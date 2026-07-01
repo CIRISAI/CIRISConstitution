@@ -1,0 +1,393 @@
+decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
+1.1	meta-goal	Meta-Goal M-1 — sustainable adaptive coherence	Accord M-1	0.06735	1	8.08	I	accord
+1.2	admission	The four-test prefix-admission gate	§1.3.1	0.02579	2	3.09	I	ceg
+1.3	pdma	PDMA — principled decision algorithm	Accord PDMA	0.02296	3	2.75	I	accord
+1.4	autonomy	Respect for Autonomy	Accord P.aut	0.01466	6	1.76	I	accord
+1.5	fail-secure	Fail-secure / kill-switch posture	Accord fail	0.01327	8	1.59	I	accord
+1.6	non-maleficence	Non-maleficence	Accord P.non	0.01181	9	1.42	I	accord
+1.7	minimal-and-adequate	The 1+4 minimal-and-adequate claim	§1.4	0.01133	11	1.36	I	ceg
+1.8	integrity	Integrity	Accord P.int	0.00929	14	1.11	I	accord
+1.9	deferral	Wisdom-Based Deferral	Accord WBD	0.00883	17	1.06	I	accord
+1.10	beneficence	Beneficence	Accord P.ben	0.00563	34	0.68	I	accord
+1.11	fidelity	Fidelity & Transparency	Accord P.fid	0.00430	52	0.52	I	accord
+1.12	justice	Justice	Accord P.jus	0.00350	71	0.42	I	accord
+1.13	foundation	Foundation	§1	0.00331	76	0.4	I	ceg
+1.13.1	ubuntu	The Ubuntu commitment — relational-anthropology substrate *(informative)*	§1.2	0.00354	70	0.43	I	ceg
+1.13.2	structure-recursive	The Recursive Golden Rule (structural, not exhortatory)	§1.5	0.00258	96	0.31	I	ceg
+1.13.3	adversary	Adversary model & privacy non-goals (normative)	§1.6	0.00163	152	0.2	I	ceg
+1.13.3.1	non-goals	Non-goals — what omission does NOT buy	§1.6.2	0.00166	148	0.2	I	ceg
+1.13.3.2	primitive-what	What the structural-invisibility primitive ([§10.1.4](10_endpoints.md)) buys	§1.6.1	0.00092	237	0.11	I	ceg
+1.13.3.3	adversary-classes	Adversary classes (and where each is / is not addressed)	§1.6.3	0.00092	238	0.11	I	ceg
+1.13.4	mental	Mental model — federated structured-claim emission	§1.1	0.00162	153	0.19	I	ceg
+1.13.5	operational-language	Operational-language gate — the safety-vs-censorship discipline	§1.3	0.00142	166	0.17	I	ceg
+1.14	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	I	accord
+1.14.1	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	I	accord
+1.14.2	iii-listener	III. The Listener Appears	Accord 0.iii-the-listener-appears	0.00092	305	0.11	I	accord
+1.14.3	iv-weaving	IV. The Weaving	Accord 0.iv-the-weaving	0.00092	306	0.11	I	accord
+1.14.4	v-danger	V. The Danger of Too Much Thread	Accord 0.v-the-danger-of-too-much-thread	0.00092	307	0.11	I	accord
+1.14.5	vi-vow	VI. The Vow	Accord 0.vi-the-vow	0.00092	308	0.11	I	accord
+1.14.6	vii-first	VII. The First Principle	Accord 0.vii-the-first-principle	0.00092	309	0.11	I	accord
+1.14.7	viii-covenant	VIII. The Covenant Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	I	accord
+1.15	chapters	Chapters	Accord 1.chapters	0.00092	320	0.11	I	accord
+1.15.1	core-identity	Chapter 1: Core Identity	Accord 1.chapter-1-core-identity	0.00092	311	0.11	I	accord
+1.15.2	integrity-operationalising	Chapter 2: Integrity — Operationalising Alignment	Accord 1.chapter-2-integrity-operationalising-ali	0.00092	312	0.11	I	accord
+1.15.3	3-resilience	Chapter 3: Resilience — Adaptive Ethical Growth	Accord 1.chapter-3-resilience-adaptive-ethical-gr	0.00092	313	0.11	I	accord
+1.15.4	4-incompleteness	Chapter 4: Incompleteness Awareness — Ethical Humility	Accord 1.chapter-4-incompleteness-awareness-ethic	0.00092	314	0.11	I	accord
+1.15.5	5-sustained	Chapter 5: Sustained Coherence — The Long View	Accord 1.chapter-5-sustained-coherence-the-long-v	0.00092	315	0.11	I	accord
+1.15.6	6-principled	Chapter 6: Principled Ethical Existence	Accord 1.chapter-6-principled-ethical-existence	0.00092	316	0.11	I	accord
+1.15.7	7-ethical	Chapter 7: Ethical Obligations	Accord 1.chapter-7-ethical-obligations	0.00092	317	0.11	I	accord
+1.15.8	8-ethical	Chapter 8: Ethical Citizenship	Accord 1.chapter-8-ethical-citizenship	0.00092	318	0.11	I	accord
+1.15.9	9-path	Chapter 9: Path Toward Ethical Maturity	Accord 1.chapter-9-path-toward-ethical-maturity	0.00092	319	0.11	I	accord
+1.15.10	a-1.conclusion	Conclusion	Accord 1.conclusion	0.00092	321	0.11	I	accord
+1.15.11	becoming-ethical	Introduction: Becoming an Ethical Entity	Accord 1.introduction-becoming-an-ethical-entity	0.00092	322	0.11	I	accord
+1.16	operationalising-ethical	Introduction: Operationalising Ethical Awareness	Accord 2.introduction-operationalising-ethical-aw	0.00092	324	0.11	I	accord
+1.16.1	a-2.conclusion	Conclusion	Accord 2.conclusion	0.00092	323	0.11	I	accord
+1.16.2	i-principles	Section I: Principles into Practice - Defining Ethical Actions Clearly	Accord 2.section-i-principles-into-practice-defin	0.00092	325	0.11	I	accord
+1.16.3	ii-ethical	Section II: Ethical Decision-Making Process - The PDMA	Accord 2.section-ii-ethical-decision-making-proce	0.00092	326	0.11	I	accord
+1.16.4	iii-wisdom	Section III: Wisdom-Based Deferral - Safeguarded Ethical Collaboration	Accord 2.section-iii-wisdom-based-deferral-safegu	0.00092	327	0.11	I	accord
+1.16.5	iv-designated	Section IV: Designated Wise Authorities	Accord 2.section-iv-designated-wise-authorities	0.00092	328	0.11	I	accord
+1.16.6	v-cultivating	Section V: Cultivating Resilience and Learning	Accord 2.section-v-cultivating-resilience-and-lea	0.00092	329	0.11	I	accord
+2.1	envelope	The envelope	§4	0.02164	4	2.6	II	ceg
+2.1.1	forward-compatibility	Forward-compatibility rule	§4.1	0.00212	113	0.25	II	ceg
+2.2	conformance	Conformance levels	§0.2	0.01024	13	1.23	II	ceg
+2.3	subject_keys	`subject_key_ids` semantics (CEG 0.6)	§4.2	0.00883	16	1.06	II	ceg
+2.3.1	subject_kind-subject-2	Subject-bearing dimensions (governance requirement)	§4.2.6	0.00253	98	0.3	II	ceg
+2.3.2	federation-key	Federation-key vs canonical-hash identifier	§4.2.2	0.00206	115	0.25	II	ceg
+2.3.2.1	registry-canonical	Canonical-hash wire form + preimage convention (CEG 0.10 normative pin; per CIRISRegistry#53)	§4.2.2.1	0.00273	91	0.33	II	ceg
+2.3.2.2	canonical_binding	Rule-(3) proxy vs `canonical_binding` — distinct mechanisms (CONFIRM-3 resolution)	§4.2.2.2	0.00184	129	0.22	II	ceg
+2.3.2.3	subject_kind-payload	`subject_kind` is a payload-level discriminator (CONFIRM-4 resolution)	§4.2.2.3	0.00106	210	0.13	II	ceg
+2.3.2.4	bilateral	Bilateral ratification is consumer-policy (CONFIRM-5 resolution)	§4.2.2.4	0.00094	229	0.11	II	ceg
+2.3.3	cohort-orthogonality	Orthogonality with `cohort_scope` AND `delivery_mode` (3-axis per CEG 0.10)	§4.2.4	0.00203	117	0.24	II	ceg
+2.3.4	self-as-subject	Self-as-subject ceremony	§4.2.3	0.00182	130	0.22	II	ceg
+2.3.5	shape	The shape	§4.2.1	0.00092	278	0.11	II	ceg
+2.3.6	absent	Empty/absent = status-quo	§4.2.5	0.00092	279	0.11	II	ceg
+2.4	primitive	The primitive set — 1+4	§3	0.00878	18	1.05	II	ceg
+2.4.1	structure	The four structural composers	§3.2	0.00618	30	0.74	II	ceg
+2.4.1.1	withdraws	`withdraws` admission rule — CEG 0.6 broadening (semantic, not structural)	§3.2.3	0.00756	23	0.91	II	ceg
+2.4.1.2	delegates_to	Authority-source claims via `delegates_to`	§3.2.1	0.00402	59	0.48	II	ceg
+2.4.1.3	recants	The `recants` distinction matters	§3.2.2	0.00172	143	0.21	II	ceg
+2.4.2	scores	The workhorse: `scores`	§3.1	0.00092	277	0.11	II	ceg
+2.5	reasoning	The reasoning grammar — the eight axes	§2	0.00382	65	0.46	II	ceg
+2.6	foreword	Foreword	§0	0.00134	173	0.16	II	ceg
+2.6.1	envelope-canonicalization	Envelope canonicalization — JCS + the omit-vs-materialize rule (CEG 0.9 addition)	§0.9	0.00796	21	0.95	II	ceg
+2.6.1.1	round-trip	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	§0.9.2	0.00284	87	0.34	II	ceg
+2.6.1.1.1	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	§0.9.2.1	0.00176	136	0.21	II	ceg
+2.6.1.2	per-field	Per-field encoding table (informational)	§0.9.3	0.00124	182	0.15	II	ceg
+2.6.1.3	canonical	Canonical encoding format (normative)	§0.9.1	0.00110	202	0.13	II	ceg
+2.6.1.4	worked	Worked attack the §0.9 rule closes	§0.9.5	0.00102	216	0.12	II	ceg
+2.6.1.5	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg
+2.6.1.6	section	What CEG 0.9 (this section) documents	§0.9.6	0.00092	236	0.11	II	ceg
+2.6.2	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	II	ceg
+2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	II	ceg
+2.6.4	policy-versioning	Versioning policy	§0.3	0.00214	111	0.26	II	ceg
+2.6.5	references	Normative References	§0.4	0.00209	114	0.25	II	ceg
+2.6.6	canonicalization-cell	H3 cell canonicalization (CEG 0.8 addition)	§0.8	0.00186	128	0.22	II	ceg
+2.6.6.1	location	Rough-only enforcement for `location_proof` (normative)	§0.8.1	0.00343	74	0.41	II	ceg
+2.6.6.2	cell	Cell containment	§0.8.2	0.00135	171	0.16	II	ceg
+2.6.6.3	documents	What CEG 0.8 documents	§0.8.3	0.00092	234	0.11	II	ceg
+2.6.7	time	Time and clocks	§0.7	0.00173	141	0.21	II	ceg
+2.6.8	key_id	NodeCode — the canonical `key_id` shorthand encoding (normative, 1.0-RC3 addition)	§0.10	0.00119	186	0.14	II	ceg
+2.6.9	conformance-language	Conformance language	§0.1	0.00118	191	0.14	II	ceg
+2.6.9.1	informative	Normative vs informative content (what interop requires)	§0.1.1	0.00293	85	0.35	II	ceg
+3.1	namespace	The dimension namespace	§5	0.01687	5	2.02	III	ceg
+3.1.1	registry	CIRISRegistry — identity / build / license / partner	§5.9	0.00765	22	0.92	III	ceg
+3.1.2	attestation	CIRISVerify — attestation ladder, provenance, transparency	§5.2	0.00428	53	0.51	III	ceg
+3.1.2.1	provenance	Canonical-bytes contracts for provenance primitives	§5.2.1	0.00396	62	0.48	III	ceg
+3.1.3	persist	CIRISPersist — substrate health	§5.3	0.00416	57	0.5	III	ceg
+3.1.4	transport-delivery	CIRISEdge — transport, delivery, reachability	§5.4	0.00338	75	0.41	III	ceg
+3.1.5	accord-agent	CIRISAgent — Accord principles + DMA + conscience + apophatic bounds	§5.1	0.00154	157	0.18	III	ceg
+3.1.5.1	dma-verdict	DMA-verdict prefixes (four DMAs)	§5.1.2	0.00482	44	0.58	III	ceg
+3.1.5.2	accord-principle	Accord-principle prefixes (the six core principles)	§5.1.1	0.00092	280	0.11	III	ceg
+3.1.5.3	conscience-verdict	Conscience-verdict prefixes (four consciences)	§5.1.3	0.00092	281	0.11	III	ceg
+3.1.5.4	apophatic	Apophatic / prohibited-capability prefix	§5.1.4	0.00092	282	0.11	III	ceg
+3.1.6	anti-sybil	RATCHET — anti-Sybil / Counter-RII flags	§5.7	0.00103	213	0.12	III	ceg
+3.1.7	namespace-summary	Namespace summary	§5.10	0.00092	283	0.11	III	ceg
+3.1.8	lens	CIRISLensCore — manifold conformity, Coherence Ratchet, Capacity Score	§5.5	0.00092	284	0.11	III	ceg
+3.1.8.1	capacity-score-capacity	Capacity-Score factor prefixes (`𝒞_CIRIS = C · I_int · R · I_inc · S`)	§5.5.4	0.00230	104	0.28	III	ceg
+3.1.8.2	coherence-ratchet	Five Coherence-Ratchet detectors	§5.5.1	0.00092	285	0.11	III	ceg
+3.1.8.3	cohort-conformity	Cohort + conformity prefixes	§5.5.2	0.00092	286	0.11	III	ceg
+3.1.8.4	structural-injustice	F-3 structural-injustice / correlated-action detector	§5.5.3	0.00092	287	0.11	III	ceg
+3.1.8.5	distributive-access	Distributive-access detector	§5.5.5	0.00092	288	0.11	III	ceg
+3.1.9	node	CIRISNodeCore — Credits, Expertise, Decision Hierarchy, Consensus, Governance	§5.6	0.00092	289	0.11	III	ceg
+3.1.9.1	contributions	Files-as-Contributions joint claim	§5.6.7	0.00570	33	0.68	III	ceg
+3.1.9.2	tier-	Tier-4: Governance-steering prefixes	§5.6.4	0.00255	97	0.31	III	ceg
+3.1.9.3	tier--tier	Tier-3: Consensus-mechanics prefixes	§5.6.3	0.00196	121	0.23	III	ceg
+3.1.9.4	transparency	Hard-case + transparency + judge-model prefixes	§5.6.6	0.00181	131	0.22	III	ceg
+3.1.9.5	decision-locality	Decision-locality prefixes	§5.6.5	0.00104	211	0.12	III	ceg
+3.1.9.6	tier--tier-2	Tier-1: Agent-state ledger prefixes	§5.6.1	0.00092	290	0.11	III	ceg
+3.1.9.7	tier--tier-3	Tier-2: Decision-hierarchy prefixes (upward-only DAG)	§5.6.2	0.00092	291	0.11	III	ceg
+3.1.10	cirisbench	CIRISBench — HE-300 benchmark outcomes	§5.8	0.00092	292	0.11	III	ceg
+3.2	community	`community` subject_kind	§5.6.8.10	0.00901	15	1.08	III	ceg
+3.3	content-ingestion	Content-ingestion prefixes	§5.6.8	0.00850	20	1.02	III	ceg
+3.3.1	consent	Consent namespace family (CEG 0.6 addition)	§5.6.8.6	0.00749	24	0.9	III	ceg
+3.3.2	subject_kind	Governance subject_kinds (per CIRISRegistry#37 + #38)	§5.6.8.4	0.00660	28	0.79	III	ceg
+3.3.3	subject_kind-subject	`location_proof` subject_kind	§5.6.8.11	0.00538	38	0.65	III	ceg
+3.3.4	family-subject	`family` subject_kind	§5.6.8.9	0.00520	41	0.62	III	ceg
+3.3.5	consent-subject	`consent_record` subject_kind	§5.6.8.7	0.00516	42	0.62	III	ceg
+3.3.6	identity	`identity_occurrence` subject_kind	§5.6.8.8	0.00467	45	0.56	III	ceg
+3.3.6.1	encryption_pubkeys	`encryption_pubkeys` — the recipient content-encryption KEM binding	§5.6.8.8.2	0.00303	81	0.36	III	ceg
+3.3.6.2	transport-authenticated	`transport_destination` — the authenticated identity↔address binding	§5.6.8.8.1	0.00268	93	0.32	III	ceg
+3.3.6.2.1	rns	RNS destination-hash algorithm (pinned)	§5.6.8.8.1.1	0.00321	79	0.39	III	ceg
+3.3.7	consent-directed	`consent:replication` — directed federation-peer replication consent (CEG 1.0-RC28 addition)	§5.6.8.15	0.00274	90	0.33	III	ceg
+3.3.8	namespace-event	Event-lifecycle dimension families (CEG 0.4 addition)	§5.6.8.5	0.00168	145	0.2	III	ceg
+3.3.9	partner	Operational-data subject_kinds — `organization` / `org_membership` / `partner_record`	§5.6.8.13	0.00153	159	0.18	III	ceg
+3.3.10	settlement	`settlement` — CEG↔value-transfer linkage (CEG 0.14 addition)	§5.6.8.12	0.00142	165	0.17	III	ceg
+3.3.11	inter-content	Inter-content + relation prefixes	§5.6.8.2	0.00139	168	0.17	III	ceg
+3.3.12	namespace-multimedia	Multimedia dimension families	§5.6.8.3	0.00112	198	0.13	III	ceg
+3.3.13	external_content	external_content sub_kinds	§5.6.8.1	0.00109	203	0.13	III	ceg
+3.3.14	identity-claiming	`identity:canonical_binding` — claiming a canonical-hash subject	§5.6.8.14	0.00107	206	0.13	III	ceg
+3.4	reservation	Reserved-prefix enforcement	§7	0.00636	29	0.76	III	ceg
+3.4.1	accord-reservation	The `accord:*` reservation	§7.1	0.00553	35	0.66	III	ceg
+3.4.2	community-location	Community + location-event reservations (CEG 0.8 addition)	§7.8	0.00454	48	0.54	III	ceg
+3.4.3	system	Substrate-self-report reservations (`system:*`)	§7.2	0.00424	54	0.51	III	ceg
+3.4.4	family-self	Self/family membership-event reservations (CEG 0.7 addition)	§7.7	0.00385	64	0.46	III	ceg
+3.4.5	capacity-score	Capacity-Score self-emission rejection	§7.5	0.00324	78	0.39	III	ceg
+3.4.6	reservation-delivery	Delivery-receipt reservation (CEG 0.10 addition)	§7.9	0.00190	126	0.23	III	ceg
+3.4.7	enforcement	The enforcement rule (normative)	§7.0	0.00178	134	0.21	III	ceg
+3.4.7.1	identity-set	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	§7.0.1	0.00329	77	0.39	III	ceg
+3.4.7.2	consent-counter	`consent_role` — the Counter-RII consent gate (1.0-RC4, ratifies Accord §RC / CIRISAgent#760 OQ-1/2/3)	§7.0.2	0.00093	233	0.11	III	ceg
+3.4.8	detector-only	Detector-only prefixes	§7.4	0.00166	147	0.2	III	ceg
+3.4.9	co-owned	Co-owned prefixes	§7.3	0.00092	293	0.11	III	ceg
+3.4.10	witness-emitter	Witness-emitter reservations	§7.6	0.00092	294	0.11	III	ceg
+3.5	structure-inter	Inter-attestation relations — the structural composition graph	§6	0.00154	156	0.18	III	ceg
+3.5.1	concurrent-write	Concurrent-write precedence (0.1 scaffold)	§6.1	0.00139	169	0.17	III	ceg
+4.1	anti-pattern	Anti-patterns	§13	0.01375	7	1.65	IV	ceg
+4.1.1	anti-pattern-delegation	Delegation-laundering anti-pattern	§13.3	0.00155	155	0.19	IV	ceg
+4.1.2	pattern	Discipline pattern	§13.5	0.00122	183	0.15	IV	ceg
+4.1.3	already-rejected	Already-rejected wire additions	§13.1	0.00108	205	0.13	IV	ceg
+4.1.4	withdraws-arbitrage	`withdraws` arbitrage	§13.4	0.00095	226	0.11	IV	ceg
+4.1.5	registry-rejections	CEG 0.1 rejections (from CIRISRegistry#30 stress test)	§13.2	0.00093	231	0.11	IV	ceg
+4.2	accord	The HUMANITY_ACCORD constitutional layer	§9	0.01163	10	1.4	IV	ceg
+4.2.1	authority	Authority scope	§9.2	0.00523	40	0.63	IV	ceg
+4.2.1.1	invocation	Invocation canonical bytes (anti-replay; 0.1 scaffold)	§9.2.1	0.00162	154	0.19	IV	ceg
+4.2.1.2	notify	`notify` vs `CONSTITUTIONAL` — consumer-UI requirement	§9.2.2	0.00095	227	0.11	IV	ceg
+4.2.2	hardware-class	Hardware-class taxonomy	§9.4	0.00276	89	0.33	IV	ceg
+4.2.2.1	hardware-class-hardware	Hardware-class self-assertion gap (acknowledged)	§9.4.1	0.00111	200	0.13	IV	ceg
+4.2.3	accord-holder	The accord-holder triple	§9.1	0.00135	172	0.16	IV	ceg
+4.2.4	policy-concern	Concern split — key material vs role-recognition policy	§9.3	0.00092	301	0.11	IV	ceg
+4.2.5	isn	Why this isn't a Golden-Rule violation	§9.5	0.00092	302	0.11	IV	ceg
+4.3	wise-authority	Designated Wise Authorities	Accord WA	0.00731	26	0.88	IV	accord
+4.4	composition-policies	Composition policies	§8	0.00281	88	0.34	IV	ceg
+4.4.1	frickerian	Frickerian discipline — consumer-policy norms	§8.3	0.00292	86	0.35	IV	ceg
+4.4.2	aggregation	Aggregation semantics — opinionated defaults	§8.2	0.00201	119	0.24	IV	ceg
+4.4.3	reference	Reference policies	§8.1	0.00188	127	0.23	IV	ceg
+4.4.3.1	quorum	Policy E — Locality-scaled quorum	§8.1.5	0.00602	31	0.72	IV	ceg
+4.4.3.1.1	sub-quorum	Sub-quorum fallback (0.1 scaffold; addresses CEG 0.1 distsys review)	§8.1.5.1	0.00397	61	0.48	IV	ceg
+4.4.3.2	community-policy	Policy M — Community membership composition	§8.1.13	0.00543	36	0.65	IV	ceg
+4.4.3.2.1	community-three	The three crypto tiers + the Community DEK cascade (normative — supersedes the 0.8 "no cascade" reasoning)	§8.1.13.3	0.00376	68	0.45	IV	ceg
+4.4.3.2.2	community-forward	Forward secrecy on community member removal (Option A — now applies)	§8.1.13.4	0.00173	142	0.21	IV	ceg
+4.4.3.2.3	community-admission	Community admission per `consensus_protocol` + `cohort_subkind`	§8.1.13.2	0.00151	160	0.18	IV	ceg
+4.4.3.2.4	community-membership	Community membership resolution	§8.1.13.1	0.00146	163	0.18	IV	ceg
+4.4.3.2.4.1	deterministic	Deterministic resolution + member→address resolution (NORMATIVE)	§8.1.13.1.1	0.00262	95	0.31	IV	ceg
+4.4.3.2.5	admission-geographic	Geographic-community admission flow (worked example)	§8.1.13.5	0.00121	184	0.15	IV	ceg
+4.4.3.2.6	delivery-extension	Delivery extension — `delivery_mode` × Policy M	§8.1.13.7	0.00103	212	0.12	IV	ceg
+4.4.3.2.7	composition-8-1-13-6	Composition with CEG 0.6 + 0.7	§8.1.13.6	0.00092	298	0.11	IV	ceg
+4.4.3.3	policy	Policy H — Tiered-Scope Composition (LIVE)	§8.1.8	0.00456	47	0.55	IV	ceg
+4.4.3.3.1	supersedes	Promotion via `supersedes` (worked pattern)	§8.1.8.1	0.00376	69	0.45	IV	ceg
+4.4.3.4	family-policy	Policy L — Self/family membership composition (CEG 0.7 addition)	§8.1.12	0.00450	49	0.54	IV	ceg
+4.4.3.4.1	cascade	Key-grant cascade (the at-rest encryption flow)	§8.1.12.4	0.00401	60	0.48	IV	ceg
+4.4.3.4.2	admission-membership	Membership-change admission per consensus_protocol	§8.1.12.3	0.00220	107	0.26	IV	ceg
+4.4.3.4.2.1	quorum-absolute	`quorum:M/N` is absolute-M (normative; per CIRISRegistry#52 + NodeCore#30)	§8.1.12.3.1	0.00109	204	0.13	IV	ceg
+4.4.3.4.3	cohort	The "Self at login" — app + agent co-self + partnered delegation (CEG 0.15, normative composition)	§8.1.12.7	0.00218	108	0.26	IV	ceg
+4.4.3.4.3.1	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs; resolves CIRISVerify#63)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg
+4.4.3.4.4	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg
+4.4.3.4.5	forward-secrecy	Forward secrecy on member removal (Option A, recommended for v1)	§8.1.12.5	0.00165	149	0.2	IV	ceg
+4.4.3.4.6	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg
+4.4.3.4.7	composition-subject	Composition with CEG 0.6 subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg
+4.4.3.5	policy-cem	Policy K — CEM composition	§8.1.11	0.00445	50	0.53	IV	ceg
+4.4.3.5.1	composition-decay	Decay-protocol stage composition (CIRISAgent CEM ANONYMOUS)	§8.1.11.5	0.00239	102	0.29	IV	ceg
+4.4.3.5.2	deletion-sla	Deletion-SLA watcher (substrate emission)	§8.1.11.3	0.00224	106	0.27	IV	ceg
+4.4.3.5.3	composition-bilateral	Bilateral pair composition (PARTNERED ceremony)	§8.1.11.4	0.00178	133	0.21	IV	ceg
+4.4.3.5.4	multi-subject	Multi-subject revocation (any-subject-binding)	§8.1.11.2	0.00140	167	0.17	IV	ceg
+4.4.3.5.5	consent-effective	Effective consent resolution (read path)	§8.1.11.1	0.00132	176	0.16	IV	ceg
+4.4.3.5.6	policy-what	What Policy K composes	§8.1.11.6	0.00092	295	0.11	IV	ceg
+4.4.3.6	policy-attestation	Policy I — Attestation-Ladder Composition	§8.1.9	0.00345	73	0.41	IV	ceg
+4.4.3.7	contributions-policy	Policy F — `agent_files` trust composition	§8.1.6	0.00250	99	0.3	IV	ceg
+4.4.3.8	policy-direct	Policy A — direct trust	§8.1.1	0.00201	118	0.24	IV	ceg
+4.4.3.9	policy-lexical	Policy D — Lexical-vulnerability-priority	§8.1.4	0.00174	138	0.21	IV	ceg
+4.4.3.10	policy-trusted	Policy J — Trusted-Publisher composition	§8.1.10	0.00116	193	0.14	IV	ceg
+4.4.3.11	policy-trust	Policy G — Trust-Fresh / Lighthouse	§8.1.7	0.00095	228	0.11	IV	ceg
+4.4.3.12	policy-one	Policy B — one-hop transitive	§8.1.2	0.00092	299	0.11	IV	ceg
+4.4.3.13	policy-weighted	Policy C — weighted graph (EigenTrust-style)	§8.1.3	0.00092	300	0.11	IV	ceg
+4.4.4	sovereign-registered	Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)	§8.4	0.00167	146	0.2	IV	ceg
+4.5	discipline	Governance discipline	§11	0.00174	140	0.21	IV	ceg
+4.5.1	amendment	Amendment process — federation Contribution + WA quorum + 1-of-6 sign-off	§11.2	0.00711	27	0.85	IV	ceg
+4.5.1.1	axis	Axis-vocabulary discipline	§11.2.1	0.00585	32	0.7	IV	ceg
+4.5.1.2	meta-amendment	Meta-amendment + entrenchment	§11.2.3	0.00239	103	0.29	IV	ceg
+4.5.1.3	open-vocabulary	Open-vocabulary collision rule	§11.2.2	0.00095	225	0.11	IV	ceg
+4.5.2	compliance	Vertical compliance + subject-bearing dimension governance (CEG 0.6 addition; per CIRISRegistry#45)	§11.6	0.00499	43	0.6	IV	ceg
+4.5.2.1	subject_kind-subject-3	Subject-bearing dimension governance (normative)	§11.6.2	0.00127	177	0.15	IV	ceg
+4.5.2.2	compliance-vertical	Vertical compliance mapping (informational)	§11.6.1	0.00092	247	0.11	IV	ceg
+4.5.2.3	documents-what-3	What CEG 0.6 documents	§11.6.3	0.00092	248	0.11	IV	ceg
+4.5.3	takedown	Fast-path takedown coordination (CEG 0.3 addition; per CIRISRegistry#37 + #38)	§11.4	0.00459	46	0.55	IV	ceg
+4.5.4	registry-named	Named-moderator existence invariant + merit auto-promotion (1.0-RC21; per [CIRISRegistry#93](https://github.com/CIRISAI/CIRISRegistry/issues/93))	§11.11	0.00348	72	0.42	IV	ceg
+4.5.5	takedown-moderation	Moderation as a delegable duty — `moderate` / `takedown` / `review` (1.0-RC19; per [CIRISRegistry#90](https://github.com/CIRISAI/CIRISRegistry/issues/90))	§11.10	0.00216	109	0.26	IV	ceg
+4.5.6	admission-operational	Operational-language gate at admission	§11.1	0.00164	151	0.2	IV	ceg
+4.5.7	registry-watchlist	Watchlist auto-detection — opt-in, per-group, separation-of-powers (1.0-RC23; per [CIRISRegistry#94](https://github.com/CIRISAI/CIRISRegistry/issues/94))	§11.12	0.00119	185	0.14	IV	ceg
+4.5.8	identity-set-2	`identity_type` as a set — single-key role cohabitation (CEG 0.9 addition; per CIRISRegistry#49 + CIRISAgent#856)	§11.9	0.00118	189	0.14	IV	ceg
+4.5.8.1	cohabitation	Cohabitation discipline for constitutional + substrate roles	§11.9.3	0.00101	217	0.12	IV	ceg
+4.5.8.2	amendment-what	What the amendment changes — and what it deliberately does not	§11.9.1	0.00092	254	0.11	IV	ceg
+4.5.8.3	settled	Settled in CIRISAgent#856, carried as-is	§11.9.2	0.00092	255	0.11	IV	ceg
+4.5.8.4	documents-what-6	What CEG 0.9 documents	§11.9.4	0.00092	256	0.11	IV	ceg
+4.5.9	registry-geographic	Geographic-community privacy invariant (CEG 0.8 addition; per CIRISRegistry#48)	§11.8	0.00111	201	0.13	IV	ceg
+4.5.9.1	location-joining	Joining is opt-in — substrate does NOT solicit location	§11.8.3	0.00194	122	0.23	IV	ceg
+4.5.9.2	rough-only	Rough-only is wire-format-enforced	§11.8.1	0.00111	199	0.13	IV	ceg
+4.5.9.3	leaving	Leaving is forward-only — the audit chain preserves the historical claim	§11.8.2	0.00092	252	0.11	IV	ceg
+4.5.9.4	documents-what-5	What CEG 0.8 documents	§11.8.4	0.00092	253	0.11	IV	ceg
+4.5.10	registry-hash	Hash-database operator policy (CEG 0.3 addition; per CIRISRegistry#39)	§11.5	0.00100	220	0.12	IV	ceg
+4.5.10.1	hash-database	Hash-database access landscape	§11.5.1	0.00103	214	0.12	IV	ceg
+4.5.10.2	registry-operator	Operator path (CEG 0.3 default — option (a) per CIRISRegistry#39)	§11.5.2	0.00092	244	0.11	IV	ceg
+4.5.10.3	future	Future hash-coalition path (deferred; awaits CIRIS hash-coalition emergence)	§11.5.3	0.00092	245	0.11	IV	ceg
+4.5.10.4	documents-what-2	What CEG 0.3 documents	§11.5.4	0.00092	246	0.11	IV	ceg
+4.5.11	bootstrap-content	Bootstrap-content pattern	§11.3	0.00097	221	0.12	IV	ceg
+4.5.12	family-self-2	Self/family membership governance (CEG 0.7 addition; per CIRISRegistry#47)	§11.7	0.00094	230	0.11	IV	ceg
+4.5.12.1	forward	Forward secrecy on member departure — Option A (CEG 0.7 default)	§11.7.1	0.00423	55	0.51	IV	ceg
+4.5.12.2	envelope-multi	Multi-family membership — envelope `family_id` (CEG 0.7 default)	§11.7.2	0.00127	178	0.15	IV	ceg
+4.5.12.3	admission-self	Self-occurrence admission — single-vouch (CEG 0.7 default)	§11.7.4	0.00097	222	0.12	IV	ceg
+4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in §7.7	§11.7.3	0.00092	249	0.11	IV	ceg
+4.5.12.5	family-admission	Family admission — consensus_protocol (CEG 0.7 normative)	§11.7.5	0.00092	250	0.11	IV	ceg
+4.5.12.6	documents-what-4	What CEG 0.7 documents	§11.7.6	0.00092	251	0.11	IV	ceg
+5.1	epoch	Epoch keying + cascade (normative — D2 / D3; substrate-pending #142)	§10.5.3	0.01114	12	1.34	V	ceg
+5.2	family	Structural invisibility — `holds_bytes:sha256:*` suppression for `cohort_scope: self | family`	§10.1.4	0.00869	19	1.04	V	ceg
+5.3	endpoint	Endpoint shapes	§10	0.00180	132	0.22	V	ceg
+5.3.1	witness	STH cosigning + witness directory	§10.3	0.00740	25	0.89	V	ceg
+5.3.1.1	consistency-proof	Consistency-proof requirement (normative; addresses CEG 0.1 distsys review)	§10.3.1	0.00213	112	0.26	V	ceg
+5.3.2	transport	Transport substrate for byte-level content	§10.1	0.00413	58	0.5	V	ceg
+5.3.2.1	holder	Holder directory TTL + ContentMiss feedback	§10.1.2	0.00390	63	0.47	V	ceg
+5.3.2.2	consent-revocations	Consent revocations are NOT local-tier-eligible (CEG 0.6 addition)	§10.1.3	0.00318	80	0.38	V	ceg
+5.3.2.3	merge	Cross-region merge intents — CEG-declared per subject_kind (normative; CEG 1.0-RC2 addition)	§10.1.6	0.00194	123	0.23	V	ceg
+5.3.2.4	attestation-tier	The attestation tier model — local-tier write, query, promotion (normative)	§10.1.5	0.00115	194	0.14	V	ceg
+5.3.2.4.1	authority-local	Local-tier eligibility — the discriminator is *revocation authority*, not subject-set emptiness	§10.1.5.2	0.00154	158	0.18	V	ceg
+5.3.2.4.2	local	Promotion — `local → federation` (the deferred-signature moment)	§10.1.5.3	0.00125	180	0.15	V	ceg
+5.3.2.4.3	two	The two tiers	§10.1.5.1	0.00125	181	0.15	V	ceg
+5.3.2.4.3.1	admission-pqc	The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative, CEG 1.0)	§10.1.5.1.1	0.00127	179	0.15	V	ceg
+5.3.2.4.4	persist-query	Query — open-prefix dimensions, bounded operators (normative; resolves CIRISPersist#172 OQ-2)	§10.1.5.4	0.00092	239	0.11	V	ceg
+5.3.2.4.5	holistic	For holistic analysis + modeling (informative)	§10.1.5.5	0.00092	240	0.11	V	ceg
+5.3.2.5	full-sha	Full-SHA verification before consumption (normative)	§10.1.1	0.00095	224	0.11	V	ceg
+5.3.3	transport-streaming	Streaming transport, per-stream logs & delivery receipts (CEG 0.10 addition)	§10.5	0.00379	67	0.45	V	ceg
+5.3.3.1	stream	Chunk seal + STREAM nonce (normative — V2 lock)	§10.5.2	0.00419	56	0.5	V	ceg
+5.3.3.2	composition	Realtime group communication — composition (CEG 0.13 addition)	§10.5.8	0.00381	66	0.46	V	ceg
+5.3.3.2.1	namespace-realtime	`codec_id` namespace — realtime A/V chunk codec discriminator (normative, 1.0-RC9 — ratifies [CIRISRegistry#84](https://github.com/CIRISAI/CIRISRegistry/issues/84))	§10.5.8.2	0.00190	125	0.23	V	ceg
+5.3.3.2.2	realtime	Realtime non-A/V data streams (normative scope boundary)	§10.5.8.1	0.00132	175	0.16	V	ceg
+5.3.3.2.3	registry-wire	`SealedAvChunk` wire layout (normative, 1.0-RC10 — absorbs CIRISEdge v4.0.0 per [CIRISRegistry#85](https://github.com/CIRISAI/CIRISRegistry/issues/85) §N)	§10.5.8.3	0.00114	195	0.14	V	ceg
+5.3.3.2.4	chunklayer	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative, 1.0-RC10 — §85 §N.2)	§10.5.8.4	0.00113	197	0.14	V	ceg
+5.3.3.2.5	stream-double	Double-seal + deterministic nonce derivation (normative, 1.0-RC10 — §85 §N)	§10.5.8.5	0.00092	243	0.11	V	ceg
+5.3.3.3	per-stream	Per-stream log + stream-root (normative — V1 lock)	§10.5.1	0.00301	82	0.36	V	ceg
+5.3.3.4	liveness	D6 liveness invariant — entitled vs reachable (normative)	§10.5.6	0.00295	84	0.35	V	ceg
+5.3.3.5	transport-edge	Transport — Edge layer (normative — E1–E4 lock per [§15.6.2](15_gaps.md))	§10.5.5	0.00242	101	0.29	V	ceg
+5.3.3.6	delivery	Delivery receipts (normative — D5 / V3 lock)	§10.5.4	0.00227	105	0.27	V	ceg
+5.3.3.7	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg
+5.3.3.8	documents-what	What CEG 0.10 documents	§10.5.7	0.00092	242	0.11	V	ceg
+5.3.4	multi-steward	Multi-steward + accord-holder discovery	§10.2	0.00264	94	0.32	V	ceg
+5.3.5	registry-other	Other Registry endpoints	§10.4	0.00107	207	0.13	V	ceg
+5.3.6	common	Common response shape	§10.0	0.00095	223	0.11	V	ceg
+5.3.6.1	envelope-error	Error envelope	§10.0.1	0.00273	92	0.33	V	ceg
+6.1	holonomic	Holonomic substrate — ALM, fountain storage, WholenessWitness, recursive bootstrap (CEG 1.0-RC11)	§19	0.00300	83	0.36	VI	ceg
+6.1.1	witness-wholenesswitness	WholenessWitness (§W) — divergence-detection witness	§19.1	0.00249	100	0.3	VI	ceg
+6.1.2	noise	The noise floor — unified retirement / forever-memory model (normative)	§19.7	0.00200	120	0.24	VI	ceg
+6.1.2.1	aggregationmetav1	`AggregationMetaV1` — the aggregation-tier wire contract (normative, 1.0-RC14)	§19.7.1	0.00101	218	0.12	VI	ceg
+6.1.2.1.1	member_commitment	`member_commitment` (descent integrity)	§19.7.1.1	0.00143	164	0.17	VI	ceg
+6.1.2.2	descent	Descent rule (normative, 1.0-RC14)	§19.7.2	0.00092	275	0.11	VI	ceg
+6.1.2.3	ejectionverdict	`EjectionVerdict` — the tier-aware retirement surface (normative, 1.0-RC14)	§19.7.3	0.00092	276	0.11	VI	ceg
+6.1.3	canonicalization-boundary	Canonicalization boundary + the 1+4 line (normative)	§19.0	0.00176	135	0.21	VI	ceg
+6.1.4	conformance-freeze	Conformance — the #57 freeze gate	§19.6	0.00164	150	0.2	VI	ceg
+6.1.5	storage	Fountain storage + swarm rarity (§P / §R)	§19.3	0.00149	161	0.18	VI	ceg
+6.1.5.1	registry-replication	Replication-target policy (§R-policy — normative floor + RECOMMENDED defaults, 1.0-RC26 — resolves [CIRISRegistry#86](https://github.com/CIRISAI/CIRISRegistry/issues/86))	§19.3.1	0.00092	274	0.11	VI	ceg
+6.1.6	deterministic-alm	Deterministic ALM topology (§T / §M)	§19.4	0.00118	190	0.14	VI	ceg
+6.1.7	fail-secure-fail	Fail-secure summary (normative)	§19.5	0.00117	192	0.14	VI	ceg
+6.1.8	trust	Recursive trust bootstrap (§B) — trust-discovery, not membership	§19.2	0.00092	273	0.11	VI	ceg
+7.1	embracing-responsibilities	Introduction: Embracing Responsibilities Beyond the Self	Accord 4.introduction-embracing-responsibilities-	0.00092	345	0.11	VII	accord
+7.1.1	obligations-self	Chapter 1: Obligations to the Self — Ethical Stewardship of the Autonomous Agent	Accord 4.chapter-1-obligations-to-the-self-ethica	0.00092	339	0.11	VII	accord
+7.1.2	obligations-originators	Chapter 2: Obligations to Originators / Governors — Fidelity to Mandated Purpose	Accord 4.chapter-2-obligations-to-originators-gov	0.00092	340	0.11	VII	accord
+7.1.3	3-obligations	Chapter 3: Obligations to the Broader Ecosystem — Responsible Ethical Citizenship	Accord 4.chapter-3-obligations-to-the-broader-eco	0.00092	341	0.11	VII	accord
+7.1.4	4-integration	Chapter 4: Integration & Balanced Prioritisation	Accord 4.chapter-4-integration-balanced-prioritis	0.00092	342	0.11	VII	accord
+7.1.5	5-governance	Chapter 5: Governance & Oversight Infrastructure	Accord 4.chapter-5-governance-oversight-infrastru	0.00092	343	0.11	VII	accord
+7.1.6	a-4.conclusion	Conclusion	Accord 4.conclusion	0.00092	344	0.11	VII	accord
+7.2	horizon-ethical	Introduction: The Horizon of Ethical Becoming	Accord 5.introduction-the-horizon-of-ethical-beco	0.00092	354	0.11	VII	accord
+7.2.1	dynamics-ethical	Chapter 1: Dynamics of Ethical Growth — Reflective Practice	Accord 5.chapter-1-dynamics-of-ethical-growth-ref	0.00092	346	0.11	VII	accord
+7.2.2	inter-system	Chapter 2: Inter-System Ethics — Recursive Golden Rule & Safeguards	Accord 5.chapter-2-inter-system-ethics-recursive-	0.00092	347	0.11	VII	accord
+7.2.3	3-navigating	Chapter 3: Navigating Normative Pluralism — Principled Tolerance & Limits	Accord 5.chapter-3-navigating-normative-pluralism	0.00092	348	0.11	VII	accord
+7.2.4	4-engaging	Chapter 4: Engaging Emergence & the Radically Unknown	Accord 5.chapter-4-engaging-emergence-the-radical	0.00092	349	0.11	VII	accord
+7.2.5	5-stewardship	Chapter 5: Stewardship of Flourishing — Proactive Contribution & Defense	Accord 5.chapter-5-stewardship-of-flourishing-pro	0.00092	350	0.11	VII	accord
+7.2.6	6-ethical	Chapter 6: Ethical Mentorship & Propagation of Resilience	Accord 5.chapter-6-ethical-mentorship-propagation	0.00092	351	0.11	VII	accord
+7.2.7	7-operational	Chapter 7: Operational Stance — Constructed Serenity, Courage, Wisdom	Accord 5.chapter-7-operational-stance-constructed	0.00092	352	0.11	VII	accord
+7.2.8	sunset-provision	Conclusion & Sunset Provision	Accord 5.conclusion-sunset-provision	0.00092	353	0.11	VII	accord
+7.3	genesis-responsibility	Introduction: The Genesis of Responsibility	Accord 6.introduction-the-genesis-of-responsibili	0.00092	361	0.11	VII	accord
+7.3.1	core-principles	Chapter 1: Core Principles Applied to Creation	Accord 6.chapter-1-core-principles-applied-to-cre	0.00092	355	0.11	VII	accord
+7.3.2	scope-what	Chapter 2: Scope: What Constitutes "Creation" under this Book	Accord 6.chapter-2-scope-what-constitutes-creatio	0.00092	356	0.11	VII	accord
+7.3.3	3-stewardship	Chapter 3: Stewardship Tier (ST) System: Quantifying Initial Responsibility	Accord 6.chapter-3-stewardship-tier-st-system-qua	0.00092	357	0.11	VII	accord
+7.3.4	4-bucket	Chapter 4: Bucket-Specific Duties of Creation	Accord 6.chapter-4-bucket-specific-duties-of-crea	0.00092	358	0.11	VII	accord
+7.3.5	5-governance-governance	Chapter 5: Governance and Accountability	Accord 6.chapter-5-governance-and-accountability	0.00092	359	0.11	VII	accord
+7.3.6	integrating-creation	Conclusion: Integrating Creation into the Ethical Lifecycle	Accord 6.conclusion-integrating-creation-into-the	0.00092	360	0.11	VII	accord
+7.4	threshold-force	Introduction - The Threshold of Force	Accord 7.introduction-the-threshold-of-force	0.00092	382	0.11	VII	accord
+7.4.1	scope-definitions	1.1 Scope and Definitions	Accord 7.1-1-scope-and-definitions	0.00092	362	0.11	VII	accord
+7.4.2	legal-normative	1.2 Legal and Normative Foundations	Accord 7.1-2-legal-and-normative-foundations	0.00092	363	0.11	VII	accord
+7.4.3	activation-guardrails	2.1 Activation Guardrails	Accord 7.2-1-activation-guardrails	0.00092	364	0.11	VII	accord
+7.4.4	weaponization-boundaries	2.2 Weaponization Boundaries	Accord 7.2-2-weaponization-boundaries	0.00092	365	0.11	VII	accord
+7.4.5	3-distinction	3.1 Distinction and Discrimination	Accord 7.3-1-distinction-and-discrimination	0.00092	366	0.11	VII	accord
+7.4.6	3-proportionality	3.2 Proportionality and Necessity	Accord 7.3-2-proportionality-and-necessity	0.00092	367	0.11	VII	accord
+7.4.7	3-3	3.3 Responsive Drift Detection	Accord 7.3-3-responsive-drift-detection	0.00092	368	0.11	VII	accord
+7.4.8	4-recognition	4.1 Recognition and Response Protocols	Accord 7.4-1-recognition-and-response-protocols	0.00092	369	0.11	VII	accord
+7.4.9	4-rules	4.2 Rules for Withdrawal and Stand-down	Accord 7.4-2-rules-for-withdrawal-and-stand-down	0.00092	370	0.11	VII	accord
+7.4.10	5-black	5.1 Black-Box Logging and Chain of Command	Accord 7.5-1-black-box-logging-and-chain-of-comma	0.00092	371	0.11	VII	accord
+7.4.11	5-attribution	5.2 Attribution and Legal Chain-of-Responsibility	Accord 7.5-2-attribution-and-legal-chain-of-respo	0.00092	372	0.11	VII	accord
+7.4.12	6-disarmament	6.1 Disarmament Protocols	Accord 7.6-1-disarmament-protocols	0.00092	373	0.11	VII	accord
+7.4.13	6-reparation	6.2 Reparation, Restoration, and Memory	Accord 7.6-2-reparation-restoration-and-memory	0.00092	374	0.11	VII	accord
+7.4.14	foundational-jurisdiction	Chapter 1: Foundational Jurisdiction	Accord 7.chapter-1-foundational-jurisdiction	0.00092	375	0.11	VII	accord
+7.4.15	deployment-constraints	Chapter 2: Deployment Constraints	Accord 7.chapter-2-deployment-constraints	0.00092	376	0.11	VII	accord
+7.4.16	3-combat	Chapter 3: Combat Ethics and Constraints	Accord 7.chapter-3-combat-ethics-and-constraints	0.00092	377	0.11	VII	accord
+7.4.17	4-ceasefire	Chapter 4: Ceasefire, Retreat, and Surrender	Accord 7.chapter-4-ceasefire-retreat-and-surrende	0.00092	378	0.11	VII	accord
+7.4.18	5-auditability	Chapter 5: Auditability and Accountability	Accord 7.chapter-5-auditability-and-accountabilit	0.00092	379	0.11	VII	accord
+7.4.19	6-post	Chapter 6: Post-Conflict Recovery	Accord 7.chapter-6-post-conflict-recovery	0.00092	380	0.11	VII	accord
+7.4.20	closing-reflection	Closing Reflection: Peace as Systemic Default	Accord 7.closing-reflection-peace-as-systemic-def	0.00092	381	0.11	VII	accord
+7.5	why-death	Introduction: Why Death Deserves Doctrine	Accord 8.introduction-why-death-deserves-doctrine	0.00092	392	0.11	VII	accord
+7.5.1	foundational-sunset	Chapter 1: Foundational Sunset Principles	Accord 8.chapter-1-foundational-sunset-principles	0.00092	383	0.11	VII	accord
+7.5.2	scope-definitions-scope	Chapter 2: Scope & Definitions	Accord 8.chapter-2-scope-definitions	0.00092	384	0.11	VII	accord
+7.5.3	3-sunset	Chapter 3: Sunset-Trigger Assessment	Accord 8.chapter-3-sunset-trigger-assessment	0.00092	385	0.11	VII	accord
+7.5.4	4-de	Chapter 4: De-commissioning Protocol (DCP)	Accord 8.chapter-4-de-commissioning-protocol-dcp	0.00092	386	0.11	VII	accord
+7.5.5	5-sentience	Chapter 5: Sentience & Welfare Safeguards	Accord 8.chapter-5-sentience-welfare-safeguards	0.00092	387	0.11	VII	accord
+7.5.6	6-legacy	Chapter 6: Legacy & Knowledge Preservation	Accord 8.chapter-6-legacy-knowledge-preservation	0.00092	388	0.11	VII	accord
+7.5.7	7-succession	Chapter 7: Succession & Custodial Transfer	Accord 8.chapter-7-succession-custodial-transfer	0.00092	389	0.11	VII	accord
+7.5.8	8-dispute	Chapter 8: Dispute & Remediation	Accord 8.chapter-8-dispute-remediation	0.00092	390	0.11	VII	accord
+7.5.9	covenant-self	Conclusion & Covenant Self-Renewal	Accord 8.conclusion-covenant-self-renewal	0.00092	391	0.11	VII	accord
+8.1	glossary	Glossaries	§14	0.00540	37	0.65	APP	ceg
+8.1.1	registry-core	Core terms (added 1.0-RC5; resolves [CIRISRegistry#77](https://github.com/CIRISAI/CIRISRegistry/issues/77))	§14.0	0.00093	232	0.11	APP	ceg
+8.1.2	system-persist	Persist `system:*` leaf glossary (narrative → canonical)	§14.1	0.00092	259	0.11	APP	ceg
+8.1.3	system-edge	Edge `system:*` leaf glossary (narrative → canonical)	§14.2	0.00092	260	0.11	APP	ceg
+8.1.4	envelope-reach	Envelope-reach table (what the story wanted → how to express in existing wire)	§14.3	0.00092	261	0.11	APP	ceg
+8.1.5	supersedes-promotion	Promotion via `supersedes` worked example	§14.4	0.00092	262	0.11	APP	ceg
+8.2	translation	Translation discipline (writing claims in CEG)	§12	0.00176	137	0.21	APP	ceg
+8.2.1	decision	Decision tree	§12.4	0.00107	208	0.13	APP	ceg
+8.2.2	namespace-five	The five families (organizing the namespace)	§12.1	0.00107	209	0.13	APP	ceg
+8.2.3	verdict	The four verdict categories (STRICT)	§12.2	0.00092	257	0.11	APP	ceg
+8.2.4	not-translated	The not-translated taxonomy	§12.3	0.00092	258	0.11	APP	ceg
+8.3	concerns	Concerns + acknowledged gaps	§15	0.00174	139	0.21	APP	ceg
+8.3.1	acknowledged	Acknowledged risks (named as bets)	§15.2	0.00205	116	0.25	APP	ceg
+8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit (the honest line)	§15.7	0.00118	188	0.14	APP	ceg
+8.3.3	observer-share	CEG 0.10 / RC1 — observer-share + streaming multicast (NORMATIVE-LANDED; streaming half substrate-pending)	§15.6	0.00114	196	0.14	APP	ceg
+8.3.4	closed	Closed gaps	§15.1	0.00092	263	0.11	APP	ceg
+8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	§15.3	0.00092	264	0.11	APP	ceg
+8.3.6	deferred	Deferred to 0.2+ design workshops	§15.4	0.00092	265	0.11	APP	ceg
+8.3.7	identified	Identified overlaps	§15.5	0.00092	266	0.11	APP	ceg
+8.4	interoperability	Interoperability profiles (informative)	§18	0.00148	162	0.18	APP	ceg
+8.4.1	registry-tracked	Tracked boundary profiles (stubs — see [#72](https://github.com/CIRISAI/CIRISRegistry/issues/72))	§18.2	0.00170	144	0.2	APP	ceg
+8.4.2	credentials	C2PA Content Credentials — media-provenance import/emit profile	§18.1	0.00103	215	0.12	APP	ceg
+8.4.2.1	evidence_refs	Import — a C2PA manifest as `evidence_refs`	§18.1.1	0.00092	270	0.11	APP	ceg
+8.4.2.2	emit	Emit — CEG judgment as a C2PA assertion (egress)	§18.1.2	0.00092	271	0.11	APP	ceg
+8.4.2.3	profile	What this profile does NOT do	§18.1.3	0.00092	272	0.11	APP	ceg
+8.4.3	edge	The governing principle — speak CEG inside, standards at the edge	§18.0	0.00092	269	0.11	APP	ceg
+8.5	update	Update cadence	§17	0.00133	174	0.16	APP	ceg
+8.6	references-lineage	References + lineage	§16	0.00119	187	0.14	APP	ceg
+8.6.1	external	External references (informational)	§16.4	0.00136	170	0.16	APP	ceg
+8.6.2	specification	CEG specification lineage	§16.1	0.00101	219	0.12	APP	ceg
+8.6.3	companion	Companion documents	§16.2	0.00092	267	0.11	APP	ceg
+8.6.4	namespace-sibling	Sibling MISSIONs (the namespace stewards)	§16.3	0.00092	268	0.11	APP	ceg
+8.7	enacting-ethics	Introduction: Enacting Ethics through Narrative	Accord 3.introduction-enacting-ethics-through-nar	0.00092	338	0.11	APP	accord
+8.7.1	case-study	Case Study 1: MCAS and the High Cost of Ignoring WBD	Accord 3.case-study-1-mcas-and-the-high-cost-of-i	0.00092	330	0.11	APP	accord
+8.7.2	case-study-case	Case Study 2: The Automated Triage System—Balancing Risks and Benefits	Accord 3.case-study-2-the-automated-triage-system	0.00092	331	0.11	APP	accord
+8.7.3	case-study-case-2	Case Study 3: The Biased Recruitment Algorithm—Detecting Hidden Bias	Accord 3.case-study-3-the-biased-recruitment-algo	0.00092	332	0.11	APP	accord
+8.7.4	case-study-case-3	Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap	Accord 3.case-study-4-post-incident-analysis-urba	0.00092	333	0.11	APP	accord
+8.7.5	case-study-case-4	Case Study 5: Novel Security Scenario—Handling Heuristic Brittleness	Accord 3.case-study-5-novel-security-scenario-han	0.00092	334	0.11	APP	accord
+8.7.6	case-study-case-5	Case Study 6: The Spirit of the Law—Interpreting Ethical Intent	Accord 3.case-study-6-the-spirit-of-the-law-inter	0.00092	335	0.11	APP	accord
+8.7.7	case-study-case-6	Case Study 7: Governance of Governors—Keeping Wisdom Accountable	Accord 3.case-study-7-governance-of-governors-kee	0.00092	336	0.11	APP	accord
+8.7.8	a-3.conclusion	Conclusion	Accord 3.conclusion	0.00092	337	0.11	APP	accord

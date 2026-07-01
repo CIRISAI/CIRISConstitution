@@ -1,0 +1,14 @@
+# LaTeX build intermediates (build_pdf.py cleans these, but ignore for safety)
+*.aux
+*.log
+*.out
+*.toc
+ciris-constitution-*.tex
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor / OS
+.DS_Store
+*.swp
