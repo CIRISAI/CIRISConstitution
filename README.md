@@ -94,7 +94,11 @@ The build is self-contained: the markdown→LaTeX converter is vendored under `t
 |---|---|
 | [CIRISConformance](https://github.com/CIRISAI/CIRISConformance) | the standard the substrate must enforce (16,000+ tests) |
 | [CEWPOS](https://github.com/CIRISAI/CEWPOS) | the object model / wire grammar of the platform OS |
-| [CIRISServer](https://github.com/CIRISAI/CIRISServer) · [CIRISAgent](https://github.com/CIRISAI/CIRISAgent) | the shipping fabric node + agent they conform to |
+| [CIRISServer](https://github.com/CIRISAI/CIRISServer) | the shipping fabric node — the constitution it enforces |
+| [CIRISAgent](https://github.com/CIRISAI/CIRISAgent) | the ethics the conscience pipeline reasons against (M-1, PDMA, WBD) |
+| [CIRISEdge](https://github.com/CIRISAI/CIRISEdge) | the wire vocabulary + opaque-envelope transport surface (§2.6.4, the manifest) |
+| [CIRISPersist](https://github.com/CIRISAI/CIRISPersist) | the state model it materializes (revocations, quorum, replication intent) |
+| [CIRISVerify](https://github.com/CIRISAI/CIRISVerify) | the verification rules it checks against (decimation-recovery / FSD-004, revocation) |
 
 Part of the [CIRIS](https://ciris.ai) ecosystem.
 
