@@ -169,7 +169,7 @@ RATCHET emits **advisory** flags — never autonomously modifies ledger state. I
 | `capacity:sustained_coherence` | S | signed |
 | `capacity:composite` | 𝒞_CIRIS — multiplicative; anti-Goodhart unity-of-virtues | signed |
 
-**Nomenclature note.** `C` here denotes the **core-identity factor** of the per-agent Capacity Score `𝒞_CIRIS`. It is **not** the Accord's Flourishing Capacity: the Accord renamed that composite **C → F** and writes `F = k_eff · λ · σ` — a distinct, federation-level three-factor construct, not mappable to the per-agent five-factor `𝒞_CIRIS`. See [CC 6.2.4](part_6_the_coherence_mathematics.md) (the Coherence Mathematics, where `F` is defined); Accord Book IX Ch 6 is the authoritative statement of the relation.
+**Nomenclature note.** `C` here denotes the **core-identity factor** of the per-agent Capacity Score `𝒞_CIRIS`. It is **not** the Accord's Flourishing Capacity: the Accord renamed that composite **C → F** and writes `F = k_eff · λ_op · σ` — a distinct, federation-level three-factor construct, not mappable to the per-agent five-factor `𝒞_CIRIS`. See [CC 6.2.4](part_6_the_coherence_mathematics.md) (the Coherence Mathematics, where `F` is defined); Accord Book IX Ch 6 is the authoritative statement of the relation.
 
 **Critical enforcement**: `capacity:*` rejects self-emission. The agent's own capacity score is never fed back into the agent's own context. Reserved per [CC 3.4.5](part_3_the_namespace.md).
 
