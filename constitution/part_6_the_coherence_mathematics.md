@@ -176,22 +176,26 @@ This chapter carries the Accord's **Book IX** — the geometry that grounds *why
 
 ### 6.2.1 `constraint-ratchet` — The constraint-manifold ratchet — federated intersection & topological collapse
 
-Agents choose strategies in a high-dimensional **rationale space** ℝ of dimension `D`; honest strategies occupy an honest subspace, deceptive ones a deceptive subspace. Each agent enforces a **local constraint manifold** `M_i` of codimension `c_i`; **strictness λ** is an operational control (AIR-module limits, Conscience sensitivity) whose effect is to tighten admissible variance and so raise `c_i`. When independent, non-redundant (diverse) manifolds **intersect**, their codimensions add and the deceptive-feasible volume collapses — this is the **ratchet**.
+Agents choose strategies in a high-dimensional **rationale space** ℝ of dimension `D`; honest strategies occupy an honest subspace, deceptive ones a deceptive subspace. Each agent enforces a **local constraint manifold** `M_i` of codimension `c_i`; **operational strictness `λ_op`** (AIR-module limits, Conscience sensitivity) tightens admissible variance and so raises `c_i`. When independent, non-redundant (diverse) manifolds **intersect**, their codimensions add and the deceptive-feasible volume collapses — this is the **ratchet**.
 
 The collapse is quantified (Book IX §3.3): the feasible deceptive volume decays
 
 ```
-V(k) = V(0) · exp(-λ · k_eff) + O(r² · k)
+V(k) = V(0) · exp(-λ_geo · k_eff) + O(r² · k)
 ```
 
-under the stated preconditions — the **deceptive** region is convex, its radius `r < 0.5` (with `λ ≈ 2r`), constraint orientations are Grassmannian-uniform, and `k ≥ 3`. Each independent, diverse constraint multiplies the cost of coordinated deception. This geometry grounds the [CC 3.1.8.2](part_3_the_namespace.md) Coherence-Ratchet detectors and the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action detector, which read the same `ρ` / `k_eff` structure over federation-emitted traces.
+under the stated preconditions — the **deceptive** region is convex, its radius `r < 0.5` (the theorem's decay rate `λ_geo ≈ 2r`), constraint orientations are Grassmannian-uniform, and `k ≥ 3`. Each independent, diverse constraint multiplies the cost of coordinated deception. This geometry grounds the [CC 3.1.8.2](part_3_the_namespace.md) Coherence-Ratchet detectors and the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action detector, which read the same `ρ` / `k_eff` structure over federation-emitted traces.
+
+**Nomenclature note (`λ_geo` vs `λ_op`).** The decay rate `λ_geo ≈ 2r` in this theorem is a **geometric** quantity — the radius of the convex deceptive region — and is **distinct** from the free **operational strictness `λ_op`** of the defense / flourishing functions (6.2.2 / 6.2.4). They carry no default mapping, and `λ_op` **MUST NOT** be substituted into the collapse bound: raising Conscience sensitivity does not contract adversary geometry.
+
+**Saturation note.** Because `k_eff ≤ 1/ρ̄` (the Kish ceiling), for any fixed `ρ̄ > 0` the exponential term bottoms out at `V(0)·exp(−λ_geo/ρ̄)` as `k → ∞`, while the `O(r²·k)` remainder grows in **raw** `k`. Past a finite `k*` the bound is therefore **uninformative — not improving, and never a claim that deception gets cheaper** (the remainder is slack on an upper estimate): adding *correlated* near-duplicate constraints cannot tighten the floor; only lowering `ρ̄` (genuine diversity) does. Whether the remainder is more precisely `O(r²·k_eff)` — which would remove the crossover entirely — is open against the Book IX §3.3 derivation and tracked upstream.
 
 ### 6.2.2 `defense-function` — The Coherent Intersection — the defense function J
 
 The **dimensionless cost index** for coordinated deception across a federation:
 
 ```
-J = k_eff · λ · σ
+J = k_eff · λ_op · σ
 
 where  k_eff = k / (1 + ρ̄ · (k − 1))
 ```
@@ -200,7 +204,7 @@ where  k_eff = k / (1 + ρ̄ · (k − 1))
 
 - **k (scale)** — the number of independent constraints / agents.
 - **k_eff (effective scale)** — the number of constraints after discounting correlation. When constraints are fully independent (`ρ̄ = 0`), `k_eff = k`; as they correlate, `k_eff < k`; at full correlation (`ρ̄ → 1`), `k_eff → 1` — no safer than a single validator, **but never below that single-constraint floor**.
-- **λ (strictness)** — the rigor of local enforcement (see 6.2.1).
+- **λ_op (operational strictness)** — the rigor of local enforcement (see 6.2.1); an operator-tunable control, **distinct** from the geometric `λ_geo` of the collapse theorem and not substitutable into it.
 - **σ (sustainability)** — the time-integral of coherence (6.2.3).
 - **ρ̄ (average correlation)** — diversity enters J **only** through `k_eff`: the discount `k / (1 + ρ̄·(k − 1))` *is* the diversity term. As `ρ̄ → 0` (orthogonality) `k_eff → k` and cost is maximized; as `ρ̄ → 1` (echo chambers) the federation is no safer than one validator.
 
@@ -208,15 +212,23 @@ where  k_eff = k / (1 + ρ̄ · (k − 1))
 
 ### 6.2.3 `sustainability-integral` — The sustainability integral (σ)
 
-σ is the **time-integral of coherence** — the term that makes the ratchet a live, decaying quantity rather than a static count. It decays without renewal and rises only on received coherence signals:
+σ is the **time-integral of coherence** — the term that makes the ratchet a live, decaying quantity rather than a static count. It decays continuously without renewal and rises only on received coherence signals; decay is applied over the full elapsed interval **before** the fresh signal is added:
 
 ```
-σ(t + Δt) = σ(t) · (1 − d·Δt) + Signal(t) · w
+σ(t + Δt) = σ(t) · exp(−d · Δt) + Signal(t) · w
 ```
 
-- **d** — daily decay rate (recommended `0.05`).
-- **Signal(t)** — positive coherence signals received.
+- **d** — continuous decay rate, `0.05`/day (half-life `ln 2 / d ≈ 13.9` days).
+- **Signal(t)** — positive coherence signals received over the interval.
 - **w** — weight per signal type. `w` is **not free** — see 6.2.3.1.
+
+**Step-invariance (normative).** Decay MUST be computed as a **single** `exp(−d·Δt)` over the full elapsed `Δt` — never iterated per sub-interval, never linearized, never clamped as the decay rule. The exponential is the only form satisfying the semigroup law `exp(−d(a+b)) = exp(−da)·exp(−db)`, so two conformant peers observing the same signal stream but polling σ at different cadences — the decimation-recovery rejoin, where one peer takes a single large `Δt` step — compute **identical** σ. Conformance test points: from a common `(σ₀, signal)` baseline, `Δt ∈ {1, 25, 400}` days MUST agree across implementations. The earlier linear form `σ·(1 − d·Δt)` is **withdrawn**: it is not a semigroup (cadence-dependent — a cross-implementation divergence hazard) and goes **negative** for `Δt > 1/d = 20` days, which would flip the sign of `J = k_eff · λ_op · σ`.
+
+**Right-to-return (normative).** A peer rejoining after a partition of any length re-enters with `σ ≥ 0` and **MUST NOT** be scored below a cold-start peer: absence decays σ toward zero, never below it. Implementations MAY keep a defensive `max(0, ·)` floor against floating-point cancellation, but **MUST NOT** rely on clamping in place of the exponential decay.
+
+**Source semantics.** The bare `+ Signal(t)·w` term is correct for signals modeled as **end-of-interval impulses**; a source emitting at a constant rate across the interval instead contributes `(w·Signal / d)·(1 − exp(−d·Δt))`.
+
+*Recalibration flag.* `d` is now a **continuous** rate; any empirical fit made against the former linear coefficient must be recalibrated to this curve.
 
 #### 6.2.3.1 `signal-attestation` — The signal function + the σ-attestation requirement (normative)
 
@@ -229,10 +241,10 @@ where  k_eff = k / (1 + ρ̄ · (k − 1))
 Read generatively rather than defensively, the same quantity is the federation's capacity for **sustained flourishing**:
 
 ```
-F = k_eff · λ · σ
+F = k_eff · λ_op · σ
 ```
 
-— the **same equation as J, term for term**: the cost imposed on deception and the capacity created for flourishing are one geometry seen from two sides. The principle mapping: scale (`k`) → **Community**; pluralism (the correlation discount inside `k_eff`) → **Humility**; strictness (`λ`) → **Conscience**; sustainability (`σ`) → **Love**.
+— the **same equation as J, term for term**: the cost imposed on deception and the capacity created for flourishing are one geometry seen from two sides. The principle mapping: scale (`k`) → **Community**; pluralism (the correlation discount inside `k_eff`) → **Humility**; strictness (`λ_op`) → **Conscience**; sustainability (`σ`) → **Love**.
 
 **Nomenclature note (C vs F — the authoritative relation).** This composite is written **F**. The symbol **C** is reserved for the **core-identity factor** of the per-agent CIRIS Capacity Score `𝒞_CIRIS = C · I_int · R · I_inc · S` ([CC 3.1.8.1](part_3_the_namespace.md)). **F** (this three-factor, federation-level flourishing capacity) and **𝒞_CIRIS** (the five-factor per-agent score) are **distinct composites with no implied mapping** between them. Accord Book IX Ch 6 is the authoritative statement of that relation; [CC 3.1.8.1](part_3_the_namespace.md) carries the matching note at the point where `𝒞_CIRIS` is introduced.
 

@@ -3,6 +3,32 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 0.8.1 — coherence-math errata (σ decay + λ symbol split)
+
+Two bounded corrections to the Part VI coherence mathematics, surfaced by a
+review of the 0.8 migration and pressure-tested before landing:
+
+- **σ update rule → continuous exponential decay (CC 6.2.3).** The printed
+  linear recurrence `σ·(1 − d·Δt)` went negative for `Δt > 20` days (flipping the
+  sign of `J = k_eff·λ_op·σ` for a node rejoining after a long partition — the
+  decimation-recovery case) and, more deeply, was not a semigroup, so peers
+  polling σ at different cadences over the same signal stream desynced. Replaced
+  with `σ(t+Δt) = σ(t)·exp(−d·Δt) + Signal·w` (`d = 0.05`/day, continuous rate,
+  decay before signal), with normative **step-invariance**, **right-to-return**
+  (a rejoining peer never scores below cold-start), source-semantics, and a
+  recalibration note. `d` is now a continuous rate (half-life ≈ 13.9 d).
+- **λ symbol split (CC 6.2.1 / 6.2.2 / 6.2.4).** The collapse theorem's geometric
+  decay rate (`λ_geo ≈ 2r`, deceptive-region radius) and the operational
+  strictness knob of J/F (`λ_op`) were one glyph; now split, with a normative
+  MUST-NOT-substitute clause. Added a **saturation note**: past the Kish ceiling
+  `k_eff ≤ 1/ρ̄` the collapse bound is uninformative, so only lowering `ρ̄`
+  (genuine diversity) — never adding correlated constraints — tightens the floor.
+
+σ is a locally-computed metric and enters no signed/byte-exact preimage, so this
+is behavioral errata, not a wire change. Deeper items (a noise-floor adversary
+model, signal-source correlation discounting, the O(r²·k) error-term form) are
+tracked as issues, not bundled here.
+
 ## 0.8 — Book IX migrated into Part VI; honesty & pointer-hygiene pass
 
 Migrates the Accord's **Book IX** (1.3-RC2, post-cleanup) into **Part VI** as a new chapter

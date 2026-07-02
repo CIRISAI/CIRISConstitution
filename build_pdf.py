@@ -19,7 +19,7 @@ import _md2latex as B   # convert(), inline(), esc(), code_ascii(), NUC (stdlib-
 
 B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "¶": r"\P{}", "Δ": r"$\Delta$", "σ": r"$\sigma$",
-              "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
+              "₀": r"\textsubscript{0}", "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",
               "├": "+", "└": "+", "⟶": r"$\longrightarrow$",
               # Book IX coherence-mathematics glyphs (Part VI 6.2)
