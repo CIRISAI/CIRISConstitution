@@ -1,28 +1,17 @@
 # The CIRIS Constitution
 
-The canonical source of the **CIRIS Constitution (CC)** — one document that joins the
-**ethics** the CIRIS federation serves and the **wire grammar** it speaks, under a single
-version line.
+**What this is:** the single rulebook for an AI system that has to *act well* and *prove it* — one document that says both what the system owes the world and exactly what bytes it must send to show it.
 
-**Current version**: CC 0.7 · **Status**: adversarially certified (0 REJECT) · **License**: AGPL-3.0-or-later
-**Stewarded by** Eric Moore — perpetual, no expiry (see [`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md))
+Most AI-governance writing splits in two: ethics with no teeth (principles no machine can check), or protocol with no conscience (wire formats that don't know what they're for). The **CIRIS Constitution (CC)** refuses the split. The ethics and the machine-checkable grammar live in **one versioned document**, so a rule and the message that enforces it can never drift apart. Everything traces back to one goal — **M-1, "sustainable adaptive coherence"** — and everything else sits co-equal beneath it: **peaked in purpose, flat in power.**
 
-## What this is
+It reads like a standard, not a manifesto, and it is deliberately layered: read Part I (the ethics) and stop, jump straight to the wire grammar, or cite any single concept by a stable address. Rejecting a later Part costs you nothing in the earlier ones.
 
-The CIRIS Constitution unifies two documents that already contained each other:
+**Current version:** CC 0.8 · **Status:** source-fidelity validated (0 REJECT) · **License:** AGPL-3.0-or-later
+**Stewarded by** Eric Moore — perpetual, no expiry ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)).
 
-- the **CIRIS Accord** — the ethical / constitutional layer: Meta-Goal **M-1**, the six
-  principles, the PDMA, Wisdom-Based Deferral, Stewardship, and the Book IX mathematics of
-  coherence; and
-- **CEG** (the *CIRIS Epistemic Grammar*) — the wire format the federation speaks: the
-  **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` /
-  `recants`), the namespace, and the admission gate.
+## The document in one paragraph (for the technical reader)
 
-They were written apart but reference each other throughout — the Accord's Book IX *defines*
-the CEG primitives; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point
-back up. This document joins them. When the joined corpus is measured for importance, **M-1
-emerges as the single apex** every mechanism traces back to, while the ~390 operational
-concepts stay co-equal beneath it — **peaked in purpose, flat in power**.
+CC joins two specs that already referenced each other throughout. The **CIRIS Accord** is the ethical layer — Meta-Goal **M-1**, the six principles, the **PDMA** (Principled Decision-Making Algorithm), **Wisdom-Based Deferral**, stewardship, and the Book IX coherence mathematics (`F = k_eff·λ·σ`, Part VI). **CEG** (the *CIRIS Epistemic Grammar*) is the wire format the federation speaks — the **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` / `recants`), the namespace, and the admission gate. The Accord's Book IX *defines* the CEG primitives; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point back up. Importance is computed by PageRank over the unified cross-reference graph — M-1 the single apex, ~390 operational concepts co-equal beneath. The **1+4 surface is conformance-frozen:** changing the wire bytes is a found defect, not an edit.
 
 ## This repository is the source of truth
 
@@ -41,7 +30,7 @@ consumers vendor from and pin by version. Downstream copies are **derived artifa
 | [`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md) | The stewardship model and the ≥100k-node maturity handoff to mechanized amendment |
 | [`constitution/toc.tsv`](constitution/toc.tsv) · [`constitution/codebook.json`](constitution/codebook.json) | The dual-ID table of contents and its bijective codebook |
 | [`manifests/WIRE_VOCABULARY.md`](manifests/WIRE_VOCABULARY.md) | The hash-pinned wire-vocabulary registry (the CC 0.7 two-tier §2.6.4 artifact) |
-| [`validation/`](validation/) | The adversarial certification evidence (rubric, per-chapter results) |
+| [`validation/`](validation/) | The migration-validation evidence (rubric, per-chapter results) |
 | `build_pdf.py` · `tools/` | Self-contained PDF build + the spine-generation toolchain |
 
 ### The eight Parts

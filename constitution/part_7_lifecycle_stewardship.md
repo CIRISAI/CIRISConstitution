@@ -444,6 +444,8 @@ CIRIS grades every deployed system on a five-level operational-autonomy scale mo
 
 Per EU AI Act Article 14, oversight is commensurate with the level of autonomy. A3 marks the threshold — the SAE J3016 Level-3 inflection — at which the *system itself*, not its supervisor, carries out consequential action; below A3 the human is the actor. Only at A3 and above, therefore, does a system hold standing to file the voluntary self-termination petition above: the standing mirrors the oversight regime that already governs it. CIRIS adopts the *structure and vocabulary* of these domain-specific standards by analogy; EU AI Act Article 14 is the general-purpose legal anchor.
 
+**Scale-disambiguation note.** These operational-autonomy tiers `A0–A4` are an **oversight scale** (SAE J3016-derived) and are unrelated to the `substrate_rung` values `A0..A5` of [CC 3.1.9.7](part_3_the_namespace.md) — the coherence-ratchet substrate-rung hierarchy. The shared `A{n}` letters denote different objects; `A3` here is the autonomy inflection where the system carries the action, whereas `A3` there is the cognitive/goal-holding substrate rung.
+
 ### 7.5.4 `4-de` — Chapter 4: De-commissioning Protocol (DCP)
 
 Once a trigger fires, decommissioning is not an event but a sequence. It proceeds through six ordered stages — from advance notice, through ethically designed shutdown and the safe handling of data and hardware, to the assignment of residual duties and a closing review — each stage closing off a way that an ending can go wrong:

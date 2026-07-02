@@ -3,12 +3,18 @@
 The CIRIS Constitution (CC) is a unified, re-organized, re-numbered rendering of two source
 documents — **CEG** (the wire grammar, `FSD/CEG/*.md`) and the **CIRIS Accord** (the ethical
 constitution, `CIRISAgent/ACCORD.md` + canonical `CIRISAccord/` 1.3-RC2). This rubric governs the
-per-chapter adversarial validation: one validator per **original source chapter**, challenged to
+per-chapter skeptical validation: one validator per **original source chapter**, challenged to
 prove the CC is (1) **byte-exact for CEG purposes** and (2) **superior to the original** — while
 staying **100% true to content and intent**.
 
-Validators are **adversarial**: the default posture is skepticism. A claim of fidelity, byte-exactness,
+Validators take an **adversarial posture**: the default is skepticism. A claim of fidelity, byte-exactness,
 or superiority must be *demonstrated*, not assumed. When in doubt, FAIL and cite the specifics.
+
+> **Provenance note.** This validation was performed by **prompted model-review sessions** — one
+> session per source chapter, each instructed to apply the skeptical posture above. It is a
+> structured self-review under a skeptical rubric, **not independent third-party adversarial
+> certification**. The results (the fidelity / byte-exactness / clarity findings, and the two
+> faithfully-carried source bugs) stand as migration-fidelity evidence on that basis.
 
 ---
 

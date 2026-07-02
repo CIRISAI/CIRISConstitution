@@ -169,6 +169,8 @@ RATCHET emits **advisory** flags — never autonomously modifies ledger state. I
 | `capacity:sustained_coherence` | S | signed |
 | `capacity:composite` | 𝒞_CIRIS — multiplicative; anti-Goodhart unity-of-virtues | signed |
 
+**Nomenclature note.** `C` here denotes the **core-identity factor** of the per-agent Capacity Score `𝒞_CIRIS`. It is **not** the Accord's Flourishing Capacity: the Accord renamed that composite **C → F** and writes `F = k_eff · λ · σ` — a distinct, federation-level three-factor construct, not mappable to the per-agent five-factor `𝒞_CIRIS`. See [CC 6.2.4](part_6_the_coherence_mathematics.md) (the Coherence Mathematics, where `F` is defined); Accord Book IX Ch 6 is the authoritative statement of the relation.
+
 **Critical enforcement**: `capacity:*` rejects self-emission. The agent's own capacity score is never fed back into the agent's own context. Reserved per [CC 3.4.5](part_3_the_namespace.md).
 
 #### 3.1.8.2 `coherence-ratchet` — Five Coherence-Ratchet detectors
@@ -259,9 +261,11 @@ This tier binds every operational act back to M-1: a Goal carries its multi-scal
 | Prefix | Description | Polarity |
 |---|---|---|
 | `goal:{scale}` | Multi-scale belonging-projector composite. `{scale}` ∈ `self`, `family`, `community`, `affiliations`, `species`, `planet`, `biosphere`. Scored by 𝒞_CIRIS. The persist typed `Goal` is the substrate OBJECT being scored; `goal:{scale}` is the ATTESTATION about it. Required `MetaGoalAlignment` (M-1 dimension + declarer rationale) on every Goal as construction-time invariant. Edge `MessageType::GoalDeclaration` + `GoalRetirement` provide federation transport. | signed |
-| `approach:{goal_id}` | Strategic pathway from current state toward Goals (Piece 10 karma). | signed |
+| `approach:{goal_id}` | Strategic pathway from current state toward Goals (Piece 10 karma — the per-agent forward post-selection structure; the universal-grace half of Piece 10 is upstream-retracted, F-11). | signed |
 | `method:{approach_id}:{substrate_rung}` | Concrete operational practice. Required `substrate_rung` (Ph0/Ph1/Ph2/A0..A5). | signed |
 | `progress_measure:{method_id}` | Evidence of progress. Required `tracks[]`, `computation`, `validity_window`, `goodhart_resistance`. | signed |
+
+**Scale-disambiguation note.** The `substrate_rung` values `Ph0/Ph1/Ph2/A0..A5` are the coherence-ratchet **substrate-rung** hierarchy (Corridor Dynamics Piece 6; `A3` = the cognitive/goal-holding rung, `A3+` = goal-projector-bearing agents). They are a **different scale** from the operational-autonomy tiers `A0–A4` of [CC 7.5.3.1](part_7_lifecycle_stewardship.md) (an SAE J3016-derived oversight scale) — the shared `A{n}` letters denote unrelated objects.
 
 ### 3.1.10 `cirisbench` — CIRISBench — HE-300 benchmark outcomes
 

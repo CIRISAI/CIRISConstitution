@@ -1,7 +1,22 @@
 # Changelog
 
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
-each cut is adversarially validated against its sources before it lands.
+each cut is validated against its sources under the skeptical rubric before it lands.
+
+## 0.8 — Book IX migrated into Part VI; honesty & pointer-hygiene pass
+
+Migrates the Accord's **Book IX** (1.3-RC2, post-cleanup) into **Part VI** as a new chapter
+**CC 6.2 — the coherence mathematics**: the constraint-manifold ratchet and topological-collapse
+theorem, the defense / flourishing functions `J = F = k_eff·λ·σ`, the sustainability integral σ,
+and the normative **σ-attestation requirement** (CC 6.2.3.1). Only the surviving F-form engineering
+tier is carried — the upstream-retracted universal-scale material (grace / joint-backward pass) is
+excluded by construction. Repoints the previously-dangling "Book IX §5.2" citation (Annex G) to
+CC 6.2.3.1, and extends the dual-ID codebook (392 → 399 concepts). Also carries the **C/F**
+nomenclature note where `𝒞_CIRIS` is introduced (CC 3.1.8.1); adds the pointer-hygiene notes
+(Piece 10 *karma* precision; the A0–A4 autonomy-tier vs A0..A5 substrate-rung scale
+disambiguation); and, per the corpus's own honesty discipline, restates the migration record as
+**source-fidelity validation under a skeptical rubric** rather than "adversarial certification"
+(the evidence is unchanged; only the framing is corrected).
 
 ## 0.7 — wire vocabulary as a hash-pinned artifact
 
@@ -62,5 +77,5 @@ references resolved, and the three definitional frameworks anchored to internati
 
 Initial consolidation of CEG (1.0-RC29, 1+4 surface frozen) and the CIRIS Accord (1.3-RC2)
 into one document. Importance-derived spine (PageRank over the unified cross-reference graph),
-dual reversible IDs, faithful copy-migration baseline, adversarial per-chapter validation to
+dual reversible IDs, faithful copy-migration baseline, skeptical per-chapter validation to
 0-REJECT certification, Scope & Disclaimers, and the perpetual-stewardship model.

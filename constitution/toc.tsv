@@ -391,3 +391,10 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 8.7.6	case-study-case-5	Case Study 6: The Spirit of the Law—Interpreting Ethical Intent	Accord 3.case-study-6-the-spirit-of-the-law-inter	0.00092	335	0.11	APP	accord
 8.7.7	case-study-case-6	Case Study 7: Governance of Governors—Keeping Wisdom Accountable	Accord 3.case-study-7-governance-of-governors-kee	0.00092	336	0.11	APP	accord
 8.7.8	a-3.conclusion	Conclusion	Accord 3.conclusion	0.00092	337	0.11	APP	accord
+6.2	coherence-mathematics	The coherence mathematics — the constraint-manifold ratchet (J / F / σ)	Accord Book IX	0.00120	393	0.2	VI	accord
+6.2.1	constraint-ratchet	The constraint-manifold ratchet — federated intersection & topological collapse	Accord Book IX Ch 1-3	0.00100	394	0.15	VI	accord
+6.2.2	defense-function	The Coherent Intersection — the defense function J	Accord Book IX Ch 4	0.00100	395	0.15	VI	accord
+6.2.3	sustainability-integral	The sustainability integral (σ)	Accord Book IX Ch 5	0.00100	396	0.15	VI	accord
+6.2.3.1	signal-attestation	The signal function + the σ-attestation requirement (normative)	Accord Book IX §5.2	0.00110	397	0.15	VI	accord
+6.2.4	flourishing-capacity	The flourishing capacity (F)	Accord Book IX Ch 6	0.00110	398	0.15	VI	accord
+6.2.5	coherence-integration	Integration, limitations & falsification	Accord Book IX Ch 7-11	0.00090	399	0.12	VI	accord
