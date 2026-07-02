@@ -4,7 +4,7 @@ The canonical source of the **CIRIS Constitution (CC)** — one document that jo
 **ethics** the CIRIS federation serves and the **wire grammar** it speaks, under a single
 version line.
 
-**Current version**: CC 0.7 · **Status**: adversarially certified (0 REJECT) · **License**: AGPL-3.0-or-later
+**Current version**: CC 0.8 · **Status**: source-fidelity validated (0 REJECT) · **License**: AGPL-3.0-or-later
 **Stewarded by** Eric Moore — perpetual, no expiry (see [`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md))
 
 ## What this is
@@ -41,7 +41,7 @@ consumers vendor from and pin by version. Downstream copies are **derived artifa
 | [`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md) | The stewardship model and the ≥100k-node maturity handoff to mechanized amendment |
 | [`constitution/toc.tsv`](constitution/toc.tsv) · [`constitution/codebook.json`](constitution/codebook.json) | The dual-ID table of contents and its bijective codebook |
 | [`manifests/WIRE_VOCABULARY.md`](manifests/WIRE_VOCABULARY.md) | The hash-pinned wire-vocabulary registry (the CC 0.7 two-tier §2.6.4 artifact) |
-| [`validation/`](validation/) | The adversarial certification evidence (rubric, per-chapter results) |
+| [`validation/`](validation/) | The migration-validation evidence (rubric, per-chapter results) |
 | `build_pdf.py` · `tools/` | Self-contained PDF build + the spine-generation toolchain |
 
 ### The eight Parts

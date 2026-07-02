@@ -21,7 +21,11 @@ B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "¶": r"\P{}", "Δ": r"$\Delta$", "σ": r"$\sigma$",
               "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",
-              "├": "+", "└": "+", "⟶": r"$\longrightarrow$"})
+              "├": "+", "└": "+", "⟶": r"$\longrightarrow$",
+              # Book IX coherence-mathematics glyphs (Part VI 6.2)
+              "λ": r"$\lambda$", "ℝ": r"$\mathbb{R}$",
+              "∉": r"$\notin$", "∅": r"$\emptyset$",
+              "": r"$\bar{\rho}$"})   # placeholder for ρ̄ (ρ + combining macron); see prefilter()
 B.CODE_ASCII.update({"├": "+", "└": "+", "⟶": "-->"})
 nuc_lines = "\n".join(r"\newunicodechar{%s}{%s}" % (k, v) for k, v in B.NUC.items())
 
@@ -35,6 +39,7 @@ def prefilter(md):
     md = re.sub(r"</?(sub|sup)>", "", md)
     md = re.sub(r"<br\s*/?>", "  ", md)
     md = (md.replace("“", '"').replace("”", '"').replace("‘", "'").replace("’", "'"))
+    md = md.replace("ρ̄", "")   # ρ̄ (ρ + combining macron) -> single mapped placeholder
     return md
 
 def contents_md():

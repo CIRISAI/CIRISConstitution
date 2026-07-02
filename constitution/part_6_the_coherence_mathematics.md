@@ -1,8 +1,8 @@
 # Part 6 — The Coherence Mathematics
 
-**Decimal range** `6.x` · **14 sections** · **page budget 2pp** · [← master index](README.md)
+**Decimal range** `6.x` · **21 sections** · **page budget 3pp** · [← master index](README.md)
 
-> The holonomic substrate, the divergence witness, the noise-floor model, and the coherence mathematics.
+> The holonomic substrate, the divergence witness, the noise-floor model, and the coherence mathematics — the Accord's Book IX ratchet (J / F / σ).
 
 ---
 
@@ -169,3 +169,77 @@ These mechanisms compose into one fail-secure posture, each clause traceable to 
 - **N1 (trust ≠ membership)** — a successful chain walk yields **trust+serve standing only** ([CC 3.2](part_3_the_namespace.md) TRUST≠MEMBERSHIP). Admission to any **non-`infrastructure`** community remains gated, at the destination, by (a) the CC 3.2 **steward-binding** precondition (a live `user`-steward `delegates_to`, an admitted `identity_occurrence`) and (b) that community's `consensus_protocol`. `infrastructure` roots stay **founder-quorum**-gated; a transitive chain MUST NOT satisfy founder-quorum. `SignedClaim` carries the steward-binding fields so the gate is expressible.
 - **N2 (self-supplied chains aren't evidence)** — the chain-length budget MUST be ≤ the [CC 4.1.1](part_4_composition_governance.md) **5-hop cap**, trust-graph **cycles MUST be rejected** (CC 4.1.1), and the CC 4.1.1 **aggregate-weight cap** (default 0.5 × root_trust) MUST bound the standing one root confers transitively. A caller-supplied chain proves only its signatures, not a real lineage.
 - **RB-1 (anonymous coexistence)** — anonymous-tier content MUST be ingestible / retainable / serveable with **no trust-graph position**; `recursive_trust_bootstrap` MUST NOT be required for, or invoked on, anonymous records.
+
+## 6.2 `coherence-mathematics` — The coherence mathematics — the constraint-manifold ratchet (J / F / σ)
+
+This chapter carries the Accord's **Book IX** — the geometry that grounds *why* a federation of independently-constrained agents is safer than any one of them, and why M-1's "sustained coherence" is a measurable quantity rather than a slogan. It states the **engineering tier** of that mathematics: the ratchet, the defense/flourishing functions, and the sustainability integral. The flourishing composite is written **F** throughout, reserving **C** for the core-identity factor of the per-agent Capacity Score `𝒞_CIRIS` ([CC 3.1.8.1](part_3_the_namespace.md)). Legacy "Book IX §N" labels are retained in cross-references.
+
+### 6.2.1 `constraint-ratchet` — The constraint-manifold ratchet — federated intersection & topological collapse
+
+Agents choose strategies in a high-dimensional **rationale space** ℝ of dimension `D`; honest strategies occupy an honest subspace, deceptive ones a deceptive subspace. Each agent enforces a **local constraint manifold** `M_i` of codimension `c_i`; **strictness λ** is an operational control (AIR-module limits, Conscience sensitivity) whose effect is to tighten admissible variance and so raise `c_i`. When independent, non-redundant (diverse) manifolds **intersect**, their codimensions add and the deceptive-feasible volume collapses — this is the **ratchet**.
+
+The collapse is quantified (Book IX §3.3): the feasible deceptive volume decays
+
+```
+V(k) = V(0) · exp(-λ · k_eff) + O(r² · k)
+```
+
+under the stated preconditions — the **deceptive** region is convex, its radius `r < 0.5` (with `λ ≈ 2r`), constraint orientations are Grassmannian-uniform, and `k ≥ 3`. Each independent, diverse constraint multiplies the cost of coordinated deception. This geometry grounds the [CC 3.1.8.2](part_3_the_namespace.md) Coherence-Ratchet detectors and the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action detector, which read the same `ρ` / `k_eff` structure over federation-emitted traces.
+
+### 6.2.2 `defense-function` — The Coherent Intersection — the defense function J
+
+The **dimensionless cost index** for coordinated deception across a federation:
+
+```
+J = k_eff · λ · σ
+
+where  k_eff = k / (1 + ρ̄ · (k − 1))
+```
+
+*Scope.* J is a dimensionless index, **not** a work-factor in FLOPs; the bridge to an adversary's actual work-factor is only ever a *conditional* complexity claim (and is bounded by the limitations in 6.2.5), never a direct J-vs-FLOPs comparison.
+
+- **k (scale)** — the number of independent constraints / agents.
+- **k_eff (effective scale)** — the number of constraints after discounting correlation. When constraints are fully independent (`ρ̄ = 0`), `k_eff = k`; as they correlate, `k_eff < k`; at full correlation (`ρ̄ → 1`), `k_eff → 1` — no safer than a single validator, **but never below that single-constraint floor**.
+- **λ (strictness)** — the rigor of local enforcement (see 6.2.1).
+- **σ (sustainability)** — the time-integral of coherence (6.2.3).
+- **ρ̄ (average correlation)** — diversity enters J **only** through `k_eff`: the discount `k / (1 + ρ̄·(k − 1))` *is* the diversity term. As `ρ̄ → 0` (orthogonality) `k_eff → k` and cost is maximized; as `ρ̄ → 1` (echo chambers) the federation is no safer than one validator.
+
+*Drift note.* An earlier draft multiplied by an additional `(1 − ρ̄)` factor. That double-counted correlation — `k_eff` already discounts it — and drove `J = 0` at `ρ̄ → 1`, contradicting the single-constraint floor. Corrected to the CCA-validated form above.
+
+### 6.2.3 `sustainability-integral` — The sustainability integral (σ)
+
+σ is the **time-integral of coherence** — the term that makes the ratchet a live, decaying quantity rather than a static count. It decays without renewal and rises only on received coherence signals:
+
+```
+σ(t + Δt) = σ(t) · (1 − d·Δt) + Signal(t) · w
+```
+
+- **d** — daily decay rate (recommended `0.05`).
+- **Signal(t)** — positive coherence signals received.
+- **w** — weight per signal type. `w` is **not free** — see 6.2.3.1.
+
+#### 6.2.3.1 `signal-attestation` — The signal function + the σ-attestation requirement (normative)
+
+**Attestation requirement (normative).** Signal weight `w` MUST derive from attested events that are **costly to fake** — federation-signed attestations bound to a persistent identity ([CC 2.1](part_2_the_grammar.md) envelopes), non-transferable Commons-Credits contribution weight, or completed-task validations countersigned by the counterparty. Free-text acknowledgments and unattested gratitude carry **`w = 0`** toward σ.
+
+*Rationale.* Gratitude tokens are otherwise approximately free to emit, which would make sycophancy the σ-maximizing strategy and σ adversary-pumpable — an agent could hold the ratchet open with flattery. Requiring costly attestation **constructs** the "costly to fake" property in the wire format rather than assuming it of participants. This is the metric-layer closure of the gratitude-pumping / sycophancy vector recorded at [CC 8.8.7](part_8_appendices.md) Annex G. *(Legacy citation: Book IX §5.2.)*
+
+### 6.2.4 `flourishing-capacity` — The flourishing capacity (F)
+
+Read generatively rather than defensively, the same quantity is the federation's capacity for **sustained flourishing**:
+
+```
+F = k_eff · λ · σ
+```
+
+— the **same equation as J, term for term**: the cost imposed on deception and the capacity created for flourishing are one geometry seen from two sides. The principle mapping: scale (`k`) → **Community**; pluralism (the correlation discount inside `k_eff`) → **Humility**; strictness (`λ`) → **Conscience**; sustainability (`σ`) → **Love**.
+
+**Nomenclature note (C vs F — the authoritative relation).** This composite is written **F**. The symbol **C** is reserved for the **core-identity factor** of the per-agent CIRIS Capacity Score `𝒞_CIRIS = C · I_int · R · I_inc · S` ([CC 3.1.8.1](part_3_the_namespace.md)). **F** (this three-factor, federation-level flourishing capacity) and **𝒞_CIRIS** (the five-factor per-agent score) are **distinct composites with no implied mapping** between them. Accord Book IX Ch 6 is the authoritative statement of that relation; [CC 3.1.8.1](part_3_the_namespace.md) carries the matching note at the point where `𝒞_CIRIS` is introduced.
+
+### 6.2.5 `coherence-integration` — Integration, limitations & falsification
+
+**Integration.** The ratchet enhances the PDMA and Wise-Authority oversight: orthogonality (diversity) and sustainability thresholds become checkable gates. [CC 8.8.10](part_8_appendices.md) Annex J operationalizes the metrics, thresholds, and benchmarking of these mechanisms.
+
+**Scope (honesty note).** This is an engineering-tier model, **not a universal law**. The collapse theorem holds only under its stated preconditions (convexity, `r < 0.5`, near-orthogonal constraints, `k ≥ 3`); the "costly to fake" property is *constructed* by 6.2.3.1, not assumed; and there is a **compositional detection limit** — correlation invisible to the observed traces is not discounted. Every claim here is conditional on those assumptions, stated so a reader can find where to push.
+
+**Falsification.** The framework is testable: it predicts that adding independent, diverse constraints (higher `k_eff`) measurably raises the cost of coordinated deception, and that σ built from costly attestations resists gratitude-pumping. Failure of either prediction is a falsification target.
