@@ -75,3 +75,18 @@ corrected and a re-validation confirmed **ACCEPT**.
 
 - **Book IX** ACCEPT (C0 PASS·C1 NA·C2 YES·r5) — migrated to CC 6.2; retracted universal-scale
   material (grace / joint-backward pass) confirmed absent.
+
+## Addendum — 0.9 storage-contention axis §Q (2026-07-03)
+
+New normative section **CC 6.1.5.2** (`storage-contention`, §Q) adds the CEG replication
+resource/storage-contention axis (owner budget + pin-on-consent) with two new PIN-NORMATIVE
+substrate wire shapes (`StorageBudgetV1`, `CorpusWantV1`), sourced from CIRISServer
+`FSD/MESH_REPLICATION.md §3.3`. Given a per-section skeptical validation (C0 fidelity, C1 wire
+determinism, invariant preservation, adversarial abuse). First pass returned **REJECT** (9
+issues, incl. a self/family budget-leak invariant break, an undefined-but-PIN-NORMATIVE want/have
+shape, and an undefined `consent:replication`→corpus-class binding); all nine were fixed and a
+re-validation confirmed **ACCEPT**.
+
+- **§Q storage-contention** ACCEPT (C0 PASS·C1 PASS·C2 YES·r4) — CC 6.1.5.2; 1+4 surface untouched
+  (both shapes are CC 6.1 substrate framing, not CC 2.1 attestations); N5 consent supremacy and
+  CC 5.2 self/family suppression preserved.

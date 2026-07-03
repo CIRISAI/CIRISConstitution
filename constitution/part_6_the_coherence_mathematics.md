@@ -1,6 +1,6 @@
 # Part 6 — The Coherence Mathematics
 
-**Decimal range** `6.x` · **21 sections** · **page budget 3pp** · [← master index](README.md)
+**Decimal range** `6.x` · **22 sections** · **page budget 3pp** · [← master index](README.md)
 
 > The holonomic substrate, the divergence witness, the noise-floor model, and the coherence mathematics — the Accord's Book IX ratchet (J / F / σ).
 
@@ -41,7 +41,7 @@ A `wholeness_witness:` object is a peer's **hybrid-signed Merkle root over a sco
 1. **Intra-object fade** — scalable/layered codec ([CC 5.3.3.2.4](part_5_transport_substrate.md) `ChunkLayer` spatial/temporal/quality) + RaptorQ per layer: drop high-detail symbols → a clean coarse version of the same item.
 2. **Inter-object aggregation** — *a picture of a thousand pictures*: tile / downsample / statistically composite **N → 1**. Recursed, this builds a pyramid (mipmap) of history: recent strata high-resolution, ancient strata collapsed into the blur. Steady-state storage to remember **all** of history is **O(log T)** in the amount remembered, not O(T) — the N→1 fan-in makes forever-memory **sublinear**. *A million years may be a blur, but it is remembered, unbroken, to the beginning.*
 
-**Pressure-driven (normative).** The descent rate and the pyramid's level transitions are driven by **pressure** (disk pressure, age, or an explicit force), never a fixed schedule. Pressure sources, slowest→fastest: natural aging < scheduled retirement < capacity (disk) eviction < **revocation (immediate forced descent below the floor)**.
+**Pressure-driven (normative).** The descent rate and the pyramid's level transitions are driven by **pressure** (disk pressure, age, or an explicit force), never a fixed schedule. Pressure sources, slowest→fastest: natural aging < scheduled retirement < capacity (disk) eviction < **revocation (immediate forced descent below the floor)**. Capacity pressure is **arbitrated per owner** by the [CC 6.1.5.2](#6152-storage-contention--owner-storage-budget--pin-on-consent-q-normative) storage-contention axis — cache and over-budget corpus descend before pinned corpus — but revocation still overrides pin state (§6.1.5 N5).
 
 **Forgetting and erasure converge (this dissolves the [CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) N5 tension).** The N5 erasure guarantee is exactly "not individually recoverable at or below the noise floor." A sufficiently-aggregated composite (a picture of a thousand pictures contains < 1/1000 of any source) is **already-erased by degradation** — no purge needed. Revocation simply *forces* an item below the floor **now**, and MUST purge only the retained tiers where it is **still individually recoverable** (the high-fidelity upper layers). It need not — and MUST NOT be required to — destroy the collective gist. Capacity-eviction reaches the identical end-state gradually. Same destination; revocation just gets there first.
 
@@ -94,7 +94,7 @@ EjectionVerdict::= Keep // above the floor, no pressure step
  | EjectHardDelete // forced descent below the floor + purge still-recoverable tiers
 ```
 
-Mapping (normative): `RetentionDecision{RetainRare|RetainNonRare|EvictEligible}` is the rarity sub-decision *within* `EjectToTier`/`Keep`; `EvictEligible` + capacity pressure → `EjectToTier`; `EvictEligible` + a `withdraws`/`consent:state:revoked` (CC 6.1.5 N5) → `EjectHardDelete` (the fastest descent, never tier-shed — CC 6.1.2). **`EjectAggregatedTierOnly { tier }`** is the tier-granular form of `EjectToTier`: it sheds a single intermediate stratum of the CC 6.1.2.1 pyramid (the tier-`tier` `AggregationMetaV1` composite) under targeted pressure, leaving both finer and coarser tiers — composing with the hard-delete trait (a `tier` below the noise floor is unreachable, so this never resurrects erased content). A pure fabric node MAY compute `EjectToTier` / `EjectAggregatedTierOnly` mechanically; `EjectHardDelete` MUST purge per CC 6.1.5 N5. Verify exposes `EjectionVerdict`; persist consumes it to drive `put_aggregated_tier` / the tier-tagged evict (EjectToTier, EjectAggregatedTierOnly) vs `evict_fountain_content_hard_delete` (EjectHardDelete).
+Mapping (normative): `RetentionDecision{RetainRare|RetainNonRare|EvictEligible}` is the rarity sub-decision *within* `EjectToTier`/`Keep`; `EvictEligible` + capacity pressure → `EjectToTier`; **cache or over-budget corpus ([CC 6.1.5.2](#6152-storage-contention--owner-storage-budget--pin-on-consent-q-normative) B5) → `EjectToTier` ahead of pinned content**; `EvictEligible` + a `withdraws`/`consent:state:revoked` (CC 6.1.5 N5) → `EjectHardDelete` **regardless of pin state** (the fastest descent, never tier-shed — CC 6.1.2). **`EjectAggregatedTierOnly { tier }`** is the tier-granular form of `EjectToTier`: it sheds a single intermediate stratum of the CC 6.1.2.1 pyramid (the tier-`tier` `AggregationMetaV1` composite) under targeted pressure, leaving both finer and coarser tiers — composing with the hard-delete trait (a `tier` below the noise floor is unreachable, so this never resurrects erased content). A pure fabric node MAY compute `EjectToTier` / `EjectAggregatedTierOnly` mechanically; `EjectHardDelete` MUST purge per CC 6.1.5 N5. Verify exposes `EjectionVerdict`; persist consumes it to drive `put_aggregated_tier` / the tier-tagged evict (EjectToTier, EjectAggregatedTierOnly) vs `evict_fountain_content_hard_delete` (EjectHardDelete).
 
 **Conformance — proven cross-impl.** CC 6.1.2.1–.3 are **byte-equivalent across implementations**: one implementation authored the vector family (`AggregationMetaV1` preimage + signature, `member_commitment`, and `descend` ordered output) and a second reproduces them **byte-for-byte** (`src/holonomic/aggregation.rs` + `tests/conformance_vectors_v19_7.rs`, 5 vectors). The `AggregationMetaV1` preimage matched **on the first attempt with no cross-team coordination beyond this spec** — the [CC 6.1.3](#613-canonicalization-boundary--the-14-line-normative) binary-length-prefixed discipline makes wire-identity reproducible from the text alone. `member_commitment` reuses the [CC 6.1.1](#611-wholenesswitness-divergence-detection-witness) WholenessWitness Merkle **verbatim** (same `compute_merkle_root`, same `WW-v1-empty` sentinel) — the federation runs **one** Merkle scheme across CC 6.1.1 (witness leaves) and CC 6.1.2 (member commitments), no schema fork. The [CC 6.1.4](#614-conformance--the-57-freeze-gate)/[#57](https://github.com/CIRISAI/CIRISRegistry/issues/57) vector family for CC 6.1.2 is **closed**; CC 6.1.2 is **1.0**.
 
@@ -109,9 +109,9 @@ This is the seam that protects the frozen attestation envelope: every CC 6.1 obj
 
 ### 6.1.4 `conformance-freeze` — Conformance — the #57 freeze gate
 
-The byte-exact signed preimages and the `compute_alm_topology` output are pinned against the reference impl, and **conformance vectors generated from it are the named [#57](https://github.com/CIRISAI/CIRISRegistry/issues/57) freeze gate**: input → expected bytes for `SealedAvChunk` + the two AV nonces, `SignedRelayCapacity`, ALM topology (input snapshot → expected tree hash, incl. permutation invariance), `FountainManifestV1`/`SymbolV1` + `retention_priority`, `FountainHoldingClaim`/`CompressRequest`, and `WholenessWitness` canonical bytes + Merkle root (incl. the empty sentinel + odd-node duplication). Until a second implementation reproduces these byte-for-byte, the CC 6.1 shapes are **pinned-but-unproven — RC-grade, not 1.0.** Beyond wire conformance, ongoing benchmarking and automated validation of the coherence mechanisms — the operational-implementation layer — is specified in [CC 8.8.10](part_8_appendices.md) Annex J.
+The byte-exact signed preimages and the `compute_alm_topology` output are pinned against the reference impl, and **conformance vectors generated from it are the named [#57](https://github.com/CIRISAI/CIRISRegistry/issues/57) freeze gate**: input → expected bytes for `SealedAvChunk` + the two AV nonces, `SignedRelayCapacity`, ALM topology (input snapshot → expected tree hash, incl. permutation invariance), `FountainManifestV1`/`SymbolV1` + `retention_priority`, `FountainHoldingClaim`/`CompressRequest`, `StorageBudgetV1` (per-`cohort_scope` allotment) + `CorpusWantV1` (the [CC 6.1.5.2](#6152-storage-contention--owner-storage-budget--pin-on-consent-q-normative) want/have negotiation), and `WholenessWitness` canonical bytes + Merkle root (incl. the empty sentinel + odd-node duplication). Until a second implementation reproduces these byte-for-byte, the CC 6.1 shapes are **pinned-but-unproven — RC-grade, not 1.0.** Beyond wire conformance, ongoing benchmarking and automated validation of the coherence mechanisms — the operational-implementation layer — is specified in [CC 8.8.10](part_8_appendices.md) Annex J.
 
-### 6.1.5 `storage` — Fountain storage + swarm rarity (§P / §R)
+### 6.1.5 `storage` — Fountain storage + swarm rarity (§P / §R / §Q)
 
 Content is RaptorQ-coded into `N` source + `K` repair symbols (`FountainManifestV1` / `FountainSymbolV1`); peers retain symbols and coordinate rarest-first so content survives churn. This is the durability layer M-1's "shared memory" rests on — but it is held subordinate to consent, so durability never overrides a withdrawal.
 
@@ -148,6 +148,61 @@ DEFAULT_TARGET_HOLDERS = 30 // distinct peers holding ≥1 symbol
 **Why these and not 22 / 40 (informative).** `N=20` keeps K=6 a meaningful ~30% FEC while one-symbol-per-peer holds across a 30-peer trust island without crowding, and sits in the RaptorQ O(N²)-decode sweet spot (microsecond scale). `K=6` matches RFC 6330's empirical overhead for 99.9% decode; higher gives diminishing returns, lower drops decode below 99% at q=0.85. `min_viable=5` is the N/4 BLINKING_DOT floor. `target_holders=30` is C_1's 26 plus churn margin.
 
 **No wire change.** §R-policy pins *defaults and a floor* over the existing [CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) `FountainManifestV1` `(N, K)` fields and `min_viable_symbols`; it introduces no new shape and no 1+4 change.
+
+#### 6.1.5.2 `storage-contention` — Owner storage budget + pin-on-consent (§Q, normative)
+
+Replication is otherwise bounded only by **wire type** ([CC 5.3.2.3](part_5_transport_substrate.md)), **membership** (`cohort_scope`), and **consent** (`consent:replication`, [CC 3.3.7](part_3_the_namespace.md)) — nothing bounds **resource contention on an owned node**. The eviction ladder ([CC 6.1.2](#612-the-noise-floor--unified-retirement--forever-memory-model-normative)) is purely *reactive*: it fires only after content has already landed. §Q adds the missing axis — an owner bounds what replicates onto their own node **before it arrives**, and pins durable content by consent. Because the substrate MUST NOT invent replication policy ([CC 5.3.2.3](part_5_transport_substrate.md)), this bound is a **declared CEG rule**, not implementation-defined per node. It is the storage-contention analogue of the IPFS pinning model (durable = pinned; else cache/GC) with SSB's size-cap + want/have.
+
+- **B1 (pin classes).** Identity, consent, and config records are **always pinned** — small, identity-critical, durable, and **exempt from the byte budget**. Corpus is **pin-on-consent, cache-otherwise**.
+- **B2 (pin-on-consent).** A corpus `content_id` is **pinned** (durable) iff **both** hold: (i) an active `consent:replication` grant ([CC 3.3.7](part_3_the_namespace.md)) authorizes the corpus `subject_kind` covering it — the grant **is** the pin authorization (no separate pin dimension); a `consent:replication` grant names corpus `subject_kind`s in its authorized-class list, extending its attestation-prefix grammar to the corpus track of [CC 5.3.2.3](part_5_transport_substrate.md); **and** (ii) the owner **elects** to spend budget on that class by listing it in the `pinned_class` set of its `StorageBudgetV1` (B3). Consent *authorizes*, the owner *elects* — a pin requires **both**. Corpus received without a satisfied pin is **cache**: eviction-eligible, and it descends **before** any pinned content under pressure ([CC 6.1.2.3](part_6_the_coherence_mathematics.md)). This is the owner's "bound what lands on me" control — unconsented corpus never becomes durable on the owner's node.
+- **B3 (owner budget — per `cohort_scope`).** An owner declares a `StorageBudgetV1` (below) allotting, **per `cohort_scope`**, a `budget_bytes` ceiling and a `pin_reserve_bytes` floor (MUST be `≤ budget_bytes`) held for pinned corpus. Pinned corpus in a scope MUST fit its `budget_bytes`; content that would exceed it is refused at admission (via the B4 want/have handshake) or, if already held, is first to descend under contention (B5). A `StorageBudgetV1` **inherits the [CC 5.2](part_5_transport_substrate.md) `self | family` suppression**: `self` and `family` scope entries MUST NOT appear in a signed / federated budget — those budgets are enforced **locally only**, else the budget would leak the existence of structurally-invisible content (the same hazard the [CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) `FountainHoldingClaim` suppression closes). Budgets are **supersedable** by monotonic `revision` — the **anti-rollback** aspect of [CC 5.3.2.3](part_5_transport_substrate.md) (a single-owner self-declaration, not a multi-signer quorum): a higher `revision` from the same `node_id` supersedes; a lower one MUST be rejected.
+- **B4 (want/have + size cap).** Large corpus is **wanted-then-pulled**, never unsolicited-pushed: a peer advertises a `want` for content **within its remaining scope budget** and a `size_cap`; a producer MUST NOT push a corpus object exceeding the receiver's advertised `size_cap`. This is at once a consent control and a bandwidth control on constrained transports. Content is content-addressed (CID-style): a pin is a stable reference and dedup is free — a `content_id` pinned by several scopes occupies its bytes **once** and is retained while **any** scope pins it.
+- **B5 (contention arbitration).** When a scope is over budget under disk pressure, descent order ([CC 6.1.2.3](part_6_the_coherence_mathematics.md)) is deterministic: **cache before pinned**; within pinned, **lowest rarity (§P) first**; ties broken by **oldest `revision`**. A `StorageBudgetV1` is **consumption-challengeable** the way [CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) N6 makes holding claims challengeable — an owner's declared consumption MUST be reconcilable against the pinned `content_id`s it actually holds, so a forged budget cannot become a force-evict channel against a competitor's content. Per-scope **consumption accounting is edge-internal** (recomputed from held content), never trusted from the wire.
+- **B6 (consent supremacy preserved).** Pinning **never** defeats consent: an active `withdraws` / `consent:state:revoked` still forces immediate descent below the noise floor regardless of pin state ([CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) N5). A pin holds content **above** the floor against **capacity** pressure only — never against **revocation**. §Q is the positive inverse of N5, and is bounded by it.
+
+**`StorageBudgetV1` — the owner's per-`cohort_scope` allotment (normative wire shape).** A substrate-framing object, **not** a [CC 2.1](part_2_the_grammar.md) attestation — no 1+4 change. Its signing preimage uses the [CC 6.1.3](#613-canonicalization-boundary--the-14-line-normative) binary discipline (length-prefixed, big-endian, domain-separated — **NOT** [CC 2.6.1](part_2_the_grammar.md) JCS):
+
+```
+preimage = b"CIRIS-STG-BUDGET"                 // 16-byte domain separator (exact)
+ ‖ u32_be(version = 1)
+ ‖ lp(node_id)                                 // the owner node this budget binds
+ ‖ lp(epoch_id)                                // epoch keying (CC 5.1)
+ ‖ u64_be(revision)                            // monotonic; higher supersedes (anti-rollback)
+ ‖ u32_be(scope_count)
+ ‖ scope_count × (                             // one entry per cohort_scope; NEVER self/family (B3)
+       lp(cohort_scope)                        //   "community" | "affiliations" | "species" | …
+     ‖ u64_be(budget_bytes)                    //   total ceiling for this scope
+     ‖ u64_be(pin_reserve_bytes) )             //   floor reserved for pinned corpus (MUST be ≤ budget_bytes)
+ ‖ u32_be(pinned_class_count)
+ ‖ pinned_class_count × lp(subject_kind)       // corpus classes the owner elects to pin (B2-ii)
+// lp(x) = u32_be(byte_len(utf8(x))) ‖ utf8(x)
+// cohort_scope entries AND each subject_kind list: sorted lexicographically over UTF-8 bytes, deduplicated
+```
+
+**Bound-hybrid signature** (the [CC 6.1.3](#613-canonicalization-boundary--the-14-line-normative) rule): `Ed25519(preimage)` + `ML-DSA-65(preimage ‖ ed25519_sig)`; a verifier MUST reject a `StorageBudgetV1` lacking a valid ML-DSA-65 half **at ingest and before persistence** (the [CC 5.3.2.4.3.1](part_5_transport_substrate.md) store-path rule — `StorageBudgetV1` is federation-tier). A higher `revision` from the same `node_id` supersedes; a lower one MUST be rejected (anti-rollback).
+
+**Validation (normative).** A verifier MUST **reject** a `StorageBudgetV1` if any `pin_reserve_bytes > budget_bytes`; if the `cohort_scope` entries or any `subject_kind` list are not lexicographically sorted and deduplicated; or if a `self` / `family` scope entry is present (B3 suppression). Two `StorageBudgetV1` from the same `(node_id, revision)` with differing content are **equivocation**: a peer MUST retain and surface both as a `hard_case:*` ([CC 3.4](part_3_the_namespace.md)) and MUST NOT silently pick one — mirroring the [CC 6.1.1](#611-wholenesswitness-divergence-detection-witness) N4 rule.
+
+**`CorpusWantV1` — the B4 want/have advertisement (normative wire shape).** A peer advertises exactly what corpus it will accept and its per-object ceiling; a producer pulls only against it. Same [CC 6.1.3](#613-canonicalization-boundary--the-14-line-normative) binary discipline:
+
+```
+preimage = b"CIRIS-WANT-HAVE\0"                // 16-byte domain separator (exact; one trailing NUL)
+ ‖ u32_be(version = 1)
+ ‖ lp(node_id)                                 // the advertising peer
+ ‖ lp(epoch_id)                                // epoch keying (CC 5.1)
+ ‖ lp(cohort_scope)                            // the scope this want draws budget from (NEVER self/family)
+ ‖ u64_be(size_cap_bytes)                      // max single-object size this peer will accept
+ ‖ u64_be(remaining_budget_bytes)             // advertised headroom in the scope
+ ‖ u32_be(want_count)
+ ‖ want_count × lp(content_id)                 // content-addressed ids wanted; lexicographic, deduplicated
+// lp(x) = u32_be(byte_len(utf8(x))) ‖ utf8(x)
+```
+
+Bound-hybrid signed and verified as above; **PIN-NORMATIVE**. A producer MUST NOT push a corpus object whose size exceeds the advertised `size_cap_bytes`, nor any object whose `content_id` is absent from an active `CorpusWantV1` from the receiver (**wanted-then-pulled, never unsolicited-pushed**). A `CorpusWantV1` MUST NOT name a `self` / `family` `cohort_scope`.
+
+**PIN line.** `StorageBudgetV1` and `CorpusWantV1` signed preimages = **PIN-NORMATIVE** (all `cohort_scope`, `subject_kind`, and `content_id` lists sorted lexicographically over UTF-8 bytes and deduplicated before signing); per-scope **consumption accounting = edge-internal** (recomputed from held content per B5, never on the wire).
+
+*Scope.* §Q supplies the **technical** storage bound (quota + budget + pin); the **economic** *who-pays* dimension is deliberately off-wire ([CC 3.3.9](part_3_the_namespace.md) billing) and is not part of these shapes.
 
 ### 6.1.6 `deterministic-alm` — Deterministic ALM topology (§T / §M)
 
