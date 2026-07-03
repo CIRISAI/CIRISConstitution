@@ -3,6 +3,34 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 0.9 — CEG replication storage-contention axis (§Q, seed-blocker)
+
+Closes the last replication gap before mesh seed: replication was specified by **wire type**
+(CC 5.3.2.3), **membership** (`cohort_scope`), and **consent** (`consent:replication`), but had
+**no rule for resource / storage contention on an owned node** — no owner budget, no pin, only
+reactive eviction after content had already landed. New normative section **CC 6.1.5.2**
+(`storage-contention`, §Q) adds the missing 4th axis (the IPFS-pinning model), sourced from
+CIRISServer `FSD/MESH_REPLICATION.md §3.3` and twinned with CIRISServer#145:
+
+- **Pin classes / pin-on-consent (B1–B2).** Identity/consent/config always pinned; corpus is
+  pinned iff a `consent:replication` grant authorizes its `subject_kind` **and** the owner elects
+  to spend budget on it — else it is cache (GC-eligible, descends first). The grant's
+  `attestation_prefixes` grammar is extended to name corpus classes (reciprocal note at CC 3.3.7).
+- **Owner budget, per `cohort_scope` (B3).** A new signed `StorageBudgetV1` declares per-scope
+  `budget_bytes` + `pin_reserve_bytes`; `self`/`family` scopes are suppressed from the wire
+  (CC 5.2 structural invisibility); supersedable by monotonic `revision` (anti-rollback).
+- **want/have + size cap (B4).** A new signed `CorpusWantV1` makes large corpus wanted-then-pulled,
+  never unsolicited-pushed; content-addressed (CID) for free dedup.
+- **Arbitration + consent supremacy (B5–B6).** Deterministic descent order (cache → low-rarity →
+  oldest revision); budgets are consumption-challengeable (no forged-budget force-evict); a pin
+  **never** defeats revocation (N5 still forces descent below the floor regardless of pin).
+
+Both `StorageBudgetV1` and `CorpusWantV1` are CC 6.1 substrate shapes (16-byte domain separators,
+hybrid Ed25519+ML-DSA-65, verify-at-ingest, #57 freeze-gate vectors) — **not** CC 2.1 attestations,
+so the 1+4 surface is untouched. Given its own skeptical validation: REJECT (9 issues) → fixes →
+ACCEPT (results.csv + MANIFEST addendum). Wired into CC 6.1.2 pressure sources and CC 6.1.2.3
+`EjectionVerdict`.
+
 ## 0.8.1 — coherence-math errata (σ decay + λ symbol split)
 
 Two bounded corrections to the Part VI coherence mathematics, surfaced by a

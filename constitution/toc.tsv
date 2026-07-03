@@ -293,6 +293,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 6.1.4	conformance-freeze	Conformance — the #57 freeze gate	§19.6	0.00164	150	0.2	VI	ceg
 6.1.5	storage	Fountain storage + swarm rarity (§P / §R)	§19.3	0.00149	161	0.18	VI	ceg
 6.1.5.1	registry-replication	Replication-target policy (§R-policy — normative floor + RECOMMENDED defaults, 1.0-RC26 — resolves [CIRISRegistry#86](https://github.com/CIRISAI/CIRISRegistry/issues/86))	§19.3.1	0.00092	274	0.11	VI	ceg
+6.1.5.2	storage-contention	Owner storage budget + pin-on-consent (§Q, normative)	§19.3.2	0.00110	400	0.14	VI	ceg
 6.1.6	deterministic-alm	Deterministic ALM topology (§T / §M)	§19.4	0.00118	190	0.14	VI	ceg
 6.1.7	fail-secure-fail	Fail-secure summary (normative)	§19.5	0.00117	192	0.14	VI	ceg
 6.1.8	trust	Recursive trust bootstrap (§B) — trust-discovery, not membership	§19.2	0.00092	273	0.11	VI	ceg

@@ -1,6 +1,6 @@
 {
  "_note": "Deterministic dual-ID codebook for the CIRIS Constitution (CC). Both maps are 1:1. decimal_id and semantic_id are deterministic functions of the unified corpus (graph_unified.json unified_pagerank conscious-mesh weights + the fixed Part map); same corpus => byte-identical codebook. title->id is NOT codebook-free: it depends on the measured importance distribution, by design.",
- "n_concepts": 399,
+ "n_concepts": 400,
  "decimal_to_key": {
   "2.6": "0",
   "2.6.9": "0.1",
@@ -400,7 +400,8 @@
   "6.2.3": "A§Book-IX-Ch5",
   "6.2.3.1": "A§Book-IX-5.2",
   "6.2.4": "A§Book-IX-Ch6",
-  "6.2.5": "A§Book-IX-Ch7-11"
+  "6.2.5": "A§Book-IX-Ch7-11",
+  "6.1.5.2": "19.3.2"
  },
  "key_to_decimal": {
   "0": "2.6",
@@ -801,7 +802,8 @@
   "A§Book-IX-Ch5": "6.2.3",
   "A§Book-IX-5.2": "6.2.3.1",
   "A§Book-IX-Ch6": "6.2.4",
-  "A§Book-IX-Ch7-11": "6.2.5"
+  "A§Book-IX-Ch7-11": "6.2.5",
+  "19.3.2": "6.1.5.2"
  },
  "semantic_to_key": {
   "foreword": "0",
@@ -1202,7 +1204,8 @@
   "sustainability-integral": "A§Book-IX-Ch5",
   "signal-attestation": "A§Book-IX-5.2",
   "flourishing-capacity": "A§Book-IX-Ch6",
-  "coherence-integration": "A§Book-IX-Ch7-11"
+  "coherence-integration": "A§Book-IX-Ch7-11",
+  "storage-contention": "19.3.2"
  },
  "key_to_semantic": {
   "0": "foreword",
@@ -1603,7 +1606,8 @@
   "A§Book-IX-Ch5": "sustainability-integral",
   "A§Book-IX-5.2": "signal-attestation",
   "A§Book-IX-Ch6": "flourishing-capacity",
-  "A§Book-IX-Ch7-11": "coherence-integration"
+  "A§Book-IX-Ch7-11": "coherence-integration",
+  "19.3.2": "storage-contention"
  },
  "legacy_to_decimal": {
   "§0": "2.6",
@@ -2004,6 +2008,7 @@
   "Accord Book IX Ch 5": "6.2.3",
   "Accord Book IX §5.2": "6.2.3.1",
   "Accord Book IX Ch 6": "6.2.4",
-  "Accord Book IX Ch 7-11": "6.2.5"
+  "Accord Book IX Ch 7-11": "6.2.5",
+  "§19.3.2": "6.1.5.2"
  }
 }
