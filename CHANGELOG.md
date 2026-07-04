@@ -3,6 +3,15 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 0.9.2 — executive summary revised: consent-reaching-all-agency-surfaces framing
+
+Revises the executive summary to lead with *why*: consent-based governance must touch
+every output surface a frontier system's agency can reach, checkable at the point of
+expression. Trims the apex language to a single M-1 mention; adds an explicit statement
+of how the science (coherence-ratchet) relates to the law — narrow engineering-tier
+import, public retractions upstream, the seam explicit so neither corrupts the other.
+No normative change.
+
 ## 0.9.1 — executive summary in the front matter
 
 Adds `constitution/EXECUTIVE_SUMMARY.md` — a one-page plain-language statement of
