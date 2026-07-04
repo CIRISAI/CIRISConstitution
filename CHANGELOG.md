@@ -3,6 +3,17 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 0.9.3 — executive summary: mesh-safety thesis + what the assumptions rest on
+
+Reframes the executive summary around the whole-mesh safety thesis: this is the
+constitution of a decentralized network (CEWP — the internet without the centralized
+middle), safety is a property of the diverse federation rather than any single aligned
+model ("a singleton is a condition to be prevented; the parts, together, are what is
+safe"; check the behavior, not the weights). Adds an explicit "what the safety
+assumptions rest on" section — the Part VI correlation-not-headcount mathematics, its
+narrow engineering-tier import from coherence-ratchet, its falsifiable/open status, and
+that current empirics strengthen it. No normative change.
+
 ## 0.9.2 — executive summary revised: consent-reaching-all-agency-surfaces framing
 
 Revises the executive summary to lead with *why*: consent-based governance must touch
