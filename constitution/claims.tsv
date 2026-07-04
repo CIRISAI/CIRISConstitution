@@ -17,3 +17,21 @@ CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (
 CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	staged
 CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	staged
 CLM-migration-fidelity	corpus	Source-fidelity migration validated (0 REJECT) under the skeptical rubric	test:@validation/results.csv	established
+CLM-child-protection	3.4.13	Seven child-protection rulings (fail-secure minor-stewardship, consent gating)	staged:CIRISServer#155 test:CIRISConformance#59	staged
+CLM-trust-not-membership	3.2	Trust ≠ membership; default-not-forced-root; steward-binding admission	staged:CIRISServer#155	staged
+CLM-adult-incapacity	3.4.12	Adult-incapacity stewardship (capacity-assurance, prior-will-first, fail-to-liberty auto-restore)	staged:CIRISServer#155	staged
+CLM-age-assurance	3.4.11	Verified-rung age assurance + minor-steward binding	staged:CIRISServer#155	staged
+CLM-structural-invisibility	5.2	self/family content is structurally invisible — never federates (wire-enforced)	test:CIRISConformance#59 staged:CIRISServer#155	staged
+CLM-epoch-keying	5.1	Epoch keying + cascade (forward-secure content transport)	staged:CIRISServer#155	staged
+CLM-revocation-promotion	5.3.2.2	Subject revocation never rests local; 24h federation-tier promotion SLA	staged:CIRISServer#155	staged
+CLM-fragmentation	5.4.3	Content-fragmentation wire discipline (scope-privacy transport)	test:CIRISConformance#59	staged
+CLM-wholeness-witness	6.1.1	WholenessWitness divergence detection (Merkle construction, WW-1..3, N3/N4 equivocation)	test:CIRISConformance#59 staged:CIRISServer#155	staged
+CLM-canonicalization-boundary	6.1.3	CC 6.1 binary preimage discipline — length-prefixed/domain-separated, never JCS, never 1+4	test:CIRISConformance#59	staged
+CLM-billing-offwire	3.3.9	Billing/settlement is off-wire; value transfer rides external rails	normative-only:—	established
+CLM-meta-goal	1.1	M-1 (sustainable adaptive coherence) is the single apex every mechanism serves	normative-only:—	established
+CLM-wbd	1.9	Wisdom-Based Deferral: halt/escalate rather than guess beyond competence	impl:CIRISAgent#911	staged
+CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-6)	normative-only:—	established
+CLM-entrenchment	4.5.1.2	Entrenchment: CC 4.2 / 4.5.1 / 1.2 need a MAJOR bump + dedicated accord ratification	normative-only:—	established
+CLM-halt-authority	4.2	HUMANITY_ACCORD constitutional halt layer — wire- and scope-isolated	staged:CIRISServer#155	staged
+CLM-wire-vocabulary	8.8	Two-tier wire-vocabulary governance; hash-pinned manifest registry	test:@manifests/WIRE_VOCABULARY.md	established
+CLM-noise-descent	6.1.2	One retirement operator: revocation/eviction/aging as pressure-driven descent	impl:CIRISServer#155	staged

@@ -28,6 +28,22 @@ STATUSES = {"established", "staged", "open"}
 DRIFT_EXEMPT_PREFIX = ("1.14",)
 
 _HEADING = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`')
+_NORM = re.compile(r'\b(?:MUST NOT|MUST|SHALL NOT|SHALL|REQUIRED)\b')
+
+
+def load_normative_sections():
+    """decimal_id -> count of normative statements (MUST/SHALL/REQUIRED) in that section."""
+    sec = {}
+    for fn in glob.glob(os.path.join(DOC, "part_*.md")):
+        cur = None
+        for ln in open(fn, encoding="utf-8"):
+            m = _HEADING.match(ln)
+            if m:
+                cur = m.group(1)
+                sec.setdefault(cur, 0)
+            elif cur:
+                sec[cur] += len(_NORM.findall(ln))
+    return {d: c for d, c in sec.items() if c > 0}
 
 
 def load_toc_decimals():
@@ -78,6 +94,7 @@ def main():
         rows = list(enumerate(r, 2))
 
     ids = set()
+    claim_decimals = set()
     status_ct, tag_ct = Counter(), Counter()
     resolvable_evidenced = inrepo_checked = 0
 
@@ -123,6 +140,14 @@ def main():
             warnings.append(f"L{ln} [{cid}]: has resolvable evidence but status='{st}' (expected 'established')")
         if has_resolvable:
             resolvable_evidenced += 1
+        if dec != "corpus":
+            claim_decimals.add(dec)
+
+    # --- coverage: every normative-bearing section should carry >= 1 claim ---
+    norm = load_normative_sections()
+    covered = {d for d in norm if d in claim_decimals}
+    uncovered = sorted((norm[d], d) for d in norm if d not in covered)
+    cov_pct = 100.0 * len(covered) / len(norm) if norm else 100.0
 
     print("=== CC evidence registry (claims.tsv) ===")
     print(f"claims: {len(rows)}")
@@ -130,6 +155,12 @@ def main():
     print("tags:   " + ", ".join(f"{k}={v}" for k, v in sorted(tag_ct.items())))
     print(f"in-repo pointers checked: {inrepo_checked}")
     print(f"claims with resolvable (in-repo) impl/test/lean/bench evidence: {resolvable_evidenced}/{len(rows)}")
+    print(f"\n=== normative coverage (P2) ===")
+    print(f"normative-bearing sections: {len(norm)} | covered by >=1 claim: {len(covered)} ({cov_pct:.0f}%)")
+    if uncovered:
+        print("top uncovered normative-density sections:")
+        for c, d in sorted(uncovered, reverse=True)[:12]:
+            print(f"  {d:12} {c:3} MUST/SHALL")
 
     if warnings:
         print(f"\n{len(warnings)} warning(s) [cross-repo pending — see the downstream evidence issues]:")
