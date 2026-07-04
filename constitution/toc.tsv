@@ -399,3 +399,32 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 6.2.3.1	signal-attestation	The signal function + the σ-attestation requirement (normative)	Accord Book IX §5.2	0.00110	397	0.15	VI	accord
 6.2.4	flourishing-capacity	The flourishing capacity (F)	Accord Book IX Ch 6	0.00110	398	0.15	VI	accord
 6.2.5	coherence-integration	Integration, limitations & falsification	Accord Book IX Ch 7-11	0.00090	399	0.12	VI	accord
+1.13.3.4	default-anonymity	Anonymity defaults to the smallest cohort scope (normative)	(spine-reconciled)	0.00050	401	0.1	I	accord
+3.3.5.1	fair-exchange	Optimistic fair exchange (worked example, no new primitive)	(spine-reconciled)	0.00050	402	0.1	III	ceg
+3.4.11	age-assurance	Age-assurance: the witness-reserved ladder, the subject self-declared rung, and the protective gate	(spine-reconciled)	0.00050	403	0.1	III	ceg
+3.4.12	adult-incapacity-stewardship	Adult stewardship under incapacity (capacity-triggered, prior-will-first, fail-to-liberty)	(spine-reconciled)	0.00050	404	0.1	III	ceg
+3.4.13	minor-protection	Minor operation & protection — the seven ratified child-safety rulings (restrictive floor)	(spine-reconciled)	0.00050	405	0.1	III	ceg
+4.2.1.3	lifecycle	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	(spine-reconciled)	0.00050	406	0.1	IV	accord
+4.2.6	live-quorum	Live-quorum operation & recovery under decimation (normative)	(spine-reconciled)	0.00050	407	0.1	IV	accord
+4.4.3.2.8	affiliations	The institutional cohort (necessity, not interest) (normative)	(spine-reconciled)	0.00050	408	0.1	IV	ceg
+4.5.13	reverse-quorum	Reverse-quorum governance — presence is authority, absence forfeits it	(spine-reconciled)	0.00050	409	0.1	IV	ceg
+5.4	scope-privacy-wire	Scope-Native Privacy wire profile	(spine-reconciled)	0.00050	410	0.1	V	ceg
+5.4.1	record-id	Deterministic `record_id` (CBOR profile, normative)	(spine-reconciled)	0.00050	411	0.1	V	ceg
+5.4.2	symbol	Uniform symbol AEAD framing for fountain-coded fragments (normative)	(spine-reconciled)	0.00050	412	0.1	V	ceg
+5.4.3	fragmentation	Uniform-envelope fragmentation & reassembly (normative)	(spine-reconciled)	0.00050	413	0.1	V	ceg
+5.4.4	welcome-wrap	MLS Welcome HPKE wrap under invitee static X-Wing key (normative)	(spine-reconciled)	0.00050	414	0.1	V	ceg
+5.4.5	witness-content	Witness-chain content discipline (privacy witness, normative)	(spine-reconciled)	0.00050	415	0.1	V	ceg
+5.4.6	announce-suppress	Announce suppression for group-scoped destinations (normative)	(spine-reconciled)	0.00050	416	0.1	V	ceg
+7.5.3.1	autonomy-tiers	Operational autonomy tiers (A0–A4)	(spine-reconciled)	0.00050	417	0.1	VII	accord
+8.8	annexes	Annexes (supporting frameworks)	(spine-reconciled)	0.00050	418	0.1	APP	accord
+8.8.1	annex-a	Annex A: Flourishing Metrics Framework	Accord Annex A	0.00050	419	0.1	APP	accord
+8.8.2	annex-b	Annex B: Wise-Authority Governance Charter	Accord Annex B	0.00050	420	0.1	APP	accord
+8.8.3	annex-d	Annex D: Catastrophic-Risk Evaluation (CRE) Protocol	Accord Annex D	0.00050	421	0.1	APP	accord
+8.8.4	annex-e	Annex E: Structural Influence (SI) & Coherence Stake (CS) Mechanisms	Accord Annex E	0.00050	422	0.1	APP	accord
+8.8.5	annex-c	Annex C: Regulatory Cross-Walk	Accord Annex C	0.00050	423	0.1	APP	accord
+8.8.6	annex-f	Annex F: Human-in-the-Loop & Oversight	Accord Annex F	0.00050	424	0.1	APP	accord
+8.8.7	annex-g	Annex G: Adversarial Security & Robustness	Accord Annex G	0.00050	425	0.1	APP	accord
+8.8.8	annex-h	Annex H: Continuous Compliance & Review	Accord Annex H	0.00050	426	0.1	APP	accord
+8.8.9	annex-i	Annex I: Legal & Regulatory Alignment	Accord Annex I	0.00050	427	0.1	APP	accord
+8.8.10	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord
+8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg

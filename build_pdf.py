@@ -42,6 +42,33 @@ def prefilter(md):
     md = md.replace("ρ̄", "")   # ρ̄ (ρ + combining macron) -> single mapped placeholder
     return md
 
+def evidence_appendix_md():
+    """Generated Evidence Register (from constitution/claims.tsv) — the reviewer's
+    'make the evidence as reviewable as the architecture', rendered into the PDF."""
+    from collections import Counter
+    rows = list(csv.DictReader(open(DOC / "claims.tsv"), delimiter="\t"))
+    st = Counter(r["status"] for r in rows)
+    def dk(d): return [999] if d == "corpus" else [int(x) for x in d.split(".")]
+    rows.sort(key=lambda r: dk(r["decimal_id"]))
+    out = ["# Evidence Register\n",
+           "Generated from `constitution/claims.tsv`. Every load-bearing claim names the artifact that "
+           "establishes it — **impl** (reference implementation), **test** (conformance vector), "
+           "**lean** (mechanized proof), **bench** (evaluation) — or is **staged** against a named "
+           "implementation, or an acknowledged **open** gap. The tag vocabulary and the four-artifact "
+           "convention are defined in `constitution/EVIDENCE.md`; consistency (evidence pointers, the "
+           "dual-ID spine, and normative coverage) is machine-checked by `tools/check_claims.py` as a CI gate.\n",
+           f"**{len(rows)} claims** — established {st['established']} · staged {st['staged']} · open {st['open']}. "
+           "Cross-repo pointers resolve against the pinned sibling spec-map manifests.\n",
+           "| CC | Claim | Evidence | Status |",
+           "|---|---|---|---|"]
+    for r in rows:
+        summ = r["summary"].replace("|", "/")
+        if len(summ) > 66: summ = summ[:64].rstrip() + "…"
+        ev = r["evidence"].replace("|", "/")
+        out.append(f"| {r['decimal_id']} | {summ} | {ev} | {r['status']} |")
+    return "\n".join(out)
+
+
 def contents_md():
     """Explicit chapter-level TOC (decimal + semantic + title), grouped by Part."""
     rows = list(csv.DictReader(open(DOC / "toc.tsv"), delimiter="\t"))
@@ -99,6 +126,8 @@ body.append(r"\clearpage")
 for p in PARTS:
     body.append(B.convert(prefilter(p.read_text(encoding="utf-8"))))
     body.append(r"\clearpage")
+body.append(B.convert(prefilter(evidence_appendix_md())))                               # generated evidence register
+body.append(r"\clearpage")
 body.append(B.convert(prefilter((DOC / "STEWARDSHIP.md").read_text(encoding="utf-8"))))
 body.append(r"\end{document}")
 

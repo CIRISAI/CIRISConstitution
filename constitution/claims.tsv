@@ -1,19 +1,147 @@
 claim_id	decimal_id	summary	evidence	status
-CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity bench:RATCHET#8	staged
-CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k); remainder form open	lean:coherence-ratchet:Core.Corridor open:coherence-ratchet#4	open
-CLM-math-JF	6.2.4	J = F = k_eff·λ_op·σ (defense and flourishing are one geometry)	lean:coherence-ratchet:Core.Corridor	staged
+CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity	established
+CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k_eff); remainder mechanized (crossover dissolved)	lean:coherence-ratchet:Core.CollapseTheorem.remainder_scales_with_k_eff bench:RATCHET#8	established
+CLM-math-JF	6.2.4	J = F = k_eff·λ_op·σ (defense and flourishing are one geometry)	lean:coherence-ratchet:Core.Corridor	established
 CLM-sigma-semigroup	6.2.3	σ exp-decay semigroup + step-invariance; linear form withdrawn	test:CIRISConformance#57 staged:CIRISServer#155	staged
-CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	impl:CIRISAgent#911	staged
-CLM-sigma-srccorr	6.2.3.1	σ signal-source correlation discount (unpatched gap)	open:coherence-ratchet#5	open
-CLM-noise-classify	6.1.2	Noise-floor classification Full/Partial/EnvelopeOnly by procedure (R,ε)	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	staged
-CLM-noise-N5	6.1.5	N5: revocation forces descent below floor regardless of rarity	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	staged
-CLM-noise-ejection	6.1.2.3	EjectionVerdict routing (Keep/EjectToTier/AggregatedTierOnly/HardDelete)	test:CIRISConformance#test_541_ejection_routing impl:CIRISServer#155	staged
+CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	staged:CIRISServer#155	staged
+CLM-sigma-srccorr	6.2.3.1	σ signal-source Kish discount Signal_eff = n_src/(1+ρ̄_src(n_src−1)); clique neutralized at ρ̄_src=1	lean:coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization	established
+CLM-noise-classify	6.1.2	Noise-floor classification Full/Partial/EnvelopeOnly by procedure (R,ε)	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
+CLM-noise-N5	6.1.5	N5: revocation forces descent below floor regardless of rarity	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
+CLM-noise-ejection	6.1.2.3	EjectionVerdict routing (Keep/EjectToTier/AggregatedTierOnly/HardDelete)	test:CIRISConformance#test_541_ejection_routing impl:CIRISServer#155	established
 CLM-noise-dominance	6.1.2	Aggregation-erasure conditional on source-diversity gate (R9)	open:CIRISConstitution#6 test:CIRISConformance#55	open
-CLM-storage-budget	6.1.5.2	StorageBudgetV1 per-cohort_scope owner budget (PIN-NORMATIVE, self/family suppressed)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	staged
-CLM-storage-want	6.1.5.2	CorpusWantV1 want/have + size cap (wanted-then-pulled)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	staged
+CLM-storage-budget	6.1.5.2	StorageBudgetV1 per-cohort_scope owner budget (PIN-NORMATIVE, self/family suppressed)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
+CLM-storage-want	6.1.5.2	CorpusWantV1 want/have + size cap (wanted-then-pulled)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
 CLM-freeze-57	6.1.4	#57 freeze-gate byte-exact conformance vectors for CC 6.1 shapes	test:CIRISConformance#59	staged
-CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/prohibitions.py#_validate_capability staged:CIRISAgent#910	staged
-CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/dma/pdma.py	staged
-CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	staged
+CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/prohibitions.py#_validate_capability staged:CIRISAgent#910	established
+CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/dma/pdma.py	established
+CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	established
 CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	staged
 CLM-migration-fidelity	corpus	Source-fidelity migration validated (0 REJECT) under the skeptical rubric	test:@validation/results.csv	established
+CLM-child-protection	3.4.13	Seven child-protection rulings (fail-secure minor-stewardship, consent gating)	staged:CIRISServer#155 test:CIRISConformance#59	established
+CLM-trust-not-membership	3.2	Trust ≠ membership; default-not-forced-root; steward-binding admission	staged:CIRISServer#155	staged
+CLM-adult-incapacity	3.4.12	Adult-incapacity stewardship (capacity-assurance, prior-will-first, fail-to-liberty auto-restore)	staged:CIRISServer#155	staged
+CLM-age-assurance	3.4.11	Verified-rung age assurance + minor-steward binding	staged:CIRISServer#155	staged
+CLM-structural-invisibility	5.2	self/family content is structurally invisible — never federates (wire-enforced)	test:CIRISConformance#59 staged:CIRISServer#155	staged
+CLM-epoch-keying	5.1	Epoch keying + cascade (forward-secure content transport)	staged:CIRISServer#155	staged
+CLM-revocation-promotion	5.3.2.2	Subject revocation never rests local; 24h federation-tier promotion SLA	staged:CIRISServer#155	staged
+CLM-fragmentation	5.4.3	Content-fragmentation wire discipline (scope-privacy transport)	test:CIRISConformance#59	staged
+CLM-wholeness-witness	6.1.1	WholenessWitness divergence detection (Merkle construction, WW-1..3, N3/N4 equivocation)	test:CIRISConformance#59 staged:CIRISServer#155	staged
+CLM-canonicalization-boundary	6.1.3	CC 6.1 binary preimage discipline — length-prefixed/domain-separated, never JCS, never 1+4	test:CIRISConformance#59	staged
+CLM-billing-offwire	3.3.9	Billing/settlement is off-wire; value transfer rides external rails	normative-only:—	established
+CLM-meta-goal	1.1	M-1 (sustainable adaptive coherence) is the single apex every mechanism serves	normative-only:—	established
+CLM-wbd	1.9	Wisdom-Based Deferral: halt/escalate rather than guess beyond competence	impl:CIRISAgent#911	established
+CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-6)	normative-only:—	established
+CLM-entrenchment	4.5.1.2	Entrenchment: CC 4.2 / 4.5.1 / 1.2 need a MAJOR bump + dedicated accord ratification	normative-only:—	established
+CLM-halt-authority	4.2	HUMANITY_ACCORD constitutional halt layer — wire- and scope-isolated	staged:CIRISServer#155	staged
+CLM-wire-vocabulary	8.8	Two-tier wire-vocabulary governance; hash-pinned manifest registry	test:@manifests/WIRE_VOCABULARY.md	established
+CLM-noise-descent	6.1.2	One retirement operator: revocation/eviction/aging as pressure-driven descent	impl:CIRISServer#155	established
+CLM-admission	1.2	The four-test prefix-admission gate	staged:CIRISServer#155	staged
+CLM-adversary	1.13.3	Adversary model & privacy non-goals (normative)	normative-only:—	established
+CLM-adversary-classes	1.13.3.3	Adversary classes (and where each is / is not addressed)	normative-only:—	established
+CLM-forward-compatibility	2.1.1	Forward-compatibility rule	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-conformance	2.2	Conformance levels	test:CIRISConformance#59 impl:CIRISServer#155	staged
+CLM-subject_kind-subject-2	2.3.1	Subject-bearing dimensions (governance requirement)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-registry-canonical	2.3.2.1	Canonical-hash wire form + preimage convention	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-withdraws	2.4.1.1	`withdraws` admission rule (semantic, not structural)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-round-trip	2.6.1.1	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-canonicalization-array	2.6.1.1.1	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-per-field	2.6.1.2	Per-field encoding table (informational)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-canonical	2.6.1.3	Canonical encoding format (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-worked	2.6.1.4	Worked attack the rule closes	test:CIRISConformance#59 impl:CIRISServer#155	staged
+CLM-canonicalization	2.6.2	Date-time canonicalization	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-canonicalization-hexadecimal	2.6.3	Hexadecimal canonicalization	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-policy-versioning	2.6.4	Versioning policy	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-references	2.6.5	Normative References	test:CIRISConformance#59 impl:CIRISServer#155	staged
+CLM-canonicalization-cell	2.6.6	H3 cell canonicalization	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-location	2.6.6.1	Rough-only enforcement for `location_proof` (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-cell	2.6.6.2	Cell containment	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-time	2.6.7	Time and clocks	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-key_id	2.6.8	NodeCode — the canonical `key_id` shorthand encoding (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-conformance-language	2.6.9	Conformance language	test:CIRISConformance#59 impl:CIRISServer#155	staged
+CLM-provenance	3.1.2.1	Canonical-bytes contracts for provenance primitives	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-contributions	3.1.9.1	Files-as-Contributions joint claim	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-subject_kind	3.3.2	Governance subject_kinds	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-subject_kind-subject	3.3.3	`location_proof` subject_kind	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-family-subject	3.3.4	`family` subject_kind	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-consent-subject	3.3.5	`consent_record` subject_kind	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-identity	3.3.6	`identity_occurrence` subject_kind	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-encryption_pubkeys	3.3.6.1	the recipient content-encryption KEM binding	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-transport-authenticated	3.3.6.2	`transport_destination` — the authenticated identity↔address binding	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-rns	3.3.6.2.1	RNS destination-hash algorithm (pinned)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-consent-directed	3.3.7	`consent:replication` — directed federation-peer replication consent (CEG 1.0-RC28 addition)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-accord-reservation	3.4.1	The `accord:*` reservation	impl:CIRISServer#155	established
+CLM-community-location	3.4.2	Community + location-event reservations (CEG 0.8 addition)	impl:CIRISServer#155	established
+CLM-system	3.4.3	Substrate-self-report reservations (`system:*`)	impl:CIRISServer#155	established
+CLM-family-self	3.4.4	Self/family membership-event reservations (CEG 0.7 addition)	impl:CIRISServer#155	established
+CLM-capacity-score	3.4.5	Capacity-Score self-emission rejection	impl:CIRISServer#155	established
+CLM-reservation-delivery	3.4.6	Delivery-receipt reservation (CEG 0.10 addition)	impl:CIRISServer#155	established
+CLM-enforcement	3.4.7	The enforcement rule (normative)	impl:CIRISServer#155	established
+CLM-identity-set	3.4.7.1	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	impl:CIRISServer#155	established
+CLM-consent-counter	3.4.7.2	`consent_role` — the Counter-RII consent gate (1.0-RC4, ratifies Accord §RC / CIRISAgent#760 OQ-1/2/3)	impl:CIRISServer#155	established
+CLM-detector-only	3.4.8	Detector-only prefixes	impl:CIRISServer#155	established
+CLM-co-stewarded	3.4.9	Co-stewarded prefixes	impl:CIRISServer#155	staged
+CLM-witness-emitter	3.4.10	Witness-emitter reservations	impl:CIRISServer#155	established
+CLM-concurrent-write	3.5.1	Concurrent-write precedence	impl:CIRISServer#155	established
+CLM-anti-pattern-delegation	4.1.1	Delegation-laundering anti-pattern	impl:CIRISServer#155	established
+CLM-withdraws-arbitrage	4.1.4	`withdraws` arbitrage	impl:CIRISServer#155	staged
+CLM-invocation	4.2.1.1	Invocation canonical bytes (anti-replay)	impl:CIRISServer#155	established
+CLM-notify	4.2.1.2	`notify` vs `CONSTITUTIONAL` — consumer-UI requirement	impl:CIRISServer#155	established
+CLM-lifecycle	4.2.1.3	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	impl:CIRISServer#155	established
+CLM-hardware-class	4.2.2	Hardware-class taxonomy	impl:CIRISServer#155	established
+CLM-hardware-class-hardware	4.2.2.1	Hardware-class self-assertion gap (acknowledged)	impl:CIRISServer#155	staged
+CLM-composition-policies	4.4	Composition policies	impl:CIRISServer#155	staged
+CLM-frickerian	4.4.1	Frickerian discipline — consumer-policy norms	impl:CIRISServer#155	staged
+CLM-sub-quorum	4.4.3.1.1	Sub-quorum fallback	impl:CIRISServer#155	established
+CLM-community-three	4.4.3.2.1	The three crypto tiers + the Community DEK cascade (normative)	impl:CIRISServer#155	established
+CLM-deterministic	4.4.3.2.4.1	Deterministic resolution + member→address resolution (NORMATIVE)	impl:CIRISServer#155	established
+CLM-affiliations	4.4.3.2.8	The institutional cohort (necessity, not interest) (normative)	impl:CIRISServer#155	established
+CLM-family-policy	4.4.3.4	Policy L — Self/family membership composition	impl:CIRISServer#155	established
+CLM-cascade	4.4.3.4.1	Key-grant cascade (the at-rest encryption flow)	impl:CIRISServer#155	established
+CLM-cohort	4.4.3.4.3	"The ""Self at login"" — app + agent co-self + partnered delegation (normative composition)"	impl:CIRISServer#155	established
+CLM-canonicalization-signing	4.4.3.4.3.1	Signing member sets (normative — the JCS contract Verify hybrid-signs)	impl:CIRISServer#155	established
+CLM-multi-subject	4.4.3.5.4	Multi-subject revocation (any-subject-binding)	impl:CIRISServer#155	established
+CLM-policy-attestation	4.4.3.6	Policy I — Attestation-Ladder Composition	impl:CIRISServer#155	established
+CLM-policy-trusted	4.4.3.10	Policy J — Trusted-Publisher composition	impl:CIRISServer#155	established
+CLM-axis	4.5.1.1	Axis-vocabulary discipline	impl:CIRISServer#155	established
+CLM-subject_kind-subject-3	4.5.2.1	Subject-bearing dimension governance (normative)	impl:CIRISServer#155	established
+CLM-compliance-vertical	4.5.2.2	Vertical compliance mapping (informational)	impl:CIRISServer#155	staged
+CLM-takedown	4.5.3	Fast-path takedown coordination	impl:CIRISServer#155	established
+CLM-registry-named	4.5.4	Named-moderator existence invariant + merit auto-promotion	impl:CIRISServer#155	established
+CLM-takedown-moderation	4.5.5	Moderation as a delegable duty — `moderate` / `takedown` / `review`	impl:CIRISServer#155	established
+CLM-registry-watchlist	4.5.7	Watchlist auto-detection — opt-in, per-group, separation-of-powers	impl:CIRISServer#155	established
+CLM-cohabitation	4.5.8.1	Cohabitation discipline for constitutional + substrate roles	impl:CIRISServer#155	established
+CLM-settled	4.5.8.3	Settled in CIRISAgent, carried as-is	impl:CIRISServer#155	staged
+CLM-documents-what-2	4.5.10.4	What this documents	impl:CIRISServer#155	staged
+CLM-envelope-multi	4.5.12.2	Multi-family membership — envelope `family_id`	impl:CIRISServer#155	established
+CLM-reverse-quorum	4.5.13	Reverse-quorum governance — presence is authority, absence forfeits it	impl:CIRISServer#155	established
+CLM-witness	5.3.1	STH cosigning + witness directory	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-consistency-proof	5.3.1.1	Consistency-proof requirement (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-holder	5.3.2.1	Holder directory TTL + ContentMiss feedback	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-merge	5.3.2.3	Cross-region merge intents — CEG-declared per subject_kind (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-attestation-tier	5.3.2.4	The attestation tier model — local-tier write, query, promotion (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-authority-local	5.3.2.4.1	Local-tier eligibility — the discriminator is *revocation authority*, not subject-set emptiness	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-local	5.3.2.4.2	Promotion — `local → federation` (the deferred-signature moment)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-two	5.3.2.4.3	The two tiers	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-admission-pqc	5.3.2.4.3.1	The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-full-sha	5.3.2.5	Full-SHA verification before consumption (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-stream	5.3.3.1	Chunk seal + STREAM nonce (normative — V2 lock)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-namespace-realtime	5.3.3.2.1	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-registry-wire	5.3.3.2.3	`SealedAvChunk` wire layout (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-chunklayer	5.3.3.2.4	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-liveness	5.3.3.4	D6 liveness invariant — entitled vs reachable (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-transport-edge	5.3.3.5	Transport — Edge layer (normative — E1–E4 lock)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-delivery	5.3.3.6	Delivery receipts (normative — D5 / V3 lock)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-normative	5.3.3.7	Framing (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-multi-steward	5.3.4	Multi-steward + accord-holder discovery	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-envelope-error	5.3.6.1	Error envelope	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-record-id	5.4.1	Deterministic `record_id` (CBOR profile, normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-symbol	5.4.2	Uniform symbol AEAD framing for fountain-coded fragments (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-welcome-wrap	5.4.4	MLS Welcome HPKE wrap under invitee static X-Wing key (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-witness-content	5.4.5	Witness-chain content discipline (privacy witness, normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-announce-suppress	5.4.6	Announce suppression for group-scoped destinations (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-aggregationmetav1	6.1.2.1	`AggregationMetaV1` — the aggregation-tier wire contract (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-descent	6.1.2.2	Descent rule (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-registry-replication	6.1.5.1	Replication-target policy (§R-policy — normative floor + RECOMMENDED defaults)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-deterministic-alm	6.1.6	Deterministic ALM topology (§T / §M)	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-trust	6.1.8	Recursive trust bootstrap (§B) — trust-discovery, not membership	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-annex-g	8.8.7	Annex G: Adversarial Security & Robustness	normative-only:—	established
