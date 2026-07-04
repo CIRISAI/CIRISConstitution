@@ -95,6 +95,9 @@ def load_backed_decimals():
             elif repo == "RATCHET":
                 if r.get("status", "").strip().lower() in ("mechanized", "empirical"):
                     decs.add(dec)
+            elif repo == "CIRISAgent":
+                if r.get("status", "").strip().lower() == "impl":
+                    decs.add(dec)
         backed[repo] = decs
     return backed
 

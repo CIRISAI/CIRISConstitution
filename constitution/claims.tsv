@@ -1,10 +1,10 @@
 claim_id	decimal_id	summary	evidence	status
 CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity	established
-CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k); remainder form open	lean:coherence-ratchet:Core.Corridor bench:RATCHET#8 open:coherence-ratchet#4	open
+CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k_eff); remainder mechanized (crossover dissolved)	lean:coherence-ratchet:Core.CollapseTheorem.remainder_scales_with_k_eff bench:RATCHET#8	established
 CLM-math-JF	6.2.4	J = F = k_eff·λ_op·σ (defense and flourishing are one geometry)	lean:coherence-ratchet:Core.Corridor	established
 CLM-sigma-semigroup	6.2.3	σ exp-decay semigroup + step-invariance; linear form withdrawn	test:CIRISConformance#57 staged:CIRISServer#155	staged
-CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	impl:CIRISAgent#911	staged
-CLM-sigma-srccorr	6.2.3.1	σ signal-source correlation discount (unpatched gap)	open:coherence-ratchet#5	open
+CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	staged:CIRISServer#155	staged
+CLM-sigma-srccorr	6.2.3.1	σ signal-source Kish discount Signal_eff = n_src/(1+ρ̄_src(n_src−1)); clique neutralized at ρ̄_src=1	lean:coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization	established
 CLM-noise-classify	6.1.2	Noise-floor classification Full/Partial/EnvelopeOnly by procedure (R,ε)	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
 CLM-noise-N5	6.1.5	N5: revocation forces descent below floor regardless of rarity	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
 CLM-noise-ejection	6.1.2.3	EjectionVerdict routing (Keep/EjectToTier/AggregatedTierOnly/HardDelete)	test:CIRISConformance#test_541_ejection_routing impl:CIRISServer#155	established
@@ -12,8 +12,8 @@ CLM-noise-dominance	6.1.2	Aggregation-erasure conditional on source-diversity ga
 CLM-storage-budget	6.1.5.2	StorageBudgetV1 per-cohort_scope owner budget (PIN-NORMATIVE, self/family suppressed)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
 CLM-storage-want	6.1.5.2	CorpusWantV1 want/have + size cap (wanted-then-pulled)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
 CLM-freeze-57	6.1.4	#57 freeze-gate byte-exact conformance vectors for CC 6.1 shapes	test:CIRISConformance#59	staged
-CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/prohibitions.py#_validate_capability staged:CIRISAgent#910	staged
-CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/dma/pdma.py	staged
+CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/prohibitions.py#_validate_capability staged:CIRISAgent#910	established
+CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/dma/pdma.py	established
 CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	established
 CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	staged
 CLM-migration-fidelity	corpus	Source-fidelity migration validated (0 REJECT) under the skeptical rubric	test:@validation/results.csv	established
@@ -29,15 +29,15 @@ CLM-wholeness-witness	6.1.1	WholenessWitness divergence detection (Merkle constr
 CLM-canonicalization-boundary	6.1.3	CC 6.1 binary preimage discipline — length-prefixed/domain-separated, never JCS, never 1+4	test:CIRISConformance#59	staged
 CLM-billing-offwire	3.3.9	Billing/settlement is off-wire; value transfer rides external rails	normative-only:—	established
 CLM-meta-goal	1.1	M-1 (sustainable adaptive coherence) is the single apex every mechanism serves	normative-only:—	established
-CLM-wbd	1.9	Wisdom-Based Deferral: halt/escalate rather than guess beyond competence	impl:CIRISAgent#911	staged
+CLM-wbd	1.9	Wisdom-Based Deferral: halt/escalate rather than guess beyond competence	impl:CIRISAgent#911	established
 CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-6)	normative-only:—	established
 CLM-entrenchment	4.5.1.2	Entrenchment: CC 4.2 / 4.5.1 / 1.2 need a MAJOR bump + dedicated accord ratification	normative-only:—	established
 CLM-halt-authority	4.2	HUMANITY_ACCORD constitutional halt layer — wire- and scope-isolated	staged:CIRISServer#155	staged
 CLM-wire-vocabulary	8.8	Two-tier wire-vocabulary governance; hash-pinned manifest registry	test:@manifests/WIRE_VOCABULARY.md	established
 CLM-noise-descent	6.1.2	One retirement operator: revocation/eviction/aging as pressure-driven descent	impl:CIRISServer#155	established
-CLM-admission	1.2	The four-test prefix-admission gate	impl:CIRISAgent#911	staged
-CLM-adversary	1.13.3	Adversary model & privacy non-goals (normative)	impl:CIRISAgent#911	staged
-CLM-adversary-classes	1.13.3.3	Adversary classes (and where each is / is not addressed)	impl:CIRISAgent#911	staged
+CLM-admission	1.2	The four-test prefix-admission gate	staged:CIRISServer#155	staged
+CLM-adversary	1.13.3	Adversary model & privacy non-goals (normative)	normative-only:—	established
+CLM-adversary-classes	1.13.3.3	Adversary classes (and where each is / is not addressed)	normative-only:—	established
 CLM-forward-compatibility	2.1.1	Forward-compatibility rule	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-conformance	2.2	Conformance levels	test:CIRISConformance#59 impl:CIRISServer#155	staged
 CLM-subject_kind-subject-2	2.3.1	Subject-bearing dimensions (governance requirement)	test:CIRISConformance#59 impl:CIRISServer#155	established
