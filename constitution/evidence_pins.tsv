@@ -2,3 +2,4 @@ repo	commit	manifest_path	vendored	backed_when
 CIRISServer	2435036	evidence/cc_impl.tsv	vendor/evidence/CIRISServer.cc_impl.tsv	impl (repo!=— and crate!=open)
 CIRISConformance	d632a6e	evidence/cc_tests.tsv	vendor/evidence/CIRISConformance.cc_tests.tsv	status==green
 coherence-ratchet	11924dd	evidence/cc_lean.tsv	vendor/evidence/coherence-ratchet.cc_lean.tsv	status==mechanized
+RATCHET	c4a13f6	evidence/cc_formal.tsv	vendor/evidence/RATCHET.cc_formal.tsv	status in {mechanized,empirical}

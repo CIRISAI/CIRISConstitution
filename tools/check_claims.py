@@ -92,6 +92,9 @@ def load_backed_decimals():
             elif repo == "coherence-ratchet":
                 if r.get("status", "").strip().lower() == "mechanized":
                     decs.add(dec)
+            elif repo == "RATCHET":
+                if r.get("status", "").strip().lower() in ("mechanized", "empirical"):
+                    decs.add(dec)
         backed[repo] = decs
     return backed
 
@@ -202,7 +205,11 @@ def main():
     if backed:
         print("pinned manifests: " + ", ".join(f"{k}({len(v)} decimals)" for k, v in sorted(backed.items())))
         print(f"pointers RESOLVED: {xrepo_resolved} — " + ", ".join(f"{k}={v}" for k, v in sorted(resolved_by_repo.items())))
-        print(f"pointers PENDING:  {xrepo_pending} (unpinned repos: CIRISAgent, RATCHET — plus decimals a pinned manifest does not yet back)")
+        unpinned = sorted({re.split(r'[#/:]', p, 1)[0] for r in rows for tok in r[1]['evidence'].split()
+                           if ':' in tok and (p := tok.split(':', 1)[1])
+                           and tok.split(':', 1)[0] in RESOLVABLE_TAGS
+                           and re.split(r'[#/:]', p, 1)[0] not in backed})
+        print(f"pointers PENDING:  {xrepo_pending} (unpinned repos: {', '.join(unpinned) or 'none'} — plus decimals a pinned manifest does not yet back)")
     else:
         print("(no evidence_pins.tsv — all cross-repo pointers pending)")
     print(f"\n=== normative coverage (P2) ===")

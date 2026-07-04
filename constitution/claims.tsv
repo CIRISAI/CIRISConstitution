@@ -1,6 +1,6 @@
 claim_id	decimal_id	summary	evidence	status
-CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity bench:RATCHET#8	established
-CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k); remainder form open	lean:coherence-ratchet:Core.Corridor open:coherence-ratchet#4	open
+CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity	established
+CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k); remainder form open	lean:coherence-ratchet:Core.Corridor bench:RATCHET#8 open:coherence-ratchet#4	open
 CLM-math-JF	6.2.4	J = F = k_eff·λ_op·σ (defense and flourishing are one geometry)	lean:coherence-ratchet:Core.Corridor	established
 CLM-sigma-semigroup	6.2.3	σ exp-decay semigroup + step-invariance; linear form withdrawn	test:CIRISConformance#57 staged:CIRISServer#155	staged
 CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	impl:CIRISAgent#911	staged
