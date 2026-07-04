@@ -90,3 +90,22 @@ re-validation confirmed **ACCEPT**.
 - **§Q storage-contention** ACCEPT (C0 PASS·C1 PASS·C2 YES·r4) — CC 6.1.5.2; 1+4 surface untouched
   (both shapes are CC 6.1 substrate framing, not CC 2.1 attestations); N5 consent supremacy and
   CC 5.2 self/family suppression preserved.
+
+## Addendum — 1.0-rc gap register (G-A…G-G, 2026-07-03)
+
+Seven-gap pre-1.0 register applied. The security-critical one (**G-A**, a roster-capture defeat of the
+HUMANITY_ACCORD kill switch, CC 4.2.6) was adversarially validated: first pass **PARTIALLY-CLOSED**
+(the mandatory restore was unreachable under total censorship-through-`W`, and the `accord_contest`
+act had no pinned wire object); fixes applied — a **post-`W` contest on immutable append-log
+evidence** (restore reachable in exactly the attack case), the `accord_contest` / `accord_restore`
+canonical-bytes domains, the log-snapshot verify-resolution carve-out, a bounded adjudication SLA —
+and a re-validation returned **CLOSED**.
+
+- **G-A live-quorum roster-capture** CLOSED / ACCEPT (r5) — attack no longer achieves permanent
+  kill-switch disablement; surviving residual (bounded steward-restore dependence) named honestly.
+- **G-B…G-G** applied (noise-floor procedure-relative `(R,ε)`; Order-Max→WBD; severity-dial; σ
+  integrand definition; σ constants as bets; physical-assumption indexed) + R9 acknowledged risk.
+
+**Ratification note.** G-A amends the **entrenched** CC 4.2 surface; per CC 4.5.1.2 this requires a
+MAJOR bump + a dedicated accord ratification (pre-maturity: founder/accord-holder authority). Shipped
+as **1.0-rc1** pending that ratification ceremony.
