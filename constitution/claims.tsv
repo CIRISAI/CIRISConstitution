@@ -1,0 +1,19 @@
+claim_id	decimal_id	summary	evidence	status
+CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity bench:RATCHET#8	staged
+CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k); remainder form open	lean:coherence-ratchet:Core.Corridor open:coherence-ratchet#4	open
+CLM-math-JF	6.2.4	J = F = k_eff·λ_op·σ (defense and flourishing are one geometry)	lean:coherence-ratchet:Core.Corridor	staged
+CLM-sigma-semigroup	6.2.3	σ exp-decay semigroup + step-invariance; linear form withdrawn	test:CIRISConformance#57 staged:CIRISServer#155	staged
+CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	impl:CIRISAgent#911	staged
+CLM-sigma-srccorr	6.2.3.1	σ signal-source correlation discount (unpatched gap)	open:coherence-ratchet#5	open
+CLM-noise-classify	6.1.2	Noise-floor classification Full/Partial/EnvelopeOnly by procedure (R,ε)	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	staged
+CLM-noise-N5	6.1.5	N5: revocation forces descent below floor regardless of rarity	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	staged
+CLM-noise-ejection	6.1.2.3	EjectionVerdict routing (Keep/EjectToTier/AggregatedTierOnly/HardDelete)	test:CIRISConformance#test_541_ejection_routing impl:CIRISServer#155	staged
+CLM-noise-dominance	6.1.2	Aggregation-erasure conditional on source-diversity gate (R9)	open:CIRISConstitution#6 test:CIRISConformance#55	open
+CLM-storage-budget	6.1.5.2	StorageBudgetV1 per-cohort_scope owner budget (PIN-NORMATIVE, self/family suppressed)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	staged
+CLM-storage-want	6.1.5.2	CorpusWantV1 want/have + size cap (wanted-then-pulled)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	staged
+CLM-freeze-57	6.1.4	#57 freeze-gate byte-exact conformance vectors for CC 6.1 shapes	test:CIRISConformance#59	staged
+CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/prohibitions.py#_validate_capability staged:CIRISAgent#910	staged
+CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/dma/pdma.py	staged
+CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	staged
+CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	staged
+CLM-migration-fidelity	corpus	Source-fidelity migration validated (0 REJECT) under the skeptical rubric	test:@validation/results.csv	established
