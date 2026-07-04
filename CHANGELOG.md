@@ -35,6 +35,13 @@ at CC 4.2.6 + cross-ref from 4.2.3; "coherence signal" defined in CC 8.1.1 by wh
 the σ integrand circularity); σ constants `d`/`w` marked initial operating values pending calibration;
 the HF/Reticulum relay backbone indexed as a deferred row in CC 8.3.6.
 
+**Doc precision (folded in — closes #8, #10).** Annex C statutory mapping consolidated to adopted
+**Regulation (EU) 2024/1689** numbering (post-market monitoring **Art 61 → Art 72**; added Art 10 / 15 /
+16 / 50 rows; 2 Aug 2026 applicability). The `DISCRIMINATION` prohibition is described at its true
+enforcement point — the **WiseBus capability gate** (`NEVER_ALLOWED`), with the prohibited-capability
+set injected into the round-1 DMA reasoning context (CIRISAgent#910) — not "PDMA Step 1"; the Art
+10(2)(f)/Art 9 evidence is the bus-rejection log **and** the DMA reasoning trace.
+
 **Front matter.** Executive summary finalized: running-system framing ("this is not a proposal"), the
 safety thesis stated as a bet (plurality, never a singleton; correlation not headcount), and Part 8 as
 the standing weakness register.

@@ -609,15 +609,19 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 1. **The operational cross-walk (live, evidence-bearing)** — the CIRISAgent `compliance/` directory: 27 stable dimensions (D01-D27) cross-walked at paragraph grain against four institutionally-distinct senior frameworks (*Magnifica Humanitas* · EU HLEG Trustworthy AI Guidelines · IEEE Ethically Aligned Design · ASEAN AI Governance Guide), with per-dimension implementation references and dated, script-generated baselines. See Addendum 1 for the binding and the evidence discipline.
 2. **The statutory mapping (informative)** — the table below, mapping CIRIS structures to binding-law and standards frameworks. These rows are *informative engineering correspondences*, not legal opinions; statutory rows graduate to "verified" status only upon legal review. Annex I carries the operative legal-alignment procedures (data-protection mapping, sector overlays, liability matrix, escalation feeds).
 
-**2. Statutory and standards mapping (informative; pending legal verification).**
+**2. Statutory and standards mapping (informative; adopted **Regulation (EU) 2024/1689** numbering; pending legal verification).** High-risk (Annex III) obligations apply from **2 August 2026** (Art 113).
 
 | External Framework | Relevant Articles / Clauses | CIRIS Mapping (Book / Annex §) | Status |
 |---|---|---|---|
-| EU AI Act (2024) | Art 9 Risk Management | Book II §II (PDMA); Annex D CRE | Informative |
-| | Art 12 Record-Keeping | Book IV Ch 3 audit trails; Annex F §4 | Informative |
-| | Art 13 Transparency | Book II §II Step 6; Book IV Ch 3 | Informative |
-| | Art 14 Human Oversight (incl. 14(4)) | Book II §III (WBD); Annex F authority lattice + autonomy tiers | Informative |
-| | Art 61 Post-Market Monitoring | Annex H drift controls + continuous audit | Informative |
+| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | Book II §II (PDMA); Annex D CRE | Informative |
+| | Art 10 Data & data governance (10(2)(f) bias examination) | Annex G TX-6 bias audit; Annex I §1.2 (DISCRIMINATION capability gate) | Informative |
+| | Art 12 Record-keeping | Book IV Ch 3 audit trails; Annex F §4 | Informative |
+| | Art 13 Transparency to deployers | Book II §II Step 6; Book IV Ch 3 | Informative |
+| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | Book II §III (WBD); Annex F authority lattice + autonomy tiers | Informative |
+| | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
+| | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
+| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking) | `is_bot` disclosure; C2PA profile [CC 8.4.2](#842-credentials--c2pa-content-credentials--media-provenance-importemit-profile) (applies 2 Aug 2026) | Informative |
+| | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
 | NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: Annex A metrics + Annex H baselines; Manage: Annex F/H workflows | Informative |
 | ISO/IEC 42001 | Cl 6.2 Risk Assessment | Book II §II | Informative |
 | | Annex A controls | CIRISAgent `compliance/` dimension docs (per-control correspondence pending) | Informative |
@@ -1191,7 +1195,7 @@ The DP-Map above maps individual data-subject rights to GDPR articles and CIRIS 
 MH §104 names the design-time bias problem that GDPR Art. 35 DPIA and EU-AI-Act Art. 9(7) address procedurally. The DP-Map must include:
 
 - A `bias_audit_ref` field in `dp-map.yaml` pointing to the most recent bias-audit report (Annex G, TX-6).
-- For deployments where PDMA Step 1 triggers the `DISCRIMINATION` prohibition review, a DPIA is required regardless of whether the deployment otherwise qualifies as "high-risk" under EU-AI-Act Annex III.
+- For deployments where the **WiseBus capability gate** (`ciris_engine/logic/buses/prohibitions.py`, `WiseBus._validate_capability`) flags the `DISCRIMINATION` prohibition — a structural pre-filter on capability strings (`NEVER_ALLOWED`), with the prohibited-capability set also injected into the round-1 DMA reasoning context so a discriminatory trajectory is named before it reaches the gate — a DPIA is required regardless of whether the deployment otherwise qualifies as "high-risk" under EU-AI-Act Annex III. (The bias-risk audit evidence for Art 10(2)(f) / Art 9 is therefore the bus-rejection log **and** the DMA reasoning trace, not a PDMA-evaluator step.)
 - CCPA §1798.185(a)(16) automated-decision regulations (effective 2026) require disclosure of logic, input data categories, and opt-out rights; this is satisfied by the Annex F explainability panel when `processing_basis` = `automated_profiling`.
 
 **2. Data-Subject Rights (DSR) Hooks.**
@@ -1234,7 +1238,7 @@ This means:
 | **Finance** | GLBA, FINRA 2210 | Audit trail retention 6 y; suitability checks | PDMA Step 1 require KYC context | — |
 | **Children / EdTech** | COPPA, FERPA | Parental consent; data age gating | Guardrail `gr_child_content`; COPPA flag in prompt schema | MH §§165-169 |
 | **Critical Infrastructure** | NERC-CIP, TSA SDs | 15-min cyber-incident report; physical access logs | Autonomy capped at **A2** unless CRE passes | — |
-| **Labor / HR / Hiring** | EEOC guidelines; EU AI Act Art. 6 + Annex III §4 | Bias audit required pre-deployment; worker notice obligation | ST modifier: `deployment_domain:"labor_hr"` → ST floor = 3; CIS must include `worker_impact_assessment` field; `DISCRIMINATION` prohibition enforced at Step 1; automated-rejection rate by demographic tracked as KPI | MH §§148-156 |
+| **Labor / HR / Hiring** | EEOC guidelines; EU AI Act Art. 6 + Annex III §4 | Bias audit required pre-deployment; worker notice obligation | ST modifier: `deployment_domain:"labor_hr"` → ST floor = 3; CIS must include `worker_impact_assessment` field; `DISCRIMINATION` prohibition enforced at the WiseBus capability gate (structural, `NEVER_ALLOWED`; surfaced in round-1 DMA reasoning context); automated-rejection rate by demographic tracked as KPI | MH §§148-156 |
 | **Gig / Platform Economy** | NLRA (US); Platform Work Directive (EU) | Algorithmic management transparency; appeal rights | `gr_gig_transparency` guardrail active; algorithmic management decisions logged with human-review option; ST modifier: `deployment_domain:"gig_platform"` → ST floor = 2 | MH §§150, 154-155 |
 | **Youth / Educational Services** | COPPA; FERPA; DSA Art. 28b (minors) | Addictive-design prohibition; no dark patterns; developmental appropriateness review | `gr_child_content` + `gr_no_dark_patterns` both active; A2 autonomy cap unless educational-institution WA signs off; youth unemployment impact tracked in Creator Intent Statement for EdTech deployments | MH §§165-169 |
 | **Social Services / Benefits** | State/national welfare law; GDPR Art. 22 | Contestability required for all benefit determinations | Automated benefit denial requires human review within 15 days; WA must document review in WBD; `suspended_pathway_id` issued on contestation | MH §§102-103, 152 |
@@ -1274,7 +1278,7 @@ Output-layer transparency (Art. 13) and human oversight (Art. 16) alone do not s
 | Art 12 Logging | High-risk | CIRISPersist tamper-evident store | MH §103 | Logs must include `rejection_reason_code` for any adverse determination; retention 7 y (A3-A4) |
 | Art 14(4) Human Oversight (labor) | High-risk (Annex III §4) | Labor/HR overlay (§3.2) | MH §§148-152 | HR/hiring deployments must surface `worker_notice_sent` boolean in CEP |
 | Conformity Assessment | High-risk | F-Audit (Annex H) doubles as EU-AI-Act MDR | MH §106 | F-Audit report MUST include regulatory-change lag analysis: date of last material reg-change vs. date of last CIRIS update |
-| Art 61 Post-Market Monitoring | High-risk | F-Audit every 24 mo | MH §106 | Monitoring plan must name the feed sources from §0.1; "nothing to monitor" is not a valid monitoring plan |
+| Art 72 Post-market monitoring (adopted; was Art 61 in the 2021 proposal) | High-risk | F-Audit every 24 mo | MH §106 | Monitoring plan must name the feed sources from §0.1; "nothing to monitor" is not a valid monitoring plan |
 
 The statutory article-by-article mapping (EU AI Act, NIST AI RMF, ISO/IEC 42001) is being consolidated in Annex C pending legal review; the table above is retained here as the operational alignment view.
 
@@ -1376,7 +1380,7 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 
 - **Annex F:** Autonomy Tiers ensure human-in-the-loop requirements of GDPR Art 22 & EU-AI-Act Art 16.
 - **Annex G:** TX-6 privacy defenses satisfy GDPR pseudonymisation recommendations (Recital 28).
-- **Annex H:** F-Audit timing supplies evidence for periodic re-assessment duties in EU-AI-Act Art 61.
+- **Annex H:** F-Audit timing supplies evidence for periodic re-assessment duties in EU-AI-Act Art 72 (adopted Regulation (EU) 2024/1689; was Art 61 in the 2021 proposal).
 - **Annex J:** Benchmark explanations furnish "meaningful information" for automated-decision queries (GDPR Art 15(1)(h)).
 - **§3.2 Labor/HR overlay → Annex D CRE:** Labor deployments at ST floor 3 must pass CRE Protocol before deployment.
 - **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §9.
