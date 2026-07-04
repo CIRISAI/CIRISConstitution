@@ -3,6 +3,12 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 0.9.1 — executive summary in the front matter
+
+Adds `constitution/EXECUTIVE_SUMMARY.md` — a one-page plain-language statement of
+what this document is and why (the README's register, inside the document itself) —
+placed before the Foreword in the built PDF. No normative change.
+
 ## 0.9 — CEG replication storage-contention axis (§Q, seed-blocker)
 
 Closes the last replication gap before mesh seed: replication was specified by **wire type**

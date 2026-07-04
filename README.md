@@ -6,7 +6,7 @@ Most AI-governance writing splits in two: ethics with no teeth (principles no ma
 
 It reads like a standard, not a manifesto, and it is deliberately layered: read Part I (the ethics) and stop, jump straight to the wire grammar, or cite any single concept by a stable address. Rejecting a later Part costs you nothing in the earlier ones.
 
-**Current version:** CC 0.9 · **Status:** source-fidelity validated (0 REJECT) · **License:** AGPL-3.0-or-later
+**Current version:** CC 0.9.1 · **Status:** source-fidelity validated (0 REJECT) · **License:** AGPL-3.0-or-later
 **Stewarded by** Eric Moore — perpetual, no expiry ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)).
 
 ## The document in one paragraph (for the technical reader)
@@ -24,6 +24,7 @@ consumers vendor from and pin by version. Downstream copies are **derived artifa
 
 | Path | Content |
 |---|---|
+| [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md) | The executive summary — what this is and why, before the opening |
 | [`constitution/FOREWORD.md`](constitution/FOREWORD.md) | The foreword — Genesis of Ethical Agency (sets the tone) |
 | [`constitution/SCOPE_AND_DISCLAIMERS.md`](constitution/SCOPE_AND_DISCLAIMERS.md) | Scope (up to AGI/ASI), the claim-and-limit, the no-warranty / not-force disclaimer |
 | `constitution/part_1_foundation.md` … `part_8_appendices.md` | The eight Parts (see below) |
