@@ -81,7 +81,7 @@ def load_backed_decimals():
         lines = [l for l in open(vend, encoding="utf-8") if not l.lstrip().startswith("#")]
         for r in csv.DictReader(lines, delimiter="\t"):
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
-            if not dec:
+            if not dec or dec == "—":                     # skip non-section rows (e.g. h3ere StepPoint)
                 continue
             if repo == "CIRISServer":
                 if r.get("repo", "").strip() not in ("—", "") and r.get("crate@version", "").strip().lower() != "open":
