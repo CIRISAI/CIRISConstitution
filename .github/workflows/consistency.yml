@@ -1,0 +1,23 @@
+name: consistency
+
+# RC2 "spec as executable infrastructure": every push/PR is gated on the evidence
+# registry + dual-ID spine staying consistent with the prose. A dead in-repo
+# evidence pointer, a bad section address, or a prose section missing from the
+# dual-ID spine fails the build. Cross-repo evidence pointers warn (they resolve
+# against the pinned sibling manifests) but do not fail.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  claims-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Evidence registry + toc/prose drift + normative coverage
+        run: python3 tools/check_claims.py

@@ -1,0 +1,6 @@
+repo	commit	manifest_path	vendored	backed_when
+CIRISServer	2435036	evidence/cc_impl.tsv	vendor/evidence/CIRISServer.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISConformance	d632a6e	evidence/cc_tests.tsv	vendor/evidence/CIRISConformance.cc_tests.tsv	status==green
+coherence-ratchet	f4b72b0	evidence/cc_lean.tsv	vendor/evidence/coherence-ratchet.cc_lean.tsv	status==mechanized
+RATCHET	4233cef	evidence/cc_formal.tsv	vendor/evidence/RATCHET.cc_formal.tsv	status in {mechanized,empirical}
+CIRISAgent	c08cbad	evidence/cc_impl.tsv	vendor/evidence/CIRISAgent.cc_impl.tsv	status==impl (PR #912, pre-release — re-pin on their next tag)
