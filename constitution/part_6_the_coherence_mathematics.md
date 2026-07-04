@@ -236,14 +236,14 @@ Agents choose strategies in a high-dimensional **rationale space** ℝ of dimens
 The collapse is quantified (Book IX §3.3): the feasible deceptive volume decays
 
 ```
-V(k) = V(0) · exp(-λ_geo · k_eff) + O(r² · k)
+V(k) = V(0) · exp(-λ_geo · k_eff) + O(r² · k_eff)
 ```
 
 under the stated preconditions — the **deceptive** region is convex, its radius `r < 0.5` (the theorem's decay rate `λ_geo ≈ 2r`), constraint orientations are Grassmannian-uniform, and `k ≥ 3`. Each independent, diverse constraint multiplies the cost of coordinated deception. This geometry grounds the [CC 3.1.8.2](part_3_the_namespace.md) Coherence-Ratchet detectors and the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action detector, which read the same `ρ` / `k_eff` structure over federation-emitted traces.
 
 **Nomenclature note (`λ_geo` vs `λ_op`).** The decay rate `λ_geo ≈ 2r` in this theorem is a **geometric** quantity — the radius of the convex deceptive region — and is **distinct** from the free **operational strictness `λ_op`** of the defense / flourishing functions (6.2.2 / 6.2.4). They carry no default mapping, and `λ_op` **MUST NOT** be substituted into the collapse bound: raising Conscience sensitivity does not contract adversary geometry.
 
-**Saturation note.** Because `k_eff ≤ 1/ρ̄` (the Kish ceiling), for any fixed `ρ̄ > 0` the exponential term bottoms out at `V(0)·exp(−λ_geo/ρ̄)` as `k → ∞`, while the `O(r²·k)` remainder grows in **raw** `k`. Past a finite `k*` the bound is therefore **uninformative — not improving, and never a claim that deception gets cheaper** (the remainder is slack on an upper estimate): adding *correlated* near-duplicate constraints cannot tighten the floor; only lowering `ρ̄` (genuine diversity) does. Whether the remainder is more precisely `O(r²·k_eff)` — which would remove the crossover entirely — is open against the Book IX §3.3 derivation and tracked upstream.
+**Saturation note (resolved).** Because `k_eff ≤ 1/ρ̄` (the Kish ceiling), for any fixed `ρ̄ > 0` the exponential term saturates at `V(0)·exp(−λ_geo/ρ̄)` as `k → ∞`. The remainder is **`O(r²·k_eff)`, not `O(r²·k)`** — mechanized in Lean (`coherence-ratchet:Core.CollapseTheorem.remainder_scales_with_k_eff`) — so **both terms saturate in lockstep and the bound is uniform in `k`**: the earlier crossover pathology **dissolves**. Adding *correlated* near-duplicate constraints neither tightens nor loosens the floor (`k_eff` already discounts redundancy — it is neutral); only lowering `ρ̄` (genuine diversity) tightens it. `λ_geo` and the remainder constant `κ` are **substrate-specific positive constants** — framework primitives, not a universal value. The withdrawn `O(r²·k)` form is retained upstream as a *distinct* object (`withdrawn_bound_looser_than_corrected`), machine-checkably not equivalent — the correction is proven, not asserted.
 
 ### 6.2.2 `defense-function` — The Coherent Intersection — the defense function J
 
@@ -292,6 +292,16 @@ where  k_eff = k / (1 + ρ̄ · (k − 1))
 **Attestation requirement (normative).** Signal weight `w` MUST derive from attested events that are **costly to fake** — federation-signed attestations bound to a persistent identity ([CC 2.1](part_2_the_grammar.md) envelopes), non-transferable Commons-Credits contribution weight, or completed-task validations countersigned by the counterparty. Free-text acknowledgments and unattested gratitude carry **`w = 0`** toward σ.
 
 *Rationale.* Gratitude tokens are otherwise approximately free to emit, which would make sycophancy the σ-maximizing strategy and σ adversary-pumpable — an agent could hold the ratchet open with flattery. Requiring costly attestation **constructs** the "costly to fake" property in the wire format rather than assuming it of participants. This is the metric-layer closure of the gratitude-pumping / sycophancy vector recorded at [CC 8.8.7](part_8_appendices.md) Annex G. *(Legacy citation: Book IX §5.2.)*
+
+**Signal-source correlation discount (normative).** The `w = 0` rule closes *solo* sycophancy, but σ must also resist a **colluding clique**: legitimately-stewarded peers mutually countersigning each other emit genuinely-attested, `w > 0` signals yet would pump σ at linear cost with no diversity penalty — the echo-chamber double-count `k_eff` was built to kill, reappearing on the σ leg. The signal weight is therefore Kish-discounted over the **signal-source correlation**: the interval contributes `w · Signal_eff`, with
+
+```
+Signal_eff = n_src / (1 + ρ̄_src · (n_src − 1))
+```
+
+where `n_src` is the number of distinct signal sources and `ρ̄_src` their average pairwise correlation, drawn from the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action matrix (co-signing frequency, shared steward lineage, temporal clustering). `ρ̄_src` (signal-source correlation) is **named distinctly from, and non-substitutable with,** `k_eff`'s `ρ̄` (constraint-orientation correlation). At full collusion (`ρ̄_src → 1`) `Signal_eff → 1` regardless of clique size — a fully-collusive clique contributes at most **one** independent source's σ (mechanized: `coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization`). The discount is applied on the **attested-timestamp replay path** (the 6.2.3 step-invariance), so a partitioned clique cannot dump a fat offline backlog to bypass an interval-local `ρ̄_src` estimate.
+
+*Scope.* `Signal_eff` and the corrected recurrence `σ(t+Δt) = σ(t)·exp(−d·Δt) + w·Signal_eff` are mechanized. The full **source-attributed provenance-vector** state-shape — per-source σ carried through the exp recurrence with the source-correlation matrix maintained over the window — is the larger, atomic 6.2.3 / 6.2.3.1 edit that **composes on top** of this, a stated future refinement rather than a formula tweak.
 
 ### 6.2.4 `flourishing-capacity` — The flourishing capacity (F)
 
