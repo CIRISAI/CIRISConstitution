@@ -206,7 +206,7 @@ def main():
         print("pinned manifests: " + ", ".join(f"{k}({len(v)} decimals)" for k, v in sorted(backed.items())))
         print(f"pointers RESOLVED: {xrepo_resolved} — " + ", ".join(f"{k}={v}" for k, v in sorted(resolved_by_repo.items())))
         unpinned = sorted({re.split(r'[#/:]', p, 1)[0] for r in rows for tok in r[1]['evidence'].split()
-                           if ':' in tok and (p := tok.split(':', 1)[1])
+                           if ':' in tok and (p := tok.split(':', 1)[1]) and not p.startswith('@')
                            and tok.split(':', 1)[0] in RESOLVABLE_TAGS
                            and re.split(r'[#/:]', p, 1)[0] not in backed})
         print(f"pointers PENDING:  {xrepo_pending} (unpinned repos: {', '.join(unpinned) or 'none'} — plus decimals a pinned manifest does not yet back)")
