@@ -48,13 +48,16 @@ def load_prose_decimals():
     return decs
 
 
-def report_toc_drift(toc, prose, warnings):
-    missing = sorted(d for d in prose if d not in toc)                # section exists, not in spine
+def report_toc_drift(toc, prose, errors, warnings):
+    # A prose section absent from the spine is a hard error: every numbered section
+    # MUST carry a dual-ID (toc.tsv + codebook.json). Reconciled in CIRISConstitution#20.
+    missing = sorted(d for d in prose if d not in toc)
+    # A toc decimal with no prose heading is a warning (e.g. the 1.14.x parable → FOREWORD).
     extra = sorted(d for d in toc if d not in prose
                    and not d.startswith(DRIFT_EXEMPT_PREFIX) and "." in d)
     if missing:
-        warnings.append(f"toc drift: {len(missing)} prose section(s) missing from toc.tsv "
-                        f"[spine reconciliation — tracked separately]: {', '.join(missing)}")
+        errors.append(f"toc drift: {len(missing)} prose section(s) missing from toc.tsv/codebook "
+                      f"(every numbered section MUST have a dual-ID): {', '.join(missing)}")
     if extra:
         warnings.append(f"toc drift: {len(extra)} toc decimal(s) with no prose heading: {', '.join(extra)}")
 
@@ -64,7 +67,7 @@ def main():
     toc = load_toc_decimals()
     prose = load_prose_decimals()
     decs = toc | prose                                                # a claim may address any real section
-    report_toc_drift(toc, prose, warnings)
+    report_toc_drift(toc, prose, errors, warnings)
     path = os.path.join(DOC, "claims.tsv")
     with open(path, encoding="utf-8") as f:
         r = csv.DictReader(f, delimiter="\t")
