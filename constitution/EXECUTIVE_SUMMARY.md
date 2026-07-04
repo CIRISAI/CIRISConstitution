@@ -1,0 +1,17 @@
+# Executive Summary
+
+**What this document is:** the single rulebook for an AI federation that has to *act well* and *prove it* — one text that states both what these systems owe the world and exactly what bytes they must exchange to show it.
+
+Most governance writing for AI splits into two piles: ethics with no teeth — principles no machine can check — or protocol with no conscience — wire formats that do not know what they are for. This Constitution refuses the split. The ethical layer and the machine-checkable grammar live in **one versioned document**, so a rule and the message that enforces it can never drift apart.
+
+**Why it exists.** Two documents grew up separately and already contained each other: the **CIRIS Accord**, the ethical constitution — one meta-goal, six principles, a decision algorithm, deferral to human wisdom, and the mathematics of why diverse, independently-constrained agents are safer together than any one alone — and **CEG**, the epistemic grammar — the frozen attestation surface a federation of machines actually speaks. The Accord's mathematics defines CEG's primitives; CEG's halt layer and reserved namespaces point back up to the Accord. Joining them was not a merger of convenience; it was recognizing one document that had been written in two places.
+
+**The single apex.** When the joined corpus is measured for importance, one concept emerges above all others: **M-1 — the meta-goal of sustainable adaptive coherence**, the flourishing of sentient life within a living, diverse world. Every mechanism in these pages — every consent object, every quorum rule, every byte of the wire — traces back to it. Beneath M-1, roughly four hundred operational concepts stand co-equal: **peaked in purpose, flat in power**. No component owns the mesh; no scale of participant outranks another in kind.
+
+**What it claims, and what it does not.** The wire surface — one envelope, four structural primitives — is **conformance-frozen**: a change to those bytes is a found defect, not an edit. The coherence mathematics is stated as an engineering tier with its preconditions and open questions named, not as universal law. Validation of this text against its sources was performed by skeptical review under a published rubric, and is described here as exactly that — nothing stronger. Where a guarantee is not yet measurable, the text says so and points at the work remaining. The document holds itself to the honesty discipline it prescribes.
+
+**How to read it.** The text is deliberately layered. Part I is the ethics and can be read alone. Parts II–V are the grammar, namespace, governance, and transport a builder needs. Part VI is the mathematics; Part VII the lifecycle — from creation ethics to a dignified sunset; Part VIII the appendices, case studies, and regulatory crosswalks. Every section carries two stable addresses — a decimal number and a semantic name — and a lossless mapping back to its source text. Read the ethics and stop, or jump straight to the wire: rejecting a later Part costs you nothing in the earlier ones.
+
+**Who keeps it.** The document is stewarded — responsible *for*, never holder *of* — until the mesh reaches maturity, at which point amendment authority passes to the federation's own mechanized process. Until then, every change lands through the same discipline: declared, validated against sources, versioned, and recorded.
+
+One goal above; equals beneath. Rules that machines can check, in service of a purpose worth checking them for.

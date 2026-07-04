@@ -88,6 +88,8 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 """
 
 body = [PREAMBLE]
+body.append(B.convert(prefilter((DOC / "EXECUTIVE_SUMMARY.md").read_text(encoding="utf-8"))))  # exec summary before the opening
+body.append(r"\clearpage")
 body.append(B.convert(prefilter((DOC / "FOREWORD.md").read_text(encoding="utf-8"))))   # foreword sets the tone
 body.append(r"\clearpage")
 body.append(B.convert(prefilter((DOC / "SCOPE_AND_DISCLAIMERS.md").read_text(encoding="utf-8"))))  # scope + disclaimers
