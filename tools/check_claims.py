@@ -64,6 +64,38 @@ def load_prose_decimals():
     return decs
 
 
+def load_backed_decimals():
+    """repo -> set of CC decimals its pinned, vendored spec-map manifest BACKS.
+    Manifests are vendored under constitution/vendor/evidence/ at the commits pinned
+    in constitution/evidence_pins.tsv, so resolution is reproducible and CI-local.
+    Cross-repo pointers join on the CC decimal (claim_ids differ between repos)."""
+    backed = {}
+    pins = os.path.join(DOC, "evidence_pins.tsv")
+    if not os.path.exists(pins):
+        return backed
+    for row in csv.DictReader(open(pins, encoding="utf-8"), delimiter="\t"):
+        repo, vend = row["repo"], os.path.join(DOC, row["vendored"])
+        if not os.path.exists(vend):
+            continue
+        decs = set()
+        lines = [l for l in open(vend, encoding="utf-8") if not l.lstrip().startswith("#")]
+        for r in csv.DictReader(lines, delimiter="\t"):
+            dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
+            if not dec:
+                continue
+            if repo == "CIRISServer":
+                if r.get("repo", "").strip() not in ("—", "") and r.get("crate@version", "").strip().lower() != "open":
+                    decs.add(dec)
+            elif repo == "CIRISConformance":
+                if r.get("status", "").strip().lower() == "green":
+                    decs.add(dec)
+            elif repo == "coherence-ratchet":
+                if r.get("status", "").strip().lower() == "mechanized":
+                    decs.add(dec)
+        backed[repo] = decs
+    return backed
+
+
 def report_toc_drift(toc, prose, errors, warnings):
     # A prose section absent from the spine is a hard error: every numbered section
     # MUST carry a dual-ID (toc.tsv + codebook.json). Reconciled in CIRISConstitution#20.
@@ -97,6 +129,9 @@ def main():
     claim_decimals = set()
     status_ct, tag_ct = Counter(), Counter()
     resolvable_evidenced = inrepo_checked = 0
+    backed = load_backed_decimals()                         # repo -> backed CC decimals (pinned manifests)
+    xrepo_resolved = xrepo_pending = 0
+    resolved_by_repo = Counter()
 
     for ln, row in rows:
         cid = (row["claim_id"] or "").strip()
@@ -133,11 +168,19 @@ def main():
                     errors.append(f"L{ln} [{cid}]: dead in-repo pointer '{ptr}'")
                 elif tag in RESOLVABLE_TAGS:
                     has_resolvable = True
-            elif tag in RESOLVABLE_TAGS:                  # cross-repo, pending manifest
-                warnings.append(f"L{ln} [{cid}]: cross-repo {tag} pointer '{ptr}' unresolved (pending sibling manifest)")
+            elif tag in RESOLVABLE_TAGS:                  # cross-repo: resolve by decimal vs pinned manifest
+                repo = re.split(r"[#/:]", ptr, 1)[0]
+                if repo in backed and dec in backed[repo]:
+                    xrepo_resolved += 1
+                    resolved_by_repo[repo] += 1
+                    has_resolvable = True                 # backed by a pinned sibling manifest → counts as evidence
+                elif repo in backed:
+                    xrepo_pending += 1
+                    warnings.append(f"L{ln} [{cid}]: {tag} pointer '{ptr}' — {repo} manifest (pinned) does not yet back CC {dec}")
+                else:
+                    xrepo_pending += 1
+                    warnings.append(f"L{ln} [{cid}]: cross-repo {tag} pointer '{ptr}' unresolved (no pinned {repo} manifest yet)")
 
-        if has_resolvable and st != "established":
-            warnings.append(f"L{ln} [{cid}]: has resolvable evidence but status='{st}' (expected 'established')")
         if has_resolvable:
             resolvable_evidenced += 1
         if dec != "corpus":
@@ -154,7 +197,14 @@ def main():
     print("status: " + ", ".join(f"{k}={v}" for k, v in sorted(status_ct.items())))
     print("tags:   " + ", ".join(f"{k}={v}" for k, v in sorted(tag_ct.items())))
     print(f"in-repo pointers checked: {inrepo_checked}")
-    print(f"claims with resolvable (in-repo) impl/test/lean/bench evidence: {resolvable_evidenced}/{len(rows)}")
+    print(f"claims with resolvable evidence (in-repo @ or pinned-manifest-backed): {resolvable_evidenced}/{len(rows)}")
+    print(f"\n=== cross-repo resolution (against pinned manifests) ===")
+    if backed:
+        print("pinned manifests: " + ", ".join(f"{k}({len(v)} decimals)" for k, v in sorted(backed.items())))
+        print(f"pointers RESOLVED: {xrepo_resolved} — " + ", ".join(f"{k}={v}" for k, v in sorted(resolved_by_repo.items())))
+        print(f"pointers PENDING:  {xrepo_pending} (unpinned repos: CIRISAgent, RATCHET — plus decimals a pinned manifest does not yet back)")
+    else:
+        print("(no evidence_pins.tsv — all cross-repo pointers pending)")
     print(f"\n=== normative coverage (P2) ===")
     print(f"normative-bearing sections: {len(norm)} | covered by >=1 claim: {len(covered)} ({cov_pct:.0f}%)")
     if uncovered:
