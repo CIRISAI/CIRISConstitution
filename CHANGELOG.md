@@ -3,6 +3,43 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 1.0-rc2 — evidence registry, two new invariants, and the coherence math finalized
+
+Consolidates the post-review work into the release candidate.
+
+**Evidence registry (spec as executable infrastructure).** New `constitution/EVIDENCE.md`
+(tag vocabulary), `constitution/claims.tsv` (146 load-bearing claims), and
+`tools/check_claims.py` — a CI gate (`.github/workflows/consistency.yml`) that validates
+evidence pointers, the dual-ID spine, and normative coverage. Coverage **132/132 sections
+(100%)**. Cross-repo `impl`/`test`/`lean`/`bench` pointers resolve by CC decimal against
+five **pinned, vendored** sibling manifests (CIRISServer, CIRISConformance,
+coherence-ratchet, RATCHET, CIRISAgent): **116 pointers resolved, 118 claims established**.
+A generated **Evidence Register** appendix is rendered into the PDF. The checker also caught
+and closed real drift — **29 prose sections** were missing from `toc.tsv`/`codebook.json`
+(reconciled; spine 400 → 429; drift now a hard error).
+
+**Single-owner invariant (CC 3.2).** Closes a grindable ownership-resolution leak: node
+ownership is the single-valued `delegates_to(user→key, purpose: owner_binding)` sub-relation
+(distinct from multi-parent act-on-behalf/hierarchy); `owner_of` is purpose-filtered → at
+most one; admission-time reject of a second distinct owner; consumers fail-closed on
+cardinality ≠ 1 (no `.next()` a sorted set); no permanent ownerless lock. Adversarially
+validated (grind CLOSED).
+
+**Detection discriminator (CC 3.4.8).** Pins the wire discriminator as the prefix contract
+itself — any `detection:*` row is a primary emission requiring `lenscore_detector`;
+cross-attestations ride `truth_grounding:detection:*` — so the persist admission gate is a
+blanket reserved-prefix rule with no envelope parsing.
+
+**Coherence mathematics finalized (CC 6.2.1 / 6.2.3.1).** Both upstream-open questions are
+now mechanized in Lean. The collapse remainder is **`O(r²·k_eff)`** (not `O(r²·k)`) —
+`remainder_scales_with_k_eff` — so the bound is uniform in `k` and the crossover pathology
+dissolves. The **σ signal-source Kish discount** (`Signal_eff`, `clique_neutralization`)
+lands normatively at 6.2.3.1, closing the colluding-clique σ-pump. Honesty caveats preserved
+(substrate-specific constants; the full source-attributed provenance-vector state-shape is a
+stated future refinement).
+
+VERSION → 1.0-rc2.
+
 ## 1.0-rc1 — 1.0-readiness gap register (G-A…G-G) + finalized front matter
 
 The seven-gap pre-1.0 register, applied with exact fixes, plus the finalized executive summary.
