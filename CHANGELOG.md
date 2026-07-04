@@ -3,6 +3,54 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 1.0-rc1 — 1.0-readiness gap register (G-A…G-G) + finalized front matter
+
+The seven-gap pre-1.0 register, applied with exact fixes, plus the finalized executive summary.
+
+**G-A (BLOCKER) — live-quorum roster-capture (CC 4.2.6).** Closes a defeat of the HUMANITY_ACCORD
+kill switch through its own recovery path: an adversary capturing a strict live majority and censoring
+the honest minority through the participation window `W` could remove honest holders (the old
+steward-cosign trigger only fired at `\|L\| < L_floor = 3`, which stopped scaling as the roster grew).
+Four additive fixes: (1) a **scaling removal-gate** — any roster change that *removes* a standing
+holder needs the 2-of-3 steward co-sign whenever `2·\|L\| ≤ N_standing`; (2) **fire-authority
+persistence** — a holder named for removal keeps floor-of-1 fire through a lame-duck window;
+(3) **contest is a duty** — a removed holder MAY contest within `W` **or post-`W` on immutable
+append-log evidence**, the steward quorum MUST adjudicate within a bounded SLA (72 h / 7 d) and MUST
+restore on a seizure finding; (4) the entrenchment proof corrected to state the capture partition
+honestly. Adds the `accord_contest` / `accord_restore` canonical-bytes domains and the log-snapshot
+verify-resolution carve-out for off-roster contestants. Adversarially validated:
+PARTIALLY-CLOSED → fixes → **CLOSED** (attack no longer achieves permanent disablement; the surviving
+bounded steward-restore dependence is named).
+
+**G-B — noise-floor overclaim (CC 6.1.2).** "Information-theoretically unrecoverable" → **not
+individually recoverable by the specified procedure `R` above fidelity `ε`**; `(R, ε)` operator-tunable
+with a pinned default + conformance vector; the `< 1/N` claim caveated to non-dominated composites.
+New acknowledged risk **R9** (composite invertibility) in CC 8.3.1.
+
+**G-C — Order-Maximisation Veto (CC 1.3).** "→ abort action" → **mandatory WBD deferral** (CC 1.9): the
+10× ratio triggers human judgment over incommensurable estimates, not an unfalsifiable MUST-abort.
+
+**G-D…G-G (editorial).** Kill severity-dial paragraph (missed fire terminal / false fire recoverable)
+at CC 4.2.6 + cross-ref from 4.2.3; "coherence signal" defined in CC 8.1.1 by what it measures (kills
+the σ integrand circularity); σ constants `d`/`w` marked initial operating values pending calibration;
+the HF/Reticulum relay backbone indexed as a deferred row in CC 8.3.6.
+
+**Doc precision (folded in — closes #8, #10).** Annex C statutory mapping consolidated to adopted
+**Regulation (EU) 2024/1689** numbering (post-market monitoring **Art 61 → Art 72**; added Art 10 / 15 /
+16 / 50 rows; 2 Aug 2026 applicability). The `DISCRIMINATION` prohibition is described at its true
+enforcement point — the **WiseBus capability gate** (`NEVER_ALLOWED`), with the prohibited-capability
+set injected into the round-1 DMA reasoning context (CIRISAgent#910) — not "PDMA Step 1"; the Art
+10(2)(f)/Art 9 evidence is the bus-rejection log **and** the DMA reasoning trace.
+
+**Front matter.** Executive summary finalized: running-system framing ("this is not a proposal"), the
+safety thesis stated as a bet (plurality, never a singleton; correlation not headcount), and Part 8 as
+the standing weakness register.
+
+**Ratification note.** G-A amends the **entrenched** CC 4.2 HUMANITY_ACCORD surface; per CC 4.5.1.2 an
+entrenched change requires a MAJOR version bump **and** a dedicated accord ratification — pre-maturity,
+the founder/accord-holder authority, exercised via an out-of-band ceremony. Tagged **1.0-rc1** pending
+that ratification; tagging 1.0 is the steward's ratifying act.
+
 ## 0.9.3 — executive summary: mesh-safety thesis + what the assumptions rest on
 
 Reframes the executive summary around the whole-mesh safety thesis: this is the
