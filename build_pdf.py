@@ -23,6 +23,7 @@ B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",
               "├": "+", "└": "+", "⟶": r"$\longrightarrow$",
               # Book IX coherence-mathematics glyphs (Part VI 6.2)
+              "Σ": r"$\Sigma$",
               "λ": r"$\lambda$", "κ": r"$\kappa$", "ℝ": r"$\mathbb{R}$",
               "∉": r"$\notin$", "∅": r"$\emptyset$",
               "": r"$\bar{\rho}$"})   # placeholder for ρ̄ (ρ + combining macron); see prefilter()
