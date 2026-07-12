@@ -10,7 +10,7 @@ CLM-noise-N5	6.1.5	N5: revocation forces descent below floor regardless of rarit
 CLM-noise-ejection	6.1.2.3	EjectionVerdict routing (Keep/EjectToTier/AggregatedTierOnly/HardDelete)	test:CIRISConformance#test_541_ejection_routing impl:CIRISServer#155	established
 CLM-noise-dominance	6.1.2	Aggregation-erasure conditional on the source-diversity (dominance) gate, enforced at admission	test:CIRISConformance#test_542_dominance_gate impl:CIRISServer#155	established
 CLM-neff-dominance-gate	6.1.2.1.2	Signed n_eff (Kish) + pinned min_ratio=0.5 dominance gate; v1 tiers fail closed at admission	test:CIRISConformance#test_542_dominance_gate impl:CIRISServer#155	staged
-CLM-noise-content-multiplicity	6.1.2.1.2	Content-similarity N_eff / max-multiplicity surface (R9 residual: near-duplicates under distinct ids pass)	open:CIRISConformance#55	open
+CLM-noise-content-multiplicity	6.1.2.1.2	Content-similarity N_eff / max-multiplicity surface (R9 residual: near-duplicates under distinct ids pass)	open:CIRISVerify#191 test:CIRISConformance#71	open
 CLM-storage-budget	6.1.5.2	StorageBudgetV1 per-cohort_scope owner budget (PIN-NORMATIVE, self/family suppressed)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
 CLM-storage-want	6.1.5.2	CorpusWantV1 want/have + size cap (wanted-then-pulled)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
 CLM-freeze-57	6.1.4	#57 freeze-gate byte-exact conformance vectors for CC 6.1 shapes	test:CIRISConformance#59	staged
