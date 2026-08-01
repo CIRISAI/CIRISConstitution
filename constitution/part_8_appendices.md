@@ -154,7 +154,7 @@ A `not-translated` verdict is not a failure — it is a precise statement about 
 
 ## 8.3 `concerns` — Concerns + acknowledged gaps
 
-Trust is earned by naming weaknesses before a reviewer finds them. Three independent methodologies surfaced concerns, and a dedicated critical-review pass added five more reviewer perspectives — cryptography, distributed systems, standards architecture, adversarial red-team, and application development. The gaps are recorded here so external reviewers see them acknowledged rather than discovered: what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap.
+Trust is earned by naming weaknesses before a reviewer finds them. Three independent methodologies surfaced concerns, and a dedicated critical-review pass added five more reviewer perspectives — cryptography, distributed systems, standards architecture, adversarial red-team, and application development. The gaps are recorded here so external reviewers see them acknowledged rather than discovered: what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap. How strongly to read any evidence row backing a claim in this register is graded at [CC 8.6.1](#).
 
 ### 8.3.1 `acknowledged` — Acknowledged risks (named as bets)
 
@@ -191,7 +191,7 @@ The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-se
 |---|---|---|---|
 | **RC1-1b** | Confirm the `KEY_GRANT_V1_INFO` versioned-context HKDF pattern exists in `key_grant.rs` (the [CC 5.3.3.1](#) V2 nonce-prefix derivation reuses it). Unverifiable from Edge. *(Still owed.)* | Persist | 🔴 V2 |
 | **RC1-1c** | ⚠️ **Coupling caveat** — the V054 cross-column CHECK requires content-addressed `key_grant`s; the [CC 5.1](#) epoch axis needs a **parallel CHECK arm** (content- OR stream/epoch-addressed) — a bounded constraint migration, **not a pure index-add**. Flagged in [CC 5.1](#) normative text, so the spec doesn't claim "purely additive" at the Persist constraint layer. | Persist | flagged |
-| **RC1-7** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](#) locality-scaled, not fixed N). | router | — |
+| **RC1-7** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](#) locality-scaled, not fixed N). Flagged in [CC 5.3.3.3](#) — operator-tunable; not blocking the normative ship. | router | — |
 
 ### 8.3.4 `closed` — Closed gaps
 
@@ -255,6 +255,7 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 | SEED_DIMENSIONS RFC | RFC stage; needs discussion. |
 | Fleet-attestation primitive (closes R6 occurrence_id self-assertion) | Workshop output. |
 | Deeper Frickerian instantiation (closes R7) | Workshop output. |
+| DRY-authority-witness format in the traceability spine — single-sourced authority registry + differential authority-equivalence tests + path-shape witnesses (CIRISConstitution#36) | Deferred to 1.1, and the reason is the format's own argument. Its motivating failure is real and verified (a canonical verifier that signed one preimage and checked another, with a fixture encoding the same error), but the ecosystem currently has one live differential pair and one gating shape-assertion; a format nobody has implemented is not made real by ratifying a paragraph about it. Revisit once the CIRISPersist pilot has run several `DRY-N` rows, then ratify the format that survived rather than the one that was specified. |
 | Live-quorum physical relay backbone (HF / Reticulum) under sustained adversary jamming | Named at [CC 4.2.6](part_4_composition_governance.md) as an adversary-targeted assumption: firing needs *some* out-of-band publishable-signature channel to survive a first strike. Channel diversity (HF / mesh / sneakernet fallback) is a **deployment-spec** concern, deferred there — indexed here so the concerns register is complete. |
 
 ### 8.3.7 `identified` — Identified overlaps
@@ -352,17 +353,17 @@ The spec is a living document with a disciplined heartbeat. It is updated on eve
 - On every CIRISAccord revision affecting the federation surface
 - On every conformance-language or normative-reference change in [CC 2.6](#2.6)
 
-Each update lands as a single commit touching the relevant file(s) + a lineage row in [CC 8.6.2](#8.6.2). The version number bumps per the [CC 2.6.4](#2.6.4) SemVer rules.
+Each update lands as a single commit touching the relevant file(s) + a `CHANGELOG.md` entry, which is where the lineage is kept ([CC 8.6.2](#8.6.2)). The version number bumps per the [CC 2.6.4](#2.6.4) SemVer rules.
 
 ## 8.6 `references-lineage` — References + lineage
 
-This section gathers the spec's external grounding and its own provenance: the standards it cites, the documents that travel alongside it, the sibling MISSIONs that own pieces of the namespace, where the version-by-version lineage is kept, and — at the end — how strongly to read any evidence row.
+This section gathers the spec's external grounding and its own provenance: the standards it cites, the documents that travel alongside it, the sibling MISSIONs that own pieces of the namespace, where the version-by-version lineage is kept, and (closing CC 8.6.1) how strongly to read any evidence row.
 
 ### 8.6.1 `external` — External references (informational)
 
 Normative references — what an implementation conforms to — are at [CC 2.6.5](part_2_the_grammar.md). Everything here is **informational**: the scholarship the design borrows from, cited once, with no normative force.
 
-**The coherence mathematics are borrowed instruments.** `k_eff` is not this federation's invention, and this document does not claim it. The identity `k_eff = k/(1 + ρ̄(k−1))` is Kish's design effect; the same effective-count construction was reached independently in comparative politics a decade later; the penalty it encodes — correlated witnesses are worth less than their headcount — is a jury-theorem result; and the fact that engineered redundancy fails in correlated ways is a measured software-engineering result from 1986. **The claim is application, not discovery**: carrying an established diversity discount into an alignment and attestation setting, and stating the strength of each borrowing honestly ([CC 8.6.5](#)). These literatures **corroborate** — convergent independent arrivals are *hits*, not proof. None of them establishes any claim this document makes about AI systems, and no priority claim over `k_eff` is made or should be read.
+**The coherence mathematics are borrowed instruments.** `k_eff` is not this federation's invention, and this document does not claim it. The identity `k_eff = k/(1 + ρ̄(k−1))` is Kish's design effect; the same effective-count construction was reached independently in comparative politics a decade later; the penalty it encodes — correlated witnesses are worth less than their headcount — is a jury-theorem result; and the fact that engineered redundancy fails in correlated ways is a measured software-engineering result from 1986. **The claim is application, not discovery**: carrying an established diversity discount into an alignment and attestation setting, and stating the strength of each borrowing honestly (the grades below). These literatures **corroborate** — convergent independent arrivals are *hits*, not proof. None of them establishes any claim this document makes about AI systems, and no priority claim over `k_eff` is made or should be read.
 
 | Work | What is borrowed |
 |---|---|
@@ -375,26 +376,7 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 
 **Other informational citations.** Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693) (*SPKI Certificate Theory*) — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.10](#) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.5](#) graduation rule.
 
-### 8.6.2 `specification` — CEG specification lineage
-
-The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` (per-cut, with the issue numbers each change discharges), in `VERSION` + the git tags, and in the archived record for each published cut. Redaction history, superseded text, and review archaeology live there too, by design — this document carries the present truth and cites where the past is kept.
-
-### 8.6.3 `companion` — Companion documents
-
-The following documents travel with the spec and are cited throughout:
-
-- [`FSD/PRIOR_ART_SCAN.md`](../PRIOR_ART_SCAN.md) — design-space comparison.
-- [`FSD/SOTA_SCAN.md`](../SOTA_SCAN.md) — production-validation comparison.
-- [`FSD/WITNESS_KIND_REGISTRY.md`](../WITNESS_KIND_REGISTRY.md) — non-normative open-vocabulary registry referenced by the namespace.
-- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](../../docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
-
-### 8.6.4 `namespace-sibling` — Sibling MISSIONs (the namespace stewards)
-
-*[source content to migrate — the sibling MISSION documents that own segments of the namespace, carried verbatim from the canonical references section; not present in this snapshot.]*
-
-### 8.6.5 `evidence-strength` — Strength grades (how to read an evidence row)
-
-The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI by `tools/check_claims.py`, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
+**Strength grades — how to read an evidence row.** The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI by `tools/check_claims.py`, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
 
 | Grade | What it means | What it does not license |
 |---|---|---|
@@ -418,6 +400,23 @@ The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.m
 | Corridor poles (over-rigidity ↔ fragmentation) | §6.2 `J` argument / design intuition | **theorem-given-model**, re-founded on the CIRISOntology anchors offered at stated strength in CIRISConstitution#45: the rigidity pole is exactly zero (`share_eq_zero_of_signSymmetric`), the fragmentation pole is exactly zero (`Valve.lean` product lemmas — independence carries zero), and the maximum sits strictly between at exactly `ln 2` (`ThirdCap.share_max_eq_log_two`). **Measured** companion: peak at criticality under weak symmetry breaking, forward prediction −3.084 ± 0.219 against −3.109 staked in advance. |
 
 **What is still owed.** The tag vocabulary, the registry, the CI checker, and the generated Evidence Register have shipped (CIRISConstitution#17). Three gaps remain, named rather than papered over: (1) cross-repo pointers resolve by *section decimal* against a vendored manifest, not by symbol — so a pointer can resolve while naming an object its manifest does not carry, which is exactly the mispointer above; (2) terminology validation against the [CC 8.1.1](#) glossary is not implemented; (3) strength is graded here, in prose, and is not yet a registry column — until it is, this table is the reading key for the register.
+
+### 8.6.2 `specification` — CEG specification lineage
+
+The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` (per-cut, with the issue numbers each change discharges), in `VERSION` + the git tags, and in the archived record for each published cut. Redaction history, superseded text, and review archaeology live there too, by design — this document carries the present truth and cites where the past is kept.
+
+### 8.6.3 `companion` — Companion documents
+
+The following documents travel with the spec and are cited throughout:
+
+- [`FSD/PRIOR_ART_SCAN.md`](../PRIOR_ART_SCAN.md) — design-space comparison.
+- [`FSD/SOTA_SCAN.md`](../SOTA_SCAN.md) — production-validation comparison.
+- [`FSD/WITNESS_KIND_REGISTRY.md`](../WITNESS_KIND_REGISTRY.md) — non-normative open-vocabulary registry referenced by the namespace.
+- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](../../docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
+
+### 8.6.4 `namespace-sibling` — Sibling MISSIONs (the namespace stewards)
+
+*[source content to migrate — the sibling MISSION documents that own segments of the namespace, carried verbatim from the canonical references section; not present in this snapshot.]*
 
 ## 8.7 `enacting-ethics` — Introduction: Enacting Ethics through Narrative
 
@@ -892,6 +891,8 @@ MH citations load-bearing for this section: §132 ("only the shared pursuit of t
 | TX-11 | In-toto attestation extended to training-labor provenance: CIS must include labor-condition declaration for all data-labeling and RLHF providers; SLSA Level 3 manifest covers labor-chain disclosures | Automated audit of annotation-provider labor certifications at each fine-tune checkpoint; flag sourcing from unverified or high-risk jurisdiction providers | Halt affected fine-tune line; quarantine model artifacts from non-certified labor sources; IW-2; WA advisory within 72 h |
 
 *All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
+
+*TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor** — aggregate structure that ordinary correlated operation accrues with nobody scheming (CIRISConstitution#45: theorem-given-model at k = 3, plus a measured rate law; floor measured at 50%–5.8× of the null on real survey data). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time. The verdict remains the WA's ([CC 8.8.2](#)).
 
 Prohibited-capability enforcement for the `NEVER_ALLOWED` bounds above is tracked dimension-level in the CIRISAgent `compliance/` directory under D04 (prohibited capabilities); the AgencyErosionDetector conscience faculty is tracked under D12 (conscience).
 
