@@ -362,11 +362,24 @@ This section gathers the spec's external grounding and its own provenance: the s
 
 ### 8.6.1 `external` — External references (informational)
 
-*[source content to migrate — carried verbatim from the canonical references section; not present in this snapshot.]*
+Normative references — what an implementation conforms to — are at [CC 2.6.5](part_2_the_grammar.md). Everything here is **informational**: the scholarship the design borrows from, cited once, with no normative force.
+
+**The coherence mathematics are borrowed instruments.** `k_eff` is not this federation's invention, and this document does not claim it. The identity `k_eff = k/(1 + ρ̄(k−1))` is Kish's design effect; the same effective-count construction was reached independently in comparative politics a decade later; the penalty it encodes — correlated witnesses are worth less than their headcount — is a jury-theorem result; and the fact that engineered redundancy fails in correlated ways is a measured software-engineering result from 1986. **The claim is application, not discovery**: carrying an established diversity discount into an alignment and attestation setting, and stating the strength of each borrowing honestly ([CC 8.6.5](#)). These literatures **corroborate** — convergent independent arrivals are *hits*, not proof. None of them establishes any claim this document makes about AI systems, and no priority claim over `k_eff` is made or should be read.
+
+| Work | What is borrowed |
+|---|---|
+| Kish, L. (1965). *Survey Sampling*. Wiley. | The design effect / effective sample size — the `k_eff` identity itself ([CC 6.2.2](part_6_the_coherence_mathematics.md)). |
+| Laakso, M., & Taagepera, R. (1979). "The 'Effective' Number of Parties: A Measure with Application to West Europe." *Comparative Political Studies* 12(1). | The same effective-count construction, arrived at independently in another discipline. The convergence *is* the corroboration. |
+| Ladha, K. K. (1992). "The Condorcet Jury Theorem, Free Speech, and Correlated Votes." *American Journal of Political Science* 36(3). | Why `ρ̄ > 0` has to be discounted: correlation degrades collective competence. |
+| Ladha, K. K. (1995). "Information Pooling Through Majority-Rule Voting: Condorcet's Jury Theorem with Correlated Votes." *Journal of Economic Behavior & Organization* 26(3). | Why the discount is a *ceiling* and not a prohibition: pooling can still beat the individual under correlation. |
+| Knight, J. C., & Leveson, N. G. (1986). "An Experimental Evaluation of the Assumption of Independence in Multiversion Programming." *IEEE Transactions on Software Engineering* SE-12(1). | Measured, not modelled: independently-built redundant versions fail on the same inputs. Correlated failure is the default case, not the pathology. |
+| Condorcet, M. de (1785). *Essai sur l'application de l'analyse à la probabilité des décisions rendues à la pluralité des voix*. | The independence-conditioned original the three results above correct. |
+
+**Other informational citations.** Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693) (*SPKI Certificate Theory*) — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.10](#) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.5](#) graduation rule.
 
 ### 8.6.2 `specification` — CEG specification lineage
 
-*[source content to migrate — the version-by-version specification lineage, carried verbatim from the canonical lineage table; not present in this snapshot.]*
+The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` (per-cut, with the issue numbers each change discharges), in `VERSION` + the git tags, and in the archived record for each published cut. Redaction history, superseded text, and review archaeology live there too, by design — this document carries the present truth and cites where the past is kept.
 
 ### 8.6.3 `companion` — Companion documents
 
