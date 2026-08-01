@@ -51,13 +51,14 @@ This section catalogs every prefix family, organized by owning component, each c
 | `cert_validity:{authority}` | Validity of a certification authority's signature. Each registry steward emits `cert_validity:{steward_id}` self-attestation alongside `/v1/steward-key`. | boolean-via-score |
 | `hardware_custody:{platform}` | Statement that the seed lives in `tpm` / `ios_secure_enclave` / `android_keystore` / `software_fallback`. | boolean-via-score |
 
-#### Witness-reserved assurance ladders (registry rows; rules at CC 3.4.11 / CC 3.4.12)
+#### Assurance ladders (registry rows; rules at CC 3.4.11 / CC 3.4.12)
 
-Both ladders are attestation ladders in the sense of this section — a registered witness climbs a rung about a subject — and both were, until this cut, ruled in [CC 3.4](part_3_the_namespace.md) with no CC 3.1 row, i.e. unregistered under [CC 3.1.7](part_3_the_namespace.md) R1.
+Both ladders are attestation ladders in the sense of this section — a registered witness climbs a rung about a subject — and both were, until this cut, ruled in [CC 3.4](part_3_the_namespace.md) with no CC 3.1 row, i.e. unregistered under [CC 3.1.7](part_3_the_namespace.md) R1. The subject-signed `age_self_declared:` counterpart is catalogued here too: it is *not* witness-reserved, but it carries an admission rule at [CC 3.4.11](part_3_the_namespace.md), so R1 requires its row.
 
 | Prefix | Description | Polarity | Reserved? |
 |---|---|---|---|
-| `age_assurance:{rung}` | Witness rung of the age ladder. Subject self-declaration rides the distinct non-reserved `age_self_declared` prefix; a consumer unions both and the witness rung outranks the self rung. Full ladder + protective gate at [CC 3.4.11](part_3_the_namespace.md). | signed | **Yes — [CC 3.4.11](part_3_the_namespace.md)** |
+| `age_assurance:{level}:{band}:{version}` | Witness rung of the age ladder — `{level}` ∈ `provider` \| `government`, `{band}` ∈ `minor` \| `adult`, canonical `{version}` = `v1`. There is no `self` level on this prefix: the self rung rides `age_self_declared:` below. A consumer unions both and the witness rung outranks the self rung. Full ladder + protective gate at [CC 3.4.11](part_3_the_namespace.md). | signed | **Yes — [CC 3.4.11](part_3_the_namespace.md)** |
+| `age_self_declared:{band}:{version}` | Subject's own age-band declaration — `{band}` ∈ `minor` \| `adult`, canonical `{version}` = `v1`. Carries **no** `{level}` token: its level is `self` by construction, and a level token on this prefix is malformed. Non-reserved but not open-sender: admitted only where the signer acts for the subject, per [CC 3.4.11](part_3_the_namespace.md). | signed | No |
 | `capacity_assurance:{level}:{domain}:{band}:{version}` | Witness rung of the adult decision-capacity ladder ([CC 3.4.12](part_3_the_namespace.md)): a registered qualified assessor attests a per-domain band; the subject cannot self-emit it and the proposed steward cannot be the attester. Aggregation across domains is forbidden — capacity is a vector, never collapsed to a scalar. | signed | **Yes — [CC 3.4.12](part_3_the_namespace.md)** |
 
 #### 3.1.2.1 `provenance` — Canonical-bytes contracts for provenance primitives
@@ -107,15 +108,17 @@ Producers MUST emit v2. The closed-vocabulary [CC 4.2.1.1](part_4_composition_go
 
 **Steward**: [`CIRISPersist/MISSION.md`](https://github.com/CIRISAI/CIRISPersist/blob/main/MISSION.md). These dimensions are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own health by a third party.
 
-`system:*` reserved per [CC 3.4.1](part_3_the_namespace.md).
+`system:*` is reserved to the substrate per [CC 3.4.3](part_3_the_namespace.md) and is registered here as a family of this component.
 
-Canonical leaves: `audit_chain:hash_continuity`, `corpus_health:n_eff_measurable`, `identity_continuity:relational_anchor`, `federation_directory:replication_lag`. Polarity: signed. Authors: see [CC 8.1](part_8_appendices.md) Persist leaf glossary for narrative-name → canonical-leaf mapping.
+Canonical leaves: `system:*`, `audit_chain:hash_continuity`, `corpus_health:n_eff_measurable`, `identity_continuity:relational_anchor`, `federation_directory:replication_lag`. Polarity: signed. Authors: see [CC 8.1](part_8_appendices.md) Persist leaf glossary for narrative-name → canonical-leaf mapping.
 
 ### 3.1.4 `transport-delivery` — CIRISEdge — transport, delivery, reachability
 
-**Steward**: [`CIRISEdge/MISSION.md`](https://github.com/CIRISAI/CIRISEdge/blob/main/MISSION.md). Substrate-self-reports per [CC 3.4.1](part_3_the_namespace.md).
+**Steward**: [`CIRISEdge/MISSION.md`](https://github.com/CIRISAI/CIRISEdge/blob/main/MISSION.md). Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md).
 
-Canonical leaves: `transport:{kind}`, `delivery:{class}`, `peer_reachability:{network}`, `key_boundary:{scope}`. Polarity: signed. See [CC 8.1](part_8_appendices.md) Edge leaf glossary.
+Canonical leaves: `system:*`, `transport:{kind}`, `delivery:{class}`, `peer_reachability:{network}`, `key_boundary:{scope}`. Polarity: signed. See [CC 8.1](part_8_appendices.md) Edge leaf glossary.
+
+`delivery_receipt:{stream_id}` is Edge's too, and is registered here rather than left to [CC 3.4.6](part_3_the_namespace.md) prose: subscriber-emitted, membership-gated, **not** a substrate-self-report. Polarity: signed. Emitter rule and the validated-not-adjudicated discipline: [CC 3.4.6](part_3_the_namespace.md).
 
 ### 3.1.5 `accord-agent` — CIRISAgent — Accord principles + DMA + conscience + apophatic bounds
 
@@ -190,7 +193,7 @@ RATCHET emits **advisory** flags — never autonomously modifies ledger state. I
 
 **The generated registry is the count of record.** [`manifests/namespace_registry.json`](../manifests/namespace_registry.json) is regenerated from this Part by `tools/build_cc_namespace.py`; its `_meta` totals and per-component breakdown supersede any figure restated in prose, and its recorded source hash is what pins the two together.
 
-**R1 — registration is a CC 3.1 row (normative).** A prefix family is *registered* iff it carries a row under a [CC 3.1](part_3_the_namespace.md) component subsection — the region the generator extracts. An unregistered family has no owning component, no polarity and no reserved rule, so a consumer resolving its authority falls through to the producer-steward default; that default behaving sanely is luck, not construction. A producer MUST NOT ship a dimension family this Part does not register, and a family whose emitter or reservation rule is stated only in [CC 3.3](part_3_the_namespace.md) / [CC 3.4](part_3_the_namespace.md) prose MUST also carry its CC 3.1 row — a row the generator cannot see is a row downstream vendors never receive, which is the drift this rule exists to close.
+**R1 — registration is a catalogue row, and a reserved family's row MUST be a CC 3.1 row (normative).** A prefix family is *registered* iff it carries a row in a dimension-family table of this Part — either a [CC 3.1](part_3_the_namespace.md) component subsection (the region the generator extracts) or a [CC 3.3](part_3_the_namespace.md) family table. An unregistered family has no owning component, no polarity and no reserved rule, so a consumer resolving its authority falls through to the producer-steward default; that default behaving sanely is luck, not construction. A producer MUST NOT ship a dimension family this Part does not register. **The stronger obligation is scoped to gated families**: a family carrying a reservation or an emitter rule anywhere in [CC 3.3](part_3_the_namespace.md) / [CC 3.4](part_3_the_namespace.md) MUST additionally carry its CC 3.1 row, because a rule the generator cannot see is a rule downstream vendors never receive — that is the drift this clause exists to close, and it is exactly the gated families where the drift is unsafe. An open-vocabulary, ungated family catalogued only under CC 3.3 is registered and conformant.
 
 The four parameterized envelope fields beyond the base — `witness_relation`, `oversight_mode`, `occurrence_id` / `occurrence_count` / `occurrence_role` — carry the wire-level disciplines that the prefixes above compose against. All polarity columns are populated; the attestation-ladder prefixes are mechanism-named (`attestation:self_verify`, `attestation:hardware_rooted`, `attestation:registry_consensus`, `attestation:license_validity`, `attestation:agent_integrity`) because L-numbers name a verdict-shape (ladder position), not a mechanism — the L1-L5 ladder lives as consumer-side composition per [CC 4.4.3.6](part_4_composition_governance.md) Policy I — Attestation-Ladder Composition.
 
@@ -211,9 +214,9 @@ The four parameterized envelope fields beyond the base — `witness_relation`, `
 
 **Composition rule (normative — corrects the product form).** A composer MUST compute `capacity:composite` as `𝒞_CIRIS = min(C, I_int, R, I_inc, S)` over the five live factor scores, and MUST NOT compute it as their product. The product form is withdrawn as defective: the factors are polarity-`signed` over [−1, 1], so a product is **positive whenever an even number of factors are negative** — a negative core identity times a negative integrity yields a positive composite, inverting the very anti-Goodhart property the composite exists to serve. `min` is chosen because it is the strongest available anti-Goodhart form: no factor can be compensated by another, so the composite is exactly the weakest virtue and a collapse anywhere is visible everywhere. The two alternatives were considered and not chosen — renormalising the factors to [0, 1] preserves the product's compensation (a high factor still buys down a low one) and additionally discards the negative half of the polarity, which is the half that carries the warning; a geometric mean over non-negatives is smoother but is a mean, and a mean is a compensation device by construction. Polarity and range are unchanged (`signed`, [−1, 1]); a factor with no live score makes the composite **undefined**, not zero, and it MUST NOT be emitted.
 
-**Nomenclature note.** `C` here denotes the **core-identity factor** of the per-agent Capacity Score `𝒞_CIRIS`. It is **not** the Accord's Flourishing Capacity: the Accord renamed that composite **C → F** and writes `F = k_eff · λ_op · σ` — a distinct, federation-level three-factor construct, not mappable to the per-agent five-factor `𝒞_CIRIS`. See [CC 6.2.4](part_6_the_coherence_mathematics.md) (the Coherence Mathematics, where `F` is defined); Accord Book IX Ch 6 is the authoritative statement of the relation.
+**Nomenclature note.** `C` here denotes the **core-identity factor** of the per-agent Capacity Score `𝒞_CIRIS`. It is **not** the Accord's Flourishing Capacity: the Accord renamed that composite **C → F** and writes `F = k_eff · λ_op · σ` — a distinct, federation-level three-factor construct, not mappable to the per-agent five-factor `𝒞_CIRIS`. See [CC 6.2.4](part_6_the_coherence_mathematics.md) (the Coherence Mathematics, where `F` is defined): that section is the **statement of record** for the relation, and no external work is authority for it.
 
-**Critical enforcement**: `capacity:*` rejects self-emission **and is consent-gated on emission** — a live `consent:scope:analyze` from the subject must cover the attester, community-addressed. The agent's own capacity score is never fed back into the agent's own context, and is not readable by it either. Reserved per [CC 3.4.5](part_3_the_namespace.md) (emission gate S1–S3; read boundary S4–S6).
+**Critical enforcement**: `capacity:*` rejects self-emission — the agent's own capacity score is never fed back into the agent's own context. Reserved per [CC 3.4.5](part_3_the_namespace.md). The proposed consent-before-scoring gate and the read boundary described at [CC 3.4.5](part_3_the_namespace.md) are **deferred and non-normative** in this revision; neither is a conformance condition.
 
 #### 3.1.8.2 `coherence-ratchet` — Five Coherence-Ratchet detectors
 
@@ -689,20 +692,20 @@ takedown_notice {
 }
 ```
 
-Where `LegalBasis` is the closed-set enum:
+Where `LegalBasis` is the closed-set enum. **The PascalCase name is the spec-level variant name; the wire string is what is serialized** — same two-column discipline as `wrap_algorithm` below, and the same reason: a variant name is for reading, a wire string is for byte comparison.
 
-| `legal_basis` value | Source regime | Discipline |
-|---|---|---|
-| `Dmca512` | US 17 USC §512 | Expeditious-with-counter-notice (10-14 business day window) |
-| `DsaArticle16` | EU Digital Services Act Article 16 | Expeditious-with-counter-notice (Article 17 redress) |
-| `TvecTerrorist` | EU Terrorist Content Regulation 2021/784 | **Immediate** (1-hour removal obligation) |
-| `NcmecCsam` | US 18 USC §2258A (NCMEC) | **Immediate** (substrate-protective; no counter-notice) |
-| `GifctCip` | GIFCT Content Incident Protocol | **Immediate** (within-hours coordinated response) |
-| `CommunityStandards` | Operator-defined community standards | Expeditious-with-counter-notice (operator-set window) |
-| `PerceptualHashCsam` | Hash-match against CSAM clearinghouse (PhotoDNA / Arachnid / etc.) | **Immediate** (substrate-protective) |
-| `OsaIllegalContent` | UK Online Safety Act illegal-content category | Expeditious-with-counter-notice (OSA-defined timelines) |
-| `AvmsdAgeInappropriate` | EU AVMSD age-inappropriate flagging | Compose with `age_assurance:*` gate; not immediate removal |
-| `CourtOrder` | Court-ordered removal (any jurisdiction) | **Immediate** (subject to court's stated timeline) |
+| `LegalBasis` (variant) | wire string (normative) | Source regime | Discipline |
+|---|---|---|---|
+| `Dmca512` | `dmca512` | US 17 USC §512 | Expeditious-with-counter-notice (10-14 business day window) |
+| `DsaArticle16` | `dsa_article16` | EU Digital Services Act Article 16 | Expeditious-with-counter-notice (Article 17 redress) |
+| `TvecTerrorist` | `tvec_terrorist` | EU Terrorist Content Regulation 2021/784 | **Immediate** (1-hour removal obligation) |
+| `NcmecCsam` | `ncmec_csam` | US 18 USC §2258A (NCMEC) | **Immediate** (substrate-protective; no counter-notice) |
+| `GifctCip` | `gifct_cip` | GIFCT Content Incident Protocol | **Immediate** (within-hours coordinated response) |
+| `CommunityStandards` | `community_standards` | Operator-defined community standards | Expeditious-with-counter-notice (operator-set window) |
+| `PerceptualHashCsam` | `perceptual_hash_csam` | Hash-match against CSAM clearinghouse (PhotoDNA / Arachnid / etc.) | **Immediate** (substrate-protective) |
+| `OsaIllegalContent` | `osa_illegal_content` | UK Online Safety Act illegal-content category | Expeditious-with-counter-notice (OSA-defined timelines) |
+| `AvmsdAgeInappropriate` | `avmsd_age_inappropriate` | EU AVMSD age-inappropriate flagging | Compose with `age_assurance:*` gate; not immediate removal |
+| `CourtOrder` | `court_order` | Court-ordered removal (any jurisdiction) | **Immediate** (subject to court's stated timeline) |
 
 **Fast-path coordination**: see [CC 4.5.3](part_4_composition_governance.md) for the operator-coordination protocol around immediate-eviction cases (TVEC 1-hour / GIFCT CIP / NCMEC / PerceptualHashCsam / CourtOrder).
 
@@ -749,11 +752,15 @@ Where:
 
 **Crypto-agility headroom.** The vocab is deliberately version-roomy: a future `v3` (anticipated: **ML-KEM-1024**, given national directives treating ML-KEM-768 as interim with retirement horizons near 2030) is a pure **additive** row — new variant, new wire string, no change to existing grants or to the closed-set decode discipline. Consumers MUST reject an unknown `wrap_algorithm` string (fail-secure), which is exactly what makes the addition safe: old consumers refuse v3 grants rather than mis-decoding them.
 
-| `scope` | Use |
-|---|---|
-| `SingleContent` | Grant decrypts exactly one `content_sha256` |
-| `GroupMember` | Grant decrypts all content for which recipient is a member of named group (cohort-scoped) |
-| `SubscriptionTier` | Grant decrypts all content for which recipient holds named subscription tier |
+| `GrantScope` (variant) | wire string (normative) | Use |
+|---|---|---|
+| `SingleContent` | `single_content` | Grant decrypts exactly one `content_sha256` |
+| `GroupMember` | `group_member` | Grant decrypts all content for which recipient is a member of named group (cohort-scoped) |
+| `SubscriptionTier` | `subscription_tier` | Grant decrypts all content for which recipient holds named subscription tier |
+
+**Variant name vs wire string — one answer for every CC 3.3.2 closed set (normative).** Each closed set in this section (`LegalBasis`, `WrapAlgorithm`, `GrantScope`) has **two** spellings and they are not interchangeable. The **PascalCase variant name** is a spec-and-pseudocode label; it names the row and never appears on the wire, so a payload sketch written `scope: GroupMember` (e.g. [CC 4.4.3.4.5](part_4_composition_governance.md)) denotes the row, not the bytes. The **wire string** is lowercase-ASCII `snake_case`, is the serialized value, and satisfies the [CC 5.1](part_5_transport_substrate.md) identifier class rule: a producer, the substrate and every consumer MUST serialize and match **exactly these bytes**, and MUST NOT normalize case, separators or ordering before comparison. Where the two readings could diverge, the wire-string column governs; where a future row is added, its wire string is derived the same way the rows above are (PascalCase word boundaries → `_`, lowercased, digits staying attached to the token they qualify) and is pinned in the table rather than recomputed by an implementation.
+
+**Why this is pinned rather than left to convention.** The closed sets are decoded **fail-secure**: an unrecognized value is rejected, never guessed. That is the right default and it is also why a spelling ambiguity here is a safety defect rather than a cosmetic one — a peer that reads `NcmecCsam` where its counterpart wrote `ncmec_csam` does not degrade gracefully, it **drops the removal notice**, and the notices most likely to be dropped are exactly the immediate-eviction ones (`ncmec_csam`, `perceptual_hash_csam`, `tvec_terrorist`, `court_order`). One spelling, byte-compared, is the whole mitigation.
 
 **Retire-key-grants emission**: when a publisher mass-retires key_grants tied to a compromised recipient, the emission uses **a fresh `key_grant` Contribution with a `rotation_chain` entry that supersedes the prior grant** — NOT a `withdraws` against the prior key_grant. `withdraws` is the holders-directory eviction primitive in [CC 5.3.2.1](part_5_transport_substrate.md); overloading it with grant-rotation semantics would muddy the wire-format contract.
 
@@ -1351,7 +1358,7 @@ All four families are **open vocabulary** per [CC 4.5.1.1](part_4_composition_go
 | `content_rating:{scheme}:{rating}` | Multi-scheme content rating. `{scheme}` ∈ `mpaa` (G/PG/PG-13/R/NC-17), `bbfc` (U/PG/12/15/18), `pegi` (3/7/12/16/18), `esrb` (E/E10+/T/M/AO), `ifco`, `csm` (Common Sense Media), or `operator:{operator_id}` for operator-defined rubrics. Polarity carries certifier confidence; not a slashing input. | signed |
 | `content_class:{class}` | Mechanism-descriptive content classification. `{class}` open vocabulary; canonical: `film`, `short_film`, `documentary`, `art_piece`, `theatre`, `performance`, `news`, `educational`, `entertainment`, `vlog`, `adult`, `generated`, `generated_modified`. `generated` (machine-produced) and `generated_modified` (human-origin, materially altered by an AI system) are **mandatory** where they apply, per [CC 3.4.14](#3414-synthesis-disclosure--machine-generation-disclosure--the-attestation-is-the-marking-normative), and — unlike the rest of this table — are not multimedia-scoped: they apply to any Contribution carrying content, text included. Distinct from `cw_class:*` (community declarations) — `content_class` is producer-declared production-class; `cw_class` is community-applied content-warning. | enumerated |
 | `cw_class:{class}` | Community CW (content-warning) declarations. `{class}` open vocabulary; canonical: `art_cinema`, `horror`, `political`, `erotic`, `violence`, `medical`, `nsfw_text`. Cohort-attestable per [CC 4.4.1](part_4_composition_governance.md) Frickerian discipline (low-density cohort CWs not downweighted). | enumerated |
-| `age_assurance:{level}` | Age-assurance attestation. `{level}` ∈ `self` (self-declared age, lowest confidence), `provider:{verifier_key}:adult` (third-party verifier attests adult), `government:{credential_class}:adult` (government-credential-backed adult attestation, highest confidence). NEVER fires `slashing:*` on misdeclaration alone — `moderation:age_assurance_misdeclaration` is the adjudication path. | enumerated |
+| `age_assurance:{level}:{band}:{version}` | Witness-reserved age-assurance attestation ([CC 3.1.2](part_3_the_namespace.md) row; rules at [CC 3.4.11](part_3_the_namespace.md)). `{level}` ∈ `provider` \| `government`; `{band}` ∈ `minor` \| `adult`; canonical `{version}` = `v1`. **There is no `self` level on this prefix** — the self rung is the subject-signed `age_self_declared:{band}:{version}`, which carries a band only. A `provider` / `government` rung MAY further qualify `{level}` with a verifier key or credential class. Misdeclaration NEVER fires `slashing:*` alone — `moderation:age_assurance_misdeclaration` is the adjudication path. | enumerated |
 
 Media-type prefix families per `external_content` sub_kind:
 
@@ -1620,7 +1627,7 @@ misdeclaration adjudication dimension:
     moderation:age_assurance_misdeclaration
 ```
 
-The `self` rung of the ladder materializes on the non-reserved `age_self_declared:` prefix; the `provider`/`government` rungs materialize on the witness-reserved `age_assurance:` prefix carrying the `{level}` token. Parsers MUST tolerate the trailing `:vN` version segment. This refines the [CC 3.3.12](#3312-namespace-multimedia--multimedia-dimension-families) `age_assurance:{level}` enumerated entry (provider/government rungs MAY further qualify `{level}` with a `{verifier_key}` / `{credential_class}` per that entry).
+The `self` rung of the ladder materializes on the non-reserved `age_self_declared:` prefix; the `provider`/`government` rungs materialize on the witness-reserved `age_assurance:` prefix carrying the `{level}` token. Parsers MUST tolerate the trailing `:vN` version segment. **`self` is not a value of `{level}`** and a producer MUST NOT emit `age_assurance:self:*`; a consumer MUST reject it as malformed rather than reading it as a self-declaration. These two arities — `age_assurance:{level}:{band}:{version}` and `age_self_declared:{band}:{version}` — are the only shapes this Part registers, and the [CC 3.1.2](part_3_the_namespace.md) rows and the [CC 3.3.12](#3312-namespace-multimedia--multimedia-dimension-families) entry state them identically (provider/government rungs MAY further qualify `{level}` with a `{verifier_key}` / `{credential_class}`).
 
 **Read-union — witness outranks subject (normative).** A consumer resolving an identity's age-assurance MUST union both prefixes and take the **highest** level on record. A witness-emitted `age_assurance:*` (provider/government) **OUTRANKS** a subject `age_self_declared:*`. Absence of any row resolves to **None**, which MUST be treated protectively — see the gate.
 
