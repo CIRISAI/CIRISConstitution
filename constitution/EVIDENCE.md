@@ -30,12 +30,18 @@ is resolved directly by the checker; a dead in-repo pointer fails the build. All
 **cross-repo** and resolve against the pinned sibling **spec-map manifests** each downstream repo
 publishes (`evidence/cc_tests.tsv`, `evidence/cc_impl.tsv`, `evidence/cc_formal.tsv` — tracked in
 CIRISConformance#59, CIRISServer#155, CIRISAgent#911, RATCHET#8). Until those land, a cross-repo
-`impl`/`test`/`lean`/`bench` pointer is reported as a **warning** (unresolved, pending manifest), not a
-failure — so the registry is useful immediately and tightens as the manifests arrive.
+`impl`/`test`/`lean`/`bench` pointer whose manifest does not yet reach the section is reported as a
+**warning** (unresolved, pending manifest). A pointer that names an artifact the pinned manifest does
+**not publish** is an **error** — a dead pointer is not a pending one, and the distinction is the whole
+value of naming symbols rather than sections.
 
 ## Status
 
 - `established` — at least one resolvable `impl`/`test`/`lean`/`bench` artifact backs the claim.
+- `normative` — the claim is **settled by this document and has no external artifact to resolve**: a
+  definition, a governance rule, or a threat-model classification whose whole content is the text.
+  Pairs with `normative-only:—`. This is not a weaker `established` — it is a different kind of claim,
+  and conflating the two is what let self-contained rules read as externally evidenced.
 - `staged` — the claim is normative now; its artifact is named but not yet resolvable (a `staged:` or
   cross-repo pointer pending its manifest).
 - `open` — an acknowledged gap (mirrors a CC 8.3.1 R-bet / a tracked issue).

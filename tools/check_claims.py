@@ -37,7 +37,7 @@ DOC = os.path.join(ROOT, "constitution")
 TAGS = {"impl", "test", "lean", "bench", "staged", "open", "normative-only"}
 RESOLVABLE_TAGS = {"impl", "test", "lean", "bench"}   # count toward "evidenced"
 TICKET_TAGS = {"staged", "open"}                      # named ticket, NOT evidence
-STATUSES = {"established", "staged", "open"}
+STATUSES = {"established", "normative", "staged", "open"}
 # The 1.14.x parable was migrated into FOREWORD.md; it is intentionally in toc but
 # has no numbered prose heading. Exempt it from the toc↔prose drift report.
 DRIFT_EXEMPT_PREFIX = ("1.14",)
@@ -437,14 +437,19 @@ def main():
         if st == "established" and grade is None:
             if only_normative:
                 errors.append(f"L{ln} [{cid}]: status 'established' with evidence 'normative-only' — "
-                              f"EVIDENCE.md:26 defines normative-only as 'no external artifact' and "
-                              f"EVIDENCE.md:38 defines established as 'at least one resolvable artifact'. "
-                              f"The two cannot both hold; EVIDENCE.md has no status for a self-contained "
-                              f"rule (see the checker's report — this needs a vocabulary decision, not a relabel)")
+                              f"EVIDENCE.md defines normative-only as 'no external artifact' and "
+                              f"established as 'at least one resolvable artifact'. A rule settled by the "
+                              f"document itself takes status 'normative'")
             else:
                 errors.append(f"L{ln} [{cid}]: status 'established' but NO resolvable impl/test/lean/bench "
                               f"artifact backs it (evidence: {ev or '—'}) — EVIDENCE.md:38 defines "
                               f"established as at least one resolvable artifact; use 'staged' or 'open'")
+        # `normative` is reserved for rules the document settles by itself. A row claiming it while
+        # citing an external artifact is the same conflation in the other direction.
+        if st == "normative" and not only_normative:
+            errors.append(f"L{ln} [{cid}]: status 'normative' is for self-contained rules and pairs with "
+                          f"'normative-only:—', but this row cites '{ev or '—'}' — if an artifact backs "
+                          f"it, use 'established'/'staged'/'open'")
         if dec != "corpus":
             claim_decimals[dec].append((cid, grade))
 

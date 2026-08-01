@@ -371,12 +371,12 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 8.3.6	deferred	Deferred to 0.2+ design workshops	§15.4	0.00092	265	0.11	APP	ceg
 8.3.7	identified	Identified overlaps	§15.5	0.00092	266	0.11	APP	ceg
 8.4	interoperability	Interoperability profiles (informative)	§18	0.00148	162	0.18	APP	ceg
-8.4.1	registry-tracked	Tracked boundary profiles (stubs — see [#72](https://github.com/CIRISAI/CIRISRegistry/issues/72))	§18.2	0.00170	144	0.2	APP	ceg
+8.4.1	edge	The governing principle — speak CEG inside, standards at the edge	§18.2	0.00170	144	0.2	APP	ceg
 8.4.2	credentials	C2PA Content Credentials — media-provenance import/emit profile	§18.1	0.00103	215	0.12	APP	ceg
 8.4.2.1	evidence_refs	Import — a C2PA manifest as `evidence_refs`	§18.1.1	0.00092	270	0.11	APP	ceg
 8.4.2.2	emit	Emit — CEG judgment as a C2PA assertion (egress)	§18.1.2	0.00092	271	0.11	APP	ceg
 8.4.2.3	profile	What this profile does NOT do	§18.1.3	0.00092	272	0.11	APP	ceg
-8.4.3	edge	The governing principle — speak CEG inside, standards at the edge	§18.0	0.00092	269	0.11	APP	ceg
+8.4.3	registry-tracked	Tracked boundary profiles (stubs — see [#72](https://github.com/CIRISAI/CIRISRegistry/issues/72))	§18.0	0.00092	269	0.11	APP	ceg
 8.5	update	Update cadence	§17	0.00133	174	0.16	APP	ceg
 8.6	references-lineage	References + lineage	§16	0.00119	187	0.14	APP	ceg
 8.6.1	external	External references (informational)	§16.4	0.00136	170	0.16	APP	ceg
@@ -392,7 +392,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 8.7.6	case-study-case-5	Case Study 6: The Spirit of the Law—Interpreting Ethical Intent	Accord 3.case-study-6-the-spirit-of-the-law-inter	0.00092	335	0.11	APP	accord
 8.7.7	case-study-case-6	Case Study 7: Governance of Governors—Keeping Wisdom Accountable	Accord 3.case-study-7-governance-of-governors-kee	0.00092	336	0.11	APP	accord
 8.7.8	a-3.conclusion	Conclusion	Accord 3.conclusion	0.00092	337	0.11	APP	accord
-6.2	coherence-mathematics	The coherence mathematics — the constraint-manifold ratchet (J / F / σ)	Accord Book IX	0.00120	393	0.2	VI	accord
+6.2	coherence-mathematics	The coherence mathematics — capacity analysis under chosen constraints (J / F / σ)	Accord Book IX	0.00120	393	0.2	VI	accord
 6.2.1	constraint-ratchet	The constraint-manifold ratchet — federated intersection & topological collapse	Accord Book IX Ch 1-3	0.00100	394	0.15	VI	accord
 6.2.2	defense-function	The Coherent Intersection — the defense function J	Accord Book IX Ch 4	0.00100	395	0.15	VI	accord
 6.2.3	sustainability-integral	The sustainability integral (σ)	Accord Book IX Ch 5	0.00100	396	0.15	VI	accord
