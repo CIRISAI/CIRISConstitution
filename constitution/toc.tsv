@@ -404,6 +404,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.4.11	age-assurance	Age-assurance: the witness-reserved ladder, the subject self-declared rung, and the protective gate	(spine-reconciled)	0.00050	403	0.1	III	ceg
 3.4.12	adult-incapacity-stewardship	Adult stewardship under incapacity (capacity-triggered, prior-will-first, fail-to-liberty)	(spine-reconciled)	0.00050	404	0.1	III	ceg
 3.4.13	minor-protection	Minor operation & protection — the seven ratified child-safety rulings (restrictive floor)	(spine-reconciled)	0.00050	405	0.1	III	ceg
+3.4.14	synthesis-disclosure	Machine-generation disclosure — the attestation IS the marking (EU AI Act Art. 50(2), normative)	(spine-reconciled)	0.00050	430	0.1	III	ceg
 4.2.1.3	lifecycle	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	(spine-reconciled)	0.00050	406	0.1	IV	accord
 4.2.6	live-quorum	Live-quorum operation & recovery under decimation (normative)	(spine-reconciled)	0.00050	407	0.1	IV	accord
 4.4.3.2.8	affiliations	The institutional cohort (necessity, not interest) (normative)	(spine-reconciled)	0.00050	408	0.1	IV	ceg

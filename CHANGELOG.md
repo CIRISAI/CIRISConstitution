@@ -3,6 +3,37 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## Unreleased (RC3 line) — machine-generation disclosure becomes mandatory
+
+**CC 3.4.14 `synthesis-disclosure` (new, normative).** Marking AI-generated content is no longer a
+planned interoperability profile — it is a MUST, discharging EU AI Act Art. 50(2)/(4) (applicable
+2026-08-02) with **zero new wire surface**. The rule rests on what CEG already does: attest a source.
+R1 makes `content_class:generated` / `content_class:generated_modified` mandatory on every
+Contribution carrying generated or materially-altered content, from any attester; R2 binds the
+agent-produced case to an `identity_type` containing `agent`, so machine origin is readable from the
+signed envelope rather than from a self-declared flag; R3 requires the marking to survive egress to
+non-CEG channels, with an unmarkable channel recorded as a `hard_case:*` exception rather than
+silently dropped; R4 carves out assistive operations (a disclosure that fires on every spell-check is
+not a signal); R5 puts the duty on the generator, keeps false marking on the existing false-attestation
+evidence floor, and leaves verdicts with the WA quorum. `generated_modified` is a canonical addition to
+`content_class`'s existing open vocabulary (documentation-only per CC 4.5.1.1), and CC 3.3.12's
+`content_class` is clarified as not multimedia-scoped — it reaches text.
+
+**CC 8.4.2 C2PA profile — ADOPT → adopted, emit limb normative.** The profile's `MAY` is promoted to
+`MUST` for generated media as the media-egress form of CC 3.4.14 R3; the AI-generation disclosure
+named descriptively in the CC 3.3.13 multimedia Source structs is marked mandatory with a fail-secure
+default (absent/unknown on an agent-attested Contribution resolves to *disclosed as generated*).
+
+**Compliance-mapping corrections.** The CC 4.5.2 regulatory table filed training-data transparency
+under EU AI Act Art. 50; that is Art. 53(1)(d) (GPAI) — the row is split and both are now pointed at
+the primitives that actually carry them. The CC 8.3 conformance row for Art. 50 moves from
+*Informative* to *Evidence-bearing* and names the shipping releases.
+
+**Conformance pin.** The emission path is discharged in **CIRISAgent 2.9.8** and **CIRISServer 0.6**,
+which publish the conformance statement. The claims-registry rows are `staged` against
+CIRISConstitution#9 until those releases' spec-map manifests back CC 3.4.14 — spec ahead of impl, named
+ticket, per the EVIDENCE.md discipline. Normative coverage holds at 100% (134/134 sections).
+
 ## 1.0-rc2 — evidence registry, two new invariants, and the coherence math finalized
 
 Consolidates the post-review work into the release candidate.

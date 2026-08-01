@@ -297,7 +297,7 @@ Four boundary modes:
 
 ### 8.4.2 `credentials` — C2PA Content Credentials — media-provenance import/emit profile
 
-**Disposition: ADOPT at the media boundary (import bridge + emit), zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50 machine-readable marking of AI-generated content applies from **2026-08** in the federation's primary jurisdiction, so this profile is calendar-bound, not optional. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
+**Disposition: ADOPTED — import bridge informative, emit normative for generated media per [CC 3.4.14](part_3_the_namespace.md); zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver, now discharged:** EU AI Act Art. 50(2) machine-readable marking of AI-generated content applies from **2026-08-02** in the federation's primary jurisdiction. The marking obligation itself is normative at [CC 3.4.14](part_3_the_namespace.md) (where it belongs — the interior rule is about attesting a source, not about C2PA); this profile is the **media egress form** of that rule's R3, shipping in CIRISAgent 2.9.8 / CIRISServer 0.6. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
 
 C2PA is **provenance**; CEG is **judgment**. They do not compete — they compose. C2PA answers *"what process produced these bytes, signed by whom?"*; CEG answers *"what does a community of signers, under what consent, make of them — and who can revoke that?"* Neither does the other's job; C2PA has no consent architecture, no revocation, no 1+4.
 
@@ -322,6 +322,8 @@ evidence_refs: [
 #### 8.4.2.2 `emit` — Emit — CEG judgment as a C2PA assertion (egress)
 
 At a media-publish boundary a node MAY emit a C2PA assertion carrying a CEG attestation reference (a CAWG-identity-assertion-shaped custom assertion), so a pure-C2PA consumer downstream sees "this media is vouched-for in CEWP" without speaking CEG. This is an **export** at the edge (re-expressing an existing CEG attestation in C2PA's assertion envelope), parallel to the CC 8.4.1 COSE export profile — it adds no CEG wire field and re-signs nothing in the interior.
+
+**For generated media the emit is not optional.** Where the published media carries `content_class:generated` or `content_class:generated_modified`, the node MUST emit the C2PA assertion carrying the AI-generation disclosure — this is the media form of the [CC 3.4.14](part_3_the_namespace.md) R3 egress rule, and it is what discharges EU AI Act Art. 50(2) at a media boundary. Where the destination cannot carry a C2PA manifest, CC 3.4.14 R3's recorded-exception path applies: human-legible disclosure plus a `hard_case:*` observation naming the channel. The `MAY` above governs the general vouched-for export; it does NOT govern the generation marking.
 
 #### 8.4.2.3 `profile` — What this profile does NOT do
 
@@ -620,7 +622,7 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 | | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | Book II §III (WBD); Annex F authority lattice + autonomy tiers | Informative |
 | | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
-| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking) | `is_bot` disclosure; C2PA profile [CC 8.4.2](#842-credentials--c2pa-content-credentials--media-provenance-importemit-profile) (applies 2 Aug 2026) | Informative |
+| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2)/50(4): [CC 3.4.14](part_3_the_namespace.md) synthesis-disclosure — `content_class:generated` / `generated_modified` + `identity_type: agent` attestation, egress via the [CC 8.4.2](#842-credentials--c2pa-content-credentials--media-provenance-importemit-profile) C2PA emit. Applies 2 Aug 2026; shipped CIRISAgent 2.9.8 / CIRISServer 0.6 | Evidence-bearing |
 | | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
 | NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: Annex A metrics + Annex H baselines; Manage: Annex F/H workflows | Informative |
 | ISO/IEC 42001 | Cl 6.2 Risk Assessment | Book II §II | Informative |
