@@ -537,6 +537,7 @@ All error responses MUST conform to:
 | 422 | `CLOCK_SKEW_VIOLATION` | `signed_at` exceeds [CC 2.6.7](part_2_the_grammar.md) ±5 minute tolerance |
 | 422 | `WITNESS_QUORUM_NOT_MET` | Insufficient cosignatures to validate |
 | 422 | `CONSISTENCY_PROOF_INVALID` | A witness cosignature's [CC 5.3.1.1](#1031-consistency-proof-requirement-normative-addresses-ceg-01-distsys-review) consistency proof against the prior STH it cosigned is absent or does not verify. A missing proof when a prior STH exists, or a tree_size behind the witness's prior cosigned STH, is `MALFORMED_REQUEST` instead. |
+| 413 | `ENVELOPE_TOO_LARGE` | Canonical JCS bytes exceed the [CC 2.6.1.3](part_2_the_grammar.md) 1 MiB bound. Raised at **every** write path (HTTP body, capsule, FFI, tier-ingest), not only at an HTTP gate — the CC 2.6.1.3 rule is an admission bound, not a transport limit. CIRISPersist's storage-layer spelling `federation_envelope_too_large` maps to this wire code; the wire code is the conformance surface. |
 | 429 | `RATE_LIMITED` | `X-RateLimit-*` headers set; `Retry-After` honored |
 | 500 | `INTERNAL_ERROR` | Server-side fault; request_id usable for support |
 | 503 | `WITNESS_DIRECTORY_UNAVAILABLE` | Substrate replication lag exceeds liveness bound |
