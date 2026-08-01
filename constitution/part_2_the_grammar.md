@@ -103,11 +103,26 @@ hex = sha256_hex_lowercase(utf8_bytes(preimage))
 
 Parsing is **split-on-first-two-colons**: the substring before the first `:` is `{platform}`; the substring between the first and second `:` is `{entity_kind}`; **everything after the second `:` is `{id}` verbatim, and MAY itself contain colons** (so Matrix IDs like `@alice:example.org` survive). Rules:
 
-- `{platform}` — lowercased; open vocabulary per [CC 4.5.1.1](#4.5.1.1). Canonical seeds: `discord`, `slack`, `twitter`, `matrix`, `email`, `phone`, `github`, `xmpp`, `irc`
-- `{entity_kind}` — lowercased; open vocabulary. Canonical seeds: `user`, `channel`, `guild`, `room`, `group`, `address`
-- `{id}` — the platform's **stable, immutable** identifier, **verbatim** (case-preserved — some IDs are case-sensitive). MUST be the immutable account/object identifier (Discord/Twitter numeric snowflake; Matrix MXID; UUID), **NOT** a mutable handle/username/display-name. Using a mutable handle breaks subject-identity stability the moment the user renames.
+- `{platform}` — REQUIRED; MUST match `[a-z0-9][a-z0-9._-]*` — ASCII lowercase, and therefore **colon-free** by construction. Open vocabulary per [CC 4.5.1.1](#4.5.1.1). Canonical seeds: `discord`, `slack`, `twitter`, `matrix`, `email`, `phone`, `github`, `xmpp`, `irc`
+- `{entity_kind}` — REQUIRED; the same production as `{platform}`. Canonical seeds: `user`, `channel`, `guild`, `room`, `group`, `address`
+- `{id}` — REQUIRED, non-empty; the platform's **stable, immutable** identifier, **verbatim** (case-preserved — some IDs are case-sensitive). MUST be the immutable account/object identifier (Discord/Twitter numeric snowflake; Matrix MXID; UUID), **NOT** a mutable handle/username/display-name. Using a mutable handle breaks subject-identity stability the moment the user renames. `{id}` is the **only** component that MAY contain a colon.
 
-The split-on-first-two-colons rule means a producer constructs the preimage by joining exactly three parts with `:`; only the first two colons are structural. This is what makes the rule-(3) `delegates_to` proxy chain (`canonical_hash ∈ T.subject_key_ids`) match across producers: every CEG-Conforming producer that names the same `(platform, entity_kind, immutable_id)` triple computes the same `{hex}`, hence the same tagged wire string.
+**Preimage bytes (normative).** The hashed octets are exactly, and only:
+
+```
+preimage_bytes = utf8(platform) ‖ 0x3A ‖ utf8(entity_kind) ‖ 0x3A ‖ utf8(id)
+hex            = lowercase_hex( SHA-256(preimage_bytes) )
+```
+
+`0x3A` is the ASCII colon, contributed exactly twice by the construction. There is **no** length prefix, **no** domain-separation label, **no** trailing NUL, **no** BOM, and no framing of any other kind — an implementation that adds any of these computes a different subject and its gate diverges from every other gate.
+
+**P1 — no normalization at hash time.** A producer MUST NOT case-fold, trim, pad, or Unicode-normalize (NFC / NFD / NFKC / NFKD) any component before hashing; `{id}` is hashed exactly as the platform issues it. An input that does not already satisfy the productions above MUST be **rejected, not repaired** — a repairing producer and a rejecting producer would otherwise compute different subjects from the same input, which is the divergence this clause exists to close.
+
+**P2 — injectivity is structural, not statistical.** Because `{platform}` and `{entity_kind}` admit no colon, the joined string reverse-parses to exactly one triple. `("p","k:a","b")` and `("p","k","a:b")` are not two spellings of one preimage: one is an admissible triple, the other is a rejected input. The delimiter therefore carries the full anti-collision property over the admitted domain, and no length prefix is needed to obtain it. The `lp(x) = u32_be(len(x)) ‖ utf8(x)` discipline is the [CC 6.1.3](part_6_the_coherence_mathematics.md) rule for **substrate framing objects that never enter JCS**; a canonical subject is a string value *inside* a [CC 2.1](#2.1) envelope field and sits on the JCS side of that boundary, so adopting `lp` here would cross the CC 6.1.3 seam and re-spell every digest below to buy a property P2 already gives. The delimiter form stands.
+
+**P3 — the tag and the digest are governed, not re-opened.** `{hex}` is [CC 2.6.3](#2.6.3) lowercase hex; `{hashalg}` is exactly `sha256` for v1; an exact tag admits neither case variance nor whitespace. Uppercase hex, `SHA256`, a non-v1 algorithm, a bare untagged hex string, and any leading or trailing whitespace are all **rejects**.
+
+Together these make the rule-(3) `delegates_to` proxy chain (`canonical_hash ∈ T.subject_key_ids`) match across producers: every CEG-Conforming producer naming the same `(platform, entity_kind, immutable_id)` triple computes the same `{hex}`, hence the same tagged wire string.
 
 **Conformance vectors**:
 
@@ -118,6 +133,18 @@ The split-on-first-two-colons rule means a producer constructs the preimage by j
 | `matrix:user:@alice:example.org` (id contains colons) | `16d4d0bf478835a9af68cdaac730a29b36f82bf0dfe2073237ee4980f6b975d9` | `canonical:sha256:16d4d0bf…f6b975d9` |
 | `twitter:user:1455079377986420736` (numeric id, NOT @handle) | `10243ba010bf159a45197d368f91c025ef6ac1eb7f42ca32e55b414d90c861c2` | `canonical:sha256:10243ba0…90c861c2` |
 | `email:address:alice@example.org` | `04481a02fccfc8d99a47bde4f0563dd360d425b0734e8fcd8d5dd7198d0a263f` | `canonical:sha256:04481a02…98d0a263f` |
+
+**Reject vectors** — each MUST be refused at the gate, never normalized into acceptance:
+
+| Input | Rejected because |
+|---|---|
+| `ff7c5632…0295f61` (untagged) | the tag is REQUIRED; bare hex is format-indistinguishable from a `key_id` |
+| `canonical:md5:…` | `{hashalg}` is not the v1 algorithm |
+| `canonical:SHA256:ff7c5632…` | the alg segment is not exactly `sha256` |
+| `canonical:sha256:FF7C5632…` | `{hex}` is not [CC 2.6.3](#2.6.3) lowercase |
+| `canonical:sha256:ff7c5632…␣` (leading/trailing space) | an exact tag admits no padding |
+| triple `("Discord","user","1234…")` | `{platform}` is not ASCII-lowercase — reject, do NOT case-fold (P1) |
+| triple `("discord:x","user","1")` | `{platform}` contains `:` (P2) |
 
 #### 2.3.2.2 `canonical_binding` — Rule-(3) proxy vs `canonical_binding` — distinct mechanisms
 
@@ -374,6 +401,8 @@ A CEG-Conforming Producer MUST produce signing bytes via JCS over the envelope o
 
 
 **Number totality (normative).** RFC 8785 §3.2.2.3 fixes the number model as the IEEE-754 binary64 (ECMAScript `Number`) image. A CCP MUST coerce every numeric value to its finite IEEE-754 double image *before* computing JCS bytes, and MUST reject — with a hard error, never a fallback or best-effort hash — any number that has no finite double (overflow to ±Infinity, e.g. `1e1000` or a thousand-digit integer). An implementation built against an arbitrary-precision JSON parser otherwise admits a string-backed number that bypasses the double model: JCS then emits a non-canonical result and the content address silently diverges between peers — the same non-determinism-is-broken hazard class as the byte-field and timestamp rules of [CC 2.6.1.1.1](#2.6.1.1.1). With this rule a content address is always either the spec-canonical hash or an honest error, never a wrong-but-plausible one, in any parser feature configuration. The cross-impl JCS vector set MUST include a non-representable-number case (a value with no finite double, asserted to reject) under both default and arbitrary-precision parser builds.
+
+**Canonical-bytes size bound (normative).** A CEG envelope's canonical (JCS) bytes MUST NOT exceed **1 MiB (1 048 576 bytes)** — the signed thing is the sized thing, so the bound is on the bytes the signature covers, never on a stored or transport-framed image of them. A CCP MUST NOT emit an envelope above the cap; a CCS MUST reject one at admission — at **every** write path, including capsule/FFI and tier-ingest, not only an HTTP body gate — with `ENVELOPE_TOO_LARGE` (HTTP 413, [CC 5.3.6.1](part_5_transport_substrate.md)). The value is the one the substrate already practices for blob payloads (inline below 1 MiB, fountain-coded above), so the cap adds a rule, not a second regime. Above the cap **the envelope carries the manifest, not the bytes**: the heavy payload moves to the degradable fountain plane ([CC 6.1.5](part_6_the_coherence_mathematics.md)) and the envelope names it by content hash in `evidence_refs`, retrievable through the `holds_bytes:sha256:*` directory + [CC 5.3.2](part_5_transport_substrate.md) `ContentFetch`. The attestation remains the CEG object; only its payload relocates — **no new envelope field and no new primitive; the [CC 1.7](part_1_foundation.md) 1+4 surface is untouched.** This is a different axis from the [CC 5.4.3](part_5_transport_substrate.md) fixed 1.4 KB substrate envelope: that size is a traffic-analysis uniformity rule which *chunks* an oversize payload rather than refusing it, so it bounds no admission decision — absent the cap here, a multi-megabyte attestation is simply hundreds more fragments on the anti-entropy walk. The cap must be wire-contract precisely because peers have to agree on it: unratified, one node's legitimate envelope is another's rejection. The freeze-gate vector set MUST include an at-cap envelope (admits) and a cap-plus-one-byte envelope (rejects with the token above).
 
 #### 2.6.1.4 `worked` — Worked attack the rule closes
 
