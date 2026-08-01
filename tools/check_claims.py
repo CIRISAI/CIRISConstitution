@@ -139,6 +139,7 @@ def load_manifests():
         if spec is None or not os.path.exists(vend):
             continue
         backed, sym_backed, sym_all, bad = set(), defaultdict(set), defaultdict(set), []
+        sym_state = {}
         lines = [l for l in open(vend, encoding="utf-8") if not l.lstrip().startswith("#")]
         for r in csv.DictReader(lines, delimiter="\t"):
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
@@ -158,13 +159,15 @@ def load_manifests():
                         syms.append(tok)
             for s in syms:
                 sym_all[s].add(dec)
+                sym_state[(s, dec)] = (r.get(spec["status_col"]) or "?").strip()
                 if is_backed:
                     sym_backed[s].add(dec)
             if spec["known_bad"](r):
                 bad.append((dec, (r.get("cc_claim_id") or r.get("claim_id") or "?").strip(),
                             syms, (r.get(spec["status_col"]) or "?").strip()))
         out[repo] = dict(backed=backed, sym_backed=sym_backed, sym_all=sym_all,
-                         known_bad=bad, spec=spec, publishes_symbols=bool(sym_all))
+                         sym_state=sym_state, known_bad=bad, spec=spec,
+                         publishes_symbols=bool(sym_all))
     return out
 
 
@@ -407,9 +410,12 @@ def main():
                     notes.append(f"L{ln} [{cid}]: {tag} pointer '{ptr}' names a module/file, not a single "
                                  f"artifact — matched by prefix against the pinned {repo} manifest")
             elif dec in hit_all:
+                st_here = sorted({v for (s, d), v in m["sym_state"].items()
+                                  if d == dec and _sym_eq(frag, s)})
                 errors.append(f"L{ln} [{cid}]: {tag} pointer '{ptr}' — the pinned {repo} manifest "
                               f"publishes this artifact at CC {dec} but NOT in a backed state "
-                              f"(status is not {spec['status_col']}-backed); it does not establish the claim")
+                              f"({spec['status_col']}={'/'.join(st_here) or '?'}); it does not "
+                              f"establish the claim")
             elif hit_all:
                 where = ", ".join(sorted(hit_all))
                 xrepo_pending += 1
@@ -512,8 +518,9 @@ def main():
           f"{len(evidenced) + len(token_only)}/{len(norm)} "
           f"({100.0*(len(evidenced)+len(token_only))/n:.0f}%)]")
     if token_only:
-        print("top normative-density sections carrying NO checkable evidence:")
-        for c, d in sorted(((norm[d], d) for d in token_only), reverse=True)[:12]:
+        print(f"all {len(token_only)} normative section(s) carrying NO checkable evidence "
+              f"(by MUST/SHALL density):")
+        for c, d in sorted(((norm[d], d) for d in token_only), reverse=True):
             who = ", ".join(c for c, _ in claim_decimals[d])
             print(f"  {d:12} {c:3} MUST/SHALL   {who}")
     if uncovered:

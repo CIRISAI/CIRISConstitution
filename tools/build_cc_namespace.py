@@ -302,11 +302,18 @@ def main():
     outside = sorted(observed - NORMATIVE_8)
     unexpected_outside = sorted(set(outside) - CATALOGUED_NOT_NORMATIVE)
     component_problems = []
+    if len(NORMATIVE_8) != EXPECTED_NORMATIVE_COMPONENTS:
+        component_problems.append(
+            "the generator's NORMATIVE_8 table lists %d components; CC 3.1 asserts %d"
+            % (len(NORMATIVE_8), EXPECTED_NORMATIVE_COMPONENTS))
+    if normative_missing:
+        component_problems.append(
+            "MISSION.md-committed component(s) with no catalogued family in CC 3.1: %s"
+            % ", ".join(normative_missing))
     if len(normative_seen) != EXPECTED_NORMATIVE_COMPONENTS:
         component_problems.append(
-            "CC 3.1 asserts %d MISSION.md-committed owning components; this catalog extracts %d%s"
-            % (EXPECTED_NORMATIVE_COMPONENTS, len(normative_seen),
-               (" (missing: " + ", ".join(normative_missing) + ")") if normative_missing else ""))
+            "CC 3.1 asserts %d MISSION.md-committed owning components; this catalog extracts %d"
+            % (EXPECTED_NORMATIVE_COMPONENTS, len(normative_seen)))
     if unexpected_outside:
         component_problems.append(
             "component(s) catalogued that are neither in the normative %d nor declared "
