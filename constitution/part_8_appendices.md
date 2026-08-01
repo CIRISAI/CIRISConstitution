@@ -385,7 +385,7 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 | **measured** | An instrumented observation, strongest when the prediction was staked before the measurement. Meaningless quoted without its sample, floor, and error bar. | Generalising past the measured population or substrate. |
 | **cited-external** | Established elsewhere in the literature. Corroboration by convergence, not proof of anything claimed here. | Reading agreement in another field as validation of this application. |
 
-**Authority note (CCA).** Where a row's authority was the *Coherence Collapse Analysis*, note that CCA v5 — a corrections version ([10.5281/zenodo.21730551](https://doi.org/10.5281/zenodo.21730551)) — **withdraws its own validations**: the `k_eff` hardware checks are reclassified as identity checks, the institutional application is re-scored below chance, and the collapse asymmetry is recorded as *assumed, not derived*. CCA is therefore not an authority for the collapse asymmetry or for any "CCA-validated form". What survives and may be cited is the Möbius/ceiling core: `k_eff` monotone in `ρ̄`, the `1/ρ̄` ceiling, and "scale cannot restore collapsed diversity".
+**Authority note (CCA).** The *Coherence Collapse Analysis* is **not an authority** for the collapse asymmetry or for any "CCA-validated form", and no row here cites it as one. What may be cited, per its current version (v5, [10.5281/zenodo.21730551](https://doi.org/10.5281/zenodo.21730551)), is the Möbius/ceiling core: `k_eff` monotone in `ρ̄`, the `1/ρ̄` ceiling, and "scale cannot restore collapsed diversity". The version record on Zenodo carries its own claim lineage.
 
 **Strength grades — the reading key for the register.** Each row grades what the named artifact establishes, not whether it exists.
 
@@ -1624,7 +1624,7 @@ jobs:
 
 Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** All ten Accord annexes (A–J) are migrated in full, and the three definitional frameworks are defined in Part VII against adopted international standards.
 
-**Formerly stubbed, defined at** (lineage in the CHANGELOG):
+**Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** migrated in full → [CC 8.8.5](#885-annex-c--annex-c-regulatory-cross-walk)–[CC 8.8.10](#8810-annex-j--annex-j-benchmarking--automated-validation).
 - **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).
