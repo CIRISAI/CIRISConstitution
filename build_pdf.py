@@ -18,6 +18,13 @@ sys.path.insert(0, str(HERE / "tools"))
 import _md2latex as B   # convert(), inline(), esc(), code_ascii(), NUC (stdlib-only, safe import)
 
 B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
+              # RC3 additions: reject-vector control pictures (CC 2.3.2.1), R-policy
+              # constraint subscripts (CC 6.1.5.1), citation diacritics (§8.6.1),
+              # event-time sum + combining macron (Part VI)
+              "␊": r"\textlangle LF\textrangle{}", "␣": r"\textvisiblespace{}",
+              "₁": r"\textsubscript{1}", "₃": r"\textsubscript{3}",
+              "Σ": r"$\Sigma$", "à": r"\`a", "ö": r"\"o",
+              "̄": r"\textsuperscript{--}",
               "¶": r"\P{}", "Δ": r"$\Delta$", "σ": r"$\sigma$",
               "₀": r"\textsubscript{0}", "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",

@@ -2,7 +2,7 @@ claim_id	decimal_id	summary	evidence	status
 CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity	established
 CLM-math-collapse	6.2.1	Remainder bound only: O(r²·k_eff) remainder of an ASSUMED decay law with substrate-specific free constants λ_geo, κ. Does not establish the decay law; nothing establishes the collapse asymmetry	lean:RATCHET:Core.CollapseTheorem.remainder_scales_with_k_eff bench:RATCHET#8	established
 CLM-math-JF	6.2.4	J = F identity (rfl): the two expressions co-denote. Certifies co-denotation only — NOT that the expression measures deterrence or flourishing	lean:coherence-ratchet:Core.Coherence.J_eq_F	established
-CLM-sigma-semigroup	6.2.3	Event-time σ(t)=Σ wᵢ·Signal_eff,i·exp(−d(t−tᵢ)) is the rule; recurrence demoted to an end-of-interval consequence; linear form withdrawn	lean:coherence-ratchet:Core.Coherence.sigma_decay_semigroup test:CIRISConformance#57 staged:CIRISServer#155	staged
+CLM-sigma-semigroup	6.2.3	Event-time σ(t)=Σ w_i·Signal_eff,i·exp(−d(t−t_i)) is the rule; recurrence demoted to an end-of-interval consequence; linear form withdrawn	lean:coherence-ratchet:Core.Coherence.sigma_decay_semigroup test:CIRISConformance#57 staged:CIRISServer#155	staged
 CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	staged:CIRISServer#155	staged
 CLM-sigma-srccorr	6.2.3.1	σ signal-source Kish discount Signal_eff = n_src/(1+ρ̄_src(n_src−1)); clique neutralized at ρ̄_src=1	lean:RATCHET:Core.SignalSourceDiscount.clique_neutralization	staged
 CLM-noise-classify	6.1.2	Noise-floor classification Full/Partial/EnvelopeOnly by procedure (R,ε)	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
