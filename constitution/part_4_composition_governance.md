@@ -37,6 +37,7 @@ The Ubuntu-primary discipline cuts cleanly: standing is constituted relationally
 | `score:trustworthiness:{entity}` | Meta-judgment as separate prefix | Compose downstream from `licensure:*` / `capacity:*` / `provenance:*` attestations |
 | `flag:bad_actor:{axis}` | Pejorative wire vocabulary | Surface as low-confidence scores on `provenance:*` and `coherence_standing:*`; adjudicate via NodeCore P8 quorum |
 | `grounding:{tradition}:{principle}` | "Tradition" claims are interpretive, not mechanism | Reuse `delegates_to` structural primitive per [CC 2.4.1.2](#2.4.1.2) |
+| `infra:observe` (or any `observer:*` capability) | Observation as a *granted* capability — inverting consent, so a token the observer carries would decide what may be seen | **No scope, deliberately.** Observation is the zero state: "we begin as an observer" is the base self-attestation existing at all ([CC 4.4.3.8](#4438-policy-direct--policy-a--direct-trust)). What may be observed is governed by the subject's consent — `cohort_scope`, `key_grant`, observer-share — never by a capability the observer holds. |
 
 ### 4.1.4 `withdraws-arbitrage` — `withdraws` arbitrage
 
@@ -62,7 +63,7 @@ The stories below each reached for a richer self-declaration; each is reducible 
 
 ## 4.2 `accord` — The HUMANITY_ACCORD constitutional layer
 
-The federation is symmetric by design — every participant binds every other under the Recursive Golden Rule. There is exactly one asymmetry in the whole wire format, and it points outward: humanity's right to halt the system. This section specifies it.
+The federation is symmetric by design — every participant binds every other under the Recursive Golden Rule. There is exactly one asymmetry in the whole wire format, and it points outward: humanity's right to halt the system. This section specifies it. The asymmetry is **consent-scoped**: it reaches exactly those holding a live trust edge to the accord, and it dies when that edge is cut ([CC 4.2.1](#421-authority--authority-scope) reach, [CC 4.4.3.8](#4438-policy-direct--policy-a--direct-trust) un-trust). The humanity accord is *a* trust root, not *the* trust root; what it holds over those who root to it is an emergency brake they granted, not a power imposed on everyone.
 
 ### 4.2.1 `authority` — Authority scope
 

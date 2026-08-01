@@ -304,21 +304,35 @@ The two quantities are not interchangeable: `k_eff` is a Kish effective count ov
 
 ### 6.2.3 `sustainability-integral` — The sustainability integral (σ)
 
-σ is the **time-integral of coherence** — the term that makes the ratchet a live, decaying quantity rather than a static count. It decays continuously without renewal and rises only on received coherence signals; decay is applied over the full elapsed interval **before** the fresh signal is added:
+σ is the **time-integral of coherence** — the term that makes the ratchet a live, decaying quantity rather than a static count. It decays continuously without renewal and rises only on received coherence signals.
+
+**Event-time form — the rule (normative).** σ is defined over **attested event time**, not over polling steps. Each signal decays from **its own attested timestamp**:
 
 ```
-σ(t + Δt) = σ(t) · exp(−d · Δt) + Signal(t) · w
+σ(t) = Σ_{i : t_i ≤ t}  w_i · Signal_eff,i · exp(−d · (t − t_i))
 ```
 
 - **d** — continuous decay rate, `0.05`/day (half-life `ln 2 / d ≈ 13.9` days).
-- **Signal(t)** — **coherence signals** received over the interval: attested events evidencing completed cooperative work / validated contribution (defined at [CC 8.1.1](part_8_appendices.md) by *what they measure*, not what they cost).
-- **w** — weight per signal type. `w` is **not free** — see 6.2.3.1.
+- **t_i** — the attested timestamp of signal `i`: **coherence signals** are attested events evidencing completed cooperative work / validated contribution (defined at [CC 8.1.1](part_8_appendices.md) by *what they measure*, not what they cost).
+- **w_i** — weight for that signal's type. `w` is **not free** — see 6.2.3.1; `Signal_eff` is the 6.2.3.1 source-correlation discount.
 
-**Step-invariance (normative).** Decay MUST be computed as a **single** `exp(−d·Δt)` over the full elapsed `Δt` — never iterated per sub-interval, never linearized, never clamped as the decay rule. The exponential is the only form satisfying the semigroup law `exp(−d(a+b)) = exp(−da)·exp(−db)`, so two conformant peers observing the same signal stream but polling σ at different cadences — the decimation-recovery rejoin, where one peer takes a single large `Δt` step — compute **identical** σ. Conformance test points: from a common `(σ₀, signal)` baseline, `Δt ∈ {1, 25, 400}` days MUST agree across implementations. The earlier linear form `σ·(1 − d·Δt)` is **withdrawn**: it is not a semigroup (cadence-dependent — a cross-implementation divergence hazard) and goes **negative** for `Δt > 1/d = 20` days, which would flip the sign of `J = k_eff · λ_op · σ`.
+An implementation MUST compute σ by this rule. It is **step-invariant by construction**: `σ(t)` is a function of the attested event set and `t` alone, and contains no polling cadence, so two conformant peers observing the same attested signals at **any** cadences whatsoever compute **identical** σ. This is the property the conformance obligation actually needs.
+
+**The recurrence is a consequence, not the rule.** The step form
+
+```
+σ(t + Δt) = σ(t) · exp(−d · Δt) + w · Signal_eff        // valid only for end-of-interval signals
+```
+
+follows from the event-time form **only** when every signal in `(t, t + Δt]` is attested at the interval end (`t_i = t + Δt`). For an **interior** signal (`t < t_i < t + Δt`) it over-credits by `exp(d·(t + Δt − t_i)) > 1` and is **not step-invariant**: two peers polling at different cadences diverge — a [CC 2.6.1](part_2_the_grammar.md)-class divergence hazard. The recurrence MAY be used as an implementation shortcut exactly when the end-of-interval condition holds; it MUST NOT be used as the definition, and an implementation MUST NOT fold an interior signal into it.
+
+**Conformance (normative).** From a common `(σ₀, attested signal set)` baseline, implementations MUST agree on `σ(t)` for `Δt ∈ {1, 25, 400}` days, **and** the vector family MUST include at least one signal attested **strictly inside** the interval — the case the withdrawn recurrence fails and the event-time form passes. Agreement at end-of-interval points alone does not discriminate the two forms and is not a sufficient test.
+
+*Why the exponential.* It is the only decay satisfying the semigroup law `exp(−d(a+b)) = exp(−da)·exp(−db)` (**theorem-given-model**; `lean:coherence-ratchet:Core.Coherence.sigma_decay_semigroup`), which is what makes the event-time form well-defined under re-basing. The earlier linear form `σ·(1 − d·Δt)` is **withdrawn**: it is not a semigroup (cadence-dependent) and goes **negative** for `Δt > 1/d = 20` days, which would flip the sign of `J = k_eff · λ_op · σ`.
 
 **Right-to-return (normative).** A peer rejoining after a partition of any length re-enters with `σ ≥ 0` and **MUST NOT** be scored below a cold-start peer: absence decays σ toward zero, never below it. Implementations MAY keep a defensive `max(0, ·)` floor against floating-point cancellation, but **MUST NOT** rely on clamping in place of the exponential decay.
 
-**Source semantics.** The bare `+ Signal(t)·w` term is correct for signals modeled as **end-of-interval impulses**; a source emitting at a constant rate across the interval instead contributes `(w·Signal / d)·(1 − exp(−d·Δt))`.
+**Source semantics.** The event-time form treats each signal as an **impulse at `t_i`**. A source emitting at a constant rate `Signal` across an interval of length `Δt` ending at `t` contributes `(w·Signal / d)·(1 − exp(−d·Δt))` instead — the continuous limit of the impulse sum, and the only case in which a rate, rather than a timestamped event, is admissible input.
 
 *Recalibration flag.* `d` is now a **continuous** rate; any empirical fit made against the former linear coefficient must be recalibrated to this curve.
 
@@ -336,9 +350,9 @@ The two quantities are not interchangeable: `k_eff` is a Kish effective count ov
 Signal_eff = n_src / (1 + ρ̄_src · (n_src − 1))
 ```
 
-where `n_src` is the number of distinct signal sources and `ρ̄_src` their average pairwise correlation, drawn from the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action matrix (co-signing frequency, shared steward lineage, temporal clustering). `ρ̄_src` (signal-source correlation) is **named distinctly from, and non-substitutable with,** `k_eff`'s `ρ̄` (constraint-orientation correlation). At full collusion (`ρ̄_src → 1`) `Signal_eff → 1` regardless of clique size — a fully-collusive clique contributes at most **one** independent source's σ (mechanized: `coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization`). The discount is applied on the **attested-timestamp replay path** (the 6.2.3 step-invariance), so a partitioned clique cannot dump a fat offline backlog to bypass an interval-local `ρ̄_src` estimate. `w · Signal_eff` **replaces** the base `Signal(t) · w` term of 6.2.3: `Signal_eff` is the interval's *effective independent* source count (per-source signal magnitude is folded into the future source-attributed treatment, Scope below), so the two are equal only when sources emit one signal each — under the discount the effective count governs. **Step-invariance requires** `ρ̄_src` and `n_src` to be computed over **attested event-time** — grouping signals by their own timestamps, not by polling-window boundaries — so that two peers polling the same attested events at different cadences (the 6.2.3 semigroup case) compute the **same** `Signal_eff`; a window-boundary estimate would break cross-implementation agreement and is non-conformant.
+where `n_src` is the number of distinct signal sources and `ρ̄_src` their average pairwise correlation, drawn from the [CC 3.1.8.4](part_3_the_namespace.md) F-3 correlated-action matrix (co-signing frequency, shared steward lineage, temporal clustering). `ρ̄_src` (signal-source correlation) is **named distinctly from, and non-substitutable with,** `k_eff`'s `ρ̄` (constraint-orientation correlation). At full collusion (`ρ̄_src → 1`) `Signal_eff → 1` regardless of clique size — a fully-collusive clique contributes at most **one** independent source's σ (mechanized: `coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization`). The discount is applied on the **attested-timestamp replay path**, so a partitioned clique cannot dump a fat offline backlog to bypass an interval-local `ρ̄_src` estimate. `Signal_eff` is the *effective independent* source count of the signals being credited (per-source signal magnitude is folded into the future source-attributed treatment, Scope below), so it equals `n_src` only when the sources are uncorrelated — under the discount the effective count governs. `ρ̄_src` and `n_src` MUST be computed over **attested event-time** — grouping signals by their own `t_i`, never by polling-window boundaries — which is what makes the 6.2.3 event-time form well-defined: a window-boundary estimate makes `Signal_eff` cadence-dependent, breaks cross-implementation agreement, and is **non-conformant**.
 
-*Scope.* `Signal_eff` and the corrected recurrence `σ(t+Δt) = σ(t)·exp(−d·Δt) + w·Signal_eff` are mechanized. The full **source-attributed provenance-vector** state-shape — per-source σ carried through the exp recurrence with the source-correlation matrix maintained over the window — is the larger, atomic 6.2.3 / 6.2.3.1 edit that **composes on top** of this, a stated future refinement rather than a formula tweak.
+*Scope.* `Signal_eff` and its use in the 6.2.3 σ form are mechanized. The full **source-attributed provenance-vector** state-shape — per-source σ carried through the exp recurrence with the source-correlation matrix maintained over the window — is the larger, atomic 6.2.3 / 6.2.3.1 edit that **composes on top** of this, a stated future refinement rather than a formula tweak.
 
 ### 6.2.4 `flourishing-capacity` — The flourishing capacity (F)
 
