@@ -1098,7 +1098,6 @@
   "consent-counter": "7.0.2",
   "accord-reservation": "7.1",
   "system": "7.2",
-  "co-owned": "7.3",
   "detector-only": "7.4",
   "capacity-score": "7.5",
   "witness-emitter": "7.6",
@@ -1295,7 +1294,8 @@
   "annex-i": "cc:8.8.9",
   "annex-j": "cc:8.8.10",
   "stubs": "cc:8.9",
-  "synthesis-disclosure": "cc:3.4.14"
+  "synthesis-disclosure": "cc:3.4.14",
+  "co-stewarded": "7.3"
  },
  "key_to_semantic": {
   "0": "foreword",
@@ -1530,7 +1530,7 @@
   "7.0.2": "consent-counter",
   "7.1": "accord-reservation",
   "7.2": "system",
-  "7.3": "co-owned",
+  "7.3": "co-stewarded",
   "7.4": "detector-only",
   "7.5": "capacity-score",
   "7.6": "witness-emitter",

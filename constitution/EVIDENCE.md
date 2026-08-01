@@ -1,4 +1,4 @@
-# Evidence registry — the tag vocabulary (CC 1.0-rc2)
+# Evidence registry — the tag vocabulary (CC 1.0-rc3)
 
 The Constitution should not carry all of its own evidentiary weight. This file defines how each
 load-bearing claim names **which artifact establishes it**, so a reviewer — and CI — can follow the

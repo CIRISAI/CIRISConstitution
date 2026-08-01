@@ -3,7 +3,82 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
-## Unreleased (RC3 line) — machine-generation disclosure becomes mandatory
+## 1.0-rc3 — the external-review remediation, the trust-root ratifications, and an honest matrix
+
+RC3 closes the open issue set. Where an issue asked for a ruling, this cut gives one; where an
+issue was wrong, the disposition says so. Provenance, review archaeology and superseded text live
+in the GitHub issues and on Zenodo — not in this document.
+
+**Part VI — the math corrections (#50, #45, #26, #34, #35, #6).** §6.2 is demoted from
+justification to **capacity analysis under chosen constraints**: the collapse geometry cuts honest
+and deceptive regions alike, so the asymmetry lives in the choice of constraints, not in a
+theorem's gift. The reviewer's contradiction is real and is fixed at the root — J = k_eff·λ_op·σ is
+a *throughput index* monotone in diversity, maximised at ρ̄ = 0, and it **MUST NOT** be cited as the
+corridor's basis. The corridor re-founds on the whole-only share, where both poles are exactly zero
+by machine-checked theorem and the ceiling is exactly ln 2, with the peak-at-criticality labelled
+*measured* and explicitly "not established for this federation". The σ recurrence was a conformance
+bug — not step-invariant for interior signals, yet carrying a MUST that implementations agree at
+Δt ∈ {1, 25, 400} days, which is unsatisfiable as written; the event-time form is now the rule, and
+conformance MUST include a strictly-interior signal, since those three deltas cannot discriminate
+the two forms. The §6.1 fountain sentence is corrected (RaptorQ is all-or-nothing at block level;
+graceful degradation belongs to the layered codec) and the noise-floor default re-founds on the
+layered-codec fidelity metric. #6 is addressed without being closed: the MUST now binds relative to
+a pinned adversary model, and the side-informed limb is marked unverifiable-pending-instrument.
+
+**CCA is no longer cited as authority.** CCA v5 withdraws its own validations — k_eff hardware
+checks reclassified as identity checks, institutional application re-scored below chance, collapse
+asymmetry "assumed, not derived". No "CCA-validated" label attaches to any claim in §6.2; v5 is
+cited for the surviving Möbius/ceiling core only.
+
+**Part VIII — the traceability matrix stops flattering itself (#50 item 7).**
+`remainder_scales_with_k_eff` is re-graded to *theorem-given-model, remainder only*: it bounds the
+remainder order of an assumed decay law with substrate-specific free constants. It does not
+establish the decay law, and nothing in the corpus establishes the collapse asymmetry. Kish and the
+ceiling are *identity*; J = F is *identity*. §8.6.1 is populated with the borrowed instruments, and
+the priority claim is retired positively: **the claim is application, not discovery.**
+
+**Part I — the keeper thesis (#32), scoped to what is evidenced.** A recognition-grade preamble
+paragraph, and "what M-1 does not contain": no aggregation rule, no ranking of losses, no
+superlative derivable. M-1 does not launder witness into theorem.
+
+**Trust, consent and contextual integrity (#48, #46, #47, #49, #40, #44).** Trust-root operational
+semantics ratified: two named conferral planes, un-trust as one deletable acceptance edge with
+everything downstream failing closed emergently, and **liveness as a reported signal that MUST NOT
+be ANDed into validity** — a root is valid until revoked, superseding an RC2 reading that would
+have darkened the mesh at once. Consent-before-scoring for `capacity:*` reverses a stated CC
+position, so it is written family-scoped, community-addressed (root-addressed consent is consent to
+an unenumerable set), with the adversarial families exempt because an abuser never consents.
+`hard_case:deletion_window_breach` is evidence, never a verdict; no affirmative `deletion_proof`
+artifact, which a producer could emit while retaining the bytes. A scored agent may always see and
+contest what is filed about it, and never the scores, weights or bands. The swap test becomes a
+mandatory drafting gate, and bootstrap is handled by *building* the declared-asymmetry register
+rather than leaving a silent exemption.
+
+**Wire hygiene (#41, #38, #37, #30, #42, #43, #39).** The CC 2.3.2.1 canonical-subject preimage is
+pinned byte-level (all five golden vectors verified to reproduce; no digest changes). A 1 MiB
+canonical-bytes bound lands at CC 2.6.1.3, enforced at every write path — Part V's fixed 1.4 KB
+envelope is a traffic-analysis rule that chunks rather than refuses, so it bounded nothing at
+admission. One canonical spelling is frozen for the hybrid construction, chosen on repo evidence
+rather than preference, together with the class rule that prevents the next collision. `C_CIRIS`
+becomes `min(...)`: the five-factor product scored positive whenever an even number of factors were
+negative, inverting the anti-Goodhart rationale it exists to serve. Family counts are now
+**generated, not asserted** — `manifests/namespace_registry.json` is the registry of record, and the
+generator's hard-coded expectation is removed so the number cannot go stale again.
+
+**Declined or deferred, on the record.** Dead-clauses-keep-their-killers (#49-A4) — declined;
+errata live in git, GitHub and Zenodo. The proof-centipede witness format (#36) — deferred to 1.1;
+ratifying a paragraph does not make a format real. The `lp()` re-spelling of the canonical subject
+(#41 comment) — declined; it crosses the CC 6.1.3 seam and re-spells every ratified digest to buy a
+property the colon-ban already gives. The severance window on the halt fire path (#40 comment) —
+declined; it hands the halted party an escape at the instant the brake is pulled.
+
+**Not discharged, and marked as such.** #49-A2's memory-forking failure mode was to be red-teamed
+before ratification and has not been; CC 1.15.5 ships with an anti-forking binding that has had no
+adversarial review, and its claims row is `staged` against the issue. #50 item 8 — commissioning
+external reviewers with standing to kill sections — is not a document change and remains open; it
+is the one item nobody inside this ecosystem can substitute for.
+
+### Machine-generation disclosure becomes mandatory (#9, EU AI Act Art. 50(2))
 
 **CC 3.4.14 `synthesis-disclosure` (new, normative).** Marking AI-generated content is no longer a
 planned interoperability profile — it is a MUST, discharging EU AI Act Art. 50(2)/(4) (applicable

@@ -147,7 +147,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.4.7.1	identity-set	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	§7.0.1	0.00329	77	0.39	III	ceg
 3.4.7.2	consent-counter	`consent_role` — the Counter-RII consent gate (1.0-RC4, ratifies Accord §RC / CIRISAgent#760 OQ-1/2/3)	§7.0.2	0.00093	233	0.11	III	ceg
 3.4.8	detector-only	Detector-only prefixes	§7.4	0.00166	147	0.2	III	ceg
-3.4.9	co-owned	Co-owned prefixes	§7.3	0.00092	293	0.11	III	ceg
+3.4.9	co-stewarded	Co-stewarded prefixes	§7.3	0.00092	293	0.11	III	ceg
 3.4.10	witness-emitter	Witness-emitter reservations	§7.6	0.00092	294	0.11	III	ceg
 3.5	structure-inter	Inter-attestation relations — the structural composition graph	§6	0.00154	156	0.18	III	ceg
 3.5.1	concurrent-write	Concurrent-write precedence (0.1 scaffold)	§6.1	0.00139	169	0.17	III	ceg

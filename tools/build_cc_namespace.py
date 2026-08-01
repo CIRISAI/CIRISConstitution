@@ -29,7 +29,11 @@ SOURCE = os.path.join(HERE, "..", SOURCE_REL)
 VERSION_FILE = os.path.join(HERE, "..", "VERSION")
 OUT = os.path.join(HERE, "..", "manifests", "namespace_registry.json")
 
-EXPECTED_FAMILIES = 83          # normative claim (CC 3.1 intro + 3.1.7 summary)
+# CC 3.1.7 R1 (RC3) makes THIS GENERATED FILE the count of record: the prose no longer
+# asserts a family/component count, so there is no longer a normative number to diverge
+# from. Kept as None so the discrepancy machinery below stays dormant rather than
+# re-introducing a hard-coded claim that goes stale on every added family (#30).
+EXPECTED_FAMILIES = None
 EXPECTED_COMPONENTS = 8         # normative claim: "8 owning components"
 
 # ---- owning components -------------------------------------------------------
@@ -290,7 +294,8 @@ def main():
     meta["n_components"] = n_components
     meta["per_component"] = per_component
     meta["generator"] = "tools/build_cc_namespace.py"
-    if n_families != EXPECTED_FAMILIES or n_components != EXPECTED_COMPONENTS:
+    if EXPECTED_FAMILIES is not None and (
+            n_families != EXPECTED_FAMILIES or n_components != EXPECTED_COMPONENTS):
         meta["discrepancy"] = OrderedDict([
             ("normative_n_families", EXPECTED_FAMILIES),
             ("normative_n_components", EXPECTED_COMPONENTS),
@@ -326,10 +331,10 @@ def main():
         print("  %-20s %-14s %3d%s" % (comp, COMPONENT_REPO.get(comp, "?"),
                                        per_component[comp], star))
     print("-" * 60)
-    print("total families   : %d   (normative claim: %d)" % (n_families, EXPECTED_FAMILIES))
-    print("total components : %d   (normative claim: %d)" % (n_components, EXPECTED_COMPONENTS))
+    print("total families   : %d   (registry of record — CC 3.1.7 R1)" % n_families)
+    print("total components : %d" % n_components)
     print("reserved families: %d" % reserved_count)
-    if n_families != EXPECTED_FAMILIES:
+    if EXPECTED_FAMILIES is not None and n_families != EXPECTED_FAMILIES:
         print("-" * 60)
         print("DELTA vs 83 — per-section breakdown (families found):")
         def skey(s):

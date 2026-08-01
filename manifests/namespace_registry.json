@@ -1,29 +1,22 @@
 {
   "_meta": {
     "cc_version": "1.0-rc2",
-    "discrepancy": {
-      "normative_n_components": 8,
-      "normative_n_families": 83,
-      "note": "CC 3.1 intro + the 3.1.7 summary assert '83 prefix families across 8 owning components'. This catalog extracts every distinct backtick prefix family at leaf granularity (the granularity a vendoring crate needs), deduping the one cross-section joint claim (agent_files, CC 3.1.1 + CC 3.1.9.1). The observed count exceeds 83 because the normative summary predates later-added families (e.g. CC 3.1.8.4/3.1.8.5 structural-injustice + distributive-access detectors, CC 3.1.9.4 health:liveness / watchlist / judge_model). CIRISBench (CC 3.1.10) is the 9th owning_component here but is cited from a README rather than a MISSION.md, so it is outside the normative 'is 8 owning components' (all MISSION.md-committed).",
-      "observed_n_components": 9,
-      "observed_n_families": 95
-    },
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
-    "n_families": 95,
+    "n_families": 103,
     "per_component": {
-      "accord-agent": 16,
+      "accord-agent": 19,
       "anti-sybil": 6,
-      "attestation": 15,
+      "attestation": 17,
       "cirisbench": 1,
       "lens": 15,
-      "node": 26,
+      "node": 27,
       "persist": 4,
-      "registry": 8,
+      "registry": 10,
       "transport-delivery": 4
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "f6d446eb662c312d3dad1a79afcc7b4d3bbf8b2b3b74a36260c2eec638d7328f"
+    "source_sha256": "15d1b4723230cf80e17d494ae58b54c21df5aafc2e889b0f09c651fb97827478"
   },
   "families": [
     {
@@ -47,6 +40,19 @@
       "polarity": "boolean-via-score",
       "prefix": "activity_tier:{period}",
       "reserved": false
+    },
+    {
+      "cc_section": "3.1.2",
+      "description": "Witness rung of the age ladder.",
+      "owning_component": "attestation",
+      "owning_repo": "CIRISVerify",
+      "polarity": "signed",
+      "prefix": "age_assurance:{rung}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.11",
+        "rule": "witness-reserved, subject-not-self"
+      }
     },
     {
       "cc_section": "3.1.1",
@@ -171,7 +177,7 @@
     },
     {
       "cc_section": "3.1.8.1",
-      "description": "\ud835\udc9e_CIRIS \u2014 multiplicative; anti-Goodhart unity-of-virtues",
+      "description": "\ud835\udc9e_CIRIS \u2014 the minimum over the five factors; anti-Goodhart unity-of-virtues",
       "owning_component": "lens",
       "owning_repo": "CIRISLensCore",
       "polarity": "signed",
@@ -249,6 +255,19 @@
     },
     {
       "cc_section": "3.1.2",
+      "description": "Witness rung of the adult decision-capacity ladder (CC 3.4.12): a registered qualified assessor attests a per-domain band; the subject cannot self-emit it and the proposed steward cannot be the attester.",
+      "owning_component": "attestation",
+      "owning_repo": "CIRISVerify",
+      "polarity": "signed",
+      "prefix": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.12",
+        "rule": "witness-reserved, subject-not-self, attester != steward"
+      }
+    },
+    {
+      "cc_section": "3.1.2",
       "description": "Validity of a certification authority's signature.",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
@@ -273,6 +292,19 @@
       "polarity": "signed",
       "prefix": "commitment_fulfillment:{prior_contribution_id}",
       "reserved": false
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "A node's declared operating configuration, published as an auditable record rather than inferred from behaviour.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "config:{scope}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      }
     },
     {
       "cc_section": "3.1.5.3",
@@ -309,6 +341,19 @@
       "polarity": "signed",
       "prefix": "conscience:optimization_veto",
       "reserved": false
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Subject-side consent authority over Contributions naming the subject in subject_key_ids, plus the producer-side and substrate-side leaves that close its lifecycle.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "per-leaf (CC 3.3.1)",
+      "prefix": "consent:{kind}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      }
     },
     {
       "cc_section": "3.1.3",
@@ -706,6 +751,19 @@
     },
     {
       "cc_section": "3.1.1",
+      "description": "The owner-binding made observable as a score.",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "boolean-via-score",
+      "prefix": "ownership:{relation}:{target_kind}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      }
+    },
+    {
+      "cc_section": "3.1.1",
       "description": "Partner status (COMMUNITY / COMMUNITY_PLUS / PROFESSIONAL_MEDICAL / PROFESSIONAL_LEGAL / PROFESSIONAL_FINANCIAL / PROFESSIONAL_FULL).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
@@ -889,6 +947,32 @@
       "reserved": false
     },
     {
+      "cc_section": "3.1.5",
+      "description": "An agent's own reasoning trace carried envelope-native.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "signed",
+      "prefix": "trace:{form}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      }
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Post-scrub digest of a trace for cross-node consumption when the trace itself is out of scope or over cap.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "signed",
+      "prefix": "trace_summary:{kind}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      }
+    },
+    {
       "cc_section": "3.1.2",
       "description": "RFC 6962 consistency proof between two STHs.",
       "owning_component": "attestation",
@@ -930,6 +1014,19 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
+      }
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "The trust-root conferral and acceptance edges, carried as dimension values on delegates_to rows \u2014 the wire type is unchanged, so 1+4 is untouched.",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "positive-only",
+      "prefix": "trust:{job}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": null,
+        "rule": "reserved (see table)"
       }
     },
     {
