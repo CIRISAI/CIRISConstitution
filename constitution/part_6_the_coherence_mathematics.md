@@ -49,7 +49,7 @@ A `wholeness_witness:` object is a peer's **hybrid-signed Merkle root over a sco
 
 **Infrastructure is self-sufficient for memory (sharpens [CC 1.13.5](part_1_foundation.md)).** Both degradation operators are **mechanical** (symbol arithmetic + resampling) — they require **no reasoning and no agency**, so a pure fabric node performs the entire forever-memory function. A brain MAY enrich a degraded tier with a richer semantic gist, but is **never required**: infrastructure remembers without agency. The mechanism is mechanical degradation; the brain is optional enrichment.
 
-**Disposition mapping.** The [CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) `EjectionVerdict` values are points on this one axis: `Keep` = above-floor, no pressure; `EjectToTier` = a downward step (still recoverable, lower fidelity); aggregation = N→1 downward step; `EjectHardDelete` = forced descent below the floor + purge-still-recoverable-tiers. They are not distinct mechanisms — they are stops on the single pressure-driven descent.
+**Disposition mapping.** The [CC 6.1.5](#615-fountain-storage--swarm-rarity-p--r) `EjectionVerdict` values are points on this one axis: `Keep` = above-floor, no pressure; `EjectToTier` = a downward step (still recoverable at lower fidelity — by **dropping whole layers**, never by holding a partial symbol count, since decode is all-or-nothing per layer); aggregation = N→1 downward step; `EjectHardDelete` = forced descent below the floor + purge-still-recoverable-tiers. They are not distinct mechanisms — they are stops on the single pressure-driven descent.
 
 #### 6.1.2.1 `aggregationmetav1` — `AggregationMetaV1` — the aggregation-tier wire contract (normative)
 
@@ -107,7 +107,8 @@ The single verdict surface a verifier exposes and a substrate consumes to gate o
 ```
 EjectionVerdict::= Keep // above the floor, no pressure step
  | EjectToTier // one downward step: still recoverable, lower fidelity
- // (intra-object layer-drop OR N→1 aggregation)
+ // (intra-object layer-drop OR N→1 aggregation — never a
+ // partial symbol count; decode is all-or-nothing per layer)
  | EjectAggregatedTierOnly { tier }
  // shed exactly one pyramid stratum — the tier-`tier`
  // composite — leaving finer AND coarser tiers intact

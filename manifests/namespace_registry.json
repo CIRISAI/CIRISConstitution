@@ -1,22 +1,26 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc2",
+    "cc_version": "1.0-rc3",
+    "components_outside_normative": [
+      "cirisbench"
+    ],
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
-    "n_families": 103,
+    "n_components_normative": 8,
+    "n_families": 106,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
-      "attestation": 17,
+      "attestation": 18,
       "cirisbench": 1,
       "lens": 15,
       "node": 27,
-      "persist": 4,
+      "persist": 5,
       "registry": 10,
-      "transport-delivery": 4
+      "transport-delivery": 5
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "15d1b4723230cf80e17d494ae58b54c21df5aafc2e889b0f09c651fb97827478"
+    "source_sha256": "bdfbc16aec01fac55694746209d27ba9b927bc74cfef90c33cb2814ac0168de6"
   },
   "families": [
     {
@@ -43,16 +47,25 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Witness rung of the age ladder.",
+      "description": "Witness rung of the age ladder \u2014 {level} \u2208 provider | government, {band} \u2208 minor | adult, canonical {version} = v1.",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
-      "prefix": "age_assurance:{rung}",
+      "prefix": "age_assurance:{level}:{band}:{version}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.11",
         "rule": "witness-reserved, subject-not-self"
       }
+    },
+    {
+      "cc_section": "3.1.2",
+      "description": "Subject's own age-band declaration \u2014 {band} \u2208 minor | adult, canonical {version} = v1.",
+      "owning_component": "attestation",
+      "owning_repo": "CIRISVerify",
+      "polarity": "signed",
+      "prefix": "age_self_declared:{band}:{version}",
+      "reserved": false
     },
     {
       "cc_section": "3.1.1",
@@ -393,6 +406,19 @@
       "owning_repo": "CIRISEdge",
       "polarity": "signed",
       "prefix": "delivery:{class}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      }
+    },
+    {
+      "cc_section": "3.1.4",
+      "description": "is Edge's too, and is registered here rather than left to CC 3.4.6 prose: subscriber-emitted, membership-gated, not a substrate-self-report.",
+      "owning_component": "transport-delivery",
+      "owning_repo": "CIRISEdge",
+      "polarity": "signed",
+      "prefix": "delivery_receipt:{stream_id}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
@@ -936,6 +962,19 @@
       "polarity": "boolean-via-score",
       "prefix": "slashing:{outcome}",
       "reserved": false
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "system:*",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      }
     },
     {
       "cc_section": "3.1.9.3",

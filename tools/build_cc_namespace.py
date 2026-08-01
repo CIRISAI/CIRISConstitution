@@ -29,12 +29,21 @@ SOURCE = os.path.join(HERE, "..", SOURCE_REL)
 VERSION_FILE = os.path.join(HERE, "..", "VERSION")
 OUT = os.path.join(HERE, "..", "manifests", "namespace_registry.json")
 
-# CC 3.1.7 R1 (RC3) makes THIS GENERATED FILE the count of record: the prose no longer
-# asserts a family/component count, so there is no longer a normative number to diverge
-# from. Kept as None so the discrepancy machinery below stays dormant rather than
-# re-introducing a hard-coded claim that goes stale on every added family (#30).
+# CC 3.1.7 R1 (RC3) makes THIS GENERATED FILE the count of record for FAMILIES: the prose
+# no longer asserts a family count, so there is no normative number to diverge from. Kept
+# as None so the family-delta machinery stays dormant rather than re-introducing a
+# hard-coded claim that goes stale on every added family (#30).
 EXPECTED_FAMILIES = None
-EXPECTED_COMPONENTS = 8         # normative claim: "8 owning components"
+# The COMPONENT count is a different case: CC 3.1 (intro) still asserts it in words —
+# "**Eight** owning components are committed by a sibling MISSION.md; **CIRISBench** is
+# catalogued from a README and is the ninth." That claim is checkable and MUST NOT ride on
+# EXPECTED_FAMILIES: retiring the family count previously disabled this check too, leaving
+# `EXPECTED_COMPONENTS = 8` sitting next to a registry reporting n_components: 9 with
+# nothing able to fire. The check below is therefore independent of EXPECTED_FAMILIES, and
+# it checks the claim the prose actually makes — the MISSION.md-committed set, not the
+# catalogued total, which is legitimately 9.
+EXPECTED_NORMATIVE_COMPONENTS = 8       # CC 3.1: components committed by a sibling MISSION.md
+CATALOGUED_NOT_NORMATIVE = {"cirisbench"}   # CC 3.1.10 — README-cited, the ninth
 
 # ---- owning components -------------------------------------------------------
 # Every top-level `### 3.1.N` heading (N != 7 summary) is one owning component.
@@ -286,19 +295,43 @@ def main():
     n_components = len(per_component)
     reserved_count = sum(1 for r in fam_list if r["reserved"])
 
+    # ---- component check (independent of EXPECTED_FAMILIES) --------------------
+    observed = set(per_component)
+    normative_seen = sorted(observed & NORMATIVE_8)
+    normative_missing = sorted(NORMATIVE_8 - observed)
+    outside = sorted(observed - NORMATIVE_8)
+    unexpected_outside = sorted(set(outside) - CATALOGUED_NOT_NORMATIVE)
+    component_problems = []
+    if len(normative_seen) != EXPECTED_NORMATIVE_COMPONENTS:
+        component_problems.append(
+            "CC 3.1 asserts %d MISSION.md-committed owning components; this catalog extracts %d%s"
+            % (EXPECTED_NORMATIVE_COMPONENTS, len(normative_seen),
+               (" (missing: " + ", ".join(normative_missing) + ")") if normative_missing else ""))
+    if unexpected_outside:
+        component_problems.append(
+            "component(s) catalogued that are neither in the normative %d nor declared "
+            "catalogued-only: %s" % (EXPECTED_NORMATIVE_COMPONENTS, ", ".join(unexpected_outside)))
+
     meta = OrderedDict()
     meta["cc_version"] = cc_version
     meta["source"] = SOURCE_REL
     meta["source_sha256"] = sha
     meta["n_families"] = n_families
     meta["n_components"] = n_components
+    meta["n_components_normative"] = len(normative_seen)
+    meta["components_outside_normative"] = outside
     meta["per_component"] = per_component
     meta["generator"] = "tools/build_cc_namespace.py"
-    if EXPECTED_FAMILIES is not None and (
-            n_families != EXPECTED_FAMILIES or n_components != EXPECTED_COMPONENTS):
+    if component_problems:
+        meta["component_discrepancy"] = OrderedDict([
+            ("normative_n_components", EXPECTED_NORMATIVE_COMPONENTS),
+            ("observed_n_components_normative", len(normative_seen)),
+            ("observed_n_components_total", n_components),
+            ("problems", component_problems),
+        ])
+    if EXPECTED_FAMILIES is not None and n_families != EXPECTED_FAMILIES:
         meta["discrepancy"] = OrderedDict([
             ("normative_n_families", EXPECTED_FAMILIES),
-            ("normative_n_components", EXPECTED_COMPONENTS),
             ("observed_n_families", n_families),
             ("observed_n_components", n_components),
             ("note",
@@ -332,8 +365,16 @@ def main():
                                        per_component[comp], star))
     print("-" * 60)
     print("total families   : %d   (registry of record — CC 3.1.7 R1)" % n_families)
-    print("total components : %d" % n_components)
+    print("total components : %d   (normative/MISSION.md-committed: %d of %d%s)"
+          % (n_components, len(normative_seen), EXPECTED_NORMATIVE_COMPONENTS,
+             ("; catalogued-only: " + ", ".join(outside)) if outside else ""))
     print("reserved families: %d" % reserved_count)
+    if component_problems:
+        print("-" * 60)
+        print("COMPONENT DISCREPANCY vs the CC 3.1 prose claim:")
+        for p in component_problems:
+            print("  - %s" % p)
+        print("  (recorded in _meta.component_discrepancy)")
     if EXPECTED_FAMILIES is not None and n_families != EXPECTED_FAMILIES:
         print("-" * 60)
         print("DELTA vs 83 — per-section breakdown (families found):")

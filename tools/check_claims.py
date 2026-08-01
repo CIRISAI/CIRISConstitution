@@ -262,9 +262,7 @@ def report_toc_drift(toc, prose, errors, warnings, notes):
     for dec, t, p in semid:
         errors.append(f"dual-ID drift at CC {dec}: toc.tsv semantic_id '{t}' != prose heading id '{p}'")
     for dec, t, p in title_hard:
-        warnings.append(f"title drift at CC {dec}:\n"
-                        f"           toc.tsv: {t}\n"
-                        f"           prose  : {p}")
+        warnings.append(f"title drift at CC {dec}: toc.tsv={t!r} | prose={p!r}")
     if title_annot:
         notes.append(f"{len(title_annot)} section(s) where toc.tsv keeps a provenance annotation the "
                      f"prose heading dropped (title otherwise identical): {', '.join(title_annot)}")
@@ -320,6 +318,9 @@ def main():
 
         grade = None                            # 'symbol' > 'decimal' > None
         n_tickets = 0
+        cites_artifact = False                  # row names >=1 impl/test/lean/bench pointer
+        only_normative = bool(ev) and all(t.split(":", 1)[0] == "normative-only"
+                                          for t in ev.split() if ":" in t)
         for tok in ev.split():
             if ":" not in tok:
                 errors.append(f"L{ln} [{cid}]: malformed evidence token '{tok}'")
@@ -329,6 +330,8 @@ def main():
                 errors.append(f"L{ln} [{cid}]: unknown tag '{tag}'")
                 continue
             tag_ct[tag] += 1
+            if tag in RESOLVABLE_TAGS:
+                cites_artifact = True
 
             # ---- normative-only ------------------------------------------------
             if tag == "normative-only":
@@ -422,12 +425,20 @@ def main():
 
         grade_ct[grade or "none"] += 1
         if grade is None:
-            ticket_only_rows.append((ln, cid, dec, st, n_tickets))
+            ticket_only_rows.append((ln, cid, dec, st, "normative-only" if only_normative
+                                     else ("cites-artifact-unresolved" if cites_artifact else "ticket-only")))
         # --- EVIDENCE.md: `established` = "at least one resolvable artifact backs it"
         if st == "established" and grade is None:
-            errors.append(f"L{ln} [{cid}]: status 'established' but NO resolvable impl/test/lean/bench "
-                          f"artifact backs it (evidence: {ev or '—'}) — EVIDENCE.md defines established "
-                          f"as at least one resolvable artifact; use 'staged' or 'open'")
+            if only_normative:
+                errors.append(f"L{ln} [{cid}]: status 'established' with evidence 'normative-only' — "
+                              f"EVIDENCE.md:26 defines normative-only as 'no external artifact' and "
+                              f"EVIDENCE.md:38 defines established as 'at least one resolvable artifact'. "
+                              f"The two cannot both hold; EVIDENCE.md has no status for a self-contained "
+                              f"rule (see the checker's report — this needs a vocabulary decision, not a relabel)")
+            else:
+                errors.append(f"L{ln} [{cid}]: status 'established' but NO resolvable impl/test/lean/bench "
+                              f"artifact backs it (evidence: {ev or '—'}) — EVIDENCE.md:38 defines "
+                              f"established as at least one resolvable artifact; use 'staged' or 'open'")
         if dec != "corpus":
             claim_decimals[dec].append((cid, grade))
 
@@ -449,7 +460,11 @@ def main():
     print(f"in-repo pointers checked: {inrepo_checked}")
     print(f"claims with resolvable evidence: {grade_ct['symbol'] + grade_ct['decimal']}/{len(rows)}"
           f"  (artifact-verified {grade_ct['symbol']}, decimal-only {grade_ct['decimal']})")
-    print(f"claims with NO resolvable evidence (staged:/open:/normative-only only): {grade_ct['none']}")
+    kind_ct = Counter(k for _, _, _, _, k in ticket_only_rows)
+    print(f"claims with NO resolvable evidence: {grade_ct['none']}"
+          f"  (ticket-only staged:/open: {kind_ct['ticket-only']},"
+          f" normative-only {kind_ct['normative-only']},"
+          f" names an artifact that did not resolve {kind_ct['cites-artifact-unresolved']})")
 
     print(f"\n=== cross-repo resolution (against pinned manifests) ===")
     if man:
