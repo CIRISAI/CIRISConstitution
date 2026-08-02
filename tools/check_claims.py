@@ -57,6 +57,12 @@ _NORM = re.compile(r'\b(?:MUST NOT|MUST|SHALL NOT|SHALL|REQUIRED)\b')
 # `issue`      : the manifest's own tracking issue. `REPO#<issue>` in claims.tsv is
 #                a reference to the manifest itself, not to an artifact.
 MANIFESTS = {
+    "CIRISVerify": dict(
+        status_col="crate@version",
+        backed=lambda r: (r.get("repo", "").strip() not in ("—", "")
+                          and r.get("crate@version", "").strip().lower() != "open"),
+        known_bad=lambda r: False,
+        symbol_cols=["path#symbol"], symbol_kind="path#symbol", issue="233"),
     "CIRISServer": dict(
         status_col="crate@version",
         backed=lambda r: (r.get("repo", "").strip() not in ("—", "")
