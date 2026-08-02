@@ -14,6 +14,8 @@ The federation's prose carries some load-bearing terms and some warm narrative s
 
 ### 8.1.1 `registry-core` — Core terms
 
+**"Steward" (three senses, pinned — the word is load-bearing and was previously polysemous, CIRISConstitution#40 §3).** (1) **Substrate steward** — the operator identity holding a component's steward keys (e.g. a registry steward emitting `cert_validity:{steward_id}`); an infrastructure role. (2) **Owner-steward** — the accountable human (`user`-role identity) a `node`/`agent` key is steward-bound to via `is_steward_bound(K)` ([CC 3.2](part_3_the_namespace.md)); the sense the admission gates check. (3) **Co-steward** — the CC 3.4.9 shared-custody governance relation over a reserved family. Prose MUST be readable under exactly one sense; where ambiguity is possible the qualified form is used.
+
 These terms are referenced throughout the spec and across sibling repos. Defining them in-spec retires the external `ciris.ai/cewp` placeholder citations.
 
 | Term | Definition |

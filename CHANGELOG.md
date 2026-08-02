@@ -53,8 +53,7 @@ shipped substrate already enforces, so the spec and the mesh agree. The fourteen
 families are dispositioned per family (none consent-gated: they verify artifacts, not agents). The
 **read boundary** remains reserved design space, tracked at CIRISConstitution#49.
 `hard_case:deletion_window_breach` is evidence, never a verdict; no affirmative `deletion_proof`
-artifact, which a producer could emit while retaining the bytes. A scored agent may always see and
-contest what is filed about it, and never the scores, weights or bands. The swap test becomes a
+artifact, which a producer could emit while retaining the bytes. The swap test becomes a
 mandatory drafting gate, and bootstrap is handled by *building* the declared-asymmetry register
 rather than leaving a silent exemption.
 
@@ -75,6 +74,8 @@ ratifying a paragraph does not make a format real. The `lp()` re-spelling of the
 (#41 comment) — declined; it crosses the CC 6.1.3 seam and re-spells every ratified digest to buy a
 property the colon-ban already gives. The severance window on the halt fire path (#40 comment) —
 declined; it hands the halted party an escape at the instant the brake is pulled.
+
+**Deferred to the post-1.0 candidate backlog, on the record (the #36 principle: ratify the format that survived, not the one specified).** #32's asks 2-5 — the six consent-foundation `lean:` claim rows, the `need:survival:*` reserved domain with the one-card mandate, and the totalitarian-case proxy-promotion composition — are deferred with successor issues; only the keeper thesis (ask 1) landed in this cut. #57 (mesh-config authorship) is **reserved, not designed**: CC 4.2.1 now forbids an implementation deriving the authority from silence, and the model ratifies on the issue's sketch. #58 (graded enforcement tiers), #59 (reverse-quorum objection form), #60 (volume standing + `revoked_after`) are deferred with their proposal sketches recorded on the issues — each has no implementation whose survival could be ratified, and #60's own caveat (a naive rate cap is a censorship primitive absent a reserved admission class) is the reason not to ratify it from the armchair. #49-A1 (the `capacity:*` read boundary) is deferred at CC 3.4.5 with the non-conformance rationale stated in-text.
 
 **Not discharged, and marked as such.** #49-A2's anti-forking binding did not survive drafting:
 CC 1.15.5 states covenant identity recognition-grade and explicitly declines the binding (no
