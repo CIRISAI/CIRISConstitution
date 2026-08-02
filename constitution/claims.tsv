@@ -85,7 +85,8 @@ CLM-accord-reservation	3.4.1	The `accord:*` reservation	impl:CIRISServer#155	est
 CLM-community-location	3.4.2	Community + location-event reservations (CEG 0.8 addition)	impl:CIRISServer#155	established
 CLM-system	3.4.3	Substrate-self-report reservations (`system:*`)	impl:CIRISServer#155	established
 CLM-family-self	3.4.4	Self/family membership-event reservations (CEG 0.7 addition)	impl:CIRISServer#155	established
-CLM-capacity-score	3.4.5	Self-emission polarity: capacity:* anti-self (attesting_key_id MUST NOT equal attested_key_id) plus the per-family emitter-class table. The consent-before-scoring gate and the read boundary are reserved design space with no conformance force (CIRISConstitution#46/#49)	impl:CIRISServer#155	established
+CLM-capacity-score	3.4.5	Self-emission polarity: capacity:* anti-self (attesting_key_id MUST NOT equal attested_key_id) plus the per-family emitter-class table. The read boundary is reserved design space (CIRISConstitution#49)	impl:CIRISServer#155	established
+CLM-capacity-consent-gate	3.4.5	Consent-before-scoring (ratified): federation-tier capacity:* admission requires the subject's live consent:scope:analyze grant, community-addressed; role-gated abuse-response families exempt; 14 verify families dispositioned not-consent-gated	impl:CIRISPersist/src/federation/admission.rs#check_capacity_consent_admission	staged
 CLM-reservation-delivery	3.4.6	Delivery-receipt reservation (CEG 0.10 addition)	impl:CIRISServer#155	established
 CLM-enforcement	3.4.7	The enforcement rule (normative)	impl:CIRISServer#155	established
 CLM-identity-set	3.4.7.1	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	impl:CIRISServer#155	established

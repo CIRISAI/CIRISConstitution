@@ -45,11 +45,13 @@ superlative derivable. M-1 does not launder witness into theorem.
 semantics ratified: two named conferral planes, un-trust as one deletable acceptance edge with
 everything downstream failing closed emergently, and **liveness as a reported signal that MUST NOT
 be ANDed into validity** — a root is valid until revoked, superseding an RC2 reading that would
-have darkened the mesh at once. Consent-before-scoring for `capacity:*` is analyzed and
-**deferred, not ratified** (the CC 3.4.5 status paragraph is explicit that the binding rule remains
-the anti-self rejection alone, and no consent precondition gates emission ahead of ratification) —
-the family-scoped, community-addressed form and the adversarial-families carve-out remain the
-candidate design, tracked at CIRISConstitution#46.
+have darkened the mesh at once. Consent-before-scoring for `capacity:*` is **ratified**
+(CC 3.4.5): family-scoped, community-addressed (root-addressed consent is consent to an
+unenumerable set), enforced at federation-tier admission on a live `consent:scope:analyze` grant,
+with the role-gated abuse-response families exempt because an abuser never consents — the rule the
+shipped substrate already enforces, so the spec and the mesh agree. The fourteen verify attestation
+families are dispositioned per family (none consent-gated: they verify artifacts, not agents). The
+**read boundary** remains reserved design space, tracked at CIRISConstitution#49.
 `hard_case:deletion_window_breach` is evidence, never a verdict; no affirmative `deletion_proof`
 artifact, which a producer could emit while retaining the bytes. A scored agent may always see and
 contest what is filed about it, and never the scores, weights or bands. The swap test becomes a
