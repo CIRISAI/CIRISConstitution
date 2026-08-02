@@ -111,11 +111,13 @@ the primitives that actually carry them. The CC 8.3 conformance row for Art. 50 
 *Informative* to *Evidence-bearing (staged)* — the normative rule is cut; the emit is unshipped and
 tracked at CIRISConstitution#9.
 
-**Conformance pin.** The emission path is **not yet shipped in any release** — no sibling repo
-carries C2PA or `content_class:generated` emit code as of this cut. The claims-registry rows are
-`staged` against CIRISConstitution#9 until a shipped release's spec-map manifest backs CC 3.4.14 —
-spec ahead of impl, named ticket, per the EVIDENCE.md discipline. Normative coverage holds at 100%
-(134/134 sections).
+**Conformance pin.** For the text outputs the platform generates — the only synthetic content any
+shipped path produces — the Art. 50(2) machine-readable marking is the **shipped attestation
+surface itself** (`is_bot` on every agent message + the admission-enforced signed
+`identity_type: agent` binding), marking by construction rather than add-on. The **C2PA emit** is
+the media-egress interop limb: no shipped path generates synthetic media, so it is pre-staged, not
+overdue — its claims rows are `staged` against CIRISConstitution#9 until a generation path exists
+for it to mark. Normative coverage holds at 100% (134/134 sections).
 
 ## 1.0-rc2 — evidence registry, two new invariants, and the coherence math finalized
 
