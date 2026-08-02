@@ -46,7 +46,7 @@ This section catalogs every prefix family, organized by owning component, each c
 | `provenance:skill_import:{source}` | Community-skill import provenance. `{source}` ∈ `registry:{registry_id}` \| `direct:{url}` \| `local:{path}`. Envelope: `{skill_manifest_sha256, signer_identity, import_timestamp, capability_declaration}`. Canonical-bytes spec at [CC 3.1.2.1](#521-canonical-bytes-contracts-for-provenance-primitives). | signed |
 | `transparency_log:inclusion` | RFC 6962 inclusion proof for an audit leaf. | boolean-via-score |
 | `transparency_log:consistency` | RFC 6962 consistency proof between two STHs. | boolean-via-score |
-| `transparency_log:cosigned:{tree_size}` | Witness cosignature on an STH (substrate-conformance path; the interim uses a per-region `registry_sth_cosignatures` table; see [CC 5.3.1](part_5_transport_substrate.md) endpoints). | signed |
+| `transparency_log:cosigned:{tree_size}` | Witness cosignature on an STH (substrate-conformance path; the interim uses a per-region `registry_sth_cosignatures` table; see [CC 5.3.1](part_5_transport_substrate.md) endpoints). Witness-emitted, verify-recognized — emitter rule (`identity_type="witness"`) at CC 3.4.9. | signed |
 | `rollback_detected:{revision_field}` | Anti-rollback — decrease in revocation revision. | -1 only |
 | `cert_validity:{authority}` | Validity of a certification authority's signature. Each registry steward emits `cert_validity:{steward_id}` self-attestation alongside `/v1/steward-key`. | boolean-via-score |
 | `hardware_custody:{platform}` | Statement that the seed lives in `tpm` / `ios_secure_enclave` / `android_keystore` / `software_fallback`. | boolean-via-score |
@@ -74,12 +74,14 @@ canonical_bytes = sha256( JCS( {
  "skill_manifest_sha256": sha256_hex_lowercase, // per CC 2.6.3
  "signer_identity": signer_key_id, // per CC 2.6.3
  "import_timestamp": rfc3339_canonical, // per CC 2.6.2
- "capability_declaration": capability_declaration_object, // a JSON object, canonicalized in place
+ "capability_declaration": sorted_capability_array, // JSON array of capability strings, sorted
+ // lexicographically by byte representation BEFORE canonicalization — JCS canonicalizes
+ // arrays in place and does not reorder elements, so the sort is part of the signed preimage
  "valid_until": rfc3339_canonical // OPTIONAL — CC 2.6.1.1 omit rule: absent if unset
 }))
 ```
 
-Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload). All [CC 2.6.1.1.1](part_2_the_grammar.md) determinism rules apply (hex per CC 2.6.3, timestamps per CC 2.6.2, omit-vs-materialize per CC 2.6.1.1).
+Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload). All [CC 2.6.1.1.1](part_2_the_grammar.md) determinism rules apply (hex per CC 2.6.3, timestamps per CC 2.6.2, omit-vs-materialize per CC 2.6.1.1). *Migration note:* an earlier draft of this block spelled `capability_declaration` as a JSON "object"; it carried no key schema, no producer ever emitted one, and the only shipped implementation (CIRISVerify v11.0.0, golden-vectored) signs the sorted array — so the array form is a correction, not a version bump.
 
 #### Per-locale Merkle composition (v2 — normative)
 

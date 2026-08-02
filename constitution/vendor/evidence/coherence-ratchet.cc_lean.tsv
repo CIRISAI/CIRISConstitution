@@ -1,23 +1,35 @@
-cc_decimal_id	cc_claim_id	module_theorem	status	note
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff	mechanized	the Kish identity def k_eff = k/(1+ρ(k-1))
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_at_zero	mechanized	boundary k_eff(k,0)=k
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_at_one	mechanized	boundary k_eff(k,1)=1
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_monotone_rho	mechanized	K3: monotone decreasing in ρ for k>1
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_bounded	mechanized	K4: 1 ≤ k_eff ≤ k on ρ∈[0,1]
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_asymptotic_ceiling	mechanized	THE ceiling: k_eff → 1/ρ̄ as k→∞ (full Tendsto proof)
-6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_bounded_above	mechanized	finite-k form of the ceiling
-6.2.1	CLM-math-collapse	RATCHET:Core.EffectiveConstraints	open	exp-decay collapse V(k)=V(0)exp(−λ_geo·k_eff)+O(r²·k) lives in the RATCHET lake, not here; O(r²·k_eff) remainder form OPEN (coherence-ratchet#4)
-6.2.1	CLM-math-collapse	Core.Corridor.corridor_keff_range_asymptotic	mechanized	precondition/structure: corridor bounds k_eff between local floor and ceiling (rests on the corridorBounds axiom)
-6.2.1	CLM-math-collapse	Core.Corridor.corridor_bounds_well_formed	mechanized	precondition: 0<ρ_lower<ρ_upper<1
-6.2.1	CLM-math-collapse	Core.Dynamics.rho_drift_at_zero_maintenance	mechanized	collapse DIRECTION (rigidity exit): M=0 ∧ α>0 ⇒ dρ/dt>0
-6.2.1	CLM-math-collapse	Core.Dynamics.rho_exit_chaos	mechanized	the second corridor exit: M=0 ∧ α<0 ⇒ dρ/dt<0
-6.2.1	CLM-math-collapse	Core.Dynamics.corridor_requires_maintenance	mechanized	at equilibrium γ·M = α (corridor is a maintained state)
-6.2.4	CLM-math-JF	Core.Coherence.J_eq_F	mechanized	J = F = k_eff·λ_op·σ (definitional identity; content is the modeling commitment). NOTE: claims.tsv currently points at Core.Corridor — REPOINT to Core.Coherence (CIRISConstitution repoint issue)
-6.2.4	CLM-math-JF	Core.Coherence.J_eq_F_kish	mechanized	J=F holds with the scale factor instantiated at the real Kish Core.k_eff
-6.2.4	CLM-math-JF	Core.Coherence.coherence_nonneg	mechanized	nonnegativity of the functional on nonnegative factors
-6.2.4	CLM-math-JF	Core.Coherence.coherence_mono_strictness	mechanized	monotone increasing in λ_op (Conscience)
-6.2.4	CLM-math-JF	Core.Coherence.coherence_mono_keff	mechanized	monotone increasing in k_eff (Community×Humility)
-6.2.3	CLM-sigma-semigroup	Core.Coherence.sigma_decay_semigroup	mechanized	σ exp-decay semigroup: decay over a+b = decay over a then b (cadence-invariance). Conformance test points Δt∈{1,25,400} are a separate test: obligation (CIRISConformance#57)
-6.2.3	CLM-sigma-semigroup	Core.Coherence.sigma_decay_nonneg	mechanized	σ₀≥0 ⇒ σ(Δt)≥0 ∀Δt (linear form withdrawn: goes negative past Δt=1/d)
-6.2.3	CLM-sigma-semigroup	Core.Coherence.J_nonneg_under_decay	mechanized	sign tie: J never flips sign under σ decay
-6.2.3.1	CLM-sigma-srccorr	—	open	σ signal-source correlation discount is an unpatched gap (coherence-ratchet#5); no Lean anchor
+cc_decimal_id	cc_claim_id	module_theorem	lean_name	status	note
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff	CoherenceRatchet.Core.k_eff	mechanized	the Kish identity def k_eff = k/(1+ρ(k-1))
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_at_zero	CoherenceRatchet.Core.k_eff_at_zero	mechanized	boundary k_eff(k,0)=k
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_at_one	CoherenceRatchet.Core.k_eff_at_one	mechanized	boundary k_eff(k,1)=1
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_monotone_rho	CoherenceRatchet.Core.k_eff_monotone_rho	mechanized	K3: monotone decreasing in ρ for k>1
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_bounded	CoherenceRatchet.Core.k_eff_bounded	mechanized	K4: 1 ≤ k_eff ≤ k on ρ∈[0,1]
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_asymptotic_ceiling	CoherenceRatchet.Core.k_eff_asymptotic_ceiling	mechanized	THE ceiling: k_eff → 1/ρ̄ as k→∞ (full Tendsto proof)
+6.2.2	CLM-math-kish	Core.BaseIdentity.k_eff_bounded_above	CoherenceRatchet.Core.k_eff_bounded_above	mechanized	finite-k form of the ceiling
+6.2.1	CLM-math-collapse	Core.CollapseTheorem.collapseUpperBound	CoherenceRatchet.Core.CollapseTheorem.collapseUpperBound	mechanized	corrected bound V(k) ≤ V₀·exp(−λ_geo·k_eff) + κ·r²·k_eff (axiomatizes framework primitives λ_geo, κ as substrate-specific positives)
+6.2.1	CLM-math-collapse	Core.CollapseTheorem.remainder_scales_with_k_eff	CoherenceRatchet.Core.CollapseTheorem.remainder_scales_with_k_eff	mechanized	closes #4: the remainder count-factor is k_eff, not raw k
+6.2.1	CLM-math-collapse	Core.CollapseTheorem.collapse_bound_saturates	CoherenceRatchet.Core.CollapseTheorem.collapse_bound_saturates	mechanized	both terms saturate in lockstep at the Kish ceiling
+6.2.1	CLM-math-collapse	Core.CollapseTheorem.collapse_bound_uniformly_bounded	CoherenceRatchet.Core.CollapseTheorem.collapse_bound_uniformly_bounded	mechanized	bound uniform in k at fixed ρ̄>0 (crossover pathology dissolved)
+6.2.1	CLM-math-collapse	Core.CollapseTheorem.withdrawn_bound_looser_than_corrected	CoherenceRatchet.Core.CollapseTheorem.withdrawn_bound_looser_than_corrected	mechanized	padding-attack-neutral: raising raw k past k* cannot loosen the bound
+6.2.1	CLM-math-collapse	Core.Corridor.corridor_keff_range_asymptotic	CoherenceRatchet.Core.Corridor.corridor_keff_range_asymptotic	mechanized	precondition: corridor bounds k_eff between local floor and ceiling (rests on the corridorBounds axiom)
+6.2.1	CLM-math-collapse	Core.Corridor.corridor_bounds_well_formed	CoherenceRatchet.Core.Corridor.corridor_bounds_well_formed	mechanized	precondition: 0<ρ_lower<ρ_upper<1
+6.2.1	CLM-math-collapse	Core.Dynamics.rho_drift_at_zero_maintenance	CoherenceRatchet.Core.Dynamics.rho_drift_at_zero_maintenance	mechanized	collapse DIRECTION (rigidity exit): M=0 ∧ α>0 ⇒ dρ/dt>0
+6.2.1	CLM-math-collapse	Core.Dynamics.rho_exit_chaos	CoherenceRatchet.Core.Dynamics.rho_exit_chaos	mechanized	the second corridor exit: M=0 ∧ α<0 ⇒ dρ/dt<0
+6.2.1	CLM-math-collapse	Core.Dynamics.corridor_requires_maintenance	CoherenceRatchet.Core.Dynamics.corridor_requires_maintenance	mechanized	at equilibrium γ·M = α (corridor is a maintained state)
+6.2.4	CLM-math-JF	Core.Coherence.J_eq_F	CoherenceRatchet.Core.Coherence.J_eq_F	mechanized	J = F = k_eff·λ_op·σ (definitional identity; content is the modeling commitment). claims.tsv must repoint from Core.Corridor (CIRISConstitution#26)
+6.2.4	CLM-math-JF	Core.Coherence.J_eq_F_kish	CoherenceRatchet.Core.Coherence.J_eq_F_kish	mechanized	J=F holds with the scale factor instantiated at the real Kish Core.k_eff
+6.2.4	CLM-math-JF	Core.Coherence.coherence_nonneg	CoherenceRatchet.Core.Coherence.coherence_nonneg	mechanized	nonnegativity of the functional on nonnegative factors
+6.2.4	CLM-math-JF	Core.Coherence.coherence_mono_strictness	CoherenceRatchet.Core.Coherence.coherence_mono_strictness	mechanized	monotone increasing in λ_op (Conscience)
+6.2.4	CLM-math-JF	Core.Coherence.coherence_mono_keff	CoherenceRatchet.Core.Coherence.coherence_mono_keff	mechanized	monotone increasing in k_eff (Community×Humility)
+6.2.3	CLM-sigma-semigroup	Core.Coherence.sigma_decay_semigroup	CoherenceRatchet.Core.Coherence.sigma_decay_semigroup	mechanized	σ exp-decay semigroup: decay over a+b = decay over a then b (cadence-invariance). Conformance test points Δt∈{1,25,400} remain a separate test: obligation (CIRISConformance#57)
+6.2.3	CLM-sigma-semigroup	Core.Coherence.sigma_decay_nonneg	CoherenceRatchet.Core.Coherence.sigma_decay_nonneg	mechanized	σ₀≥0 ⇒ σ(Δt)≥0 ∀Δt (linear form withdrawn: goes negative past Δt=1/d)
+6.2.3	CLM-sigma-semigroup	Core.Coherence.J_nonneg_under_decay	CoherenceRatchet.Core.Coherence.J_nonneg_under_decay	mechanized	sign tie: J never flips sign under σ decay
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.Signal_eff	CoherenceRatchet.Core.SignalSourceDiscount.Signal_eff	mechanized	Signal_eff = n_src/(1+ρ̄_src·(n_src−1)) — the Kish discount on the σ signal-source leg
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.Signal_eff_is_kish	CoherenceRatchet.Core.SignalSourceDiscount.Signal_eff_is_kish	mechanized	Signal_eff is literally the Kish functional applied to sources
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.clique_neutralization	CoherenceRatchet.Core.SignalSourceDiscount.clique_neutralization	mechanized	closes #5: a fully-collusive clique (ρ̄_src→1) contributes at most ONE independent source's σ
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.Signal_eff_at_zero_correlation	CoherenceRatchet.Core.SignalSourceDiscount.Signal_eff_at_zero_correlation	mechanized	independent sources are undiscounted
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.Signal_eff_monotone_ρ_src	CoherenceRatchet.Core.SignalSourceDiscount.Signal_eff_monotone_ρ_src	mechanized	more source-collusion ⇒ strictly less σ credit
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.sigma_step_with_source_discount	CoherenceRatchet.Core.SignalSourceDiscount.sigma_step_with_source_discount	mechanized	the discounted σ step on the attested-timestamp replay path
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.sigma_step_nonneg	CoherenceRatchet.Core.SignalSourceDiscount.sigma_step_nonneg	mechanized	discounted σ step preserves nonnegativity
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.non_substitutability_is_semantic	CoherenceRatchet.Core.SignalSourceDiscount.non_substitutability_is_semantic	mechanized	rider 1: ρ̄_src (source collusion) is a DISTINCT symbol from ρ̄ (constraint correlation)
+6.2.3.1	CLM-sigma-srccorr	Core.SignalSourceDiscount.worked_example_moderate_clique	CoherenceRatchet.Core.SignalSourceDiscount.worked_example_moderate_clique	mechanized	numeric worked example of clique discounting

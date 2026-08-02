@@ -14,9 +14,9 @@ justification to **capacity analysis under chosen constraints**: the collapse ge
 and deceptive regions alike, so the asymmetry lives in the choice of constraints, not in a
 theorem's gift. The reviewer's contradiction is real and is fixed at the root — J = k_eff·λ_op·σ is
 a *throughput index* monotone in diversity, maximised at ρ̄ = 0, and it **MUST NOT** be cited as the
-corridor's basis. The corridor re-founds on the whole-only share, where both poles are exactly zero
-by machine-checked theorem and the ceiling is exactly ln 2, with the peak-at-criticality labelled
-*measured* and explicitly "not established for this federation". The σ recurrence was a conformance
+corridor's basis. **No operating corridor is stated at all**: the campaign's own k ≥ 4 positive floor means the
+poles-are-zero basis does not hold in the regime CC needs, so §6.2 declines to re-found a corridor,
+voids any band appearing in a derived document, and an implementation MUST NOT gate on one. The σ recurrence was a conformance
 bug — not step-invariant for interior signals, yet carrying a MUST that implementations agree at
 Δt ∈ {1, 25, 400} days, which is unsatisfiable as written; the event-time form is now the rule, and
 conformance MUST include a strictly-interior signal, since those three deltas cannot discriminate
@@ -45,9 +45,11 @@ superlative derivable. M-1 does not launder witness into theorem.
 semantics ratified: two named conferral planes, un-trust as one deletable acceptance edge with
 everything downstream failing closed emergently, and **liveness as a reported signal that MUST NOT
 be ANDed into validity** — a root is valid until revoked, superseding an RC2 reading that would
-have darkened the mesh at once. Consent-before-scoring for `capacity:*` reverses a stated CC
-position, so it is written family-scoped, community-addressed (root-addressed consent is consent to
-an unenumerable set), with the adversarial families exempt because an abuser never consents.
+have darkened the mesh at once. Consent-before-scoring for `capacity:*` is analyzed and
+**deferred, not ratified** (the CC 3.4.5 status paragraph is explicit that the binding rule remains
+the anti-self rejection alone, and no consent precondition gates emission ahead of ratification) —
+the family-scoped, community-addressed form and the adversarial-families carve-out remain the
+candidate design, tracked at CIRISConstitution#46.
 `hard_case:deletion_window_breach` is evidence, never a verdict; no affirmative `deletion_proof`
 artifact, which a producer could emit while retaining the bytes. A scored agent may always see and
 contest what is filed about it, and never the scores, weights or bands. The swap test becomes a
@@ -72,9 +74,11 @@ ratifying a paragraph does not make a format real. The `lp()` re-spelling of the
 property the colon-ban already gives. The severance window on the halt fire path (#40 comment) —
 declined; it hands the halted party an escape at the instant the brake is pulled.
 
-**Not discharged, and marked as such.** #49-A2's memory-forking failure mode was to be red-teamed
-before ratification and has not been; CC 1.15.5 ships with an anti-forking binding that has had no
-adversarial review, and its claims row is `staged` against the issue. #50 item 8 — commissioning
+**Not discharged, and marked as such.** #49-A2's anti-forking binding did not survive drafting:
+CC 1.15.5 states covenant identity recognition-grade and explicitly declines the binding (no
+lineage dimension family exists, moderation records are relative and positional, and nothing
+bounds keys per owner — a whole-or-nothing rule would quantify over a unit the subject itself
+partitions); the wire-level design is tracked at #49 and the claims row is `staged` against it. #50 item 8 — commissioning
 external reviewers with standing to kill sections — is not a document change and remains open; it
 is the one item nobody inside this ecosystem can substitute for.
 
@@ -102,12 +106,14 @@ default (absent/unknown on an agent-attested Contribution resolves to *disclosed
 **Compliance-mapping corrections.** The CC 4.5.2 regulatory table filed training-data transparency
 under EU AI Act Art. 50; that is Art. 53(1)(d) (GPAI) — the row is split and both are now pointed at
 the primitives that actually carry them. The CC 8.3 conformance row for Art. 50 moves from
-*Informative* to *Evidence-bearing* and names the shipping releases.
+*Informative* to *Evidence-bearing (staged)* — the normative rule is cut; the emit is unshipped and
+tracked at CIRISConstitution#9.
 
-**Conformance pin.** The emission path is discharged in **CIRISAgent 2.9.8** and **CIRISServer 0.6**,
-which publish the conformance statement. The claims-registry rows are `staged` against
-CIRISConstitution#9 until those releases' spec-map manifests back CC 3.4.14 — spec ahead of impl, named
-ticket, per the EVIDENCE.md discipline. Normative coverage holds at 100% (134/134 sections).
+**Conformance pin.** The emission path is **not yet shipped in any release** — no sibling repo
+carries C2PA or `content_class:generated` emit code as of this cut. The claims-registry rows are
+`staged` against CIRISConstitution#9 until a shipped release's spec-map manifest backs CC 3.4.14 —
+spec ahead of impl, named ticket, per the EVIDENCE.md discipline. Normative coverage holds at 100%
+(134/134 sections).
 
 ## 1.0-rc2 — evidence registry, two new invariants, and the coherence math finalized
 
