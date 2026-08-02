@@ -157,3 +157,5 @@ CLM-registry-replication	6.1.5.1	Replication-target policy (§R-policy — norma
 CLM-deterministic-alm	6.1.6	Deterministic ALM topology (§T / §M)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-trust	6.1.8	Recursive trust bootstrap (§B) — trust-discovery, not membership	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-annex-g	8.8.7	Annex G: Adversarial Security & Robustness	normative-only:—	normative
+CLM-trace-family	3.1.5	trace:{form}:{version} + trace_summary:{kind} family, the exactly-one-of inline/manifest shape, and the trace_manifest:v1 payload schema	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission staged:CIRISConformance#83	staged
+CLM-envelope-size	2.6.1.3	1 MiB bound on canonical JCS bytes at every write path (contract + intake bounds, ENVELOPE_TOO_LARGE/413) + above-cap manifest route; freeze-gate vector pair pending	impl:CIRISPersist/src/federation/admission.rs#check_envelope_size_admission staged:CIRISConformance#83	staged
