@@ -81,7 +81,8 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 —	UNASSIGNED-CLM-deletion-window-breach-evidence	CIRISPersist	src/federation/deletion_window.rs#run_deletion_window_watch	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-reverse-quorum-objection	CIRISPersist	src/federation/reverse_quorum.rs#record_objection	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-reverse-quorum-dismissal	CIRISPersist	src/federation/reverse_quorum.rs#record_objection_dismissal	ciris-persist@27.0.0
-—	UNASSIGNED-CLM-consent-before-scoring	CIRISPersist	src/federation/admission.rs#check_capacity_consent_admission	ciris-persist@27.0.0
+3.4.5	CLM-capacity-consent-gate	CIRISPersist	src/federation/admission.rs#check_capacity_consent_admission	ciris-persist@27.0.0
+2.6.1.3	CLM-envelope-size	CIRISPersist	src/federation/admission.rs#check_envelope_size_admission	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-peer-deadmission-revocable	CIRISPersist	src/federation/admission.rs#check_peer_deadmission	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-wa-adjudication-family	CIRISPersist	src/federation/ownership_reclaim.rs#build_reclaim_petition_envelope	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-wa-quorum-re-derived	CIRISPersist	src/federation/ownership_reclaim.rs#wa_quorum_over_body	ciris-persist@27.0.0
