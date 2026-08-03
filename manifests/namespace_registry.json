@@ -7,20 +7,20 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 105,
+    "n_families": 109,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
       "attestation": 18,
       "cirisbench": 1,
       "lens": 15,
-      "node": 26,
+      "node": 30,
       "persist": 5,
       "registry": 10,
       "transport-delivery": 5
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "df94b491cb2be3fb5588e5693b4bd04f8117da423f8eaaddd881dd3fcd288768"
+    "source_sha256": "774062a90c0a31520648839e6bef110d3305d0f78d35cf3e821e3af6b4b02ba8"
   },
   "families": [
     {
@@ -620,6 +620,15 @@
       "reserved": false
     },
     {
+      "cc_section": "3.1.9.4",
+      "description": "External service-health observation.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "health:liveness:{version}",
+      "reserved": false
+    },
+    {
       "cc_section": "3.1.9.1",
       "description": "Substrate auto-emission per federation_blobs.put_blob.",
       "owning_component": "node",
@@ -648,6 +657,15 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "integrity:{aspect}",
+      "reserved": false
+    },
+    {
+      "cc_section": "3.1.9.4",
+      "description": "Independent foundation-model judge verdict (PASS/FAIL/UNDETERMINED).",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "boolean-via-score",
+      "prefix": "judge_model:verdict:{model_id}",
       "reserved": false
     },
     {
@@ -946,6 +964,15 @@
       "reserved": false
     },
     {
+      "cc_section": "3.1.9.4",
+      "description": "Pairwise cosine of seed-holder vote vectors per voting window.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "seed_holder_voting_alignment:{cell}",
+      "reserved": false
+    },
+    {
       "cc_section": "3.1.9.2",
       "description": "PROVEN_ROGUE / NOT_PROVEN.",
       "owning_component": "node",
@@ -1084,6 +1111,15 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "wa_adjudication:{state}",
+      "reserved": false
+    },
+    {
+      "cc_section": "3.1.9.4",
+      "description": "Per-group content-watchlist config.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "watchlist:{id}",
       "reserved": false
     },
     {

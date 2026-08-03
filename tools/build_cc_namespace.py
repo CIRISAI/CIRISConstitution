@@ -20,7 +20,7 @@ The families appear in THREE source formats, all handled here:
 stdlib only, Python 3, fully deterministic (families sorted by prefix; json sort_keys).
 Does NOT commit. Run:  python3 tools/build_cc_namespace.py
 """
-import json, os, re, hashlib
+import json, os, re, hashlib, sys
 from collections import OrderedDict
 
 HERE = os.path.dirname(__file__)
@@ -356,6 +356,27 @@ def main():
     out = OrderedDict()
     out["_meta"] = meta
     out["families"] = fam_list
+
+    # Removal gate (CIRISPersist#590 lesson): additions are cheap; SILENT removals
+    # are the dangerous direction — a text edit that moves a table boundary can
+    # orphan rows and families "leave" without anyone retiring them. A family may
+    # only leave the manifest via an explicit entry here, with the retiring change.
+    RETIRED_FAMILIES = set()  # e.g. {"old:family"} — name it in the same commit
+    if os.path.exists(OUT):
+        try:
+            prev = {f_["prefix"] for f_ in json.load(open(OUT)).get("families", [])}
+        except Exception:
+            prev = set()
+        now = {f_["prefix"] for f_ in fam_list}
+        lost = prev - now - RETIRED_FAMILIES
+        if lost:
+            sys.stderr.write(
+                "FATAL: %d famil%s left the registry with no explicit retirement: %s\n"
+                "A generated artifact is not its own authority on whether generation was\n"
+                "correct — if this removal is intended, add it to RETIRED_FAMILIES in the\n"
+                "same commit; if not, a table boundary probably moved.\n"
+                % (len(lost), "y" if len(lost)==1 else "ies", ", ".join(sorted(lost))))
+            sys.exit(2)
 
     with open(OUT, "w") as f:
         f.write(json.dumps(out, sort_keys=True, indent=2))
