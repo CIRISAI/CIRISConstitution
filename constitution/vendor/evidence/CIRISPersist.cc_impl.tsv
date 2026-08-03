@@ -91,3 +91,9 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 —	UNASSIGNED-CLM-slash-duty-scope	CIRISPersist	src/federation/admission.rs#check_delegated_duty_scores_admission	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-admin-action-attributed	CIRISPersist	src/federation/hard_case.rs#check_admin_action_attribution	ciris-persist@27.0.0
 —	UNASSIGNED-CLM-revocation-history-bound	CIRISPersist	src/federation/register.rs#check_revocation_bound	ciris-persist@27.0.0
+—	UNASSIGNED-CLM-private-use-never-federates	CIRISPersist	src/federation/admission.rs#check_private_use_not_federatable	ciris-persist@27.0.0
+—	UNASSIGNED-CLM-promotion-cohort-standing	CIRISPersist	src/federation/admission.rs#check_promotion_cohort_standing	ciris-persist@27.0.0
+—	UNASSIGNED-CLM-persist-ruled-family-inventory	CIRISPersist	src/federation/family_rules.rs#persist_ruled_prefixes	ciris-persist@27.0.0
+—	UNASSIGNED-CLM-rule-not-on-the-row	CIRISPersist	src/federation/family_rules.rs#rule_not_on_the_row_for	ciris-persist@27.0.0
+—	UNASSIGNED-CLM-absence-claims-still-hold	CIRISPersist	src/federation/namespace/supersets.rs#manifest_absence_claims	ciris-persist@27.0.0
+—	UNASSIGNED-CLM-axis-classification-field-op	CIRISPersist	src/federation/namespace/supersets.rs#fusion_classification	ciris-persist@27.0.0
