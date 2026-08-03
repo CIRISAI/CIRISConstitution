@@ -228,3 +228,7 @@ CLM-trust-anchor-baked	4.2.2.1	Baked attestation roots (Google x2 / Apple / Yubi
 CLM-dimension-registry	3.1.2	Verify-owned DimensionSpec registry — the machine-readable form of the CC 2.3.2 attestation-family table	staged:CIRISConstitution#75	staged
 CLM-dimension-consent-disposition	3.4.5	ConsentDisposition encoding of the CC 3.4.5 per-family ruling (capacity:* gated; artifact/log/detector families not)	staged:CIRISConstitution#75	staged
 CLM-classification-gating	3.4.5	classification.rs Gating — the post-ConsentClass surface deriving admissibility from the CC 3.4.5 ruling	staged:CIRISConstitution#75	staged
+CLM-hardware-class-tpm	4.2.2.1	TPM EK certificate chain validation (R5 per-platform chain; vendor anchors deliberately unbaked — Ok(None) is the honest state)	staged:CIRISConstitution#75	staged
+CLM-anchor-provenance-tier	4.2.2.1	AnchorProvenance tier on the trust-anchor store (baked vs operator-supplied vs absent)	staged:CIRISConstitution#75	staged
+CLM-redactable-commitment	2.6.1.1	RedactableCommitment — the CC 2.6 redaction-constraints primitive (salted digests, no canonicalization dependency)	staged:CIRISConstitution#75	staged
+CLM-presentation-identifier-scope	5.1	IdentifierScope — enforces the CC 5.1 no-stable-cross-verifier-identifier interim MUST	staged:CIRISConstitution#75	staged
