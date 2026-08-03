@@ -218,3 +218,13 @@ CLM-agent-health-failclosed	8.8.7	Health reporting fails closed: empty service r
 CLM-agent-platform-capability	8.8.7	Platform capability detection gates tool exposure to what the platform actually provides (2.9.7 control)	staged:CIRISConstitution#53	staged
 CLM-agent-ssrf-guard	8.8.7	SSRF egress guard on outbound URL fetch — scoped: enforced at document_parser/base_vision/api_tools call sites; unguarded paths tracked at CIRISAgent#941	staged:CIRISConstitution#53	staged
 CLM-agent-localization-integrity	8.8.10	Localization integrity is CI-gated: check_localization_integrity runs in build.yml — a drifted locale primer fails the build (2.9.7 control)	staged:CIRISConstitution#53	staged
+CLM-presenter-binding	4.2.2	Build-attestation bundle verification (peer-presentable, manifest-gated) — verify_build_attestation_bundle	staged:CIRISConstitution#75	staged
+CLM-presenter-binding-producer	4.2.2	Build-attestation bundle production — produce_build_attestation_bundle	staged:CIRISConstitution#75	staged
+CLM-hardware-class-android	4.2.2.1	Android Key Attestation chain validation (the R5 per-platform chain, landed)	staged:CIRISConstitution#75	staged
+CLM-hardware-class-apple	4.2.2.1	Apple App Attest chain validation (R5 per-platform chain)	staged:CIRISConstitution#75	staged
+CLM-hardware-class-yubikey	4.2.2.1	YubiKey PIV attestation for accord custody (R5 per-platform chain)	staged:CIRISConstitution#75	staged
+CLM-trust-anchor-store	4.2.2.1	CoTS constrained trust-anchor store (ConciseTaStore) backing the attestation chains	staged:CIRISConstitution#75	staged
+CLM-trust-anchor-baked	4.2.2.1	Baked attestation roots (Google x2 / Apple / Yubico) with self-validation at generation	staged:CIRISConstitution#75	staged
+CLM-dimension-registry	3.1.2	Verify-owned DimensionSpec registry — the machine-readable form of the CC 2.3.2 attestation-family table	staged:CIRISConstitution#75	staged
+CLM-dimension-consent-disposition	3.4.5	ConsentDisposition encoding of the CC 3.4.5 per-family ruling (capacity:* gated; artifact/log/detector families not)	staged:CIRISConstitution#75	staged
+CLM-classification-gating	3.4.5	classification.rs Gating — the post-ConsentClass surface deriving admissibility from the CC 3.4.5 ruling	staged:CIRISConstitution#75	staged
