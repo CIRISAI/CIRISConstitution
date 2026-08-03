@@ -86,7 +86,7 @@ CLM-community-location	3.4.2	Community + location-event reservations (CEG 0.8 ad
 CLM-system	3.4.3	Substrate-self-report reservations (`system:*`)	impl:CIRISServer#155	established
 CLM-family-self	3.4.4	Self/family membership-event reservations (CEG 0.7 addition)	impl:CIRISServer#155	established
 CLM-capacity-score	3.4.5	Self-emission polarity: capacity:* anti-self (attesting_key_id MUST NOT equal attested_key_id) plus the per-family emitter-class table. The read boundary is reserved design space (CIRISConstitution#49)	impl:CIRISServer#155	established
-CLM-capacity-consent-gate	3.4.5	Consent-before-scoring (ratified): federation-tier capacity:* admission requires the subject's live consent:scope:analyze grant, community-addressed; role-gated abuse-response families exempt; 14 verify families dispositioned not-consent-gated	impl:CIRISPersist/src/federation/admission.rs#check_capacity_consent_admission	staged
+CLM-capacity-consent-gate	3.4.5	Consent-before-scoring (ratified): federation-tier capacity:* admission requires the subject's live consent:scope:analyze grant, community-addressed; role-gated abuse-response families exempt; 14 verify families dispositioned not-consent-gated	staged:CIRISPersist#519	staged
 CLM-reservation-delivery	3.4.6	Delivery-receipt reservation (CEG 0.10 addition)	impl:CIRISServer#155	staged
 CLM-enforcement	3.4.7	The enforcement rule (normative)	impl:CIRISServer#155	established
 CLM-identity-set	3.4.7.1	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	impl:CIRISServer#155	established
@@ -159,7 +159,7 @@ CLM-deterministic-alm	6.1.6	Deterministic ALM topology (§T / §M)	test:CIRISCon
 CLM-trust	6.1.8	Recursive trust bootstrap (§B) — trust-discovery, not membership	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-annex-g	8.8.7	Annex G: Adversarial Security & Robustness	normative-only:—	normative
 CLM-trace-family	3.1.5	trace:{form}:{version} + trace_summary:{kind} family, the exactly-one-of inline/manifest shape, and the trace_manifest:v1 payload schema	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission staged:CIRISConformance#83	staged
-CLM-envelope-size	2.6.1.3	1 MiB bound on canonical JCS bytes at every write path (contract + intake bounds, ENVELOPE_TOO_LARGE/413) + above-cap manifest route; freeze-gate vector pair pending	impl:CIRISPersist/src/federation/admission.rs#check_envelope_size_admission staged:CIRISConformance#83	staged
+CLM-envelope-size	2.6.1.3	1 MiB bound on canonical JCS bytes at every write path (contract + intake bounds, ENVELOPE_TOO_LARGE/413) + above-cap manifest route; freeze-gate vector pair pending	staged:CIRISPersist#519 staged:CIRISConformance#83	staged
 CLM-nsproc-dimension	3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): dimension	impl:CIRISEdge/src/replication/bridge.rs#attestation_is_advertised staged:CIRISConstitution#64	staged
 CLM-nsproc-family-roster-membership-change-via-entr-accord	3.1.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): family roster membership change via entr accord	impl:CIRISPersist/ciris-verify-core/src/accord_genesis.rs#build_accord_family_envelope staged:CIRISConstitution#64	staged
 CLM-nsproc-holds-bytes-agent-files-kind-platform-or-target	3.1.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): holds bytes agent files kind platform or target	impl:CIRISPersist/src/federation/blobs.rs#holds_bytes_attestation_envelope staged:CIRISConstitution#64	staged
