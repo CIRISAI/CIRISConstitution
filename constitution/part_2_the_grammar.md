@@ -240,7 +240,7 @@ The four structural composers act on the attestation graph itself, not as score-
 
 Revocation has to reach beyond the original producer without inventing new structure. The `withdraws` admission rule broadens *who* the substrate accepts a retraction from — federation-enrolled subjects, proxies for un-enrolled subjects, and delegates — while keeping the primitive itself unchanged.
 
-Substrate MUST admit a `withdraws` Contribution against target `T` when the issuer's `key_id` satisfies **ANY** of:
+Substrate MUST admit a `withdraws` Contribution against target `T` when the issuer's `key_id` satisfies **ANY** of (one carve-out: the [CC 3.4.5](part_3_the_namespace.md) anti-Goodhart retraction dual — a subject-authority path, rules 2–4, MUST NOT withdraw a third-party `capacity:*` or `detection:*` row about itself; selective erasure of adverse evidence is reputation laundering, and the subject's contest path is [CC 4.5.5](part_4_composition_governance.md) `reconsideration:{grounds}`, on which the subject holds standing):
 
 | # | Authority path | Description |
 |---|---|---|
