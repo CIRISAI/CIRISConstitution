@@ -11,37 +11,37 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 # Validated by tools/check_evidence.py — a moved or renamed symbol fails CI.
 #
 # Columns: cc_decimal <TAB> clm_name <TAB> repo <TAB> path#symbol <TAB> crate@version
-2.6.1.1	CLM-round-trip	CIRISVerify	src/ciris-verify-core/src/jcs.rs#verify_jcs_hybrid_signature	ciris-verify-core@v12.0.0
-2.6.1.1.1	CLM-canonicalization-array	CIRISVerify	src/ciris-verify-core/src/operational_admit.rs#check_set_semantics_sorted	ciris-verify-core@v12.0.0
-2.6.2	CLM-canonicalization	CIRISVerify	src/ciris-verify-core/src/skill_import.rs#check_canonical_rfc3339	ciris-verify-core@v12.0.0
-2.6.3	CLM-canonicalization-hexadecimal	CIRISVerify	src/ciris-verify-core/src/skill_import.rs#check_canonical_hex64	ciris-verify-core@v12.0.0
-3.3.6.2	CLM-transport-authenticated	CIRISVerify	src/ciris-verify-core/src/transport_binding.rs#verify_transport_binding	ciris-verify-core@v12.0.0
-3.3.6.2.1	CLM-rns	CIRISVerify	src/ciris-verify-core/src/transport_binding.rs#compute_destination_hash	ciris-verify-core@v12.0.0
-4.2.1.1	CLM-invocation	CIRISVerify	src/ciris-verify-core/src/humanity_accord.rs#Invocation::canonical_bytes	ciris-verify-core@v12.0.0
-4.2.1.3	CLM-lifecycle	CIRISVerify	src/ciris-verify-core/src/humanity_accord.rs#verify_invocation	ciris-verify-core@v12.0.0
+2.6.1.1	CLM-round-trip	CIRISVerify	src/ciris-verify-core/src/jcs.rs#verify_jcs_hybrid_signature	ciris-verify-core@v12.1.0
+2.6.1.1.1	CLM-canonicalization-array	CIRISVerify	src/ciris-verify-core/src/operational_admit.rs#check_set_semantics_sorted	ciris-verify-core@v12.1.0
+2.6.2	CLM-canonicalization	CIRISVerify	src/ciris-verify-core/src/skill_import.rs#check_canonical_rfc3339	ciris-verify-core@v12.1.0
+2.6.3	CLM-canonicalization-hexadecimal	CIRISVerify	src/ciris-verify-core/src/skill_import.rs#check_canonical_hex64	ciris-verify-core@v12.1.0
+3.3.6.2	CLM-transport-authenticated	CIRISVerify	src/ciris-verify-core/src/transport_binding.rs#verify_transport_binding	ciris-verify-core@v12.1.0
+3.3.6.2.1	CLM-rns	CIRISVerify	src/ciris-verify-core/src/transport_binding.rs#compute_destination_hash	ciris-verify-core@v12.1.0
+4.2.1.1	CLM-invocation	CIRISVerify	src/ciris-verify-core/src/humanity_accord.rs#Invocation::canonical_bytes	ciris-verify-core@v12.1.0
+4.2.1.3	CLM-lifecycle	CIRISVerify	src/ciris-verify-core/src/humanity_accord.rs#verify_invocation	ciris-verify-core@v12.1.0
 4.2.2	CLM-hardware-class	CIRISVerify	src/ciris-keyring/src/hw_token.rs#hardware_class_table	ciris-keyring@v10.1.1
-4.2.6	CLM-accord-livequorum	CIRISVerify	src/ciris-verify-core/src/accord_live_quorum.rs#verify_membership_change_by_live_quorum	ciris-verify-core@v12.0.0
-4.4.3.4.3	CLM-cohort	CIRISVerify	src/ciris-verify-core/src/self_at_login.rs#perform_self_at_login	ciris-verify-core@v12.0.0
-4.4.3.4.3.1	CLM-canonicalization-signing	CIRISVerify	src/ciris-verify-core/src/self_at_login.rs#sign_partnership_grant	ciris-verify-core@v12.0.0
-5.3.1	CLM-witness	CIRISVerify	src/ciris-verify-core/src/transparency.rs#SignedTreeHead::cosign	ciris-verify-core@v12.0.0
-5.3.1.1	CLM-consistency-proof	CIRISVerify	src/ciris-verify-core/src/transparency.rs#verify_consistency	ciris-verify-core@v12.0.0
-5.3.2.5	CLM-full-sha	CIRISVerify	src/ciris-verify-core/src/holds_bytes.rs#verify_holds_bytes	ciris-verify-core@v12.0.0
-5.3.6.1	CLM-envelope-error	CIRISVerify	src/ciris-verify-core/src/ceg_error.rs#CegError	ciris-verify-core@v12.0.0
-5.4.1	CLM-record-id	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_record_id	ciris-crypto@v12.0.0
-5.4.2	CLM-symbol	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_symbol_key	ciris-crypto@v12.0.0
-5.4.5	CLM-witness-content	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#witness_cover_leaf	ciris-crypto@v12.0.0
-6.1.2	CLM-noise-descent	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#ejection_verdict	ciris-verify-core@v12.0.0
-6.1.2.1	CLM-aggregationmetav1	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#AggregationMetaV1	ciris-verify-core@v12.0.0
-6.1.2.2	CLM-descent	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#descend_order	ciris-verify-core@v12.0.0
-6.1.2.3	CLM-noise-ejection	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#EjectionVerdict	ciris-verify-core@v12.0.0
-6.1.5	CLM-noise-N5	CIRISVerify	src/ciris-verify-core/src/holonomic/fountain.rs#retention_decision	ciris-verify-core@v12.0.0
-6.1.8	CLM-trust	CIRISVerify	src/ciris-verify-core/src/holonomic/bootstrap.rs#recursive_trust_bootstrap	ciris-verify-core@v12.0.0
-6.1.2.1.2	CLM-neff-dominance-gate	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#passes_dominance_gate	ciris-verify-core@v12.0.0
+4.2.6	CLM-accord-livequorum	CIRISVerify	src/ciris-verify-core/src/accord_live_quorum.rs#verify_membership_change_by_live_quorum	ciris-verify-core@v12.1.0
+4.4.3.4.3	CLM-cohort	CIRISVerify	src/ciris-verify-core/src/self_at_login.rs#perform_self_at_login	ciris-verify-core@v12.1.0
+4.4.3.4.3.1	CLM-canonicalization-signing	CIRISVerify	src/ciris-verify-core/src/self_at_login.rs#sign_partnership_grant	ciris-verify-core@v12.1.0
+5.3.1	CLM-witness	CIRISVerify	src/ciris-verify-core/src/transparency.rs#SignedTreeHead::cosign	ciris-verify-core@v12.1.0
+5.3.1.1	CLM-consistency-proof	CIRISVerify	src/ciris-verify-core/src/transparency.rs#verify_consistency	ciris-verify-core@v12.1.0
+5.3.2.5	CLM-full-sha	CIRISVerify	src/ciris-verify-core/src/holds_bytes.rs#verify_holds_bytes	ciris-verify-core@v12.1.0
+5.3.6.1	CLM-envelope-error	CIRISVerify	src/ciris-verify-core/src/ceg_error.rs#CegError	ciris-verify-core@v12.1.0
+5.4.1	CLM-record-id	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_record_id	ciris-crypto@v12.1.0
+5.4.2	CLM-symbol	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_symbol_key	ciris-crypto@v12.1.0
+5.4.5	CLM-witness-content	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#witness_cover_leaf	ciris-crypto@v12.1.0
+6.1.2	CLM-noise-descent	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#ejection_verdict	ciris-verify-core@v12.1.0
+6.1.2.1	CLM-aggregationmetav1	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#AggregationMetaV1	ciris-verify-core@v12.1.0
+6.1.2.2	CLM-descent	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#descend_order	ciris-verify-core@v12.1.0
+6.1.2.3	CLM-noise-ejection	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#EjectionVerdict	ciris-verify-core@v12.1.0
+6.1.5	CLM-noise-N5	CIRISVerify	src/ciris-verify-core/src/holonomic/fountain.rs#retention_decision	ciris-verify-core@v12.1.0
+6.1.8	CLM-trust	CIRISVerify	src/ciris-verify-core/src/holonomic/bootstrap.rs#recursive_trust_bootstrap	ciris-verify-core@v12.1.0
+6.1.2.1.2	CLM-neff-dominance-gate	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#passes_dominance_gate	ciris-verify-core@v12.1.0
 #
 # ── Known decimal, previously uncited ────────────────────────────────────────
 # CC assigns these decimals already; no manifest cited verify's implementation.
-2.3.2.1	CLM-registry-canonical	CIRISVerify	src/ciris-verify-core/src/canonical_subject.rs#canonical_subject	ciris-verify-core@v12.0.0
-2.3.2.1	CLM-registry-canonical-reject	CIRISVerify	src/ciris-verify-core/src/canonical_subject.rs#parse_canonical_subject	ciris-verify-core@v12.0.0
+2.3.2.1	CLM-registry-canonical	CIRISVerify	src/ciris-verify-core/src/canonical_subject.rs#canonical_subject	ciris-verify-core@v12.1.0
+2.3.2.1	CLM-registry-canonical-reject	CIRISVerify	src/ciris-verify-core/src/canonical_subject.rs#parse_canonical_subject	ciris-verify-core@v12.1.0
 #
 # ── UNASSIGNED — awaiting a CC decimal ───────────────────────────────────────
 # Shipped, tested verify surface with no CC identifier yet. Listed here so the
@@ -49,12 +49,13 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 # against a proposal. The `UNASSIGNED` marker is not a decimal; tools/check_evidence.py
 # still resolves the symbol, so these cannot rot while they wait.
 # Proposed CLM names are suggestions, not claims.
-UNASSIGNED	CLM-presenter-binding	CIRISVerify	src/ciris-verify-core/src/build_attestation_bundle.rs#verify_build_attestation_bundle	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-presenter-binding-producer	CIRISVerify	src/ciris-verify-core/src/build_attestation_bundle.rs#produce_build_attestation_bundle	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-hardware-class-android	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_android_key_attestation	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-hardware-class-apple	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_apple_app_attest	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-hardware-class-yubikey	CIRISVerify	src/ciris-verify-core/src/accord_custody_attestation.rs#verify_yubikey_piv_attestation	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-trust-anchor-store	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#ConciseTaStore	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-trust-anchor-baked	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#yubico_attestation_root	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-dimension-registry	CIRISVerify	src/ciris-verify-core/src/federation_provenance.rs#DimensionSpec	ciris-verify-core@v12.0.0
-UNASSIGNED	CLM-dimension-consent-disposition	CIRISVerify	src/ciris-verify-core/src/federation_provenance.rs#ConsentDisposition	ciris-verify-core@v12.0.0
+UNASSIGNED	CLM-presenter-binding	CIRISVerify	src/ciris-verify-core/src/build_attestation_bundle.rs#verify_build_attestation_bundle	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-presenter-binding-producer	CIRISVerify	src/ciris-verify-core/src/build_attestation_bundle.rs#produce_build_attestation_bundle	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-hardware-class-android	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_android_key_attestation	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-hardware-class-apple	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_apple_app_attest	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-hardware-class-yubikey	CIRISVerify	src/ciris-verify-core/src/accord_custody_attestation.rs#verify_yubikey_piv_attestation	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-trust-anchor-store	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#ConciseTaStore	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-trust-anchor-baked	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#yubico_attestation_root	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-dimension-registry	CIRISVerify	src/ciris-verify-core/src/federation_provenance.rs#DimensionSpec	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-dimension-consent-disposition	CIRISVerify	src/ciris-verify-core/src/federation_provenance.rs#ConsentDisposition	ciris-verify-core@v12.1.0
+UNASSIGNED	CLM-classification-gating	CIRISVerify	src/ciris-verify-core/src/classification.rs#Gating	ciris-verify-core@v12.1.0
