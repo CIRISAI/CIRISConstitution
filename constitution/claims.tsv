@@ -250,3 +250,8 @@ CLM-private-use-never-federates	3.1.7	private use never federates (designated vi
 CLM-promotion-cohort-standing	4.5.4	promotion cohort standing (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_promotion_cohort_standing	established
 CLM-persist-ruled-family-inventory	3.1.7	persist ruled family inventory (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/family_rules.rs#persist_ruled_prefixes	established
 CLM-ci-axis	4.5.1.1	ci axis (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/namespace/supersets.rs#fusion_classification	established
+CLM-key-refusal-names-its-branch	3.4.7	key refusal names its branch (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/register.rs#KeyRefusalReason	established
+CLM-load-bearing-reachability	6.1.5	load bearing reachability (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/load_bearing.rs#is_load_bearing	established
+CLM-peer-deadmission-revocable	3.4.7	peer deadmission revocable (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_peer_deadmission	established
+CLM-rule-not-on-the-row	3.1.7	rule not on the row (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/family_rules.rs#rule_not_on_the_row_for	established
+CLM-absence-claims-still-hold	3.1.7	absence claims still hold (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/namespace/supersets.rs#manifest_absence_claims	established
