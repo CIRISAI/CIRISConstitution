@@ -1,4 +1,4 @@
-# NOTE: header row injected locally by CIRISConstitution vendoring — upstream file is headerless (CIRISVerify#233); remove when upstream ships it.
+# NOTE: header injected locally (CIRISVerify#233)
 decimal_id	claim_id	repo	path#symbol	crate@version
 # CIRISVerify evidence registry — impl: tier (CIRISVerify#233 / CIRISConstitution#17)
 #
@@ -54,12 +54,13 @@ UNASSIGNED	CLM-presenter-binding-producer	CIRISVerify	src/ciris-verify-core/src/
 UNASSIGNED	CLM-hardware-class-android	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_android_key_attestation	ciris-verify-core@v12.5.0
 UNASSIGNED	CLM-hardware-class-apple	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_apple_app_attest	ciris-verify-core@v12.5.0
 UNASSIGNED	CLM-hardware-class-yubikey	CIRISVerify	src/ciris-verify-core/src/accord_custody_attestation.rs#verify_yubikey_piv_attestation	ciris-verify-core@v12.5.0
-UNASSIGNED	CLM-trust-anchor-store	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#ConciseTaStore	ciris-verify-core@v12.5.0
-UNASSIGNED	CLM-trust-anchor-baked	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#yubico_attestation_root	ciris-verify-core@v12.5.0
+UNASSIGNED	CLM-trust-anchor-store	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#ConciseTaStore	ciris-verify-core@v12.6.0
+UNASSIGNED	CLM-trust-anchor-baked	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#yubico_attestation_root	ciris-verify-core@v12.6.0
 UNASSIGNED	CLM-dimension-registry	CIRISVerify	src/ciris-verify-core/src/federation_provenance.rs#DimensionSpec	ciris-verify-core@v12.5.0
 UNASSIGNED	CLM-dimension-consent-disposition	CIRISVerify	src/ciris-verify-core/src/federation_provenance.rs#ConsentDisposition	ciris-verify-core@v12.5.0
 UNASSIGNED	CLM-classification-gating	CIRISVerify	src/ciris-verify-core/src/classification.rs#Gating	ciris-verify-core@v12.5.0
 UNASSIGNED	CLM-hardware-class-tpm	CIRISVerify	src/ciris-verify-core/src/device_attestation.rs#verify_tpm_ek_certificate	ciris-verify-core@v12.5.0
-UNASSIGNED	CLM-anchor-provenance-tier	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#AnchorProvenance	ciris-verify-core@v12.5.0
+UNASSIGNED	CLM-anchor-provenance-tier	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#AnchorProvenance	ciris-verify-core@v12.6.0
+UNASSIGNED	CLM-tpm-vendor-anchors	CIRISVerify	src/ciris-verify-core/src/trust_anchor_store.rs#TPM_VENDOR_ROOTS	ciris-verify-core@v12.6.0
 UNASSIGNED	CLM-redactable-commitment	CIRISVerify	src/ciris-verify-core/src/redactable.rs#RedactableCommitment	ciris-verify-core@v12.5.0
 UNASSIGNED	CLM-presentation-identifier-scope	CIRISVerify	src/ciris-verify-core/src/presentation.rs#IdentifierScope	ciris-verify-core@v12.5.0
