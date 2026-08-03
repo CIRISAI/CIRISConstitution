@@ -19,8 +19,9 @@
       "registry": 10,
       "transport-delivery": 5
     },
+    "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "72700f7ba969dbd1c5e7aff11f1b85c893ba7c00835c4d5b3ae1a3e6322edecf"
+    "source_sha256": "23664f307356ac7151310dca6df8bfeca9fdc108473b14e211ec0e21ca56fdfc"
   },
   "families": [
     {

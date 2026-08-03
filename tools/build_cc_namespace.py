@@ -354,6 +354,7 @@ def main():
         ])
 
     out = OrderedDict()
+    meta["private_use_prefix"] = "x_private:"  # CC 3.1.7 R2 — the one literal, machine-readable
     out["_meta"] = meta
     out["families"] = fam_list
 
