@@ -7,20 +7,20 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 106,
+    "n_families": 105,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
       "attestation": 18,
       "cirisbench": 1,
       "lens": 15,
-      "node": 27,
+      "node": 26,
       "persist": 5,
       "registry": 10,
       "transport-delivery": 5
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "060cbc85a72981b24437ace1d2aa72824cb58677f98cb4f39643080f099d30b2"
+    "source_sha256": "df94b491cb2be3fb5588e5693b4bd04f8117da423f8eaaddd881dd3fcd288768"
   },
   "families": [
     {
@@ -620,15 +620,6 @@
       "reserved": false
     },
     {
-      "cc_section": "3.1.9.4",
-      "description": "External service-health observation.",
-      "owning_component": "node",
-      "owning_repo": "CIRISNodeCore",
-      "polarity": "signed",
-      "prefix": "health:liveness:{version}",
-      "reserved": false
-    },
-    {
       "cc_section": "3.1.9.1",
       "description": "Substrate auto-emission per federation_blobs.put_blob.",
       "owning_component": "node",
@@ -657,15 +648,6 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "integrity:{aspect}",
-      "reserved": false
-    },
-    {
-      "cc_section": "3.1.9.4",
-      "description": "Independent foundation-model judge verdict (PASS/FAIL/UNDETERMINED).",
-      "owning_component": "node",
-      "owning_repo": "CIRISNodeCore",
-      "polarity": "boolean-via-score",
-      "prefix": "judge_model:verdict:{model_id}",
       "reserved": false
     },
     {
@@ -776,6 +758,15 @@
       "reserved": false
     },
     {
+      "cc_section": "3.1.9.2",
+      "description": "Reverse-quorum objection marker (CIRISConstitution#67): a signed, roster-pinned objection to a pending commons act; state lifecycle per the minting cut.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "objection:{state}",
+      "reserved": false
+    },
+    {
       "cc_section": "3.1.1",
       "description": "The owner-binding made observable as a score.",
       "owning_component": "registry",
@@ -865,6 +856,15 @@
       "reserved": false
     },
     {
+      "cc_section": "3.1.9.2",
+      "description": "Subject-scoped quarantine marker (CIRISConstitution#76): slash-duty-holder-only emitter.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "quarantine:{state}",
+      "reserved": false
+    },
+    {
       "cc_section": "3.1.6",
       "description": "",
       "owning_component": "anti-sybil",
@@ -943,15 +943,6 @@
       "owning_repo": "CIRISVerify",
       "polarity": "-1 only",
       "prefix": "rollback_detected:{revision_field}",
-      "reserved": false
-    },
-    {
-      "cc_section": "3.1.9.4",
-      "description": "Pairwise cosine of seed-holder vote vectors per voting window.",
-      "owning_component": "node",
-      "owning_repo": "CIRISNodeCore",
-      "polarity": "signed",
-      "prefix": "seed_holder_voting_alignment:{cell}",
       "reserved": false
     },
     {
@@ -1088,11 +1079,11 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "Per-group content-watchlist config.",
+      "description": "CC 4.3 Wise-Authority quorum adjudication finding (CIRISConstitution#73) \u2014 the attestation a wa_adjudication_ref resolves to (abandonment/seizure and successor findings).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
-      "prefix": "watchlist:{id}",
+      "prefix": "wa_adjudication:{state}",
       "reserved": false
     },
     {
