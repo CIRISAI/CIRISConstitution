@@ -6,3 +6,4 @@ RATCHET	4233cef	evidence/cc_formal.tsv	vendor/evidence/RATCHET.cc_formal.tsv	sta
 CIRISAgent	b0a02313e	evidence/cc_impl.tsv	vendor/evidence/CIRISAgent.cc_impl.tsv	status==impl (PR #912, pre-release — re-pin on their next tag)
 CIRISVerify	74ed0c0	evidence/cc_impl.tsv	vendor/evidence/CIRISVerify.cc_impl.tsv	impl (repo!=— and crate!=open)
 CIRISPersist	a41d225	evidence/cc_impl.tsv	vendor/evidence/CIRISPersist.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISEdge	8bf567d	evidence/CIRISEdge.cc_impl.tsv	vendor/evidence/CIRISEdge.cc_impl.tsv	impl (repo!=— and crate!=open)
