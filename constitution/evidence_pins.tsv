@@ -5,5 +5,5 @@ coherence-ratchet	754c2fa	evidence/cc_lean.tsv	vendor/evidence/coherence-ratchet
 RATCHET	4233cef	evidence/cc_formal.tsv	vendor/evidence/RATCHET.cc_formal.tsv	status in {mechanized,empirical}
 CIRISAgent	1e1b4b19d	evidence/cc_impl.tsv	vendor/evidence/CIRISAgent.cc_impl.tsv	status==impl (PR #912, pre-release — re-pin on their next tag)
 CIRISVerify	bd33a6b	evidence/cc_impl.tsv	vendor/evidence/CIRISVerify.cc_impl.tsv	impl (repo!=— and crate!=open)
-CIRISPersist	6ac441c	evidence/cc_impl.tsv	vendor/evidence/CIRISPersist.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISPersist	63a8ea6	evidence/cc_impl.tsv	vendor/evidence/CIRISPersist.cc_impl.tsv	impl (repo!=— and crate!=open)
 CIRISEdge	da083e5	evidence/CIRISEdge.cc_impl.tsv	vendor/evidence/CIRISEdge.cc_impl.tsv	impl (repo!=— and crate!=open)

@@ -232,3 +232,21 @@ CLM-hardware-class-tpm	4.2.2.1	TPM EK certificate chain validation (R5 per-platf
 CLM-anchor-provenance-tier	4.2.2.1	AnchorProvenance tier on the trust-anchor store (baked vs operator-supplied vs absent)	staged:CIRISConstitution#75	staged
 CLM-redactable-commitment	2.6.1.1	RedactableCommitment — the CC 2.6 redaction-constraints primitive (salted digests, no canonicalization dependency)	staged:CIRISConstitution#75	staged
 CLM-presentation-identifier-scope	5.1	IdentifierScope — enforces the CC 5.1 no-stable-cross-verifier-identifier interim MUST	staged:CIRISConstitution#75	staged
+CLM-conferral-plane-named	3.2	conferral plane named (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/trust_root.rs#ConferralPlane	established
+CLM-drill-freshness-signal-not-gate	3.2	drill freshness signal not gate (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/trust_root.rs#DrillFreshness	established
+CLM-transit-eligibility-shared-root	3.2	transit eligibility shared root (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/trust_root.rs#resolve_transit_eligibility	established
+CLM-quota-refusal-names-its-budget	6.1.5.2	quota refusal names its budget (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/replication/admission.rs#PeerQuotaRefusal	established
+CLM-reverse-quorum-objection	3.1.9.2	reverse quorum objection (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/reverse_quorum.rs#record_objection	established
+CLM-reverse-quorum-dismissal	3.1.9.2	reverse quorum dismissal (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/reverse_quorum.rs#record_objection_dismissal	established
+CLM-wa-adjudication-family	3.1.9.4	wa adjudication family (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/ownership_reclaim.rs#build_reclaim_petition_envelope	established
+CLM-wa-quorum-re-derived	4.2.6	wa quorum re derived (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/ownership_reclaim.rs#wa_quorum_over_body	established
+CLM-reclaim-authority-fails-closed	3.2	reclaim authority fails closed (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/ownership_reclaim.rs#ReclaimPolicy::from_deployment_pin	established
+CLM-quarantine-marker-not-command	3.1.9.2	quarantine marker not command (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/quarantine.rs#fold_quarantine	established
+CLM-quarantine-serve-consult	3.1.9.2	quarantine serve consult (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/quarantine.rs#filter_withheld_rows	established
+CLM-slash-duty-scope	4.5.5	slash duty scope (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_delegated_duty_scores_admission	established
+CLM-admin-action-attributed	3.1.9.4	admin action attributed (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/hard_case.rs#check_admin_action_attribution	established
+CLM-revoked-after	2.4.1.1	revoked after (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/register.rs#check_revocation_bound	established
+CLM-private-use-never-federates	3.1.7	private use never federates (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_private_use_not_federatable	established
+CLM-promotion-cohort-standing	4.5.4	promotion cohort standing (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_promotion_cohort_standing	established
+CLM-persist-ruled-family-inventory	3.1.7	persist ruled family inventory (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/family_rules.rs#persist_ruled_prefixes	established
+CLM-ci-axis	4.5.1.1	ci axis (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/namespace/supersets.rs#fusion_classification	established

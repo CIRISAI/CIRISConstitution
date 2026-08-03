@@ -7,21 +7,21 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 113,
+    "n_families": 114,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
       "attestation": 18,
       "cirisbench": 1,
       "lens": 15,
-      "node": 34,
+      "node": 35,
       "persist": 5,
       "registry": 10,
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "063bc59811e25253e8ba1cb8f8529fbcf56aba30ddc6b1f868c787500bf50673"
+    "source_sha256": "ec3cca6cdfea62a51905867d380a3f7b07d90cd2bcdb4fa2c5080e8b405516b6"
   },
   "families": [
     {
@@ -980,6 +980,15 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "reconsideration:{grounds}",
+      "reserved": false
+    },
+    {
+      "cc_section": "3.1.9.2",
+      "description": "Regime declaration for {artifact} \u2208 manifest/composition/gate/onwire (CIRISConstitution#81 / CIRISPersist#571): reserved \u2014 substrate-steward-emitted, the emitter rule pinned at mint per R2(a); registered to end the ProducerSteward default.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "regime:{artifact}:{version}",
       "reserved": false
     },
     {
