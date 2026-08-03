@@ -7,20 +7,20 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 109,
+    "n_families": 112,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
       "attestation": 18,
       "cirisbench": 1,
       "lens": 15,
-      "node": 30,
+      "node": 33,
       "persist": 5,
       "registry": 10,
       "transport-delivery": 5
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "774062a90c0a31520648839e6bef110d3305d0f78d35cf3e821e3af6b4b02ba8"
+    "source_sha256": "10ad870992601e6ad2249ec6868829e8ab591adf87def7d87960e30100a20d47"
   },
   "families": [
     {
@@ -369,6 +369,24 @@
       }
     },
     {
+      "cc_section": "3.1.9.2",
+      "description": "Catalogue row (CC 3.1.7 R1); semantics at CC 3.3.12 \u2014 incl.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "content_class:{class}",
+      "reserved": false
+    },
+    {
+      "cc_section": "3.1.9.2",
+      "description": "Catalogue row (CC 3.1.7 R1); semantics, schemes and the trusted-publisher emitter rule at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "content_rating:{scheme}:{rating}",
+      "reserved": false
+    },
+    {
       "cc_section": "3.1.3",
       "description": "",
       "owning_component": "persist",
@@ -397,6 +415,15 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",
       "prefix": "credits:{domain}:{language}:{subject}",
+      "reserved": false
+    },
+    {
+      "cc_section": "3.1.9.2",
+      "description": "Catalogue row (CC 3.1.7 R1); community content-warning semantics at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "cw_class:{class}",
       "reserved": false
     },
     {

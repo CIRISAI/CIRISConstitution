@@ -1312,6 +1312,7 @@ CEG **names** the three duties as canonical `delegated_scope` kinds and **enforc
 | `moderate` | `moderation:{allegation_type}` ModerationEvent + report→`scores` + `age_assurance`/`content_class` gates | [CC 3.1.9.2](part_3_the_namespace.md) / [CC 4.4.3.10](part_4_composition_governance.md) |
 | `takedown` | `takedown_notice` (incl. the CC 4.5.3 immediate-removal fast-path) | [CC 3.3.2](part_3_the_namespace.md) / [CC 4.5.3](#453-fast-path-takedown-coordination-ceg-03-addition-per-cirisregistry37--38) |
 | `review` | `reconsideration:{grounds}` appeal / review | [CC 3.1.9.2](part_3_the_namespace.md) |
+| `slash` | `slashing:{outcome}` verdicts and the `quarantine:{state}` marker plane | [CC 3.1.9.2](part_3_the_namespace.md) |
 
 **Subject standing (normative — the CC 3.4.5 contestation pair).** The **subject of the target attestation** holds standing to file `reconsideration:{grounds}` — contestation at zero disclosure: the subject files band-blind, and a duty-holder who CAN see the composition performs the valence-sensitive step. This standing is what makes the CC 2.4.1.1 anti-Goodhart retraction carve-out admissible: the withdraws path closes only because a real contest path exists.
 
