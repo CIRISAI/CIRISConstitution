@@ -212,12 +212,6 @@ CLM-nsproc-recipient-capability	5.3.2.4	Namespace-processor evidence row (minted
 CLM-nsproc-attestation-prefixes	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation prefixes	impl:CIRISEdge/src/replication/bridge.rs#recipient_capability_withholds staged:CIRISConstitution#64	established
 CLM-nsproc-delivery-mode	5.3.3	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): delivery mode	impl:CIRISEdge/src/delivery_mode.rs#decide staged:CIRISConstitution#64	established
 CLM-nsproc-recipient-serve-capability	5.3.3.5	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): recipient serve capability	impl:CIRISEdge/src/replication/bridge.rs#peer_has_serve_capability staged:CIRISConstitution#64	established
-CLM-h3ere-steppoints	8.8.6	The H3ERE pipeline exposes its reasoning stages as observable step points, enumerated by StepPoint (the enum is the count of record — no count restated in prose)	staged:CIRISConstitution#52	staged
-CLM-agent-spend-auth	8.8.7	Spend authorization fails closed: budget_envelope.authorize_spend gates wallet tool calls (2.9.7 control, pre-verified pointer awaiting manifest row)	staged:CIRISConstitution#53	staged
-CLM-agent-health-failclosed	8.8.7	Health reporting fails closed: empty service registry resolves to critical, never healthy (2.9.7 control)	staged:CIRISConstitution#53	staged
-CLM-agent-platform-capability	8.8.7	Platform capability detection gates tool exposure to what the platform actually provides (2.9.7 control)	staged:CIRISConstitution#53	staged
-CLM-agent-ssrf-guard	8.8.7	SSRF egress guard on outbound URL fetch — scoped: enforced at document_parser/base_vision/api_tools call sites; unguarded paths tracked at CIRISAgent#941	staged:CIRISConstitution#53	staged
-CLM-agent-localization-integrity	8.8.10	Localization integrity is CI-gated: check_localization_integrity runs in build.yml — a drifted locale primer fails the build (2.9.7 control)	staged:CIRISConstitution#53	staged
 CLM-presenter-binding	4.2.2	Build-attestation bundle verification (peer-presentable, manifest-gated) — verify_build_attestation_bundle	staged:CIRISConstitution#75	staged
 CLM-presenter-binding-producer	4.2.2	Build-attestation bundle production — produce_build_attestation_bundle	staged:CIRISConstitution#75	staged
 CLM-hardware-class-android	4.2.2.1	Android Key Attestation chain validation (the R5 per-platform chain, landed)	staged:CIRISConstitution#75	staged
@@ -255,3 +249,54 @@ CLM-load-bearing-reachability	6.1.5	load bearing reachability (designated via CC
 CLM-peer-deadmission-revocable	3.4.7	peer deadmission revocable (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_peer_deadmission	established
 CLM-rule-not-on-the-row	3.1.7	rule not on the row (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/family_rules.rs#rule_not_on_the_row_for	established
 CLM-absence-claims-still-hold	3.1.7	absence claims still hold (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/namespace/supersets.rs#manifest_absence_claims	established
+CLM-await-spend-authorization	3.3.9	spend authorization (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-health-fails-closed	8.8.7	health fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-platform-fails-closed	8.8.7	platform fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-ssrf-egress-guard	8.8.7	ssrf egress guard (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-ablation-gate	8.8.7	ablation gate (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-condition-a-refusal	8.8.7	condition a refusal (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-conscience-score-gate	8.8.7	conscience score gate (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-accord-seam-faculties	8.8.7	accord seam faculties (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-loader-only-prompt-text	8.8.7	loader only prompt text (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-field-scoped-overrides	8.8.7	field scoped overrides (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-prompt-key-consumption	8.8.7	prompt key consumption (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-taxonomy-totality	8.8.7	taxonomy totality (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-language-guidance-integrity	4.2.2	language guidance integrity (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-handler-reachability	8.8.7	handler reachability (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-metric-honesty	8.8.7	metric honesty (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-killswitch-live	8.8.7	killswitch live (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-jwt-subtype-key-binding	8.8.7	jwt subtype key binding (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-role-gate-on-routes	8.8.7	role gate on routes (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-revoked-service-token-refused	8.8.7	revoked service token refused (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-setup-closes-after-first-run	8.8.7	setup closes after first run (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-root-signature-mints-wa	8.8.7	root signature mints wa (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-oauth-state-single-use	8.8.7	oauth state single use (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-oauth-redirect-allowlist	8.8.7	oauth redirect allowlist (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-apple-id-token-verified	8.8.7	apple id token verified (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-ingress-header-trust-boundary	8.8.7	ingress header trust boundary (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-reasoning-cannot-mint-envelope	8.8.7	reasoning cannot mint envelope (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-no-killswitch-no-run	8.8.7	no killswitch no run (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-killswitch-unfilterable-perception	8.8.7	killswitch unfilterable perception (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-emergency-signature-is-auth	8.8.7	emergency signature is auth (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-prohibited-capability-registration-gate	8.8.7	prohibited capability registration gate (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-no-unverified-crisis-number	8.8.7	no unverified crisis number (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-trusted-frame-spoof-redaction	8.8.7	trusted frame spoof redaction (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-identity-forget-requires-wa	8.8.7	identity forget requires wa (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-managed-user-attrs-immutable	8.8.7	managed user attrs immutable (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-expired-consent-blocks-memorize	8.8.7	expired consent blocks memorize (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-deletion-proof-verification	8.8.7	deletion proof verification (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-unsafe-skill-import-refused	8.8.7	unsafe skill import refused (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-accord-corpus-hash-pin	4.2.2	accord corpus hash pin (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-runtime-tamper-halts-agent	4.2.2	runtime tamper halts agent (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-runtime-md-provenance-gate	8.8.7	runtime md provenance gate (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-signed-tree-rule-parity	8.8.7	signed tree rule parity (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-irreversible-send-guard	3.3.9	irreversible send guard (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-attestation-bound-spend	3.3.9	attestation bound spend (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-currency-denominated-ceiling	3.3.9	currency denominated ceiling (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-credit-gate-fails-closed	3.3.9	credit gate fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-every-rail-gated	3.3.9	every rail gated (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-gate-coverage-floor	8.8.7	gate coverage floor (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-google-token-fails-closed	8.8.7	google token fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-degraded-path-no-weaker	8.8.7	degraded path no weaker (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-one-emergency-trust-root	3.2	one emergency trust root (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-manifest-content-identity	4.2.2	manifest content identity (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
