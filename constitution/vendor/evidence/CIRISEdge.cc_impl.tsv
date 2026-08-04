@@ -7,10 +7,10 @@
 # failure. Vendored by CIRISConstitution/tools/check_evidence.py.
 # Columns: cc_section <TAB> clm <TAB> repo <TAB> path#symbol <TAB> crate@version
 decimal_id	claim_id	repo	path#symbol	crate@version
-5.3.3	CLM-nsproc-delivery-mode	CIRISEdge	src/delivery_mode.rs#decide	ciris-edge@v15.16.0
-3.3.6	CLM-nsproc-cohort-scope	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v15.16.0
-3.1	CLM-nsproc-dimension	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v15.16.0
-3.4	CLM-nsproc-key-boundary-scope	CIRISEdge	src/key_boundary.rs#KeyBoundaryScope	ciris-edge@v15.16.0
-5.3.3.5	CLM-nsproc-recipient-serve-capability	CIRISEdge	src/replication/bridge.rs#peer_has_serve_capability	ciris-edge@v15.16.0
-5.3.2.4	CLM-nsproc-recipient-capability	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v15.16.0
-5.3.2.4	CLM-nsproc-attestation-prefixes	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v15.16.0
+5.3.3	CLM-nsproc-delivery-mode	CIRISEdge	src/delivery_mode.rs#decide	ciris-edge@v15.17.0
+3.3.6	CLM-nsproc-cohort-scope	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v15.17.0
+3.1	CLM-nsproc-dimension	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v15.17.0
+3.4	CLM-nsproc-key-boundary-scope	CIRISEdge	src/key_boundary.rs#KeyBoundaryScope	ciris-edge@v15.17.0
+5.3.3.5	CLM-nsproc-recipient-serve-capability	CIRISEdge	src/replication/bridge.rs#peer_has_serve_capability	ciris-edge@v15.17.0
+5.3.2.4	CLM-nsproc-recipient-capability	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v15.17.0
+5.3.2.4	CLM-nsproc-attestation-prefixes	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v15.17.0
