@@ -300,3 +300,6 @@ CLM-await-google-token-fails-closed	8.8.7	google token fails closed (agent v-maj
 CLM-await-degraded-path-no-weaker	8.8.7	degraded path no weaker (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
 CLM-await-one-emergency-trust-root	3.2	one emergency trust root (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
 CLM-await-manifest-content-identity	4.2.2	manifest content identity (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-tpm-vendor-anchors	4.2.2.1	TPM vendor anchor store (deliberately unbaked — Ok(None) honest state; aggregations would misrepresent provenance)	staged:CIRISConstitution#75	staged
+CLM-classification-frame	3.4.5	Arity surface: testimonial-as-relation frame parameter (the repairable_does_not_factor adoption, verify#248)	staged:CIRISConstitution#75	staged
+CLM-binding-disposition-split	3.4.5	Gating disposition split: cannot-vary vs hold-under-named-authority (the lake's binding-fusion correction)	staged:CIRISConstitution#75	staged
