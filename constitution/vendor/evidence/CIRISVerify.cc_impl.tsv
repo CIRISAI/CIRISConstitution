@@ -65,3 +65,5 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 3.4.5	CLM-binding-disposition-split	CIRISVerify	src/ciris-verify-core/src/classification.rs#Gating	ciris-verify-core@v13.0.0
 2.6.1.1	CLM-redactable-commitment	CIRISVerify	src/ciris-verify-core/src/redactable.rs#RedactableCommitment	ciris-verify-core@v13.0.0
 5.1	CLM-presentation-identifier-scope	CIRISVerify	src/ciris-verify-core/src/presentation.rs#IdentifierScope	ciris-verify-core@v13.0.0
+UNASSIGNED	CLM-subject-binding	CIRISVerify	src/ciris-verify-core/src/subject_binding.rs#SubjectBinding	ciris-verify-core@v13.1.0
+UNASSIGNED	CLM-subject-binding-keyrecord	CIRISVerify	src/ciris-verify-core/src/federation_self_record.rs#check_subject_binding	ciris-verify-core@v13.1.0
