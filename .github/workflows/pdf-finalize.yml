@@ -18,7 +18,8 @@ jobs:
         id: state
         run: |
           V=$(cat VERSION)
-          if ls ciris_constitution-${V}.*.pdf >/dev/null 2>&1 || [ ! -f "ciris_constitution-${V}.pdf" ]; then
+          EXTRA=$(ls ciris_constitution-*.pdf 2>/dev/null | grep -v -x "ciris_constitution-${V}.pdf" || true)
+          if [ -n "$EXTRA" ] || [ ! -f "ciris_constitution-${V}.pdf" ]; then
             echo "finalize=yes" >> "$GITHUB_OUTPUT"
           else
             echo "finalize=no" >> "$GITHUB_OUTPUT"

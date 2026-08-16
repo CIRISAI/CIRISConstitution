@@ -163,12 +163,15 @@ def versioned_pdf_name():
     import glob as _glob
     clean = f"ciris_constitution-{VERSION}.pdf"
     numbered = re.compile(rf"ciris_constitution-{re.escape(VERSION)}\.(\d+)\.pdf$")
-    prior = [p for p in _glob.glob(str(HERE / f"ciris_constitution-{VERSION}*.pdf"))]
-    if "rc" not in VERSION.lower() or _branch() == "main":
-        return clean, [p for p in prior if Path(p).name != clean]
-    nums = [int(m.group(1)) for p in prior if (m := numbered.search(p))]
+    everything = _glob.glob(str(HERE / "ciris_constitution-*.pdf"))   # ALL versions —
+    # a version bump sweeps the previous version's PDF; git history keeps it
+    is_prerelease = re.search(r"rc\d", VERSION.lower()) is not None
+    if not is_prerelease or _branch() == "main":
+        return clean, [p for p in everything if Path(p).name != clean]
+    nums = [int(m.group(1)) for p in everything if (m := numbered.search(p))]
     n = max(nums, default=0) + 1
-    return f"ciris_constitution-{VERSION}.{n}.pdf", prior
+    name = f"ciris_constitution-{VERSION}.{n}.pdf"
+    return name, [p for p in everything if Path(p).name != name]
 
 if shutil.which("pdflatex"):
     for _ in range(2):  # two passes to resolve hyperref/toc references
