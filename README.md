@@ -73,7 +73,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for the version history.
 ## Building the PDF
 
 ```bash
-python3 build_pdf.py   # -> ciris_constitution.pdf   (needs a TeX Live pdflatex)
+python3 build_pdf.py   # -> ciris_constitution-<VERSION>[.<build>].pdf   (needs a TeX Live pdflatex)
 ```
 
 The build is self-contained: the markdown→LaTeX converter is vendored under `tools/`.

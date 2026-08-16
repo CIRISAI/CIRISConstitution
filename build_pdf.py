@@ -5,7 +5,7 @@ Front matter is deliberately minimal: title, the Accord foreword (which sets the
 tone), the Scope & Disclaimers, and an explicit chapter-level table of contents
 built from constitution/toc.tsv -- then Parts I-VIII, then the Stewardship note.
 
-Output: ciris_constitution.pdf (repo root).
+Output: ciris_constitution-<VERSION>[.<build>].pdf (repo root; pre-release builds auto-iterate).
 Deps: a TeX Live install providing pdflatex (newunicodechar, listings, titlesec,
 hyperref, booktabs). Run:  python3 build_pdf.py
 """
@@ -143,13 +143,32 @@ tex = HERE / f"{stem}.tex"
 tex.write_text("\n".join(body), encoding="utf-8")
 print(f"wrote {tex.name} (foreword + scope + contents + {len(PARTS)} parts)")
 
+def versioned_pdf_name():
+    """ciris_constitution-<VERSION>.pdf for releases; pre-releases (an 'rc' in
+    VERSION) carry an auto-iterating build number: -<VERSION>.<n>.pdf. The next
+    n is read from whatever same-version build is sitting in the repo root, so
+    every rebuild iterates the value that is there; a version bump resets to 1.
+    Returns (new_name, [stale same-version files to remove])."""
+    import glob as _glob
+    if "rc" not in VERSION.lower():
+        name = f"ciris_constitution-{VERSION}.pdf"
+        return name, [p for p in _glob.glob(str(HERE / f"ciris_constitution-{VERSION}.*.pdf"))]
+    pat = re.compile(rf"ciris_constitution-{re.escape(VERSION)}\.(\d+)\.pdf$")
+    prior = [p for p in _glob.glob(str(HERE / f"ciris_constitution-{VERSION}.*.pdf")) if pat.search(p)]
+    n = max((int(pat.search(p).group(1)) for p in prior), default=0) + 1
+    return f"ciris_constitution-{VERSION}.{n}.pdf", prior
+
 if shutil.which("pdflatex"):
     for _ in range(2):  # two passes to resolve hyperref/toc references
         subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", tex.name],
                        cwd=HERE, check=True, stdout=subprocess.DEVNULL)
-    shutil.move(str(HERE / f"{stem}.pdf"), str(HERE / "ciris_constitution.pdf"))
+    pdf_name, stale = versioned_pdf_name()
+    shutil.move(str(HERE / f"{stem}.pdf"), str(HERE / pdf_name))
+    for p in stale:                       # one tracked PDF per version
+        Path(p).unlink(missing_ok=True)
+    (HERE / "ciris_constitution.pdf").unlink(missing_ok=True)   # legacy fixed name
     for ext in (".aux", ".log", ".out", ".tex"):
         (HERE / f"{stem}{ext}").unlink(missing_ok=True)
-    print("wrote ciris_constitution.pdf")
+    print(f"wrote {pdf_name}")
 else:
     print("pdflatex not found -- wrote .tex only; install TeX Live to render the PDF")
