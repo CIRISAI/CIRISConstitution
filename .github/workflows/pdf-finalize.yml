@@ -1,0 +1,39 @@
+name: pdf-finalize
+# On merge to main, collapse the pre-release PDF name (ciris_constitution-<V>.<n>.pdf)
+# to the bare version (ciris_constitution-<V>.pdf) and keep it there. Loop-safe:
+# commits only when the FILENAME SET is wrong (a numbered build present, or the
+# clean name absent) — never on byte differences, so the finalize commit itself
+# triggers a run that finds nothing to do.
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check filename state
+        id: state
+        run: |
+          V=$(cat VERSION)
+          if ls ciris_constitution-${V}.*.pdf >/dev/null 2>&1 || [ ! -f "ciris_constitution-${V}.pdf" ]; then
+            echo "finalize=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "finalize=no" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install TeX Live
+        if: steps.state.outputs.finalize == 'yes'
+        run: sudo apt-get update -q && sudo apt-get install -y -q texlive-latex-extra texlive-fonts-recommended
+      - name: Rebuild as the release name
+        if: steps.state.outputs.finalize == 'yes'
+        run: PDF_BRANCH=main python3 build_pdf.py
+      - name: Commit the finalized PDF
+        if: steps.state.outputs.finalize == 'yes'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A ciris_constitution-*.pdf
+          git rm -q --cached $(git ls-files 'ciris_constitution-*.pdf' | grep -E '\.[0-9]+\.pdf$') 2>/dev/null || true
+          git commit -m "PDF: finalize $(cat VERSION) on main" && git push

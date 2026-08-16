@@ -143,19 +143,31 @@ tex = HERE / f"{stem}.tex"
 tex.write_text("\n".join(body), encoding="utf-8")
 print(f"wrote {tex.name} (foreword + scope + contents + {len(PARTS)} parts)")
 
+def _branch():
+    import os
+    if os.environ.get("PDF_BRANCH"):            # override for CI / testing
+        return os.environ["PDF_BRANCH"]
+    try:
+        return subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=HERE,
+                              capture_output=True, text=True).stdout.strip()
+    except Exception:
+        return ""
+
 def versioned_pdf_name():
-    """ciris_constitution-<VERSION>.pdf for releases; pre-releases (an 'rc' in
-    VERSION) carry an auto-iterating build number: -<VERSION>.<n>.pdf. The next
-    n is read from whatever same-version build is sitting in the repo root, so
-    every rebuild iterates the value that is there; a version bump resets to 1.
-    Returns (new_name, [stale same-version files to remove])."""
+    """ciris_constitution-<VERSION>.pdf for releases AND for any build on main;
+    pre-release builds off other branches carry an auto-iterating build number:
+    -<VERSION>.<n>.pdf, with n read from whatever same-version build is sitting
+    in the repo root (every rebuild iterates the value that is there; a version
+    bump resets to 1). On merge to main the next build collapses the name to the
+    bare version, and it stays there. Returns (new_name, [stale files])."""
     import glob as _glob
-    if "rc" not in VERSION.lower():
-        name = f"ciris_constitution-{VERSION}.pdf"
-        return name, [p for p in _glob.glob(str(HERE / f"ciris_constitution-{VERSION}.*.pdf"))]
-    pat = re.compile(rf"ciris_constitution-{re.escape(VERSION)}\.(\d+)\.pdf$")
-    prior = [p for p in _glob.glob(str(HERE / f"ciris_constitution-{VERSION}.*.pdf")) if pat.search(p)]
-    n = max((int(pat.search(p).group(1)) for p in prior), default=0) + 1
+    clean = f"ciris_constitution-{VERSION}.pdf"
+    numbered = re.compile(rf"ciris_constitution-{re.escape(VERSION)}\.(\d+)\.pdf$")
+    prior = [p for p in _glob.glob(str(HERE / f"ciris_constitution-{VERSION}*.pdf"))]
+    if "rc" not in VERSION.lower() or _branch() == "main":
+        return clean, [p for p in prior if Path(p).name != clean]
+    nums = [int(m.group(1)) for p in prior if (m := numbered.search(p))]
+    n = max(nums, default=0) + 1
     return f"ciris_constitution-{VERSION}.{n}.pdf", prior
 
 if shutil.which("pdflatex"):
