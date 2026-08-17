@@ -6,12 +6,12 @@ Most AI-governance writing splits in two: ethics with no teeth (principles no ma
 
 It reads like a standard, not a manifesto, and it is deliberately layered: read Part I (the ethics) and stop, jump straight to the wire grammar, or cite any single concept by a stable address. Rejecting a later Part costs you nothing in the earlier ones.
 
-**Current version:** CC 1.0-rc2 · **Status:** source-fidelity validated (0 REJECT) · **License:** AGPL-3.0-or-later
+**This tree:** CC 1.0-rc3 · **Status:** release candidate — **not released** (rc3 ships only once CIRISAgent 2.9.7 merges and the pre-registered RATCHET TORQUE campaign completes; the published constitution remains 1.0-rc2) · **Source fidelity:** validated (0 REJECT) · **License:** AGPL-3.0-or-later
 **Stewarded by** Eric Moore — perpetual, no expiry ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)).
 
 ## The document in one paragraph (for the technical reader)
 
-CC joins two specs that already referenced each other throughout. The **CIRIS Accord** is the ethical layer — Meta-Goal **M-1**, the six principles, the **PDMA** (Principled Decision-Making Algorithm), **Wisdom-Based Deferral**, stewardship, and the Book IX coherence mathematics (`F = k_eff·λ·σ`, Part VI). **CEG** (the *CIRIS Epistemic Grammar*) is the wire format the federation speaks — the **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` / `recants`), the namespace, and the admission gate. The Accord's Book IX *defines* the CEG primitives; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point back up. Importance is computed by PageRank over the unified cross-reference graph — M-1 the single apex, ~390 operational concepts co-equal beneath. The **1+4 surface is conformance-frozen:** changing the wire bytes is a found defect, not an edit.
+CC joins two specs that already referenced each other throughout. The **CIRIS Accord** is the ethical layer — Meta-Goal **M-1**, the six principles, the **PDMA** (Principled Decision-Making Algorithm), **Wisdom-Based Deferral**, stewardship, and the coherence mathematics (`F = k_eff·λ·σ`, carried in Part VI under its legacy "Book IX" label). **CEG** (the *CIRIS Epistemic Grammar*) is the wire format the federation speaks — the **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` / `recants`), the namespace, and the admission gate. **Part VI is the statement of record** for that mathematics — "Book IX" is a source label, not a separate authority, and it does not define the CEG primitives, which Parts II–III do; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point back up. Importance is computed by PageRank over the unified cross-reference graph — M-1 the single apex, ~390 operational concepts co-equal beneath. The **1+4 surface is conformance-frozen:** changing the wire bytes is a found defect, not an edit.
 
 ## This repository is the source of truth
 
@@ -73,7 +73,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for the version history.
 ## Building the PDF
 
 ```bash
-python3 build_pdf.py   # -> ciris_constitution.pdf   (needs a TeX Live pdflatex)
+python3 build_pdf.py   # -> ciris_constitution-<VERSION>[.<build>].pdf   (needs a TeX Live pdflatex)
 ```
 
 The build is self-contained: the markdown→LaTeX converter is vendored under `tools/`.

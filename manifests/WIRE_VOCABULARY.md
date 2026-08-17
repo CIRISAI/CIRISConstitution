@@ -110,7 +110,7 @@ The integrity primitive here is **`sha256(body)` itself**, not an inner signatur
 | Variant | Delivery | Contract |
 |---|---|---|
 | `ContentFetch` | Ephemeral (request/response) | Request the bytes hashing to `sha256`; retryable, on-demand pull. |
-| `ContentBody` | Ephemeral (response) | Carries the bytes; receiver MUST verify `sha256(bytes) == claimed` on receipt. AV-13 16 MiB ceiling. |
+| `ContentBody` | Ephemeral (response) | Carries the bytes; receiver MUST verify `sha256(bytes) == claimed` on receipt. Bounded by the AV-13 `MAX_BODY_BYTES` cap (§3.2) — this row restates no number of its own. |
 | `ContentMiss` | Ephemeral (response) | Typed refusal (`NotHeld`/`Withdrawn`/`Revoked`/`PolicyDenied`) so the fetcher fails over rather than hangs. |
 | `BlobChunkFetch` | Ephemeral (request/response) | Request one chunk keyed by `(blob_sha256, chunk_sha256)`. |
 | `BlobChunkBody` | Ephemeral (response) | Carries chunk bytes; persist `put_blob_chunk` atomically verifies `sha256(bytes) == chunk_sha256` or returns `ChunkMismatch`. |

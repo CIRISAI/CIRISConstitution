@@ -20,7 +20,7 @@ The families appear in THREE source formats, all handled here:
 stdlib only, Python 3, fully deterministic (families sorted by prefix; json sort_keys).
 Does NOT commit. Run:  python3 tools/build_cc_namespace.py
 """
-import json, os, re, hashlib
+import json, os, re, hashlib, sys
 from collections import OrderedDict
 
 HERE = os.path.dirname(__file__)
@@ -29,8 +29,21 @@ SOURCE = os.path.join(HERE, "..", SOURCE_REL)
 VERSION_FILE = os.path.join(HERE, "..", "VERSION")
 OUT = os.path.join(HERE, "..", "manifests", "namespace_registry.json")
 
-EXPECTED_FAMILIES = 83          # normative claim (CC 3.1 intro + 3.1.7 summary)
-EXPECTED_COMPONENTS = 8         # normative claim: "8 owning components"
+# CC 3.1.7 R1 (RC3) makes THIS GENERATED FILE the count of record for FAMILIES: the prose
+# no longer asserts a family count, so there is no normative number to diverge from. Kept
+# as None so the family-delta machinery stays dormant rather than re-introducing a
+# hard-coded claim that goes stale on every added family (#30).
+EXPECTED_FAMILIES = None
+# The COMPONENT count is a different case: CC 3.1 (intro) still asserts it in words —
+# "**Eight** owning components are committed by a sibling MISSION.md; **CIRISBench** is
+# catalogued from a README and is the ninth." That claim is checkable and MUST NOT ride on
+# EXPECTED_FAMILIES: retiring the family count previously disabled this check too, leaving
+# `EXPECTED_COMPONENTS = 8` sitting next to a registry reporting n_components: 9 with
+# nothing able to fire. The check below is therefore independent of EXPECTED_FAMILIES, and
+# it checks the claim the prose actually makes — the MISSION.md-committed set, not the
+# catalogued total, which is legitimately 9.
+EXPECTED_NORMATIVE_COMPONENTS = 8       # CC 3.1: components committed by a sibling MISSION.md
+CATALOGUED_NOT_NORMATIVE = {"cirisbench"}   # CC 3.1.10 — README-cited, the ninth
 
 # ---- owning components -------------------------------------------------------
 # Every top-level `### 3.1.N` heading (N != 7 summary) is one owning component.
@@ -282,18 +295,50 @@ def main():
     n_components = len(per_component)
     reserved_count = sum(1 for r in fam_list if r["reserved"])
 
+    # ---- component check (independent of EXPECTED_FAMILIES) --------------------
+    observed = set(per_component)
+    normative_seen = sorted(observed & NORMATIVE_8)
+    normative_missing = sorted(NORMATIVE_8 - observed)
+    outside = sorted(observed - NORMATIVE_8)
+    unexpected_outside = sorted(set(outside) - CATALOGUED_NOT_NORMATIVE)
+    component_problems = []
+    if len(NORMATIVE_8) != EXPECTED_NORMATIVE_COMPONENTS:
+        component_problems.append(
+            "the generator's NORMATIVE_8 table lists %d components; CC 3.1 asserts %d"
+            % (len(NORMATIVE_8), EXPECTED_NORMATIVE_COMPONENTS))
+    if normative_missing:
+        component_problems.append(
+            "MISSION.md-committed component(s) with no catalogued family in CC 3.1: %s"
+            % ", ".join(normative_missing))
+    if len(normative_seen) != EXPECTED_NORMATIVE_COMPONENTS:
+        component_problems.append(
+            "CC 3.1 asserts %d MISSION.md-committed owning components; this catalog extracts %d"
+            % (EXPECTED_NORMATIVE_COMPONENTS, len(normative_seen)))
+    if unexpected_outside:
+        component_problems.append(
+            "component(s) catalogued that are neither in the normative %d nor declared "
+            "catalogued-only: %s" % (EXPECTED_NORMATIVE_COMPONENTS, ", ".join(unexpected_outside)))
+
     meta = OrderedDict()
     meta["cc_version"] = cc_version
     meta["source"] = SOURCE_REL
     meta["source_sha256"] = sha
     meta["n_families"] = n_families
     meta["n_components"] = n_components
+    meta["n_components_normative"] = len(normative_seen)
+    meta["components_outside_normative"] = outside
     meta["per_component"] = per_component
     meta["generator"] = "tools/build_cc_namespace.py"
-    if n_families != EXPECTED_FAMILIES or n_components != EXPECTED_COMPONENTS:
+    if component_problems:
+        meta["component_discrepancy"] = OrderedDict([
+            ("normative_n_components", EXPECTED_NORMATIVE_COMPONENTS),
+            ("observed_n_components_normative", len(normative_seen)),
+            ("observed_n_components_total", n_components),
+            ("problems", component_problems),
+        ])
+    if EXPECTED_FAMILIES is not None and n_families != EXPECTED_FAMILIES:
         meta["discrepancy"] = OrderedDict([
             ("normative_n_families", EXPECTED_FAMILIES),
-            ("normative_n_components", EXPECTED_COMPONENTS),
             ("observed_n_families", n_families),
             ("observed_n_components", n_components),
             ("note",
@@ -309,8 +354,30 @@ def main():
         ])
 
     out = OrderedDict()
+    meta["private_use_prefix"] = "x_private:"  # CC 3.1.7 R2 — the one literal, machine-readable
     out["_meta"] = meta
     out["families"] = fam_list
+
+    # Removal gate (CIRISPersist#590 lesson): additions are cheap; SILENT removals
+    # are the dangerous direction — a text edit that moves a table boundary can
+    # orphan rows and families "leave" without anyone retiring them. A family may
+    # only leave the manifest via an explicit entry here, with the retiring change.
+    RETIRED_FAMILIES = set()  # e.g. {"old:family"} — name it in the same commit
+    if os.path.exists(OUT):
+        try:
+            prev = {f_["prefix"] for f_ in json.load(open(OUT)).get("families", [])}
+        except Exception:
+            prev = set()
+        now = {f_["prefix"] for f_ in fam_list}
+        lost = prev - now - RETIRED_FAMILIES
+        if lost:
+            sys.stderr.write(
+                "FATAL: %d famil%s left the registry with no explicit retirement: %s\n"
+                "A generated artifact is not its own authority on whether generation was\n"
+                "correct — if this removal is intended, add it to RETIRED_FAMILIES in the\n"
+                "same commit; if not, a table boundary probably moved.\n"
+                % (len(lost), "y" if len(lost)==1 else "ies", ", ".join(sorted(lost))))
+            sys.exit(2)
 
     with open(OUT, "w") as f:
         f.write(json.dumps(out, sort_keys=True, indent=2))
@@ -326,10 +393,18 @@ def main():
         print("  %-20s %-14s %3d%s" % (comp, COMPONENT_REPO.get(comp, "?"),
                                        per_component[comp], star))
     print("-" * 60)
-    print("total families   : %d   (normative claim: %d)" % (n_families, EXPECTED_FAMILIES))
-    print("total components : %d   (normative claim: %d)" % (n_components, EXPECTED_COMPONENTS))
+    print("total families   : %d   (registry of record — CC 3.1.7 R1)" % n_families)
+    print("total components : %d   (normative/MISSION.md-committed: %d of %d%s)"
+          % (n_components, len(normative_seen), EXPECTED_NORMATIVE_COMPONENTS,
+             ("; catalogued-only: " + ", ".join(outside)) if outside else ""))
     print("reserved families: %d" % reserved_count)
-    if n_families != EXPECTED_FAMILIES:
+    if component_problems:
+        print("-" * 60)
+        print("COMPONENT DISCREPANCY vs the CC 3.1 prose claim:")
+        for p in component_problems:
+            print("  - %s" % p)
+        print("  (recorded in _meta.component_discrepancy)")
+    if EXPECTED_FAMILIES is not None and n_families != EXPECTED_FAMILIES:
         print("-" * 60)
         print("DELTA vs 83 — per-section breakdown (families found):")
         def skey(s):

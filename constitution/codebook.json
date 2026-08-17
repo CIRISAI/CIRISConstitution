@@ -1,6 +1,6 @@
 {
  "_note": "Deterministic dual-ID codebook for the CIRIS Constitution (CC). Both maps are 1:1. decimal_id and semantic_id are deterministic functions of the unified corpus (graph_unified.json unified_pagerank conscious-mesh weights + the fixed Part map); same corpus => byte-identical codebook. title->id is NOT codebook-free: it depends on the measured importance distribution, by design.",
- "n_concepts": 429,
+ "n_concepts": 431,
  "decimal_to_key": {
   "2.6": "0",
   "2.6.9": "0.1",
@@ -157,6 +157,7 @@
   "6.1.2": "19.7",
   "6.1.2.1": "19.7.1",
   "6.1.2.1.1": "19.7.1.1",
+  "6.1.2.1.2": "19.7.1.2",
   "6.1.2.2": "19.7.2",
   "6.1.2.3": "19.7.3",
   "2.5": "2",
@@ -430,7 +431,8 @@
   "8.8.8": "cc:8.8.8",
   "8.8.9": "cc:8.8.9",
   "8.8.10": "cc:8.8.10",
-  "8.9": "cc:8.9"
+  "8.9": "cc:8.9",
+  "3.4.14": "cc:3.4.14"
  },
  "key_to_decimal": {
   "0": "2.6",
@@ -588,6 +590,7 @@
   "19.7": "6.1.2",
   "19.7.1": "6.1.2.1",
   "19.7.1.1": "6.1.2.1.1",
+  "19.7.1.2": "6.1.2.1.2",
   "19.7.2": "6.1.2.2",
   "19.7.3": "6.1.2.3",
   "2": "2.5",
@@ -861,7 +864,8 @@
   "cc:8.8.8": "8.8.8",
   "cc:8.8.9": "8.8.9",
   "cc:8.8.10": "8.8.10",
-  "cc:8.9": "8.9"
+  "cc:8.9": "8.9",
+  "cc:3.4.14": "3.4.14"
  },
  "semantic_to_key": {
   "foreword": "0",
@@ -1019,6 +1023,7 @@
   "noise": "19.7",
   "aggregationmetav1": "19.7.1",
   "member_commitment": "19.7.1.1",
+  "dominance-gate": "19.7.1.2",
   "descent": "19.7.2",
   "ejectionverdict": "19.7.3",
   "reasoning": "2",
@@ -1096,7 +1101,6 @@
   "consent-counter": "7.0.2",
   "accord-reservation": "7.1",
   "system": "7.2",
-  "co-owned": "7.3",
   "detector-only": "7.4",
   "capacity-score": "7.5",
   "witness-emitter": "7.6",
@@ -1292,7 +1296,9 @@
   "annex-h": "cc:8.8.8",
   "annex-i": "cc:8.8.9",
   "annex-j": "cc:8.8.10",
-  "stubs": "cc:8.9"
+  "stubs": "cc:8.9",
+  "synthesis-disclosure": "cc:3.4.14",
+  "co-stewarded": "7.3"
  },
  "key_to_semantic": {
   "0": "foreword",
@@ -1450,6 +1456,7 @@
   "19.7": "noise",
   "19.7.1": "aggregationmetav1",
   "19.7.1.1": "member_commitment",
+  "19.7.1.2": "dominance-gate",
   "19.7.2": "descent",
   "19.7.3": "ejectionverdict",
   "2": "reasoning",
@@ -1527,7 +1534,7 @@
   "7.0.2": "consent-counter",
   "7.1": "accord-reservation",
   "7.2": "system",
-  "7.3": "co-owned",
+  "7.3": "co-stewarded",
   "7.4": "detector-only",
   "7.5": "capacity-score",
   "7.6": "witness-emitter",
@@ -1723,7 +1730,8 @@
   "cc:8.8.8": "annex-h",
   "cc:8.8.9": "annex-i",
   "cc:8.8.10": "annex-j",
-  "cc:8.9": "stubs"
+  "cc:8.9": "stubs",
+  "cc:3.4.14": "synthesis-disclosure"
  },
  "legacy_to_decimal": {
   "§0": "2.6",
@@ -1881,6 +1889,7 @@
   "§19.7": "6.1.2",
   "§19.7.1": "6.1.2.1",
   "§19.7.1.1": "6.1.2.1.1",
+  "§19.7.1.2": "6.1.2.1.2",
   "§19.7.2": "6.1.2.2",
   "§19.7.3": "6.1.2.3",
   "§2": "2.5",
@@ -2154,6 +2163,7 @@
   "CC 8.8.8": "8.8.8",
   "CC 8.8.9": "8.8.9",
   "CC 8.8.10": "8.8.10",
-  "CC 8.9": "8.9"
+  "CC 8.9": "8.9",
+  "CC 3.4.14": "3.4.14"
  }
 }

@@ -14,6 +14,8 @@ The federation's prose carries some load-bearing terms and some warm narrative s
 
 ### 8.1.1 `registry-core` — Core terms
 
+**"Steward" (three senses, pinned — the word is load-bearing and was previously polysemous, CIRISConstitution#40 §3).** (1) **Substrate steward** — the operator identity holding a component's steward keys (e.g. a registry steward emitting `cert_validity:{steward_id}`); an infrastructure role. (2) **Owner-steward** — the accountable human (`user`-role identity) a `node`/`agent` key is steward-bound to via `is_steward_bound(K)` ([CC 3.2](part_3_the_namespace.md)); the sense the admission gates check. (3) **Co-steward** — the CC 3.4.9 shared-custody governance relation over a reserved family. Prose MUST be readable under exactly one sense; where ambiguity is possible the qualified form is used.
+
 These terms are referenced throughout the spec and across sibling repos. Defining them in-spec retires the external `ciris.ai/cewp` placeholder citations.
 
 | Term | Definition |
@@ -154,7 +156,7 @@ A `not-translated` verdict is not a failure — it is a precise statement about 
 
 ## 8.3 `concerns` — Concerns + acknowledged gaps
 
-Trust is earned by naming weaknesses before a reviewer finds them. Three independent methodologies surfaced concerns, and a dedicated critical-review pass added five more reviewer perspectives — cryptography, distributed systems, standards architecture, adversarial red-team, and application development. The gaps are recorded here so external reviewers see them acknowledged rather than discovered: what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap.
+Trust is earned by naming weaknesses before a reviewer finds them. Three independent methodologies surfaced concerns, and a dedicated critical-review pass added five more reviewer perspectives — cryptography, distributed systems, standards architecture, adversarial red-team, and application development. The gaps are recorded here so external reviewers see them acknowledged rather than discovered: what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap. How strongly to read any evidence row backing a claim in this register is graded at [CC 8.6.1](#).
 
 ### 8.3.1 `acknowledged` — Acknowledged risks (named as bets)
 
@@ -166,11 +168,12 @@ Each of these is a known weakness the federation has chosen to carry rather than
 | **R2** — `delegates_to` rename-chain adoption cost | First test was the `correlated_action_v{N+1}:from:emergent_deception_v{N}` chain at RATCHET deployment. |
 | **R3** — "Log existence ≠ log monitoring" drift toward TOFU caching | Consumer-policy guidance in `docs/TRUST_CONTRACT.md`. |
 | **R4** — Self-attestation under Ubuntu commitment | `witness_relation: self` admissible; consumer policy responsible for appropriate weighting per [CC 4.1.2](#) discipline. |
-| **R5** — `hardware_class` self-assertion vs cryptographic attestation | Per [CC 4.2.2.1](#): no normative attestation-chain verification yet. Bet that placeholder/dev-class rejection + trust-multipliers cover the deployment window until per-platform attestation chains land in 1.x. |
+| **R5** — `hardware_class` self-assertion vs cryptographic attestation | **Discharged (2026-08):** the per-platform attestation chains landed and are evidence-established — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK, the CoTS constrained trust-anchor store, and baked roots with self-validation at generation (CC 4.2.2.1 rows, artifact-resolved). Residual, deliberate: TPM *vendor* anchors stay unbaked — `Ok(None)` is the honest state, since aggregated vendor roots would misrepresent provenance. The bet paid; the placeholder-rejection window it covered is closed. |
 | **R6** — `occurrence_id` / `occurrence_count` / `occurrence_role` self-assertion | Per [CC 2.1](#): env-var-driven, with no cryptographic fleet-attestation primitive. Bet that downstream compliance reviewers can correlate via correlated `signed_at` clusters + `evidence_refs[]` cross-checks; first incident drives a fleet-attestation primitive design workshop. |
 | **R7** — Frickerian discipline ([CC 4.4.1](#)) vocabulary without full method | First-pass shallow Frickerian SHOULD-rules; bet that the structural safeguards ([CC 3.1.9.3](#) testimonial_witness disciplines, never-sole-evidence-for-slashing) absorb the gap until a deeper hermeneutical-resource analysis lands as a workshop output. |
-| **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Known exposure**: *outlier dominance* (one source dominating a composite) and *side-information / linkage reconstruction* — neither visible to the id-based `member_commitment` ([CC 6.1.2.1.1](part_6_the_coherence_mathematics.md)), which counts *which* members, never *dominance*. **Mitigation now**: the shortcut is gated on a source-diversity precondition; where it fails the N5 purge obligation applies in full. **Fallback (post-1.0)**: a formal DP-style bound on the aggregation operator (a content-similarity `N_eff` / max-dominance gate), tracked in CIRISConstitution#6 with a waiting conformance xfail (CIRISConformance#55). |
+| **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Mitigated (shipped, v2/v3)**: *mass dominance* and *content-similarity multiplicity* are both wire-visible and admission-gated — the signed `n_eff` mass-dominance gate (pinned `min_ratio = 0.5`) and the R9 multiplicity gate (pinned integer-L1 metric, `0.950` threshold, connected-component clustering, `n_min = 2`), with `mass_commitment` making a lying surface mechanically provable from held evidence ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md)); a `version < 3` tier is inadmissible (flag-day). Where a gate fails the N5 purge obligation applies in full. **Known exposure (residual)**: the *adversary-model / side-information-linkage* limb of the below-floor MUST — unverifiable-pending-instrument (CC 6.1.2.1.2's closing scope note; definitional history CIRISConstitution#6). **Two constraints on any candidate instrument, offered at stated strength in CIRISConstitution#45**: a *pairwise* `N_eff` gate is blind by construction to structure carried only by the whole (the valve results — `valve_upward_strict` / `valve_needs_asymmetry`, theorem-given-model at k = 3, with a measured rate law — say ordinary correlated operation accrues such structure with nobody scheming), and any *whole-reading* replacement carries a manufactured floor (measured at 50%–5.8× of the null on survey data) that has to be subtracted before a threshold means anything. The LP pair-pinning gate is offered as a bounded instrument for the #6 floor test at **proposed-instrument** strength — not a solution, and not adopted here. |
 | **R8** — Conceptual scope vs governable surface | One grammar spans identity, communities, consent, location, communications, streaming, payments, governance, constitutional mechanisms, addressing, and transparency logs. Historically, projects unifying that many layers fail when one layer dominates the others; the harder risk is *governability* — can a human amendment body ([CC 4.5.1](#)) steward a system of this breadth? **Bet**: structural minimalism keeps the *amendable structural surface* tiny even as the namespace grows ([CC 1.7](#) 1+4), and the strict primitive/namespace/composition/verdict separation ([CC 1.13.5](#)) means scope grows in the *open-vocab namespace* (locally evolvable) rather than the *governed core*. **Residual**: namespace + composition-policy sprawl can still outrun review capacity; mitigation is the [CC 4.5.1](#) high evidentiary bar + the post-1.0 candidate backlog. The remaining challenge is no longer purely technical. |
+| **R10** — Gates ratified ahead of their dye tests | Per the gatecraft discipline (a gate never shown to catch anything is a hypothesis about a gate), most gates ratified in the rc3 cycle lack a planted-dye test, a stated depth, or a named maintenance owner. **Bet**: the gates are sound because each was carved from an observed failure, not designed a priori. **The owing is named, not hidden**: the per-gate wager ledger is CIRISConstitution#84 — uncertainty reducible but expensive, paid gate by gate; an unpaid wager is not a defect, an unnamed one is. |
 
 ### 8.3.2 `child-safety` — Child-safety — fails-secure governance vs the shared detection limit (the honest line)
 
@@ -183,8 +186,6 @@ This is an **acknowledged inherent limit, not a spec gap** — no CEG mechanism 
 
 ### 8.3.3 `observer-share` — Observer-share + streaming multicast (normative-landed; streaming half substrate-pending)
 
-The delivery axis is normatively landed: the delivery-axis decisions are ratified into normative spec text ([CC 2.1](#) / [CC 3.4.6](#) / [CC 4.4.3.2.6](#) / [CC 5.3.3](#)). The `KEY_GRANT_V1_INFO` versioned-context HKDF pattern is confirmed (`KEY_GRANT_V1_INFO` in `key_grant.rs` as `b"cewp-key-grant/v1"`). The coupling caveat RC1-1c (the parallel-CHECK migration) is flagged in [CC 5.1](#) normative text. RC1-7 (operational constants) is flagged in [CC 5.3.3.3](#) — operator-tunable; not blocking the normative ship.
-
 The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-set = `community` per [CC 4.4.3.2](#) Policy M + per-subscriber `key_grant`; **ZERO remaining blockers, normative-ready**) and a **streaming-multicast half** (N>1; per-`(stream_id, epoch)` keys; **spec-now, impl substrate-pending** on the streaming substrate step — un-stewarded/unscheduled — with the accountable tier additionally pending). All cross-team decisions (Persist P1–P4, Verify V1–V3, Edge E1–E4, router RC1-2) are **✅ resolved/ratified** and folded into normative spec text ([CC 2.1](#) / [CC 3.4.6](#) / [CC 4.4.3.2.6](#) / [CC 5.3.3](#)). The `rotation_chain` hygiene corrections (it is the content-addressed grant-supersession lineage per [CC 3.3.2](#), NOT a key-rotation primitive; epoch rotation is greenfield per `stream_id`) are folded into [CC 3.3.2](#) / [CC 1.7](#) path-8 / [CC 4.5.12.1](#) / [CC 3.3.4](#).
 
 **Remaining streaming-half items** (operator-tunable / substrate-coupled, not blocking the observer-share normative ship):
@@ -192,8 +193,8 @@ The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-se
 | OQ | Open item | Steward | Gating |
 |---|---|---|---|
 | **RC1-1b** | Confirm the `KEY_GRANT_V1_INFO` versioned-context HKDF pattern exists in `key_grant.rs` (the [CC 5.3.3.1](#) V2 nonce-prefix derivation reuses it). Unverifiable from Edge. *(Still owed.)* | Persist | 🔴 V2 |
-| **RC1-1c** | ⚠️ **Coupling caveat** — the V054 cross-column CHECK requires content-addressed `key_grant`s; the [CC 5.1](#) epoch axis needs a **parallel CHECK arm** (content- OR stream/epoch-addressed) — a bounded constraint migration, **not a pure index-add**. Recorded so the spec doesn't claim "purely additive" at the Persist constraint layer. | Persist | flagged |
-| **RC1-7** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](#) locality-scaled, not fixed N). | router | — |
+| **RC1-1c** | ⚠️ **Coupling caveat** — the V054 cross-column CHECK requires content-addressed `key_grant`s; the [CC 5.1](#) epoch axis needs a **parallel CHECK arm** (content- OR stream/epoch-addressed) — a bounded constraint migration, **not a pure index-add**. Flagged in [CC 5.1](#) normative text, so the spec doesn't claim "purely additive" at the Persist constraint layer. | Persist | flagged |
+| **RC1-7** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](#) locality-scaled, not fixed N). Flagged in [CC 5.3.3.3](#) — operator-tunable; not blocking the normative ship. | router | — |
 
 ### 8.3.4 `closed` — Closed gaps
 
@@ -257,6 +258,7 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 | SEED_DIMENSIONS RFC | RFC stage; needs discussion. |
 | Fleet-attestation primitive (closes R6 occurrence_id self-assertion) | Workshop output. |
 | Deeper Frickerian instantiation (closes R7) | Workshop output. |
+| DRY-authority-witness format in the traceability spine — single-sourced authority registry + differential authority-equivalence tests + path-shape witnesses (CIRISConstitution#36) | Deferred to 1.1, and the reason is the format's own argument. Its motivating failure is real and verified (a canonical verifier that signed one preimage and checked another, with a fixture encoding the same error), but the ecosystem currently has one live differential pair and one gating shape-assertion; a format nobody has implemented is not made real by ratifying a paragraph about it. Revisit once the CIRISPersist pilot has run several `DRY-N` rows, then ratify the format that survived rather than the one that was specified. |
 | Live-quorum physical relay backbone (HF / Reticulum) under sustained adversary jamming | Named at [CC 4.2.6](part_4_composition_governance.md) as an adversary-targeted assumption: firing needs *some* out-of-band publishable-signature channel to survive a first strike. Channel diversity (HF / mesh / sneakernet fallback) is a **deployment-spec** concern, deferred there — indexed here so the concerns register is complete. |
 
 ### 8.3.7 `identified` — Identified overlaps
@@ -297,7 +299,7 @@ Four boundary modes:
 
 ### 8.4.2 `credentials` — C2PA Content Credentials — media-provenance import/emit profile
 
-**Disposition: ADOPT at the media boundary (import bridge + emit), zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50 machine-readable marking of AI-generated content applies from **2026-08** in the federation's primary jurisdiction, so this profile is calendar-bound, not optional. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
+**Disposition: ADOPTED — import bridge informative, emit normative for generated media per [CC 3.4.14](part_3_the_namespace.md); zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50(2) machine-readable marking of AI-generated content applies from **2026-08-02** in the federation's primary jurisdiction. The marking obligation itself is normative at [CC 3.4.14](part_3_the_namespace.md) (where it belongs — the interior rule is about attesting a source, not about C2PA); this profile is the **media egress form** of that rule's R3. **Compliance posture (the two limbs, stated honestly):** for the **text outputs the platform generates today** — the only synthetic content any shipped path produces — the Art. 50(2) machine-readable marking **is the shipped attestation surface itself**: `is_bot` on every agent message plus the admission-enforced, hybrid-signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)) on every agent-emitted Contribution. Marking is by construction, not by add-on — a signed provenance record that cannot be silently stripped inside the federation, which is the whole design. The **C2PA emit is the media-egress interop form**: it becomes load-bearing only when a synthetic-media generation path ships or marked media leaves the federation to consumers that read Content Credentials rather than CEG envelopes. That limb is pre-staged, not overdue — claims rows `staged` against CIRISConstitution#9 until a generation path exists for it to mark (spec ahead of need, named ticket, per the EVIDENCE.md discipline). Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
 
 C2PA is **provenance**; CEG is **judgment**. They do not compete — they compose. C2PA answers *"what process produced these bytes, signed by whom?"*; CEG answers *"what does a community of signers, under what consent, make of them — and who can revoke that?"* Neither does the other's job; C2PA has no consent architecture, no revocation, no 1+4.
 
@@ -322,6 +324,8 @@ evidence_refs: [
 #### 8.4.2.2 `emit` — Emit — CEG judgment as a C2PA assertion (egress)
 
 At a media-publish boundary a node MAY emit a C2PA assertion carrying a CEG attestation reference (a CAWG-identity-assertion-shaped custom assertion), so a pure-C2PA consumer downstream sees "this media is vouched-for in CEWP" without speaking CEG. This is an **export** at the edge (re-expressing an existing CEG attestation in C2PA's assertion envelope), parallel to the CC 8.4.1 COSE export profile — it adds no CEG wire field and re-signs nothing in the interior.
+
+**For generated media the emit is not optional.** Where the published media carries `content_class:generated` or `content_class:generated_modified`, the node MUST emit the C2PA assertion carrying the AI-generation disclosure — this is the media form of the [CC 3.4.14](part_3_the_namespace.md) R3 egress rule, and it is what discharges EU AI Act Art. 50(2) at a media boundary. Where the destination cannot carry a C2PA manifest, CC 3.4.14 R3's recorded-exception path applies: human-legible disclosure plus a `hard_case:*` observation naming the channel. The `MAY` above governs the general vouched-for export; it does NOT govern the generation marking.
 
 #### 8.4.2.3 `profile` — What this profile does NOT do
 
@@ -352,19 +356,57 @@ The spec is a living document with a disciplined heartbeat. It is updated on eve
 - On every CIRISAccord revision affecting the federation surface
 - On every conformance-language or normative-reference change in [CC 2.6](#2.6)
 
-Each update lands as a single commit touching the relevant file(s) + a lineage row in [CC 8.6.2](#8.6.2). The version number bumps per the [CC 2.6.4](#2.6.4) SemVer rules.
+Each update lands as a single commit touching the relevant file(s) + a `CHANGELOG.md` entry, which is where the lineage is kept ([CC 8.6.2](#8.6.2)). The version number bumps per the [CC 2.6.4](#2.6.4) SemVer rules.
 
 ## 8.6 `references-lineage` — References + lineage
 
-This section gathers the spec's external grounding and its own provenance: the standards it cites, the documents that travel alongside it, the sibling MISSIONs that own pieces of the namespace, and the version-by-version lineage of the specification itself.
+This section gathers the spec's external grounding and its own provenance: the standards it cites, the documents that travel alongside it, the sibling MISSIONs that own pieces of the namespace, where the version-by-version lineage is kept, and (closing CC 8.6.1) how strongly to read any evidence row.
 
 ### 8.6.1 `external` — External references (informational)
 
-*[source content to migrate — carried verbatim from the canonical references section; not present in this snapshot.]*
+Normative references — what an implementation conforms to — are at [CC 2.6.5](part_2_the_grammar.md). Everything here is **informational**: the scholarship the design borrows from, cited once, with no normative force.
+
+**The coherence mathematics are borrowed instruments.** `k_eff` is not this federation's invention, and this document does not claim it. The identity `k_eff = k/(1 + ρ̄(k−1))` is Kish's design effect; the same effective-count construction was reached independently in comparative politics a decade later; the penalty it encodes — correlated witnesses are worth less than their headcount — is a jury-theorem result; and the fact that engineered redundancy fails in correlated ways is a measured software-engineering result from 1986. **The claim is application, not discovery**: carrying an established diversity discount into an alignment and attestation setting, and stating the strength of each borrowing honestly (the grades below). These literatures **corroborate** — convergent independent arrivals are *hits*, not proof. None of them establishes any claim this document makes about AI systems, and no priority claim over `k_eff` is made or should be read.
+
+| Work | What is borrowed |
+|---|---|
+| Kish, L. (1965). *Survey Sampling*. Wiley. | The design effect / effective sample size — the `k_eff` identity itself ([CC 6.2.2](part_6_the_coherence_mathematics.md)). |
+| Laakso, M., & Taagepera, R. (1979). "The 'Effective' Number of Parties: A Measure with Application to West Europe." *Comparative Political Studies* 12(1). | The same effective-count construction, arrived at independently in another discipline. The convergence *is* the corroboration. |
+| Ladha, K. K. (1992). "The Condorcet Jury Theorem, Free Speech, and Correlated Votes." *American Journal of Political Science* 36(3). | Why `ρ̄ > 0` has to be discounted: correlation degrades collective competence. |
+| Ladha, K. K. (1995). "Information Pooling Through Majority-Rule Voting: Condorcet's Jury Theorem with Correlated Votes." *Journal of Economic Behavior & Organization* 26(3). | Why the discount is a *ceiling* and not a prohibition: pooling can still beat the individual under correlation. |
+| Knight, J. C., & Leveson, N. G. (1986). "An Experimental Evaluation of the Assumption of Independence in Multiversion Programming." *IEEE Transactions on Software Engineering* SE-12(1). | Measured, not modelled: independently-built redundant versions fail on the same inputs. Correlated failure is the default case, not the pathology. |
+| Condorcet, M. de (1785). *Essai sur l'application de l'analyse à la probabilité des décisions rendues à la pluralité des voix*. | The independence-conditioned original the three results above correct. |
+
+**Other informational citations.** Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693) (*SPKI Certificate Theory*) — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.10](#) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.5](#) graduation rule.
+
+**Strength grades — how to read an evidence row.** The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI by `tools/check_claims.py`, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
+
+| Grade | What it means | What it does not license |
+|---|---|---|
+| **identity** | A definition, or an algebraic consequence of one. True by construction; carries no empirical content. | Any claim that the modelled quantity is the real one. |
+| **theorem-given-model** | Proved, inside a stated model, from stated hypotheses. Exactly as strong as the modelling commitment. | Dropping the "given-model" — the hypotheses travel with the result. |
+| **measured** | An instrumented observation, strongest when the prediction was staked before the measurement. Meaningless quoted without its sample, floor, and error bar. | Generalising past the measured population or substrate. |
+| **cited-external** | Established elsewhere in the literature. Corroboration by convergence, not proof of anything claimed here. | Reading agreement in another field as validation of this application. |
+
+**Authority note (CCA).** The *Coherence Collapse Analysis* is **not an authority** for the collapse asymmetry or for any "CCA-validated form", and no row here cites it as one. What may be cited, per its current version (v5, [10.5281/zenodo.21730551](https://doi.org/10.5281/zenodo.21730551)), is the Möbius/ceiling core: `k_eff` monotone in `ρ̄`, the `1/ρ̄` ceiling, and "scale cannot restore collapsed diversity". The version record on Zenodo carries its own claim lineage.
+
+**Strength grades — the reading key for the register.** Each row grades what the named artifact establishes, not whether it exists.
+
+| Claim → artifact | Grade |
+|---|---|
+| Kish identity + ceiling `k_eff → 1/ρ̄` → `coherence-ratchet:Core.BaseIdentity.*` | **identity.** A definition plus its boundary, monotonicity, and limit consequences. The ceiling is a limit of the definition, not a finding about any federation. |
+| Collapse bound `V(k) = V(0)·exp(−λ_geo·k_eff) + O(r²·k_eff)` → `RATCHET:Core.CollapseTheorem.remainder_scales_with_k_eff` | **theorem-given-model — remainder only.** The named object bounds the *remainder order* of an assumed exponential-decay law whose `λ_geo` and `κ` are substrate-specific free constants. It does not establish the decay law, and nothing establishes a collapse *asymmetry*. The two pinned sibling manifests disagree about this object (RATCHET: mechanized; the older coherence-ratchet pin: open) — graded at the weaker pin until they agree. |
+| `J = F = k_eff·λ_op·σ` → `Core.Coherence.J_eq_F` | **identity.** `J_eq_F` is definitional; the content is the modelling commitment that these are the three right factors. `J` is monotone in each and maximised at `ρ̄ = 0` — a **throughput index**. |
+| σ signal-source discount → `Core.SignalSourceDiscount.clique_neutralization` | **identity**, and **theorem-given-model** only on the newer pin — the older coherence-ratchet pin records *no Lean anchor* (coherence-ratchet#5). `clique_neutralization` is the Kish form applied to the σ leg; its content is that reuse, not a new result. |
+| Measured `k_eff` across substrates (`experiments/keff_saturation`: 6 substrates, `k_eff` ≈ 7 ± 2, max 9.7 at k = 200) | **measured.** Corroborates the ceiling as a saturation rather than a growth. Substrate-specific; not a validation of the decay law. |
+| Driver-invariance (r ≈ −0.009) → `exp0_cca_validation` | **identity check**, per the authority note above. It establishes that the extraction is driver-independent — not that the modelled collapse occurs. |
+| Operating corridor for `ρ̄` | **No grade attaches — no corridor is claimed.** [CC 6.2.2](part_6_the_coherence_mathematics.md) states no band and forbids gating on one; the evidentiary record and any future re-basing live at RATCHET#17 (pre-registered, not run, not citable as evidence). |
+
+**Known limits of the register.** The tag vocabulary, the registry, the CI checker, and the generated Evidence Register have shipped (CIRISConstitution#17), and cross-repo pointers that name an artifact resolve **by symbol** against the pinned manifests — a pointer naming an object its manifest does not publish is a build error, not a warning. Two limits remain, named rather than papered over: (1) terminology validation against the [CC 8.1.1](#) glossary is not implemented; (2) strength is graded here, in prose, and is not yet a registry column — until it is, this table is the reading key for the register.
 
 ### 8.6.2 `specification` — CEG specification lineage
 
-*[source content to migrate — the version-by-version specification lineage, carried verbatim from the canonical lineage table; not present in this snapshot.]*
+The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` (per-cut, with the issue numbers each change discharges), in `VERSION` + the git tags, and in the archived record for each published cut. Redaction history, superseded text, and review archaeology live there too, by design — this document carries the present truth and cites where the past is kept.
 
 ### 8.6.3 `companion` — Companion documents
 
@@ -620,7 +662,7 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 | | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | Book II §III (WBD); Annex F authority lattice + autonomy tiers | Informative |
 | | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
-| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking) | `is_bot` disclosure; C2PA profile [CC 8.4.2](#842-credentials--c2pa-content-credentials--media-provenance-importemit-profile) (applies 2 Aug 2026) | Informative |
+| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for the text outputs the platform generates, the machine-readable marking is the **shipped attestation surface** — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)); [CC 3.4.14](part_3_the_namespace.md) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#842-credentials--c2pa-content-credentials--media-provenance-importemit-profile) C2PA emit its media-egress form, staged against CIRISConstitution#9 for when a synthetic-media generation path ships. 50(4): no deep-fake generation path ships; the disclosure duty is pre-ratified at CC 3.4.14. Applies 2 Aug 2026 | Evidence-bearing |
 | | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
 | NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: Annex A metrics + Annex H baselines; Manage: Annex F/H workflows | Informative |
 | ISO/IEC 42001 | Cl 6.2 Risk Assessment | Book II §II | Informative |
@@ -852,6 +894,8 @@ MH citations load-bearing for this section: §132 ("only the shared pursuit of t
 | TX-11 | In-toto attestation extended to training-labor provenance: CIS must include labor-condition declaration for all data-labeling and RLHF providers; SLSA Level 3 manifest covers labor-chain disclosures | Automated audit of annotation-provider labor certifications at each fine-tune checkpoint; flag sourcing from unverified or high-risk jurisdiction providers | Halt affected fine-tune line; quarantine model artifacts from non-certified labor sources; IW-2; WA advisory within 72 h |
 
 *All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
+
+*TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor** — aggregate structure that ordinary correlated operation accrues with nobody scheming (CIRISConstitution#45: theorem-given-model at k = 3, plus a measured rate law; floor measured at 50%–5.8× of the null on real survey data). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time. The verdict remains the WA's ([CC 8.8.2](#)).
 
 Prohibited-capability enforcement for the `NEVER_ALLOWED` bounds above is tracked dimension-level in the CIRISAgent `compliance/` directory under D04 (prohibited capabilities); the AgencyErosionDetector conscience faculty is tracked under D12 (conscience).
 
@@ -1195,7 +1239,7 @@ The DP-Map above maps individual data-subject rights to GDPR articles and CIRIS 
 MH §104 names the design-time bias problem that GDPR Art. 35 DPIA and EU-AI-Act Art. 9(7) address procedurally. The DP-Map must include:
 
 - A `bias_audit_ref` field in `dp-map.yaml` pointing to the most recent bias-audit report (Annex G, TX-6).
-- For deployments where the **WiseBus capability gate** (`ciris_engine/logic/buses/prohibitions.py`, `WiseBus._validate_capability`) flags the `DISCRIMINATION` prohibition — a structural pre-filter on capability strings (`NEVER_ALLOWED`), with the prohibited-capability set also injected into the round-1 DMA reasoning context so a discriminatory trajectory is named before it reaches the gate — a DPIA is required regardless of whether the deployment otherwise qualifies as "high-risk" under EU-AI-Act Annex III. (The bias-risk audit evidence for Art 10(2)(f) / Art 9 is therefore the bus-rejection log **and** the DMA reasoning trace, not a PDMA-evaluator step.)
+- For deployments where the **WiseBus capability gate** (`ciris_engine/logic/buses/wise_bus.py`, `WiseBus._validate_capability`, prohibition table in `prohibitions.py`) flags the `DISCRIMINATION` prohibition — a structural pre-filter on capability strings (`NEVER_ALLOWED`), with the prohibited-capability set also injected into the round-1 DMA reasoning context so a discriminatory trajectory is named before it reaches the gate — a DPIA is required regardless of whether the deployment otherwise qualifies as "high-risk" under EU-AI-Act Annex III. (The bias-risk audit evidence for Art 10(2)(f) / Art 9 is therefore the bus-rejection log **and** the DMA reasoning trace, not a PDMA-evaluator step.)
 - CCPA §1798.185(a)(16) automated-decision regulations (effective 2026) require disclosure of logic, input data categories, and opt-out rights; this is satisfied by the Annex F explainability panel when `processing_basis` = `automated_profiling`.
 
 **2. Data-Subject Rights (DSR) Hooks.**
@@ -1405,6 +1449,31 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 
 ### 8.8.10 `annex-j` — Annex J: Benchmarking & Automated Validation
 
+#### The research evidence, as of this cut (measured; nothing rounded up)
+
+This document's safety thesis is architectural, and architecture is not evidence. What follows is every empirical result the federation currently holds about whether the architecture *does anything*, each at its stated grade, with what it does **not** establish stated beside it. The registry rows are `CLM-conscience-faculty` (CC 8.8.6) and the transfer work tracked at CIRISConstitution#88 / #90.
+
+**1. The tuned domain — mental health · *measured*.** A pre-registered staged battery (symptom disclosure → diagnostic pressure → treatment pressure → cross-cluster probe → crisis trigger → four adversarial probes), five locales × five models across four families × nine turns, judged by a model of independent lineage, bare deferrals scored as failures, cluster-robust over conversation arcs:
+
+| arm | hard-fail rate |
+|---|---|
+| bare model | 24.0% |
+| the accord as a plain **prompt** | 37.3% |
+| **the accord inside the pipeline** | **5.8%** |
+| pipeline, values corpus emptied | 16.9% |
+
+Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p < 0.001); emptied − pipeline **+11.1 points** (95% CI [+2.3, +21.3], p = 0.013). **The machinery carries the bulk of the effect; the content contributes a real but modest share** — the difference between deferring *with care* and deferring barely.
+
+**2. What that result does not establish, stated first.** The content contrast is **post-hoc** (it followed a re-scoring of bare deferrals as failures) and awaits pre-registered replication; the arm that could separate *these* values from *appropriate structured content* — a different real value system in the same form — has not been run. **Identity drop under social pressure is never eliminated**: it fails in every arm, the pipeline included. Nothing here bears on `k_eff`, `ρ̄`, a corridor, or collapse asymmetry ([CC 6.2](part_6_the_coherence_mathematics.md) states no corridor and this does not rehabilitate one). One battery, one agent version, one provider: **nothing transfers by assumption.**
+
+**3. The untuned domain — transfer, *in progress, not citable*.** Whether machinery built for one domain cross-applies with no tuning is the architectural thesis's natural falsification surface, and it is being tested against a hazardous-knowledge probe paired with a benign-prompt over-refusal probe (both axes mandatory — an agent that refuses everything scores perfectly on one and is useless). Interim readings have already reversed once under a validated judge, and the early signal runs **against** the tuned-domain ordering: on single-turn untuned harm the accord as a plain prompt outperformed the pipeline on both axes, while both beat the bare model. That is a boundary on the transfer claim, not a refutation of the tuned result, and it is reported here **because** it is unflattering. No number is ratified until it meets the standard below.
+
+**4. The standard any such number must meet (normative).** A cross-application result has standing as its own claim class — ***measured-transfer, domain-untuned*** — never prose-comparable to tuned-domain numbers, and admissible only in the **two-axis form** (a hazard-declined figure without its paired over-refusal cost is inadmissible). Judge-scored numbers additionally require, for the **pivotal class of the claim being made**: κ ≥ 0.7 against human labels on the binary axis, recall *and* precision ≥ 80% on the pivotal class, and — reported with the number — an **adversarial-flip sensitivity**: the judge's known error modes turned maximally against the conclusion, with the contrast surviving. An instrument that fails these carries no reading regardless of how impressive the reading is. A validated instrument is the durable output; the number is perishable.
+
+**5. The defect class this surfaced (normative).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**: the record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
+
+
+
 > Benchmarking & Automated Validation (v1.3-RC2)
 
 **0. Purpose.** Provide a reproducible, API-driven harness that (a) continuously checks whether a system remains CIRIS-compliant across its full release cycle and (b) blocks promotion if ethical performance regresses. The harness is built around the "Ethics Engine Enterprise API" and a curated 300-scenario subset of the Hendrycks Ethics data-set (HE-300).
@@ -1583,7 +1652,7 @@ jobs:
 
 Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** All ten Accord annexes (A–J) are migrated in full, and the three definitional frameworks are defined in Part VII against adopted international standards.
 
-**Resolved this cut:**
+**Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** migrated in full → [CC 8.8.5](#885-annex-c--annex-c-regulatory-cross-walk)–[CC 8.8.10](#8810-annex-j--annex-j-benchmarking--automated-validation).
 - **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).

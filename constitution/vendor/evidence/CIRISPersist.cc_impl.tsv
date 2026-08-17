@@ -1,0 +1,106 @@
+# CIRIS evidence registry — impl:CIRISPersist tier (CIRISConstitution#17 / CIRISPersist#519)
+# The sibling spec-map the Constitution's check_evidence.py resolves CIRISPersist#nsproc
+# pointers against: every path#symbol MUST resolve at the pinned crate version.
+# CODE-VERIFIED (the evidence_cc_impl_pointers_resolve witness re-checks every src/ row);
+# materialized from namespace_supersets.json evidence_export[CIRISPersist] (v0.3.0) with
+# post-cut symbol renames applied + non-resolving (edge-proposed/misattributed) rows dropped.
+# persist's half of the #519 item-6 field_processor_matrix → CLM-nsproc citation loop.
+# Columns: decimal_id, claim_id, repo, path#symbol, crate@version
+decimal_id	claim_id	repo	path#symbol	crate@version
+3.1.1	CLM-nsproc-family-roster-membership-change-via-entr-accord	CIRISPersist	ciris-verify-core/src/accord_genesis.rs#build_accord_family_envelope	ciris-persist@31.0.0
+3.1.1	CLM-nsproc-holds-bytes-agent-files-kind-platform-or-target	CIRISPersist	src/federation/blobs.rs#holds_bytes_attestation_envelope	ciris-persist@36.1.0
+3.1.1	CLM-nsproc-kind-open-vocab-registration-collision-g-agent-files-kind-platform-or-target	CIRISPersist	src/federation/schema_resolver.rs#BlobBackedSchemaResolver	ciris-persist@36.1.0
+3.1.2	CLM-nsproc-witness-key-id-transparency-log-cosigned-tree-size	CIRISPersist	src/federation/admission.rs#default_reserved_prefix_rules	ciris-persist@36.1.0
+3.1.2	CLM-nsproc-restrictions-attestation-license-validity	CIRISPersist	src/federation/consent_grammar.rs#RestrictionOp::StripField	ciris-persist@36.1.0
+3.1.2	CLM-nsproc-cosign-transparency-log-cosigned-tree-size	CIRISPersist	src/federation/operational.rs#check_skew_bound	ciris-persist@36.1.0
+3.1.2	CLM-nsproc-cosignature-transparency-log-cosigned-tree-size	CIRISPersist	src/federation/tier_ingest.rs#verify_federation_tier_ingest	ciris-persist@36.1.0
+3.1.5	CLM-nsproc-manifest-schema-trace-manifest	CIRISPersist	src/federation/admission.rs#check_trace_dimension_admission	ciris-persist@36.1.0
+3.1.5	CLM-nsproc-trace-xor-manifest-shape-trace-manifest	CIRISPersist	src/federation/admission.rs#check_trace_dimension_admission	ciris-persist@36.1.0
+3.1.5	CLM-nsproc-cohort-scope-trace-manifest	CIRISPersist	src/federation/types.rs#LocalAttestationInput	ciris-persist@36.1.0
+3.1.5.1	CLM-nsproc-raw-chain-of-thought-dma-csdma	CIRISPersist	src/federation/schema_resolver.rs#BlobBackedSchemaResolver	ciris-persist@36.1.0
+3.1.8	CLM-nsproc-cohort-operational-definition-calibratio-manifold-conformity-cohort	CIRISPersist	signing/event.rs#CohortDelineation	ciris-persist@31.0.0
+3.1.8.2	CLM-nsproc-lens-core-version-detection-intra-agent-consistency	CIRISPersist	src/derived/types.rs#DetectionEvent	ciris-persist@36.1.0
+3.1.8.5	CLM-nsproc-cross-attestation-prefix-distinctness-detection-distributive-access-resource-t	CIRISPersist	src/federation/admission.rs#default_reserved_prefix_rules	ciris-persist@36.1.0
+3.1.9.2	CLM-nsproc-community-id-moderation-allegation-type	CIRISPersist	src/federation/admission.rs#check_delegated_duty_scores_admission	ciris-persist@36.1.0
+3.1.9.2	CLM-nsproc-community-id-reconsideration-grounds	CIRISPersist	src/federation/admission.rs#named_moderator_holders	ciris-persist@36.1.0
+3.1.9.4	CLM-nsproc-kind-kind-discriminator-hard-case-kind	CIRISPersist	src/federation/admission.rs#check_reserved_prefix_admission	ciris-persist@36.1.0
+3.1.9.7	CLM-nsproc-meta-goal-alignment-goal-scale	CIRISPersist	src/federation/goal.rs#Goal::new	ciris-persist@36.1.0
+3.1.9.7	CLM-nsproc-goal-scope-goal-scale	CIRISPersist	src/federation/goal.rs#GoalScope	ciris-persist@36.1.0
+3.2	CLM-nsproc-delegated-scope-ownership	CIRISPersist	src/federation/admission.rs#check_node_agency_admission	ciris-persist@36.1.0
+3.2	CLM-nsproc-attested-key-id-ownership	CIRISPersist	src/federation/admission.rs#check_single_node_owner_admission	ciris-persist@36.1.0
+3.2	CLM-nsproc-delegation-valid-until-ownership	CIRISPersist	src/federation/admission.rs#delegation_valid_until_lapsed	ciris-persist@36.1.0
+3.2	CLM-nsproc-delegation-purpose-ownership	CIRISPersist	src/federation/admission.rs#is_owner_binding_envelope	ciris-persist@36.1.0
+3.2	CLM-nsproc-pre-rotation-commitment-trust	CIRISPersist	src/federation/trust_root.rs#check_trust_charter_admission	ciris-persist@36.1.0
+3.2	CLM-nsproc-halt-latched-trust	CIRISPersist	src/federation/trust_root.rs#trust_root_valid	ciris-persist@36.1.0
+3.2	CLM-trust-not-membership	CIRISPersist	src/federation/admission.rs#check_user_target_steward_binding_admission	ciris-persist@36.1.0
+3.2	CLM-nsproc-steward-bound-predicate-trust	CIRISPersist	src/federation/admission.rs#is_steward_bound	ciris-persist@36.1.0
+3.2	CLM-nsproc-steward-bindings-read-fold-trust	CIRISPersist	src/engine.rs#steward_bindings_of	ciris-persist@36.1.0
+3.3.1	CLM-nsproc-subject-key-ids-consent	CIRISPersist	src/federation/admission.rs#resolve_withdraws_admission_rule	ciris-persist@36.1.0
+3.3.1	CLM-nsproc-dimension-consent	CIRISPersist	src/federation/consent.rs#consent_state_of	ciris-persist@36.1.0
+3.3.1	CLM-nsproc-attestation-prefixes-consent	CIRISPersist	src/federation/consent_grammar.rs#parse_grant_payload	ciris-persist@36.1.0
+3.3.1	CLM-nsproc-restrictions-op-strip-field-consent	CIRISPersist	src/federation/consent_grammar.rs#strip_field	ciris-persist@36.1.0
+3.3.1	CLM-nsproc-tier-consent	CIRISPersist	src/federation/mod.rs#list_consent_revocation_promotion_overdue	ciris-persist@36.1.0
+3.3.1	CLM-nsproc-deletion-sla-consent	CIRISPersist	src/federation/mod.rs#run_consent_sla_watch	ciris-persist@36.1.0
+3.3.7	CLM-nsproc-attestation-prefixes-scores	CIRISPersist	src/federation/consent_grammar.rs#covers	ciris-persist@36.1.0
+3.4.12	CLM-nsproc-attester-independence-capacity-assurance	CIRISPersist	src/federation/admission.rs#check_adult_incapacity_binding	ciris-persist@36.1.0
+3.4.12	CLM-nsproc-valid-until-capacity-assurance	CIRISPersist	src/federation/admission.rs#check_adult_incapacity_binding	ciris-persist@36.1.0
+3.4.12	CLM-nsproc-attestation-type-capacity-assurance	CIRISPersist	src/federation/admission.rs#default_reserved_prefix_rules	ciris-persist@36.1.0
+3.4.12	CLM-nsproc-scope-domain-subset-capacity-assurance	CIRISPersist	src/federation/capacity.rs#is_protected_domain	ciris-persist@36.1.0
+3.4.11	CLM-nsproc-age-band-resolution-child-protection	CIRISPersist	src/engine.rs#age_band	ciris-persist@36.1.0
+3.4.13	CLM-child-protection	CIRISPersist	src/federation/age.rs#is_minor	ciris-persist@36.1.0
+3.4.13	CLM-nsproc-age-band-one-way-coarsening-child-protection	CIRISPersist	src/federation/age.rs#coarsen	ciris-persist@36.1.0
+4.5.8.3	CLM-nsproc-attestation-prefixes-trace-summary	CIRISPersist	src/federation/consent_grammar.rs#covers	ciris-persist@36.1.0
+4.5.8.3	CLM-nsproc-agent-key-id-trace-summary	CIRISPersist	src/store/sqlite.rs#list_trace_summaries	ciris-persist@36.1.0
+4.5.8.3	CLM-nsproc-extraction-manifest-hash-trace-summary	CIRISPersist	src/trace_summary_contract.rs#extraction_manifest_sha256	ciris-persist@36.1.0
+5.3.2.4	CLM-nsproc-restrictions-op-strip-field-trace	CIRISPersist	src/federation/consent_grammar.rs#strip_field	ciris-persist@36.1.0
+5.3.2.4	CLM-nsproc-cohort-scope-trace	CIRISPersist	src/engine.rs#Engine::promote_consented_backlog	ciris-persist@36.1.0
+5.3.2.4	CLM-nsproc-dimension-trace	CIRISPersist	src/federation/admission.rs#check_trace_dimension_admission	ciris-persist@36.1.0
+5.3.2.4	CLM-nsproc-subject-key-ids-trace	CIRISPersist	src/federation/admission.rs#check_trace_dimension_admission	ciris-persist@36.1.0
+
+# ── UNASSIGNED — awaiting a CC decimal ───────────────────────────────────────
+# v25.1.0 (CIRISPersist#577 follow-up) — adopted from CIRISVerify's registry
+# (CIRISVerify#233), which shipped this section first and was right to.
+#
+# Shipped, tested persist surface with NO CC identifier yet. Listed here so the
+# Constitution can issue decimals against real implementations rather than
+# against a proposal — the direction that matches how every one of these was
+# actually built (persist implements, CC ratifies, and the RC3 batch #46/#47/
+# #48/#49/#67 is that loop running).
+#
+# The decimal column carries `—`, which is CC check_claims.py's documented skip
+# sentinel (`if not dec or dec == "—": continue`). The literal string
+# "UNASSIGNED" there would be neither empty nor `—`, so the checker would add
+# it to the backed-DECIMAL set — registering a fake identifier. The
+# awaiting-assignment marker therefore rides the CLM name instead, where it
+# cannot be mistaken for a CC decimal.
+#
+# These cannot rot while they wait: persist's OWN resolver
+# (`evidence_cc_impl_pointers_resolve`) requires a definition for every src/
+# row regardless of decimal, so a rename fails our build even before CC sees
+# it. Proposed CLM names are suggestions, not claims.
+3.2	CLM-conferral-plane-named	CIRISPersist	src/federation/trust_root.rs#ConferralPlane	ciris-persist@36.1.0
+3.2	CLM-drill-freshness-signal-not-gate	CIRISPersist	src/federation/trust_root.rs#DrillFreshness	ciris-persist@36.1.0
+3.2	CLM-transit-eligibility-shared-root	CIRISPersist	src/federation/trust_root.rs#resolve_transit_eligibility	ciris-persist@36.1.0
+3.4.7	CLM-key-refusal-names-its-branch	CIRISPersist	src/federation/register.rs#KeyRefusalReason	ciris-persist@36.1.0
+6.1.5.2	CLM-quota-refusal-names-its-budget	CIRISPersist	src/federation/replication/admission.rs#PeerQuotaRefusal	ciris-persist@36.1.0
+6.1.5	CLM-load-bearing-reachability	CIRISPersist	src/federation/load_bearing.rs#is_load_bearing	ciris-persist@36.1.0
+3.3.1	CLM-deletion-window	CIRISPersist	src/federation/deletion_window.rs#run_deletion_window_watch	ciris-persist@36.1.0
+3.1.9.2	CLM-reverse-quorum-objection	CIRISPersist	src/federation/reverse_quorum.rs#record_objection	ciris-persist@36.1.0
+3.1.9.2	CLM-reverse-quorum-dismissal	CIRISPersist	src/federation/reverse_quorum.rs#record_objection_dismissal	ciris-persist@36.1.0
+3.4.5	CLM-capacity-consent-gate	CIRISPersist	src/federation/admission.rs#check_capacity_consent_admission	ciris-persist@36.1.0
+2.6.1.3	CLM-envelope-size	CIRISPersist	src/federation/admission.rs#check_envelope_size_admission	ciris-persist@36.1.0
+3.4.7	CLM-peer-deadmission-revocable	CIRISPersist	src/federation/admission.rs#check_peer_deadmission	ciris-persist@36.1.0
+3.1.9.4	CLM-wa-adjudication-family	CIRISPersist	src/federation/ownership_reclaim.rs#build_reclaim_petition_envelope	ciris-persist@36.1.0
+4.2.6	CLM-wa-quorum-re-derived	CIRISPersist	src/federation/ownership_reclaim.rs#wa_quorum_over_body	ciris-persist@36.1.0
+3.2	CLM-reclaim-authority-fails-closed	CIRISPersist	src/federation/ownership_reclaim.rs#ReclaimPolicy::from_deployment_pin	ciris-persist@36.1.0
+3.1.9.2	CLM-quarantine-marker-not-command	CIRISPersist	src/federation/quarantine.rs#fold_quarantine	ciris-persist@36.1.0
+3.1.9.2	CLM-quarantine-serve-consult	CIRISPersist	src/federation/quarantine.rs#filter_withheld_rows	ciris-persist@36.1.0
+4.5.5	CLM-slash-duty-scope	CIRISPersist	src/federation/admission.rs#check_delegated_duty_scores_admission	ciris-persist@36.1.0
+3.1.9.4	CLM-admin-action-attributed	CIRISPersist	src/federation/hard_case.rs#check_admin_action_attribution	ciris-persist@36.1.0
+2.4.1.1	CLM-revoked-after	CIRISPersist	src/federation/register.rs#check_revocation_bound	ciris-persist@36.1.0
+3.1.7	CLM-private-use-never-federates	CIRISPersist	src/federation/admission.rs#check_private_use_not_federatable	ciris-persist@36.1.0
+4.5.4	CLM-promotion-cohort-standing	CIRISPersist	src/federation/admission.rs#check_promotion_cohort_standing	ciris-persist@36.1.0
+3.1.7	CLM-persist-ruled-family-inventory	CIRISPersist	src/federation/family_rules.rs#persist_ruled_prefixes	ciris-persist@36.1.0
+3.1.7	CLM-rule-not-on-the-row	CIRISPersist	src/federation/family_rules.rs#rule_not_on_the_row_for	ciris-persist@36.1.0
+3.1.7	CLM-absence-claims-still-hold	CIRISPersist	src/federation/namespace/supersets.rs#manifest_absence_claims	ciris-persist@36.1.0
+4.5.1.1	CLM-ci-axis	CIRISPersist	src/federation/namespace/supersets.rs#fusion_classification	ciris-persist@36.1.0

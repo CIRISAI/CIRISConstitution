@@ -1,10 +1,18 @@
 name: consistency
 
-# RC2 "spec as executable infrastructure": every push/PR is gated on the evidence
-# registry + dual-ID spine staying consistent with the prose. A dead in-repo
-# evidence pointer, a bad section address, or a prose section missing from the
-# dual-ID spine fails the build. Cross-repo evidence pointers warn (they resolve
-# against the pinned sibling manifests) but do not fail.
+# "Spec as executable infrastructure": every push/PR is gated on the evidence
+# registry + dual-ID spine staying consistent with the prose. Hard errors: a dead
+# in-repo pointer; a bad section address; a prose section missing from the dual-ID
+# spine; a semantic-id that disagrees with its prose heading; a cross-repo pointer
+# naming an artifact the pinned manifest does NOT publish; and a status its own
+# evidence cannot support (`established` without a resolvable artifact, `normative`
+# with one).
+#
+# A cross-repo pointer whose pinned manifest simply does not reach that section yet
+# still warns rather than fails — pending is not dead.
+#
+# Coverage is reported as sections backed by RESOLVABLE evidence, never as sections
+# that merely carry a row. Those are different numbers and the gap is the point.
 
 on:
   push:
@@ -21,3 +29,7 @@ jobs:
           python-version: '3.12'
       - name: Evidence registry + toc/prose drift + normative coverage
         run: python3 tools/check_claims.py
+      - name: Namespace registry is regenerated (no drift)
+        run: |
+          python3 tools/build_cc_namespace.py
+          git diff --exit-code manifests/

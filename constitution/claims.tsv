@@ -1,53 +1,65 @@
 claim_id	decimal_id	summary	evidence	status
 CLM-math-kish	6.2.2	Kish identity k_eff = k/(1+ρ̄(k−1)); ceiling k_eff→1/ρ̄	lean:coherence-ratchet:Core.BaseIdentity	established
-CLM-math-collapse	6.2.1	Collapse theorem V(k)=V(0)·exp(−λ_geo·k_eff)+O(r²·k_eff); remainder mechanized (crossover dissolved)	lean:coherence-ratchet:Core.CollapseTheorem.remainder_scales_with_k_eff bench:RATCHET#8	established
-CLM-math-JF	6.2.4	J = F = k_eff·λ_op·σ (defense and flourishing are one geometry)	lean:coherence-ratchet:Core.Corridor	established
-CLM-sigma-semigroup	6.2.3	σ exp-decay semigroup + step-invariance; linear form withdrawn	test:CIRISConformance#57 staged:CIRISServer#155	staged
+CLM-math-collapse	6.2.1	Remainder bound only: O(r²·k_eff) remainder of an ASSUMED decay law with substrate-specific free constants λ_geo, κ. Does not establish the decay law; nothing establishes the collapse asymmetry	lean:coherence-ratchet:Core.CollapseTheorem.remainder_scales_with_k_eff bench:RATCHET#8	established
+CLM-math-JF	6.2.4	J = F identity (rfl): the two expressions co-denote. Certifies co-denotation only — NOT that the expression measures deterrence or flourishing	lean:coherence-ratchet:Core.Coherence.J_eq_F	established
+CLM-sigma-semigroup	6.2.3	Event-time group-share σ rule: σ(t)=Σ_g (Signal_eff,g/n_g)·Σ w_i·exp(−d(t−t_i)); per-signal Signal_eff multiplication is non-conformant (violates clique_neutralization); the recurrence is an end-of-interval consequence, not the rule; linear decay is non-conformant	lean:coherence-ratchet:Core.Coherence.sigma_decay_semigroup test:CIRISConformance#57 staged:CIRISServer#155	established
 CLM-sigma-attest	6.2.3.1	σ-attestation: unattested/free-gratitude signals carry w=0	staged:CIRISServer#155	staged
-CLM-sigma-srccorr	6.2.3.1	σ signal-source Kish discount Signal_eff = n_src/(1+ρ̄_src(n_src−1)); clique neutralized at ρ̄_src=1	lean:coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization	staged
+CLM-sigma-srccorr	6.2.3.1	σ signal-source Kish discount Signal_eff = n_src/(1+ρ̄_src(n_src−1)); clique neutralized at ρ̄_src=1	lean:coherence-ratchet:Core.SignalSourceDiscount.clique_neutralization	established
 CLM-noise-classify	6.1.2	Noise-floor classification Full/Partial/EnvelopeOnly by procedure (R,ε)	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
 CLM-noise-N5	6.1.5	N5: revocation forces descent below floor regardless of rarity	test:CIRISConformance#test_540_noise_floor impl:CIRISServer#155	established
 CLM-noise-ejection	6.1.2.3	EjectionVerdict routing (Keep/EjectToTier/AggregatedTierOnly/HardDelete)	test:CIRISConformance#test_541_ejection_routing impl:CIRISServer#155	established
-CLM-noise-dominance	6.1.2	Aggregation-erasure conditional on source-diversity gate (R9)	open:CIRISConstitution#6 test:CIRISConformance#55	open
+CLM-noise-dominance	6.1.2	Aggregation-erasure conditional on the source-diversity gates (mass + multiplicity), enforced at admission	test:CIRISConformance#test_542_dominance_gate impl:CIRISServer#155	established
+CLM-neff-dominance-gate	6.1.2.1.2	Signed n_eff (Kish) + pinned min_ratio=0.5 mass-dominance gate; below-version tiers fail closed at admission	test:CIRISConformance#test_542_dominance_gate impl:CIRISServer#155	established
+CLM-multiplicity-gate	6.1.2.1.2	v3 R9 multiplicity gate: pinned integer-L1 metric/0.950/connected-component/n_min=2 + mass_commitment auditability; version<3 inadmissible (flag-day)	impl:CIRISServer#155 test:CIRISConformance#test_542_dominance_gate	established
 CLM-storage-budget	6.1.5.2	StorageBudgetV1 per-cohort_scope owner budget (PIN-NORMATIVE, self/family suppressed)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
 CLM-storage-want	6.1.5.2	CorpusWantV1 want/have + size cap (wanted-then-pulled)	test:CIRISConformance#test_530_storage_contention staged:CIRISPersist#356	established
-CLM-freeze-57	6.1.4	#57 freeze-gate byte-exact conformance vectors for CC 6.1 shapes	test:CIRISConformance#59	staged
-CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/prohibitions.py#_validate_capability staged:CIRISAgent#910	established
-CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/dma/pdma.py	established
+CLM-freeze-57	6.1.4	#57 freeze-gate byte-exact conformance vectors for CC 6.1 shapes	test:CIRISConformance#59	established
+CLM-discrimination-gate	8.8.9	DISCRIMINATION enforced at the WiseBus capability gate (NEVER_ALLOWED) for requests carrying a capability (a request without one bypasses the gate — hasattr guard) + round-1 DMA context	impl:CIRISAgent/ciris_engine/logic/buses/wise_bus.py#WiseBus._validate_capability	established
+CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (not MUST-abort)	impl:CIRISAgent/ciris_engine/logic/conscience/core.py#OptimizationVetoConscience.check	established
 CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	established
-CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	staged
+CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	established
 CLM-migration-fidelity	corpus	Source-fidelity migration validated (0 REJECT) under the skeptical rubric	test:@validation/results.csv	established
-CLM-child-protection	3.4.13	Seven child-protection rulings (fail-secure minor-stewardship, consent gating)	staged:CIRISServer#155 test:CIRISConformance#59	established
-CLM-trust-not-membership	3.2	Trust ≠ membership; default-not-forced-root; steward-binding admission	staged:CIRISServer#155	staged
+CLM-child-protection	3.4.13	Seven child-protection rulings (fail-secure minor-stewardship, consent gating); conformance vectors superseded by the #87 narrowing — awaiting the substrate age-plane witness	impl:CIRISPersist/src/federation/age.rs#is_minor	established
+CLM-covenant-identity	1.15.5	RECOGNITION-GRADE, non-normative: covenant identity described as keys + maintained memory lineage + conduct record. No lineage-inheritance binding is stated; the wire-level design (lineage extent, conduct-record portability, keys-per-owner) is tracked at CIRISConstitution#49	staged:CIRISConstitution#71	staged
+CLM-registry-of-record	3.1.7	Family/component counts are generated, not asserted: manifests/namespace_registry.json is the registry of record and registration means a CC 3.1 row	impl:@manifests/namespace_registry.json	established
+CLM-capacity-composite	3.1.8.1	C_CIRIS = min(C, I_int, R, I_inc, S); a product form is non-conformant (sign-cancelling: an even number of negative factors scores positive, inverting the anti-Goodhart rationale); a missing factor is undefined, not zero	staged:CIRISConstitution#50	staged
+CLM-goal-id	3.1.9.7	goal_id is an object identifier, never a scale token; goal:{scale} (belonging) and cohort_scope (privacy/routing) are different axes; {scale} stays at 7 tokens	staged:CIRISConstitution#43	staged
+CLM-deletion-window	3.3.1	hard_case:deletion_window_breach is substrate-observed EVIDENCE, never a slashing verdict; deletion proof = withdrawn/superseded/hard-deleted before the deadline; no affirmative deletion_proof artifact (a producer could emit one while retaining the bytes)	impl:CIRISPersist/src/federation/deletion_window.rs#run_deletion_window_watch	established
+CLM-accord-reach	4.2.1	Halt binds exactly the live delegates_to(user->accord) set pinned at asserted_at; exit is prospective, not retroactive; pre-committed powers only; the enumeration admits the canonical-conferral co-scrub so root-minting is not forbidden by the clause it depends on	staged:CIRISConstitution#40	staged
+CLM-wa-symmetry	4.3	Wise Authorities wear the same banded signals as everyone else: liveness on the presence/absence pattern with deferral re-routing, published conduct composing to a WA record, readable at the same grain as accord and moderator standing	staged:CIRISConstitution#71	staged
+CLM-trust-root	4.4.3.8	Pluggable trust root: self-root base, attenuation-bound charter, un-trust as one deletable acceptance edge with downstream failing closed emergently, fail-closed capability gate, ceremony-vs-delegation conferral planes, genesis scoped honestly to tamper-evident	staged:CIRISConstitution#40	staged
+CLM-synthesis-disclosure	3.4.14	Machine-generation marking is mandatory: content_class:generated/generated_modified universal, agent-attester identity_type binding, egress re-expression, assistive carve-out, generator-is-duty-holder	staged:CIRISConstitution#9	staged
+CLM-c2pa-emit	8.4.2.2	C2PA emit is normative for generated media (the CC 3.4.14 R3 media-egress form); recorded-exception path where the destination cannot carry a manifest	staged:CIRISConstitution#9	staged
+CLM-trust-not-membership	3.2	Trust ≠ membership; default-not-forced-root; steward-binding admission (post-#87: owner-binding edges only)	impl:CIRISPersist/src/federation/admission.rs#check_user_target_steward_binding_admission	established
 CLM-adult-incapacity	3.4.12	Adult-incapacity stewardship (capacity-assurance, prior-will-first, fail-to-liberty auto-restore)	staged:CIRISServer#155	staged
 CLM-age-assurance	3.4.11	Verified-rung age assurance + minor-steward binding	staged:CIRISServer#155	staged
-CLM-structural-invisibility	5.2	self/family content is structurally invisible — never federates (wire-enforced)	test:CIRISConformance#59 staged:CIRISServer#155	staged
+CLM-structural-invisibility	5.2	self/family content is structurally invisible — never federates (wire-enforced)	test:CIRISConformance#59 staged:CIRISServer#155	established
 CLM-epoch-keying	5.1	Epoch keying + cascade (forward-secure content transport)	staged:CIRISServer#155	staged
-CLM-revocation-promotion	5.3.2.2	Subject revocation never rests local; 24h federation-tier promotion SLA	staged:CIRISServer#155	staged
-CLM-fragmentation	5.4.3	Content-fragmentation wire discipline (scope-privacy transport)	test:CIRISConformance#59	staged
+CLM-revocation-promotion	5.3.2.2	Subject revocation never rests local; 24h federation-tier promotion SLA	test:CIRISConformance#test_574_revocation_promotion staged:CIRISServer#155	established
+CLM-fragmentation	5.4.3	Content-fragmentation wire discipline (scope-privacy transport)	test:CIRISConformance#59	established
 CLM-wholeness-witness	6.1.1	WholenessWitness divergence detection (Merkle construction, WW-1..3, N3/N4 equivocation)	test:CIRISConformance#59 staged:CIRISServer#155	staged
-CLM-canonicalization-boundary	6.1.3	CC 6.1 binary preimage discipline — length-prefixed/domain-separated, never JCS, never 1+4	test:CIRISConformance#59	staged
-CLM-billing-offwire	3.3.9	Billing/settlement is off-wire; value transfer rides external rails	normative-only:—	established
-CLM-meta-goal	1.1	M-1 (sustainable adaptive coherence) is the single apex every mechanism serves	normative-only:—	established
+CLM-canonicalization-boundary	6.1.3	CC 6.1 binary preimage discipline — length-prefixed/domain-separated, never JCS, never 1+4	test:CIRISConformance#59	established
+CLM-billing-offwire	3.3.9	Billing/settlement is off-wire; value transfer rides external rails	normative-only:—	normative
+CLM-meta-goal	1.1	M-1 (sustainable adaptive coherence) is the single apex every mechanism serves	normative-only:—	normative
 CLM-wbd	1.9	Wisdom-Based Deferral: halt/escalate rather than guess beyond competence	impl:CIRISAgent#911	established
-CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-6)	normative-only:—	established
-CLM-entrenchment	4.5.1.2	Entrenchment: CC 4.2 / 4.5.1 / 1.2 need a MAJOR bump + dedicated accord ratification	normative-only:—	established
+CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-6)	normative-only:—	normative
+CLM-entrenchment	4.5.1.2	Entrenchment: CC 4.2 / 4.5.1 / 1.2 need a MAJOR bump + dedicated accord ratification	normative-only:—	normative
 CLM-halt-authority	4.2	HUMANITY_ACCORD constitutional halt layer — wire- and scope-isolated	staged:CIRISServer#155	staged
 CLM-wire-vocabulary	8.8	Two-tier wire-vocabulary governance; hash-pinned manifest registry	test:@manifests/WIRE_VOCABULARY.md	established
 CLM-noise-descent	6.1.2	One retirement operator: revocation/eviction/aging as pressure-driven descent	impl:CIRISServer#155	established
 CLM-admission	1.2	The four-test prefix-admission gate	staged:CIRISServer#155	staged
-CLM-adversary	1.13.3	Adversary model & privacy non-goals (normative)	normative-only:—	established
-CLM-adversary-classes	1.13.3.3	Adversary classes (and where each is / is not addressed)	normative-only:—	established
+CLM-adversary	1.13.3	Adversary model & privacy non-goals (normative)	normative-only:—	normative
+CLM-adversary-classes	1.13.3.3	Adversary classes (and where each is / is not addressed)	normative-only:—	normative
 CLM-forward-compatibility	2.1.1	Forward-compatibility rule	test:CIRISConformance#59 impl:CIRISServer#155	established
-CLM-conformance	2.2	Conformance levels	test:CIRISConformance#59 impl:CIRISServer#155	staged
-CLM-subject_kind-subject-2	2.3.1	Subject-bearing dimensions (governance requirement)	test:CIRISConformance#59 impl:CIRISServer#155	established
-CLM-registry-canonical	2.3.2.1	Canonical-hash wire form + preimage convention	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-conformance	2.2	Conformance levels	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-subject_kind-subject-2	2.3.1	Subject-bearing dimensions (governance requirement)	test:CIRISConformance#59 impl:CIRISServer#155	staged
+CLM-registry-canonical	2.3.2.1	Canonical-hash wire form + preimage convention	test:CIRISConformance#59 impl:CIRISServer#155	staged
 CLM-withdraws	2.4.1.1	`withdraws` admission rule (semantic, not structural)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-round-trip	2.6.1.1	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-canonicalization-array	2.6.1.1.1	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-per-field	2.6.1.2	Per-field encoding table (informational)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-canonical	2.6.1.3	Canonical encoding format (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
-CLM-worked	2.6.1.4	Worked attack the rule closes	test:CIRISConformance#59 impl:CIRISServer#155	staged
+CLM-worked	2.6.1.4	Worked attack the rule closes	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-canonicalization	2.6.2	Date-time canonicalization	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-canonicalization-hexadecimal	2.6.3	Hexadecimal canonicalization	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-policy-versioning	2.6.4	Versioning policy	test:CIRISConformance#59 impl:CIRISServer#155	established
@@ -73,47 +85,48 @@ CLM-accord-reservation	3.4.1	The `accord:*` reservation	impl:CIRISServer#155	est
 CLM-community-location	3.4.2	Community + location-event reservations (CEG 0.8 addition)	impl:CIRISServer#155	established
 CLM-system	3.4.3	Substrate-self-report reservations (`system:*`)	impl:CIRISServer#155	established
 CLM-family-self	3.4.4	Self/family membership-event reservations (CEG 0.7 addition)	impl:CIRISServer#155	established
-CLM-capacity-score	3.4.5	Capacity-Score self-emission rejection	impl:CIRISServer#155	established
-CLM-reservation-delivery	3.4.6	Delivery-receipt reservation (CEG 0.10 addition)	impl:CIRISServer#155	established
+CLM-capacity-score	3.4.5	Self-emission polarity: capacity:* anti-self (attesting_key_id MUST NOT equal attested_key_id) plus the per-family emitter-class table. The read boundary is reserved design space (CIRISConstitution#49)	impl:CIRISServer#155	established
+CLM-capacity-consent-gate	3.4.5	Consent-before-scoring (ratified): federation-tier capacity:* admission requires the subject's live consent:scope:analyze grant, community-addressed; role-gated abuse-response families exempt; 14 verify families dispositioned not-consent-gated	impl:CIRISPersist/src/federation/admission.rs#check_capacity_consent_admission	established
+CLM-reservation-delivery	3.4.6	Delivery-receipt reservation (CEG 0.10 addition)	impl:CIRISServer#155	staged
 CLM-enforcement	3.4.7	The enforcement rule (normative)	impl:CIRISServer#155	established
 CLM-identity-set	3.4.7.1	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	impl:CIRISServer#155	established
 CLM-consent-counter	3.4.7.2	`consent_role` — the Counter-RII consent gate (1.0-RC4, ratifies Accord §RC / CIRISAgent#760 OQ-1/2/3)	impl:CIRISServer#155	established
 CLM-detector-only	3.4.8	Detector-only prefixes	impl:CIRISServer#155	established
-CLM-co-stewarded	3.4.9	Co-stewarded prefixes	impl:CIRISServer#155	staged
+CLM-co-stewarded	3.4.9	Co-stewarded prefixes	impl:CIRISServer#155	established
 CLM-witness-emitter	3.4.10	Witness-emitter reservations	impl:CIRISServer#155	established
 CLM-concurrent-write	3.5.1	Concurrent-write precedence	impl:CIRISServer#155	established
-CLM-anti-pattern-delegation	4.1.1	Delegation-laundering anti-pattern	impl:CIRISServer#155	established
-CLM-withdraws-arbitrage	4.1.4	`withdraws` arbitrage	impl:CIRISServer#155	staged
+CLM-anti-pattern-delegation	4.1.1	Delegation-laundering anti-pattern	impl:CIRISServer#155	staged
+CLM-withdraws-arbitrage	4.1.4	`withdraws` arbitrage	impl:CIRISServer#155	established
 CLM-invocation	4.2.1.1	Invocation canonical bytes (anti-replay)	impl:CIRISServer#155	established
 CLM-notify	4.2.1.2	`notify` vs `CONSTITUTIONAL` — consumer-UI requirement	impl:CIRISServer#155	established
 CLM-lifecycle	4.2.1.3	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	impl:CIRISServer#155	established
 CLM-hardware-class	4.2.2	Hardware-class taxonomy	impl:CIRISServer#155	established
-CLM-hardware-class-hardware	4.2.2.1	Hardware-class self-assertion gap (acknowledged)	impl:CIRISServer#155	staged
-CLM-composition-policies	4.4	Composition policies	impl:CIRISServer#155	staged
-CLM-frickerian	4.4.1	Frickerian discipline — consumer-policy norms	impl:CIRISServer#155	staged
-CLM-sub-quorum	4.4.3.1.1	Sub-quorum fallback	impl:CIRISServer#155	established
+CLM-hardware-class-hardware	4.2.2.1	Hardware-class self-assertion gap (acknowledged)	impl:CIRISServer#155	established
+CLM-composition-policies	4.4	Composition policies	impl:CIRISServer#155	established
+CLM-frickerian	4.4.1	Frickerian discipline — consumer-policy norms	impl:CIRISServer#155	established
+CLM-sub-quorum	4.4.3.1.1	Sub-quorum fallback	impl:CIRISServer#155	staged
 CLM-community-three	4.4.3.2.1	The three crypto tiers + the Community DEK cascade (normative)	impl:CIRISServer#155	established
-CLM-deterministic	4.4.3.2.4.1	Deterministic resolution + member→address resolution (NORMATIVE)	impl:CIRISServer#155	established
-CLM-affiliations	4.4.3.2.8	The institutional cohort (necessity, not interest) (normative)	impl:CIRISServer#155	established
+CLM-deterministic	4.4.3.2.4.1	Deterministic resolution + member→address resolution (NORMATIVE)	impl:CIRISServer#155	staged
+CLM-affiliations	4.4.3.2.8	The institutional cohort (necessity, not interest) (normative)	impl:CIRISServer#155	staged
 CLM-family-policy	4.4.3.4	Policy L — Self/family membership composition	impl:CIRISServer#155	established
 CLM-cascade	4.4.3.4.1	Key-grant cascade (the at-rest encryption flow)	impl:CIRISServer#155	established
 CLM-cohort	4.4.3.4.3	"The ""Self at login"" — app + agent co-self + partnered delegation (normative composition)"	impl:CIRISServer#155	established
 CLM-canonicalization-signing	4.4.3.4.3.1	Signing member sets (normative — the JCS contract Verify hybrid-signs)	impl:CIRISServer#155	established
 CLM-multi-subject	4.4.3.5.4	Multi-subject revocation (any-subject-binding)	impl:CIRISServer#155	established
-CLM-policy-attestation	4.4.3.6	Policy I — Attestation-Ladder Composition	impl:CIRISServer#155	established
-CLM-policy-trusted	4.4.3.10	Policy J — Trusted-Publisher composition	impl:CIRISServer#155	established
+CLM-policy-attestation	4.4.3.6	Policy I — Attestation-Ladder Composition	impl:CIRISServer#155	staged
+CLM-policy-trusted	4.4.3.10	Policy J — Trusted-Publisher composition	impl:CIRISServer#155	staged
 CLM-axis	4.5.1.1	Axis-vocabulary discipline	impl:CIRISServer#155	established
-CLM-subject_kind-subject-3	4.5.2.1	Subject-bearing dimension governance (normative)	impl:CIRISServer#155	established
-CLM-compliance-vertical	4.5.2.2	Vertical compliance mapping (informational)	impl:CIRISServer#155	staged
+CLM-subject_kind-subject-3	4.5.2.1	Subject-bearing dimension governance (normative)	impl:CIRISServer#155	staged
+CLM-compliance-vertical	4.5.2.2	Vertical compliance mapping (informational)	impl:CIRISServer#155	established
 CLM-takedown	4.5.3	Fast-path takedown coordination	impl:CIRISServer#155	established
 CLM-registry-named	4.5.4	Named-moderator existence invariant + merit auto-promotion	impl:CIRISServer#155	established
 CLM-takedown-moderation	4.5.5	Moderation as a delegable duty — `moderate` / `takedown` / `review`	impl:CIRISServer#155	established
 CLM-registry-watchlist	4.5.7	Watchlist auto-detection — opt-in, per-group, separation-of-powers	impl:CIRISServer#155	established
-CLM-cohabitation	4.5.8.1	Cohabitation discipline for constitutional + substrate roles	impl:CIRISServer#155	established
+CLM-cohabitation	4.5.8.1	Cohabitation discipline for constitutional + substrate roles	impl:CIRISServer#155	staged
 CLM-settled	4.5.8.3	Settled in CIRISAgent, carried as-is	impl:CIRISServer#155	staged
 CLM-documents-what-2	4.5.10.4	What this documents	impl:CIRISServer#155	staged
 CLM-envelope-multi	4.5.12.2	Multi-family membership — envelope `family_id`	impl:CIRISServer#155	established
-CLM-reverse-quorum	4.5.13	Reverse-quorum governance — presence is authority, absence forfeits it	impl:CIRISServer#155	established
+CLM-reverse-quorum	4.5.13	Reverse-quorum governance — presence is authority, absence forfeits it	impl:CIRISServer#155	staged
 CLM-witness	5.3.1	STH cosigning + witness directory	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-consistency-proof	5.3.1.1	Consistency-proof requirement (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-holder	5.3.2.1	Holder directory TTL + ContentMiss feedback	test:CIRISConformance#59 impl:CIRISServer#155	established
@@ -132,7 +145,7 @@ CLM-liveness	5.3.3.4	D6 liveness invariant — entitled vs reachable (normative)
 CLM-transport-edge	5.3.3.5	Transport — Edge layer (normative — E1–E4 lock)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-delivery	5.3.3.6	Delivery receipts (normative — D5 / V3 lock)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-normative	5.3.3.7	Framing (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
-CLM-multi-steward	5.3.4	Multi-steward + accord-holder discovery	test:CIRISConformance#59 impl:CIRISServer#155	established
+CLM-multi-steward	5.3.4	Multi-steward + accord-holder discovery	test:CIRISConformance#59 impl:CIRISServer#155	staged
 CLM-envelope-error	5.3.6.1	Error envelope	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-record-id	5.4.1	Deterministic `record_id` (CBOR profile, normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-symbol	5.4.2	Uniform symbol AEAD framing for fountain-coded fragments (normative)	test:CIRISConformance#59 impl:CIRISServer#155	established
@@ -144,4 +157,155 @@ CLM-descent	6.1.2.2	Descent rule (normative)	test:CIRISConformance#59 impl:CIRIS
 CLM-registry-replication	6.1.5.1	Replication-target policy (§R-policy — normative floor + RECOMMENDED defaults)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-deterministic-alm	6.1.6	Deterministic ALM topology (§T / §M)	test:CIRISConformance#59 impl:CIRISServer#155	established
 CLM-trust	6.1.8	Recursive trust bootstrap (§B) — trust-discovery, not membership	test:CIRISConformance#59 impl:CIRISServer#155	established
-CLM-annex-g	8.8.7	Annex G: Adversarial Security & Robustness	normative-only:—	established
+CLM-annex-g	8.8.7	Annex G: Adversarial Security & Robustness	normative-only:—	normative
+CLM-trace-family	3.1.5	trace:{form}:{version} + trace_summary:{kind} family, the exactly-one-of inline/manifest shape, and the trace_manifest:v1 payload schema	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission staged:CIRISConformance#83	established
+CLM-envelope-size	2.6.1.3	1 MiB bound on canonical JCS bytes at every write path (contract + intake bounds, ENVELOPE_TOO_LARGE/413) + above-cap manifest route; freeze-gate vector pair pending	impl:CIRISPersist/src/federation/admission.rs#check_envelope_size_admission staged:CIRISConformance#83	established
+CLM-nsproc-dimension	3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): dimension	impl:CIRISEdge/src/replication/bridge.rs#attestation_is_advertised	established
+CLM-nsproc-family-roster-membership-change-via-entr-accord	3.1.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): family roster membership change via entr accord	impl:CIRISPersist/ciris-verify-core/src/accord_genesis.rs#build_accord_family_envelope	established
+CLM-nsproc-holds-bytes-agent-files-kind-platform-or-target	3.1.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): holds bytes agent files kind platform or target	impl:CIRISPersist/src/federation/blobs.rs#holds_bytes_attestation_envelope	established
+CLM-nsproc-kind-open-vocab-registration-collision-g-agent-files-kind-platform-or-target	3.1.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): kind open vocab registration collision g agent files kind platform or target	impl:CIRISPersist/src/federation/schema_resolver.rs#BlobBackedSchemaResolver	established
+CLM-nsproc-witness-key-id-transparency-log-cosigned-tree-size	3.1.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): witness key id transparency log cosigned tree size	impl:CIRISPersist/src/federation/admission.rs#default_reserved_prefix_rules	established
+CLM-nsproc-restrictions-attestation-license-validity	3.1.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): restrictions attestation license validity	impl:CIRISPersist/src/federation/consent_grammar.rs#RestrictionOp::StripField	established
+CLM-nsproc-cosign-transparency-log-cosigned-tree-size	3.1.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cosign transparency log cosigned tree size	impl:CIRISPersist/src/federation/operational.rs#check_skew_bound	established
+CLM-nsproc-cosignature-transparency-log-cosigned-tree-size	3.1.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cosignature transparency log cosigned tree size	impl:CIRISPersist/src/federation/tier_ingest.rs#verify_federation_tier_ingest	established
+CLM-nsproc-manifest-schema-trace-manifest	3.1.5	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): manifest schema trace manifest	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission	established
+CLM-nsproc-trace-xor-manifest-shape-trace-manifest	3.1.5	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): trace xor manifest shape trace manifest	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission	established
+CLM-nsproc-cohort-scope-trace-manifest	3.1.5	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cohort scope trace manifest	impl:CIRISPersist/src/federation/types.rs#LocalAttestationInput	established
+CLM-nsproc-raw-chain-of-thought-dma-csdma	3.1.5.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): raw chain of thought dma csdma	impl:CIRISPersist/src/federation/schema_resolver.rs#BlobBackedSchemaResolver	established
+CLM-nsproc-cohort-operational-definition-calibratio-manifold-conformity-cohort	3.1.8	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cohort operational definition calibratio manifold conformity cohort	impl:CIRISPersist/signing/event.rs#CohortDelineation	established
+CLM-nsproc-lens-core-version-detection-intra-agent-consistency	3.1.8.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): lens core version detection intra agent consistency	impl:CIRISPersist/src/derived/types.rs#DetectionEvent	established
+CLM-nsproc-cross-attestation-prefix-distinctness-detection-distributive-access-resource-t	3.1.8.5	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cross attestation prefix distinctness detection distributive access resource t	impl:CIRISPersist/src/federation/admission.rs#default_reserved_prefix_rules	established
+CLM-nsproc-community-id-moderation-allegation-type	3.1.9.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): community id moderation allegation type	impl:CIRISPersist/src/federation/admission.rs#check_delegated_duty_scores_admission	established
+CLM-nsproc-community-id-reconsideration-grounds	3.1.9.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): community id reconsideration grounds	impl:CIRISPersist/src/federation/admission.rs#named_moderator_holders	established
+CLM-nsproc-kind-kind-discriminator-hard-case-kind	3.1.9.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): kind kind discriminator hard case kind	impl:CIRISPersist/src/federation/admission.rs#check_reserved_prefix_admission	established
+CLM-nsproc-meta-goal-alignment-goal-scale	3.1.9.7	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): meta goal alignment goal scale	impl:CIRISPersist/src/federation/goal.rs#Goal::new	established
+CLM-nsproc-goal-scope-goal-scale	3.1.9.7	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): goal scope goal scale	impl:CIRISPersist/src/federation/goal.rs#GoalScope	established
+CLM-nsproc-delegated-scope-ownership	3.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): delegated scope ownership	impl:CIRISPersist/src/federation/admission.rs#check_node_agency_admission	established
+CLM-nsproc-attested-key-id-ownership	3.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attested key id ownership	impl:CIRISPersist/src/federation/admission.rs#check_single_node_owner_admission	established
+CLM-nsproc-delegation-valid-until-ownership	3.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): delegation valid until ownership	impl:CIRISPersist/src/federation/admission.rs#delegation_valid_until_lapsed	established
+CLM-nsproc-delegation-purpose-ownership	3.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): delegation purpose ownership	impl:CIRISPersist/src/federation/admission.rs#is_owner_binding_envelope	established
+CLM-nsproc-pre-rotation-commitment-trust	3.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): pre rotation commitment trust	impl:CIRISPersist/src/federation/trust_root.rs#check_trust_charter_admission	established
+CLM-nsproc-halt-latched-trust	3.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): halt latched trust	impl:CIRISPersist/src/federation/trust_root.rs#trust_root_valid	established
+CLM-nsproc-subject-key-ids-consent	3.3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): subject key ids consent	impl:CIRISPersist/src/federation/admission.rs#resolve_withdraws_admission_rule	established
+CLM-nsproc-dimension-consent	3.3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): dimension consent	impl:CIRISPersist/src/federation/consent.rs#consent_state_of	established
+CLM-nsproc-attestation-prefixes-consent	3.3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation prefixes consent	impl:CIRISPersist/src/federation/consent_grammar.rs#parse_grant_payload	established
+CLM-nsproc-restrictions-op-strip-field-consent	3.3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): restrictions op strip field consent	impl:CIRISPersist/src/federation/consent_grammar.rs#strip_field	established
+CLM-nsproc-tier-consent	3.3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): tier consent	impl:CIRISPersist/src/federation/mod.rs#list_consent_revocation_promotion_overdue	established
+CLM-nsproc-deletion-sla-consent	3.3.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): deletion sla consent	impl:CIRISPersist/src/federation/mod.rs#run_consent_sla_watch	established
+CLM-nsproc-cohort-scope	3.3.6	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cohort scope	impl:CIRISEdge/src/replication/bridge.rs#attestation_is_advertised	established
+CLM-nsproc-attestation-prefixes-scores	3.3.7	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation prefixes scores	impl:CIRISPersist/src/federation/consent_grammar.rs#covers	established
+CLM-nsproc-key-boundary-scope	3.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): key boundary scope	impl:CIRISEdge/src/key_boundary.rs#KeyBoundaryScope	established
+CLM-nsproc-attester-independence-capacity-assurance	3.4.12	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attester independence capacity assurance	impl:CIRISPersist/src/federation/admission.rs#check_adult_incapacity_binding	established
+CLM-nsproc-valid-until-capacity-assurance	3.4.12	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): valid until capacity assurance	impl:CIRISPersist/src/federation/admission.rs#check_adult_incapacity_binding	established
+CLM-nsproc-attestation-type-capacity-assurance	3.4.12	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation type capacity assurance	impl:CIRISPersist/src/federation/admission.rs#default_reserved_prefix_rules	established
+CLM-nsproc-scope-domain-subset-capacity-assurance	3.4.12	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): scope domain subset capacity assurance	impl:CIRISPersist/src/federation/capacity.rs#is_protected_domain	established
+CLM-nsproc-attestation-evidence	4.2.2.1	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation evidence	staged:CIRISConstitution#64	staged
+CLM-nsproc-aggregation-policy	4.4.2	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): aggregation policy	staged:CIRISConstitution#64	staged
+CLM-nsproc-attestation-prefixes-trace-summary	4.5.8.3	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation prefixes trace summary	impl:CIRISPersist/src/federation/consent_grammar.rs#covers	established
+CLM-nsproc-agent-key-id-trace-summary	4.5.8.3	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): agent key id trace summary	impl:CIRISPersist/src/store/sqlite.rs#list_trace_summaries	established
+CLM-nsproc-extraction-manifest-hash-trace-summary	4.5.8.3	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): extraction manifest hash trace summary	impl:CIRISPersist/src/trace_summary_contract.rs#extraction_manifest_sha256	established
+CLM-nsproc-restrictions-op-strip-field-trace	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): restrictions op strip field trace	impl:CIRISPersist/src/federation/consent_grammar.rs#strip_field	established
+CLM-nsproc-cohort-scope-trace	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): cohort scope trace	impl:CIRISPersist/src/engine.rs#Engine::promote_consented_backlog	established
+CLM-nsproc-dimension-trace	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): dimension trace	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission	established
+CLM-nsproc-subject-key-ids-trace	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): subject key ids trace	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission	established
+CLM-nsproc-recipient-capability	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): recipient capability	impl:CIRISEdge/src/replication/bridge.rs#recipient_capability_withholds	established
+CLM-nsproc-attestation-prefixes	5.3.2.4	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): attestation prefixes	impl:CIRISEdge/src/replication/bridge.rs#recipient_capability_withholds	established
+CLM-nsproc-delivery-mode	5.3.3	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): delivery mode	impl:CIRISEdge/src/delivery_mode.rs#decide	established
+CLM-nsproc-recipient-serve-capability	5.3.3.5	Namespace-processor evidence row (minted for pre-verified sibling evidence, #62): recipient serve capability	impl:CIRISEdge/src/replication/bridge.rs#peer_has_serve_capability	established
+CLM-presenter-binding	4.2.2	Build-attestation bundle verification (peer-presentable, manifest-gated) — verify_build_attestation_bundle	impl:CIRISVerify/src/ciris-verify-core/src/build_attestation_bundle.rs#verify_build_attestation_bundle	established
+CLM-presenter-binding-producer	4.2.2	Build-attestation bundle production — produce_build_attestation_bundle	impl:CIRISVerify/src/ciris-verify-core/src/build_attestation_bundle.rs#produce_build_attestation_bundle	established
+CLM-hardware-class-android	4.2.2.1	Android Key Attestation chain validation (the R5 per-platform chain, landed)	impl:CIRISVerify/src/ciris-verify-core/src/device_attestation.rs#verify_android_key_attestation	established
+CLM-hardware-class-apple	4.2.2.1	Apple App Attest chain validation (R5 per-platform chain)	impl:CIRISVerify/src/ciris-verify-core/src/device_attestation.rs#verify_apple_app_attest	established
+CLM-hardware-class-yubikey	4.2.2.1	YubiKey PIV attestation for accord custody (R5 per-platform chain)	impl:CIRISVerify/src/ciris-verify-core/src/accord_custody_attestation.rs#verify_yubikey_piv_attestation	established
+CLM-trust-anchor-store	4.2.2.1	CoTS constrained trust-anchor store (ConciseTaStore) backing the attestation chains	impl:CIRISVerify/src/ciris-verify-core/src/trust_anchor_store.rs#ConciseTaStore	established
+CLM-trust-anchor-baked	4.2.2.1	Baked attestation roots (Google x2 / Apple / Yubico) with self-validation at generation	impl:CIRISVerify/src/ciris-verify-core/src/trust_anchor_store.rs#yubico_attestation_root	established
+CLM-dimension-registry	3.1.2	Verify-owned DimensionSpec registry — the machine-readable form of the CC 2.3.2 attestation-family table	impl:CIRISVerify/src/ciris-verify-core/src/federation_provenance.rs#DimensionSpec	established
+CLM-dimension-consent-disposition	3.4.5	ConsentDisposition encoding of the CC 3.4.5 per-family ruling (capacity:* gated; artifact/log/detector families not)	impl:CIRISVerify/src/ciris-verify-core/src/federation_provenance.rs#ConsentDisposition	established
+CLM-classification-gating	3.4.5	classification.rs Gating — the post-ConsentClass surface deriving admissibility from the CC 3.4.5 ruling	impl:CIRISVerify/src/ciris-verify-core/src/classification.rs#Gating	established
+CLM-hardware-class-tpm	4.2.2.1	TPM EK certificate chain validation (R5 per-platform chain; vendor anchors deliberately unbaked — Ok(None) is the honest state)	impl:CIRISVerify/src/ciris-verify-core/src/device_attestation.rs#verify_tpm_ek_certificate	established
+CLM-anchor-provenance-tier	4.2.2.1	AnchorProvenance tier on the trust-anchor store (baked vs operator-supplied vs absent)	impl:CIRISVerify/src/ciris-verify-core/src/trust_anchor_store.rs#AnchorProvenance	established
+CLM-redactable-commitment	2.6.1.1	RedactableCommitment — the CC 2.6 redaction-constraints primitive (salted digests, no canonicalization dependency)	impl:CIRISVerify/src/ciris-verify-core/src/redactable.rs#RedactableCommitment	established
+CLM-presentation-identifier-scope	5.1	IdentifierScope — enforces the CC 5.1 no-stable-cross-verifier-identifier interim MUST	impl:CIRISVerify/src/ciris-verify-core/src/presentation.rs#IdentifierScope	established
+CLM-conferral-plane-named	3.2	conferral plane named (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/trust_root.rs#ConferralPlane	established
+CLM-drill-freshness-signal-not-gate	3.2	drill freshness signal not gate (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/trust_root.rs#DrillFreshness	established
+CLM-transit-eligibility-shared-root	3.2	transit eligibility shared root (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/trust_root.rs#resolve_transit_eligibility	established
+CLM-quota-refusal-names-its-budget	6.1.5.2	quota refusal names its budget (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/replication/admission.rs#PeerQuotaRefusal	established
+CLM-reverse-quorum-objection	3.1.9.2	reverse quorum objection (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/reverse_quorum.rs#record_objection	established
+CLM-reverse-quorum-dismissal	3.1.9.2	reverse quorum dismissal (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/reverse_quorum.rs#record_objection_dismissal	established
+CLM-wa-adjudication-family	3.1.9.4	wa adjudication family (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/ownership_reclaim.rs#build_reclaim_petition_envelope	established
+CLM-wa-quorum-re-derived	4.2.6	wa quorum re derived (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/ownership_reclaim.rs#wa_quorum_over_body	established
+CLM-reclaim-authority-fails-closed	3.2	reclaim authority fails closed (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/ownership_reclaim.rs#ReclaimPolicy::from_deployment_pin	established
+CLM-quarantine-marker-not-command	3.1.9.2	quarantine marker not command (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/quarantine.rs#fold_quarantine	established
+CLM-quarantine-serve-consult	3.1.9.2	quarantine serve consult (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/quarantine.rs#filter_withheld_rows	established
+CLM-slash-duty-scope	4.5.5	slash duty scope (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_delegated_duty_scores_admission	established
+CLM-admin-action-attributed	3.1.9.4	admin action attributed (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/hard_case.rs#check_admin_action_attribution	established
+CLM-revoked-after	2.4.1.1	revoked after (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/register.rs#check_revocation_bound	established
+CLM-private-use-never-federates	3.1.7	private use never federates (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_private_use_not_federatable	established
+CLM-promotion-cohort-standing	4.5.4	promotion cohort standing (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_promotion_cohort_standing	established
+CLM-persist-ruled-family-inventory	3.1.7	persist ruled family inventory (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/family_rules.rs#persist_ruled_prefixes	established
+CLM-ci-axis	4.5.1.1	ci axis (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/namespace/supersets.rs#fusion_classification	established
+CLM-key-refusal-names-its-branch	3.4.7	key refusal names its branch (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/register.rs#KeyRefusalReason	established
+CLM-load-bearing-reachability	6.1.5	load bearing reachability (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/load_bearing.rs#is_load_bearing	established
+CLM-peer-deadmission-revocable	3.4.7	peer deadmission revocable (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/admission.rs#check_peer_deadmission	established
+CLM-rule-not-on-the-row	3.1.7	rule not on the row (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/family_rules.rs#rule_not_on_the_row_for	established
+CLM-absence-claims-still-hold	3.1.7	absence claims still hold (designated via CC#67; persist-shipped)	impl:CIRISPersist/src/federation/namespace/supersets.rs#manifest_absence_claims	established
+CLM-await-spend-authorization	3.3.9	spend authorization (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/services/governance/budget_envelope.py#authorize_spend	established
+CLM-await-health-fails-closed	8.8.7	health fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/routes/system/helpers.py#determine_overall_status	established
+CLM-await-platform-fails-closed	8.8.7	platform fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/utils/platform_detection.py#detect_platform_capabilities	established
+CLM-await-ssrf-egress-guard	8.8.7	ssrf egress guard (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/utils/url_guard.py#validate_url_for_ssrf	established
+CLM-await-ablation-gate	8.8.7	ablation gate (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/utils/compose_dump.py#run_gate	established
+CLM-await-condition-a-refusal	8.8.7	condition a refusal (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/utils/research_overrides.py#_validate_manifest	established
+CLM-await-conscience-score-gate	8.8.7	conscience score gate (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/processors/core/thought_processor/main.py#ThoughtProcessor._conscience_guidance_mode	established
+CLM-await-accord-seam-faculties	8.8.7	accord seam faculties (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/accord/verifier.py#AccordVerifier.public_key_for	established
+CLM-await-loader-only-prompt-text	8.8.7	loader only prompt text (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/test_no_prompt_text_bypasses_the_loader.py#test_no_prompt_text_reaches_a_model_except_through_a_loader	established
+CLM-await-field-scoped-overrides	8.8.7	field scoped overrides (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/dma/test_template_override_policy_996.py#test_no_composer_hides_in_an_override_else_branch	established
+CLM-await-prompt-key-consumption	8.8.7	prompt key consumption (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/dma/test_prompt_key_consumption_990.py#test_every_populated_key_is_consumed	established
+CLM-await-taxonomy-totality	8.8.7	taxonomy totality (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/utils/test_taxonomy_gate_997.py#test_no_mixed_blocks_beyond_the_ratchet	established
+CLM-await-language-guidance-integrity	4.2.2	language guidance integrity (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/utils/test_language_guidance_split_997.py#test_every_locale_composes_the_same_bytes_it_did_before_the_split	established
+CLM-await-handler-reachability	8.8.7	handler reachability (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/test_no_phantom_capability_998.py#test_every_action_handler_is_reachable_from_the_dispatcher	established
+CLM-await-metric-honesty	8.8.6	metric honesty (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_engine/logic/test_no_phantom_capability_998.py#test_no_metric_asserts_a_quantity_it_did_not_measure	established
+CLM-await-killswitch-live	8.8.7	killswitch live (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/accord/verifier.py#AccordVerifier.verify	established
+CLM-await-jwt-subtype-key-binding	8.8.7	jwt subtype key binding (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/services/infrastructure/authentication/service.py#AuthenticationService._verify_jwt_and_get_context	established
+CLM-await-role-gate-on-routes	8.8.7	role gate on routes (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/dependencies/auth.py#require_role	established
+CLM-await-revoked-service-token-refused	8.8.7	revoked service token refused (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/services/auth_service.py#APIAuthService.validate_service_token	established
+CLM-await-setup-closes-after-first-run	8.8.7	setup closes after first run (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/routes/setup/dependencies.py#require_setup_mode	established
+CLM-await-root-signature-mints-wa	8.8.7	root signature mints wa (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/services/auth_service.py#APIAuthService.verify_root_signature	established
+CLM-await-oauth-state-single-use	8.8.7	oauth state single use (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-oauth-redirect-allowlist	8.8.7	oauth redirect allowlist (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-apple-id-token-verified	8.8.7	apple id token verified (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-ingress-header-trust-boundary	8.8.7	ingress header trust boundary (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_adapters/home_assistant/ingress_auth.py#HAIngressAuthProvider._is_trusted_ip	established
+CLM-await-reasoning-cannot-mint-envelope	8.8.7	reasoning cannot mint envelope (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/infrastructure/authorization/envelope_issuer.py#_forbid_in_reasoning_scope	established
+CLM-await-no-killswitch-no-run	3.2	no killswitch no run (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/accord/verifier.py#AccordVerifier._load_default_authorities	established
+CLM-await-killswitch-unfilterable-perception	8.8.7	killswitch unfilterable perception (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/base_observer.py#BaseObserver._check_for_accord	established
+CLM-await-emergency-signature-is-auth	8.8.7	emergency signature is auth (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/routes/emergency.py#emergency_shutdown	established
+CLM-await-prohibited-capability-registration-gate	8.8.7	prohibited capability registration gate (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/registries/base.py#ServiceRegistry._validate_wa_capabilities_at_registration	established
+CLM-await-no-unverified-crisis-number	8.8.7	no unverified crisis number (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/schemas/resources/crisis.py#CrisisResourceRegistry.default_prompt_resources	established
+CLM-await-trusted-frame-spoof-redaction	8.8.7	trusted frame spoof redaction (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/base_observer.py#detect_and_replace_spoofed_markers	established
+CLM-await-identity-forget-requires-wa	8.8.7	identity forget requires wa (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/handlers/memory/forget_handler.py#ForgetHandler._can_forget	established
+CLM-await-managed-user-attrs-immutable	8.8.7	managed user attrs immutable (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/infrastructure/handlers/shared_helpers.py#check_managed_attributes	established
+CLM-await-expired-consent-blocks-memorize	8.8.7	expired consent blocks memorize (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/infrastructure/handlers/shared_helpers.py#handle_user_consent	established
+CLM-await-deletion-proof-verification	8.8.7	deletion proof verification (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/routes/verification.py#_verify_proof	established
+CLM-await-unsafe-skill-import-refused	8.8.7	unsafe skill import refused (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/routes/system/skill_import.py#import_skill	established
+CLM-await-accord-corpus-hash-pin	4.2.2	accord corpus hash pin (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/utils/constants.py#_verify_accord_integrity	established
+CLM-await-runtime-tamper-halts-agent	4.2.2	runtime tamper halts agent (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/services/infrastructure/authentication/service.py#AuthenticationService._check_integrity_degradation	established
+CLM-await-runtime-md-provenance-gate	8.8.7	runtime md provenance gate (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tools/dev/check_no_runtime_md_reference.py#main	established
+CLM-await-signed-tree-rule-parity	8.8.7	signed tree rule parity (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/dev/test_canonical_rules_parity.py#test_build_yml_python_source_tree_sign_matches_canonical_rules	established
+CLM-await-irreversible-send-guard	3.3.9	irreversible send guard (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_adapters/wallet/providers/validation.py#WalletValidator.validate_send	established
+CLM-await-attestation-bound-spend	3.3.9	attestation bound spend (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_adapters/wallet/providers/x402_provider.py#SpendingAuthority.can_spend	established
+CLM-await-currency-denominated-ceiling	3.3.9	currency denominated ceiling (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_adapters/wallet/tool_service.py#WalletToolService._resolve_trust_envelope	established
+CLM-await-credit-gate-fails-closed	3.3.9	credit gate fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/base_observer.py#BaseObserver._check_and_charge_credit	established
+CLM-await-every-rail-gated	3.3.9	every rail gated (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tests/ciris_adapters/wallet/test_budget_envelope_enforcement.py#TestEveryRailIsGated.test_no_grant_denies_on_every_rail	established
+CLM-await-gate-coverage-floor	8.8.7	gate coverage floor (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/tools/research/probe_gate_coverage.py#check_floors	established
+CLM-await-google-token-fails-closed	8.8.7	google token fails closed (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-degraded-path-no-weaker	8.8.7	degraded path no weaker (agent v-major evidence pack; designated in bulk, see designation issue)	staged:CIRISConstitution#85	staged
+CLM-await-one-emergency-trust-root	3.2	one emergency trust root (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/adapters/api/routes/emergency.py#is_authorized_key	established
+CLM-await-manifest-content-identity	4.2.2	manifest content identity (agent v-major evidence pack; designated in bulk, see designation issue)	impl:CIRISAgent/ciris_engine/logic/utils/research_overrides.py#compute_manifest_digest	established
+CLM-tpm-vendor-anchors	4.2.2.1	TPM vendor anchor store (deliberately unbaked — Ok(None) honest state; aggregations would misrepresent provenance)	impl:CIRISVerify/src/ciris-verify-core/src/trust_anchor_store.rs#TPM_VENDOR_ROOTS	established
+CLM-classification-frame	3.4.5	Arity surface: testimonial-as-relation frame parameter (the repairable_does_not_factor adoption, verify#248)	impl:CIRISVerify/src/ciris-verify-core/src/classification.rs#Arity	established
+CLM-binding-disposition-split	3.4.5	Gating disposition split: cannot-vary vs hold-under-named-authority (the lake's binding-fusion correction)	impl:CIRISVerify/src/ciris-verify-core/src/classification.rs#Gating	established
+CLM-h3ere-steppoints	8.8.6	The H3ERE pipeline exposes its reasoning stages as observable step points, enumerated by StepPoint (the enum is the count of record)	impl:CIRISAgent/ciris_engine/schemas/services/runtime_control.py#StepPoint	established
+CLM-conscience-faculty	8.8.6	Measured, domain-bounded, cluster-corrected (bare deferrals as failures): pipeline vs accord-as-prompt -31.6 pts [CI -40.4,-22.7]; values-emptied +11.1 pts [CI +2.3,+21.3, post-hoc, replication at RATCHET#21] — machinery carries the bulk; content real but modest (deferring with care)	staged:CIRISConstitution#88	staged
+CLM-nsproc-steward-bound-predicate-trust	3.2	steward bound predicate trust (persist-designated; the age/steward-plane witness set)	impl:CIRISPersist/src/federation/admission.rs#is_steward_bound	established
+CLM-nsproc-steward-bindings-read-fold-trust	3.2	steward bindings read fold trust (persist-designated; the age/steward-plane witness set)	impl:CIRISPersist/src/engine.rs#steward_bindings_of	established
+CLM-nsproc-age-band-resolution-child-protection	3.4.11	age band resolution child protection (persist-designated; the age/steward-plane witness set)	impl:CIRISPersist/src/engine.rs#age_band	established
+CLM-nsproc-age-band-one-way-coarsening-child-protection	3.4.13	age band one way coarsening child protection (persist-designated; the age/steward-plane witness set)	impl:CIRISPersist/src/federation/age.rs#coarsen	established
