@@ -19,7 +19,7 @@ CLM-pdma-ordermax	1.3	Order-Maximisation Veto routes to mandatory WBD deferral (
 CLM-accord-livequorum	4.2.6	Live-quorum roster-capture closed: post-W contest on append-log evidence + mandatory restore	impl:CIRISServer#155	established
 CLM-1plus4-frozen	2.1	The 1+4 attestation surface is conformance-frozen (a wire-byte change is a defect)	test:CIRISConformance#59	established
 CLM-migration-fidelity	corpus	Source-fidelity migration validated (0 REJECT) under the skeptical rubric	test:@validation/results.csv	established
-CLM-child-protection	3.4.13	Seven child-protection rulings (fail-secure minor-stewardship, consent gating)	staged:CIRISServer#155 test:CIRISConformance#59	staged
+CLM-child-protection	3.4.13	Seven child-protection rulings (fail-secure minor-stewardship, consent gating); conformance vectors superseded by the #87 narrowing — awaiting the substrate age-plane witness	staged:CIRISPersist#729	staged
 CLM-covenant-identity	1.15.5	RECOGNITION-GRADE, non-normative: covenant identity described as keys + maintained memory lineage + conduct record. No lineage-inheritance binding is stated; the wire-level design (lineage extent, conduct-record portability, keys-per-owner) is tracked at CIRISConstitution#49	staged:CIRISConstitution#71	staged
 CLM-registry-of-record	3.1.7	Family/component counts are generated, not asserted: manifests/namespace_registry.json is the registry of record and registration means a CC 3.1 row	impl:@manifests/namespace_registry.json	established
 CLM-capacity-composite	3.1.8.1	C_CIRIS = min(C, I_int, R, I_inc, S); a product form is non-conformant (sign-cancelling: an even number of negative factors scores positive, inverting the anti-Goodhart rationale); a missing factor is undefined, not zero	staged:CIRISConstitution#50	staged
@@ -30,7 +30,7 @@ CLM-wa-symmetry	4.3	Wise Authorities wear the same banded signals as everyone el
 CLM-trust-root	4.4.3.8	Pluggable trust root: self-root base, attenuation-bound charter, un-trust as one deletable acceptance edge with downstream failing closed emergently, fail-closed capability gate, ceremony-vs-delegation conferral planes, genesis scoped honestly to tamper-evident	staged:CIRISConstitution#40	staged
 CLM-synthesis-disclosure	3.4.14	Machine-generation marking is mandatory: content_class:generated/generated_modified universal, agent-attester identity_type binding, egress re-expression, assistive carve-out, generator-is-duty-holder	staged:CIRISConstitution#9	staged
 CLM-c2pa-emit	8.4.2.2	C2PA emit is normative for generated media (the CC 3.4.14 R3 media-egress form); recorded-exception path where the destination cannot carry a manifest	staged:CIRISConstitution#9	staged
-CLM-trust-not-membership	3.2	Trust ≠ membership; default-not-forced-root; steward-binding admission	staged:CIRISServer#155	staged
+CLM-trust-not-membership	3.2	Trust ≠ membership; default-not-forced-root; steward-binding admission (post-#87: owner-binding edges only)	staged:CIRISPersist#729	staged
 CLM-adult-incapacity	3.4.12	Adult-incapacity stewardship (capacity-assurance, prior-will-first, fail-to-liberty auto-restore)	staged:CIRISServer#155	staged
 CLM-age-assurance	3.4.11	Verified-rung age assurance + minor-steward binding	staged:CIRISServer#155	staged
 CLM-structural-invisibility	5.2	self/family content is structurally invisible — never federates (wire-enforced)	test:CIRISConformance#59 staged:CIRISServer#155	established

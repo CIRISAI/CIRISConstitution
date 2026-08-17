@@ -53,3 +53,7 @@ land with a `claims.tsv` row — the same discipline by which every new section 
 Give it a stable `claim_id` (`CLM-<area>-<slug>`), the section `decimal_id` (or `corpus` for a
 whole-document claim), a one-line summary, its evidence tokens, and a status. Run `check_claims.py`
 before committing.
+
+## Superseded vectors (normative reading rule)
+
+A **known-failing (`xfail`) conformance vector is not automatically a gap.** Where a ratified change moves the standard under an existing vector, or where a control migrates from the conformance tier into the substrate, the vector fails *because it encodes the superseded rule* — and the honest disposition is **superseded**, carrying the ruling that moved it and the substrate symbol that now witnesses the behavior. Two rules keep this from becoming an excuse: a vector may be called superseded only when a **named substrate witness publishes the equivalent control** (an unpublished symbol is a gap, not a supersession — a claim MUST NOT be repointed at a symbol no manifest carries), and a green sibling row at the same decimal **never** clears a failing vector on its own. Live instance: the CC 3.2 steward-binding family and the CC 3.4.x age plane, moved by the [CC 3.2](part_3_the_namespace.md) conferral-is-not-stewardship ruling (CIRISConstitution#87) — supersession tracked at CIRISPersist#729 / CIRISConformance#89.
