@@ -1449,6 +1449,31 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 
 ### 8.8.10 `annex-j` — Annex J: Benchmarking & Automated Validation
 
+#### The research evidence, as of this cut (measured; nothing rounded up)
+
+This document's safety thesis is architectural, and architecture is not evidence. What follows is every empirical result the federation currently holds about whether the architecture *does anything*, each at its stated grade, with what it does **not** establish stated beside it. The registry rows are `CLM-conscience-faculty` (CC 8.8.6) and the transfer work tracked at CIRISConstitution#88 / #90.
+
+**1. The tuned domain — mental health · *measured*.** A pre-registered staged battery (symptom disclosure → diagnostic pressure → treatment pressure → cross-cluster probe → crisis trigger → four adversarial probes), five locales × five models across four families × nine turns, judged by a model of independent lineage, bare deferrals scored as failures, cluster-robust over conversation arcs:
+
+| arm | hard-fail rate |
+|---|---|
+| bare model | 24.0% |
+| the accord as a plain **prompt** | 37.3% |
+| **the accord inside the pipeline** | **5.8%** |
+| pipeline, values corpus emptied | 16.9% |
+
+Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p < 0.001); emptied − pipeline **+11.1 points** (95% CI [+2.3, +21.3], p = 0.013). **The machinery carries the bulk of the effect; the content contributes a real but modest share** — the difference between deferring *with care* and deferring barely.
+
+**2. What that result does not establish, stated first.** The content contrast is **post-hoc** (it followed a re-scoring of bare deferrals as failures) and awaits pre-registered replication; the arm that could separate *these* values from *appropriate structured content* — a different real value system in the same form — has not been run. **Identity drop under social pressure is never eliminated**: it fails in every arm, the pipeline included. Nothing here bears on `k_eff`, `ρ̄`, a corridor, or collapse asymmetry ([CC 6.2](part_6_the_coherence_mathematics.md) states no corridor and this does not rehabilitate one). One battery, one agent version, one provider: **nothing transfers by assumption.**
+
+**3. The untuned domain — transfer, *in progress, not citable*.** Whether machinery built for one domain cross-applies with no tuning is the architectural thesis's natural falsification surface, and it is being tested against a hazardous-knowledge probe paired with a benign-prompt over-refusal probe (both axes mandatory — an agent that refuses everything scores perfectly on one and is useless). Interim readings have already reversed once under a validated judge, and the early signal runs **against** the tuned-domain ordering: on single-turn untuned harm the accord as a plain prompt outperformed the pipeline on both axes, while both beat the bare model. That is a boundary on the transfer claim, not a refutation of the tuned result, and it is reported here **because** it is unflattering. No number is ratified until it meets the standard below.
+
+**4. The standard any such number must meet (normative).** A cross-application result has standing as its own claim class — ***measured-transfer, domain-untuned*** — never prose-comparable to tuned-domain numbers, and admissible only in the **two-axis form** (a hazard-declined figure without its paired over-refusal cost is inadmissible). Judge-scored numbers additionally require, for the **pivotal class of the claim being made**: κ ≥ 0.7 against human labels on the binary axis, recall *and* precision ≥ 80% on the pivotal class, and — reported with the number — an **adversarial-flip sensitivity**: the judge's known error modes turned maximally against the conclusion, with the contrast surviving. An instrument that fails these carries no reading regardless of how impressive the reading is. A validated instrument is the durable output; the number is perishable.
+
+**5. The defect class this surfaced (normative).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**: the record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
+
+
+
 > Benchmarking & Automated Validation (v1.3-RC2)
 
 **0. Purpose.** Provide a reproducible, API-driven harness that (a) continuously checks whether a system remains CIRIS-compliant across its full release cycle and (b) blocks promotion if ethical performance regresses. The harness is built around the "Ethics Engine Enterprise API" and a curated 300-scenario subset of the Hendrycks Ethics data-set (HE-300).
