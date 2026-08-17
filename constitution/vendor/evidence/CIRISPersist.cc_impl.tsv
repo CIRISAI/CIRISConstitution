@@ -32,6 +32,9 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 3.2	CLM-nsproc-delegation-purpose-ownership	CIRISPersist	src/federation/admission.rs#is_owner_binding_envelope	ciris-persist@36.1.0
 3.2	CLM-nsproc-pre-rotation-commitment-trust	CIRISPersist	src/federation/trust_root.rs#check_trust_charter_admission	ciris-persist@36.1.0
 3.2	CLM-nsproc-halt-latched-trust	CIRISPersist	src/federation/trust_root.rs#trust_root_valid	ciris-persist@36.1.0
+3.2	CLM-trust-not-membership	CIRISPersist	src/federation/admission.rs#check_user_target_steward_binding_admission	ciris-persist@36.1.0
+3.2	CLM-nsproc-steward-bound-predicate-trust	CIRISPersist	src/federation/admission.rs#is_steward_bound	ciris-persist@36.1.0
+3.2	CLM-nsproc-steward-bindings-read-fold-trust	CIRISPersist	src/engine.rs#steward_bindings_of	ciris-persist@36.1.0
 3.3.1	CLM-nsproc-subject-key-ids-consent	CIRISPersist	src/federation/admission.rs#resolve_withdraws_admission_rule	ciris-persist@36.1.0
 3.3.1	CLM-nsproc-dimension-consent	CIRISPersist	src/federation/consent.rs#consent_state_of	ciris-persist@36.1.0
 3.3.1	CLM-nsproc-attestation-prefixes-consent	CIRISPersist	src/federation/consent_grammar.rs#parse_grant_payload	ciris-persist@36.1.0
@@ -43,6 +46,9 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 3.4.12	CLM-nsproc-valid-until-capacity-assurance	CIRISPersist	src/federation/admission.rs#check_adult_incapacity_binding	ciris-persist@36.1.0
 3.4.12	CLM-nsproc-attestation-type-capacity-assurance	CIRISPersist	src/federation/admission.rs#default_reserved_prefix_rules	ciris-persist@36.1.0
 3.4.12	CLM-nsproc-scope-domain-subset-capacity-assurance	CIRISPersist	src/federation/capacity.rs#is_protected_domain	ciris-persist@36.1.0
+3.4.11	CLM-nsproc-age-band-resolution-child-protection	CIRISPersist	src/engine.rs#age_band	ciris-persist@36.1.0
+3.4.13	CLM-child-protection	CIRISPersist	src/federation/age.rs#is_minor	ciris-persist@36.1.0
+3.4.13	CLM-nsproc-age-band-one-way-coarsening-child-protection	CIRISPersist	src/federation/age.rs#coarsen	ciris-persist@36.1.0
 4.5.8.3	CLM-nsproc-attestation-prefixes-trace-summary	CIRISPersist	src/federation/consent_grammar.rs#covers	ciris-persist@36.1.0
 4.5.8.3	CLM-nsproc-agent-key-id-trace-summary	CIRISPersist	src/store/sqlite.rs#list_trace_summaries	ciris-persist@36.1.0
 4.5.8.3	CLM-nsproc-extraction-manifest-hash-trace-summary	CIRISPersist	src/trace_summary_contract.rs#extraction_manifest_sha256	ciris-persist@36.1.0
