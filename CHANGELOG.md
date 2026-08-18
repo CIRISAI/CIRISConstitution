@@ -3,6 +3,20 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 1.0-rc4 — in progress
+
+**CC 5.4.6 — a directed announce inherits the prohibition (#91, ruled).** The first RC4 revision.
+The clause binds the emission, not the addressing mode: on Reticulum transport no directed announce
+satisfies the purposive sentence — multi-hop path learning *is* outsider observation (path state a
+subpoena reaches), and the epoch-bound derivation forces either a roster-wide re-announce wave on
+every Add/Remove or a removed member keeping every peer's addressing indefinitely. The flat MUST NOT
+was never broadcast-era shorthand — the same section bans the targeted, non-broadcast per-destination
+query in the same breath. The trade on offer was a structural, claimable guarantee for a
+traffic-analysis-statistical one — a claim base CEG/RET declines to make (CC 1.13.3.1; the goal
+stands, the Anonymous Tier is its opt-in). The leak reading's sound insight is kept in-text:
+in-group MLS distribution of addressing material was never prohibited. Multi-hop scoped reach is an
+amendment-plane design question with its bar stated in-clause.
+
 ## 1.0-rc3 — the external-review remediation, the trust-root ratifications, and an honest matrix
 
 RC3 closes the open issue set. Where an issue asked for a ruling, this cut gives one; where an
