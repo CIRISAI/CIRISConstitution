@@ -5,6 +5,29 @@ each cut is validated against its sources under the skeptical rubric before it l
 
 ## 1.0-rc4 — in progress
 
+**CC 3.3.10.1 — in-grammar ledgers: owner-serialized content, cohort-witnessed conservation (#92).**
+The ballot machinery extended to value, on a three-track prior-art sweep (theory, channels/mints,
+mutual-credit practice). Total order lives in the owner's hash chain, never the grammar (CC 3.2
+single-owner ⇒ consensus number 1, Guerraoui PODC 2019 — which also corrects the stance's dated
+"no totally-ordered ledger" premise; the real exclusions are named in-text). Nine normative
+clauses: identity/unit binding, dense hash-chained entries, delegate serialization, witness-anchored
+heads with the cadence stated as the equivocation-exposure window (SUNDR's 2004 "time stamp box";
+CT's failed voluntary gossip is why the anchor is an obligation), checkpoints riding §19.7 descent
+(the regulator-endorsed summarize-and-delete shape), promotion-with-proof, the deterministic
+byte-equal conservation fold (Sardex's zero-sum invariant; PeerReview's transferable evidence),
+fork-as-adjudicated-slashing with mandatory restore-then-resync (the eltoo critique answered —
+available because the witness set is cooperative), and the non-claims (no atomicity, no
+member-vs-member privacy, no cross-cohort conservation — netting + net rail settlement, the
+CLS ~96% pattern). 1+4 lockdown holds: rides scores + subject_kind + evidence_refs + supersedes +
+cohort_scope. Staged claim rows on #92 / CIRISPersist#754. The attempted-systems record lands
+verified: Holochain's 8-year gestation vs NetzBon-on-Taler's two; SSB/Hypercore fork-death
+answered by L8's mandatory resync and L3's Keybase-shaped in-chain delegation; Sardex's
+load-bearing brokers hooked to the named-moderator invariant; Circles' rail-boundary death
+shaping the netting guidance. Closed with the kernel note: each application is the club-bounded
+sibling of its famous problem, the novelty budget spent once on the deployed two-plane kernel.
+CC 5.4.6 Position additionally adopts the lightnet/darknet name the transport implementation
+already carries, closing edge's dangling citation. *Lightnet settles; darknet transacts.*
+
 **CC 5.4.6 — a directed announce inherits the prohibition (#91, ruled).** The first RC4 revision.
 The clause binds the emission, not the addressing mode: on Reticulum transport no directed announce
 satisfies the purposive sentence — multi-hop path learning *is* outsider observation (path state a
