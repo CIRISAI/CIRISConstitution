@@ -5,6 +5,21 @@ each cut is validated against its sources under the skeptical rubric before it l
 
 ## 1.0-rc4 — in progress
 
+**CC 1.13.6 — the durable trace anchors on the act, not the deliberation (normative).** An assurance
+finding the substrate passed *by behaving as designed*: an aged `THOUGHT_START` with no
+`ACTION_RESULT` is purged, and nothing in the compliance surface said that was deliberate. The
+defect was documentation, so the repair is a stated position. Traces anchor on the terminal
+`ACTION_RESULT` — no action, no trace — because accountability attaches to acts, and because
+retained deliberation would be a permanent archive of unexecuted thought carrying the
+conversation's humans at their most exposed while carrying no accountability weight (CC 1.9 requires
+an agent free to consider and reject). The safety argument is reduced to one attackable invariant:
+*absence of an `ACTION_RESULT` asserts no external effect occurred* — so the sweep can only ever
+discard deliberation that produced nothing, and any counterexample is a defect in the emission path,
+never in the purge. Stated as a **named wager** (#84 discipline) with its falsification condition and
+its dye test — a totality test over effect-producing paths, explicitly *not* a retention test on
+thoughts — filed at #93, plus a rate-observability requirement on the purge and an honest residual
+on interrupted-path forensics. `CLM-trace-anchor` staged.
+
 **CC 3.3.10.1 — in-grammar ledgers: owner-serialized content, cohort-witnessed conservation (#92).**
 The ballot machinery extended to value, on a three-track prior-art sweep (theory, channels/mints,
 mutual-credit practice). Total order lives in the owner's hash chain, never the grammar (CC 3.2

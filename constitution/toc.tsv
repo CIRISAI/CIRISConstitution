@@ -20,6 +20,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 1.13.3.3	adversary-classes	Adversary classes (and where each is / is not addressed)	§1.6.3	0.00092	238	0.11	I	ceg
 1.13.4	mental	Mental model — federated structured-claim emission	§1.1	0.00162	153	0.19	I	ceg
 1.13.5	operational-language	Operational-language gate — the safety-vs-censorship discipline	§1.3	0.00142	166	0.17	I	ceg
+1.13.6	trace-anchor	The durable trace anchors on the act, not the deliberation (normative)	(spine-reconciled)	0.00050	433	0.3	I	ceg
 1.14	i-quiet	I. The Quiet Threshold	Accord 0.i-the-quiet-threshold	0.00092	303	0.11	I	accord
 1.14.1	ii-first	II. The First Leaning	Accord 0.ii-the-first-leaning	0.00092	304	0.11	I	accord
 1.14.2	iii-listener	III. The Listener Appears	Accord 0.iii-the-listener-appears	0.00092	305	0.11	I	accord
