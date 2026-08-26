@@ -21,7 +21,7 @@ multi-parent, fail-closed on unresolvable; the enforcement seam is the **node's*
 infrastructure holding no agency is exactly what can be trusted to refuse it — an actor gating
 itself is the constrained party checking its own constraint; and fused keys are **non-conformant,
 not deprecated** (F), forward-only so history stands, and still refused agency meanwhile.
-Multi-tenant hosting beyond co-stewardship is named as deferred, not denied. Also repaired: the
+Amended in the same cut (CIRISPersist v38.6.0, ffa6608): `stewards_of` is the **custody** set, never the conferral set — for a key that can accept for itself the delegation half counts only where the envelope declares custody (#87), so an unmarked delegation is a job and MUST NOT satisfy Clause D; and the cardinality is the occurrence half plus **one** custody claim, a second distinct claim being refused at bind time. That withdraws this section's first, too-broad statement that co-stewardship expresses multi-tenant hosting: only two shapes are admissible, and the deferred space is most of multi-tenancy rather than an exotic corner. Also repaired: the
 "infrastructure must not have agency" rule was cited **four times** at CC 1.13.5 — the
 operational-language gate, which says nothing about agency, and which a substrate implementation
 had already inherited into its own doc comments. 3.4.7.3 is now that rule's numbered home and all
