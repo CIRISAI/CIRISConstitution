@@ -5,6 +5,28 @@ each cut is validated against its sources under the skeptical rubric before it l
 
 ## 1.0-rc4 — in progress
 
+**CC 3.4.7.3 — the actor/substrate separation (#95, ruled).** CC enforced one direction of the
+node/agency split and was silent on its converse: a node-only key may not *receive* agency, but
+nothing stopped an actor key from *being* the infrastructure — and the live agent topology fused
+both onto one key, so `owner_of()` resolved a person to an actor where a node was asked for. Worse,
+the escape was legal: CC 4.4.3.4.3's conformance rule fired only on `node`-**only** recipients, so
+adding `agent` to a node's role-set repealed the invariant — **the loophole was spelled as a
+simplification**. Ruled in six clauses: `node` is exclusive of `agent`/`user` (A); the gate reads
+**set membership**, never purity (B) — both required, since A stops a fused key being minted and B
+protects against the ones that already exist; the actor↔node relation is **entailed, never
+asserted** (C) — neither party has standing, so the pairing derives from two human-signed edges and
+cannot be forged by either side; the common-human predicate `∃h. h=owner_of(node) ∧ h ∈
+stewards_of(agent)` (D), existential because node ownership is single-valued while stewardship is
+multi-parent, fail-closed on unresolvable; the enforcement seam is the **node's** (E), because
+infrastructure holding no agency is exactly what can be trusted to refuse it — an actor gating
+itself is the constrained party checking its own constraint; and fused keys are **non-conformant,
+not deprecated** (F), forward-only so history stands, and still refused agency meanwhile.
+Multi-tenant hosting beyond co-stewardship is named as deferred, not denied. Also repaired: the
+"infrastructure must not have agency" rule was cited **four times** at CC 1.13.5 — the
+operational-language gate, which says nothing about agency, and which a substrate implementation
+had already inherited into its own doc comments. 3.4.7.3 is now that rule's numbered home and all
+four citations repoint to it. `CLM-actor-substrate` / `CLM-common-human` staged.
+
 **CC 1.13.6 — the durable trace anchors on the act, not the deliberation (normative).** An assurance
 finding the substrate passed *by behaving as designed*: an aged `THOUGHT_START` with no
 `ACTION_RESULT` is purged, and nothing in the compliance surface said that was deliberate. The
