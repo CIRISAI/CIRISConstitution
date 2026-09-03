@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc3",
+    "cc_version": "1.0-rc4",
     "components_outside_normative": [
       "cirisbench"
     ],
@@ -21,7 +21,7 @@
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "bb7a90b9d37eb65889656808e2443994ff7afe2df4e2d60d74c6ace9f4979fd6"
+    "source_sha256": "ff76a47865de04927257cd245170834416983127b231416b23cabcb74ad3a75a"
   },
   "families": [
     {

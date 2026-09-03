@@ -3,6 +3,82 @@
 All notable changes to the CIRIS Constitution. CC is one document with one version line;
 each cut is validated against its sources under the skeptical rubric before it lands.
 
+## 1.0-rc4 — the actor/substrate line, ledgers as content, and every row resolving
+
+**Evidence lockdown — every row resolves or names an open ticket.** All eight pins re-vendored at heads (persist v40.0.0, edge v20.0.0, verify v14.1.0, agent v2.9.48, server 0.5.196, RATCHET, coherence-ratchet; conformance already current). The two closed manifest-tracking tickets (CIRISConformance#59, CIRISServer#155) are retired as pointers — 139 rows rewritten from section-level placeholders to the symbols and node ids the pinned manifests actually publish, under a strict rule: a manifest row naming a *different* claim id is that claim's evidence, never this one's. Seven rows graduate on real artifacts (the ledger pair on persist's `src/ledgers/standard.rs`, reverse-quorum on `test_271`/`test_272`, age-assurance, registry-canonical, affiliations, cohabitation); none demote — the sibling manifests back every decimal Server and Conformance do not reach. Thirty-nine rows remain `staged`, all on open tickets: the per-repo evidence asks (CIRISConformance#90, CIRISServer#536, CIRISPersist#803) plus #9, #40, #43, #71, #88, #93. `CLM-noise-N5` moves to 6.1.2, where RC3 put the rule and where conformance publishes the test. Nine toc title drifts repaired. CC 2.1 no longer names an `accountability:mode_shift` dimension — a mode shift is a superseding `delegates_to` on the delegation plane, and accountability is structural (the D23 design), so the family was never one to mint. CC 1.13.4 gains the kinds-of-change map shared with RATCHET: the 27 compliance dimensions are the Record's vocabulary, each *about* one or more of the eleven kinds; Manner and Circumstances are thin on purpose (context, carried by envelope fields), and the deep kinds want instruments, not a 28th dimension.
+
+**CC 3.4.7.3 — the actor/substrate separation (#95, ruled).** CC enforced one direction of the
+node/agency split and was silent on its converse: a node-only key may not *receive* agency, but
+nothing stopped an actor key from *being* the infrastructure — and the live agent topology fused
+both onto one key, so `owner_of()` resolved a person to an actor where a node was asked for. Worse,
+the escape was legal: CC 4.4.3.4.3's conformance rule fired only on `node`-**only** recipients, so
+adding `agent` to a node's role-set repealed the invariant — **the loophole was spelled as a
+simplification**. Ruled in six clauses: `node` is exclusive of `agent`/`user` (A); the gate reads
+**set membership**, never purity (B) — both required, since A stops a fused key being minted and B
+protects against the ones that already exist; the actor↔node relation is **entailed, never
+asserted** (C) — neither party has standing, so the pairing derives from two human-signed edges and
+cannot be forged by either side; the common-human predicate `∃h. h=owner_of(node) ∧ h ∈
+stewards_of(agent)` (D), existential because node ownership is single-valued while stewardship is
+multi-parent, fail-closed on unresolvable; the enforcement seam is the **node's** (E), because
+infrastructure holding no agency is exactly what can be trusted to refuse it — an actor gating
+itself is the constrained party checking its own constraint; and fused keys are **non-conformant,
+not deprecated** (F), forward-only so history stands, and still refused agency meanwhile.
+Amended in the same cut (CIRISPersist v38.6.0, ffa6608): `stewards_of` is the **custody** set, never the conferral set — for a key that can accept for itself the delegation half counts only where the envelope declares custody (#87), so an unmarked delegation is a job and MUST NOT satisfy Clause D; and the cardinality is the occurrence half plus **one** custody claim, a second distinct claim being refused at bind time. That withdraws this section's first, too-broad statement that co-stewardship expresses multi-tenant hosting: only two shapes are admissible, and the deferred space is most of multi-tenancy rather than an exotic corner. Also repaired: the
+"infrastructure must not have agency" rule was cited **four times** at CC 1.13.5 — the
+operational-language gate, which says nothing about agency, and which a substrate implementation
+had already inherited into its own doc comments. 3.4.7.3 is now that rule's numbered home and all
+four citations repoint to it. `CLM-actor-substrate` / `CLM-common-human` staged.
+
+**CC 1.13.6 — the durable trace anchors on the act, not the deliberation (normative).** An assurance
+finding the substrate passed *by behaving as designed*: an aged `THOUGHT_START` with no
+`ACTION_RESULT` is purged, and nothing in the compliance surface said that was deliberate. The
+defect was documentation, so the repair is a stated position. Traces anchor on the terminal
+`ACTION_RESULT` — no action, no trace — because accountability attaches to acts, and because
+retained deliberation would be a permanent archive of unexecuted thought carrying the
+conversation's humans at their most exposed while carrying no accountability weight (CC 1.9 requires
+an agent free to consider and reject). The safety argument is reduced to one attackable invariant:
+*absence of an `ACTION_RESULT` asserts no external effect occurred* — so the sweep can only ever
+discard deliberation that produced nothing, and any counterexample is a defect in the emission path,
+never in the purge. Stated as a **named wager** (#84 discipline) with its falsification condition and
+its dye test — a totality test over effect-producing paths, explicitly *not* a retention test on
+thoughts — filed at #93, plus a rate-observability requirement on the purge and an honest residual
+on interrupted-path forensics. `CLM-trace-anchor` staged.
+
+**CC 3.3.10.1 — in-grammar ledgers: owner-serialized content, cohort-witnessed conservation (#92).**
+The ballot machinery extended to value, on a three-track prior-art sweep (theory, channels/mints,
+mutual-credit practice). Total order lives in the owner's hash chain, never the grammar (CC 3.2
+single-owner ⇒ consensus number 1, Guerraoui PODC 2019 — which also corrects the stance's dated
+"no totally-ordered ledger" premise; the real exclusions are named in-text). Nine normative
+clauses: identity/unit binding, dense hash-chained entries, delegate serialization, witness-anchored
+heads with the cadence stated as the equivocation-exposure window (SUNDR's 2004 "time stamp box";
+CT's failed voluntary gossip is why the anchor is an obligation), checkpoints riding §19.7 descent
+(the regulator-endorsed summarize-and-delete shape), promotion-with-proof, the deterministic
+byte-equal conservation fold (Sardex's zero-sum invariant; PeerReview's transferable evidence),
+fork-as-adjudicated-slashing with mandatory restore-then-resync (the eltoo critique answered —
+available because the witness set is cooperative), and the non-claims (no atomicity, no
+member-vs-member privacy, no cross-cohort conservation — netting + net rail settlement, the
+CLS ~96% pattern). 1+4 lockdown holds: rides scores + subject_kind + evidence_refs + supersedes +
+cohort_scope. Staged claim rows on #92 / CIRISPersist#754. The attempted-systems record lands
+verified: Holochain's 8-year gestation vs NetzBon-on-Taler's two; SSB/Hypercore fork-death
+answered by L8's mandatory resync and L3's Keybase-shaped in-chain delegation; Sardex's
+load-bearing brokers hooked to the named-moderator invariant; Circles' rail-boundary death
+shaping the netting guidance. Closed with the kernel note: each application is the club-bounded
+sibling of its famous problem, the novelty budget spent once on the deployed two-plane kernel.
+CC 5.4.6 Position additionally adopts the lightnet/darknet name the transport implementation
+already carries, closing edge's dangling citation. *Lightnet settles; darknet transacts.*
+
+**CC 5.4.6 — a directed announce inherits the prohibition (#91, ruled).** The first RC4 revision.
+The clause binds the emission, not the addressing mode: on Reticulum transport no directed announce
+satisfies the purposive sentence — multi-hop path learning *is* outsider observation (path state a
+subpoena reaches), and the epoch-bound derivation forces either a roster-wide re-announce wave on
+every Add/Remove or a removed member keeping every peer's addressing indefinitely. The flat MUST NOT
+was never broadcast-era shorthand — the same section bans the targeted, non-broadcast per-destination
+query in the same breath. The trade on offer was a structural, claimable guarantee for a
+traffic-analysis-statistical one — a claim base CEG/RET declines to make (CC 1.13.3.1; the goal
+stands, the Anonymous Tier is its opt-in). The leak reading's sound insight is kept in-text:
+in-group MLS distribution of addressing material was never prohibited. Multi-hop scoped reach is an
+amendment-plane design question with its bar stated in-clause.
+
 ## 1.0-rc3 — the external-review remediation, the trust-root ratifications, and an honest matrix
 
 RC3 closes the open issue set. Where an issue asked for a ruling, this cut gives one; where an

@@ -47,7 +47,7 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 
 ## 2. Tier 1 — constitutional `MessageType` variants (closed; CC §4.5.1 / Standards Action)
 
-25 variants. Each row: **delivery class** · one-line contract. Body structs live in the named consumer crates; edge stays domain-agnostic.
+26 variants. Each row: **delivery class** · one-line contract. Body structs live in the named consumer crates; edge stays domain-agnostic.
 
 ### 2.1 Attestations (signed standing claims)
 
@@ -115,6 +115,14 @@ The integrity primitive here is **`sha256(body)` itself**, not an inner signatur
 | `BlobChunkFetch` | Ephemeral (request/response) | Request one chunk keyed by `(blob_sha256, chunk_sha256)`. |
 | `BlobChunkBody` | Ephemeral (response) | Carries chunk bytes; persist `put_blob_chunk` atomically verifies `sha256(bytes) == chunk_sha256` or returns `ChunkMismatch`. |
 | `BlobChunkMiss` | Ephemeral (response) | Chunk-level typed refusal sharing the `ContentMiss` `MissReason` vocabulary. |
+
+### 2.9 Substrate reply correlation
+
+Tier-1 by exclusion, not by ethical weight: the §3.3 ethical-primitive test decides what leaves for Tier 2, and what leaves must carry a schema, a canonicalization, and an API into a range steward's repo. This variant has none to carry — edge never parses its payload, and its canonicalization is the outer envelope's. It is also not expressible as Tier 2 for a structural reason: **edge holds no `kind` range** (§3.1, by design), so the substrate's own reply mechanism has no Private-Use code point available to it. Tier-1 is where it lives.
+
+| Variant | Delivery | Contract |
+|---|---|---|
+| `EphemeralResponse` | Ephemeral (response) | Carries a typed handler's response bytes back to the `Edge::send` waiter that requested them, correlated by `in_reply_to` = the request's `body_sha256`. Distinct from `OpaqueResponse`, which is the *app*-tier reply on a steward's `kind` range; this is the substrate's own. Excluded from the durable-ACK matcher exactly like `OpaqueResponse` — its `in_reply_to` is request/response correlation, never a durable-send acknowledgement. Edge is domain-agnostic to the payload: it moves the bytes the handler returned and parses none of them. |
 
 ---
 
