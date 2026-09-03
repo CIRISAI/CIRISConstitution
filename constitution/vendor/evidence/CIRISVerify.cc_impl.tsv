@@ -67,3 +67,8 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 5.1	CLM-presentation-identifier-scope	CIRISVerify	src/ciris-verify-core/src/presentation.rs#IdentifierScope	ciris-verify-core@v13.0.0
 UNASSIGNED	CLM-subject-binding	CIRISVerify	src/ciris-verify-core/src/subject_binding.rs#SubjectBinding	ciris-verify-core@v13.1.0
 UNASSIGNED	CLM-subject-binding-keyrecord	CIRISVerify	src/ciris-verify-core/src/federation_self_record.rs#check_subject_binding	ciris-verify-core@v13.1.0
+UNASSIGNED	CLM-scope-destination	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_destination	ciris-crypto@v13.4.0
+5.4.6	CLM-announce-suppress	CIRISVerify	src/ciris-verify-core/src/announce_policy.rs#may_announce	ciris-verify-core@v13.6.0
+UNASSIGNED	CLM-key-validity-window	CIRISVerify	src/ciris-verify-core/src/federation_self_record.rs#valid_until_in_envelope	ciris-verify-core@v14.0.0
+UNASSIGNED	CLM-fedcode-owned-nodes	CIRISVerify	src/ciris-verify-core/src/fedcode.rs#OwnedNode	ciris-verify-core@v14.1.0
+UNASSIGNED	CLM-keyring-rng-latch	CIRISVerify	src/ciris-keyring/src/lib.rs#mint_p256_signing_key	ciris-keyring@v14.1.0

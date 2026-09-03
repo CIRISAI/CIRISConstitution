@@ -230,26 +230,26 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.5.8	identity-set-2	`identity_type` as a set — single-key role cohabitation (CEG 0.9 addition; per CIRISRegistry#49 + CIRISAgent#856)	§11.9	0.00118	189	0.14	IV	ceg
 4.5.8.1	cohabitation	Cohabitation discipline for constitutional + substrate roles	§11.9.3	0.00101	217	0.12	IV	ceg
 4.5.8.2	amendment-what	What the amendment changes — and what it deliberately does not	§11.9.1	0.00092	254	0.11	IV	ceg
-4.5.8.3	settled	Settled in CIRISAgent#856, carried as-is	§11.9.2	0.00092	255	0.11	IV	ceg
-4.5.8.4	documents-what-6	What CEG 0.9 documents	§11.9.4	0.00092	256	0.11	IV	ceg
+4.5.8.3	settled	Settled in CIRISAgent, carried as-is	§11.9.2	0.00092	255	0.11	IV	ceg
+4.5.8.4	documents-what-6	What this documents	§11.9.4	0.00092	256	0.11	IV	ceg
 4.5.9	registry-geographic	Geographic-community privacy invariant (CEG 0.8 addition; per CIRISRegistry#48)	§11.8	0.00111	201	0.13	IV	ceg
 4.5.9.1	location-joining	Joining is opt-in — substrate does NOT solicit location	§11.8.3	0.00194	122	0.23	IV	ceg
 4.5.9.2	rough-only	Rough-only is wire-format-enforced	§11.8.1	0.00111	199	0.13	IV	ceg
 4.5.9.3	leaving	Leaving is forward-only — the audit chain preserves the historical claim	§11.8.2	0.00092	252	0.11	IV	ceg
-4.5.9.4	documents-what-5	What CEG 0.8 documents	§11.8.4	0.00092	253	0.11	IV	ceg
+4.5.9.4	documents-what-5	What this documents	§11.8.4	0.00092	253	0.11	IV	ceg
 4.5.10	registry-hash	Hash-database operator policy (CEG 0.3 addition; per CIRISRegistry#39)	§11.5	0.00100	220	0.12	IV	ceg
 4.5.10.1	hash-database	Hash-database access landscape	§11.5.1	0.00103	214	0.12	IV	ceg
 4.5.10.2	registry-operator	Operator path (CEG 0.3 default — option (a) per CIRISRegistry#39)	§11.5.2	0.00092	244	0.11	IV	ceg
 4.5.10.3	future	Future hash-coalition path (deferred; awaits CIRIS hash-coalition emergence)	§11.5.3	0.00092	245	0.11	IV	ceg
-4.5.10.4	documents-what-2	What CEG 0.3 documents	§11.5.4	0.00092	246	0.11	IV	ceg
+4.5.10.4	documents-what-2	What this documents	§11.5.4	0.00092	246	0.11	IV	ceg
 4.5.11	bootstrap-content	Bootstrap-content pattern	§11.3	0.00097	221	0.12	IV	ceg
 4.5.12	family-self-2	Self/family membership governance (CEG 0.7 addition; per CIRISRegistry#47)	§11.7	0.00094	230	0.11	IV	ceg
 4.5.12.1	forward	Forward secrecy on member departure — Option A (CEG 0.7 default)	§11.7.1	0.00423	55	0.51	IV	ceg
 4.5.12.2	envelope-multi	Multi-family membership — envelope `family_id` (CEG 0.7 default)	§11.7.2	0.00127	178	0.15	IV	ceg
 4.5.12.3	admission-self	Self-occurrence admission — single-vouch (CEG 0.7 default)	§11.7.4	0.00097	222	0.12	IV	ceg
-4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in §7.7	§11.7.3	0.00092	249	0.11	IV	ceg
+4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in CC 3.4.4	§11.7.3	0.00092	249	0.11	IV	ceg
 4.5.12.5	family-admission	Family admission — consensus_protocol (CEG 0.7 normative)	§11.7.5	0.00092	250	0.11	IV	ceg
-4.5.12.6	documents-what-4	What CEG 0.7 documents	§11.7.6	0.00092	251	0.11	IV	ceg
+4.5.12.6	documents-what-4	What this documents	§11.7.6	0.00092	251	0.11	IV	ceg
 5.1	epoch	Epoch keying + cascade (normative — D2 / D3; substrate-pending #142)	§10.5.3	0.01114	12	1.34	V	ceg
 5.2	family	Structural invisibility — `holds_bytes:sha256:*` suppression for `cohort_scope: self | family`	§10.1.4	0.00869	19	1.04	V	ceg
 5.3	endpoint	Endpoint shapes	§10	0.00180	132	0.22	V	ceg
@@ -280,7 +280,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 5.3.3.5	transport-edge	Transport — Edge layer (normative — E1–E4 lock per [§15.6.2](15_gaps.md))	§10.5.5	0.00242	101	0.29	V	ceg
 5.3.3.6	delivery	Delivery receipts (normative — D5 / V3 lock)	§10.5.4	0.00227	105	0.27	V	ceg
 5.3.3.7	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg
-5.3.3.8	documents-what	What CEG 0.10 documents	§10.5.7	0.00092	242	0.11	V	ceg
+5.3.3.8	documents-what	What the streaming surface documents	§10.5.7	0.00092	242	0.11	V	ceg
 5.3.4	multi-steward	Multi-steward + accord-holder discovery	§10.2	0.00264	94	0.32	V	ceg
 5.3.5	registry-other	Other Registry endpoints	§10.4	0.00107	207	0.13	V	ceg
 5.3.6	common	Common response shape	§10.0	0.00095	223	0.11	V	ceg
@@ -369,10 +369,10 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 8.3	concerns	Concerns + acknowledged gaps	§15	0.00174	139	0.21	APP	ceg
 8.3.1	acknowledged	Acknowledged risks (named as bets)	§15.2	0.00205	116	0.25	APP	ceg
 8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit (the honest line)	§15.7	0.00118	188	0.14	APP	ceg
-8.3.3	observer-share	CEG 0.10 / RC1 — observer-share + streaming multicast (NORMATIVE-LANDED; streaming half substrate-pending)	§15.6	0.00114	196	0.14	APP	ceg
+8.3.3	observer-share	Observer-share + streaming multicast (normative-landed; streaming half substrate-pending)	§15.6	0.00114	196	0.14	APP	ceg
 8.3.4	closed	Closed gaps	§15.1	0.00092	263	0.11	APP	ceg
 8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	§15.3	0.00092	264	0.11	APP	ceg
-8.3.6	deferred	Deferred to 0.2+ design workshops	§15.4	0.00092	265	0.11	APP	ceg
+8.3.6	deferred	Deferred to design workshops	§15.4	0.00092	265	0.11	APP	ceg
 8.3.7	identified	Identified overlaps	§15.5	0.00092	266	0.11	APP	ceg
 8.4	interoperability	Interoperability profiles (informative)	§18	0.00148	162	0.18	APP	ceg
 8.4.1	edge	The governing principle — speak CEG inside, standards at the edge	§18.2	0.00170	144	0.2	APP	ceg
