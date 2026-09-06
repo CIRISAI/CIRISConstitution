@@ -403,6 +403,111 @@ def check_namespace_coverage(errors, warnings, notes):
         )
 
 
+
+# ── Ticket-state + pin-staleness gates (CIRISConstitution#65, #63) ──────────
+# #65: "check_claims.py cannot see any of this because it never queries issue
+# state, so the decay is silent by construction." A `staged:`/`open:` token
+# names work that is pending; when the ticket closes, the token becomes a lie
+# in one of two directions — the work shipped (the row should have graduated)
+# or the ticket was closed unfixed (the row is unanchored). Either way the
+# registry is asserting something untrue and nothing notices.
+#
+# #63: a pin that never moves silently freezes the evidence surface at an old
+# commit while the manifests advance.
+#
+# Both need the network. When `gh` is unavailable they degrade to a NOTE — a
+# check that cannot run must say so rather than pass quietly.
+
+def _gh_json(args):
+    """Run gh and return parsed JSON, or None if unavailable/offline."""
+    import subprocess, json as _json
+    try:
+        out = subprocess.run(["gh"] + args, capture_output=True, text=True, timeout=25)
+    except Exception:
+        return None
+    if out.returncode != 0 or not out.stdout.strip():
+        return None
+    try:
+        return _json.loads(out.stdout)
+    except Exception:
+        return None
+
+
+def check_ticket_states(rows, errors, warnings, notes):
+    """A staged:/open: token must name an OPEN ticket (CIRISConstitution#65)."""
+    import re as _re
+    targets = {}
+    for ln, row in rows:
+        for tok in (row.get("evidence") or "").split():
+            m = _re.match(r"^(?:staged|open):([A-Za-z0-9_.-]+)#(\d+)$", tok)
+            if m:
+                targets.setdefault((m.group(1), m.group(2)), []).append(
+                    (ln, row.get("claim_id"), row.get("status")))
+    if not targets:
+        return
+    import subprocess as _sp
+    try:
+        probe = _sp.run(["gh", "auth", "status"], capture_output=True, text=True, timeout=20).returncode == 0
+    except Exception:
+        probe = False
+    if not probe:
+        notes.append(f"ticket-state gate: gh unavailable — {len(targets)} staging "
+                     f"ticket(s) unverified (the check did not run; it did not pass)")
+        return
+    closed = []
+    for (repo, num), users in sorted(targets.items()):
+        st = _gh_json(["issue", "view", num, "-R", f"CIRISAI/{repo}", "--json", "state"])
+        if st is None:
+            warnings.append(f"ticket-state gate: {repo}#{num} could not be read")
+            continue
+        if str(st.get("state", "")).upper() != "OPEN":
+            closed.append((repo, num, users))
+    for repo, num, users in closed:
+        who = ", ".join(f"{c} (L{l}, {s})" for l, c, s in users[:6])
+        errors.append(
+            f"ticket-state: {len(users)} row(s) stage on {repo}#{num}, which is CLOSED — "
+            f"either the work shipped and the row must graduate to its artifact, or the "
+            f"ticket closed unfixed and the row is unanchored. Rows: {who}")
+    if not closed:
+        notes.append(f"ticket-state gate: all {len(targets)} staging ticket(s) open")
+
+
+def check_pin_staleness(errors, warnings, notes):
+    """Report pins behind their upstream head (CIRISConstitution#63)."""
+    path = os.path.join(DOC, "evidence_pins.tsv")
+    if not os.path.exists(path):
+        return
+    lines = [l.rstrip("\n").split("\t") for l in open(path, encoding="utf-8") if l.strip()]
+    stale, unread = [], []
+    for f in lines[1:]:
+        if len(f) < 2:
+            continue
+        repo, pinned = f[0], f[1]
+        br = "master" if repo == "RATCHET" else "main"
+        import subprocess as _sp
+        try:
+            _o = _sp.run(["gh", "api", f"repos/CIRISAI/{repo}/commits/{br}", "--jq", ".sha"],
+                         capture_output=True, text=True, timeout=25)
+            head = _o.stdout.strip() if _o.returncode == 0 else ""
+        except Exception:
+            head = ""
+        if not re.fullmatch(r"[0-9a-f]{7,40}", head):
+            unread.append(repo)
+            continue
+        if not head.startswith(pinned):
+            stale.append((repo, pinned, head[:7]))
+    if unread and len(unread) == len(lines) - 1:
+        notes.append("pin-staleness gate: gh unavailable — pins unverified "
+                     "(the check did not run; it did not pass)")
+        return
+    if stale:
+        warnings.append("pin staleness: " + "; ".join(
+            f"{r} pinned {p} but head is {h}" for r, p, h in stale)
+            + " — re-vendor, or record why the pin is held")
+    else:
+        notes.append("pin-staleness gate: every evidence pin is at its upstream head")
+
+
 def main():
     xfail_blocks = "--xfail-blocks" in sys.argv
     errors, warnings, notes = [], [], []
@@ -663,6 +768,8 @@ def main():
             print(f"  {d:12} {c:3} MUST/SHALL")
 
     check_namespace_coverage(errors, warnings, notes)
+    check_ticket_states(rows, errors, warnings, notes)
+    check_pin_staleness(errors, warnings, notes)
 
     if notes:
         print(f"\n{len(notes)} note(s):")
