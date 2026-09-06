@@ -87,7 +87,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 2.6.6.2	cell	Cell containment	§0.8.2	0.00135	171	0.16	II	ceg
 2.6.6.3	documents	What CEG 0.8 documents	§0.8.3	0.00092	234	0.11	II	ceg
 2.6.7	time	Time and clocks	§0.7	0.00173	141	0.21	II	ceg
-2.6.8	key_id	NodeCode — the canonical `key_id` shorthand encoding (normative, 1.0-RC3 addition)	§0.10	0.00119	186	0.14	II	ceg
+2.6.8	key_id	FedCode — the kind-tagged identity shorthand; NodeCode v1 retained as `kind: node` (normative)	§0.10	0.00119	186	0.14	II	ceg
 2.6.9	conformance-language	Conformance language	§0.1	0.00118	191	0.14	II	ceg
 2.6.9.1	informative	Normative vs informative content (what interop requires)	§0.1.1	0.00293	85	0.35	II	ceg
 3.1	namespace	The dimension namespace	§5	0.01687	5	2.02	III	ceg

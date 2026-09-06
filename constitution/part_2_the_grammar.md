@@ -566,38 +566,45 @@ Time-skew between cosigners on a single STH ([CC 5.3.1](#5.3.1)) is bounded by t
 
 For long-lived attestations carrying `valid_until` in the future, the freshness check is "the attestation has not yet reached its `valid_until`, AND the current consumer clock is within ±5 minutes of the substrate's network-consensus clock"; a consumer whose clock drifts past the skew bound MUST fail-secure (reject) rather than accept.
 
-### 2.6.8 `key_id` — NodeCode — the canonical `key_id` shorthand encoding (normative)
+### 2.6.8 `key_id` — FedCode — the kind-tagged identity shorthand; NodeCode v1 retained as `kind: node` (normative)
 
-Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **NodeCode** is the **one** human-shareable shorthand — a compact, QR-able, checksummed render of a peer's identity for **bootstrap UX**. It is pinned here so **every implementation renders and parses the same code for the same key** — a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1](#2.6.1) JCS. It is a deterministic *render of an existing `key_id`*, **not** a new envelope field — additive on the frozen 1+4 surface. NodeCode resolution is **DNS-free**: the decoded `key_id` resolves to a destination via the signed `transport_destination` → Reticulum chain ([CC 3.3.6.2](#3.3.6.2) / [CC 4.4.3.2.4.1](#4.4.3.2.4.1)); a NodeCode carries no hostname.
+Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **FedCode** is the **one** human-shareable shorthand — a compact, QR-able, checksummed render of a federation entity's identity for **bootstrap UX** — pinned here so **every implementation renders and parses the same code for the same key**, a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1](#2.6.1) JCS. It is a deterministic render of an existing `key_id`, **not** a new envelope field — additive on the frozen 1+4 surface; the `kind` byte is a payload discriminator of the same discipline as `subject_kind` riding the single `scores` shape ([CC 3.3.2](part_3_the_namespace.md)). Resolution is **DNS-free**. The reference implementation is CIRISVerify (`fedcode.rs`, FSD-003); every other component decodes through it.
 
-**Binary payload (normative):**
-
-```
-offset  size  field
-------  ----  -----
-   0      1   version                 = 0x01
-   1     32   key_id_hash             = SHA-256(key_id_str, UTF-8)
-  33     32   pubkey_ed25519          (raw 32 bytes)
-  65      1   key_id_str_len          (0–255)
-  66      N   key_id_str              (UTF-8)
- 66+N     1   transport_hint_len      (0–255)
- 67+N     M   transport_hint          (UTF-8; OPTIONAL — len 0 if absent)
-67+N+M    1   alias_hint_len          (0–255)
-68+N+M    K   alias_hint              (UTF-8; OPTIONAL — len 0 if absent)
-   …      2   crc16                   = CRC-16-CCITT over ALL preceding bytes
-```
-
-- All length-prefixed fields are **1-byte** length (max 255 UTF-8 bytes); a field overflow is a malformed NodeCode.
-- `key_id_hash` is the stable 32-byte fingerprint (suitable for binary-only Edge ANNOUNCE surfaces); `key_id_str` carries the display form so a round-trip preserves exactly what the user saw. Both are carried — a decoder MUST verify `SHA-256(key_id_str) == key_id_hash`.
-- **CRC-16-CCITT**: polynomial `0x1021`, init `0xFFFF`, **no** final xor, big-endian; computed over every byte before the trailing 2.
-
-**String form (normative):** the payload is **RFC 4648 base32** (alphabet `A–Z2–7`) with padding **stripped** on encode (re-padded on decode), then split into **4-character groups joined by `-`** and prefixed with **`CIRIS-V1-`**:
+**Tied to the user, not the node (the model).** The v1 **NodeCode** (`CIRIS-V1-`) rendered a *node's* key. The code is now tied to the **entity** — five kinds mapping 1:1 onto [CC 3.4.7.1](part_3_the_namespace.md) `identity_type` and the rostered `subject_kind`s:
 
 ```
-CIRIS-V1-ABCD-EFGH-IJKL-…
+kind(1): 1=user  2=agent  3=node  4=family  5=community
 ```
 
-The encoded form is **case-insensitive** (decoder upper-cases input) and a conformant decoder MUST tolerate dashes, embedded whitespace, and the dash-free QR form. The version token in the prefix (`V1`) tracks the payload `version` byte; a future layout bumps both.
+A `user` code is the owner's identity; the owner's **nodes and transport are optional**. A code that carries them resolves with no directory — first contact, a QR across a table, an air-gapped hand-off. A code that carries none resolves through the **federation directory**: the consumer walks `nodes_owned_by(U)` — the exact inverse of `owner_of` ([CC 3.2](part_3_the_namespace.md); `n ∈ nodes_owned_by(U)` iff `owner_of(n) == U`, held by construction) — to find the nodes to transport to. A node whose owner resolves ambiguous is **skipped, not fatal**: one poisoned node must not make its owner unroutable, while a direct query about that node still fails closed.
+
+**Wire format (normative).** Binary payload, then **CRC-16-CCITT** (polynomial `0x1021`, init `0xFFFF`, no final xor) appended as 2 bytes big-endian, then **RFC 4648 base32** (alphabet `A–Z2–7`, padding stripped on encode, re-padded on decode), prefixed by the version token and grouped into 4-character dash-separated chunks for display; the QR form is ungrouped. Decoders normalize (drop whitespace, upper-case, strip dashes) and accept the undashed prefix. All length-prefixed fields are 1-byte length, ≤ 255 UTF-8 bytes; an overflow is malformed.
+
+```
+v2 payload  (prefix CIRIS-V2-)
+  version(1)=0x02 | kind(1) | sha256(key_id)(32) | ed25519_pubkey(32)
+  | LP(key_id) | hint(transport) | hint(alias) | hint(group_key_id)
+v3 payload  (prefix CIRIS-V3-)  — all v2 fields byte-identical, then:
+  node_count(1) = 0..=16
+  node_count × [ LP(node_key_id) | transport_ed25519(32) ]
+  pqc_commitment: 0x00 absent | 0x01 + 32 raw bytes = sha256(ML-DSA-65 pubkey)
+```
+
+`LP` = 1-byte length prefix + UTF-8; `hint` = `0x00` when absent, else `LP`. `group_key_id` is the family/community `*_key_id`, absent otherwise. `sha256(key_id)` binds the display `key_id` into the CRC-protected payload — a decoder MUST verify it against `key_id`. The v1 layout is retained unchanged: `version=0x01 | key_id_hash(32) | pubkey(32) | LP(key_id_str) | LP(transport_hint) | LP(alias_hint) | crc16` under `CIRIS-V1-`.
+
+**Constraints (each MUST be enforced at encoder AND decoder — a code minted by another implementation is exactly the case an encoder cannot police).**
+
+1. **An embedded node key is the node's TRANSPORT Ed25519 — never the owner's federation key, never the node's federation key.** A destination derived from a federation key is `sha256(fed)[..16]`, an explicit-hash destination that categorically cannot be announced, so no peer can self-learn a route to it (CIRISServer#335 is the production record: every node reported `knows_peer = true` and zero traces arrived, and the false rooting then *prevented* recovery). A code whose embedded transport key equals the owner's pubkey MUST be rejected.
+2. **Only `kind = user` MAY embed nodes.** "The owner's nodes" is meaningless for a node, and a group's destinations are group-scoped material a code MUST NOT carry at all ([CC 5.4.6](part_5_transport_substrate.md), ruled in CIRISConstitution#91). A code carries **lightnet** facts only — federation-scope identity that already announces and carries no anonymity claim.
+3. **`node_count ≤ 16` and total payload ≤ 1024 bytes before base32.** Bounding the count without bounding the size bounds the wrong thing: 16 × 255-byte ids exceeds what a QR can render, defeating the hand-off the format exists for.
+4. **Empty is valid and is the default.** A code with no nodes and no commitment MUST encode as **v2, byte-identically**, so nothing already issued moves; only a non-empty tail emits `CIRIS-V3-`.
+5. **Compatibility.** v1 decodes as `kind: node`; v2 decodes unchanged; a v3 decoder accepts all three prefixes; a v2-only decoder MUST reject `CIRIS-V3-` outright rather than mis-parse it — the prefix differs before any payload byte is read.
+
+**The PQC commitment (normative — CIRISVerify#272).** A code names an Ed25519 key and nothing else, but the substrate takes `federation_keys` writes only at `algorithm: hybrid` (Ed25519 + ML-DSA-65; [CC 5.3.2.4.3.1](part_5_transport_substrate.md)) — so a code-admitted key had no PQC half to register and first contact had no conformant path. The ML-DSA-65 public key is 1952 bytes, which would end the code's life as something a person can read aloud; the code therefore carries the **32-byte commitment** `sha256(raw ML-DSA-65 public key)`. Rules: **(a)** the host admits the classical half plus the commitment, fetches the ML-DSA body through the existing Key Pull, and verifies it against the commitment **before** writing a hybrid record — nothing is registered until both halves are present and bound, so the hybrid-only rule is preserved, not weakened; **(b)** it applies to **any** kind of code — a plain `user` code with no nodes emits v3 with `node_count = 0`; **(c)** it is presence-tagged and **last**, so a v3 code minted before it still decodes with the commitment absent; **(d)** the API form is exactly 64 **lowercase** hex characters, **rejected, never repaired** — normalizing case would let two spellings of one identity mint two codes; **(e)** a FedCode is **unsigned**: the commitment inherits exactly the trust of the code carrying it and adds no authority — a conforming implementation MUST NOT treat a commitment match as authentication of the identity; what it buys is that a Key Pull cannot be substituted after the fact. A code with **no** commitment fails closed at the pull check: there is nothing to bind the pulled key to.
+
+**`key_id` format (normative — FSD-003 §4).** `key_id = "<label>-<fingerprint>"`, `fingerprint` = the first **10 base32 characters** (50 bits) of `sha256(ed25519_pubkey)`, lowercased; `label` is lowercased and reduced to `[a-z0-9-]`, cosmetic. **Collision-free by construction** — the suffix is bound to the key, so two entities choosing one label never collide, with no registry round-trip; **verifiable** — anyone recomputes the suffix from the pubkey (a random UUID cannot do this: one could claim another's); friendly — `eric-moore-k7f3qd2pza` reads as a name. Registry global-uniqueness remains a backstop; correctness does not depend on it. A deployment expecting more than 2³² identities under one label SHOULD raise the fingerprint length.
+
+**Onboarding — usercode → owner (the chosen model).** Put the owner's usercode (`kind: user`) in a node's configuration and the node becomes one of the owner's devices with **one approval tap and no PIN or QR handshake** — under the honest constraint of [CC 1.13.2](part_1_foundation.md): owner-binding MUST be a **user-signed** `delegates_to`, so a node cannot make itself owned by reading a pubkey. On boot the node decodes the usercode, learns its intended owner `U`, and self-registers as a **pending `identity_occurrence` of `U`** ([CC 3.3.6](part_3_the_namespace.md)) — trust-and-serve only until owned; `U`'s client lists pending occurrences naming `U`; `U` approves, and their hardware-rooted key signs `delegates_to(U → node)`. The pending-until-approved window **is** the safety property: a usercode is public (a pubkey), so a stolen one lets a node *request* ownership, never *obtain* it. The rejected alternative — a usercode embedding a pre-authorized signed delegation so the node binds with no tap — is a **bearer credential** (theft = silent ownership) and is NOT the default; if ever added it MUST be expiring, scope-limited, and revocable, by amendment.
 
 ### 2.6.9 `conformance-language` — Conformance language
 
