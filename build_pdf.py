@@ -159,19 +159,25 @@ def versioned_pdf_name():
     -<VERSION>.<n>.pdf, with n read from whatever same-version build is sitting
     in the repo root (every rebuild iterates the value that is there; a version
     bump resets to 1). On merge to main the next build collapses the name to the
-    bare version, and it stays there. Returns (new_name, [stale files])."""
+    bare version, and it stays there.
+
+    Only SAME-VERSION files are ever swept. Earlier releases
+    (ciris_constitution-1.0-rc3.pdf, -rc4.pdf, ...) persist in the tree so
+    published links keep resolving, and CIRISConstitution-latest.pdf — the
+    permalink, written by the finalize workflow on main — is never touched here.
+    Returns (new_name, [stale same-version files])."""
     import glob as _glob
     clean = f"ciris_constitution-{VERSION}.pdf"
     numbered = re.compile(rf"ciris_constitution-{re.escape(VERSION)}\.(\d+)\.pdf$")
-    everything = _glob.glob(str(HERE / "ciris_constitution-*.pdf"))   # ALL versions —
-    # a version bump sweeps the previous version's PDF; git history keeps it
+    same_version = [p for p in _glob.glob(str(HERE / "ciris_constitution-*.pdf"))
+                    if Path(p).name == clean or numbered.search(p)]
     is_prerelease = re.search(r"rc\d", VERSION.lower()) is not None
     if not is_prerelease or _branch() == "main":
-        return clean, [p for p in everything if Path(p).name != clean]
-    nums = [int(m.group(1)) for p in everything if (m := numbered.search(p))]
+        return clean, [p for p in same_version if Path(p).name != clean]
+    nums = [int(m.group(1)) for p in same_version if (m := numbered.search(p))]
     n = max(nums, default=0) + 1
     name = f"ciris_constitution-{VERSION}.{n}.pdf"
-    return name, [p for p in everything if Path(p).name != name]
+    return name, [p for p in same_version if Path(p).name != name]
 
 if shutil.which("pdflatex"):
     for _ in range(2):  # two passes to resolve hyperref/toc references
@@ -179,7 +185,7 @@ if shutil.which("pdflatex"):
                        cwd=HERE, check=True, stdout=subprocess.DEVNULL)
     pdf_name, stale = versioned_pdf_name()
     shutil.move(str(HERE / f"{stem}.pdf"), str(HERE / pdf_name))
-    for p in stale:                       # one tracked PDF per version
+    for p in stale:                       # one tracked PDF per version (same version only)
         Path(p).unlink(missing_ok=True)
     (HERE / "ciris_constitution.pdf").unlink(missing_ok=True)   # legacy fixed name
     for ext in (".aux", ".log", ".out", ".tex"):

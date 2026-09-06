@@ -1,9 +1,11 @@
 name: pdf-finalize
 # On merge to main, collapse the pre-release PDF name (ciris_constitution-<V>.<n>.pdf)
-# to the bare version (ciris_constitution-<V>.pdf) and keep it there. Loop-safe:
-# commits only when the FILENAME SET is wrong (a numbered build present, or the
-# clean name absent) — never on byte differences, so the finalize commit itself
-# triggers a run that finds nothing to do.
+# to the bare version (ciris_constitution-<V>.pdf), keep it there, and refresh the
+# permalink CIRISConstitution-latest.pdf as a byte copy of it. Earlier releases
+# (-rc3.pdf, -rc4.pdf, ...) are never removed: published links must keep resolving.
+# Loop-safe: commits only when the CURRENT version's filename set is wrong (a numbered
+# build present, the clean name absent, or the permalink absent) — never on byte
+# differences, so the finalize commit itself triggers a run that finds nothing to do.
 on:
   push:
     branches: [main]
@@ -18,8 +20,8 @@ jobs:
         id: state
         run: |
           V=$(cat VERSION)
-          EXTRA=$(ls ciris_constitution-*.pdf 2>/dev/null | grep -v -x "ciris_constitution-${V}.pdf" || true)
-          if [ -n "$EXTRA" ] || [ ! -f "ciris_constitution-${V}.pdf" ]; then
+          NUMBERED=$(ls ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true)
+          if [ -n "$NUMBERED" ] || [ ! -f "ciris_constitution-${V}.pdf" ] || [ ! -f "CIRISConstitution-latest.pdf" ]; then
             echo "finalize=yes" >> "$GITHUB_OUTPUT"
           else
             echo "finalize=no" >> "$GITHUB_OUTPUT"
@@ -30,11 +32,14 @@ jobs:
       - name: Rebuild as the release name
         if: steps.state.outputs.finalize == 'yes'
         run: PDF_BRANCH=main python3 build_pdf.py
-      - name: Commit the finalized PDF
+      - name: Commit the finalized PDF and refresh the permalink
         if: steps.state.outputs.finalize == 'yes'
         run: |
+          V=$(cat VERSION)
+          cp "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A ciris_constitution-*.pdf
-          git rm -q --cached $(git ls-files 'ciris_constitution-*.pdf' | grep -E '\.[0-9]+\.pdf$') 2>/dev/null || true
-          git commit -m "PDF: finalize $(cat VERSION) on main" && git push
+          git add "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf
+          git rm -q --cached ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true
+          rm -f ciris_constitution-${V}.[0-9]*.pdf
+          git commit -m "PDF: finalize ${V} on main (permalink refreshed; earlier releases retained)" && git push
