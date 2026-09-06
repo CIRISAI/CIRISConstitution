@@ -30,6 +30,7 @@ cc_decimal_id	cc_claim_id	conformance_test_id(s)	freeze_gate_vector(s)	status
 3.4.13	CC-3.4.13-age-band-one-way-ratchet	tests/test_351_age_band_ratchet.py::test_age_band_pre_declaration_is_unknown,tests/test_351_age_band_ratchet.py::test_self_declared_minor_resolves_minor,tests/test_351_age_band_ratchet.py::test_self_declared_adult_cannot_graduate_a_minor,tests/test_351_age_band_ratchet.py::test_witness_assurance_outranks_self	-	green
 4.4.3.2.8	CC-4.4.3.2.8-affiliations-cohort-scope	tests/test_262_affiliation_cohort_scope.py	-	green
 4.4.3.2.8	CC-4.4.3.2.8-affiliations-membership-lifecycle	tests/test_263_affiliation_membership_lifecycle.py	-	green
+4.5.1.1	CC-4.5.1.1-field-processor-matrix-every-wheel	tests/test_583_field_conformance_manifest.py	field_processor_matrix	green
 4.5.4	CC-4.5.4-moderator-existence-admission	tests/test_271_moderator_existence_gate.py::test_live_moderator_resolves_for_moderated_capability,tests/test_271_moderator_existence_gate.py::test_moderator_loss_resolves_to_absence,tests/test_271_moderator_existence_gate.py::test_stewardless_community_refused_at_admission,tests/test_271_moderator_existence_gate.py::test_empty_roster_community_resolves_no_moderator	-	green
 4.5.8.1	CC-4.5.8.1-cohabitation	tests/test_580_role_set_cohabitation.py	-	green
 4.5.13	CC-4.5.13-infohazard-consent-gate-enforcement	tests/test_272_infohazard_consent_gate.py::test_viewing_flagged_content_requires_consent_enforced	-	green
