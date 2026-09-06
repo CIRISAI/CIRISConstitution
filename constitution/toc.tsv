@@ -145,6 +145,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.4.3	system	Substrate-self-report reservations (`system:*`)	§7.2	0.00424	54	0.51	III	ceg
 3.4.4	family-self	Self/family membership-event reservations (CEG 0.7 addition)	§7.7	0.00385	64	0.46	III	ceg
 3.4.5	capacity-score	Self-emission polarity — who may speak about whom	§7.5	0.00324	78	0.39	III	ceg
+3.4.5.1	self-report-route	How a self-report reaches a peer, and what a peer owes it (normative)	(spine-reconciled)	0.00050	437	0.3	III	ceg
 3.4.6	reservation-delivery	Delivery-receipt reservation (CEG 0.10 addition)	§7.9	0.00190	126	0.23	III	ceg
 3.4.7	enforcement	The enforcement rule (normative)	§7.0	0.00178	134	0.21	III	ceg
 3.4.7.1	identity-set	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	§7.0.1	0.00329	77	0.39	III	ceg
