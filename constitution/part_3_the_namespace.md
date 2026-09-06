@@ -114,6 +114,30 @@ Producers MUST emit v2. The closed-vocabulary [CC 4.2.1.1](part_4_composition_go
 
 Canonical leaves: `system:*`, `audit_chain:hash_continuity`, `corpus_health:n_eff_measurable`, `identity_continuity:relational_anchor`, `federation_directory:replication_lag`. Polarity: signed. Authors: see [CC 8.1](part_8_appendices.md) Persist leaf glossary for narrative-name → canonical-leaf mapping.
 
+#### 3.1.3.1 `session-claim` — `session:*` — which occurrence of a self is handling an exchange (normative — CIRISConstitution#98)
+
+Distinct from the substrate self-reports above: these are **occurrence** self-reports, not substrate ones. Persist is the steward — it owns the rows, the projection, the merge rule and the read — and it enforces both rules below today; this section is the row those validators read from, so that two of them cannot apply different predicates to one artifact.
+
+**The problem it solves.** A *self* is one federated identity plus the N nodes it stewards — its **occurrences**. An attestation addressed to a fed id fans out to every one of them, because a fed id has no transport path of its own; delivery is therefore N-to-M and **exactly one occurrence may act**. The claim is keyed by `(community, session)`: *"which node is my self?"* has no answer — a self is legitimately doing several things at once, an agent scouting in one community while the person is on video in another — but *"which node is handling session z in community B?"* does. Canonical leaf `session:claim:v1`; the family governs **any addressed, stateful exchange** — a session, a claim flow, a moderation duty, a request expecting one reply — and is not chat-specific.
+
+**Registry row (CC 3.1.7 R1 — this is the catalogue row the validators read).**
+
+| Prefix | Description | Polarity | Reserved? |
+|---|---|---|---|
+| `session:{kind}` | Which occurrence of a self is handling an addressed, stateful exchange. Canonical leaf `session:claim:v1`; `{kind}` open vocabulary per [CC 4.5.1.1](part_4_composition_governance.md). Keyed by `(community, session)` — a routing table, never a leader election, and not chat-specific. Emitter: **self-report** (`attesting_key_id` = `attested_key_id` = the claiming occurrence). Composition: **convergent merge** — earliest `claimed_at`, ties on the lowest occurrence `key_id`. Projection ceiling **`Cohort`** at every commons tier, no `authority` branch. | signed | **Yes — [CC 3.4.5](part_3_the_namespace.md) self-report** |
+
+**This is a routing table, not a leader election.** Nothing here elects a node, confers standing, or ranks occurrences. Election does not belong on this plane at all.
+
+**Emitter — self-report (normative).** `attesting_key_id` MUST equal `attested_key_id` and MUST be the claiming occurrence. A row about an occurrence authored by anyone else is not that occurrence's claim and MUST NOT be folded as one — the same discipline [CC 3.4.5](part_3_the_namespace.md) states for `config:{scope}`, and for the same reason: a third-party assertion of where you are attending is a rumour.
+
+**Composition — convergent merge (normative).** There is no compare-and-swap across a mesh, so concurrent claims are **expected rather than prevented** and MUST settle on **earliest `claimed_at`, ties broken on the lowest occurrence `key_id`**. The tie-break is load-bearing, not decoration: a fan-out arrives at once and clocks are coarse, so without a total order two nodes would disagree about the survivor forever, each correctly applying "earliest wins". Because the rule is convergent from either arrival order, every occurrence computes the same holder with **no coordination round-trip**. Consumers MUST still make handling idempotent per attestation id — determinism only bites once views agree, and replication lag means they transiently do not. A claim goes **stale** and becomes claimable again so a dead node cannot hold a session forever; staleness is the **consumer's** horizon, since the substrate cannot know whether a node is attending.
+
+**The invariant beneath both rules (normative).** **An unclaimed exchange is never acted on** — not by a quorum, not by the lowest id, and **not by a single-node self**. Being the only occurrence is not authority to act; it means there is one place where nobody is home. Attendance is encoded as **presence in the table**: an unattended occurrence is *absent*, never present with a weak claim. A weak-claim value is one a careless comparison can promote into a right to act, so no such variant may exist.
+
+**Projection ceiling: `Cohort` at every commons tier, with no `authority` branch (normative — a decided row, not a default).** A trust root is not a party to someone else's session. The ceiling is stated as a decision, with its reason, precisely so a later tidying sweep cannot "finish" the row by lifting it: at `Global` the family would publish an **attendance map of a person's devices** — which node they are chatting from, which is running an agent, which is on video — to the whole mesh. That is the [CC 5.2](part_5_transport_substrate.md) structural-invisibility promise inverted, and it would arrive as a refactor rather than a ruling.
+
+**What the substrate does not own.** Attendance itself. *"A human is present here"* / *"an agent is running here"* is not a storage fact, and no substrate can know it; when to claim, renew, and release is the consumer's decision.
+
 ### 3.1.4 `transport-delivery` — CIRISEdge — transport, delivery, reachability
 
 **Steward**: [`CIRISEdge/MISSION.md`](https://github.com/CIRISAI/CIRISEdge/blob/main/MISSION.md). Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md).
@@ -252,7 +276,7 @@ This detector is justice made measurable: it watches for harm that no single com
 
 | Prefix | Description | Polarity | Reserved? |
 |---|---|---|---|
-| `config:{scope}` | A node's declared operating configuration, published as an auditable record rather than inferred from behaviour. `{scope}` open vocabulary per [CC 4.5.1.1](part_4_composition_governance.md); canonical scopes `admission`, `replication`, `moderation`, `transport`. Distinct from `agent_files:config:{kind}` ([CC 3.1.9.1](part_3_the_namespace.md)), which addresses config *bytes*; this dimension attests the config a node is *running*. A configuration record is not a verdict about any other party — it is only ever about the emitting node. | signed | **Yes — [CC 3.4.5](part_3_the_namespace.md)** |
+| `config:{scope}` | A node's declared operating configuration, published as an auditable record rather than inferred from behaviour. `{scope}` open vocabulary per [CC 4.5.1.1](part_4_composition_governance.md); canonical scopes `admission`, `replication`, `moderation`, `transport`, `load` (the [CC 4.2.1.4](part_4_composition_governance.md) operational self-report; canonical `state` value `shedding`). Distinct from `agent_files:config:{kind}` ([CC 3.1.9.1](part_3_the_namespace.md)), which addresses config *bytes*; this dimension attests the config a node is *running*. A configuration record is not a verdict about any other party — it is only ever about the emitting node. | signed | **Yes — [CC 3.4.5](part_3_the_namespace.md)** |
 
 #### 3.1.9.1 `contributions` — Files-as-Contributions joint claim
 

@@ -7,7 +7,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 114,
+    "n_families": 115,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
@@ -15,13 +15,13 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 35,
-      "persist": 5,
+      "persist": 6,
       "registry": 10,
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "ff76a47865de04927257cd245170834416983127b231416b23cabcb74ad3a75a"
+    "source_sha256": "8f809763ee82b198c9d8e6d9fb202fc3b6228467909eff83ba5fbf336f187fc4"
   },
   "families": [
     {
@@ -1017,6 +1017,19 @@
       "polarity": "signed",
       "prefix": "seed_holder_voting_alignment:{cell}",
       "reserved": false
+    },
+    {
+      "cc_section": "3.1.3.1",
+      "description": "Which occurrence of a self is handling an addressed, stateful exchange.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "session:{kind}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      }
     },
     {
       "cc_section": "3.1.9.2",

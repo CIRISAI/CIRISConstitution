@@ -127,6 +127,25 @@ canonical = sha256(
 
 This ratifies the CIRISVerify v6.10.0 first-implementation layout (issue #109), with one addition the implementation flagged as open: the **mandatory `resumes_halt_id` field** (its sub-Q1). Verify adjusts by the one-field change; until then its layout is first-impl-pending-cross-confirm, now confirmed with that field added.
 
+#### 4.2.1.4 `operational-relief` — Operational self-report vs. relief — the node detects, the root relieves (normative — CIRISConstitution#96)
+
+The four rules above constrain **authoring on the delegation plane**. Under load the question an operator actually faces is the other one — *what may a node do about itself?* — and answering it only by negation ("it may not author `mesh_config`; therefore…") is what let two implementations get it wrong in opposite directions in one week. The composition is stated here.
+
+**Two planes, and neither may be authored on the other's.**
+
+| plane | author | says |
+|---|---|---|
+| `config:load` ([CC 3.1](part_3_the_namespace.md) / [CC 3.4.5](part_3_the_namespace.md)) | **the node**, on `infra:attest`, `witness_relation: self` | *"I am at capacity"* — about **itself** |
+| `mesh_config:{key}` ([CC 4.2.1](#421-authority--authority-scope)) | **the trust root**, on the [CC 3.2](part_3_the_namespace.md) delegation plane | *"nodes under me shall carry ≤ N"* — about **others** |
+
+**Operational self-report vs. relief (normative).** A node MAY attest its own carried load as `config:load` — a self-report on `infra:attest`, `witness_relation: self`, bounded by `expires_at`, about the emitting node and no other party. A node MUST NOT author a `mesh_config` value: that plane is the trust root's and governs what other nodes carry. A root MAY relieve across its nodes under rules (1)–(3). The two **compose** — a node's self-report is evidence a root may act on; a root's relief is a bound the node consumes — and neither substitutes for the other. A `mesh_config` key governing carried load remains subject to rule (2): it MUST NOT be admitted before a consumer processor exists for it, or a relief is reported as taken while the node keeps working at full rate.
+
+**A node MAY always do less of its own optional work.** Reducing its own housekeeping under measured contention is a **local act**: it declares nothing, confers nothing, needs no authority, and is available to every node at every moment. It was previously derivable but nowhere stated, so an implementer could not tell whether even that was in bounds.
+
+**Why the shapes differ, and why both expire.** A node holds `infra:attest` — *"vouch as the delegator's infrastructure"* — from its owner-binding, or for a canonical from the accord's charter; every node is delegated its rights **for a reason**, and speaking about its own condition is within them ([CC 3.4.7.3](part_3_the_namespace.md) Clause E is the same principle at the enforcement seam: infrastructure may sign its own refusal without new authority). What a node lacks is standing over **others**, which is exactly what `mesh_config` confers. Both records are short-lived for one structural reason: **the TTL attaches to unilateralness** (rule (3)'s own logic) — a root's relief is unilateral over its nodes, and a node's self-report is unilateral about itself, so a node's standing does not survive the condition that prompted it.
+
+**Enforcement is three-legged and now complete.** [CC 3.4.5](part_3_the_namespace.md)'s self-or-owner rule for `config:*` is enforced at **substrate admission** as [CC 3.4.7](part_3_the_namespace.md) requires, not by producer obligation alone — without the gate, any peer could make a healthy node look like it is shedding, and a third-party `config:load` staged at the put door would route around the producer rule entirely.
+
 ### 4.2.2 `hardware-class` — Hardware-class taxonomy
 
 | Value | Use |

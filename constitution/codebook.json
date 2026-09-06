@@ -1,6 +1,6 @@
 {
   "_note": "Deterministic dual-ID codebook for the CIRIS Constitution (CC). Both maps are 1:1. decimal_id and semantic_id are deterministic functions of the unified corpus (graph_unified.json unified_pagerank conscious-mesh weights + the fixed Part map); same corpus => byte-identical codebook. title->id is NOT codebook-free: it depends on the measured importance distribution, by design.",
-  "n_concepts": 434,
+  "n_concepts": 436,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -435,7 +435,9 @@
     "3.4.14": "cc:3.4.14",
     "3.3.10.1": "cc:3.3.10.1",
     "1.13.6": "cc:1.13.6",
-    "3.4.7.3": "cc:3.4.7.3"
+    "3.4.7.3": "cc:3.4.7.3",
+    "4.2.1.4": "cc:4.2.1.4",
+    "3.1.3.1": "cc:3.1.3.1"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -871,7 +873,9 @@
     "cc:3.4.14": "3.4.14",
     "cc:3.3.10.1": "3.3.10.1",
     "cc:1.13.6": "1.13.6",
-    "cc:3.4.7.3": "3.4.7.3"
+    "cc:3.4.7.3": "3.4.7.3",
+    "cc:4.2.1.4": "4.2.1.4",
+    "cc:3.1.3.1": "3.1.3.1"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -1307,7 +1311,9 @@
     "co-stewarded": "7.3",
     "ledger": "cc:3.3.10.1",
     "trace-anchor": "cc:1.13.6",
-    "actor-substrate": "cc:3.4.7.3"
+    "actor-substrate": "cc:3.4.7.3",
+    "operational-relief": "cc:4.2.1.4",
+    "session-claim": "cc:3.1.3.1"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1743,7 +1749,9 @@
     "cc:3.4.14": "synthesis-disclosure",
     "cc:3.3.10.1": "ledger",
     "cc:1.13.6": "trace-anchor",
-    "cc:3.4.7.3": "actor-substrate"
+    "cc:3.4.7.3": "actor-substrate",
+    "cc:4.2.1.4": "operational-relief",
+    "cc:3.1.3.1": "session-claim"
   },
   "legacy_to_decimal": {
     "§0": "2.6",
