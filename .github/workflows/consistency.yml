@@ -6,7 +6,11 @@ name: consistency
 # spine; a semantic-id that disagrees with its prose heading; a cross-repo pointer
 # naming an artifact the pinned manifest does NOT publish; and a status its own
 # evidence cannot support (`established` without a resolvable artifact, `normative`
-# with one).
+# with one); and a dimension family documented in the prose that carries no registry
+# row and no registered parent — CC 3.1.7 R2's "admits under an authority nobody chose",
+# which was previously silent because the namespace generator harvests only CC 3.1.x.
+# The known unowned set is PINNED: a new orphan fails, and so does a pin that outlives
+# its gap.
 #
 # A cross-repo pointer whose pinned manifest simply does not reach that section yet
 # still warns rather than fails — pending is not dead.

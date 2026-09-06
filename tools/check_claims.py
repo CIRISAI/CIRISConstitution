@@ -292,6 +292,117 @@ def report_toc_drift(toc, prose, errors, warnings, notes):
 
 # --- main --------------------------------------------------------------------
 
+
+# ── Namespace coverage gate (CIRISConstitution#102) ──────────────────────────
+# CC 3.1.7 R2: an unregistered family "admits under the ProducerSteward
+# fallback, an authority nobody chose for it, silently and cumulatively." The
+# namespace generator harvests ONLY tables under a `3.1.x` component heading,
+# because registration needs an owning component. A dimension-family table
+# documented anywhere else therefore never registers — silently. This gate
+# enumerates every prefix table in the prose and asserts registry coverage, so
+# the failure is loud.
+#
+# PINNED, not tolerated: the orphan set below is the measured inventory at the
+# time of the audit. A NEW orphan is an error (a family stopped registering, or
+# was minted outside 3.1). A pinned orphan that HAS registered is also an error
+# — a pin must not outlive the gap it names.
+
+# Sections whose prefix-shaped tables are not family catalogues at all.
+NON_CATALOGUE_SECTIONS = {
+    "2.1":         "envelope fields, not dimension families",
+    "4.1.3":       "already-rejected wire additions — registering them would be wrong",
+    "4.1.5":       "rejected proposals from the stress test",
+    "4.4.3.4.3":   "delegated_scope classes (infra:* / agency:*), not dimensions",
+    "8.3.4":       "closed-gaps appendix — restatements of families registered elsewhere",
+}
+
+# Families with no registered owner, documented outside CC 3.1. Each admits
+# under R2's unchosen fallback until an owning component is assigned.
+PINNED_UNOWNED_FAMILIES = {
+    "event:lifecycle:{state}":   "3.3.8",
+    "event:attendance":          "3.3.8",
+    "news:*":                    "3.3.11",
+    "encyclopedia:*":            "3.3.11",
+    "chat:*":                    "3.3.11",
+    "blog:*":                    "3.3.11",
+    "topical_relation:{kind}":   "3.3.11",
+    "image:*":                   "3.3.12",
+    "audio:*":                   "3.3.12",
+    "video:*":                   "3.3.12",
+    "film:*":                    "3.3.12",
+    "model_3d:*":                "3.3.12",
+}
+PINNED_UNOWNED_TRACKED_BY = "CIRISConstitution#102 (owner assignment)"
+
+
+def check_namespace_coverage(errors, warnings, notes):
+    """Every prose family registers, is a leaf of a registered family, or is pinned."""
+    reg_path = os.path.join(ROOT, "manifests", "namespace_registry.json")
+    if not os.path.exists(reg_path):
+        warnings.append("namespace coverage: registry not built; skipped")
+        return
+    import json as _json
+    with open(reg_path, encoding="utf-8") as fh:
+        reg = {f["prefix"] for f in _json.load(fh)["families"]}
+    reg_stems = {p.split(":")[0] for p in reg}
+
+    table_row = re.compile(r"^\s*\|(.+)\|\s*$")
+    backtick = re.compile(r"`([^`]+)`")
+    seen, orphans = set(), []
+    import glob as _glob
+    for path in sorted(_glob.glob(os.path.join(DOC, "part_*.md"))):
+        sec, in_prefix_table = "(front)", False
+        with open(path, encoding="utf-8") as fh:
+            _lines = fh.read().splitlines()
+        for line in _lines:
+            h = re.match(r"^#+\s+(\d+(?:\.\d+)*)\s", line)
+            if h:
+                sec, in_prefix_table = h.group(1), False
+                continue
+            m = table_row.match(line)
+            if not m:
+                continue
+            if "prefix" in line.lower() and "---" not in line:
+                in_prefix_table = True
+                continue
+            if re.match(r"^\s*\|[\s:|-]+\|\s*$", line) or not in_prefix_table:
+                continue
+            cells = [c.strip() for c in m.group(1).split("|")]
+            bt = backtick.search(cells[0]) if cells else None
+            if not bt:
+                continue
+            fam = bt.group(1)
+            if sec in NON_CATALOGUE_SECTIONS or sec.startswith("3.1"):
+                continue
+            seen.add(fam)
+            # covered if registered outright, or a leaf of a registered
+            # parameterized family sharing its stem (consent:scope under consent:{kind})
+            if fam in reg or fam.split(":")[0] in reg_stems:
+                continue
+            orphans.append((fam, sec))
+
+    new = [(f, s) for f, s in orphans if f not in PINNED_UNOWNED_FAMILIES]
+    for fam, sec in new:
+        errors.append(
+            f"namespace coverage: CC {sec} documents family '{fam}' with no registry row and no "
+            f"registered parent — it would admit under the CC 3.1.7 R2 ProducerSteward fallback, "
+            f"an authority nobody chose. Register it under an owning CC 3.1.x component, or pin it."
+        )
+    stale = [f for f in PINNED_UNOWNED_FAMILIES
+             if f in seen and not any(f == o for o, _ in orphans)]
+    for fam in stale:
+        errors.append(
+            f"namespace coverage: '{fam}' is pinned as unowned but now resolves — "
+            f"remove it from PINNED_UNOWNED_FAMILIES (a pin must not outlive its gap)."
+        )
+    if orphans and not new:
+        notes.append(
+            f"namespace coverage: {len(orphans)} prose famil(ies) outside CC 3.1 carry no owning "
+            f"component and so never register — pinned, tracked by {PINNED_UNOWNED_TRACKED_BY}: "
+            + ", ".join(sorted({f for f, _ in orphans}))
+        )
+
+
 def main():
     xfail_blocks = "--xfail-blocks" in sys.argv
     errors, warnings, notes = [], [], []
@@ -550,6 +661,8 @@ def main():
         print("top uncovered normative-density sections:")
         for c, d in sorted(uncovered, reverse=True)[:12]:
             print(f"  {d:12} {c:3} MUST/SHALL")
+
+    check_namespace_coverage(errors, warnings, notes)
 
     if notes:
         print(f"\n{len(notes)} note(s):")
