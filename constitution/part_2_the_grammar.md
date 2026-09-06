@@ -263,6 +263,27 @@ A constitutional or framework claim can name its source-of-authority by emitting
 
 **Owner-binding is the single-valued sub-relation.** A `delegates_to(user → node/agent)` carrying `delegation_purpose: owner_binding` is the **ownership** grant that defines the `self` cohort ([CC 3.2](part_3_the_namespace.md) single-owner invariant): at most one is live per owned key at a time, and the substrate rejects a second, distinct-owner binding **at bind time**. This is the **one** `delegation_purpose` that is single-valued — act-on-behalf, hierarchy ([CC 4.5.13](part_4_composition_governance.md)), and authority-source delegations remain **multi-parent** DAGs. `delegation_purpose` thereby distinguishes the ownership relation from the general delegation grammar with **no new primitive**: the `self`-cohort boundary rides an existing field, not a fifth relation.
 
+#### 2.4.1.2.1 `authority-triad` — Licensure, grant, delegation — three concepts, three wire discriminators (normative — CIRISConstitution#100)
+
+`delegates_to` is one of three ways a key comes to hold something, and the three are routinely conflated because only one of them has a structural primitive. This document already routes two of them through different machinery — *"license authority rides the existing [CC 3.2](part_3_the_namespace.md) founder-quorum machinery; role authority rides the existing [CC 4.4.3.4.3.1](part_4_composition_governance.md) delegation resolver"* ([CC 3.3.9](part_3_the_namespace.md)) — but states it as an aside inside an operational-data section. It is the triad, and it belongs at the grammar, where an implementer meets it once.
+
+| | **Licensure** | **Grant** | **Delegation** |
+|---|---|---|---|
+| who gives it | an **authority** | the asset's **owner / steward** | a **principal** |
+| what it confers | standing to practise | access to a specific thing | agency to act *for* someone |
+| what it is about | the subject | the asset (hash, stream, balance) | the principal's own powers |
+| ends by | the authority revokes / suspends | rotation, expiry, exhaustion | the principal withdraws; attenuation |
+| **chains?** | **no** | **no** | **yes** — attenuated, depth-capped, revocable per link |
+| wire discriminator | dimension prefix on `scores`: `licensure:{authority_id}` / `attestation:license_validity` | `subject_kind` (`key_grant`) or the `consent:scope:*` family | **structural primitive**: `attestation_type: delegates_to` |
+
+**The transitivity row is the discriminator of record.** Only delegation composes, which is why only `delegates_to` gets a graph walk ([CC 4.1.1](part_4_composition_governance.md) depth cap, cycle rejection, aggregate-weight cap). A licence does not chain — holding one confers no power to issue one. A grant does not chain — receiving access confers no power to re-grant it (below). Any design that walks a licence or a grant transitively has mistaken it for a delegation.
+
+The professional analogue is exact, and it is the domain this federation licenses: a physician assistant holds a **licence** from a board, practises under a supervising physician's **delegated** authority, and holds **privileges** — a grant — at one hospital for named procedures. Three grantors, three revocation paths, reported as separate categories by the registries that track them.
+
+**Provenance is the authority, not a delegation (normative).** A licence's provenance is its **`authority_id`** — carried inside the dimension — and that authority is conferred by **quorum** ([CC 3.3.9](part_3_the_namespace.md) / [CC 3.2](part_3_the_namespace.md) founder-quorum), **never** by `delegates_to`. Three things must not be collapsed into one another: *who grants the licence* (the `authority_id`), *who vouches for the attester* (the trust walk, `infra:attest`), and *what external legal force it carries* (a **bridge** on an in-grammar record — [CC 8.3](part_8_appendices.md): bridges compose with the record, they are never alternatives to it).
+
+**A grant is non-transferable by default (normative).** A `key_grant` conveys access to an asset; it does **not** convey the power to convey it. An onward grant is a **new grant issued by a holder of the underlying key**, never a forwarded one, and `rotation_chain` is supersession lineage — not onward transfer. This is enforced cryptographically before it is enforced by policy: only a holder of the data-encryption key can wrap a new grant at all. A design that treats receipt of a grant as authority to re-grant has, again, mistaken a grant for a delegation.
+
 #### 2.4.1.3 `recants` — The `recants` distinction matters
 
 Per `PRIOR_ART_SCAN.md` Bucket 1: no prior identity system (PGP, SPKI/SDSI, W3C VC) typed epistemic-error-admission as a wire primitive distinct from retraction. CEG types both because the Recursive Golden Rule applies to attesters: admitting error is a primary act, not a derivative of retraction. Consumer policy can apply different trust adjustments to attesters who `recant` versus those who `withdraw`.

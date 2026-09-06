@@ -66,6 +66,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 2.4.1	structure	The four structural composers	§3.2	0.00618	30	0.74	II	ceg
 2.4.1.1	withdraws	`withdraws` admission rule — CEG 0.6 broadening (semantic, not structural)	§3.2.3	0.00756	23	0.91	II	ceg
 2.4.1.2	delegates_to	Authority-source claims via `delegates_to`	§3.2.1	0.00402	59	0.48	II	ceg
+2.4.1.2.1	authority-triad	Licensure, grant, delegation — three concepts, three wire discriminators (normative)	(spine-reconciled)	0.00050	438	0.35	II	ceg
 2.4.1.3	recants	The `recants` distinction matters	§3.2.2	0.00172	143	0.21	II	ceg
 2.4.2	scores	The workhorse: `scores`	§3.1	0.00092	277	0.11	II	ceg
 2.5	reasoning	The reasoning grammar — the eight axes	§2	0.00382	65	0.46	II	ceg

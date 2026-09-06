@@ -7,7 +7,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 115,
+    "n_families": 116,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
@@ -16,12 +16,12 @@
       "lens": 15,
       "node": 35,
       "persist": 6,
-      "registry": 10,
+      "registry": 11,
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "523a65c49de6aa44258143dbf1a783475d24c844494520df8e01585de357b2b0"
+    "source_sha256": "735b9bbe51e3d275c3ac0894b464b08a6a75fbe3123c1a6b359d0c29555d87f1"
   },
   "families": [
     {
@@ -581,6 +581,15 @@
       "reserved": false
     },
     {
+      "cc_section": "3.1.1",
+      "description": "An obligation attached to a permission \u2014 the thing a permission-and-prohibition grammar cannot express, and the thing every widely-used content licence rests on (attribution, share-alike, carry-restrictions-downstream).",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "signed",
+      "prefix": "duty:{kind}",
+      "reserved": false
+    },
+    {
       "cc_section": "3.1.9.6",
       "description": "Expertise standing (P3).",
       "owning_component": "node",
@@ -720,7 +729,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "License status \u2014 issued / revoked / expired \u2014 for a key under a named authority.",
+      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1; authority is conferred by quorum, never by delegates_to).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
