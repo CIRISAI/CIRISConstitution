@@ -1,5 +1,80 @@
 {
   "_meta": {
+    "case_rule": {
+      "cc_ref": "CC 3.1.7 R3",
+      "classes": {
+        "external": "outside-standard token; verbatim canonical form (ISO 4217, BCP 47, rating scheme)",
+        "hex": "CC 2.6.3 digest; lowercase",
+        "literal": "CC-fixed stem; lowercase (build-gated)",
+        "value": "caller-supplied identity; verbatim, case-preserved",
+        "vocab": "CC-defined vocabulary; MUST match vocab_pattern; refuse, never fold",
+        "wildcard": "the `*` tail; not a segment value"
+      },
+      "compare": "byte-exact; consumers MUST NOT case-fold",
+      "literal_pattern": "^[a-z0-9][a-z0-9_]*$",
+      "placeholder_classes": {
+        "allegation_type": "vocab",
+        "approach_id": "value",
+        "artifact": "vocab",
+        "aspect": "vocab",
+        "authority": "value",
+        "authority_id": "value",
+        "axis": "vocab",
+        "band": "vocab",
+        "category": "vocab",
+        "cell": "value",
+        "class": "vocab",
+        "cohort": "value",
+        "community_key_id": "value",
+        "contribution_id": "value",
+        "currency": "external",
+        "domain": "vocab",
+        "entity_type": "vocab",
+        "form": "vocab",
+        "forum": "value",
+        "goal_id": "value",
+        "grounds": "vocab",
+        "id": "value",
+        "job": "vocab",
+        "key": "vocab",
+        "kind": "vocab",
+        "lang_code": "external",
+        "language": "vocab",
+        "layer": "vocab",
+        "level": "vocab",
+        "method_id": "value",
+        "model_id": "value",
+        "network": "vocab",
+        "outcome": "vocab",
+        "period": "vocab",
+        "platform": "vocab",
+        "platform_or_target": "vocab",
+        "prefix": "hex",
+        "prior_contribution_id": "value",
+        "rating": "external",
+        "reason": "vocab",
+        "relation": "vocab",
+        "resource_type": "vocab",
+        "revision_field": "vocab",
+        "role": "vocab",
+        "scale": "vocab",
+        "scheme": "vocab",
+        "scope": "vocab",
+        "source": "value",
+        "state": "vocab",
+        "stream_id": "value",
+        "subject": "value",
+        "substrate_rung": "vocab",
+        "target": "value",
+        "target_kind": "vocab",
+        "tier": "vocab",
+        "tree_size": "value",
+        "version": "vocab"
+      },
+      "policy": "case-sensitive; lowercase CC vocabulary; per-segment classes",
+      "refusal_token": "namespace_dimension_case_malformed",
+      "vocab_pattern": "^[a-z0-9][a-z0-9_.-]*$"
+    },
     "cc_version": "1.0-rc5",
     "components_outside_normative": [
       "cirisbench"
@@ -21,7 +96,7 @@
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "1b1a248a4e863130d9ad6ec6cc6c8b3e57e9311b0b710ffb735b04d4c926afa3"
+    "source_sha256": "3673df1e1accf226ce18db90f463c2d3e7900f77e48d0a14b4d1f87e8a020eba"
   },
   "families": [
     {
@@ -35,7 +110,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.1",
         "rule": "accord_holder-only"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "accord"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.6",
@@ -44,7 +129,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
       "prefix": "activity_tier:{period}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "activity_tier"
+        },
+        {
+          "class": "vocab",
+          "segment": "{period}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -57,7 +152,25 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.11",
         "rule": "witness-reserved, subject-not-self"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "age_assurance"
+        },
+        {
+          "class": "vocab",
+          "segment": "{level}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{band}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -66,7 +179,21 @@
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
       "prefix": "age_self_declared:{band}:{version}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "age_self_declared"
+        },
+        {
+          "class": "vocab",
+          "segment": "{band}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -75,7 +202,21 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
       "prefix": "agent_files:{kind}:{platform_or_target}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "agent_files"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{platform_or_target}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.7",
@@ -84,7 +225,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "approach:{goal_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "approach"
+        },
+        {
+          "class": "value",
+          "segment": "{goal_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -93,7 +244,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "attestation:agent_integrity",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "attestation"
+        },
+        {
+          "class": "literal",
+          "segment": "agent_integrity"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -102,7 +263,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "attestation:hardware_rooted",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "attestation"
+        },
+        {
+          "class": "literal",
+          "segment": "hardware_rooted"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -111,7 +282,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "attestation:license_validity",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "attestation"
+        },
+        {
+          "class": "literal",
+          "segment": "license_validity"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -120,7 +301,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score; Indeterminate allowed \u2192 RESTRICTED",
       "prefix": "attestation:registry_consensus",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "attestation"
+        },
+        {
+          "class": "literal",
+          "segment": "registry_consensus"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -129,7 +320,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "attestation:self_verify",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "attestation"
+        },
+        {
+          "class": "literal",
+          "segment": "self_verify"
+        }
+      ]
     },
     {
       "cc_section": "3.1.3",
@@ -142,7 +343,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "audit_chain"
+        },
+        {
+          "class": "literal",
+          "segment": "hash_continuity"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -151,7 +362,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "autonomy:{aspect}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "autonomy"
+        },
+        {
+          "class": "vocab",
+          "segment": "{aspect}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.10",
@@ -160,7 +381,25 @@
       "owning_repo": "CIRISBench",
       "polarity": "positive-only",
       "prefix": "benchmark:he300:{category}:{version}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "benchmark"
+        },
+        {
+          "class": "literal",
+          "segment": "he300"
+        },
+        {
+          "class": "vocab",
+          "segment": "{category}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -169,7 +408,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "beneficence:{aspect}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "beneficence"
+        },
+        {
+          "class": "vocab",
+          "segment": "{aspect}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -178,7 +427,17 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
       "prefix": "bond_posted:{currency}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "bond_posted"
+        },
+        {
+          "class": "external",
+          "segment": "{currency}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -187,7 +446,21 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "boolean-via-score",
       "prefix": "build:registered:{target}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "build"
+        },
+        {
+          "class": "literal",
+          "segment": "registered"
+        },
+        {
+          "class": "value",
+          "segment": "{target}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.1",
@@ -200,7 +473,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "composite"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.1",
@@ -213,7 +496,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "core_identity"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.1",
@@ -226,7 +519,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "incompleteness_awareness"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.1",
@@ -239,7 +542,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "integrity"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.1",
@@ -252,7 +565,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "resilience"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.1",
@@ -265,7 +588,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "sustained_coherence"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -278,7 +611,29 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.12",
         "rule": "witness-reserved, subject-not-self, attester != steward"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity_assurance"
+        },
+        {
+          "class": "vocab",
+          "segment": "{level}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{band}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -287,7 +642,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "cert_validity:{authority}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "cert_validity"
+        },
+        {
+          "class": "value",
+          "segment": "{authority}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.3",
@@ -296,7 +661,17 @@
       "owning_repo": "CIRISLensCore",
       "polarity": "signed",
       "prefix": "coherence_standing:{cohort}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "coherence_standing"
+        },
+        {
+          "class": "value",
+          "segment": "{cohort}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -305,7 +680,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "commitment_fulfillment:{prior_contribution_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "commitment_fulfillment"
+        },
+        {
+          "class": "value",
+          "segment": "{prior_contribution_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9",
@@ -318,7 +703,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "reserved (see table)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "config"
+        },
+        {
+          "class": "vocab",
+          "segment": "{scope}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.3",
@@ -327,7 +722,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "conscience:coherence",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "conscience"
+        },
+        {
+          "class": "literal",
+          "segment": "coherence"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.3",
@@ -336,7 +741,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "conscience:entropy",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "conscience"
+        },
+        {
+          "class": "literal",
+          "segment": "entropy"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.3",
@@ -345,7 +760,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "conscience:epistemic_humility",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "conscience"
+        },
+        {
+          "class": "literal",
+          "segment": "epistemic_humility"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.3",
@@ -354,7 +779,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "conscience:optimization_veto",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "conscience"
+        },
+        {
+          "class": "literal",
+          "segment": "optimization_veto"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5",
@@ -367,7 +802,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "reserved (see table)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -376,7 +821,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "content_class:{class}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "content_class"
+        },
+        {
+          "class": "vocab",
+          "segment": "{class}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -385,7 +840,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "content_rating:{scheme}:{rating}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "content_rating"
+        },
+        {
+          "class": "vocab",
+          "segment": "{scheme}"
+        },
+        {
+          "class": "external",
+          "segment": "{rating}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.3",
@@ -398,7 +867,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "corpus_health"
+        },
+        {
+          "class": "literal",
+          "segment": "n_eff_measurable"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.6",
@@ -407,7 +886,25 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",
       "prefix": "credits:{domain}:{language}:substrate_building",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "credits"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{language}"
+        },
+        {
+          "class": "literal",
+          "segment": "substrate_building"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.6",
@@ -416,7 +913,25 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",
       "prefix": "credits:{domain}:{language}:{subject}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "credits"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{language}"
+        },
+        {
+          "class": "value",
+          "segment": "{subject}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -425,7 +940,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "cw_class:{class}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "cw_class"
+        },
+        {
+          "class": "vocab",
+          "segment": "{class}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.4",
@@ -438,7 +963,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "delivery"
+        },
+        {
+          "class": "vocab",
+          "segment": "{class}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.4",
@@ -451,7 +986,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "delivery_receipt"
+        },
+        {
+          "class": "value",
+          "segment": "{stream_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.2",
@@ -464,7 +1009,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "conscience_override_rate"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.4",
@@ -477,7 +1032,21 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "correlated_action"
+        },
+        {
+          "class": "vocab",
+          "segment": "{axis}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.2",
@@ -490,7 +1059,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "cross_agent_divergence"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.5",
@@ -503,7 +1082,25 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "distributive"
+        },
+        {
+          "class": "literal",
+          "segment": "access"
+        },
+        {
+          "class": "vocab",
+          "segment": "{resource_type}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.2",
@@ -516,7 +1113,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "hash_chain_integrity"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.2",
@@ -529,7 +1136,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "intra_agent_consistency"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.2",
@@ -542,7 +1159,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
         "rule": "detector-only (identity_type contains lenscore_detector)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "detection"
+        },
+        {
+          "class": "literal",
+          "segment": "temporal_drift"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.1",
@@ -551,7 +1178,21 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "dma:csdma:*",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "dma"
+        },
+        {
+          "class": "literal",
+          "segment": "csdma"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.1",
@@ -560,7 +1201,25 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "dma:dsdma:{domain}:*",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "dma"
+        },
+        {
+          "class": "literal",
+          "segment": "dsdma"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.1",
@@ -569,7 +1228,21 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "dma:idma:*",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "dma"
+        },
+        {
+          "class": "literal",
+          "segment": "idma"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.1",
@@ -578,7 +1251,21 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "dma:pdma:*",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "dma"
+        },
+        {
+          "class": "literal",
+          "segment": "pdma"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -587,7 +1274,17 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
       "prefix": "duty:{kind}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "duty"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.6",
@@ -596,7 +1293,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "expertise:{domain}:{language}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "expertise"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{language}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.3",
@@ -609,7 +1320,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "federation_directory"
+        },
+        {
+          "class": "literal",
+          "segment": "replication_lag"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -618,7 +1339,21 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "fidelity:explainability_sla:{tier}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "fidelity"
+        },
+        {
+          "class": "literal",
+          "segment": "explainability_sla"
+        },
+        {
+          "class": "vocab",
+          "segment": "{tier}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -627,7 +1362,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "fidelity:{aspect}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "fidelity"
+        },
+        {
+          "class": "vocab",
+          "segment": "{aspect}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.7",
@@ -636,7 +1381,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "goal:{scale}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "goal"
+        },
+        {
+          "class": "vocab",
+          "segment": "{scale}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.4",
@@ -645,7 +1400,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",
       "prefix": "hard_case:{kind}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "hard_case"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -654,7 +1419,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "hardware_custody:{platform}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "hardware_custody"
+        },
+        {
+          "class": "vocab",
+          "segment": "{platform}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.4",
@@ -663,7 +1438,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "health:liveness:{version}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "health"
+        },
+        {
+          "class": "literal",
+          "segment": "liveness"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.1",
@@ -672,7 +1461,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
       "prefix": "holds_bytes:sha256:{prefix}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "holds_bytes"
+        },
+        {
+          "class": "literal",
+          "segment": "sha256"
+        },
+        {
+          "class": "hex",
+          "segment": "{prefix}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.3",
@@ -685,7 +1488,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "identity_continuity"
+        },
+        {
+          "class": "literal",
+          "segment": "relational_anchor"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -694,7 +1507,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "integrity:{aspect}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "integrity"
+        },
+        {
+          "class": "vocab",
+          "segment": "{aspect}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.4",
@@ -703,7 +1526,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
       "prefix": "judge_model:verdict:{model_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "judge_model"
+        },
+        {
+          "class": "literal",
+          "segment": "verdict"
+        },
+        {
+          "class": "value",
+          "segment": "{model_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -712,7 +1549,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "justice:{aspect}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "justice"
+        },
+        {
+          "class": "vocab",
+          "segment": "{aspect}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.4",
@@ -725,7 +1572,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key_boundary"
+        },
+        {
+          "class": "vocab",
+          "segment": "{scope}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -738,7 +1595,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.9",
         "rule": "co-stewarded (Registry + Verify)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "licensure"
+        },
+        {
+          "class": "value",
+          "segment": "{authority_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.5",
@@ -747,7 +1614,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "enumerated",
       "prefix": "locality:decision:{scale}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "locality"
+        },
+        {
+          "class": "literal",
+          "segment": "decision"
+        },
+        {
+          "class": "vocab",
+          "segment": "{scale}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.8.3",
@@ -756,7 +1637,17 @@
       "owning_repo": "CIRISLensCore",
       "polarity": "signed",
       "prefix": "manifold_conformity:{cohort}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "manifold_conformity"
+        },
+        {
+          "class": "value",
+          "segment": "{cohort}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -765,7 +1656,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "mesh_config:{key}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "mesh_config"
+        },
+        {
+          "class": "vocab",
+          "segment": "{key}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.7",
@@ -774,7 +1675,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "method:{approach_id}:{substrate_rung}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "method"
+        },
+        {
+          "class": "value",
+          "segment": "{approach_id}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{substrate_rung}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -783,7 +1698,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "moderation:{allegation_type}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "moderation"
+        },
+        {
+          "class": "vocab",
+          "segment": "{allegation_type}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -792,7 +1717,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "moderation_track_record:{community_key_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "moderation_track_record"
+        },
+        {
+          "class": "value",
+          "segment": "{community_key_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -801,7 +1736,21 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
       "prefix": "multilateral_participation:{forum}:{kind}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "multilateral_participation"
+        },
+        {
+          "class": "value",
+          "segment": "{forum}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.3",
@@ -810,7 +1759,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",
       "prefix": "need:{domain}:{kind}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "need"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.2",
@@ -819,7 +1782,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
       "prefix": "non_maleficence:{aspect}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "non_maleficence"
+        },
+        {
+          "class": "vocab",
+          "segment": "{aspect}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -828,7 +1801,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "objection:{state}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "objection"
+        },
+        {
+          "class": "vocab",
+          "segment": "{state}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -841,7 +1824,25 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "reserved (see table)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ownership"
+        },
+        {
+          "class": "vocab",
+          "segment": "{relation}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{target_kind}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -850,7 +1851,17 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "enumerated",
       "prefix": "partner_role:{role}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "partner_role"
+        },
+        {
+          "class": "vocab",
+          "segment": "{role}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.4",
@@ -863,7 +1874,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "peer_reachability"
+        },
+        {
+          "class": "vocab",
+          "segment": "{network}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.7",
@@ -872,7 +1893,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "progress_measure:{method_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "progress_measure"
+        },
+        {
+          "class": "value",
+          "segment": "{method_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5.4",
@@ -881,7 +1912,17 @@
       "owning_repo": "CIRISAgent",
       "polarity": "-1 / -0.5 only",
       "prefix": "prohibited:{category}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "prohibited"
+        },
+        {
+          "class": "vocab",
+          "segment": "{category}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -890,7 +1931,21 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "provenance:build_manifest:{target}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "provenance"
+        },
+        {
+          "class": "literal",
+          "segment": "build_manifest"
+        },
+        {
+          "class": "value",
+          "segment": "{target}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -899,7 +1954,29 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "provenance:build_manifest:{target}:locale:{lang_code}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "provenance"
+        },
+        {
+          "class": "literal",
+          "segment": "build_manifest"
+        },
+        {
+          "class": "value",
+          "segment": "{target}"
+        },
+        {
+          "class": "literal",
+          "segment": "locale"
+        },
+        {
+          "class": "external",
+          "segment": "{lang_code}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -908,7 +1985,21 @@
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
       "prefix": "provenance:skill_import:{source}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "provenance"
+        },
+        {
+          "class": "literal",
+          "segment": "skill_import"
+        },
+        {
+          "class": "value",
+          "segment": "{source}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -917,7 +2008,21 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "provenance:slsa:{level}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "provenance"
+        },
+        {
+          "class": "literal",
+          "segment": "slsa"
+        },
+        {
+          "class": "vocab",
+          "segment": "{level}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -926,7 +2031,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "quarantine:{state}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "quarantine"
+        },
+        {
+          "class": "vocab",
+          "segment": "{state}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.6",
@@ -935,7 +2050,21 @@
       "owning_repo": "RATCHET",
       "polarity": "signed",
       "prefix": "ratchet:flag:coordinated_voting_cluster",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ratchet"
+        },
+        {
+          "class": "literal",
+          "segment": "flag"
+        },
+        {
+          "class": "literal",
+          "segment": "coordinated_voting_cluster"
+        }
+      ]
     },
     {
       "cc_section": "3.1.6",
@@ -944,7 +2073,25 @@
       "owning_repo": "RATCHET",
       "polarity": "signed",
       "prefix": "ratchet:flag:counter_rii:{layer}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ratchet"
+        },
+        {
+          "class": "literal",
+          "segment": "flag"
+        },
+        {
+          "class": "literal",
+          "segment": "counter_rii"
+        },
+        {
+          "class": "vocab",
+          "segment": "{layer}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.6",
@@ -953,7 +2100,21 @@
       "owning_repo": "RATCHET",
       "polarity": "signed",
       "prefix": "ratchet:flag:density_anomaly",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ratchet"
+        },
+        {
+          "class": "literal",
+          "segment": "flag"
+        },
+        {
+          "class": "literal",
+          "segment": "density_anomaly"
+        }
+      ]
     },
     {
       "cc_section": "3.1.6",
@@ -962,7 +2123,21 @@
       "owning_repo": "RATCHET",
       "polarity": "signed",
       "prefix": "ratchet:flag:expertise_attestation_anomaly",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ratchet"
+        },
+        {
+          "class": "literal",
+          "segment": "flag"
+        },
+        {
+          "class": "literal",
+          "segment": "expertise_attestation_anomaly"
+        }
+      ]
     },
     {
       "cc_section": "3.1.6",
@@ -971,7 +2146,21 @@
       "owning_repo": "RATCHET",
       "polarity": "signed",
       "prefix": "ratchet:flag:harassment_pattern",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ratchet"
+        },
+        {
+          "class": "literal",
+          "segment": "flag"
+        },
+        {
+          "class": "literal",
+          "segment": "harassment_pattern"
+        }
+      ]
     },
     {
       "cc_section": "3.1.6",
@@ -980,7 +2169,21 @@
       "owning_repo": "RATCHET",
       "polarity": "signed",
       "prefix": "ratchet:flag:out_of_distribution_voting",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ratchet"
+        },
+        {
+          "class": "literal",
+          "segment": "flag"
+        },
+        {
+          "class": "literal",
+          "segment": "out_of_distribution_voting"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -989,7 +2192,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "reconsideration:{grounds}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "reconsideration"
+        },
+        {
+          "class": "vocab",
+          "segment": "{grounds}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
@@ -998,7 +2211,21 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "regime:{artifact}:{version}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "regime"
+        },
+        {
+          "class": "vocab",
+          "segment": "{artifact}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -1007,7 +2234,21 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "-1 only",
       "prefix": "revocation:{entity_type}:{reason}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "revocation"
+        },
+        {
+          "class": "vocab",
+          "segment": "{entity_type}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{reason}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -1016,7 +2257,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "-1 only",
       "prefix": "rollback_detected:{revision_field}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "rollback_detected"
+        },
+        {
+          "class": "vocab",
+          "segment": "{revision_field}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.4",
@@ -1025,7 +2276,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "seed_holder_voting_alignment:{cell}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "seed_holder_voting_alignment"
+        },
+        {
+          "class": "value",
+          "segment": "{cell}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.3.1",
@@ -1038,16 +2299,36 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "session"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "PROVEN_ROGUE / NOT_PROVEN.",
+      "description": "proven_rogue / not_proven (lowercase per CC 3.1.7 R3; the substrate's coined upheld / suspension / expertise_fraud admit as open vocab under CC 4.5.1.1).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
       "prefix": "slashing:{outcome}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "slashing"
+        },
+        {
+          "class": "vocab",
+          "segment": "{outcome}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.3",
@@ -1060,7 +2341,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "system"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.3",
@@ -1069,7 +2360,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "testimonial_witness:{kind}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "testimonial_witness"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5",
@@ -1082,7 +2383,21 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "reserved (see table)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "trace"
+        },
+        {
+          "class": "vocab",
+          "segment": "{form}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.5",
@@ -1095,7 +2410,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
         "rule": "reserved (see table)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "trace_summary"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -1104,7 +2429,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "transparency_log:consistency",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "transparency_log"
+        },
+        {
+          "class": "literal",
+          "segment": "consistency"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -1117,7 +2452,21 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.10",
         "rule": "witness-emitter (identity_type contains witness)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "transparency_log"
+        },
+        {
+          "class": "literal",
+          "segment": "cosigned"
+        },
+        {
+          "class": "value",
+          "segment": "{tree_size}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.2",
@@ -1126,7 +2475,17 @@
       "owning_repo": "CIRISVerify",
       "polarity": "boolean-via-score",
       "prefix": "transparency_log:inclusion",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "transparency_log"
+        },
+        {
+          "class": "literal",
+          "segment": "inclusion"
+        }
+      ]
     },
     {
       "cc_section": "3.1.4",
@@ -1139,7 +2498,17 @@
       "reserved_rule": {
         "cc_ref": "CC 3.4.3",
         "rule": "substrate-self-report"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "transport"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.1",
@@ -1152,7 +2521,21 @@
       "reserved_rule": {
         "cc_ref": null,
         "rule": "reserved (see table)"
-      }
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "trust"
+        },
+        {
+          "class": "vocab",
+          "segment": "{job}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.3",
@@ -1161,7 +2544,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "truth_grounding:{subject}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "truth_grounding"
+        },
+        {
+          "class": "value",
+          "segment": "{subject}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.3",
@@ -1170,7 +2563,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "vote:{contribution_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "vote"
+        },
+        {
+          "class": "value",
+          "segment": "{contribution_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.4",
@@ -1179,7 +2582,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "wa_adjudication:{state}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "wa_adjudication"
+        },
+        {
+          "class": "vocab",
+          "segment": "{state}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.4",
@@ -1188,7 +2601,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "watchlist:{id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "watchlist"
+        },
+        {
+          "class": "value",
+          "segment": "{id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.3",
@@ -1197,7 +2620,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
       "prefix": "weighted_aggregate:{contribution_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "weighted_aggregate"
+        },
+        {
+          "class": "value",
+          "segment": "{contribution_id}"
+        }
+      ]
     },
     {
       "cc_section": "3.1.9.3",
@@ -1206,7 +2639,17 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
       "prefix": "witness_diversity:{contribution_id}",
-      "reserved": false
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "witness_diversity"
+        },
+        {
+          "class": "value",
+          "segment": "{contribution_id}"
+        }
+      ]
     }
   ]
 }
