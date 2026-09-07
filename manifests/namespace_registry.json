@@ -96,7 +96,7 @@
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "3673df1e1accf226ce18db90f463c2d3e7900f77e48d0a14b4d1f87e8a020eba"
+    "source_sha256": "87aede5012064288fd5ce8770d3e77a8c5131cd61d27799c4c06558507b9a9f5"
   },
   "families": [
     {
@@ -1846,7 +1846,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Partner status (COMMUNITY / COMMUNITY_PLUS / PROFESSIONAL_MEDICAL / PROFESSIONAL_LEGAL / PROFESSIONAL_FINANCIAL / PROFESSIONAL_FULL).",
+      "description": "Partner status (community / community_plus / professional_medical / professional_legal / professional_financial / professional_full \u2014 lowercase per CC 3.1.7 R3).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "enumerated",
