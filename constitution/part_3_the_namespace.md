@@ -381,7 +381,7 @@ Communities differ from families along three axes:
 | | `family` | `community` |
 |---|---|---|
 | **Scale** | Household / intimate trust circle (typically ≤ 20 members) | City / professional / interest (10s to 100Ks of members) |
-| **At-rest encryption** | Yes — DEK cascade per [CC 4.4.3.4.1](part_4_composition_governance.md); `holds_bytes:*` suppressed | No — content federates per status quo |
+| **At-rest encryption** | Yes — per-write DEK cascade per [CC 4.4.3.4.1](part_4_composition_governance.md); `holds_bytes:*` suppressed ([CC 5.2](part_5_transport_substrate.md) structural invisibility) | Yes — **mandatory** per-community DEK cascade per [CC 4.4.3.2.1](part_4_composition_governance.md); `holds_bytes:*` emitted carrying **cleartext provenance**, not cleartext bytes (the paragraph above). One carve-out: `cohort_subkind: infrastructure` is Commons-plaintext with no DEK — the trust root must be publicly auditable |
 | **Subkind discriminator** | None | `cohort_subkind` field (open vocab; canonical: `geographic`, `infrastructure`) |
 | **Typical admission** | `founder_only` / `unanimous` for small intimate groups | `majority` / `weighted` / per-subkind protocol (e.g., geographic requires `location_proof`) |
 
