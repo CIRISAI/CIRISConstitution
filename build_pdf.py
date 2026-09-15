@@ -165,6 +165,7 @@ def versioned_pdf_name():
     (ciris_constitution-1.0-rc3.pdf, -rc4.pdf, ...) persist in the tree so
     published links keep resolving, and CIRISConstitution-latest.pdf — the
     permalink, written by the finalize workflow on main — is never touched here.
+    The fixed-name ciris_constitution.pdf is refreshed after the move, below.
     Returns (new_name, [stale same-version files])."""
     import glob as _glob
     clean = f"ciris_constitution-{VERSION}.pdf"
@@ -187,7 +188,13 @@ if shutil.which("pdflatex"):
     shutil.move(str(HERE / f"{stem}.pdf"), str(HERE / pdf_name))
     for p in stale:                       # one tracked PDF per version (same version only)
         Path(p).unlink(missing_ok=True)
-    (HERE / "ciris_constitution.pdf").unlink(missing_ok=True)   # legacy fixed name
+    # Fixed-name permalink. This was the built PDF's name until d53f83a
+    # introduced versioned names and deleted it here, which 404'd every
+    # external link that predated the change. It is now always a byte copy
+    # of the build just written, so raw/<branch>/ciris_constitution.pdf
+    # resolves on any branch. Never swept: the stale-file glob requires a
+    # "-" after the stem, so it cannot match this name.
+    shutil.copyfile(str(HERE / pdf_name), str(HERE / "ciris_constitution.pdf"))
     for ext in (".aux", ".log", ".out", ".tex"):
         (HERE / f"{stem}{ext}").unlink(missing_ok=True)
     print(f"wrote {pdf_name}")
