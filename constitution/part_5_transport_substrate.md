@@ -249,6 +249,27 @@ The tier model is the *same KEM-then-symmetric placement* the streaming model us
 
 A CEG-Conforming Consumer (CCC) MUST verify the full SHA-256 of received bytes against the value in `evidence_refs[]` BEFORE handing the bytes to any consumer (Agent loader, Portal renderer, etc.). The `holds_bytes:sha256:{prefix}` directory ([CC 3.1.9.1](part_3_the_namespace.md)) carries only a short prefix for index efficiency; the consumer MUST NOT short-circuit verification to the prefix. Bytes that fail the full-SHA check MUST be discarded and the holder MUST be reported via the `holds_bytes:sha256:{prefix}` chain (emit a `withdraws` or negative score per consumer policy).
 
+#### 5.3.2.6 `render-tier` — The render tier is receiver policy, computed from verified, sniffed bytes (normative)
+
+A CCC MUST decide whether and how to render a blob from the **verified bytes and its own policy, never from a claim in the descriptor** (ruling on [CIRISConstitution#104](https://github.com/CIRISAI/CIRISConstitution/issues/104)). After [CC 5.3.2.5](#5325-full-sha--full-sha-verification-before-consumption-normative) verification the consumer MUST sniff the leading bytes and require the sniffed essence to **equal** the declared `format` ([CC 3.3.13](part_3_the_namespace.md)); a mismatch is a **refusal, not a correction**. The declared `format` / `codec` are inputs to that comparison and to capability checks, never authorisations. This is exactly how Element ignores `info.mimetype` for the blob-URL decision and Synapse ignores the uploader's wishes for `Content-Disposition`; it is what makes the set below a property of the *receiver* that a malicious sender cannot widen.
+
+**Recommended renderable set (recommended CCC policy — not normative).** The intersection of what Signal, WhatsApp, Mastodon, Threema and Element *emit*, what Android / iOS / Skiko / Chromium all decode, and what has a memory-safe decoder today. A CCC MAY adopt a narrower set; a wider one is its own risk to own, and this Part will not have ratified it.
+
+| `format` (sniffed) | Tier | Conditions |
+|---|---|---|
+| `image/jpeg`, `image/png` (APNG as PNG), `image/gif` | **A — render** | ≤ 16 MB, ≤ 33 Mpx; GIF ≤ 921,600 px + frame cap; reject bytes after `IEND` / `FFD9` |
+| `image/webp` | **A — conditional** | ≤ 10 MB; node runs Signal's `webpsan`; re-encoded on ingest |
+| `text/plain` | **A** | valid UTF-8, ≤ 1 MB, bidi controls rendered visibly |
+| `video/mp4` | **A — conditional** | `codec` present and `avc1.*` (≤ L4.1) + `mp4a.40.2` only; ≤ 100 MB, ≤ 8,294,400 px; node runs `mp4san`; receiver rejects unlisted tracks |
+| `audio/mp4` (`mp4a.40.2`), `audio/mpeg` | **A** | ID3v2 ignored — never decode `APIC` |
+| AVIF, HEIC / HEIF, JXL, WebM, MOV, MKV, Ogg / Opus, FLAC, WAV, ADTS, Markdown | **B — sender converts to a Tier-A form before hashing; raw arrival = C** | iOS has no WebM / Opus playback; Skiko decodes none of the images; Mastodon disabled HEIF 2026-09-15 |
+| `image/svg+xml` | **C for the bytes — never a client renderer or WebView.** A node MAY emit a PNG rendition (`derived_from`) from a hardened rasteriser (`resvg`: no file-href resolver, no system fonts, caps) in an isolated process; that PNG is Tier A | excluded by name in Signal, Session, Threema, Element, Synapse, Delta, Mastodon. The [CC 3.3.13](part_3_the_namespace.md) rendition rule dissolves the B-or-C question: the SVG is C, the node's PNG is A |
+| `application/pdf` | **C — download**; node MAY rasterise pages to attested PNG in an isolated process | JS / Launch actions / embedded fonts; pdf.js CVE-2024-4367, PDFium CVE-2024-7973 / 5846 |
+| `model_3d` (glTF, USDZ, FBX, splats) | **C — download**; node MAY rasterise a PNG poster in an isolated process | 33 Apple USD CVEs through CVE-2026-20616; 15 Pixar OpenUSD; FBX SDK CVE-2026-10709 / 10710; glTF: cgltf CVE-2026-32845, VTK CVE-2025-57108, Gitea CVE-2026-28737 — stored XSS *through a glTF field* in a 3D viewer |
+| HTML, Office, fonts, archives, TIFF, PSD, BMP, ICO, everything else | **C — refuse** | generic card, external handoff, dangerous-extension block on save |
+
+**Where enforcement lives.** The ingest pipeline that makes Tier A enforceable — sniff → size → full-SHA → memory-safe demux / decode → canonical re-encode → strip metadata → emit rendition + descriptor — belongs on the **node**, so every client renders only bytes the node's safe encoder produced. Memory-safe decoders are production today: Chromium's default PNG decoder is the Rust `png` crate, JPEG is moving to `zune-jpeg`, Signal ships `mp4san` / `webpsan`, Android 17 moves AAC in-process as Rust. Images, SVG and audio decode entirely in `#![forbid(unsafe_code)]` Rust; video is "Rust validates container and elementary stream, hardware decodes". That pipeline is CIRISServer's to build against this slot; this Part settles the slot.
+
 ### 5.3.3 `transport-streaming` — Streaming transport, per-stream logs & delivery receipts
 
 This is the **delivery axis** — the third orthogonal envelope concern alongside visibility (`cohort_scope`) and revocability. [CC 2.4](part_2_the_grammar.md)'s 1+4 primitive set is untouched; this is an endpoint + envelope + composition extension, NOT a grammar change.

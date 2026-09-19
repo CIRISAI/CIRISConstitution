@@ -270,6 +270,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 5.3.2.4.4	persist-query	Query — open-prefix dimensions, bounded operators (normative; resolves CIRISPersist#172 OQ-2)	§10.1.5.4	0.00092	239	0.11	V	ceg
 5.3.2.4.5	holistic	For holistic analysis + modeling (informative)	§10.1.5.5	0.00092	240	0.11	V	ceg
 5.3.2.5	full-sha	Full-SHA verification before consumption (normative)	§10.1.1	0.00095	224	0.11	V	ceg
+5.3.2.6	render-tier	The render tier is receiver policy, computed from verified, sniffed bytes (normative)	(spine-reconciled)	0.00050	439	0.35	V	ceg
 5.3.3	transport-streaming	Streaming transport, per-stream logs & delivery receipts (CEG 0.10 addition)	§10.5	0.00379	67	0.45	V	ceg
 5.3.3.1	stream	Chunk seal + STREAM nonce (normative — V2 lock)	§10.5.2	0.00419	56	0.5	V	ceg
 5.3.3.2	composition	Realtime group communication — composition (CEG 0.13 addition)	§10.5.8	0.00381	66	0.46	V	ceg
