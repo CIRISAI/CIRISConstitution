@@ -292,6 +292,267 @@ def report_toc_drift(toc, prose, errors, warnings, notes):
 
 # --- main --------------------------------------------------------------------
 
+
+# ── Namespace coverage gate (CIRISConstitution#102) ──────────────────────────
+# CC 3.1.7 R2: an unregistered family "admits under the ProducerSteward
+# fallback, an authority nobody chose for it, silently and cumulatively." The
+# namespace generator harvests ONLY tables under a `3.1.x` component heading,
+# because registration needs an owning component. A dimension-family table
+# documented anywhere else therefore never registers — silently. This gate
+# enumerates every prefix table in the prose and asserts registry coverage, so
+# the failure is loud.
+#
+# PINNED, not tolerated: the orphan set below is the measured inventory at the
+# time of the audit. A NEW orphan is an error (a family stopped registering, or
+# was minted outside 3.1). A pinned orphan that HAS registered is also an error
+# — a pin must not outlive the gap it names.
+
+# Sections whose prefix-shaped tables are not family catalogues at all.
+NON_CATALOGUE_SECTIONS = {
+    "2.1":         "envelope fields, not dimension families",
+    "4.1.3":       "already-rejected wire additions — registering them would be wrong",
+    "4.1.5":       "rejected proposals from the stress test",
+    "4.4.3.4.3":   "delegated_scope classes (infra:* / agency:*), not dimensions",
+    "8.3.4":       "closed-gaps appendix — restatements of families registered elsewhere",
+}
+
+# Families with no registered owner, documented outside CC 3.1. Each admits
+# under R2's unchosen fallback until an owning component is assigned.
+#
+# EMPTY as of the #102 owner decision: the 13 families measured at the audit
+# (CC 3.3.8 event:*, CC 3.3.11 inter-content, CC 3.3.12 media-type) were
+# assigned to NodeCore and carry CC 3.1.7 R1 catalogue rows under CC 3.1.9.
+# The machinery stays: a new orphan is still an error, and a family pinned
+# here that later registers is still an error (a pin must not outlive its gap).
+PINNED_UNOWNED_FAMILIES = {}
+PINNED_UNOWNED_TRACKED_BY = "CIRISConstitution#102 (owner assignment)"
+
+
+def check_namespace_coverage(errors, warnings, notes):
+    """Every prose family registers, is a leaf of a registered family, or is pinned."""
+    reg_path = os.path.join(ROOT, "manifests", "namespace_registry.json")
+    if not os.path.exists(reg_path):
+        warnings.append("namespace coverage: registry not built; skipped")
+        return
+    import json as _json
+    with open(reg_path, encoding="utf-8") as fh:
+        _fams = _json.load(fh)["families"]
+    reg = {f["prefix"] for f in _fams}
+    reg_stems = {p.split(":")[0] for p in reg}
+    # CIRISConstitution#112 — a reserved wildcard family with leaves is CLOSED: a prose
+    # leaf under it must be one of the leaves the registry lists, else it is exactly
+    # the "reservation used as a namespace" R2(b) refuses.
+    closed = {f["prefix"].split(":")[0]: set(f.get("leaves", []))
+              for f in _fams if f.get("leaves_closed")}
+    import sys as _sys
+    _sys.path.insert(0, HERE)
+    import cc_namespace_match as _match
+    _rules = _match.Rules(_match.load_manifest(reg_path))
+
+    def _shape(prose_prefix):
+        """A prose prefix as a pseudo-family the matcher can instantiate."""
+        segs = []
+        for seg in prose_prefix.split(":"):
+            if seg == "*":
+                segs.append({"segment": "*", "class": "wildcard"})
+            elif seg.startswith("{"):
+                name = seg[1:-1]
+                cls = "hex" if name.endswith("hash") or name == "prefix" else "vocab"
+                segs.append({"segment": seg, "class": cls})
+            else:
+                segs.append({"segment": seg, "class": "literal"})
+        return {"prefix": prose_prefix, "segments": segs}
+
+    table_row = re.compile(r"^\s*\|(.+)\|\s*$")
+    backtick = re.compile(r"`([^`]+)`")
+    seen, orphans = set(), []
+    import glob as _glob
+    for path in sorted(_glob.glob(os.path.join(DOC, "part_*.md"))):
+        sec, in_prefix_table = "(front)", False
+        with open(path, encoding="utf-8") as fh:
+            _lines = fh.read().splitlines()
+        for line in _lines:
+            h = re.match(r"^#+\s+(\d+(?:\.\d+)*)\s", line)
+            if h:
+                sec, in_prefix_table = h.group(1), False
+                continue
+            m = table_row.match(line)
+            if not m:
+                continue
+            # A header row is one whose FIRST cell is the word "Prefix". The
+            # earlier substring test ("prefix" anywhere in the line) mis-read the
+            # CC 3.3.8 `event:rsvp_count` row as a header because its description
+            # links to `#…--relation-prefixes`, so that family was never audited
+            # (CIRISConstitution#105).
+            first_cell = m.group(1).split("|")[0].strip().strip("*` ").lower()
+            if first_cell == "prefix":
+                in_prefix_table = True
+                continue
+            if re.match(r"^\s*\|[\s:|-]+\|\s*$", line) or not in_prefix_table:
+                continue
+            cells = [c.strip() for c in m.group(1).split("|")]
+            bt = backtick.search(cells[0]) if cells else None
+            if not bt:
+                continue
+            fam = bt.group(1)
+            if sec in NON_CATALOGUE_SECTIONS or sec.startswith("3.1"):
+                continue
+            seen.add(fam)
+            # covered if registered outright, or a leaf of a registered
+            # parameterized family sharing its stem (consent:scope under consent:{kind})
+            if fam in reg:
+                continue
+            stem = fam.split(":")[0]
+            # `family:*` in a reservation table is shorthand for every registered family
+            # under that stem (CC 3.4.5), not a family of its own.
+            if fam.endswith(":*") and any(p.startswith(stem + ":") for p in reg):
+                continue
+            if stem in closed:
+                errors.append(
+                    f"namespace coverage: CC {sec} documents '{fam}' under the CLOSED reserved family "
+                    f"'{stem}:*' but the registry lists no such leaf — a reservation is not a namespace "
+                    f"(CC 3.1.7 R3, CIRISConstitution#112); add its CC 3.1 row or remove it."
+                )
+                continue
+            # Coverage by SHAPE, through the reference matcher (#113 review): a prose
+            # family is covered iff its instantiated sample resolves to a registered
+            # family with no refusal. Sharing a stem is not coverage — `consent:scope:{kind}`
+            # was "covered" by `consent:{kind}` while no matcher could resolve it.
+            got, _binds, refusal = _match.match_family(_rules, _match.instantiate(_shape(fam)))
+            if got is not None and refusal is None:
+                continue
+            orphans.append((fam, sec))
+
+    new = [(f, s) for f, s in orphans if f not in PINNED_UNOWNED_FAMILIES]
+    for fam, sec in new:
+        errors.append(
+            f"namespace coverage: CC {sec} documents family '{fam}' with no registry row and no "
+            f"registered parent — it would admit under the CC 3.1.7 R2 ProducerSteward fallback, "
+            f"an authority nobody chose. Register it under an owning CC 3.1.x component, or pin it."
+        )
+    stale = [f for f in PINNED_UNOWNED_FAMILIES
+             if f in seen and not any(f == o for o, _ in orphans)]
+    for fam in stale:
+        errors.append(
+            f"namespace coverage: '{fam}' is pinned as unowned but now resolves — "
+            f"remove it from PINNED_UNOWNED_FAMILIES (a pin must not outlive its gap)."
+        )
+    if orphans and not new:
+        notes.append(
+            f"namespace coverage: {len(orphans)} prose famil(ies) outside CC 3.1 carry no owning "
+            f"component and so never register — pinned, tracked by {PINNED_UNOWNED_TRACKED_BY}: "
+            + ", ".join(sorted({f for f, _ in orphans}))
+        )
+
+
+
+# ── Ticket-state + pin-staleness gates (CIRISConstitution#65, #63) ──────────
+# #65: "check_claims.py cannot see any of this because it never queries issue
+# state, so the decay is silent by construction." A `staged:`/`open:` token
+# names work that is pending; when the ticket closes, the token becomes a lie
+# in one of two directions — the work shipped (the row should have graduated)
+# or the ticket was closed unfixed (the row is unanchored). Either way the
+# registry is asserting something untrue and nothing notices.
+#
+# #63: a pin that never moves silently freezes the evidence surface at an old
+# commit while the manifests advance.
+#
+# Both need the network. When `gh` is unavailable they degrade to a NOTE — a
+# check that cannot run must say so rather than pass quietly.
+
+def _gh_json(args):
+    """Run gh and return parsed JSON, or None if unavailable/offline."""
+    import subprocess, json as _json
+    try:
+        out = subprocess.run(["gh"] + args, capture_output=True, text=True, timeout=25)
+    except Exception:
+        return None
+    if out.returncode != 0 or not out.stdout.strip():
+        return None
+    try:
+        return _json.loads(out.stdout)
+    except Exception:
+        return None
+
+
+def check_ticket_states(rows, errors, warnings, notes):
+    """A staged:/open: token must name an OPEN ticket (CIRISConstitution#65)."""
+    import re as _re
+    targets = {}
+    for ln, row in rows:
+        for tok in (row.get("evidence") or "").split():
+            m = _re.match(r"^(?:staged|open):([A-Za-z0-9_.-]+)#(\d+)$", tok)
+            if m:
+                targets.setdefault((m.group(1), m.group(2)), []).append(
+                    (ln, row.get("claim_id"), row.get("status")))
+    if not targets:
+        return
+    import subprocess as _sp
+    try:
+        probe = _sp.run(["gh", "auth", "status"], capture_output=True, text=True, timeout=20).returncode == 0
+    except Exception:
+        probe = False
+    if not probe:
+        notes.append(f"ticket-state gate: gh unavailable — {len(targets)} staging "
+                     f"ticket(s) unverified (the check did not run; it did not pass)")
+        return
+    closed = []
+    for (repo, num), users in sorted(targets.items()):
+        st = _gh_json(["issue", "view", num, "-R", f"CIRISAI/{repo}", "--json", "state"])
+        if st is None:
+            warnings.append(f"ticket-state gate: {repo}#{num} could not be read")
+            continue
+        if str(st.get("state", "")).upper() != "OPEN":
+            closed.append((repo, num, users))
+    for repo, num, users in closed:
+        who = ", ".join(f"{c} (L{l}, {s})" for l, c, s in users[:6])
+        errors.append(
+            f"ticket-state: {len(users)} row(s) stage on {repo}#{num}, which is CLOSED — "
+            f"either the work shipped and the row must graduate to its artifact, or the "
+            f"ticket closed unfixed and the row is unanchored. Rows: {who}")
+    if not closed:
+        notes.append(f"ticket-state gate: all {len(targets)} staging ticket(s) open")
+
+
+def check_pin_staleness(errors, warnings, notes):
+    """Report pins behind their upstream head (CIRISConstitution#63)."""
+    path = os.path.join(DOC, "evidence_pins.tsv")
+    if not os.path.exists(path):
+        return
+    lines = [l.rstrip("\n").split("\t") for l in open(path, encoding="utf-8") if l.strip()]
+    stale, unread = [], []
+    for f in lines[1:]:
+        if len(f) < 2:
+            continue
+        repo, pinned = f[0], f[1]
+        br = "master" if repo == "RATCHET" else "main"
+        import subprocess as _sp
+        try:
+            _o = _sp.run(["gh", "api", f"repos/CIRISAI/{repo}/commits/{br}", "--jq", ".sha"],
+                         capture_output=True, text=True, timeout=25)
+            head = _o.stdout.strip() if _o.returncode == 0 else ""
+        except Exception:
+            head = ""
+        if not re.fullmatch(r"[0-9a-f]{7,40}", head):
+            unread.append(repo)
+            continue
+        if not head.startswith(pinned):
+            stale.append((repo, pinned, head[:7]))
+    if unread and len(unread) == len(lines) - 1:
+        notes.append("pin-staleness gate: gh unavailable — pins unverified "
+                     "(the check did not run; it did not pass)")
+        return
+    for r in unread:                      # a partial read is a partial check, said so
+        warnings.append(f"pin staleness: {r} head could not be read — its pin is UNVERIFIED, "
+                        f"not at head (transient API failure, or a token without access)")
+    if stale:
+        warnings.append("pin staleness: " + "; ".join(
+            f"{r} pinned {p} but head is {h}" for r, p, h in stale)
+            + " — re-vendor, or record why the pin is held")
+    elif not unread:
+        notes.append("pin-staleness gate: every evidence pin is at its upstream head")
+
+
 def main():
     xfail_blocks = "--xfail-blocks" in sys.argv
     errors, warnings, notes = [], [], []
@@ -550,6 +811,10 @@ def main():
         print("top uncovered normative-density sections:")
         for c, d in sorted(uncovered, reverse=True)[:12]:
             print(f"  {d:12} {c:3} MUST/SHALL")
+
+    check_namespace_coverage(errors, warnings, notes)
+    check_ticket_states(rows, errors, warnings, notes)
+    check_pin_staleness(errors, warnings, notes)
 
     if notes:
         print(f"\n{len(notes)} note(s):")

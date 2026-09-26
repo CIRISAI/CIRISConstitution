@@ -68,28 +68,134 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # Each entry: (predicate(prefix, component) -> bool, rule, cc_ref). First match wins;
 # order is specificity-first. Component-scoped substrate-self-report rules come after the
 # prefix-specific ones.
+# Stems CC 3.4 reserves AS A WHOLE — every leaf beneath them, registered or not. Published
+# as `_meta.case_rule.reserved_stems` so a consumer refuses an unregistered leaf under
+# one (`capacity:not_a_leaf:v1`) as namespace_family_unregistered rather than routing it
+# to the default authority (#113 review). `licensure:` is deliberately absent: CC 3.4.9
+# co-stewards the CIRIS-issued licence and says the family is open-emitter.
+# A stem with an EMITTER RULE but no reservation (the family's own row says "No"): an
+# unclaimed leaf beneath it still refuses, because the rule would otherwise be
+# bypassed by an unminted leaf; the family's `reserved` flag is untouched.
+GATED_STEMS = [
+    ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
+]
+RESERVED_STEMS = [
+    ("accord:", "accord_holder-only", "CC 3.4.1"),
+    ("transparency_log:cosigned:", "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
+    ("detection:", "detector-only (identity_type contains lenscore_detector)", "CC 3.4.8"),
+    ("capacity:", "no-self-emit (attesting_key_id != attested_key_id)", "CC 3.4.5"),
+    ("age_assurance:", "witness-reserved, subject-not-self", "CC 3.4.11"),
+    ("capacity_assurance:", "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
+]
+
+
 def _reserved_rules():
-    return [
-        (lambda p, c: p.startswith("accord:"),
-         "accord_holder-only", "CC 3.4.1"),
-        (lambda p, c: p.startswith("transparency_log:cosigned"),
-         "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
-        (lambda p, c: p.startswith("detection:"),
-         "detector-only (identity_type contains lenscore_detector)", "CC 3.4.8"),
-        (lambda p, c: p.startswith("capacity:"),
-         "no-self-emit (attesting_key_id != attested_key_id)", "CC 3.4.5"),
-        (lambda p, c: p.startswith("age_assurance:"),
-         "witness-reserved, subject-not-self", "CC 3.4.11"),
-        (lambda p, c: p.startswith("capacity_assurance:"),
-         "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
-        (lambda p, c: p.startswith("licensure:"),
-         "co-stewarded (Registry + Verify)", "CC 3.4.9"),
+    return [(lambda p, c, _s=stem: p.startswith(_s), rule, ref) for stem, rule, ref in RESERVED_STEMS] + [
+        # (the prefix table above; family- and component-scoped rules follow)
+        # CC 3.1.3.1: an OCCURRENCE self-report, not a substrate one — before the
+        # component-wide persist rule so the manifest carries the rule the row states.
+        (lambda p, c: p.startswith("session:"),
+         "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
     ]
 
 RESERVED_RULES = _reserved_rules()
+
+# ---- CC 3.1.7 R3 — per-segment case classes (ruling on CIRISPersist#815) ----------
+# Every `{placeholder}` a catalogued prefix carries MUST be classified here; an
+# unclassified one FAILS the build (no silent default — a wrong default would
+# either refuse legitimate caller data or let a malformed vocab token through).
+#   literal  — stem this Part fixes; lowercase by construction (gate below)
+#   vocab    — CC-defined open/closed vocabulary; MUST match VOCAB_PATTERN; refuse, never fold
+#   external — spelling fixed by an outside standard; verbatim canonical form (USD, PG-13, en-US)
+#   value    — caller-supplied identity; verbatim, case-preserved (CC 2.6.7 {id} discipline)
+#   hex      — CC 2.6.3 digest; lowercase
+VOCAB_PATTERN = r"^[a-z0-9][a-z0-9_.-]*$"
+LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
+PLACEHOLDER_CLASS = {
+    "vocab": {
+        "allegation_type", "artifact", "aspect", "axis", "band", "category", "class",
+        "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
+        "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
+        "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
+        "scope", "stage", "stance", "state", "substrate_rung", "target_kind", "tier", "version",
+    },
+    "external": {"currency", "lang_code", "rating", "unit"},
+    "value": {
+        "approach_id", "authority", "authority_id", "cell", "cohort", "community_key_id",
+        "contribution_id", "days", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id",
+        "notify_id",
+        "prior_contribution_id", "source", "stream_id", "subject", "target", "tree_size",
+    },
+    "hex": {"canonical_hash", "prefix"},
+}
+_CLASS_OF = {name: cls for cls, names in PLACEHOLDER_CLASS.items() for name in names}
+# A placeholder whose VALUE has a shape beyond its class (CIRISConstitution#113 review):
+# the canonical-binding hash is a full SHA-256; the SLA window and the RFC 6962 tree
+# size are numbers. Published as `pattern` on the segment; class stays as classified.
+SEGMENT_PATTERNS = {
+    "canonical_hash": "^[0-9a-f]{64}$",
+    "days": "^[0-9]+$",
+    "tree_size": "^[0-9]+$",
+}
+# A placeholder whose documented values carry `:` — it spans one OR MORE segments,
+# each sub-segment obeying the placeholder's class. Keyed by family, never by name,
+# so `{kind}` is multi-segment on consent:scope alone.
+MULTI_PLACEHOLDERS = {
+    "consent:scope:{kind}": "kind",                       # retain:90d — sub-scoping in the token (#103)
+    "detection:correlated_action:{axis}": "axis",         # rights_asymmetry:{population}
+    "provenance:skill_import:{source}": "source",         # registry:{registry_id} / direct:{url}
+}
+EXTERNAL_STANDARDS = {                      # name -> (standard, syntax pattern or None)
+    "currency": ("ISO 4217 alphabetic code", "^[A-Z]{3}$"),
+    "lang_code": ("BCP 47 language tag", "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$"),
+    "rating": ("the scheme named in the sibling {scheme} segment", None),
+    "unit": ("ISO 4217 code, or a unit the ledger declares", None),
+}
+
+# CC 3.1.7 R3 version segment (CIRISConstitution#112): families that carry NO trailing
+# `:v{N}` — the mechanism-named attestation ladder (CC 3.1.2; version lives in the
+# attesting binary) and the canonical-binding claim (CC 3.3.14; the suffix is the hash).
+VERSION_EXEMPT = [
+    "attestation:agent_integrity", "attestation:hardware_rooted", "attestation:license_validity",
+    "attestation:registry_consensus", "attestation:self_verify",
+    "identity:canonical_binding:{canonical_hash}",
+]
+
+
+def classify_segments(prefix):
+    """Return [{'segment': str, 'class': str}] for a catalogued prefix, or raise."""
+    out = []
+    for seg in prefix.split(":"):
+        if seg == "*":
+            # CIRISConstitution#108: a trailing `*` is VARIADIC — it matches one or
+            # more remaining segments, never exactly one. CC 3.4.1 lists
+            # `accord:invoke:notify:{notify_id}` (four segments) under `accord:*`,
+            # so a consumer that pairs `*` with a single segment cannot name any
+            # leaf the Constitution obliges it to distinguish. Carried as data so a
+            # vendoring checker keys on the manifest, not on its own reading of `*`.
+            out.append({"segment": "*", "class": "wildcard", "variadic": True})
+        elif seg.startswith("{") and seg.endswith("}"):
+            name = seg[1:-1]
+            cls = _CLASS_OF.get(name)
+            if cls is None:
+                raise SystemExit(
+                    f"R3: placeholder {{{name}}} in `{prefix}` has no class in "
+                    f"PLACEHOLDER_CLASS (tools/build_cc_namespace.py) — classify it in "
+                    f"the same change that adds the family (CC 3.1.7 R2(a)/R3)."
+                )
+            out.append({"segment": seg, "class": cls})
+        else:
+            if not re.match(LITERAL_PATTERN, seg):
+                raise SystemExit(
+                    f"R3: literal stem `{seg}` in `{prefix}` is not lowercase "
+                    f"[a-z0-9_] — CC 3.1.7 R3 forbids a catalogued stem that is not."
+                )
+            out.append({"segment": seg, "class": "literal"})
+    return out
+
 
 BACKTICK = re.compile(r"`([^`]+)`")
 HEADING = re.compile(r"^(#{2,6})\s+(3\.[0-9]+(?:\.[0-9]+)*)\s+(.*)$")
@@ -134,6 +240,44 @@ def apply_reserved(prefix, component):
     return False, None
 
 
+ENUM_DECL = re.compile(r"`\{([a-z_]+)\}`\s*(?:∈|in)\s*((?:`[^`]+`\s*(?:\\?\|)?\s*)+)")
+
+
+def check_enum_case(lines, families):
+    """CC 3.1.7 R3 dye test on the VALUES, not just the stems (CIRISConstitution#106).
+
+    classify_segments() refuses a non-lowercase literal stem, but a `vocab`
+    placeholder's enumeration lives in the description cell as prose — `{tier}` ∈
+    `L1_summary` \| … — and nothing checked those tokens against vocab_pattern, so
+    the Constitution's own vocabulary could be unwritable on the wire. For every
+    table row whose prefix registers with a `vocab`-classed placeholder, each
+    backticked token in an in-row `{name}` ∈ … enumeration MUST match VOCAB_PATTERN.
+    """
+    bad = []
+    for line in lines:
+        m = TABLE_ROW.match(line)
+        if not m:
+            continue
+        cells = split_row(line)
+        first = BACKTICK.search(cells[1] if len(cells) > 1 else "")
+        if not first or first.group(1) not in families:
+            continue
+        vocab = {seg["segment"][1:-1] for seg in families[first.group(1)]["segments"]
+                 if seg["class"] == "vocab"}
+        for em in ENUM_DECL.finditer(line):
+            if em.group(1) not in vocab:
+                continue
+            for tok in BACKTICK.findall(em.group(2)):
+                if not re.match(VOCAB_PATTERN, tok):
+                    bad.append((first.group(1), em.group(1), tok))
+    if bad:
+        raise SystemExit(
+            "R3: %d enumerated vocab value(s) would be refused on the wire as "
+            "namespace_dimension_case_malformed — the Constitution's own vocabulary is "
+            "lowercase (CC 3.1.7 R3; CIRISConstitution#106):\n%s"
+            % (len(bad), "\n".join("  %s  {%s} = `%s`" % b for b in bad)))
+
+
 def main():
     raw = open(SOURCE, "rb").read()
     sha = hashlib.sha256(raw).hexdigest()
@@ -149,7 +293,7 @@ def main():
     in_fence = False
     i = 0
 
-    def add_family(prefix, section, comp, crepo, description, polarity, reserved_hint):
+    def add_family(prefix, section, comp, crepo, description, polarity, reserved_hint, raw=""):
         prefix = prefix.strip()
         if not prefix:
             return
@@ -170,6 +314,36 @@ def main():
         rec["owning_repo"] = crepo
         rec["cc_section"] = section
         rec["polarity"] = polarity or ""
+        rec["segments"] = classify_segments(prefix)
+        for seg in rec["segments"]:
+            if seg["segment"].startswith("{"):
+                pname = seg["segment"][1:-1]
+                if pname in SEGMENT_PATTERNS:
+                    seg["pattern"] = SEGMENT_PATTERNS[pname]
+                if MULTI_PLACEHOLDERS.get(prefix) == pname:
+                    seg["multi"] = True
+        for seg in rec["segments"]:               # R3 `external`: the standard travels with the segment
+            if seg["class"] == "external":
+                spec = EXTERNAL_STANDARDS.get(seg["segment"][1:-1])
+                if spec:
+                    seg["standard"] = spec[0]
+                    if spec[1]:
+                        seg["pattern"] = spec[1]
+        # CIRISConstitution#112 — a `vocab` placeholder's canonical values, enumerated
+        # in-row as `{name}` ∈ `a` \| `b` …, are published on the segment so a consumer
+        # validates a value against the enumeration rather than only the pattern.
+        # An enumeration is CLOSED only where the row says the word "closed" — most rows
+        # enumerate canonical values of an open vocabulary (CC 4.5.1.1), and a partial
+        # list read as closed would refuse legitimate traffic. Closing one is a per-row
+        # ruling, made by writing the word.
+        if raw:
+            enums = {m.group(1): BACKTICK.findall(m.group(2)) for m in ENUM_DECL.finditer(raw)}
+            is_open = "closed" not in raw.lower()
+            for seg in rec["segments"]:
+                name = seg["segment"][1:-1] if seg["segment"].startswith("{") else None
+                if seg["class"] == "vocab" and name in enums and enums[name]:
+                    seg["values"] = enums[name]
+                    seg["open"] = is_open
         rec["reserved"] = reserved
         if reserved:
             rec["reserved_rule"] = rule
@@ -244,8 +418,9 @@ def main():
                     polarity = clean_text(cells[pol_idx]) if pol_idx is not None and pol_idx < len(cells) else ""
                     resv = cells[res_idx] if res_idx is not None and res_idx < len(cells) else ""
                     resv = resv if resv and resv.strip().lower() not in ("no", "") else ""
-                    desc = first_sentence(cells[desc_idx]) if desc_idx is not None and desc_idx < len(cells) else ""
-                    add_family(prefix, cc_section, component, repo, desc, polarity, resv)
+                    raw = cells[desc_idx] if desc_idx is not None and desc_idx < len(cells) else ""
+                    desc = first_sentence(raw)
+                    add_family(prefix, cc_section, component, repo, desc, polarity, resv, raw)
                 i += 1
             continue
 
@@ -285,6 +460,17 @@ def main():
 
     # ---- assemble deterministic output ----------------------------------
     fam_list = sorted(families.values(), key=lambda r: r["prefix"])
+    # CIRISConstitution#112 — a wildcard family publishes the registered leaves beneath
+    # it; a RESERVED wildcard family with leaves is CLOSED: a consumer refuses any other
+    # leaf as namespace_family_unregistered (R2(b)), so a reserved prefix cannot be used
+    # as a namespace for rows this Part never named.
+    all_prefixes = [r["prefix"] for r in fam_list]
+    for r in fam_list:
+        if r["segments"][-1]["class"] == "wildcard":
+            stem = r["prefix"][:-1]            # "accord:*" -> "accord:"
+            leaves = [p for p in all_prefixes if p != r["prefix"] and p.startswith(stem)]
+            r["leaves"] = leaves
+            r["leaves_closed"] = bool(leaves) and bool(r["reserved"])
     comps = OrderedDict()
     for r in fam_list:
         comps.setdefault(r["owning_component"], 0)
@@ -355,6 +541,62 @@ def main():
 
     out = OrderedDict()
     meta["private_use_prefix"] = "x_private:"  # CC 3.1.7 R2 — the one literal, machine-readable
+    meta["case_rule"] = OrderedDict([          # CC 3.1.7 R3 — CIRISPersist#815
+        ("policy", "case-sensitive; lowercase CC vocabulary; per-segment classes"),
+        ("cc_ref", "CC 3.1.7 R3"),
+        ("compare", "byte-exact; consumers MUST NOT case-fold"),
+        ("refusal_token", "namespace_dimension_case_malformed"),
+        ("vocab_pattern", VOCAB_PATTERN),
+        ("literal_pattern", LITERAL_PATTERN),
+        ("classes", OrderedDict([
+            ("literal", "CC-fixed stem; lowercase (build-gated)"),
+            ("vocab", "CC-defined vocabulary; MUST match vocab_pattern; refuse, never fold"),
+            ("external", "outside-standard token; verbatim canonical form (ISO 4217, BCP 47, rating scheme)"),
+            ("value", "caller-supplied identity; verbatim, case-preserved"),
+            ("hex", "CC 2.6.3 digest; lowercase"),
+            ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments (CIRISConstitution#108)"),
+        ])),
+        ("version_segment", OrderedDict([        # CC 3.1.7 R3 — CIRISConstitution#112
+            ("pattern", "^v[0-9]+(\\.[0-9]+)*$"),   # v1, v2 … and a dotted suite version (HE-300 v1.2)
+            ("position", "trailing"),
+            ("required", True),
+            ("exempt", VERSION_EXEMPT),
+            ("note", "Every scored dimension carries exactly one trailing version segment after its "
+                     "family's own segments; a row whose last segment is `{version}` names that segment. "
+                     "Matching strips it; a consumer keys the rule version from it. Families in `exempt` "
+                     "need none — a tail is tolerated, never required (mechanism-named attestation ladder; the canonical-binding hash)."),
+        ])),
+        ("external_standards", OrderedDict(      # CC 3.1.7 R3 `external` — CIRISConstitution#113 review
+            (n, OrderedDict([("standard", s), ("pattern", p)])) for n, (s, p) in sorted(EXTERNAL_STANDARDS.items()))),
+        ("reserved_stems", [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "reserved")]) for s, r, c in RESERVED_STEMS]
+                         + [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "gated")]) for s, r, c in GATED_STEMS]),
+        ("refusal_tokens", OrderedDict([         # the matcher's tokens — never bespoke
+            ("case_malformed", "namespace_dimension_case_malformed"),
+            ("vocab_value_unregistered", "namespace_vocab_value_unregistered"),
+            ("family_unregistered", "namespace_family_unregistered"),
+            ("private_use_not_federatable", "namespace_private_use_not_federatable"),
+            ("missing_version_segment", "missing_version_segment"),
+        ])),
+        ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
+            ("match", "one_or_more_segments"),
+            ("cc_ref", "CC 3.1.7 R3"),
+            ("note", "A family ending in `*` covers every dimension sharing its stem segments with at least one further "
+                     "segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires "
+                     "len(segments) == len(parts) for a wildcard family has misread the registry. The segments below "
+                     "the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf "
+                     "row says otherwise."),
+        ])),
+        ("placeholder_classes", OrderedDict(
+            (name, cls) for name, cls in sorted(_CLASS_OF.items()))),
+    ])
+    # CIRISConstitution#112 — the pin a consumer (CSD/3 `registry_sha256`) should carry:
+    # the hash of the GRAMMAR (families + _meta without the prose hash), so a wording
+    # edit anywhere in Part 3 does not invalidate every downstream pin.
+    grammar = OrderedDict([("_meta", OrderedDict((k, v) for k, v in meta.items()
+                                                 if k not in ("source_sha256", "registry_sha256"))),
+                           ("families", fam_list)])
+    meta["registry_sha256"] = hashlib.sha256(
+        json.dumps(grammar, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
     out["_meta"] = meta
     out["families"] = fam_list
 
@@ -362,7 +604,19 @@ def main():
     # are the dangerous direction — a text edit that moves a table boundary can
     # orphan rows and families "leave" without anyone retiring them. A family may
     # only leave the manifest via an explicit entry here, with the retiring change.
-    RETIRED_FAMILIES = set()  # e.g. {"old:family"} — name it in the same commit
+    check_enum_case(lines, families)   # R3 on values, not just stems (#106)
+
+    # CIRISConstitution#112 — the grammar round-trips through the reference matcher:
+    # every family's class-conformant sample resolves to that family and no other,
+    # with and without the version tail, and every refusal vector refuses as named.
+    sys.path.insert(0, HERE)
+    import cc_namespace_match as _match
+    _problems = _match.self_test(json.loads(json.dumps(out)))
+    if _problems:
+        raise SystemExit("namespace grammar does not round-trip through tools/cc_namespace_match.py "
+                         "(%d):\n  %s" % (len(_problems), "\n  ".join(_problems)))
+
+    RETIRED_FAMILIES = {"age_self_declared:{band}:{version}"}  # -> age_self_declared:band:{band}:{version} (#113 review: the wire arity)
     if os.path.exists(OUT):
         try:
             prev = {f_["prefix"] for f_ in json.load(open(OUT)).get("families", [])}

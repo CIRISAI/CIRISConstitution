@@ -6,7 +6,11 @@ name: consistency
 # spine; a semantic-id that disagrees with its prose heading; a cross-repo pointer
 # naming an artifact the pinned manifest does NOT publish; and a status its own
 # evidence cannot support (`established` without a resolvable artifact, `normative`
-# with one).
+# with one); and a dimension family documented in the prose that carries no registry
+# row and no registered parent — CC 3.1.7 R2's "admits under an authority nobody chose",
+# which was previously silent because the namespace generator harvests only CC 3.1.x.
+# The known unowned set is PINNED: a new orphan fails, and so does a pin that outlives
+# its gap.
 #
 # A cross-repo pointer whose pinned manifest simply does not reach that section yet
 # still warns rather than fails — pending is not dead.
@@ -19,6 +23,11 @@ on:
     branches: [ main ]
   pull_request:
 
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
 jobs:
   claims-registry:
     runs-on: ubuntu-latest
@@ -27,9 +36,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Evidence registry + toc/prose drift + normative coverage
+      - name: Evidence registry + toc/prose drift + normative coverage + ticket-state and pin gates
+        env:
+          GH_TOKEN: ${{ github.token }}   # the #65/#63 gates query issue state; unauthenticated gh only NOTEs
         run: python3 tools/check_claims.py
-      - name: Namespace registry is regenerated (no drift)
+      - name: Namespace registry and match vectors are regenerated (no drift)
         run: |
           python3 tools/build_cc_namespace.py
+          python3 tools/cc_namespace_match.py --self-test
+          python3 tools/cc_namespace_match.py --write-vectors
           git diff --exit-code manifests/

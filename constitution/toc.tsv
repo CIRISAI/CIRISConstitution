@@ -16,7 +16,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 1.13.2	structure-recursive	The Recursive Golden Rule (structural, not exhortatory)	§1.5	0.00258	96	0.31	I	ceg
 1.13.3	adversary	Adversary model & privacy non-goals (normative)	§1.6	0.00163	152	0.2	I	ceg
 1.13.3.1	non-goals	Non-goals — what omission does NOT buy	§1.6.2	0.00166	148	0.2	I	ceg
-1.13.3.2	primitive-what	What the structural-invisibility primitive ([§10.1.4](10_endpoints.md)) buys	§1.6.1	0.00092	237	0.11	I	ceg
+1.13.3.2	primitive-what	What the structural-invisibility primitive ([CC 5.2](part_5_transport_substrate.md)) buys	§1.6.1	0.00092	237	0.11	I	ceg
 1.13.3.3	adversary-classes	Adversary classes (and where each is / is not addressed)	§1.6.3	0.00092	238	0.11	I	ceg
 1.13.4	mental	Mental model — federated structured-claim emission	§1.1	0.00162	153	0.19	I	ceg
 1.13.5	operational-language	Operational-language gate — the safety-vs-censorship discipline	§1.3	0.00142	166	0.17	I	ceg
@@ -66,6 +66,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 2.4.1	structure	The four structural composers	§3.2	0.00618	30	0.74	II	ceg
 2.4.1.1	withdraws	`withdraws` admission rule — CEG 0.6 broadening (semantic, not structural)	§3.2.3	0.00756	23	0.91	II	ceg
 2.4.1.2	delegates_to	Authority-source claims via `delegates_to`	§3.2.1	0.00402	59	0.48	II	ceg
+2.4.1.2.1	authority-triad	Licensure, grant, delegation — three concepts, three wire discriminators (normative)	(spine-reconciled)	0.00050	438	0.35	II	ceg
 2.4.1.3	recants	The `recants` distinction matters	§3.2.2	0.00172	143	0.21	II	ceg
 2.4.2	scores	The workhorse: `scores`	§3.1	0.00092	277	0.11	II	ceg
 2.5	reasoning	The reasoning grammar — the eight axes	§2	0.00382	65	0.46	II	ceg
@@ -75,9 +76,9 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 2.6.1.1.1	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	§0.9.2.1	0.00176	136	0.21	II	ceg
 2.6.1.2	per-field	Per-field encoding table (informational)	§0.9.3	0.00124	182	0.15	II	ceg
 2.6.1.3	canonical	Canonical encoding format (normative)	§0.9.1	0.00110	202	0.13	II	ceg
-2.6.1.4	worked	Worked attack the §0.9 rule closes	§0.9.5	0.00102	216	0.12	II	ceg
+2.6.1.4	worked	Worked attack the rule closes	§0.9.5	0.00102	216	0.12	II	ceg
 2.6.1.5	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg
-2.6.1.6	section	What CEG 0.9 (this section) documents	§0.9.6	0.00092	236	0.11	II	ceg
+2.6.1.6	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	II	ceg
 2.6.2	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	II	ceg
 2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	II	ceg
 2.6.4	policy-versioning	Versioning policy	§0.3	0.00214	111	0.26	II	ceg
@@ -85,9 +86,9 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 2.6.6	canonicalization-cell	H3 cell canonicalization (CEG 0.8 addition)	§0.8	0.00186	128	0.22	II	ceg
 2.6.6.1	location	Rough-only enforcement for `location_proof` (normative)	§0.8.1	0.00343	74	0.41	II	ceg
 2.6.6.2	cell	Cell containment	§0.8.2	0.00135	171	0.16	II	ceg
-2.6.6.3	documents	What CEG 0.8 documents	§0.8.3	0.00092	234	0.11	II	ceg
+2.6.6.3	documents	Scope of the H3 rule	§0.8.3	0.00092	234	0.11	II	ceg
 2.6.7	time	Time and clocks	§0.7	0.00173	141	0.21	II	ceg
-2.6.8	key_id	NodeCode — the canonical `key_id` shorthand encoding (normative, 1.0-RC3 addition)	§0.10	0.00119	186	0.14	II	ceg
+2.6.8	key_id	FedCode — the kind-tagged identity shorthand; NodeCode v1 retained as `kind: node` (normative)	§0.10	0.00119	186	0.14	II	ceg
 2.6.9	conformance-language	Conformance language	§0.1	0.00118	191	0.14	II	ceg
 2.6.9.1	informative	Normative vs informative content (what interop requires)	§0.1.1	0.00293	85	0.35	II	ceg
 3.1	namespace	The dimension namespace	§5	0.01687	5	2.02	III	ceg
@@ -95,6 +96,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.1.2	attestation	CIRISVerify — attestation ladder, provenance, transparency	§5.2	0.00428	53	0.51	III	ceg
 3.1.2.1	provenance	Canonical-bytes contracts for provenance primitives	§5.2.1	0.00396	62	0.48	III	ceg
 3.1.3	persist	CIRISPersist — substrate health	§5.3	0.00416	57	0.5	III	ceg
+3.1.3.1	session-claim	`session:*` — which occurrence of a self is handling an exchange (normative)	(spine-reconciled)	0.00050	436	0.3	III	ceg
 3.1.4	transport-delivery	CIRISEdge — transport, delivery, reachability	§5.4	0.00338	75	0.41	III	ceg
 3.1.5	accord-agent	CIRISAgent — Accord principles + DMA + conscience + apophatic bounds	§5.1	0.00154	157	0.18	III	ceg
 3.1.5.1	dma-verdict	DMA-verdict prefixes (four DMAs)	§5.1.2	0.00482	44	0.58	III	ceg
@@ -126,14 +128,14 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.3.4	family-subject	`family` subject_kind	§5.6.8.9	0.00520	41	0.62	III	ceg
 3.3.5	consent-subject	`consent_record` subject_kind	§5.6.8.7	0.00516	42	0.62	III	ceg
 3.3.6	identity	`identity_occurrence` subject_kind	§5.6.8.8	0.00467	45	0.56	III	ceg
-3.3.6.1	encryption_pubkeys	`encryption_pubkeys` — the recipient content-encryption KEM binding	§5.6.8.8.2	0.00303	81	0.36	III	ceg
+3.3.6.1	encryption_pubkeys	the recipient content-encryption KEM binding	§5.6.8.8.2	0.00303	81	0.36	III	ceg
 3.3.6.2	transport-authenticated	`transport_destination` — the authenticated identity↔address binding	§5.6.8.8.1	0.00268	93	0.32	III	ceg
 3.3.6.2.1	rns	RNS destination-hash algorithm (pinned)	§5.6.8.8.1.1	0.00321	79	0.39	III	ceg
 3.3.7	consent-directed	`consent:replication` — directed federation-peer replication consent (CEG 1.0-RC28 addition)	§5.6.8.15	0.00274	90	0.33	III	ceg
 3.3.8	namespace-event	Event-lifecycle dimension families (CEG 0.4 addition)	§5.6.8.5	0.00168	145	0.2	III	ceg
 3.3.9	partner	Operational-data subject_kinds — `organization` / `org_membership` / `partner_record`	§5.6.8.13	0.00153	159	0.18	III	ceg
-3.3.10	settlement	`settlement` — CEG↔value-transfer linkage (CEG 0.14 addition)	§5.6.8.12	0.00142	165	0.17	III	ceg
-3.3.10.1	ledger	`ledger` — In-grammar ledgers: owner-serialized content, cohort-witnessed conservation (CIRISConstitution#92 addition)	(spine-reconciled)	0.00050	432	0.35	III	ceg
+3.3.10	settlement	CEG↔value-transfer linkage (CEG 0.14 addition)	§5.6.8.12	0.00142	165	0.17	III	ceg
+3.3.10.1	ledger	In-grammar ledgers: owner-serialized content, cohort-witnessed conservation (CIRISConstitution#92 addition)	(spine-reconciled)	0.00050	432	0.35	III	ceg
 3.3.11	inter-content	Inter-content + relation prefixes	§5.6.8.2	0.00139	168	0.17	III	ceg
 3.3.12	namespace-multimedia	Multimedia dimension families	§5.6.8.3	0.00112	198	0.13	III	ceg
 3.3.13	external_content	external_content sub_kinds	§5.6.8.1	0.00109	203	0.13	III	ceg
@@ -144,6 +146,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.4.3	system	Substrate-self-report reservations (`system:*`)	§7.2	0.00424	54	0.51	III	ceg
 3.4.4	family-self	Self/family membership-event reservations (CEG 0.7 addition)	§7.7	0.00385	64	0.46	III	ceg
 3.4.5	capacity-score	Self-emission polarity — who may speak about whom	§7.5	0.00324	78	0.39	III	ceg
+3.4.5.1	self-report-route	How a self-report reaches a peer, and what a peer owes it (normative)	(spine-reconciled)	0.00050	437	0.3	III	ceg
 3.4.6	reservation-delivery	Delivery-receipt reservation (CEG 0.10 addition)	§7.9	0.00190	126	0.23	III	ceg
 3.4.7	enforcement	The enforcement rule (normative)	§7.0	0.00178	134	0.21	III	ceg
 3.4.7.1	identity-set	`identity_type` is a set — single-key role cohabitation (CEG 0.9 addition)	§7.0.1	0.00329	77	0.39	III	ceg
@@ -159,13 +162,13 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.1.2	pattern	Discipline pattern	§13.5	0.00122	183	0.15	IV	ceg
 4.1.3	already-rejected	Already-rejected wire additions	§13.1	0.00108	205	0.13	IV	ceg
 4.1.4	withdraws-arbitrage	`withdraws` arbitrage	§13.4	0.00095	226	0.11	IV	ceg
-4.1.5	registry-rejections	CEG 0.1 rejections (from CIRISRegistry#30 stress test)	§13.2	0.00093	231	0.11	IV	ceg
+4.1.5	registry-rejections	Rejected stress-test reaches	§13.2	0.00093	231	0.11	IV	ceg
 4.2	accord	The HUMANITY_ACCORD constitutional layer	§9	0.01163	10	1.4	IV	ceg
 4.2.1	authority	Authority scope	§9.2	0.00523	40	0.63	IV	ceg
 4.2.1.1	invocation	Invocation canonical bytes (anti-replay; 0.1 scaffold)	§9.2.1	0.00162	154	0.19	IV	ceg
-4.2.1.2	notify	`notify` vs `CONSTITUTIONAL` — consumer-UI requirement	§9.2.2	0.00095	227	0.11	IV	ceg
+4.2.1.2	notify	`notify` vs `constitutional` — consumer-UI requirement	§9.2.2	0.00095	227	0.11	IV	ceg
 4.2.2	hardware-class	Hardware-class taxonomy	§9.4	0.00276	89	0.33	IV	ceg
-4.2.2.1	hardware-class-hardware	Hardware-class self-assertion gap (acknowledged)	§9.4.1	0.00111	200	0.13	IV	ceg
+4.2.2.1	hardware-class-hardware	Hardware-class claim, and the attestation chain that corroborates it	§9.4.1	0.00111	200	0.13	IV	ceg
 4.2.3	accord-holder	The accord-holder triple	§9.1	0.00135	172	0.16	IV	ceg
 4.2.4	policy-concern	Concern split — key material vs role-recognition policy	§9.3	0.00092	301	0.11	IV	ceg
 4.2.5	isn	Why this isn't a Golden-Rule violation	§9.5	0.00092	302	0.11	IV	ceg
@@ -184,7 +187,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.4.3.2.4.1	deterministic	Deterministic resolution + member→address resolution (NORMATIVE)	§8.1.13.1.1	0.00262	95	0.31	IV	ceg
 4.4.3.2.5	admission-geographic	Geographic-community admission flow (worked example)	§8.1.13.5	0.00121	184	0.15	IV	ceg
 4.4.3.2.6	delivery-extension	Delivery extension — `delivery_mode` × Policy M	§8.1.13.7	0.00103	212	0.12	IV	ceg
-4.4.3.2.7	composition-8-1-13-6	Composition with CEG 0.6 + 0.7	§8.1.13.6	0.00092	298	0.11	IV	ceg
+4.4.3.2.7	composition-8-1-13-6	Composition with consent + self-collectives	§8.1.13.6	0.00092	298	0.11	IV	ceg
 4.4.3.3	policy	Policy H — Tiered-Scope Composition (LIVE)	§8.1.8	0.00456	47	0.55	IV	ceg
 4.4.3.3.1	supersedes	Promotion via `supersedes` (worked pattern)	§8.1.8.1	0.00376	69	0.45	IV	ceg
 4.4.3.4	family-policy	Policy L — Self/family membership composition (CEG 0.7 addition)	§8.1.12	0.00450	49	0.54	IV	ceg
@@ -196,7 +199,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.4.3.4.4	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg
 4.4.3.4.5	forward-secrecy	Forward secrecy on member removal (Option A, recommended for v1)	§8.1.12.5	0.00165	149	0.2	IV	ceg
 4.4.3.4.6	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg
-4.4.3.4.7	composition-subject	Composition with CEG 0.6 subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg
+4.4.3.4.7	composition-subject	Composition with subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg
 4.4.3.5	policy-cem	Policy K — CEM composition	§8.1.11	0.00445	50	0.53	IV	ceg
 4.4.3.5.1	composition-decay	Decay-protocol stage composition (CIRISAgent CEM ANONYMOUS)	§8.1.11.5	0.00239	102	0.29	IV	ceg
 4.4.3.5.2	deletion-sla	Deletion-SLA watcher (substrate emission)	§8.1.11.3	0.00224	106	0.27	IV	ceg
@@ -221,7 +224,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.5.2	compliance	Vertical compliance + subject-bearing dimension governance (CEG 0.6 addition; per CIRISRegistry#45)	§11.6	0.00499	43	0.6	IV	ceg
 4.5.2.1	subject_kind-subject-3	Subject-bearing dimension governance (normative)	§11.6.2	0.00127	177	0.15	IV	ceg
 4.5.2.2	compliance-vertical	Vertical compliance mapping (informational)	§11.6.1	0.00092	247	0.11	IV	ceg
-4.5.2.3	documents-what-3	What CEG 0.6 documents	§11.6.3	0.00092	248	0.11	IV	ceg
+4.5.2.3	documents-what-3	What this governance layer documents	§11.6.3	0.00092	248	0.11	IV	ceg
 4.5.3	takedown	Fast-path takedown coordination (CEG 0.3 addition; per CIRISRegistry#37 + #38)	§11.4	0.00459	46	0.55	IV	ceg
 4.5.4	registry-named	Named-moderator existence invariant + merit auto-promotion (1.0-RC21; per [CIRISRegistry#93](https://github.com/CIRISAI/CIRISRegistry/issues/93))	§11.11	0.00348	72	0.42	IV	ceg
 4.5.5	takedown-moderation	Moderation as a delegable duty — `moderate` / `takedown` / `review` (1.0-RC19; per [CIRISRegistry#90](https://github.com/CIRISAI/CIRISRegistry/issues/90))	§11.10	0.00216	109	0.26	IV	ceg
@@ -229,7 +232,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.5.7	registry-watchlist	Watchlist auto-detection — opt-in, per-group, separation-of-powers (1.0-RC23; per [CIRISRegistry#94](https://github.com/CIRISAI/CIRISRegistry/issues/94))	§11.12	0.00119	185	0.14	IV	ceg
 4.5.8	identity-set-2	`identity_type` as a set — single-key role cohabitation (CEG 0.9 addition; per CIRISRegistry#49 + CIRISAgent#856)	§11.9	0.00118	189	0.14	IV	ceg
 4.5.8.1	cohabitation	Cohabitation discipline for constitutional + substrate roles	§11.9.3	0.00101	217	0.12	IV	ceg
-4.5.8.2	amendment-what	What the amendment changes — and what it deliberately does not	§11.9.1	0.00092	254	0.11	IV	ceg
+4.5.8.2	amendment-what	What this changes — and what it deliberately does not	§11.9.1	0.00092	254	0.11	IV	ceg
 4.5.8.3	settled	Settled in CIRISAgent, carried as-is	§11.9.2	0.00092	255	0.11	IV	ceg
 4.5.8.4	documents-what-6	What this documents	§11.9.4	0.00092	256	0.11	IV	ceg
 4.5.9	registry-geographic	Geographic-community privacy invariant (CEG 0.8 addition; per CIRISRegistry#48)	§11.8	0.00111	201	0.13	IV	ceg
@@ -267,6 +270,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 5.3.2.4.4	persist-query	Query — open-prefix dimensions, bounded operators (normative; resolves CIRISPersist#172 OQ-2)	§10.1.5.4	0.00092	239	0.11	V	ceg
 5.3.2.4.5	holistic	For holistic analysis + modeling (informative)	§10.1.5.5	0.00092	240	0.11	V	ceg
 5.3.2.5	full-sha	Full-SHA verification before consumption (normative)	§10.1.1	0.00095	224	0.11	V	ceg
+5.3.2.6	render-tier	The render tier is receiver policy, computed from verified, sniffed bytes (normative)	(spine-reconciled)	0.00050	439	0.35	V	ceg
 5.3.3	transport-streaming	Streaming transport, per-stream logs & delivery receipts (CEG 0.10 addition)	§10.5	0.00379	67	0.45	V	ceg
 5.3.3.1	stream	Chunk seal + STREAM nonce (normative — V2 lock)	§10.5.2	0.00419	56	0.5	V	ceg
 5.3.3.2	composition	Realtime group communication — composition (CEG 0.13 addition)	§10.5.8	0.00381	66	0.46	V	ceg
@@ -410,6 +414,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 3.4.13	minor-protection	Minor operation & protection — the seven ratified child-safety rulings (restrictive floor)	(spine-reconciled)	0.00050	405	0.1	III	ceg
 3.4.14	synthesis-disclosure	Machine-generation disclosure — the attestation IS the marking (EU AI Act Art. 50(2), normative)	(spine-reconciled)	0.00050	430	0.1	III	ceg
 4.2.1.3	lifecycle	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	(spine-reconciled)	0.00050	406	0.1	IV	accord
+4.2.1.4	operational-relief	Operational self-report vs. relief — the node detects, the root relieves (normative)	(spine-reconciled)	0.00050	435	0.3	IV	ceg
 4.2.6	live-quorum	Live-quorum operation & recovery under decimation (normative)	(spine-reconciled)	0.00050	407	0.1	IV	accord
 4.4.3.2.8	affiliations	The institutional cohort (necessity, not interest) (normative)	(spine-reconciled)	0.00050	408	0.1	IV	ceg
 4.5.13	reverse-quorum	Reverse-quorum governance — presence is authority, absence forfeits it	(spine-reconciled)	0.00050	409	0.1	IV	ceg
