@@ -542,11 +542,14 @@ def check_pin_staleness(errors, warnings, notes):
         notes.append("pin-staleness gate: gh unavailable — pins unverified "
                      "(the check did not run; it did not pass)")
         return
+    for r in unread:                      # a partial read is a partial check, said so
+        warnings.append(f"pin staleness: {r} head could not be read — its pin is UNVERIFIED, "
+                        f"not at head (transient API failure, or a token without access)")
     if stale:
         warnings.append("pin staleness: " + "; ".join(
             f"{r} pinned {p} but head is {h}" for r, p, h in stale)
             + " — re-vendor, or record why the pin is held")
-    else:
+    elif not unread:
         notes.append("pin-staleness gate: every evidence pin is at its upstream head")
 
 

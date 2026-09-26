@@ -84,6 +84,10 @@ def _reserved_rules():
          "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
         (lambda p, c: p.startswith("licensure:"),
          "co-stewarded (Registry + Verify)", "CC 3.4.9"),
+        # CC 3.1.3.1: an OCCURRENCE self-report, not a substrate one — before the
+        # component-wide persist rule so the manifest carries the rule the row states.
+        (lambda p, c: p.startswith("session:"),
+         "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
@@ -120,6 +124,22 @@ PLACEHOLDER_CLASS = {
     "hex": {"canonical_hash", "prefix"},
 }
 _CLASS_OF = {name: cls for cls, names in PLACEHOLDER_CLASS.items() for name in names}
+# A placeholder whose VALUE has a shape beyond its class (CIRISConstitution#113 review):
+# the canonical-binding hash is a full SHA-256; the SLA window and the RFC 6962 tree
+# size are numbers. Published as `pattern` on the segment; class stays as classified.
+SEGMENT_PATTERNS = {
+    "canonical_hash": "^[0-9a-f]{64}$",
+    "days": "^[0-9]+$",
+    "tree_size": "^[0-9]+$",
+}
+# A placeholder whose documented values carry `:` — it spans one OR MORE segments,
+# each sub-segment obeying the placeholder's class. Keyed by family, never by name,
+# so `{kind}` is multi-segment on consent:scope alone.
+MULTI_PLACEHOLDERS = {
+    "consent:scope:{kind}": "kind",                       # retain:90d — sub-scoping in the token (#103)
+    "detection:correlated_action:{axis}": "axis",         # rights_asymmetry:{population}
+    "provenance:skill_import:{source}": "source",         # registry:{registry_id} / direct:{url}
+}
 EXTERNAL_STANDARDS = {                      # name -> (standard, syntax pattern or None)
     "currency": ("ISO 4217 alphabetic code", "^[A-Z]{3}$"),
     "lang_code": ("BCP 47 language tag", "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$"),
@@ -287,6 +307,13 @@ def main():
         rec["cc_section"] = section
         rec["polarity"] = polarity or ""
         rec["segments"] = classify_segments(prefix)
+        for seg in rec["segments"]:
+            if seg["segment"].startswith("{"):
+                pname = seg["segment"][1:-1]
+                if pname in SEGMENT_PATTERNS:
+                    seg["pattern"] = SEGMENT_PATTERNS[pname]
+                if MULTI_PLACEHOLDERS.get(prefix) == pname:
+                    seg["multi"] = True
         for seg in rec["segments"]:               # R3 `external`: the standard travels with the segment
             if seg["class"] == "external":
                 spec = EXTERNAL_STANDARDS.get(seg["segment"][1:-1])

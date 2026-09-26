@@ -1,9 +1,9 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "3583bd4be8bec4cae2f35e003fa9df4c112947f087d4dfa451c439db1f7c79f9",
+    "registry_sha256": "5884c1fcc8cd845b93aa370ac7cbc0cc570588ef04f94c14f437bf83e6e86294",
     "generator": "tools/cc_namespace_match.py",
-    "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension"
+    "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension \u2014 on a refusal of namespace_dimension_case_malformed the refusal is the contract and the family is best-effort attribution"
   },
   "vectors": [
     {
@@ -55,6 +55,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "accord:human_dignity:V1",
+      "family": "accord:human_dignity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:human_dignity:v1:v2",
+      "family": "accord:human_dignity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:human_dignity:v1",
+      "family": "accord:human_dignity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "accord:human_dignity",
       "family": "accord:human_dignity",
       "refusal": "missing_version_segment",
@@ -65,6 +83,24 @@
       "family": "accord:invoke:constitutional:{halt_id}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "accord:invoke:constitutional:id1:V1",
+      "family": "accord:invoke:constitutional:{halt_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:invoke:constitutional:id1:v1:v2",
+      "family": "accord:invoke:constitutional:{halt_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:invoke:constitutional:id1:v1",
+      "family": "accord:invoke:constitutional:{halt_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "accord:invoke:constitutional:id1",
@@ -79,6 +115,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "accord:invoke:drill:id1:V1",
+      "family": "accord:invoke:drill:{drill_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:invoke:drill:id1:v1:v2",
+      "family": "accord:invoke:drill:{drill_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:invoke:drill:id1:v1",
+      "family": "accord:invoke:drill:{drill_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "accord:invoke:drill:id1",
       "family": "accord:invoke:drill:{drill_id}",
       "refusal": "missing_version_segment",
@@ -89,6 +143,24 @@
       "family": "accord:invoke:notify:{notify_id}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "accord:invoke:notify:id1:V1",
+      "family": "accord:invoke:notify:{notify_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:invoke:notify:id1:v1:v2",
+      "family": "accord:invoke:notify:{notify_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:invoke:notify:id1:v1",
+      "family": "accord:invoke:notify:{notify_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "accord:invoke:notify:id1",
@@ -103,6 +175,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "accord:lifecycle:V1",
+      "family": "accord:lifecycle",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:lifecycle:v1:v2",
+      "family": "accord:lifecycle",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:lifecycle:v1",
+      "family": "accord:lifecycle",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "accord:lifecycle",
       "family": "accord:lifecycle",
       "refusal": "missing_version_segment",
@@ -115,6 +205,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "accord:lifecycle:active:V1",
+      "family": "accord:lifecycle:active",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:lifecycle:active:v1:v2",
+      "family": "accord:lifecycle:active",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:lifecycle:active:v1",
+      "family": "accord:lifecycle:active",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "accord:lifecycle:active",
       "family": "accord:lifecycle:active",
       "refusal": "missing_version_segment",
@@ -125,6 +233,24 @@
       "family": "activity_tier:{period}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "activity_tier:sample:V1",
+      "family": "activity_tier:{period}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "activity_tier:sample:v1:v2",
+      "family": "activity_tier:{period}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Activity_tier:sample:v1",
+      "family": "activity_tier:{period}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "activity_tier:sample",
@@ -145,6 +271,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "age_assurance:provider:minor:V1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "age_assurance:provider:minor:v1:v2",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Age_assurance:provider:minor:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "age_assurance:provider:minor",
       "family": "age_assurance:{level}:{band}:{version}",
       "refusal": "missing_version_segment",
@@ -161,6 +305,24 @@
       "family": "age_self_declared:{band}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "age_self_declared:minor:V1",
+      "family": "age_self_declared:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "age_self_declared:minor:v1:v2",
+      "family": "age_self_declared:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Age_self_declared:minor:v1",
+      "family": "age_self_declared:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "age_self_declared:minor",
@@ -181,6 +343,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "agent_files:sample:sample:V1",
+      "family": "agent_files:{kind}:{platform_or_target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "agent_files:sample:sample:v1:v2",
+      "family": "agent_files:{kind}:{platform_or_target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Agent_files:sample:sample:v1",
+      "family": "agent_files:{kind}:{platform_or_target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "agent_files:sample:sample",
       "family": "agent_files:{kind}:{platform_or_target}",
       "refusal": "missing_version_segment",
@@ -199,6 +379,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "approach:id1:V1",
+      "family": "approach:{goal_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "approach:id1:v1:v2",
+      "family": "approach:{goal_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Approach:id1:v1",
+      "family": "approach:{goal_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "approach:id1",
       "family": "approach:{goal_id}",
       "refusal": "missing_version_segment",
@@ -211,10 +409,22 @@
       "why": "instantiated sample resolves to its row (exempt: no version tail)"
     },
     {
+      "dimension": "attestation:agent_integrity:v1",
+      "family": "attestation:agent_integrity",
+      "refusal": null,
+      "why": "an exempt family tolerates a version tail (never required)"
+    },
+    {
       "dimension": "attestation:hardware_rooted",
       "family": "attestation:hardware_rooted",
       "refusal": null,
       "why": "instantiated sample resolves to its row (exempt: no version tail)"
+    },
+    {
+      "dimension": "attestation:hardware_rooted:v1",
+      "family": "attestation:hardware_rooted",
+      "refusal": null,
+      "why": "an exempt family tolerates a version tail (never required)"
     },
     {
       "dimension": "attestation:license_validity",
@@ -223,10 +433,22 @@
       "why": "instantiated sample resolves to its row (exempt: no version tail)"
     },
     {
+      "dimension": "attestation:license_validity:v1",
+      "family": "attestation:license_validity",
+      "refusal": null,
+      "why": "an exempt family tolerates a version tail (never required)"
+    },
+    {
       "dimension": "attestation:registry_consensus",
       "family": "attestation:registry_consensus",
       "refusal": null,
       "why": "instantiated sample resolves to its row (exempt: no version tail)"
+    },
+    {
+      "dimension": "attestation:registry_consensus:v1",
+      "family": "attestation:registry_consensus",
+      "refusal": null,
+      "why": "an exempt family tolerates a version tail (never required)"
     },
     {
       "dimension": "attestation:self_verify",
@@ -235,10 +457,34 @@
       "why": "instantiated sample resolves to its row (exempt: no version tail)"
     },
     {
+      "dimension": "attestation:self_verify:v1",
+      "family": "attestation:self_verify",
+      "refusal": null,
+      "why": "an exempt family tolerates a version tail (never required)"
+    },
+    {
       "dimension": "audio:leaf:v1",
       "family": "audio:*",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "audio:leaf:V1",
+      "family": "audio:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "audio:leaf:v1:v2",
+      "family": "audio:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Audio:leaf:v1",
+      "family": "audio:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "audio:leaf",
@@ -253,6 +499,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "audit_chain:hash_continuity:V1",
+      "family": "audit_chain:hash_continuity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "audit_chain:hash_continuity:v1:v2",
+      "family": "audit_chain:hash_continuity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Audit_chain:hash_continuity:v1",
+      "family": "audit_chain:hash_continuity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "audit_chain:hash_continuity",
       "family": "audit_chain:hash_continuity",
       "refusal": "missing_version_segment",
@@ -263,6 +527,24 @@
       "family": "autonomy:{aspect}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "autonomy:sample:V1",
+      "family": "autonomy:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "autonomy:sample:v1:v2",
+      "family": "autonomy:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Autonomy:sample:v1",
+      "family": "autonomy:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "autonomy:sample",
@@ -283,6 +565,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "benchmark:he300:sample:V1.0",
+      "family": "benchmark:he300:{category}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "benchmark:he300:sample:v1.0:v2",
+      "family": "benchmark:he300:{category}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Benchmark:he300:sample:v1.0",
+      "family": "benchmark:he300:{category}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "benchmark:he300:sample",
       "family": "benchmark:he300:{category}:{version}",
       "refusal": "missing_version_segment",
@@ -299,6 +599,24 @@
       "family": "beneficence:{aspect}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "beneficence:sample:V1",
+      "family": "beneficence:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "beneficence:sample:v1:v2",
+      "family": "beneficence:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Beneficence:sample:v1",
+      "family": "beneficence:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "beneficence:sample",
@@ -319,6 +637,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "blog:leaf:V1",
+      "family": "blog:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "blog:leaf:v1:v2",
+      "family": "blog:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Blog:leaf:v1",
+      "family": "blog:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "blog:leaf",
       "family": "blog:*",
       "refusal": "missing_version_segment",
@@ -329,6 +665,24 @@
       "family": "bond_posted:{currency}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "bond_posted:USD:V1",
+      "family": "bond_posted:{currency}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "bond_posted:USD:v1:v2",
+      "family": "bond_posted:{currency}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Bond_posted:USD:v1",
+      "family": "bond_posted:{currency}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "bond_posted:USD",
@@ -349,6 +703,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "build:registered:id1:V1",
+      "family": "build:registered:{target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "build:registered:id1:v1:v2",
+      "family": "build:registered:{target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Build:registered:id1:v1",
+      "family": "build:registered:{target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "build:registered:id1",
       "family": "build:registered:{target}",
       "refusal": "missing_version_segment",
@@ -359,6 +731,24 @@
       "family": "capacity:composite",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity:composite:V1",
+      "family": "capacity:composite",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:composite:v1:v2",
+      "family": "capacity:composite",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:composite:v1",
+      "family": "capacity:composite",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "capacity:composite",
@@ -373,6 +763,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "capacity:core_identity:V1",
+      "family": "capacity:core_identity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:core_identity:v1:v2",
+      "family": "capacity:core_identity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:core_identity:v1",
+      "family": "capacity:core_identity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "capacity:core_identity",
       "family": "capacity:core_identity",
       "refusal": "missing_version_segment",
@@ -383,6 +791,24 @@
       "family": "capacity:incompleteness_awareness",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity:incompleteness_awareness:V1",
+      "family": "capacity:incompleteness_awareness",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:incompleteness_awareness:v1:v2",
+      "family": "capacity:incompleteness_awareness",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:incompleteness_awareness:v1",
+      "family": "capacity:incompleteness_awareness",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "capacity:incompleteness_awareness",
@@ -397,6 +823,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "capacity:integrity:V1",
+      "family": "capacity:integrity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:integrity:v1:v2",
+      "family": "capacity:integrity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:integrity:v1",
+      "family": "capacity:integrity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "capacity:integrity",
       "family": "capacity:integrity",
       "refusal": "missing_version_segment",
@@ -407,6 +851,24 @@
       "family": "capacity:resilience",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity:resilience:V1",
+      "family": "capacity:resilience",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:resilience:v1:v2",
+      "family": "capacity:resilience",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:resilience:v1",
+      "family": "capacity:resilience",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "capacity:resilience",
@@ -421,6 +883,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "capacity:sustained_coherence:V1",
+      "family": "capacity:sustained_coherence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:sustained_coherence:v1:v2",
+      "family": "capacity:sustained_coherence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:sustained_coherence:v1",
+      "family": "capacity:sustained_coherence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "capacity:sustained_coherence",
       "family": "capacity:sustained_coherence",
       "refusal": "missing_version_segment",
@@ -431,6 +911,24 @@
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity_assurance:sample:sample:sample:V1",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:sample:sample:sample:v1:v2",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity_assurance:sample:sample:sample:v1",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "capacity_assurance:sample:sample:sample",
@@ -451,6 +949,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "cert_validity:id1:V1",
+      "family": "cert_validity:{authority}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "cert_validity:id1:v1:v2",
+      "family": "cert_validity:{authority}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Cert_validity:id1:v1",
+      "family": "cert_validity:{authority}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "cert_validity:id1",
       "family": "cert_validity:{authority}",
       "refusal": "missing_version_segment",
@@ -461,6 +977,24 @@
       "family": "chat:*",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "chat:leaf:V1",
+      "family": "chat:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "chat:leaf:v1:v2",
+      "family": "chat:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Chat:leaf:v1",
+      "family": "chat:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "chat:leaf",
@@ -475,6 +1009,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "coherence_standing:id1:V1",
+      "family": "coherence_standing:{cohort}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "coherence_standing:id1:v1:v2",
+      "family": "coherence_standing:{cohort}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Coherence_standing:id1:v1",
+      "family": "coherence_standing:{cohort}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "coherence_standing:id1",
       "family": "coherence_standing:{cohort}",
       "refusal": "missing_version_segment",
@@ -487,6 +1039,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "commitment_fulfillment:id1:V1",
+      "family": "commitment_fulfillment:{prior_contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "commitment_fulfillment:id1:v1:v2",
+      "family": "commitment_fulfillment:{prior_contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Commitment_fulfillment:id1:v1",
+      "family": "commitment_fulfillment:{prior_contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "commitment_fulfillment:id1",
       "family": "commitment_fulfillment:{prior_contribution_id}",
       "refusal": "missing_version_segment",
@@ -497,6 +1067,24 @@
       "family": "config:{scope}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "config:sample:V1",
+      "family": "config:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "config:sample:v1:v2",
+      "family": "config:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Config:sample:v1",
+      "family": "config:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "config:sample",
@@ -517,6 +1105,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "conscience:coherence:V1",
+      "family": "conscience:coherence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "conscience:coherence:v1:v2",
+      "family": "conscience:coherence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Conscience:coherence:v1",
+      "family": "conscience:coherence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "conscience:coherence",
       "family": "conscience:coherence",
       "refusal": "missing_version_segment",
@@ -527,6 +1133,24 @@
       "family": "conscience:entropy",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "conscience:entropy:V1",
+      "family": "conscience:entropy",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "conscience:entropy:v1:v2",
+      "family": "conscience:entropy",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Conscience:entropy:v1",
+      "family": "conscience:entropy",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "conscience:entropy",
@@ -541,6 +1165,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "conscience:epistemic_humility:V1",
+      "family": "conscience:epistemic_humility",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "conscience:epistemic_humility:v1:v2",
+      "family": "conscience:epistemic_humility",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Conscience:epistemic_humility:v1",
+      "family": "conscience:epistemic_humility",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "conscience:epistemic_humility",
       "family": "conscience:epistemic_humility",
       "refusal": "missing_version_segment",
@@ -553,6 +1195,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "conscience:optimization_veto:V1",
+      "family": "conscience:optimization_veto",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "conscience:optimization_veto:v1:v2",
+      "family": "conscience:optimization_veto",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Conscience:optimization_veto:v1",
+      "family": "conscience:optimization_veto",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "conscience:optimization_veto",
       "family": "conscience:optimization_veto",
       "refusal": "missing_version_segment",
@@ -563,6 +1223,24 @@
       "family": "consent:decay:{stage}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:decay:sample:V1",
+      "family": "consent:decay:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:decay:sample:v1:v2",
+      "family": "consent:decay:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:decay:sample:v1",
+      "family": "consent:decay:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "consent:decay:sample",
@@ -583,19 +1261,55 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "consent:deletion_complete:V1",
+      "family": "consent:deletion_complete",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:deletion_complete:v1:v2",
+      "family": "consent:deletion_complete",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:deletion_complete:v1",
+      "family": "consent:deletion_complete",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "consent:deletion_complete",
       "family": "consent:deletion_complete",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "consent:deletion_sla:id1:v1",
+      "dimension": "consent:deletion_sla:42:v1",
       "family": "consent:deletion_sla:{days}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "consent:deletion_sla:id1",
+      "dimension": "consent:deletion_sla:42:V1",
+      "family": "consent:deletion_sla:{days}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:deletion_sla:42:v1:v2",
+      "family": "consent:deletion_sla:{days}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:deletion_sla:42:v1",
+      "family": "consent:deletion_sla:{days}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:deletion_sla:42",
       "family": "consent:deletion_sla:{days}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
@@ -605,6 +1319,24 @@
       "family": "consent:partnership_accept",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:partnership_accept:V1",
+      "family": "consent:partnership_accept",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:partnership_accept:v1:v2",
+      "family": "consent:partnership_accept",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:partnership_accept:v1",
+      "family": "consent:partnership_accept",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "consent:partnership_accept",
@@ -619,6 +1351,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "consent:partnership_grant:V1",
+      "family": "consent:partnership_grant",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:partnership_grant:v1:v2",
+      "family": "consent:partnership_grant",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:partnership_grant:v1",
+      "family": "consent:partnership_grant",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "consent:partnership_grant",
       "family": "consent:partnership_grant",
       "refusal": "missing_version_segment",
@@ -631,25 +1381,61 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "consent:replication:V1",
+      "family": "consent:replication:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:replication:v1:v2",
+      "family": "consent:replication:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:replication:v1",
+      "family": "consent:replication:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "consent:replication",
       "family": "consent:replication:{version}",
       "refusal": "missing_version_segment",
       "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
-      "dimension": "consent:scope:sample:v1",
+      "dimension": "consent:scope:sample:sub:v1",
       "family": "consent:scope:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "consent:scope:sample",
+      "dimension": "consent:scope:sample:sub:V1",
+      "family": "consent:scope:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:scope:sample:sub:v1:v2",
+      "family": "consent:scope:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:scope:sample:sub:v1",
+      "family": "consent:scope:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:scope:sample:sub",
       "family": "consent:scope:{kind}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "consent:scope:SAMPLE:v1",
+      "dimension": "consent:scope:SAMPLE:sub:v1",
       "family": "consent:scope:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
@@ -659,6 +1445,24 @@
       "family": "consent:state:{stance}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:state:granted:V1",
+      "family": "consent:state:{stance}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:state:granted:v1:v2",
+      "family": "consent:state:{stance}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:state:granted:v1",
+      "family": "consent:state:{stance}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "consent:state:granted",
@@ -685,6 +1489,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "consent:stream:sample:V1",
+      "family": "consent:stream:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:stream:sample:v1:v2",
+      "family": "consent:stream:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:stream:sample:v1",
+      "family": "consent:stream:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "consent:stream:sample",
       "family": "consent:stream:{kind}",
       "refusal": "missing_version_segment",
@@ -701,6 +1523,24 @@
       "family": "consent:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:sample:V1",
+      "family": "consent:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:sample:v1:v2",
+      "family": "consent:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:sample:v1",
+      "family": "consent:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "consent:sample",
@@ -721,6 +1561,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "content_class:sample:V1",
+      "family": "content_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "content_class:sample:v1:v2",
+      "family": "content_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Content_class:sample:v1",
+      "family": "content_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "content_class:sample",
       "family": "content_class:{class}",
       "refusal": "missing_version_segment",
@@ -737,6 +1595,24 @@
       "family": "content_rating:{scheme}:{rating}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "content_rating:sample:PG-13:V1",
+      "family": "content_rating:{scheme}:{rating}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "content_rating:sample:PG-13:v1:v2",
+      "family": "content_rating:{scheme}:{rating}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Content_rating:sample:PG-13:v1",
+      "family": "content_rating:{scheme}:{rating}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "content_rating:sample:PG-13",
@@ -757,6 +1633,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "corpus_health:n_eff_measurable:V1",
+      "family": "corpus_health:n_eff_measurable",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "corpus_health:n_eff_measurable:v1:v2",
+      "family": "corpus_health:n_eff_measurable",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Corpus_health:n_eff_measurable:v1",
+      "family": "corpus_health:n_eff_measurable",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "corpus_health:n_eff_measurable",
       "family": "corpus_health:n_eff_measurable",
       "refusal": "missing_version_segment",
@@ -767,6 +1661,24 @@
       "family": "credits:{domain}:{language}:substrate_building",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "credits:sample:sample:substrate_building:V1",
+      "family": "credits:{domain}:{language}:substrate_building",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "credits:sample:sample:substrate_building:v1:v2",
+      "family": "credits:{domain}:{language}:substrate_building",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Credits:sample:sample:substrate_building:v1",
+      "family": "credits:{domain}:{language}:substrate_building",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "credits:sample:sample:substrate_building",
@@ -787,6 +1699,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "credits:sample:sample:id1:V1",
+      "family": "credits:{domain}:{language}:{subject}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "credits:sample:sample:id1:v1:v2",
+      "family": "credits:{domain}:{language}:{subject}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Credits:sample:sample:id1:v1",
+      "family": "credits:{domain}:{language}:{subject}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "credits:sample:sample:id1",
       "family": "credits:{domain}:{language}:{subject}",
       "refusal": "missing_version_segment",
@@ -803,6 +1733,24 @@
       "family": "cw_class:{class}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "cw_class:sample:V1",
+      "family": "cw_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "cw_class:sample:v1:v2",
+      "family": "cw_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Cw_class:sample:v1",
+      "family": "cw_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "cw_class:sample",
@@ -823,6 +1771,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "delivery:sample:V1",
+      "family": "delivery:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "delivery:sample:v1:v2",
+      "family": "delivery:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Delivery:sample:v1",
+      "family": "delivery:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "delivery:sample",
       "family": "delivery:{class}",
       "refusal": "missing_version_segment",
@@ -841,6 +1807,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "delivery_receipt:id1:V1",
+      "family": "delivery_receipt:{stream_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "delivery_receipt:id1:v1:v2",
+      "family": "delivery_receipt:{stream_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Delivery_receipt:id1:v1",
+      "family": "delivery_receipt:{stream_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "delivery_receipt:id1",
       "family": "delivery_receipt:{stream_id}",
       "refusal": "missing_version_segment",
@@ -853,25 +1837,61 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "detection:conscience_override_rate:V1",
+      "family": "detection:conscience_override_rate",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:conscience_override_rate:v1:v2",
+      "family": "detection:conscience_override_rate",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:conscience_override_rate:v1",
+      "family": "detection:conscience_override_rate",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "detection:conscience_override_rate",
       "family": "detection:conscience_override_rate",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "detection:correlated_action:sample:v1",
+      "dimension": "detection:correlated_action:sample:sub:v1",
       "family": "detection:correlated_action:{axis}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "detection:correlated_action:sample",
+      "dimension": "detection:correlated_action:sample:sub:V1",
+      "family": "detection:correlated_action:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:correlated_action:sample:sub:v1:v2",
+      "family": "detection:correlated_action:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:correlated_action:sample:sub:v1",
+      "family": "detection:correlated_action:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:correlated_action:sample:sub",
       "family": "detection:correlated_action:{axis}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "detection:correlated_action:SAMPLE:v1",
+      "dimension": "detection:correlated_action:SAMPLE:sub:v1",
       "family": "detection:correlated_action:{axis}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
@@ -881,6 +1901,24 @@
       "family": "detection:cross_agent_divergence",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "detection:cross_agent_divergence:V1",
+      "family": "detection:cross_agent_divergence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:cross_agent_divergence:v1:v2",
+      "family": "detection:cross_agent_divergence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:cross_agent_divergence:v1",
+      "family": "detection:cross_agent_divergence",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "detection:cross_agent_divergence",
@@ -893,6 +1931,24 @@
       "family": "detection:distributive:access:{resource_type}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "detection:distributive:access:compute:V1",
+      "family": "detection:distributive:access:{resource_type}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:distributive:access:compute:v1:v2",
+      "family": "detection:distributive:access:{resource_type}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:distributive:access:compute:v1",
+      "family": "detection:distributive:access:{resource_type}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "detection:distributive:access:compute",
@@ -913,6 +1969,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "detection:hash_chain_integrity:V1",
+      "family": "detection:hash_chain_integrity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:hash_chain_integrity:v1:v2",
+      "family": "detection:hash_chain_integrity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:hash_chain_integrity:v1",
+      "family": "detection:hash_chain_integrity",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "detection:hash_chain_integrity",
       "family": "detection:hash_chain_integrity",
       "refusal": "missing_version_segment",
@@ -923,6 +1997,24 @@
       "family": "detection:intra_agent_consistency",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "detection:intra_agent_consistency:V1",
+      "family": "detection:intra_agent_consistency",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:intra_agent_consistency:v1:v2",
+      "family": "detection:intra_agent_consistency",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:intra_agent_consistency:v1",
+      "family": "detection:intra_agent_consistency",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "detection:intra_agent_consistency",
@@ -937,6 +2029,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "detection:temporal_drift:V1",
+      "family": "detection:temporal_drift",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "detection:temporal_drift:v1:v2",
+      "family": "detection:temporal_drift",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Detection:temporal_drift:v1",
+      "family": "detection:temporal_drift",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "detection:temporal_drift",
       "family": "detection:temporal_drift",
       "refusal": "missing_version_segment",
@@ -949,6 +2059,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "dma:csdma:leaf:V1",
+      "family": "dma:csdma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "dma:csdma:leaf:v1:v2",
+      "family": "dma:csdma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Dma:csdma:leaf:v1",
+      "family": "dma:csdma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "dma:csdma:leaf",
       "family": "dma:csdma:*",
       "refusal": "missing_version_segment",
@@ -959,6 +2087,24 @@
       "family": "dma:dsdma:{domain}:*",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "dma:dsdma:sample:leaf:V1",
+      "family": "dma:dsdma:{domain}:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "dma:dsdma:sample:leaf:v1:v2",
+      "family": "dma:dsdma:{domain}:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Dma:dsdma:sample:leaf:v1",
+      "family": "dma:dsdma:{domain}:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "dma:dsdma:sample:leaf",
@@ -979,6 +2125,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "dma:idma:leaf:V1",
+      "family": "dma:idma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "dma:idma:leaf:v1:v2",
+      "family": "dma:idma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Dma:idma:leaf:v1",
+      "family": "dma:idma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "dma:idma:leaf",
       "family": "dma:idma:*",
       "refusal": "missing_version_segment",
@@ -991,6 +2155,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "dma:pdma:leaf:V1",
+      "family": "dma:pdma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "dma:pdma:leaf:v1:v2",
+      "family": "dma:pdma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Dma:pdma:leaf:v1",
+      "family": "dma:pdma:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "dma:pdma:leaf",
       "family": "dma:pdma:*",
       "refusal": "missing_version_segment",
@@ -1001,6 +2183,24 @@
       "family": "duty:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "duty:sample:V1",
+      "family": "duty:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "duty:sample:v1:v2",
+      "family": "duty:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Duty:sample:v1",
+      "family": "duty:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "duty:sample",
@@ -1021,6 +2221,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "encyclopedia:leaf:V1",
+      "family": "encyclopedia:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "encyclopedia:leaf:v1:v2",
+      "family": "encyclopedia:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Encyclopedia:leaf:v1",
+      "family": "encyclopedia:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "encyclopedia:leaf",
       "family": "encyclopedia:*",
       "refusal": "missing_version_segment",
@@ -1033,6 +2251,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "event:attendance:V1",
+      "family": "event:attendance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "event:attendance:v1:v2",
+      "family": "event:attendance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Event:attendance:v1",
+      "family": "event:attendance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "event:attendance",
       "family": "event:attendance",
       "refusal": "missing_version_segment",
@@ -1043,6 +2279,24 @@
       "family": "event:lifecycle:{state}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "event:lifecycle:sample:V1",
+      "family": "event:lifecycle:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "event:lifecycle:sample:v1:v2",
+      "family": "event:lifecycle:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Event:lifecycle:sample:v1",
+      "family": "event:lifecycle:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "event:lifecycle:sample",
@@ -1063,6 +2317,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "event:rsvp_count:V1",
+      "family": "event:rsvp_count",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "event:rsvp_count:v1:v2",
+      "family": "event:rsvp_count",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Event:rsvp_count:v1",
+      "family": "event:rsvp_count",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "event:rsvp_count",
       "family": "event:rsvp_count",
       "refusal": "missing_version_segment",
@@ -1073,6 +2345,24 @@
       "family": "expertise:{domain}:{language}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "expertise:sample:sample:V1",
+      "family": "expertise:{domain}:{language}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "expertise:sample:sample:v1:v2",
+      "family": "expertise:{domain}:{language}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Expertise:sample:sample:v1",
+      "family": "expertise:{domain}:{language}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "expertise:sample:sample",
@@ -1093,6 +2383,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "federation_directory:replication_lag:V1",
+      "family": "federation_directory:replication_lag",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "federation_directory:replication_lag:v1:v2",
+      "family": "federation_directory:replication_lag",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Federation_directory:replication_lag:v1",
+      "family": "federation_directory:replication_lag",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "federation_directory:replication_lag",
       "family": "federation_directory:replication_lag",
       "refusal": "missing_version_segment",
@@ -1103,6 +2411,24 @@
       "family": "fidelity:explainability_sla:{tier}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "fidelity:explainability_sla:l1_summary:V1",
+      "family": "fidelity:explainability_sla:{tier}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "fidelity:explainability_sla:l1_summary:v1:v2",
+      "family": "fidelity:explainability_sla:{tier}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Fidelity:explainability_sla:l1_summary:v1",
+      "family": "fidelity:explainability_sla:{tier}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "fidelity:explainability_sla:l1_summary",
@@ -1123,6 +2449,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "fidelity:sample:V1",
+      "family": "fidelity:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "fidelity:sample:v1:v2",
+      "family": "fidelity:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Fidelity:sample:v1",
+      "family": "fidelity:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "fidelity:sample",
       "family": "fidelity:{aspect}",
       "refusal": "missing_version_segment",
@@ -1141,6 +2485,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "film:leaf:V1",
+      "family": "film:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "film:leaf:v1:v2",
+      "family": "film:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Film:leaf:v1",
+      "family": "film:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "film:leaf",
       "family": "film:*",
       "refusal": "missing_version_segment",
@@ -1151,6 +2513,24 @@
       "family": "goal:{scale}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "goal:self:V1",
+      "family": "goal:{scale}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "goal:self:v1:v2",
+      "family": "goal:{scale}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Goal:self:v1",
+      "family": "goal:{scale}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "goal:self",
@@ -1171,6 +2551,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "hard_case:sample:V1",
+      "family": "hard_case:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "hard_case:sample:v1:v2",
+      "family": "hard_case:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Hard_case:sample:v1",
+      "family": "hard_case:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "hard_case:sample",
       "family": "hard_case:{kind}",
       "refusal": "missing_version_segment",
@@ -1187,6 +2585,24 @@
       "family": "hardware_custody:{platform}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "hardware_custody:android_keystore:V1",
+      "family": "hardware_custody:{platform}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "hardware_custody:android_keystore:v1:v2",
+      "family": "hardware_custody:{platform}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Hardware_custody:android_keystore:v1",
+      "family": "hardware_custody:{platform}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "hardware_custody:android_keystore",
@@ -1213,6 +2629,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "health:liveness:V1",
+      "family": "health:liveness:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "health:liveness:v1:v2",
+      "family": "health:liveness:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Health:liveness:v1",
+      "family": "health:liveness:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "health:liveness",
       "family": "health:liveness:{version}",
       "refusal": "missing_version_segment",
@@ -1225,22 +2659,64 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "holds_bytes:sha256:ab12:V1",
+      "family": "holds_bytes:sha256:{prefix}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "holds_bytes:sha256:ab12:v1:v2",
+      "family": "holds_bytes:sha256:{prefix}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Holds_bytes:sha256:ab12:v1",
+      "family": "holds_bytes:sha256:{prefix}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "holds_bytes:sha256:ab12",
       "family": "holds_bytes:sha256:{prefix}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "identity:canonical_binding:ab12",
+      "dimension": "identity:canonical_binding:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
       "family": "identity:canonical_binding:{canonical_hash}",
       "refusal": null,
       "why": "instantiated sample resolves to its row (exempt: no version tail)"
+    },
+    {
+      "dimension": "identity:canonical_binding:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789:v1",
+      "family": "identity:canonical_binding:{canonical_hash}",
+      "refusal": null,
+      "why": "an exempt family tolerates a version tail (never required)"
     },
     {
       "dimension": "identity_continuity:relational_anchor:v1",
       "family": "identity_continuity:relational_anchor",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "identity_continuity:relational_anchor:V1",
+      "family": "identity_continuity:relational_anchor",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity_continuity:relational_anchor:v1:v2",
+      "family": "identity_continuity:relational_anchor",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Identity_continuity:relational_anchor:v1",
+      "family": "identity_continuity:relational_anchor",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "identity_continuity:relational_anchor",
@@ -1255,6 +2731,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "image:leaf:V1",
+      "family": "image:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "image:leaf:v1:v2",
+      "family": "image:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Image:leaf:v1",
+      "family": "image:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "image:leaf",
       "family": "image:*",
       "refusal": "missing_version_segment",
@@ -1265,6 +2759,24 @@
       "family": "integrity:{aspect}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "integrity:sample:V1",
+      "family": "integrity:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "integrity:sample:v1:v2",
+      "family": "integrity:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Integrity:sample:v1",
+      "family": "integrity:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "integrity:sample",
@@ -1285,6 +2797,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "judge_model:verdict:id1:V1",
+      "family": "judge_model:verdict:{model_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "judge_model:verdict:id1:v1:v2",
+      "family": "judge_model:verdict:{model_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Judge_model:verdict:id1:v1",
+      "family": "judge_model:verdict:{model_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "judge_model:verdict:id1",
       "family": "judge_model:verdict:{model_id}",
       "refusal": "missing_version_segment",
@@ -1295,6 +2825,24 @@
       "family": "justice:{aspect}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "justice:sample:V1",
+      "family": "justice:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "justice:sample:v1:v2",
+      "family": "justice:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Justice:sample:v1",
+      "family": "justice:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "justice:sample",
@@ -1315,6 +2863,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "key_boundary:sample:V1",
+      "family": "key_boundary:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "key_boundary:sample:v1:v2",
+      "family": "key_boundary:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Key_boundary:sample:v1",
+      "family": "key_boundary:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "key_boundary:sample",
       "family": "key_boundary:{scope}",
       "refusal": "missing_version_segment",
@@ -1333,6 +2899,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "licensure:id1:V1",
+      "family": "licensure:{authority_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "licensure:id1:v1:v2",
+      "family": "licensure:{authority_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Licensure:id1:v1",
+      "family": "licensure:{authority_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "licensure:id1",
       "family": "licensure:{authority_id}",
       "refusal": "missing_version_segment",
@@ -1343,6 +2927,24 @@
       "family": "locality:decision:{scale}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "locality:decision:local:V1",
+      "family": "locality:decision:{scale}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "locality:decision:local:v1:v2",
+      "family": "locality:decision:{scale}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Locality:decision:local:v1",
+      "family": "locality:decision:{scale}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "locality:decision:local",
@@ -1363,6 +2965,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "manifold_conformity:id1:V1",
+      "family": "manifold_conformity:{cohort}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "manifold_conformity:id1:v1:v2",
+      "family": "manifold_conformity:{cohort}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Manifold_conformity:id1:v1",
+      "family": "manifold_conformity:{cohort}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "manifold_conformity:id1",
       "family": "manifold_conformity:{cohort}",
       "refusal": "missing_version_segment",
@@ -1373,6 +2993,24 @@
       "family": "mesh_config:{key}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "mesh_config:sample:V1",
+      "family": "mesh_config:{key}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "mesh_config:sample:v1:v2",
+      "family": "mesh_config:{key}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Mesh_config:sample:v1",
+      "family": "mesh_config:{key}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "mesh_config:sample",
@@ -1393,6 +3031,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "method:id1:sample:V1",
+      "family": "method:{approach_id}:{substrate_rung}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "method:id1:sample:v1:v2",
+      "family": "method:{approach_id}:{substrate_rung}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Method:id1:sample:v1",
+      "family": "method:{approach_id}:{substrate_rung}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "method:id1:sample",
       "family": "method:{approach_id}:{substrate_rung}",
       "refusal": "missing_version_segment",
@@ -1411,6 +3067,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "model_3d:leaf:V1",
+      "family": "model_3d:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "model_3d:leaf:v1:v2",
+      "family": "model_3d:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Model_3d:leaf:v1",
+      "family": "model_3d:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "model_3d:leaf",
       "family": "model_3d:*",
       "refusal": "missing_version_segment",
@@ -1421,6 +3095,24 @@
       "family": "moderation:{allegation_type}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "moderation:rogue_vote:V1",
+      "family": "moderation:{allegation_type}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "moderation:rogue_vote:v1:v2",
+      "family": "moderation:{allegation_type}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Moderation:rogue_vote:v1",
+      "family": "moderation:{allegation_type}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "moderation:rogue_vote",
@@ -1441,6 +3133,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "moderation_track_record:id1:V1",
+      "family": "moderation_track_record:{community_key_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "moderation_track_record:id1:v1:v2",
+      "family": "moderation_track_record:{community_key_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Moderation_track_record:id1:v1",
+      "family": "moderation_track_record:{community_key_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "moderation_track_record:id1",
       "family": "moderation_track_record:{community_key_id}",
       "refusal": "missing_version_segment",
@@ -1451,6 +3161,24 @@
       "family": "multilateral_participation:{forum}:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "multilateral_participation:id1:membership:V1",
+      "family": "multilateral_participation:{forum}:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "multilateral_participation:id1:membership:v1:v2",
+      "family": "multilateral_participation:{forum}:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Multilateral_participation:id1:membership:v1",
+      "family": "multilateral_participation:{forum}:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "multilateral_participation:id1:membership",
@@ -1471,6 +3199,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "need:sample:sample:V1",
+      "family": "need:{domain}:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "need:sample:sample:v1:v2",
+      "family": "need:{domain}:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Need:sample:sample:v1",
+      "family": "need:{domain}:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "need:sample:sample",
       "family": "need:{domain}:{kind}",
       "refusal": "missing_version_segment",
@@ -1489,6 +3235,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "news:leaf:V1",
+      "family": "news:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "news:leaf:v1:v2",
+      "family": "news:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "News:leaf:v1",
+      "family": "news:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "news:leaf",
       "family": "news:*",
       "refusal": "missing_version_segment",
@@ -1499,6 +3263,24 @@
       "family": "non_maleficence:{aspect}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "non_maleficence:sample:V1",
+      "family": "non_maleficence:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "non_maleficence:sample:v1:v2",
+      "family": "non_maleficence:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Non_maleficence:sample:v1",
+      "family": "non_maleficence:{aspect}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "non_maleficence:sample",
@@ -1519,6 +3301,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "objection:sample:V1",
+      "family": "objection:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "objection:sample:v1:v2",
+      "family": "objection:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Objection:sample:v1",
+      "family": "objection:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "objection:sample",
       "family": "objection:{state}",
       "refusal": "missing_version_segment",
@@ -1535,6 +3335,24 @@
       "family": "ownership:{relation}:{target_kind}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "ownership:sample:sample:V1",
+      "family": "ownership:{relation}:{target_kind}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ownership:sample:sample:v1:v2",
+      "family": "ownership:{relation}:{target_kind}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ownership:sample:sample:v1",
+      "family": "ownership:{relation}:{target_kind}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "ownership:sample:sample",
@@ -1555,6 +3373,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "partner_role:sample:V1",
+      "family": "partner_role:{role}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "partner_role:sample:v1:v2",
+      "family": "partner_role:{role}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Partner_role:sample:v1",
+      "family": "partner_role:{role}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "partner_role:sample",
       "family": "partner_role:{role}",
       "refusal": "missing_version_segment",
@@ -1571,6 +3407,24 @@
       "family": "peer_reachability:{network}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "peer_reachability:sample:V1",
+      "family": "peer_reachability:{network}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "peer_reachability:sample:v1:v2",
+      "family": "peer_reachability:{network}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Peer_reachability:sample:v1",
+      "family": "peer_reachability:{network}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "peer_reachability:sample",
@@ -1591,6 +3445,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "progress_measure:id1:V1",
+      "family": "progress_measure:{method_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "progress_measure:id1:v1:v2",
+      "family": "progress_measure:{method_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Progress_measure:id1:v1",
+      "family": "progress_measure:{method_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "progress_measure:id1",
       "family": "progress_measure:{method_id}",
       "refusal": "missing_version_segment",
@@ -1601,6 +3473,24 @@
       "family": "prohibited:{category}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "prohibited:sample:V1",
+      "family": "prohibited:{category}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "prohibited:sample:v1:v2",
+      "family": "prohibited:{category}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Prohibited:sample:v1",
+      "family": "prohibited:{category}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "prohibited:sample",
@@ -1621,6 +3511,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "provenance:build_manifest:id1:V1",
+      "family": "provenance:build_manifest:{target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "provenance:build_manifest:id1:v1:v2",
+      "family": "provenance:build_manifest:{target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Provenance:build_manifest:id1:v1",
+      "family": "provenance:build_manifest:{target}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "provenance:build_manifest:id1",
       "family": "provenance:build_manifest:{target}",
       "refusal": "missing_version_segment",
@@ -1633,19 +3541,55 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "provenance:build_manifest:id1:locale:en-US:V1",
+      "family": "provenance:build_manifest:{target}:locale:{lang_code}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "provenance:build_manifest:id1:locale:en-US:v1:v2",
+      "family": "provenance:build_manifest:{target}:locale:{lang_code}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Provenance:build_manifest:id1:locale:en-US:v1",
+      "family": "provenance:build_manifest:{target}:locale:{lang_code}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "provenance:build_manifest:id1:locale:en-US",
       "family": "provenance:build_manifest:{target}:locale:{lang_code}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "provenance:skill_import:id1:v1",
+      "dimension": "provenance:skill_import:id1:id2:v1",
       "family": "provenance:skill_import:{source}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "provenance:skill_import:id1",
+      "dimension": "provenance:skill_import:id1:id2:V1",
+      "family": "provenance:skill_import:{source}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "provenance:skill_import:id1:id2:v1:v2",
+      "family": "provenance:skill_import:{source}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Provenance:skill_import:id1:id2:v1",
+      "family": "provenance:skill_import:{source}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "provenance:skill_import:id1:id2",
       "family": "provenance:skill_import:{source}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
@@ -1655,6 +3599,24 @@
       "family": "provenance:slsa:{level}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "provenance:slsa:sample:V1",
+      "family": "provenance:slsa:{level}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "provenance:slsa:sample:v1:v2",
+      "family": "provenance:slsa:{level}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Provenance:slsa:sample:v1",
+      "family": "provenance:slsa:{level}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "provenance:slsa:sample",
@@ -1675,6 +3637,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "quarantine:sample:V1",
+      "family": "quarantine:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "quarantine:sample:v1:v2",
+      "family": "quarantine:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Quarantine:sample:v1",
+      "family": "quarantine:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "quarantine:sample",
       "family": "quarantine:{state}",
       "refusal": "missing_version_segment",
@@ -1693,6 +3673,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "ratchet:flag:coordinated_voting_cluster:V1",
+      "family": "ratchet:flag:coordinated_voting_cluster",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ratchet:flag:coordinated_voting_cluster:v1:v2",
+      "family": "ratchet:flag:coordinated_voting_cluster",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ratchet:flag:coordinated_voting_cluster:v1",
+      "family": "ratchet:flag:coordinated_voting_cluster",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "ratchet:flag:coordinated_voting_cluster",
       "family": "ratchet:flag:coordinated_voting_cluster",
       "refusal": "missing_version_segment",
@@ -1703,6 +3701,24 @@
       "family": "ratchet:flag:counter_rii:{layer}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "ratchet:flag:counter_rii:sample:V1",
+      "family": "ratchet:flag:counter_rii:{layer}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ratchet:flag:counter_rii:sample:v1:v2",
+      "family": "ratchet:flag:counter_rii:{layer}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ratchet:flag:counter_rii:sample:v1",
+      "family": "ratchet:flag:counter_rii:{layer}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "ratchet:flag:counter_rii:sample",
@@ -1723,6 +3739,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "ratchet:flag:density_anomaly:V1",
+      "family": "ratchet:flag:density_anomaly",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ratchet:flag:density_anomaly:v1:v2",
+      "family": "ratchet:flag:density_anomaly",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ratchet:flag:density_anomaly:v1",
+      "family": "ratchet:flag:density_anomaly",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "ratchet:flag:density_anomaly",
       "family": "ratchet:flag:density_anomaly",
       "refusal": "missing_version_segment",
@@ -1733,6 +3767,24 @@
       "family": "ratchet:flag:expertise_attestation_anomaly",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "ratchet:flag:expertise_attestation_anomaly:V1",
+      "family": "ratchet:flag:expertise_attestation_anomaly",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ratchet:flag:expertise_attestation_anomaly:v1:v2",
+      "family": "ratchet:flag:expertise_attestation_anomaly",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ratchet:flag:expertise_attestation_anomaly:v1",
+      "family": "ratchet:flag:expertise_attestation_anomaly",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "ratchet:flag:expertise_attestation_anomaly",
@@ -1747,6 +3799,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "ratchet:flag:harassment_pattern:V1",
+      "family": "ratchet:flag:harassment_pattern",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ratchet:flag:harassment_pattern:v1:v2",
+      "family": "ratchet:flag:harassment_pattern",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ratchet:flag:harassment_pattern:v1",
+      "family": "ratchet:flag:harassment_pattern",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "ratchet:flag:harassment_pattern",
       "family": "ratchet:flag:harassment_pattern",
       "refusal": "missing_version_segment",
@@ -1759,6 +3829,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "ratchet:flag:out_of_distribution_voting:V1",
+      "family": "ratchet:flag:out_of_distribution_voting",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ratchet:flag:out_of_distribution_voting:v1:v2",
+      "family": "ratchet:flag:out_of_distribution_voting",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ratchet:flag:out_of_distribution_voting:v1",
+      "family": "ratchet:flag:out_of_distribution_voting",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "ratchet:flag:out_of_distribution_voting",
       "family": "ratchet:flag:out_of_distribution_voting",
       "refusal": "missing_version_segment",
@@ -1769,6 +3857,24 @@
       "family": "reconsideration:{grounds}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "reconsideration:sample:V1",
+      "family": "reconsideration:{grounds}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "reconsideration:sample:v1:v2",
+      "family": "reconsideration:{grounds}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Reconsideration:sample:v1",
+      "family": "reconsideration:{grounds}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "reconsideration:sample",
@@ -1789,6 +3895,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "regime:manifest:V1",
+      "family": "regime:{artifact}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "regime:manifest:v1:v2",
+      "family": "regime:{artifact}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Regime:manifest:v1",
+      "family": "regime:{artifact}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "regime:manifest",
       "family": "regime:{artifact}:{version}",
       "refusal": "missing_version_segment",
@@ -1805,6 +3929,24 @@
       "family": "revocation:{entity_type}:{reason}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "revocation:sample:sample:V1",
+      "family": "revocation:{entity_type}:{reason}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "revocation:sample:sample:v1:v2",
+      "family": "revocation:{entity_type}:{reason}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Revocation:sample:sample:v1",
+      "family": "revocation:{entity_type}:{reason}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "revocation:sample:sample",
@@ -1825,6 +3967,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "rollback_detected:sample:V1",
+      "family": "rollback_detected:{revision_field}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rollback_detected:sample:v1:v2",
+      "family": "rollback_detected:{revision_field}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Rollback_detected:sample:v1",
+      "family": "rollback_detected:{revision_field}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "rollback_detected:sample",
       "family": "rollback_detected:{revision_field}",
       "refusal": "missing_version_segment",
@@ -1843,6 +4003,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "seed_holder_voting_alignment:id1:V1",
+      "family": "seed_holder_voting_alignment:{cell}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "seed_holder_voting_alignment:id1:v1:v2",
+      "family": "seed_holder_voting_alignment:{cell}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Seed_holder_voting_alignment:id1:v1",
+      "family": "seed_holder_voting_alignment:{cell}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "seed_holder_voting_alignment:id1",
       "family": "seed_holder_voting_alignment:{cell}",
       "refusal": "missing_version_segment",
@@ -1853,6 +4031,24 @@
       "family": "session:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "session:sample:V1",
+      "family": "session:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "session:sample:v1:v2",
+      "family": "session:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Session:sample:v1",
+      "family": "session:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "session:sample",
@@ -1873,6 +4069,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "slashing:sample:V1",
+      "family": "slashing:{outcome}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "slashing:sample:v1:v2",
+      "family": "slashing:{outcome}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Slashing:sample:v1",
+      "family": "slashing:{outcome}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "slashing:sample",
       "family": "slashing:{outcome}",
       "refusal": "missing_version_segment",
@@ -1891,6 +4105,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "system:leaf:V1",
+      "family": "system:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "system:leaf:v1:v2",
+      "family": "system:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "System:leaf:v1",
+      "family": "system:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "system:leaf",
       "family": "system:*",
       "refusal": "missing_version_segment",
@@ -1901,6 +4133,24 @@
       "family": "testimonial_witness:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "testimonial_witness:sample:V1",
+      "family": "testimonial_witness:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "testimonial_witness:sample:v1:v2",
+      "family": "testimonial_witness:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Testimonial_witness:sample:v1",
+      "family": "testimonial_witness:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "testimonial_witness:sample",
@@ -1921,6 +4171,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "topical_relation:sample:V1",
+      "family": "topical_relation:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "topical_relation:sample:v1:v2",
+      "family": "topical_relation:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Topical_relation:sample:v1",
+      "family": "topical_relation:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "topical_relation:sample",
       "family": "topical_relation:{kind}",
       "refusal": "missing_version_segment",
@@ -1937,6 +4205,24 @@
       "family": "trace:{form}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "trace:sample:V1",
+      "family": "trace:{form}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "trace:sample:v1:v2",
+      "family": "trace:{form}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Trace:sample:v1",
+      "family": "trace:{form}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "trace:sample",
@@ -1957,6 +4243,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "trace_summary:sample:V1",
+      "family": "trace_summary:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "trace_summary:sample:v1:v2",
+      "family": "trace_summary:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Trace_summary:sample:v1",
+      "family": "trace_summary:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "trace_summary:sample",
       "family": "trace_summary:{kind}",
       "refusal": "missing_version_segment",
@@ -1975,19 +4279,55 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "transparency_log:consistency:V1",
+      "family": "transparency_log:consistency",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "transparency_log:consistency:v1:v2",
+      "family": "transparency_log:consistency",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Transparency_log:consistency:v1",
+      "family": "transparency_log:consistency",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "transparency_log:consistency",
       "family": "transparency_log:consistency",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "transparency_log:cosigned:id1:v1",
+      "dimension": "transparency_log:cosigned:42:v1",
       "family": "transparency_log:cosigned:{tree_size}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "transparency_log:cosigned:id1",
+      "dimension": "transparency_log:cosigned:42:V1",
+      "family": "transparency_log:cosigned:{tree_size}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "transparency_log:cosigned:42:v1:v2",
+      "family": "transparency_log:cosigned:{tree_size}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Transparency_log:cosigned:42:v1",
+      "family": "transparency_log:cosigned:{tree_size}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "transparency_log:cosigned:42",
       "family": "transparency_log:cosigned:{tree_size}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
@@ -1997,6 +4337,24 @@
       "family": "transparency_log:inclusion",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "transparency_log:inclusion:V1",
+      "family": "transparency_log:inclusion",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "transparency_log:inclusion:v1:v2",
+      "family": "transparency_log:inclusion",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Transparency_log:inclusion:v1",
+      "family": "transparency_log:inclusion",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "transparency_log:inclusion",
@@ -2009,6 +4367,24 @@
       "family": "transport:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "transport:sample:V1",
+      "family": "transport:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "transport:sample:v1:v2",
+      "family": "transport:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Transport:sample:v1",
+      "family": "transport:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "transport:sample",
@@ -2029,6 +4405,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "trust:sample:V1",
+      "family": "trust:{job}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "trust:sample:v1:v2",
+      "family": "trust:{job}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Trust:sample:v1",
+      "family": "trust:{job}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "trust:sample",
       "family": "trust:{job}:{version}",
       "refusal": "missing_version_segment",
@@ -2047,6 +4441,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "truth_grounding:id1:V1",
+      "family": "truth_grounding:{subject}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "truth_grounding:id1:v1:v2",
+      "family": "truth_grounding:{subject}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Truth_grounding:id1:v1",
+      "family": "truth_grounding:{subject}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "truth_grounding:id1",
       "family": "truth_grounding:{subject}",
       "refusal": "missing_version_segment",
@@ -2057,6 +4469,24 @@
       "family": "video:*",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "video:leaf:V1",
+      "family": "video:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "video:leaf:v1:v2",
+      "family": "video:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Video:leaf:v1",
+      "family": "video:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "video:leaf",
@@ -2071,6 +4501,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "vote:id1:V1",
+      "family": "vote:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "vote:id1:v1:v2",
+      "family": "vote:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Vote:id1:v1",
+      "family": "vote:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "vote:id1",
       "family": "vote:{contribution_id}",
       "refusal": "missing_version_segment",
@@ -2081,6 +4529,24 @@
       "family": "wa_adjudication:{state}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "wa_adjudication:sample:V1",
+      "family": "wa_adjudication:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "wa_adjudication:sample:v1:v2",
+      "family": "wa_adjudication:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Wa_adjudication:sample:v1",
+      "family": "wa_adjudication:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "wa_adjudication:sample",
@@ -2101,6 +4567,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "watchlist:id1:V1",
+      "family": "watchlist:{id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "watchlist:id1:v1:v2",
+      "family": "watchlist:{id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Watchlist:id1:v1",
+      "family": "watchlist:{id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "watchlist:id1",
       "family": "watchlist:{id}",
       "refusal": "missing_version_segment",
@@ -2113,6 +4597,24 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "weighted_aggregate:id1:V1",
+      "family": "weighted_aggregate:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "weighted_aggregate:id1:v1:v2",
+      "family": "weighted_aggregate:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Weighted_aggregate:id1:v1",
+      "family": "weighted_aggregate:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
       "dimension": "weighted_aggregate:id1",
       "family": "weighted_aggregate:{contribution_id}",
       "refusal": "missing_version_segment",
@@ -2123,6 +4625,24 @@
       "family": "witness_diversity:{contribution_id}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "witness_diversity:id1:V1",
+      "family": "witness_diversity:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "witness_diversity:id1:v1:v2",
+      "family": "witness_diversity:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Witness_diversity:id1:v1",
+      "family": "witness_diversity:{contribution_id}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "witness_diversity:id1",

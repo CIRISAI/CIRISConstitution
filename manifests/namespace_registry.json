@@ -147,9 +147,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "3583bd4be8bec4cae2f35e003fa9df4c112947f087d4dfa451c439db1f7c79f9",
+    "registry_sha256": "5884c1fcc8cd845b93aa370ac7cbc0cc570588ef04f94c14f437bf83e6e86294",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "5e2cb7ef4be3979a8af78fbb17a6d671775487f220b0ca68e9c4a971919177b7"
+    "source_sha256": "d13f6f334d9b6222c53488edb5d6bea55967f3ad26935c4efade5ea1386c85c7"
   },
   "families": [
     {
@@ -1182,6 +1182,7 @@
         },
         {
           "class": "value",
+          "pattern": "^[0-9]+$",
           "segment": "{days}"
         }
       ]
@@ -1282,6 +1283,7 @@
         },
         {
           "class": "vocab",
+          "multi": true,
           "segment": "{kind}"
         }
       ]
@@ -1600,6 +1602,7 @@
         },
         {
           "class": "vocab",
+          "multi": true,
           "segment": "{axis}"
         }
       ]
@@ -2200,6 +2203,7 @@
         },
         {
           "class": "hex",
+          "pattern": "^[0-9a-f]{64}$",
           "segment": "{canonical_hash}"
         }
       ]
@@ -2810,6 +2814,7 @@
         },
         {
           "class": "value",
+          "multi": true,
           "segment": "{source}"
         }
       ]
@@ -3114,8 +3119,8 @@
       "prefix": "session:{kind}",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 3.1.3.1",
+        "rule": "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)"
       },
       "segments": [
         {
@@ -3303,6 +3308,7 @@
         },
         {
           "class": "value",
+          "pattern": "^[0-9]+$",
           "segment": "{tree_size}"
         }
       ]
