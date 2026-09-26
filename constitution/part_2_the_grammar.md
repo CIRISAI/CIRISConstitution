@@ -263,6 +263,29 @@ A constitutional or framework claim can name its source-of-authority by emitting
 
 **Owner-binding is the single-valued sub-relation.** A `delegates_to(user → node/agent)` carrying `delegation_purpose: owner_binding` is the **ownership** grant that defines the `self` cohort ([CC 3.2](part_3_the_namespace.md) single-owner invariant): at most one is live per owned key at a time, and the substrate rejects a second, distinct-owner binding **at bind time**. This is the **one** `delegation_purpose` that is single-valued — act-on-behalf, hierarchy ([CC 4.5.13](part_4_composition_governance.md)), and authority-source delegations remain **multi-parent** DAGs. `delegation_purpose` thereby distinguishes the ownership relation from the general delegation grammar with **no new primitive**: the `self`-cohort boundary rides an existing field, not a fifth relation.
 
+#### 2.4.1.2.1 `authority-triad` — Licensure, grant, delegation — three concepts, three wire discriminators (normative — CIRISConstitution#100)
+
+`delegates_to` is one of three ways a key comes to hold something, and the three are routinely conflated because only one of them has a structural primitive. This document already routes two of them through different machinery — *"license authority rides the existing [CC 3.2](part_3_the_namespace.md) founder-quorum machinery; role authority rides the existing [CC 4.4.3.4.3.1](part_4_composition_governance.md) delegation resolver"* ([CC 3.3.9](part_3_the_namespace.md)) — but states it as an aside inside an operational-data section. It is the triad, and it belongs at the grammar, where an implementer meets it once.
+
+| | **Licensure** | **Grant** | **Delegation** |
+|---|---|---|---|
+| who gives it | an **authority** | the asset's **owner / steward** | a **principal** |
+| what it confers | standing to practise | access to a specific thing | agency to act *for* someone |
+| what it is about | the subject | the asset (hash, stream, balance) | the principal's own powers |
+| ends by | the authority revokes / suspends | rotation, expiry, exhaustion | the principal withdraws; attenuation |
+| **chains?** | **no** | **no** | **yes** — attenuated, depth-capped, revocable per link |
+| wire discriminator | dimension prefix on `scores`: `licensure:{authority_id}` / `attestation:license_validity` | `subject_kind` (`key_grant`) or the `consent:scope:*` family | **structural primitive**: `attestation_type: delegates_to` |
+
+**The transitivity row is the discriminator of record.** Only delegation composes, which is why only `delegates_to` gets a graph walk ([CC 4.1.1](part_4_composition_governance.md) depth cap, cycle rejection, aggregate-weight cap). A licence does not chain — holding one confers no power to issue one. A grant does not chain — receiving access confers no power to re-grant it (below). Any design that walks a licence or a grant transitively has mistaken it for a delegation.
+
+The professional analogue is exact, and it is the domain this federation licenses: a physician assistant holds a **licence** from a board, practises under a supervising physician's **delegated** authority, and holds **privileges** — a grant — at one hospital for named procedures. Three grantors, three revocation paths, reported as separate categories by the registries that track them.
+
+**Provenance is the authority, not a delegation (normative).** A licence's provenance is its **`authority_id`** — carried inside the dimension — and that authority is conferred by **quorum** ([CC 3.3.9](part_3_the_namespace.md) / [CC 3.2](part_3_the_namespace.md) founder-quorum), **never** by `delegates_to`. Three things must not be collapsed into one another: *who grants the licence* (the `authority_id`), *who vouches for the attester* (the trust walk, `infra:attest`), and *what external legal force it carries* (a **bridge** on an in-grammar record — [CC 8.3](part_8_appendices.md): bridges compose with the record, they are never alternatives to it).
+
+**Who may be a licensing authority, and what admits a licence (normative — ruling on CIRISPersist#814).** Anyone. `authority_id` names a key — a `federation_keys.key_id`, or an organisation whose keys resolve through `org_membership` ([CC 3.3.9](part_3_the_namespace.md)) — and "X holds licence authority for `A`" means exactly that X's key *is* `A`, or holds a `license`-scoped delegation whose chain resolves to `A` ([CC 4.4.3.4.3](part_4_composition_governance.md)). There is no roster of permitted authorities and a substrate checks none: a `licensure:{A}` row admits under the same gate as every other row on the wire — the reader trusts the emitter's root or has consented to receive from it ([CC 4.4.3.8](part_4_composition_governance.md); the [contextual-integrity exemplar](https://ciris.ai/contextual-integrity): a medical licensure claim reaches a reader only along a flow that reader's trust or consent admits) — and it reaches nobody else. Per [CC 4.4.4](part_4_composition_governance.md) a Sovereign key scoring `licensure:CA_medical_board` is wire-identical to a Registry steward scoring it; consumer policy weights by attester. "By quorum" in the provenance paragraph above is a statement about the authority's *own* governance where it is a collective — the [CC 3.2](part_3_the_namespace.md) founder quorum that constitutes a community's key, the [CC 3.3.9](part_3_the_namespace.md) steward quorum that admits a `partner_record` — never an admission gate a substrate applies to somebody else's authority. **What the fold keys on (normative).** The `licensure:{A}` status set for a subject folds only rows whose emitter resolves to `A` — `A`'s key, or a `license` chain to `A`. A row under `licensure:{A}` signed by a key that is neither `A` nor `A`'s delegate is admitted if trusted or consented to, but it is *testimony about* `A`'s licensure, not `A`'s licensure: it stays out of the `(subject, A)` fold and composes at consumer confidence — which is how a stranger's absorbing `revoked` binds nobody. The one refusal is on the `license` scope itself: an issuance whose delegator chain does not resolve to `A` is **`licensure_delegator_not_authority`**. There is no bootstrap: `A`'s first `licensure:{A}` row is signed by `A`. Where a substrate carries `org_membership`, an organisation-named authority resolves through its `OrgAdmin` / `KeyManager` members; where it does not, that `authority_id` resolves to no key yet and rows under it are testimony until it does.
+
+**A grant is non-transferable by default (normative).** A `key_grant` conveys access to an asset; it does **not** convey the power to convey it. An onward grant is a **new grant issued by a holder of the underlying key**, never a forwarded one, and `rotation_chain` is supersession lineage — not onward transfer. This is enforced cryptographically before it is enforced by policy: only a holder of the data-encryption key can wrap a new grant at all. A design that treats receipt of a grant as authority to re-grant has, again, mistaken a grant for a delegation.
+
 #### 2.4.1.3 `recants` — The `recants` distinction matters
 
 Per `PRIOR_ART_SCAN.md` Bucket 1: no prior identity system (PGP, SPKI/SDSI, W3C VC) typed epistemic-error-admission as a wire primitive distinct from retraction. CEG types both because the Recursive Golden Rule applies to attesters: admitting error is a primary act, not a derivative of retraction. Consumer policy can apply different trust adjustments to attesters who `recant` versus those who `withdraw`.
@@ -566,38 +589,45 @@ Time-skew between cosigners on a single STH ([CC 5.3.1](#5.3.1)) is bounded by t
 
 For long-lived attestations carrying `valid_until` in the future, the freshness check is "the attestation has not yet reached its `valid_until`, AND the current consumer clock is within ±5 minutes of the substrate's network-consensus clock"; a consumer whose clock drifts past the skew bound MUST fail-secure (reject) rather than accept.
 
-### 2.6.8 `key_id` — NodeCode — the canonical `key_id` shorthand encoding (normative)
+### 2.6.8 `key_id` — FedCode — the kind-tagged identity shorthand; NodeCode v1 retained as `kind: node` (normative)
 
-Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **NodeCode** is the **one** human-shareable shorthand — a compact, QR-able, checksummed render of a peer's identity for **bootstrap UX**. It is pinned here so **every implementation renders and parses the same code for the same key** — a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1](#2.6.1) JCS. It is a deterministic *render of an existing `key_id`*, **not** a new envelope field — additive on the frozen 1+4 surface. NodeCode resolution is **DNS-free**: the decoded `key_id` resolves to a destination via the signed `transport_destination` → Reticulum chain ([CC 3.3.6.2](#3.3.6.2) / [CC 4.4.3.2.4.1](#4.4.3.2.4.1)); a NodeCode carries no hostname.
+Federation `key_id`s are long opaque identifiers, unfit for a human to type or read aloud. **FedCode** is the **one** human-shareable shorthand — a compact, QR-able, checksummed render of a federation entity's identity for **bootstrap UX** — pinned here so **every implementation renders and parses the same code for the same key**, a cross-impl determinism requirement of the same class as [CC 2.6.3](#2.6.3) hex / [CC 2.6.1](#2.6.1) JCS. It is a deterministic render of an existing `key_id`, **not** a new envelope field — additive on the frozen 1+4 surface; the `kind` byte is a payload discriminator of the same discipline as `subject_kind` riding the single `scores` shape ([CC 3.3.2](part_3_the_namespace.md)). Resolution is **DNS-free**. The reference implementation is CIRISVerify (`fedcode.rs`, FSD-003); every other component decodes through it.
 
-**Binary payload (normative):**
-
-```
-offset  size  field
-------  ----  -----
-   0      1   version                 = 0x01
-   1     32   key_id_hash             = SHA-256(key_id_str, UTF-8)
-  33     32   pubkey_ed25519          (raw 32 bytes)
-  65      1   key_id_str_len          (0–255)
-  66      N   key_id_str              (UTF-8)
- 66+N     1   transport_hint_len      (0–255)
- 67+N     M   transport_hint          (UTF-8; OPTIONAL — len 0 if absent)
-67+N+M    1   alias_hint_len          (0–255)
-68+N+M    K   alias_hint              (UTF-8; OPTIONAL — len 0 if absent)
-   …      2   crc16                   = CRC-16-CCITT over ALL preceding bytes
-```
-
-- All length-prefixed fields are **1-byte** length (max 255 UTF-8 bytes); a field overflow is a malformed NodeCode.
-- `key_id_hash` is the stable 32-byte fingerprint (suitable for binary-only Edge ANNOUNCE surfaces); `key_id_str` carries the display form so a round-trip preserves exactly what the user saw. Both are carried — a decoder MUST verify `SHA-256(key_id_str) == key_id_hash`.
-- **CRC-16-CCITT**: polynomial `0x1021`, init `0xFFFF`, **no** final xor, big-endian; computed over every byte before the trailing 2.
-
-**String form (normative):** the payload is **RFC 4648 base32** (alphabet `A–Z2–7`) with padding **stripped** on encode (re-padded on decode), then split into **4-character groups joined by `-`** and prefixed with **`CIRIS-V1-`**:
+**Tied to the user, not the node (the model).** The v1 **NodeCode** (`CIRIS-V1-`) rendered a *node's* key. The code is now tied to the **entity** — five kinds mapping 1:1 onto [CC 3.4.7.1](part_3_the_namespace.md) `identity_type` and the rostered `subject_kind`s:
 
 ```
-CIRIS-V1-ABCD-EFGH-IJKL-…
+kind(1): 1=user  2=agent  3=node  4=family  5=community
 ```
 
-The encoded form is **case-insensitive** (decoder upper-cases input) and a conformant decoder MUST tolerate dashes, embedded whitespace, and the dash-free QR form. The version token in the prefix (`V1`) tracks the payload `version` byte; a future layout bumps both.
+A `user` code is the owner's identity; the owner's **nodes and transport are optional**. A code that carries them resolves with no directory — first contact, a QR across a table, an air-gapped hand-off. A code that carries none resolves through the **federation directory**: the consumer walks `nodes_owned_by(U)` — the exact inverse of `owner_of` ([CC 3.2](part_3_the_namespace.md); `n ∈ nodes_owned_by(U)` iff `owner_of(n) == U`, held by construction) — to find the nodes to transport to. A node whose owner resolves ambiguous is **skipped, not fatal**: one poisoned node must not make its owner unroutable, while a direct query about that node still fails closed.
+
+**Wire format (normative).** Binary payload, then **CRC-16-CCITT** (polynomial `0x1021`, init `0xFFFF`, no final xor) appended as 2 bytes big-endian, then **RFC 4648 base32** (alphabet `A–Z2–7`, padding stripped on encode, re-padded on decode), prefixed by the version token and grouped into 4-character dash-separated chunks for display; the QR form is ungrouped. Decoders normalize (drop whitespace, upper-case, strip dashes) and accept the undashed prefix. All length-prefixed fields are 1-byte length, ≤ 255 UTF-8 bytes; an overflow is malformed.
+
+```
+v2 payload  (prefix CIRIS-V2-)
+  version(1)=0x02 | kind(1) | sha256(key_id)(32) | ed25519_pubkey(32)
+  | LP(key_id) | hint(transport) | hint(alias) | hint(group_key_id)
+v3 payload  (prefix CIRIS-V3-)  — all v2 fields byte-identical, then:
+  node_count(1) = 0..=16
+  node_count × [ LP(node_key_id) | transport_ed25519(32) ]
+  pqc_commitment: 0x00 absent | 0x01 + 32 raw bytes = sha256(ML-DSA-65 pubkey)
+```
+
+`LP` = 1-byte length prefix + UTF-8; `hint` = `0x00` when absent, else `LP`. `group_key_id` is the family/community `*_key_id`, absent otherwise. `sha256(key_id)` binds the display `key_id` into the CRC-protected payload — a decoder MUST verify it against `key_id`. The v1 layout is retained unchanged: `version=0x01 | key_id_hash(32) | pubkey(32) | LP(key_id_str) | LP(transport_hint) | LP(alias_hint) | crc16` under `CIRIS-V1-`.
+
+**Constraints (each MUST be enforced at encoder AND decoder — a code minted by another implementation is exactly the case an encoder cannot police).**
+
+1. **An embedded node key is the node's TRANSPORT Ed25519 — never the owner's federation key, never the node's federation key.** A destination derived from a federation key is `sha256(fed)[..16]`, an explicit-hash destination that categorically cannot be announced, so no peer can self-learn a route to it (CIRISServer#335 is the production record: every node reported `knows_peer = true` and zero traces arrived, and the false rooting then *prevented* recovery). A code whose embedded transport key equals the owner's pubkey MUST be rejected.
+2. **Only `kind = user` MAY embed nodes.** "The owner's nodes" is meaningless for a node, and a group's destinations are group-scoped material a code MUST NOT carry at all ([CC 5.4.6](part_5_transport_substrate.md), ruled in CIRISConstitution#91). A code carries **lightnet** facts only — federation-scope identity that already announces and carries no anonymity claim.
+3. **`node_count ≤ 16` and total payload ≤ 1024 bytes before base32.** Bounding the count without bounding the size bounds the wrong thing: 16 × 255-byte ids exceeds what a QR can render, defeating the hand-off the format exists for.
+4. **Empty is valid and is the default.** A code with no nodes and no commitment MUST encode as **v2, byte-identically**, so nothing already issued moves; only a non-empty tail emits `CIRIS-V3-`.
+5. **Compatibility.** v1 decodes as `kind: node`; v2 decodes unchanged; a v3 decoder accepts all three prefixes; a v2-only decoder MUST reject `CIRIS-V3-` outright rather than mis-parse it — the prefix differs before any payload byte is read.
+
+**The PQC commitment (normative — CIRISVerify#272).** A code names an Ed25519 key and nothing else, but the substrate takes `federation_keys` writes only at `algorithm: hybrid` (Ed25519 + ML-DSA-65; [CC 5.3.2.4.3.1](part_5_transport_substrate.md)) — so a code-admitted key had no PQC half to register and first contact had no conformant path. The ML-DSA-65 public key is 1952 bytes, which would end the code's life as something a person can read aloud; the code therefore carries the **32-byte commitment** `sha256(raw ML-DSA-65 public key)`. Rules: **(a)** the host admits the classical half plus the commitment, fetches the ML-DSA body through the existing Key Pull, and verifies it against the commitment **before** writing a hybrid record — nothing is registered until both halves are present and bound, so the hybrid-only rule is preserved, not weakened; **(b)** it applies to **any** kind of code — a plain `user` code with no nodes emits v3 with `node_count = 0`; **(c)** it is presence-tagged and **last**, so a v3 code minted before it still decodes with the commitment absent; **(d)** the API form is exactly 64 **lowercase** hex characters, **rejected, never repaired** — normalizing case would let two spellings of one identity mint two codes; **(e)** a FedCode is **unsigned**: the commitment inherits exactly the trust of the code carrying it and adds no authority — a conforming implementation MUST NOT treat a commitment match as authentication of the identity; what it buys is that a Key Pull cannot be substituted after the fact. A code with **no** commitment fails closed at the pull check: there is nothing to bind the pulled key to.
+
+**`key_id` format (normative — FSD-003 §4).** `key_id = "<label>-<fingerprint>"`, `fingerprint` = the first **10 base32 characters** (50 bits) of `sha256(ed25519_pubkey)`, lowercased; `label` is lowercased and reduced to `[a-z0-9-]`, cosmetic. **Collision-free by construction** — the suffix is bound to the key, so two entities choosing one label never collide, with no registry round-trip; **verifiable** — anyone recomputes the suffix from the pubkey (a random UUID cannot do this: one could claim another's); friendly — `eric-moore-k7f3qd2pza` reads as a name. Registry global-uniqueness remains a backstop; correctness does not depend on it. A deployment expecting more than 2³² identities under one label SHOULD raise the fingerprint length.
+
+**Onboarding — usercode → owner (the chosen model).** Put the owner's usercode (`kind: user`) in a node's configuration and the node becomes one of the owner's devices with **one approval tap and no PIN or QR handshake** — under the honest constraint of [CC 1.13.2](part_1_foundation.md): owner-binding MUST be a **user-signed** `delegates_to`, so a node cannot make itself owned by reading a pubkey. On boot the node decodes the usercode, learns its intended owner `U`, and self-registers as a **pending `identity_occurrence` of `U`** ([CC 3.3.6](part_3_the_namespace.md)) — trust-and-serve only until owned; `U`'s client lists pending occurrences naming `U`; `U` approves, and their hardware-rooted key signs `delegates_to(U → node)`. The pending-until-approved window **is** the safety property: a usercode is public (a pubkey), so a stolen one lets a node *request* ownership, never *obtain* it. The rejected alternative — a usercode embedding a pre-authorized signed delegation so the node binds with no tap — is a **bearer credential** (theft = silent ownership) and is NOT the default; if ever added it MUST be expiring, scope-limited, and revocable, by amendment.
 
 ### 2.6.9 `conformance-language` — Conformance language
 

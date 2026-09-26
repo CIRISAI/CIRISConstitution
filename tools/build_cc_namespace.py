@@ -91,6 +91,62 @@ def _reserved_rules():
 
 RESERVED_RULES = _reserved_rules()
 
+# ---- CC 3.1.7 R3 — per-segment case classes (ruling on CIRISPersist#815) ----------
+# Every `{placeholder}` a catalogued prefix carries MUST be classified here; an
+# unclassified one FAILS the build (no silent default — a wrong default would
+# either refuse legitimate caller data or let a malformed vocab token through).
+#   literal  — stem this Part fixes; lowercase by construction (gate below)
+#   vocab    — CC-defined open/closed vocabulary; MUST match VOCAB_PATTERN; refuse, never fold
+#   external — spelling fixed by an outside standard; verbatim canonical form (USD, PG-13, en-US)
+#   value    — caller-supplied identity; verbatim, case-preserved (CC 2.6.7 {id} discipline)
+#   hex      — CC 2.6.3 digest; lowercase
+VOCAB_PATTERN = r"^[a-z0-9][a-z0-9_.-]*$"
+LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
+PLACEHOLDER_CLASS = {
+    "vocab": {
+        "allegation_type", "artifact", "aspect", "axis", "band", "category", "class",
+        "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
+        "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
+        "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
+        "scope", "state", "substrate_rung", "target_kind", "tier", "version",
+    },
+    "external": {"currency", "lang_code", "rating"},
+    "value": {
+        "approach_id", "authority", "authority_id", "cell", "cohort", "community_key_id",
+        "contribution_id", "forum", "goal_id", "id", "method_id", "model_id",
+        "prior_contribution_id", "source", "stream_id", "subject", "target", "tree_size",
+    },
+    "hex": {"prefix"},
+}
+_CLASS_OF = {name: cls for cls, names in PLACEHOLDER_CLASS.items() for name in names}
+
+
+def classify_segments(prefix):
+    """Return [{'segment': str, 'class': str}] for a catalogued prefix, or raise."""
+    out = []
+    for seg in prefix.split(":"):
+        if seg == "*":
+            out.append({"segment": "*", "class": "wildcard"})
+        elif seg.startswith("{") and seg.endswith("}"):
+            name = seg[1:-1]
+            cls = _CLASS_OF.get(name)
+            if cls is None:
+                raise SystemExit(
+                    f"R3: placeholder {{{name}}} in `{prefix}` has no class in "
+                    f"PLACEHOLDER_CLASS (tools/build_cc_namespace.py) — classify it in "
+                    f"the same change that adds the family (CC 3.1.7 R2(a)/R3)."
+                )
+            out.append({"segment": seg, "class": cls})
+        else:
+            if not re.match(LITERAL_PATTERN, seg):
+                raise SystemExit(
+                    f"R3: literal stem `{seg}` in `{prefix}` is not lowercase "
+                    f"[a-z0-9_] — CC 3.1.7 R3 forbids a catalogued stem that is not."
+                )
+            out.append({"segment": seg, "class": "literal"})
+    return out
+
+
 BACKTICK = re.compile(r"`([^`]+)`")
 HEADING = re.compile(r"^(#{2,6})\s+(3\.[0-9]+(?:\.[0-9]+)*)\s+(.*)$")
 TABLE_ROW = re.compile(r"^\s*\|(.*)\|\s*$")
@@ -170,6 +226,7 @@ def main():
         rec["owning_repo"] = crepo
         rec["cc_section"] = section
         rec["polarity"] = polarity or ""
+        rec["segments"] = classify_segments(prefix)
         rec["reserved"] = reserved
         if reserved:
             rec["reserved_rule"] = rule
@@ -355,6 +412,24 @@ def main():
 
     out = OrderedDict()
     meta["private_use_prefix"] = "x_private:"  # CC 3.1.7 R2 — the one literal, machine-readable
+    meta["case_rule"] = OrderedDict([          # CC 3.1.7 R3 — CIRISPersist#815
+        ("policy", "case-sensitive; lowercase CC vocabulary; per-segment classes"),
+        ("cc_ref", "CC 3.1.7 R3"),
+        ("compare", "byte-exact; consumers MUST NOT case-fold"),
+        ("refusal_token", "namespace_dimension_case_malformed"),
+        ("vocab_pattern", VOCAB_PATTERN),
+        ("literal_pattern", LITERAL_PATTERN),
+        ("classes", OrderedDict([
+            ("literal", "CC-fixed stem; lowercase (build-gated)"),
+            ("vocab", "CC-defined vocabulary; MUST match vocab_pattern; refuse, never fold"),
+            ("external", "outside-standard token; verbatim canonical form (ISO 4217, BCP 47, rating scheme)"),
+            ("value", "caller-supplied identity; verbatim, case-preserved"),
+            ("hex", "CC 2.6.3 digest; lowercase"),
+            ("wildcard", "the `*` tail; not a segment value"),
+        ])),
+        ("placeholder_classes", OrderedDict(
+            (name, cls) for name, cls in sorted(_CLASS_OF.items()))),
+    ])
     out["_meta"] = meta
     out["families"] = fam_list
 
