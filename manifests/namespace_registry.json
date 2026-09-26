@@ -82,21 +82,21 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 116,
+    "n_families": 129,
     "per_component": {
       "accord-agent": 19,
       "anti-sybil": 6,
       "attestation": 18,
       "cirisbench": 1,
       "lens": 15,
-      "node": 35,
+      "node": 48,
       "persist": 6,
       "registry": 11,
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "90737b0a10b0245334b123bcaa5846bec1b5fd540d46b71c3b7046ac48e03d1e"
+    "source_sha256": "bed8f31dca51d4bf39c078d50076a86a5951662315e9b2a0ebe65bad2b55896c"
   },
   "families": [
     {
@@ -333,6 +333,25 @@
       ]
     },
     {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); audio-content claims per external_content:audio, semantics at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "audio:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "audio"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.3",
       "description": "",
       "owning_component": "persist",
@@ -417,6 +436,25 @@
         {
           "class": "vocab",
           "segment": "{aspect}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); blog-content claims, semantics at CC 3.3.11.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "blog:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "blog"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
         }
       ]
     },
@@ -651,6 +689,25 @@
         {
           "class": "value",
           "segment": "{authority}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); chat-content claims, semantics at CC 3.3.11.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "chat:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "chat"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
         }
       ]
     },
@@ -1287,6 +1344,86 @@
       ]
     },
     {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); encyclopedia-content claims, semantics at CC 3.3.11.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "encyclopedia:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "encyclopedia"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); post-event attendance attestation, semantics at CC 3.3.8.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "event:attendance",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "event"
+        },
+        {
+          "class": "literal",
+          "segment": "attendance"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); event-lifecycle state signal on an event_listing, canonical states at CC 3.3.8.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "enumerated",
+      "prefix": "event:lifecycle:{state}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "event"
+        },
+        {
+          "class": "literal",
+          "segment": "lifecycle"
+        },
+        {
+          "class": "vocab",
+          "segment": "{state}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); publisher-asserted RSVP tally, semantics at CC 3.3.8.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "event:rsvp_count",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "event"
+        },
+        {
+          "class": "literal",
+          "segment": "rsvp_count"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.6",
       "description": "Expertise standing (P3).",
       "owning_component": "node",
@@ -1371,6 +1508,25 @@
         {
           "class": "vocab",
           "segment": "{aspect}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); film-content claims per external_content:film, semantics at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "film:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "film"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
         }
       ]
     },
@@ -1497,6 +1653,25 @@
         {
           "class": "literal",
           "segment": "relational_anchor"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); image-content claims per external_content:image, semantics at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "image:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "image"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
         }
       ]
     },
@@ -1692,6 +1867,25 @@
       ]
     },
     {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); 3D-content claims per external_content:model_3d, semantics at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "model_3d:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "model_3d"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.2",
       "description": "ModerationEvent.",
       "owning_component": "node",
@@ -1772,6 +1966,25 @@
         {
           "class": "vocab",
           "segment": "{kind}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); news-content claims, semantics at CC 3.3.11.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "news:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "news"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
         }
       ]
     },
@@ -2373,6 +2586,25 @@
       ]
     },
     {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); open-vocabulary inter-content relation edges, canonical kinds at CC 3.3.11.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "enumerated",
+      "prefix": "topical_relation:{kind}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "topical_relation"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.5",
       "description": "An agent's own reasoning trace carried envelope-native.",
       "owning_component": "accord-agent",
@@ -2553,6 +2785,25 @@
         {
           "class": "value",
           "segment": "{subject}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9",
+      "description": "Catalogue row (CC 3.1.7 R1); video-content claims per external_content:video, semantics at CC 3.3.12.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "video:*",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "video"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*"
         }
       ]
     },

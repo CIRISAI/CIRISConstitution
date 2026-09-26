@@ -318,21 +318,13 @@ NON_CATALOGUE_SECTIONS = {
 
 # Families with no registered owner, documented outside CC 3.1. Each admits
 # under R2's unchosen fallback until an owning component is assigned.
-PINNED_UNOWNED_FAMILIES = {
-    "event:lifecycle:{state}":   "3.3.8",
-    "event:rsvp_count":          "3.3.8",
-    "event:attendance":          "3.3.8",
-    "news:*":                    "3.3.11",
-    "encyclopedia:*":            "3.3.11",
-    "chat:*":                    "3.3.11",
-    "blog:*":                    "3.3.11",
-    "topical_relation:{kind}":   "3.3.11",
-    "image:*":                   "3.3.12",
-    "audio:*":                   "3.3.12",
-    "video:*":                   "3.3.12",
-    "film:*":                    "3.3.12",
-    "model_3d:*":                "3.3.12",
-}
+#
+# EMPTY as of the #102 owner decision: the 13 families measured at the audit
+# (CC 3.3.8 event:*, CC 3.3.11 inter-content, CC 3.3.12 media-type) were
+# assigned to NodeCore and carry CC 3.1.7 R1 catalogue rows under CC 3.1.9.
+# The machinery stays: a new orphan is still an error, and a family pinned
+# here that later registers is still an error (a pin must not outlive its gap).
+PINNED_UNOWNED_FAMILIES = {}
 PINNED_UNOWNED_TRACKED_BY = "CIRISConstitution#102 (owner assignment)"
 
 
