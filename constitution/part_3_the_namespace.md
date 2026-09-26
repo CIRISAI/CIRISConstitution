@@ -153,7 +153,7 @@ Canonical leaves: `system:*`, `transport:{kind}`, `delivery:{class}`, `peer_reac
 
 #### Autonomy + explainability wire families (registry rows)
 
-Two principle families were in live production use with no CC 3.1 row. `consent:*` is `autonomy:` at the wire — the subject's own grant, scope and revocation over a Contribution about them; it **governs routing**, so leaving it unreserved left the transmission principle open by accident. `trace:*` is `fidelity:explainability_sla:` at the wire — the artifact an `L2_reasoning_trace` / `L3_full_dma_chain` / `L4_attested_chain` commitment actually delivers.
+Two principle families were in live production use with no CC 3.1 row. `consent:*` is `autonomy:` at the wire — the subject's own grant, scope and revocation over a Contribution about them; it **governs routing**, so leaving it unreserved left the transmission principle open by accident. `trace:*` is `fidelity:explainability_sla:` at the wire — the artifact an `l2_reasoning_trace` / `l3_full_dma_chain` / `l4_attested_chain` commitment actually delivers.
 
 | Prefix | Description | Polarity | Reserved? |
 |---|---|---|---|
@@ -186,7 +186,7 @@ manifest {
 | `non_maleficence:{aspect}` | "Avoid Harm." Apophatic-bound failures (the 22 prohibited categories) are -1 only. | signed |
 | `integrity:{aspect}` | "Act Ethically — transparent, auditable reasoning." | signed |
 | `fidelity:{aspect}` | "Be Honest — truthful, comprehensible information." | signed |
-| `fidelity:explainability_sla:{tier}` | Per-response explainability SLA commitment. `{tier}` ∈ `L1_summary` \| `L2_reasoning_trace` \| `L3_full_dma_chain` \| `L4_attested_chain`. Envelope: `{committed_tier, achieved_tier, fallback_reason?}`. NodeCore composition: SLA breach surfaces as `hard_case:sla_breach_unattested` per [CC 3.1.9.4](#566-hard-case--transparency--judge-model-prefixes). | signed |
+| `fidelity:explainability_sla:{tier}` | Per-response explainability SLA commitment. `{tier}` ∈ `l1_summary` \| `l2_reasoning_trace` \| `l3_full_dma_chain` \| `l4_attested_chain`. Envelope: `{committed_tier, achieved_tier, fallback_reason?}`. NodeCore composition: SLA breach surfaces as `hard_case:sla_breach_unattested` per [CC 3.1.9.4](#566-hard-case--transparency--judge-model-prefixes). | signed |
 | `autonomy:{aspect}` | "Uphold the informed agency and dignity of sentient beings." | signed |
 | `justice:{aspect}` | "Distribute benefits and burdens equitably." | signed |
 

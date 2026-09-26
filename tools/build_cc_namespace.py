@@ -190,6 +190,44 @@ def apply_reserved(prefix, component):
     return False, None
 
 
+ENUM_DECL = re.compile(r"`\{([a-z_]+)\}`\s*(?:∈|in)\s*((?:`[^`]+`\s*(?:\\\|)?\s*)+)")
+
+
+def check_enum_case(lines, families):
+    """CC 3.1.7 R3 dye test on the VALUES, not just the stems (CIRISConstitution#106).
+
+    classify_segments() refuses a non-lowercase literal stem, but a `vocab`
+    placeholder's enumeration lives in the description cell as prose — `{tier}` ∈
+    `L1_summary` \| … — and nothing checked those tokens against vocab_pattern, so
+    the Constitution's own vocabulary could be unwritable on the wire. For every
+    table row whose prefix registers with a `vocab`-classed placeholder, each
+    backticked token in an in-row `{name}` ∈ … enumeration MUST match VOCAB_PATTERN.
+    """
+    bad = []
+    for line in lines:
+        m = TABLE_ROW.match(line)
+        if not m:
+            continue
+        cells = split_row(line)
+        first = BACKTICK.search(cells[1] if len(cells) > 1 else "")
+        if not first or first.group(1) not in families:
+            continue
+        vocab = {seg["segment"][1:-1] for seg in families[first.group(1)]["segments"]
+                 if seg["class"] == "vocab"}
+        for em in ENUM_DECL.finditer(line):
+            if em.group(1) not in vocab:
+                continue
+            for tok in BACKTICK.findall(em.group(2)):
+                if not re.match(VOCAB_PATTERN, tok):
+                    bad.append((first.group(1), em.group(1), tok))
+    if bad:
+        raise SystemExit(
+            "R3: %d enumerated vocab value(s) would be refused on the wire as "
+            "namespace_dimension_case_malformed — the Constitution's own vocabulary is "
+            "lowercase (CC 3.1.7 R3; CIRISConstitution#106):\n%s"
+            % (len(bad), "\n".join("  %s  {%s} = `%s`" % b for b in bad)))
+
+
 def main():
     raw = open(SOURCE, "rb").read()
     sha = hashlib.sha256(raw).hexdigest()
@@ -437,6 +475,8 @@ def main():
     # are the dangerous direction — a text edit that moves a table boundary can
     # orphan rows and families "leave" without anyone retiring them. A family may
     # only leave the manifest via an explicit entry here, with the retiring change.
+    check_enum_case(lines, families)   # R3 on values, not just stems (#106)
+
     RETIRED_FAMILIES = set()  # e.g. {"old:family"} — name it in the same commit
     if os.path.exists(OUT):
         try:

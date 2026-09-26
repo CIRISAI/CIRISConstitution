@@ -320,6 +320,7 @@ NON_CATALOGUE_SECTIONS = {
 # under R2's unchosen fallback until an owning component is assigned.
 PINNED_UNOWNED_FAMILIES = {
     "event:lifecycle:{state}":   "3.3.8",
+    "event:rsvp_count":          "3.3.8",
     "event:attendance":          "3.3.8",
     "news:*":                    "3.3.11",
     "encyclopedia:*":            "3.3.11",
@@ -362,7 +363,13 @@ def check_namespace_coverage(errors, warnings, notes):
             m = table_row.match(line)
             if not m:
                 continue
-            if "prefix" in line.lower() and "---" not in line:
+            # A header row is one whose FIRST cell is the word "Prefix". The
+            # earlier substring test ("prefix" anywhere in the line) mis-read the
+            # CC 3.3.8 `event:rsvp_count` row as a header because its description
+            # links to `#…--relation-prefixes`, so that family was never audited
+            # (CIRISConstitution#105).
+            first_cell = m.group(1).split("|")[0].strip().strip("*` ").lower()
+            if first_cell == "prefix":
                 in_prefix_table = True
                 continue
             if re.match(r"^\s*\|[\s:|-]+\|\s*$", line) or not in_prefix_table:
