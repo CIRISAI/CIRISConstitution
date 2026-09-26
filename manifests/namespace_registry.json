@@ -179,9 +179,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "6324a8ee7d341399628899a154398aac13025af6f63dccc46b5e4aa95b23eab1",
+    "registry_sha256": "3f42324f9eddd39b21ffab773e32f37bd5d76c22dfe6ad831363d12c4314182e",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "0870056287c1bd454159cebaacabb8356b53ec5ac7ea00d97ad7ed74dcc7f2f4"
+    "source_sha256": "e78b4ad6bae9a0bcb61e860ced2e0f5d0a7be596252f3d2f455e291989967927"
   },
   "families": [
     {
@@ -404,7 +404,7 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Witness rung of the age ladder \u2014 {level} \u2208 provider | government, {band} \u2208 minor | adult, canonical {version} = v1.",
+      "description": "Witness rung of the age ladder \u2014 {level} \u2208 provider | government (closed; self is refused here), {band} \u2208 minor | adult | under_13 | 13_15 | 16_17 (closed \u2014 the CC 3.4.13 Q1 finer bands spelled as the substrate's AgeBandFine; unknown is a c",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
@@ -421,7 +421,7 @@
         },
         {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{level}",
           "values": [
             "provider",
@@ -430,11 +430,14 @@
         },
         {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{band}",
           "values": [
             "minor",
-            "adult"
+            "adult",
+            "under_13",
+            "13_15",
+            "16_17"
           ]
         },
         {
@@ -445,11 +448,11 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Subject's own age-band declaration \u2014 {band} \u2208 minor | adult, canonical {version} = v1.",
+      "description": "Subject's own age-band declaration \u2014 {band} \u2208 minor | adult | under_13 | 13_15 | 16_17 (closed \u2014 the CC 3.4.13 Q1 finer bands spelled as the substrate's AgeBandFine; unknown is a consumer's fail-secure *resolution*, never a wire token), can",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
-      "prefix": "age_self_declared:{band}:{version}",
+      "prefix": "age_self_declared:band:{band}:{version}",
       "reserved": false,
       "segments": [
         {
@@ -457,12 +460,19 @@
           "segment": "age_self_declared"
         },
         {
+          "class": "literal",
+          "segment": "band"
+        },
+        {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{band}",
           "values": [
             "minor",
-            "adult"
+            "adult",
+            "under_13",
+            "13_15",
+            "16_17"
           ]
         },
         {

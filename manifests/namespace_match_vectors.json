@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "6324a8ee7d341399628899a154398aac13025af6f63dccc46b5e4aa95b23eab1",
+    "registry_sha256": "3f42324f9eddd39b21ffab773e32f37bd5d76c22dfe6ad831363d12c4314182e",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension \u2014 on a refusal of namespace_dimension_case_malformed the refusal is the contract and the family is best-effort attribution"
   },
@@ -301,40 +301,52 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
-      "dimension": "age_self_declared:minor:v1",
-      "family": "age_self_declared:{band}:{version}",
+      "dimension": "age_assurance:not_a_listed_value:minor:v1",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
+    },
+    {
+      "dimension": "age_self_declared:band:minor:v1",
+      "family": "age_self_declared:band:{band}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "age_self_declared:minor:V1",
-      "family": "age_self_declared:{band}:{version}",
+      "dimension": "age_self_declared:band:minor:V1",
+      "family": "age_self_declared:band:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "age_self_declared:minor:v1:v2",
-      "family": "age_self_declared:{band}:{version}",
+      "dimension": "age_self_declared:band:minor:v1:v2",
+      "family": "age_self_declared:band:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "Age_self_declared:minor:v1",
-      "family": "age_self_declared:{band}:{version}",
+      "dimension": "Age_self_declared:band:minor:v1",
+      "family": "age_self_declared:band:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "age_self_declared:minor",
-      "family": "age_self_declared:{band}:{version}",
+      "dimension": "age_self_declared:band:minor",
+      "family": "age_self_declared:band:{band}:{version}",
       "refusal": "missing_version_segment",
       "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
-      "dimension": "age_self_declared:MINOR:v1",
-      "family": "age_self_declared:{band}:{version}",
+      "dimension": "age_self_declared:band:MINOR:v1",
+      "family": "age_self_declared:band:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "age_self_declared:band:not_a_listed_value:v1",
+      "family": "age_self_declared:band:{band}:{version}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "agent_files:sample:sample:v1",
