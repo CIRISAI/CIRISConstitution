@@ -110,15 +110,25 @@ PLACEHOLDER_CLASS = {
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
         "scope", "state", "substrate_rung", "target_kind", "tier", "version",
     },
-    "external": {"currency", "lang_code", "rating"},
+    "external": {"currency", "lang_code", "rating", "unit"},
     "value": {
         "approach_id", "authority", "authority_id", "cell", "cohort", "community_key_id",
-        "contribution_id", "forum", "goal_id", "id", "method_id", "model_id",
+        "contribution_id", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id",
+        "notify_id",
         "prior_contribution_id", "source", "stream_id", "subject", "target", "tree_size",
     },
-    "hex": {"prefix"},
+    "hex": {"canonical_hash", "prefix"},
 }
 _CLASS_OF = {name: cls for cls, names in PLACEHOLDER_CLASS.items() for name in names}
+
+# CC 3.1.7 R3 version segment (CIRISConstitution#112): families that carry NO trailing
+# `:v{N}` — the mechanism-named attestation ladder (CC 3.1.2; version lives in the
+# attesting binary) and the canonical-binding claim (CC 3.3.14; the suffix is the hash).
+VERSION_EXEMPT = [
+    "attestation:agent_integrity", "attestation:hardware_rooted", "attestation:license_validity",
+    "attestation:registry_consensus", "attestation:self_verify",
+    "identity:canonical_binding:{canonical_hash}",
+]
 
 
 def classify_segments(prefix):
@@ -196,7 +206,7 @@ def apply_reserved(prefix, component):
     return False, None
 
 
-ENUM_DECL = re.compile(r"`\{([a-z_]+)\}`\s*(?:∈|in)\s*((?:`[^`]+`\s*(?:\\\|)?\s*)+)")
+ENUM_DECL = re.compile(r"`\{([a-z_]+)\}`\s*(?:∈|in)\s*((?:`[^`]+`\s*(?:\\?\|)?\s*)+)")
 
 
 def check_enum_case(lines, families):
@@ -249,7 +259,7 @@ def main():
     in_fence = False
     i = 0
 
-    def add_family(prefix, section, comp, crepo, description, polarity, reserved_hint):
+    def add_family(prefix, section, comp, crepo, description, polarity, reserved_hint, raw=""):
         prefix = prefix.strip()
         if not prefix:
             return
@@ -271,6 +281,21 @@ def main():
         rec["cc_section"] = section
         rec["polarity"] = polarity or ""
         rec["segments"] = classify_segments(prefix)
+        # CIRISConstitution#112 — a `vocab` placeholder's canonical values, enumerated
+        # in-row as `{name}` ∈ `a` \| `b` …, are published on the segment so a consumer
+        # validates a value against the enumeration rather than only the pattern.
+        # An enumeration is CLOSED only where the row says the word "closed" — most rows
+        # enumerate canonical values of an open vocabulary (CC 4.5.1.1), and a partial
+        # list read as closed would refuse legitimate traffic. Closing one is a per-row
+        # ruling, made by writing the word.
+        if raw:
+            enums = {m.group(1): BACKTICK.findall(m.group(2)) for m in ENUM_DECL.finditer(raw)}
+            is_open = "closed" not in raw.lower()
+            for seg in rec["segments"]:
+                name = seg["segment"][1:-1] if seg["segment"].startswith("{") else None
+                if seg["class"] == "vocab" and name in enums and enums[name]:
+                    seg["values"] = enums[name]
+                    seg["open"] = is_open
         rec["reserved"] = reserved
         if reserved:
             rec["reserved_rule"] = rule
@@ -345,8 +370,9 @@ def main():
                     polarity = clean_text(cells[pol_idx]) if pol_idx is not None and pol_idx < len(cells) else ""
                     resv = cells[res_idx] if res_idx is not None and res_idx < len(cells) else ""
                     resv = resv if resv and resv.strip().lower() not in ("no", "") else ""
-                    desc = first_sentence(cells[desc_idx]) if desc_idx is not None and desc_idx < len(cells) else ""
-                    add_family(prefix, cc_section, component, repo, desc, polarity, resv)
+                    raw = cells[desc_idx] if desc_idx is not None and desc_idx < len(cells) else ""
+                    desc = first_sentence(raw)
+                    add_family(prefix, cc_section, component, repo, desc, polarity, resv, raw)
                 i += 1
             continue
 
@@ -386,6 +412,17 @@ def main():
 
     # ---- assemble deterministic output ----------------------------------
     fam_list = sorted(families.values(), key=lambda r: r["prefix"])
+    # CIRISConstitution#112 — a wildcard family publishes the registered leaves beneath
+    # it; a RESERVED wildcard family with leaves is CLOSED: a consumer refuses any other
+    # leaf as namespace_family_unregistered (R2(b)), so a reserved prefix cannot be used
+    # as a namespace for rows this Part never named.
+    all_prefixes = [r["prefix"] for r in fam_list]
+    for r in fam_list:
+        if r["segments"][-1]["class"] == "wildcard":
+            stem = r["prefix"][:-1]            # "accord:*" -> "accord:"
+            leaves = [p for p in all_prefixes if p != r["prefix"] and p.startswith(stem)]
+            r["leaves"] = leaves
+            r["leaves_closed"] = bool(leaves) and bool(r["reserved"])
     comps = OrderedDict()
     for r in fam_list:
         comps.setdefault(r["owning_component"], 0)
@@ -471,6 +508,23 @@ def main():
             ("hex", "CC 2.6.3 digest; lowercase"),
             ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments (CIRISConstitution#108)"),
         ])),
+        ("version_segment", OrderedDict([        # CC 3.1.7 R3 — CIRISConstitution#112
+            ("pattern", "^v[0-9]+$"),
+            ("position", "trailing"),
+            ("required", True),
+            ("exempt", VERSION_EXEMPT),
+            ("note", "Every scored dimension carries exactly one trailing version segment after its "
+                     "family's own segments; a row whose last segment is `{version}` names that segment. "
+                     "Matching strips it; a consumer keys the rule version from it. Families in `exempt` "
+                     "need none — a tail is tolerated, never required (mechanism-named attestation ladder; the canonical-binding hash)."),
+        ])),
+        ("refusal_tokens", OrderedDict([         # the matcher's tokens — never bespoke
+            ("case_malformed", "namespace_dimension_case_malformed"),
+            ("vocab_value_unregistered", "namespace_vocab_value_unregistered"),
+            ("family_unregistered", "namespace_family_unregistered"),
+            ("private_use_not_federatable", "namespace_private_use_not_federatable"),
+            ("missing_version_segment", "missing_version_segment"),
+        ])),
         ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
             ("match", "one_or_more_segments"),
             ("cc_ref", "CC 3.1.7 R3"),
@@ -483,6 +537,14 @@ def main():
         ("placeholder_classes", OrderedDict(
             (name, cls) for name, cls in sorted(_CLASS_OF.items()))),
     ])
+    # CIRISConstitution#112 — the pin a consumer (CSD/3 `registry_sha256`) should carry:
+    # the hash of the GRAMMAR (families + _meta without the prose hash), so a wording
+    # edit anywhere in Part 3 does not invalidate every downstream pin.
+    grammar = OrderedDict([("_meta", OrderedDict((k, v) for k, v in meta.items()
+                                                 if k not in ("source_sha256", "registry_sha256"))),
+                           ("families", fam_list)])
+    meta["registry_sha256"] = hashlib.sha256(
+        json.dumps(grammar, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
     out["_meta"] = meta
     out["families"] = fam_list
 
@@ -491,6 +553,16 @@ def main():
     # orphan rows and families "leave" without anyone retiring them. A family may
     # only leave the manifest via an explicit entry here, with the retiring change.
     check_enum_case(lines, families)   # R3 on values, not just stems (#106)
+
+    # CIRISConstitution#112 — the grammar round-trips through the reference matcher:
+    # every family's class-conformant sample resolves to that family and no other,
+    # with and without the version tail, and every refusal vector refuses as named.
+    sys.path.insert(0, HERE)
+    import cc_namespace_match as _match
+    _problems = _match.self_test(json.loads(json.dumps(out)))
+    if _problems:
+        raise SystemExit("namespace grammar does not round-trip through tools/cc_namespace_match.py "
+                         "(%d):\n  %s" % (len(_problems), "\n  ".join(_problems)))
 
     RETIRED_FAMILIES = set()  # e.g. {"old:family"} — name it in the same commit
     if os.path.exists(OUT):

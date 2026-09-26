@@ -336,8 +336,14 @@ def check_namespace_coverage(errors, warnings, notes):
         return
     import json as _json
     with open(reg_path, encoding="utf-8") as fh:
-        reg = {f["prefix"] for f in _json.load(fh)["families"]}
+        _fams = _json.load(fh)["families"]
+    reg = {f["prefix"] for f in _fams}
     reg_stems = {p.split(":")[0] for p in reg}
+    # CIRISConstitution#112 — a reserved wildcard family with leaves is CLOSED: a prose
+    # leaf under it must be one of the leaves the registry lists, else it is exactly
+    # the "reservation used as a namespace" R2(b) refuses.
+    closed = {f["prefix"].split(":")[0]: set(f.get("leaves", []))
+              for f in _fams if f.get("leaves_closed")}
 
     table_row = re.compile(r"^\s*\|(.+)\|\s*$")
     backtick = re.compile(r"`([^`]+)`")
@@ -376,7 +382,17 @@ def check_namespace_coverage(errors, warnings, notes):
             seen.add(fam)
             # covered if registered outright, or a leaf of a registered
             # parameterized family sharing its stem (consent:scope under consent:{kind})
-            if fam in reg or fam.split(":")[0] in reg_stems:
+            if fam in reg:
+                continue
+            stem = fam.split(":")[0]
+            if stem in closed:
+                errors.append(
+                    f"namespace coverage: CC {sec} documents '{fam}' under the CLOSED reserved family "
+                    f"'{stem}:*' but the registry lists no such leaf — a reservation is not a namespace "
+                    f"(CC 3.1.7 R3, CIRISConstitution#112); add its CC 3.1 row or remove it."
+                )
+                continue
+            if stem in reg_stems:
                 continue
             orphans.append((fam, sec))
 

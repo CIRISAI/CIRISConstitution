@@ -38,7 +38,7 @@ The namespace is open: anyone may publish a rule set and admit a new prefix. The
 |---|---|---|
 | **T1** | Is the prefix part of a published, hash-pinned, version-controlled rule set, distinct from per-attestation verdicts? | Rules + verdicts separated in writing |
 | **T2** | Does the prefix name a **mechanism** (correlation, count, time-window, schema-conformance) rather than a **subjective quality** (deception, harm, virtue, trustworthiness, sin)? | Mechanism-descriptive prefix name |
-| **T3** | Can past verdicts be re-checked against the rule version they ran against? | Version-pinning in `evidence_refs[]` |
+| **T3** | Can past verdicts be re-checked against the rule version they ran against? | Version-pinning: the dimension's trailing `:v{N}` names the rule version ([CC 3.1.7](part_3_the_namespace.md) R3); `evidence_refs[]` pins the calibration artifacts |
 | **T4** | Is the prefix wired so its attestations are **never sole evidence** for `slashing:*`? | Adjudication separation |
 
 T2 is the most slip-prone gate, because judgment-words feel natural where mechanism-words should go. A prefix that fails T2 gets renamed to the mechanism it actually checks: the canonical case is `detection:emergent_deception:*` (a subjective quality) renamed to `detection:correlated_action:*` (a measurable mechanism). The full anti-pattern catalogue lives at [CC 4.1](#41-anti-patterns).
