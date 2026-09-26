@@ -62,6 +62,7 @@ class Rules:
         self.tokens = cr["refusal_tokens"]
         self.external = {name: re.compile(spec["pattern"]) for name, spec in cr.get("external_standards", {}).items()
                          if spec.get("pattern")}
+        self.reserved_stems = [s["stem"] for s in cr.get("reserved_stems", [])]
         self.families = OrderedDict((f["prefix"], f) for f in manifest["families"])
 
 
@@ -237,6 +238,10 @@ def match_family(manifest_or_rules, dimension):
         mutated = _detect_malformed(rules, parts)
         if mutated:
             return mutated, {}, rules.tokens["case_malformed"]
+        # a stem CC 3.4 reserves as a whole: an unclaimed leaf beneath it is unregistered,
+        # never open vocabulary — the reservation covers the leaves nobody minted yet
+        if any(dimension.startswith(stem) for stem in rules.reserved_stems):
+            return None, {}, rules.tokens["family_unregistered"]
         return None, {}, None
     prefix, binds, refusal, has_version = hit
     fam = rules.families[prefix]
@@ -354,6 +359,11 @@ def generate_vectors(manifest):
                 add(":".join(parts), prefix, rules.tokens["vocab_value_unregistered"],
                     "a value outside a closed enumeration is unregistered")
                 break
+    for stem in rules.reserved_stems:
+        dim = stem + "zz_unminted_leaf:v1"
+        got, _, refusal = match_family(rules, dim)
+        add(dim, got, refusal or rules.tokens["family_unregistered"],
+            "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)")
     add(rules.private + "anything:v1", None, rules.tokens["private_use_not_federatable"],
         "the Private Use prefix never admits at federation tier (R2)")
     add("no_such_family:leaf:v1", None, None, "open vocabulary: no row claims it, no refusal")
@@ -371,6 +381,10 @@ def self_test(manifest):
         got, _, refusal = match_family(rules, dim)
         if got != prefix or refusal:
             problems.append("%s: sample %r resolved to %r (refusal %r)" % (prefix, dim, got, refusal))
+    for stem in rules.reserved_stems:          # a reserved stem never yields open vocabulary
+        got, _, refusal = match_family(rules, stem + "zz_unminted_leaf:v1")
+        if refusal is None:
+            problems.append("reserved stem %r admitted an unminted leaf as open vocabulary" % stem)
     for v in generate_vectors(manifest):
         got, _, refusal = match_family(rules, v["dimension"])
         # on a malformed dimension the REFUSAL is the contract; the family it is judged

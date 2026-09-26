@@ -68,22 +68,24 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # Each entry: (predicate(prefix, component) -> bool, rule, cc_ref). First match wins;
 # order is specificity-first. Component-scoped substrate-self-report rules come after the
 # prefix-specific ones.
+# Stems CC 3.4 reserves AS A WHOLE — every leaf beneath them, registered or not. Published
+# as `_meta.case_rule.reserved_stems` so a consumer refuses an unregistered leaf under
+# one (`capacity:not_a_leaf:v1`) as namespace_family_unregistered rather than routing it
+# to the default authority (#113 review). `licensure:` is deliberately absent: CC 3.4.9
+# co-stewards the CIRIS-issued licence and says the family is open-emitter.
+RESERVED_STEMS = [
+    ("accord:", "accord_holder-only", "CC 3.4.1"),
+    ("transparency_log:cosigned:", "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
+    ("detection:", "detector-only (identity_type contains lenscore_detector)", "CC 3.4.8"),
+    ("capacity:", "no-self-emit (attesting_key_id != attested_key_id)", "CC 3.4.5"),
+    ("age_assurance:", "witness-reserved, subject-not-self", "CC 3.4.11"),
+    ("capacity_assurance:", "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
+]
+
+
 def _reserved_rules():
-    return [
-        (lambda p, c: p.startswith("accord:"),
-         "accord_holder-only", "CC 3.4.1"),
-        (lambda p, c: p.startswith("transparency_log:cosigned"),
-         "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
-        (lambda p, c: p.startswith("detection:"),
-         "detector-only (identity_type contains lenscore_detector)", "CC 3.4.8"),
-        (lambda p, c: p.startswith("capacity:"),
-         "no-self-emit (attesting_key_id != attested_key_id)", "CC 3.4.5"),
-        (lambda p, c: p.startswith("age_assurance:"),
-         "witness-reserved, subject-not-self", "CC 3.4.11"),
-        (lambda p, c: p.startswith("capacity_assurance:"),
-         "witness-reserved, subject-not-self, attester != steward", "CC 3.4.12"),
-        (lambda p, c: p.startswith("licensure:"),
-         "co-stewarded (Registry + Verify)", "CC 3.4.9"),
+    return [(lambda p, c, _s=stem: p.startswith(_s), rule, ref) for stem, rule, ref in RESERVED_STEMS] + [
+        # (the prefix table above; family- and component-scoped rules follow)
         # CC 3.1.3.1: an OCCURRENCE self-report, not a substrate one — before the
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
@@ -560,6 +562,7 @@ def main():
         ])),
         ("external_standards", OrderedDict(      # CC 3.1.7 R3 `external` — CIRISConstitution#113 review
             (n, OrderedDict([("standard", s), ("pattern", p)])) for n, (s, p) in sorted(EXTERNAL_STANDARDS.items()))),
+        ("reserved_stems", [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c)]) for s, r, c in RESERVED_STEMS]),
         ("refusal_tokens", OrderedDict([         # the matcher's tokens — never bespoke
             ("case_malformed", "namespace_dimension_case_malformed"),
             ("vocab_value_unregistered", "namespace_vocab_value_unregistered"),

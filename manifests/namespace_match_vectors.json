@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "5884c1fcc8cd845b93aa370ac7cbc0cc570588ef04f94c14f437bf83e6e86294",
+    "registry_sha256": "6324a8ee7d341399628899a154398aac13025af6f63dccc46b5e4aa95b23eab1",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension \u2014 on a refusal of namespace_dimension_case_malformed the refusal is the contract and the family is best-effort attribution"
   },
@@ -4649,6 +4649,42 @@
       "family": "witness_diversity:{contribution_id}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "accord:zz_unminted_leaf:v1",
+      "family": "accord:*",
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "transparency_log:cosigned:zz_unminted_leaf:v1",
+      "family": "transparency_log:cosigned:{tree_size}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "detection:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "capacity:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "age_assurance:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "capacity_assurance:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
       "dimension": "x_private:anything:v1",

@@ -106,6 +106,38 @@
         "private_use_not_federatable": "namespace_private_use_not_federatable",
         "vocab_value_unregistered": "namespace_vocab_value_unregistered"
       },
+      "reserved_stems": [
+        {
+          "cc_ref": "CC 3.4.1",
+          "rule": "accord_holder-only",
+          "stem": "accord:"
+        },
+        {
+          "cc_ref": "CC 3.4.10",
+          "rule": "witness-emitter (identity_type contains witness)",
+          "stem": "transparency_log:cosigned:"
+        },
+        {
+          "cc_ref": "CC 3.4.8",
+          "rule": "detector-only (identity_type contains lenscore_detector)",
+          "stem": "detection:"
+        },
+        {
+          "cc_ref": "CC 3.4.5",
+          "rule": "no-self-emit (attesting_key_id != attested_key_id)",
+          "stem": "capacity:"
+        },
+        {
+          "cc_ref": "CC 3.4.11",
+          "rule": "witness-reserved, subject-not-self",
+          "stem": "age_assurance:"
+        },
+        {
+          "cc_ref": "CC 3.4.12",
+          "rule": "witness-reserved, subject-not-self, attester != steward",
+          "stem": "capacity_assurance:"
+        }
+      ],
       "version_segment": {
         "exempt": [
           "attestation:agent_integrity",
@@ -147,9 +179,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "5884c1fcc8cd845b93aa370ac7cbc0cc570588ef04f94c14f437bf83e6e86294",
+    "registry_sha256": "6324a8ee7d341399628899a154398aac13025af6f63dccc46b5e4aa95b23eab1",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "186a52166aa71d5e13361d71b10efce6cdf75a2ea35d3491e9647a7864c35b5d"
+    "source_sha256": "0870056287c1bd454159cebaacabb8356b53ec5ac7ea00d97ad7ed74dcc7f2f4"
   },
   "families": [
     {
@@ -2344,11 +2376,7 @@
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
       "prefix": "licensure:{authority_id}",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.9",
-        "rule": "co-stewarded (Registry + Verify)"
-      },
+      "reserved": false,
       "segments": [
         {
           "class": "literal",
