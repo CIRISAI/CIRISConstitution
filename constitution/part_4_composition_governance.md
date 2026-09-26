@@ -172,7 +172,7 @@ Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secur
 | `placeholder_pending_provisioning` | none — no key yet |
 | `software_hsm_development` | `software_only` |
 
-#### 4.2.2.1 `hardware-class-hardware` — Hardware-class self-assertion gap (acknowledged)
+#### 4.2.2.1 `hardware-class-hardware` — Hardware-class claim, and the attestation chain that corroborates it
 
 The `hardware_class` string is self-asserted by the holder; there is no `federation_keys.hardware_class` column — it rides inside the key's `attestation_evidence`. What corroborates it is the **evidence variant**, not the string: since 2026-08 the per-platform attestation chains are evidence-established ([CC 8.3.1](part_8_appendices.md) **R5**, discharged — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK), and a verifier admits a class only when the chain for that mechanism verifies and the attested key is the record's own key (a lifted attestation replayed under another key is refused). Consumer policy therefore keys on the **verified mechanism** (`hardware_custody:{platform}`, the `HardwareType` the chain proves) and reads `hardware_class` as the holder's certified-class claim over it; where no chain verifies, the class is unattested and the multiplier is 0.0. The earlier text of this section said no mechanism existed; R5 records that it does.
 

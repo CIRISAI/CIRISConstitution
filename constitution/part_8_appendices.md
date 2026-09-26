@@ -248,7 +248,7 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 
 | Item | Why deferred |
 |---|---|
-| Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | Phase D 1.x roadmap per R5. |
+| Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred** — discharged 2026-08 per R5 ([CC 4.2.2.1](part_4_composition_governance.md)): Android Key Attestation, Apple App Attest, YubiKey PIV and TPM EK chains are evidence-established. Kept in this table so the 1.0-surface record shows the change; the residual, TPM *vendor* anchors left unbaked, is deliberate. |
 | Multi-party witness directory admission (2-of-3 steward sign-off) | Phase C commitment per [CC 5.3.1](#). |
 | Machine-readable namespace manifest (`FSD/CEG/dimensions.json`) | Phase E commitment per [CC 8.2.1](#). |
 | Full OpenAPI export for all endpoints | Phase E commitment per [CC 5.3.5](#). |

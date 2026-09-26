@@ -168,7 +168,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.2.1.1	invocation	Invocation canonical bytes (anti-replay; 0.1 scaffold)	§9.2.1	0.00162	154	0.19	IV	ceg
 4.2.1.2	notify	`notify` vs `constitutional` — consumer-UI requirement	§9.2.2	0.00095	227	0.11	IV	ceg
 4.2.2	hardware-class	Hardware-class taxonomy	§9.4	0.00276	89	0.33	IV	ceg
-4.2.2.1	hardware-class-hardware	Hardware-class self-assertion gap (acknowledged)	§9.4.1	0.00111	200	0.13	IV	ceg
+4.2.2.1	hardware-class-hardware	Hardware-class claim, and the attestation chain that corroborates it	§9.4.1	0.00111	200	0.13	IV	ceg
 4.2.3	accord-holder	The accord-holder triple	§9.1	0.00135	172	0.16	IV	ceg
 4.2.4	policy-concern	Concern split — key material vs role-recognition policy	§9.3	0.00092	301	0.11	IV	ceg
 4.2.5	isn	Why this isn't a Golden-Rule violation	§9.5	0.00092	302	0.11	IV	ceg

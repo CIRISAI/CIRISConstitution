@@ -179,6 +179,17 @@ def _resolve(rules, parts):
             ok, binds, refusal = _match_segments(fam, parts[:-1], rules)
             if ok:
                 candidates.append((_score(fam), prefix, binds, refusal, True))
+    if not candidates and versioned:
+        # the last segment is version-SHAPED but nothing matched with it stripped: it may
+        # be a VALUE that happens to look like a version (`config:v1` = `config:{scope}`
+        # with the tail omitted). Read it as an unversioned instance so the family is
+        # recognised and refused for the missing tail, never called open vocabulary.
+        for prefix, fam in rules.families.items():
+            if fam["segments"][-1]["segment"] == "{version}":
+                continue
+            ok, binds, refusal = _match_segments(fam, parts, rules)
+            if ok:
+                candidates.append((_score(fam), prefix, binds, refusal, False))
     if not candidates:
         return None
     candidates.sort(key=lambda c: c[0], reverse=True)
