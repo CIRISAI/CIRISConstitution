@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "3f42324f9eddd39b21ffab773e32f37bd5d76c22dfe6ad831363d12c4314182e",
+    "registry_sha256": "d6c87945ea08d72cc1f83820e35f0e3fb72cce47ea49f2ed3321d43219642ea6",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension \u2014 on a refusal of namespace_dimension_case_malformed the refusal is the contract and the family is best-effort attribution"
   },
@@ -4694,6 +4694,12 @@
     },
     {
       "dimension": "capacity_assurance:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "age_self_declared:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_family_unregistered",
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"

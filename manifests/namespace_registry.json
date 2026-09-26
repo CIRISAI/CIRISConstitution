@@ -109,33 +109,45 @@
       "reserved_stems": [
         {
           "cc_ref": "CC 3.4.1",
+          "kind": "reserved",
           "rule": "accord_holder-only",
           "stem": "accord:"
         },
         {
           "cc_ref": "CC 3.4.10",
+          "kind": "reserved",
           "rule": "witness-emitter (identity_type contains witness)",
           "stem": "transparency_log:cosigned:"
         },
         {
           "cc_ref": "CC 3.4.8",
+          "kind": "reserved",
           "rule": "detector-only (identity_type contains lenscore_detector)",
           "stem": "detection:"
         },
         {
           "cc_ref": "CC 3.4.5",
+          "kind": "reserved",
           "rule": "no-self-emit (attesting_key_id != attested_key_id)",
           "stem": "capacity:"
         },
         {
           "cc_ref": "CC 3.4.11",
+          "kind": "reserved",
           "rule": "witness-reserved, subject-not-self",
           "stem": "age_assurance:"
         },
         {
           "cc_ref": "CC 3.4.12",
+          "kind": "reserved",
           "rule": "witness-reserved, subject-not-self, attester != steward",
           "stem": "capacity_assurance:"
+        },
+        {
+          "cc_ref": "CC 3.4.11",
+          "kind": "gated",
+          "rule": "subject-or-steward-signed, not open-sender; no {level} token",
+          "stem": "age_self_declared:"
         }
       ],
       "version_segment": {
@@ -179,9 +191,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "3f42324f9eddd39b21ffab773e32f37bd5d76c22dfe6ad831363d12c4314182e",
+    "registry_sha256": "d6c87945ea08d72cc1f83820e35f0e3fb72cce47ea49f2ed3321d43219642ea6",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "e78b4ad6bae9a0bcb61e860ced2e0f5d0a7be596252f3d2f455e291989967927"
+    "source_sha256": "fdd46b25553f45dec7b20cdaf159ee0855b41d0176128be5a79ce7dadfd90d8a"
   },
   "families": [
     {

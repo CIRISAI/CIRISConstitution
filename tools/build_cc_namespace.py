@@ -73,6 +73,12 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # one (`capacity:not_a_leaf:v1`) as namespace_family_unregistered rather than routing it
 # to the default authority (#113 review). `licensure:` is deliberately absent: CC 3.4.9
 # co-stewards the CIRIS-issued licence and says the family is open-emitter.
+# A stem with an EMITTER RULE but no reservation (the family's own row says "No"): an
+# unclaimed leaf beneath it still refuses, because the rule would otherwise be
+# bypassed by an unminted leaf; the family's `reserved` flag is untouched.
+GATED_STEMS = [
+    ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
+]
 RESERVED_STEMS = [
     ("accord:", "accord_holder-only", "CC 3.4.1"),
     ("transparency_log:cosigned:", "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
@@ -562,7 +568,8 @@ def main():
         ])),
         ("external_standards", OrderedDict(      # CC 3.1.7 R3 `external` — CIRISConstitution#113 review
             (n, OrderedDict([("standard", s), ("pattern", p)])) for n, (s, p) in sorted(EXTERNAL_STANDARDS.items()))),
-        ("reserved_stems", [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c)]) for s, r, c in RESERVED_STEMS]),
+        ("reserved_stems", [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "reserved")]) for s, r, c in RESERVED_STEMS]
+                         + [OrderedDict([("stem", s), ("rule", r), ("cc_ref", c), ("kind", "gated")]) for s, r, c in GATED_STEMS]),
         ("refusal_tokens", OrderedDict([         # the matcher's tokens — never bespoke
             ("case_malformed", "namespace_dimension_case_malformed"),
             ("vocab_value_unregistered", "namespace_vocab_value_unregistered"),
