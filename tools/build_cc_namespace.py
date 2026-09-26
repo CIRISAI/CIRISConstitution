@@ -126,7 +126,13 @@ def classify_segments(prefix):
     out = []
     for seg in prefix.split(":"):
         if seg == "*":
-            out.append({"segment": "*", "class": "wildcard"})
+            # CIRISConstitution#108: a trailing `*` is VARIADIC — it matches one or
+            # more remaining segments, never exactly one. CC 3.4.1 lists
+            # `accord:invoke:notify:{notify_id}` (four segments) under `accord:*`,
+            # so a consumer that pairs `*` with a single segment cannot name any
+            # leaf the Constitution obliges it to distinguish. Carried as data so a
+            # vendoring checker keys on the manifest, not on its own reading of `*`.
+            out.append({"segment": "*", "class": "wildcard", "variadic": True})
         elif seg.startswith("{") and seg.endswith("}"):
             name = seg[1:-1]
             cls = _CLASS_OF.get(name)
@@ -463,7 +469,16 @@ def main():
             ("external", "outside-standard token; verbatim canonical form (ISO 4217, BCP 47, rating scheme)"),
             ("value", "caller-supplied identity; verbatim, case-preserved"),
             ("hex", "CC 2.6.3 digest; lowercase"),
-            ("wildcard", "the `*` tail; not a segment value"),
+            ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments (CIRISConstitution#108)"),
+        ])),
+        ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
+            ("match", "one_or_more_segments"),
+            ("cc_ref", "CC 3.1.7 R3"),
+            ("note", "A family ending in `*` covers every dimension sharing its stem segments with at least one further "
+                     "segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires "
+                     "len(segments) == len(parts) for a wildcard family has misread the registry. The segments below "
+                     "the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf "
+                     "row says otherwise."),
         ])),
         ("placeholder_classes", OrderedDict(
             (name, cls) for name, cls in sorted(_CLASS_OF.items()))),

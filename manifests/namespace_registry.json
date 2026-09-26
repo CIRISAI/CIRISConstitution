@@ -8,7 +8,7 @@
         "literal": "CC-fixed stem; lowercase (build-gated)",
         "value": "caller-supplied identity; verbatim, case-preserved",
         "vocab": "CC-defined vocabulary; MUST match vocab_pattern; refuse, never fold",
-        "wildcard": "the `*` tail; not a segment value"
+        "wildcard": "the `*` tail; not a segment value; VARIADIC \u2014 matches one or more remaining segments (CIRISConstitution#108)"
       },
       "compare": "byte-exact; consumers MUST NOT case-fold",
       "literal_pattern": "^[a-z0-9][a-z0-9_]*$",
@@ -73,7 +73,12 @@
       },
       "policy": "case-sensitive; lowercase CC vocabulary; per-segment classes",
       "refusal_token": "namespace_dimension_case_malformed",
-      "vocab_pattern": "^[a-z0-9][a-z0-9_.-]*$"
+      "vocab_pattern": "^[a-z0-9][a-z0-9_.-]*$",
+      "wildcard_rule": {
+        "cc_ref": "CC 3.1.7 R3",
+        "match": "one_or_more_segments",
+        "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
+      }
     },
     "cc_version": "1.0-rc5",
     "components_outside_normative": [
@@ -96,7 +101,7 @@
     },
     "private_use_prefix": "x_private:",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "bed8f31dca51d4bf39c078d50076a86a5951662315e9b2a0ebe65bad2b55896c"
+    "source_sha256": "a8580478fbc8b51e98228e2ac76eb5c475f827683c20a77bf8638592cbcd5ddd"
   },
   "families": [
     {
@@ -118,7 +123,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -347,7 +353,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -454,7 +461,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -707,7 +715,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1247,7 +1256,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1274,7 +1284,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1297,7 +1308,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1320,7 +1332,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1358,7 +1371,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1526,7 +1540,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1671,7 +1686,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1881,7 +1897,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -1984,7 +2001,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -2562,7 +2580,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
@@ -2803,7 +2822,8 @@
         },
         {
           "class": "wildcard",
-          "segment": "*"
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
