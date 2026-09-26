@@ -11,6 +11,24 @@
         "wildcard": "the `*` tail; not a segment value; VARIADIC \u2014 matches one or more remaining segments (CIRISConstitution#108)"
       },
       "compare": "byte-exact; consumers MUST NOT case-fold",
+      "external_standards": {
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "standard": "ISO 4217 alphabetic code"
+        },
+        "lang_code": {
+          "pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$",
+          "standard": "BCP 47 language tag"
+        },
+        "rating": {
+          "pattern": null,
+          "standard": "the scheme named in the sibling {scheme} segment"
+        },
+        "unit": {
+          "pattern": null,
+          "standard": "ISO 4217 code, or a unit the ledger declares"
+        }
+      },
       "literal_pattern": "^[a-z0-9][a-z0-9_]*$",
       "placeholder_classes": {
         "allegation_type": "vocab",
@@ -29,6 +47,7 @@
         "community_key_id": "value",
         "contribution_id": "value",
         "currency": "external",
+        "days": "value",
         "domain": "vocab",
         "drill_id": "value",
         "entity_type": "vocab",
@@ -65,6 +84,8 @@
         "scheme": "vocab",
         "scope": "vocab",
         "source": "value",
+        "stage": "vocab",
+        "stance": "vocab",
         "state": "vocab",
         "stream_id": "value",
         "subject": "value",
@@ -95,7 +116,7 @@
           "identity:canonical_binding:{canonical_hash}"
         ],
         "note": "Every scored dimension carries exactly one trailing version segment after its family's own segments; a row whose last segment is `{version}` names that segment. Matching strips it; a consumer keys the rule version from it. Families in `exempt` need none \u2014 a tail is tolerated, never required (mechanism-named attestation ladder; the canonical-binding hash).",
-        "pattern": "^v[0-9]+$",
+        "pattern": "^v[0-9]+(\\.[0-9]+)*$",
         "position": "trailing",
         "required": true
       },
@@ -113,9 +134,9 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 136,
+    "n_families": 145,
     "per_component": {
-      "accord-agent": 19,
+      "accord-agent": 28,
       "anti-sybil": 6,
       "attestation": 19,
       "cirisbench": 1,
@@ -126,9 +147,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "ed4ba5c1d5389ba23f10d0e447862b645299ede20cb526c1e2f91c0cd0679b80",
+    "registry_sha256": "3583bd4be8bec4cae2f35e003fa9df4c112947f087d4dfa451c439db1f7c79f9",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "a8390fc31a597e7088d11ecaacc0e7737e6d8e9019e0c2aaa2e8ec448c04823e"
+    "source_sha256": "5e2cb7ef4be3979a8af78fbb17a6d671775487f220b0ca68e9c4a971919177b7"
   },
   "families": [
     {
@@ -621,7 +642,7 @@
     },
     {
       "cc_section": "3.1.10",
-      "description": "HE-300 score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version (v1.0 / v1.1 / v1.2).",
+      "description": "HE-300 score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version \u2014 {version} \u2208 v1.0 | v1.1 | v1.2, the HE-300 suite version (a dotted rule version is admitted by CC 3.1.7 R3).",
       "owning_component": "cirisbench",
       "owning_repo": "CIRISBench",
       "polarity": "positive-only",
@@ -642,7 +663,13 @@
         },
         {
           "class": "vocab",
-          "segment": "{version}"
+          "open": true,
+          "segment": "{version}",
+          "values": [
+            "v1.0",
+            "v1.1",
+            "v1.2"
+          ]
         }
       ]
     },
@@ -702,7 +729,9 @@
         },
         {
           "class": "external",
-          "segment": "{currency}"
+          "pattern": "^[A-Z]{3}$",
+          "segment": "{currency}",
+          "standard": "ISO 4217 alphabetic code"
         }
       ]
     },
@@ -1082,6 +1111,243 @@
     },
     {
       "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); a decay-protocol stage, emitted by the party running the protocol, CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "enumerated",
+      "prefix": "consent:decay:{stage}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "decay"
+        },
+        {
+          "class": "vocab",
+          "segment": "{stage}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); producer's eviction attestation, CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "consent:deletion_complete",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "deletion_complete"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); the producer's time-to-delete-after-revoke commitment, CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "signed",
+      "prefix": "consent:deletion_sla:{days}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "deletion_sla"
+        },
+        {
+          "class": "value",
+          "segment": "{days}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); producer side of a bilateral grant, CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "consent:partnership_accept",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "partnership_accept"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); subject side of a bilateral grant, CC 3.3.1 / CC 4.4.3.5.3.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "consent:partnership_grant",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "partnership_grant"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); directed node\u2192peer replication grant, CC 3.3.7.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "signed",
+      "prefix": "consent:replication:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "replication"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); a descriptive scope row \u2014 the scope of a grant is the scope envelope member of consent:state:granted (CC 3.3.1, #103).",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "enumerated",
+      "prefix": "consent:scope:{kind}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "scope"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); the subject's stance on a Contribution, semantics at CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "enumerated",
+      "prefix": "consent:state:{stance}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "state"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{stance}",
+          "values": [
+            "granted",
+            "revoked",
+            "expired"
+          ]
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); pre-packaged stream bundle, canonical kinds at CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "enumerated",
+      "prefix": "consent:stream:{kind}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "stream"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
       "description": "Subject-side consent authority over Contributions naming the subject in subject_key_ids, plus the producer-side and substrate-side leaves that close its lifecycle.",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
@@ -1141,7 +1407,8 @@
         },
         {
           "class": "external",
-          "segment": "{rating}"
+          "segment": "{rating}",
+          "standard": "the scheme named in the sibling {scheme} segment"
         }
       ]
     },
@@ -2518,7 +2785,9 @@
         },
         {
           "class": "external",
-          "segment": "{lang_code}"
+          "pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$",
+          "segment": "{lang_code}",
+          "standard": "BCP 47 language tag"
         }
       ]
     },

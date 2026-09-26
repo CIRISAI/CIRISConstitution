@@ -60,6 +60,8 @@ class Rules:
         self.version_required = bool(vs.get("required", True))
         self.exempt = set(vs.get("exempt", []))
         self.tokens = cr["refusal_tokens"]
+        self.external = {name: re.compile(spec["pattern"]) for name, spec in cr.get("external_standards", {}).items()
+                         if spec.get("pattern")}
         self.families = OrderedDict((f["prefix"], f) for f in manifest["families"])
 
 
@@ -105,7 +107,13 @@ def _match_segments(fam, parts, rules):
         elif cls == "hex":
             if not re.match(HEX_PATTERN, got):
                 refusal = refusal or rules.tokens["case_malformed"]
-        # external / value: verbatim, case-preserved
+        elif cls == "external":
+            # verbatim in the standard's canonical form; where the standard has a
+            # syntax, an off-syntax token is malformed (USD passes, usd does not)
+            pat = rules.external.get(name)
+            if pat and not pat.match(got):
+                refusal = refusal or rules.tokens["case_malformed"]
+        # value: verbatim, case-preserved
         binds[name] = got
     tail = parts[len(fixed):]
     for got in tail:                          # segments below a variadic tail
@@ -135,7 +143,14 @@ def match_family(manifest_or_rules, dimension):
     candidates = []                            # (score, prefix, binds, refusal, used_tail)
     for prefix, fam in rules.families.items():
         ends_version = fam["segments"][-1]["segment"] == "{version}"
-        if ends_version or not versioned:
+        if ends_version and not versioned:
+            # a row ending in {version} whose input lacks the tail: recognise the family
+            # by its other segments so it earns missing_version_segment, not open vocabulary
+            headless = dict(fam, segments=fam["segments"][:-1])
+            ok, binds, refusal = _match_segments(headless, parts, rules)
+            if ok:
+                candidates.append((_score(fam), prefix, binds, refusal, False))
+        elif ends_version or not versioned:
             # as written: a row ending in {version} consumes the version itself;
             # an unversioned dimension is matched whole (and refused below if required)
             ok, binds, refusal = _match_segments(fam, parts, rules)
@@ -171,6 +186,7 @@ def match_family(manifest_or_rules, dimension):
 # ---- vectors ------------------------------------------------------------------
 
 SAMPLE = {"vocab": "sample", "external": "USD", "value": "id1", "hex": "ab12"}
+SAMPLE_EXTERNAL = {"currency": "USD", "lang_code": "en-US", "rating": "PG-13", "unit": "USD"}
 
 
 def instantiate(fam, with_version=True):
@@ -184,7 +200,9 @@ def instantiate(fam, with_version=True):
             out.append("leaf")
         elif cls == "vocab":
             values = seg.get("values")
-            out.append("v1" if name == "{version}" else (values[0] if values else SAMPLE["vocab"]))
+            out.append(values[0] if values else ("v1" if name == "{version}" else SAMPLE["vocab"]))
+        elif cls == "external":
+            out.append(SAMPLE_EXTERNAL.get(name.strip("{}"), SAMPLE["external"]))
         else:
             out.append(SAMPLE[cls])
     if with_version and fam["segments"][-1]["segment"] != "{version}":
@@ -217,6 +235,19 @@ def generate_vectors(manifest):
         if not exempt and fam["segments"][-1]["segment"] != "{version}":
             add(instantiate(fam, with_version=False), prefix, rules.tokens["missing_version_segment"],
                 "the trailing version segment is mandatory (R3 version_segment)")
+        elif not exempt:
+            parts = instantiate(fam).split(":")[:-1]
+            add(":".join(parts), prefix, rules.tokens["missing_version_segment"],
+                "a row ending in {version} still refuses an input without the version segment")
+        for i, seg in enumerate(fam["segments"]):
+            if seg["class"] == "external" and seg["segment"].strip("{}") in rules.external:
+                parts = instantiate(fam, with_version=not exempt).split(":")
+                low = parts[i].lower()
+                if low != parts[i] and not rules.external[seg["segment"].strip("{}")].match(low):
+                    parts[i] = low
+                    add(":".join(parts), prefix, rules.tokens["case_malformed"],
+                        "an external token outside its standard's canonical syntax is malformed (USD, not usd)")
+                break
         # a vocab segment in the wrong case
         for i, seg in enumerate(fam["segments"]):
             if seg["class"] == "vocab" and seg["segment"] != "{version}":

@@ -22,7 +22,12 @@ jobs:
         run: |
           V=$(cat VERSION)
           NUMBERED=$(ls ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true)
-          if [ -n "$NUMBERED" ] || [ ! -f "ciris_constitution-${V}.pdf" ] || [ ! -f "CIRISConstitution-latest.pdf" ] || [ ! -f "ciris_constitution.pdf" ]; then
+          # Finalize when a numbered build is present, the clean name or a permalink is
+          # absent, OR a permalink's bytes differ from the clean file (a stable-version
+          # bump writes the clean name directly, leaving `latest` stale — #113 review).
+          # Still loop-safe: after the copy below both permalinks compare equal.
+          if [ -n "$NUMBERED" ] || [ ! -f "ciris_constitution-${V}.pdf" ] || [ ! -f "CIRISConstitution-latest.pdf" ] || [ ! -f "ciris_constitution.pdf" ] \
+             || ! cmp -s "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf || ! cmp -s "ciris_constitution-${V}.pdf" ciris_constitution.pdf; then
             echo "finalize=yes" >> "$GITHUB_OUTPUT"
           else
             echo "finalize=no" >> "$GITHUB_OUTPUT"

@@ -344,6 +344,24 @@ def check_namespace_coverage(errors, warnings, notes):
     # the "reservation used as a namespace" R2(b) refuses.
     closed = {f["prefix"].split(":")[0]: set(f.get("leaves", []))
               for f in _fams if f.get("leaves_closed")}
+    import sys as _sys
+    _sys.path.insert(0, HERE)
+    import cc_namespace_match as _match
+    _rules = _match.Rules(_match.load_manifest(reg_path))
+
+    def _shape(prose_prefix):
+        """A prose prefix as a pseudo-family the matcher can instantiate."""
+        segs = []
+        for seg in prose_prefix.split(":"):
+            if seg == "*":
+                segs.append({"segment": "*", "class": "wildcard"})
+            elif seg.startswith("{"):
+                name = seg[1:-1]
+                cls = "hex" if name.endswith("hash") or name == "prefix" else "vocab"
+                segs.append({"segment": seg, "class": cls})
+            else:
+                segs.append({"segment": seg, "class": "literal"})
+        return {"prefix": prose_prefix, "segments": segs}
 
     table_row = re.compile(r"^\s*\|(.+)\|\s*$")
     backtick = re.compile(r"`([^`]+)`")
@@ -385,6 +403,10 @@ def check_namespace_coverage(errors, warnings, notes):
             if fam in reg:
                 continue
             stem = fam.split(":")[0]
+            # `family:*` in a reservation table is shorthand for every registered family
+            # under that stem (CC 3.4.5), not a family of its own.
+            if fam.endswith(":*") and any(p.startswith(stem + ":") for p in reg):
+                continue
             if stem in closed:
                 errors.append(
                     f"namespace coverage: CC {sec} documents '{fam}' under the CLOSED reserved family "
@@ -392,7 +414,12 @@ def check_namespace_coverage(errors, warnings, notes):
                     f"(CC 3.1.7 R3, CIRISConstitution#112); add its CC 3.1 row or remove it."
                 )
                 continue
-            if stem in reg_stems:
+            # Coverage by SHAPE, through the reference matcher (#113 review): a prose
+            # family is covered iff its instantiated sample resolves to a registered
+            # family with no refusal. Sharing a stem is not coverage — `consent:scope:{kind}`
+            # was "covered" by `consent:{kind}` while no matcher could resolve it.
+            got, _binds, refusal = _match.match_family(_rules, _match.instantiate(_shape(fam)))
+            if got is not None and refusal is None:
                 continue
             orphans.append((fam, sec))
 

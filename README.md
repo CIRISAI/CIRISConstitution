@@ -6,7 +6,7 @@ Most AI-governance writing splits in two: ethics with no teeth (principles no ma
 
 It reads like a standard, not a manifesto, and it is deliberately layered: read Part I (the ethics) and stop, jump straight to the wire grammar, or cite any single concept by a stable address. Rejecting a later Part costs you nothing in the earlier ones.
 
-**This tree:** CC 1.0-rc4 · **Status:** release candidate — cut 2026-09-03 (six RC4 revisions — the announce ruling, in-grammar ledgers, the trace anchor, the actor/substrate separation — and the evidence lockdown: every claim row resolves to a pinned artifact or names an open ticket; supersedes 1.0-rc3) · **Source fidelity:** validated (0 REJECT) · **License:** AGPL-3.0-or-later
+**This tree:** CC 1.0-rc5 · **Status:** release candidate, in progress — opened 2026-09-06 as the evidence re-pin release (see CHANGELOG); rc4 was cut 2026-09-03 (six RC4 revisions — the announce ruling, in-grammar ledgers, the trace anchor, the actor/substrate separation — and the evidence lockdown: every claim row resolves to a pinned artifact or names an open ticket; supersedes 1.0-rc3) · **Source fidelity:** validated (0 REJECT) · **License:** AGPL-3.0-or-later
 **Stewarded by** Eric Moore — perpetual, no expiry ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)).
 
 **PDF permalinks — two fixed names, either one is safe to link:**

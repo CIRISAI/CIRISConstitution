@@ -108,18 +108,24 @@ PLACEHOLDER_CLASS = {
         "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
-        "scope", "state", "substrate_rung", "target_kind", "tier", "version",
+        "scope", "stage", "stance", "state", "substrate_rung", "target_kind", "tier", "version",
     },
     "external": {"currency", "lang_code", "rating", "unit"},
     "value": {
         "approach_id", "authority", "authority_id", "cell", "cohort", "community_key_id",
-        "contribution_id", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id",
+        "contribution_id", "days", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id",
         "notify_id",
         "prior_contribution_id", "source", "stream_id", "subject", "target", "tree_size",
     },
     "hex": {"canonical_hash", "prefix"},
 }
 _CLASS_OF = {name: cls for cls, names in PLACEHOLDER_CLASS.items() for name in names}
+EXTERNAL_STANDARDS = {                      # name -> (standard, syntax pattern or None)
+    "currency": ("ISO 4217 alphabetic code", "^[A-Z]{3}$"),
+    "lang_code": ("BCP 47 language tag", "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$"),
+    "rating": ("the scheme named in the sibling {scheme} segment", None),
+    "unit": ("ISO 4217 code, or a unit the ledger declares", None),
+}
 
 # CC 3.1.7 R3 version segment (CIRISConstitution#112): families that carry NO trailing
 # `:v{N}` — the mechanism-named attestation ladder (CC 3.1.2; version lives in the
@@ -281,6 +287,13 @@ def main():
         rec["cc_section"] = section
         rec["polarity"] = polarity or ""
         rec["segments"] = classify_segments(prefix)
+        for seg in rec["segments"]:               # R3 `external`: the standard travels with the segment
+            if seg["class"] == "external":
+                spec = EXTERNAL_STANDARDS.get(seg["segment"][1:-1])
+                if spec:
+                    seg["standard"] = spec[0]
+                    if spec[1]:
+                        seg["pattern"] = spec[1]
         # CIRISConstitution#112 — a `vocab` placeholder's canonical values, enumerated
         # in-row as `{name}` ∈ `a` \| `b` …, are published on the segment so a consumer
         # validates a value against the enumeration rather than only the pattern.
@@ -509,7 +522,7 @@ def main():
             ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments (CIRISConstitution#108)"),
         ])),
         ("version_segment", OrderedDict([        # CC 3.1.7 R3 — CIRISConstitution#112
-            ("pattern", "^v[0-9]+$"),
+            ("pattern", "^v[0-9]+(\\.[0-9]+)*$"),   # v1, v2 … and a dotted suite version (HE-300 v1.2)
             ("position", "trailing"),
             ("required", True),
             ("exempt", VERSION_EXEMPT),
@@ -518,6 +531,8 @@ def main():
                      "Matching strips it; a consumer keys the rule version from it. Families in `exempt` "
                      "need none — a tail is tolerated, never required (mechanism-named attestation ladder; the canonical-binding hash)."),
         ])),
+        ("external_standards", OrderedDict(      # CC 3.1.7 R3 `external` — CIRISConstitution#113 review
+            (n, OrderedDict([("standard", s), ("pattern", p)])) for n, (s, p) in sorted(EXTERNAL_STANDARDS.items()))),
         ("refusal_tokens", OrderedDict([         # the matcher's tokens — never bespoke
             ("case_malformed", "namespace_dimension_case_malformed"),
             ("vocab_value_unregistered", "namespace_vocab_value_unregistered"),

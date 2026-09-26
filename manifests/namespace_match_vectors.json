@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "ed4ba5c1d5389ba23f10d0e447862b645299ede20cb526c1e2f91c0cd0679b80",
+    "registry_sha256": "3583bd4be8bec4cae2f35e003fa9df4c112947f087d4dfa451c439db1f7c79f9",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension"
   },
@@ -145,6 +145,12 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "age_assurance:provider:minor",
+      "family": "age_assurance:{level}:{band}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
       "dimension": "age_assurance:PROVIDER:minor:v1",
       "family": "age_assurance:{level}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
@@ -155,6 +161,12 @@
       "family": "age_self_declared:{band}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "age_self_declared:minor",
+      "family": "age_self_declared:{band}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
       "dimension": "age_self_declared:MINOR:v1",
@@ -265,13 +277,19 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
-      "dimension": "benchmark:he300:sample:v1",
+      "dimension": "benchmark:he300:sample:v1.0",
       "family": "benchmark:he300:{category}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "benchmark:he300:SAMPLE:v1",
+      "dimension": "benchmark:he300:sample",
+      "family": "benchmark:he300:{category}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
+      "dimension": "benchmark:he300:SAMPLE:v1.0",
       "family": "benchmark:he300:{category}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
@@ -317,6 +335,12 @@
       "family": "bond_posted:{currency}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "bond_posted:usd:v1",
+      "family": "bond_posted:{currency}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an external token outside its standard's canonical syntax is malformed (USD, not usd)"
     },
     {
       "dimension": "build:registered:id1:v1",
@@ -407,6 +431,12 @@
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity_assurance:sample:sample:sample",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
       "dimension": "capacity_assurance:SAMPLE:sample:sample:v1",
@@ -529,6 +559,144 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
+      "dimension": "consent:decay:sample:v1",
+      "family": "consent:decay:{stage}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:decay:sample",
+      "family": "consent:decay:{stage}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:decay:SAMPLE:v1",
+      "family": "consent:decay:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "consent:deletion_complete:v1",
+      "family": "consent:deletion_complete",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:deletion_complete",
+      "family": "consent:deletion_complete",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:deletion_sla:id1:v1",
+      "family": "consent:deletion_sla:{days}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:deletion_sla:id1",
+      "family": "consent:deletion_sla:{days}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:partnership_accept:v1",
+      "family": "consent:partnership_accept",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:partnership_accept",
+      "family": "consent:partnership_accept",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:partnership_grant:v1",
+      "family": "consent:partnership_grant",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:partnership_grant",
+      "family": "consent:partnership_grant",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:replication:v1",
+      "family": "consent:replication:{version}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:replication",
+      "family": "consent:replication:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
+      "dimension": "consent:scope:sample:v1",
+      "family": "consent:scope:{kind}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:scope:sample",
+      "family": "consent:scope:{kind}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:scope:SAMPLE:v1",
+      "family": "consent:scope:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "consent:state:granted:v1",
+      "family": "consent:state:{stance}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:state:granted",
+      "family": "consent:state:{stance}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:state:GRANTED:v1",
+      "family": "consent:state:{stance}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "consent:state:not_a_listed_value:v1",
+      "family": "consent:state:{stance}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
+    },
+    {
+      "dimension": "consent:stream:sample:v1",
+      "family": "consent:stream:{kind}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:stream:sample",
+      "family": "consent:stream:{kind}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "consent:stream:SAMPLE:v1",
+      "family": "consent:stream:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
       "dimension": "consent:sample:v1",
       "family": "consent:{kind}",
       "refusal": null,
@@ -565,19 +733,19 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
-      "dimension": "content_rating:sample:USD:v1",
+      "dimension": "content_rating:sample:PG-13:v1",
       "family": "content_rating:{scheme}:{rating}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "content_rating:sample:USD",
+      "dimension": "content_rating:sample:PG-13",
       "family": "content_rating:{scheme}:{rating}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "content_rating:SAMPLE:USD:v1",
+      "dimension": "content_rating:SAMPLE:PG-13:v1",
       "family": "content_rating:{scheme}:{rating}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
@@ -1045,6 +1213,12 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "health:liveness",
+      "family": "health:liveness:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
       "dimension": "holds_bytes:sha256:ab12:v1",
       "family": "holds_bytes:sha256:{prefix}",
       "refusal": null,
@@ -1363,6 +1537,12 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "ownership:sample:sample",
+      "family": "ownership:{relation}:{target_kind}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
       "dimension": "ownership:SAMPLE:sample:v1",
       "family": "ownership:{relation}:{target_kind}:{version}",
       "refusal": "namespace_dimension_case_malformed",
@@ -1447,13 +1627,13 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "provenance:build_manifest:id1:locale:USD:v1",
+      "dimension": "provenance:build_manifest:id1:locale:en-US:v1",
       "family": "provenance:build_manifest:{target}:locale:{lang_code}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "provenance:build_manifest:id1:locale:USD",
+      "dimension": "provenance:build_manifest:id1:locale:en-US",
       "family": "provenance:build_manifest:{target}:locale:{lang_code}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
@@ -1609,6 +1789,12 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "regime:manifest",
+      "family": "regime:{artifact}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
       "dimension": "regime:MANIFEST:v1",
       "family": "regime:{artifact}:{version}",
       "refusal": "namespace_dimension_case_malformed",
@@ -1753,6 +1939,12 @@
       "why": "instantiated sample resolves to its row"
     },
     {
+      "dimension": "trace:sample",
+      "family": "trace:{form}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
       "dimension": "trace:SAMPLE:v1",
       "family": "trace:{form}:{version}",
       "refusal": "namespace_dimension_case_malformed",
@@ -1835,6 +2027,12 @@
       "family": "trust:{job}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "trust:sample",
+      "family": "trust:{job}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
       "dimension": "trust:SAMPLE:v1",
