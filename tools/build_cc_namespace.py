@@ -162,7 +162,15 @@ EXTERNAL_STANDARDS = {                      # name -> (standard, syntax pattern 
     "currency": ("ISO 4217 alphabetic code", "^[A-Z]{3}$"),
     # canonical casing per BCP 47 §2.1.1 (RFC 5646): language lowercase, script Titlecase,
     # region UPPERCASE or 3 digits, variants and extensions lowercase — one wire string per tag
-    "lang_code": ("BCP 47 language tag, canonical casing", "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?$"),
+    # RFC 5646 §2.1 langtag WITHOUT the extlang branch, or privateuse, canonical casing; plus
+    # the five grandfathered tags the registry gives NO Preferred-Value (i-default, i-enochian,
+    # i-mingo, cel-gaulish, zh-min), admitted literally. Every other extlang or grandfathered
+    # form (zh-cmn-Hans-CN, i-klingon, zh-min-nan) has a §4.5 preferred value (cmn-Hans-CN,
+    # tlh, nan), and that form is the one canonical spelling R3 admits — one wire string per tag.
+    "lang_code": ("BCP 47 language tag — RFC 5646 langtag without extlang, or privateuse, canonical casing; "
+                  "extlang and grandfathered forms with a §4.5 preferred value are written as that value; "
+                  "the five grandfathered tags without one (i-default, i-enochian, i-mingo, cel-gaulish, zh-min) are admitted literally",
+                  "^(?:[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?|x(-[a-z0-9]{1,8})+|i-default|i-enochian|i-mingo|cel-gaulish|zh-min)$"),
     "rating": ("the scheme named in the sibling {scheme} segment", None),
     "unit": ("ISO 4217 code, or a unit the ledger declares", None),
 }
@@ -361,6 +369,8 @@ def main():
         rec["reserved"] = reserved
         if reserved:
             rec["reserved_rule"] = rule
+        # the row's own words decide closure of a parameterized parent's leaf set (below)
+        rec["_closed_leaves"] = bool(raw) and "closed in its leaves" in raw.lower()
         rec["description"] = description or ""
         families[prefix] = rec
 
@@ -480,11 +490,19 @@ def main():
     # as a namespace for rows this Part never named.
     all_prefixes = [r["prefix"] for r in fam_list]
     for r in fam_list:
+        closed_hint = r.pop("_closed_leaves", False)
         if r["segments"][-1]["class"] == "wildcard":
             stem = r["prefix"][:-1]            # "accord:*" -> "accord:"
             leaves = [p for p in all_prefixes if p != r["prefix"] and p.startswith(stem)]
             r["leaves"] = leaves
             r["leaves_closed"] = bool(leaves) and bool(r["reserved"])
+        elif r["segments"][-1]["class"] == "vocab" and len(r["segments"]) == 2 and closed_hint:
+            # a PARAMETERIZED parent (`consent:{kind}`) whose row says "closed in its leaves":
+            # the `{kind}` position selects a catalogued leaf row, never a new one (#113 review)
+            stem = r["prefix"].split(":")[0] + ":"
+            leaves = [p for p in all_prefixes if p != r["prefix"] and p.startswith(stem)]
+            r["leaves"] = leaves
+            r["leaves_closed"] = bool(leaves)
     comps = OrderedDict()
     for r in fam_list:
         comps.setdefault(r["owning_component"], 0)

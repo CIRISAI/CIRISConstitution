@@ -224,7 +224,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | delegates_to depth + cycle | **CLOSED** in [CC 4.1.1](#) anti-pattern + consumer-policy caps. |
 | HUMANITY_ACCORD invocation replay | **CLOSED** in [CC 4.2.1.1](#) discriminator + nonce in signed bytes. |
 | `notify` vs CONSTITUTIONAL social-canonicity | **CLOSED** in [CC 4.2.1.2](#) consumer-UI requirement. |
-| /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#): the route serves the self-authenticating GenesisBundle; authority is the bundle's own accord authorizations, and a serving install signs nothing that counts as a root. |
+| /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#): the route serves the GenesisBundle — tamper-evident, authentic only against the consumer's pinned anchor (CC 3.2 T5); authority is the bundle's own accord authorizations, and a serving install signs nothing that counts as a root. |
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](#) collision rule. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](#) + R6 above. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](#) consumer-policy countermeasure. |
