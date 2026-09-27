@@ -279,8 +279,15 @@ def match_family(manifest_or_rules, dimension):
         # global: exactly one trailing version segment. An unversioned open dimension owes
         # its tail; a duplicated tail (`third_party:signal:v1:v2`) is malformed (#122 review)
         if rules.version_required and not rules.version.fullmatch(parts[-1]):
+            # a last segment that is a version ATTEMPT (`V1`, `v1beta`) is malformed, as R3
+            # says; one that is not version-shaped at all is a missing tail
+            if _mutated_tail(rules, parts[-1]):
+                return None, {}, rules.tokens["case_malformed"]
             return None, {}, rules.tokens["missing_version_segment"]
-        if len(parts) > 2 and (rules.version.fullmatch(parts[-2]) or _mutated_tail(rules, parts[-2])):
+        # a duplicated tail is a VERSION (or its uppercase) right before the real one; a
+        # vocabulary segment that merely starts `v` + digit (`v1beta`) is a family segment
+        # here, since a valid version follows it (#122 review)
+        if len(parts) > 2 and VERSION_LIKE.match(parts[-2]):
             return None, {}, rules.tokens["case_malformed"]
         return None, {}, None
     prefix, binds, refusal, has_version = hit
@@ -433,6 +440,10 @@ def generate_vectors(manifest):
         "open vocabulary still owes the trailing version segment (R3 is global)")
     add("no_such_family:leaf:v1:v2", None, rules.tokens["case_malformed"],
         "a duplicated version tail on open vocabulary is malformed (R3: exactly one)")
+    add("no_such_family:leaf:V1", None, rules.tokens["case_malformed"],
+        "a version attempt in last place on open vocabulary is malformed, not a missing tail")
+    add("no_such_family:v1beta:v2", None, None,
+        "a family segment that merely starts v+digit is open vocabulary when a valid version follows")
     for stem in rules.closed_stems:
         dim = stem + "totally:new:v1"
         add(dim, match_family(rules, dim)[0], rules.tokens["family_unregistered"],   # a wildcard parent claims it; a parameterized one cannot

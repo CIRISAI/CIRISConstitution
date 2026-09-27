@@ -5659,6 +5659,18 @@
       "why": "a duplicated version tail on open vocabulary is malformed (R3: exactly one)"
     },
     {
+      "dimension": "no_such_family:leaf:V1",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version attempt in last place on open vocabulary is malformed, not a missing tail"
+    },
+    {
+      "dimension": "no_such_family:v1beta:v2",
+      "family": null,
+      "refusal": null,
+      "why": "a family segment that merely starts v+digit is open vocabulary when a valid version follows"
+    },
+    {
       "dimension": "accord:totally:new:v1",
       "family": "accord:*",
       "refusal": "namespace_family_unregistered",
