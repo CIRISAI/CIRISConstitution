@@ -176,9 +176,38 @@ def versioned_pdf_name():
     if not is_prerelease or _branch() == "main":
         return clean, [p for p in same_version if Path(p).name != clean]
     nums = [int(m.group(1)) for p in same_version if (m := numbered.search(p))]
+    # The counter is monotonic across a finalize (#122 review): when main collapses
+    # rc5.20 to the bare name it deletes the numbered file, and a branch cut from that
+    # main would otherwise restart at .1 — a newer build with a smaller number. So the
+    # tree is only the floor: every numbered same-version name git has ever seen, and
+    # the number a finalize commit records ("from <V>.N"), raise it. A shallow clone
+    # may see less history; the finalize message is there so it still sees the last one.
+    nums += _history_build_numbers(numbered)
     n = max(nums, default=0) + 1
     name = f"ciris_constitution-{VERSION}.{n}.pdf"
-    return name, [p for p in same_version if Path(p).name != name]
+    # Sweep only OTHER numbered builds. The finalized bare-name file, when main has
+    # written one, stays beside the branch build: it is a published release name and
+    # the next finalize overwrites it from the numbered build (cmp-based).
+    return name, [p for p in same_version if Path(p).name not in (name, clean)]
+
+
+def _history_build_numbers(numbered):
+    """Build numbers git remembers for this VERSION: numbered filenames ever added or
+    deleted on any ref, plus the number a finalize commit message records."""
+    out = []
+    try:
+        names = subprocess.run(
+            ["git", "log", "--all", "--diff-filter=AD", "--name-only", "--format=",
+             "--", f"ciris_constitution-{VERSION}.*.pdf"],
+            cwd=HERE, capture_output=True, text=True, timeout=60).stdout.split()
+        out += [int(m.group(1)) for p in names if (m := numbered.search(p))]
+        msgs = subprocess.run(
+            ["git", "log", "--all", "--format=%s", f"--grep=finalize {VERSION}"],
+            cwd=HERE, capture_output=True, text=True, timeout=60).stdout
+        out += [int(x) for x in re.findall(rf"from {re.escape(VERSION)}\.(\d+)", msgs)]
+    except Exception:
+        pass
+    return out
 
 if shutil.which("pdflatex"):
     for _ in range(2):  # two passes to resolve hyperref/toc references

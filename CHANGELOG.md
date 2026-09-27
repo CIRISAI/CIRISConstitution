@@ -80,6 +80,8 @@ RC5 is the **evidence re-pin release**: rc4 locked the registry so that every ro
 
 **Codex on #122, second pass — three findings, three fixes.** Open vocabulary: a version attempt in last place (`third_party:signal:V1`, `…:v1beta`) is `namespace_dimension_case_malformed` as R3 says, not a missing tail; a duplicated tail is a *version* (or its uppercase) right before the real one, so `third_party:protocol:v1beta:v2` is open vocabulary — `v1beta` is a family segment when a valid version follows it. 953 vectors. Session claims: bound (a) no longer depends on which row arrives first — a claim whose opening row has not yet arrived is **held** outside the fold (`session_claim_pending_opening`), re-evaluated when the opening row arrives, and dropped unread if its own `valid_until` passes first, so every substrate reaches the same final verdict from the same two rows whatever the replication order.
 
+**The PDF build number is monotonic across a finalize (#122 review).** `build_pdf.py` numbered a pre-release build from the highest numbered same-version file in the tree; the finalize on main deletes that file when it collapses the name, so the branch cut from the finalized rc5 restarted at rc5.1 — a newer build with a smaller number than rc5.20. The counter now also reads every numbered name git has ever seen on any ref and the number the finalize commit records (`from <V>.N`, which `pdf-finalize.yml` now writes), so this branch continues at **rc5.21**; and the finalized bare-name file is no longer swept by a branch build — it is a published release name and the next finalize overwrites it.
+
 
 ## 1.0-rc4 — the actor/substrate line, ledgers as content, and every row resolving
 

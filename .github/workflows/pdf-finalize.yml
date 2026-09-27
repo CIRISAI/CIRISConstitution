@@ -42,6 +42,10 @@ jobs:
         if: steps.state.outputs.finalize == 'yes'
         run: |
           V=$(cat VERSION)
+          # the highest numbered build this finalize collapses, recorded in the commit
+          # message so build_pdf.py keeps counting from it on the next branch (#122 review)
+          LAST=$(ls ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null | sed -E "s/.*\.([0-9]+)\.pdf/\1/" | sort -n | tail -1)
+          FROM=${LAST:+ (from ${V}.${LAST})}
           cp "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf
           cp "ciris_constitution-${V}.pdf" ciris_constitution.pdf
           git config user.name "github-actions[bot]"
@@ -49,4 +53,4 @@ jobs:
           git add "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf ciris_constitution.pdf
           git rm -q --cached ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true
           rm -f ciris_constitution-${V}.[0-9]*.pdf
-          git commit -m "PDF: finalize ${V} on main (permalink refreshed; earlier releases retained)" && git push
+          git commit -m "PDF: finalize ${V} on main${FROM}; permalink refreshed; earlier releases retained" && git push
