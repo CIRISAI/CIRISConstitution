@@ -90,6 +90,8 @@ RC5 is the **evidence re-pin release**: rc4 locked the registry so that every ro
 
 **Codex on #122, fifth pass — three findings, three fixes.** `consent:community_trust` gets its own fold rather than a pointer at CC 3.3.9's org keys: rows group by `attested_key_id` (the node), a `withdraws` / `recants` removes a grant forward-only, latest `asserted_at` among the survivors wins, ties on the smallest attestation id; capture resumes only on a fresh grant from the owner-binding chain, and a row from outside that chain is not the node's consent. A version attempt may carry any vocabulary byte after `v` + digit (`v1-beta`, `v1_beta` are malformed, not missing). The PDF build floor lives in the tree: `ciris_constitution.build` records `<VERSION> <N>` on every numbered build, so a depth-1 checkout that sees neither the deleted numbered file nor the finalize commit still continues the count.
 
+**Codex on #122, sixth pass — three findings, three fixes.** `consent:community_trust`: a revocation is a fold **boundary**, not a deletion — every grant asserted at or before the latest revocation is out, whichever row the revocation named, so revoking the newest grant never resurrects an older one; and the owner can always revoke — a node-emitted grant MUST list its owner in `subject_key_ids[]` so the owner's `withdraws` is admitted on the CC 2.4.1.1 third-party path. Session claims: `claimed_at ≤ valid_until` joins the 86 400 s ceiling, so a lease runs forward from its claim.
+
 
 ## 1.0-rc4 — the actor/substrate line, ledgers as content, and every row resolving
 
