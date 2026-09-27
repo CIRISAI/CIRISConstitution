@@ -503,7 +503,7 @@ Three named holders with hybrid pubkeys + per-holder `hardware_class` + `provisi
 
 ### `GET /v1/accord/holders`
 
-UI wrapper around `/v1/accord-holders` with per-holder `accord_emissions[]` for UI rendering. Same response-signing requirement.
+UI wrapper around `/v1/accord-holders` with per-holder `accord_emissions[]` for UI rendering. The same projection rule: **no response signature** — the wrapper carries no authority, a consumer cross-checks every holder it shows against `bundle.holders` under the anchor it already holds, and `accord_emissions[]` are the holders' own signed rows, verified individually.
 
 ### `GET /v1/rotation-history`
 

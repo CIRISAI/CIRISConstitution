@@ -17,8 +17,8 @@
           "standard": "ISO 4217 alphabetic code"
         },
         "lang_code": {
-          "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?$",
-          "standard": "BCP 47 language tag, canonical casing"
+          "pattern": "^(?:[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?|x(-[a-z0-9]{1,8})+)$",
+          "standard": "BCP 47 language tag (langtag or privateuse production), canonical casing"
         },
         "rating": {
           "pattern": null,
@@ -192,9 +192,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "9b3e42286368f1e06b55d3af481f05409348238bd26e93ec01b03c6763e88e06",
+    "registry_sha256": "789981b2658e73212218998413e262d0be8cf1db4af2a2372fc6db1939fb3498",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "a29336a29cc3809f009bf8ef580cc6688e76d2713165a475f10683e113d93e87"
+    "source_sha256": "fbfe68faa642bbdbdafb95a3787809a76e53828770fde77892cb05494dcb3349"
   },
   "families": [
     {
@@ -1479,6 +1479,18 @@
     {
       "cc_section": "3.1.5",
       "description": "Subject-side consent authority over Contributions naming the subject in subject_key_ids, plus the producer-side and substrate-side leaves that close its lifecycle.",
+      "leaves": [
+        "consent:decay:{stage}",
+        "consent:deletion_complete",
+        "consent:deletion_sla:{days}",
+        "consent:partnership_accept",
+        "consent:partnership_grant",
+        "consent:replication:{version}",
+        "consent:scope:{kind}",
+        "consent:state:{stance}",
+        "consent:stream:{kind}"
+      ],
+      "leaves_closed": true,
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "per-leaf (CC 3.3.1)",
@@ -2913,9 +2925,9 @@
         },
         {
           "class": "external",
-          "pattern": "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?$",
+          "pattern": "^(?:[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?|x(-[a-z0-9]{1,8})+)$",
           "segment": "{lang_code}",
-          "standard": "BCP 47 language tag, canonical casing"
+          "standard": "BCP 47 language tag (langtag or privateuse production), canonical casing"
         }
       ]
     },

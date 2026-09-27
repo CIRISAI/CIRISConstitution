@@ -137,13 +137,12 @@ def _match_segments(fam, parts, rules):
         if multi and i == multi[0]:
             span = parts[pi:pi + 1 + extra]
             pi += 1 + extra
-            for k, got in enumerate(span):
-                # a version-like sub-segment is a stray version tail, never part of the value;
-                # a version ATTEMPT in last place is the same mistake misspelled
-                last = pi - len(span) + k == len(parts) - 1
-                refusal = refusal or _check_seg(seg, got, rules) or (
-                    rules.tokens["case_malformed"]
-                    if VERSION_LIKE.match(got) or (last and VERSION_ATTEMPT.match(got)) else None)
+            for got in span:
+                # every component of a multi-segment value is verbatim — `registry:v1` is a
+                # source id — so no version-shape test applies inside the span: once the real
+                # trailing version is stripped, a duplicated tail and a version-shaped value are
+                # the same bytes, and a value class resolves that ambiguity as a value (#113 review)
+                refusal = refusal or _check_seg(seg, got, rules)
             binds[seg["segment"].strip("{}")] = ":".join(span)
             continue
         got = parts[pi]
@@ -167,6 +166,11 @@ def _match_segments(fam, parts, rules):
     return True, binds, refusal
 
 
+def _mutated_tail(rules, seg):
+    """A last segment shaped like a version tail but not one: uppercase or an attempt."""
+    return bool((VERSION_LIKE.match(seg) and not rules.version.fullmatch(seg)) or VERSION_ATTEMPT.match(seg))
+
+
 def _resolve(rules, parts):
     """Best candidate for `parts`: (prefix, binds, refusal, has_version) or None."""
     versioned = bool(rules.version.fullmatch(parts[-1]))
@@ -186,6 +190,10 @@ def _resolve(rules, parts):
         elif ends_version or not versioned:
             ok, binds, refusal = _match_segments(fam, parts, rules)
             if ok:
+                if not versioned and _mutated_tail(rules, parts[-1]):
+                    # an unversioned input whose last segment is a MUTATED version tail
+                    # (`V1`, `v1beta`) is malformed whatever class absorbed it (#113 review)
+                    refusal = refusal or rules.tokens["case_malformed"]
                 candidates.append((_score(fam), prefix, binds, refusal, ends_version))
         elif len(parts) > 1:
             # the trailing version segment is the version — never a value or a wildcard tail
@@ -254,6 +262,15 @@ def match_family(manifest_or_rules, dimension):
         # never open vocabulary — the reservation covers the leaves nobody minted yet
         if any(dimension.startswith(stem) for stem in rules.reserved_stems):
             return None, {}, rules.tokens["family_unregistered"]
+        # a case-mutated reserved stem (`Capacity:zz:v1`) is malformed, never a bypass:
+        # fold only to DETECT the reservation, never to admit (#113 review)
+        low = dimension.lower()
+        if low != dimension and any(low.startswith(stem) for stem in rules.reserved_stems):
+            return None, {}, rules.tokens["case_malformed"]
+        # open vocabulary: no row claims it and no refusal — but R3's version segment is
+        # global, so an unversioned open dimension still owes its tail (#113 review)
+        if rules.version_required and not rules.version.fullmatch(parts[-1]):
+            return None, {}, rules.tokens["missing_version_segment"]
         return None, {}, None
     prefix, binds, refusal, has_version = hit
     fam = rules.families[prefix]
@@ -270,8 +287,9 @@ def match_family(manifest_or_rules, dimension):
     if refusal:
         return prefix, binds, refusal
     versioned = bool(rules.version.fullmatch(parts[-1]))
-    # closed reserved leaves: a wildcard family only admits the leaves CC names
-    if fam["segments"][-1]["class"] == "wildcard" and fam.get("leaves_closed"):
+    # closed leaves: a wildcard family — or a parameterized parent whose row says "closed in
+    # its leaves" (`consent:{kind}`) — only admits the leaves CC names
+    if fam.get("leaves_closed") and fam["segments"][-1]["class"] in ("wildcard", "vocab"):
         leaf_parts = parts[:-1] if (versioned and has_version) else parts
         ok_leaf = any(_match_segments(rules.families[l], leaf_parts, rules)[0]
                       for l in fam.get("leaves", []) if l in rules.families)
@@ -326,7 +344,7 @@ def generate_vectors(manifest):
 
     for prefix, fam in rules.families.items():
         exempt = prefix in rules.exempt
-        closed = fam.get("leaves_closed") and fam["segments"][-1]["class"] == "wildcard"
+        closed = fam.get("leaves_closed") and fam["segments"][-1]["class"] in ("wildcard", "vocab")
         if closed:
             for leaf in fam.get("leaves", []):
                 if leaf in rules.families:
@@ -334,7 +352,8 @@ def generate_vectors(manifest):
                     add(instantiate(lf, with_version=leaf not in rules.exempt), leaf, None,
                         "closed reserved leaf resolves to its own row")
             add(instantiate(fam, with_version=True), prefix, rules.tokens["family_unregistered"],
-                "an unlisted leaf under a closed reserved family is unregistered (R2(b))")
+                "an unlisted leaf under a closed family is unregistered (R2(b)) — a reserved wildcard, "
+                "or a parameterized parent whose row is closed in its leaves")
             continue
         add(instantiate(fam, with_version=not exempt), prefix, None,
             "instantiated sample resolves to its row" + (" (exempt: no version tail)" if exempt else ""))
@@ -345,10 +364,16 @@ def generate_vectors(manifest):
             parts = instantiate(fam).split(":")
             add(":".join(parts[:-1] + [parts[-1].upper()]), prefix, rules.tokens["case_malformed"],
                 "an uppercase version tail is malformed, not open vocabulary")
-            add(":".join(parts + ["v2"]), prefix, rules.tokens["case_malformed"],
-                "a duplicated version tail is malformed, not open vocabulary")
-            add(":".join(parts[:-1] + ["v1beta"]), prefix, rules.tokens["case_malformed"],
-                "a version-shaped tail that fails the version pattern is malformed, not open vocabulary")
+            if any(s.get("multi") for s in fam["segments"]):
+                # a multi-segment value absorbs version-shaped components as VALUES, so the two
+                # malformed-tail vectors below do not exist for it; the positive case does
+                add(":".join(parts[:-1] + ["v1", parts[-1]]), prefix, None,
+                    "a version-shaped component of a multi-segment value is a value, not a tail")
+            else:
+                add(":".join(parts + ["v2"]), prefix, rules.tokens["case_malformed"],
+                    "a duplicated version tail is malformed, not open vocabulary")
+                add(":".join(parts[:-1] + ["v1beta"]), prefix, rules.tokens["case_malformed"],
+                    "a version-shaped tail that fails the version pattern is malformed, not open vocabulary")
             if fam["segments"][0]["class"] == "literal":
                 add(":".join([parts[0].capitalize()] + parts[1:]), prefix, rules.tokens["case_malformed"],
                     "a case-mutated registered stem is malformed, not open vocabulary")
@@ -393,6 +418,13 @@ def generate_vectors(manifest):
     add("no_such_family:leaf:v1", None, None, "open vocabulary: no row claims it, no refusal")
     add("config:admission\n:v1", "config:{scope}", rules.tokens["case_malformed"],
         "a segment carrying a newline fails its pattern under full-match semantics (#116: `$` is not a byte)")
+    add("no_such_family:leaf", None, rules.tokens["missing_version_segment"],
+        "open vocabulary still owes the trailing version segment (R3 is global)")
+    for stem in rules.reserved_stems:
+        mutated = stem[0].upper() + stem[1:]
+        parent = match_family(rules, mutated + "zz_unminted_leaf:v1")[0]   # attribution is the reference's; the refusal is the contract
+        add(mutated + "zz_unminted_leaf:v1", parent, rules.tokens["case_malformed"],
+            "a case-mutated reserved stem is malformed, never a bypass of the reservation")
     return vectors
 
 
@@ -401,8 +433,8 @@ def self_test(manifest):
     rules = Rules(manifest)
     problems = []
     for prefix, fam in rules.families.items():
-        if fam.get("leaves_closed") and fam["segments"][-1]["class"] == "wildcard":
-            continue
+        if fam.get("leaves_closed") and fam["segments"][-1]["class"] in ("wildcard", "vocab"):
+            continue                          # a closed parent admits only its leaves (each tested on its own row)
         dim = instantiate(fam, with_version=prefix not in rules.exempt)
         got, _, refusal = match_family(rules, dim)
         if got != prefix or refusal:

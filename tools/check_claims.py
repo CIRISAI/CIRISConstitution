@@ -407,19 +407,20 @@ def check_namespace_coverage(errors, warnings, notes):
             # under that stem (CC 3.4.5), not a family of its own.
             if fam.endswith(":*") and any(p.startswith(stem + ":") for p in reg):
                 continue
-            if stem in closed:
-                errors.append(
-                    f"namespace coverage: CC {sec} documents '{fam}' under the CLOSED reserved family "
-                    f"'{stem}:*' but the registry lists no such leaf — a reservation is not a namespace "
-                    f"(CC 3.1.7 R3, CIRISConstitution#112); add its CC 3.1 row or remove it."
-                )
-                continue
             # Coverage by SHAPE, through the reference matcher (#113 review): a prose
             # family is covered iff its instantiated sample resolves to a registered
             # family with no refusal. Sharing a stem is not coverage — `consent:scope:{kind}`
-            # was "covered" by `consent:{kind}` while no matcher could resolve it.
+            # was "covered" by `consent:{kind}` while no matcher could resolve it — and a
+            # leaf-of-a-leaf (`consent:state:expired` under `consent:state:{stance}`) IS.
             got, _binds, refusal = _match.match_family(_rules, _match.instantiate(_shape(fam)))
             if got is not None and refusal is None:
+                continue
+            if stem in closed:
+                errors.append(
+                    f"namespace coverage: CC {sec} documents '{fam}' under the CLOSED family "
+                    f"'{stem}:…' but no registered leaf resolves it — a reservation is not a namespace "
+                    f"(CC 3.1.7 R3, CIRISConstitution#112); add its CC 3.1 row or remove it."
+                )
                 continue
             orphans.append((fam, sec))
 
@@ -496,11 +497,12 @@ def check_ticket_states(rows, errors, warnings, notes):
         notes.append(f"ticket-state gate: gh unavailable — {len(targets)} staging "
                      f"ticket(s) unverified (the check did not run; it did not pass)")
         return
-    closed = []
+    closed, unread = [], []
     for (repo, num), users in sorted(targets.items()):
         st = _gh_json(["issue", "view", num, "-R", f"CIRISAI/{repo}", "--json", "state"])
         if st is None:
-            warnings.append(f"ticket-state gate: {repo}#{num} could not be read")
+            unread.append(f"{repo}#{num}")
+            warnings.append(f"ticket-state gate: {repo}#{num} could not be read — its rows are UNVERIFIED")
             continue
         if str(st.get("state", "")).upper() != "OPEN":
             closed.append((repo, num, users))
@@ -510,8 +512,11 @@ def check_ticket_states(rows, errors, warnings, notes):
             f"ticket-state: {len(users)} row(s) stage on {repo}#{num}, which is CLOSED — "
             f"either the work shipped and the row must graduate to its artifact, or the "
             f"ticket closed unfixed and the row is unanchored. Rows: {who}")
-    if not closed:
+    if not closed and not unread:
         notes.append(f"ticket-state gate: all {len(targets)} staging ticket(s) open")
+    elif not closed:
+        notes.append(f"ticket-state gate: {len(targets) - len(unread)} of {len(targets)} staging ticket(s) "
+                     f"read and open; {len(unread)} unread ({', '.join(unread)}) — a partial check, not a pass")
 
 
 def check_unevidenced_slices(errors, warnings, notes):
