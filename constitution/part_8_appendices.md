@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **41 sections** · **page budget 6pp** · [← master index](README.md)
+**Decimal range** `8.x` · **41 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -25,7 +25,7 @@ These terms are referenced throughout the spec and across sibling repos. Definin
 | **Fabric node** | A headless CEG/CEWP participant: it attests, stores, observes, reaches consensus, and transports, but does **not** reason or act (no brain). Shipped as CIRISServer. Three deployment shapes: standalone server, embedded-in-agent, or family member. See [CC 3.4.7.1](#3-4-7-1). |
 | **Coherence signal** | The σ integrand ([CC 6.2.3](part_6_the_coherence_mathematics.md)): an **attested event evidencing completed cooperative work or validated contribution** — e.g. a `commitment_fulfillment` ([CC 3.1.9.2](part_3_the_namespace.md)), a countersigned task validation, or a Commons-Credits award. Defined by **what it measures** (cooperative work actually done), not by what it costs; the [CC 6.2.3.1](part_6_the_coherence_mathematics.md) σ-attestation requirement separately governs that its *weight* be costly-to-fake. σ rises only on coherence signals received. |
 | **`ciris-canonical`** | The bootstrap governed community ([cohort_subkind: infrastructure](part_4_composition_governance.md)) every node ships trusting by default — but which any consumer MAY untrust or re-root ([CC 3.2](#3-2) default-**not**-forced-root). Its founding members (`lens` + `registry-us` + `registry-eu` fabric nodes) hold the founder-quorum (2-of-3, entrenched). Trust in it is **role-scoped and ≠ consent** ([CC 3.2](#3-2)). |
-| **NodeCode** | The QR-able peer-bootstrap shorthand for a federation key (`CIRIS-V1-…`, base32 + CRC-16). See [CC 2.6.8](#2-6-8). |
+| **FedCode** (née NodeCode) | The QR-able, kind-tagged identity shorthand for a federation entity (`CIRIS-V2-`/`V3-`, base32 + CRC-16; v1 `CIRIS-V1-` decodes as `kind: node`). Tied to the user; owned nodes and transport optional, else resolved from the directory via `nodes_owned_by`. See [CC 2.6.8](#2-6-8). |
 | **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise-floor descent over fountain-coded storage: content can be **pushed below the recoverability floor** (controlled, graceful, verifiable destruction — the fountain-coding dividend) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.x archive_mode](part_3_the_namespace.md)) where destruction is itself the harm (evidence, heritage, records). **Prior art:** the term follows Bostrom (2011), *Information Hazards: A Typology of Potential Harms from Knowledge*; the lifecycle-phase decomposition adapts the data-lifecycle governance model (CSA / NIST), adding the *perception* phase from the cognitohazard / neuropsychological-hazard literature. |
 
 ### 8.1.2 `system-persist` — Persist `system:*` leaf glossary (narrative → canonical)
@@ -109,7 +109,7 @@ Pattern recap per [CC 4.4.3.3.1](#4-4-3-3-1): widens `cohort_scope`, optionally 
 
 ## 8.2 `translation` — Translation discipline (writing claims in CEG)
 
-A grammar is only as honest as the discipline used to write in it. This section gives that discipline: how to take a substantive paragraph — a principle, a finding, a policy — and decide whether it belongs in the wire at all, which family it sits in, which primitives carry it, and when the right answer is *not to translate*. The discipline exists so that the namespace grows only where there is genuine operational claim to carry, and so that what cannot be reduced to wire is named as such rather than faked. Full primer at [`LANGUAGE_PRIMER.md`](../LANGUAGE_PRIMER.md); the key rules are consolidated here.
+A grammar is only as honest as the discipline used to write in it. This section gives that discipline: how to take a substantive paragraph — a principle, a finding, a policy — and decide whether it belongs in the wire at all, which family it sits in, which primitives carry it, and when the right answer is *not to translate*. The discipline exists so that the namespace grows only where there is genuine operational claim to carry, and so that what cannot be reduced to wire is named as such rather than faked. Full primer at [`LANGUAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/LANGUAGE_PRIMER.md); the key rules are consolidated here.
 
 ### 8.2.1 `decision` — Decision tree
 
@@ -174,6 +174,9 @@ Each of these is a known weakness the federation has chosen to carry rather than
 | **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Mitigated (shipped, v2/v3)**: *mass dominance* and *content-similarity multiplicity* are both wire-visible and admission-gated — the signed `n_eff` mass-dominance gate (pinned `min_ratio = 0.5`) and the R9 multiplicity gate (pinned integer-L1 metric, `0.950` threshold, connected-component clustering, `n_min = 2`), with `mass_commitment` making a lying surface mechanically provable from held evidence ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md)); a `version < 3` tier is inadmissible (flag-day). Where a gate fails the N5 purge obligation applies in full. **Known exposure (residual)**: the *adversary-model / side-information-linkage* limb of the below-floor MUST — unverifiable-pending-instrument (CC 6.1.2.1.2's closing scope note; definitional history CIRISConstitution#6). **Two constraints on any candidate instrument, offered at stated strength in CIRISConstitution#45**: a *pairwise* `N_eff` gate is blind by construction to structure carried only by the whole (the valve results — `valve_upward_strict` / `valve_needs_asymmetry`, theorem-given-model at k = 3, with a measured rate law — say ordinary correlated operation accrues such structure with nobody scheming), and any *whole-reading* replacement carries a manufactured floor (measured at 50%–5.8× of the null on survey data) that has to be subtracted before a threshold means anything. The LP pair-pinning gate is offered as a bounded instrument for the #6 floor test at **proposed-instrument** strength — not a solution, and not adopted here. |
 | **R8** — Conceptual scope vs governable surface | One grammar spans identity, communities, consent, location, communications, streaming, payments, governance, constitutional mechanisms, addressing, and transparency logs. Historically, projects unifying that many layers fail when one layer dominates the others; the harder risk is *governability* — can a human amendment body ([CC 4.5.1](#)) steward a system of this breadth? **Bet**: structural minimalism keeps the *amendable structural surface* tiny even as the namespace grows ([CC 1.7](#) 1+4), and the strict primitive/namespace/composition/verdict separation ([CC 1.13.5](#)) means scope grows in the *open-vocab namespace* (locally evolvable) rather than the *governed core*. **Residual**: namespace + composition-policy sprawl can still outrun review capacity; mitigation is the [CC 4.5.1](#) high evidentiary bar + the post-1.0 candidate backlog. The remaining challenge is no longer purely technical. |
 | **R10** — Gates ratified ahead of their dye tests | Per the gatecraft discipline (a gate never shown to catch anything is a hypothesis about a gate), most gates ratified in the rc3 cycle lack a planted-dye test, a stated depth, or a named maintenance owner. **Bet**: the gates are sound because each was carved from an observed failure, not designed a priori. **The owing is named, not hidden**: the per-gate wager ledger is CIRISConstitution#84 — uncertainty reducible but expensive, paid gate by gate; an unpaid wager is not a defect, an unnamed one is. |
+| **R11** — The growth tax | Consent-gated replication has never coexisted with mass adoption — Secure Scuttlebutt hit exactly this wall. **Bet**: portable-root genesis plus blessed-serve ([CC 4.4.3.8](part_4_composition_governance.md)) makes joining cheap enough that the spam-proof network is also a growable one. **Residual**: the price of consent-gating is paid at every join; if it is paid in friction the network stays small and correct. Measured by join cost against the FEDERATION_SCALING_MODEL. (CIRISConstitution#40) |
+| **R12** — Blessing plurality | SPF/DKIM/DMARC was *also* signed attestations plus local policy, and still centralized, because *evaluation* concentrated (Spamhaus). **Bet**: accord issuance stays economically plural — anyone may mint a root ([CC 4.2.1](part_4_composition_governance.md)) and be genuinely trusted by senders. **Residual**: the metric is the cost to mint a new accord *and* be trusted, not the cost to mint; a plural grammar with one trusted evaluator is a monoculture with extra steps. (CIRISConstitution#40) |
+| **R13** — First-halt legitimacy | No surveyed system survived its first emergency use with legitimacy intact (The DAO: 5% turnout, relitigated for a decade). **Bet**: pre-committed powers, the severance window, and a public ceremony ([CC 4.2.1](part_4_composition_governance.md) reach-is-consent-scoped) change that — a halt you could see coming and could exit is one you can accept having happened. **Residual**: untested until the first real halt; the bet is falsified the first time the severance window is skipped under pressure. (CIRISConstitution#40) |
 
 ### 8.3.2 `child-safety` — Child-safety — fails-secure governance vs the shared detection limit (the honest line)
 
@@ -202,7 +205,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 
 | Gap | Status | Resolution |
 |---|---|---|
-| G1 — Revocation privacy | **RETRACTED** | Wrong threat model. The Registered path's thesis is public verifiability per [`../MISSION.md`](../../MISSION.md) §1.1. |
+| G1 — Revocation privacy | **RETRACTED** | Wrong threat model. The Registered path's thesis is public verifiability per [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.1. |
 | G2 — Rules-layer Sybil | **MITIGATED** | [CC 4.5.1](#) step 5 1-of-6 accord/steward sign-off + CC 4.5.1.2 meta-amendment entrenchment. |
 | G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** | [CC 4.4.3.1](#) locality-scaled quorum + CC 4.4.3.1.1 sub-quorum fallback. |
 | v1.4 T-3 #1 testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](#) new prefix; opened to open vocabulary. |
@@ -221,7 +224,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | delegates_to depth + cycle | **CLOSED** in [CC 4.1.1](#) anti-pattern + consumer-policy caps. |
 | HUMANITY_ACCORD invocation replay | **CLOSED** in [CC 4.2.1.1](#) discriminator + nonce in signed bytes. |
 | `notify` vs CONSTITUTIONAL social-canonicity | **CLOSED** in [CC 4.2.1.2](#) consumer-UI requirement. |
-| /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#) response-signing requirement. |
+| /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#): the route serves the self-authenticating GenesisBundle; authority is the bundle's own accord authorizations, and a serving install signs nothing that counts as a root. |
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](#) collision rule. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](#) + R6 above. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](#) consumer-policy countermeasure. |
@@ -245,7 +248,7 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 
 | Item | Why deferred |
 |---|---|
-| Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | Phase D 1.x roadmap per R5. |
+| Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred** — discharged 2026-08 per R5 ([CC 4.2.2.1](part_4_composition_governance.md)): Android Key Attestation, Apple App Attest, YubiKey PIV and TPM EK chains are evidence-established. Kept in this table so the 1.0-surface record shows the change; the residual, TPM *vendor* anchors left unbaked, is deliberate. |
 | Multi-party witness directory admission (2-of-3 steward sign-off) | Phase C commitment per [CC 5.3.1](#). |
 | Machine-readable namespace manifest (`FSD/CEG/dimensions.json`) | Phase E commitment per [CC 8.2.1](#). |
 | Full OpenAPI export for all endpoints | Phase E commitment per [CC 5.3.5](#). |
@@ -412,10 +415,10 @@ The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` 
 
 The following documents travel with the spec and are cited throughout:
 
-- [`FSD/PRIOR_ART_SCAN.md`](../PRIOR_ART_SCAN.md) — design-space comparison.
-- [`FSD/SOTA_SCAN.md`](../SOTA_SCAN.md) — production-validation comparison.
-- [`FSD/WITNESS_KIND_REGISTRY.md`](../WITNESS_KIND_REGISTRY.md) — non-normative open-vocabulary registry referenced by the namespace.
-- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](../../docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
+- [`FSD/PRIOR_ART_SCAN.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/PRIOR_ART_SCAN.md) — design-space comparison.
+- [`FSD/SOTA_SCAN.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/SOTA_SCAN.md) — production-validation comparison.
+- `FSD/WITNESS_KIND_REGISTRY.md` — non-normative open-vocabulary registry once kept in CIRISRegistry; absent from that repository's `main`, so cited by name only until it has a home here.
+- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
 
 ### 8.6.4 `namespace-sibling` — Sibling MISSIONs (the namespace stewards)
 

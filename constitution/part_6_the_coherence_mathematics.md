@@ -1,6 +1,6 @@
 # Part 6 — The Coherence Mathematics
 
-**Decimal range** `6.x` · **22 sections** · **page budget 3pp** · [← master index](README.md)
+**Decimal range** `6.x` · **22 sections** · **page budget 3pp** · [← master index](../README.md)
 
 > The holonomic substrate, the divergence witness, the noise-floor model, and the coherence mathematics — the Accord's Book IX ratchet (J / F / σ).
 

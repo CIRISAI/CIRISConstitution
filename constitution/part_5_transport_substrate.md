@@ -1,6 +1,6 @@
 # Part 5 — Transport & Substrate
 
-**Decimal range** `5.x` · **35 sections** · **page budget 11pp** · [← master index](README.md)
+**Decimal range** `5.x` · **35 sections** · **page budget 11pp** · [← master index](../README.md)
 
 > Byte-level content transport, structural invisibility, epoch keying, and delivery.
 
@@ -47,7 +47,7 @@ The stream-epoch DEK seals content **O(1)**; the per-subscriber `key_grant` casc
 
 **Forward secrecy** is forward-only by default ([CC 4.5.12.1](part_4_composition_governance.md) Option A). **Post-Compromise Security (PCS)** is AVAILABLE (inherent to TreeKEM key-updates: a compromised current member heals on the next commit) and is **OPTIONAL, operator-enabled** — a deployment MAY require periodic self-updates for PCS, or stay forward-only.
 
-**Catch-up bound (P4)**: `min(operator depth cap [LensCore knob, NOT a substrate constant], chunk-eviction horizon)`. Three distinct windows that are NOT conflated: chunk-eviction horizon ≠ [CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) `holds_bytes` 24h TTL ≠ grant durability. A catch-up request against an evicted epoch returns **`ContentMiss` — fail-honest, no silent gap** (consistent with the [`MISSION.md`](../../MISSION.md) fail-honest invariant). Operators MUST ship the P4 cap **with** the cascade, else 10⁶ grant Contributions per rekey is the unbounded worst case.
+**Catch-up bound (P4)**: `min(operator depth cap [LensCore knob, NOT a substrate constant], chunk-eviction horizon)`. Three distinct windows that are NOT conflated: chunk-eviction horizon ≠ [CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) `holds_bytes` 24h TTL ≠ grant durability. A catch-up request against an evicted epoch returns **`ContentMiss` — fail-honest, no silent gap** (consistent with the [`MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) fail-honest invariant). Operators MUST ship the P4 cap **with** the cascade, else 10⁶ grant Contributions per rekey is the unbounded worst case.
 
 ## 5.2 `family` — Structural invisibility — `holds_bytes:sha256:*` suppression for `cohort_scope: self | family`
 
@@ -97,7 +97,7 @@ On admission of a Contribution C with cohort_scope ∈ {self, family}:
 
 **Composition with at-rest encryption flow**: when self/family at-rest encryption is enabled, persist wraps the DEK (`wrap_algorithm: v2`) under each currently-admitted `identity_occurrence`'s `occurrence_key_id` (self) or each `member.key_id` in the named family's roster (family). New occurrence / new family-member admission triggers retroactive `key_grant` emission for all extant `cohort_scope: self|family` content (the "I bought a new phone and want my Twitter history" / "I added Carol to the household" flows from CC 3.3.4 worked example).
 
-**Recipient encryption-key resolution + fail-secure exclusion.** The wrap target is **not** a recipient's signing key. `wrap_algorithm: v2` needs the recipient's `{x25519, ml_kem_768}` **content-KEM** keys, which the recipient self-certifies via its `identity_occurrence.encryption_pubkeys` ([CC 3.3.6.1](part_3_the_namespace.md)); the substrate resolves them by `resolve_encryption_keys(key_id)` = the recipient's current (non-superseded, within-`valid_until`) occurrence → its `encryption_pubkeys`. Because this layer **mandates v2**, a recipient whose current occurrence carries **no valid ML-KEM-768 key MUST be fail-secure *excluded*** from the grant — the content remains encrypted and unreachable to it; the substrate MUST NOT fall back to plaintext or to `wrap_algorithm: v1`. To be an at-rest-encryption recipient, an identity MUST have a federation-present occurrence carrying `encryption_pubkeys`. This is the [non-maleficence / fail-secure default](../../CLAUDE.md): a missing key denies access, never downgrades the protection.
+**Recipient encryption-key resolution + fail-secure exclusion.** The wrap target is **not** a recipient's signing key. `wrap_algorithm: v2` needs the recipient's `{x25519, ml_kem_768}` **content-KEM** keys, which the recipient self-certifies via its `identity_occurrence.encryption_pubkeys` ([CC 3.3.6.1](part_3_the_namespace.md)); the substrate resolves them by `resolve_encryption_keys(key_id)` = the recipient's current (non-superseded, within-`valid_until`) occurrence → its `encryption_pubkeys`. Because this layer **mandates v2**, a recipient whose current occurrence carries **no valid ML-KEM-768 key MUST be fail-secure *excluded*** from the grant — the content remains encrypted and unreachable to it; the substrate MUST NOT fall back to plaintext or to `wrap_algorithm: v1`. To be an at-rest-encryption recipient, an identity MUST have a federation-present occurrence carrying `encryption_pubkeys`. This is the [non-maleficence / fail-secure default](https://github.com/CIRISAI/CIRISRegistry/blob/main/CLAUDE.md): a missing key denies access, never downgrades the protection.
 
 **Exclusion MUST NOT be silent.** A bare `skip` makes a fail-secure exclusion indistinguishable from "the family went quiet" — a soft-censorship vector for a buggy or malicious substrate, and a contradiction of the spec's own `hard_case:*` attestability grain. On every fail-secure skip the substrate MUST emit **`hard_case:recipient_excluded:{scope_key_id}`** ([CC 3.4.4](part_3_the_namespace.md), which defines the closed `reason` set) **into the affected self/family scope itself** — carrying the excluded recipient's `key_id`, a `reason`, and the skipped Contribution's envelope ref — so the excluded member (who still sees cohort-scoped attestations) has something to audit and remediate. The event is cohort-scoped: it MUST NOT federate beyond the self/family (the CC 5.2 invisibility promise is preserved; the *fact* of the family's content is not leaked by its exclusion events).
 
@@ -220,7 +220,7 @@ Promotion computes the hybrid signature and flips the row federation-visible. It
 | `local` | MAY be absent (deferred per CC 5.3.2.2) | **No** | **only the producing occurrence** (self-read); every other caller — even an authorized family/community peer — sees nothing | local-tier write |
 | `federation` | hybrid Ed25519 + ML-DSA-65 **present** | Yes | per [CC 2.1](part_2_the_grammar.md) `cohort_scope` + the CC 5.2 invisibility rule | direct signed write OR `local → federation` promotion |
 
-**Invariant (substrate MUST enforce):** `tier = federation ⟹ hybrid signature present`. Nothing crosses to federation-visible unsigned. A `local` row is **labelled** local and MUST NOT be served as federation-authoritative ([fail-honest](../../MISSION.md)). The read-gate is **orthogonal** to `cohort_scope`: it is an additional filter (`local ⟹ caller is the producing occurrence`), composing with the CC 5.2 target-membership predicate. Threat entries: AV-59 (local row leaked to a non-self caller), AV-60 (unsigned local served as authoritative), AV-61 (the two gates de-synced).
+**Invariant (substrate MUST enforce):** `tier = federation ⟹ hybrid signature present`. Nothing crosses to federation-visible unsigned. A `local` row is **labelled** local and MUST NOT be served as federation-authoritative ([fail-honest](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md)). The read-gate is **orthogonal** to `cohort_scope`: it is an additional filter (`local ⟹ caller is the producing occurrence`), composing with the CC 5.2 target-membership predicate. Threat entries: AV-59 (local row leaked to a non-self caller), AV-60 (unsigned local served as authoritative), AV-61 (the two gates de-synced).
 
 ###### 5.3.2.4.3.1 `admission-pqc` — The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)
 
@@ -248,6 +248,29 @@ The tier model is the *same KEM-then-symmetric placement* the streaming model us
 #### 5.3.2.5 `full-sha` — Full-SHA verification before consumption (normative)
 
 A CEG-Conforming Consumer (CCC) MUST verify the full SHA-256 of received bytes against the value in `evidence_refs[]` BEFORE handing the bytes to any consumer (Agent loader, Portal renderer, etc.). The `holds_bytes:sha256:{prefix}` directory ([CC 3.1.9.1](part_3_the_namespace.md)) carries only a short prefix for index efficiency; the consumer MUST NOT short-circuit verification to the prefix. Bytes that fail the full-SHA check MUST be discarded and the holder MUST be reported via the `holds_bytes:sha256:{prefix}` chain (emit a `withdraws` or negative score per consumer policy).
+
+**Every blob carries its size, and size is checked first (normative).** A descriptor that cites a blob from `evidence_refs[]` — installer, config, adapter package, media, any bytes — carries the blob's byte length alongside its digest. A producer always knows it at creation time. **Where the size lives:** an `evidence_refs[]` entry is a bare URI or content-hash string on the frozen [CC 2.1](part_2_the_grammar.md) envelope and carries no size; the size rides the **descriptor** whose canonical shape this document already defines — the multimedia Source struct's `{digest, size}` ([CC 3.3.13](part_3_the_namespace.md)), the live-stream chunk-descriptor list (same section), and the per-artifact entries of `SkillImportManifest` and the build manifest ([CC 3.1.2.1](part_3_the_namespace.md)). This rule binds every blob cited **through** such a descriptor. A blob cited only by a bare `evidence_refs[]` string has no declared size, and a consumer fetching it enforces the [CC 2.6.1.3](part_2_the_grammar.md) cap instead — it MUST NOT invent a size field on the envelope, which would be a wire change; a producer that needs the size check on such bytes cites them through a descriptor (CIRISConstitution#113 review). The consumer MUST compare the received length to the declared size **before** computing the digest: a mismatch is a refusal without reading the rest, and the descriptor alone lets a receiver enforce caps and refuse a `ContentFetch` that would overrun. Size is not a substitute for the digest, only the cheaper check that runs first. The one descriptor with no total size is a **live stream in progress** ([CC 3.3.13](part_3_the_namespace.md) `live_stream`): each chunk and the init segment carry their own, and the recording, once the stream ends, is an ordinary blob with one.
+
+#### 5.3.2.6 `render-tier` — The render tier is receiver policy, computed from verified, sniffed bytes (normative)
+
+A CCC MUST decide whether and how to render a blob from the **verified bytes and its own policy, never from a claim in the descriptor** (ruling on [CIRISConstitution#104](https://github.com/CIRISAI/CIRISConstitution/issues/104)). After [CC 5.3.2.5](#5325-full-sha--full-sha-verification-before-consumption-normative) verification the consumer MUST sniff the leading bytes and require the sniffed essence to **equal** the declared `format` ([CC 3.3.13](part_3_the_namespace.md)); a mismatch is a **refusal, not a correction**. Where the description is sealed (`sealed_descriptor`, [CC 3.3.13](part_3_the_namespace.md)), the sniff runs where the bytes decrypt, by the party that opened them, against the `format` inside the seal; a holder that cannot open the bytes does not sniff and does not claim to (CIRISConstitution#114). The declared `format` / `codec` are inputs to that comparison and to capability checks, never authorisations. This is exactly how Element ignores `info.mimetype` for the blob-URL decision and Synapse ignores the uploader's wishes for `Content-Disposition`; it is what makes the set below a property of the *receiver* that a malicious sender cannot widen.
+
+**Recommended renderable set (recommended CCC policy — not normative).** The intersection of what Signal, WhatsApp, Mastodon, Threema and Element *emit*, what Android / iOS / Skiko / Chromium all decode, and what has a memory-safe decoder today. A CCC MAY adopt a narrower set; a wider one is its own risk to own, and this Part will not have ratified it.
+
+| `format` (sniffed) | Tier | Conditions |
+|---|---|---|
+| `image/jpeg`, `image/png` (APNG as PNG), `image/gif` | **A — render** | ≤ 16 MB, ≤ 33 Mpx; GIF ≤ 921,600 px + frame cap; reject bytes after `IEND` / `FFD9` |
+| `image/webp` | **A — conditional** | ≤ 10 MB; node runs Signal's `webpsan`; re-encoded on ingest |
+| `text/plain` | **A** | valid UTF-8, ≤ 1 MB, bidi controls rendered visibly |
+| `video/mp4` | **A — conditional** | `codec` present and `avc1.*` (≤ L4.1) + `mp4a.40.2` only; ≤ 100 MB, ≤ 8,294,400 px; node runs `mp4san`; receiver rejects unlisted tracks |
+| `audio/mp4` (`mp4a.40.2`), `audio/mpeg` | **A** | ID3v2 ignored — never decode `APIC` |
+| AVIF, HEIC / HEIF, JXL, WebM, MOV, MKV, Ogg / Opus, FLAC, WAV, ADTS, Markdown | **B — sender converts to a Tier-A form before hashing; raw arrival = C** | iOS has no WebM / Opus playback; Skiko decodes none of the images; Mastodon disabled HEIF 2026-09-15 |
+| `image/svg+xml` | **C for the bytes — never a client renderer or WebView.** A node MAY emit a PNG rendition (`derived_from`) from a hardened rasteriser (`resvg`: no file-href resolver, no system fonts, caps) in an isolated process; that PNG is Tier A | excluded by name in Signal, Session, Threema, Element, Synapse, Delta, Mastodon. The [CC 3.3.13](part_3_the_namespace.md) rendition rule dissolves the B-or-C question: the SVG is C, the node's PNG is A |
+| `application/pdf` | **C — download**; node MAY rasterise pages to attested PNG in an isolated process | JS / Launch actions / embedded fonts; pdf.js CVE-2024-4367, PDFium CVE-2024-7973 / 5846 |
+| `model_3d` (glTF, USDZ, FBX, splats) | **C — download**; node MAY rasterise a PNG poster in an isolated process | 33 Apple USD CVEs through CVE-2026-20616; 15 Pixar OpenUSD; FBX SDK CVE-2026-10709 / 10710; glTF: cgltf CVE-2026-32845, VTK CVE-2025-57108, Gitea CVE-2026-28737 — stored XSS *through a glTF field* in a 3D viewer |
+| HTML, Office, fonts, archives, TIFF, PSD, BMP, ICO, everything else | **C — refuse** | generic card, external handoff, dangerous-extension block on save |
+
+**Where enforcement lives.** The ingest pipeline that makes Tier A enforceable — size ([CC 5.3.2.5](#5325-full-sha--full-sha-verification-before-consumption-normative): checked first) → full-SHA → sniff (only on verified bytes, [CC 5.3.2.6](#5326-render-tier--the-render-tier-is-receiver-policy-computed-from-verified-sniffed-bytes-normative)) → memory-safe demux / decode → canonical re-encode → strip metadata → emit rendition + descriptor — belongs on the **node**, so every client renders only bytes the node's safe encoder produced. Memory-safe decoders are production today: Chromium's default PNG decoder is the Rust `png` crate, JPEG is moving to `zune-jpeg`, Signal ships `mp4san` / `webpsan`, Android 17 moves AAC in-process as Rust. Images, SVG and audio decode entirely in `#![forbid(unsafe_code)]` Rust; video is "Rust validates container and elementary stream, hardware decodes". That pipeline is CIRISServer's to build against this slot; this Part settles the slot.
 
 ### 5.3.3 `transport-streaming` — Streaming transport, per-stream logs & delivery receipts
 
@@ -428,7 +451,7 @@ Both `epoch` (key-rotation index — for per-epoch entitlement / billing) and `K
 2. **`chunk_root` is a real published STH root** — MUST equal a `SignedTreeHead.root_hash` actually published for `log_id = stream_id` at `tree_size ≥ K`. A phantom / self-invented root → REJECT. For accountable streams, "published" means **witness-cosigned** (the CC 5.3.1 path), so the subscriber cannot collude with the producer on a private root.
 3. *(Recommended for accountable)* **Inclusion proof** chunk K → `chunk_root`. Upgrades the receipt from "subscriber saw a root" to "subscriber saw a root that provably commits to chunk K".
 
-**Semantics — proof-of-DELIVERY, not proof-of-CONSUMPTION**: the receipt proves the subscriber received bytes committing to chunk K. It does NOT prove they decrypted those bytes (they may not hold the epoch DEK). Consumers MUST NOT overclaim a delivery receipt as proof of consumption. Per the [`MISSION.md`](../../MISSION.md) fail-honest invariant + [CC 1.7](part_1_foundation.md) "Verify authenticates origin, does not compose 'delivered'/'owes N'", Verify's role is validation-not-adjudication: emit the validated receipt as an attestation on `delivery_receipt:{stream_id}` — the "delivered" verdict is consumer policy.
+**Semantics — proof-of-DELIVERY, not proof-of-CONSUMPTION**: the receipt proves the subscriber received bytes committing to chunk K. It does NOT prove they decrypted those bytes (they may not hold the epoch DEK). Consumers MUST NOT overclaim a delivery receipt as proof of consumption. Per the [`MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) fail-honest invariant + [CC 1.7](part_1_foundation.md) "Verify authenticates origin, does not compose 'delivered'/'owes N'", Verify's role is validation-not-adjudication: emit the validated receipt as an attestation on `delivery_receipt:{stream_id}` — the "delivered" verdict is consumer policy.
 
 **Accountable-stream receipt quorum**: Policy E ([CC 4.4.3.1](part_4_composition_governance.md) locality-scaled) — same shape as the CC 5.3.3.3 STH quorum.
 
@@ -442,50 +465,41 @@ The 1+4 wire-format lockdown holds: there are no new `attestation_type` values. 
 
 Scope pointer: the CC 5.3.3 streaming surface — delivery axis ([CC 5.3.3.3](#1051-per-stream-log--stream-root-normative--v1-lock)–[CC 5.3.3.4](#1056-d6-liveness-invariant--entitled-vs-reachable-normative)) — does **not** change the 1+4 primitive set ([CC 2.4](part_2_the_grammar.md)) (delivery rides existing primitives), does **not** bundle the streaming-half substrate impl (the streaming-chunk store + the parallel CHECK-arm migration), keeps push-mode multicast relay/fan-out pull-only at RC1, and leaves the K / T / MAX_CHUNKS_PER_EPOCH constants + accountable-stream quorum operator-tunable.
 
-### 5.3.4 `multi-steward` — Multi-steward + accord-holder discovery
+### 5.3.4 `multi-steward` — Trust-root discovery — the GenesisBundle + accord holders
 
-These endpoints publish the trust roots themselves — the steward set and accord holders — so a verifier can discover *whom* to trust before trusting anything. Every response is hybrid-signed by the serving steward, and a consumer MUST verify that signature before promoting any field to a trust root: this is the fidelity / fail-secure floor for the whole discovery surface.
+These endpoints publish the trust root itself — the accord-authorized GenesisBundle, and the accord holders it names — so a verifier can discover *whom* to trust before trusting anything. A consumer MUST verify the bundle's quorum against its own records before promoting any field to a trust root: this is the fidelity / fail-secure floor for the whole discovery surface. Nothing a serving install signs on its own account is a root.
 
-### `GET /v1/steward-key`
+### `GET /v1/trust-root/bundle` — the portable trust root (`/v1/steward-key` is a kept alias)
 
-Returns the multi-steward set with M-of-N policy.
+Returns the **GenesisBundle**: the charter, the accord-holder roster, the scopes and the serve-node grants, hybrid-authorized by the accord holders at the genesis ceremony. It replaces the per-region steward set this section specified through rc4 ([CIRISRegistry#133](https://github.com/CIRISAI/CIRISRegistry/issues/133), [CIRISServer#537](https://github.com/CIRISAI/CIRISServer/issues/537)): a registry publishing its own key as its own root, `hardware_class` self-attested, was the weakest form of a producer claim ([CC 4.2.2.1](part_4_composition_governance.md)), and the fold makes the registry a conferred slice of a canonical node rather than a root. Registry v3.0.0 serves this body at both paths; CIRISServer serves it at `/v1/trust-root/bundle` once the fold's phase 2a lands.
 
 Response (`200 OK`):
 
 ```json
 {
-  "stewards": [
-    {
-      "region": "us",
-      "key_id": "us-steward-2026",
-      "ed25519_pubkey_b64": "<base64-url>",
-      "mldsa65_pubkey_b64": "<base64-url>",
-      "hardware_class": "HSM_FIPS_140_3_L3",
-      "deployed": true,
-      "fingerprint_sha256_hex": "<64-char-lowercase>",
-      "cert_validity_self_attest": {
-        "valid_until": "<rfc3339_canonical>",
-        "signature_b64": "<base64-url>"
-      }
-    },
-    {"region": "eu", ..., "deployed": false},
-    {"region": "apac", ..., "deployed": false}
-  ],
-  "threshold_policy": {"required": 2, "available": 1},
-  "response_signature": {
-    "signer_key_id": "us-steward-2026",
-    "ed25519_b64": "<base64-url>",
-    "mldsa65_b64": "<base64-url>",
-    "canonical_bytes_label": "ciris.steward_key_response.v1"
-  }
+  "bundle": {
+    "version": 1,
+    "family_key_id": "humanity-accord",
+    "holders": [ "<SignedKeyRecord>", "..." ],
+    "serve_nodes": [ "<SignedKeyRecord ciris-canonical-1-...>" ],
+    "consensus_protocol": "quorum:2/3",
+    "attestations": [ "<SignedAttestation: charter, lifecycle, grants>" ],
+    "authorizations": [ "<GenesisAuthorization A1>", "<GenesisAuthorization B1>" ],
+    "produced_at": "<rfc3339_canonical>"
+  },
+  "bundle_fingerprint": "sha256:<64-char-lowercase over the JCS-canonical bundle>",
+  "charter_root_key_id": "<read off the bundle; verify it>",
+  "served_by": { "node_key_id": "<relaying node>", "accepts_this_root": true }
 }
 ```
 
-The response itself is hybrid-signed by the serving region's steward over `canonical = "ciris.steward_key_response.v1\n" || sha256_hex_lowercase(canonicalized_json_body_excluding_signature)`. Consumers MUST verify the response signature before trusting any field in the body — placeholder pubkeys without `deployed: true` MUST NOT be promoted to trust roots.
+**Authority lives inside `bundle` and nowhere else (normative).** The bundle is **tamper-evident, not authentic** ([CC 3.2](part_3_the_namespace.md) T5): its holders' hybrid authorizations over the charter prove the bundle is internally consistent, and an attacker's self-consistent bundle under the same identifiers verifies identically. A consumer therefore MUST hold an **out-of-band anchor before accepting a bootstrap bundle** — either the pinned `bundle_fingerprint` (the `sha256:` over the JCS-canonical bundle, published with the release and baked into conformant builds) or the pinned fingerprints of the accord-holder keys — and MUST compare the received bundle against it at attach time; `ciris-canonical` and `humanity-accord` are **names, not anchors**, and a consumer with no anchor MUST NOT promote anything in the response to a trust root. With the anchor held, the consumer re-derives the quorum from its *own* records (`verify_bundle_quorum` — the authorizations counted against the roster the consumer holds or has just pinned), and from then on the root is valid until revoked (T4). Everything outside `bundle` — the served fingerprint, the charter root id, `served_by` — is unsigned convenience metadata the consumer recomputes (the fingerprint against its pin) or ignores; the served `bundle_fingerprint` is never itself the anchor. There is deliberately **no `response_signature`**: signing the wrapper would prove only that the relaying node said it, which is exactly what the retired steward-key response proved and exactly what was worthless, and it would invite consumers to check the envelope instead of the artifact. `hardware_class`, `signature_mode` and `threshold_policy` MUST NOT appear on the outer envelope; a holder's custody class rides its signed key record and is corroborated, or not, per [CC 4.2.2.1](part_4_composition_governance.md). `served_by.accepts_this_root: false` is a legitimate state — a node may relay a root it has not accepted ([CC 3.2](part_3_the_namespace.md) T3) — and is the operator's un-trust lever made visible.
+
+A consumer pins the community anchor `community_key_id: ciris-canonical` and the accord family `humanity-accord`, resolves the live member set via `resolve_community` ([CC 4.4.3.2.4](part_4_composition_governance.md)), and never hard-pins a serving install's fingerprint. A root is valid until revoked, never until a timer lapses ([CC 3.2](part_3_the_namespace.md) T4): a signed whole-roster snapshot, where one is served, carries a **freshness** bound consumers treat as a liveness signal, not an expiry that invalidates the root.
 
 ### `GET /v1/accord-holders`
 
-Three named holders with hybrid pubkeys + per-holder `hardware_class` + `provisioned` flag. v1.4 interim ships with placeholder fingerprints + `provisioned: false`; consumers MUST NOT honor CONSTITUTIONAL invocations against placeholders. Response signed by the serving region's steward (same shape as `/v1/steward-key`).
+Three named holders with hybrid pubkeys + per-holder `hardware_class` + `provisioned` flag. v1.4 interim shipped placeholder fingerprints + `provisioned: false`; consumers MUST NOT honor `constitutional` invocations against placeholders. The holders' authority is the bundle above — this route is a projection of `bundle.holders`, and a consumer cross-checks it against the bundle rather than trusting the projection.
 
 ### `GET /v1/accord/holders`
 
@@ -506,7 +520,7 @@ Full response schemas for these endpoints land in the Rust handlers + OpenAPI ex
 All CEG endpoints return:
 
 - **Content-Type**: `application/json` (`Accept: application/json` honored; other types respond `406 Not Acceptable`)
-- **CEG-API-Version header**: `CEG-Version: <current spec major.minor>` on every response (track the [README](README.md) `Version:` field; currently `1.0-rc27`); clients SHOULD echo `CEG-Accept-Version: <pinned-version>` on request, naming the version they were built against. Per [CC 2.6.4](part_2_the_grammar.md) SemVer policy, MAJOR mismatch is a wire-incompat reject; MINOR mismatch is compatible (clients MAY warn).
+- **CEG-API-Version header**: `CEG-Version: <current spec major.minor>` on every response (track the [README](../README.md) `Version:` field; currently `1.0-rc27`); clients SHOULD echo `CEG-Accept-Version: <pinned-version>` on request, naming the version they were built against. Per [CC 2.6.4](part_2_the_grammar.md) SemVer policy, MAJOR mismatch is a wire-incompat reject; MINOR mismatch is compatible (clients MAY warn).
 - **Time-Source header**: `X-CEG-Server-Time: <rfc3339_canonical>` per [CC 2.6.2](part_2_the_grammar.md) for client clock-skew bounds
 - **Pagination** (where applicable): `?cursor=` + `?limit=` query params; response includes `next_cursor` (null if exhausted) and `total_estimate` (server's best estimate, may be approximate)
 
@@ -665,7 +679,7 @@ The per-symbol KDF is **HKDF-SHA3-256** — harvest-now-decrypt-later (HNDL) dis
 
 **Fragment-set rebinds on MLS Add/Remove (normative).** `K_symbol` and `K_record_id` are bound to the MLS group epoch (derived from the group `exporter_secret`). On any MLS **Add** or **Remove** the group epoch advances, so the fragment set MUST rebind: `record_id` and `symbol_key` are recomputed under the new epoch, and subsequent symbols seal under the new keying. This carries the forward-secrecy guarantee of [CC 5.1](#1053-epoch-keying--cascade-normative--d2--d3-substrate-pending-142) onto the fragment layer — a removed member cannot derive the post-removal fragment set, and a newly-added member receives forward keying without retroactive symbol access except as the archive policy permits (the companion per-community archive-policy section; default `rotate-forward`, 30-day window).
 
-**Reassembly (fail-honest).** A consumer holding `K_symbol` + `record_id` collects symbol envelopes from holders ([CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) holder discovery), opens each `symbol_envelope` under its recomputed `symbol_key` (XChaCha20-Poly1305 verify; a failed tag MUST discard that symbol, never accept partial plaintext), and RaptorQ-decodes once `≥ K` valid symbols are recovered. Insufficient surviving symbols MUST resolve to a `ContentMiss` — an honest miss, never a silent gap or a downgrade to unverified bytes ([fail-honest](../../MISSION.md)).
+**Reassembly (fail-honest).** A consumer holding `K_symbol` + `record_id` collects symbol envelopes from holders ([CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) holder discovery), opens each `symbol_envelope` under its recomputed `symbol_key` (XChaCha20-Poly1305 verify; a failed tag MUST discard that symbol, never accept partial plaintext), and RaptorQ-decodes once `≥ K` valid symbols are recovered. Insufficient surviving symbols MUST resolve to a `ContentMiss` — an honest miss, never a silent gap or a downgrade to unverified bytes ([fail-honest](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md)).
 
 ### 5.4.4 `welcome-wrap` — MLS Welcome HPKE wrap under invitee static X-Wing key (normative)
 
@@ -723,6 +737,8 @@ This codifies CEWP `SCOPE_PRIVACY` §3.4 ([#107](https://github.com/CIRISAI/CIRI
 A Reticulum **announce** is the broadcast that tells the whole network a destination exists and is reachable. Announcing a *group-scoped* destination therefore leaks the one fact the cohort tiers exist to withhold: that the group exists at all. The discovery discipline closes that leak — group destinations are resolved from a **cached directory + per-group HKDF**, never from an announce. This is the transport-layer realization of [CC 5.2](part_5_transport_substrate.md) structural invisibility on the *addressing* plane: bytes are already suppressed from the holder directory ([CC 5.3.2.1](part_5_transport_substrate.md)) by the [CC 5.2](part_5_transport_substrate.md) `holds_bytes:sha256:*` suppression rule; here the **destination itself** is suppressed at the announce plane.
 
 **No announce for group-scoped destinations (normative).** A destination whose `cohort_scope` is below federation (the InvisibleEncrypted and CommunityDek tiers — `self`, `family`, `community`, `affiliations`) MUST NOT emit a Reticulum announce — **directed or broadcast; the prohibition binds the emission, not the addressing mode** (CIRISConstitution#91, ruled below). The substrate MUST suppress the announce that would reveal a group-scoped destination's existence. Only federation/Commons-scope destinations (`species`, `biosphere`, `federation`, and the `infrastructure` opt-out) MAY announce normally — they carry no anonymity claim.
+
+**The device roster is public exactly for the devices announced — per node (normative — CIRISConstitution#111, ruled).** A person's device roster is public because it has to be for them to be contactable, and it is not thereby *exposed*: it follows this section's lightnet/darknet split **one node at a time**. Each node's setup chooses whether that node **announces**, which in this section means one thing: its owner-binding ([CC 3.2](part_3_the_namespace.md)) is carried at `cohort_scope: federation`, owner-signed at that audience. The public roster of a person is **exactly the set of their nodes whose owner-binding is federation-scoped** — the devices they chose to be reachable on — and nothing else; the Reticulum announce of a node's transport destination, which every routing node emits, places nothing on the roster by itself. A node whose owner-binding is held only at `self` stays on the derived plane: reachable by the person's own nodes and by whoever holds a v3 code they issued ([CC 2.6.8](part_2_the_grammar.md)), **never listed**, and a directory, serve policy or read route MUST NOT enumerate it to any node outside the owner's `self` cohort. This mirrors the [CC 2.1](part_2_the_grammar.md) `listed` discipline (a roster is never globally enumerable without the member's opt-in) at the identity plane, where re-signing the binding at federation scope *is* the opt-in, and it is the `self` cohort over the owner-binding graph that decides who reaches the unannounced remainder. **Composition with the minors floor:** a federation-scope owner-binding makes its owner contactable and discoverable by unconnected adults, which the [CC 3.4.13](part_3_the_namespace.md) Q5 hard floor forbids for a minor and no steward, guardian or stacked consent may lift — so a node whose owner resolves to the `minor` band MUST NOT carry a federation-scope owner-binding, admission MUST refuse the promotion, and such a person is reachable only on the derived plane, through their own nodes and the codes they hand out.
 
 **Discovery is directory-cached, not announced (normative).** Group members resolve each other's destinations from a locally cached directory plus a deterministic per-group derivation — no announce, no per-resolution query:
 

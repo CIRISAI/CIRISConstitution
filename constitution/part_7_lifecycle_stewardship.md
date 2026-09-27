@@ -1,6 +1,6 @@
 # Part 7 — Lifecycle & Stewardship
 
-**Decimal range** `7.x` · **54 sections** · **page budget 6pp** · [← master index](README.md)
+**Decimal range** `7.x` · **54 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Creation ethics, stewardship & autonomy tiers, sunset, and the sentience-welfare safeguards.
 

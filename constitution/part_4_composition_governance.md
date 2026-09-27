@@ -1,6 +1,6 @@
 # Part 4 — Composition & Governance
 
-**Decimal range** `4.x` · **96 sections** · **page budget 26pp** · [← master index](README.md)
+**Decimal range** `4.x` · **96 sections** · **page budget 26pp** · [← master index](../README.md)
 
 > How attestations compose into trust; self-governance, amendment, moderation, and the human halt-authority.
 
@@ -18,7 +18,7 @@ These are wire-format reaches that fail the [CC 1.2](#1.2) operational-language 
 
 | What's wrong | Correct expression |
 |---|---|
-| Unbounded depth `delegates_to` chains | Consumer policy MUST cap traversal depth at **5 hops** by default (configurable); chains longer than the cap are treated as `attestation:self_verify` only (no transitive trust) |
+| Unbounded depth `delegates_to` chains | Consumer policy MUST cap traversal depth at **5 hops** by default (configurable); chains longer than the cap are treated as `attestation:self_verify` only (no transitive trust). A substrate MAY additionally clamp any caller-requested depth at an absolute ceiling (the shipped substrate clamps at 16); the ceiling bounds the walk, it does not raise the default |
 | Cycles (A → B → A) | Substrate MUST detect cycles on the `delegates_to` graph and reject the cycle-closing emission |
 | Aggregate-weight concentration | Consumer policy SHOULD cap the trust weight any single terminal delegate can accumulate from a given root attester at **0.5 × root_trust** by default |
 
@@ -59,7 +59,7 @@ The stories below each reached for a richer self-declaration; each is reducible 
 | `stake: civic` / `epistemic` / `dignitary` | 10 stories | `civic` = `stake: reputational + cohort_scope: community`. `epistemic` = `confidence + stake: reputational` (same axis as confidence; not separate). `dignitary` lives on wrong axis (stake names what the attester loses; dignity harm is what the attested loses → belongs in `harm_class:dignity_harm`). | Compose existing values with cohort/harm-class. |
 | `oversight_mode: deferred` / `active` / `advisory` | 6 stories | All map to existing HITL/HOTL/HOOTL | `deferred` = HITL pre-decision; `active` = HITL with substrate monitoring; `advisory` = HOTL |
 | `provenance_walk` as wire primitive | (1 reviewer) | UX concern smuggled into wire format | Consumer-side composition (Portal / Verify dashboards / agent introspection); the chain already walks via `references_attestation_id` + `topical_relation:*` + `valid_until` |
-| Renaming canonical capacity factors and HE-300 categories to "kid-friendly" names | 8 stories | Canonical names map to a worked-out epistemic/ethical lattice that loses precision under accessibility renames | Translation glossary in [`LANGUAGE_PRIMER.md`](../LANGUAGE_PRIMER.md) (spec name ↔ narrative name) + version pinning in worked examples |
+| Renaming canonical capacity factors and HE-300 categories to "kid-friendly" names | 8 stories | Canonical names map to a worked-out epistemic/ethical lattice that loses precision under accessibility renames | Translation glossary in [`LANGUAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/LANGUAGE_PRIMER.md) (spec name ↔ narrative name) + version pinning in worked examples |
 
 ## 4.2 `accord` — The HUMANITY_ACCORD constitutional layer
 
@@ -71,16 +71,16 @@ The federation is symmetric by design — every participant binds every other un
 
 **Root conferral is in scope.** The enumeration admits a 2-of-3 accord co-scrub over a `canonical,node` registration envelope bearing `roles: ["infra:serve"]` — the ceremony that mints a **portable trust root** ([CC 4.4.3.8](#4438-policy-direct--policy-a--direct-trust)). Read without it, the clause forbids the accord from blessing the very primitive that creates a root. Scope isolation still does its real work: accord authority cannot reach the consent or licensure planes. It does **not** isolate the amendment plane — [CC 4.5.1](#451-amendment--amendment-process--federation-contribution--wa-quorum--1-of-6-sign-off) step 5 and its pre-maturity authority, and the [CC 4.5.1.2](#4512-meta-amendment--meta-amendment--entrenchment) entrenched 2-of-3 ratification, all name accord-holders. That reach is stated here rather than denied; per the [CC 1](part_1_foundation.md) reading rule it is a **default** of this instance — escaped by naming your own occupants — not a privilege requiring declaration. Root-minting is **not** an accord privilege — the identical ceremony under any other root's holders mints an equally valid root, and the CIRIS root is the shipped default, not a privileged one ([CC 3.2](part_3_the_namespace.md): a default-plus-re-root is a federation). Conferral MUST NOT be relocated to a founder-quorum of an infrastructure community: that is circular at genesis — a community presupposes admission, which presupposes a root — and destroys portability.
 
-**Reach is consent-scoped (normative).** A `CONSTITUTIONAL` halt binds exactly the nodes holding a **live `delegates_to(user → accord)`** at the invocation's `asserted_at`. The halt rides the same edge as everything else the accord confers and dies with it on un-trust ([CC 4.4.3.8](#4438-policy-direct--policy-a--direct-trust)); a node that never trusted the accord, or has already cut the edge, is simply not reached. Consumers MUST resolve reach against the edge set pinned at `asserted_at`, not at apply time: **exit is prospective, never retroactive.** Severing an edge *after* an invocation's `asserted_at` MUST NOT remove the severing node from that halt's reach — otherwise the halted party escapes by un-choosing at the instant the brake is pulled, and the consent was a preference rather than a binding. The complementary rule binds the accord: **pre-committed powers only, never act-then-ratify.** The accord's powers are exactly those enumerated here, over edges already held; any change *widening* accord reach (a charter amendment adding scopes) takes effect only after a published **severance window** — 72 h baseline, the [CC 4.2.6](#426-live-quorum--live-quorum-operation--recovery-under-decimation-normative) cadence — during which any bound node may cut its edge and exit. Widening waits; firing does not ([CC 4.2.6](#426-live-quorum--live-quorum-operation--recovery-under-decimation-normative) minimize-the-missed-fire).
+**Reach is consent-scoped (normative).** A `constitutional` halt binds exactly the nodes holding a **live `delegates_to(user → accord)`** at the invocation's `asserted_at`. The halt rides the same edge as everything else the accord confers and dies with it on un-trust ([CC 4.4.3.8](#4438-policy-direct--policy-a--direct-trust)); a node that never trusted the accord, or has already cut the edge, is simply not reached. Consumers MUST resolve reach against the edge set pinned at `asserted_at`, not at apply time: **exit is prospective, never retroactive.** Severing an edge *after* an invocation's `asserted_at` MUST NOT remove the severing node from that halt's reach — otherwise the halted party escapes by un-choosing at the instant the brake is pulled, and the consent was a preference rather than a binding. The complementary rule binds the accord: **pre-committed powers only, never act-then-ratify.** The accord's powers are exactly those enumerated here, over edges already held; any change *widening* accord reach (a charter amendment adding scopes) takes effect only after a published **severance window** — 72 h baseline, the [CC 4.2.6](#426-live-quorum--live-quorum-operation--recovery-under-decimation-normative) cadence — during which any bound node may cut its edge and exit. Widening waits; firing does not ([CC 4.2.6](#426-live-quorum--live-quorum-operation--recovery-under-decimation-normative) minimize-the-missed-fire).
 
 #### 4.2.1.1 `invocation` — Invocation canonical bytes (anti-replay)
 
-Every `accord:invoke:*` Contribution signs the following canonical bytes (BOTH the discriminator AND a per-invocation nonce are in the signed payload — preventing CONSTITUTIONAL ↔ notify ↔ drill cross-replay):
+Every `accord:invoke:*` Contribution signs the following canonical bytes (BOTH the discriminator AND a per-invocation nonce are in the signed payload — preventing constitutional ↔ notify ↔ drill cross-replay):
 
 ```
 canonical = sha256(
- "ciris.accord_invoke.v1\n" ||
- "invocation_kind=" || ("CONSTITUTIONAL" | "notify" | "drill") || "\n" ||
+ "ciris.accord_invoke.v2\n" ||                       // v2: lowercase kinds (CIRISConstitution#112)
+ "invocation_kind=" || ("constitutional" | "notify" | "drill") || "\n" ||
  "invocation_id=" || halt_id_or_notify_id_or_drill_id || "\n" ||
  "nonce=" || base64url(rand_32_bytes) || "\n" ||
  "asserted_at=" || rfc3339_canonical || "\n" || // per §0.5
@@ -92,20 +92,22 @@ Hybrid signature per [CC 3.1.2.1](part_3_the_namespace.md): Ed25519 + ML-DSA-65 
 
 The substrate MUST reject duplicate `invocation_id` values within the `valid_until` window (per-kind unique).
 
-#### 4.2.1.2 `notify` — `notify` vs `CONSTITUTIONAL` — consumer-UI requirement
+**The kinds are lowercase, and the domain label carries the change (normative — CIRISConstitution#112).** `invocation_kind` takes exactly `constitutional` \| `notify` \| `drill`, the [CC 3.1.7](part_3_the_namespace.md) R3 spelling of the registered leaves `accord:invoke:constitutional:{halt_id}` and siblings; a verifier compares the bytes exactly and never folds. The label moved from `ciris.accord_invoke.v1` to `.v2` so that a signature under the old spelling fails loudly rather than verifying by accident; this is what the label's version is for. The `EmergencyShutdown CONSTITUTIONAL` message and `IncidentSeverity::INCIDENT_CONSTITUTIONAL` are the *severity* enum of the shutdown message, not a dimension token, and are outside R3.
 
-Wire-format isolation alone does not close the social-engineering risk that downstream UI conflates a `notify` with a CONSTITUTIONAL halt. The consumer-UI requirement below is therefore the load-bearing safeguard: it stops accord-holders from being socially pressured into emitting a `notify` that carries CONSTITUTIONAL social weight without CONSTITUTIONAL substrate weight.
+#### 4.2.1.2 `notify` — `notify` vs `constitutional` — consumer-UI requirement
+
+Wire-format isolation alone does not close the social-engineering risk that downstream UI conflates a `notify` with a `constitutional` halt. The consumer-UI requirement below is therefore the load-bearing safeguard: it stops accord-holders from being socially pressured into emitting a `notify` that carries `constitutional` social weight without `constitutional` substrate weight.
 
 A CEG-Conforming Consumer (CCC) presenting accord invocations to humans MUST visually distinguish the four kinds:
 
-- **`CONSTITUTIONAL`** — kill-switch authority; full halt; visible as an unambiguous emergency banner.
-- **`notify`** — federation-wide accord-holder communication; MUST NOT be visually conflated with CONSTITUTIONAL.
+- **`constitutional`** — kill-switch authority; full halt; visible as an unambiguous emergency banner.
+- **`notify`** — federation-wide accord-holder communication; MUST NOT be visually conflated with `constitutional`.
 - **`drill`** — accord-holder exercise; MUST be visually marked as a drill (e.g., explicit "[DRILL]" prefix on any human-visible surface).
-- **`lifecycle:active`** — resumption from a constitutional halt (the federation coming back online; [CC 4.2.1.3](#4213-lifecycle--lifecycle-resumption-canonical-bytes--accordlifecycleactive)). MUST be shown as its own unambiguous "reactivated — resumed from constitutional halt" state, never conflated with an active CONSTITUTIONAL halt (its opposite) nor with a `notify`.
+- **`lifecycle:active`** — resumption from a constitutional halt (the federation coming back online; [CC 4.2.1.3](#4213-lifecycle--lifecycle-resumption-canonical-bytes--accordlifecycleactive)). MUST be shown as its own unambiguous "reactivated — resumed from constitutional halt" state, never conflated with an active `constitutional` halt (its opposite) nor with a `notify`. A consumer switches on the four registered kinds **byte-exactly, with no case-fold and a fail-closed default**: an unknown kind is rendered as unknown, never as a `notify`.
 
 #### 4.2.1.3 `lifecycle` — Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`
 
-`accord:lifecycle:active` is the **only** sanctioned resumption after a `CONSTITUTIONAL` halt ([CC 4.2.1](#421-authority--authority-scope)). It signs a **separate canonical-bytes domain** from `accord:invoke:*`: the `accord:invoke` `invocation_kind` stays closed to `{CONSTITUTIONAL, notify, drill}` (the scope-isolation rule — a fourth value is *not* added to it), and resumption rides its own domain prefix so an invoke signature can never be replayed as a resumption, nor a resumption as an invoke:
+`accord:lifecycle:active` is the **only** sanctioned resumption after a `constitutional` halt ([CC 4.2.1](#421-authority--authority-scope)). It signs a **separate canonical-bytes domain** from `accord:invoke:*`: the `accord:invoke` `invocation_kind` stays closed to `{constitutional, notify, drill}` (the scope-isolation rule — a fourth value is *not* added to it), and resumption rides its own domain prefix so an invoke signature can never be replayed as a resumption, nor a resumption as an invoke:
 
 ```
 canonical = sha256(
@@ -119,13 +121,32 @@ canonical = sha256(
  "payload_sha256=" || sha256_hex_lowercase_of_payload) // per §0.6
 ```
 
-**`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.** A resumption authorizes ending a *single named* `CONSTITUTIONAL` halt, not resumption-in-general — so a stockpiled or replayed `lifecycle:active` cannot silently un-halt a *later*, unrelated kill; the signature is worthless against any halt but the one it names. The substrate MUST reject a `lifecycle:active` whose `resumes_halt_id` does not match the currently-active CONSTITUTIONAL halt, and MUST reject a duplicate `invocation_id` within the `valid_until` window. A resumption proof is verifiable **offline** against the node's own pinned roster and MAY be presented by any out-of-band means — the halt latch clears on local verification and does not require replication reach (a halted node is not serving, so the wire path could never deliver it; recoverability is a local act, which is what makes the false-fire-is-recoverable argument checkable). The halt itself carries **no TTL by design**: expiry would convert the brake into a wait-out for the halted party; the one exit is the named resumption above.
+**`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.** A resumption authorizes ending a *single named* `constitutional` halt, not resumption-in-general — so a stockpiled or replayed `lifecycle:active` cannot silently un-halt a *later*, unrelated kill; the signature is worthless against any halt but the one it names. The substrate MUST reject a `lifecycle:active` whose `resumes_halt_id` does not match the currently-active CONSTITUTIONAL halt, and MUST reject a duplicate `invocation_id` within the `valid_until` window. A resumption proof is verifiable **offline** against the node's own pinned roster and MAY be presented by any out-of-band means — the halt latch clears on local verification and does not require replication reach (a halted node is not serving, so the wire path could never deliver it; recoverability is a local act, which is what makes the false-fire-is-recoverable argument checkable). The halt itself carries **no TTL by design**: expiry would convert the brake into a wait-out for the halted party; the one exit is the named resumption above.
 
 **Resumption is not a fire — it admits at quorum, never at the fire floor.** The [CC 4.2.6](#426-live-quorum--live-quorum-operation--recovery-under-decimation-normative) bias gradient runs `fire ≤ roster-change ≤ standing`. Firing leans easiest (floor = 1) because a missed fire is terminal; **un-firing leans hard**, because a lone coerced or replayed key trivially undoing a legitimate halt is precisely the failure the halt-authority exists to prevent. `lifecycle:active` therefore admits at **no less than the roster-change threshold — strict majority of the live set `L`, with the [CC 4.2.6](#426-live-quorum--live-quorum-operation--recovery-under-decimation-normative) steward backstop when `\|L\|` is small — never a lone signature.** It is hybrid-signed and tallied exactly as [CC 4.2.1.1](#4211-invocation--invocation-canonical-bytes-anti-replay), only over the resumption domain and at the resumption threshold.
 
-**No operator tier reaches a CONSTITUTIONAL halt (normative — resolves the Annex F overlap).** The incident-response tiers of [Annex F](part_8_appendices.md) — Tier 1 pause/retry, Tier 2 "first human veto; reactivate after triage", Tier 4 fleet shut-down — govern **operator-level** incidents, the layer [CC 3.4.1](part_3_the_namespace.md) already distinguishes from federation-wide constitutional halt. A Tier-2 lone-signature reactivation within its 30-minute time-to-act therefore resumes an **operator-tier pause only**. A `CONSTITUTIONAL` halt is resumable **exclusively** by `accord:lifecycle:active` at the threshold above; no oversight, incident-command, or administrative tier MAY resume one, and no time-to-act target applies to it. Reading Annex F otherwise would give a single supervisor the un-fire authority this section exists to deny.
+**No operator tier reaches a `constitutional` halt (normative — resolves the Annex F overlap).** The incident-response tiers of [Annex F](part_8_appendices.md) — Tier 1 pause/retry, Tier 2 "first human veto; reactivate after triage", Tier 4 fleet shut-down — govern **operator-level** incidents, the layer [CC 3.4.1](part_3_the_namespace.md) already distinguishes from federation-wide constitutional halt. A Tier-2 lone-signature reactivation within its 30-minute time-to-act therefore resumes an **operator-tier pause only**. A `CONSTITUTIONAL` halt is resumable **exclusively** by `accord:lifecycle:active` at the threshold above; no oversight, incident-command, or administrative tier MAY resume one, and no time-to-act target applies to it. Reading Annex F otherwise would give a single supervisor the un-fire authority this section exists to deny.
 
 This ratifies the CIRISVerify v6.10.0 first-implementation layout (issue #109), with one addition the implementation flagged as open: the **mandatory `resumes_halt_id` field** (its sub-Q1). Verify adjusts by the one-field change; until then its layout is first-impl-pending-cross-confirm, now confirmed with that field added.
+
+#### 4.2.1.4 `operational-relief` — Operational self-report vs. relief — the node detects, the root relieves (normative — CIRISConstitution#96)
+
+The four rules above constrain **authoring on the delegation plane**. Under load the question an operator actually faces is the other one — *what may a node do about itself?* — and answering it only by negation ("it may not author `mesh_config`; therefore…") is what let two implementations get it wrong in opposite directions in one week. The composition is stated here.
+
+**Two planes, and neither may be authored on the other's.**
+
+| plane | author | says |
+|---|---|---|
+| `config:load` ([CC 3.1](part_3_the_namespace.md) / [CC 3.4.5](part_3_the_namespace.md)) | **the node**, on `infra:attest`, `witness_relation: self` | *"I am at capacity"* — about **itself** |
+| `mesh_config:{key}` ([CC 4.2.1](#421-authority--authority-scope)) | **the trust root**, on the [CC 3.2](part_3_the_namespace.md) delegation plane | *"nodes under me shall carry ≤ N"* — about **others** |
+
+**Operational self-report vs. relief (normative).** A node MAY attest its own carried load as `config:load` — a self-report on `infra:attest`, `witness_relation: self`, bounded by `expires_at`, about the emitting node and no other party. A node MUST NOT author a `mesh_config` value: that plane is the trust root's and governs what other nodes carry. A root MAY relieve across its nodes under rules (1)–(3). The two **compose** — a node's self-report is evidence a root may act on; a root's relief is a bound the node consumes — and neither substitutes for the other. A `mesh_config` key governing carried load remains subject to rule (2): it MUST NOT be admitted before a consumer processor exists for it, or a relief is reported as taken while the node keeps working at full rate.
+
+**A node MAY always do less of its own optional work.** Reducing its own housekeeping under measured contention is a **local act**: it declares nothing, confers nothing, needs no authority, and is available to every node at every moment. It was previously derivable but nowhere stated, so an implementer could not tell whether even that was in bounds.
+
+**Why the shapes differ, and why both expire.** A node holds `infra:attest` — *"vouch as the delegator's infrastructure"* — from its owner-binding, or for a canonical from the accord's charter; every node is delegated its rights **for a reason**, and speaking about its own condition is within them ([CC 3.4.7.3](part_3_the_namespace.md) Clause E is the same principle at the enforcement seam: infrastructure may sign its own refusal without new authority). What a node lacks is standing over **others**, which is exactly what `mesh_config` confers. Both records are short-lived for one structural reason: **the TTL attaches to unilateralness** (rule (3)'s own logic) — a root's relief is unilateral over its nodes, and a node's self-report is unilateral about itself, so a node's standing does not survive the condition that prompted it.
+
+**Enforcement is three-legged and now complete.** [CC 3.4.5](part_3_the_namespace.md)'s self-or-owner rule for `config:*` is enforced at **substrate admission** as [CC 3.4.7](part_3_the_namespace.md) requires, not by producer obligation alone — without the gate, any peer could make a healthy node look like it is shedding, and a third-party `config:load` staged at the put door would route around the producer rule entirely.
 
 ### 4.2.2 `hardware-class` — Hardware-class taxonomy
 
@@ -138,11 +159,22 @@ This ratifies the CIRISVerify v6.10.0 first-implementation layout (issue #109), 
 | `placeholder_pending_provisioning` | Interim value before actual hardware provisioning. Consumers MUST treat as `0.0` trust weight |
 | `software_hsm_development` | DEVELOPMENT ONLY; consumer policy MUST reject for federation-scope verification |
 
-Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secure_Enclave` = 0.95; `YubiKey_5_FIPS` = 0.95; `TPM_2_0` = 0.9; `placeholder_pending_provisioning` = 0.0; `software_hsm_development` = 0.0.
+Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secure_Enclave` = 0.95; `YubiKey_5_FIPS` = 0.95; `TPM_2_0` = 0.9; `placeholder_pending_provisioning` = 0.0; `software_hsm_development` = 0.0. **A class this table does not list carries multiplier 0.0** — an unlisted class is a claim nobody rated, not a claim rated by its own spelling.
 
-#### 4.2.2.1 `hardware-class-hardware` — Hardware-class self-assertion gap (acknowledged)
+**Two fields, two questions (normative — CIRISConstitution#107 / #112).** `hardware_class` is the **certified class** a holder asserts, carried as a JSON property on a signed key record (as served in the GenesisBundle's `holders` / `serve_nodes` and on `/v1/accord-holders`) and inside `attestation_evidence`; it is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary generated from `ciris_keyring::HardwareType`. One is never a value of the other; a consumer that needs both reads both. The classes code has minted beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
 
-The `hardware_class` field is a self-asserted string on each `federation_keys` row. There is no normative mechanism (TPM quote chain, Apple attestation, FIDO attestation) for a verifier to independently corroborate the claim. Per [CC 8.3.1](part_8_appendices.md) **R5** (acknowledged risk): consumer policy MUST treat the `hardware_class` field as a producer claim, not a cryptographically-attested fact. A planned roadmap item closes this via per-platform attestation-chain verification; until then the trust-multipliers in CC 4.2.2 above bind only as guidance.
+| `hardware_class` | `hardware_custody:{platform}` it runs on |
+|---|---|
+| `HSM_FIPS_140_3_L3` | `aws_cloud_hsm` \| `azure_hsm` \| `gcp_cloud_hsm` \| `yubi_hsm` |
+| `Apple_Secure_Enclave` | `ios_secure_enclave` \| `mac_os_secure_enclave` |
+| `YubiKey_5_FIPS` | `external_secure_element` |
+| `TPM_2_0` | `tpm_discrete` \| `tpm_firmware` |
+| `placeholder_pending_provisioning` | none — no key yet |
+| `software_hsm_development` | `software_only` |
+
+#### 4.2.2.1 `hardware-class-hardware` — Hardware-class claim, and the attestation chain that corroborates it
+
+The `hardware_class` string is self-asserted by the holder; there is no `federation_keys.hardware_class` column — it rides inside the key's `attestation_evidence`. What corroborates it is the **evidence variant**, not the string: since 2026-08 the per-platform attestation chains are evidence-established ([CC 8.3.1](part_8_appendices.md) **R5**, discharged — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK), and a verifier admits a class only when the chain for that mechanism verifies and the attested key is the record's own key (a lifted attestation replayed under another key is refused). Consumer policy therefore keys on the **verified mechanism** (`hardware_custody:{platform}`, the `HardwareType` the chain proves) and reads `hardware_class` as the holder's certified-class claim over it; where no chain verifies, the class is unattested and the multiplier is 0.0. The earlier text of this section said no mechanism existed; R5 records that it does.
 
 ### 4.2.3 `accord-holder` — The accord-holder triple
 
@@ -202,7 +234,7 @@ The genesis triple ([CC 4.2.3](#423-accord-holder--the-accord-holder-triple)) is
 
 | Action | Threshold over `L` | Window |
 |---|---|---|
-| **Fire** (`CONSTITUTIONAL` kill, [CC 4.2.1.1](#4211-invocation--invocation-canonical-bytes-anti-replay)) | **floor = 1** — a single reachable survivor may fire | **none** — immediate on a fresh survivor signature |
+| **Fire** (`constitutional` kill, [CC 4.2.1.1](#4211-invocation--invocation-canonical-bytes-anti-replay)) | **floor = 1** — a single reachable survivor may fire | **none** — immediate on a fresh survivor signature |
 | **Roster change** (add / remove / swap) | **strict majority of `L`** (`2·M > \|L\|`) | `W` = 72 h baseline (extensible to 7 d under a declared severe-degradation state) |
 | **Standing acts** (non-emergency) | strict majority of the standing roster (unchanged) | normal cadence |
 
@@ -256,7 +288,7 @@ contest = sha256(
  "nonce=" || base64url(rand_32_bytes))
 ```
 
-`accord_decision` carries **no separate signing domain** — its authority is the contained `accord_participation` signatures + any membership `supersedes`. The **restore** authority (`verify_recovery_supersede`, H7) signs its own `ciris.accord_restore.v1` domain over the known-good-snapshot digest + the adjudicated `accord_contest` digest — distinct from every domain above, so a restore can never be replayed as a proposal, participation, decision, or contest. All hybrid (Ed25519 + ML-DSA-65). The CIRISVerify `accord_live_quorum` impl aligns to these pins; this section is the CEG-registry confirmation (#113). **Steward PQC publication:** the accord-holder **and** the (key-independent, H6) steward-backstop PQC halves are published over the [CC 5.3](part_5_transport_substrate.md) HTTPS-consensus steward-key endpoint, so the tally resolves every signer at the federation tier under RequireHybrid; absent publication, hybrid resolution **fails closed**.
+`accord_decision` carries **no separate signing domain** — its authority is the contained `accord_participation` signatures + any membership `supersedes`. The **restore** authority (`verify_recovery_supersede`, H7) signs its own `ciris.accord_restore.v1` domain over the known-good-snapshot digest + the adjudicated `accord_contest` digest — distinct from every domain above, so a restore can never be replayed as a proposal, participation, decision, or contest. All hybrid (Ed25519 + ML-DSA-65). The CIRISVerify `accord_live_quorum` impl aligns to these pins; this section is the CEG-registry confirmation (#113). **Steward PQC publication:** the accord-holder **and** the (key-independent, H6) steward-backstop PQC halves are published as signed key records in the `federation_keys` directory under their own `identity_type` — **never** in the GenesisBundle's `holders`, which is the accord-family roster ([CC 5.3.4](part_5_transport_substrate.md)) and would otherwise count the backstop as a constitutional voter — so the tally resolves every signer at the federation tier under RequireHybrid; absent publication, hybrid resolution **fails closed**.
 
 **Physical assumption (deployment, not constitution).** The model rests only on a survivor getting a few-hundred-byte signed proof-of-life to a relaying node with **no standing infrastructure** — satisfiable over HF/shortwave skywave + NVIS store-and-forward (JS8Call) bridged into the mesh by EMP-hardened, geographically-distributed HF↔Reticulum gateways co-located with the steward sites. The signature is the trust, not the path, so any number of untrusted RF hops is safe. The relay/gateway backbone is itself adversary-targeted infrastructure and belongs in a deployment spec.
 
@@ -537,7 +569,7 @@ For `delivery_mode: push`, the substrate fans out to `entitled ∧ reachable` pe
 On a new-member admission via Policy M, the new member's `history_on_join` envelope value determines retroactive content delivery:
 
 - `from_join` (default) — new member receives current-epoch content forward only; no retroactive `key_grant` cascade
-- `full` — new member receives `key_grant`s for prior epochs subject to the [CC 5.1](part_5_transport_substrate.md) P4 catch-up bound (`min(operator depth cap, chunk-eviction horizon)`); evicted-epoch grants return `ContentMiss` per the [`MISSION.md`](../../MISSION.md) fail-honest invariant
+- `full` — new member receives `key_grant`s for prior epochs subject to the [CC 5.1](part_5_transport_substrate.md) P4 catch-up bound (`min(operator depth cap, chunk-eviction horizon)`); evicted-epoch grants return `ContentMiss` per the [`MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) fail-honest invariant
 
 This composes with [CC 4.4.3.4.5](#81125-forward-secrecy-on-member-removal-option-a-recommended-for-v1) Option A forward-secrecy: removed members retain extant `key_grant`s for content they were entitled to during membership; new members may or may not get retroactive grants per `history_on_join`. The substrate's forward-secrecy posture is uniform across consent, takedown, membership-departure, AND delivery-onboarding surfaces.
 
@@ -727,10 +759,10 @@ So a user MAY grant a device co-self (it manages their data locally) while revok
 
 **Agency at login (the partnering + delegation).**
 1. **Partnering** — the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id` ([CC 4.4.3.5.3](#81114-bilateral-partnered-pair) PARTNERED); the bilateral pair is the persistent, auditable relationship.
-2. **Delegation** — the user identity emits `delegates_to` against the **agent occurrence key**, with `delegated_scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"`, bounded `delegation_valid_until`. Sub-delegation works because `delegates_to` chains.
+2. **Delegation** — the user identity emits `delegates_to` against the **agent occurrence key**, with `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"`, bounded `delegation_valid_until`. Sub-delegation works because `delegates_to` chains.
 3. **This grant is FEDERATION-tier ([CC 5.3.2.4](part_5_transport_substrate.md)), not local** — *other peers must verify the agent's authority before honoring its messages/presence*, so the partnering+delegation is signed + promoted at login. **Promotion is the "app shows up on the network" moment.** (The agent's own self-content stays local-tier; only the act-on-behalf authorization federates.)
 
-**Canonical `delegated_scope` kinds for act-on-behalf**:
+**Canonical `scope` kinds for act-on-behalf**:
 
 | scope | grants the agent |
 |---|---|
@@ -746,8 +778,10 @@ So a user MAY grant a device co-self (it manages their data locally) while revok
 | `moderate` | a `moderation:{allegation_type}` ModerationEvent + the report→`scores` path + `age_assurance:*`/`content_class:*` gates | [CC 3.1.9.2](part_3_the_namespace.md) / [CC 4.4.3.10](part_4_composition_governance.md) |
 | `takedown` | a `takedown_notice` (incl. the CC 4.5.3 immediate-removal fast-path) | [CC 3.3.2](part_3_the_namespace.md) / [CC 4.5.3](part_4_composition_governance.md) |
 | `review` | a `reconsideration:{grounds}` appeal / review | [CC 3.1.9.2](part_3_the_namespace.md) |
+| `license` | a `licensure:{authority_id}` / `attestation:license_validity` attestation, **on behalf of a delegator that itself holds licence authority** by quorum ([CC 3.3.9](part_3_the_namespace.md)) — the scope conveys the right to *issue*, never the authority itself ([CC 2.4.1.2.1](part_2_the_grammar.md): a licence does not chain); anyone may be an authority under their own key, the fold keys on emitter-resolves-to-authority, and the one refusal a `license`-scoped issuance meets is ruled there) | [CC 3.1.2](part_3_the_namespace.md) / [CC 3.1.1](part_3_the_namespace.md) |
+| `grant` | a `key_grant` ([CC 3.3.2](part_3_the_namespace.md)) or a `consent:scope:*` grant over assets the delegator **owns or stewards, or holds a `grant`-scoped delegation over** — bounded by that authority, never by what the delegator can wrap: every recipient can wrap the DEK it unwrapped, and admission refuses a grant issued on possession alone ([CC 2.4.1.2.1](part_2_the_grammar.md)) | [CC 3.3.2](part_3_the_namespace.md) / [CC 3.3.5](part_3_the_namespace.md) |
 
-**Enforced-admission rule (normative):** a moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator (the entity holding the duty over the target content/scope) — exactly the CC 2.4.1.1 rule-(3) proxy shape (`scope ⊇ {moderate|takedown|review}`), depth-capped per [CC 4.1.1](part_4_composition_governance.md), revocable by `withdraws` against the `delegates_to`. **Reject otherwise.** Every action is therefore delegate-signed, delegator-traceable up the chain, and revocable — the [CC 4.5.3](part_4_composition_governance.md) **"takedown-isn't-a-coup"** property made *structural* (coordinated + attributable + revocable, never a unilateral seizure). See [CC 4.5.5](part_4_composition_governance.md). **1+4 preserved** — a `delegated_scope` vocabulary + enforcement addition over the existing `delegates_to`; the action primitives already ship; no new structural primitive.
+**Enforced-admission rule (normative — extended to `license` / `grant` per [CC 2.4.1.2.1](part_2_the_grammar.md)):** the same admission test binds every scope in the table above, including `license` and `grant`: an issuance whose delegator does not itself hold the underlying authority is **refused at admission**, not merely unweighted — for `license`, the delegator MUST hold licence authority for that `authority_id`; for `grant`, the delegator MUST hold the asset. A moderation action above is admitted **iff** its `attesting_key_id` is the delegator itself **or** sits on a live `delegates_to` chain bearing the matching scope from the delegator (the entity holding the duty over the target content/scope) — exactly the CC 2.4.1.1 rule-(3) proxy shape (`scope ⊇ {moderate|takedown|review}`), depth-capped per [CC 4.1.1](part_4_composition_governance.md), revocable by `withdraws` against the `delegates_to`. **Reject otherwise.** Every action is therefore delegate-signed, delegator-traceable up the chain, and revocable — the [CC 4.5.3](part_4_composition_governance.md) **"takedown-isn't-a-coup"** property made *structural* (coordinated + attributable + revocable, never a unilateral seizure). See [CC 4.5.5](part_4_composition_governance.md). **1+4 preserved** — a `scope` vocabulary + enforcement addition over the existing `delegates_to`; the action primitives already ship; no new structural primitive.
 
 **Partnership WITHOUT agency — the infrastructure delegation profile.** The flow above binds an **agent** (a key with a brain) to a user as partnership **+ agency** — the scope includes `act_on_behalf` / `message_io`, so the agent reasons and acts AS the user. A **fabric/infrastructure node** ([CC 3.4.7.1](part_3_the_namespace.md); CIRISServer) needs the *partnership* (identity + the [CC 3.2](part_3_the_namespace.md) steward-binding that lets it hold non-infra membership standing under the user's authority) but MUST NOT receive agency — [CC 3.4.7.3](part_3_the_namespace.md) "infrastructure must not have agency." CEG pins a **reserved two-prefix scope split** so a verifier can enforce this cryptographically:
 
@@ -772,7 +806,7 @@ So a user MAY grant a device co-self (it manages their data locally) while revok
 
 ###### 4.4.3.4.3.1 `canonicalization-signing` — Signing member sets (normative — the JCS contract Verify hybrid-signs)
 
-Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelope)` ([CC 2.6.1](part_2_the_grammar.md) / RFC 8785), and at login promoted to federation-tier (the [CC 5.3.2.4.2](part_5_transport_substrate.md) promotion canonicalizes the **exact committed member set** — omit-vs-materialize ([CC 2.6.1.1](part_2_the_grammar.md)) is load-bearing; the signer MUST NOT re-default). **The [CC 2.6.1.1.1](part_2_the_grammar.md) determinism rules apply**: `subject_key_ids[]` and `delegated_scope[]` are **lexicographically sorted** (set-semantics); `aspects[]` retains RNS order (sequence-semantics); all key/hash/pubkey byte fields (`*_key_id`, `subject_key_ids[]`, the two reticulum pubkeys, `destination_hash`) are **lowercase hex per [CC 2.6.3](part_2_the_grammar.md)**; all timestamps are **[CC 2.6.2](part_2_the_grammar.md)-canonical**. The member sets the producer commits (and which `JCS` therefore covers) are pinned below. Optional [CC 2.1](part_2_the_grammar.md) envelope fields not listed ride the CC 2.6.1.1 omit rule (absent unless the producer sets them).
+Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelope)` ([CC 2.6.1](part_2_the_grammar.md) / RFC 8785), and at login promoted to federation-tier (the [CC 5.3.2.4.2](part_5_transport_substrate.md) promotion canonicalizes the **exact committed member set** — omit-vs-materialize ([CC 2.6.1.1](part_2_the_grammar.md)) is load-bearing; the signer MUST NOT re-default). **The [CC 2.6.1.1.1](part_2_the_grammar.md) determinism rules apply**: `subject_key_ids[]` and `scope[]` are **lexicographically sorted** (set-semantics); `aspects[]` retains RNS order (sequence-semantics); all key/hash/pubkey byte fields (`*_key_id`, `subject_key_ids[]`, the two reticulum pubkeys, `destination_hash`) are **lowercase hex per [CC 2.6.3](part_2_the_grammar.md)**; all timestamps are **[CC 2.6.2](part_2_the_grammar.md)-canonical**. The member sets the producer commits (and which `JCS` therefore covers) are pinned below. Optional [CC 2.1](part_2_the_grammar.md) envelope fields not listed ride the CC 2.6.1.1 omit rule (absent unless the producer sets them).
 
 **(a) `consent:partnership_grant:v1` (user side) / `consent:partnership_accept:v1` (agent side)** — bare `scores` ([CC 3.3.1](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
 ```
@@ -784,7 +818,7 @@ Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelop
  bilateral_pair_id:<shared pair id>, // §8.1.11.4 binding mechanism
  signed_at: <rfc3339_canonical> }
 ```
-> **Version segment pinned.** The dimension carries the `:v1` version segment — `consent:partnership_grant:v1` / `consent:partnership_accept:v1` — to satisfy the [CC 4.1.3](part_4_composition_governance.md) `scores` version-segment gate. The `:v1` is the partnership-ceremony schema version (bump to `:v2` only if the bilateral shape changes); the shared `bilateral_pair_id` remains the CC 4.4.3.5.3 binding mechanism.
+> **Version segment pinned.** The dimension carries the `:v1` version segment — `consent:partnership_grant:v1` / `consent:partnership_accept:v1` — as [CC 3.1.7](part_3_the_namespace.md) R3 requires of every scored dimension. The `:v1` is the partnership-ceremony schema version (bump to `:v2` only if the bilateral shape changes); the shared `bilateral_pair_id` remains the CC 4.4.3.5.3 binding mechanism.
 
 **Canonical signed member set for the two `:v1` envelopes.** Both impls MUST canonicalize (and thus hybrid-sign) **exactly** this member set, or the JCS bytes — and the signatures — diverge. The set is the [CC 3.3.1](part_3_the_namespace.md) bare-`scores` shape; these seven members are **REQUIRED** (present in the JCS for both `grant` and `accept`):
 
@@ -805,7 +839,7 @@ Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelop
 { attestation_type: "delegates_to",
  attesting_key_id: <user identity_key_id>,
  attested_key_id: <agent occurrence_key_id>, // the delegate
- delegated_scope: ["act_on_behalf",...], // §8.1.12.7 canonical kinds
+ scope: ["act_on_behalf",...], // §8.1.12.7 canonical kinds
  delegation_purpose: "act_as_user",
  delegation_valid_from:<rfc3339_canonical>,
  delegation_valid_until:<rfc3339_canonical>,
@@ -989,7 +1023,7 @@ Substrate MAY cache the resolution per `(T, s)` keyed on the latest `asserted_at
 | **PARTNERED** | Bilateral pair per CC 4.4.3.5.3: subject `consent:partnership_grant` + producer `consent:partnership_accept` under same `bilateral_pair_id`; no `valid_until` |
 | **ANONYMOUS** | Revocation + decay-protocol per CC 4.4.3.5.1: substrate emits stage milestones; agent honors stage-appropriate processing constraints |
 
-Per CEG's [CC 2.4 MISSION.md](../../MISSION.md) layering: CIRISAgent's three streams are a **named bundle** at the consumer-policy layer. Other agents MAY compose other streams over the same wire primitives. CEG documents the canonical bundle for ecosystem coordination; CEG does not lock the bundle.
+Per CEG's [CC 2.4 MISSION.md](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) layering: CIRISAgent's three streams are a **named bundle** at the consumer-policy layer. Other agents MAY compose other streams over the same wire primitives. CEG documents the canonical bundle for ecosystem coordination; CEG does not lock the bundle.
 
 #### 4.4.3.6 `policy-attestation` — Policy I — Attestation-Ladder Composition
 
@@ -1047,7 +1081,7 @@ Consumer trusts an attestation if `attesting_key_id` is in the consumer's pinned
 
 Aggregation: per (`dimension`, `attested_key_id`) tuple, mean of `score × confidence` from trusted attesters. Consumer threshold determines verdict.
 
-**Recommended default**: Policy A with `pinned_trust = {us-steward, eu-steward, apac-steward, accord_holder_1, accord_holder_2, accord_holder_3}`. Cold-start bootstrap: a new consumer obtains the pinned trust set by fetching `GET /v1/steward-key` + `GET /v1/accord-holders` ([CC 5.3.4](part_5_transport_substrate.md)), verifying the responses' hybrid signatures against TLS pubkey pinning (consumer-side TOFU or out-of-band distribution), and persisting locally. This is the shipped **default** root — never *the* root; the model below is what makes that distinction structural rather than rhetorical.
+**Recommended default**: Policy A with `pinned_trust = {community_key_id: ciris-canonical, family: humanity-accord}` — the accord-conferred steward founders of `ciris-canonical` and the three accord holders, resolved live, never a serving install's key. Cold-start bootstrap: a new consumer fetches `GET /v1/trust-root/bundle` ([CC 5.3.4](part_5_transport_substrate.md)), re-derives the bundle's quorum from the holder records it carries against out-of-band pins (the published holder fingerprints, or a build-baked copy of the bundle), and persists the anchors locally; `GET /v1/accord-holders` is a projection it cross-checks, not a second root. This is the shipped **default** root — never *the* root; the model below is what makes that distinction structural rather than rhetorical.
 
 **The pinned trust set is a graph, and its roots are pluggable (normative).**
 
@@ -1122,7 +1156,7 @@ Consumer applies transitive-trust propagation across the full attestation graph,
 
 A Sovereign agent scoring `licensure:CA_medical_board: +1.0` is wire-format identical to a Registry-steward scoring the same. Consumer policy weights by attester source; the substrate is source-neutral. M-1's symmetry is structural, not bolted on.
 
-Per [`../MISSION.md`](../../MISSION.md) §1.1: both paths produce federation membership; neither is a gate. What differs is the *attestation surface* — the kind of claim the federation can compose about why a participant is trustworthy.
+Per [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.1: both paths produce federation membership; neither is a gate. What differs is the *attestation surface* — the kind of claim the federation can compose about why a participant is trustworthy.
 
 ## 4.5 `discipline` — Governance discipline
 
@@ -1167,7 +1201,7 @@ For RATCHET-calibrated detectors, the operational definition lives in the calibr
 4. Evidence-shape requirement
 5. Polarity semantics
 
-For documentation-only open vocabularies (`testimonial_witness:{kind}`, `hard_case:{kind}`, `topical_relation:{kind}`), discoverability lives in non-normative registry documents like [`WITNESS_KIND_REGISTRY.md`](../WITNESS_KIND_REGISTRY.md) — additions there require no spec amendment.
+For documentation-only open vocabularies (`testimonial_witness:{kind}`, `hard_case:{kind}`, `topical_relation:{kind}`), discoverability lives in non-normative registry documents like `WITNESS_KIND_REGISTRY.md` (retired; cited by name) — additions there require no spec amendment.
 
 **`{axis}` and `ci_axis` are different objects — and that is the point.** The `{axis}` above is a *value* in an open prefix vocabulary. A **`ci_axis`** is a *contextual-integrity question a wire field answers*: who sent, about whom, who may see, who may revoke, who may receive, what type, under what principle, over what lifecycle, what content. This section governs both and never fuses them — one name serving two axes is exactly the defect the gate below exists to detect.
 
@@ -1305,7 +1339,7 @@ Moderation is a **delegable *duty*, not a platform- or fabric-assigned role** (d
 
 One grammar covers a group chat, a classroom (teacher = delegated `moderate`), a town hall, an art gallery, a subreddit, a Discord, a Facebook-scale community: **the labeling open + filterable, the authority delegable + attenuable + revocable.**
 
-CEG **names** the three duties as canonical `delegated_scope` kinds and **enforces** their admission — mirroring the only previously-enforced scope, `consent_revocation` ([CC 2.4.1.1 rule 3](part_2_the_grammar.md)). The kinds + their shipped action primitives are pinned at [CC 4.4.3.4.3.1](part_4_composition_governance.md):
+CEG **names** the three duties as canonical `scope` kinds and **enforces** their admission — mirroring the only previously-enforced scope, `consent_revocation` ([CC 2.4.1.1 rule 3](part_2_the_grammar.md)). The kinds + their shipped action primitives are pinned at [CC 4.4.3.4.3.1](part_4_composition_governance.md):
 
 | scope | emits, on the delegator's behalf | shipped primitive |
 |---|---|---|
@@ -1323,7 +1357,11 @@ CEG **names** the three duties as canonical `delegated_scope` kinds and **enforc
 
 Otherwise **REJECT**. **Absence of a principal field is NOT an admit condition** — admission requires (a) or (b) to hold positively; a verifier MUST NOT read "no field present" as "as-self." This is the faithful mirror of `consent_revocation` ([CC 2.4.1.1 rule 3](part_2_the_grammar.md)), which derives its principal from the existing `subject_key_ids` relationship + the chain, never a side-field. Substrate SHOULD record which rule + which root admitted the action (the CC 2.4.1.1 per-rule audit metadata).
 
-**Deputization + attenuation (normative; SOTA-aligned — UCAN / macaroons / SPKI-SDSI / ZCAP-LD).** A `delegates_to` MAY permit its delegate to **deputize** (further-delegate the duty) — but **only if the delegator granted it**, by including `sub_delegation` in the granted `delegated_scope` ([CC 4.4.3.4.3.1](part_4_composition_governance.md)). Every sub-delegation **attenuates, never expands**: `child.scope ⊆ parent.scope`, and constraints may be *added* but never removed — the capability-attenuation rule shared by UCAN (each delegation "restates or attenuates"), macaroon caveats, and SPKI/SDSI proof-carrying authorization. The chain is depth-capped at 5 ([CC 4.1.1](part_4_composition_governance.md)) and **revocable at any link**: a `withdraws` against *any* `delegates_to` in the chain invalidates everything downstream of it (UCAN-style proof-chain revocation). So a delegator decides at grant time **whether** their deputy may appoint further deputies and **under what constraints**, and can sever the entire subtree with a single revocation — deputize-a-teacher's-aide, hand-a-shift-to-another-mod, appoint-an-agent, all with bounded, revocable, attenuating authority.
+**Deputization + attenuation (normative; SOTA-aligned — UCAN / macaroons / SPKI-SDSI / ZCAP-LD).** A `delegates_to` MAY permit its delegate to **deputize** (further-delegate the duty) — but **only if the delegator granted it**, by including `sub_delegation` in the granted `scope` ([CC 4.4.3.4.3.1](part_4_composition_governance.md)). Every sub-delegation **attenuates, never expands**: `child.scope ⊆ parent.scope`, and constraints may be *added* but never removed — the capability-attenuation rule shared by UCAN (each delegation "restates or attenuates"), macaroon caveats, and SPKI/SDSI proof-carrying authorization. The chain is depth-capped at 5 ([CC 4.1.1](part_4_composition_governance.md)) and **revocable at any link**: a `withdraws` against *any* `delegates_to` in the chain invalidates everything downstream of it (UCAN-style proof-chain revocation). So a delegator decides at grant time **whether** their deputy may appoint further deputies and **under what constraints**, and can sever the entire subtree with a single revocation — deputize-a-teacher's-aide, hand-a-shift-to-another-mod, appoint-an-agent, all with bounded, revocable, attenuating authority.
+
+**Attenuating a capability to a family — `infra:attest:{dimension_family}` (normative — CIRISConstitution#100).** `infra:attest` grants *attest anything as the delegator's infrastructure*, which is the only vehicle a licensing authority has today for "issue `licensure:CA_medical_board` on my behalf" — an over-grant the caveat discipline this clause already names (UCAN / macaroons) exists to prevent, but which no field carried. A `scope` token MAY therefore be **sub-scoped to a dimension family** — `infra:attest:licensure:{authority_id}` — under the attenuation rule above: narrower only, never wider, and `child.scope ⊆ parent.scope` is satisfied by construction because the sub-scope names a subset of what the parent reaches. This adds no member to the closed `infra:*` set: it is a **caveat on an existing capability**, not a new capability.
+
+**Sub-scope matching is directional, and a prefix test gets it backwards (normative).** A parent token satisfies a check for its child; a **child MUST NOT satisfy a check for its parent**. The naive implementation — `scope.starts_with("infra:attest")` — returns true for `infra:attest:licensure:X` and hands a deliberately narrowed holder the full attest capability, silently repealing the attenuation that was the point of issuing it. A verifier MUST match on the full token with explicit parent/child semantics, and MUST NOT widen an **unrecognized** sub-scope to its parent: an unknown caveat fails closed, exactly as [CC 3.4.7.3](part_3_the_namespace.md) Clause B requires a membership test rather than a purity test for the same class of defect — the loophole spelled as a simplification.
 
 **Target → duty-holder resolution — makes the rule substrate-enforceable.** "Holds the duty over the target" is resolved by mapping the action's target to its duty-holder set, then checking the two predicates against it:
 
@@ -1343,7 +1381,7 @@ With this, **both** clauses of admit-(a) — subject-self and named-moderator �
 
 **The "takedown-isn't-a-coup" property, made structural.** Because every action is delegate-signed, delegator-traceable up the `delegates_to` chain, steward-bound at the root ([CC 3.2](part_3_the_namespace.md) — authority roots in an accountable human), and revocable, a takedown is **coordinated + attributable + revocable** — never a unilateral seizure. A no-authority actor, or a state actor demanding removal of `federation_keys` for whole classes of dissenters, **fails the enforced-admission gate** and escalates to the [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD per [CC 4.5.3](#453-fast-path-takedown-coordination-ceg-03-addition-per-cirisregistry37--38). The CC 4.5.3 immediate-removal timeline is unchanged — speed at the action layer; authority checked at the delegation layer.
 
-**1+4 preserved.** A `delegated_scope` vocabulary + enforced-admission addition over the existing `delegates_to`; the action primitives (`moderation:*`, `takedown_notice`, `reconsideration:*`) already ship. **No new structural primitive.**
+**1+4 preserved.** A `scope` vocabulary + enforced-admission addition over the existing `delegates_to`; the action primitives (`moderation:*`, `takedown_notice`, `reconsideration:*`) already ship. **No new structural primitive.**
 
 ### 4.5.6 `admission-operational` — Operational-language gate at admission
 
