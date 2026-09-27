@@ -287,7 +287,9 @@ def match_family(manifest_or_rules, dimension):
         # a duplicated tail is a VERSION (or its uppercase) right before the real one; a
         # vocabulary segment that merely starts `v` + digit (`v1beta`) is a family segment
         # here, since a valid version follows it (#122 review)
-        if len(parts) > 2 and VERSION_LIKE.match(parts[-2]):
+        if len(parts) >= 2 and VERSION_LIKE.match(parts[-2]):
+            return None, {}, rules.tokens["case_malformed"]
+        if len(parts) < 2:                # `v1` alone: a version with no family segment before it
             return None, {}, rules.tokens["case_malformed"]
         return None, {}, None
     prefix, binds, refusal, has_version = hit
@@ -444,6 +446,10 @@ def generate_vectors(manifest):
         "a version attempt in last place on open vocabulary is malformed, not a missing tail")
     add("no_such_family:v1beta:v2", None, None,
         "a family segment that merely starts v+digit is open vocabulary when a valid version follows")
+    add("v1:v2", None, rules.tokens["case_malformed"],
+        "two version segments and no family segment is malformed, not open vocabulary")
+    add("v1", None, rules.tokens["case_malformed"],
+        "a version with no family segment before it is malformed, not open vocabulary")
     for stem in rules.closed_stems:
         dim = stem + "totally:new:v1"
         add(dim, match_family(rules, dim)[0], rules.tokens["family_unregistered"],   # a wildcard parent claims it; a parameterized one cannot

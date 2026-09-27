@@ -92,6 +92,8 @@ RC5 is the **evidence re-pin release**: rc4 locked the registry so that every ro
 
 **Codex on #122, sixth pass — three findings, three fixes.** `consent:community_trust`: a revocation is a fold **boundary**, not a deletion — every grant asserted at or before the latest revocation is out, whichever row the revocation named, so revoking the newest grant never resurrects an older one; and the owner can always revoke — a node-emitted grant MUST list its owner in `subject_key_ids[]` so the owner's `withdraws` is admitted on the CC 2.4.1.1 third-party path. Session claims: `claimed_at ≤ valid_until` joins the 86 400 s ceiling, so a lease runs forward from its claim.
 
+**Codex on #122, seventh pass — three findings, three fixes.** `consent:community_trust`: the owner a node-emitted grant must list is `owner_of(node)` **at the grant's own `asserted_at`**, resolved over the replicated owner-binding rows and never the receiver's current view, so an ownership transfer neither admits nor un-admits a grant already made; the listed key keeps its revocation seat whatever ownership later becomes, and a new owner re-grants rather than inheriting it. Open vocabulary needs a family segment before its version: `v1` and `v1:v2` are malformed (962 vectors). The session rule's clock exception cites CC 2.6.7, where the ±5-minute rule lives, not CC 2.6.2.
+
 
 ## 1.0-rc4 — the actor/substrate line, ledgers as content, and every row resolving
 

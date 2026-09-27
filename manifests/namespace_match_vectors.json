@@ -5713,6 +5713,18 @@
       "why": "a family segment that merely starts v+digit is open vocabulary when a valid version follows"
     },
     {
+      "dimension": "v1:v2",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "two version segments and no family segment is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "v1",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version with no family segment before it is malformed, not open vocabulary"
+    },
+    {
       "dimension": "accord:totally:new:v1",
       "family": "accord:*",
       "refusal": "namespace_family_unregistered",
