@@ -559,6 +559,9 @@ def main():
         ("policy", "case-sensitive; lowercase CC vocabulary; per-segment classes"),
         ("cc_ref", "CC 3.1.7 R3"),
         ("compare", "byte-exact; consumers MUST NOT case-fold"),
+        ("match_semantics", "full-match: a segment pattern (vocab_pattern, literal_pattern, version_segment.pattern, "
+                            "segments[].pattern, external_standards[].pattern) must match the WHOLE segment; "
+                            "a `$` anchor does not admit a trailing newline (CIRISConstitution#116)"),
         ("refusal_token", "namespace_dimension_case_malformed"),
         ("vocab_pattern", VOCAB_PATTERN),
         ("literal_pattern", LITERAL_PATTERN),

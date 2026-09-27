@@ -30,6 +30,7 @@
         }
       },
       "literal_pattern": "^[a-z0-9][a-z0-9_]*$",
+      "match_semantics": "full-match: a segment pattern (vocab_pattern, literal_pattern, version_segment.pattern, segments[].pattern, external_standards[].pattern) must match the WHOLE segment; a `$` anchor does not admit a trailing newline (CIRISConstitution#116)",
       "placeholder_classes": {
         "allegation_type": "vocab",
         "approach_id": "value",
@@ -178,11 +179,11 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 145,
+    "n_families": 147,
     "per_component": {
       "accord-agent": 28,
       "anti-sybil": 6,
-      "attestation": 19,
+      "attestation": 21,
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
@@ -191,9 +192,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "b696db25674612ff1b027bf844bedfa2be8967db7812045bdf3f5ed3c3882d6e",
+    "registry_sha256": "9b3e42286368f1e06b55d3af481f05409348238bd26e93ec01b03c6763e88e06",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "d13f83893599011fb9c4f5b83b963c7ad338e7b47247993bc50db73806872eea"
+    "source_sha256": "a29336a29cc3809f009bf8ef580cc6688e76d2713165a475f10683e113d93e87"
   },
   "families": [
     {
@@ -952,6 +953,68 @@
     },
     {
       "cc_section": "3.1.2",
+      "description": "Reversible-cause exclusion companion (CC 3.4.12): the assessor attests that delirium, infection-confusion, depression and polypharmacy are ruled out for the domain.",
+      "owning_component": "attestation",
+      "owning_repo": "CIRISVerify",
+      "polarity": "signed",
+      "prefix": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.12",
+        "rule": "witness-reserved, subject-not-self, attester != steward"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity_assurance"
+        },
+        {
+          "class": "literal",
+          "segment": "reversible_excluded"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.2",
+      "description": "Acute-window companion (CC 3.4.12): exclusion in progress, not skipped; admissible for the T1 emergency-necessity tier only, and the binding MUST lapse unless it resolves to reversible_excluded within its valid_until.",
+      "owning_component": "attestation",
+      "owning_repo": "CIRISVerify",
+      "polarity": "signed",
+      "prefix": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.12",
+        "rule": "witness-reserved, subject-not-self, attester != steward"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity_assurance"
+        },
+        {
+          "class": "literal",
+          "segment": "reversible_pending"
+        },
+        {
+          "class": "vocab",
+          "segment": "{domain}"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.2",
       "description": "Witness rung of the adult decision-capacity ladder (CC 3.4.12): a registered qualified assessor attests a per-domain band; the subject cannot self-emit it and the proposed steward cannot be the attester.",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
@@ -969,7 +1032,13 @@
         },
         {
           "class": "vocab",
-          "segment": "{level}"
+          "open": false,
+          "segment": "{level}",
+          "values": [
+            "provider",
+            "panel",
+            "government"
+          ]
         },
         {
           "class": "vocab",
@@ -977,7 +1046,12 @@
         },
         {
           "class": "vocab",
-          "segment": "{band}"
+          "open": false,
+          "segment": "{band}",
+          "values": [
+            "capacitated",
+            "incapacitated"
+          ]
         },
         {
           "class": "vocab",

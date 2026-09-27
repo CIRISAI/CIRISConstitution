@@ -74,6 +74,9 @@ def _score(fam):
 
 
 VERSION_LIKE = re.compile(r"^[vV][0-9]+(\.[0-9]+)*$")
+# Every pattern is applied with full-match semantics (`re.fullmatch`): the WHOLE segment
+# must match, so a segment carrying a trailing newline fails a `$`-anchored pattern here
+# exactly as it does in a byte-exact port (CIRISConstitution#116).
 # a LAST segment that starts like a version tail (v + digit) but is not one — v1beta,
 # v1., V1x: an attempt at the version segment, so the family is the one the other
 # segments name. A bare `vx` is a leaf name (a version begins `v` + digit, R3).
@@ -88,21 +91,21 @@ def _check_seg(seg, got, rules):
         return rules.tokens["case_malformed"]
     pattern = seg.get("pattern")
     if seg["segment"] == "{version}":
-        return None if rules.version.match(got) else rules.tokens["case_malformed"]
+        return None if rules.version.fullmatch(got) else rules.tokens["case_malformed"]
     if cls == "vocab":
-        if not rules.vocab.match(got):
+        if not rules.vocab.fullmatch(got):
             return rules.tokens["case_malformed"]
         values = seg.get("values")
         if values and not seg.get("open", False) and got not in values:
             return rules.tokens["vocab_value_unregistered"]
         return None
     if cls == "hex":
-        return None if re.match(pattern or HEX_PATTERN, got) else rules.tokens["case_malformed"]
+        return None if re.fullmatch(pattern or HEX_PATTERN, got) else rules.tokens["case_malformed"]
     if cls == "external":
         pat = re.compile(pattern) if pattern else rules.external.get(name)
-        return None if (not pat or pat.match(got)) else rules.tokens["case_malformed"]
+        return None if (not pat or pat.fullmatch(got)) else rules.tokens["case_malformed"]
     # value: verbatim, case-preserved — unless the row pins a shape (a numeric field)
-    if pattern and not re.match(pattern, got):
+    if pattern and not re.fullmatch(pattern, got):
         return rules.tokens["case_malformed"]
     return None
 
@@ -157,7 +160,7 @@ def _match_segments(fam, parts, rules):
         # real version was stripped before matching — so it is malformed, never a leaf;
         # so is a version attempt (v1beta) in last place
         last = pi + k == len(parts) - 1
-        if not got or not rules.vocab.match(got) or VERSION_LIKE.match(got) or (last and VERSION_ATTEMPT.match(got)):
+        if not got or not rules.vocab.fullmatch(got) or VERSION_LIKE.match(got) or (last and VERSION_ATTEMPT.match(got)):
             refusal = refusal or rules.tokens["case_malformed"]
     if tail:
         binds["*"] = ":".join(tail)
@@ -166,7 +169,7 @@ def _match_segments(fam, parts, rules):
 
 def _resolve(rules, parts):
     """Best candidate for `parts`: (prefix, binds, refusal, has_version) or None."""
-    versioned = bool(rules.version.match(parts[-1]))
+    versioned = bool(rules.version.fullmatch(parts[-1]))
     candidates = []
     for prefix, fam in rules.families.items():
         ends_version = fam["segments"][-1]["segment"] == "{version}"
@@ -207,7 +210,7 @@ def _resolve(rules, parts):
     return prefix, binds, refusal, has_version
 
 
-def _detect_malformed(rules, parts):
+def _detect_malformed(rules, parts, clean_only=False):
     """A dimension no row claims may still be a MALFORMED form of a registered family —
     a case-mutated stem, an uppercase or duplicated version tail. Fold and strip only
     to DETECT, never to admit; return the family it mutates, or None."""
@@ -223,7 +226,7 @@ def _detect_malformed(rules, parts):
             variants.append(low[:-2])
     for v in variants:
         hit = _resolve(rules, v)
-        if hit:
+        if hit and (hit[2] is None or not clean_only):
             return hit[0]
     return None
 
@@ -255,8 +258,18 @@ def match_family(manifest_or_rules, dimension):
     prefix, binds, refusal, has_version = hit
     fam = rules.families[prefix]
     if refusal:
+        # a refused hit may be a MALFORMED form of a different row that resolves cleanly once
+        # folded or stripped — a leaf under a wildcard parent (`accord:lifecycle:V1`), or a
+        # companion row hidden by an arity-exact sibling (`capacity_assurance:reversible_excluded:
+        # medical:v1:v2`). The clean row is the family it mutates (#116, #117): the reference
+        # answers what the vectors name, so a consumer can compare exactly.
+        # (clean_only: the alternative must resolve without refusal, or the hit stands)
+        mutated = _detect_malformed(rules, parts, clean_only=True)
+        if mutated and mutated != prefix:
+            return mutated, {}, rules.tokens["case_malformed"]
+    if refusal:
         return prefix, binds, refusal
-    versioned = bool(rules.version.match(parts[-1]))
+    versioned = bool(rules.version.fullmatch(parts[-1]))
     # closed reserved leaves: a wildcard family only admits the leaves CC names
     if fam["segments"][-1]["class"] == "wildcard" and fam.get("leaves_closed"):
         leaf_parts = parts[:-1] if (versioned and has_version) else parts
@@ -350,7 +363,7 @@ def generate_vectors(manifest):
             if seg["class"] == "external" and seg["segment"].strip("{}") in rules.external:
                 parts = instantiate(fam, with_version=not exempt).split(":")
                 low = parts[i].lower()
-                if low != parts[i] and not rules.external[seg["segment"].strip("{}")].match(low):
+                if low != parts[i] and not rules.external[seg["segment"].strip("{}")].fullmatch(low):
                     parts[i] = low
                     add(":".join(parts), prefix, rules.tokens["case_malformed"],
                         "an external token outside its standard's canonical syntax is malformed (USD, not usd)")
@@ -378,6 +391,8 @@ def generate_vectors(manifest):
     add(rules.private + "anything:v1", None, rules.tokens["private_use_not_federatable"],
         "the Private Use prefix never admits at federation tier (R2)")
     add("no_such_family:leaf:v1", None, None, "open vocabulary: no row claims it, no refusal")
+    add("config:admission\n:v1", "config:{scope}", rules.tokens["case_malformed"],
+        "a segment carrying a newline fails its pattern under full-match semantics (#116: `$` is not a byte)")
     return vectors
 
 
@@ -398,10 +413,8 @@ def self_test(manifest):
             problems.append("reserved stem %r admitted an unminted leaf as open vocabulary" % stem)
     for v in generate_vectors(manifest):
         got, _, refusal = match_family(rules, v["dimension"])
-        # on a malformed dimension the REFUSAL is the contract; the family it is judged
-        # to mutate (a closed leaf or its wildcard parent) is best-effort attribution
-        family_ok = (got == v["family"]) or (v["refusal"] == rules.tokens["case_malformed"] and got is not None)
-        if not family_ok or refusal != v["refusal"]:
+        # exact: every vector names the family the reference itself answers (#116)
+        if got != v["family"] or refusal != v["refusal"]:
             problems.append("vector %r: expected (%r, %r) got (%r, %r)"
                             % (v["dimension"], v["family"], v["refusal"], got, refusal))
     return problems
@@ -425,9 +438,10 @@ def main(argv):
                 ("registry_sha256", manifest["_meta"].get("registry_sha256")),
                 ("generator", "tools/cc_namespace_match.py"),
                 ("contract", "every consumer replays these against its own matcher; "
-                             "expected (family, refusal) per dimension — on a refusal of "
-                             "namespace_dimension_case_malformed the refusal is the contract and "
-                             "the family is best-effort attribution"),
+                             "expected (family, refusal) per dimension, exactly as the reference "
+                             "answers them — a malformed form is attributed to the registered leaf it "
+                             "mutates where one exists, else to its wildcard parent (#116). Patterns are "
+                             "applied whole-segment (full-match): a `$` anchor never admits a trailing newline"),
             ])),
             ("vectors", generate_vectors(manifest)),
         ])

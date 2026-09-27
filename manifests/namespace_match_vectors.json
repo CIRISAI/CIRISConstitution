@@ -1,9 +1,9 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "b696db25674612ff1b027bf844bedfa2be8967db7812045bdf3f5ed3c3882d6e",
+    "registry_sha256": "9b3e42286368f1e06b55d3af481f05409348238bd26e93ec01b03c6763e88e06",
     "generator": "tools/cc_namespace_match.py",
-    "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension \u2014 on a refusal of namespace_dimension_case_malformed the refusal is the contract and the family is best-effort attribution"
+    "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
   "vectors": [
     {
@@ -1069,46 +1069,136 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "capacity_assurance:sample:sample:sample:v1",
+      "dimension": "capacity_assurance:reversible_excluded:sample:v1",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_excluded:sample:V1",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_excluded:sample:v1:v2",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_excluded:sample:v1beta",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity_assurance:reversible_excluded:sample:v1",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_excluded:sample",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_excluded:SAMPLE:v1",
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_pending:sample:v1",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_pending:sample:V1",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_pending:sample:v1:v2",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_pending:sample:v1beta",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity_assurance:reversible_pending:sample:v1",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_pending:sample",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
+    },
+    {
+      "dimension": "capacity_assurance:reversible_pending:SAMPLE:v1",
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "capacity_assurance:provider:sample:capacitated:v1",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "capacity_assurance:sample:sample:sample:V1",
+      "dimension": "capacity_assurance:provider:sample:capacitated:V1",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "capacity_assurance:sample:sample:sample:v1:v2",
+      "dimension": "capacity_assurance:provider:sample:capacitated:v1:v2",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "capacity_assurance:sample:sample:sample:v1beta",
+      "dimension": "capacity_assurance:provider:sample:capacitated:v1beta",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Capacity_assurance:sample:sample:sample:v1",
+      "dimension": "Capacity_assurance:provider:sample:capacitated:v1",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "capacity_assurance:sample:sample:sample",
+      "dimension": "capacity_assurance:provider:sample:capacitated",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "missing_version_segment",
       "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
-      "dimension": "capacity_assurance:SAMPLE:sample:sample:v1",
+      "dimension": "capacity_assurance:PROVIDER:sample:capacitated:v1",
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "capacity_assurance:not_a_listed_value:sample:capacitated:v1",
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "cert_validity:id1:v1",
@@ -5549,6 +5639,12 @@
       "family": null,
       "refusal": null,
       "why": "open vocabulary: no row claims it, no refusal"
+    },
+    {
+      "dimension": "config:admission\n:v1",
+      "family": "config:{scope}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a segment carrying a newline fails its pattern under full-match semantics (#116: `$` is not a byte)"
     }
   ]
 }
