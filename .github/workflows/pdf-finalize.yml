@@ -22,6 +22,10 @@ jobs:
         run: |
           V=$(cat VERSION)
           NUMBERED=$(ls ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true)
+          # the highest numbered build present now — captured here, before the rebuild
+          # below sweeps the numbered files, so the finalize commit can record it (#122 review)
+          LAST=$(echo "$NUMBERED" | sed -E "s/.*\.([0-9]+)\.pdf/\1/" | sort -n | tail -1)
+          echo "last=${LAST}" >> "$GITHUB_OUTPUT"
           # Finalize when a numbered build is present, the clean name or a permalink is
           # absent, OR a permalink's bytes differ from the clean file (a stable-version
           # bump writes the clean name directly, leaving `latest` stale — #113 review).
@@ -42,9 +46,9 @@ jobs:
         if: steps.state.outputs.finalize == 'yes'
         run: |
           V=$(cat VERSION)
-          # the highest numbered build this finalize collapses, recorded in the commit
-          # message so build_pdf.py keeps counting from it on the next branch (#122 review)
-          LAST=$(ls ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null | sed -E "s/.*\.([0-9]+)\.pdf/\1/" | sort -n | tail -1)
+          # the highest numbered build this finalize collapsed (captured in the state step,
+          # before the rebuild swept it), recorded so build_pdf.py keeps counting from it
+          LAST="${{ steps.state.outputs.last }}"
           FROM=${LAST:+ (from ${V}.${LAST})}
           cp "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf
           cp "ciris_constitution-${V}.pdf" ciris_constitution.pdf

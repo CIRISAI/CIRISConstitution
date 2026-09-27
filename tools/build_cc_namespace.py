@@ -162,13 +162,15 @@ EXTERNAL_STANDARDS = {                      # name -> (standard, syntax pattern 
     "currency": ("ISO 4217 alphabetic code", "^[A-Z]{3}$"),
     # canonical casing per BCP 47 §2.1.1 (RFC 5646): language lowercase, script Titlecase,
     # region UPPERCASE or 3 digits, variants and extensions lowercase — one wire string per tag
-    # RFC 5646 §2.1 langtag WITHOUT the extlang branch, or privateuse; canonical casing.
-    # Extlang forms (zh-cmn-Hans-CN) and grandfathered/irregular tags are not admitted: each
-    # has a preferred-value form (cmn-Hans-CN) under RFC 5646 §4.5, and that form is the one
-    # canonical spelling R3 admits — one wire string per tag.
-    "lang_code": ("BCP 47 language tag — RFC 5646 langtag without extlang, or privateuse; canonical casing; "
-                  "extlang and grandfathered forms are written as their §4.5 preferred value",
-                  "^(?:[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?|x(-[a-z0-9]{1,8})+)$"),
+    # RFC 5646 §2.1 langtag WITHOUT the extlang branch, or privateuse, canonical casing; plus
+    # the five grandfathered tags the registry gives NO Preferred-Value (i-default, i-enochian,
+    # i-mingo, cel-gaulish, zh-min), admitted literally. Every other extlang or grandfathered
+    # form (zh-cmn-Hans-CN, i-klingon, zh-min-nan) has a §4.5 preferred value (cmn-Hans-CN,
+    # tlh, nan), and that form is the one canonical spelling R3 admits — one wire string per tag.
+    "lang_code": ("BCP 47 language tag — RFC 5646 langtag without extlang, or privateuse, canonical casing; "
+                  "extlang and grandfathered forms with a §4.5 preferred value are written as that value; "
+                  "the five grandfathered tags without one (i-default, i-enochian, i-mingo, cel-gaulish, zh-min) are admitted literally",
+                  "^(?:[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?|x(-[a-z0-9]{1,8})+|i-default|i-enochian|i-mingo|cel-gaulish|zh-min)$"),
     "rating": ("the scheme named in the sibling {scheme} segment", None),
     "unit": ("ISO 4217 code, or a unit the ledger declares", None),
 }
