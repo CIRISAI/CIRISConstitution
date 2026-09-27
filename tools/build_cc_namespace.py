@@ -102,6 +102,10 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
+        # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
+        # "not a substrate-self-report", so it must come before the edge-wide rule.
+        (lambda p, c: p.startswith("delivery_receipt:"),
+         "subscriber-only (attesting_key_id is a current subscriber/member of the named stream; not a substrate self-report)", "CC 3.4.6"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
@@ -156,7 +160,9 @@ MULTI_PLACEHOLDERS = {
 }
 EXTERNAL_STANDARDS = {                      # name -> (standard, syntax pattern or None)
     "currency": ("ISO 4217 alphabetic code", "^[A-Z]{3}$"),
-    "lang_code": ("BCP 47 language tag", "^[A-Za-z]{2,3}(-[A-Za-z0-9]{1,8})*$"),
+    # canonical casing per BCP 47 §2.1.1 (RFC 5646): language lowercase, script Titlecase,
+    # region UPPERCASE or 3 digits, variants and extensions lowercase — one wire string per tag
+    "lang_code": ("BCP 47 language tag, canonical casing", "^[a-z]{2,3}(-[A-Z][a-z]{3})?(-(?:[A-Z]{2}|[0-9]{3}))?(-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*(-[a-wy-z0-9](-[a-z0-9]{2,8})+)*(-x(-[a-z0-9]{1,8})+)?$"),
     "rating": ("the scheme named in the sibling {scheme} segment", None),
     "unit": ("ISO 4217 code, or a unit the ledger declares", None),
 }

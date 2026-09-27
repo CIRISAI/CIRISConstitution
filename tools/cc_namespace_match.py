@@ -74,6 +74,10 @@ def _score(fam):
 
 
 VERSION_LIKE = re.compile(r"^[vV][0-9]+(\.[0-9]+)*$")
+# a LAST segment that starts like a version tail (v + digit) but is not one — v1beta,
+# v1., V1x: an attempt at the version segment, so the family is the one the other
+# segments name. A bare `vx` is a leaf name (a version begins `v` + digit, R3).
+VERSION_ATTEMPT = re.compile(r"^[vV][0-9][0-9A-Za-z.]*$")
 
 
 def _check_seg(seg, got, rules):
@@ -130,10 +134,13 @@ def _match_segments(fam, parts, rules):
         if multi and i == multi[0]:
             span = parts[pi:pi + 1 + extra]
             pi += 1 + extra
-            for got in span:
-                # a version-like sub-segment is a stray version tail, never part of the value
+            for k, got in enumerate(span):
+                # a version-like sub-segment is a stray version tail, never part of the value;
+                # a version ATTEMPT in last place is the same mistake misspelled
+                last = pi - len(span) + k == len(parts) - 1
                 refusal = refusal or _check_seg(seg, got, rules) or (
-                    rules.tokens["case_malformed"] if VERSION_LIKE.match(got) else None)
+                    rules.tokens["case_malformed"]
+                    if VERSION_LIKE.match(got) or (last and VERSION_ATTEMPT.match(got)) else None)
             binds[seg["segment"].strip("{}")] = ":".join(span)
             continue
         got = parts[pi]
@@ -145,10 +152,12 @@ def _match_segments(fam, parts, rules):
         refusal = refusal or _check_seg(seg, got, rules)
         binds[seg["segment"].strip("{}")] = got
     tail = parts[pi:]
-    for got in tail:                          # segments below a variadic tail
+    for k, got in enumerate(tail):            # segments below a variadic tail
         # a version-like token here is an uppercase or duplicated version tail — the
-        # real version was stripped before matching — so it is malformed, never a leaf
-        if not got or not rules.vocab.match(got) or VERSION_LIKE.match(got):
+        # real version was stripped before matching — so it is malformed, never a leaf;
+        # so is a version attempt (v1beta) in last place
+        last = pi + k == len(parts) - 1
+        if not got or not rules.vocab.match(got) or VERSION_LIKE.match(got) or (last and VERSION_ATTEMPT.match(got)):
             refusal = refusal or rules.tokens["case_malformed"]
     if tail:
         binds["*"] = ":".join(tail)
@@ -206,7 +215,7 @@ def _detect_malformed(rules, parts):
     low = [p.lower() for p in parts]
     if low != parts:
         variants.append(low)
-    if len(parts) > 1 and VERSION_LIKE.match(parts[-1]):
+    if len(parts) > 1 and (VERSION_LIKE.match(parts[-1]) or VERSION_ATTEMPT.match(parts[-1])):
         variants.append(parts[:-1])
         variants.append(low[:-1])
         if len(parts) > 2 and VERSION_LIKE.match(parts[-2]):
@@ -325,6 +334,8 @@ def generate_vectors(manifest):
                 "an uppercase version tail is malformed, not open vocabulary")
             add(":".join(parts + ["v2"]), prefix, rules.tokens["case_malformed"],
                 "a duplicated version tail is malformed, not open vocabulary")
+            add(":".join(parts[:-1] + ["v1beta"]), prefix, rules.tokens["case_malformed"],
+                "a version-shaped tail that fails the version pattern is malformed, not open vocabulary")
             if fam["segments"][0]["class"] == "literal":
                 add(":".join([parts[0].capitalize()] + parts[1:]), prefix, rules.tokens["case_malformed"],
                     "a case-mutated registered stem is malformed, not open vocabulary")

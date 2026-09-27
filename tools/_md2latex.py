@@ -24,7 +24,7 @@ def esc(s):
 
 # ASCII fallbacks for unicode INSIDE code blocks (verbatim can't use newunicodechar)
 CODE_ASCII = {'§':'S','—':'--','→':'->','←':'<-','≤':'<=','≥':'>=','∈':'in','‖':'||',
-   '²':'^2','³':'^3','⁴':'^4','⁶':'^6','✅':'[x]','↔':'<->','·':'.','×':'x','–':'-',
+   '²':'^2','³':'^3','⁴':'^4','⁵':'^5','⁶':'^6','⁰':'^0','¹':'^1','⁷':'^7','⁸':'^8','⁹':'^9','✅':'[x]','↔':'<->','·':'.','×':'x','–':'-',
    '∧':'/\\','≠':'!=','│':'|','…':'...','≡':'==','±':'+-','─':'-','𝒞':'C','−':'-',
    '⊇':'>=','∩':'^','┐':'+','┘':'+','✓':'v','á':'a','⚠':'(!)','️':'','∃':'E',
    'ρ':'rho','⌈':'|','⌉':'|','∪':'U','≫':'>>','≈':'~=','🔴':'(R)','┌':'+','┴':'+',
@@ -130,7 +130,7 @@ def convert(md):
 NUC = {
  '§':r'\S','—':'---','→':r'$\rightarrow$','←':r'$\leftarrow$','≤':r'$\leq$','≥':r'$\geq$',
  '∈':r'$\in$','‖':r'$\|$','²':r'\textsuperscript{2}','³':r'\textsuperscript{3}',
- '⁴':r'\textsuperscript{4}','⁶':r'\textsuperscript{6}','✅':r'[\checkmark]','↔':r'$\leftrightarrow$',
+ '⁴':r'\textsuperscript{4}','⁵':r'\textsuperscript{5}','⁶':r'\textsuperscript{6}','⁰':r'\textsuperscript{0}','¹':r'\textsuperscript{1}','⁷':r'\textsuperscript{7}','⁸':r'\textsuperscript{8}','⁹':r'\textsuperscript{9}','✅':r'[\checkmark]','↔':r'$\leftrightarrow$',
  '·':r'\textperiodcentered{}','×':r'$\times$','–':'--','∧':r'$\wedge$','≠':r'$\neq$',
  '│':'|','…':r'\ldots{}','≡':r'$\equiv$','±':r'$\pm$','─':'-','𝒞':r'$\mathcal{C}$',
  '−':'-','⊇':r'$\supseteq$','⊆':r'$\subseteq$','≔':r'$:=$','∩':r'$\cap$','┐':'+','┘':'+','✓':r'\checkmark{}','á':r"\'a",
