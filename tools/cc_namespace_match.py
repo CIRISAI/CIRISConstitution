@@ -86,7 +86,7 @@ VERSION_LIKE = re.compile(r"^[vV][0-9]+(\.[0-9]+)*$")
 # a LAST segment that starts like a version tail (v + digit) but is not one — v1beta,
 # v1., V1x: an attempt at the version segment, so the family is the one the other
 # segments name. A bare `vx` is a leaf name (a version begins `v` + digit, R3).
-VERSION_ATTEMPT = re.compile(r"^[vV][0-9][0-9A-Za-z.]*$")
+VERSION_ATTEMPT = re.compile(r"^[vV][0-9][0-9A-Za-z_.\-]*$")   # v1beta, v1-beta, v1_beta, v1., V1x
 
 
 def _check_seg(seg, got, rules):

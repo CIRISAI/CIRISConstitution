@@ -183,12 +183,33 @@ def versioned_pdf_name():
     # the number a finalize commit records ("from <V>.N"), raise it. A shallow clone
     # may see less history; the finalize message is there so it still sees the last one.
     nums += _history_build_numbers(numbered)
+    nums += _floor_from_tree()
     n = max(nums, default=0) + 1
     name = f"ciris_constitution-{VERSION}.{n}.pdf"
     # Sweep only OTHER numbered builds. The finalized bare-name file, when main has
     # written one, stays beside the branch build: it is a published release name and
     # the next finalize overwrites it from the numbered build (cmp-based).
     return name, [p for p in same_version if Path(p).name not in (name, clean)]
+
+
+COUNTER = HERE / "ciris_constitution.build"   # "<VERSION> <N>" — the floor, tracked in the tree
+
+
+def _floor_from_tree():
+    """The last build number recorded for this VERSION in the tracked counter file —
+    the floor a depth-1 checkout can see when neither the deleted numbered file nor
+    the finalize commit is in its history (#122 review)."""
+    try:
+        v, n = COUNTER.read_text(encoding="utf-8").split()
+        return [int(n)] if v == VERSION else []
+    except Exception:
+        return []
+
+
+def _record_floor(pdf_name):
+    m = re.search(r"\.(\d+)\.pdf$", pdf_name)
+    if m:
+        COUNTER.write_text(f"{VERSION} {m.group(1)}\n", encoding="utf-8")
 
 
 def _history_build_numbers(numbered):
@@ -224,6 +245,7 @@ if shutil.which("pdflatex"):
     # resolves on any branch. Never swept: the stale-file glob requires a
     # "-" after the stem, so it cannot match this name.
     shutil.copyfile(str(HERE / pdf_name), str(HERE / "ciris_constitution.pdf"))
+    _record_floor(pdf_name)               # a numbered build raises the tracked floor; a finalize leaves it
     for ext in (".aux", ".log", ".out", ".tex"):
         (HERE / f"{stem}{ext}").unlink(missing_ok=True)
     print(f"wrote {pdf_name}")
