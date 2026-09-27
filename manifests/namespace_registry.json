@@ -179,9 +179,9 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 147,
+    "n_families": 148,
     "per_component": {
-      "accord-agent": 28,
+      "accord-agent": 29,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
@@ -192,9 +192,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "49ba7cac954b33e6430d3d77b87536ec9975dbb9ff51c0c050d7f67f8b67c242",
+    "registry_sha256": "07e0c72538f3dd42451cac0c5f2529eed37bea3e8996640de2749aabb960b7fb",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "7b3b44273654a7384c0eca16befc404d78e4360569488ca4bffcc59140622ba5"
+    "source_sha256": "fb387133eea815d0241d4296c5b81c775c7d0caaa377fc2c1581b3da2f79b7c2"
   },
   "families": [
     {
@@ -1239,6 +1239,29 @@
     },
     {
       "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); a node owner's standing grant that the node's sealed reasoning traces may be captured for the community-trust plane, CC 3.3.1.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "consent:community_trust",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "community_trust"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
       "description": "Catalogue row (CC 3.1.7 R1); a decay-protocol stage, emitted by the party running the protocol, CC 3.3.1.",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
@@ -1480,6 +1503,7 @@
       "cc_section": "3.1.5",
       "description": "Subject-side consent authority over Contributions naming the subject in subject_key_ids, plus the producer-side and substrate-side leaves that close its lifecycle.",
       "leaves": [
+        "consent:community_trust",
         "consent:decay:{stage}",
         "consent:deletion_complete",
         "consent:deletion_sla:{days}",

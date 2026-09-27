@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc5",
-    "registry_sha256": "49ba7cac954b33e6430d3d77b87536ec9975dbb9ff51c0c050d7f67f8b67c242",
+    "registry_sha256": "07e0c72538f3dd42451cac0c5f2529eed37bea3e8996640de2749aabb960b7fb",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -1531,6 +1531,42 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
+      "dimension": "consent:community_trust:v1",
+      "family": "consent:community_trust",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:community_trust:V1",
+      "family": "consent:community_trust",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:community_trust:v1:v2",
+      "family": "consent:community_trust",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:community_trust:v1beta",
+      "family": "consent:community_trust",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:community_trust:v1",
+      "family": "consent:community_trust",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:community_trust",
+      "family": "consent:community_trust",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
       "dimension": "consent:decay:sample:v1",
       "family": "consent:decay:{stage}",
       "refusal": null,
@@ -1877,6 +1913,12 @@
       "family": "consent:stream:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "consent:community_trust:v1",
+      "family": "consent:community_trust",
+      "refusal": null,
+      "why": "closed reserved leaf resolves to its own row"
     },
     {
       "dimension": "consent:decay:sample:v1",
