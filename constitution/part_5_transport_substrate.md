@@ -1,6 +1,6 @@
 # Part 5 — Transport & Substrate
 
-**Decimal range** `5.x` · **35 sections** · **page budget 11pp** · [← master index](README.md)
+**Decimal range** `5.x` · **35 sections** · **page budget 11pp** · [← master index](../README.md)
 
 > Byte-level content transport, structural invisibility, epoch keying, and delivery.
 
@@ -47,7 +47,7 @@ The stream-epoch DEK seals content **O(1)**; the per-subscriber `key_grant` casc
 
 **Forward secrecy** is forward-only by default ([CC 4.5.12.1](part_4_composition_governance.md) Option A). **Post-Compromise Security (PCS)** is AVAILABLE (inherent to TreeKEM key-updates: a compromised current member heals on the next commit) and is **OPTIONAL, operator-enabled** — a deployment MAY require periodic self-updates for PCS, or stay forward-only.
 
-**Catch-up bound (P4)**: `min(operator depth cap [LensCore knob, NOT a substrate constant], chunk-eviction horizon)`. Three distinct windows that are NOT conflated: chunk-eviction horizon ≠ [CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) `holds_bytes` 24h TTL ≠ grant durability. A catch-up request against an evicted epoch returns **`ContentMiss` — fail-honest, no silent gap** (consistent with the [`MISSION.md`](../../MISSION.md) fail-honest invariant). Operators MUST ship the P4 cap **with** the cascade, else 10⁶ grant Contributions per rekey is the unbounded worst case.
+**Catch-up bound (P4)**: `min(operator depth cap [LensCore knob, NOT a substrate constant], chunk-eviction horizon)`. Three distinct windows that are NOT conflated: chunk-eviction horizon ≠ [CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) `holds_bytes` 24h TTL ≠ grant durability. A catch-up request against an evicted epoch returns **`ContentMiss` — fail-honest, no silent gap** (consistent with the [`MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) fail-honest invariant). Operators MUST ship the P4 cap **with** the cascade, else 10⁶ grant Contributions per rekey is the unbounded worst case.
 
 ## 5.2 `family` — Structural invisibility — `holds_bytes:sha256:*` suppression for `cohort_scope: self | family`
 
@@ -97,7 +97,7 @@ On admission of a Contribution C with cohort_scope ∈ {self, family}:
 
 **Composition with at-rest encryption flow**: when self/family at-rest encryption is enabled, persist wraps the DEK (`wrap_algorithm: v2`) under each currently-admitted `identity_occurrence`'s `occurrence_key_id` (self) or each `member.key_id` in the named family's roster (family). New occurrence / new family-member admission triggers retroactive `key_grant` emission for all extant `cohort_scope: self|family` content (the "I bought a new phone and want my Twitter history" / "I added Carol to the household" flows from CC 3.3.4 worked example).
 
-**Recipient encryption-key resolution + fail-secure exclusion.** The wrap target is **not** a recipient's signing key. `wrap_algorithm: v2` needs the recipient's `{x25519, ml_kem_768}` **content-KEM** keys, which the recipient self-certifies via its `identity_occurrence.encryption_pubkeys` ([CC 3.3.6.1](part_3_the_namespace.md)); the substrate resolves them by `resolve_encryption_keys(key_id)` = the recipient's current (non-superseded, within-`valid_until`) occurrence → its `encryption_pubkeys`. Because this layer **mandates v2**, a recipient whose current occurrence carries **no valid ML-KEM-768 key MUST be fail-secure *excluded*** from the grant — the content remains encrypted and unreachable to it; the substrate MUST NOT fall back to plaintext or to `wrap_algorithm: v1`. To be an at-rest-encryption recipient, an identity MUST have a federation-present occurrence carrying `encryption_pubkeys`. This is the [non-maleficence / fail-secure default](../../CLAUDE.md): a missing key denies access, never downgrades the protection.
+**Recipient encryption-key resolution + fail-secure exclusion.** The wrap target is **not** a recipient's signing key. `wrap_algorithm: v2` needs the recipient's `{x25519, ml_kem_768}` **content-KEM** keys, which the recipient self-certifies via its `identity_occurrence.encryption_pubkeys` ([CC 3.3.6.1](part_3_the_namespace.md)); the substrate resolves them by `resolve_encryption_keys(key_id)` = the recipient's current (non-superseded, within-`valid_until`) occurrence → its `encryption_pubkeys`. Because this layer **mandates v2**, a recipient whose current occurrence carries **no valid ML-KEM-768 key MUST be fail-secure *excluded*** from the grant — the content remains encrypted and unreachable to it; the substrate MUST NOT fall back to plaintext or to `wrap_algorithm: v1`. To be an at-rest-encryption recipient, an identity MUST have a federation-present occurrence carrying `encryption_pubkeys`. This is the [non-maleficence / fail-secure default](https://github.com/CIRISAI/CIRISRegistry/blob/main/CLAUDE.md): a missing key denies access, never downgrades the protection.
 
 **Exclusion MUST NOT be silent.** A bare `skip` makes a fail-secure exclusion indistinguishable from "the family went quiet" — a soft-censorship vector for a buggy or malicious substrate, and a contradiction of the spec's own `hard_case:*` attestability grain. On every fail-secure skip the substrate MUST emit **`hard_case:recipient_excluded:{scope_key_id}`** ([CC 3.4.4](part_3_the_namespace.md), which defines the closed `reason` set) **into the affected self/family scope itself** — carrying the excluded recipient's `key_id`, a `reason`, and the skipped Contribution's envelope ref — so the excluded member (who still sees cohort-scoped attestations) has something to audit and remediate. The event is cohort-scoped: it MUST NOT federate beyond the self/family (the CC 5.2 invisibility promise is preserved; the *fact* of the family's content is not leaked by its exclusion events).
 
@@ -220,7 +220,7 @@ Promotion computes the hybrid signature and flips the row federation-visible. It
 | `local` | MAY be absent (deferred per CC 5.3.2.2) | **No** | **only the producing occurrence** (self-read); every other caller — even an authorized family/community peer — sees nothing | local-tier write |
 | `federation` | hybrid Ed25519 + ML-DSA-65 **present** | Yes | per [CC 2.1](part_2_the_grammar.md) `cohort_scope` + the CC 5.2 invisibility rule | direct signed write OR `local → federation` promotion |
 
-**Invariant (substrate MUST enforce):** `tier = federation ⟹ hybrid signature present`. Nothing crosses to federation-visible unsigned. A `local` row is **labelled** local and MUST NOT be served as federation-authoritative ([fail-honest](../../MISSION.md)). The read-gate is **orthogonal** to `cohort_scope`: it is an additional filter (`local ⟹ caller is the producing occurrence`), composing with the CC 5.2 target-membership predicate. Threat entries: AV-59 (local row leaked to a non-self caller), AV-60 (unsigned local served as authoritative), AV-61 (the two gates de-synced).
+**Invariant (substrate MUST enforce):** `tier = federation ⟹ hybrid signature present`. Nothing crosses to federation-visible unsigned. A `local` row is **labelled** local and MUST NOT be served as federation-authoritative ([fail-honest](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md)). The read-gate is **orthogonal** to `cohort_scope`: it is an additional filter (`local ⟹ caller is the producing occurrence`), composing with the CC 5.2 target-membership predicate. Threat entries: AV-59 (local row leaked to a non-self caller), AV-60 (unsigned local served as authoritative), AV-61 (the two gates de-synced).
 
 ###### 5.3.2.4.3.1 `admission-pqc` — The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)
 
@@ -451,7 +451,7 @@ Both `epoch` (key-rotation index — for per-epoch entitlement / billing) and `K
 2. **`chunk_root` is a real published STH root** — MUST equal a `SignedTreeHead.root_hash` actually published for `log_id = stream_id` at `tree_size ≥ K`. A phantom / self-invented root → REJECT. For accountable streams, "published" means **witness-cosigned** (the CC 5.3.1 path), so the subscriber cannot collude with the producer on a private root.
 3. *(Recommended for accountable)* **Inclusion proof** chunk K → `chunk_root`. Upgrades the receipt from "subscriber saw a root" to "subscriber saw a root that provably commits to chunk K".
 
-**Semantics — proof-of-DELIVERY, not proof-of-CONSUMPTION**: the receipt proves the subscriber received bytes committing to chunk K. It does NOT prove they decrypted those bytes (they may not hold the epoch DEK). Consumers MUST NOT overclaim a delivery receipt as proof of consumption. Per the [`MISSION.md`](../../MISSION.md) fail-honest invariant + [CC 1.7](part_1_foundation.md) "Verify authenticates origin, does not compose 'delivered'/'owes N'", Verify's role is validation-not-adjudication: emit the validated receipt as an attestation on `delivery_receipt:{stream_id}` — the "delivered" verdict is consumer policy.
+**Semantics — proof-of-DELIVERY, not proof-of-CONSUMPTION**: the receipt proves the subscriber received bytes committing to chunk K. It does NOT prove they decrypted those bytes (they may not hold the epoch DEK). Consumers MUST NOT overclaim a delivery receipt as proof of consumption. Per the [`MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) fail-honest invariant + [CC 1.7](part_1_foundation.md) "Verify authenticates origin, does not compose 'delivered'/'owes N'", Verify's role is validation-not-adjudication: emit the validated receipt as an attestation on `delivery_receipt:{stream_id}` — the "delivered" verdict is consumer policy.
 
 **Accountable-stream receipt quorum**: Policy E ([CC 4.4.3.1](part_4_composition_governance.md) locality-scaled) — same shape as the CC 5.3.3.3 STH quorum.
 
@@ -465,50 +465,41 @@ The 1+4 wire-format lockdown holds: there are no new `attestation_type` values. 
 
 Scope pointer: the CC 5.3.3 streaming surface — delivery axis ([CC 5.3.3.3](#1051-per-stream-log--stream-root-normative--v1-lock)–[CC 5.3.3.4](#1056-d6-liveness-invariant--entitled-vs-reachable-normative)) — does **not** change the 1+4 primitive set ([CC 2.4](part_2_the_grammar.md)) (delivery rides existing primitives), does **not** bundle the streaming-half substrate impl (the streaming-chunk store + the parallel CHECK-arm migration), keeps push-mode multicast relay/fan-out pull-only at RC1, and leaves the K / T / MAX_CHUNKS_PER_EPOCH constants + accountable-stream quorum operator-tunable.
 
-### 5.3.4 `multi-steward` — Multi-steward + accord-holder discovery
+### 5.3.4 `multi-steward` — Trust-root discovery — the GenesisBundle + accord holders
 
-These endpoints publish the trust roots themselves — the steward set and accord holders — so a verifier can discover *whom* to trust before trusting anything. Every response is hybrid-signed by the serving steward, and a consumer MUST verify that signature before promoting any field to a trust root: this is the fidelity / fail-secure floor for the whole discovery surface.
+These endpoints publish the trust root itself — the accord-authorized GenesisBundle, and the accord holders it names — so a verifier can discover *whom* to trust before trusting anything. A consumer MUST verify the bundle's quorum against its own records before promoting any field to a trust root: this is the fidelity / fail-secure floor for the whole discovery surface. Nothing a serving install signs on its own account is a root.
 
-### `GET /v1/steward-key`
+### `GET /v1/trust-root/bundle` — the portable trust root (`/v1/steward-key` is a kept alias)
 
-Returns the multi-steward set with M-of-N policy.
+Returns the **GenesisBundle**: the charter, the accord-holder roster, the scopes and the serve-node grants, hybrid-authorized by the accord holders at the genesis ceremony. It replaces the per-region steward set this section specified through rc4 ([CIRISRegistry#133](https://github.com/CIRISAI/CIRISRegistry/issues/133), [CIRISServer#537](https://github.com/CIRISAI/CIRISServer/issues/537)): a registry publishing its own key as its own root, `hardware_class` self-attested, was the weakest form of a producer claim ([CC 4.2.2.1](part_4_composition_governance.md)), and the fold makes the registry a conferred slice of a canonical node rather than a root. Registry v3.0.0 serves this body at both paths; CIRISServer serves it at `/v1/trust-root/bundle` once the fold's phase 2a lands.
 
 Response (`200 OK`):
 
 ```json
 {
-  "stewards": [
-    {
-      "region": "us",
-      "key_id": "us-steward-2026",
-      "ed25519_pubkey_b64": "<base64-url>",
-      "mldsa65_pubkey_b64": "<base64-url>",
-      "hardware_class": "HSM_FIPS_140_3_L3",
-      "deployed": true,
-      "fingerprint_sha256_hex": "<64-char-lowercase>",
-      "cert_validity_self_attest": {
-        "valid_until": "<rfc3339_canonical>",
-        "signature_b64": "<base64-url>"
-      }
-    },
-    {"region": "eu", ..., "deployed": false},
-    {"region": "apac", ..., "deployed": false}
-  ],
-  "threshold_policy": {"required": 2, "available": 1},
-  "response_signature": {
-    "signer_key_id": "us-steward-2026",
-    "ed25519_b64": "<base64-url>",
-    "mldsa65_b64": "<base64-url>",
-    "canonical_bytes_label": "ciris.steward_key_response.v1"
-  }
+  "bundle": {
+    "version": 1,
+    "family_key_id": "humanity-accord",
+    "holders": [ "<SignedKeyRecord>", "..." ],
+    "serve_nodes": [ "<SignedKeyRecord ciris-canonical-1-...>" ],
+    "consensus_protocol": "quorum:2/3",
+    "attestations": [ "<SignedAttestation: charter, lifecycle, grants>" ],
+    "authorizations": [ "<GenesisAuthorization A1>", "<GenesisAuthorization B1>" ],
+    "produced_at": "<rfc3339_canonical>"
+  },
+  "bundle_fingerprint": "sha256:<64-char-lowercase over the JCS-canonical bundle>",
+  "charter_root_key_id": "<read off the bundle; verify it>",
+  "served_by": { "node_key_id": "<relaying node>", "accepts_this_root": true }
 }
 ```
 
-The response itself is hybrid-signed by the serving region's steward over `canonical = "ciris.steward_key_response.v1\n" || sha256_hex_lowercase(canonicalized_json_body_excluding_signature)`. Consumers MUST verify the response signature before trusting any field in the body — placeholder pubkeys without `deployed: true` MUST NOT be promoted to trust roots.
+**Authority lives inside `bundle` and nowhere else (normative).** The bundle is self-authenticating: a consumer MUST re-derive its quorum from the consumer's *own* records (`verify_bundle_quorum` — the holders' hybrid authorizations over the charter, counted against the roster the consumer already holds or is bootstrapping with out-of-band pins), so a forged bundle carrying an attacker's "holders" proves nothing. Everything outside `bundle` — the fingerprint, the charter root id, `served_by` — is unsigned convenience metadata a consumer recomputes or ignores. There is deliberately **no `response_signature`**: signing the wrapper would prove only that the relaying node said it, which is exactly what the retired steward-key response proved and exactly what was worthless, and it would invite consumers to check the envelope instead of the artifact. `hardware_class`, `signature_mode` and `threshold_policy` MUST NOT appear on the outer envelope; a holder's custody class rides its signed key record and is corroborated, or not, per [CC 4.2.2.1](part_4_composition_governance.md). `served_by.accepts_this_root: false` is a legitimate state — a node may relay a root it has not accepted ([CC 3.2](part_3_the_namespace.md) T3) — and is the operator's un-trust lever made visible.
+
+A consumer pins the community anchor `community_key_id: ciris-canonical` and the accord family `humanity-accord`, resolves the live member set via `resolve_community` ([CC 4.4.3.2.4](part_4_composition_governance.md)), and never hard-pins a serving install's fingerprint. A root is valid until revoked, never until a timer lapses ([CC 3.2](part_3_the_namespace.md) T4): a signed whole-roster snapshot, where one is served, carries a **freshness** bound consumers treat as a liveness signal, not an expiry that invalidates the root.
 
 ### `GET /v1/accord-holders`
 
-Three named holders with hybrid pubkeys + per-holder `hardware_class` + `provisioned` flag. v1.4 interim ships with placeholder fingerprints + `provisioned: false`; consumers MUST NOT honor CONSTITUTIONAL invocations against placeholders. Response signed by the serving region's steward (same shape as `/v1/steward-key`).
+Three named holders with hybrid pubkeys + per-holder `hardware_class` + `provisioned` flag. v1.4 interim shipped placeholder fingerprints + `provisioned: false`; consumers MUST NOT honor `constitutional` invocations against placeholders. The holders' authority is the bundle above — this route is a projection of `bundle.holders`, and a consumer cross-checks it against the bundle rather than trusting the projection.
 
 ### `GET /v1/accord/holders`
 
@@ -529,7 +520,7 @@ Full response schemas for these endpoints land in the Rust handlers + OpenAPI ex
 All CEG endpoints return:
 
 - **Content-Type**: `application/json` (`Accept: application/json` honored; other types respond `406 Not Acceptable`)
-- **CEG-API-Version header**: `CEG-Version: <current spec major.minor>` on every response (track the [README](README.md) `Version:` field; currently `1.0-rc27`); clients SHOULD echo `CEG-Accept-Version: <pinned-version>` on request, naming the version they were built against. Per [CC 2.6.4](part_2_the_grammar.md) SemVer policy, MAJOR mismatch is a wire-incompat reject; MINOR mismatch is compatible (clients MAY warn).
+- **CEG-API-Version header**: `CEG-Version: <current spec major.minor>` on every response (track the [README](../README.md) `Version:` field; currently `1.0-rc27`); clients SHOULD echo `CEG-Accept-Version: <pinned-version>` on request, naming the version they were built against. Per [CC 2.6.4](part_2_the_grammar.md) SemVer policy, MAJOR mismatch is a wire-incompat reject; MINOR mismatch is compatible (clients MAY warn).
 - **Time-Source header**: `X-CEG-Server-Time: <rfc3339_canonical>` per [CC 2.6.2](part_2_the_grammar.md) for client clock-skew bounds
 - **Pagination** (where applicable): `?cursor=` + `?limit=` query params; response includes `next_cursor` (null if exhausted) and `total_estimate` (server's best estimate, may be approximate)
 
@@ -688,7 +679,7 @@ The per-symbol KDF is **HKDF-SHA3-256** — harvest-now-decrypt-later (HNDL) dis
 
 **Fragment-set rebinds on MLS Add/Remove (normative).** `K_symbol` and `K_record_id` are bound to the MLS group epoch (derived from the group `exporter_secret`). On any MLS **Add** or **Remove** the group epoch advances, so the fragment set MUST rebind: `record_id` and `symbol_key` are recomputed under the new epoch, and subsequent symbols seal under the new keying. This carries the forward-secrecy guarantee of [CC 5.1](#1053-epoch-keying--cascade-normative--d2--d3-substrate-pending-142) onto the fragment layer — a removed member cannot derive the post-removal fragment set, and a newly-added member receives forward keying without retroactive symbol access except as the archive policy permits (the companion per-community archive-policy section; default `rotate-forward`, 30-day window).
 
-**Reassembly (fail-honest).** A consumer holding `K_symbol` + `record_id` collects symbol envelopes from holders ([CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) holder discovery), opens each `symbol_envelope` under its recomputed `symbol_key` (XChaCha20-Poly1305 verify; a failed tag MUST discard that symbol, never accept partial plaintext), and RaptorQ-decodes once `≥ K` valid symbols are recovered. Insufficient surviving symbols MUST resolve to a `ContentMiss` — an honest miss, never a silent gap or a downgrade to unverified bytes ([fail-honest](../../MISSION.md)).
+**Reassembly (fail-honest).** A consumer holding `K_symbol` + `record_id` collects symbol envelopes from holders ([CC 5.3.2.1](#1012-holder-directory-ttl--contentmiss-feedback) holder discovery), opens each `symbol_envelope` under its recomputed `symbol_key` (XChaCha20-Poly1305 verify; a failed tag MUST discard that symbol, never accept partial plaintext), and RaptorQ-decodes once `≥ K` valid symbols are recovered. Insufficient surviving symbols MUST resolve to a `ContentMiss` — an honest miss, never a silent gap or a downgrade to unverified bytes ([fail-honest](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md)).
 
 ### 5.4.4 `welcome-wrap` — MLS Welcome HPKE wrap under invitee static X-Wing key (normative)
 

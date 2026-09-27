@@ -27,7 +27,7 @@ decimal is a WARNING (pending), not a failure.
 
 Usage:  python3 tools/check_claims.py [--xfail-blocks]
 """
-import csv, os, sys, re, glob
+import csv, json, os, sys, re, glob
 from collections import Counter, defaultdict, OrderedDict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -514,6 +514,37 @@ def check_ticket_states(rows, errors, warnings, notes):
         notes.append(f"ticket-state gate: all {len(targets)} staging ticket(s) open")
 
 
+def check_unevidenced_slices(errors, warnings, notes):
+    """Every `owning_repo` in the namespace manifest should have an evidence pin.
+
+    A CC 3.1 slice whose repository has no pinned manifest has zero `impl:`
+    evidence by construction — the pin-staleness gate cannot even be stale for
+    it. Report it as a WARNING (CIRISConstitution#113): today Registry, LensCore,
+    NodeCore and the catalogued-only CIRISBench; the registry fold moves that
+    slice's evidence to CIRISServer rather than vendoring a manifest that would
+    be archived.
+    """
+    reg_path = os.path.join(ROOT, "manifests", "namespace_registry.json")
+    pins_path = os.path.join(DOC, "evidence_pins.tsv")
+    if not (os.path.exists(reg_path) and os.path.exists(pins_path)):
+        return
+    try:
+        fams = json.load(open(reg_path, encoding="utf-8")).get("families", [])
+    except Exception:
+        return
+    pinned = {l.split("\t")[0] for l in open(pins_path, encoding="utf-8")
+              if l.strip() and not l.startswith("repo")}
+    by_repo = {}
+    for f in fams:
+        by_repo.setdefault(f.get("owning_repo", ""), 0)
+        by_repo[f.get("owning_repo", "")] += 1
+    for repo, n in sorted(by_repo.items()):
+        if repo and repo not in pinned:
+            warnings.append(f"unevidenced slice: {n} famil{'y' if n == 1 else 'ies'} carry "
+                            f"owning_repo={repo} and evidence_pins.tsv pins no manifest for it — "
+                            f"no impl: row can exist for that slice until one is vendored")
+
+
 def check_pin_staleness(errors, warnings, notes):
     """Report pins behind their upstream head (CIRISConstitution#63)."""
     path = os.path.join(DOC, "evidence_pins.tsv")
@@ -814,6 +845,7 @@ def main():
 
     check_namespace_coverage(errors, warnings, notes)
     check_ticket_states(rows, errors, warnings, notes)
+    check_unevidenced_slices(errors, warnings, notes)
     check_pin_staleness(errors, warnings, notes)
 
     if notes:

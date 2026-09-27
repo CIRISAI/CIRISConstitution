@@ -1,6 +1,6 @@
 # Part 4 — Composition & Governance
 
-**Decimal range** `4.x` · **96 sections** · **page budget 26pp** · [← master index](README.md)
+**Decimal range** `4.x` · **96 sections** · **page budget 26pp** · [← master index](../README.md)
 
 > How attestations compose into trust; self-governance, amendment, moderation, and the human halt-authority.
 
@@ -18,7 +18,7 @@ These are wire-format reaches that fail the [CC 1.2](#1.2) operational-language 
 
 | What's wrong | Correct expression |
 |---|---|
-| Unbounded depth `delegates_to` chains | Consumer policy MUST cap traversal depth at **5 hops** by default (configurable); chains longer than the cap are treated as `attestation:self_verify` only (no transitive trust) |
+| Unbounded depth `delegates_to` chains | Consumer policy MUST cap traversal depth at **5 hops** by default (configurable); chains longer than the cap are treated as `attestation:self_verify` only (no transitive trust). A substrate MAY additionally clamp any caller-requested depth at an absolute ceiling (the shipped substrate clamps at 16); the ceiling bounds the walk, it does not raise the default |
 | Cycles (A → B → A) | Substrate MUST detect cycles on the `delegates_to` graph and reject the cycle-closing emission |
 | Aggregate-weight concentration | Consumer policy SHOULD cap the trust weight any single terminal delegate can accumulate from a given root attester at **0.5 × root_trust** by default |
 
@@ -59,7 +59,7 @@ The stories below each reached for a richer self-declaration; each is reducible 
 | `stake: civic` / `epistemic` / `dignitary` | 10 stories | `civic` = `stake: reputational + cohort_scope: community`. `epistemic` = `confidence + stake: reputational` (same axis as confidence; not separate). `dignitary` lives on wrong axis (stake names what the attester loses; dignity harm is what the attested loses → belongs in `harm_class:dignity_harm`). | Compose existing values with cohort/harm-class. |
 | `oversight_mode: deferred` / `active` / `advisory` | 6 stories | All map to existing HITL/HOTL/HOOTL | `deferred` = HITL pre-decision; `active` = HITL with substrate monitoring; `advisory` = HOTL |
 | `provenance_walk` as wire primitive | (1 reviewer) | UX concern smuggled into wire format | Consumer-side composition (Portal / Verify dashboards / agent introspection); the chain already walks via `references_attestation_id` + `topical_relation:*` + `valid_until` |
-| Renaming canonical capacity factors and HE-300 categories to "kid-friendly" names | 8 stories | Canonical names map to a worked-out epistemic/ethical lattice that loses precision under accessibility renames | Translation glossary in [`LANGUAGE_PRIMER.md`](../LANGUAGE_PRIMER.md) (spec name ↔ narrative name) + version pinning in worked examples |
+| Renaming canonical capacity factors and HE-300 categories to "kid-friendly" names | 8 stories | Canonical names map to a worked-out epistemic/ethical lattice that loses precision under accessibility renames | Translation glossary in [`LANGUAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/LANGUAGE_PRIMER.md) (spec name ↔ narrative name) + version pinning in worked examples |
 
 ## 4.2 `accord` — The HUMANITY_ACCORD constitutional layer
 
@@ -161,7 +161,7 @@ The four rules above constrain **authoring on the delegation plane**. Under load
 
 Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secure_Enclave` = 0.95; `YubiKey_5_FIPS` = 0.95; `TPM_2_0` = 0.9; `placeholder_pending_provisioning` = 0.0; `software_hsm_development` = 0.0. **A class this table does not list carries multiplier 0.0** — an unlisted class is a claim nobody rated, not a claim rated by its own spelling.
 
-**Two fields, two questions (normative — CIRISConstitution#107 / #112).** `hardware_class` is the **certified class** a holder asserts, carried as a JSON property on `/v1/steward-key`, `/v1/accord-holders` and inside `attestation_evidence`; it is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary generated from `ciris_keyring::HardwareType`. One is never a value of the other; a consumer that needs both reads both. The classes code has minted beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
+**Two fields, two questions (normative — CIRISConstitution#107 / #112).** `hardware_class` is the **certified class** a holder asserts, carried as a JSON property on a signed key record (as served in the GenesisBundle's `holders` / `serve_nodes` and on `/v1/accord-holders`) and inside `attestation_evidence`; it is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary generated from `ciris_keyring::HardwareType`. One is never a value of the other; a consumer that needs both reads both. The classes code has minted beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
 
 | `hardware_class` | `hardware_custody:{platform}` it runs on |
 |---|---|
@@ -288,7 +288,7 @@ contest = sha256(
  "nonce=" || base64url(rand_32_bytes))
 ```
 
-`accord_decision` carries **no separate signing domain** — its authority is the contained `accord_participation` signatures + any membership `supersedes`. The **restore** authority (`verify_recovery_supersede`, H7) signs its own `ciris.accord_restore.v1` domain over the known-good-snapshot digest + the adjudicated `accord_contest` digest — distinct from every domain above, so a restore can never be replayed as a proposal, participation, decision, or contest. All hybrid (Ed25519 + ML-DSA-65). The CIRISVerify `accord_live_quorum` impl aligns to these pins; this section is the CEG-registry confirmation (#113). **Steward PQC publication:** the accord-holder **and** the (key-independent, H6) steward-backstop PQC halves are published over the [CC 5.3](part_5_transport_substrate.md) HTTPS-consensus steward-key endpoint, so the tally resolves every signer at the federation tier under RequireHybrid; absent publication, hybrid resolution **fails closed**.
+`accord_decision` carries **no separate signing domain** — its authority is the contained `accord_participation` signatures + any membership `supersedes`. The **restore** authority (`verify_recovery_supersede`, H7) signs its own `ciris.accord_restore.v1` domain over the known-good-snapshot digest + the adjudicated `accord_contest` digest — distinct from every domain above, so a restore can never be replayed as a proposal, participation, decision, or contest. All hybrid (Ed25519 + ML-DSA-65). The CIRISVerify `accord_live_quorum` impl aligns to these pins; this section is the CEG-registry confirmation (#113). **Steward PQC publication:** the accord-holder **and** the (key-independent, H6) steward-backstop PQC halves are published as signed key records in the GenesisBundle ([CC 5.3.4](part_5_transport_substrate.md) `holders`) and the `federation_keys` directory, so the tally resolves every signer at the federation tier under RequireHybrid; absent publication, hybrid resolution **fails closed**.
 
 **Physical assumption (deployment, not constitution).** The model rests only on a survivor getting a few-hundred-byte signed proof-of-life to a relaying node with **no standing infrastructure** — satisfiable over HF/shortwave skywave + NVIS store-and-forward (JS8Call) bridged into the mesh by EMP-hardened, geographically-distributed HF↔Reticulum gateways co-located with the steward sites. The signature is the trust, not the path, so any number of untrusted RF hops is safe. The relay/gateway backbone is itself adversary-targeted infrastructure and belongs in a deployment spec.
 
@@ -569,7 +569,7 @@ For `delivery_mode: push`, the substrate fans out to `entitled ∧ reachable` pe
 On a new-member admission via Policy M, the new member's `history_on_join` envelope value determines retroactive content delivery:
 
 - `from_join` (default) — new member receives current-epoch content forward only; no retroactive `key_grant` cascade
-- `full` — new member receives `key_grant`s for prior epochs subject to the [CC 5.1](part_5_transport_substrate.md) P4 catch-up bound (`min(operator depth cap, chunk-eviction horizon)`); evicted-epoch grants return `ContentMiss` per the [`MISSION.md`](../../MISSION.md) fail-honest invariant
+- `full` — new member receives `key_grant`s for prior epochs subject to the [CC 5.1](part_5_transport_substrate.md) P4 catch-up bound (`min(operator depth cap, chunk-eviction horizon)`); evicted-epoch grants return `ContentMiss` per the [`MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) fail-honest invariant
 
 This composes with [CC 4.4.3.4.5](#81125-forward-secrecy-on-member-removal-option-a-recommended-for-v1) Option A forward-secrecy: removed members retain extant `key_grant`s for content they were entitled to during membership; new members may or may not get retroactive grants per `history_on_join`. The substrate's forward-secrecy posture is uniform across consent, takedown, membership-departure, AND delivery-onboarding surfaces.
 
@@ -1023,7 +1023,7 @@ Substrate MAY cache the resolution per `(T, s)` keyed on the latest `asserted_at
 | **PARTNERED** | Bilateral pair per CC 4.4.3.5.3: subject `consent:partnership_grant` + producer `consent:partnership_accept` under same `bilateral_pair_id`; no `valid_until` |
 | **ANONYMOUS** | Revocation + decay-protocol per CC 4.4.3.5.1: substrate emits stage milestones; agent honors stage-appropriate processing constraints |
 
-Per CEG's [CC 2.4 MISSION.md](../../MISSION.md) layering: CIRISAgent's three streams are a **named bundle** at the consumer-policy layer. Other agents MAY compose other streams over the same wire primitives. CEG documents the canonical bundle for ecosystem coordination; CEG does not lock the bundle.
+Per CEG's [CC 2.4 MISSION.md](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) layering: CIRISAgent's three streams are a **named bundle** at the consumer-policy layer. Other agents MAY compose other streams over the same wire primitives. CEG documents the canonical bundle for ecosystem coordination; CEG does not lock the bundle.
 
 #### 4.4.3.6 `policy-attestation` — Policy I — Attestation-Ladder Composition
 
@@ -1081,7 +1081,7 @@ Consumer trusts an attestation if `attesting_key_id` is in the consumer's pinned
 
 Aggregation: per (`dimension`, `attested_key_id`) tuple, mean of `score × confidence` from trusted attesters. Consumer threshold determines verdict.
 
-**Recommended default**: Policy A with `pinned_trust = {us-steward, eu-steward, apac-steward, accord_holder_1, accord_holder_2, accord_holder_3}`. Cold-start bootstrap: a new consumer obtains the pinned trust set by fetching `GET /v1/steward-key` + `GET /v1/accord-holders` ([CC 5.3.4](part_5_transport_substrate.md)), verifying the responses' hybrid signatures against TLS pubkey pinning (consumer-side TOFU or out-of-band distribution), and persisting locally. This is the shipped **default** root — never *the* root; the model below is what makes that distinction structural rather than rhetorical.
+**Recommended default**: Policy A with `pinned_trust = {community_key_id: ciris-canonical, family: humanity-accord}` — the accord-conferred steward founders of `ciris-canonical` and the three accord holders, resolved live, never a serving install's key. Cold-start bootstrap: a new consumer fetches `GET /v1/trust-root/bundle` ([CC 5.3.4](part_5_transport_substrate.md)), re-derives the bundle's quorum from the holder records it carries against out-of-band pins (the published holder fingerprints, or a build-baked copy of the bundle), and persists the anchors locally; `GET /v1/accord-holders` is a projection it cross-checks, not a second root. This is the shipped **default** root — never *the* root; the model below is what makes that distinction structural rather than rhetorical.
 
 **The pinned trust set is a graph, and its roots are pluggable (normative).**
 
@@ -1156,7 +1156,7 @@ Consumer applies transitive-trust propagation across the full attestation graph,
 
 A Sovereign agent scoring `licensure:CA_medical_board: +1.0` is wire-format identical to a Registry-steward scoring the same. Consumer policy weights by attester source; the substrate is source-neutral. M-1's symmetry is structural, not bolted on.
 
-Per [`../MISSION.md`](../../MISSION.md) §1.1: both paths produce federation membership; neither is a gate. What differs is the *attestation surface* — the kind of claim the federation can compose about why a participant is trustworthy.
+Per [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.1: both paths produce federation membership; neither is a gate. What differs is the *attestation surface* — the kind of claim the federation can compose about why a participant is trustworthy.
 
 ## 4.5 `discipline` — Governance discipline
 
@@ -1201,7 +1201,7 @@ For RATCHET-calibrated detectors, the operational definition lives in the calibr
 4. Evidence-shape requirement
 5. Polarity semantics
 
-For documentation-only open vocabularies (`testimonial_witness:{kind}`, `hard_case:{kind}`, `topical_relation:{kind}`), discoverability lives in non-normative registry documents like [`WITNESS_KIND_REGISTRY.md`](../WITNESS_KIND_REGISTRY.md) — additions there require no spec amendment.
+For documentation-only open vocabularies (`testimonial_witness:{kind}`, `hard_case:{kind}`, `topical_relation:{kind}`), discoverability lives in non-normative registry documents like `WITNESS_KIND_REGISTRY.md` (retired; cited by name) — additions there require no spec amendment.
 
 **`{axis}` and `ci_axis` are different objects — and that is the point.** The `{axis}` above is a *value* in an open prefix vocabulary. A **`ci_axis`** is a *contextual-integrity question a wire field answers*: who sent, about whom, who may see, who may revoke, who may receive, what type, under what principle, over what lifecycle, what content. This section governs both and never fuses them — one name serving two axes is exactly the defect the gate below exists to detect.
 

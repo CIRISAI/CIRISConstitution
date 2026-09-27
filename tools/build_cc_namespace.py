@@ -59,6 +59,12 @@ COMPONENT_REPO = {
     "node": "CIRISNodeCore",
     "cirisbench": "CIRISBench",
 }
+# CC 3.1.7 R1 — a fold keeps the row and moves the owner. Previous owning repos per
+# component, oldest first; the row carries `owning_repo_history` only when non-empty,
+# so registry_sha256 is untouched until a fold actually lands.
+COMPONENT_REPO_HISTORY = {
+    # "registry": ["CIRISRegistry"],   # ← flip COMPONENT_REPO["registry"] to CIRISServer in the same cut
+}
 # The 8 owning components committed via a sibling MISSION.md (CIRISBench is cited from a
 # README, not a MISSION.md, and is the 9th, catalogued-but-not-in-the-normative-8 slice).
 NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
@@ -312,6 +318,8 @@ def main():
         rec["prefix"] = prefix
         rec["owning_component"] = comp
         rec["owning_repo"] = crepo
+        if COMPONENT_REPO_HISTORY.get(comp):
+            rec["owning_repo_history"] = list(COMPONENT_REPO_HISTORY[comp])
         rec["cc_section"] = section
         rec["polarity"] = polarity or ""
         rec["segments"] = classify_segments(prefix)

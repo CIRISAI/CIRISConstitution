@@ -285,7 +285,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 5.3.3.6	delivery	Delivery receipts (normative — D5 / V3 lock)	§10.5.4	0.00227	105	0.27	V	ceg
 5.3.3.7	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg
 5.3.3.8	documents-what	What the streaming surface documents	§10.5.7	0.00092	242	0.11	V	ceg
-5.3.4	multi-steward	Multi-steward + accord-holder discovery	§10.2	0.00264	94	0.32	V	ceg
+5.3.4	multi-steward	Trust-root discovery — the GenesisBundle + accord holders	§10.2	0.00264	94	0.32	V	ceg
 5.3.5	registry-other	Other Registry endpoints	§10.4	0.00107	207	0.13	V	ceg
 5.3.6	common	Common response shape	§10.0	0.00095	223	0.11	V	ceg
 5.3.6.1	envelope-error	Error envelope	§10.0.1	0.00273	92	0.33	V	ceg

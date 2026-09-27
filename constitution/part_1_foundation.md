@@ -1,6 +1,6 @@
 # Part 1 — Foundation
 
-**Decimal range** `1.x` · **48 sections** · **page budget 29pp** · [← master index](README.md)
+**Decimal range** `1.x` · **48 sections** · **page budget 29pp** · [← master index](../README.md)
 
 > The meta-goal M-1 and the ethical foundation the federation serves.
 
@@ -160,7 +160,7 @@ The principles above are the federation's *why*. The sections that follow are th
 
 ### 1.13.1 `ubuntu` — The Ubuntu commitment — relational-anthropology substrate *(informative)*
 
-Per `CIRISAgent/ContemplativeTraditions/Ubuntu.lean::F_ubuntu_primary_tradition_commitment` and [`../MISSION.md`](../../MISSION.md) §1.5:
+Per `CIRISAgent/ContemplativeTraditions/Ubuntu.lean::F_ubuntu_primary_tradition_commitment` and [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.5:
 
 > *Umuntu ngumuntu ngabantu* — a person is a person through other persons. Persons are not atomic; the relation IS the person.
 

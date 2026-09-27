@@ -1,6 +1,6 @@
 # Part 8 — Appendices
 
-**Decimal range** `8.x` · **41 sections** · **page budget 6pp** · [← master index](README.md)
+**Decimal range** `8.x` · **41 sections** · **page budget 6pp** · [← master index](../README.md)
 
 > Case studies, glossaries, conformance vectors, interop, and the dual-ID table of contents.
 
@@ -109,7 +109,7 @@ Pattern recap per [CC 4.4.3.3.1](#4-4-3-3-1): widens `cohort_scope`, optionally 
 
 ## 8.2 `translation` — Translation discipline (writing claims in CEG)
 
-A grammar is only as honest as the discipline used to write in it. This section gives that discipline: how to take a substantive paragraph — a principle, a finding, a policy — and decide whether it belongs in the wire at all, which family it sits in, which primitives carry it, and when the right answer is *not to translate*. The discipline exists so that the namespace grows only where there is genuine operational claim to carry, and so that what cannot be reduced to wire is named as such rather than faked. Full primer at [`LANGUAGE_PRIMER.md`](../LANGUAGE_PRIMER.md); the key rules are consolidated here.
+A grammar is only as honest as the discipline used to write in it. This section gives that discipline: how to take a substantive paragraph — a principle, a finding, a policy — and decide whether it belongs in the wire at all, which family it sits in, which primitives carry it, and when the right answer is *not to translate*. The discipline exists so that the namespace grows only where there is genuine operational claim to carry, and so that what cannot be reduced to wire is named as such rather than faked. Full primer at [`LANGUAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/LANGUAGE_PRIMER.md); the key rules are consolidated here.
 
 ### 8.2.1 `decision` — Decision tree
 
@@ -205,7 +205,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 
 | Gap | Status | Resolution |
 |---|---|---|
-| G1 — Revocation privacy | **RETRACTED** | Wrong threat model. The Registered path's thesis is public verifiability per [`../MISSION.md`](../../MISSION.md) §1.1. |
+| G1 — Revocation privacy | **RETRACTED** | Wrong threat model. The Registered path's thesis is public verifiability per [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.1. |
 | G2 — Rules-layer Sybil | **MITIGATED** | [CC 4.5.1](#) step 5 1-of-6 accord/steward sign-off + CC 4.5.1.2 meta-amendment entrenchment. |
 | G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** | [CC 4.4.3.1](#) locality-scaled quorum + CC 4.4.3.1.1 sub-quorum fallback. |
 | v1.4 T-3 #1 testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](#) new prefix; opened to open vocabulary. |
@@ -224,7 +224,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | delegates_to depth + cycle | **CLOSED** in [CC 4.1.1](#) anti-pattern + consumer-policy caps. |
 | HUMANITY_ACCORD invocation replay | **CLOSED** in [CC 4.2.1.1](#) discriminator + nonce in signed bytes. |
 | `notify` vs CONSTITUTIONAL social-canonicity | **CLOSED** in [CC 4.2.1.2](#) consumer-UI requirement. |
-| /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#) response-signing requirement. |
+| /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#): the route serves the self-authenticating GenesisBundle; authority is the bundle's own accord authorizations, and a serving install signs nothing that counts as a root. |
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](#) collision rule. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](#) + R6 above. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](#) consumer-policy countermeasure. |
@@ -415,10 +415,10 @@ The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` 
 
 The following documents travel with the spec and are cited throughout:
 
-- [`FSD/PRIOR_ART_SCAN.md`](../PRIOR_ART_SCAN.md) — design-space comparison.
-- [`FSD/SOTA_SCAN.md`](../SOTA_SCAN.md) — production-validation comparison.
-- [`FSD/WITNESS_KIND_REGISTRY.md`](../WITNESS_KIND_REGISTRY.md) — non-normative open-vocabulary registry referenced by the namespace.
-- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](../../docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
+- [`FSD/PRIOR_ART_SCAN.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/PRIOR_ART_SCAN.md) — design-space comparison.
+- [`FSD/SOTA_SCAN.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/SOTA_SCAN.md) — production-validation comparison.
+- `FSD/WITNESS_KIND_REGISTRY.md` — non-normative open-vocabulary registry once kept in CIRISRegistry; absent from that repository's `main`, so cited by name only until it has a home here.
+- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
 
 ### 8.6.4 `namespace-sibling` — Sibling MISSIONs (the namespace stewards)
 
