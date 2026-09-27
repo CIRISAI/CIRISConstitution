@@ -64,6 +64,12 @@ class Rules:
                          if spec.get("pattern")}
         self.reserved_stems = [s["stem"] for s in cr.get("reserved_stems", [])]
         self.families = OrderedDict((f["prefix"], f) for f in manifest["families"])
+        # stems of CLOSED families (a reserved wildcard, or a parameterized parent whose row is
+        # closed in its leaves): any unmatched descendant beneath one is unregistered, never
+        # open vocabulary — exactly as the reserved stems above (#122 review)
+        self.closed_stems = sorted({
+            (f["prefix"][:-1] if f["segments"][-1]["class"] == "wildcard" else f["prefix"].split(":")[0] + ":")
+            for f in self.families.values() if f.get("leaves_closed")})
 
 
 def _score(fam):
@@ -258,19 +264,24 @@ def match_family(manifest_or_rules, dimension):
         mutated = _detect_malformed(rules, parts)
         if mutated:
             return mutated, {}, rules.tokens["case_malformed"]
-        # a stem CC 3.4 reserves as a whole: an unclaimed leaf beneath it is unregistered,
-        # never open vocabulary — the reservation covers the leaves nobody minted yet
-        if any(dimension.startswith(stem) for stem in rules.reserved_stems):
+        # a stem CC 3.4 reserves as a whole, or the stem of a CLOSED family: an unclaimed
+        # leaf or an unmatched descendant beneath it (`consent:totally:new:v1`) is
+        # unregistered, never open vocabulary — the closure covers what nobody minted
+        fenced = rules.reserved_stems + rules.closed_stems
+        if any(dimension.startswith(stem) for stem in fenced):
             return None, {}, rules.tokens["family_unregistered"]
-        # a case-mutated reserved stem (`Capacity:zz:v1`) is malformed, never a bypass:
-        # fold only to DETECT the reservation, never to admit (#113 review)
+        # a case-mutated reserved or closed stem (`Capacity:zz:v1`) is malformed, never a
+        # bypass: fold only to DETECT the fence, never to admit (#113 review)
         low = dimension.lower()
-        if low != dimension and any(low.startswith(stem) for stem in rules.reserved_stems):
+        if low != dimension and any(low.startswith(stem) for stem in fenced):
             return None, {}, rules.tokens["case_malformed"]
-        # open vocabulary: no row claims it and no refusal — but R3's version segment is
-        # global, so an unversioned open dimension still owes its tail (#113 review)
+        # open vocabulary: no row claims it and no refusal — but R3's version grammar is
+        # global: exactly one trailing version segment. An unversioned open dimension owes
+        # its tail; a duplicated tail (`third_party:signal:v1:v2`) is malformed (#122 review)
         if rules.version_required and not rules.version.fullmatch(parts[-1]):
             return None, {}, rules.tokens["missing_version_segment"]
+        if len(parts) > 2 and (rules.version.fullmatch(parts[-2]) or _mutated_tail(rules, parts[-2])):
+            return None, {}, rules.tokens["case_malformed"]
         return None, {}, None
     prefix, binds, refusal, has_version = hit
     fam = rules.families[prefix]
@@ -420,6 +431,12 @@ def generate_vectors(manifest):
         "a segment carrying a newline fails its pattern under full-match semantics (#116: `$` is not a byte)")
     add("no_such_family:leaf", None, rules.tokens["missing_version_segment"],
         "open vocabulary still owes the trailing version segment (R3 is global)")
+    add("no_such_family:leaf:v1:v2", None, rules.tokens["case_malformed"],
+        "a duplicated version tail on open vocabulary is malformed (R3: exactly one)")
+    for stem in rules.closed_stems:
+        dim = stem + "totally:new:v1"
+        add(dim, match_family(rules, dim)[0], rules.tokens["family_unregistered"],   # a wildcard parent claims it; a parameterized one cannot
+            "an unmatched descendant beneath a closed family is unregistered, never open vocabulary")
     for stem in rules.reserved_stems:
         mutated = stem[0].upper() + stem[1:]
         parent = match_family(rules, mutated + "zz_unminted_leaf:v1")[0]   # attribution is the reference's; the refusal is the contract

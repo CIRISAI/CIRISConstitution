@@ -5653,6 +5653,24 @@
       "why": "open vocabulary still owes the trailing version segment (R3 is global)"
     },
     {
+      "dimension": "no_such_family:leaf:v1:v2",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail on open vocabulary is malformed (R3: exactly one)"
+    },
+    {
+      "dimension": "accord:totally:new:v1",
+      "family": "accord:*",
+      "refusal": "namespace_family_unregistered",
+      "why": "an unmatched descendant beneath a closed family is unregistered, never open vocabulary"
+    },
+    {
+      "dimension": "consent:totally:new:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unmatched descendant beneath a closed family is unregistered, never open vocabulary"
+    },
+    {
       "dimension": "Accord:zz_unminted_leaf:v1",
       "family": "accord:*",
       "refusal": "namespace_dimension_case_malformed",
