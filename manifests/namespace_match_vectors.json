@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc5",
-    "registry_sha256": "07e0c72538f3dd42451cac0c5f2529eed37bea3e8996640de2749aabb960b7fb",
+    "cc_version": "1.0-rc6",
+    "registry_sha256": "c22dc0874b4c5ade08d8a691effdee36464eeaa76e3c57de28bdd0d0b2328d3e",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -993,6 +993,42 @@
     {
       "dimension": "capacity:integrity",
       "family": "capacity:integrity",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "capacity:relay_delivery:v1",
+      "family": "capacity:relay_delivery",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "capacity:relay_delivery:V1",
+      "family": "capacity:relay_delivery",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:relay_delivery:v1:v2",
+      "family": "capacity:relay_delivery",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:relay_delivery:v1beta",
+      "family": "capacity:relay_delivery",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Capacity:relay_delivery:v1",
+      "family": "capacity:relay_delivery",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "capacity:relay_delivery",
+      "family": "capacity:relay_delivery",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },

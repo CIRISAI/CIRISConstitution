@@ -179,7 +179,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 148,
+    "n_families": 149,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -189,12 +189,12 @@
       "node": 48,
       "persist": 6,
       "registry": 17,
-      "transport-delivery": 5
+      "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "b2d996aa72fe9286c3c611bd9cc8cc3046857147e602e22095fa676f62d916e4",
+    "registry_sha256": "c22dc0874b4c5ade08d8a691effdee36464eeaa76e3c57de28bdd0d0b2328d3e",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "3f01b723a91971f386e98bb4b355c1ac0db395a53d8ba149670df5215a699e61"
+    "source_sha256": "fbb6c32e0ff0a4ef3aa0956c65882e9d0a50123827f9e1eee2c15858f84bd4de"
   },
   "families": [
     {
@@ -902,6 +902,29 @@
         {
           "class": "literal",
           "segment": "integrity"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.4",
+      "description": "A consuming node's measurement of a relay's delivered-versus-claimed A/V throughput over a window, keyed to the relay's own SignedRelayCapacity claim (advertiser_key_id, stream_id, epoch): the envelope score is the fulfilment ratio, never a",
+      "owning_component": "transport-delivery",
+      "owning_repo": "CIRISEdge",
+      "polarity": "signed",
+      "prefix": "capacity:relay_delivery",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "no-self-emit (attesting_key_id != attested_key_id)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "capacity"
+        },
+        {
+          "class": "literal",
+          "segment": "relay_delivery"
         }
       ]
     },
