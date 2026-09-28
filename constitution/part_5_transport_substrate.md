@@ -150,6 +150,41 @@ canonical = sha256(
 
 Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig` (bound payload).
 
+### `POST /v1/transparency/lineage-head/cosign` (public) — trust-root lineage heads ([CIRISConstitution#119](https://github.com/CIRISAI/CIRISConstitution/issues/119))
+
+The same directory witnesses **trust-root lineage heads** ([CC 3.2](part_3_the_namespace.md) T6): the latest roster-chain record of a conferring family or `infrastructure` community, named by the SHA-256 of its JCS-canonical signed bytes. A witness posts its cosignature over `(lineage_key_id, head_digest, head_asserted_at, signed_at)`; the Registry verifies hybrid Ed25519 + ML-DSA-65 against the witness pubkey in the directory, refuses a witness that is a founder of the lineage it would witness (the witness set is independent by rule), and persists on success.
+
+Request body:
+
+```json
+{
+  "lineage_key_id": "<community_key_id or family_key_id>",
+  "head_digest_sha256_hex": "<64-char-lowercase over the JCS-canonical signed roster record>",
+  "head_asserted_at": "<rfc3339_canonical — the record's signer-stamped instant>",
+  "prior_head_digest_sha256_hex": "<64-char-lowercase — the head this witness last cosigned for this lineage; absent on its first>",
+  "signed_at": "<rfc3339_canonical>",
+  "witness_key_id": "<string>",
+  "ed25519_signature_b64": "<base64-url>",
+  "mldsa65_signature_b64": "<base64-url>"
+}
+```
+
+Canonical bytes (witness MUST sign these):
+
+```
+canonical = sha256(
+    "ciris.lineage_head_cosign.v1\n" ||
+    "lineage_key_id=" || lineage_key_id || "\n" ||
+    "head_digest_sha256=" || sha256_hex_lowercase || "\n" ||
+    "head_asserted_at=" || rfc3339_canonical || "\n" ||
+    "signed_at=" || rfc3339_canonical
+)
+```
+
+Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig`. The domain label is distinct from `ciris.sth_cosign.v1` and the byte layout differs, so a lineage-head cosignature can never be replayed as a tree-head cosignature or the reverse.
+
+**Descent, and equivocation kept as evidence (normative).** A witness MUST verify, before signing, that the new head descends by `supersedes` from the prior head it cosigned for that lineage (or from the lineage's genesis record on its first cosignature), and the Registry MUST reject a cosignature whose named prior it did not record for that witness, or whose head does not descend from it → `LINEAGE_HEAD_INCONSISTENT` ([CC 5.3.6.1](#5361-envelope-error--error-envelope)). A head that carries a **valid founder-quorum signature** and does *not* descend from the lineage's witnessed head is a different thing from a malformed request: the Registry MUST **record it and never cosign it**, because that record is the `hard_case:lineage_equivocation` evidence ([CC 3.4.2](part_3_the_namespace.md)) and refusing it would lose the proof. A lineage whose latest cosignature is older than its charter's `witness_cadence` is *silent*: reported on the trust surface as a liveness signal under [CC 3.2](part_3_the_namespace.md) T4, never a validity leg.
+
 #### 5.3.1.1 `consistency-proof` — Consistency-proof requirement (normative)
 
 A cosignature only means something if the witness has checked that the new tree is a consistent extension of the one it last saw — otherwise quorum is agreement on a string, not on a history. A witness signing an STH MUST first verify a consistency proof from the prior STH it cosigned (or from genesis if it is the witness's first cosignature against this log). The Registry MUST reject `POST /v1/transparency/sth/cosign` requests that omit the `consistency_proof_*` fields OR whose consistency proof does not verify against the named prior STH. `witness_quorum_met` is therefore "quorum on log consistency," not "quorum on a string."
@@ -495,7 +530,9 @@ Response (`200 OK`):
 
 **Authority lives inside `bundle` and nowhere else (normative).** The bundle is **tamper-evident, not authentic** ([CC 3.2](part_3_the_namespace.md) T5): its holders' hybrid authorizations over the charter prove the bundle is internally consistent, and an attacker's self-consistent bundle under the same identifiers verifies identically. A consumer therefore MUST hold an **out-of-band anchor before accepting a bootstrap bundle** — either the pinned `bundle_fingerprint` (the `sha256:` over the JCS-canonical bundle, published with the release and baked into conformant builds) or the pinned fingerprints of the accord-holder keys — and MUST compare the received bundle against it at attach time; `ciris-canonical` and `humanity-accord` are **names, not anchors**, and a consumer with no anchor MUST NOT promote anything in the response to a trust root. With the anchor held, the consumer re-derives the quorum from its *own* records (`verify_bundle_quorum` — the authorizations counted against the roster the consumer holds or has just pinned), and from then on the root is valid until revoked (T4). Everything outside `bundle` — the served fingerprint, the charter root id, `served_by` — is unsigned convenience metadata the consumer recomputes (the fingerprint against its pin) or ignores; the served `bundle_fingerprint` is never itself the anchor. There is deliberately **no `response_signature`**: signing the wrapper would prove only that the relaying node said it, which is exactly what the retired steward-key response proved and exactly what was worthless, and it would invite consumers to check the envelope instead of the artifact. `hardware_class`, `signature_mode` and `threshold_policy` MUST NOT appear on the outer envelope; a holder's custody class rides its signed key record and is corroborated, or not, per [CC 4.2.2.1](part_4_composition_governance.md). `served_by.accepts_this_root: false` is a legitimate state — a node may relay a root it has not accepted ([CC 3.2](part_3_the_namespace.md) T3) — and is the operator's un-trust lever made visible.
 
-A consumer pins the community anchor `community_key_id: ciris-canonical` and the accord family `humanity-accord`, resolves the live member set via `resolve_community` ([CC 4.4.3.2.4](part_4_composition_governance.md)), and never hard-pins a serving install's fingerprint. A root is valid until revoked, never until a timer lapses ([CC 3.2](part_3_the_namespace.md) T4): a signed whole-roster snapshot, where one is served, carries a **freshness** bound consumers treat as a liveness signal, not an expiry that invalidates the root.
+A consumer pins the community anchor `community_key_id: ciris-canonical` and the accord family `humanity-accord`, resolves the live member set via `resolve_community` ([CC 4.4.3.2.4](part_4_composition_governance.md)), and never hard-pins a serving install's fingerprint. A root is valid until revoked, never until a timer lapses ([CC 3.2](part_3_the_namespace.md) T4); what freshness gates is *attaching*, under T4a, and the object that carries it is served beside the bundle.
+
+**The lineage head beside the bundle ([CIRISConstitution#118](https://github.com/CIRISAI/CIRISConstitution/issues/118) / [#119](https://github.com/CIRISAI/CIRISConstitution/issues/119)).** The route serves, outside `bundle`, a `lineage_head` member: the latest roster-chain record of `ciris-canonical` (and, for the accord family, of `humanity-accord`), its `head_digest_sha256_hex`, its signer-stamped `asserted_at`, and the witness cosignatures collected under [CC 5.3.1](#531-witness--sth-cosigning--witness-directory)'s lineage-head domain. The same object is served alone at `GET /v1/trust-root/lineage-head` for a consumer refreshing before it attaches. It is unsigned convenience like everything outside `bundle`: the consumer verifies the record's founder-quorum signature, verifies each cosignature against the witness directory it holds, checks that the head descends from the bundle's genesis record, and applies [CC 3.2](part_3_the_namespace.md) T4a — a head older than the root's `attach_window`, or carrying fewer than the witness quorum, is insufficient to attach, and the consumer fetches a fresher one or refuses; it never attaches on the stale one. **Shipped charter defaults** for both `ciris-canonical` and `humanity-accord`: `attach_window` **7 days**, `witness_cadence` **24 hours**; both are charter members, changed only by re-scrub. Once attached, T4 governs: the served head's age is a liveness signal on the trust surface, never an expiry.
 
 ### `GET /v1/accord-holders`
 
@@ -553,6 +590,7 @@ All error responses MUST conform to:
 | 422 | `CLOCK_SKEW_VIOLATION` | `signed_at` exceeds [CC 2.6.7](part_2_the_grammar.md) ±5 minute tolerance |
 | 422 | `WITNESS_QUORUM_NOT_MET` | Insufficient cosignatures to validate |
 | 422 | `CONSISTENCY_PROOF_INVALID` | A witness cosignature's [CC 5.3.1.1](#1031-consistency-proof-requirement-normative-addresses-ceg-01-distsys-review) consistency proof against the prior STH it cosigned is absent or does not verify. A missing proof when a prior STH exists, or a tree_size behind the witness's prior cosigned STH, is `MALFORMED_REQUEST` instead. |
+| 422 | `LINEAGE_HEAD_INCONSISTENT` | A lineage-head cosignature ([CC 5.3.1](#531-witness--sth-cosigning--witness-directory)) names a prior head the Registry did not record for that witness, or a head that does not descend from it by `supersedes`. A founder-quorum-signed head that does not descend from the lineage's *witnessed* head is not this error: it is recorded uncosigned as `hard_case:lineage_equivocation` evidence ([CC 3.2](part_3_the_namespace.md) T6) |
 | 413 | `ENVELOPE_TOO_LARGE` | Canonical JCS bytes exceed the [CC 2.6.1.3](part_2_the_grammar.md) 1 MiB bound. Raised at **every** write path (HTTP body, capsule, FFI, tier-ingest), not only at an HTTP gate — the CC 2.6.1.3 rule is an admission bound, not a transport limit. CIRISPersist's storage-layer spelling `federation_envelope_too_large` maps to this wire code; the wire code is the conformance surface. |
 | 429 | `RATE_LIMITED` | `X-RateLimit-*` headers set; `Retry-After` honored |
 | 500 | `INTERNAL_ERROR` | Server-side fault; request_id usable for support |

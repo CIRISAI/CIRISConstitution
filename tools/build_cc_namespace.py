@@ -628,7 +628,7 @@ def main():
     # the hash of the GRAMMAR (families + _meta without the prose hash), so a wording
     # edit anywhere in Part 3 does not invalidate every downstream pin.
     grammar = OrderedDict([("_meta", OrderedDict((k, v) for k, v in meta.items()
-                                                 if k not in ("source_sha256", "registry_sha256"))),
+                                                 if k not in ("source_sha256", "registry_sha256", "cc_version"))),   # cc_version: a bump is not a grammar change (rc6)
                            ("families", fam_list)])
     meta["registry_sha256"] = hashlib.sha256(
         json.dumps(grammar, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()

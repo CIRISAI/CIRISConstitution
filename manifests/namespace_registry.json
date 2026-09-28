@@ -192,9 +192,9 @@
       "transport-delivery": 5
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "73af21aff98f1e81b4bfcb3a2ccd873c87b1803b33e6dbc0ab4de9d891406ce0",
+    "registry_sha256": "b2d996aa72fe9286c3c611bd9cc8cc3046857147e602e22095fa676f62d916e4",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "4f675532029663469f9c67694fb68d5d13742deb701d8337f1929ae8f6b7a907"
+    "source_sha256": "ccb22a0cc893842029278f3f302a925e56c8a3fcce7762b521cc3e4ee0ec326d"
   },
   "families": [
     {
