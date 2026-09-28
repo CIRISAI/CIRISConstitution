@@ -1,0 +1,25 @@
+name: formal
+
+# Manual until the configuration closes: at Founders=4 / Witnesses=3 / MaxT=3 the
+# state space exceeded 366M distinct states (depth 15, no violation) before the local
+# run was stopped for memory. A gating run needs a smaller configuration or a state
+# constraint — CIRISConstitution#127.
+on:
+  workflow_dispatch:
+
+jobs:
+  tlc:
+    name: TLC — CC 3.2 T8 standing verdict
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch tla2tools (pinned release)
+        run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Model-check TrustRootVerdict
+        working-directory: formal/trust_root
+        run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -deadlock TrustRootVerdict.tla
