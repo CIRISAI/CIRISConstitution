@@ -1,11 +1,19 @@
 name: formal
 
-# Manual until the configuration closes: at Founders=4 / Witnesses=3 / MaxT=3 the
-# state space exceeded 366M distinct states (depth 15, no violation) before the local
-# run was stopped for memory. A gating run needs a smaller configuration or a state
-# constraint — CIRISConstitution#127.
+# The checked-in configuration closes (22,152,480 distinct states, depth 25, ~9 min on
+# 8 workers); allow up to two hours on a small runner. State files go to a temp dir.
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'formal/**'
+      - 'constitution/part_3_the_namespace.md'
+      - '.github/workflows/formal.yml'
+  pull_request:
+    paths:
+      - 'formal/**'
+      - 'constitution/part_3_the_namespace.md'
+      - '.github/workflows/formal.yml'
 
 jobs:
   tlc:
@@ -22,4 +30,4 @@ jobs:
         run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
       - name: Model-check TrustRootVerdict
         working-directory: formal/trust_root
-        run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -deadlock TrustRootVerdict.tla
+        run: java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc" -deadlock TrustRootVerdict.tla
