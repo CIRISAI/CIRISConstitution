@@ -5743,6 +5743,24 @@
       "why": "a version attempt in last place on open vocabulary is malformed, not a missing tail"
     },
     {
+      "dimension": "no_such_family:v1\n:v2",
+      "family": null,
+      "refusal": null,
+      "why": "a newline-bearing segment is not a version attempt (#128): open vocabulary, no charset rule binds an unregistered family's own segments"
+    },
+    {
+      "dimension": "no_such_family:V1\n:v2",
+      "family": null,
+      "refusal": null,
+      "why": "same as above with an uppercase v \u2014 not a version attempt once the detector is full-match (#128)"
+    },
+    {
+      "dimension": "system:foo:v1beta\n:v1",
+      "family": "system:*",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "under a registered wildcard the vocab pattern binds the leaf, and a newline fails it (#128, #116)"
+    },
+    {
       "dimension": "no_such_family:v1beta:v2",
       "family": null,
       "refusal": null,
