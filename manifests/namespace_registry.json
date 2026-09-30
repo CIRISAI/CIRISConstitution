@@ -179,7 +179,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 150,
+    "n_families": 153,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -187,14 +187,14 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 7,
+      "persist": 10,
       "registry": 17,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "a5d8f10ec2be7cd4df3caacfe09ca1ad429f8f4f0e134a6dc914677df9481042",
+    "registry_sha256": "2ed5b47c4e5379e08b80b68a8e60df2830b6aaf94e9056d8e53a881a404fd61b",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "54e7e6346fd4ff35f7a216b75c5aef3b19eb4b11da2a4153368dcf2209f9287f"
+    "source_sha256": "1d493396ec01a3dbadc0311deb2ea3dcefe95e0d6477847b69b422a2f75f2e77"
   },
   "families": [
     {
@@ -1143,6 +1143,29 @@
       ]
     },
     {
+      "cc_section": "3.1.3.4",
+      "description": "A collection of files that is an object in its own right.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "collection:{kind}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3.4",
+        "rule": "author-emitted (the collection's creator; amendments by it or the cohort under consensus_protocol)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "collection"
+        },
+        {
+          "class": "vocab",
+          "segment": "{kind}"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.2",
       "description": "Track-record of follow-through.",
       "owning_component": "node",
@@ -1675,6 +1698,34 @@
         {
           "class": "value",
           "segment": "{subject}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3.3",
+      "description": "A device's own signed custody receipt for one blob: {state} \u2208 held | none \u2014 closed.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "custody:{state}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3.3",
+        "rule": "holder self-report (attesting_key_id is the device the receipt is about); within-cohort only"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "custody"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{state}",
+          "values": [
+            "held",
+            "none"
+          ]
         }
       ]
     },
@@ -2223,6 +2274,29 @@
         {
           "class": "vocab",
           "segment": "{aspect}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3.4",
+      "description": "A file: one row per file, placed at a cohort_scope, its bytes addressed by digest and described by the CC 3.3.13 Source struct, name and format inside the sealed descriptor.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "file:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3.4",
+        "rule": "author-emitted (the file's author, or a device it acts through)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "file"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
         }
       ]
     },

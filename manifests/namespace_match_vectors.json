@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc6",
-    "registry_sha256": "a5d8f10ec2be7cd4df3caacfe09ca1ad429f8f4f0e134a6dc914677df9481042",
+    "registry_sha256": "2ed5b47c4e5379e08b80b68a8e60df2830b6aaf94e9056d8e53a881a404fd61b",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -1345,6 +1345,48 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
+      "dimension": "collection:sample:v1",
+      "family": "collection:{kind}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "collection:sample:V1",
+      "family": "collection:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "collection:sample:v1:v2",
+      "family": "collection:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "collection:sample:v1beta",
+      "family": "collection:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Collection:sample:v1",
+      "family": "collection:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "collection:sample",
+      "family": "collection:{kind}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "collection:SAMPLE:v1",
+      "family": "collection:{kind}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
       "dimension": "commitment_fulfillment:id1:v1",
       "family": "commitment_fulfillment:{prior_contribution_id}",
       "refusal": null,
@@ -2219,6 +2261,54 @@
       "family": "credits:{domain}:{language}:{subject}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "custody:held:v1",
+      "family": "custody:{state}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "custody:held:V1",
+      "family": "custody:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "custody:held:v1:v2",
+      "family": "custody:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "custody:held:v1beta",
+      "family": "custody:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Custody:held:v1",
+      "family": "custody:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "custody:held",
+      "family": "custody:{state}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "custody:HELD:v1",
+      "family": "custody:{state}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "custody:not_a_listed_value:v1",
+      "family": "custody:{state}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "cw_class:sample:v1",
@@ -3101,6 +3191,42 @@
       "family": "fidelity:{aspect}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "file:v1",
+      "family": "file:{version}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "file:V1",
+      "family": "file:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "file:v1:v2",
+      "family": "file:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "file:v1beta",
+      "family": "file:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "File:v1",
+      "family": "file:{version}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "file",
+      "family": "file:{version}",
+      "refusal": "missing_version_segment",
+      "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
       "dimension": "film:leaf:v1",

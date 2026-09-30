@@ -175,6 +175,44 @@ Distinct from the substrate self-reports above: these are **occurrence** self-re
 
 **Not a membership rule: reverse quorum.** The reverse-quorum brake of [CC 4.5.13](part_4_composition_governance.md) governs objection to commons acts. It admits no one and confers no consent on anyone's behalf.
 
+
+#### 3.1.3.3 `custody` — `custody:*` — which of a cohort's own devices hold a blob, and which hold none (normative — CIRISConstitution#130)
+
+**The ruling (maintainer, 2026-09-30).** A family must be able to see how many copies of its content exist — "only one copy, back it up" before a phone dies — without weakening encryption or outsider invisibility. [CC 5.2](part_5_transport_substrate.md)'s structural invisibility, and the "wire discovery: none" of the `self` / `family` tiers ([CC 4.4.3.2.1](part_4_composition_governance.md)), are invisibility to those **outside** the cohort. Discovery *within* the cohort, of custody only, is permitted, on the terms below. A device's signed statement that it holds **no** copy is a custody fact in its own right, the counterpart of a [CC 5.3.3.6](part_5_transport_substrate.md) delivery receipt, so the receipt covers both states.
+
+**Registry row (CC 3.1.7 R1).**
+
+| Prefix | Description | Polarity | Reserved? |
+|---|---|---|---|
+| `custody:{state}` | A device's own signed custody receipt for one blob: `{state}` ∈ `held` \| `none` — closed. Carries the blob's address digest, its `size` (on `held`), and the signer-stamped instant; `held` means the device stores the bytes, `none` means the device answered and holds no copy. Placed at the blob's own `cohort_scope` and replicated only within that cohort. | positive-only | **Yes — holder self-report:** `attesting_key_id` is the device the receipt is about; nobody reports custody for another device |
+
+**Scope and invisibility (normative).** A custody receipt is placed at the content's own `cohort_scope` — `self` for a person's own devices, `family`, or `community` — and is replicated only to that cohort's members. It is never `holds_bytes:*`, never delivered to a non-member, and carries nothing about the blob beyond its address, size and the device; the blob's name and format stay in the sealed descriptor ([CC 3.3.13](part_3_the_namespace.md)). An outsider learns nothing it did not learn before.
+
+**Freshness (normative).** A `held` receipt is withdrawn when the device drops the bytes. Both states lapse at a freshness horizon — default **7 days** from the receipt's instant, re-issued by a responsive device before it lapses — so a lost or dead device stops counting rather than reporting a copy it may no longer have.
+
+**What a cohort member sees, per device.** **here** — a live `held` receipt; **received** — a [CC 5.3.3.6](part_5_transport_substrate.md) delivery receipt with no later custody receipt; **none** — a live `none` receipt; **unknown** — no live receipt. The count of *here* is the number of known copies; a UI MUST NOT present *unknown* as *none*, nor a lapsed `held` as a copy.
+
+#### 3.1.3.4 `files` — `file:*` and `collection:*` — files, and directories of them (normative — CIRISConstitution#135)
+
+**The ruling (maintainer, 2026-09-30).** Files ship today as one row per file placed in a cohort, with name and type sealed ([CC 3.3.13](part_3_the_namespace.md), #114), under a family the registry never carried. This section registers it, and adds directories as objects in their own right, so a directory can be promoted, moved, renamed, withdrawn and shared as one thing.
+
+**Registry rows (CC 3.1.7 R1).**
+
+| Prefix | Description | Polarity | Reserved? |
+|---|---|---|---|
+| `file:{version}` | A file: one row per file, placed at a `cohort_scope`, its bytes addressed by digest and described by the [CC 3.3.13](part_3_the_namespace.md) Source struct, name and format inside the sealed descriptor. Wire `file:v1`. | positive-only | **Yes — author-emitted:** the file's author (or a device that author acts through) |
+| `collection:{kind}` | A collection of files that is an object in its own right. Canonical kind `directory` (wire `collection:directory:v1`); `{kind}` open per [CC 4.5.1.1](part_4_composition_governance.md), leaving room for albums or playlists. Its name and its own `parent` live in its sealed descriptor, exactly as a file's do. | positive-only | **Yes — author-emitted:** the collection's creator; an amendment (rename, move) is its author's, or the cohort's under its `consensus_protocol` where the cohort's rules say so |
+
+**Identity and membership (normative).** A directory's identity is the attestation id of its creating row, carried forward by `supersedes` under the [CC 3.3.9](part_3_the_namespace.md) stable-id grouping; renaming or moving it is a `supersedes` of that row. A file's or a directory's membership in a directory is **`parent`, carried inside its own sealed descriptor** — the containing directory's stable id, sealed with the name. There is no edge row: the tree's shape is sealed at every scope, including `community`, so no holder learns how many items a directory holds, and moving a file is one write — the child's row re-sealed with a new `parent`. Placing one's own file in a directory needs no one's leave but that file's author.
+
+**Promotion is one intent, executed as N crossings (normative).** Every widening is an act on specific bytes: [CC 5.2](part_5_transport_substrate.md) emits on the new Contribution, promotion is the federation-emit moment ([CC 5.3.2.4.2](part_5_transport_substrate.md)), and the perceptual-hash tripwire fires at every scope-widening promotion ([CC 1.13.3.4](part_1_foundation.md)). A collection-level crossing would be the one way to widen bytes without that tripwire, so none exists and no folder key is ever minted. Promoting a directory is a `supersedes` of the directory row at the wider scope — the intent — which its author's node carries out as one ordinary promotion per file that author owns, each with its own emission and tripwire, reporting any it did not widen and why.
+
+**A directory's scope is a default, never a floor (normative).** A file placed in a directory is placed at the directory's scope at that instant, by its author's own act; a file its author pinned narrower stays narrower, and widening the directory never drags it. Narrowing a directory is forward-only: it changes the default for later placements and MAY withdraw the author's own wider copies; it un-publishes nothing.
+
+**No consent for anyone else's files (normative).** A directory promotion widens **only the promoting author's own files**. Each author holds revocation authority over their own rows ([CC 5.3.2.4.1](part_5_transport_substrate.md)), and no collection act stands in for it — the principle [CC 3.1.3.2](part_3_the_namespace.md) states for membership. Another author's files in a shared directory receive a widening **request**, which that author's node acts on only on that author's acceptance. Every per-file gate still binds: a non-author subject's consent ([CC 2.3](part_2_the_grammar.md), [CC 3.3.1](part_3_the_namespace.md)) and the minor protections of [CC 3.4.13](part_3_the_namespace.md). A directory act inherits every gate and bypasses none.
+
+**Custody at the directory tier** is a query over the per-file custody receipts of CC 3.1.3.3, filtered by `parent`; it needs no row of its own.
+
 ### 3.1.4 `transport-delivery` — CIRISEdge — transport, delivery, reachability
 
 **Steward**: [`CIRISEdge/MISSION.md`](https://github.com/CIRISAI/CIRISEdge/blob/main/MISSION.md). Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md).
@@ -1615,9 +1653,11 @@ codec           string         RFC 6381 family; REQUIRED for video/mp4, audio/mp
 width, height, duration_ms     layout hints; receiver re-derives from the header, never trusts for allocation
 placeholder     {thumbhash}    ~25 bytes, decoded by arithmetic — the only element a UI may show before CC 5.3.2.5 has passed
 name            string         display only; RFC 6266 §4.3 sanitised; never selects a decoder or a save path
+parent          id             optional; ONLY inside sealed_descriptor, never in clear: the stable id of the
+                               collection:directory containing this file (CC 3.1.3.4)
 content_digest  sha256:<hex>   optional: plaintext hash when digest is over ciphertext (community+ scopes, per-epoch HPKE)
 derived_from    sha256:<hex>   optional: this blob is a rendition of that one
-sealed_descriptor base64       optional: AEAD seal under the room DEK over {name, format, codec?} as a JCS object,
+sealed_descriptor base64       optional: AEAD seal under the room DEK over {name, format, codec?, parent?} as a JCS object,
                                associated data = digest; when present, name / format / codec MUST be absent in clear
 ```
 

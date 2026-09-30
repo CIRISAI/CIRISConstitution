@@ -102,6 +102,14 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
+        # CC 3.1.3.3 / 3.1.3.4: device custody receipts and authored file/collection rows —
+        # not substrate self-reports.
+        (lambda p, c: p.startswith("custody:"),
+         "holder self-report (attesting_key_id is the device the receipt is about); within-cohort only", "CC 3.1.3.3"),
+        (lambda p, c: p.startswith("file:"),
+         "author-emitted (the file's author, or a device it acts through)", "CC 3.1.3.4"),
+        (lambda p, c: p.startswith("collection:"),
+         "author-emitted (the collection's creator; amendments by it or the cohort under consensus_protocol)", "CC 3.1.3.4"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
         (lambda p, c: p.startswith("membership:"),
          "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])", "CC 3.1.3.2"),
