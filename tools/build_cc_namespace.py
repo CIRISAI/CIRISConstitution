@@ -662,7 +662,10 @@ def main():
         raise SystemExit("namespace grammar does not round-trip through tools/cc_namespace_match.py "
                          "(%d):\n  %s" % (len(_problems), "\n  ".join(_problems)))
 
-    RETIRED_FAMILIES = {"age_self_declared:{band}:{version}"}  # -> age_self_declared:band:{band}:{version} (#113 review: the wire arity)
+    RETIRED_FAMILIES = {
+        "age_self_declared:{band}:{version}",  # -> age_self_declared:band:{band}:{version} (#113 review: the wire arity)
+        "custody:{state}",                     # -> custody:{kind} = ack (#130 operator ruling; lived one rc6 commit, 3f10e7f)
+    }
     if os.path.exists(OUT):
         try:
             prev = {f_["prefix"] for f_ in json.load(open(OUT)).get("families", [])}

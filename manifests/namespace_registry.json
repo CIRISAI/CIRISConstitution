@@ -192,9 +192,9 @@
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "2ed5b47c4e5379e08b80b68a8e60df2830b6aaf94e9056d8e53a881a404fd61b",
+    "registry_sha256": "f70f69ce0f4749648795873ec3fde256163e3dafc30a1f106545ac821c0e6985",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "1d493396ec01a3dbadc0311deb2ea3dcefe95e0d6477847b69b422a2f75f2e77"
+    "source_sha256": "da53ab7bc30d3dd7ab7eeb07b1bbdb3e7499a823fb3bdd6aad8c80849aeb49bf"
   },
   "families": [
     {
@@ -1703,11 +1703,11 @@
     },
     {
       "cc_section": "3.1.3.3",
-      "description": "A device's own signed custody receipt for one blob: {state} \u2208 held | none \u2014 closed.",
+      "description": "Within-cohort custody reports.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
-      "prefix": "custody:{state}",
+      "prefix": "custody:{kind}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.3.3",
@@ -1721,10 +1721,9 @@
         {
           "class": "vocab",
           "open": false,
-          "segment": "{state}",
+          "segment": "{kind}",
           "values": [
-            "held",
-            "none"
+            "ack"
           ]
         }
       ]

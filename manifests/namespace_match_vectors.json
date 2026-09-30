@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc6",
-    "registry_sha256": "2ed5b47c4e5379e08b80b68a8e60df2830b6aaf94e9056d8e53a881a404fd61b",
+    "registry_sha256": "f70f69ce0f4749648795873ec3fde256163e3dafc30a1f106545ac821c0e6985",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -2263,50 +2263,50 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
-      "dimension": "custody:held:v1",
-      "family": "custody:{state}",
+      "dimension": "custody:ack:v1",
+      "family": "custody:{kind}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "custody:held:V1",
-      "family": "custody:{state}",
+      "dimension": "custody:ack:V1",
+      "family": "custody:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "custody:held:v1:v2",
-      "family": "custody:{state}",
+      "dimension": "custody:ack:v1:v2",
+      "family": "custody:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "custody:held:v1beta",
-      "family": "custody:{state}",
+      "dimension": "custody:ack:v1beta",
+      "family": "custody:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Custody:held:v1",
-      "family": "custody:{state}",
+      "dimension": "Custody:ack:v1",
+      "family": "custody:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "custody:held",
-      "family": "custody:{state}",
+      "dimension": "custody:ack",
+      "family": "custody:{kind}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "custody:HELD:v1",
-      "family": "custody:{state}",
+      "dimension": "custody:ACK:v1",
+      "family": "custody:{kind}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
       "dimension": "custody:not_a_listed_value:v1",
-      "family": "custody:{state}",
+      "family": "custody:{kind}",
       "refusal": "namespace_vocab_value_unregistered",
       "why": "a value outside a closed enumeration is unregistered"
     },
