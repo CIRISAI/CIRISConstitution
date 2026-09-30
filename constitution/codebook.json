@@ -1,6 +1,6 @@
 {
   "_note": "Deterministic dual-ID codebook for the CIRIS Constitution (CC). Both maps are 1:1. decimal_id and semantic_id are deterministic functions of the unified corpus (graph_unified.json unified_pagerank conscious-mesh weights + the fixed Part map); same corpus => byte-identical codebook. title->id is NOT codebook-free: it depends on the measured importance distribution, by design.",
-  "n_concepts": 439,
+  "n_concepts": 440,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -440,7 +440,8 @@
     "3.1.3.1": "cc:3.1.3.1",
     "3.4.5.1": "cc:3.4.5.1",
     "2.4.1.2.1": "cc:2.4.1.2.1",
-    "5.3.2.6": "cc:5.3.2.6"
+    "5.3.2.6": "cc:5.3.2.6",
+    "3.1.3.2": "cc:3.1.3.2"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -881,7 +882,8 @@
     "cc:3.1.3.1": "3.1.3.1",
     "cc:3.4.5.1": "3.4.5.1",
     "cc:2.4.1.2.1": "2.4.1.2.1",
-    "cc:5.3.2.6": "5.3.2.6"
+    "cc:5.3.2.6": "5.3.2.6",
+    "cc:3.1.3.2": "3.1.3.2"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -1322,7 +1324,8 @@
     "session-claim": "cc:3.1.3.1",
     "self-report-route": "cc:3.4.5.1",
     "authority-triad": "cc:2.4.1.2.1",
-    "render-tier": "cc:5.3.2.6"
+    "render-tier": "cc:5.3.2.6",
+    "membership": "cc:3.1.3.2"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1763,7 +1766,8 @@
     "cc:3.1.3.1": "session-claim",
     "cc:3.4.5.1": "self-report-route",
     "cc:2.4.1.2.1": "authority-triad",
-    "cc:5.3.2.6": "render-tier"
+    "cc:5.3.2.6": "render-tier",
+    "cc:3.1.3.2": "membership"
   },
   "legacy_to_decimal": {
     "§0": "2.6",

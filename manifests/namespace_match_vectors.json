@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc6",
-    "registry_sha256": "c22dc0874b4c5ade08d8a691effdee36464eeaa76e3c57de28bdd0d0b2328d3e",
+    "registry_sha256": "5f74b3687dfb6bc7256364e3d4f5cf0de4d9d7c9746e64e851b405a4d5ff47a6",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -3701,6 +3701,54 @@
       "family": "manifold_conformity:{cohort}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "membership:proposal:v1",
+      "family": "membership:{stage}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "membership:proposal:V1",
+      "family": "membership:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "membership:proposal:v1:v2",
+      "family": "membership:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "membership:proposal:v1beta",
+      "family": "membership:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Membership:proposal:v1",
+      "family": "membership:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "membership:proposal",
+      "family": "membership:{stage}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "membership:PROPOSAL:v1",
+      "family": "membership:{stage}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "membership:not_a_listed_value:v1",
+      "family": "membership:{stage}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "mesh_config:sample:v1",

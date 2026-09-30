@@ -148,6 +148,28 @@ Distinct from the substrate self-reports above: these are **occurrence** self-re
 
 **What the substrate does not own.** Attendance itself. *"A human is present here"* / *"an agent is running here"* is not a storage fact, and no substrate can know it; when to claim, renew, and release is the consumer's decision.
 
+
+#### 3.1.3.2 `membership` — `membership:*` — nobody joins a family or community without their own consent (normative — CIRISConstitution#133)
+
+**The ruling (maintainer, 2026-09-30).** Admission to a `family` or `community` is two consents, never one: the group's, under its `consensus_protocol`, and the joiner's own. Before this ruling the admission predicates of [CC 4.4.3.2.3](part_4_composition_governance.md) and [CC 4.4.3.4.2](part_4_composition_governance.md) read only the *existing* members' signatures, so a record growing the roster by K was admissible with no act by K, and a founder could enrol any registered key. The joiner's consent is the joiner's; no quorum, however large, stands in for it — so the rule binds **every** `consensus_protocol`, `founder_only` included. Persist is the steward: the gate is at admission, local put and replicated apply alike, so no host can skip it (CIRISPersist#955).
+
+**Registry row (CC 3.1.7 R1).**
+
+| Prefix | Description | Polarity | Reserved? |
+|---|---|---|---|
+| `membership:{stage}` | The membership ceremony, one row per step: `{stage}` ∈ `proposal` \| `acceptance` \| `decline` — closed. A **proposal** names one invitee K (`attested_key_id`), the group (`community_id` or `family_id`), the `offered_role`, and a `valid_until`; it is authored by the group under its `consensus_protocol` and carries the co-signatures that protocol needs. An **acceptance** or **decline** is K's answer to exactly one proposal, binding its `proposal_digest`. | positive-only | **Yes — per-leaf emitter:** a proposal is the group's (its signers MUST satisfy the current `consensus_protocol`); an acceptance or decline is the invitee's only — `attesting_key_id` resolves to K (K's own key, or an occurrence K acts through, [CC 3.4.7.3](part_3_the_namespace.md) `may_act_through`) |
+
+**Admission (normative).** A roster-growing record — a `supersedes` on a `family` or `community`, a community membership widening, or a founding record — that seats a key K not seated before is admissible only if, for **each** such K, there is a live `membership:acceptance:v1` from K whose `proposal_digest` is the SHA-256 of the signed bytes of a `membership:proposal:v1` that (a) names K, this group and the role the record gives K, (b) was admissible under the group's `consensus_protocol` at its own `asserted_at`, and (c) has not passed its `valid_until`, been declined, or been admitted before. The acceptance binds the group id, the proposal's digest and the role offered; an acceptance of a different proposal, a different role or a different group is not this acceptance. Missing, stale or mismatched, the record is refused with `hard_case:community_consensus_protocol_violation:{community_key_id}` (or the family twin) carrying reason `membership_acceptance_missing`, `membership_proposal_declined`, `membership_proposal_expired` or `membership_proposal_consumed` — a named arm of the existing observability prefix, never a silent hold. Geographic's `location_proof` ([CC 4.4.3.2.3](part_4_composition_governance.md)) is required **in addition**, never instead.
+
+**Decline and expiry are first-class.** A proposal MUST carry `valid_until`; one without it is refused at admission. K declines with `membership:decline:v1` naming the proposal's digest. A declined or expired proposal can never be admitted — not by a later acceptance, not by a re-signature of the same bytes; asking again is a **new** proposal with a new digest. An admitted proposal is consumed: its digest seats K once. K MAY `withdraws` an acceptance before the seat is admitted, which makes it not live; after admission, leaving is the ordinary forward-only `withdraws` by the member alone, unchanged.
+
+**Founding and the trust-root seats.** A founding record seats **only its author** without further act; everyone else it names joins by proposal and acceptance, the founding record being the proposal. The same binds the trust-root ceremony: the `ciris-canonical` birth row ([CC 3.2](part_3_the_namespace.md)) seats each human steward founder only on that steward's acceptance — a conferral on the ceremony plane makes a key *eligible* to be seated, never seated against its will. The T7 recovery widening already satisfies the rule, because the conferred key signs the widening itself: that signature is its acceptance.
+
+**Not a membership rule: reverse quorum.** The reverse-quorum brake of [CC 4.5.13](part_4_composition_governance.md) governs objection to commons acts. It is not a way to admit, and it confers no consent on anyone's behalf.
+
+**Delivery.** A proposal is addressed to K (`attested_key_id = K`) and reaches K's nodes on the same replication path as any row addressed to a person; the acceptance or decline is scoped to the group (`cohort_scope` = the group's scope) and reaches its members. Neither leaks the group to outsiders: both ride the group's own scope, and a proposal reaching K discloses the group only to the person invited to it.
+
+
 ### 3.1.4 `transport-delivery` — CIRISEdge — transport, delivery, reachability
 
 **Steward**: [`CIRISEdge/MISSION.md`](https://github.com/CIRISAI/CIRISEdge/blob/main/MISSION.md). Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md).

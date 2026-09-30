@@ -409,6 +409,12 @@ admit_community_change(C, proposed: community_record):
  emit hard_case:community_consensus_protocol_violation:{C}
  reject
 
+ // CC 3.1.3.2 (CIRISConstitution#133): the joiner's own consent, under EVERY protocol
+ for each NEW member K in proposed.members (not in current):
+ if not live_acceptance(K, C, proposed.role_of(K)):   // acceptance of an unexpired,
+ emit hard_case:community_consensus_protocol_violation:{C}  // undeclined, unconsumed proposal
+ reject                                                     // naming K, C and this role
+
  subkind_ok = evaluate_subkind_admission(subkind, current, proposed)
  if not subkind_ok:
  // For geographic: subkind admission failed (e.g., new member's location_proof
@@ -704,7 +710,7 @@ The cascade is the wire-format primitive for the "I got a new phone and want my 
 
 ##### 4.4.3.4.2 `admission-membership` — Membership-change admission per consensus_protocol
 
-A proposed membership change (addition OR removal) rides a `supersedes` Contribution on the family's latest admitted `family` Contribution. Substrate admission gate evaluates the CURRENT family's `consensus_protocol` against the signatures on the proposal:
+A proposed membership change (addition OR removal) rides a `supersedes` Contribution on the family's latest admitted `family` Contribution. Substrate admission gate evaluates the CURRENT family's `consensus_protocol` against the signatures on the proposal — and, for every key the change **adds**, that key's own signed acceptance of that proposal ([CC 3.1.3.2](part_3_the_namespace.md); nobody joins without their own consent, under any protocol):
 
 ```
 admit_family_change(F, proposed: family_record):
@@ -725,6 +731,12 @@ admit_family_change(F, proposed: family_record):
  return sum(weight(m, rubric) for m in current who signed) >= threshold
  "custom:{family_id}":
  return operator-defined predicate evaluates to true
+
+ // CC 3.1.3.2 (CIRISConstitution#133): the joiner's own consent, under EVERY protocol —
+ // a protocol arm above admits the GROUP's side only
+ for each NEW member K in proposed.members (not in current):
+ if not live_acceptance(K, F, proposed.role_of(K)):
+ admit = false
 
  if admit:
  emit hard_case:family_membership_change:{F}
@@ -1596,6 +1608,8 @@ What it does NOT do:
 - Document the at-rest encryption flow details (substrate-side; persist spec)
 
 ### 4.5.13 `reverse-quorum` — Reverse-quorum governance — presence is authority, absence forfeits it
+
+**Not a membership rule (CIRISConstitution#133).** Reverse quorum is the commons objection brake. It never admits anyone to a family or community and confers no consent on anyone's behalf; joining is [CC 3.1.3.2](part_3_the_namespace.md)'s proposal and acceptance.
 
 **The general pattern.** [CC 4.2.6](part_4_composition_governance.md) is not a one-off kill-switch rule; it is the federation's **general governance shape**, and this section ratifies it as such. **Presence is authority, absence forfeits it, a timer decides.** A decision opens a bounded window; whoever shows up and signs is counted; whoever stays absent is simply *not in the denominator* and cannot block by being gone. The [CC 4.2.6](part_4_composition_governance.md) accord kill-switch is the **constitutional instance** of this pattern (the live set governs the halt-authority); **community-scope moderation is its first community instance** (the live community governs its own content). One mechanism, two scopes — the accord over humanity's off-switch, moderation over a group's content.
 

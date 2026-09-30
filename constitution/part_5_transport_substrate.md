@@ -348,7 +348,7 @@ The delivery axis was framed for 1:1 observer-share and 1:N broadcast multicast.
 | **Channel** | a `community` (persistent) — its roster gates who can join the call / read the chat |
 | **Sub-channels** | nested `community` membership ([CC 4.4.3.2.5](part_4_composition_governance.md) multi-level pattern): a parent "space" community whose members admit child channel-communities; sub-channel members are a subset of the space roster |
 | **Presence ("who's here")** | the D6 reachable set ([CC 5.3.3.4](#1056-d6-liveness-invariant--entitled-vs-reachable-normative)) — node-local, never an attestation, never logged |
-| **Invite / join / leave** | community admission ceremony ([CC 4.4.3.2.3](part_4_composition_governance.md)) — invite = membership proposal; join = admitted member; leave = forward-only `withdraws` |
+| **Invite / join / leave** | community admission ceremony ([CC 4.4.3.2.3](part_4_composition_governance.md)) — invite = membership proposal (`membership:proposal:v1`); join = admitted member, **on the invitee's own `membership:acceptance:v1`** ([CC 3.1.3.2](part_3_the_namespace.md)); decline = `membership:decline:v1`; leave = forward-only `withdraws` |
 
 **Transport profiles (normative — extends CC 5.3.3.5):**
 
