@@ -105,7 +105,7 @@ On admission of a Contribution C with cohort_scope ∈ {self, family}:
 
 **Boundary cases**:
 
-- `cohort_scope: community | affiliations | federation` content emits `holds_bytes:sha256:*` per status-quo behavior. Only the self/family path is suppressed.
+- `cohort_scope: community | affiliations | federation` content emits `holds_bytes:sha256:*` per status-quo behavior. Only the self/family path is suppressed. Suppression is of **outsider** discovery only: within the cohort, holding claims, custody reports, target replication and anti-entropy run at self/family exactly as at every other tier ([CC 6.1.5.3](part_6_the_coherence_mathematics.md)).
 - A `cohort_scope: self` Contribution that is later promoted via `supersedes` to `cohort_scope: community` emits `holds_bytes:sha256:*` at promotion time on the NEW Contribution. The original `cohort_scope: self` Contribution's bytes remain structurally-invisible at federation; only the promoted scope's bytes propagate.
 - `cohort_scope: self` content with `subject_key_ids` containing a non-self party (e.g., a private note Alice writes ABOUT Bob) is admitted and stays in Alice's self-collective; Bob does NOT receive a key_grant unless Bob is also in Alice's self (not the case for two distinct identities). Bob's [CC 2.3](part_2_the_grammar.md) subject-side revocation authority over the note still composes, but the bytes never reach Bob without Alice's explicit re-emit at a higher cohort_scope including Bob.
 
