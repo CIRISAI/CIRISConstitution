@@ -192,9 +192,9 @@
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "5f74b3687dfb6bc7256364e3d4f5cf0de4d9d7c9746e64e851b405a4d5ff47a6",
+    "registry_sha256": "a5d8f10ec2be7cd4df3caacfe09ca1ad429f8f4f0e134a6dc914677df9481042",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "1d6ee9a6809eab79662f4c65b0e31ee166228a697c0bd775c1ca05e1ce89df45"
+    "source_sha256": "54e7e6346fd4ff35f7a216b75c5aef3b19eb4b11da2a4153368dcf2209f9287f"
   },
   "families": [
     {
@@ -2594,7 +2594,7 @@
     },
     {
       "cc_section": "3.1.3.2",
-      "description": "The membership ceremony, one row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
+      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -2602,7 +2602,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.3.2",
-        "rule": "per-leaf: proposal = the group under its consensus_protocol; acceptance/decline = the invitee only (may_act_through)"
+        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])"
       },
       "segments": [
         {

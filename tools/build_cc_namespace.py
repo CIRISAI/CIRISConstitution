@@ -104,7 +104,7 @@ def _reserved_rules():
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
         (lambda p, c: p.startswith("membership:"),
-         "per-leaf: proposal = the group under its consensus_protocol; acceptance/decline = the invitee only (may_act_through)", "CC 3.1.3.2"),
+         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
         # "not a substrate-self-report", so it must come before the edge-wide rule.
         (lambda p, c: p.startswith("delivery_receipt:"),

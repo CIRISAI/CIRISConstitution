@@ -409,11 +409,13 @@ admit_community_change(C, proposed: community_record):
  emit hard_case:community_consensus_protocol_violation:{C}
  reject
 
- // CC 3.1.3.2 (CIRISConstitution#133): the joiner's own consent, under EVERY protocol
+ // CC 3.1.3.2 (CIRISConstitution#133): a supersede NEVER adds (membership_supersede_cannot_add);
+ // growth rides the widening plane, where every NEW member K needs K's own acceptance
+ // of an undeclined, unwithdrawn proposal for C, answered and grown before its expires_at
  for each NEW member K in proposed.members (not in current):
- if not live_acceptance(K, C, proposed.role_of(K)):   // acceptance of an unexpired,
- emit hard_case:community_consensus_protocol_violation:{C}  // undeclined, unconsumed proposal
- reject                                                     // naming K, C and this role
+ if not acceptance_admits(K, C, proposed.role_of(K), proposed.signed_at):
+ emit hard_case:community_consensus_protocol_violation:{C}  // with the named membership_* rule
+ reject
 
  subkind_ok = evaluate_subkind_admission(subkind, current, proposed)
  if not subkind_ok:
@@ -732,10 +734,10 @@ admit_family_change(F, proposed: family_record):
  "custom:{family_id}":
  return operator-defined predicate evaluates to true
 
- // CC 3.1.3.2 (CIRISConstitution#133): the joiner's own consent, under EVERY protocol —
- // a protocol arm above admits the GROUP's side only
+ // CC 3.1.3.2 (CIRISConstitution#133): a protocol arm above admits the GROUP's side only;
+ // a supersede never adds, and on a widening every NEW member K needs K's own acceptance
  for each NEW member K in proposed.members (not in current):
- if not live_acceptance(K, F, proposed.role_of(K)):
+ if not acceptance_admits(K, F, proposed.role_of(K), proposed.signed_at):
  admit = false
 
  if admit:
