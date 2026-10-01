@@ -434,7 +434,7 @@ The omit-vs-materialize rule applies uniformly to every optional [CC 2.1](#2.1) 
 | `attached_head_digest` | 1.0-rc6 (CC 3.2 T4a) | n/a (REQUIRED on `trust:accepts:v1`) | member absent (not an acceptance edge; on one, admission refuses `trust_root_head_unwitnessed`) | `"attached_head_digest":"<64-char-lowercase>"` |
 | `attach_window_secs` | 1.0-rc6 (CC 3.2 T4a) | absent = no window declared (attach by out-of-band anchor only) | member absent | `"attach_window_secs":604800` |
 | `witness_cadence_secs` | 1.0-rc6 (CC 3.2 T6) | n/a (REQUIRED on a witnessed lineage's charter) | member absent (the lineage is unwitnessed for T6) | `"witness_cadence_secs":86400` |
-| `witness_quorum` | 1.0-rc6 (CC 3.2 T6) | n/a (REQUIRED on a witnessed lineage's charter) | member absent (the lineage is unwitnessed for T6) | `"witness_quorum":2` |
+| `witness_quorum` | 1.0-rc6 (CC 3.2 T6) | absent ≡ `0`: witnessed mode off; no substrate default is substituted | member absent (witnessed mode off — the lineage is unwitnessed for T6) | `"witness_quorum":2` |
 | `witnesses` | 1.0-rc6 (CC 3.2 T6) | n/a (REQUIRED on a witnessed lineage's charter) | member absent (the lineage is unwitnessed for T6) | `"witnesses":[<SignedKeyRecord>, ...]` |
 | `family_id` | CEG 0.7 | n/a (REQUIRED iff `cohort_scope == family`) | member absent (admission rejects if cohort_scope == family) | `"family_id":"..."` |
 | `community_id` | CEG 0.8 | n/a (REQUIRED iff `cohort_scope == community`) | member absent (admission rejects if cohort_scope == community) | `"community_id":"..."` |
