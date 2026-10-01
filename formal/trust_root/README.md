@@ -47,7 +47,7 @@ forking the whole tree, and that `Recover` had **never fired** — all three hum
 seated, so no key was conferrable. Two earlier runs also found modelling bugs (a single-record
 edge and a single-flag halt made `V` impure in `t`). No run found a defect in the T8 text.
 
-**What it does not model.** The charter legs (recovery commitment, scope) are constants; witness
+**What it does not model.** **Witnessed mode off** (`witness_quorum: 0`, the 0.5.219 re-mint configuration, CC 3.2 T6): there the head leg is satisfied by out-of-band anchoring and first-seen-wins holds, and this model's `HasCurrentHead` (valid AND witnessed) does not represent it — the closed run says nothing about that mode. The charter legs (recovery commitment, scope) are constants; witness
 independence is by construction (disjoint constant sets) rather than derived from steward
 bindings; the directory does not rotate; the accord family is out of scope (T7 excludes it).
 Persist's five rc5 review corners are **not** encoded — #127 asks persist to list them, and they
