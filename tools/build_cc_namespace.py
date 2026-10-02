@@ -84,6 +84,7 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # bypassed by an unminted leaf; the family's `reserved` flag is untouched.
 GATED_STEMS = [
     ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
+    ("self:delegates_to:", "legacy label, closed: no leaf beyond the two registered", "CC 3.1.3"),
 ]
 RESERVED_STEMS = [
     ("accord:", "accord_holder-only", "CC 3.4.1"),
@@ -102,6 +103,9 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
+        # CC 3.1.3 legacy delegation labels (#137): not a substrate self-report.
+        (lambda p, c: p.startswith("self:delegates_to"),
+         "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed", "CC 3.1.3"),
         # CC 3.1.3.3 / 3.1.3.4: device custody receipts and authored file/collection rows —
         # not substrate self-reports.
         (lambda p, c: p.startswith("custody:"),

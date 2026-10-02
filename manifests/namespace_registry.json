@@ -149,6 +149,12 @@
           "kind": "gated",
           "rule": "subject-or-steward-signed, not open-sender; no {level} token",
           "stem": "age_self_declared:"
+        },
+        {
+          "cc_ref": "CC 3.1.3",
+          "kind": "gated",
+          "rule": "legacy label, closed: no leaf beyond the two registered",
+          "stem": "self:delegates_to:"
         }
       ],
       "version_segment": {
@@ -179,7 +185,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 153,
+    "n_families": 155,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -187,14 +193,14 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 10,
+      "persist": 12,
       "registry": 17,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "f70f69ce0f4749648795873ec3fde256163e3dafc30a1f106545ac821c0e6985",
+    "registry_sha256": "5944d68ee8186e814b5db107a7865dfebae0125c247693bbf52fd8e123334a1d",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "ef1ed1f2d747ba182cac36a2b4ee4756df248a753b78c499e57259dad274bac3"
+    "source_sha256": "c4ef24d7ef91c51791d9bf11aea95e0dc5a298b1cb8078851e353ec345d2568e"
   },
   "families": [
     {
@@ -3392,6 +3398,56 @@
         {
           "class": "value",
           "segment": "{cell}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Legacy label, closed.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "self:delegates_to",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "self"
+        },
+        {
+          "class": "literal",
+          "segment": "delegates_to"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Legacy label, closed.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "self:delegates_to:agent_occurrence",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "self"
+        },
+        {
+          "class": "literal",
+          "segment": "delegates_to"
+        },
+        {
+          "class": "literal",
+          "segment": "agent_occurrence"
         }
       ]
     },
