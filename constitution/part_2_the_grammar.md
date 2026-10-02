@@ -448,6 +448,7 @@ The omit-vs-materialize rule applies uniformly to every optional [CC 2.1](#2.1) 
 | `expires_at` | 1.0-rc6 (CC 3.1.3.2) | n/a (REQUIRED on a membership proposal) | member absent (not a proposal; on one, admission refuses) | `"expires_at":"2026-10-07T00:00:00.000Z"` |
 | `proposal_hash` | 1.0-rc6 (CC 3.1.3.2) | n/a (REQUIRED on a membership answer) | member absent (not an answer; on one, admission refuses) | `"proposal_hash":"<original_content_hash>"` |
 | `attached_head_digest` | 1.0-rc6 (CC 3.2 T4a) | n/a (REQUIRED on `trust:accepts:v1`) | member absent (not an acceptance edge; a NEW acceptance edge without it is refused; one admitted before rc6 enforcement stays valid, T4) | `"attached_head_digest":"<64-char-lowercase>"` |
+| `subject_sha256_ed25519_raw` | 1.0-rc6 (CC 2.4.1.1, #134) | absent (the subject is named some other way, or not at all) | member absent | `"subject_sha256_ed25519_raw":"<64 lowercase hex>"` |
 | `attach_window_secs` | 1.0-rc6 (CC 3.2 T4a) | absent = no window declared (attach by out-of-band anchor only) | member absent | `"attach_window_secs":604800` |
 | `witness_cadence_secs` | 1.0-rc6 (CC 3.2 T6) | n/a (REQUIRED on a witnessed lineage's charter) | member absent (the lineage is unwitnessed for T6) | `"witness_cadence_secs":86400` |
 | `witness_quorum` | 1.0-rc6 (CC 3.2 T6) | absent ≡ `0`: witnessed mode off; no substrate default is substituted | member absent (witnessed mode off — the lineage is unwitnessed for T6) | `"witness_quorum":2` |
