@@ -194,7 +194,7 @@
     "private_use_prefix": "x_private:",
     "registry_sha256": "f70f69ce0f4749648795873ec3fde256163e3dafc30a1f106545ac821c0e6985",
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "5aeaf2475814cdef1620246053a85365c569570840fd6af4a5cb448c37a450fd"
+    "source_sha256": "ef1ed1f2d747ba182cac36a2b4ee4756df248a753b78c499e57259dad274bac3"
   },
   "families": [
     {

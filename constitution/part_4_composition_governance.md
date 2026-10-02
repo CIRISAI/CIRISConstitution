@@ -677,7 +677,7 @@ A Contribution's `cohort_scope` MAY be widened (promoted) by emitting a `superse
 - `references_attestation_id` = the prior attestation's id
 - `differs_in: ["cohort_scope", "sub_kind?"]` — naming what changed
 - new attestation envelope reuses the prior `content_sha256` (no body re-upload)
-- new `cohort_scope` is wider (e.g., `self` → `community` or `community` → `global`)
+- new `cohort_scope` is wider (e.g., `self` → `community` or `community` → `federation`)
 - optionally morph `sub_kind` (e.g., `local_data` → `encyclopedia_article` for "promote my private note to a published encyclopedia entry")
 
 This pattern is wire-format-clean: it re-uses the structural primitive `supersedes` rather than introducing a `promote` primitive. The chain is walkable via `references_attestation_id` so the promotion lineage is preserved.
