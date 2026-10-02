@@ -85,7 +85,39 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 GATED_STEMS = [
     ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
     ("self:delegates_to:", "legacy label, closed: no leaf beyond the two registered", "CC 3.1.3"),
+    ("key_grant:", "carrier row type (CC 2.4), never a dimension", "CC 2.4"),
 ]
+# CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
+# registered carriers. A consumer builds its admission ALLOWLIST from this; the table in
+# constitution/part_2_the_grammar.md is the authority and main() refuses to build if the two differ.
+ROW_TYPES_SOURCE_REL = "constitution/part_2_the_grammar.md"
+STRUCTURAL_ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
+CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample)
+    ("holds_bytes:sha256:{prefix}", "holds_bytes", r"^holds_bytes:sha256:[0-9a-f]{8}$", "holds_bytes:sha256:0a1b2c3d"),
+    ("key_grant:{axis}:{version}", "key_grant", r"^key_grant:(content|epoch|stream):v1$", "key_grant:epoch:v1"),
+]
+
+
+def check_row_types_table():
+    """The CC 2.4 carrier table and CARRIER_ROW_TYPES name the same rows, in the same order."""
+    txt = open(os.path.join(HERE, "..", ROW_TYPES_SOURCE_REL), encoding="utf-8").read()
+    i = txt.find("| Carrier type token |")
+    if i < 0:
+        raise SystemExit("CC 2.4 carrier table not found in %s" % ROW_TYPES_SOURCE_REL)
+    rows = []
+    for ln in txt[i:].split("\n")[2:]:
+        if not ln.startswith("|"):
+            break
+        cells = [c.strip() for c in ln.strip().strip("|").split(" | ")]
+        rows.append((cells[0].strip("`"), cells[1].strip("`")))
+    want = [(t, k) for t, k, _, _ in CARRIER_ROW_TYPES]
+    if rows != want:
+        raise SystemExit("CC 2.4 carrier table %r != CARRIER_ROW_TYPES %r — a carrier is added in the text "
+                         "and here in the same commit, never in one alone" % (rows, want))
+    for t, _, pat, sample in CARRIER_ROW_TYPES:
+        if not re.fullmatch(pat.strip("^$"), sample):
+            raise SystemExit("carrier %s: sample %r does not match its own pattern" % (t, sample))
+
 RESERVED_STEMS = [
     ("accord:", "accord_holder-only", "CC 3.4.1"),
     ("transparency_log:cosigned:", "witness-emitter (identity_type contains witness)", "CC 3.4.10"),
@@ -626,6 +658,7 @@ def main():
             ("family_unregistered", "namespace_family_unregistered"),
             ("private_use_not_federatable", "namespace_private_use_not_federatable"),
             ("missing_version_segment", "missing_version_segment"),
+            ("attestation_type_unregistered", "attestation_type_unregistered"),
         ])),
         ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
             ("match", "one_or_more_segments"),
@@ -638,6 +671,14 @@ def main():
         ])),
         ("placeholder_classes", OrderedDict(
             (name, cls) for name, cls in sorted(_CLASS_OF.items()))),
+    ])
+    meta["row_types"] = OrderedDict([          # CC 2.4 — closed; the admission allowlist (#137)
+        ("cc_ref", "CC 2.4"),
+        ("compare", "byte-exact, whole-string (full-match); anything else is refused attestation_type_unregistered"),
+        ("refusal", "attestation_type_unregistered"),
+        ("structural", STRUCTURAL_ROW_TYPES),
+        ("carriers", [OrderedDict([("token", t), ("kind", k), ("pattern", p), ("sample", smp)])
+                      for t, k, p, smp in CARRIER_ROW_TYPES]),
     ])
     # CIRISConstitution#112 — the pin a consumer (CSD/3 `registry_sha256`) should carry:
     # the hash of the GRAMMAR (families + _meta without the prose hash), so a wording
@@ -655,6 +696,7 @@ def main():
     # orphan rows and families "leave" without anyone retiring them. A family may
     # only leave the manifest via an explicit entry here, with the retiring change.
     check_enum_case(lines, families)   # R3 on values, not just stems (#106)
+    check_row_types_table()            # CC 2.4 carriers: text and generator agree (#137)
 
     # CIRISConstitution#112 — the grammar round-trips through the reference matcher:
     # every family's class-conformant sample resolves to that family and no other,

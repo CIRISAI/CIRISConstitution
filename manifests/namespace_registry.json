@@ -101,6 +101,7 @@
       "policy": "case-sensitive; lowercase CC vocabulary; per-segment classes",
       "refusal_token": "namespace_dimension_case_malformed",
       "refusal_tokens": {
+        "attestation_type_unregistered": "attestation_type_unregistered",
         "case_malformed": "namespace_dimension_case_malformed",
         "family_unregistered": "namespace_family_unregistered",
         "missing_version_segment": "missing_version_segment",
@@ -155,6 +156,12 @@
           "kind": "gated",
           "rule": "legacy label, closed: no leaf beyond the two registered",
           "stem": "self:delegates_to:"
+        },
+        {
+          "cc_ref": "CC 2.4",
+          "kind": "gated",
+          "rule": "carrier row type (CC 2.4), never a dimension",
+          "stem": "key_grant:"
         }
       ],
       "version_segment": {
@@ -198,9 +205,35 @@
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "5944d68ee8186e814b5db107a7865dfebae0125c247693bbf52fd8e123334a1d",
+    "registry_sha256": "6673f143a46c7829c17073490a63e4f5eb1efde7e8a5090c330eed559fb76c44",
+    "row_types": {
+      "carriers": [
+        {
+          "kind": "holds_bytes",
+          "pattern": "^holds_bytes:sha256:[0-9a-f]{8}$",
+          "sample": "holds_bytes:sha256:0a1b2c3d",
+          "token": "holds_bytes:sha256:{prefix}"
+        },
+        {
+          "kind": "key_grant",
+          "pattern": "^key_grant:(content|epoch|stream):v1$",
+          "sample": "key_grant:epoch:v1",
+          "token": "key_grant:{axis}:{version}"
+        }
+      ],
+      "cc_ref": "CC 2.4",
+      "compare": "byte-exact, whole-string (full-match); anything else is refused attestation_type_unregistered",
+      "refusal": "attestation_type_unregistered",
+      "structural": [
+        "scores",
+        "delegates_to",
+        "supersedes",
+        "withdraws",
+        "recants"
+      ]
+    },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "c4ef24d7ef91c51791d9bf11aea95e0dc5a298b1cb8078851e353ec345d2568e"
+    "source_sha256": "7bbf939fc60df59ee55f5ce59122309d01d929c9f8481723cce1e961921d0b34"
   },
   "families": [
     {
@@ -2429,7 +2462,7 @@
     },
     {
       "cc_section": "3.1.9.1",
-      "description": "Substrate auto-emission per federation_blobs.put_blob.",
+      "description": "A carrier row type, not a scores dimension (CC 2.4): the token is the row's type, the row carries no score, and it never appears as a dimension.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",

@@ -330,6 +330,52 @@ SAMPLE = {"vocab": "sample", "external": "USD", "value": "id1", "hex": "ab12"}
 SAMPLE_EXTERNAL = {"currency": "USD", "lang_code": "en-US", "rating": "PG-13", "unit": "USD"}
 
 
+def match_row_type(manifest, attestation_type):
+    """CC 2.4: (class, name, refusal) for a row's type. class is 'structural' or 'carrier'.
+
+    The slot is closed: one of the five, or a whole-string match for a registered carrier
+    pattern. Anything else — including a near miss in case, a trailing newline, or a carrier
+    stem with an unregistered tail — is refused `attestation_type_unregistered`."""
+    rt = manifest["_meta"]["row_types"]
+    if attestation_type in rt["structural"]:
+        return "structural", attestation_type, None
+    for c in rt["carriers"]:
+        if re.fullmatch(c["pattern"].lstrip("^").rstrip("$"), attestation_type):
+            return "carrier", c["token"], None
+    return None, None, rt["refusal"]
+
+
+def generate_row_type_vectors(manifest):
+    rt = manifest["_meta"]["row_types"]
+    tok = rt["refusal"]
+    out = []
+
+    def add(t, cls, name, refusal, why):
+        out.append(OrderedDict([("attestation_type", t), ("class", cls), ("name", name),
+                                ("refusal", refusal), ("why", why)]))
+    for s in rt["structural"]:
+        add(s, "structural", s, None, "one of the five")
+        add(s.upper(), None, None, tok, "byte-exact: a case variant is not the type")
+        add(s + ":v1", None, None, tok, "the five carry no tail")
+        add(s + "\n", None, None, tok, "whole-string match: a trailing newline is not admitted")
+    for c in rt["carriers"]:
+        add(c["sample"], "carrier", c["token"], None, "a registered carrier")
+        add(c["sample"] + "\n", None, None, tok, "whole-string match: a trailing newline is not admitted")
+        add(c["sample"].upper(), None, None, tok, "byte-exact: a case variant is not the carrier")
+        add(c["kind"], None, None, tok, "the bare carrier stem is not a row type")
+        add(c["kind"] + ":zz_unminted:v1", None, None, tok, "an unregistered tail beneath a carrier stem is refused")
+    for t in ("key_grant:content:v1", "key_grant:stream:v1"):
+        add(t, "carrier", "key_grant:{axis}:{version}", None, "each registered axis")
+    add("key_grant:epoch:v2", None, None, tok, "an unregistered version is refused")
+    add("holds_bytes:sha256:0a1b2c3", None, None, tok, "the prefix is exactly eight hex characters")
+    add("holds_bytes:sha256:0A1B2C3D", None, None, tok, "the prefix is lowercase hex")
+    add("holds_bytes:sha512:0a1b2c3d", None, None, tok, "sha256 is the only registered digest")
+    add("custody:ack:v1", None, None, tok, "a dimension is not a row type")
+    add("membership", None, None, tok, "an unlisted type is refused, however plausible")
+    add("", None, None, tok, "the empty string is not a row type")
+    return out
+
+
 def instantiate(fam, with_version=True):
     """A class-conformant sample dimension for a family."""
     out = []
@@ -494,6 +540,11 @@ def self_test(manifest):
         if got != v["family"] or refusal != v["refusal"]:
             problems.append("vector %r: expected (%r, %r) got (%r, %r)"
                             % (v["dimension"], v["family"], v["refusal"], got, refusal))
+    for v in generate_row_type_vectors(manifest):
+        got = match_row_type(manifest, v["attestation_type"])
+        if got != (v["class"], v["name"], v["refusal"]):
+            problems.append("row-type vector %r: expected %r got %r"
+                            % (v["attestation_type"], (v["class"], v["name"], v["refusal"]), got))
     return problems
 
 
@@ -521,6 +572,7 @@ def main(argv):
                              "applied whole-segment (full-match): a `$` anchor never admits a trailing newline"),
             ])),
             ("vectors", generate_vectors(manifest)),
+            ("row_type_vectors", generate_row_type_vectors(manifest)),   # CC 2.4 (#137)
         ])
         text = json.dumps(out, indent=2) + "\n"
         if argv[0] == "--check-vectors":

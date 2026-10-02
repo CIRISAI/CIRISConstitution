@@ -11,10 +11,20 @@ registered family:
   OPEN     — resolves as open vocabulary: no row claims it
   REFUSED  — the matcher refuses it (wrong arity, retired family, bad case, …)
 
+It also audits ROW TYPES (CC 2.4): the row-type slot is closed at the five primitives and
+the registered carriers. A literal that is a registered carrier token is counted as
+registered, not as an unregistered dimension; and every string constant whose name
+contains ATTESTATION_TYPE, and every literal assigned to an `attestation_type` field,
+is checked against the closed list:
+
+  ROW TYPE — a type constant (or type prefix) the closed list does not admit
+
 Usage:  python3 tools/audit_emitted_dimensions.py <checkout> [<checkout> …]
 Exit status 1 if any OPEN or REFUSED dimension is found (suitable for CI), 0 otherwise.
 
-Limits, stated: it sees only literals that carry the version tail. A dimension built
+Limits, stated: a row type held in a constant whose name does not say so, or built at
+run time, is invisible here; the admission allowlist (CC 2.4) is the gate, this is the
+early warning. For dimensions it sees only literals that carry the version tail. A dimension built
 from prefix helpers or constants at run time is invisible to it, as is one emitted
 with no tail at all; a component should ALSO replay its emitters' real output through
 the matcher (as edge, persist and verify do). Negative controls in a repo's own
@@ -31,6 +41,9 @@ SKIP_DIR = ("/target/", "/node_modules/", "/.git/", "/build/", "/dist/", "/vendo
             "/testing/", "/tests/", "/test/", "/benches/", "/fixtures/", "/reference/", "/site-packages/",
             "/harness/", "/localization/", "/i18n/")
 LIT = re.compile(r'''["'`]([a-z][a-z0-9_]*(?::[A-Za-z0-9_{}.$<>()\-\[\]?* ]+?)*:v[0-9]+)["'`]''')
+TYPE_CONST = re.compile(r'''\b([A-Z0-9_]*ATTESTATION_TYPE[A-Z0-9_]*)\b[^=;\n]*=\s*"([^"\n]*)"''')
+TYPE_FIELD = re.compile(r'''\battestation_type\s*[:=]\s*"([^"\n]*)"''')      # a literal placed straight in the slot
+TYPE_VALUE = re.compile(r"[a-z][a-z0-9_]*(:[A-Za-z0-9_.{}$<>\-]+)*")           # a value shaped like a type at all
 SHAPE = re.compile(r"[a-z][a-z0-9_]*(:[A-Za-z0-9_.\-]+)+")
 
 
@@ -65,6 +78,20 @@ def main():
                     i = txt.find("#[cfg(test)]")
                     if i > 0:
                         txt = txt[:i]
+                slot = [(mm.group(1), mm.group(2)) for mm in TYPE_CONST.finditer(txt)]
+                slot += [("attestation_type", mm.group(1)) for mm in TYPE_FIELD.finditer(txt)]
+                for name, val in slot:
+                    if val in a.allow or val == "attestation_type" or not TYPE_VALUE.fullmatch(val.rstrip(":")):
+                        continue                # a field NAME constant, or prose
+                    rt = reg["_meta"]["row_types"]
+                    if val.endswith(":"):       # a type PREFIX: admitted iff some carrier token begins with it
+                        good = any(c["sample"].startswith(val) for c in rt["carriers"])
+                    else:
+                        good = ccm.match_row_type(reg, sample(val))[0] is not None
+                    if good:
+                        ok += 1
+                    else:
+                        found[("%s = %s" % (name, val), "ROW TYPE")].add(os.path.relpath(p, root))
                 for mm in LIT.finditer(txt):
                     raw = mm.group(1)
                     if raw in a.allow or len(raw) > 120:
@@ -73,6 +100,8 @@ def main():
                     if not SHAPE.fullmatch(d):
                         continue
                     fam, _, refusal = ccm.match_family(reg, d)
+                    if ccm.match_row_type(reg, d)[0] == "carrier":
+                        fam = d                     # a carrier row type (CC 2.4), not a dimension
                     if fam:
                         ok += 1
                     else:

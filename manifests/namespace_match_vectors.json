@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc6",
-    "registry_sha256": "5944d68ee8186e814b5db107a7865dfebae0125c247693bbf52fd8e123334a1d",
+    "registry_sha256": "6673f143a46c7829c17073490a63e4f5eb1efde7e8a5090c330eed559fb76c44",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -5959,6 +5959,12 @@
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
+      "dimension": "key_grant:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
       "dimension": "x_private:anything:v1",
       "family": null,
       "refusal": "namespace_private_use_not_federatable",
@@ -6089,6 +6095,287 @@
       "family": null,
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
+    },
+    {
+      "dimension": "Key_grant:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
+    }
+  ],
+  "row_type_vectors": [
+    {
+      "attestation_type": "scores",
+      "class": "structural",
+      "name": "scores",
+      "refusal": null,
+      "why": "one of the five"
+    },
+    {
+      "attestation_type": "SCORES",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the type"
+    },
+    {
+      "attestation_type": "scores:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the five carry no tail"
+    },
+    {
+      "attestation_type": "scores\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "delegates_to",
+      "class": "structural",
+      "name": "delegates_to",
+      "refusal": null,
+      "why": "one of the five"
+    },
+    {
+      "attestation_type": "DELEGATES_TO",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the type"
+    },
+    {
+      "attestation_type": "delegates_to:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the five carry no tail"
+    },
+    {
+      "attestation_type": "delegates_to\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "supersedes",
+      "class": "structural",
+      "name": "supersedes",
+      "refusal": null,
+      "why": "one of the five"
+    },
+    {
+      "attestation_type": "SUPERSEDES",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the type"
+    },
+    {
+      "attestation_type": "supersedes:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the five carry no tail"
+    },
+    {
+      "attestation_type": "supersedes\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "withdraws",
+      "class": "structural",
+      "name": "withdraws",
+      "refusal": null,
+      "why": "one of the five"
+    },
+    {
+      "attestation_type": "WITHDRAWS",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the type"
+    },
+    {
+      "attestation_type": "withdraws:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the five carry no tail"
+    },
+    {
+      "attestation_type": "withdraws\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "recants",
+      "class": "structural",
+      "name": "recants",
+      "refusal": null,
+      "why": "one of the five"
+    },
+    {
+      "attestation_type": "RECANTS",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the type"
+    },
+    {
+      "attestation_type": "recants:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the five carry no tail"
+    },
+    {
+      "attestation_type": "recants\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "holds_bytes:sha256:0a1b2c3d",
+      "class": "carrier",
+      "name": "holds_bytes:sha256:{prefix}",
+      "refusal": null,
+      "why": "a registered carrier"
+    },
+    {
+      "attestation_type": "holds_bytes:sha256:0a1b2c3d\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "HOLDS_BYTES:SHA256:0A1B2C3D",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the carrier"
+    },
+    {
+      "attestation_type": "holds_bytes",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the bare carrier stem is not a row type"
+    },
+    {
+      "attestation_type": "holds_bytes:zz_unminted:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "an unregistered tail beneath a carrier stem is refused"
+    },
+    {
+      "attestation_type": "key_grant:epoch:v1",
+      "class": "carrier",
+      "name": "key_grant:{axis}:{version}",
+      "refusal": null,
+      "why": "a registered carrier"
+    },
+    {
+      "attestation_type": "key_grant:epoch:v1\n",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "whole-string match: a trailing newline is not admitted"
+    },
+    {
+      "attestation_type": "KEY_GRANT:EPOCH:V1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "byte-exact: a case variant is not the carrier"
+    },
+    {
+      "attestation_type": "key_grant",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the bare carrier stem is not a row type"
+    },
+    {
+      "attestation_type": "key_grant:zz_unminted:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "an unregistered tail beneath a carrier stem is refused"
+    },
+    {
+      "attestation_type": "key_grant:content:v1",
+      "class": "carrier",
+      "name": "key_grant:{axis}:{version}",
+      "refusal": null,
+      "why": "each registered axis"
+    },
+    {
+      "attestation_type": "key_grant:stream:v1",
+      "class": "carrier",
+      "name": "key_grant:{axis}:{version}",
+      "refusal": null,
+      "why": "each registered axis"
+    },
+    {
+      "attestation_type": "key_grant:epoch:v2",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "an unregistered version is refused"
+    },
+    {
+      "attestation_type": "holds_bytes:sha256:0a1b2c3",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the prefix is exactly eight hex characters"
+    },
+    {
+      "attestation_type": "holds_bytes:sha256:0A1B2C3D",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the prefix is lowercase hex"
+    },
+    {
+      "attestation_type": "holds_bytes:sha512:0a1b2c3d",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "sha256 is the only registered digest"
+    },
+    {
+      "attestation_type": "custody:ack:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "a dimension is not a row type"
+    },
+    {
+      "attestation_type": "membership",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "an unlisted type is refused, however plausible"
+    },
+    {
+      "attestation_type": "",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the empty string is not a row type"
     }
   ]
 }
