@@ -1,9 +1,9 @@
 repo	commit	manifest_path	vendored	backed_when
-CIRISServer	405acc1	evidence/cc_impl.tsv	vendor/evidence/CIRISServer.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISServer	e7910a6	evidence/cc_impl.tsv	vendor/evidence/CIRISServer.cc_impl.tsv	impl (repo!=— and crate!=open)
 CIRISConformance	c3f895b	evidence/cc_tests.tsv	vendor/evidence/CIRISConformance.cc_tests.tsv	status==green
 coherence-ratchet	0c4edfb	evidence/cc_lean.tsv	vendor/evidence/coherence-ratchet.cc_lean.tsv	status==mechanized
 RATCHET	38933ef	evidence/cc_formal.tsv	vendor/evidence/RATCHET.cc_formal.tsv	status in {mechanized,empirical}
 CIRISAgent	6f00288	evidence/cc_impl.tsv	vendor/evidence/CIRISAgent.cc_impl.tsv	status==impl
-CIRISVerify	33c3695	evidence/cc_impl.tsv	vendor/evidence/CIRISVerify.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISVerify	3398091	evidence/cc_impl.tsv	vendor/evidence/CIRISVerify.cc_impl.tsv	impl (repo!=— and crate!=open)
 CIRISPersist	21572bb	evidence/cc_impl.tsv	vendor/evidence/CIRISPersist.cc_impl.tsv	impl (repo!=— and crate!=open)
-CIRISEdge	83d39d8	evidence/CIRISEdge.cc_impl.tsv	vendor/evidence/CIRISEdge.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISEdge	f71afcc	evidence/CIRISEdge.cc_impl.tsv	vendor/evidence/CIRISEdge.cc_impl.tsv	impl (repo!=— and crate!=open)
