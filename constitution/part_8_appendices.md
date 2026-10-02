@@ -86,7 +86,7 @@ The clearest way to see the wire grammar carry a real life-cycle is to watch one
   }
 }
 
-// Promoted (encyclopedia_article, global scope) via supersedes:
+// Promoted (encyclopedia_article, federation scope) via supersedes:
 {
   "attestation_type": "supersedes",
   "attesting_key_id": "user-alice-2026",
@@ -99,7 +99,7 @@ The clearest way to see the wire grammar carry a real life-cycle is to watch one
     "new_score": 1.0,
     "new_confidence": 0.9,
     "new_evidence_refs": ["sha256:abc123..."],         // same content_sha256
-    "new_cohort_scope": "global",                      // widened scope
+    "new_cohort_scope": "federation",                      // widened scope
     "asserted_at": "2026-05-28T15:00:00.000Z"
   }
 }

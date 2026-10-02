@@ -82,7 +82,9 @@ def _score(fam):
 VERSION_LIKE = re.compile(r"^[vV][0-9]+(\.[0-9]+)*$")
 # Every pattern is applied with full-match semantics (`re.fullmatch`): the WHOLE segment
 # must match, so a segment carrying a trailing newline fails a `$`-anchored pattern here
-# exactly as it does in a byte-exact port (CIRISConstitution#116).
+# exactly as it does in a byte-exact port (CIRISConstitution#116). The two version-shape
+# detectors (VERSION_LIKE / VERSION_ATTEMPT) are applied with `fullmatch` for the same
+# reason (#128): `re.match` + `$` would admit one trailing newline, and a strict port would not.
 # a LAST segment that starts like a version tail (v + digit) but is not one — v1beta,
 # v1., V1x: an attempt at the version segment, so the family is the one the other
 # segments name. A bare `vx` is a leaf name (a version begins `v` + digit, R3).
@@ -165,7 +167,7 @@ def _match_segments(fam, parts, rules):
         # real version was stripped before matching — so it is malformed, never a leaf;
         # so is a version attempt (v1beta) in last place
         last = pi + k == len(parts) - 1
-        if not got or not rules.vocab.fullmatch(got) or VERSION_LIKE.match(got) or (last and VERSION_ATTEMPT.match(got)):
+        if not got or not rules.vocab.fullmatch(got) or VERSION_LIKE.fullmatch(got) or (last and VERSION_ATTEMPT.fullmatch(got)):
             refusal = refusal or rules.tokens["case_malformed"]
     if tail:
         binds["*"] = ":".join(tail)
@@ -174,7 +176,7 @@ def _match_segments(fam, parts, rules):
 
 def _mutated_tail(rules, seg):
     """A last segment shaped like a version tail but not one: uppercase or an attempt."""
-    return bool((VERSION_LIKE.match(seg) and not rules.version.fullmatch(seg)) or VERSION_ATTEMPT.match(seg))
+    return bool((VERSION_LIKE.fullmatch(seg) and not rules.version.fullmatch(seg)) or VERSION_ATTEMPT.fullmatch(seg))
 
 
 def _resolve(rules, parts):
@@ -232,10 +234,10 @@ def _detect_malformed(rules, parts, clean_only=False):
     low = [p.lower() for p in parts]
     if low != parts:
         variants.append(low)
-    if len(parts) > 1 and (VERSION_LIKE.match(parts[-1]) or VERSION_ATTEMPT.match(parts[-1])):
+    if len(parts) > 1 and (VERSION_LIKE.fullmatch(parts[-1]) or VERSION_ATTEMPT.fullmatch(parts[-1])):
         variants.append(parts[:-1])
         variants.append(low[:-1])
-        if len(parts) > 2 and VERSION_LIKE.match(parts[-2]):
+        if len(parts) > 2 and VERSION_LIKE.fullmatch(parts[-2]):
             variants.append(parts[:-2])
             variants.append(low[:-2])
     for v in variants:
@@ -287,7 +289,7 @@ def match_family(manifest_or_rules, dimension):
         # a duplicated tail is a VERSION (or its uppercase) right before the real one; a
         # vocabulary segment that merely starts `v` + digit (`v1beta`) is a family segment
         # here, since a valid version follows it (#122 review)
-        if len(parts) >= 2 and VERSION_LIKE.match(parts[-2]):
+        if len(parts) >= 2 and VERSION_LIKE.fullmatch(parts[-2]):
             return None, {}, rules.tokens["case_malformed"]
         if len(parts) < 2:                # `v1` alone: a version with no family segment before it
             return None, {}, rules.tokens["case_malformed"]
@@ -326,6 +328,52 @@ def match_family(manifest_or_rules, dimension):
 
 SAMPLE = {"vocab": "sample", "external": "USD", "value": "id1", "hex": "ab12"}
 SAMPLE_EXTERNAL = {"currency": "USD", "lang_code": "en-US", "rating": "PG-13", "unit": "USD"}
+
+
+def match_row_type(manifest, attestation_type):
+    """CC 2.4: (class, name, refusal) for a row's type. class is 'structural' or 'carrier'.
+
+    The slot is closed: one of the five, or a whole-string match for a registered carrier
+    pattern. Anything else — including a near miss in case, a trailing newline, or a carrier
+    stem with an unregistered tail — is refused `attestation_type_unregistered`."""
+    rt = manifest["_meta"]["row_types"]
+    if attestation_type in rt["structural"]:
+        return "structural", attestation_type, None
+    for c in rt["carriers"]:
+        if re.fullmatch(c["pattern"].lstrip("^").rstrip("$"), attestation_type):
+            return "carrier", c["token"], None
+    return None, None, rt["refusal"]
+
+
+def generate_row_type_vectors(manifest):
+    rt = manifest["_meta"]["row_types"]
+    tok = rt["refusal"]
+    out = []
+
+    def add(t, cls, name, refusal, why):
+        out.append(OrderedDict([("attestation_type", t), ("class", cls), ("name", name),
+                                ("refusal", refusal), ("why", why)]))
+    for s in rt["structural"]:
+        add(s, "structural", s, None, "one of the five")
+        add(s.upper(), None, None, tok, "byte-exact: a case variant is not the type")
+        add(s + ":v1", None, None, tok, "the five carry no tail")
+        add(s + "\n", None, None, tok, "whole-string match: a trailing newline is not admitted")
+    for c in rt["carriers"]:
+        add(c["sample"], "carrier", c["token"], None, "a registered carrier")
+        add(c["sample"] + "\n", None, None, tok, "whole-string match: a trailing newline is not admitted")
+        add(c["sample"].upper(), None, None, tok, "byte-exact: a case variant is not the carrier")
+        add(c["kind"], None, None, tok, "the bare carrier stem is not a row type")
+        add(c["kind"] + ":zz_unminted:v1", None, None, tok, "an unregistered tail beneath a carrier stem is refused")
+    for t in ("key_grant:content:v1", "key_grant:stream:v1"):
+        add(t, "carrier", "key_grant:{axis}:{version}", None, "each registered axis")
+    add("key_grant:epoch:v2", None, None, tok, "an unregistered version is refused")
+    add("holds_bytes:sha256:0a1b2c3", None, None, tok, "the prefix is exactly eight hex characters")
+    add("holds_bytes:sha256:0A1B2C3D", None, None, tok, "the prefix is lowercase hex")
+    add("holds_bytes:sha512:0a1b2c3d", None, None, tok, "sha256 is the only registered digest")
+    add("custody:ack:v1", None, None, tok, "a dimension is not a row type")
+    add("membership", None, None, tok, "an unlisted type is refused, however plausible")
+    add("", None, None, tok, "the empty string is not a row type")
+    return out
 
 
 def instantiate(fam, with_version=True):
@@ -444,6 +492,15 @@ def generate_vectors(manifest):
         "a duplicated version tail on open vocabulary is malformed (R3: exactly one)")
     add("no_such_family:leaf:V1", None, rules.tokens["case_malformed"],
         "a version attempt in last place on open vocabulary is malformed, not a missing tail")
+    # CIRISConstitution#128 — the version-shape detectors are full-match too, so a segment
+    # carrying a trailing newline is never a version or a version attempt; a strict
+    # byte-exact port (`\z`) answers these exactly as the reference does.
+    add("no_such_family:v1\n:v2", None, None,
+        "a newline-bearing segment is not a version attempt (#128): open vocabulary, no charset rule binds an unregistered family's own segments")
+    add("no_such_family:V1\n:v2", None, None,
+        "same as above with an uppercase v — not a version attempt once the detector is full-match (#128)")
+    add("system:foo:v1beta\n:v1", "system:*", rules.tokens["case_malformed"],
+        "under a registered wildcard the vocab pattern binds the leaf, and a newline fails it (#128, #116)")
     add("no_such_family:v1beta:v2", None, None,
         "a family segment that merely starts v+digit is open vocabulary when a valid version follows")
     add("v1:v2", None, rules.tokens["case_malformed"],
@@ -483,6 +540,11 @@ def self_test(manifest):
         if got != v["family"] or refusal != v["refusal"]:
             problems.append("vector %r: expected (%r, %r) got (%r, %r)"
                             % (v["dimension"], v["family"], v["refusal"], got, refusal))
+    for v in generate_row_type_vectors(manifest):
+        got = match_row_type(manifest, v["attestation_type"])
+        if got != (v["class"], v["name"], v["refusal"]):
+            problems.append("row-type vector %r: expected %r got %r"
+                            % (v["attestation_type"], (v["class"], v["name"], v["refusal"]), got))
     return problems
 
 
@@ -510,6 +572,7 @@ def main(argv):
                              "applied whole-segment (full-match): a `$` anchor never admits a trailing newline"),
             ])),
             ("vectors", generate_vectors(manifest)),
+            ("row_type_vectors", generate_row_type_vectors(manifest)),   # CC 2.4 (#137)
         ])
         text = json.dumps(out, indent=2) + "\n"
         if argv[0] == "--check-vectors":

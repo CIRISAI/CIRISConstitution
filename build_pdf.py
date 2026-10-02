@@ -26,7 +26,7 @@ B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "Σ": r"$\Sigma$", "à": r"\`a", "ö": r"\"o",
               "̄": r"\textsuperscript{--}",
               "¶": r"\P{}", "Δ": r"$\Delta$", "σ": r"$\sigma$",
-              "₀": r"\textsubscript{0}", "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
+              "⌊": r"$\lfloor$", "⌋": r"$\rfloor$", "⌈": r"$\lceil$", "⌉": r"$\rceil$", "₀": r"\textsubscript{0}", "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",
               "├": "+", "└": "+", "⟶": r"$\longrightarrow$",
               # Book IX coherence-mathematics glyphs (Part VI 6.2)

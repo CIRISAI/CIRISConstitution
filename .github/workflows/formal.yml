@@ -1,0 +1,33 @@
+name: formal
+
+# The checked-in configuration closes (22,152,480 distinct states, depth 25, ~9 min on
+# 8 workers); allow up to two hours on a small runner. State files go to a temp dir.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'formal/**'
+      - 'constitution/part_3_the_namespace.md'
+      - '.github/workflows/formal.yml'
+  pull_request:
+    paths:
+      - 'formal/**'
+      - 'constitution/part_3_the_namespace.md'
+      - '.github/workflows/formal.yml'
+
+jobs:
+  tlc:
+    name: TLC — CC 3.2 T8 standing verdict
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch tla2tools (pinned release)
+        run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Model-check TrustRootVerdict
+        working-directory: formal/trust_root
+        run: java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc" -deadlock TrustRootVerdict.tla
