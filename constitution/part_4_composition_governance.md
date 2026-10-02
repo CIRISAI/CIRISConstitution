@@ -875,7 +875,7 @@ Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelop
  attesting_key_id: <user identity_key_id | a current occurrence>,
  identity_key_id: <user identity_key_id>,
  occurrence_key_id:<the occurrence being bound>,
- device_class: "phone" | "laptop" | "agent" |...,
+ device_class: "phone" | "laptop" | "server" | "embedded" | "service" | "agent", // closed; personal = phone|laptop (CC 3.3.7)
  transport_destination: {
  reticulum_x25519_pubkey: <[u8;32]>,
  reticulum_ed25519_pubkey: <[u8;32]>,
