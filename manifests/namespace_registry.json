@@ -168,6 +168,12 @@
           "kind": "gated",
           "rule": "closed: device:label is the only leaf",
           "stem": "device:"
+        },
+        {
+          "cc_ref": "CC 3.1.9.4",
+          "kind": "gated",
+          "rule": "closed: observation:reachability is the only leaf",
+          "stem": "observation:"
         }
       ],
       "version_segment": {
@@ -198,20 +204,20 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 156,
+    "n_families": 158,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
       "lens": 15,
-      "node": 48,
-      "persist": 12,
+      "node": 49,
+      "persist": 13,
       "registry": 18,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "6653e6c1145868a69a35e71906236fc633be7d44e178b192bbbcf8f47c935d9d",
+    "registry_sha256": "f666f334db6b5e82dd7f75e6cbe82c926d27dcd9bd81d208784527cbce651c37",
     "row_types": {
       "carriers": [
         {
@@ -239,7 +245,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "8db00fbfe4057590601d84c4b6baf1ea61e080c8ed1eebf6cf46b687f101cb85"
+    "source_sha256": "459d3ef52bc6d021d8bed58af908f75c11fdaf83b5cb841e100040fbe6437ea9"
   },
   "families": [
     {
@@ -2468,7 +2474,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "External service-health observation.",
+      "description": "External service-health verdict \u2014 a third-person claim about a keyed service.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -2681,6 +2687,35 @@
         {
           "class": "value",
           "segment": "{authority_id}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The ceremony by which a node becomes a witness of a trust-root lineage (CC 3.2 T6), one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "lineage_witness:{stage}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.2",
+        "rule": "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "lineage_witness"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{stage}",
+          "values": [
+            "proposal",
+            "acceptance",
+            "decline"
+          ]
         }
       ]
     },
@@ -2978,6 +3013,29 @@
         {
           "class": "vocab",
           "segment": "{state}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9.4",
+      "description": "A first-person probe result: \"from here, at this instant, a request to this target answered, or did not.\" The monitoring node (ciris-status) signs one scores row per observed target per change-or-heartbeat: observed names the target by a st",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "observation:reachability",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.9.4",
+        "rule": "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "observation"
+        },
+        {
+          "class": "literal",
+          "segment": "reachability"
         }
       ]
     },

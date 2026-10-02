@@ -87,6 +87,7 @@ GATED_STEMS = [
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("key_grant:", "carrier row type (CC 2.4), never a dimension", "CC 2.4"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
+    ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
 # registered carriers. A consumer builds its admission ALLOWLIST from this; the table in
@@ -150,6 +151,12 @@ def _reserved_rules():
          "author-emitted (the file's author, or a device it acts through)", "CC 3.1.3.4"),
         (lambda p, c: p.startswith("collection:"),
          "author-emitted (the collection's creator; amendments by it or the cohort under consensus_protocol)", "CC 3.1.3.4"),
+        # CC 3.1.9.4 (#137): a monitoring node's first-person probe result.
+        (lambda p, c: p.startswith("observation:reachability"),
+         "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
+        # CC 3.2 T6 / CIRISPersist#974: the lineage-witness consent ceremony — per-leaf emitter.
+        (lambda p, c: p.startswith("lineage_witness:"),
+         "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
         (lambda p, c: p.startswith("membership:"),
          "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])", "CC 3.1.3.2"),
