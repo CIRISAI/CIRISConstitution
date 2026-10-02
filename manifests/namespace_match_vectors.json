@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc6",
-    "registry_sha256": "6673f143a46c7829c17073490a63e4f5eb1efde7e8a5090c330eed559fb76c44",
+    "registry_sha256": "6653e6c1145868a69a35e71906236fc633be7d44e178b192bbbcf8f47c935d9d",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -2685,6 +2685,42 @@
     {
       "dimension": "detection:temporal_drift",
       "family": "detection:temporal_drift",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "device:label:v1",
+      "family": "device:label",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "device:label:V1",
+      "family": "device:label",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "device:label:v1:v2",
+      "family": "device:label",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "device:label:v1beta",
+      "family": "device:label",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Device:label:v1",
+      "family": "device:label",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "device:label",
+      "family": "device:label",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
@@ -5953,13 +5989,19 @@
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
-      "dimension": "self:delegates_to:zz_unminted_leaf:v1",
+      "dimension": "self:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_family_unregistered",
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
       "dimension": "key_grant:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_family_unregistered",
+      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
+    },
+    {
+      "dimension": "device:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_family_unregistered",
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
@@ -6091,13 +6133,19 @@
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
     },
     {
-      "dimension": "Self:delegates_to:zz_unminted_leaf:v1",
+      "dimension": "Self:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
     },
     {
       "dimension": "Key_grant:zz_unminted_leaf:v1",
+      "family": null,
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
+    },
+    {
+      "dimension": "Device:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"

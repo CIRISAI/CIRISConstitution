@@ -154,14 +154,20 @@
         {
           "cc_ref": "CC 3.1.3",
           "kind": "gated",
-          "rule": "legacy label, closed: no leaf beyond the two registered",
-          "stem": "self:delegates_to:"
+          "rule": "a cohort scope, never a dimension stem: closed to the two legacy labels",
+          "stem": "self:"
         },
         {
           "cc_ref": "CC 2.4",
           "kind": "gated",
           "rule": "carrier row type (CC 2.4), never a dimension",
           "stem": "key_grant:"
+        },
+        {
+          "cc_ref": "CC 3.1.1",
+          "kind": "gated",
+          "rule": "closed: device:label is the only leaf",
+          "stem": "device:"
         }
       ],
       "version_segment": {
@@ -192,7 +198,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 155,
+    "n_families": 156,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -201,11 +207,11 @@
       "lens": 15,
       "node": 48,
       "persist": 12,
-      "registry": 17,
+      "registry": 18,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "6673f143a46c7829c17073490a63e4f5eb1efde7e8a5090c330eed559fb76c44",
+    "registry_sha256": "6653e6c1145868a69a35e71906236fc633be7d44e178b192bbbcf8f47c935d9d",
     "row_types": {
       "carriers": [
         {
@@ -233,7 +239,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "d78dd950888e427b38fc55d128a53726b26e53ac92181ff518fb1571a1dfc9f5"
+    "source_sha256": "8db00fbfe4057590601d84c4b6baf1ea61e080c8ed1eebf6cf46b687f101cb85"
   },
   "families": [
     {
@@ -2007,6 +2013,29 @@
         {
           "class": "literal",
           "segment": "temporal_drift"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "The name a person gives one of their own devices (steward ruling 2026-10-01, CIRISConstitution#137; the server's shipped self:device_label, renamed \u2014 self is a cohort scope and names no family).",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "positive-only",
+      "prefix": "device:label",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.1",
+        "rule": "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "device"
+        },
+        {
+          "class": "literal",
+          "segment": "label"
         }
       ]
     },

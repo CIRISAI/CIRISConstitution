@@ -84,8 +84,9 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # bypassed by an unminted leaf; the family's `reserved` flag is untouched.
 GATED_STEMS = [
     ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
-    ("self:delegates_to:", "legacy label, closed: no leaf beyond the two registered", "CC 3.1.3"),
+    ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("key_grant:", "carrier row type (CC 2.4), never a dimension", "CC 2.4"),
+    ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
 # registered carriers. A consumer builds its admission ALLOWLIST from this; the table in
@@ -135,6 +136,9 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
+        # CC 3.1.1 device label (#137): the owner's name for an owned occurrence.
+        (lambda p, c: p.startswith("device:label"),
+         "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing", "CC 3.1.1"),
         # CC 3.1.3 legacy delegation labels (#137): not a substrate self-report.
         (lambda p, c: p.startswith("self:delegates_to"),
          "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed", "CC 3.1.3"),
