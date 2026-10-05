@@ -365,6 +365,7 @@ def generate_row_type_vectors(manifest):
         add(c["kind"], None, None, tok, "the bare carrier stem is not a row type")
         add(c["kind"] + ":zz_unminted:v1", None, None, tok, "an unregistered tail beneath a carrier stem is refused")
     add("holds_bytes:sha256:0a1b2c3d", None, None, tok, "the retired rc6 holds_bytes carrier is not a row type (#141)")
+    add("key_grant:epoch:v1", None, None, tok, "the retired rc6 key-grant set is not a row type; key_grant:{axis}:v1 is a scores dimension (#143)")
     add("custody:ack:v1", None, None, tok, "a dimension is not a row type")
     add("membership", None, None, tok, "an unlisted type is refused, however plausible")
     add("", None, None, tok, "the empty string is not a row type")

@@ -85,7 +85,6 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 GATED_STEMS = [
     ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
-    ("key_grant:", "carrier row type (CC 2.4), never a dimension", "CC 2.4"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
     ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
 ]
@@ -94,8 +93,7 @@ GATED_STEMS = [
 # constitution/part_2_the_grammar.md is the authority and main() refuses to build if the two differ.
 ROW_TYPES_SOURCE_REL = "constitution/part_2_the_grammar.md"
 STRUCTURAL_ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
-CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample)
-    ("key_grant:{axis}:{version}", "key_grant", r"^key_grant:(content|epoch|stream):v1$", "key_grant:epoch:v1"),
+CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample) — EMPTY since rc7 (#141, #143): the slot is the five
 ]
 
 
@@ -104,7 +102,9 @@ def check_row_types_table():
     txt = open(os.path.join(HERE, "..", ROW_TYPES_SOURCE_REL), encoding="utf-8").read()
     i = txt.find("| Carrier type token |")
     if i < 0:
-        raise SystemExit("CC 2.4 carrier table not found in %s" % ROW_TYPES_SOURCE_REL)
+        if CARRIER_ROW_TYPES:
+            raise SystemExit("CC 2.4 carrier table not found in %s" % ROW_TYPES_SOURCE_REL)
+        return                                  # rc7 (#141/#143): the slot is the five; no table, no carriers
     rows = []
     for ln in txt[i:].split("\n")[2:]:
         if not ln.startswith("|"):
@@ -139,6 +139,9 @@ def _reserved_rules():
         # CC 3.1.1 device label (#137): the owner's name for an owned occurrence.
         (lambda p, c: p.startswith("device:label"),
          "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing", "CC 3.1.1"),
+        # CC 3.3.2 / 3.1.3 key wraps (#143): sealer- or minter-signed, about the recipient occurrence.
+        (lambda p, c: p.startswith("key_grant:"),
+         "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn", "CC 3.3.2"),
         # CC 3.1.3 legacy delegation labels (#137): not a substrate self-report.
         (lambda p, c: p.startswith("self:delegates_to"),
          "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed", "CC 3.1.3"),

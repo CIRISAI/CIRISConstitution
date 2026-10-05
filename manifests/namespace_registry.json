@@ -158,12 +158,6 @@
           "stem": "self:"
         },
         {
-          "cc_ref": "CC 2.4",
-          "kind": "gated",
-          "rule": "carrier row type (CC 2.4), never a dimension",
-          "stem": "key_grant:"
-        },
-        {
           "cc_ref": "CC 3.1.1",
           "kind": "gated",
           "rule": "closed: device:label is the only leaf",
@@ -204,7 +198,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 157,
+    "n_families": 158,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -212,21 +206,14 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 13,
+      "persist": 14,
       "registry": 18,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "287a0f2e9dc296d4003931aa285c00f4f15d34eb159465e1d45d6fdd26e84117",
+    "registry_sha256": "1c9b0e1cfa44847f4780a695fcec3ea14ab826907fa3a1ae3e1df53347dd1bf6",
     "row_types": {
-      "carriers": [
-        {
-          "kind": "key_grant",
-          "pattern": "^key_grant:(content|epoch|stream):v1$",
-          "sample": "key_grant:epoch:v1",
-          "token": "key_grant:{axis}:{version}"
-        }
-      ],
+      "carriers": [],
       "cc_ref": "CC 2.4",
       "compare": "byte-exact, whole-string (full-match); anything else is refused attestation_type_unregistered",
       "refusal": "attestation_type_unregistered",
@@ -239,7 +226,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "38f520ac3d466c39047fa9bce0554d83e4a4be7b83bf85c3eb6146f6359fc5a0"
+    "source_sha256": "bf3eeb348b723dce561d8e0bfdb6fbb37b70043118e503e1236e83e5aef3ca81"
   },
   "families": [
     {
@@ -2639,6 +2626,35 @@
         {
           "class": "vocab",
           "segment": "{scope}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "One wrap of one data-encryption key to one recipient (CC 3.3.2): {axis} \u2208 content | epoch | stream \u2014 closed; wire key_grant:{axis}:v1.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "key_grant:{axis}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.3.2",
+        "rule": "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key_grant"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{axis}",
+          "values": [
+            "content",
+            "epoch",
+            "stream"
+          ]
         }
       ]
     },

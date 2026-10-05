@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc7",
-    "registry_sha256": "287a0f2e9dc296d4003931aa285c00f4f15d34eb159465e1d45d6fdd26e84117",
+    "registry_sha256": "1c9b0e1cfa44847f4780a695fcec3ea14ab826907fa3a1ae3e1df53347dd1bf6",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -3715,6 +3715,54 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "key_grant:content:v1",
+      "family": "key_grant:{axis}",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "key_grant:content:V1",
+      "family": "key_grant:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "key_grant:content:v1:v2",
+      "family": "key_grant:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "key_grant:content:v1beta",
+      "family": "key_grant:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Key_grant:content:v1",
+      "family": "key_grant:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "key_grant:content",
+      "family": "key_grant:{axis}",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "key_grant:CONTENT:v1",
+      "family": "key_grant:{axis}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "key_grant:not_a_listed_value:v1",
+      "family": "key_grant:{axis}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
+    },
+    {
       "dimension": "licensure:id1:v1",
       "family": "licensure:{authority_id}",
       "refusal": null,
@@ -6043,12 +6091,6 @@
       "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
     },
     {
-      "dimension": "key_grant:zz_unminted_leaf:v1",
-      "family": null,
-      "refusal": "namespace_family_unregistered",
-      "why": "an unclaimed leaf under a reserved stem is refused, never open vocabulary (CC 3.4)"
-    },
-    {
       "dimension": "device:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_family_unregistered",
@@ -6188,12 +6230,6 @@
     },
     {
       "dimension": "Self:zz_unminted_leaf:v1",
-      "family": null,
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
-    },
-    {
-      "dimension": "Key_grant:zz_unminted_leaf:v1",
       "family": null,
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated reserved stem is malformed, never a bypass of the reservation"
@@ -6353,46 +6389,18 @@
       "why": "whole-string match: a trailing newline is not admitted"
     },
     {
-      "attestation_type": "key_grant:epoch:v1",
-      "class": "carrier",
-      "name": "key_grant:{axis}:{version}",
-      "refusal": null,
-      "why": "a registered carrier"
-    },
-    {
-      "attestation_type": "key_grant:epoch:v1\n",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "whole-string match: a trailing newline is not admitted"
-    },
-    {
-      "attestation_type": "KEY_GRANT:EPOCH:V1",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "byte-exact: a case variant is not the carrier"
-    },
-    {
-      "attestation_type": "key_grant",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "the bare carrier stem is not a row type"
-    },
-    {
-      "attestation_type": "key_grant:zz_unminted:v1",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "an unregistered tail beneath a carrier stem is refused"
-    },
-    {
       "attestation_type": "holds_bytes:sha256:0a1b2c3d",
       "class": null,
       "name": null,
       "refusal": "attestation_type_unregistered",
       "why": "the retired rc6 holds_bytes carrier is not a row type (#141)"
+    },
+    {
+      "attestation_type": "key_grant:epoch:v1",
+      "class": null,
+      "name": null,
+      "refusal": "attestation_type_unregistered",
+      "why": "the retired rc6 key-grant set is not a row type; key_grant:{axis}:v1 is a scores dimension (#143)"
     },
     {
       "attestation_type": "custody:ack:v1",
