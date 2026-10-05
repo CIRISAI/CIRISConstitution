@@ -38,9 +38,9 @@ Lapse == /\ halted /\ ~confirmed /\ clock = Fuse
          /\ halted' = FALSE /\ confirmSigs' = {} /\ clock' = 0
          /\ UNCHANGED <<honest, intent, sealed, stolen, jammed, confirmed, resumeSigs>>
 \* resumption of a confirmed pause: M of N
-SignResume(h) == /\ halted /\ confirmed /\ h \notin resumeSigs /\ resumeSigs' = resumeSigs \cup {h}
+SignResume(h) == /\ halted /\ h \notin resumeSigs /\ resumeSigs' = resumeSigs \cup {h}
                  /\ UNCHANGED <<honest, intent, sealed, stolen, jammed, halted, confirmed, confirmSigs, clock>>
-Resume == /\ halted /\ confirmed /\ Cardinality(resumeSigs) >= M
+Resume == /\ halted /\ Cardinality(resumeSigs) >= M        \* a majority ends ANY halt, confirmed or not
           /\ halted' = FALSE /\ confirmed' = FALSE /\ confirmSigs' = {} /\ resumeSigs' = {} /\ intent' = {} /\ clock' = 0
           /\ UNCHANGED <<honest, sealed, stolen, jammed>>
 \* adversary
@@ -55,7 +55,7 @@ Steal(h) == /\ h \in sealed /\ h \notin stolen /\ stolen' = stolen \cup {h}
             /\ UNCHANGED <<honest, intent, sealed, jammed, halted, confirmed, confirmSigs, resumeSigs, clock>>
 CoercedSign(h) == /\ h \notin honest /\ halted
                   /\ \/ (~confirmed /\ h \notin confirmSigs /\ confirmSigs' = confirmSigs \cup {h} /\ UNCHANGED resumeSigs)
-                     \/ (confirmed /\ h \notin resumeSigs /\ resumeSigs' = resumeSigs \cup {h} /\ UNCHANGED confirmSigs)
+                     \/ (h \notin resumeSigs /\ resumeSigs' = resumeSigs \cup {h} /\ UNCHANGED confirmSigs)
                   /\ UNCHANGED <<honest, intent, sealed, stolen, jammed, halted, confirmed, clock>>
 
 Next == \/ \E h \in Holders : Intend(h) \/ Seal(h) \/ Publish(h) \/ PublishStolen(h) \/ SignConfirm(h)
@@ -67,11 +67,13 @@ Spec == Init /\ [][Next]_vars
 Inv_LoneBounded == (halted /\ ~confirmed) => clock <= Fuse
 \* F2 Nothing the adversary alone signs confirms or resumes: both need an honest signature.
 Inv_ConfirmNeedsHonest == confirmed => confirmSigs \cap honest # {}
-Inv_ResumeNeedsHonest == (halted /\ confirmed /\ Cardinality(resumeSigs) >= M) => resumeSigs \cap honest # {}
+Inv_ResumeNeedsHonest == (halted /\ Cardinality(resumeSigs) >= M) => resumeSigs \cap honest # {}
 \* F3 The stop needs no one but the firer and a channel: with intent and no jam, Publish is enabled.
 Inv_FireEnabled == (intent \cap honest # {} /\ ~jammed /\ ~halted) => ENABLED (\E h \in Holders : Publish(h))
 \* F4 A confirmed pause does not lapse: only a majority resumption ends it.
 Prop_ConfirmedPersists == [][(halted /\ confirmed /\ ~halted') => Resume]_vars
+\* F6 A majority can end an unconfirmed pause (a stolen sealed row) before the fuse runs.
+Inv_MajorityCanResume == (halted /\ ~jammed /\ Cardinality(honest) >= M) => ENABLED (\E h \in Holders : SignResume(h)) \/ ENABLED Resume
 \* F5 The adversary can only ever SHORTEN a pause (by preventing confirmation), never extend one
 \*    or prevent a fresh one once a channel reopens: with two honest reachable holders and no jam,
 \*    confirmation is enabled before the fuse runs.

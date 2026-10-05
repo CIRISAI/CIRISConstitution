@@ -24,7 +24,9 @@ depth 21: `Inv_LoneBounded` (a lone pause never outlives the fuse), `Inv_FireEna
 needs only the firer and a channel), `Inv_ConfirmNeedsHonest` / `Inv_ResumeNeedsHonest` (a
 coerced holder alone does neither), `Inv_MajorityCanConfirm` (two honest reachable holders can
 always confirm before the fuse runs), `Prop_ConfirmedPersists` (a confirmed pause ends only by
-resumption). An unbounded lapse counter was the one cut: it made the chain infinite and carried
+resumption), `Inv_MajorityCanResume` (a majority can end an unconfirmed pause before the fuse: a
+stolen sealed row need not run its course). The fuse counts from receipt, as the model's `Stop`
+does, never from the signer-chosen `asserted_at`. 319,090 states after the resume change. An unbounded lapse counter was the one cut: it made the chain infinite and carried
 no information.
 
 **What it does not cover.** An adversary that jams every channel to every node *before* any holder
