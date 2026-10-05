@@ -204,7 +204,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 159,
+    "n_families": 163,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -212,12 +212,12 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 14,
+      "persist": 18,
       "registry": 19,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "1dd2aefe5123d9180018e5a8f45613886e7544e63f08a66bedc15141becf57b0",
+    "registry_sha256": "ad97d3b8430d627fe68cc123b15627f529da2a7335b61bacc95182d1e237e04d",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -232,7 +232,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "9e59c5afaa70bda0e4a34fd0d2d373c4f4a0a10f18da95d04a82d6307919205c"
+    "source_sha256": "45b51007ac51a7fb63e62ad680ac86baccb61498a5fd5728650378291d5effcd"
   },
   "families": [
     {
@@ -2429,6 +2429,29 @@
       ]
     },
     {
+      "cc_section": "3.1.3",
+      "description": "A family's or community's roster version: the signed roster record at a version that CC 3.2 T6 makes the lineage head, as a cosigned scores row \u2014 attested_key_id the group, envelope carrying the fold (seats, roles, effective_ats, bounds), p",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "group:roster",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "group"
+        },
+        {
+          "class": "literal",
+          "segment": "roster"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.4",
       "description": "Open vocabulary.",
       "owning_component": "node",
@@ -2526,6 +2549,29 @@
           "class": "hex",
           "pattern": "^[0-9a-f]{64}$",
           "segment": "{canonical_hash}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "An identity's occurrence record (CC 3.3.6): device class, encryption pubkeys, transport binding.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "identity:occurrence",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "signed by the identity or a live occurrence of it (signer_acts_for)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "identity"
+        },
+        {
+          "class": "literal",
+          "segment": "occurrence"
         }
       ]
     },
@@ -2632,6 +2678,52 @@
         {
           "class": "vocab",
           "segment": "{aspect}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A key's claim of itself: attesting_key_id = attested_key_id = the key, envelope carrying pubkey_ed25519_base64, pubkey_ml_dsa_65_base64, identity_type and roles.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "key:record",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key"
+        },
+        {
+          "class": "literal",
+          "segment": "record"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A key-plane revocation (CC 2.4.1.1): subject revoked_key_sha256_ed25519_raw, revoked_after only ever lowering across versions.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "-1 only",
+      "prefix": "key:revocation",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "revoker-signed, judged without the subject's record; never withdrawn"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key"
+        },
+        {
+          "class": "literal",
+          "segment": "revocation"
         }
       ]
     },
@@ -2786,7 +2878,7 @@
     },
     {
       "cc_section": "3.1.3.2",
-      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
+      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline | widening | removal | resignation \u2014 closed.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -2794,7 +2886,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.3.2",
-        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])"
+        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member"
       },
       "segments": [
         {
@@ -2808,7 +2900,10 @@
           "values": [
             "proposal",
             "acceptance",
-            "decline"
+            "decline",
+            "widening",
+            "removal",
+            "resignation"
           ]
         }
       ]

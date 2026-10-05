@@ -143,6 +143,15 @@ def _reserved_rules():
         # CC 3.1.1 device label (#137): the owner's name for an owned occurrence.
         (lambda p, c: p.startswith("device:label"),
          "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing", "CC 3.1.1"),
+        # CC 3.1.3 planes as rows (#145): cosigned or possession-admitted, never substrate self-reports.
+        (lambda p, c: p.startswith("group:roster"),
+         "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws", "CC 3.1.3"),
+        (lambda p, c: p.startswith("key:record"),
+         "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession", "CC 3.1.3"),
+        (lambda p, c: p.startswith("key:revocation"),
+         "revoker-signed, judged without the subject's record; never withdrawn", "CC 3.1.3"),
+        (lambda p, c: p.startswith("identity:occurrence"),
+         "signed by the identity or a live occurrence of it (signer_acts_for)", "CC 3.1.3"),
         # CC 3.3.2 / 3.1.3 key wraps (#143): sealer- or minter-signed, about the recipient occurrence.
         (lambda p, c: p.startswith("key_grant:"),
          "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn", "CC 3.3.2"),
@@ -165,7 +174,7 @@ def _reserved_rules():
          "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
         (lambda p, c: p.startswith("membership:"),
-         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])", "CC 3.1.3.2"),
+         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
         # "not a substrate-self-report", so it must come before the edge-wide rule.
         (lambda p, c: p.startswith("delivery_receipt:"),
