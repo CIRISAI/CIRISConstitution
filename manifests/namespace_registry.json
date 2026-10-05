@@ -204,7 +204,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 163,
+    "n_families": 167,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -212,12 +212,12 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 18,
+      "persist": 22,
       "registry": 19,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "ad97d3b8430d627fe68cc123b15627f529da2a7335b61bacc95182d1e237e04d",
+    "registry_sha256": "247efe953da882470acee302690f72e4734bf2f4edb635e56a43782c0340f966",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -232,7 +232,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "45b51007ac51a7fb63e62ad680ac86baccb61498a5fd5728650378291d5effcd"
+    "source_sha256": "68c4398f0b4ef46f3f1924a63a132cd28cfd0cd0d47db9ec268ab61d5c8bc72e"
   },
   "families": [
     {
@@ -2780,6 +2780,97 @@
       ]
     },
     {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); a co-witnessed balance snapshot at a sequence number, superseding the detail below it (CC 3.3.10.1 clause 5); the conservation fold is provable from the latest checkpoint forward.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ledger:checkpoint:{unit}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ledger"
+        },
+        {
+          "class": "literal",
+          "segment": "checkpoint"
+        },
+        {
+          "class": "external",
+          "segment": "{unit}",
+          "standard": "ISO 4217 code, or a unit the ledger declares"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); an in-grammar ledger's head \u2014 sequence, unit and the declared anchoring cadence (CC 3.3.10.1 clauses 1\u20134).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ledger:head:{unit}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ledger"
+        },
+        {
+          "class": "literal",
+          "segment": "head"
+        },
+        {
+          "class": "external",
+          "segment": "{unit}",
+          "standard": "ISO 4217 code, or a unit the ledger declares"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); promotion of a ledger to cohort visibility, carrying the compliance proof \u2014 chain validity from the latest witnessed checkpoint to the promoted head (CC 3.3.10.1 clause 6).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ledger:promotion:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ledger"
+        },
+        {
+          "class": "literal",
+          "segment": "promotion"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.1",
       "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1; authority is conferred by quorum, never by delegates_to).",
       "owning_component": "registry",
@@ -3702,6 +3793,32 @@
         {
           "class": "vocab",
           "segment": "{kind}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); the optional, privacy-scoped linkage of a federation action to its off-stack settlement \u2014 a bare scores against the paid Contribution, or the settlement subject_kind ceremony when an explicit receipt is wanted (",
+      "leaves": [],
+      "leaves_closed": false,
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "settlement:*",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "settlement"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*",
+          "variadic": true
         }
       ]
     },
