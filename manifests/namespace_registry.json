@@ -204,28 +204,22 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 158,
+    "n_families": 157,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
       "lens": 15,
-      "node": 49,
+      "node": 48,
       "persist": 13,
       "registry": 18,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "f666f334db6b5e82dd7f75e6cbe82c926d27dcd9bd81d208784527cbce651c37",
+    "registry_sha256": "287a0f2e9dc296d4003931aa285c00f4f15d34eb159465e1d45d6fdd26e84117",
     "row_types": {
       "carriers": [
-        {
-          "kind": "holds_bytes",
-          "pattern": "^holds_bytes:sha256:[0-9a-f]{8}$",
-          "sample": "holds_bytes:sha256:0a1b2c3d",
-          "token": "holds_bytes:sha256:{prefix}"
-        },
         {
           "kind": "key_grant",
           "pattern": "^key_grant:(content|epoch|stream):v1$",
@@ -245,7 +239,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "3085ba2e4de22c3fd0f975c679be4a38de40e55e0b7c4b0280d3b193818c1af6"
+    "source_sha256": "38f520ac3d466c39047fa9bce0554d83e4a4be7b83bf85c3eb6146f6359fc5a0"
   },
   "families": [
     {
@@ -2492,29 +2486,6 @@
         {
           "class": "vocab",
           "segment": "{version}"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.9.1",
-      "description": "A carrier row type, not a scores dimension (CC 2.4): the token is the row's type, the row carries no score, and it never appears as a dimension.",
-      "owning_component": "node",
-      "owning_repo": "CIRISNodeCore",
-      "polarity": "boolean-via-score",
-      "prefix": "holds_bytes:sha256:{prefix}",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "holds_bytes"
-        },
-        {
-          "class": "literal",
-          "segment": "sha256"
-        },
-        {
-          "class": "hex",
-          "segment": "{prefix}"
         }
       ]
     },

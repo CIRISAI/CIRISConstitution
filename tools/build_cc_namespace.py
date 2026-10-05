@@ -95,7 +95,6 @@ GATED_STEMS = [
 ROW_TYPES_SOURCE_REL = "constitution/part_2_the_grammar.md"
 STRUCTURAL_ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
 CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample)
-    ("holds_bytes:sha256:{prefix}", "holds_bytes", r"^holds_bytes:sha256:[0-9a-f]{8}$", "holds_bytes:sha256:0a1b2c3d"),
     ("key_grant:{axis}:{version}", "key_grant", r"^key_grant:(content|epoch|stream):v1$", "key_grant:epoch:v1"),
 ]
 
@@ -722,6 +721,7 @@ def main():
     RETIRED_FAMILIES = {
         "age_self_declared:{band}:{version}",  # -> age_self_declared:band:{band}:{version} (#113 review: the wire arity)
         "custody:{state}",                     # -> custody:{kind} = ack (#130 operator ruling; lived one rc6 commit, 3f10e7f)
+        "holds_bytes:sha256:{prefix}",         # -> custody:ack:v1 at the content's scope (#141 steward ruling, rc7)
     }
     if os.path.exists(OUT):
         try:

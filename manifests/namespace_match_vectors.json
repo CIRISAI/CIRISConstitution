@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc7",
-    "registry_sha256": "f666f334db6b5e82dd7f75e6cbe82c926d27dcd9bd81d208784527cbce651c37",
+    "registry_sha256": "287a0f2e9dc296d4003931aa285c00f4f15d34eb159465e1d45d6fdd26e84117",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -3469,42 +3469,6 @@
       "why": "a row ending in {version} still refuses an input without the version segment"
     },
     {
-      "dimension": "holds_bytes:sha256:ab12:v1",
-      "family": "holds_bytes:sha256:{prefix}",
-      "refusal": null,
-      "why": "instantiated sample resolves to its row"
-    },
-    {
-      "dimension": "holds_bytes:sha256:ab12:V1",
-      "family": "holds_bytes:sha256:{prefix}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "an uppercase version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "holds_bytes:sha256:ab12:v1:v2",
-      "family": "holds_bytes:sha256:{prefix}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a duplicated version tail is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "holds_bytes:sha256:ab12:v1beta",
-      "family": "holds_bytes:sha256:{prefix}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "Holds_bytes:sha256:ab12:v1",
-      "family": "holds_bytes:sha256:{prefix}",
-      "refusal": "namespace_dimension_case_malformed",
-      "why": "a case-mutated registered stem is malformed, not open vocabulary"
-    },
-    {
-      "dimension": "holds_bytes:sha256:ab12",
-      "family": "holds_bytes:sha256:{prefix}",
-      "refusal": "missing_version_segment",
-      "why": "the trailing version segment is mandatory (R3 version_segment)"
-    },
-    {
       "dimension": "identity:canonical_binding:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
       "family": "identity:canonical_binding:{canonical_hash}",
       "refusal": null,
@@ -6389,41 +6353,6 @@
       "why": "whole-string match: a trailing newline is not admitted"
     },
     {
-      "attestation_type": "holds_bytes:sha256:0a1b2c3d",
-      "class": "carrier",
-      "name": "holds_bytes:sha256:{prefix}",
-      "refusal": null,
-      "why": "a registered carrier"
-    },
-    {
-      "attestation_type": "holds_bytes:sha256:0a1b2c3d\n",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "whole-string match: a trailing newline is not admitted"
-    },
-    {
-      "attestation_type": "HOLDS_BYTES:SHA256:0A1B2C3D",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "byte-exact: a case variant is not the carrier"
-    },
-    {
-      "attestation_type": "holds_bytes",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "the bare carrier stem is not a row type"
-    },
-    {
-      "attestation_type": "holds_bytes:zz_unminted:v1",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "an unregistered tail beneath a carrier stem is refused"
-    },
-    {
       "attestation_type": "key_grant:epoch:v1",
       "class": "carrier",
       "name": "key_grant:{axis}:{version}",
@@ -6459,46 +6388,11 @@
       "why": "an unregistered tail beneath a carrier stem is refused"
     },
     {
-      "attestation_type": "key_grant:content:v1",
-      "class": "carrier",
-      "name": "key_grant:{axis}:{version}",
-      "refusal": null,
-      "why": "each registered axis"
-    },
-    {
-      "attestation_type": "key_grant:stream:v1",
-      "class": "carrier",
-      "name": "key_grant:{axis}:{version}",
-      "refusal": null,
-      "why": "each registered axis"
-    },
-    {
-      "attestation_type": "key_grant:epoch:v2",
+      "attestation_type": "holds_bytes:sha256:0a1b2c3d",
       "class": null,
       "name": null,
       "refusal": "attestation_type_unregistered",
-      "why": "an unregistered version is refused"
-    },
-    {
-      "attestation_type": "holds_bytes:sha256:0a1b2c3",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "the prefix is exactly eight hex characters"
-    },
-    {
-      "attestation_type": "holds_bytes:sha256:0A1B2C3D",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "the prefix is lowercase hex"
-    },
-    {
-      "attestation_type": "holds_bytes:sha512:0a1b2c3d",
-      "class": null,
-      "name": null,
-      "refusal": "attestation_type_unregistered",
-      "why": "sha256 is the only registered digest"
+      "why": "the retired rc6 holds_bytes carrier is not a row type (#141)"
     },
     {
       "attestation_type": "custody:ack:v1",

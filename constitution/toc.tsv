@@ -257,7 +257,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 4.5.12.5	family-admission	Family admission — consensus_protocol (CEG 0.7 normative)	§11.7.5	0.00092	250	0.11	IV	ceg
 4.5.12.6	documents-what-4	What this documents	§11.7.6	0.00092	251	0.11	IV	ceg
 5.1	epoch	Epoch keying + cascade (normative — D2 / D3; substrate-pending #142)	§10.5.3	0.01114	12	1.34	V	ceg
-5.2	family	Structural invisibility — `holds_bytes:sha256:*` suppression for `cohort_scope: self | family`	§10.1.4	0.00869	19	1.04	V	ceg
+5.2	family	Structural invisibility — no holding claim leaves a bounded cohort	§10.1.4	0.00869	19	1.04	V	ceg
 5.3	endpoint	Endpoint shapes	§10	0.00180	132	0.22	V	ceg
 5.3.1	witness	STH cosigning + witness directory	§10.3	0.00740	25	0.89	V	ceg
 5.3.1.1	consistency-proof	Consistency-proof requirement (normative; addresses CEG 0.1 distsys review)	§10.3.1	0.00213	112	0.26	V	ceg

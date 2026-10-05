@@ -362,7 +362,7 @@ Recursion safety: the [CC 4.5.1](part_4_composition_governance.md) amendment pro
 
 Per [CC 3.2](part_3_the_namespace.md) `community` + [CC 3.3.3](part_3_the_namespace.md) `location_proof`. Composition pattern for resolving the **current membership set** of a community, gating cohort-filtered visibility for `cohort_scope: community` content.
 
-Sibling to [CC 4.4.3.4 Policy L](#8112-policy-l--selffamily-membership-composition-ceg-07-addition) (self/family) but with different defaults — community content is encrypted under a per-community DEK + emits `holds_bytes:sha256:*` with cleartext provenance; the privacy property is byte-confidential-to-members, not cohort-filtered-visibility.
+Sibling to [CC 4.4.3.4 Policy L](#8112-policy-l--selffamily-membership-composition-ceg-07-addition) (self/family) but with different defaults — community content is encrypted under a per-community DEK and its holding claims reach members only; the privacy property is byte-confidential-to-members and, since [CIRISConstitution#141](https://github.com/CIRISAI/CIRISConstitution/issues/141), existence-invisible-to-non-members as well.
 
 ##### 4.4.3.2.1 `community-three` — The three crypto tiers + the Community DEK cascade (normative)
 
@@ -371,16 +371,16 @@ The line is drawn at **"does it have a bounded membership roster?"** — yes →
 | Tier | `cohort_scope` | At-rest | Wire discovery | Reader |
 |---|---|---|---|---|
 | **self / family** | `self`, `family` | encrypted, per-write DEK | **none** ([CC 5.2](part_5_transport_substrate.md) structural invisibility) | occurrences / family members |
-| **Community** | `community`, `affiliations` | **encrypted under the community DEK** | `holds_bytes:*` **+ cleartext provenance** | community members (DEK cascade) |
-| **Commons** | `species`, `biosphere`, `federation` | **plaintext** | `holds_bytes:*` | anyone |
+| **Community** | `community`, `affiliations` | **encrypted under the community DEK** | **none outside the roster**: `custody:ack:v1` within the cohort ([CC 3.1.3.3](part_3_the_namespace.md)) | community members (DEK cascade) |
+| **Commons** | `species`, `biosphere`, `federation` | **plaintext** | `custody:ack:v1` at federation scope — the holder directory | anyone |
 
-*Wire discovery: none* for `self` / `family` means none **outside** the cohort. Within it, a device's custody report for a blob (`custody:ack:v1`, `here` \| `none`, [CC 3.1.3.3](part_3_the_namespace.md)) is permitted, at the blob's own scope and replicated only to members — never `holds_bytes:*`, never to a non-member ([CIRISConstitution#130](https://github.com/CIRISAI/CIRISConstitution/issues/130)).
+*Wire discovery: none* for `self` / `family` means none **outside** the cohort. Within it, a device's custody report for a blob (`custody:ack:v1`, `here` \| `none`, [CC 3.1.3.3](part_3_the_namespace.md)) is permitted, at the blob's own scope and replicated only to members — never to a non-member ([CIRISConstitution#130](https://github.com/CIRISAI/CIRISConstitution/issues/130)).
 
-**Community DEK cascade (MANDATORY).** Community content (`cohort_scope: community | affiliations`) is encrypted at rest under a **per-community DEK** and emits `holds_bytes:sha256:*` carrying **cleartext provenance** (`attesting_key_id`, `community_id`, reason/dimension) so non-member holders can make an informed keep/evict decision without reading content. The community DEK **is the [CC 5.1](part_5_transport_substrate.md) epoch-DEK cascade applied to `cohort_scope: community`** — *a community is a stream its members subscribe to, cryptographically*: **one** DEK shared across emissions (per-emission cost O(1), not O(members)), wrapped to each member on admission, re-wrapped on membership change (CC 4.4.3.2.2), **`wrap_algorithm: v2` (hybrid PQC) MANDATORY** (same harvest-now-decrypt-later reasoning as [CC 4.4.3.4.1](#81124-key-grant-cascade-the-at-rest-encryption-flow) / [CC 5.1](part_5_transport_substrate.md)). This is **mandatory, not opt-in** — the tier name *is* the guarantee; a persecuted community is protected by *being a community*, not by remembering a flag. (Deliberately stronger than the [CC 4.4.3.4.1](#81124-key-grant-cascade-the-at-rest-encryption-flow) self/family opt-in: self/family has structural invisibility so at-rest crypto is defense-in-depth; community *federates*, so the DEK is its **sole** confidentiality boundary.)
+**Community DEK cascade (MANDATORY).** Community content (`cohort_scope: community | affiliations`) is encrypted at rest under a **per-community DEK**; its holding claims are placed at the community's scope and reach its members only ([CC 3.1.3.3](part_3_the_namespace.md)), and there is no non-member holder of community bytes ([CC 6.1.5.3](part_6_the_coherence_mathematics.md)). The community DEK **is the [CC 5.1](part_5_transport_substrate.md) epoch-DEK cascade applied to `cohort_scope: community`** — *a community is a stream its members subscribe to, cryptographically*: **one** DEK shared across emissions (per-emission cost O(1), not O(members)), wrapped to each member on admission, re-wrapped on membership change (CC 4.4.3.2.2), **`wrap_algorithm: v2` (hybrid PQC) MANDATORY** (same harvest-now-decrypt-later reasoning as [CC 4.4.3.4.1](#81124-key-grant-cascade-the-at-rest-encryption-flow) / [CC 5.1](part_5_transport_substrate.md)). This is **mandatory, not opt-in** — the tier name *is* the guarantee; a persecuted community is protected by *being a community*, not by remembering a flag. (Deliberately stronger than the [CC 4.4.3.4.1](#81124-key-grant-cascade-the-at-rest-encryption-flow) self/family opt-in: self/family has structural invisibility so at-rest crypto is defense-in-depth; community *federates*, so the DEK is its **sole** confidentiality boundary.)
 
-**Holder-inspectability principle (normative rationale).** Any data a host holds above local tier MUST support an informed keep/evict decision: either the holder **inspects the bytes** (Commons — plaintext, maximally inspectable, hence the *preferred* social-distribution mechanism) **or** it **inspects the provenance** (Community — the cleartext `attesting_key_id` + `community_id` + reason on an otherwise-encrypted blob) and chooses to hold opaque ciphertext for a community it trusts. **Nothing above local tier is ever a forced, unattributable opaque blob.** This is *why* the split is shaped this way and what the eviction rules (persist `EvictionSweeper` / `evict_actor`) enforce.
+**Holder-inspectability principle (normative).** A node never holds bytes it does not know what they are: either the holder **inspects the bytes** (Commons — plaintext, maximally inspectable, hence the *preferred* social-distribution mechanism) **or** it is a **member of the cohort** the bytes belong to and holds ciphertext its owner can open ([CC 6.1.5.3](part_6_the_coherence_mathematics.md): a node is in a cohort's audience only through its owner's membership). There is no third case — the rc6 clause under which a non-member host "inspects the provenance and chooses to hold opaque ciphertext for a community it trusts" described no shipped behaviour and is withdrawn ([CIRISConstitution#141](https://github.com/CIRISAI/CIRISConstitution/issues/141)). **Nothing above local tier is ever a forced, unattributable opaque blob**, and nothing is ever an opaque blob held by a stranger. This is *why* the split is shaped this way and what the eviction rules (persist `EvictionSweeper` / `evict_actor`) enforce.
 
-**The `infrastructure` exception (normative).** A `community` with `cohort_subkind: infrastructure` ([CC 3.2](part_3_the_namespace.md)) — `ciris-canonical` and any governance/trust root — **opts OUT of the mandatory DEK cascade and is Commons-tier (plaintext, `holds_bytes:*`, no DEK)**. The trust root cannot be an opaque blob; its entire purpose is public auditability — transparency-seeking, not privacy-seeking. **Node→canonical traces** (conformance / `registry_consensus` emissions to a governance community) are therefore `cohort_scope: federation` (Commons/plaintext, world-readable) — a node enrolling in governance is thereby told its conformance traces are public.
+**The `infrastructure` exception (normative).** A `community` with `cohort_subkind: infrastructure` ([CC 3.2](part_3_the_namespace.md)) — `ciris-canonical` and any governance/trust root — **opts OUT of the mandatory DEK cascade and is Commons-tier (plaintext, holding claims at federation scope, no DEK)**. The trust root cannot be an opaque blob; its entire purpose is public auditability — transparency-seeking, not privacy-seeking. **Node→canonical traces** (conformance / `registry_consensus` emissions to a governance community) are therefore `cohort_scope: federation` (Commons/plaintext, world-readable) — a node enrolling in governance is thereby told its conformance traces are public.
 
 ##### 4.4.3.2.2 `community-forward` — Forward secrecy on community member removal (Option A)
 
@@ -521,7 +521,7 @@ The three resolutions and their trust roots: **WHO** = `resolve_community` (sign
 
 4. Alice now receives cohort-filtered visibility for cohort_scope:community content
  with community_id: austin-community. No key_grant cascade (community is unencrypted);
- no at-rest wrap; substrate emits holds_bytes:* for community content per status quo.
+ no at-rest wrap; holding claims stay within the community's roster.
 ```
 
 ##### 4.4.3.2.6 `delivery-extension` — Delivery extension — `delivery_mode` × Policy M
@@ -560,7 +560,7 @@ The same Policy M machinery handles both cardinalities — the difference is pur
 
 **Composition with `delivery_mode: pull` (default)**:
 
-For `delivery_mode: pull`, subscribers discover via the standard `holds_bytes:sha256:*` directory per [CC 5.3.2](part_5_transport_substrate.md). Policy M still resolves the community for visibility-filtering (consumer reads `community_id` envelope field, walks the membership, filters out non-member peers from the discovery surface). No fan-out push; no `delivery_receipt` emission required (best-effort).
+For `delivery_mode: pull`, subscribers discover via the holding-claim directory at the stream's scope (`custody:ack:v1`, [CC 3.1.3.3](part_3_the_namespace.md)) per [CC 5.3.2](part_5_transport_substrate.md). Policy M still resolves the community for visibility-filtering (consumer reads `community_id` envelope field, walks the membership, filters out non-member peers from the discovery surface). No fan-out push; no `delivery_receipt` emission required (best-effort).
 
 **Composition with `delivery_mode: push`**:
 
@@ -606,7 +606,7 @@ A **community** ([CC 4.4.3.2](part_4_composition_governance.md)) gathers by *int
 - **`access_control_model`** — `roster-wide` (default; the DEK cascade) | `rbac` (role→(class,compartment)) | `minimum-necessary` (treatment-/matter-relationship binding + audited **break-the-glass**). Honors HIPAA §164.502(b) minimum-necessary and the law-firm/bank/intel chinese-wall pattern.
 - **`data_subject_access_grant`** — a scoped read+portability path to a **non-member** data subject (patient, client, student) over **their own** records, via a `delegates_to`/key-grant scoped grant **without conferring membership** (Cures Act, GDPR Art 15, FERPA rights-transfer-on-enrollment). Resolves the "the subject owns the data but is outside the roster" gap. Default: none.
 - **`archive_custody`** — an institutional archive-key **custodian/escrow** role holding per-epoch archive keys **decoupled from the live roster**, so `permanent`/`retain` records survive member turnover. Resolves the forward-secrecy-vs-permanence collision ([CC 4.4.3.2.2](part_4_composition_governance.md) DEK rotation on removal would otherwise render a treaty-inviolable permanent archive unreadable). Rides the key-grant/escrow cascade. Default: none.
-- **`chain_of_custody`** — an append-only, **gap-marked** provenance chain per accessioned object / matter / lot (museum provenance with the legally-significant 1933–45 gap; product-liability lot traceability). Rides `supersedes` + `holds_bytes:*`. Default: none.
+- **`chain_of_custody`** — an append-only, **gap-marked** provenance chain per accessioned object / matter / lot (museum provenance with the legally-significant 1933–45 gap; product-liability lot traceability). Rides `supersedes` + holding claims. Default: none.
 
 **C. Hierarchy + designated officials — OPTIONAL.**
 
@@ -921,7 +921,7 @@ resolve_self(I, now):
 
 The root `I` itself is implicitly a member (the identity_key is always an admissible signer for its own content). Single-vouch admission: any current occurrence (including `I` itself) may admit a new occurrence via `attesting_key_id` on a fresh `identity_occurrence` Contribution.
 
-**Concrete**: Alice has admitted `alice_phone`, `alice_laptop`, `alice_agent`. Her self-collective is `{alice_root, alice_phone, alice_laptop, alice_agent}`. When Alice's phone publishes a `cohort_scope: self` Twitter scroll, the substrate wraps the content DEK under all four keys; the content reaches her laptop and agent via the at-rest encryption flow without emitting `holds_bytes:sha256:*`.
+**Concrete**: Alice has admitted `alice_phone`, `alice_laptop`, `alice_agent`. Her self-collective is `{alice_root, alice_phone, alice_laptop, alice_agent}`. When Alice's phone publishes a `cohort_scope: self` Twitter scroll, the substrate wraps the content DEK under all four keys; the content reaches her laptop and agent via the at-rest encryption flow with no holding claim leaving the self cohort.
 
 ##### 4.4.3.4.7 `composition-subject` — Composition with subject_key_ids[]
 
@@ -1308,7 +1308,7 @@ Some takedowns cannot wait for the CC 4.5.1 amendment timeline. For `takedown_no
 A fast-path coordination protocol carves this out:
 
 1. **Notice admission**: the `takedown_notice` Contribution arrives at the substrate, signed by `claimant_key_id`. The substrate accepts it without CC 4.5.1 quorum; speed matters at this layer.
-2. **Holder eviction**: substrate emits a `withdraws` against the matching `holds_bytes:sha256:{prefix}` directory entry per [CC 5.3.2.1](part_5_transport_substrate.md). Holders see their advertisement marked withdrawn and SHOULD cease serving the bytes — except under an immediate-removal `legal_basis` below, where a reachable holder MUST destroy the bytes on receipt of the purge (retaining a serve-withheld copy is knowing possession; the [CC 6.1.2.2](part_6_the_coherence_mathematics.md) prohibited-content carve-out is the storage-side twin of this rule).
+2. **Holder eviction**: the substrate tombstones the content on the bytes plane ([CC 2.3](part_2_the_grammar.md)); nobody withdraws another device's holding claim ([CC 3.1.3.3](part_3_the_namespace.md) rule 4). Holders see the tombstone, SHOULD cease serving the bytes, and re-acknowledge `none` — except under an immediate-removal `legal_basis` below, where a reachable holder MUST destroy the bytes on receipt of the purge (retaining a serve-withheld copy is knowing possession; the [CC 6.1.2.2](part_6_the_coherence_mathematics.md) prohibited-content carve-out is the storage-side twin of this rule).
 3. **Per-basis dispatch**:
  - `TvecTerrorist` — operator coordinates via TVEC-designated channel (national regulator notification within 1 hour); substrate logs the notice + the eviction action to its audit chain.
  - `GifctCip` — operator coordinates via GIFCT Content Incident Protocol communication channel; same audit-chain logging.
@@ -1589,7 +1589,7 @@ The consensus_protocol field is itself subject to amendment via the SAME protoco
 #### 4.5.12.6 `documents-what-4` — What this documents
 
 - The wire-format primitives that compose into self/family membership ([CC 3.3.6](part_3_the_namespace.md) + [CC 3.3.4](part_3_the_namespace.md))
-- The structural-invisibility discipline at [CC 5.2](part_5_transport_substrate.md) (cohort_scope: self/family suppresses holds_bytes:*)
+- The structural-invisibility discipline at [CC 5.2](part_5_transport_substrate.md) (no holding claim leaves a self/family cohort)
 - The at-rest encryption flow composition at [CC 4.4.3.4](part_4_composition_governance.md) Policy L
 - The consensus_protocol vocabulary (canonical kinds; open-vocab extension)
 - HUMANITY_ACCORD as the canonical entrenched-`family` instance at [CC 4.2.3](part_4_composition_governance.md)
