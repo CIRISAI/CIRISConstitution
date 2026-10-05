@@ -373,6 +373,7 @@ The line is drawn at **"does it have a bounded membership roster?"** — yes →
 | **self / family** | `self`, `family` | encrypted, per-write DEK | **none** ([CC 5.2](part_5_transport_substrate.md) structural invisibility) | occurrences / family members |
 | **Community** | `community`, `affiliations` | **encrypted under the community DEK** | **none outside the roster**: `custody:ack:v1` within the cohort ([CC 3.1.3.3](part_3_the_namespace.md)) | community members (DEK cascade) |
 | **Commons** | `species`, `biosphere`, `federation` | **plaintext** | `custody:ack:v1` at federation scope — the holder directory | anyone |
+| **Public room** (`cohort_subkind: public`, [CC 3.2](part_3_the_namespace.md)) | `community` | **plaintext** (Commons tier, no DEK) | `custody:ack:v1` at federation scope; a `community:listing:v1` row | anyone who joins (open admission); replicated to the roster's nodes |
 
 *Wire discovery: none* for `self` / `family` means none **outside** the cohort. Within it, a device's custody report for a blob (`custody:ack:v1`, `here` \| `none`, [CC 3.1.3.3](part_3_the_namespace.md)) is permitted, at the blob's own scope and replicated only to members — never to a non-member ([CIRISConstitution#130](https://github.com/CIRISAI/CIRISConstitution/issues/130)).
 
@@ -380,7 +381,7 @@ The line is drawn at **"does it have a bounded membership roster?"** — yes →
 
 **Holder-inspectability principle (normative).** A node never holds bytes it does not know what they are: either the holder **inspects the bytes** (Commons — plaintext, maximally inspectable, hence the *preferred* social-distribution mechanism) **or** it is a **member of the cohort** the bytes belong to and holds ciphertext its owner can open ([CC 6.1.5.3](part_6_the_coherence_mathematics.md): a node is in a cohort's audience only through its owner's membership). There is no third case — the rc6 clause under which a non-member host "inspects the provenance and chooses to hold opaque ciphertext for a community it trusts" described no shipped behaviour and is withdrawn ([CIRISConstitution#141](https://github.com/CIRISAI/CIRISConstitution/issues/141)). **Nothing above local tier is ever a forced, unattributable opaque blob**, and nothing is ever an opaque blob held by a stranger. This is *why* the split is shaped this way and what the eviction rules (persist `EvictionSweeper` / `evict_actor`) enforce.
 
-**The `infrastructure` exception (normative).** A `community` with `cohort_subkind: infrastructure` ([CC 3.2](part_3_the_namespace.md)) — `ciris-canonical` and any governance/trust root — **opts OUT of the mandatory DEK cascade and is Commons-tier (plaintext, holding claims at federation scope, no DEK)**. The trust root cannot be an opaque blob; its entire purpose is public auditability — transparency-seeking, not privacy-seeking. **Node→canonical traces** (conformance / `registry_consensus` emissions to a governance community) are therefore `cohort_scope: federation` (Commons/plaintext, world-readable) — a node enrolling in governance is thereby told its conformance traces are public.
+**The Commons-tier subkinds (normative).** Two `cohort_subkind` values **opt OUT of the mandatory DEK cascade and are Commons-tier (plaintext, holding claims at federation scope, no DEK)**: `infrastructure` ([CC 3.2](part_3_the_namespace.md)) — `ciris-canonical` and any governance/trust root — and `public` ([CC 3.2](part_3_the_namespace.md), [CIRISConstitution#142](https://github.com/CIRISAI/CIRISConstitution/issues/142)) — a room anyone may join, which therefore has no confidentiality claim against the public. The trust root cannot be an opaque blob; its entire purpose is public auditability — transparency-seeking, not privacy-seeking. **Node→canonical traces** (conformance / `registry_consensus` emissions to a governance community) are therefore `cohort_scope: federation` (Commons/plaintext, world-readable) — a node enrolling in governance is thereby told its conformance traces are public.
 
 ##### 4.4.3.2.2 `community-forward` — Forward secrecy on community member removal (Option A)
 
@@ -435,6 +436,14 @@ evaluate_subkind_admission(subkind, current, proposed):
  return false // location outside community's geographic bound
  if their_proof.valid_until passed:
  return false // expired
+ return true
+ "public":
+ # CC 3.2 `public`: open admission — a standing founder proposal and the joiner's
+ # own acceptance; the widening still passes consensus_protocol
+ if current.admission == "open":
+ for each NEW member in proposed.members (not in current):
+ if no membership:acceptance:v1 from new_member naming the standing proposal:
+ return false // nobody joins without their own consent (CC 3.1.3.2)
  return true
  _:
  return true // unknown subkinds admit on consensus_protocol alone

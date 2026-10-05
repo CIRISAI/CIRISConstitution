@@ -86,6 +86,7 @@ GATED_STEMS = [
     ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
+    ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
     ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
@@ -136,6 +137,9 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
+        # CC 3.1.1 / 3.2 public-room listing (#142): the founder's (or a moderate-holder's) own row.
+        (lambda p, c: p.startswith("community:listing"),
+         "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
         # CC 3.1.1 device label (#137): the owner's name for an owned occurrence.
         (lambda p, c: p.startswith("device:label"),
          "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing", "CC 3.1.1"),

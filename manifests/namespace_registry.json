@@ -164,6 +164,12 @@
           "stem": "device:"
         },
         {
+          "cc_ref": "CC 3.1.1",
+          "kind": "gated",
+          "rule": "closed: community:listing is the only leaf",
+          "stem": "community:"
+        },
+        {
           "cc_ref": "CC 3.1.9.4",
           "kind": "gated",
           "rule": "closed: observation:reachability is the only leaf",
@@ -198,7 +204,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 158,
+    "n_families": 159,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -207,11 +213,11 @@
       "lens": 15,
       "node": 48,
       "persist": 14,
-      "registry": 18,
+      "registry": 19,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "1c9b0e1cfa44847f4780a695fcec3ea14ab826907fa3a1ae3e1df53347dd1bf6",
+    "registry_sha256": "1dd2aefe5123d9180018e5a8f45613886e7544e63f08a66bedc15141becf57b0",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -226,7 +232,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "bf3eeb348b723dce561d8e0bfdb6fbb37b70043118e503e1236e83e5aef3ca81"
+    "source_sha256": "9e59c5afaa70bda0e4a34fd0d2d373c4f4a0a10f18da95d04a82d6307919205c"
   },
   "families": [
     {
@@ -1213,6 +1219,29 @@
         {
           "class": "value",
           "segment": "{prior_contribution_id}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "A public community's own discovery row (CIRISConstitution#142; CC 3.2 public): a federation-scoped scores row by the founder carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, rank",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "positive-only",
+      "prefix": "community:listing",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.2",
+        "rule": "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "community"
+        },
+        {
+          "class": "literal",
+          "segment": "listing"
         }
       ]
     },
