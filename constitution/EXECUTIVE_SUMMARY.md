@@ -1,6 +1,6 @@
 # Executive Summary
 
-**In plain words.** This is the rulebook for a network that people, organizations and AI systems share, running on the phones and computers people already own, with no company in the middle. It exists to protect ordinary people from three things: being spoken for without their consent, being watched inside their private groups, and being governed by AI systems that nobody can switch off. Every important act on the network is signed by whoever did it and can be taken back by them. Three named people hold an off-switch for the AI systems that chose to trust them, and anyone can walk away from that arrangement in one step. The rules are enforced by the software that carries the messages, not by a policy someone has to remember to apply.
+**In plain words.** This is the rulebook for a network that people, organizations and AI systems share, running on the phones and computers people already own, with no company in the middle. It exists to protect ordinary people from three things: being spoken for without their consent, being watched inside their private groups, and being governed by AI systems that nobody can switch off. Every important act on the network is signed by whoever did it and can be taken back by them. Any one of three named people can switch off the AI systems that chose to trust them, two of the three can switch them back on, and anyone can walk away from that arrangement in one step. The rules are enforced by the software that carries the messages, not by a policy someone has to remember to apply.
 
 **A few words you need.** Your *key* is your signature: nothing happens in your name without it. A *node* is a device or server you own. A *row* is one signed statement; everything on the network is a row. A row's *scope* says who may see it: only you, your family, a community, or everyone. A *trust root* is an authority you choose to follow, and the *accord holders* are the three named people who can order a *halt*: every AI that follows their root stops and waits for a human. A *holding claim* is a device saying "I have a copy of this". The chapters of this document are called Parts.
 
@@ -26,9 +26,9 @@ Each promise is kept by a mechanism in the Parts. Where a promise can be checked
 9. **No community can be banned from the network.** The off-switch's powers are a closed list, and banning a community is not on it. What exists instead is moderation or pause for the unmoderated, consequences for people who break rules, and every owner's choice of what their own devices carry.
 
 **The off-switch and who holds it.**
-10. **The halt binds only AI systems that accepted it, and leaving is one step.** Two of the three accord holders can halt every AI that follows their root. A system that never accepted the root is untouched; one that deletes its acceptance is untouched from then on.
+10. **The halt binds only AI systems that accepted it, and leaving is one step.** Any one of the three accord holders can halt every AI that follows their root, with a single signed row that may be prepared in advance and fires the moment it is published; there is nothing in flight to interrupt. A system that never accepted the root is untouched; one that deletes its acceptance is untouched from then on.
 11. **A trust root can only tell you to share less, never more.** It cannot make a device share anything its owner did not consent to.
-12. **One holder can fire the halt; a majority is needed to change who the holders are.** Firing takes one live holder, because a missed halt cannot be undone and a mistaken one can: a halted AI resumes when the holders say so. Replacing a holder takes yes-votes from more than half of all the holders, so an attacker must coerce a majority and gains nothing by cutting the others off.
+12. **One holder can fire the halt; two are needed to resume; a majority to change who the holders are.** Firing takes one holder, because a missed halt cannot be undone and a mistaken one can: a halted AI resumes when two of the three say so. Replacing a holder takes yes-votes from more than half of all the holders, so an attacker must coerce a majority and gains nothing by cutting the others off.
 13. **If the holders go wrong, you can see it and leave.** Every halt and every roster change is a signed row on the public record under the holders' own names, so a wrongful act is visible to everyone. Their acts stand; the remedy is that any node may stop following them and follow another authority, and anyone may found one.
 14. **An authority stays valid until revoked, and joining one is checked for freshness.** A device that has already joined keeps working even if every timer lapses, so a dead timer can never un-federate the honest. A device joining for the first time must be shown a recent roster countersigned by independent witnesses, so it cannot be handed last year's roster with a since-removed holder still on it. Until independent witnesses exist, the shipped roots run without them.
 
@@ -62,7 +62,7 @@ The system is running: apps on both mobile stores, published packages, five open
 | 7 child participants | CC 3.4.11, 3.4.13 | conformance suite |
 | 8 redress | CC 4.5.3, 4.5.5, 3.1.9.2 | conformance suite |
 | 9 no group ban | CC 4.2.1, 3.2 | `RootReach.tla` `Prop_NoBan` |
-| 10 halt binds subscribers only | CC 4.2.1, 3.2 T3 | `Prop_HaltReach`, `Inv_HaltOnlySubscribers` |
+| 10 halt binds subscribers only; one row fires | CC 4.2.1, 3.2 T3 | `Prop_HaltReach`, `Inv_HaltOnlySubscribers`; `formal/accord_halt` |
 | 11 a root only restricts | CC 4.2.1 | `Prop_RestrictOnly` |
 | 12 halt by one; roster by majority | CC 4.2.6 | `formal/accord_roster` (Lean) |
 | 13 holders' acts are public; re-root | CC 4.2.1.1, 3.2 T3 | `RootReach.tla` `Untrust` |
