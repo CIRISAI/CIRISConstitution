@@ -204,7 +204,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 167,
+    "n_families": 168,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -213,11 +213,11 @@
       "lens": 15,
       "node": 48,
       "persist": 22,
-      "registry": 19,
+      "registry": 20,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "247efe953da882470acee302690f72e4734bf2f4edb635e56a43782c0340f966",
+    "registry_sha256": "796f609981434b838edab1165462484f1be67889eed7f60c26b210ede5984464",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -232,7 +232,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "68c4398f0b4ef46f3f1924a63a132cd28cfd0cd0d47db9ec268ab61d5c8bc72e"
+    "source_sha256": "9032a726082d2db658bac364fd865617b7add3d7ef71dd644010c65297548660"
   },
   "families": [
     {
@@ -244,7 +244,8 @@
         "accord:invoke:drill:{drill_id}",
         "accord:invoke:notify:{notify_id}",
         "accord:lifecycle",
-        "accord:lifecycle:active"
+        "accord:lifecycle:active",
+        "accord:lifecycle:confirmed"
       ],
       "leaves_closed": true,
       "owning_component": "registry",
@@ -431,6 +432,33 @@
         {
           "class": "literal",
           "segment": "active"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "Catalogue row (CC 3.1.7 R1); a strict majority's confirmation of a one-holder constitutional halt within its fuse, CC 4.2.1.1 / CC 4.2.1.3.",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "+1.0 only",
+      "prefix": "accord:lifecycle:confirmed",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.1",
+        "rule": "accord_holder-only"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "accord"
+        },
+        {
+          "class": "literal",
+          "segment": "lifecycle"
+        },
+        {
+          "class": "literal",
+          "segment": "confirmed"
         }
       ]
     },

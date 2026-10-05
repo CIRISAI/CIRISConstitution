@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc7",
-    "registry_sha256": "247efe953da882470acee302690f72e4734bf2f4edb635e56a43782c0340f966",
+    "registry_sha256": "796f609981434b838edab1165462484f1be67889eed7f60c26b210ede5984464",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -39,6 +39,12 @@
     {
       "dimension": "accord:lifecycle:active:v1",
       "family": "accord:lifecycle:active",
+      "refusal": null,
+      "why": "closed reserved leaf resolves to its own row"
+    },
+    {
+      "dimension": "accord:lifecycle:confirmed:v1",
+      "family": "accord:lifecycle:confirmed",
       "refusal": null,
       "why": "closed reserved leaf resolves to its own row"
     },
@@ -261,6 +267,42 @@
     {
       "dimension": "accord:lifecycle:active",
       "family": "accord:lifecycle:active",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "accord:lifecycle:confirmed:v1",
+      "family": "accord:lifecycle:confirmed",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "accord:lifecycle:confirmed:V1",
+      "family": "accord:lifecycle:confirmed",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:lifecycle:confirmed:v1:v2",
+      "family": "accord:lifecycle:confirmed",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:lifecycle:confirmed:v1beta",
+      "family": "accord:lifecycle:confirmed",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Accord:lifecycle:confirmed:v1",
+      "family": "accord:lifecycle:confirmed",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "accord:lifecycle:confirmed",
+      "family": "accord:lifecycle:confirmed",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },

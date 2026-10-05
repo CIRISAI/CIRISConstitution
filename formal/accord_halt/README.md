@@ -17,6 +17,16 @@ self-contained signed row by any holder, pre-signable offline, fired on receipt 
 | `AccordHalt_proposal.cfg` | the remaining properties hold (2,352 states): a halt binds subscribers only; a coerced holder alone cannot resume |
 | `AccordHalt_row.cfg` | every property holds (19,408 states): no window; firing is enabled by intent and a channel alone, never by the server or another holder; a stolen sealed row is a false halt and nothing more; resumption needs an honest signature |
 
+**The fuse (`AccordHaltFuse.tla`, steward ruling the same day).** The one-row halt plus: a lone
+halt lapses after `Fuse` ticks unless a strict majority of the standing roster confirms it; a
+confirmed halt ends only by a majority resumption. `AccordHaltFuse.cfg` closes at 130,440 states,
+depth 21: `Inv_LoneBounded` (a lone pause never outlives the fuse), `Inv_FireEnabled` (the stop
+needs only the firer and a channel), `Inv_ConfirmNeedsHonest` / `Inv_ResumeNeedsHonest` (a
+coerced holder alone does neither), `Inv_MajorityCanConfirm` (two honest reachable holders can
+always confirm before the fuse runs), `Prop_ConfirmedPersists` (a confirmed pause ends only by
+resumption). An unbounded lapse counter was the one cut: it made the chain infinite and carried
+no information.
+
 **What it does not cover.** An adversary that jams every channel to every node *before* any holder
 intends to halt (the row path is not immune to that; nothing is), and an AI that acts faster
 than a row propagates (answered only by agents checking the latch before every effectful act).
