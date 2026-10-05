@@ -158,16 +158,16 @@
           "stem": "self:"
         },
         {
-          "cc_ref": "CC 2.4",
-          "kind": "gated",
-          "rule": "carrier row type (CC 2.4), never a dimension",
-          "stem": "key_grant:"
-        },
-        {
           "cc_ref": "CC 3.1.1",
           "kind": "gated",
           "rule": "closed: device:label is the only leaf",
           "stem": "device:"
+        },
+        {
+          "cc_ref": "CC 3.1.1",
+          "kind": "gated",
+          "rule": "closed: community:listing is the only leaf",
+          "stem": "community:"
         },
         {
           "cc_ref": "CC 3.1.9.4",
@@ -197,42 +197,29 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc6",
+    "cc_version": "1.0-rc7",
     "components_outside_normative": [
       "cirisbench"
     ],
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 158,
+    "n_families": 168,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
       "lens": 15,
-      "node": 49,
-      "persist": 13,
-      "registry": 18,
+      "node": 48,
+      "persist": 22,
+      "registry": 20,
       "transport-delivery": 6
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "f666f334db6b5e82dd7f75e6cbe82c926d27dcd9bd81d208784527cbce651c37",
+    "registry_sha256": "796f609981434b838edab1165462484f1be67889eed7f60c26b210ede5984464",
     "row_types": {
-      "carriers": [
-        {
-          "kind": "holds_bytes",
-          "pattern": "^holds_bytes:sha256:[0-9a-f]{8}$",
-          "sample": "holds_bytes:sha256:0a1b2c3d",
-          "token": "holds_bytes:sha256:{prefix}"
-        },
-        {
-          "kind": "key_grant",
-          "pattern": "^key_grant:(content|epoch|stream):v1$",
-          "sample": "key_grant:epoch:v1",
-          "token": "key_grant:{axis}:{version}"
-        }
-      ],
+      "carriers": [],
       "cc_ref": "CC 2.4",
       "compare": "byte-exact, whole-string (full-match); anything else is refused attestation_type_unregistered",
       "refusal": "attestation_type_unregistered",
@@ -245,7 +232,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "459d3ef52bc6d021d8bed58af908f75c11fdaf83b5cb841e100040fbe6437ea9"
+    "source_sha256": "9032a726082d2db658bac364fd865617b7add3d7ef71dd644010c65297548660"
   },
   "families": [
     {
@@ -257,7 +244,8 @@
         "accord:invoke:drill:{drill_id}",
         "accord:invoke:notify:{notify_id}",
         "accord:lifecycle",
-        "accord:lifecycle:active"
+        "accord:lifecycle:active",
+        "accord:lifecycle:confirmed"
       ],
       "leaves_closed": true,
       "owning_component": "registry",
@@ -444,6 +432,33 @@
         {
           "class": "literal",
           "segment": "active"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "Catalogue row (CC 3.1.7 R1); a strict majority's confirmation of a one-holder constitutional halt within its fuse, CC 4.2.1.1 / CC 4.2.1.3.",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "+1.0 only",
+      "prefix": "accord:lifecycle:confirmed",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.1",
+        "rule": "accord_holder-only"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "accord"
+        },
+        {
+          "class": "literal",
+          "segment": "lifecycle"
+        },
+        {
+          "class": "literal",
+          "segment": "confirmed"
         }
       ]
     },
@@ -1232,6 +1247,29 @@
         {
           "class": "value",
           "segment": "{prior_contribution_id}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "A public community's own discovery row (CIRISConstitution#142; CC 3.2 public): a federation-scoped scores row by the founder carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, rank",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "positive-only",
+      "prefix": "community:listing",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.2",
+        "rule": "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "community"
+        },
+        {
+          "class": "literal",
+          "segment": "listing"
         }
       ]
     },
@@ -2419,6 +2457,29 @@
       ]
     },
     {
+      "cc_section": "3.1.3",
+      "description": "A family's or community's roster version: the signed roster record at a version that CC 3.2 T6 makes the lineage head, as a cosigned scores row \u2014 attested_key_id the group, envelope carrying the fold (seats, roles, effective_ats, bounds), p",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "group:roster",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "group"
+        },
+        {
+          "class": "literal",
+          "segment": "roster"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.4",
       "description": "Open vocabulary.",
       "owning_component": "node",
@@ -2496,29 +2557,6 @@
       ]
     },
     {
-      "cc_section": "3.1.9.1",
-      "description": "A carrier row type, not a scores dimension (CC 2.4): the token is the row's type, the row carries no score, and it never appears as a dimension.",
-      "owning_component": "node",
-      "owning_repo": "CIRISNodeCore",
-      "polarity": "boolean-via-score",
-      "prefix": "holds_bytes:sha256:{prefix}",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "holds_bytes"
-        },
-        {
-          "class": "literal",
-          "segment": "sha256"
-        },
-        {
-          "class": "hex",
-          "segment": "{prefix}"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.2",
       "description": "Catalogue row (CC 3.1.7 R1); the claim that federation key K is the identity behind canonical hash H, semantics and admission consequence at CC 3.3.14.",
       "owning_component": "attestation",
@@ -2539,6 +2577,29 @@
           "class": "hex",
           "pattern": "^[0-9a-f]{64}$",
           "segment": "{canonical_hash}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "An identity's occurrence record (CC 3.3.6): device class, encryption pubkeys, transport binding.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "identity:occurrence",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "signed by the identity or a live occurrence of it (signer_acts_for)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "identity"
+        },
+        {
+          "class": "literal",
+          "segment": "occurrence"
         }
       ]
     },
@@ -2649,6 +2710,52 @@
       ]
     },
     {
+      "cc_section": "3.1.3",
+      "description": "A key's claim of itself: attesting_key_id = attested_key_id = the key, envelope carrying pubkey_ed25519_base64, pubkey_ml_dsa_65_base64, identity_type and roles.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "key:record",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key"
+        },
+        {
+          "class": "literal",
+          "segment": "record"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A key-plane revocation (CC 2.4.1.1): subject revoked_key_sha256_ed25519_raw, revoked_after only ever lowering across versions.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "-1 only",
+      "prefix": "key:revocation",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "revoker-signed, judged without the subject's record; never withdrawn"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key"
+        },
+        {
+          "class": "literal",
+          "segment": "revocation"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.4",
       "description": "",
       "owning_component": "transport-delivery",
@@ -2668,6 +2775,126 @@
         {
           "class": "vocab",
           "segment": "{scope}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "One wrap of one data-encryption key to one recipient (CC 3.3.2): {axis} \u2208 content | epoch | stream \u2014 closed; wire key_grant:{axis}:v1.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "key_grant:{axis}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.3.2",
+        "rule": "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "key_grant"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{axis}",
+          "values": [
+            "content",
+            "epoch",
+            "stream"
+          ]
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); a co-witnessed balance snapshot at a sequence number, superseding the detail below it (CC 3.3.10.1 clause 5); the conservation fold is provable from the latest checkpoint forward.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ledger:checkpoint:{unit}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ledger"
+        },
+        {
+          "class": "literal",
+          "segment": "checkpoint"
+        },
+        {
+          "class": "external",
+          "segment": "{unit}",
+          "standard": "ISO 4217 code, or a unit the ledger declares"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); an in-grammar ledger's head \u2014 sequence, unit and the declared anchoring cadence (CC 3.3.10.1 clauses 1\u20134).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ledger:head:{unit}:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ledger"
+        },
+        {
+          "class": "literal",
+          "segment": "head"
+        },
+        {
+          "class": "external",
+          "segment": "{unit}",
+          "standard": "ISO 4217 code, or a unit the ledger declares"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); promotion of a ledger to cohort visibility, carrying the compliance proof \u2014 chain validity from the latest witnessed checkpoint to the promoted head (CC 3.3.10.1 clause 6).",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ledger:promotion:{version}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ledger"
+        },
+        {
+          "class": "literal",
+          "segment": "promotion"
+        },
+        {
+          "class": "vocab",
+          "segment": "{version}"
         }
       ]
     },
@@ -2770,7 +2997,7 @@
     },
     {
       "cc_section": "3.1.3.2",
-      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline \u2014 closed.",
+      "description": "The membership ceremony, one attestation-plane row per step: {stage} \u2208 proposal | acceptance | decline | widening | removal | resignation \u2014 closed.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -2778,7 +3005,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.3.2",
-        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])"
+        "rule": "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member"
       },
       "segments": [
         {
@@ -2792,7 +3019,10 @@
           "values": [
             "proposal",
             "acceptance",
-            "decline"
+            "decline",
+            "widening",
+            "removal",
+            "resignation"
           ]
         }
       ]
@@ -3591,6 +3821,32 @@
         {
           "class": "vocab",
           "segment": "{kind}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "Catalogue row (CC 3.1.7 R1); the optional, privacy-scoped linkage of a federation action to its off-stack settlement \u2014 a bare scores against the paid Contribution, or the settlement subject_kind ceremony when an explicit receipt is wanted (",
+      "leaves": [],
+      "leaves_closed": false,
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "settlement:*",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "settlement"
+        },
+        {
+          "class": "wildcard",
+          "segment": "*",
+          "variadic": true
         }
       ]
     },

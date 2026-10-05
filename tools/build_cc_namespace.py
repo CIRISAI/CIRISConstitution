@@ -85,8 +85,8 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 GATED_STEMS = [
     ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
-    ("key_grant:", "carrier row type (CC 2.4), never a dimension", "CC 2.4"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
+    ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
     ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
@@ -94,10 +94,60 @@ GATED_STEMS = [
 # constitution/part_2_the_grammar.md is the authority and main() refuses to build if the two differ.
 ROW_TYPES_SOURCE_REL = "constitution/part_2_the_grammar.md"
 STRUCTURAL_ROW_TYPES = ["scores", "delegates_to", "supersedes", "withdraws", "recants"]
-CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample)
-    ("holds_bytes:sha256:{prefix}", "holds_bytes", r"^holds_bytes:sha256:[0-9a-f]{8}$", "holds_bytes:sha256:0a1b2c3d"),
-    ("key_grant:{axis}:{version}", "key_grant", r"^key_grant:(content|epoch|stream):v1$", "key_grant:epoch:v1"),
+CARRIER_ROW_TYPES = [   # (token, envelope kind, full-match pattern, sample) — EMPTY since rc7 (#141, #143): the slot is the five
 ]
+
+
+def _covered(pfx, families):
+    """A declared prefix is covered by an exact family, by a registered wildcard on its stem, by
+    any family under its stem when the row itself is `stem:*` (a reservation-rule shorthand,
+    CC 3.4), or by a parameterised sibling whose placeholders absorb the row's literals
+    (`consent:state:{stance}` covers `consent:state:expired`)."""
+    if pfx in families:
+        return True
+    parts = pfx.split(":")
+    if parts[-1] == "*":
+        return any(f.startswith(parts[0] + ":") for f in families)
+    for f in families:
+        fp = f.split(":")
+        if fp[-1] == "*" and parts[:len(fp) - 1] == fp[:-1] and len(parts) > len(fp) - 1:
+            return True
+        if len(fp) == len(parts) and all(a == b or (b.startswith("{") and b.endswith("}")) for a, b in zip(parts, fp)):
+            return True
+    return False
+
+
+def check_declared_outside_catalog(lines, families):
+    """CIRISConstitution#105: a family declared in a `Prefix`-headed table anywhere in Part 3
+    outside the 3.1 catalogue MUST be emitted (dual-declared under 3.1) or covered by an
+    emitted wildcard parent. The 17 families #105 found had been written in CC 3.3 and never
+    reached a registry; this fails the build the day it happens again."""
+    sec = None; in_table = False; missing = []
+    for ln in lines:
+        hm = HEADING.match(ln)
+        if hm:
+            sec = hm.group(2); in_table = False; continue
+        if not sec or sec.startswith("3.1"):
+            continue
+        if ln.startswith("|") and "prefix" in ln.lower() and "---" not in ln:
+            in_table = True; continue
+        if in_table and ln.startswith("|"):
+            if re.match(r"^\s*\|[\s:|-]+\|\s*$", ln):
+                continue
+            cells = split_row(TABLE_ROW.match(ln).group(1)) if TABLE_ROW.match(ln) else []
+            bt = BACKTICK.search(cells[0]) if cells else None
+            if bt:
+                pfx = bt.group(1)
+                if ":" in pfx and not _covered(pfx, families):
+                    missing.append((sec, pfx))
+        elif in_table:
+            in_table = False
+    if missing:
+        sys.stderr.write("FATAL: %d famil%s declared in a Prefix table outside the CC 3.1 catalogue with no registry "
+                         "home (give each a 3.1.N catalogue row, #105):\n  %s\n"
+                         % (len(missing), "y" if len(missing) == 1 else "ies",
+                            "\n  ".join("%s %s" % m for m in missing)))
+        sys.exit(2)
 
 
 def check_row_types_table():
@@ -105,7 +155,9 @@ def check_row_types_table():
     txt = open(os.path.join(HERE, "..", ROW_TYPES_SOURCE_REL), encoding="utf-8").read()
     i = txt.find("| Carrier type token |")
     if i < 0:
-        raise SystemExit("CC 2.4 carrier table not found in %s" % ROW_TYPES_SOURCE_REL)
+        if CARRIER_ROW_TYPES:
+            raise SystemExit("CC 2.4 carrier table not found in %s" % ROW_TYPES_SOURCE_REL)
+        return                                  # rc7 (#141/#143): the slot is the five; no table, no carriers
     rows = []
     for ln in txt[i:].split("\n")[2:]:
         if not ln.startswith("|"):
@@ -137,9 +189,24 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
+        # CC 3.1.1 / 3.2 public-room listing (#142): the founder's (or a moderate-holder's) own row.
+        (lambda p, c: p.startswith("community:listing"),
+         "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
         # CC 3.1.1 device label (#137): the owner's name for an owned occurrence.
         (lambda p, c: p.startswith("device:label"),
          "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing", "CC 3.1.1"),
+        # CC 3.1.3 planes as rows (#145): cosigned or possession-admitted, never substrate self-reports.
+        (lambda p, c: p.startswith("group:roster"),
+         "cosigned under the group's consensus_protocol; withdrawn only by a cosigned withdraws", "CC 3.1.3"),
+        (lambda p, c: p.startswith("key:record"),
+         "self only (attesting_key_id == attested_key_id == the key), admitted by proof of possession", "CC 3.1.3"),
+        (lambda p, c: p.startswith("key:revocation"),
+         "revoker-signed, judged without the subject's record; never withdrawn", "CC 3.1.3"),
+        (lambda p, c: p.startswith("identity:occurrence"),
+         "signed by the identity or a live occurrence of it (signer_acts_for)", "CC 3.1.3"),
+        # CC 3.3.2 / 3.1.3 key wraps (#143): sealer- or minter-signed, about the recipient occurrence.
+        (lambda p, c: p.startswith("key_grant:"),
+         "sealer-only: attesting_key_id speaks for the content/stream owner (content, stream) or is the epoch's minter (epoch); attested_key_id = the recipient occurrence; never withdrawn", "CC 3.3.2"),
         # CC 3.1.3 legacy delegation labels (#137): not a substrate self-report.
         (lambda p, c: p.startswith("self:delegates_to"),
          "legacy label on an owner's own delegates_to row; claims no job, confers nothing; closed", "CC 3.1.3"),
@@ -159,7 +226,7 @@ def _reserved_rules():
          "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
         (lambda p, c: p.startswith("membership:"),
-         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0])", "CC 3.1.3.2"),
+         "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says
         # "not a substrate-self-report", so it must come before the edge-wide rule.
         (lambda p, c: p.startswith("delivery_receipt:"),
@@ -708,6 +775,7 @@ def main():
     # only leave the manifest via an explicit entry here, with the retiring change.
     check_enum_case(lines, families)   # R3 on values, not just stems (#106)
     check_row_types_table()            # CC 2.4 carriers: text and generator agree (#137)
+    check_declared_outside_catalog(lines, families)   # #105: no Prefix-table row outside 3.1 without a registry home
 
     # CIRISConstitution#112 — the grammar round-trips through the reference matcher:
     # every family's class-conformant sample resolves to that family and no other,
@@ -722,6 +790,7 @@ def main():
     RETIRED_FAMILIES = {
         "age_self_declared:{band}:{version}",  # -> age_self_declared:band:{band}:{version} (#113 review: the wire arity)
         "custody:{state}",                     # -> custody:{kind} = ack (#130 operator ruling; lived one rc6 commit, 3f10e7f)
+        "holds_bytes:sha256:{prefix}",         # -> custody:ack:v1 at the content's scope (#141 steward ruling, rc7)
     }
     if os.path.exists(OUT):
         try:
