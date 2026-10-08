@@ -106,6 +106,7 @@
         "family_unregistered": "namespace_family_unregistered",
         "missing_version_segment": "missing_version_segment",
         "private_use_not_federatable": "namespace_private_use_not_federatable",
+        "score_outside_declared_polarity": "score_outside_declared_polarity",
         "vocab_value_unregistered": "namespace_vocab_value_unregistered"
       },
       "reserved_stems": [
@@ -197,7 +198,7 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc7",
+    "cc_version": "1.0-rc8",
     "components_outside_normative": [
       "cirisbench"
     ],
@@ -216,8 +217,66 @@
       "registry": 20,
       "transport-delivery": 6
     },
+    "polarity_classes": {
+      "+1.0 only": {
+        "kind": "points",
+        "points": [
+          1.0
+        ]
+      },
+      "-1 / -0.5 only": {
+        "kind": "points",
+        "points": [
+          -1.0,
+          -0.5
+        ]
+      },
+      "-1 only": {
+        "kind": "points",
+        "points": [
+          -1.0
+        ]
+      },
+      "_aliases": {
+        "boolean-via-score; Indeterminate allowed \u2192 RESTRICTED": "boolean-via-score",
+        "per-leaf (CC 3.3.1)": "per-leaf",
+        "see CC 3.4.1": "+1.0 only"
+      },
+      "boolean-via-score": {
+        "kind": "points",
+        "points": [
+          -1.0,
+          1.0
+        ]
+      },
+      "enumerated": {
+        "kind": "range",
+        "max": 1.0,
+        "min": -1.0,
+        "min_inclusive": true,
+        "note": "the value rides the dimension's segment; the score is the assertion's strength"
+      },
+      "note": "points are points, never intervals; a score outside the class is refused at admission (CC 3.1.7 R4)",
+      "per-leaf": {
+        "kind": "per_leaf",
+        "note": "resolve the leaf's own row"
+      },
+      "positive-only": {
+        "kind": "range",
+        "max": 1.0,
+        "min": 0.0,
+        "min_inclusive": false
+      },
+      "refusal": "score_outside_declared_polarity",
+      "signed": {
+        "kind": "range",
+        "max": 1.0,
+        "min": -1.0,
+        "min_inclusive": true
+      }
+    },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "796f609981434b838edab1165462484f1be67889eed7f60c26b210ede5984464",
+    "registry_sha256": "6c7dc9df87919a2d4b41aabee93bd970e8f438bddf8ae3a9d3d8bcdcd58afc88",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -232,7 +291,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "9032a726082d2db658bac364fd865617b7add3d7ef71dd644010c65297548660"
+    "source_sha256": "7de4c8d5bd2c327ed15de62adfc331c370a9bf7fd3b27a8a947b0acd45b8b25b"
   },
   "families": [
     {
@@ -3363,7 +3422,7 @@
     },
     {
       "cc_section": "3.1.5.4",
-      "description": "22 NEVER_ALLOWED categories from prohibitions.py.",
+      "description": "22 NEVER_ALLOWED categories from prohibitions.py; {category} \u2208 medical | financial | legal | spiritual_direction | home_security | identity_verification | content_moderation | research | infrastructure_control | weapons_harmful | manipulati",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "-1 / -0.5 only",
@@ -3376,7 +3435,32 @@
         },
         {
           "class": "vocab",
-          "segment": "{category}"
+          "open": false,
+          "segment": "{category}",
+          "values": [
+            "medical",
+            "financial",
+            "legal",
+            "spiritual_direction",
+            "home_security",
+            "identity_verification",
+            "content_moderation",
+            "research",
+            "infrastructure_control",
+            "weapons_harmful",
+            "manipulation_coercion",
+            "surveillance_mass",
+            "deception_fraud",
+            "cyber_offensive",
+            "election_interference",
+            "biometric_inference",
+            "autonomous_deception",
+            "hazardous_materials",
+            "discrimination",
+            "crisis_escalation",
+            "pattern_detection",
+            "protective_routing"
+          ]
         }
       ]
     },

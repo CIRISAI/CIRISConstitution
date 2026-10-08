@@ -737,6 +737,7 @@ def main():
             ("private_use_not_federatable", "namespace_private_use_not_federatable"),
             ("missing_version_segment", "missing_version_segment"),
             ("attestation_type_unregistered", "attestation_type_unregistered"),
+            ("score_outside_declared_polarity", "score_outside_declared_polarity"),   # CC 3.1.7 R4
         ])),
         ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
             ("match", "one_or_more_segments"),
@@ -757,6 +758,24 @@ def main():
         ("structural", STRUCTURAL_ROW_TYPES),
         ("carriers", [OrderedDict([("token", t), ("kind", k), ("pattern", p), ("sample", smp)])
                       for t, k, p, smp in CARRIER_ROW_TYPES]),
+    ])
+    meta["polarity_classes"] = OrderedDict([   # CC 3.1.7 R4 — a family's declared polarity is an admission rule
+        ("signed", OrderedDict([("kind", "range"), ("min", -1.0), ("max", 1.0), ("min_inclusive", True)])),
+        ("positive-only", OrderedDict([("kind", "range"), ("min", 0.0), ("max", 1.0), ("min_inclusive", False)])),
+        ("boolean-via-score", OrderedDict([("kind", "points"), ("points", [-1.0, 1.0])])),
+        ("+1.0 only", OrderedDict([("kind", "points"), ("points", [1.0])])),
+        ("-1 only", OrderedDict([("kind", "points"), ("points", [-1.0])])),
+        ("-1 / -0.5 only", OrderedDict([("kind", "points"), ("points", [-1.0, -0.5])])),
+        ("enumerated", OrderedDict([("kind", "range"), ("min", -1.0), ("max", 1.0), ("min_inclusive", True),
+                                    ("note", "the value rides the dimension's segment; the score is the assertion's strength")])),
+        ("per-leaf", OrderedDict([("kind", "per_leaf"), ("note", "resolve the leaf's own row")])),
+        ("_aliases", OrderedDict([
+            ("see CC 3.4.1", "+1.0 only"),                                   # accord:* parent: every leaf is +1.0 only
+            ("per-leaf (CC 3.3.1)", "per-leaf"),
+            ("boolean-via-score; Indeterminate allowed → RESTRICTED", "boolean-via-score"),
+        ])),
+        ("refusal", "score_outside_declared_polarity"),
+        ("note", "points are points, never intervals; a score outside the class is refused at admission (CC 3.1.7 R4)"),
     ])
     # CIRISConstitution#112 — the pin a consumer (CSD/3 `registry_sha256`) should carry:
     # the hash of the GRAMMAR (families + _meta without the prose hash), so a wording

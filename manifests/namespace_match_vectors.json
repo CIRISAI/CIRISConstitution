@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc7",
-    "registry_sha256": "796f609981434b838edab1165462484f1be67889eed7f60c26b210ede5984464",
+    "cc_version": "1.0-rc8",
+    "registry_sha256": "6c7dc9df87919a2d4b41aabee93bd970e8f438bddf8ae3a9d3d8bcdcd58afc88",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -4903,46 +4903,52 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "prohibited:sample:v1",
+      "dimension": "prohibited:medical:v1",
       "family": "prohibited:{category}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "prohibited:sample:V1",
+      "dimension": "prohibited:medical:V1",
       "family": "prohibited:{category}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "prohibited:sample:v1:v2",
+      "dimension": "prohibited:medical:v1:v2",
       "family": "prohibited:{category}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "prohibited:sample:v1beta",
+      "dimension": "prohibited:medical:v1beta",
       "family": "prohibited:{category}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Prohibited:sample:v1",
+      "dimension": "Prohibited:medical:v1",
       "family": "prohibited:{category}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "prohibited:sample",
+      "dimension": "prohibited:medical",
       "family": "prohibited:{category}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "prohibited:SAMPLE:v1",
+      "dimension": "prohibited:MEDICAL:v1",
       "family": "prohibited:{category}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "prohibited:not_a_listed_value:v1",
+      "family": "prohibited:{category}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "provenance:build_manifest:id1:v1",
@@ -6800,6 +6806,88 @@
       "name": null,
       "refusal": "attestation_type_unregistered",
       "why": "the empty string is not a row type"
+    }
+  ],
+  "polarity_vectors": [
+    {
+      "family": "prohibited:{category}",
+      "score": -1.0,
+      "admissible": true,
+      "class": "-1 / -0.5 only",
+      "refusal": null,
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "prohibited:{category}",
+      "score": -0.5,
+      "admissible": true,
+      "class": "-1 / -0.5 only",
+      "refusal": null,
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "prohibited:{category}",
+      "score": -0.7,
+      "admissible": false,
+      "class": "-1 / -0.5 only",
+      "refusal": "score_outside_declared_polarity",
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "prohibited:{category}",
+      "score": 1.0,
+      "admissible": false,
+      "class": "-1 / -0.5 only",
+      "refusal": "score_outside_declared_polarity",
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "accord:invoke:constitutional:{halt_id}",
+      "score": 1.0,
+      "admissible": true,
+      "class": "+1.0 only",
+      "refusal": null,
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "accord:invoke:constitutional:{halt_id}",
+      "score": -1.0,
+      "admissible": false,
+      "class": "+1.0 only",
+      "refusal": "score_outside_declared_polarity",
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "accord:invoke:constitutional:{halt_id}",
+      "score": 0.5,
+      "admissible": false,
+      "class": "+1.0 only",
+      "refusal": "score_outside_declared_polarity",
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "key:revocation",
+      "score": -1.0,
+      "admissible": true,
+      "class": "-1 only",
+      "refusal": null,
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "key:revocation",
+      "score": 1.0,
+      "admissible": false,
+      "class": "-1 only",
+      "refusal": "score_outside_declared_polarity",
+      "why": "points are points, never intervals"
+    },
+    {
+      "family": "benchmark:he300:{category}:{version}",
+      "score": 0.0,
+      "admissible": false,
+      "class": "positive-only",
+      "refusal": "score_outside_declared_polarity",
+      "why": "positive-only excludes zero"
     }
   ]
 }
