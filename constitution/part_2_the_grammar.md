@@ -553,7 +553,7 @@ CEG follows **SemVer 2.0.0** with these mapping rules:
 
 - **MAJOR (X.0.0)** — any wire-incompatible change: removal of an envelope field, change of a field's semantic, removal of a structural primitive, change to canonical-bytes domain-separation labels, removal or breaking-redefinition of a [CC 3.1](#3.1) prefix, change to a [CC 3.4](#3.4) reservation, or change to the CC 2.6.9 / CC 2.2 conformance language.
 - **MINOR (0.X.0)** — wire-compatible additions: new prefix in [CC 3.1](#3.1), new envelope field with documented default, new composition policy in [CC 4.4](#4.4), new endpoint shape in [CC 5.3](#5.3), new optional conformance subsection. Existing Conforming Producers and Consumers continue to interoperate without modification.
-- **PATCH (0.0.X)** — clarifications, editorial fixes, additions to non-normative sections (the retired `FSD/WITNESS_KIND_REGISTRY.md` open-vocabulary list, glossaries [CC 8.1](#8.1)), addition to [CC 8.3](#8.3) acknowledged-gaps, fixes to non-normative examples in [CC 8.1](#8.1).
+- **PATCH (0.0.X)** — clarifications, editorial fixes, additions to non-normative sections (open-vocabulary lists, glossaries [CC 8.1](#8.1)), addition to [CC 8.3](#8.3) acknowledged-gaps, fixes to non-normative examples in [CC 8.1](#8.1).
 
 The 0.x series indicates this specification is a Public Working Draft. Any 0.x → 0.(x+1) bump MAY include wire-breaking changes; consumers MUST treat 0.x as unstable until 1.0 publication. Once 1.0 is published, the rules above bind strictly.
 

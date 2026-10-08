@@ -1237,7 +1237,7 @@ For RATCHET-calibrated detectors, the operational definition lives in the calibr
 4. Evidence-shape requirement
 5. Polarity semantics
 
-For documentation-only open vocabularies (`testimonial_witness:{kind}`, `hard_case:{kind}`, `topical_relation:{kind}`), discoverability lives in non-normative registry documents like `WITNESS_KIND_REGISTRY.md` (retired; cited by name) — additions there require no spec amendment.
+For documentation-only open vocabularies (`testimonial_witness:{kind}`, `hard_case:{kind}`, `topical_relation:{kind}`), discoverability lives in non-normative documentation (no external registry exists for them since the former `WITNESS_KIND_REGISTRY.md` was retired, CIRISConstitution#115) — additions there require no spec amendment.
 
 **`{axis}` and `ci_axis` are different objects — and that is the point.** The `{axis}` above is a *value* in an open prefix vocabulary. A **`ci_axis`** is a *contextual-integrity question a wire field answers*: who sent, about whom, who may see, who may revoke, who may receive, what type, under what principle, over what lifecycle, what content. This section governs both and never fuses them — one name serving two axes is exactly the defect the gate below exists to detect.
 

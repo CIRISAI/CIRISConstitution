@@ -73,3 +73,6 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 2.6.8	CLM-fedcode-owned-nodes	CIRISVerify	src/ciris-verify-core/src/fedcode.rs#OwnedNode	ciris-verify-core@v14.1.0
 4.2.2	CLM-keyring-rng-latch	CIRISVerify	src/ciris-keyring/src/lib.rs#mint_p256_signing_key	ciris-keyring@v14.1.0
 2.6.8	CLM-fedcode-pqc-commitment	CIRISVerify	src/ciris-verify-core/src/fedcode.rs#verify_pulled_ml_dsa_65_pubkey	ciris-verify-core@v14.2.0
+4.2.1.1	CLM-halt-one-row	CIRISVerify	src/ciris-verify-core/src/humanity_accord.rs#InvocationKind::required_signatures	ciris-verify-core@v20.0.0
+4.2.1.1	CLM-halt-one-row	CIRISVerify	src/ciris-verify-core/src/accord_halt_latch.rs#HaltLatch::apply	ciris-verify-core@v20.0.0
+4.2.1.1	CLM-halt-one-row	CIRISVerify	src/ciris-verify-core/src/accord_halt_latch.rs#verify_for_latch	ciris-verify-core@v20.0.0
