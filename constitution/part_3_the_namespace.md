@@ -318,6 +318,8 @@ manifest {
 
 **Shape admission validates parseability; provenance rides the signature.** An admitted `trace:*` row is guaranteed parseable; that is all admission claims. Provenance rides the producer signature inside the envelope, verified at promotion to federation tier ([CC 5.3.2.4](part_5_transport_substrate.md)) and again by consumers. Neither half substitutes for the other. The emitter rule and the refusal token are normative at [CC 3.4.5](part_3_the_namespace.md).
 
+**Every trace names its run, and its shape is pinned (normative — steward decision 2026-10-09, [CIRISConstitution#166](https://github.com/CIRISAI/CIRISConstitution/issues/166); CIRISPersist#1040, CIRISAgent#1244).** A signed `trace:*` envelope carries **`run_kind`** in the signed bytes, closed vocabulary `production | qa | battery | mock`; a `mock` trace is refused at federation-tier admission outright (`trace_run_kind_mock`) — a mock LLM's output attests nothing about any agent, and 1,499 such traces reached the canonical as `production` before this rule. The **per-level field schema** of `trace:complete:v1` (which fields each `trace_level` carries, their types, string and list bounds — the shape that keeps a free-text message array out of `flags[]`) is the **Agent's artifact** (`trace_format_v{n}.json`; wire shape is the implementer's), **pinned by hash in this constitution's evidence pins and vendored by tag** by every substrate that admits traces, so the emitter and the admitter derive from one artifact and never from two hand copies. A row that violates the pinned schema is **refused, never truncated** (`trace_field_shape_violation`): a truncated row is a silently altered signed record. A field bump is a re-pin, not a ruling.
+
 #### 3.1.5.1 `dma-verdict` — DMA-verdict prefixes (four DMAs)
 
 `dma:pdma:*` / `dma:csdma:*` / `dma:dsdma:{domain}:*` / `dma:idma:*` — Decision-Making Algorithm verdicts about an agent's reasoning chain. Polarity: signed.
@@ -992,6 +994,7 @@ Where `LegalBasis` is the closed-set enum. **The PascalCase name is the spec-lev
 | `OsaIllegalContent` | `osa_illegal_content` | UK Online Safety Act illegal-content category | Expeditious-with-counter-notice (OSA-defined timelines) |
 | `AvmsdAgeInappropriate` | `avmsd_age_inappropriate` | EU AVMSD age-inappropriate flagging | Compose with `age_assurance:*` gate; not immediate removal |
 | `CourtOrder` | `court_order` | Court-ordered removal (any jurisdiction) | **Immediate** (subject to court's stated timeline) |
+| `StewardPurge` | `steward_purge` | Trust-root moderation of its own canonical ([CC 2.4.1.1](part_2_the_grammar.md); [CIRISConstitution#165](https://github.com/CIRISAI/CIRISConstitution/issues/165)) | **Cosigned** under the root's `consensus_protocol` ([CC 2.4](part_2_the_grammar.md) rule 0); `content_sha256` is the **selection digest** (SHA-256 over the JCS-sorted purged ids, derived included); `evidence_refs` → the dry-run ledger; contest by `reconsideration:{grounds}` ([CC 4.5.5](part_4_composition_governance.md)) |
 
 **Fast-path coordination**: see [CC 4.5.3](part_4_composition_governance.md) for the operator-coordination protocol around immediate-eviction cases (TVEC 1-hour / GIFCT CIP / NCMEC / PerceptualHashCsam / CourtOrder).
 

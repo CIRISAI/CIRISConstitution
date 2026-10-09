@@ -738,6 +738,11 @@ def main():
             ("missing_version_segment", "missing_version_segment"),
             ("attestation_type_unregistered", "attestation_type_unregistered"),
             ("score_outside_declared_polarity", "score_outside_declared_polarity"),   # CC 3.1.7 R4
+            ("purge_unauthorised", "purge_unauthorised"),                         # CC 2.4.1.1 — CIRISConstitution#165
+            ("purge_selection_digest_mismatch", "purge_selection_digest_mismatch"),
+            ("asserted_at_stale", "asserted_at_stale"),                               # CC 2.6.7 W — CIRISConstitution#167
+            ("trace_run_kind_mock", "trace_run_kind_mock"),                           # CC 3.1.5 — CIRISConstitution#166
+            ("trace_field_shape_violation", "trace_field_shape_violation"),
         ])),
         ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
             ("match", "one_or_more_segments"),

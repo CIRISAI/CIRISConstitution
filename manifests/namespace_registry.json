@@ -101,12 +101,17 @@
       "policy": "case-sensitive; lowercase CC vocabulary; per-segment classes",
       "refusal_token": "namespace_dimension_case_malformed",
       "refusal_tokens": {
+        "asserted_at_stale": "asserted_at_stale",
         "attestation_type_unregistered": "attestation_type_unregistered",
         "case_malformed": "namespace_dimension_case_malformed",
         "family_unregistered": "namespace_family_unregistered",
         "missing_version_segment": "missing_version_segment",
         "private_use_not_federatable": "namespace_private_use_not_federatable",
+        "purge_selection_digest_mismatch": "purge_selection_digest_mismatch",
+        "purge_unauthorised": "purge_unauthorised",
         "score_outside_declared_polarity": "score_outside_declared_polarity",
+        "trace_field_shape_violation": "trace_field_shape_violation",
+        "trace_run_kind_mock": "trace_run_kind_mock",
         "vocab_value_unregistered": "namespace_vocab_value_unregistered"
       },
       "reserved_stems": [
@@ -276,7 +281,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "6c7dc9df87919a2d4b41aabee93bd970e8f438bddf8ae3a9d3d8bcdcd58afc88",
+    "registry_sha256": "cc1a8b5e17d7ea6c76cc95c0421b48de52552c3a7212e50ce73f2882550017eb",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -291,7 +296,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "7de4c8d5bd2c327ed15de62adfc331c370a9bf7fd3b27a8a947b0acd45b8b25b"
+    "source_sha256": "272e5ca5d2c1dbaae95be1fa57ee619049de79546bfa82b4cf31e8eecc837901"
   },
   "families": [
     {
