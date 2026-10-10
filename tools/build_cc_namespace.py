@@ -255,7 +255,7 @@ VOCAB_PATTERN = r"^[a-z0-9][a-z0-9_.-]*$"
 LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
 PLACEHOLDER_CLASS = {
     "vocab": {
-        "allegation_type", "artifact", "aspect", "axis", "band", "category", "class",
+        "allegation_type", "artifact", "aspect", "axis", "band", "basis", "category", "class",
         "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",

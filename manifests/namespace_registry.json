@@ -40,6 +40,7 @@
         "authority_id": "value",
         "axis": "vocab",
         "band": "vocab",
+        "basis": "vocab",
         "canonical_hash": "hex",
         "category": "vocab",
         "cell": "value",
@@ -184,6 +185,12 @@
           "kind": "gated",
           "rule": "closed: observation:reachability is the only leaf",
           "stem": "observation:"
+        },
+        {
+          "cc_ref": "CC 3.1.1",
+          "kind": "gated",
+          "rule": "closed: takedown_notice:{basis}:v1 is the only family",
+          "stem": "takedown_notice:"
         }
       ],
       "version_segment": {
@@ -214,7 +221,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 168,
+    "n_families": 169,
     "per_component": {
       "accord-agent": 29,
       "anti-sybil": 6,
@@ -223,7 +230,7 @@
       "lens": 15,
       "node": 48,
       "persist": 22,
-      "registry": 20,
+      "registry": 21,
       "transport-delivery": 6
     },
     "polarity_classes": {
@@ -285,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "d2cdb18265632b33725f6e735fa21d1310016fbf14f287c371dc5725cb71acb7",
+    "registry_sha256": "bc807de5e4b6d7512ac51e3c22df26c2d5859309c93f3ccbac4d1d2b8380a21e",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -300,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "f582c275102327f9ad45afa080eb27a1057840c10ee8c676e2599885df95d061"
+    "source_sha256": "eb99fa6fba5e835fe9e86f1c8c4deda017509728e5bd68519088bc3d99fa7497"
   },
   "families": [
     {
@@ -3985,6 +3992,47 @@
           "class": "wildcard",
           "segment": "*",
           "variadic": true
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.1",
+      "description": "A takedown notice as a row (CIRISConstitution#165; shape and bases at CC 3.3.2): the scores row whose envelope is the takedown_notice payload, subject_kind: takedown_notice, so that every notice has an attestation_id a tombstone cites and a",
+      "owning_component": "registry",
+      "owning_repo": "CIRISRegistry",
+      "polarity": "-1 only",
+      "prefix": "takedown_notice:{basis}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.1",
+        "rule": "duty-holder-signed under CC 4.5.5 for the legal bases; cosigned under the trust root's consensus_protocol for steward_purge, attester any seat, family derived from the verified signers"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "takedown_notice"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{basis}",
+          "values": [
+            "dmca512",
+            "dsa_article16",
+            "tvec_terrorist",
+            "ncmec_csam",
+            "gifct_cip",
+            "community_standards",
+            "perceptual_hash_csam",
+            "osa_illegal_content",
+            "avmsd_age_inappropriate",
+            "court_order",
+            "steward_purge"
+          ]
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },
