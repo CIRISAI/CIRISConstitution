@@ -740,6 +740,10 @@ def main():
             ("score_outside_declared_polarity", "score_outside_declared_polarity"),   # CC 3.1.7 R4
             ("purge_unauthorised", "purge_unauthorised"),                         # CC 2.4.1.1 — CIRISConstitution#165
             ("purge_selection_digest_mismatch", "purge_selection_digest_mismatch"),
+            ("purge_selection_count_mismatch", "purge_selection_count_mismatch"),
+            ("purge_retraction_inadmissible", "purge_retraction_inadmissible"),
+            ("purge_not_settled", "purge_not_settled"),
+            ("purge_tombstoned", "purge_tombstoned"),
             ("asserted_at_stale", "asserted_at_stale"),                               # CC 2.6.7 W — CIRISConstitution#167
             ("trace_run_kind_mock", "trace_run_kind_mock"),                           # CC 3.1.5 — CIRISConstitution#166
             ("trace_field_shape_violation", "trace_field_shape_violation"),

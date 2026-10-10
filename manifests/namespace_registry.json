@@ -107,7 +107,11 @@
         "family_unregistered": "namespace_family_unregistered",
         "missing_version_segment": "missing_version_segment",
         "private_use_not_federatable": "namespace_private_use_not_federatable",
+        "purge_not_settled": "purge_not_settled",
+        "purge_retraction_inadmissible": "purge_retraction_inadmissible",
+        "purge_selection_count_mismatch": "purge_selection_count_mismatch",
         "purge_selection_digest_mismatch": "purge_selection_digest_mismatch",
+        "purge_tombstoned": "purge_tombstoned",
         "purge_unauthorised": "purge_unauthorised",
         "score_outside_declared_polarity": "score_outside_declared_polarity",
         "trace_field_shape_violation": "trace_field_shape_violation",
@@ -281,7 +285,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "cc1a8b5e17d7ea6c76cc95c0421b48de52552c3a7212e50ce73f2882550017eb",
+    "registry_sha256": "d2cdb18265632b33725f6e735fa21d1310016fbf14f287c371dc5725cb71acb7",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -296,7 +300,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "272e5ca5d2c1dbaae95be1fa57ee619049de79546bfa82b4cf31e8eecc837901"
+    "source_sha256": "f582c275102327f9ad45afa080eb27a1057840c10ee8c676e2599885df95d061"
   },
   "families": [
     {
