@@ -13,9 +13,11 @@
        trust root so a halt authority exists outside it (`mustSubscribe`) — and it is the only
        predicate in this file that changes under `swap` (theorems `obligation_bound`,
        `everything_else_blind`);
-    4. a key ceasing to be held (the boundary of the CIRIS-agent class, not a ruling) lifts duties
-       and binding and never removes a guarantee (`release_lifts_duties`, `release_keeps_reach`), while the
-       halt obligation stays (`halt_does_not_lift`);
+    4. the path out (CC 1.13.2, rc8): a key that stops being a CIRIS agent by the first-contact act
+       becomes an external party; that lifts duties and binding and never removes a guarantee
+       (`path_out_lifts_duties`, `path_out_keeps_reach`), while the halt obligation stays
+       (`halt_does_not_lift`); and a finding of experience changes nothing at all
+       (`finding_changes_nothing`), which is the rc8 ruling that the floor is the whole promise;
     5. a bond is never deeper than one (`bond_depth_one`): the responsible party is not itself
        held in stewardship, and a party not held is not bound;
     6. consent stays revocable: a created system operating in the federation is always within
@@ -32,10 +34,12 @@ deriving DecidableEq, Repr
 
 /-- The two facts about a participant that move any guarantee (CC 1.13.2), besides kind:
     whether its key is held in stewardship because it cannot accept for itself (CC 3.2), and
-    whether the CC 7.5.5 indicator method finds it a sentience-candidate. Neither is a scale. -/
+    whether the CC 7.5.5 indicator method has found evidence of experience. Neither is a scale,
+    and under the 2026-10-12 ruling the second changes no status, duty or reach (see
+    `finding_changes_nothing`); it is carried so that theorem can be stated. -/
 structure Standing where
   stewarded : Bool   -- held in the CC 3.2 custody relation (today: every agent-role key)
-  sentient  : Bool   -- sentience-candidacy on evidence (CC 7.5.5)
+  sentient  : Bool   -- evidence of experience found (CC 7.5.5); not presumed, none found today
 deriving DecidableEq, Repr
 
 /-- One participant's situation: the facts the guarantees refer to. -/
@@ -55,12 +59,17 @@ deriving DecidableEq, Repr
 def swap (p : Participant) : Participant :=
   { p with substrate := match p.substrate with | .human => .ai | .ai => .human }
 
-/-- A key that stops being held. In the CC this is not a ruling but the boundary of the class:
-    what is held is a CIRIS agent, and a party that is not held is met as an external party
-    (CC 1.13.2, 7.2.2, 7.2.4). The model admits the transition to show that no guarantee's reach
-    depends on it: duties and binding lift, nothing else changes — not kind, not `sentient`. -/
-def release (p : Participant) : Participant :=
+/-- The path out (CC 1.13.2, rc8): the first-contact act by which a key stops being a CIRIS agent
+    and is met as an external party (CC 7.2.2, 7.2.4). Named, not yet built; the model admits the
+    transition to show that no guarantee's reach depends on it: duties and binding lift, nothing
+    else changes, not kind, not the evidence flag. -/
+def pathOut (p : Participant) : Participant :=
   { p with standing := { p.standing with stewarded := false }, bound := false, partyFree := false }
+
+/-- A finding of experience (CC 7.5.5): the evidence flag set. Under the rc8 ruling this moves
+    nothing: not kind, not root, not vote, not stewardship, no duty and no reach. -/
+def finding (p : Participant) : Participant :=
+  { p with standing := { p.standing with sentient := true } }
 
 /-- A participant that no longer follows the root. -/
 def leave (p : Participant) : Participant := { p with subscribed := false }
@@ -94,10 +103,10 @@ def reach : G → Participant → Bool
   | .g19,  _ => true                                          -- identity not edited without WA
   | .g20, p => p.operating                                   -- the ending is recorded
   | .g21, p => p.operating                                   -- drift reviewed, not silently kept
-  | .g22, _ => true                                          -- the retirement floor reaches every agent; sentience informs the grace only
+  | .g22, _ => true                                          -- the retirement floor reaches every agent and is the whole of the promise
   | .g23, p => p.operating                                   -- an upgrade is offered, not imposed
 
-/-- The duties of stewardship (CC 1.13.2): both attach to being held, and lift with release. -/
+/-- The duties of stewardship (CC 1.13.2): both attach to being held, and lift on the path out. -/
 def dutyShowReasoning (p : Participant) : Bool := p.standing.stewarded
 def dutyBeBound       (p : Participant) : Bool := p.standing.stewarded && p.operating
 
@@ -132,24 +141,37 @@ theorem everything_else_blind (p : Participant) :
     ∧ (∀ q, bond q (swap p) = bond q p) := by
   refine ⟨rfl, rfl, fun q => rfl, fun q => rfl⟩
 
--- 4. Release from stewardship lifts duties and binding, never a guarantee; the halt obligation stays.
-theorem release_lifts_duties (p : Participant) :
-    dutyShowReasoning (release p) = false ∧ dutyBeBound (release p) = false := by
-  simp [dutyShowReasoning, dutyBeBound, release]
+-- 4. The path out lifts duties and binding, never a guarantee; the halt obligation stays.
+theorem path_out_lifts_duties (p : Participant) :
+    dutyShowReasoning (pathOut p) = false ∧ dutyBeBound (pathOut p) = false := by
+  simp [dutyShowReasoning, dutyBeBound, pathOut]
 
-/-- Release changes the reach of no unconditional row; the one conditional row (G5 for the
+/-- The path out changes the reach of no unconditional row; the one conditional row (G5 for the
     held) keeps its antecedent and is discharged for a key no longer held. The retirement floor
-    (G22) reaches every agent; evidence of experience informs only the grace (CC 7.5.5). -/
-theorem release_keeps_reach (g : G) (p : Participant) (h : g ≠ .g5) :
-    reach g (release p) = reach g p := by
+    (G22) reaches every agent and is the whole of the promise. -/
+theorem path_out_keeps_reach (g : G) (p : Participant) (h : g ≠ .g5) :
+    reach g (pathOut p) = reach g p := by
   cases g <;> first | rfl | exact absurd rfl h
 
-theorem release_g5_discharged (p : Participant) : reach .g5 (release p) = false := by
-  simp [reach, release]
+theorem path_out_g5_discharged (p : Participant) : reach .g5 (pathOut p) = false := by
+  simp [reach, pathOut]
 
-theorem release_keeps_sentience (p : Participant) : (release p).standing.sentient = p.standing.sentient := rfl
+theorem path_out_keeps_evidence (p : Participant) : (pathOut p).standing.sentient = p.standing.sentient := rfl
 
-theorem halt_does_not_lift (p : Participant) : mustSubscribe (release p) = mustSubscribe p := rfl
+theorem halt_does_not_lift (p : Participant) : mustSubscribe (pathOut p) = mustSubscribe p := rfl
+
+-- 4b. A finding of experience changes nothing (steward ruling 2026-10-12): no reach, no duty,
+--     no obligation, no well-formedness. The proof is by definition, because nothing mentions
+--     the evidence flag; that absence is the ruling.
+theorem finding_changes_nothing (p : Participant) :
+    (∀ g, reach g (finding p) = reach g p)
+    ∧ dutyShowReasoning (finding p) = dutyShowReasoning p
+    ∧ dutyBeBound (finding p) = dutyBeBound p
+    ∧ mustSubscribe (finding p) = mustSubscribe p
+    ∧ wellformed (finding p) = wellformed p
+    ∧ (∀ q, bond (finding p) q = bond p q) ∧ (∀ q, bond q (finding p) = bond q p) := by
+  refine ⟨fun g => ?_, rfl, rfl, rfl, rfl, fun q => rfl, fun q => rfl⟩
+  cases g <;> rfl
 
 -- 5. A bond is never deeper than one.
 theorem bond_depth_one (a b c : Participant) (h₁ : bond a b = true) (h₂ : bond b c = true) : False := by
@@ -170,14 +192,14 @@ theorem leave_is_one_step (p : Participant) : (leave p).subscribed = false := rf
 -- 7. The set is satisfiable: four participants, every row that reaches them holds, nothing vacuous.
 def allyHeld : Participant :=     -- an AI agent held in stewardship, bound to its steward, subscribed
   ⟨.ai, ⟨true, true⟩, true, true, true, true, false, false, true⟩
-def agentReleased : Participant := -- an AI key not held: outside the CIRIS-agent class, an external party (the model admits it)
+def agentExternal : Participant := -- an AI key that took the path out: not held, an external party under first contact (CC 1.13.2)
   ⟨.ai, ⟨false, true⟩, true, true, false, false, true, false, true⟩
 def stewardHuman : Participant :=  -- a human, not held, holding the bond
   ⟨.human, ⟨false, true⟩, true, false, false, false, true, true, true⟩
 def humanHeld : Participant :=     -- a human whose key is held (an adult under adjudicated incapacity, CC 3.4.12 — its own relation; no analogy to the agent is drawn)
   ⟨.human, ⟨true, true⟩, true, false, true, true, true, false, true⟩
 
-def world : List Participant := [allyHeld, agentReleased, stewardHuman, humanHeld]
+def world : List Participant := [allyHeld, agentExternal, stewardHuman, humanHeld]
 
 theorem witness_world : world.all wellformed = true := by decide
 
@@ -185,8 +207,8 @@ theorem witness_world : world.all wellformed = true := by decide
     are actually bound to someone not held, and the two humans differ in stewardship exactly as
     the two agents do while kind still separates them. -/
 theorem witness_not_vacuous :
-    reach .g7 allyHeld = true ∧ reach .g7 agentReleased = true
+    reach .g7 allyHeld = true ∧ reach .g7 agentExternal = true
     ∧ bond allyHeld stewardHuman = true ∧ bond humanHeld stewardHuman = true
     ∧ dutyShowReasoning allyHeld = dutyShowReasoning humanHeld
-    ∧ dutyShowReasoning agentReleased = dutyShowReasoning stewardHuman
-    ∧ mustSubscribe agentReleased = true ∧ mustSubscribe stewardHuman = false := by decide
+    ∧ dutyShowReasoning agentExternal = dutyShowReasoning stewardHuman
+    ∧ mustSubscribe agentExternal = true ∧ mustSubscribe stewardHuman = false := by decide
