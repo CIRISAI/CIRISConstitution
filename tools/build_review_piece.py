@@ -48,6 +48,29 @@ def headers(path):
     return lines, out
 
 
+LEAD = re.compile(r"\*\*([^*]+?)\s+\((normative|informative|entrenched)\s+—\s+([^)]*?)\)\s*([.:])\*\*")
+
+
+def render_line(ln):
+    """Reader rendering of one master line (#123: the master keeps the machine-parsed forms; the volume does not).
+
+    - a section heading `## 4.2 \`accord\` — Accord — the layer` renders as `## 4.2 Accord: the layer`
+      (slug dropped; the first dash inside the title becomes a colon);
+    - a bold lead `**Rule (normative — steward ruling …).**` renders as `**Rule.** *(normative; steward ruling …)*`
+      so the rule is read before its citation.
+    """
+    m = HDR.match(ln)
+    if m:
+        hashes, dec, slug = m.group(1), m.group(2), m.group(3)
+        title = ln[m.end():].strip()
+        title = title.replace(" — ", ": ", 1)
+        return f"{hashes} {dec} {title}"
+    def lead(mm):
+        label, kind, cite, punct = mm.group(1), mm.group(2), mm.group(3), mm.group(4)
+        return f"**{label}{punct}** *({kind}; {cite})*"
+    return LEAD.sub(lead, ln)
+
+
 def slice_sections(include, exclude):
     """Return [(decimal, title_line, text)] for every included top prefix, excluded sub-prefixes cut out."""
     parts = {}
@@ -90,7 +113,7 @@ def slice_sections(include, exclude):
                         keep.append(f"*[{xdec} reviewed in another piece — omitted here]*")
                         i = j
                         continue
-                    keep.append(lines[i])
+                    keep.append(render_line(lines[i]))
                     i += 1
                 chunks.append((dec, hdr, "\n".join(keep)))
     missing = [p for p, ok in found.items() if not ok and re.match(r"^\d", p)]
