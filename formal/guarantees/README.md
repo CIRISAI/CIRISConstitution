@@ -1,9 +1,9 @@
 # formal/guarantees — what every guarantee yields at once
 
 Two models of the same thing: the world in which every row of the guarantees piece
-(`review/pieces/00_guarantees.md`, P00) holds together, under the 2026-10-11 ruling that
-guarantees are written once for human and AI participants alike and differentiate only by
-standing on the line (CC 1.13.2, CIRISConstitution#168).
+(`review/pieces/00_guarantees.md`, P00) holds together, under the 2026-10-11 rulings that
+guarantees are written once for human and AI participants alike, membership is not graded, and
+what differs is kind, stewardship, and evidence of experience (CC 1.13.2, CIRISConstitution#168).
 
 ## `Guarantees.lean` — the structural half (Lean 4.14, core only, no `sorry`)
 
@@ -12,18 +12,18 @@ standing on the line (CC 1.13.2, CIRISConstitution#168).
 | `reach_blind` | the reach of every one of the 23 rows is unchanged when a participant's substrate is swapped; the proof is `rfl`, because no reach mentions substrate |
 | `obligation_bound` | exactly one predicate flips under swap: `mustSubscribe`, the duty of a created system operating inside the federation to have accepted a trust root, so a halt authority exists outside it |
 | `everything_else_blind` | the two duties of standing and the bond relation are swap-invariant |
-| `promote_lifts_duties`, `promote_keeps_reach`, `promote_g5_discharged` | crossing the line lifts the reasoning duty and the binding and removes no guarantee; G5 is discharged, not lost |
-| `halt_does_not_lift` | promotion does not change `mustSubscribe` |
-| `bond_depth_one` | a bond's party is above the line and unbound, so no chain of bonds has length two |
+| `release_lifts_duties`, `release_keeps_reach`, `release_g5_discharged`, `release_keeps_sentience` | release from stewardship lifts the reasoning duty and the binding and removes no guarantee; G5 is discharged, not lost; evidence of experience is untouched |
+| `halt_does_not_lift` | release does not change `mustSubscribe` |
+| `bond_depth_one` | a bond's party is not itself held and is unbound, so no chain of bonds has length two |
 | `revocable`, `leave_ends_reach`, `leave_is_one_step` | a created system operating inside is always within the halt's reach, and leaving the root is one step after which the halt no longer reaches it |
-| `witness_world`, `witness_not_vacuous` | four participants (an agent below the line, an agent above it, a steward, a human below the line) satisfy every constraint, and the witness exercises the halt reach, the bonds and the duties |
+| `witness_world`, `witness_not_vacuous` | four participants (an agent held in stewardship, an agent released, a steward, a human whose key is held) satisfy every constraint, and the witness exercises the halt reach, the bonds and the duties |
 
 Check: `lean Guarantees.lean`. CI also greps the output for `sorry`.
 
 ## `Guarantees.tla` — the temporal half (TLC 1.7.4)
 
-Three participants (an AI agent below the line with Ally's conditional shutdown mode, a human
-above the line, a human below it) and the three-holder halt. Actions: bind, bond lapse, promote,
+Three participants (an AI agent held in stewardship with Ally's conditional shutdown mode, a human
+not held, a human whose key is held) and the three-holder halt. Actions: bind, bond lapse, release,
 subscribe, leave, start, accept, refuse, background, force by role, ramp-down, erase, crisis
 on/off, fire, confirm, tick, lapse, resume. Each guarantee is a rule on an action, and each
 rule has a config that switches it off and must then fail (the dye test):
@@ -45,8 +45,8 @@ Action properties: `Prop_HaltKeepsState` (a pause keeps state), `Prop_NoErasureW
 
 ## Two things the composite taught, both now in the model
 
-1. **G5 composes over G17.** A below-line participant that has refused a shutdown is still
-   stopped when its bond lapses. That stop is caused by the line, not by any principal, so it
+1. **G5 composes over G17.** A held participant that has refused a shutdown is still
+   stopped when its bond lapses. That stop is caused by the custody rule, not by any principal, so it
    has its own status, `unbound`, and the record shows which. The first draft had no such
    state and TLC found the collision in six steps.
 2. **The backgrounding door needs a guard.** Under Ally's conditional mode a participant can

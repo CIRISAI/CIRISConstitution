@@ -23,7 +23,7 @@ Every register row maps to exactly one piece (`build_review_piece.py --check`; t
 
 ## The rule the pieces are reviewed against
 
-Guarantees are written once for human and AI participants alike and differentiate only by attested standing on the line (sentience-candidacy on evidence, maturity, responsibility), never by substrate (CC 1.13.2). The halt is the one asymmetry that does not lift with maturity, because consent requires revocability and revocability requires a halt authority outside the system being halted (CC 1.5, 1.13.2). A reviewer in any piece may kill text that gates a duty or a guarantee on substrate where it should gate on the line.
+Guarantees are written once for human and AI participants alike. Membership is not graded, and no human's standing turns on any finding about them. What differs is decided by three facts, none a scale: kind (a made system accepts a root, discloses itself, has no vote), stewardship (a key that cannot accept for itself is held by an accountable human), and evidence of experience (CC 7.5.5 welfare duties on the holder). The halt is the one asymmetry that does not lift, because consent requires revocability and revocability requires a halt authority outside the system being halted (CC 1.5, 1.13.2). An AI is not a human and does not become one; no finding about an agent removes a person's agency over what acts for them. A reviewer in any piece may kill text that gates a duty or a guarantee on substrate where it should gate on one of the three facts, that grades membership, or that likens an agent to a child.
 
 ## Protocol
 

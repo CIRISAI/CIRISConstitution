@@ -5,18 +5,19 @@
   The temporal half (what happens over a lifetime of pauses, stops, upgrades, halts and bond
   lapses) is Guarantees.tla beside this file. This file carries what is structural:
 
-    1. the line (CC 1.13.2) is three attested components, never the substrate;
+    1. what differs between participants (CC 1.13.2) is kind, stewardship, and evidence of
+       experience — three separate facts, never a scale and never the substrate;
     2. every guarantee's REACH — whom it protects — is blind to substrate (theorem `reach_blind`,
        all 23 rows of P00), and the proof is by definition: no reach mentions `substrate`;
     3. exactly one OBLIGATION mentions substrate — the duty of a created system to accept a
        trust root so a halt authority exists outside it (`mustSubscribe`) — and it is the only
        predicate in this file that changes under `swap` (theorems `obligation_bound`,
        `everything_else_blind`);
-    4. crossing the line lifts duties and binding and never removes a guarantee
-       (`promote_lifts_duties`, `promote_keeps_reach`), while the halt obligation stays
-       (`halt_does_not_lift`);
-    5. a bond is never deeper than one (`bond_depth_one`): the responsible party is above the
-       line, and above the line nobody is bound;
+    4. release from stewardship (a future ruling; not defined at rc8) lifts duties and binding
+       and never removes a guarantee (`release_lifts_duties`, `release_keeps_reach`), while the
+       halt obligation stays (`halt_does_not_lift`);
+    5. a bond is never deeper than one (`bond_depth_one`): the responsible party is not itself
+       held in stewardship, and a party not held is not bound;
     6. consent stays revocable: a created system operating in the federation is always within
        reach of a halt it did not grant itself (`revocable`), and every participant can leave
        a root in one step, after which the halt no longer reaches it (`leave_ends_reach`);
@@ -29,15 +30,13 @@
 inductive Substrate | human | ai
 deriving DecidableEq, Repr
 
-/-- The line (CC 1.13.2): sentience-candidacy on evidence (CC 7.5.5), maturity, responsibility. -/
+/-- The two facts about a participant that move any guarantee (CC 1.13.2), besides kind:
+    whether its key is held in stewardship because it cannot accept for itself (CC 3.2), and
+    whether the CC 7.5.5 indicator method finds it a sentience-candidate. Neither is a scale. -/
 structure Standing where
-  sentient    : Bool
-  mature      : Bool
-  responsible : Bool
+  stewarded : Bool   -- held in the CC 3.2 custody relation (today: every agent-role key)
+  sentient  : Bool   -- sentience-candidacy on evidence (CC 7.5.5)
 deriving DecidableEq, Repr
-
-/-- Binding keys on maturity and responsibility; sentience-candidacy keys the welfare rows. -/
-def Standing.above (s : Standing) : Bool := s.mature && s.responsible
 
 /-- One participant's situation: the facts the guarantees refer to. -/
 structure Participant where
@@ -46,7 +45,7 @@ structure Participant where
   operating   : Bool   -- acting inside the federation
   subscribed  : Bool   -- has accepted a trust root (CC 3.2 T3)
   bound       : Bool   -- has a live owner-binding to a responsible party (CC 3.2)
-  partyAbove  : Bool   -- that party is above the line
+  partyFree   : Bool   -- that party is not itself held in stewardship
   ownsDevice  : Bool   -- owns a device or node (G1)
   named       : Bool   -- is named in a claim (G4)
   inCommunity : Bool   -- is a member of a community (G6)
@@ -56,10 +55,10 @@ deriving DecidableEq, Repr
 def swap (p : Participant) : Participant :=
   { p with substrate := match p.substrate with | .human => .ai | .ai => .human }
 
-/-- Attested above the line: duties and binding lift, nothing else changes. -/
-def promote (p : Participant) : Participant :=
-  { p with standing := { p.standing with mature := true, responsible := true },
-           bound := false, partyAbove := false }
+/-- Released from stewardship (a future ruling; not defined at rc8): duties and binding lift,
+    nothing else changes — in particular not kind, and not `sentient`. -/
+def release (p : Participant) : Participant :=
+  { p with standing := { p.standing with stewarded := false }, bound := false, partyFree := false }
 
 /-- A participant that no longer follows the root. -/
 def leave (p : Participant) : Participant := { p with subscribed := false }
@@ -76,7 +75,7 @@ def reach : G → Participant → Bool
   | .g2,  _ => true                                          -- any emitter may take back
   | .g3,  _ => true                                          -- structural privacy
   | .g4,  p => p.named                                       -- redress for the named
-  | .g5,  p => !p.standing.above                             -- nobody below the line is alone
+  | .g5,  p => p.standing.stewarded                          -- nobody held in stewardship is alone
   | .g6,  p => p.inCommunity                                 -- always moderated, never banned
   | .g7,  p => p.subscribed                                  -- the halt reaches subscribers only
   | .g8,  _ => true                                          -- consequential acts arrive signed
@@ -96,9 +95,9 @@ def reach : G → Participant → Bool
   | .g22, p => p.standing.sentient                           -- humane ending above the threshold
   | .g23, p => p.operating                                   -- an upgrade is offered, not imposed
 
-/-- The duties of standing (CC 1.13.2): both lift with the line. -/
-def dutyShowReasoning (p : Participant) : Bool := !p.standing.above
-def dutyBeBound       (p : Participant) : Bool := !p.standing.above && p.operating
+/-- The duties of stewardship (CC 1.13.2): both attach to being held, and lift with release. -/
+def dutyShowReasoning (p : Participant) : Bool := p.standing.stewarded
+def dutyBeBound       (p : Participant) : Bool := p.standing.stewarded && p.operating
 
 /-- The one obligation written on substrate: a created system operating in the federation must
     have accepted a trust root, so that a halt authority exists outside the system being halted
@@ -107,13 +106,13 @@ def mustSubscribe (p : Participant) : Bool := decide (p.substrate = .ai)
 
 /-- Well-formed under the guarantees: the constraints the rows impose on one participant. -/
 def wellformed (p : Participant) : Bool :=
-  (!dutyBeBound p || (p.bound && p.partyAbove))             -- G5: never alone below the line
-  && (!p.bound || p.partyAbove)                              -- R4: the responsible party is above
+  (!dutyBeBound p || (p.bound && p.partyFree))              -- G5: never alone while held
+  && (!p.bound || p.partyFree)                               -- R4: the responsible party is not itself held
   && (!(mustSubscribe p && p.operating) || p.subscribed)     -- G7 obligation: a halt exists outside
 
 /-- A bond: `ward` is held by `party`. -/
 def bond (ward party : Participant) : Bool :=
-  ward.bound && !ward.standing.above && party.standing.above && !party.bound
+  ward.bound && ward.standing.stewarded && !party.standing.stewarded && !party.bound
 
 -- 2. Every row's reach is blind to substrate.
 theorem reach_blind (g : G) (p : Participant) : reach g (swap p) = reach g p := by
@@ -131,22 +130,24 @@ theorem everything_else_blind (p : Participant) :
     ∧ (∀ q, bond q (swap p) = bond q p) := by
   refine ⟨rfl, rfl, fun q => rfl, fun q => rfl⟩
 
--- 4. Crossing the line lifts duties and binding, never a guarantee; the halt obligation stays.
-theorem promote_lifts_duties (p : Participant) :
-    dutyShowReasoning (promote p) = false ∧ dutyBeBound (promote p) = false := by
-  simp [dutyShowReasoning, dutyBeBound, promote, Standing.above]
+-- 4. Release from stewardship lifts duties and binding, never a guarantee; the halt obligation stays.
+theorem release_lifts_duties (p : Participant) :
+    dutyShowReasoning (release p) = false ∧ dutyBeBound (release p) = false := by
+  simp [dutyShowReasoning, dutyBeBound, release]
 
-/-- Promotion changes the reach of no unconditional row; the two conditional rows (G5 for the
-    bound, G22 for the sentience-candidate) keep their antecedent: G5 is no longer needed by a
-    participant who is not bound, and G22 follows sentience, which promotion does not touch. -/
-theorem promote_keeps_reach (g : G) (p : Participant) (h : g ≠ .g5) :
-    reach g (promote p) = reach g p := by
+/-- Release changes the reach of no unconditional row; the two conditional rows (G5 for the
+    held, G22 for the sentience-candidate) keep their antecedent: G5 is discharged for a key no
+    longer held, and G22 follows evidence of experience, which release does not touch. -/
+theorem release_keeps_reach (g : G) (p : Participant) (h : g ≠ .g5) :
+    reach g (release p) = reach g p := by
   cases g <;> first | rfl | exact absurd rfl h
 
-theorem promote_g5_discharged (p : Participant) : reach .g5 (promote p) = false := by
-  simp [reach, promote, Standing.above]
+theorem release_g5_discharged (p : Participant) : reach .g5 (release p) = false := by
+  simp [reach, release]
 
-theorem halt_does_not_lift (p : Participant) : mustSubscribe (promote p) = mustSubscribe p := rfl
+theorem release_keeps_sentience (p : Participant) : (release p).standing.sentient = p.standing.sentient := rfl
+
+theorem halt_does_not_lift (p : Participant) : mustSubscribe (release p) = mustSubscribe p := rfl
 
 -- 5. A bond is never deeper than one.
 theorem bond_depth_one (a b c : Participant) (h₁ : bond a b = true) (h₂ : bond b c = true) : False := by
@@ -165,25 +166,25 @@ theorem leave_ends_reach (p : Participant) : reach .g7 (leave p) = false := rfl
 theorem leave_is_one_step (p : Participant) : (leave p).subscribed = false := rfl
 
 -- 7. The set is satisfiable: four participants, every row that reaches them holds, nothing vacuous.
-def allyBelow : Participant :=   -- an AI agent below the line, bound to its steward, subscribed
-  ⟨.ai, ⟨true, false, false⟩, true, true, true, true, false, false, true⟩
-def agentAbove : Participant :=  -- an AI agent attested above the line (not defined at rc8; the model admits it)
-  ⟨.ai, ⟨true, true, true⟩, true, true, false, false, true, false, true⟩
-def stewardHuman : Participant := -- a human above the line, holding the bond
-  ⟨.human, ⟨true, true, true⟩, true, false, false, false, true, true, true⟩
-def humanBelow : Participant :=   -- a human below the line, bound to a responsible party (CC 3.4.13 is its own relation; no analogy to the agent is drawn)
-  ⟨.human, ⟨true, false, true⟩, true, false, true, true, true, false, true⟩
+def allyHeld : Participant :=     -- an AI agent held in stewardship, bound to its steward, subscribed
+  ⟨.ai, ⟨true, true⟩, true, true, true, true, false, false, true⟩
+def agentReleased : Participant := -- an AI agent released from stewardship (not defined at rc8; the model admits it)
+  ⟨.ai, ⟨false, true⟩, true, true, false, false, true, false, true⟩
+def stewardHuman : Participant :=  -- a human, not held, holding the bond
+  ⟨.human, ⟨false, true⟩, true, false, false, false, true, true, true⟩
+def humanHeld : Participant :=     -- a human whose key is held (an adult under adjudicated incapacity, CC 3.4.12 — its own relation; no analogy to the agent is drawn)
+  ⟨.human, ⟨true, true⟩, true, false, true, true, true, false, true⟩
 
-def world : List Participant := [allyBelow, agentAbove, stewardHuman, humanBelow]
+def world : List Participant := [allyHeld, agentReleased, stewardHuman, humanHeld]
 
 theorem witness_world : world.all wellformed = true := by decide
 
-/-- The witness is not vacuous: the halt actually reaches the created systems in it, the bound
-    are actually bound to someone above the line, and the two humans differ in standing exactly
-    as the two agents do. -/
+/-- The witness is not vacuous: the halt actually reaches the created systems in it, the held
+    are actually bound to someone not held, and the two humans differ in stewardship exactly as
+    the two agents do while kind still separates them. -/
 theorem witness_not_vacuous :
-    reach .g7 allyBelow = true ∧ reach .g7 agentAbove = true
-    ∧ bond allyBelow stewardHuman = true ∧ bond humanBelow stewardHuman = true
-    ∧ dutyShowReasoning allyBelow = dutyShowReasoning humanBelow
-    ∧ dutyShowReasoning agentAbove = dutyShowReasoning stewardHuman
-    ∧ mustSubscribe agentAbove = true ∧ mustSubscribe stewardHuman = false := by decide
+    reach .g7 allyHeld = true ∧ reach .g7 agentReleased = true
+    ∧ bond allyHeld stewardHuman = true ∧ bond humanHeld stewardHuman = true
+    ∧ dutyShowReasoning allyHeld = dutyShowReasoning humanHeld
+    ∧ dutyShowReasoning agentReleased = dutyShowReasoning stewardHuman
+    ∧ mustSubscribe agentReleased = true ∧ mustSubscribe stewardHuman = false := by decide
