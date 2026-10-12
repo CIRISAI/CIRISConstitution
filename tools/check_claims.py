@@ -674,10 +674,23 @@ def main():
             # ---- in-repo -------------------------------------------------------
             if ptr.startswith("@"):
                 inrepo_checked += 1
-                if not os.path.exists(os.path.join(ROOT, ptr[1:])):
+                # `@path#frag`: the path must exist; each comma-separated token of the fragment
+                # must occur in the file as a whole word (an invariant name, a def, a constant).
+                path, _, frag = ptr[1:].partition("#")
+                fp = os.path.join(ROOT, path)
+                if not os.path.exists(fp):
                     errors.append(f"L{ln} [{cid}]: dead in-repo pointer '{ptr}'")
-                else:
-                    grade = "symbol"
+                    continue
+                if frag:
+                    try:
+                        body = open(fp, encoding="utf-8", errors="replace").read()
+                    except OSError:
+                        body = ""
+                    missing = [t for t in frag.split(",") if t and not re.search(r"\b" + re.escape(t) + r"\b", body)]
+                    if missing:
+                        errors.append(f"L{ln} [{cid}]: in-repo pointer '{ptr}' names {missing} not found in {path}")
+                        continue
+                grade = "symbol"
                 continue
 
             # ---- cross-repo ----------------------------------------------------
