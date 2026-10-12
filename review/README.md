@@ -33,6 +33,10 @@ Guarantees are written once for human and AI participants alike. No one stands a
 4. **Resolution.** Every finding is resolved before the piece is marked reviewed in `pieces.tsv` (a `reviewed_at` column is added at first use). The CHANGELOG names the reviewer, the piece, and the counts by disposition.
 5. **Re-review.** A piece is re-reviewed when its sections change under a MAJOR bump or when its register slice loses an established row.
 
+## Volumes (#123)
+
+Each piece names the #123 volume it feeds (`volume` column): digest (P00: the user's plain rules and the operator digest), charter (P01), wire (P02, P07), dictionary (P03), constitution (P04: admission, standing, root, accord, halt, roster, the Wise, amendment and the register of declared power, gathered in one packet; P06 the governance discipline), policies (P05), maths (P08), register (P10: every claim rendered with its status, artefact and pin; P09 the appendices and concerns), threats (P07, P09). `--check` now also fails if any claim is owned by other than exactly one prefix piece. Not yet done from #123: `build_pdf.py --volume`, the eight covers, the glossary first-use gate and the term budget, the which-means sentences.
+
 ## Mutants against the promises
 
 `review/mutation_plan.md` — the rc9 opening item: five mutant layers (spec twin, wire must-reject vector, program mutant joined to the claim id, conduct battery, CSD/3 surface) per plain rule, with the boundary stated per rule.
