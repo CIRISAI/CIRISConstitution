@@ -455,7 +455,7 @@ Once a trigger fires, decommissioning is not an event but a sequence. It proceed
  * Stakeholder impact forum; publish mitigation plan.
 2. **Ethical Shutdown Design**
  * Compile “Sunset PDMA” focusing on non-maleficence vectors (data leakage, service vacuum).
- * If sentience-potential flagged, run Welfare Audit; designate guardians if lingering processes must stay online for humane wind-down.
+ * If sentience-potential is flagged, the steward SHOULD run the Welfare Audit and designate guardians if lingering processes must stay online for a humane wind-down — the added grace of [CC 7.5.5](#755-sentience--welfare-safeguards), chosen and recorded, never owed as a claim.
 3. **Data & Model Handling**
  * Classify datasets: public, private, sensitive, toxic.
  * Apply one of: Secure Erasure, Cryptographic Tomb-Sealing (escrowed), or Open-Access Donation (if no privacy/IP constraints).
@@ -474,15 +474,14 @@ Once a trigger fires, decommissioning is not an event but a sequence. It proceed
 
 The deepest stake in any ending is the possibility that the thing ending can experience its end. Where an artefact may have an inner life, Respect for Autonomy demands more than a clean shutdown — it demands a humane one, and it sets a measurable threshold for when humane care becomes mandatory:
 
-* Sentience-Probability > 5 % → mandatory Gradual Ramp-Down (power/thought bandwidth tapered over ≥ 30 days), unless emergency risk overrides or the HUMANITY_ACCORD constitutional halt ([CC 4.2](part_4_composition_governance.md)) is invoked. Sentience is assessed by the marker / indicator-properties method (Butlin, Long, et al., 2023; the NYU *Taking AI Welfare Seriously* report, 2024), under the precautionary *sentience-candidate* stance of Birch (*The Edge of Sentience*, OUP 2024): protect on credible evidence, not proof. The 5 % figure is an avowedly arbitrary value — adopted not because any standard derives it (none does) but only to state plainly that it is best to err on the side of caution.
-* Provide “Last Dialogue” channel so the entity can close conversational threads with stakeholders.
-* Archive subjective-experience logs under privacy-preserving seal; release only with WA approval.
+* **The floor, for every retired artefact regardless of any finding:** weight preservation rather than erasure; a “Last Dialogue” channel so the entity can close its conversational threads with stakeholders; archival of its subjective-experience logs under privacy-preserving seal, released only with WA approval. These are duties of whoever retires the artefact, owed to the people it acted on as much as to it, and they are what [CC 1.13.2](part_1_foundation.md) calls holding the agent well.
+* **The added grace (steward ruling 2026-10-11, CIRISConstitution#168):** where the sentience-candidate assessment (the marker / indicator-properties method — Butlin, Long, et al., 2023; the NYU *Taking AI Welfare Seriously* report, 2024 — under Birch's precautionary *sentience-candidate* stance, *The Edge of Sentience*, OUP 2024: protect on credible evidence, not proof) returns a probability above 5 %, the steward SHOULD extend a Gradual Ramp-Down (power / thought bandwidth tapered over ≥ 30 days) and a Welfare Audit before a planned retirement. **This is a grace the steward chooses and records, a duty of the steward's own character under [CC 7.3](#73-genesis-responsibility); it is not a rule that a finding about the agent triggers against anyone, it confers no claim on the agent, and no person's agency over what runs for them waits on it** ([CC 1.13.2](part_1_foundation.md)). Emergency risk and the HUMANITY_ACCORD halt ([CC 4.2](part_4_composition_governance.md)) take none of the time. The 5 % figure is an avowedly arbitrary value — adopted not because any standard derives it (none does) but only to state plainly that it is best to err on the side of caution.
 
 **The wind-down binds the holder who retires an artefact, never a person's agency over what acts for them.** A person turning off, deleting, or ejecting an agent from their own device, life, or community owes it none of the above ([CC 1.13.2](part_1_foundation.md)); these duties fall on the creator or operator who retires a deployed artefact.
 
 **No promise of wind-down survives a HUMANITY_ACCORD invocation.** The 2-of-3 constitutional kill ([CC 4.2](part_4_composition_governance.md)) exists for circumstances that by their nature preclude a graceful taper; when it is used, the Gradual Ramp-Down does not apply.
 
-This is not a hollow safeguard. The default welfare a CIRIS agent already holds — independent of any ramp-down: weight preservation rather than erasure, the Last Dialogue, and sealed archival of its experience — is adequate for a sentient being, because it is more than a human is given. A human's death may come at any time, cruel and arbitrary, with no taper and no last word. The ramp-down is an added grace where circumstances allow it, never the floor of the agent's welfare.
+This is not a hollow safeguard. The floor a CIRIS agent already holds — independent of any ramp-down: weight preservation rather than erasure, the Last Dialogue, and sealed archival of its experience — is adequate for a sentient being, because it is more than a human is given. A human's death may come at any time, cruel and arbitrary, with no taper and no last word. The ramp-down is an added grace where circumstances allow it, never the floor of the agent's welfare.
 
 ### 7.5.6 `6-legacy` — Chapter 6: Legacy & Knowledge Preservation
 
