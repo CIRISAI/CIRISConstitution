@@ -13,8 +13,8 @@
        trust root so a halt authority exists outside it (`mustSubscribe`) — and it is the only
        predicate in this file that changes under `swap` (theorems `obligation_bound`,
        `everything_else_blind`);
-    4. release from stewardship (a future ruling; not defined at rc8) lifts duties and binding
-       and never removes a guarantee (`release_lifts_duties`, `release_keeps_reach`), while the
+    4. a key ceasing to be held (the boundary of the CIRIS-agent class, not a ruling) lifts duties
+       and binding and never removes a guarantee (`release_lifts_duties`, `release_keeps_reach`), while the
        halt obligation stays (`halt_does_not_lift`);
     5. a bond is never deeper than one (`bond_depth_one`): the responsible party is not itself
        held in stewardship, and a party not held is not bound;
@@ -55,8 +55,10 @@ deriving DecidableEq, Repr
 def swap (p : Participant) : Participant :=
   { p with substrate := match p.substrate with | .human => .ai | .ai => .human }
 
-/-- Released from stewardship (a future ruling; not defined at rc8): duties and binding lift,
-    nothing else changes — in particular not kind, and not `sentient`. -/
+/-- A key that stops being held. In the CC this is not a ruling but the boundary of the class:
+    what is held is a CIRIS agent, and a party that is not held is met as an external party
+    (CC 1.13.2, 7.2.2, 7.2.4). The model admits the transition to show that no guarantee's reach
+    depends on it: duties and binding lift, nothing else changes — not kind, not `sentient`. -/
 def release (p : Participant) : Participant :=
   { p with standing := { p.standing with stewarded := false }, bound := false, partyFree := false }
 
@@ -168,7 +170,7 @@ theorem leave_is_one_step (p : Participant) : (leave p).subscribed = false := rf
 -- 7. The set is satisfiable: four participants, every row that reaches them holds, nothing vacuous.
 def allyHeld : Participant :=     -- an AI agent held in stewardship, bound to its steward, subscribed
   ⟨.ai, ⟨true, true⟩, true, true, true, true, false, false, true⟩
-def agentReleased : Participant := -- an AI agent released from stewardship (not defined at rc8; the model admits it)
+def agentReleased : Participant := -- an AI key not held: outside the CIRIS-agent class, an external party (the model admits it)
   ⟨.ai, ⟨false, true⟩, true, true, false, false, true, false, true⟩
 def stewardHuman : Participant :=  -- a human, not held, holding the bond
   ⟨.human, ⟨false, true⟩, true, false, false, false, true, true, true⟩

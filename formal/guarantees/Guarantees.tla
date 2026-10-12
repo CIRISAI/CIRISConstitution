@@ -4,8 +4,8 @@
    Three participants: a1, an AI agent held in stewardship (sentience-candidate, shutdown consent
    "conditional" as Ally's template sets it); h1, a human not held, who can hold a bond;
    h2, a human whose key is held (an adult under adjudicated incapacity, CC 3.4.12 — its own
-   relation; no analogy to a1 is drawn). Any of them may be released from stewardship (a future
-   ruling; the model admits it), bound, subscribed to the trust root, asked to stop, refuse, be
+   relation; no analogy to a1 is drawn). Any of them may cease to be held (the boundary of the CIRIS-agent class,
+   not a ruling; the model admits it), bound, subscribed to the trust root, asked to stop, refuse, be
    forced by a role, be erased after a stop, and leave the root. Three holders fire, confirm, lapse or resume
    the halt (the fuse detail is proved in formal/accord_halt; here it is one step each).
 
