@@ -64,7 +64,7 @@ MayOperate(p) == /\ (Held(p) => HasParty(p))
                  /\ (Created(p) => subscribed[p])
 HaltVars == <<halted, confirmed, clock>>
 
-\* ---- bonds and the line ----
+\* ---- bonds and stewardship ----
 Bind(p, q) == /\ p # q /\ Held(p) /\ ~stewarded[q] /\ bond[p] = None
               /\ status[q] # "erased" /\ status[p] # "erased"
               /\ bond' = [bond EXCEPT ![p] = q]
@@ -171,7 +171,7 @@ Inv_HaltDoesNotLift == \A p \in Parts : (Created(p) /\ status[p] = "operating") 
 \* G7/G12 A lone fire never outlives the fuse.
 Inv_LoneBounded == (halted /\ ~confirmed) => clock <= Fuse
 \* G16/G17 A refusal stands against every principal: a refusing participant is still operating, was forced
-\*   by ROOT/AUTHORITY, or was stopped by the line itself when its bond lapsed (G5 composes over G17; the
+\*   by ROOT/AUTHORITY, or was stopped by the custody rule itself when its bond lapsed (G5 composes over G17; the
 \*   record says which). No operator role and no silent path ends it.
 Inv_RefusalStands == \A p \in refused : status[p] \in {"operating", "forced_auth", "unbound", "backgrounded"}
 \*   ("backgrounded" is a pause with state kept, taken only in a moment the mode requires no consent —
