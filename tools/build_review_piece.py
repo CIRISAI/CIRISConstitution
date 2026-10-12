@@ -145,12 +145,16 @@ def formal_summary(dirs):
         for fn in os.listdir(p):
             fp = os.path.join(p, fn)
             if fn.endswith(".cfg"):
-                for ln in open(fp, encoding="utf-8"):
+                with open(fp, encoding="utf-8") as fh:
+                    cfg_lines = fh.read().split("\n")
+                for ln in cfg_lines:
                     ln = ln.strip()
                     if ln and not ln.startswith(("\\*", "CONSTANT", "SPECIFICATION", "INIT", "NEXT", "CHECK_DEADLOCK", "SYMMETRY")) and not ln.startswith(("INVARIANT", "PROPERTY", "INVARIANTS", "PROPERTIES")) and re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", ln):
                         names.add(ln)
             if fn.endswith(".lean"):
-                for m in re.finditer(r"^theorem\s+([A-Za-z_][A-Za-z0-9_']*)", open(fp, encoding="utf-8").read(), re.M):
+                with open(fp, encoding="utf-8") as fh:
+                    lean_src = fh.read()
+                for m in re.finditer(r"^theorem\s+([A-Za-z_][A-Za-z0-9_']*)", lean_src, re.M):
                     names.add(m.group(1))
         out.append(f"- `formal/{d}` — {len(names)} checked names: " + ", ".join(f"`{n}`" for n in sorted(names)))
     return out
@@ -247,7 +251,8 @@ def build(piece, pieces):
         elif f.endswith(".json"):
             L += [f"*(binary-ish manifest, {os.path.getsize(fp)} bytes; not inlined)*", ""]
         elif os.path.exists(fp):
-            L += [open(fp, encoding="utf-8").read(), ""]
+            with open(fp, encoding="utf-8") as fh:
+                L += [fh.read(), ""]
         else:
             L += ["**missing**", ""]
     for dec, hdr, text in chunks:
