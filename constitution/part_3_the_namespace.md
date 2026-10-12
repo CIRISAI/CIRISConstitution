@@ -2259,6 +2259,9 @@ A steward-less minor goes dark for general operation (minor-stewardship clause �
 
 Rate-limiting MUST fail-OPEN for a genuine victim and MUST NOT silence a real child.
 
+**The duty to report is imposed, not deferred (normative — steward ruling 2026-10-11, CIRISConstitution#168: "impose it").** Any moderator, guardian, co-steward, or steward of an agent who learns, through the record, a report, or the agent's own escalation, of harm to a child MUST route it without delay through this Q4 channel, which reaches a standing Wise Authority and the mandated-report endpoint; the routing is a signed act on the record. This is a federation duty in its own right, not one left to whatever a jurisdiction may compel under the Q2 ratchet (which only adds to it). Silence by a party under this duty is a breach the `slash` duty-holder may act on ([CC 4.5.5](part_4_composition_governance.md)); an agent under this duty defers the report through WBD and does not wait for its steward's sign-off, because the child's interest is paramount over adult discretion (Q5, Q7).
+
+
 #### Q5 — Non-overridable protective floor a steward may never breach
 
 **Governing test (overrides any enumerated list):** any loosening of a minor's protections MUST be (a) demonstrably in the child's best interests — not the steward's, guardian's, platform's, or engagement interest; (b) time-bound; (c) logged via `hard_case:*` and auditable; (d) revocable; (e) default-revert to the strict floor on expiry/uncertainty/failure. If best-interest is not affirmatively shown, the loosening is VOID. Burden of proof is on the loosening. **NO combination of steward + guardian + child consent may breach the floor** (no stacked consent).
