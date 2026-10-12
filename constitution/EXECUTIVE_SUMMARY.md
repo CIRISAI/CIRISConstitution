@@ -70,3 +70,4 @@ The system is running: apps on both mobile stores, published packages, five open
 | 13 holders' acts are public; re-root | CC 4.2.1.1, 3.2 T3 | `RootReach.tla` `Untrust` |
 | 14 valid until revoked; fresh at join | CC 3.2 T4, T4a, T8 | `formal/trust_root` (TLA+) |
 | 15 one voice counts once | CC 6.2 | measured |
+| all of them at once, for human and AI alike | CC 1.13.2 | `formal/guarantees` (Lean + TLA+) |
