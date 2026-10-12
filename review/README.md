@@ -33,6 +33,10 @@ Guarantees are written once for human and AI participants alike. No one stands a
 4. **Resolution.** Every finding is resolved before the piece is marked reviewed in `pieces.tsv` (a `reviewed_at` column is added at first use). The CHANGELOG names the reviewer, the piece, and the counts by disposition.
 5. **Re-review.** A piece is re-reviewed when its sections change under a MAJOR bump or when its register slice loses an established row.
 
+## Mutants against the promises
+
+`review/mutation_plan.md` — the rc9 opening item: five mutant layers (spec twin, wire must-reject vector, program mutant joined to the claim id, conduct battery, CSD/3 surface) per plain rule, with the boundary stated per rule.
+
 ## Status
 
 Scaffolding only. No piece has been reviewed. P00 is drafted; its five rulings (R1–R5) were made 2026-10-11 (#168) and landed. P03 at ~49k words is too large for one reviewer and should be split at 3.1 / 3.3+3.4+3.5 before commissioning.
