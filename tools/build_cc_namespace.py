@@ -235,6 +235,10 @@ def _reserved_rules():
         # "not a substrate-self-report", so it must come before the edge-wide rule.
         (lambda p, c: p.startswith("delivery_receipt:"),
          "subscriber-only (attesting_key_id is a current subscriber/member of the named stream; not a substrate self-report)", "CC 3.4.6"),
+        # CC 3.3.10.1 (#92; CIRISConstitution#105 follow-up found by persist at rc7): an in-grammar
+        # ledger is owner-serialized content, not a substrate self-report — the table cell says so.
+        (lambda p, c: p.startswith("ledger:"),
+         "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline", "CC 3.3.10.1"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
@@ -452,7 +456,12 @@ def main():
         if prefix in families:
             return  # first definition wins (e.g. agent_files joint claim 3.1.1 + 3.1.9.1)
         reserved, rule = apply_reserved(prefix, comp)
-        if not reserved and reserved_hint:   # table "Reserved? = Yes ... CC 3.4.x"
+        # The table's own "Reserved? = No" beats the component-wide default (CC 3.1.3 `settlement:*`:
+        # the payer signs, with a payee counter-attestation; it was never a substrate self-report).
+        if reserved and rule and rule.get("cc_ref") == "CC 3.4.3" and reserved_hint \
+                and reserved_hint.strip().lower().startswith("no"):
+            reserved, rule = False, None
+        if not reserved and reserved_hint and not reserved_hint.lower().startswith("no"):   # table "Reserved? = Yes ... CC 3.4.x"
             reserved = True
             m = re.search(r"CC\s*(3\.4\.\d+)", reserved_hint)
             rule = {"rule": "reserved (see table)", "cc_ref": "CC " + m.group(1)} if m \
@@ -570,7 +579,7 @@ def main():
                     prefix = bt.group(1)
                     polarity = clean_text(cells[pol_idx]) if pol_idx is not None and pol_idx < len(cells) else ""
                     resv = cells[res_idx] if res_idx is not None and res_idx < len(cells) else ""
-                    resv = resv if resv and resv.strip().lower() not in ("no", "") else ""
+                    resv = resv.strip() if resv else ""   # keep an explicit "No": it beats the component default
                     raw = cells[desc_idx] if desc_idx is not None and desc_idx < len(cells) else ""
                     desc = first_sentence(raw)
                     add_family(prefix, cc_section, component, repo, desc, polarity, resv, raw)

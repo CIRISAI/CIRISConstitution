@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "bc807de5e4b6d7512ac51e3c22df26c2d5859309c93f3ccbac4d1d2b8380a21e",
+    "registry_sha256": "cb2d9809d9d1325a155d9e8bc638a29a0fa2bed5d44b2a20fb8f65db0a9ec95c",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "e817b628a803b175bc742023f336ee231a27b9d6eedbd49c570d768b917576eb"
+    "source_sha256": "3f4edd87212b52bdd0aded52b23d8e9af305e4240e55bf8f17efc66f0a1ca13e"
   },
   "families": [
     {
@@ -2891,8 +2891,8 @@
       "prefix": "ledger:checkpoint:{unit}:{version}",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 3.3.10.1",
+        "rule": "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
       },
       "segments": [
         {
@@ -2923,8 +2923,8 @@
       "prefix": "ledger:head:{unit}:{version}",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 3.3.10.1",
+        "rule": "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
       },
       "segments": [
         {
@@ -2955,8 +2955,8 @@
       "prefix": "ledger:promotion:{version}",
       "reserved": true,
       "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
+        "cc_ref": "CC 3.3.10.1",
+        "rule": "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
       },
       "segments": [
         {
@@ -3933,11 +3933,7 @@
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
       "prefix": "settlement:*",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.3",
-        "rule": "substrate-self-report"
-      },
+      "reserved": false,
       "segments": [
         {
           "class": "literal",
