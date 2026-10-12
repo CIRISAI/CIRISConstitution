@@ -98,6 +98,23 @@ jobs:
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h4" -deadlock -config AccordHalt_proposal_stuck.cfg AccordHalt.tla | tee s.log
           grep -q 'Invariant NotStuck is violated' s.log || exit 1
 
+  authority:
+    name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Every invariant holds in every reachable state
+        run: python3 formal/authority_tree/authority_tree.py | tee at.log && grep -q '^CLOSED$' at.log
+      - name: The term dye test fires (I10)
+        run: |
+          set +e
+          python3 formal/authority_tree/authority_tree.py --no-term-rule | tee dye.log
+          grep -q 'VIOLATION: I10' dye.log || exit 1
+
   guarantees:
     name: TLC + Lean — every guarantee at once (formal/guarantees)
     runs-on: ubuntu-latest
