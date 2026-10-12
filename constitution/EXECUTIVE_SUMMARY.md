@@ -10,6 +10,8 @@
 
 Each promise is kept by a mechanism in the Parts. Where a promise can be checked by a machine, it has been: the names in the table at the end are automated proofs that the rule cannot be broken in a model of the network, and the table says where each promise lives.
 
+**Who the promises are for.** Every promise below is written once and holds for human and AI participants alike. What differs is not the kind of being but its attested standing on one line — whether there is credible evidence it can experience, how mature it is, and how much it can answer for — and a participant below that line is bound to a responsible party while it operates: a child to a guardian, an agent to its steward, who answers for its acts and owes it care in return. The halt (promises 10 and 12) is the one promise that stays unequal however far an agent matures, because consent needs a stop that sits outside the thing being stopped ([CC 1.13.2](part_1_foundation.md)).
+
 **Your things and your consent.**
 1. **Nothing is stored on your devices that you did not agree to**, except what you wrote yourself. You choose, for each device, which of your groups it carries: your work server never receives your family's photos unless you list the family on it. *How:* content reaches a device only through its owner's own grant for that device.
 2. **Your device is never a stranger's locker.** A node holds either plain text it can read or encrypted content for a group its owner belongs to. It never stores someone else's unreadable data for them. *How:* content replicates only to the members of its group.
