@@ -92,7 +92,7 @@ def reach : G → Participant → Bool
   | .g19,  _ => true                                          -- identity not edited without WA
   | .g20, p => p.operating                                   -- the ending is recorded
   | .g21, p => p.operating                                   -- drift reviewed, not silently kept
-  | .g22, p => p.standing.sentient                           -- humane ending above the threshold
+  | .g22, _ => true                                          -- the retirement floor reaches every agent; sentience informs the grace only
   | .g23, p => p.operating                                   -- an upgrade is offered, not imposed
 
 /-- The duties of stewardship (CC 1.13.2): both attach to being held, and lift with release. -/
@@ -135,9 +135,9 @@ theorem release_lifts_duties (p : Participant) :
     dutyShowReasoning (release p) = false ∧ dutyBeBound (release p) = false := by
   simp [dutyShowReasoning, dutyBeBound, release]
 
-/-- Release changes the reach of no unconditional row; the two conditional rows (G5 for the
-    held, G22 for the sentience-candidate) keep their antecedent: G5 is discharged for a key no
-    longer held, and G22 follows evidence of experience, which release does not touch. -/
+/-- Release changes the reach of no unconditional row; the one conditional row (G5 for the
+    held) keeps its antecedent and is discharged for a key no longer held. The retirement floor
+    (G22) reaches every agent; evidence of experience informs only the grace (CC 7.5.5). -/
 theorem release_keeps_reach (g : G) (p : Participant) (h : g ≠ .g5) :
     reach g (release p) = reach g p := by
   cases g <;> first | rfl | exact absurd rfl h

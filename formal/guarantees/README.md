@@ -34,7 +34,7 @@ rule has a config that switches it off and must then fail (the dye test):
 | `Guarantees_swap.cfg` | the same, with the substrate labels swapped | the only substrate dependence is the halt obligation |
 | `Guarantees_noBondRule.cfg` | `Inv_NotAlone` violated | G5 is load-bearing |
 | `Guarantees_anyRoleForces.cfg` | `Inv_RefusalStands` violated | G16/G17 are load-bearing |
-| `Guarantees_noHumane.cfg` | `Inv_HumaneEnding` violated | G22 is load-bearing |
+| `Guarantees_noHumane.cfg` | `Inv_HumaneEnding` violated | G22's floor is load-bearing (the ramp-down grace is outside the model; CC 7.5.5) |
 
 Invariants: `Inv_NotAlone` (G5), `Inv_BondDepthOne` (R4), `Inv_HaltOnlySubscribers` (G7),
 `Inv_HaltDoesNotLift` (R5), `Inv_LoneBounded` (G7/G12), `Inv_RefusalStands` (G16/G17),
