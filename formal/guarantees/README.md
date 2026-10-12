@@ -60,7 +60,6 @@ Action properties: `Prop_HaltKeepsState` (a pause keeps state), `Prop_NoErasureW
 ## Scope
 
 Not modelled here: redress (G4), the record and trace rows (G9), privacy (G3), one-voice counting
-(G12). Delegation (G13) is modelled in CIRISRegistry `formal/authority_tree/authority_tree.py`
-(nine invariants enumerated to closure, in that repo's CI; the term invariant is asked at
-CIRISRegistry#146). See `review/pieces/00_guarantees.md` for which rows have which witness. The halt's fuse arithmetic is `formal/accord_halt`;
+(G12). Delegation (G13) is `formal/authority_tree` (ten invariants enumerated to closure, vendored
+from CIRISRegistry with the term invariant added). See `review/pieces/00_guarantees.md` for which rows have which witness. The halt's fuse arithmetic is `formal/accord_halt`;
 the roster rule is `formal/accord_roster`; the mesh invariants are `formal/mesh_net`.
