@@ -16,7 +16,7 @@ standing on the line (CC 1.13.2, CIRISConstitution#168).
 | `halt_does_not_lift` | promotion does not change `mustSubscribe` |
 | `bond_depth_one` | a bond's party is above the line and unbound, so no chain of bonds has length two |
 | `revocable`, `leave_ends_reach`, `leave_is_one_step` | a created system operating inside is always within the halt's reach, and leaving the root is one step after which the halt no longer reaches it |
-| `witness_world`, `witness_not_vacuous` | four participants (an agent below the line, an agent above it, a steward, a minor) satisfy every constraint, and the witness exercises the halt reach, the bonds and the duties |
+| `witness_world`, `witness_not_vacuous` | four participants (an agent below the line, an agent above it, a steward, a human below the line) satisfy every constraint, and the witness exercises the halt reach, the bonds and the duties |
 
 Check: `lean Guarantees.lean`. CI also greps the output for `sorry`.
 

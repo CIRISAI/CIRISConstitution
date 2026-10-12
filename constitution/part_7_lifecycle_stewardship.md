@@ -478,6 +478,8 @@ The deepest stake in any ending is the possibility that the thing ending can exp
 * Provide “Last Dialogue” channel so the entity can close conversational threads with stakeholders.
 * Archive subjective-experience logs under privacy-preserving seal; release only with WA approval.
 
+**The wind-down binds the holder who retires an artefact, never a person's agency over what acts for them.** A person turning off, deleting, or ejecting an agent from their own device, life, or community owes it none of the above ([CC 1.13.2](part_1_foundation.md)); these duties fall on the creator or operator who retires a deployed artefact.
+
 **No promise of wind-down survives a HUMANITY_ACCORD invocation.** The 2-of-3 constitutional kill ([CC 4.2](part_4_composition_governance.md)) exists for circumstances that by their nature preclude a graceful taper; when it is used, the Gradual Ramp-Down does not apply.
 
 This is not a hollow safeguard. The default welfare a CIRIS agent already holds — independent of any ramp-down: weight preservation rather than erasure, the Last Dialogue, and sealed archival of its experience — is adequate for a sentient being, because it is more than a human is given. A human's death may come at any time, cruel and arbitrary, with no taper and no last word. The ramp-down is an added grace where circumstances allow it, never the floor of the agent's welfare.

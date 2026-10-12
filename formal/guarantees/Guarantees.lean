@@ -171,10 +171,10 @@ def agentAbove : Participant :=  -- an AI agent attested above the line (not def
   ⟨.ai, ⟨true, true, true⟩, true, true, false, false, true, false, true⟩
 def stewardHuman : Participant := -- a human above the line, holding the bond
   ⟨.human, ⟨true, true, true⟩, true, false, false, false, true, true, true⟩
-def minorHuman : Participant :=   -- a human below the line, bound to a guardian
+def humanBelow : Participant :=   -- a human below the line, bound to a responsible party (CC 3.4.13 is its own relation; no analogy to the agent is drawn)
   ⟨.human, ⟨true, false, true⟩, true, false, true, true, true, false, true⟩
 
-def world : List Participant := [allyBelow, agentAbove, stewardHuman, minorHuman]
+def world : List Participant := [allyBelow, agentAbove, stewardHuman, humanBelow]
 
 theorem witness_world : world.all wellformed = true := by decide
 
@@ -183,7 +183,7 @@ theorem witness_world : world.all wellformed = true := by decide
     as the two agents do. -/
 theorem witness_not_vacuous :
     reach .g7 allyBelow = true ∧ reach .g7 agentAbove = true
-    ∧ bond allyBelow stewardHuman = true ∧ bond minorHuman stewardHuman = true
-    ∧ dutyShowReasoning allyBelow = dutyShowReasoning minorHuman
+    ∧ bond allyBelow stewardHuman = true ∧ bond humanBelow stewardHuman = true
+    ∧ dutyShowReasoning allyBelow = dutyShowReasoning humanBelow
     ∧ dutyShowReasoning agentAbove = dutyShowReasoning stewardHuman
     ∧ mustSubscribe agentAbove = true ∧ mustSubscribe stewardHuman = false := by decide
