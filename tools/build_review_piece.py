@@ -52,7 +52,7 @@ LEAD = re.compile(r"\*\*([^*]+?)\s+\((normative|informative|entrenched)\s+—\s+
 
 
 def render_line(ln):
-    """Reader rendering of one master line (#123: the master keeps the machine-parsed forms; the volume does not).
+    r"""Reader rendering of one master line (#123: the master keeps the machine-parsed forms; the volume does not).
 
     - a section heading `## 4.2 \`accord\` — Accord — the layer` renders as `## 4.2 Accord: the layer`
       (slug dropped; the first dash inside the title becomes a colon);
