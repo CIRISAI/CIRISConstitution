@@ -24,3 +24,7 @@ deferral to a wiser authority: the generator is not a question a wiser authority
 of any kind, express or implied, and without liability to its stewards, authors, or operators; rely
 on it at your own risk (see `LICENSE`). This disclaims warranty, **not force**: the constitution is
 operative and binds conformance where it is adopted; it is not merely informational.
+
+## What this document claims about superintelligence
+
+Alignment is not solved here. CIRIS does not make a superintelligence good, and it says nothing about the inside of any model. It binds nobody who did not join, so it cannot stop an unaccountable superintelligence from forming anywhere else. What it can do is keep people able to pause, correct and refuse the agents it holds as they grow more capable than the people holding them, and inside CIRIS it tries its best, with the rules and the network it has, to keep any such power from forming unaccountable. That is all it claims. Where anything on ciris.ai reads as more, this sentence holds.
