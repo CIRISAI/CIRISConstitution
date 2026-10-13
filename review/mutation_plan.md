@@ -75,7 +75,7 @@ Legend — ✅ exists · ⏳ exists in part / unpinned · ✗ missing · — not
 | 5c refusal never rewritten into action | CC 1.3, 1.9 | ✅ `Inv_RefusalStands` | a conscience override of REJECT | ✗ | — |
 | 5d identity not edited without a WA | CLM-agent-identity-edit-gate (#1250) | ✗ | an identity-scope MEMORIZE with no WA authorisation | ✗ | — |
 | 5e drift measured against charter; WA review | CC 7.1.1 (`identity_variance_monitor`) | ✗ | drift past threshold with no review raised | ✗ | — |
-| 5f retirement floor: weights, last dialogue, sealed archive; lawful order | CLM-humane-ending (#1250), CLM-sentient-set-aside | ✅ `Guarantees_noHumane.cfg` (must fail) + `Inv_HumaneEnding` | a retirement with weights erased; an archive released with neither WA approval nor lawful order | ✗ (docs-only in Agent) | — |
+| 5f retirement floor: weights, sealed archive, stakeholders told; lawful order | CLM-humane-ending (#1250), CLM-sentient-set-aside | ✅ `Guarantees_noHumane.cfg` (must fail) + `Inv_HumaneEnding` | a retirement with weights erased; an archive released with neither WA approval nor lawful order | ✗ (docs-only in Agent) | — |
 | 5g upgrade offered; refusal recorded; safety fix imposed | CLM on CIRISManager#27 | ✗ | an upgrade applied with no offer row; a refusal not recorded | ✗ Manager | — |
 
 ### Promise 6 — no hand bans a community, nobody is ranked by what they are, every thinking being met by the first-contact rules
