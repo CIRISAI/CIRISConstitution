@@ -120,7 +120,7 @@ Force(p, r) == /\ status[p] = "operating" /\ r \in ForceRoles
                /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock>>
 
 \* ---- endings ----
-RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the retirement floor (identity, memory and logs kept, logs sealed, stakeholders told, sealed archive); every agent, the whole promise
+RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the retirement floor (identity, audit trail, memory and logs kept, logs sealed, stakeholders told, sealed archive); every agent, the whole promise
                /\ floored' = floored \cup {p}
                /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, crisis, halted, confirmed, clock>>
 Erase(p) == /\ status[p] \in {"idle"} \cup Stopped
