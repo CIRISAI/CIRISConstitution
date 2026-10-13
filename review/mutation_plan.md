@@ -1,4 +1,6 @@
-# Mutants against the nine promises — the rc9 opening item
+# Mutants against the eleven promises — the rc9 opening item
+
+*Promises 10 (sustainability) and 11 (security) were added 2026-10-12 after this plan was drafted; their rows (10a–10d, 11a–11e) are to be added at rc9 with the same five layers.*
 
 *Drafted 2026-10-12 at rc8 (steward direction: "this surfaces the tensions honestly and does not hide anything"). Source of the promises: `review/pieces/00_guarantees_plain.md`. Status column is what exists on the day of writing; nothing here is a claim of conformance.*
 

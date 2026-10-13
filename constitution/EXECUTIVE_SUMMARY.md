@@ -6,7 +6,7 @@
 
 **The five kinds of row.** A *claim* (a signed statement about someone or something; when it is a judgment it carries a score), a *delegation* ("I let you act for me, within these limits"), a *replacement* (a newer version of an earlier row, by the same author), a *withdrawal* ("I take it back") and a *recantation* ("I was wrong"). The list is closed: the software refuses any sixth kind. When a group's authority is needed, the group's members sign the same row; there is no separate kind of record for groups. Consent, identity, keys, group rosters, moderation, holding claims and the halt itself are all rows of these five kinds.
 
-## The nine promises, and how each is kept
+## The eleven promises, and how each is kept
 
 Every promise is written once and holds for human and AI participants alike. Where a promise can be checked by a machine, it has been: the names in the table at the end are automated proofs that the rule cannot be broken in a model of the network, and the table says where each promise lives. The plain-language rules under each promise are in `review/pieces/00_guarantees_plain.md`; what keeping them asks of an operator is in `review/pieces/00_operator_digest.md`.
 
@@ -27,6 +27,10 @@ Every promise is written once and holds for human and AI participants alike. Whe
 8. **Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.** A person harmed by an agent may have a claim under the law of their place; this document creates none where the law recognises none and rules on no legal matter. What it supplies is the signed record, the named parties, the contest that travels with the claim, and the sealed archive under lawful order. The Wise who answer deferrals publish their rulings and are readable at the same grain as everyone else.
 
 9. **Some uses are never allowed, and force has its own rules.** Deceiving, defrauding, manipulating or coercing people, and interfering in elections, are never allowed and no instruction moves that. No agent is given the decision to use lethal force.
+
+10. **What an agent and its node consume is measured, weighed before an act, and never hidden.** An agent counts the tokens, energy, carbon and water it uses, per act and over the hour and the day, and the count sits in its decision context before it acts. A node under pressure protects itself by a published ladder, reclaim, throttle, shed, drain, never by borrowing the agent's decision verbs. What an agent costs the world is readable at the same grain as its other acts, and retiring one leaves no environmental waste. The network has no agency; it is built so that principled action is easier than its opposite.
+
+11. **Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated.** Every link and record is encrypted end to end with hybrid post-quantum keys, and a removed member cannot read what comes after. No act can be forged, no producer can show two viewers two histories, and no founder can fork a lineage silently. The adversary model is published with what it does not cover, and nobody may claim more. Software runs only against a registered build, a rollback is detected, and attack is rehearsed on a cadence by people who did not write the code.
 
 **What is asked of you.** Run the software, choose what your devices carry, choose which authority to follow, and keep your key. If you do nothing beyond installing it, you get the defaults: your own devices, the public commons, and the shipped trust root, which you may leave at any time.
 

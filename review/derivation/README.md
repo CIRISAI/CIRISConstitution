@@ -1,4 +1,6 @@
-# Derivation — do the surfaces and the namespace fall out of the nine promises?
+# Derivation — do the surfaces and the namespace fall out of the promises?
+
+*Run against the nine promises of 2026-10-12 morning; promises 10 and 11 were added that evening and are not in these tables.*
 
 Review artefacts, not normative. Produced 2026-10-12 against the plain rules at rc8
 (`review/pieces/00_guarantees_plain.md`), the CSD corpus (CIRISClient `FSD/CSD/` at e040ae76,
