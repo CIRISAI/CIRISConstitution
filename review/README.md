@@ -8,7 +8,7 @@ The CC is one document (eight Parts, about 440 numbered sections, 405 register r
 
 | Piece | Scope | Reviewer |
 |---|---|---|
-| P00 | The guarantees (this directory's `pieces/00_guarantees.md`) + executive summary + scope | any reader; the entry piece |
+| P00 | The guarantees (this directory's `pieces/00_guarantees.md`) + the plain rules + the operator digest + the status quo (`pieces/00_status_quo.md`, what the alternatives do, promise by promise) + executive summary + scope | any reader; the entry piece |
 | P01 | Part 1 foundation and ethics, Part 7 lifecycle, 8.7 narrative | ethicist |
 | P02 | Part 2 grammar | wire-protocol engineer |
 | P03 | Part 3 namespace (not 3.2) + registry manifest | schema / registry engineer |
