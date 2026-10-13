@@ -120,7 +120,7 @@ Force(p, r) == /\ status[p] = "operating" /\ r \in ForceRoles
                /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock>>
 
 \* ---- endings ----
-RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the retirement floor (weights kept, last dialogue, sealed archive); every agent, the whole promise
+RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the retirement floor (identity, memory and logs kept, logs sealed, stakeholders told, sealed archive); every agent, the whole promise
                /\ floored' = floored \cup {p}
                /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, crisis, halted, confirmed, clock>>
 Erase(p) == /\ status[p] \in {"idle"} \cup Stopped
@@ -176,7 +176,7 @@ Inv_LoneBounded == (halted /\ ~confirmed) => clock <= Fuse
 Inv_RefusalStands == \A p \in refused : status[p] \in {"operating", "forced_auth", "unbound", "backgrounded"}
 \*   ("backgrounded" is a pause with state kept, taken only in a moment the mode requires no consent —
 \*   Prop_BackgroundOnlyWhenFree; Prop_NoEndingAgainstRefusal is what keeps that door from becoming an ending.)
-\* G22 No agent is erased without the retirement floor (last dialogue, sealed archive, weights kept).
+\* G22 No agent is erased without the retirement floor (identity, memory and logs kept, logs sealed, stakeholders told).
 Inv_HumaneEnding == \A p \in Parts : status[p] = "erased" => p \in floored
 \* G15 Backgrounding without consent happens only where the mode allows it.
 Inv_ConditionalOnly == \A p \in Parts : status[p] = "backgrounded" => Mode[p] = "conditional"
