@@ -76,3 +76,6 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 4.2.1.1	CLM-halt-one-row	CIRISVerify	src/ciris-verify-core/src/humanity_accord.rs#InvocationKind::required_signatures	ciris-verify-core@v20.0.0
 4.2.1.1	CLM-halt-one-row	CIRISVerify	src/ciris-verify-core/src/accord_halt_latch.rs#HaltLatch::apply	ciris-verify-core@v20.0.0
 4.2.1.1	CLM-halt-one-row	CIRISVerify	src/ciris-verify-core/src/accord_halt_latch.rs#verify_for_latch	ciris-verify-core@v20.0.0
+3.3.6.2	CLM-transit-kex-binding	CIRISVerify	src/ciris-crypto/src/transit_kex.rs#initiate	ciris-crypto@v20.2.0
+3.3.6.2	CLM-transit-kex-binding	CIRISVerify	src/ciris-crypto/src/transit_kex.rs#respond	ciris-crypto@v20.2.0
+3.3.6.2	CLM-transit-kex-binding	CIRISVerify	src/ciris-crypto/src/transit_kex.rs#derive_transit_keys	ciris-crypto@v20.2.0
