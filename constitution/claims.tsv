@@ -142,10 +142,10 @@ CLM-full-sha	5.3.2.5	Full-SHA verification before consumption (normative)	impl:C
 CLM-stream	5.3.3.1	Chunk seal + STREAM nonce (normative — V2 lock)	staged:CIRISPersist#1091	staged
 CLM-stream-dek-per-stream	5.1	The epoch DEK of a live_stream is HKDF-SHA256(MLS-Exporter("ciris-stream-dek/v1", empty context, 32), info = label ‖ stream_id_utf8 ‖ epoch_be8); a key_grant:stream:v1 wraps the per-stream DEK and opens one stream only; the exporter secret is never wrapped	staged:CIRISVerify#308	staged
 CLM-kept-mid-stream	5.1	Kept is per stream, producer-set via history_on_join; turning it on mid-stream wraps current and later epochs only; turning it off is forward-only; "recorded" is not a field (history_on_join: full or existing wraps; the recording is the 3.3.13 derived_from blob)	normative-only:—	normative
-CLM-namespace-realtime	5.3.3.2.1	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	staged:CIRISEdge#872	staged
+CLM-namespace-realtime	5.3.3.2.1	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	impl:CIRISEdge/src/transport/realtime_av.rs#CODEC_AV1_SVC	established
 CLM-registry-wire	5.3.3.2.3	`SealedAvChunk` wire layout (normative)	staged:CIRISEdge#872	staged
-CLM-chunklayer	5.3.3.2.4	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	staged:CIRISEdge#872	staged
-CLM-liveness	5.3.3.4	D6 liveness invariant — entitled vs reachable (normative)	staged:CIRISEdge#872	staged
+CLM-chunklayer	5.3.3.2.4	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	impl:CIRISEdge/src/transport/realtime_av.rs#ReceiverLayerPolicy::admits	established
+CLM-liveness	5.3.3.4	D6 liveness invariant — entitled vs reachable (normative)	impl:CIRISEdge/src/transport/realtime_av.rs#RealtimeFanout::plan_layered	established
 CLM-transport-edge	5.3.3.5	Transport — Edge layer (normative — E1–E4 lock)	staged:CIRISEdge#872	staged
 CLM-delivery	5.3.3.6	Delivery receipts (normative — D5 / V3 lock)	staged:CIRISPersist#1091	staged
 CLM-normative	5.3.3.7	Framing (normative)	staged:CIRISPersist#1091	staged
@@ -154,13 +154,13 @@ CLM-lineage-head-cosign	5.3.1	Lineage-head cosignature under ciris.lineage_head_
 CLM-envelope-error	5.3.6.1	Error envelope	impl:CIRISVerify/src/ciris-verify-core/src/ceg_error.rs#CegError impl:CIRISVerify/src/ciris-verify-core/src/ceg_error.rs#CegError	established
 CLM-record-id	5.4.1	Deterministic `record_id` (CBOR profile, normative)	test:CIRISConformance#test_500_scope_privacy_vectors impl:CIRISVerify/src/ciris-crypto/src/scope_privacy.rs#derive_record_id impl:CIRISVerify/src/ciris-crypto/src/scope_privacy.rs#derive_record_id	established
 CLM-symbol	5.4.2	Uniform symbol AEAD framing for fountain-coded fragments (normative)	test:CIRISConformance#test_500_scope_privacy_vectors impl:CIRISVerify/src/ciris-crypto/src/scope_privacy.rs#derive_symbol_key impl:CIRISVerify/src/ciris-crypto/src/scope_privacy.rs#derive_symbol_key	established
-CLM-welcome-wrap	5.4.4	MLS Welcome HPKE wrap under invitee static X-Wing key (normative)	staged:CIRISEdge#872	staged
+CLM-welcome-wrap	5.4.4	MLS Welcome HPKE wrap under invitee static X-Wing key (normative)	impl:CIRISEdge/src/mls/welcome_wrap.rs#unwrap_welcome	established
 CLM-witness-content	5.4.5	Witness-chain content discipline (privacy witness, normative)	impl:CIRISVerify/src/ciris-crypto/src/scope_privacy.rs#witness_cover_leaf impl:CIRISVerify/src/ciris-crypto/src/scope_privacy.rs#witness_cover_leaf	established
-CLM-announce-suppress	5.4.6	Announce suppression for group-scoped destinations (normative)	impl:CIRISVerify/src/ciris-verify-core/src/announce_policy.rs#may_announce staged:CIRISEdge#872	established
+CLM-announce-suppress	5.4.6	Announce suppression for group-scoped destinations (normative)	impl:CIRISVerify/src/ciris-verify-core/src/announce_policy.rs#may_announce impl:CIRISEdge/src/announce_suppression.rs#ScopePrivacyAnnouncePolicy::decide	established
 CLM-aggregationmetav1	6.1.2.1	`AggregationMetaV1` — the aggregation-tier wire contract (normative)	impl:CIRISVerify/src/ciris-verify-core/src/holonomic/aggregation.rs#AggregationMetaV1 impl:CIRISVerify/src/ciris-verify-core/src/holonomic/aggregation.rs#AggregationMetaV1	established
 CLM-descent	6.1.2.2	Descent rule (normative)	impl:CIRISVerify/src/ciris-verify-core/src/holonomic/aggregation.rs#descend_order impl:CIRISVerify/src/ciris-verify-core/src/holonomic/aggregation.rs#descend_order	established
-CLM-registry-replication	6.1.5.1	Replication-target policy (§R-policy — normative floor + RECOMMENDED defaults)	staged:CIRISEdge#872	staged
-CLM-deterministic-alm	6.1.6	Deterministic ALM topology (§T / §M)	staged:CIRISEdge#872	staged
+CLM-registry-replication	6.1.5.1	Replication-target policy (§R-policy — normative floor + RECOMMENDED defaults)	impl:CIRISEdge/src/holonomic/fountain_defaults.rs#recommended_policy	established
+CLM-deterministic-alm	6.1.6	Deterministic ALM topology (§T / §M)	impl:CIRISEdge/src/holonomic/deterministic_topology.rs#compute_alm_topology_verified	established
 CLM-trust	6.1.8	Recursive trust bootstrap (§B) — trust-discovery, not membership	impl:CIRISVerify/src/ciris-verify-core/src/holonomic/bootstrap.rs#recursive_trust_bootstrap impl:CIRISVerify/src/ciris-verify-core/src/holonomic/bootstrap.rs#recursive_trust_bootstrap	established
 CLM-annex-g	8.8.7	Annex G: Adversarial Security & Robustness	normative-only:—	normative
 CLM-trace-family	3.1.5	trace:{form}:{version} + trace_summary:{kind} family, the exactly-one-of inline/manifest shape, and the trace_manifest:v1 payload schema	impl:CIRISPersist/src/federation/admission.rs#check_trace_dimension_admission	established
