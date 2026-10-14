@@ -70,7 +70,7 @@ Producers introducing a new envelope field MUST follow the [CC 2.6.4](#2.6.4) ve
 
 ## 2.2 `conformance` — Conformance levels
 
-Interoperability needs named roles so that "conforming" means the same thing to every peer. A **Producer** is any peer that emits Contributions onto the federation wire. A **Consumer** is any peer that reads and composes verdicts over received Contributions. A **Substrate Implementation** is the storage + transport + crypto layer (CIRISPersist + CIRISEdge + CIRISVerify) underneath both.
+Interoperability needs named roles so that "conforming" means the same thing to every peer. CEG is the **CIRIS Epistemic Grammar**, the wire grammar this specification defines ([CC 8.1.1](part_8_appendices.md)); the roles below are named for it. A **Producer** is any peer that emits Contributions onto the federation wire. A **Consumer** is any peer that reads and composes verdicts over received Contributions. A **Substrate Implementation** is the storage + transport + crypto layer (CIRISPersist + CIRISEdge + CIRISVerify) underneath both.
 
 Three normative conformance profiles set the floor each role must meet:
 
@@ -587,6 +587,7 @@ The following documents are normatively cited; implementations MUST conform to t
 | [FIPS-203] | [FIPS 203](https://csrc.nist.gov/pubs/fips/203/final) — ML-KEM (Module-Lattice KEM); the post-quantum half of the hybrid KEM (ML-KEM-768) |
 | [FIPS-204] | [FIPS 204](https://csrc.nist.gov/pubs/fips/204/final) — ML-DSA (Module-Lattice signatures); the post-quantum half of the hybrid signature (ML-DSA-65) |
 | [RFC-9180] | [RFC 9180](https://www.rfc-editor.org/rfc/rfc9180) — Hybrid Public Key Encryption (HPKE); the `key_grant` wrap shape |
+| [hybrid-sig] | The **bound-hybrid signature**: Ed25519 ([RFC-8032]) over the canonical bytes, and ML-DSA-65 ([FIPS-204]) over the canonical bytes ‖ `ed25519_sig` (the bound-payload form, [CC 3.1.2.1](part_3_the_namespace.md)); both halves verified at every federation-tier admission gate and on the store path, never an operator toggle — normative at [CC 5.3.2.4.3.1](part_5_transport_substrate.md) and [CC 6.1.3](part_6_the_coherence_mathematics.md) |
 
 Informational citations (Magnifica Humanitas, anthropological literature, Ubuntu philosophical literature, etc.) appear in [CC 8.6.1](#8.6.1) without normative force.
 
