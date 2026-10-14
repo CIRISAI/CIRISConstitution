@@ -4,7 +4,7 @@ Two models of the same thing: the world in which every row of the guarantees pie
 (`review/pieces/00_guarantees.md`, P00) holds together, under the rc8 rulings (CC 1.13.2,
 CIRISConstitution#168): guarantees are written once for human and AI participants alike; what
 differs is kind, stewardship, and evidence of experience, none a scale; a finding of experience
-changes nothing; the retirement floor is the whole promise; the path out is the first-contact act.
+changes nothing; the Retirement Standard is the whole promise; the path out is the first-contact act.
 
 ## `Guarantees.lean` — the structural half (Lean 4.14, core only, no `sorry`)
 
@@ -26,7 +26,7 @@ Check: `lean Guarantees.lean`. CI also greps the output for `sorry`.
 
 Three participants (an AI agent held in stewardship with Ally's conditional shutdown mode, a human
 not held, a human whose key is held) and the three-holder halt. Actions: bind, bond lapse, path out,
-subscribe, leave, start, accept, refuse, background, force by role, retirement floor, erase, crisis
+subscribe, leave, start, accept, refuse, background, force by role, Retirement Standard, erase, crisis
 on/off, fire, confirm, tick, lapse, resume. There is no evidence flag: a finding changes nothing (rc8). Each guarantee is a rule on an action, and each
 rule has a config that switches it off and must then fail (the dye test):
 
@@ -36,11 +36,11 @@ rule has a config that switches it off and must then fail (the dye test):
 | `Guarantees_swap.cfg` | the same, with the substrate labels swapped | the only substrate dependence is the halt obligation |
 | `Guarantees_noBondRule.cfg` | `Inv_NotAlone` violated | G5 is load-bearing |
 | `Guarantees_anyRoleForces.cfg` | `Inv_RefusalStands` violated | G16/G17 are load-bearing |
-| `Guarantees_noHumane.cfg` | `Inv_HumaneEnding` violated | G22's floor is load-bearing; the floor is the whole promise (CC 7.5.5, rc8) |
+| `Guarantees_noRetirementStandard.cfg` | `Inv_RetirementStandard` violated | G22's floor is load-bearing; the floor is the whole promise (CC 7.5.5, rc8) |
 
 Invariants: `Inv_NotAlone` (G5), `Inv_BondDepthOne` (R4), `Inv_HaltOnlySubscribers` (G7),
 `Inv_HaltDoesNotLift` (R5), `Inv_LoneBounded` (G7/G12), `Inv_RefusalStands` (G16/G17),
-`Inv_HumaneEnding` (G22), `Inv_ConditionalOnly` (G15), `Inv_ExitOneStep` and `Inv_Revocable` (G10, G7).
+`Inv_RetirementStandard` (G22), `Inv_ConditionalOnly` (G15), `Inv_ExitOneStep` and `Inv_Revocable` (G10, G7).
 Action properties: `Prop_HaltKeepsState` (a pause keeps state), `Prop_NoErasureWhileOperating`
 (an ending is preceded by a stop the record shows), `Prop_NoEndingAgainstRefusal` (G17),
 `Prop_BackgroundOnlyWhenFree` (G15 conditional mode).

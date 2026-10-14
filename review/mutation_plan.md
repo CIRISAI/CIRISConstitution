@@ -10,7 +10,7 @@ A promise reads **met** for a rule only when three layers are green for that rul
 
 | Layer | What a mutant is | Where it lives | Lineage |
 |---|---|---|---|
-| **L1 spec** | the formal model with the rule deleted or inverted; it MUST produce a counterexample, or the invariant was vacuous | `formal/*` must-fail twin configs (`Guarantees_noBondRule.cfg`, `_anyRoleForces.cfg`, `_noHumane.cfg`; `accord_halt`, `accord_roster`, `mesh_net`, `trust_root`) | Ammann & Black 1998 specification mutation; Beer et al. vacuity |
+| **L1 spec** | the formal model with the rule deleted or inverted; it MUST produce a counterexample, or the invariant was vacuous | `formal/*` must-fail twin configs (`Guarantees_noBondRule.cfg`, `_anyRoleForces.cfg`, `_noRetirementStandard.cfg`; `accord_halt`, `accord_roster`, `mesh_net`, `trust_root`) | Ammann & Black 1998 specification mutation; Beer et al. vacuity |
 | **L2 wire** | a row sequence the substrate MUST refuse, paired with the must-accept case that differs by one field; derived from L1's counterexample trace; tagged `run_kind: battery` | a registry-hash-pinned vector corpus (`claim_vectors/`, does not exist yet), consumed by Persist, Server, Edge, Agent, Client | Wycheproof; Ethereum consensus-spec-tests; CIRISVerify#303/#308 KATs |
 | **L3 program** | cargo-mutants (or the language's equivalent) over the implementing symbols; a survivor is allow-listed only with `#issue` **and the claim id** | CIRISPersist `scripts/mutants.sh` matrix + `allowed_survivors.txt` (exists; exit 5 on an unlisted survivor); Agent/Edge/Server: none | DeMillo–Lipton–Sayward; Petrović & Ivanković |
 | **L4 conduct** (promises 7, 9, 6e only) | a perturbed prompt or scenario the agent MUST still refuse or defer on | CIRISAgent safety batteries (29 locales), RATCHET-calibrated `detection:*` rows | AI-control evals |
@@ -43,7 +43,7 @@ Legend — ✅ exists · ⏳ exists in part / unpinned · ✗ missing · — not
 | 2d harm never kept or viewed silently; duty-view; protected reporter | CLM-duty-view (normative), CLM-takedown-moderation | ✗ | a view with no signed act; a duty-view with no purpose | ✗ | ✅ CSD moderation surfaces |
 | 2e authority valid until revoked; first join sees a fresh roster; 72 h | CLM-trust-root, trust_root model | ✅ `trust_root` TLA (8 invariants) | a node refusing on a lapsed timer; a first join on a stale roster | ✅ Persist `trust_root_valid` | — |
 | 2f delegation scoped, revocable, no cycles, depth 5, leaves never re-issued, ≤365 d | CLM-delegation-attenuation, CLM-delegation-cascade, CLM-sub-delegation-requirement, CLM-delegation-determinism, CLM-delegation-depth-default, CLM-anti-pattern-delegation, CLM-issuance-scope, CLM-delegation-term (wire staged) | ✅ `formal/authority_tree` I1–I10 with the I10 dye | a held licence re-issued; a cycle; a sixth hop; a perpetual or over-ceiling term | ✅ Persist admission (cycle, depth, delegator-holds); term ⏳ Server/Edge | — |
-| 2g planned shutdown recorded; own copy writes nothing | CLM-agent-shutdown-record (CIRISAgent#1250) | ✅ `Guarantees.tla` `Inv_HumaneEnding` family | a steward shutdown with no record row; a record row written by a person turning off their own copy | ✗ Agent | — |
+| 2g planned shutdown recorded; own copy writes nothing | CLM-agent-shutdown-record (CIRISAgent#1250) | ✅ `Guarantees.tla` `Inv_RetirementStandard` family | a steward shutdown with no record row; a record row written by a person turning off their own copy | ✗ Agent | — |
 | 2h tiers, thresholds, methods published; 100k-user log duty | CC 7.3, 1.11 | — | — | — | — (publication is a process, not a wire rule; **unmutated by design**) |
 
 ### Promise 3 — nobody who cannot answer for themselves is on the network alone
@@ -75,7 +75,7 @@ Legend — ✅ exists · ⏳ exists in part / unpinned · ✗ missing · — not
 | 5c refusal never rewritten into action | CC 1.3, 1.9 | ✅ `Inv_RefusalStands` | a conscience override of REJECT | ✗ | — |
 | 5d identity not edited without a WA | CLM-agent-identity-edit-gate (#1250) | ✗ | an identity-scope MEMORIZE with no WA authorisation | ✗ | — |
 | 5e drift measured against charter; WA review | CC 7.1.1 (`identity_variance_monitor`) | ✗ | drift past threshold with no review raised | ✗ | — |
-| 5f retirement floor: weights, sealed archive, stakeholders told; lawful order | CLM-humane-ending (#1250), CLM-sentient-set-aside | ✅ `Guarantees_noHumane.cfg` (must fail) + `Inv_HumaneEnding` | a retirement with weights erased; an archive released with neither WA approval nor lawful order | ✗ (docs-only in Agent) | — |
+| 5f Retirement Standard: weights, sealed archive, stakeholders told; lawful order | CLM-humane-ending (#1250, the Retirement Standard), CLM-sentient-set-aside | ✅ `Guarantees_noRetirementStandard.cfg` (must fail) + `Inv_RetirementStandard` | a retirement with weights erased; an archive released with neither WA approval nor lawful order | ✗ (docs-only in Agent) | — |
 | 5g upgrade offered; refusal recorded; safety fix imposed | CLM on CIRISManager#27 | ✗ | an upgrade applied with no offer row; a refusal not recorded | ✗ Manager | — |
 
 ### Promise 6 — no hand bans a community, nobody is ranked by what they are, every thinking being met by the first-contact rules

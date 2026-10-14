@@ -147,5 +147,5 @@ jobs:
           grep -q 'Invariant Inv_NotAlone is violated' b.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -nowarning -metadir "$RUNNER_TEMP/g4" -deadlock -config Guarantees_anyRoleForces.cfg Guarantees.tla | tee f.log
           grep -q 'Invariant Inv_RefusalStands is violated' f.log || exit 1
-          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -nowarning -metadir "$RUNNER_TEMP/g5" -deadlock -config Guarantees_noHumane.cfg Guarantees.tla | tee h.log
-          grep -q 'Invariant Inv_HumaneEnding is violated' h.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -nowarning -metadir "$RUNNER_TEMP/g5" -deadlock -config Guarantees_noRetirementStandard.cfg Guarantees.tla | tee h.log
+          grep -q 'Invariant Inv_RetirementStandard is violated' h.log || exit 1

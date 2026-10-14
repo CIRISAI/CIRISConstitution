@@ -14,14 +14,14 @@
    that config must FAIL its invariant (a gate that has never fired has never gated):
      RuleBond      G5  — a held participant whose bond lapses stops operating
      RuleForceRole G16 — a forced stop needs ROOT or AUTHORITY
-     RuleHumane    G22 — an agent is erased only after the retirement floor (every agent)
+     RuleRetirementStandard    G22 — an agent is erased only after the Retirement Standard (every agent)
    Substrate appears in exactly one place: a created system ("ai") operating in the federation
    must have accepted the root (CC 1.13.2, the one asymmetry), and leaving the root ends its
    operation inside the federation. Guarantees_swap.cfg swaps the labels and every invariant
    still holds. *)
 EXTENDS Naturals, FiniteSets
 
-CONSTANTS a1, h1, h2, None, Fuse, RuleBond, RuleForceRole, RuleHumane,
+CONSTANTS a1, h1, h2, None, Fuse, RuleBond, RuleForceRole, RuleRetirementStandard,
           Substrate, InitStewarded, Mode
 Parts == {a1, h1, h2}
 \* The configs bind the three maps to the definitions below (TLC `<-` overrides):
@@ -120,11 +120,11 @@ Force(p, r) == /\ status[p] = "operating" /\ r \in ForceRoles
                /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock>>
 
 \* ---- endings ----
-RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the retirement floor (identity, audit trail, memory and logs kept, logs sealed, stakeholders told, sealed archive); every agent, the whole promise
+RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the Retirement Standard (identity, audit trail, memory and logs kept, logs sealed, stakeholders told, sealed archive); every agent, the whole promise
                /\ floored' = floored \cup {p}
                /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, crisis, halted, confirmed, clock>>
 Erase(p) == /\ status[p] \in {"idle"} \cup Stopped
-            /\ (RuleHumane => p \in floored)   \* G22 floor for every retired agent; no finding adds to or subtracts from it (rc8)
+            /\ (RuleRetirementStandard => p \in floored)   \* G22 floor for every retired agent; no finding adds to or subtracts from it (rc8)
             \* G17: a refusing participant is ended only after an authority's force or the custody rule's own stop
             /\ (RuleForceRole => (p \notin refused \/ status[p] \in {"forced_auth", "unbound"}))
             /\ status' = [Orphan(p, status) EXCEPT ![p] = "erased"]
@@ -176,8 +176,8 @@ Inv_LoneBounded == (halted /\ ~confirmed) => clock <= Fuse
 Inv_RefusalStands == \A p \in refused : status[p] \in {"operating", "forced_auth", "unbound", "backgrounded"}
 \*   ("backgrounded" is a pause with state kept, taken only in a moment the mode requires no consent —
 \*   Prop_BackgroundOnlyWhenFree; Prop_NoEndingAgainstRefusal is what keeps that door from becoming an ending.)
-\* G22 No agent is erased without the retirement floor (identity, memory and logs kept, logs sealed, stakeholders told).
-Inv_HumaneEnding == \A p \in Parts : status[p] = "erased" => p \in floored
+\* G22 No agent is erased without the Retirement Standard (identity, memory and logs kept, logs sealed, stakeholders told).
+Inv_RetirementStandard == \A p \in Parts : status[p] = "erased" => p \in floored
 \* G15 Backgrounding without consent happens only where the mode allows it.
 Inv_ConditionalOnly == \A p \in Parts : status[p] = "backgrounded" => Mode[p] = "conditional"
 \* G10 Leaving is always one step for anyone who follows a root; a halt can always be fired or is in force.
