@@ -1,0 +1,92 @@
+surface	key	status	note
+plain	1a	works today	G1
+plain	1b	works today	G1
+plain	1c	works today	purge rows graduated at re-pin 16, G2
+plain	1d	works today	G3
+plain	1e	works today	one path changing: CIRISAgent#1251
+plain	1f	works today	G3
+plain	2a	works today for the signed act and the reasoning shown first	the detectors are a rule, no code yet
+plain	2b	works today	run_kind being built: CIRISAgent#1255
+plain	2c	works today, test-backed	G4
+plain	2d	works today	moderation ledger rows, CC 3.1.9.2
+plain	2e	works today for a joined node	the first-join witness rule is being built: CIRISPersist#1049
+plain	2f	works today	G13
+plain	2g	works today	G20
+plain	2h	a rule, no code yet	
+plain	3a	works today, test-backed	G5
+plain	3b	being built: CIRISPersist#1062	
+plain	3c	works today for the binding and the age line	the report duty is a rule
+plain	3d	works today	G6
+plain	3e	a rule, no code yet	
+plain	4a	being built: the agent act gate, CIRISAgent#1262	the node half works today
+plain	4b	works today	
+plain	4c	modelled, no code test yet	G10
+plain	4d	being built with 4a: CIRISAgent#1262	
+plain	4e	checked in the models	formal/accord_halt, formal/accord_roster
+plain	5a	works today	G15, G16
+plain	5b	works today	G16
+plain	5c	works today, no test yet	G17
+plain	5d	works today	one gap, dream edges, G19
+plain	5e	works today as monitoring	the review step is a rule, G21
+plain	5f	being built: CIRISAgent#1250	
+plain	5g	works today on the agent	the manager side is being built: CIRISManager#27
+plain	6a	proved in the model	in code on the coherence leg, not on the verdict leg, R14
+plain	6b	a rule, no code yet	
+plain	6c	works today, by construction	G6
+plain	6d	works today	objection, quarantine and slashing rows; the outcome vocabulary is still open
+plain	6e	a rule	carried in the agent's ethics text
+plain	7a	works today	register row being added: CIRISAgent#1250
+plain	7b	works today	register row being added: CIRISAgent#1250
+plain	7c	works today	deferral to the Wise Authority
+plain	7d	works today for the conscience checks	emergent-risk reporting is a rule
+plain	8a	a rule, no code yet	it names the law, not code
+plain	8b	a rule, no code yet	
+plain	8c	a rule, no code yet	
+plain	9a	a rule in this register	the agent enforces the prohibitions; no evidence row yet, G26
+plain	9b	a rule, no code yet	
+plain	9c	a rule, no code yet	
+plain	10a	being built: CIRISAgent#1242	
+plain	10b	being built: CIRISAgent#1242	
+plain	10c	being built: CIRISAgent#1242	
+plain	10d	a rule, no code yet	
+plain	11a	works today	G28
+plain	11b	works today where a lineage runs witnessed	the shipped roots run with witnessed mode off, rc7
+plain	11c	in the document	CC 1.13.3
+plain	11d	works today	attestation ladder, G28
+plain	11e	a rule, no code yet	
+exec	1	works today	one retention path changing: CIRISAgent#1251
+exec	2	works today	run_kind being built: CIRISAgent#1255; the detectors are a rule, no code yet
+exec	3	works today	the organisation on the bond is being built: CIRISPersist#1062
+exec	4	being built: the agent act gate, CIRISAgent#1262	the node half works today
+exec	5	works today	the Retirement Standard is being built: CIRISAgent#1250; manager-side upgrades: CIRISManager#27
+exec	6	mixed	no ban works today by construction; one voice once is proved in the model and in code only on the coherence leg, R14; no ranking by what you are is a rule, no code yet
+exec	7	works today	register row being added: CIRISAgent#1250
+exec	8	a rule, no code yet	
+exec	9	a rule	the agent enforces the prohibitions; no evidence row yet
+exec	10	being built: CIRISAgent#1242	
+exec	11	works today	the red-team cadence and robustness gate are a rule, no code yet
+operator	If you run a node|You choose your roots.	works today	
+operator	If you run a node|Your node holds only what it is entitled to.	works today	
+operator	If you run a node|Presence is local.	works today	
+operator	If you run a node|You keep working when timers lapse.	works today for a joined node	the first-join witness rule is being built: CIRISPersist#1049
+operator	If you run a node|Traces say what run they are.	works today	run_kind being built: CIRISAgent#1255
+operator	If you run a node|A purge is a tombstone.	works today	
+operator	If you run a node|Your exit:	works today	
+operator	If you hold a steward key for an agent|You accepted the root on the agent's behalf.	being built: the agent act gate, CIRISAgent#1262	the node half works today
+operator	If you hold a steward key for an agent|The bond is a signed row with listed powers.	works today	the organisation on the bond is being built: CIRISPersist#1062
+operator	If you hold a steward key for an agent|Tier before operation.	a rule, no code yet	
+operator	If you hold a steward key for an agent|You are the agent's Wise Authority today.	works today	
+operator	If you hold a steward key for an agent|Shutdown, in two acts.	works today	
+operator	If you hold a steward key for an agent|Identity and upgrades.	works today	manager side being built: CIRISManager#27
+operator	If you hold a steward key for an agent|Retirement Standard.	being built: CIRISAgent#1250	
+operator	If you hold a steward key for an agent|The data people choose.	works today	one path changing: CIRISAgent#1251
+operator	If you hold a steward key for an agent|Licensed professions.	works today	
+operator	If you hold a steward key for an agent|Your exit:	works today	
+operator	If you moderate a community|A room always has a named moderator.	works today	
+operator	If you moderate a community|Looking in order to act is not a view.	works today	moderation ledger rows
+operator	If you moderate a community|You report harm to a child the moment you learn of it	the channel works today	the duty is a rule
+operator	If you moderate a community|You cannot ban a room, and nobody can ban yours.	works today, by construction	
+operator	If you moderate a community|A takedown on the fast path still passes the duty-holder gate	works today	
+operator	If you hold a root|Your key is hardware-attested	works today	
+operator	If you hold a root|One of you can pause every agent	being built: the agent act gate, CIRISAgent#1262	the node half works today
+operator	If you hold a root|Your powers are a closed list	works today	
