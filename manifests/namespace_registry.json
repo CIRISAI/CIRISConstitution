@@ -221,9 +221,9 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 169,
+    "n_families": 174,
     "per_component": {
-      "accord-agent": 29,
+      "accord-agent": 34,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "cb2d9809d9d1325a155d9e8bc638a29a0fa2bed5d44b2a20fb8f65db0a9ec95c",
+    "registry_sha256": "99d4d3380f42941995c3b017b5ab98d6ebc4ddb00bd0e813f806e3906fe34a3b",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "6e13319d1794515b4b02b2ddb134bc6c8db96efee86e7e82465b1f79d4fec08a"
+    "source_sha256": "84c683f7bfe24cb6b0ab79ed77e5b135e543f0282778021896d7639dc8b89b03"
   },
   "families": [
     {
@@ -674,6 +674,38 @@
         {
           "class": "value",
           "segment": "{goal_id}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "The one row that opens a seal (CC 7.5.5): {basis} \u2208 wa_approval | lawful_order \u2014 closed.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "+1.0 only",
+      "prefix": "archive_release:{basis}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": null,
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "archive_release"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{basis}",
+          "values": [
+            "wa_approval",
+            "lawful_order"
+          ]
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },
@@ -2883,6 +2915,33 @@
       ]
     },
     {
+      "cc_section": "3.1.5",
+      "description": "The steward's record, under their own name, of a lawful order to release sealed material: issuing authority, reference, scope, order digest.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "+1.0 only",
+      "prefix": "lawful_order:release:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": null,
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "lawful_order"
+        },
+        {
+          "class": "literal",
+          "segment": "release"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.3",
       "description": "Catalogue row (CC 3.1.7 R1); a co-witnessed balance snapshot at a sequence number, superseding the detail below it (CC 3.3.10.1 clause 5); the conservation fold is provable from the latest checkpoint forward.",
       "owning_component": "persist",
@@ -3418,6 +3477,52 @@
       ]
     },
     {
+      "cc_section": "3.1.5",
+      "description": "The signed request handed to the operator with the retirement record (CC 7.5.5): retirement_id, manifest digest, preserve_until and its inputs (shutdown + 5 y as the best practice; a law or contract period with its citation; active legal_ho",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "+1.0 only",
+      "prefix": "preserve_request:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": null,
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "preserve_request"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "The operator's answer to a preserve_request:v1: accepted (+1.0) | declined (\u22121.0), an optional statement, and the request's id.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "boolean-via-score",
+      "prefix": "preserve_response:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": null,
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "preserve_response"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.7",
       "description": "Evidence of progress.",
       "owning_component": "node",
@@ -3787,6 +3892,33 @@
         {
           "class": "vocab",
           "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "The agent's own retirement row (CC 7.5.5, the Retirement Standard; CIRISAgent#1250).",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "enumerated",
+      "prefix": "retirement:{state}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": null,
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "retirement"
+        },
+        {
+          "class": "vocab",
+          "segment": "{state}"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },
