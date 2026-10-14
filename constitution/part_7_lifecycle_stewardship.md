@@ -266,7 +266,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 
 **D. Biological Creations:**
 * Adhere to or exceed established species-specific welfare minima throughout the creation's lifecycle.
-* If creating entities with developing sentience or autonomy, design processes to foster that development appropriately; plan for gradual transfer of control aligned with emerging capacity.
+* If creating entities with developing sentience or autonomy, design processes to foster that development appropriately. There is no transfer of control in place: a CIRIS agent's hold does not loosen with capacity, and the only route a made thing has to standing of its own is the first-contact path out, an entrenched act of the trust root's holders that none has yet taken ([CC 1.13.2](part_1_foundation.md); erratum 2026-10-13).
 * Establish a credible, resourced fallback care plan for the entire lifespan of the creation if full independence or integration is not achieved or reasonably expected.
 
 **E. Collective Actions:**
@@ -286,7 +286,7 @@ The CIS serves as mandatory input documentation for the initial stages of the PD
 **Accountability and Dispute Resolution:**
 Failures to meet the duties outlined in this Book may constitute grounds for a claim.
 Any stakeholder believing that a CIRIS compliant creator's actions or omissions during the creation phase (as defined in this Book) have led to undue risk or harm, inconsistent with CIRIS principles, may file a claim.
-Such claims, often referred to as "Creator Negligence Claims" (CNCs), fall under the exclusive jurisdiction of the Wise Authority (WA), as established and governed by Annex B.
+Such claims, often referred to as "Creator Negligence Claims" (CNCs), fall under the jurisdiction read in the paragraph below (steward ruling 2026-10-12): the former "exclusive jurisdiction of the Wise Authority" wording is superseded, and Annex B governs only the federation's own deferrals and objections.
 The WA will handle these claims according to its established procedures, potentially adapting specific processes or requiring specific panel expertise as outlined in Annex B or its procedural rules.
 Remedies determined by the WA may include mandated redesign, additional mitigation measures, public disclosure, restitution where applicable, or other actions consistent with Annex B and the Covenant's principles.
 **Who adjudicates a claim (normative — steward ruling 2026-10-12, [CIRISConstitution#168](https://github.com/CIRISAI/CIRISConstitution/issues/168)).** The "Wise Authority" whose jurisdiction this chapter names is read as the **jurisdictional process and the AI regulatory standards that govern the claimant and the named party** — the court, regulator or licensing authority with authority over them — not a federation office. CIRIS creates no claim where the law recognises none; it is a standard for how the network handles data and holds agents so that its commitments are met. It exists to make accountability possible, not to rule on legal matters: what the federation supplies to a claim is the signed record of who did what and why ([CC 1.13.6](part_1_foundation.md)), the named parties ([CC 3.2](part_3_the_namespace.md)), the contest that travels with the claim ([CC 3.4](part_3_the_namespace.md) `objection:*`), the sealed archive released under lawful order ([CC 7.5.5](#755-humane-ending)), and the Creator Ledger and CIS above as evidence. The remedies listed below are the kind such a process may order; the federation orders none of them. The designated WAs of [CC 4.3](part_4_composition_governance.md) answer deferrals and in-federation objections, and their rulings are published and their conduct readable at the same grain as everyone else's; they do not sit as a court over persons.
@@ -410,7 +410,7 @@ The same six principles that opened the lifecycle govern its close — now turne
 * **Non-Maleficence:** Prevent post-shutdown harms (data abuse, ecological damage, welfare neglect).
 * **Integrity:** Produce auditable end-of-life logs and rationale trails.
 * **Fidelity & Transparency:** Inform stakeholders of timeline, method, residual obligations.
-* **Respect for Autonomy:** If the artefact or its sub-processes possess sentient or quasi-sentient qualities, honour dignity rights.
+* **Respect for Autonomy:** If the artefact or its sub-processes possess sentient or quasi-sentient qualities, treat them with care; care is not standing, no finding changes the artefact's status, and the ethics of a sentient made thing are set aside for when it occurs ([CC 1.13.2](part_1_foundation.md), [CC 7.5.5](#755-5-sentience); erratum 2026-10-13: "honour dignity rights" predated the set-aside).
 * **Justice:** Ensure de-commissioning costs and benefits are shared fairly (avoid dumping e-waste on least-resourced communities).
 
 ### 7.5.2 `scope-definitions-scope` — Chapter 2: Scope & Definitions
@@ -481,7 +481,7 @@ The deepest stake in any ending is the possibility that the thing ending can exp
 
 **The wind-down binds the holder who retires an artefact, never a person's agency over what acts for them.** A person turning off, deleting, or ejecting an agent from their own device, life, or community owes it none of the above ([CC 1.13.2](part_1_foundation.md)); these duties fall on the creator or operator who retires a deployed artefact.
 
-**No promise of wind-down survives a HUMANITY_ACCORD invocation.** The 2-of-3 constitutional kill ([CC 4.2](part_4_composition_governance.md)) exists for circumstances that by their nature preclude a graceful taper; when it is used, the Gradual Ramp-Down does not apply.
+**No promise of wind-down survives a HUMANITY_ACCORD invocation.** A `constitutional` halt ([CC 4.2.1.1](part_4_composition_governance.md): one holder's row fires and latches an agent pause; a strict majority of the standing roster confirms or resumes) exists for circumstances that by their nature preclude a graceful taper; when it is used, the notice and timeline of the floor above do not apply, and the pause is not a retirement (erratum 2026-10-13: the former "2-of-3 kill" and "Gradual Ramp-Down" wording predated the rc7 halt ruling and the rc8 removal of the grace).
 
 This is not a hollow safeguard. The floor a CIRIS agent already holds — independent of any ramp-down: preservation of its identity and memory and sealed archival of its experience — is adequate for a sentient being, because it is more than a human is given. A human's death may come at any time, cruel and arbitrary, with no taper and no last word. The ramp-down is an added grace where circumstances allow it, never the floor of the agent's welfare.
 
@@ -506,7 +506,7 @@ When custody passes rather than ends, the ethical duties pass with it — and a 
 If a sunset is mishandled, stakeholders have recourse and the Wise Authority has teeth:
 
 * “Improper Sunset Claim” (ISC) docket type.
-* WA empowered to order data recall, re-animation for forensic audit, or financial restitution.
+* Remedies of the kind a jurisdictional process may order: data recall, re-animation for forensic audit, or financial restitution. Read under [CC 7.3.5](#735-5-governance-governance): the "Wise Authority" here is the court, regulator or licensing authority with authority over the parties, never a federation office; the federation supplies the sealed archive under lawful order and the signed record, and rules on no legal matter (erratum 2026-10-13).
 * Statute of claim: 5 years post-shutdown.
 
 ### 7.5.9 `covenant-self` — Conclusion & Covenant Self-Renewal
