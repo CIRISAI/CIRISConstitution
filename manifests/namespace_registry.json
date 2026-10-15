@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "99d4d3380f42941995c3b017b5ab98d6ebc4ddb00bd0e813f806e3906fe34a3b",
+    "registry_sha256": "22b029cfd977acce779c9481cdb381a4ad274b15e5b8206ac3d502ba7535b495",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "edaa43d7c60d5d123ceac6d5153e8a1f6d714b8dac3bc389c1c0e3b7221b13e2"
+    "source_sha256": "73aa281f38b6d486ae24127393b8a3b3ec79ddad56fb19a8538db2a87e18f947"
   },
   "families": [
     {
@@ -683,7 +683,7 @@
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "+1.0 only",
-      "prefix": "archive_release:{basis}:v1",
+      "prefix": "archive_release:{basis}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": null,
@@ -702,10 +702,6 @@
             "wa_approval",
             "lawful_order"
           ]
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -2920,7 +2916,7 @@
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "+1.0 only",
-      "prefix": "lawful_order:release:v1",
+      "prefix": "lawful_order:release",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": null,
@@ -2934,10 +2930,6 @@
         {
           "class": "literal",
           "segment": "release"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -3482,7 +3474,7 @@
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "+1.0 only",
-      "prefix": "preserve_request:v1",
+      "prefix": "preserve_request",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": null,
@@ -3492,10 +3484,6 @@
         {
           "class": "literal",
           "segment": "preserve_request"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -3505,7 +3493,7 @@
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "boolean-via-score",
-      "prefix": "preserve_response:v1",
+      "prefix": "preserve_response",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": null,
@@ -3515,10 +3503,6 @@
         {
           "class": "literal",
           "segment": "preserve_response"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -3901,7 +3885,7 @@
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "enumerated",
-      "prefix": "retirement:{state}:v1",
+      "prefix": "retirement:{state}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": null,
@@ -3915,10 +3899,6 @@
         {
           "class": "vocab",
           "segment": "{state}"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -4129,7 +4109,7 @@
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "-1 only",
-      "prefix": "takedown_notice:{basis}:v1",
+      "prefix": "takedown_notice:{basis}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.1",
@@ -4157,10 +4137,6 @@
             "court_order",
             "steward_purge"
           ]
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
