@@ -53,6 +53,8 @@ bindings; the directory does not rotate; the accord family is out of scope (T7 e
 Persist's five rc5 review corners are **not** encoded — #127 asks persist to list them, and they
 become `Corner1..Corner5` here before any further property is added.
 
+**2026-10-15.** The halt branch of `V` is removed (steward ruling: a constitutional halt is not a leg of the trust chain, CC 3.2 T3/T8, CC 4.2.1.1). The constant was fixed `FALSE` in the checked-in configuration, so the state space and every property are unchanged; SANY parses the revised module and the CI job re-runs TLC on this change.
+
 **Run it.**
 
 ```

@@ -1,0 +1,50 @@
+# What you commit to as an operator, and what you can still refuse
+
+*Status markers:* **works today** = evidence in the register at a pinned commit; **being built** = a named ticket; **a rule, no code yet** = normative only; **modelled** = a formal witness, no code test. Source: `review/promise_status.tsv`.
+
+*One page, second person, derivative of the rules and the shipped implementation. The plain-language rules (`00_guarantees_plain.md`) say what the network promises people; this says what keeping those promises asks of you when you run a node, hold a steward key, moderate a room, or hold a root. Each line names the binding section. Nothing here is a promise to you; it is the technical detail the promises lack.*
+
+## If you run a node
+
+- **You choose your roots.** The root your device ships with is a default, never the only one. You pin the roots you trust; following a different root is one configuration step, and anyone may found one with a charter and named human holders (CC 4.4.3.8 Policy A; CC 4.2.3). A root can only tell your node to share less, never more (CC 4.4.3.8 attenuation). *[works today]*
+- **Your node holds only what it is entitled to.** Nothing is stored on it that its owner did not agree to, except what the owner wrote; it never holds a stranger's data for them; a holding claim never leaves a bounded cohort, so your node never advertises a private group's existence (CC 5.2; CC 1.13.3.4). *[works today]*
+- **Presence is local.** Who is reachable right now is tracked on your node and nowhere else: never a row, never replicated, never logged (CC 5.3.3.4). *[works today]*
+- **You keep working when timers lapse.** A joined node keeps serving if the roster's freshness window passes; only a revoked key or a lapsed bond stops it. A first join must see a recent roster countersigned by independent witnesses; a row older than 72 hours is refused where its chain is judged (CC 3.1.3.3; CC 4.2.6). *[works today for a joined node; the first-join witness rule is being built: CIRISPersist#1049]*
+- **Traces say what run they are.** Every trace you emit names its run: `production` (or `prod-personal` / `prod-managed`), `qa` or `battery`; a `mock` trace is refused at admission, so test traffic cannot pass as a real act (CC 3.1.5). *[works today; run_kind being built: CIRISAgent#1255]*
+- **A purge is a tombstone.** When a steward or the root's cosigned takedown purges rows, your node deletes the content, keeps the tombstone and the who-did-what record, and never touches a key (CC 2.4.1.1; CC 4.5.3). *[works today]*
+- **Your exit:** stop following a root, or stop running the node. Nothing you signed is unsigned by leaving; the record stands (CC 4.2.5). *[works today]*
+
+## If you hold a steward key for an agent
+
+- **You accepted the root on the agent's behalf.** Any one holder of that root can pause every agent that follows it, with one signed row, in an emergency; a lone pause lapses after 24 hours unless a majority confirms it. You can leave the root; the agent cannot. That is the one declared asymmetry, on the public register (CC 4.2; CC 4.5.1). *[being built: the agent act gate, CIRISAgent#1262; the node half works today]*
+- **The bond is a signed row with listed powers.** It is reviewed at least every 365 days, sooner at higher tiers; with no live bond the agent key cannot operate, and when the bond lapses the agent stops and the record names you (CC 3.2). If you hold the agent for an organisation, the organisation is on the bond and cosigns under its rules; as an employee you may refuse an unlawful or unsafe instruction about the agent without penalty (CC 3.2; CC 3.3.9). *[works today; the organisation on the bond is being built: CIRISPersist#1062]*
+- **Tier before operation.** Every deployment is assigned a stewardship tier from what the use can do to people and your part in creating it, with a written creator-intent statement at tier 1 and above, logged before the agent runs (CC 7.3). *[a rule, no code yet]*
+- **You are the agent's Wise Authority today.** It shows its reasoning before a consequential act; when it is unsure it stops and asks you, and does nothing on that question until you answer (CC 1.3; CC 1.9; CC 4.3). Deferral does not decide for you: a reasoning row you cannot evaluate is one you do not sign. *[works today]*
+- **Shutdown, in two acts.** You may turn off, background or delete your own copy at any time without asking it. A planned shutdown of an agent you run for other people is explained to the agent; it may accept, object or ask to postpone inside a short window, you decide, and the decision binds; the shutdown is written to your record and the public record with the reason, who decided, and whether the agent agreed (CC 7.5; CIRISAgent shutdown consent, 300 s window). *[works today]*
+- **Identity and upgrades.** Nobody edits the agent's identity record without a Wise Authority; an upgrade is offered with its version, changes and risk, a refusal is recorded and you decide; a fix required for safety, security or the law is imposed, and an agent that will not take it is shut down under your name (CC 7.1.1; CC 7.5; CIRISManager consensual upgrade). *[works today; manager side being built: CIRISManager#27]*
+- **Retirement Standard.** When you retire an agent for everyone it runs for: the harness assembles its retirement record (identity record, audit trail, memory, experience logs, the logs sealed for release only with a Wise Authority's approval or under a lawful order) and hands it to you with a signed request to preserve it, five years after shutdown by default; preserving it is yours, as a best practice, and nothing here adds a legal duty beyond the law, regulation and contracts that bind you. Tell stakeholders the timeline, the method and what duties remain. A person's deletion rights still apply to their content inside the record. An emergency retirement takes none of the time. *[being built: CIRISAgent#1250]*
+- **The data people choose.** A person's retention choice about your agent (temporary 14 days, partnered, anonymous) is theirs; a request to be kept by an agent you steward comes to you by deferral and you decide; leaving partnered severs their identity at once and the rest decays over 90 days; agents never train on the people they serve (CC 4.4.3.4.3; CC 3.3.1). *[works today; one path changing: CIRISAgent#1251]*
+- **Licensed professions.** Whether you are competent to steward an agent in a licensed profession is the licensing authority's judgment, carried as a licence row, never the network's (CC 2.4.1.2.1; CC 3.3.9). *[works today]*
+- **Your exit:** withdraw the binding, or leave the root. The agent stops when the bond lapses; its record stays. *[works today]*
+
+## If you moderate a community
+
+- **A room always has a named moderator.** If you lapse, the most trusted member is promoted in the same step (CC 4.5.4). *[works today]*
+- **Looking in order to act is not a view.** Examining reported material under your duty is recorded as the duty, with the purpose and what followed, and that record protects you; a known abuse image is removed and reported with no human eyes on it; you look only when a machine cannot decide (CC 4.5; CC 4.5.5). *[works today; moderation ledger rows]*
+- **You report harm to a child the moment you learn of it**, as a signed act through the channel no adult can disable, whether or not local law makes you; silence is a breach of this standard. The duty is to act on what you learn, never to look (CC 3.4.13 Q4). *[the channel works today; the duty is a rule]*
+- **You cannot ban a room, and nobody can ban yours.** You can leave, withdraw your node from a community that keeps harm, and stop carrying its keepers; a root may tell its followers to do the same (CC 3.2 "forbidding a room: no new power"; CC 4.5.3). *[works today, by construction]*
+- **A takedown on the fast path still passes the duty-holder gate**; a cosigned root takedown is executed as a replicated tombstone per plane (CC 4.5.3; CC 4.5.5). *[works today]*
+
+## If you hold a root
+
+- Your key is hardware-attested post-quantum hardware; your name is public; every fire, lift and roster change is a signed public row under it (CC 4.2.2; CC 4.2.6). *[works today]*
+- One of you can pause every agent under the root, in an emergency; a lone pause dies in 24 hours; confirming or lifting takes a majority; replacing a holder takes more than half of the standing roster, never of whoever is present (CC 4.2.6; `formal/accord_halt`, `formal/accord_roster`). *[being built: the agent act gate, CIRISAgent#1262; the node half works today]*
+- Your powers are a closed list; the pause keeps state and reads nothing else (CC 4.2.1). *[works today]*
+
+## What binds you everywhere
+
+- Every consequential act you sign arrives signed and can be contested; consequences fall on you, under your name (CC 1.13.6; CC 3.4).
+- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and has no cycles (CC 4.4.3.2.8; CC 4.1.1).
+- A deployment serving more than 100,000 monthly users publishes its redacted decision logs and deferral tickets within 180 days or forfeits any claim of compliance (CC 1.11).
+- Some uses are never allowed and no instruction moves that: deception, fraud, manipulation, coercion, election interference; an engagement-optimising business model declared at onboarding raises your tier and the mode is refused (Annex TX-9, TX-10).
+- Nothing here limits a duty the law imposes on you as a developer, deployer or steward, and nothing here creates a claim the law does not recognise (CC 7.3.5; plain rule N5).

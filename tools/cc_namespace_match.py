@@ -372,6 +372,50 @@ def generate_row_type_vectors(manifest):
     return out
 
 
+def score_admissible(manifest, family_prefix, score):
+    """CC 3.1.7 R4: (admissible, class, refusal). Reads the family's polarity through
+    `_meta.polarity_classes` (aliases folded); points are points, never intervals."""
+    pc = manifest["_meta"]["polarity_classes"]
+    fam = next((f for f in manifest["families"] if f["prefix"] == family_prefix), None)
+    if fam is None:
+        return False, None, manifest["_meta"]["case_rule"]["refusal_tokens"]["family_unregistered"]
+    name = fam.get("polarity", "")
+    name = pc["_aliases"].get(name, name)
+    cls = pc.get(name)
+    if cls is None or cls["kind"] == "per_leaf":
+        return True, name, None              # a parent with per-leaf polarity constrains nothing itself
+    if cls["kind"] == "points":
+        ok = any(abs(score - p) < 1e-9 for p in cls["points"])
+    else:
+        lo_ok = score > cls["min"] or (cls["min_inclusive"] and abs(score - cls["min"]) < 1e-9)
+        ok = lo_ok and score <= cls["max"]
+    return ok, name, (None if ok else pc["refusal"])
+
+
+def generate_polarity_vectors(manifest):
+    cases = [("prohibited:{category}", -1.0, True), ("prohibited:{category}", -0.5, True),
+             ("prohibited:{category}", -0.7, False), ("prohibited:{category}", 1.0, False),
+             ("accord:invoke:constitutional:{halt_id}", 1.0, True), ("accord:invoke:constitutional:{halt_id}", -1.0, False),
+             ("accord:invoke:constitutional:{halt_id}", 0.5, False),
+             ("key:revocation", -1.0, True), ("key:revocation", 1.0, False),
+             ("holds_bytes:sha256:{prefix}", 1.0, None)]
+    out = []
+    for fam, sc, expect in cases:
+        if expect is None:
+            continue
+        ok, cls, refusal = score_admissible(manifest, fam, sc)
+        out.append(OrderedDict([("family", fam), ("score", sc), ("admissible", expect),
+                                ("class", cls), ("refusal", None if expect else manifest["_meta"]["polarity_classes"]["refusal"]),
+                                ("why", "points are points, never intervals" if cls and "only" in cls else "the declared class bounds the score")]))
+        assert ok == expect, (fam, sc, ok, expect)
+    for fam in manifest["families"]:
+        if fam.get("polarity") == "positive-only":
+            out.append(OrderedDict([("family", fam["prefix"]), ("score", 0.0), ("admissible", False), ("class", "positive-only"),
+                                    ("refusal", manifest["_meta"]["polarity_classes"]["refusal"]), ("why", "positive-only excludes zero")]))
+            break
+    return out
+
+
 def instantiate(fam, with_version=True):
     """A class-conformant sample dimension for a family."""
     out = []
@@ -536,6 +580,11 @@ def self_test(manifest):
         if got != v["family"] or refusal != v["refusal"]:
             problems.append("vector %r: expected (%r, %r) got (%r, %r)"
                             % (v["dimension"], v["family"], v["refusal"], got, refusal))
+    for v in generate_polarity_vectors(manifest):
+        ok, cls, refusal = score_admissible(manifest, v["family"], v["score"])
+        if ok != v["admissible"] or refusal != v["refusal"]:
+            problems.append("polarity vector %r/%r: expected (%r, %r) got (%r, %r)"
+                            % (v["family"], v["score"], v["admissible"], v["refusal"], ok, refusal))
     for v in generate_row_type_vectors(manifest):
         got = match_row_type(manifest, v["attestation_type"])
         if got != (v["class"], v["name"], v["refusal"]):
@@ -569,6 +618,7 @@ def main(argv):
             ])),
             ("vectors", generate_vectors(manifest)),
             ("row_type_vectors", generate_row_type_vectors(manifest)),   # CC 2.4 (#137)
+            ("polarity_vectors", generate_polarity_vectors(manifest)),   # CC 3.1.7 R4
         ])
         text = json.dumps(out, indent=2) + "\n"
         if argv[0] == "--check-vectors":

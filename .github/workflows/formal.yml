@@ -8,6 +8,8 @@ on:
     paths:
       - 'formal/**'
       - 'constitution/part_3_the_namespace.md'
+      - 'constitution/part_1_foundation.md'
+      - 'constitution/part_4_composition_governance.md'
       - '.github/workflows/formal.yml'
   pull_request:
     paths:
@@ -59,6 +61,21 @@ jobs:
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s2" -deadlock -config MeshNet_shipped_bind.cfg MeshNet.tla | tee s2.log
           grep -q 'Invariant Inv_ClaimNotBinding is violated' s2.log || exit 1
 
+  roster:
+    name: Lean — the accord roster rule (formal/accord_roster)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.14.0 (elan)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Every theorem closes (no sorry, core only)
+        working-directory: formal/accord_roster
+        run: lean AccordRoster.lean
+
   halt:
     name: TLC — the halt's fire path (formal/accord_halt)
     runs-on: ubuntu-latest
@@ -80,3 +97,78 @@ jobs:
           grep -q 'Invariant Inv_NoWindow is violated' w.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h4" -deadlock -config AccordHalt_proposal_stuck.cfg AccordHalt.tla | tee s.log
           grep -q 'Invariant NotStuck is violated' s.log || exit 1
+
+  authority:
+    name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Every invariant holds in every reachable state
+        run: python3 formal/authority_tree/authority_tree.py | tee at.log && grep -q '^CLOSED$' at.log
+      - name: The term dye test fires (I10)
+        run: |
+          set +e
+          python3 formal/authority_tree/authority_tree.py --no-term-rule | tee dye.log
+          grep -q 'VIOLATION: I10' dye.log || exit 1
+
+  guarantees:
+    name: TLC + Lean — every guarantee at once (formal/guarantees)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Install Lean 4.14.0 (elan)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Structural half closes (no sorry, core only)
+        working-directory: formal/guarantees
+        run: |
+          lean Guarantees.lean 2>&1 | tee lean.log
+          test "${PIPESTATUS[0]}" -eq 0
+          ! grep -qi sorry lean.log
+      - name: Temporal half — the ruled and swapped worlds close; each rule's dye test fires
+        working-directory: formal/guarantees
+        run: |
+          set +e
+          java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -nowarning -metadir "$RUNNER_TEMP/g1" -deadlock -config Guarantees.cfg Guarantees.tla || exit 1
+          java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -nowarning -metadir "$RUNNER_TEMP/g2" -deadlock -config Guarantees_swap.cfg Guarantees.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -nowarning -metadir "$RUNNER_TEMP/g3" -deadlock -config Guarantees_noBondRule.cfg Guarantees.tla | tee b.log
+          grep -q 'Invariant Inv_NotAlone is violated' b.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -nowarning -metadir "$RUNNER_TEMP/g4" -deadlock -config Guarantees_anyRoleForces.cfg Guarantees.tla | tee f.log
+          grep -q 'Invariant Inv_RefusalStands is violated' f.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -nowarning -metadir "$RUNNER_TEMP/g5" -deadlock -config Guarantees_noRetirementStandard.cfg Guarantees.tla | tee h.log
+          grep -q 'Invariant Inv_RetirementStandard is violated' h.log || exit 1
+
+  withdraws:
+    name: TLC — who may erase a row about a subject (formal/withdraws_admission)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The controller-only reading closes; the proxy, literal and node-local readings each fail their invariant
+        working-directory: formal/withdraws_admission
+        run: |
+          set +e
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/w1" -deadlock -config WithdrawsAdmission_controller.cfg WithdrawsAdmission.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/w2" -deadlock -config WithdrawsAdmission_proxy.cfg WithdrawsAdmission.tla | tee p.log
+          grep -q 'Invariant Inv_AntiGoodhart is violated' p.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/w3" -deadlock -config WithdrawsAdmission_literal.cfg WithdrawsAdmission.tla | tee l.log
+          grep -q 'Invariant Inv_AntiGoodhart is violated' l.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/w4" -deadlock -config WithdrawsAdmission_local.cfg WithdrawsAdmission.tla | tee n.log
+          grep -q 'Invariant Inv_OneDoor is violated' n.log || exit 1

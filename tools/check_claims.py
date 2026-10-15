@@ -158,6 +158,7 @@ def load_manifests():
             continue
         backed, sym_backed, sym_all, bad = set(), defaultdict(set), defaultdict(set), []
         sym_state = {}
+        sym_repo = {}
         lines = [l for l in open(vend, encoding="utf-8") if not l.lstrip().startswith("#")]
         for r in csv.DictReader(lines, delimiter="\t"):
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
@@ -178,13 +179,14 @@ def load_manifests():
             for s in syms:
                 sym_all[s].add(dec)
                 sym_state[(s, dec)] = (r.get(spec["status_col"]) or "?").strip()
+                sym_repo.setdefault((s, dec), set()).add((r.get("repo") or "").strip())
                 if is_backed:
                     sym_backed[s].add(dec)
             if spec["known_bad"](r):
                 bad.append((dec, (r.get("cc_claim_id") or r.get("claim_id") or "?").strip(),
                             syms, (r.get(spec["status_col"]) or "?").strip()))
         out[repo] = dict(backed=backed, sym_backed=sym_backed, sym_all=sym_all,
-                         sym_state=sym_state, known_bad=bad, spec=spec,
+                         sym_state=sym_state, sym_repo=sym_repo, known_bad=bad, spec=spec,
                          publishes_symbols=bool(sym_all))
     return out
 
@@ -674,10 +676,23 @@ def main():
             # ---- in-repo -------------------------------------------------------
             if ptr.startswith("@"):
                 inrepo_checked += 1
-                if not os.path.exists(os.path.join(ROOT, ptr[1:])):
+                # `@path#frag`: the path must exist; each comma-separated token of the fragment
+                # must occur in the file as a whole word (an invariant name, a def, a constant).
+                path, _, frag = ptr[1:].partition("#")
+                fp = os.path.join(ROOT, path)
+                if not os.path.exists(fp):
                     errors.append(f"L{ln} [{cid}]: dead in-repo pointer '{ptr}'")
-                else:
-                    grade = "symbol"
+                    continue
+                if frag:
+                    try:
+                        body = open(fp, encoding="utf-8", errors="replace").read()
+                    except OSError:
+                        body = ""
+                    missing = [t for t in frag.split(",") if t and not re.search(r"\b" + re.escape(t) + r"\b", body)]
+                    if missing:
+                        errors.append(f"L{ln} [{cid}]: in-repo pointer '{ptr}' names {missing} not found in {path}")
+                        continue
+                grade = "symbol"
                 continue
 
             # ---- cross-repo ----------------------------------------------------
@@ -718,6 +733,19 @@ def main():
             hit_backed = match_symbol(frag, m["sym_backed"])
             hit_all = match_symbol(frag, m["sym_all"])
             if dec in hit_backed:
+                # A manifest may HOST rows for another repository (the CIRISServer monorepo manifest
+                # carries persist/verify/edge/client rows at old versions). A pointer naming repo X
+                # must resolve against a row whose `repo` column is X; otherwise the claim rests on
+                # a copy nobody re-pins (rc8 register review, P10).
+                hosts = set()
+                for (s_, d_), rs in m.get("sym_repo", {}).items():
+                    if d_ == dec and _sym_eq(frag, s_):
+                        hosts |= {h for h in rs if h}
+                if hosts and repo not in hosts:
+                    errors.append(f"L{ln} [{cid}]: {tag} pointer '{ptr}' resolves only against a row the "
+                                  f"{repo} manifest HOSTS for {'/'.join(sorted(hosts))} — cite the owning "
+                                  f"repository's pinned manifest (impl:{'/'.join(sorted(hosts))}/...) or stage it")
+                    continue
                 xrepo_symbol += 1
                 resolved_by_repo[repo] += 1
                 grade = "symbol"

@@ -88,6 +88,7 @@ GATED_STEMS = [
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
     ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
     ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
+    ("takedown_notice:", "closed: takedown_notice:{basis}:v1 is the only family", "CC 3.1.1"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
 # registered carriers. A consumer builds its admission ALLOWLIST from this; the table in
@@ -192,6 +193,9 @@ def _reserved_rules():
         # CC 3.1.1 / 3.2 public-room listing (#142): the founder's (or a moderate-holder's) own row.
         (lambda p, c: p.startswith("community:listing"),
          "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
+        # CC 3.1.1 takedown notice as a row (#165): duty-holder-signed, or cosigned by the trust root for steward_purge.
+        (lambda p, c: p.startswith("takedown_notice:"),
+         "duty-holder-signed under CC 4.5.5 for the legal bases; cosigned under the trust root's consensus_protocol for steward_purge, attester any seat, family derived from the verified signers", "CC 3.1.1"),
         # CC 3.1.1 device label (#137): the owner's name for an owned occurrence.
         (lambda p, c: p.startswith("device:label"),
          "owner-signed, about an identity occurrence the signer owns; cohort_scope self only; confers nothing", "CC 3.1.1"),
@@ -231,6 +235,10 @@ def _reserved_rules():
         # "not a substrate-self-report", so it must come before the edge-wide rule.
         (lambda p, c: p.startswith("delivery_receipt:"),
          "subscriber-only (attesting_key_id is a current subscriber/member of the named stream; not a substrate self-report)", "CC 3.4.6"),
+        # CC 3.3.10.1 (#92; CIRISConstitution#105 follow-up found by persist at rc7): an in-grammar
+        # ledger is owner-serialized content, not a substrate self-report — the table cell says so.
+        (lambda p, c: p.startswith("ledger:"),
+         "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline", "CC 3.3.10.1"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),
@@ -251,7 +259,7 @@ VOCAB_PATTERN = r"^[a-z0-9][a-z0-9_.-]*$"
 LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
 PLACEHOLDER_CLASS = {
     "vocab": {
-        "allegation_type", "artifact", "aspect", "axis", "band", "category", "class",
+        "allegation_type", "artifact", "aspect", "axis", "band", "basis", "category", "class",
         "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
@@ -448,7 +456,12 @@ def main():
         if prefix in families:
             return  # first definition wins (e.g. agent_files joint claim 3.1.1 + 3.1.9.1)
         reserved, rule = apply_reserved(prefix, comp)
-        if not reserved and reserved_hint:   # table "Reserved? = Yes ... CC 3.4.x"
+        # The table's own "Reserved? = No" beats the component-wide default (CC 3.1.3 `settlement:*`:
+        # the payer signs, with a payee counter-attestation; it was never a substrate self-report).
+        if reserved and rule and rule.get("cc_ref") == "CC 3.4.3" and reserved_hint \
+                and reserved_hint.strip().lower().startswith("no"):
+            reserved, rule = False, None
+        if not reserved and reserved_hint and not reserved_hint.lower().startswith("no"):   # table "Reserved? = Yes ... CC 3.4.x"
             reserved = True
             m = re.search(r"CC\s*(3\.4\.\d+)", reserved_hint)
             rule = {"rule": "reserved (see table)", "cc_ref": "CC " + m.group(1)} if m \
@@ -566,7 +579,7 @@ def main():
                     prefix = bt.group(1)
                     polarity = clean_text(cells[pol_idx]) if pol_idx is not None and pol_idx < len(cells) else ""
                     resv = cells[res_idx] if res_idx is not None and res_idx < len(cells) else ""
-                    resv = resv if resv and resv.strip().lower() not in ("no", "") else ""
+                    resv = resv.strip() if resv else ""   # keep an explicit "No": it beats the component default
                     raw = cells[desc_idx] if desc_idx is not None and desc_idx < len(cells) else ""
                     desc = first_sentence(raw)
                     add_family(prefix, cc_section, component, repo, desc, polarity, resv, raw)
@@ -737,6 +750,16 @@ def main():
             ("private_use_not_federatable", "namespace_private_use_not_federatable"),
             ("missing_version_segment", "missing_version_segment"),
             ("attestation_type_unregistered", "attestation_type_unregistered"),
+            ("score_outside_declared_polarity", "score_outside_declared_polarity"),   # CC 3.1.7 R4
+            ("purge_unauthorised", "purge_unauthorised"),                         # CC 2.4.1.1 — CIRISConstitution#165
+            ("purge_selection_digest_mismatch", "purge_selection_digest_mismatch"),
+            ("purge_selection_count_mismatch", "purge_selection_count_mismatch"),
+            ("purge_retraction_inadmissible", "purge_retraction_inadmissible"),
+            ("purge_not_settled", "purge_not_settled"),
+            ("purge_tombstoned", "purge_tombstoned"),
+            ("asserted_at_stale", "asserted_at_stale"),                               # CC 2.6.7 W — CIRISConstitution#167
+            ("trace_run_kind_mock", "trace_run_kind_mock"),                           # CC 3.1.5 — CIRISConstitution#166
+            ("trace_field_shape_violation", "trace_field_shape_violation"),
         ])),
         ("wildcard_rule", OrderedDict([          # CC 3.1.7 R3 — CIRISConstitution#108
             ("match", "one_or_more_segments"),
@@ -757,6 +780,24 @@ def main():
         ("structural", STRUCTURAL_ROW_TYPES),
         ("carriers", [OrderedDict([("token", t), ("kind", k), ("pattern", p), ("sample", smp)])
                       for t, k, p, smp in CARRIER_ROW_TYPES]),
+    ])
+    meta["polarity_classes"] = OrderedDict([   # CC 3.1.7 R4 — a family's declared polarity is an admission rule
+        ("signed", OrderedDict([("kind", "range"), ("min", -1.0), ("max", 1.0), ("min_inclusive", True)])),
+        ("positive-only", OrderedDict([("kind", "range"), ("min", 0.0), ("max", 1.0), ("min_inclusive", False)])),
+        ("boolean-via-score", OrderedDict([("kind", "points"), ("points", [-1.0, 1.0])])),
+        ("+1.0 only", OrderedDict([("kind", "points"), ("points", [1.0])])),
+        ("-1 only", OrderedDict([("kind", "points"), ("points", [-1.0])])),
+        ("-1 / -0.5 only", OrderedDict([("kind", "points"), ("points", [-1.0, -0.5])])),
+        ("enumerated", OrderedDict([("kind", "range"), ("min", -1.0), ("max", 1.0), ("min_inclusive", True),
+                                    ("note", "the value rides the dimension's segment; the score is the assertion's strength")])),
+        ("per-leaf", OrderedDict([("kind", "per_leaf"), ("note", "resolve the leaf's own row")])),
+        ("_aliases", OrderedDict([
+            ("see CC 3.4.1", "+1.0 only"),                                   # accord:* parent: every leaf is +1.0 only
+            ("per-leaf (CC 3.3.1)", "per-leaf"),
+            ("boolean-via-score; Indeterminate allowed → RESTRICTED", "boolean-via-score"),
+        ])),
+        ("refusal", "score_outside_declared_polarity"),
+        ("note", "points are points, never intervals; a score outside the class is refused at admission (CC 3.1.7 R4)"),
     ])
     # CIRISConstitution#112 — the pin a consumer (CSD/3 `registry_sha256`) should carry:
     # the hash of the GRAMMAR (families + _meta without the prose hash), so a wording
