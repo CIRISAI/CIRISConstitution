@@ -67,7 +67,7 @@ CLM-references	2.6.5	Normative References — a document claim with no artifact 
 CLM-canonicalization-cell	2.6.6	H3 cell canonicalization	impl:CIRISPersist/src/federation/location.rs#parse_canonical_cell	established
 CLM-location	2.6.6.1	Rough-only enforcement for `location_proof` (normative)	impl:CIRISPersist/src/federation/location.rs#validate_location_cell	established
 CLM-cell	2.6.6.2	Cell containment	impl:CIRISPersist/src/federation/location.rs#h3_cell_contained	established
-CLM-time	2.6.7	Time and clocks	test:CIRISConformance#test_240_reserved_prefix_admission impl:CIRISPersist/src/federation/operational.rs#check_skew_bound	established
+CLM-time	2.6.7	Time and clocks	impl:CIRISPersist/src/federation/operational.rs#check_skew_bound	established
 CLM-key_id	2.6.8	FedCode v1 leg: the NodeCode encoding retained as kind=node — the v1 decoder path every FedCode decoder MUST accept	impl:CIRISServer/src/nodecode.rs#encode	established
 CLM-fedcode-kind-tagged	2.6.8	FedCode v2/v3 kind-tagged encoding: kind byte, sha256(key_id) binding, CRC-16-CCITT, base32, versioned prefixes; reference decoder CIRISVerify fedcode.rs (FSD-003) — verify publishes the encoder/decoder symbols at 2.6.8	staged:CIRISVerify#297	staged
 CLM-conformance-language	2.6.9	Conformance language (BCP 14) — a document claim with no artifact to drive	normative-only:—	normative
