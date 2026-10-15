@@ -21,9 +21,9 @@
 (*    resignation and is not modelled twice;                                 *)
 (*  - seats, resignations and heads carry no instants: V is evaluated at     *)
 (*    `now` only, so "admitted at now" is a set membership;                  *)
-(*  - the halt latch is a definitional leg of V (first two branches) and     *)
-(*    orthogonal to every other row; it is not toggled here, so it does not  *)
-(*    double the space;                                                      *)
+(*  - a constitutional halt is NOT a leg of V (CC 3.2 T3/T8 as ruled      *)
+(*    2026-10-15; CC 4.2.1.1): it pauses agents and moves no trust state,  *)
+(*    so it is not modelled;                                                *)
 (*  - a head is issued only when the fold changes (T6);                     *)
 (*  - one human key starts unseated so the T7 recovery widening is          *)
 (*    reachable.                                                            *)
@@ -61,7 +61,6 @@ VARIABLES
     conferred        \* subset of Humans holding a live ceremony-plane conferral
 
 vars == << now, seated, resigned, revokedAll, heads, cosig, edgeHead, conferred >>
-halt == FALSE       \* definitional leg of V; see the header
 
 -----------------------------------------------------------------------------
 Active == ((seated \ resigned) \ revokedAll) \ NodeKeys        \* T7, identity_type at seating
@@ -86,14 +85,12 @@ NotRooted == "NotRooted"
 
 V ==
     IF edgeHead = 0 THEN NotRooted
-    ELSE IF halt THEN NotRooted
     ELSE IF ~HasCurrentHead THEN NotRooted
     ELSE IF Live THEN Rooted ELSE Stalled
 
 (* (i): the verdict with node-bearing seats ignored is the same function. *)
 VNoNode ==
     IF edgeHead = 0 THEN NotRooted
-    ELSE IF halt THEN NotRooted
     ELSE IF ~HasCurrentHead THEN NotRooted
     ELSE IF Cardinality(((seated \ resigned) \ revokedAll) \ NodeKeys) >= M + 1 THEN Rooted ELSE Stalled
 
