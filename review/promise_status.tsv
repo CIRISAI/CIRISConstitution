@@ -25,9 +25,9 @@ plain	4d	being built with 4a: CIRISAgent#1262
 plain	4e	checked in the models	formal/accord_halt, formal/accord_roster
 plain	5a	works today	G15, G16
 plain	5b	works today	G16
-plain	5c	works today, no test yet	G17
+plain	5c	works today	G17, five tests at agent ef02367
 plain	5d	works today	one gap, dream edges, G19
-plain	5e	works today as monitoring	the review step is a rule, G21
+plain	5e	works today	G21: above the threshold a Wise Authority review is requested
 plain	5f	being built: CIRISAgent#1250	
 plain	5g	works today on the agent	the manager side is being built: CIRISManager#27
 plain	6a	proved in the model	in code on the coherence leg, not on the verdict leg, R14
