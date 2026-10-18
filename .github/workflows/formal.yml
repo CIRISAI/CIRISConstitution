@@ -188,7 +188,7 @@ jobs:
         working-directory: formal/self_roster
         run: |
           set +e
-          for c in combined3_stolen combined3_lost combined4_mixed; do
+          for c in combined3_stolen combined3_lost combined4_mixed combined2_lost combined1_add; do
             java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/sr-$c" -deadlock -config SelfRoster_$c.cfg SelfRoster.tla || exit 1
           done
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-u" -deadlock -config SelfRoster_unilateral3_stolen.cfg SelfRoster.tla | tee u.log
@@ -197,6 +197,10 @@ jobs:
           grep -q 'Temporal properties were violated' q.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-r" -deadlock -config SelfRoster_reverse3_stolen.cfg SelfRoster.tla | tee r.log
           grep -q 'Temporal properties were violated' r.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-c2" -deadlock -config SelfRoster_combined2_stolen.cfg SelfRoster.tla | tee c2.log
+          grep -q 'Temporal properties were violated' c2.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-c1" -deadlock -config SelfRoster_combined1_stolen.cfg SelfRoster.tla | tee c1.log
+          grep -q 'Invariant Inv_SelfSurvives is violated' c1.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-a" -deadlock -config SelfRoster_combined3_absent.cfg SelfRoster.tla | tee a.log
           grep -q 'Invariant Inv_ThiefCannotEvictHonest is violated' a.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-m" -deadlock -config SelfRoster_combined3_mixed.cfg SelfRoster.tla | tee m.log

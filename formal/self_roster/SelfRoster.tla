@@ -129,6 +129,9 @@ Inv_ThiefCannotEvictHonest == ~wrong
 
 (* The thief never assembles a majority of the roster while the owner still holds a device. *)
 Inv_ThiefNeverMajority == OwnerHeld # {} => ~Majority(ThiefHeld, Cardinality(member))
+(* The self survives: the owner never holds no key at all. Fails only where it must: one key, stolen
+   (CC 3.3.6.3: at one key a theft is the loss of the self; the other properties are vacuous there). *)
+Inv_SelfSurvives == OwnerHeld # {}
 
 (* Second clause: from any device the owner still holds, every lost device and every stolen
    one eventually leaves the roster and the owner holds two devices again. *)

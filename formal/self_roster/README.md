@@ -20,7 +20,7 @@ are void. An owner device proposes only against what it lost or had stolen; a th
 anything. Adding a device runs under the same policy. `OwnerPresent` makes the owner use every
 device each tick; `FALSE` is the owner away for a whole window. Time is per proposal (no clock).
 
-**Twelve configurations, one module.** Three devices unless stated; one theft or two losses.
+**Sixteen configurations, one module.** Three devices unless stated; one theft or two losses. The one- and two-key runs were added for the 2026-10-18 ruling (CC 3.3.6.3), with `Inv_SelfSurvives` (the owner never holds no key) added to the ruled configurations; the stolen device ranges over every member, the genesis key included, so the genesis key's evictability is covered by the three- and four-key runs.
 
 | Config | Policy / adversary | Expectation | TLC verdict (2026-10-16) |
 |---|---|---|---|
@@ -34,6 +34,10 @@ device each tick; `FALSE` is the owner away for a whole window. Time is per prop
 | `combined3_mixed` | ruled; three devices, one stolen AND one lost | one owner device against one thief device is a tie no policy decides | `Inv_ThiefNeverMajority` violated: the bound; four devices repair it (above) |
 | `combined4_2stolen` | ruled; four devices, two stolen | safety holds; two against two cannot recover | `Prop_LostRecoverable` violated: the bound |
 | `unilateral3_lost`, `quorum3_stolen`, `reverse3_lost` | the remaining cells | the easy cases close | **close** |
+| `combined1_add` | ruled; one key, the owner adds a device (2026-10-18) | at one key the add lands at once: the add-device approval | **closes**, 80 states |
+| `combined1_stolen` | ruled; one key, stolen (2026-10-18) | the self is lost; nothing on the wire recovers it | `Inv_SelfSurvives` violated: the one-key bound |
+| `combined2_lost` | ruled; two keys, one lost (2026-10-18) | the remaining key evicts the lost one over a window and adds | **closes**, 252 states |
+| `combined2_stolen` | ruled; two keys, one stolen (2026-10-18) | safety holds; one against one is a stalemate the thief can hold | `Prop_LostRecoverable` violated: the two-key bound, stated in CC 3.3.6.3 |
 
 **What the runs forced into the rule, each found as a counterexample first.** (1) Without the
 silence condition, a thief's lone eviction landed on a present owner whose devices had not yet

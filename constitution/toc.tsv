@@ -135,6 +135,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 3.3.6.1	encryption_pubkeys	the recipient content-encryption KEM binding	§5.6.8.8.2	0.00303	81	0.36	III	ceg	dictionary
 3.3.6.2	transport-authenticated	`transport_destination` — the authenticated identity↔address binding	§5.6.8.8.1	0.00268	93	0.32	III	ceg	dictionary
 3.3.6.2.1	rns	RNS destination-hash algorithm (pinned)	§5.6.8.8.1.1	0.00321	79	0.39	III	ceg	dictionary
+3.3.6.3	self-roster	The key roster of a self: one fedID, its keys, who may act and how the roster changes (normative)	(spine-reconciled)	0.00050	445	0.5	III	ceg	dictionary
 3.3.7	consent-directed	`consent:replication` — directed federation-peer replication consent (CEG 1.0-RC28 addition)	§5.6.8.15	0.00274	90	0.33	III	ceg	dictionary
 3.3.8	namespace-event	Event-lifecycle dimension families (CEG 0.4 addition)	§5.6.8.5	0.00168	145	0.2	III	ceg	dictionary
 3.3.9	partner	Operational-data subject_kinds — `organization` / `org_membership` / `partner_record`	§5.6.8.13	0.00153	159	0.18	III	ceg	dictionary
