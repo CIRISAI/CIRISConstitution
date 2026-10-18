@@ -53,6 +53,8 @@ jobs:
           python3 tools/build_cc_signed_object.py
           python3 tools/build_cc_signed_object.py --self-test
           git diff --exit-code manifests/ constitution/part_2_the_grammar.md
+      - name: Formal state table, invariant table and atom vocabulary agree with the models, the toc and the register
+        run: python3 tools/check_formal_tables.py
       - name: Volume map (toc.tsv volume column) is regenerated from review/pieces.tsv
         run: |
           python3 build_pdf.py --write-toc-volumes
