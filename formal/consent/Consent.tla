@@ -268,4 +268,23 @@ Inv_ExpiryEmittedBySubstrate ==
 (* CC 3.3.7: a peer holds the node's traces only under a replication grant naming it. *)
 Inv_ReplicationNeedsDirectedGrant == ~badSend
 
+(* ---------------------------------------------------------------- witnesses ------------- *)
+(* Each Wit_* is the negation of a scenario that must be REACHABLE under the ruled reading; a
+   witness configuration lists one and TLC must report it violated (the scenario happens). *)
+Wit_O1WithinW      == ~\E t \in Instants : capt[t] # -1 /\
+                         LET g == Fold("ct", t, Pre(capt[t])).by IN
+                            rows[g].signer = "o1" /\ rows[g].adm >= TX /\ rows[g].at < TX
+Wit_LateRevocation == ~\E t \in Instants, i \in Ids :
+                         capt[t] # -1 /\ IsRev(i, "ct") /\ i > capt[t] /\ rows[i].at <= t
+Wit_FreshGrantAfterRevocation ==
+                      ~\E t \in Instants : capt[t] # -1 /\ \E r \in Pre(capt[t]) : IsRev(r, "ct") /\ rows[r].at <= t
+Wit_AgentRevokes   == ~\E i \in Ids : IsRev(i, "ct") /\ rows[i].signer = "agent"
+Wit_O2Revokes      == ~\E i \in Ids : IsRev(i, "ct") /\ rows[i].signer = "o2"
+Wit_PeerHolds      == peerHolds = {}
+Wit_ExpiredEmitted == ~\E i \in Ids : rows[i].kind = "expired"
+Wit_DecayComplete  == decay # "complete"
+Wit_DecayOnExpiry  == decayCause # "expired"
+Wit_ScoreAfterRevocation ==
+                      ~\E t \in Instants : scored[t] # -1 /\ \E r \in Pre(scored[t]) : IsRev(r, "st") /\ rows[r].at <= t
+
 ==========================================================================================

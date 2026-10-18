@@ -52,7 +52,9 @@ Every model states its residuals in its README: what it does not cover, the boun
 
 | [`retirement`](retirement/) | the seven-state Retirement Standard: forward only, cancel only before frozen, the seal opened by one row, custody only by the named custodian, a walk-away that keeps the record, a refusal that stands | the people an agent served, whose record and rights survive its end; the subject named inside the record | 7.5.5, 7.5, 1.9, 4.5.3 | closes, 594,048 states; 13 twins fail |
 
-Being built (2026-10-18): the membership ceremony and consent, the two planes the state table lists with the most states and no model.
+| [`consent`](consent/) | the consent fold: a revocation is a boundary, the owner can always recant, backdating is bounded by the window, decay runs forward, replication needs a directed grant | the person whose trace is captured or whose content is replicated | 3.3.1, 3.3.7, 2.6.7 | closes (4,210,336 and 467,692 states); three twins fail |
+
+Being built (2026-10-18): the membership ceremony, the last plane the state table lists with no model.
 
 ## Running
 

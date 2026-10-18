@@ -69,16 +69,16 @@ membership	group	group.moderator	candidacy_24h	4.5.4 4.5.13	24 h candidacy phase
 membership	group	group.moderator	fail_secure	4.5.4 4.5.13	no moderator: the community does not federate	group / substrate	mesh_net.MeshNet.tla:mods	—	modelled
 membership	group	group.federating	yes	4.5.4	moderated	—	mesh_net.MeshNet.tla:federating	community.formed	modelled
 membership	group	group.federating	no	4.5.4	fail-secure or restricted by root	root / substrate	mesh_net.MeshNet.tla:restricted	—	modelled
-consent	subject×scope	consent.state	granted	3.3.1	consent:state:granted	subject	—	—	text-only
-consent	subject×scope	consent.state	revoked	3.3.1	consent:state:revoked (overrides)	subject	—	—	text-only
-consent	subject×scope	consent.state	expired	3.3.1	consent:state:expired	persist	—	—	text-only
-consent	agent memory	consent.decay	identity_severed	3.3.1	consent:decay:identity_severed self-report	agent consent module	—	—	text-only
-consent	agent memory	consent.decay	patterns_anonymized	3.3.1	consent:decay:patterns_anonymized self-report	agent consent module	—	—	text-only
-consent	agent memory	consent.decay	complete	3.3.1	consent:decay:complete self-report	agent consent module	—	—	text-only
-consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-authored grant (#179)	owner or node	—	—	text-only
-consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a boundary; capture resumes on a fresh grant	any withdraws signer	—	—	text-only
-consent	node×peer node	consent.replication	none	3.3.7	—	—	—	—	text-only
-consent	node×peer node	consent.replication	granted	3.3.7	consent:replication:v1 by the adder naming the contact's node(s) as subject	adder (node owner)	—	contact.added contact.via_code	text-only
+consent	subject×scope	consent.state	granted	3.3.1	consent:state:granted	subject	consent.Consent.tla:state=granted	—	modelled
+consent	subject×scope	consent.state	revoked	3.3.1	consent:state:revoked (overrides)	subject	consent.Consent.tla:state=revoked	—	modelled
+consent	subject×scope	consent.state	expired	3.3.1	consent:state:expired	persist	consent.Consent.tla:state=expired	—	modelled
+consent	agent memory	consent.decay	identity_severed	3.3.1	consent:decay:identity_severed self-report	agent consent module	consent.Consent.tla:decay=identity_severed	—	modelled
+consent	agent memory	consent.decay	patterns_anonymized	3.3.1	consent:decay:patterns_anonymized self-report	agent consent module	consent.Consent.tla:decay=patterns_anonymized	—	modelled
+consent	agent memory	consent.decay	complete	3.3.1	consent:decay:complete self-report	agent consent module	consent.Consent.tla:decay=complete	—	modelled
+consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-authored grant (#179)	owner or node	consent.Consent.tla:community_trust=granted	—	modelled
+consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a boundary; capture resumes on a fresh grant	any withdraws signer	consent.Consent.tla:community_trust=bounded	—	modelled
+consent	node×peer node	consent.replication	none	3.3.7	—	—	consent.Consent.tla:replication=none	—	modelled
+consent	node×peer node	consent.replication	granted	3.3.7	consent:replication:v1 by the adder naming the contact's node(s) as subject	adder (node owner)	consent.Consent.tla:replication=granted	contact.added contact.via_code	modelled
 content	row	row.tier	local	5.3.2.4	local-tier write, signature deferred	producer	—	—	text-only
 content	row	row.tier	federation	5.3.2.4 2.6.1.7	promotion: hybrid signature over JCS(attestation_envelope)	producer	—	—	text-only
 content	row	row.standing	admitted	2.1 2.6.1.7	admission gates pass	producer	withdraws_admission.WithdrawsAdmission.tla:admitted	—	modelled
