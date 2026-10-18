@@ -55,7 +55,7 @@ stolen device eventually leaves and the owner holds two devices again), `TypeOK`
 
 **What it does not model.** Data at rest and DEK re-wrap (CIRISServer#678); the add-device join
 itself (CIRISServer `formal/add_device`); a thief who steals after the owner has started acting;
-an owner with fewer than three devices, where the clauses do not apply.
+theft after the owner has started acting (the adversary moves first); the one- and two-key cases are now configurations, with their bounds stated in CC 3.3.6.3.
 
 Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config SelfRoster_<cfg>.cfg SelfRoster.tla` (TLA+ tools 1.7.4; the three-device runs finish in seconds, the four-device ones in minutes).
 
