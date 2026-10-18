@@ -53,3 +53,7 @@ jobs:
           python3 tools/build_cc_signed_object.py
           python3 tools/build_cc_signed_object.py --self-test
           git diff --exit-code manifests/ constitution/part_2_the_grammar.md
+      - name: Volume map (toc.tsv volume column) is regenerated from review/pieces.tsv
+        run: |
+          python3 build_pdf.py --write-toc-volumes
+          git diff --exit-code constitution/toc.tsv
