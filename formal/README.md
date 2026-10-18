@@ -1,5 +1,7 @@
 # `formal/` — the models, and the cascade they sit in
 
+*The claim this directory tests is stated in [`ADEQUACY.md`](ADEQUACY.md): the constitution's adequacy to provide decentralized services globally as designed and committed, and an ethical model under which agents participate ethically, decomposed into sub-claims each with its witness and status.*
+
 CIRIS binds power to the rules it imposes, and directs that power toward the protection of the vulnerable.
 
 Its Recursive Golden Rule makes ethical constraints reciprocal: no agent, steward, developer, or institution stands outside the obligations governing the system.
