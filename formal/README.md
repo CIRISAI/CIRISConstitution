@@ -48,6 +48,8 @@ Every model states its residuals in its README: what it does not cover, the boun
 | [`withdraws_admission`](withdraws_admission/) | erasure at the subject's request, by the controller, never laundering an adverse row | the person named in a row, and the people the adverse row protects | 2.4.1.1, 4.5.3 | closes, 3,600 states; three twins fail |
 | [`cewp_node`](cewp_node/) | the planes composed; the catalogue turned into constants | the node as a whole | 3.2, 3.3.6.3, 3.3.7, 5.3.2.4, 4.2.1 | closes, 419,328 states; breaker twin fails |
 
+| [`reciprocity`](reciprocity/) (Lean) | the opening statement itself: which of its steps are theorems and which are premises the text must carry | the reader who takes "reciprocal" and "most vulnerable" at face value | 1.13.2, 1.3, 1.5, 7.5.5 | eight findings, compiles clean |
+
 Being built (2026-10-18): the membership ceremony, consent, and the retirement ladder, the three planes the state table lists with the most states and no model.
 
 ## Running

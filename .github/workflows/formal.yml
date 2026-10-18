@@ -232,3 +232,20 @@ jobs:
           java -Xmx3g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g2" -deadlock -config T8/accord_fuse_HA.cfg ../../accord_halt/AccordHaltFuse.tla
           java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g3" -deadlock -config T8/accord_halt_HA.cfg ../../accord_halt/AccordHalt.tla
           java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g4" -deadlock -config T1/self_roster_one_lost.cfg ../../self_roster/SelfRoster.tla
+
+  reciprocity:
+    name: Lean — from reciprocal service to CIRIS (formal/reciprocity)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.14.0 (core only; no Mathlib)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Every section compiles; no sorry
+        working-directory: formal/reciprocity
+        run: |
+          lean Reciprocity.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean
