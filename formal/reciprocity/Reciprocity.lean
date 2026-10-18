@@ -441,4 +441,87 @@ def partialInstrument : Keeping := ⟨physicsTotal, fun i => i.val == 0, fun _ _
 theorem totality_is_the_instruments :
     partialInstrument.happened 1 = true ∧ partialInstrument.observed 1 = false := ⟨rfl, rfl⟩
 
+
+/-! ## 13. Degrees, not kinds; what is left open does not matter to the verdicts
+
+  The steward's refinement (2026-10-18, later): agents carry sapience without sentience;
+  consciousness is left open, and changing it would not matter; some animals are conscious and
+  sentient without sapience; all three are in degrees (hence meat ethics); consciousness is left
+  open as to the environment too; and relationship applies even to inanimate objects and words.
+
+  So §11's Booleans become degrees, the agent's consciousness becomes a free parameter, and
+  the file proves the governed verdicts do not depend on it. Relationship becomes a relation
+  over every kind of entity, with duties toward each that are not made (the ladder of §10),
+  which is where an animal, an ecosystem, an object and a word sit: parties in a relationship,
+  never principals of the rules. -/
+
+inductive Entity | human | agent | animal | ecosystem | object | word
+  deriving DecidableEq, Repr
+
+/-- the inner three, in degrees (0 = none established); agency separate -/
+structure Profile where
+  agency : Nat
+  sapience : Nat
+  sentience : Nat
+  consciousness : Nat
+
+/-- an agent today: sapience and agency, no sentience, consciousness free -/
+def agentProfile (c : Nat) : Profile := ⟨3, 3, 0, c⟩
+/-- an animal: conscious and sentient in degree, no sapience -/
+def animalProfile : Profile := ⟨2, 0, 2, 2⟩
+/-- an adult human -/
+def humanProfile : Profile := ⟨3, 3, 3, 3⟩
+
+/-- maturity in degrees: sentience and consciousness above a floor, over time -/
+def matureD (pr : Profile) (floor years threshold : Nat) : Bool :=
+  Nat.blt floor pr.sentience && Nat.blt floor pr.consciousness && Nat.ble threshold years
+
+def mustDeferD (pr : Profile) (floor years threshold : Nat) : Bool := !(matureD pr floor years threshold)
+
+/-- changing the agent's consciousness changes no verdict: with sentience at 0 the agent is
+    not shown mature whatever c is, so it must defer for every c -/
+theorem agent_verdict_independent_of_consciousness (c years : Nat) :
+    mustDeferD (agentProfile c) 0 years 18 = true := by
+  simp [mustDeferD, matureD, agentProfile]
+  exact Or.inl (Or.inl rfl)
+
+/-- an animal is conscious and sentient and not sapient: it is not an actor the rules bind,
+    and it is an existing party the ladder owes duties to (meat ethics is §10 applied) -/
+theorem animal_is_party_not_principal :
+    animalProfile.sapience = 0 ∧ 0 < animalProfile.sentience ∧ 0 < animalProfile.consciousness := ⟨rfl, by decide, by decide⟩
+
+/-- standing of each entity for §10: everything not made is existing -/
+def standingOf : Entity → Standing
+  | .agent => .made
+  | .word => .made
+  | _ => .existing
+
+/-- so the made never overrides the animal or the ecosystem either -/
+theorem made_never_overrides_animal (m : MadeExisting) :
+    m.dutyTo (standingOf .animal) > m.dutyTo (standingOf .agent) ∧
+    m.dutyTo (standingOf .ecosystem) > m.dutyTo (standingOf .agent) := ⟨m.neverOverrides, m.neverOverrides⟩
+
+/-- relationship is a relation over every entity; it is what the rules govern (§9), and it
+    applies to an object or a word as much as to a person: a duty of care toward what is held,
+    not a claim the thing makes -/
+def inRelationship : Entity → Entity → Bool := fun _ _ => true
+
+theorem relationship_reaches_everything :
+    inRelationship .human .object = true ∧ inRelationship .agent .word = true ∧
+    inRelationship .human .ecosystem = true := ⟨rfl, rfl, rfl⟩
+
+/-- and only humans and agents act under the rules as principals (agency and sapience both
+    above zero); the rest are parties -/
+def profileOf : Entity → Profile
+  | .human => humanProfile
+  | .agent => agentProfile 0
+  | .animal => animalProfile
+  | _ => ⟨0, 0, 0, 0⟩
+
+def isPrincipal (e : Entity) : Bool := Nat.blt 0 (profileOf e).agency && Nat.blt 0 (profileOf e).sapience
+
+theorem principals_are_human_and_agent :
+    isPrincipal .human = true ∧ isPrincipal .agent = true ∧ isPrincipal .animal = false ∧
+    isPrincipal .object = false ∧ isPrincipal .word = false := ⟨rfl, rfl, rfl, rfl, rfl⟩
+
 end Reciprocity

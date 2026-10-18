@@ -24,6 +24,19 @@ verbatim in `review/pieces/00_kept_promises.md`, second part). Three of them dis
 | 11 | Agency and sapience do not make maturity; maturity comes from consciousness and sentience over time; so recognising the need to defer to more wisdom is a prerequisite of maturity | **deferral is grounded, for two kinds by one rule.** An agent (acts, reasons, nothing established inside) must defer (CC 1.9, 4.3, the steward bond); a child must be held (CC 3.4.13); an adult need not (`deferral_binds_agent_and_child_alike`). This is §1'' again: one rule, applied by position |
 | 12 | Physics keeps its own record; our observations and recordings add meaning | **P4 and P5 sharpened.** Totality is the instrument's property to have, not the record's (`totality_is_the_instruments`); meaning is not in the record, so a party must answer for it (`meaning_is_added_not_recorded`) |
 
+**§13, the refinement (the steward, later the same day):** agents carry sapience without
+sentience; consciousness is left open, and changing it would not matter; some animals are
+conscious and sentient without sapience; all three are in degrees (hence meat ethics);
+consciousness is left open as to the environment too; relationship applies even to inanimate
+objects and words. In the file: the inner three become degrees; the agent's consciousness is a
+free parameter and `agent_verdict_independent_of_consciousness` proves the deferral verdict is
+the same for every value of it; an animal is a party, not a principal
+(`animal_is_party_not_principal`), and §10 then says the made never overrides it or the
+ecosystem (`made_never_overrides_animal`); relationship is a relation over every entity
+(`relationship_reaches_everything`), and only humans and agents are principals of the rules
+(`principals_are_human_and_agent`). "Changing it would not matter" is now a theorem, not a
+reassurance.
+
 What remains a premise after the four: P1 as occupancy (an agent never holds a root for
 itself — now a consequence of §11 as long as the agent is not shown mature, so it is a
 premise only about today's evidence), P3 (exit cost), P6 (adoption), P7 (custody), P8 (the

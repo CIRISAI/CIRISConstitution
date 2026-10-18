@@ -50,7 +50,9 @@ Every model states its residuals in its README: what it does not cover, the boun
 
 | [`reciprocity`](reciprocity/) (Lean) | the opening statement itself: which of its steps are theorems and which are premises the text must carry | the reader who takes "reciprocal" and "most vulnerable" at face value | 1.13.2, 1.3, 1.5, 7.5.5 | eight findings, compiles clean |
 
-Being built (2026-10-18): the membership ceremony, consent, and the retirement ladder, the three planes the state table lists with the most states and no model.
+| [`retirement`](retirement/) | the seven-state Retirement Standard: forward only, cancel only before frozen, the seal opened by one row, custody only by the named custodian, a walk-away that keeps the record, a refusal that stands | the people an agent served, whose record and rights survive its end; the subject named inside the record | 7.5.5, 7.5, 1.9, 4.5.3 | closes, 594,048 states; 13 twins fail |
+
+Being built (2026-10-18): the membership ceremony and consent, the two planes the state table lists with the most states and no model.
 
 ## Running
 

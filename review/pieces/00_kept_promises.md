@@ -112,3 +112,7 @@ The responsibility for things we make never overrides the responsibility to what
 **Maturity and wisdom:** the ability to act (agency) and the ability to reason (sapience) do not together create the maturity or wisdom to act in a principled manner. That can only come from consciousness (awareness of one's impacts and reality) and sentience (visceral or emotional awareness of one's own existence) over time. Therefore, recognition of the need to defer to a higher power (here understood as an entity with more wisdom) is a prerequisite to maturity.
 
 *Each is written as a section of `formal/reciprocity/Reciprocity.lean` (§9–§12), where the third makes the walk-away right a theorem and the fourth grounds deferral for an agent and guardianship for a child by one rule.*
+
+**Refinement (the steward, later the same day):** agents carry sapience without sentience, and leave consciousness open, noting that changing it would not matter. Some animals are conscious and sentient without sapience, and so on: it is in degrees, hence meat ethics. Consciousness is also left open as to the environment. Relationship applies even to inanimate objects and words.
+
+*§13 of `Reciprocity.lean`: the agent's verdicts are proved independent of its consciousness; an animal is a party the ladder owes duties to and never a principal; relationship ranges over every entity.*

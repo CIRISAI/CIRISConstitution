@@ -123,13 +123,13 @@ agent	agent	agent.status	forced_auth	7.5 1.13.2 (G15)	model vocabulary; no wire 
 agent	agent	agent.status	forced_other	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=forced_other	—	model-only
 agent	agent	agent.status	unbound	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=unbound	—	model-only
 agent	agent	agent.status	erased	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=erased	—	model-only
-agent	agent	agent.retirement	decided	7.5.5	retirement:decided row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
-agent	agent	agent.retirement	frozen	7.5.5	retirement:frozen row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
-agent	agent	agent.retirement	secrets_destroyed	7.5.5	retirement:secrets_destroyed row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
-agent	agent	agent.retirement	handed_over	7.5.5	retirement:handed_over row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
-agent	agent	agent.retirement	notified	7.5.5	retirement:notified row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
-agent	agent	agent.retirement	custodian_minted	7.5.5	retirement:custodian_minted row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
-agent	agent	agent.retirement	retired	7.5.5	retirement:retired row (agent self-emits to retired; custodian after)	agent / custodian	guarantees.Guarantees.tla:Inv_RetirementStandard (ladder, not states)	—	modelled-partial
+agent	agent	agent.retirement	decided	7.5.5	retirement:decided row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=decided	—	modelled
+agent	agent	agent.retirement	frozen	7.5.5	retirement:frozen row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=frozen	—	modelled
+agent	agent	agent.retirement	secrets_destroyed	7.5.5	retirement:secrets_destroyed row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=secrets_destroyed	—	modelled
+agent	agent	agent.retirement	handed_over	7.5.5	retirement:handed_over row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=handed_over	—	modelled
+agent	agent	agent.retirement	notified	7.5.5	retirement:notified row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=notified	—	modelled
+agent	agent	agent.retirement	custodian_minted	7.5.5	retirement:custodian_minted row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=custodian_minted	—	modelled
+agent	agent	agent.retirement	retired	7.5.5	retirement:retired row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=retired	—	modelled
 agent	agent	agent.wa	absent	4.3	—	—	—	—	text-only
 agent	agent	agent.wa	present	4.3	a Wise Authority reachable for deferrals	WA	—	wa.present	text-only
 agent	agent	agent.halt_gate	acting	4.2.1.1 1.13.6	no latched halt read by the act gate	—	guarantees.Guarantees.tla:halted=FALSE	—	modelled
