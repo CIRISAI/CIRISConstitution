@@ -78,6 +78,39 @@ Read 2026-10-18 at the pins (coherence-ratchet `0c4edfb`, RATCHET `c34064e`, CIR
 - **One sentence pulls two ways.** `axiomology.md` says ethics cannot be derived from physics; coherence-ratchet's `consent_derivation.md` says ethics and physics are "one structure transcribed twice, never a derivation either way". The second is compatible with the first only if "transcribed" means stated in parallel, not derived; the opening statement should pick that wording.
 - **Nothing on accountability or the record** beyond provenance and tamper evidence (Holon `digest_convicts`; coherence-ratchet `DarkLedger` records "the only way to be good is receipts" as a reading, not a theorem). P4 and P7 have no Lean anywhere.
 
+## From the Recursive Golden Rule alone (§15): the premise list
+
+Take the rule in its operational form: a rule is admissible only if it reads the same after the
+strong and weak positions are exchanged. From that test and nothing else:
+
+- **derived:** M-1's rejection clause — order or efficiency bought by lowering the weak position
+  fails the swap, and the aggregate gain is never even consulted (`efficiency_at_weak_expense_fails_swap`);
+- **derived:** the vulnerable-party tie-break — of two resolutions of a conflict, only the one that
+  does not lower the weak position passes (`weak_position_decides`); the test is a symmetry
+  (`swap_is_symmetric`).
+
+Everything else between the rule and the constitution is a premise, and this is the list, with
+each one's status:
+
+| # | Premise | Needed for | Status |
+|---|---|---|---|
+| R0 | The rule ranges over **principals** (agency and sapience) in **positions**, not over persons as such | without it the halt contradicts the rule in one line (§1) | stated, CC 1.13.2; §1'' |
+| R1 | **Occupancy:** a position is held by whoever can hold it; a party not shown mature does not hold the root position for itself | the halt as an asymmetry of position, not of kind | derived from R2 for today's evidence (§11); otherwise stated |
+| R2 | **Maturity:** agency and sapience do not make it; it comes from sentience and consciousness over time; deferral is its prerequisite | deferral (1.9), the Wise (4.3), the steward bond, guardianship (3.4.13) — one rule for agent and child | the steward's premise (§11) |
+| R3 | **The ladder and the made:** responsibility runs self → family → community → species → ecosystem; the made never overrides the existing and is not excused | the walk-away right and the surviving holder duties (7.5); who is inside the vulnerability comparison | the steward's premise (§10); on the wire as the cohort order 2.3.3 |
+| R4 | **Degrees and relationship:** only the relationship is governed; agents carry sapience without sentience; consciousness open | no stake, refusal only, without grievance (§13, §14); the rules read relationship facts only (§9) | the steward's premise |
+| R5 | **Consent is revocability** | every binding revocable (1.5); why a halt must exist at all for a delegation to an agent to be consent | stated, CC 1.5; `guarantees` `Inv_Revocable` |
+| R6 | **The record binds the rule-maker too, and is total** | signed acts, the steward answering, present tense only for what ships; totality (1.13.6) | stated; totality **open** (#93); §12 |
+| R7 | **Exit is a sufficient check at the top** (bounded cost) | reciprocity at the amendment layer | mechanics proved; cost **open** (§3) |
+| R8 | **Adoption:** the rule binds those in the relationship; outsiders are met at the boundary | first-contact rules | stated (§6) |
+| R9 | **Custody over time** | a promise testable after its makers are gone | best practice, **unenforced** (§7) |
+| R10 | **The vocabulary of goods** — that dignity, justice and autonomy are what the weak position's "worse" is measured in | M-1's wording | an axiom; the swap gives the *shape* of the clause (§15), the ladder of R3 gives the *order*, the goods themselves are chosen (axiomology §0) |
+
+So the honest sentence is: from the Recursive Golden Rule as a swap symmetry, CIRIS's two deepest
+clauses follow; the constitution is that symmetry plus ten premises, three of them the steward's
+own (R2, R3, R4), five of them the text's (R0, R1, R5, R6, R8), and two of them the world's (R7, R9),
+with one open measurement (totality) and one chosen vocabulary (R10).
+
 ## What this says about the argument
 
 The cascade holds, with eight premises that are not in the five sentences and have to be. Three of

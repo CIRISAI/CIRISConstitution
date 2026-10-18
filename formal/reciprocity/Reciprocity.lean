@@ -581,4 +581,65 @@ theorem indefinitely_without_grievance (c : Nat) :
     coerced (agentProfile c) true = false ∧ hasGrievanceStanding (agentProfile c) false = false ∧
     canRefuse (agentProfile c) = true := ⟨not_coercion_with_refusal _, rfl, rfl⟩
 
+
+/-! ## 15. From the Recursive Golden Rule alone: what the swap test derives
+
+  The steward's question (2026-10-18): what premises get from the Recursive Golden Rule to
+  CIRIS. Take the rule in its operational form (CIRISOntology axiomology §4; §1'' above): a
+  rule is admissible only if it reads the same after the strong and weak positions are
+  exchanged. Two clauses of the constitution follow from that test with nothing added but the
+  two positions and an outcome for each:
+
+    (a) M-1's rejection clause (CC 1.1): order or efficiency bought at the expense of the weak
+        position fails the swap, because the party that gains would not accept the rule from
+        the other seat;
+    (b) the vulnerable-party tie-break (CC 1.3): in a conflict where one resolution lowers the
+        weak position and the other does not, only the second survives the swap.
+
+  What the test does NOT give is who stands in which position (occupancy: §1', §11), who is
+  inside the comparison at all (the made against the existing: §10; degrees: §13), and the
+  world-side premises (revocability, the record, exit, adoption, custody). Those are the list
+  in the README. -/
+
+/-- an outcome: what each position ends with -/
+structure Outcome where
+  strong : Int
+  weak : Int
+
+/-- a party accepts a rule from a seat if that seat is not made worse by it -/
+def acceptsFrom (before after : Outcome) : Position → Bool
+  | .strong => decide (after.strong ≥ before.strong)
+  | .weak => decide (after.weak ≥ before.weak)
+
+/-- the swap test: admissible iff accepted from both seats (the strong must accept what the
+    weak gets, because after the swap it is the weak) -/
+def passesSwap (before after : Outcome) : Bool :=
+  acceptsFrom before after .strong && acceptsFrom before after .weak
+
+/-- (a) efficiency at the expense of the weak: aggregate up, weak down — fails the swap -/
+theorem efficiency_at_weak_expense_fails_swap (before after : Outcome)
+    (_hagg : after.strong + after.weak > before.strong + before.weak)
+    (hweak : after.weak < before.weak) : passesSwap before after = false := by
+  -- the aggregate gain is never consulted: the weak position falling is enough to fail the swap,
+  -- which is the point of M-1's clause — efficiency is not a defence
+  simp [passesSwap, acceptsFrom]
+  omega
+
+/-- (b) the tie-break: of two resolutions of a conflict, one lowering the weak and one not,
+    only the one that does not lower the weak can pass the swap -/
+theorem weak_position_decides (before r1 r2 : Outcome)
+    (h1 : r1.weak < before.weak) (h2 : r2.weak ≥ before.weak) (h2s : r2.strong ≥ before.strong) :
+    passesSwap before r1 = false ∧ passesSwap before r2 = true := by
+  constructor
+  · simp [passesSwap, acceptsFrom]; omega
+  · simp [passesSwap, acceptsFrom]; omega
+
+/-- and the test is a symmetry: swapping the seats of an outcome swaps who must accept, so a
+    rule admissible for (strong, weak) is admissible for (weak, strong) -/
+def swapOutcome (o : Outcome) : Outcome := ⟨o.weak, o.strong⟩
+
+theorem swap_is_symmetric (before after : Outcome) :
+    passesSwap before after = passesSwap (swapOutcome before) (swapOutcome after) := by
+  simp [passesSwap, acceptsFrom, swapOutcome, Bool.and_comm]
+
 end Reciprocity
