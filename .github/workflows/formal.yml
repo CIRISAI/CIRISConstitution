@@ -51,14 +51,14 @@ jobs:
         run: java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-rr" -deadlock -config RootReach.cfg RootReach.tla
       - name: The ruled configuration closes (#141)
         working-directory: formal/mesh_net
-        run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-ruled" -deadlock -config MeshNet_ruled.cfg MeshNet.tla
+        run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-ruled" -deadlock -config MeshNet_ruled.cfg MeshNet3.tla
       - name: The shipped configurations each fail their one invariant (the defects #141 corrects)
         working-directory: formal/mesh_net
         run: |
           set +e
-          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s1" -deadlock -config MeshNet_shipped_scope.cfg MeshNet.tla | tee s1.log
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s1" -deadlock -config MeshNet_shipped_scope.cfg MeshNet3.tla | tee s1.log
           grep -q 'Invariant Inv_Invisible is violated' s1.log || exit 1
-          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s2" -deadlock -config MeshNet_shipped_bind.cfg MeshNet.tla | tee s2.log
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s2" -deadlock -config MeshNet_shipped_bind.cfg MeshNet3.tla | tee s2.log
           grep -q 'Invariant Inv_ClaimNotBinding is violated' s2.log || exit 1
 
   roster:
@@ -205,3 +205,30 @@ jobs:
           grep -q 'Invariant Inv_ThiefCannotEvictHonest is violated' a.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-m" -deadlock -config SelfRoster_combined3_mixed.cfg SelfRoster.tla | tee m.log
           grep -q 'Invariant Inv_ThiefNeverMajority is violated' m.log || exit 1
+
+  cewp_node:
+    name: TLC — the spine (formal/cewp_node) and the generated closure configurations
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The spine closes; the G7 breaker twin fails the serve invariant
+        working-directory: formal/cewp_node
+        run: |
+          set +e
+          java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/sp" -deadlock -config CewpNode.cfg CewpNode.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/spb" -deadlock -config CewpNode_breaker.cfg CewpNode.tla | tee b.log
+          grep -q 'Invariant Inv_X1_LatchDoesNotBlockServing is violated' b.log || exit 1
+      - name: Generated closure configurations run (one per plane, the catalogue's largest instance of each)
+        working-directory: formal/cewp_node/generated
+        run: |
+          set -e
+          java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g1" -deadlock -config T3/root_reach.cfg ../../mesh_net/RootReach.tla
+          java -Xmx3g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g2" -deadlock -config T8/accord_fuse_HA.cfg ../../accord_halt/AccordHaltFuse.tla
+          java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g3" -deadlock -config T8/accord_halt_HA.cfg ../../accord_halt/AccordHalt.tla
+          java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g4" -deadlock -config T1/self_roster_one_lost.cfg ../../self_roster/SelfRoster.tla

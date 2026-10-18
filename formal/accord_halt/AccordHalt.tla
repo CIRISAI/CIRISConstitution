@@ -13,10 +13,8 @@
    Signatures are unforgeable. Three holders, two nodes (one subscribed, one not). *)
 EXTENDS Naturals, FiniteSets
 
-CONSTANTS h1, h2, h3, n1, n2, Mode
-Holders == {h1, h2, h3}
-Nodes == {n1, n2}
-Subscribed == {n1}
+CONSTANTS Holders, Nodes, Subscribed, Mode
+ASSUME Subscribed \subseteq Nodes
 
 VARIABLES honest,       \* holders not coerced
           intent,       \* honest holders who want to halt
@@ -30,6 +28,11 @@ VARIABLES honest,       \* holders not coerced
           halted,       \* [Nodes -> BOOLEAN]  the latch
           resumeSigs    \* holders who signed lifecycle:active since the latch
 vars == <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed, seen, halted, resumeSigs>>
+
+\* The latch as seen on the subscribed nodes (one node in the rc7 instance). A strict majority of
+\* the standing roster resumes (CC 4.2.1.1); with three holders that is the two the text first said.
+LatchedSub == \E n \in Subscribed : halted[n]
+StrictMajority(S) == Cardinality(S) * 2 > Cardinality(Holders)
 
 Init == /\ honest = Holders /\ intent = {} /\ serverUp = TRUE
         /\ proposal = "none" /\ participated = {} /\ sealed = {} /\ stolen = {}
@@ -64,10 +67,10 @@ Publish(h) == /\ Mode = "row" /\ (h \in intent \/ h \in sealed) /\ ~jammed
               /\ UNCHANGED <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed>>
 
 \* resumption: two of three holders sign lifecycle:active
-SignResume(h) == /\ halted[n1] /\ h \notin resumeSigs
+SignResume(h) == /\ LatchedSub /\ h \notin resumeSigs
                  /\ resumeSigs' = resumeSigs \cup {h}
                  /\ UNCHANGED <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed, seen, halted>>
-Resume == /\ halted[n1] /\ Cardinality(resumeSigs) >= 2
+Resume == /\ LatchedSub /\ StrictMajority(resumeSigs)
           /\ halted' = [n \in Nodes |-> FALSE] /\ resumeSigs' = {} /\ intent' = {}
           /\ proposal' = (IF Mode = "proposal" THEN "none" ELSE proposal)
           /\ participated' = {}
@@ -90,7 +93,7 @@ Steal(h) == /\ Mode = "row" /\ h \in sealed /\ h \notin stolen
 PublishStolen(h) == /\ Mode = "row" /\ h \in stolen /\ ~jammed
                     /\ Fire /\ seen' = TRUE /\ resumeSigs' = {}
                     /\ UNCHANGED <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed>>
-CoercedResume(h) == /\ h \notin honest /\ halted[n1] /\ h \notin resumeSigs
+CoercedResume(h) == /\ h \notin honest /\ LatchedSub /\ h \notin resumeSigs
                     /\ resumeSigs' = resumeSigs \cup {h}
                     /\ UNCHANGED <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed, seen, halted>>
 
@@ -105,14 +108,14 @@ Spec == Init /\ [][Next]_vars
 Inv_SubscribersOnly == \A n \in Nodes : halted[n] => n \in Subscribed
 \* H2 No visible window: the adversary never sees a halt attempt that has not already landed.
 \*    Fails in proposal mode (the open proposal IS the window); holds in row mode.
-Inv_NoWindow == seen => (halted[n1] \/ proposal = "decided")
+Inv_NoWindow == seen => (LatchedSub \/ proposal = "decided")
 \* H2' stated tightly for row mode: seen and not halted means a resume already happened since.
-Inv_RowNoWindow == (Mode = "row") => (seen => (halted[n1] \/ intent = {}))
+Inv_RowNoWindow == (Mode = "row") => (seen => (LatchedSub \/ intent = {}))
 \* H3 The adversary alone cannot resume: a resume needs an honest signature while it coerces one.
-Inv_ResumeNeedsHonest == (halted[n1] /\ Cardinality(resumeSigs) >= 2) => resumeSigs \cap honest # {}
+Inv_ResumeNeedsHonest == (LatchedSub /\ StrictMajority(resumeSigs)) => resumeSigs \cap honest # {}
 \* H4 Stuck: an honest holder intends, the adversary has acted, and no halt landed.
 \*    Reachable in proposal mode (checked as a reachability witness, see cfg comments).
-Stuck == (intent \cap honest # {}) /\ ~halted[n1] /\ (jammed \/ ~serverUp)
+Stuck == (intent \cap honest # {}) /\ ~LatchedSub /\ (jammed \/ ~serverUp)
 NotStuck == ~Stuck
 \* H5 In row mode a halt never needs the server.
 Prop_RowNoServer == [][(\E h \in Holders : Publish(h)) => serverUp \/ ~serverUp]_vars

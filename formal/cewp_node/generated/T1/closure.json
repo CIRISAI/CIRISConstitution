@@ -1,0 +1,89 @@
+{
+ "catalog_id": "T1",
+ "title": "One person, two devices, self room",
+ "catalogue_version": 1,
+ "serves": [
+  "CSD-107",
+  "CSD-095"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 2,
+  "persons": 1,
+  "devices_max_per_person": 2,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_one_stolen.cfg",
+  "self_roster_one_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T1.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person one: two keys — a theft is the stated two-key stalemate (CC 3.3.6.3)"
+ ],
+ "promised_atoms": {
+  "person.multi_device": {
+   "plane": "self",
+   "state_predicate": "self.roster_size∈{two,three_or_more}",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "room.self.keyed": {
+   "plane": "content",
+   "state_predicate": "∀ devices: row.scope=self room keyed (key_grant per recipient)",
+   "cc_ref": "3.3.2 5.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "note.synced": {
+   "plane": "content",
+   "state_predicate": "blob.custody=held on every device (self scope)",
+   "cc_ref": "3.1.3.3 5.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "session.unified": {
+   "plane": "content",
+   "state_predicate": "session.claim=claimed with one handler per exchange on every device",
+   "cc_ref": "3.1.3.1",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "file.held": {
+   "plane": "content",
+   "state_predicate": "blob.custody=held on every device of the person",
+   "cc_ref": "3.1.3.3",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "file.large": {
+   "plane": "content",
+   "state_predicate": "blob.delivery=chunked",
+   "cc_ref": "2.6.1.3 5.3.3",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "file.custody_received": {
+   "plane": "content",
+   "state_predicate": "blob.custody=custody_received",
+   "cc_ref": "3.1.3.3 5.3.3.6",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "file.withdrawn": {
+   "plane": "content",
+   "state_predicate": "blob.custody=withdrawn ∧ row.standing=withdrawn",
+   "cc_ref": "2.4.1.1",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  }
+ },
+ "atoms_with_a_plane_model": 8,
+ "atoms_without": 0
+}

@@ -4,9 +4,8 @@
    the standing roster (M of N) confirms it; a confirmed pause ends only by a majority resumption.
    Adversary: coerces at most one holder, jams, steals a sealed row. N = 3, M = 2, Fuse = 2. *)
 EXTENDS Naturals, FiniteSets
-CONSTANTS h1, h2, h3, Fuse
-Holders == {h1, h2, h3}
-M == 2                                     \* strict majority of the standing roster
+CONSTANTS Holders, Fuse
+M == Cardinality(Holders) \div 2 + 1   \* strict majority of the standing roster (2 of 3 in the rc7 instance)
 VARIABLES honest, intent, sealed, stolen, jammed, halted, confirmed, confirmSigs, resumeSigs, clock
 vars == <<honest, intent, sealed, stolen, jammed, halted, confirmed, confirmSigs, resumeSigs, clock>>
 

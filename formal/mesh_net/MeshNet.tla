@@ -18,15 +18,14 @@
    accord's own roster rules are modelled elsewhere (formal/trust_root, formal/accord_roster). *)
 EXTENDS Naturals, FiniteSets
 
-CONSTANTS p1, p2, p3, n1, n2, n3, b1, b2,
+CONSTANTS Persons, Nodes, Blobs,
+          Owner,        \* [Nodes -> Persons]
+          Class,        \* [Nodes -> {"personal", "server"}]
+          InitMembers,  \* [Cohorts -> SUBSET Persons]
+          InitMods,     \* [Cohorts -> SUBSET Persons]
           ClaimScope,   \* "federation" | "content"
           ClaimsBind    \* BOOLEAN
-
-Persons == {p1, p2, p3}
-Nodes   == {n1, n2, n3}
-Blobs   == {b1, b2}
-Owner   == [n \in Nodes |-> IF n = n2 THEN p2 ELSE p1]          \* n3 is p1's server
-Class   == [n \in Nodes |-> IF n = n3 THEN "server" ELSE "personal"]
+ASSUME Owner \in [Nodes -> Persons] /\ Class \in [Nodes -> {"personal", "server"}]
 
 Cohorts   == {"fam", "room", "pub", "commons"}
 Bounded   == {"fam", "room", "pub"}        \* has a roster
@@ -70,11 +69,8 @@ Init ==
   /\ claimed = {}
   /\ allow = [n \in Nodes |-> IF Class[n] = "personal" THEN Cohorts ELSE {"commons"}]
   /\ withdrawn = {}
-  /\ members = [c \in Cohorts |-> IF c = "fam" THEN {p1, p2}
-                                   ELSE IF c = "room" THEN {p1, p3}
-                                   ELSE IF c = "pub" THEN {p3}
-                                   ELSE Persons]
-  /\ mods = [c \in Cohorts |-> IF c \in Moderated THEN {p3} ELSE {}]
+  /\ members = InitMembers
+  /\ mods = InitMods
   /\ federating = [c \in Cohorts |-> TRUE]
   /\ restricted = FALSE
 

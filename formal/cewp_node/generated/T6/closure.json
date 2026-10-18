@@ -1,0 +1,71 @@
+{
+ "catalog_id": "T6",
+ "title": "An affiliation — licensing authority, delegation chain",
+ "catalogue_version": 1,
+ "serves": [
+  "CSD-120",
+  "CSD-121",
+  "CSD-122",
+  "CSD-123",
+  "CSD-124",
+  "CSD-125",
+  "CSD-126"
+ ],
+ "derives": [
+  "2f"
+ ],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 2,
+  "persons": 2,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_authority_stolen.cfg",
+  "self_roster_authority_lost.cfg",
+  "self_roster_practitioner_stolen.cfg",
+  "self_roster_practitioner_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T6.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person authority: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person practitioner: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "community.formed": {
+   "plane": "membership",
+   "state_predicate": "group.formed=formed (community)",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "community.member": {
+   "plane": "membership",
+   "state_predicate": "member.stage=member (community)",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "authority.licensing": {
+   "plane": "authority",
+   "state_predicate": "licence.state=held under an affiliated authority",
+   "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+   "in_state_table": true,
+   "plane_models": "authority_tree"
+  },
+  "delegation.chain": {
+   "plane": "authority",
+   "state_predicate": "∃ chain: delegation.link=live, length ≥ 2",
+   "cc_ref": "4.4.3.4.3",
+   "in_state_table": true,
+   "plane_models": "authority_tree"
+  }
+ },
+ "atoms_with_a_plane_model": 2,
+ "atoms_without": 2
+}

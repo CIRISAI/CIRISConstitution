@@ -1,0 +1,6 @@
+repo	CIRISServer
+branch	feat/csd4-catalogue
+commit	42099fc5fb26d6fedefb0180b8836605a3cdbdeb
+path	harness/native/topologies/catalog/
+vendored	2026-10-18
+note	unpushed WIP at vendoring time; CC re-vendors at the first pushed commit and at every catalogue_version bump

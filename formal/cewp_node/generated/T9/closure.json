@@ -1,0 +1,75 @@
+{
+ "catalog_id": "T9",
+ "title": "Two roots and a party outside both",
+ "catalogue_version": 1,
+ "serves": [
+  "CSD-127"
+ ],
+ "derives": [
+  "6e",
+  "4d",
+  "4e"
+ ],
+ "entity_counts": {
+  "roots": 2,
+  "canonicals": 2,
+  "nodes": 3,
+  "persons": 3,
+  "devices_max_per_person": 1,
+  "holders": 3
+ },
+ "generated": [
+  "trust_root_R2.cfg",
+  "accord_halt_R2.cfg",
+  "accord_fuse_R2.cfg",
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "self_roster_zed_stolen.cfg",
+  "self_roster_zed_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T9.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R1: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "root R2: witnessed mode off; trust_root model not applicable until extended (residual E)",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person zed: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "mesh_net: 3 persons × 5 nodes is above the rc7 instance (3×3); expect a long TLC run or reduce with symmetry"
+ ],
+ "promised_atoms": {
+  "root.two": {
+   "plane": "root",
+   "state_predicate": "root.count=two",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.key": {
+   "plane": "root",
+   "state_predicate": "root.count=one ∧ root.head=none",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.infrastructure": {
+   "plane": "root",
+   "state_predicate": "root.count=one ∧ root.head≠none",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "party.outside_roots": {
+   "plane": "node",
+   "state_predicate": "∀ roots: node.subscribed=no",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  }
+ },
+ "atoms_with_a_plane_model": 4,
+ "atoms_without": 0
+}
