@@ -7,7 +7,8 @@
     "invariants": "formal/INVARIANTS.tsv",
     "bump_rule": "a new entry, a new atom, a change to an atom's meaning or to an entry's promises bumps catalogue_version; lifting a builder refusal or re-laying nodes that keep every promise does not",
     "n_atoms": 51,
-    "n_atoms_in_state_table": 43
+    "n_atoms_in_state_table": 47,
+    "revision_note": "2026-10-18 b: session.unified, contact.added, contact.via_code and file.large mapped to state-table rows (server reading accepted); no atom or meaning changed, catalogue_version stays 1"
   },
   "atoms": {
     "root.none": {
@@ -166,16 +167,16 @@
     },
     "contact.added": {
       "plane": "membership",
-      "state_predicate": "contact row admitted (no table state; app relation)",
+      "state_predicate": "consent.replication=granted by the adder naming the contact's node(s)",
       "cc_ref": "3.1.3",
-      "in_state_table": false,
+      "in_state_table": true,
       "meaning": "a contact was added"
     },
     "contact.via_code": {
       "plane": "membership",
-      "state_predicate": "contact.added via FedCode",
+      "state_predicate": "consent.replication=granted, provenance FedCode (CC 2.6.8)",
       "cc_ref": "2.6.8",
-      "in_state_table": false,
+      "in_state_table": true,
       "meaning": "a contact was added from the person's contact code"
     },
     "room.self.keyed": {
@@ -208,9 +209,9 @@
     },
     "file.large": {
       "plane": "content",
-      "state_predicate": "blob streamed (above the inline bound)",
+      "state_predicate": "blob.delivery=chunked",
       "cc_ref": "2.6.1.3 5.3.3",
-      "in_state_table": false,
+      "in_state_table": true,
       "meaning": "the file is streamed (chunked), not inline"
     },
     "file.custody_received": {
@@ -243,9 +244,9 @@
     },
     "session.unified": {
       "plane": "content",
-      "state_predicate": "session:claim names one handler per exchange (no table state)",
+      "state_predicate": "session.claim=claimed with one handler per exchange on every device",
       "cc_ref": "3.1.3.1",
-      "in_state_table": false,
+      "in_state_table": true,
       "meaning": "every device names the same handler for each exchange"
     },
     "household.formed": {
