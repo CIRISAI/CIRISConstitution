@@ -79,6 +79,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin
 2.6.1.4	worked	Worked attack the rule closes	§0.9.5	0.00102	216	0.12	II	ceg
 2.6.1.5	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg
 2.6.1.6	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	II	ceg
+2.6.1.7	signed-object	The signed object — member set, placement and types (normative)	(spine-reconciled)	0.00050	444	0.4	II	ceg
 2.6.2	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	II	ceg
 2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	II	ceg
 2.6.4	policy-versioning	Versioning policy	§0.3	0.00214	111	0.26	II	ceg

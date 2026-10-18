@@ -478,7 +478,7 @@ CEG envelope signing bytes are computed via **JCS — JSON Canonicalization Sche
 - Strings escaped per RFC 8259 §7 with the JCS narrowing on `\uXXXX` form
 - Numbers serialized per the ES6-derived rule (RFC 8785 §3.2.2.3) — integers without trailing `.0`, no exponent unless the magnitude requires it
 
-A CEG-Conforming Producer MUST produce signing bytes via JCS over the envelope object. A CEG-Conforming Consumer (CCC) MUST recompute signing bytes via the same JCS rule for signature verification. A CEG-Conforming Substrate (CCS) MUST preserve the as-received envelope object bytes for relay (per the round-trip rule above); it MAY store a parsed representation alongside, but the canonical-bytes contract is against the as-received **object** — its member set and its member values, which no party may alter — and not against a parsed-and-re-serialized shape with defaults materialized or members dropped. Insignificant whitespace and member order are **not** part of that contract: JCS erases both, so normalizing them changes no signing byte.
+A CEG-Conforming Producer MUST produce signing bytes via JCS over the envelope object — `attestation_envelope`, whose member set and placement are pinned at [CC 2.6.1.7](#2.6.1.7). A CEG-Conforming Consumer (CCC) MUST recompute signing bytes via the same JCS rule for signature verification. A CEG-Conforming Substrate (CCS) MUST preserve the as-received envelope object bytes for relay (per the round-trip rule above); it MAY store a parsed representation alongside, but the canonical-bytes contract is against the as-received **object** — its member set and its member values, which no party may alter — and not against a parsed-and-re-serialized shape with defaults materialized or members dropped. Insignificant whitespace and member order are **not** part of that contract: JCS erases both, so normalizing them changes no signing byte.
 
 **Redaction vs tampering — the signed-discriminator shape is ruled OUT (normative dead end, CIRISConstitution#78).** The shape every drafter reaches for first: a signed "I redacted this" marker distinguishing authorized redaction from tampering. Ruled out with the reasoning in-clause so the next drafter inherits the failure: **a signed redaction marker proves an authorized party changed the bytes — it does not prove that *only* the redacted parts changed.** A compromised or coerced authority key becomes a licence to rewrite arbitrary content while every reader reports the row as legitimately redacted: integrity replaced by authority, the AV-50 conflation arriving quietly. Any future redaction scheme is bound by four ruled constraints: **(a) it lives on the envelope plane** — the integrity gate is `original_content_hash` at ingest, receiver-side; `persist_row_hash` is never re-verified on read, so a storage-plane build is inert; **(b) it carries its own redactability declaration** in the signed object — per-field commitments cannot derive "which fields are redactable" from the manifest (248 wire fields vs 88 storage containers, disjoint sets, no bridge) — **unless the scheme is uniformly redactable by construction** (BBS+-style multi-message signatures, JMSW set schemes), in which case the signed object MUST instead commit to the member count and index ordering; **(c) it lives above whole-row hashing**, which forecloses partial redaction downstream; **(d) the third option stays open** — a redacted row MAY simply be a *different object carrying a different kind*, relocating the work entirely. Note for any per-field commitment design: canonical member ordering is **one of two routes** to a derivable leaf sequence — the other is committing to the encoded disclosure bytes directly (the SD-JWT/mDoc salted-digest shape, which needs no canonicalization); where the canonical route is taken, CC 2.6's canonicalization choice is already load-bearing for redactable signatures, which is what makes them cheaper than they look.
 
@@ -532,6 +532,150 @@ What this rule does NOT do:
 - Change any semantic interpretation — defaults still apply at interpretation time per [CC 2.1](#2.1)
 - Modify the datetime / hex / time / H3 sub-rules — those are domain-specific and compose under JCS
 - Wire-break prior emissions — emissions that omitted optional fields remain valid; emissions that explicitly emitted defaults likewise remain valid; what the rule normatively prohibits is RELAY-TIME mutation of presence/absence, which was always wrong but is now explicitly so
+
+#### 2.6.1.7 `signed-object` — The signed object — member set, placement and types (normative)
+
+*Generated from `constitution/signed_object.tsv` by `tools/build_cc_signed_object.py`; typed from CIRISPersist `d5a80253` (`src/federation/envelope.rs`); the same data renders [`manifests/signed_object.cddl`](../manifests/signed_object.cddl) and [`manifests/signed_object.json`](../manifests/signed_object.json), and [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) holds the byte vectors. Edit the TSV.*
+
+**The object (normative).** The signed object of an attestation row is `attestation_envelope`: one JSON object. The signing input is JCS(`attestation_envelope`) ([CC 2.6.1.3](#2.6.1.3)) and nothing else — the row's own signature members, every cosignature and every column beside the row are outside the bytes, so a cosignature is never inside the bytes it signs. Seven of those columns are mirrored *inside* the bytes under the member `row`, a closed set; a row with no mirror is refused `envelope_member_missing`, and a column that disagrees with its mirror is refused `typed_diverges_from_envelope`. The claim's instants ride inside the bytes as `asserted_at` and `expires_at`, and the columns are read back out of them. The row's own signature is the attester's: the classical half verifies against `attesting_key_id`'s pinned Ed25519 key over the signing input, the post-quantum half against its ML-DSA-65 key over the signing input followed by the raw Ed25519 signature ([hybrid-sig], [CC 2.6.5](#2.6.5)); at the federation tier both halves verify or the row is refused. `original_content_hash` is the lowercase hex SHA-256 of the signing input and is recomputed at ingest. A second signer over the same bytes is an entry of `additional_scrubs[]`, beside the row, verified against its own key. A JCS image above 1 MiB is refused `ENVELOPE_TOO_LARGE` ([CC 2.6.1.3](#2.6.1.3)).
+
+**Placement vocabulary.** `signed:row` — inside `attestation_envelope.row`. `signed:envelope` — inside `attestation_envelope`, typed by persist. `signed:envelope-extra` — inside `attestation_envelope`, typed by [CC 2.1](#2.1), carried untyped by persist and validated at the family's gate. `beside` — outside the bytes, replicated, bound to the bytes by a gate. `beside:signature` — the row's own signature members. `beside:cosign` — an `additional_scrubs[]` entry. `local` — persist-internal, not a wire contract. `not-on-wire` — named by this text, not shipped at the pin. An array's kind is `set` (sorted by JCS string before signing) or `sequence` (as authored), per [CC 2.6.1.1.1](#2.6.1.1.1).
+
+**Inside the signed bytes — the mirror (closed, exactly seven; CIRISPersist#643)**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `row.attestation_id` | signed:row | `uuid` | — | REQUIRED | — | [2.6.1.7](#2.6.1.7) | The row's identity, minted by the stamper before the bytes exist (UUID v4 at persist, src/federation/attestation_emit.rs#stamp_and_canonicalize); the composers' references_attestation_id points at it. |
+| `row.attesting_key_id` | signed:row | `key-id` | — | REQUIRED | — | [2.1](#2.1) [2.6.8](#2.6.8) | The signer. The row's own signature verifies against this key's pinned Ed25519 and ML-DSA-65 public keys (src/federation/tier_ingest.rs#verify_row_hybrid_signature); there is no separate signer slot inside the bytes. |
+| `row.attestation_type` | signed:row | `row-type` | — | REQUIRED | — | [2.4](#2.4) | One of the five, byte-compared; anything else is refused attestation_type_unregistered (src/federation/row_type.rs#check_row_type). |
+| `row.attested_key_id` | signed:row | `key-id` | — | REQUIRED | the attester | [2.1](#2.1) | Defaults to the attester at the mint (a self-claim). |
+| `row.subject_key_ids` | signed:row | `[* subject-id]` | set | REQUIRED (may be empty) | [] | [2.3](#2.3) [2.3.2.1](#2.3.2.1) [2.6.1.1.1](#2.6.1.1.1) | Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit (src/federation/mod.rs#validate_subject_key_ids). The 2.6.1.1.1 set sort is not checked at the v57 door (finding F1). |
+| `row.cohort_scope` | signed:row | `cohort-scope` | — | REQUIRED | federation | [2.3.3](#2.3.3) [5.2](#5.2) | Closed set of seven (src/federation/admission.rs#check_cohort_scope). The one mirror member a placement-touching re-sign may narrow; it may never be re-authored (CIRISPersist#656). |
+| `row.weight` | signed:row | `float` | — | OPTIONAL | absent | [2.1](#2.1) | Absent in the mirror iff the column is NULL. A non-finite value is refused at the stamp rather than serialised as null. |
+
+**Inside the signed bytes — members persist types (`EnvelopeCore`)**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `row` | signed:envelope | `row-mirror` | — | REQUIRED | — | [2.6.1.7](#2.6.1.7) | The signed twin of the seven typed columns beside the row. The member set is closed (an eighth member is refused); a row with no mirror is refused envelope_member_missing, a mirror that disagrees with a column is refused typed_diverges_from_envelope (CIRISPersist#643). |
+| `asserted_at` | signed:envelope | `rfc3339-ms` | — | REQUIRED | stamped at the mint | [2.6.2](#2.6.2) [2.6.7](#2.6.7) | The claim's instant, truncated to the millisecond (SIGNED_INSTANT_RESOLUTION_NANOS) and rendered YYYY-MM-DDTHH:MM:SS.sssZ before signing; the column beside the row is read back out of this member and never from a second clock (CIRISPersist#598). Judged against the receiver's clock only where 2.6.7 says (the future bound; W on chain-judged rows). |
+| `expires_at` | signed:envelope | `rfc3339-ms` | — | OPTIONAL | absent (no expiry) | [2.1](#2.1) [3.1.3.2](#3.1.3.2) | The column's signed twin; present iff the column is set, any other pairing refused. |
+| `dimension` | signed:envelope | `tstr` | — | REQUIRED on every row type | — | [2.1](#2.1) [2.4](#2.4) [3.1](#3.1) [3.1.7](#3.1.7) | The namespace prefix plus leaf, resolved through manifests/namespace_registry.json on all five row types (the job label on a delegates_to as much as the family on a scores). |
+| `references_attestation_id` | signed:envelope | `uuid` | — | REQUIRED on supersedes, withdraws, recants | — | [2.4.1](#2.4.1) [4.5.1.1](#4.5.1.1) | The composer target: the prior row's attestation_id. Its meaning is read only with the row type as discriminator (three readings, CC 4.5.1.1); a fourth reading is a separate member, which is why consent_supersedes exists. |
+| `scope` | signed:envelope | `tstr / [* tstr]` | set | REQUIRED on consent:state:granted and on delegates_to | — | [2.1](#2.1) [3.3.1](#3.3.1) [4.4.3.4.3](#4.4.3.4.3) | Two wire shapes are established, a bare token and an array of tokens, and admission normalises neither: "retain" and ["retain"] are two byte forms of one meaning (finding F2; CC 2.1 calls both admissible). |
+| `pre_rotation_commitment` | signed:envelope | `hex64` | — | OPTIONAL (charter) | absent | [3.2](#3.2) | Pre-rotation commitment on a charter (the KERI lesson, CIRISPersist#488). |
+| `recovers` | signed:envelope | `key-id` | — | REQUIRED on a charter recovery | absent | [3.2](#3.2) | The predecessor root being rotated. |
+| `successor_keys` | signed:envelope | `[* key-id]` | set | REQUIRED on a charter recovery | absent | [3.2](#3.2) | The pre-committed successor key set. |
+| `withdrawal_reason` | signed:envelope | `tstr` | — | OPTIONAL on withdraws | absent | [2.4.1](#2.4.1) | The producer's stated reason. |
+| `consent_supersedes` | signed:envelope | `uuid` | — | OPTIONAL on consent:state:* | absent | [3.3.1](#3.3.1) [4.5.1.1](#4.5.1.1) | The prior consent statement this one replaces (CIRISPersist#642). Separate from references_attestation_id by the CC 4.5.1.1 op split. CC 2.1 has no row for it (finding F3). |
+| `delivery_mode` | signed:envelope | `"pull" / "push"` | — | OPTIONAL | pull | [2.1](#2.1) [2.3.3](#2.3.3) | Recipient-receive axis; the processor is edge's. |
+| `deletion_window` | signed:envelope | `tstr` | — | OPTIONAL | absent | [3.3.1](#3.3.1) | Deadline by which a consented payload must be deleted; persist's lifecycle processor reads it (CIRISPersist#519). CC 2.1 has no row for it (finding F3). |
+| `listed` | signed:envelope | `"public"` | — | OPTIONAL | absent (private roster) | [2.1](#2.1) [3.2](#3.2) | One admissible value; admitted only on a community membership signed by its own subject. |
+| `media` | signed:envelope | `object` | — | OPTIONAL | absent | [3.3.13](#3.3.13) | The multimedia Source struct, kept as JSON and validated at the door (CIRISPersist#871). |
+| `widened_at` | signed:envelope | `rfc3339-ms` | — | REQUIRED on a widening supersedes, absent otherwise | absent | [4.4.3.3.1](#4.4.3.3.1) [2.6.7](#2.6.7) | When the widening itself was placed; asserted_at on a widening is the claim's own instant carried verbatim (CIRISPersist#801). CC 2.1 has no row for it (finding F3). |
+| `accord_root` | signed:envelope | `key-id` | — | REQUIRED on accord:* rows | absent | [4.2](#4.2) | Which accord an accord:* row belongs to (CIRISPersist#733); a foreign row carrying junk fails closed at the fold. CC 2.1 has no row for it (finding F3). |
+| `attach_window_secs` | signed:envelope | `uint` | — | OPTIONAL on trust:charter:v1 | absent (anchor only) | [2.1](#2.1) [3.2](#3.2) | T4a attach window. |
+| `witness_cadence_secs` | signed:envelope | `uint` | — | REQUIRED on a witnessed lineage's charter | absent | [2.1](#2.1) [3.2](#3.2) | T6 cadence. |
+| `witness_quorum` | signed:envelope | `uint` | — | REQUIRED on a witnessed lineage's charter | absent (= 0, witnessed mode off) | [2.1](#2.1) [3.2](#3.2) | T6 quorum; floor(\|witnesses\|/2)+1 and at least 2, or 0. |
+| `attached_head_digest` | signed:envelope | `hex64` | — | REQUIRED on trust:accepts:v1 | — | [2.1](#2.1) [3.2](#3.2) | T4a: the lineage head the acceptance attaches on. |
+| `recovery_commitments` | signed:envelope | `{* key-id => hex64}` | — | REQUIRED on the accord's charter | — | [2.1](#2.1) [4.2.6](#4.2.6) | Holder key id to commitment; object keys sort under JCS like any member. |
+
+**Inside the signed bytes — members this text types and persist carries untyped**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `score` | signed:envelope-extra | `float` | — | REQUIRED on scores | — | [2.1](#2.1) [3.1.7](#3.1.7) | In [-1, 1]; the family's polarity class is an admission rule (CLM-polarity-admission). |
+| `confidence` | signed:envelope-extra | `float` | — | REQUIRED on scores | — | [2.1](#2.1) | In [0, 1]. |
+| `context` | signed:envelope-extra | `tstr` | — | OPTIONAL | absent | [2.1](#2.1) | Free form; not parsed by the substrate. |
+| `evidence_refs` | signed:envelope-extra | `[* tstr]` | sequence | OPTIONAL (some families require it) | absent | [2.1](#2.1) [2.6.1.1.1](#2.6.1.1.1) [2.6.1.3](#2.6.1.3) | Producer-asserted order, preserved. Above the 1 MiB cap the payload moves to the fountain plane and is named here by content hash. |
+| `valid_until` | signed:envelope-extra | `rfc3339-ms` | — | OPTIONAL | absent | [2.1](#2.1) [2.6.2](#2.6.2) | Consumer-policy staleness, independent of expires_at. |
+| `epistemic_mode` | signed:envelope-extra | `"direct" / "crypto" / "hearsay" / "derivative" / "appeal"` | — | OPTIONAL | direct | [2.1](#2.1) [2.5](#2.5) [2.6.1.2](#2.6.1.2) | Interpretation-time default; an explicit default value is signed as written (2.6.1.1). |
+| `witness_relation` | signed:envelope-extra | `"self" / "external" / "derived"` | — | OPTIONAL | external | [2.1](#2.1) [2.6.1.2](#2.6.1.2) |  |
+| `oversight_mode` | signed:envelope-extra | `"HITL" / "HOTL" / "HOOTL"` | — | OPTIONAL | absent (per-cell default) | [2.1](#2.1) [2.6.1.2](#2.6.1.2) | CC 2.1 writes the default as null; this table reads that as absent. Whether an explicit JSON null is admissible for any optional member is unstated (finding F4). |
+| `occurrence_id` | signed:envelope-extra | `tstr` | — | OPTIONAL | absent (read as occurrence-0) | [2.1](#2.1) [2.6.1.2](#2.6.1.2) | Self-asserted (CC 8.3.1). |
+| `occurrence_count` | signed:envelope-extra | `uint` | — | OPTIONAL | absent (read as 1) | [2.1](#2.1) [2.6.1.2](#2.6.1.2) | At least 1. |
+| `occurrence_role` | signed:envelope-extra | `"primary" / "shared" / "replica"` | — | OPTIONAL | absent (read as primary) | [2.1](#2.1) [2.6.1.2](#2.6.1.2) |  |
+| `stake` | signed:envelope-extra | `"free" / "reputational" / "capital" / "cryptoeconomic"` | — | OPTIONAL | reputational | [2.1](#2.1) [2.5](#2.5) |  |
+| `community_id` | signed:envelope-extra | `key-id` | — | REQUIRED iff cohort_scope is community or affiliations | — | [2.1](#2.1) [2.3.3](#2.3.3) [4.4.3.2.8](#4.4.3.2.8) | The community whose roster gates visibility; refused when missing at those scopes. |
+| `family_id` | signed:envelope-extra | `key-id` | — | REQUIRED iff cohort_scope is family | — | [2.1](#2.1) [2.3.3](#2.3.3) [3.3.4](#3.3.4) |  |
+| `session_id` | signed:envelope-extra | `tstr` | — | REQUIRED on session:* | — | [2.1](#2.1) [3.1.3.1](#3.1.3.1) | Verbatim, case-preserved. |
+| `claimed_at` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on session:* | — | [2.1](#2.1) [3.1.3.1](#3.1.3.1) |  |
+| `custody_state` | signed:envelope-extra | `"here" / "none"` | — | REQUIRED on custody:ack | — | [2.1](#2.1) [3.1.3.3](#3.1.3.3) | Refused custody_ack_malformed otherwise. |
+| `group_kind` | signed:envelope-extra | `"family" / "community"` | — | REQUIRED on membership:proposal | — | [2.1](#2.1) [3.1.3.2](#3.1.3.2) |  |
+| `role` | signed:envelope-extra | `tstr` | — | OPTIONAL on membership:proposal, restated on membership:acceptance | absent | [2.1](#2.1) [3.1.3.2](#3.1.3.2) |  |
+| `proposal_hash` | signed:envelope-extra | `hex64` | — | REQUIRED on membership:acceptance and membership:decline | — | [2.1](#2.1) [3.1.3.2](#3.1.3.2) | The answered proposal's original_content_hash. |
+| `subject_sha256_ed25519_raw` | signed:envelope-extra | `hex64` | — | OPTIONAL on moderation:* | absent | [2.1](#2.1) [2.4.1.1](#2.4.1.1) | Refused moderation_subject_digest_malformed when malformed. |
+| `halt_fuse_secs` | signed:envelope-extra | `uint` | — | OPTIONAL on the accord's charter | 86400 (a constant of this document) | [2.1](#2.1) [4.2.1.1](#4.2.1.1) | No reader in persist at the v57 pin; the halt latch reads the constant when the member is absent (CIRISPersist#991, 2026-10-05). |
+| `witnesses` | signed:envelope-extra | `[* key-record]` | undeclared | REQUIRED on a witnessed lineage's charter | — | [2.1](#2.1) [3.2](#3.2) | Array kind not declared in CC 2.1; by the 2.6.1.1.1 default it is a set, sorted by each element's JCS string (finding F5). |
+| `history_on_join` | signed:envelope-extra | `"full" / "from_join"` | — | OPTIONAL | from_join | [2.1](#2.1) [4.5.12.1](#4.5.12.1) |  |
+| `supersession_reason` | signed:envelope-extra | `tstr` | — | OPTIONAL on supersedes | absent | [2.4.1](#2.4.1) |  |
+| `differs_in` | signed:envelope-extra | `[* tstr]` | set | OPTIONAL on supersedes; a widening lists cohort_scope | absent | [2.4.1](#2.4.1) [4.4.3.3.1](#4.4.3.3.1) | Member names that differ from the prior. Array kind not declared in 2.4.1, so the 2.6.1.1.1 default (set, sorted) applies. |
+| `recantation_reason` | signed:envelope-extra | `tstr` | — | OPTIONAL on recants | absent | [2.4.1](#2.4.1) |  |
+| `what_was_false` | signed:envelope-extra | `tstr` | — | OPTIONAL on recants | absent | [2.4.1](#2.4.1) |  |
+| `delegation_purpose` | signed:envelope-extra | `tstr` | — | OPTIONAL on delegates_to | absent | [2.4.1](#2.4.1) [2.4.1.2](#2.4.1.2) | owner_binding is the one single-valued purpose. |
+| `delegation_valid_from` | signed:envelope-extra | `rfc3339-ms` | — | OPTIONAL on delegates_to | the edge's asserted_at | [2.4.1](#2.4.1) |  |
+| `delegation_valid_until` | signed:envelope-extra | `rfc3339-ms` | — | REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL | absent (open-ended) | [2.4.1](#2.4.1) [4.4.3.2.8](#4.4.3.2.8) | At most 365 days after delegation_valid_from; refused delegation_term_required. |
+| `cosignatures` | not-on-wire | `[* cosignature]` | — | not shipped at the v57 pin | — | [2.1](#2.1) [2.4](#2.4) [2.4.1.1](#2.4.1.1) | CC 2.1 names an envelope member; a cosignature cannot be inside the bytes it signs, and persist's shipped multi-signer carrier is additional_scrubs[] beside the row (below). The {key_id, role, ...} shape sorted by key_id is the planned shape on CIRISPersist#991, not a wire fact (finding F6). |
+| `*` | signed:envelope-extra | `any` | — | OPTIONAL | — | [2.1.1](#2.1.1) [3.3](#3.3) | Every other member, including subject_kind and the per-family payloads of CC 3.3, rides the envelope untyped by the substrate and is preserved on relay (2.1.1); families validate their own at their gates. This table does not enumerate them. |
+
+**Beside the row — outside the bytes, bound to them**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `attestation_id` | beside | `uuid` | — | REQUIRED | — | [2.6.1.7](#2.6.1.7) | Equals row.attestation_id or the row is refused. |
+| `attesting_key_id` | beside | `key-id` | — | REQUIRED | — | [2.1](#2.1) | Equals row.attesting_key_id. |
+| `attested_key_id` | beside | `key-id` | — | REQUIRED | — | [2.1](#2.1) | Equals row.attested_key_id. |
+| `attestation_type` | beside | `row-type` | — | REQUIRED | — | [2.4](#2.4) | Equals row.attestation_type. |
+| `weight` | beside | `float` | — | OPTIONAL | absent | [2.1](#2.1) | Equals row.weight; absent iff absent. |
+| `asserted_at` | beside | `rfc3339` | — | REQUIRED | — | [2.6.7](#2.6.7) | Read out of the signed member at the mint; a column that disagrees is refused typed_diverges_from_envelope. |
+| `expires_at` | beside | `rfc3339` | — | OPTIONAL | absent | [2.1](#2.1) | Present iff the signed member is. |
+| `subject_key_ids` | beside | `[* subject-id]` | set | OPTIONAL (absent when empty) | absent | [2.3](#2.3) | Equals row.subject_key_ids as a list. |
+| `cohort_scope` | beside | `cohort-scope` | — | REQUIRED | federation | [2.3.3](#2.3.3) | Equals row.cohort_scope. |
+| `attestation_envelope` | beside | `envelope` | — | REQUIRED | — | [2.1](#2.1) [2.6.1](#2.6.1) [2.6.1.3](#2.6.1.3) | The signed object itself, stored and relayed as received (2.6.1.1). The signing input is JCS(attestation_envelope) and nothing else. |
+| `original_content_hash` | beside | `hex64` | — | REQUIRED | — | [2.6.1.3](#2.6.1.3) [2.6.3](#2.6.3) | Lowercase hex SHA-256 of JCS(attestation_envelope); recomputed at federation-tier ingest and refused on mismatch. |
+| `additional_scrubs` | beside | `[* scrub-sig]` | sequence | OPTIONAL (absent when empty) | absent | [2.4](#2.4) [3.2](#3.2) | Second and later signers over the same JCS bytes, each verified against its own scrub_key_id's pinned keys (CIRISPersist#556). This is the shipped carrier of quorum on a row. |
+| `persist_row_hash` | beside | `hex64` | — | REQUIRED | — | — | Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 2.6.1.3). Not a conformance target. |
+| `withdraws_admission_rule` | local | `uint` | — | OPTIONAL | absent | [2.4.1.1](#2.4.1.1) | Audit metadata: which rule (0 to 5) admitted a withdraws; persist-internal. |
+| `tier` | local | `"local" / "federation"` | — | OPTIONAL | federation | [3.1.3](#3.1.3) | Persist-internal; absent on the wire for a federation row. Not in the signed bytes, so a promoted row is byte-identical to a native one. |
+| `promoted_at` | local | `rfc3339` | — | OPTIONAL | absent | [3.1.3](#3.1.3) | Persist-internal. |
+| `scrub_signature_classical` | beside:signature | `base64` | — | REQUIRED | — | [2.6.5](#2.6.5) [2.6.1.1.1](#2.6.1.1.1) [5.3.2.4.3.1](#5.3.2.4.3.1) | Ed25519 (RFC 8032) over JCS(attestation_envelope); RFC 4648 section 4 standard alphabet, padded. |
+| `scrub_signature_pqc` | beside:signature | `base64` | — | REQUIRED at the federation tier | — | [2.6.5](#2.6.5) [5.3.2.4.3.1](#5.3.2.4.3.1) [6.1.3](#6.1.3) | ML-DSA-65 (FIPS 204) over JCS(attestation_envelope) followed by the raw 64 Ed25519 signature bytes (the bound-payload form); verified under the strict hybrid policy, never classical-only. |
+| `scrub_key_id` | beside:signature | `key-id` | — | REQUIRED | — | [2.1](#2.1) | On an attestation row the verifier resolves attesting_key_id, so this names the same key; assemble sets both from one key. (On a key record it may name an anchor, CC 3.2.) |
+| `scrub_timestamp` | beside:signature | `rfc3339` | — | REQUIRED | — | [2.6.7](#2.6.7) | When the signature was issued: asserted_at, or widened_at on a widening. Outside the bytes. |
+| `pqc_completed_at` | beside:signature | `rfc3339` | — | OPTIONAL | — | [5.3.2.4.3.1](#5.3.2.4.3.1) | When the ML-DSA-65 half was attached. Outside the bytes. |
+| `additional_scrubs[].scrub_key_id` | beside:cosign | `key-id` | — | REQUIRED | — | [2.4](#2.4) [3.2](#3.2) | The cosigner; must resolve to a registered key. |
+| `additional_scrubs[].scrub_signature_classical` | beside:cosign | `base64` | — | REQUIRED | — | [2.6.5](#2.6.5) | Ed25519 over the same JCS(attestation_envelope). |
+| `additional_scrubs[].scrub_signature_pqc` | beside:cosign | `base64` | — | REQUIRED at the federation tier | — | [2.6.5](#2.6.5) | ML-DSA-65 over the same JCS bytes followed by this entry's Ed25519 signature. |
+| `additional_scrubs[].cosigned_at` | beside:cosign | `rfc3339-ms` | — | OPTIONAL | absent | [2.6.7](#2.6.7) | When the cosignature was applied; outside every preimage, so stamping it moves no signed byte. |
+
+**The key record — the second signed object (outer shape; its envelope's member table is the key plane's)**
+
+| Member | Placement | Type | Array | Presence | Default | CC | Note |
+|---|---|---|---|---|---|---|---|
+| `key_id` | beside | `key-id` | — | REQUIRED | — | [2.6.8](#2.6.8) [3.2](#3.2) | <label>-<fingerprint>, the fingerprint the first ten lowercase base32 characters of sha256(ed25519 public key). |
+| `pubkey_ed25519_base64` | beside | `base64` | — | REQUIRED | — | [3.2](#3.2) [5.3.2.4.3.1](#5.3.2.4.3.1) | Raw 32-byte key. |
+| `pubkey_ml_dsa_65_base64` | beside | `base64` | — | REQUIRED for algorithm hybrid | — | [5.3.2.4.3.1](#5.3.2.4.3.1) | Raw 1952-byte key; the substrate takes writes only at algorithm hybrid. |
+| `algorithm` | beside | `tstr` | — | REQUIRED | — | [5.3.2.4.3.1](#5.3.2.4.3.1) | hybrid on every record admitted today. |
+| `identity_type` | beside | `tstr` | — | REQUIRED | — | [3.4.7.1](#3.4.7.1) | A set rendered as one string; see CC 3.4.7.1. |
+| `identity_ref` | beside | `tstr` | — | REQUIRED | — | [3.2](#3.2) |  |
+| `valid_from` | beside | `rfc3339` | — | REQUIRED | — | [2.1](#2.1) |  |
+| `valid_until` | beside | `rfc3339` | — | OPTIONAL | absent | [2.1](#2.1) | Its signed twin is inside registration_envelope (CLM-key-validity-window). |
+| `registration_envelope` | beside | `object` | — | REQUIRED | — | [3.2](#3.2) [3.3.6](#3.3.6) | The key record's signed object: JCS(registration_envelope) is the signing input for the base scrub and every additional scrub. Its member table is the key plane's (key:record:v1, CIRISPersist#991) and is not enumerated in this cut. |
+| `original_content_hash` | beside | `hex64` | — | REQUIRED | — | [2.6.1.3](#2.6.1.3) | Lowercase hex SHA-256 of JCS(registration_envelope). |
+| `scrub_signature_classical` | beside:signature | `base64` | — | REQUIRED | — | [2.6.5](#2.6.5) | Ed25519 over JCS(registration_envelope). |
+| `scrub_signature_pqc` | beside:signature | `base64` | — | REQUIRED once hybrid-complete | — | [2.6.5](#2.6.5) | ML-DSA-65 over JCS(registration_envelope) followed by the Ed25519 signature bytes. |
+| `scrub_key_id` | beside:signature | `key-id` | — | REQUIRED | — | [3.2](#3.2) | Self-scrub when equal to key_id; an anchor scrub when it names a pinned anchor (the one record kind where the scrubber may differ from the subject). |
+| `scrub_timestamp` | beside:signature | `rfc3339` | — | REQUIRED | — | [2.6.7](#2.6.7) |  |
+| `pqc_completed_at` | beside:signature | `rfc3339` | — | OPTIONAL | — | [5.3.2.4.3.1](#5.3.2.4.3.1) |  |
+| `persist_row_hash` | beside | `hex64` | — | REQUIRED | — | — | Store-computed; excludes itself and consent_role; informational. |
+| `roles` | beside | `[* tstr]` | set | OPTIONAL | [] | [3.4.7.1](#3.4.7.1) | Serialised as roles; the record also carries roles inside the signed registration_envelope (CIRISPersist#441). |
+| `attestation_evidence` | beside | `object` | — | OPTIONAL | absent | [4.2.2](#4.2.2) | Hardware attestation blob. |
+| `consent_role` | local | `tstr` | — | OPTIONAL | absent | [3.4.7.2](#3.4.7.2) | Mutable operational marker, excluded from persist_row_hash and from the signed bytes. |
+| `additional_scrubs` | beside | `[* scrub-sig]` | sequence | OPTIONAL (absent when empty) | absent | [3.2](#3.2) | Second and later scrubs over the same JCS(registration_envelope); what lets a replicated record prove its own m-of-n (CIRISPersist#556). |
+
+**Findings recorded by this table (each is a question for a ruling or a ticket, not a wire fact).** **F1** the [CC 2.6.1.1.1](#2.6.1.1.1) set sort of `subject_key_ids` is not checked at persist's door at the pin (`validate_subject_key_ids` checks case, whitespace and the canonical tag; `check_set_semantics_sorted` in verify-core is applied to capability lists, not to rows); an unsorted set is admitted and a relay that re-sorted it would break the signature. **F2** `scope` has two admissible byte forms for one meaning. **F3** four members persist types have no [CC 2.1](#2.1) row: `consent_supersedes`, `deletion_window`, `widened_at`, `accord_root`. **F4** whether an explicit JSON `null` is admissible for an optional member is unstated. **F5** `witnesses[]` declares no array kind. **F6** `cosignatures[]` as named in [CC 2.1](#2.1) and [CC 2.4](#2.4) is not shipped; the shipped quorum carrier is `additional_scrubs[]` beside the row, which is also where a cosignature can only be.
+
+**Vectors.** [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) carries two test identities (Ed25519 and ML-DSA-65 seeds, public keys and the [CC 2.6.8](#2.6.8) `key_id` derived from each), and for each vector the envelope, its JCS bytes, `original_content_hash`, both signature halves and the assembled row: a minimal `scores`; the same claim with an explicit default (different bytes, both verify, [CC 2.6.1.1](#2.6.1.1)); a cosigned variant; a `withdraws`; the at-cap and cap-plus-one envelopes as a recipe with their hashes; and refusal cases with their tokens. Signatures were produced and verified by the reference crate (`ciris-crypto` at the CIRISVerify pin); `tools/build_cc_signed_object.py --self-test` recomputes the JCS bytes, the hashes and the Ed25519 half in CI. A second implementation that reproduces these bytes and signatures has met the [CC 2.6.1.1.1](#2.6.1.1.1) byte-identity target for this object.
 
 ### 2.6.2 `canonicalization` — Date-time canonicalization
 

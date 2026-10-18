@@ -48,3 +48,8 @@ jobs:
           python3 tools/cc_namespace_match.py --self-test
           python3 tools/cc_namespace_match.py --write-vectors
           git diff --exit-code manifests/
+      - name: Signed object (CC 2.6.1.7) is regenerated from its table and its vectors recompute
+        run: |
+          python3 tools/build_cc_signed_object.py
+          python3 tools/build_cc_signed_object.py --self-test
+          git diff --exit-code manifests/ constitution/part_2_the_grammar.md
