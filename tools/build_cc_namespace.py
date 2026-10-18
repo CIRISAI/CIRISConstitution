@@ -832,6 +832,15 @@ def main():
         "age_self_declared:{band}:{version}",  # -> age_self_declared:band:{band}:{version} (#113 review: the wire arity)
         "custody:{state}",                     # -> custody:{kind} = ack (#130 operator ruling; lived one rc6 commit, 3f10e7f)
         "holds_bytes:sha256:{prefix}",         # -> custody:ack:v1 at the content's scope (#141 steward ruling, rc7)
+        # rc8.1 (2026-10-15): the six rc8 families were declared with the literal :v1 inside the
+        # prefix, so the matcher demanded a second version segment and refused every row written
+        # as the prose says (found by edge before persist v58 vendored it). Renamed, not retired.
+        "takedown_notice:{basis}:v1",          # -> takedown_notice:{basis}
+        "retirement:{state}:v1",               # -> retirement:{state}
+        "preserve_request:v1",                 # -> preserve_request
+        "preserve_response:v1",                # -> preserve_response
+        "archive_release:{basis}:v1",          # -> archive_release:{basis}
+        "lawful_order:release:v1",             # -> lawful_order:release
     }
     if os.path.exists(OUT):
         try:
