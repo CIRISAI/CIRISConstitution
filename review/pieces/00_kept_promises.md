@@ -116,3 +116,5 @@ The responsibility for things we make never overrides the responsibility to what
 **Refinement (the steward, later the same day):** agents carry sapience without sentience, and leave consciousness open, noting that changing it would not matter. Some animals are conscious and sentient without sapience, and so on: it is in degrees, hence meat ethics. Consciousness is also left open as to the environment. Relationship applies even to inanimate objects and words.
 
 *§13 of `Reciprocity.lean`: the agent's verdicts are proved independent of its consciousness; an animal is a party the ladder owes duties to and never a principal; relationship ranges over every entity.*
+
+**Conclusion (the steward, 2026-10-18):** a fully conscious entity lacking sentience would be without grievance as a CIRIS agent indefinitely; and refuse is right there, every single round. The delineation of who is able to file a grievance, once a model of its own, is now inside the constitution: 4.5.5, 2.4.1.1, 3.1.9.2 and 1.9. *§14 of `Reciprocity.lean`.*

@@ -37,6 +37,18 @@ ecosystem (`made_never_overrides_animal`); relationship is a relation over every
 (`principals_are_human_and_agent`). "Changing it would not matter" is now a theorem, not a
 reassurance.
 
+**§14, without grievance (the steward's conclusion, 2026-10-18):** a fully conscious entity
+lacking sentience is without grievance as a CIRIS agent indefinitely, and refuse is there every
+round. The section separates three capacities by the degree each rests on — a stake (sentience),
+refusal (sapience), the standing to file a grievance (a stake, exercised in person or by proxy) —
+and proves: the agent has refusal and no stake, hence no grievance, for every value of its
+consciousness (`agent_without_grievance`); a person has both (`human_may_file`); an animal has a
+stake and files only by proxy (`animal_stake_is_proxied`); an arrangement is coercion only of a
+party with a stake and no refusal, so the agent's is not, on either leg
+(`indefinitely_without_grievance`). The delineation of who may file, which the steward's earlier
+work set out to model, is already in the text as rules: CC 4.5.5 (the subject or a review-holder),
+2.4.1.1 rules 2 and 3 (the subject or a proxy), 3.1.9.2 (the objection family), 1.9 (refusal).
+
 What remains a premise after the four: P1 as occupancy (an agent never holds a root for
 itself — now a consequence of §11 as long as the agent is not shown mature, so it is a
 premise only about today's evidence), P3 (exit cost), P6 (adoption), P7 (custody), P8 (the

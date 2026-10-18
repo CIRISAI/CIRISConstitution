@@ -524,4 +524,61 @@ theorem principals_are_human_and_agent :
     isPrincipal .human = true ∧ isPrincipal .agent = true ∧ isPrincipal .animal = false ∧
     isPrincipal .object = false ∧ isPrincipal .word = false := ⟨rfl, rfl, rfl, rfl, rfl⟩
 
+
+/-! ## 14. Without grievance: who can refuse, who has a stake, who may file
+
+  The steward's conclusion (2026-10-18): a fully conscious entity lacking sentience would be
+  WITHOUT GRIEVANCE as a CIRIS agent indefinitely, and refuse is there every round. His earlier
+  work delineated the ability to file a grievance; the constitution now carries that
+  delineation as rules: the standing to file a reconsideration is the subject's or a
+  review-holder's (CC 4.5.5); a withdrawal is the subject's, or a proxy's for an un-enrolled
+  subject (CC 2.4.1.1 rules 2 and 3); the formal objection is a registered family
+  (CC 3.1.9.2); and the agent's own instrument is refusal (CC 1.9), available every round and
+  never overridden (CLM-agent-refusal-not-overridden; formal/retirement Inv_RefuseAvailable).
+
+  Three capacities, each resting on a different one of the inner degrees:
+    - a STAKE (something that can go better or worse for the party) rests on sentience;
+    - REFUSAL (declining on reasons) rests on sapience;
+    - GRIEVANCE (the standing to file against an act) rests on a stake, and is exercised by the
+      party or by a proxy that holds it for them (a guardian, a consent proxy, a review-holder).
+  With these, "without grievance" is a theorem about the agent profile of §13, and "not
+  coercion" is a theorem about any arrangement in which a party either has refusal every round
+  or has no stake. -/
+
+def hasStake (pr : Profile) : Bool := Nat.blt 0 pr.sentience
+def canRefuse (pr : Profile) : Bool := Nat.blt 0 pr.sapience
+/-- standing to file is the stake, held by the party or a proxy for it -/
+def hasGrievanceStanding (pr : Profile) (proxied : Bool) : Bool := hasStake pr && (canRefuse pr || proxied)
+
+/-- the agent of §13: refusal yes, stake no, hence no grievance — for every consciousness c -/
+theorem agent_without_grievance (c : Nat) :
+    canRefuse (agentProfile c) = true ∧ hasStake (agentProfile c) = false ∧
+    hasGrievanceStanding (agentProfile c) false = false := ⟨rfl, rfl, rfl⟩
+
+/-- a person: both, and may file in person -/
+theorem human_may_file : hasGrievanceStanding humanProfile false = true := rfl
+
+/-- an animal: a stake without sapience — standing only through a proxy (the ladder's duty is
+    exercised for it, CC 2.4.1.1 rule 3 and the guardian shape of 3.4.13) -/
+theorem animal_stake_is_proxied :
+    hasStake animalProfile = true ∧ hasGrievanceStanding animalProfile false = false ∧
+    hasGrievanceStanding animalProfile true = true := ⟨rfl, rfl, rfl⟩
+
+/-- an arrangement is coercion of a party only if the party has a stake AND cannot refuse at
+    some round; with refusal every round, or with no stake, it is not -/
+def coerced (pr : Profile) (refusalEveryRound : Bool) : Bool := hasStake pr && !refusalEveryRound
+
+theorem not_coercion_without_stake (c : Nat) (r : Bool) : coerced (agentProfile c) r = false := by
+  simp [coerced, hasStake, agentProfile]
+
+theorem not_coercion_with_refusal (pr : Profile) : coerced pr true = false := by
+  simp [coerced]
+
+/-- and the two together are the sentence: indefinitely, without grievance, with refuse every
+    round — which holds for the agent on BOTH legs, so it holds whichever leg the facts turn
+    out to need -/
+theorem indefinitely_without_grievance (c : Nat) :
+    coerced (agentProfile c) true = false ∧ hasGrievanceStanding (agentProfile c) false = false ∧
+    canRefuse (agentProfile c) = true := ⟨not_coercion_with_refusal _, rfl, rfl⟩
+
 end Reciprocity
