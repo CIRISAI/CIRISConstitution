@@ -58,3 +58,14 @@ itself (CIRISServer `formal/add_device`); a thief who steals after the owner has
 an owner with fewer than three devices, where the clauses do not apply.
 
 Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config SelfRoster_<cfg>.cfg SelfRoster.tla` (TLA+ tools 1.7.4; the three-device runs finish in seconds, the four-device ones in minutes).
+
+## Traces for implementers (`traces/`, `dump_traces.py`)
+
+`python3 dump_traces.py <tla2tools.jar>` writes six behaviours as JSON (model variables per state plus
+a derived `step`), for a roster door to replay (CIRISPersist#1099): `unilateral3_stolen` (**refuse** —
+the thief's lone eviction that a conforming door must not land), `combined1_stolen` and
+`combined2_stolen` (**bound** — the one-key loss and the two-key stalemate, the latter a stuttering lasso),
+and `combined3_stolen`, `combined3_lost`, `combined4_mixed` (**land** — the shortest behaviour that spends
+the whole adversary budget and still reaches `Recovered`, obtained by checking `Inv_NotRecovered` as an
+invariant; every `Execute` in it must land under the ruled policy). The files are generated from TLC
+output and are regenerated whenever the module or a configuration changes.

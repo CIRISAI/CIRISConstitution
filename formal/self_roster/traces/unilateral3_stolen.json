@@ -1,0 +1,111 @@
+{
+ "config": "unilateral3_stolen",
+ "kind": "refuse",
+ "checked": "Inv_ThiefCannotEvictHonest",
+ "tlc": "Invariant Inv_ThiefCannotEvictHonest is violated",
+ "reading": "the last Execute in this trace is the one a conforming door refuses",
+ "lasso_back_to_state": null,
+ "states": [
+  {
+   "n": 1,
+   "tlc_action": "Initial predicate",
+   "holder": {
+    "d1": "owner",
+    "d2": "owner",
+    "d3": "owner",
+    "d4": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": false,
+   "stolen": 0,
+   "step": "init"
+  },
+  {
+   "n": 2,
+   "tlc_action": "Steal",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner",
+    "d4": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": false,
+   "stolen": 1,
+   "step": "Steal(d1)"
+  },
+  {
+   "n": 3,
+   "tlc_action": "Honest",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner",
+    "d4": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 0,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2",
+    "d3"
+   ],
+   "acted": [
+    "d1"
+   ],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "Propose(evict, by=d1, target=d2)"
+  },
+  {
+   "n": 4,
+   "tlc_action": "Honest",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner",
+    "d4": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1",
+    "d3"
+   ],
+   "acted": [
+    "d1"
+   ],
+   "lostN": 0,
+   "wrong": true,
+   "started": true,
+   "stolen": 1,
+   "step": "Execute(evict d2)"
+  }
+ ]
+}

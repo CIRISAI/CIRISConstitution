@@ -1,0 +1,340 @@
+{
+ "config": "combined2_stolen",
+ "kind": "bound",
+ "checked": "Prop_LostRecoverable",
+ "tlc": "Temporal properties were violated",
+ "reading": "a stated bound: no policy on the wire resolves this behaviour",
+ "lasso_back_to_state": "stutter",
+ "states": [
+  {
+   "n": 1,
+   "tlc_action": "Initial predicate",
+   "holder": {
+    "d1": "owner",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": false,
+   "stolen": 0,
+   "step": "init"
+  },
+  {
+   "n": 2,
+   "tlc_action": "Steal",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": false,
+   "stolen": 1,
+   "step": "Steal(d1)"
+  },
+  {
+   "n": 3,
+   "tlc_action": "Honest",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 0,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [
+    "d1"
+   ],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "Propose(evict, by=d1, target=d2)"
+  },
+  {
+   "n": 4,
+   "tlc_action": "Honest",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 0,
+     "objectors": [
+      "d2"
+     ],
+     "spoke": true
+    },
+    {
+     "kind": "add",
+     "target": "d3",
+     "by": "d2",
+     "approvers": [],
+     "age": 0,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [
+    "d1",
+    "d2"
+   ],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "Propose(add, by=d2, target=d3)"
+  },
+  {
+   "n": 5,
+   "tlc_action": "Tick",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 1,
+     "objectors": [
+      "d2"
+     ],
+     "spoke": true
+    },
+    {
+     "kind": "add",
+     "target": "d3",
+     "by": "d2",
+     "approvers": [],
+     "age": 1,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "Tick"
+  },
+  {
+   "n": 6,
+   "tlc_action": "React",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 1,
+     "objectors": [
+      "d2"
+     ],
+     "spoke": true
+    },
+    {
+     "kind": "add",
+     "target": "d3",
+     "by": "d2",
+     "approvers": [],
+     "age": 1,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [
+    "d2"
+   ],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "React(d2)"
+  },
+  {
+   "n": 7,
+   "tlc_action": "Tick",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 2,
+     "objectors": [
+      "d2"
+     ],
+     "spoke": true
+    },
+    {
+     "kind": "add",
+     "target": "d3",
+     "by": "d2",
+     "approvers": [],
+     "age": 2,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "Tick"
+  },
+  {
+   "n": 8,
+   "tlc_action": "React",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 2,
+     "objectors": [
+      "d2"
+     ],
+     "spoke": true
+    },
+    {
+     "kind": "add",
+     "target": "d3",
+     "by": "d2",
+     "approvers": [],
+     "age": 2,
+     "objectors": [],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [
+    "d2"
+   ],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "React(d2)"
+  },
+  {
+   "n": 9,
+   "tlc_action": "React",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [
+    {
+     "kind": "evict",
+     "target": "d2",
+     "by": "d1",
+     "approvers": [],
+     "age": 2,
+     "objectors": [
+      "d2"
+     ],
+     "spoke": true
+    },
+    {
+     "kind": "add",
+     "target": "d3",
+     "by": "d2",
+     "approvers": [],
+     "age": 2,
+     "objectors": [
+      "d1"
+     ],
+     "spoke": false
+    }
+   ],
+   "member": [
+    "d1",
+    "d2"
+   ],
+   "acted": [
+    "d1",
+    "d2"
+   ],
+   "lostN": 0,
+   "wrong": false,
+   "started": true,
+   "stolen": 1,
+   "step": "React(d1)"
+  }
+ ]
+}

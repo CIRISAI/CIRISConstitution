@@ -137,4 +137,8 @@ Inv_SelfSurvives == OwnerHeld # {}
    one eventually leaves the roster and the owner holds two devices again. *)
 Recovered == LostHeld = {} /\ ThiefHeld = {} /\ Cardinality(OwnerHeld) >= 2
 Prop_LostRecoverable == []( (OwnerHeld # {} /\ started) => <>Recovered )
+(* Trace-witness helper, used only by dump_traces.py: checking this as an invariant makes TLC print
+   the shortest behaviour that spends the whole adversary budget and still reaches Recovered: the landing
+   trace persist replays. *)
+Inv_NotRecovered == ~(Recovered /\ started /\ stolen = MaxStolen /\ lostN = MaxLost)
 =============================================================================
