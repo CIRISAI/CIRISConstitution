@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "2060da45535cd25ec154c14e36b7ac4c9d173ec8110b7e4f7d4946e8bd4e022c",
+    "source_sha256": "bded6f232813e0937a95caad0f0e59ac6f5bc8d666dd4a52dce20960a0d8e2db",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "d5a80253",
@@ -141,7 +141,7 @@
         "default": "[]",
         "cc_ref": "2.3 2.3.2.1 2.6.1.1.1",
         "impl": "src/federation/envelope.rs#RowMirror",
-        "note": "Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit (src/federation/mod.rs#validate_subject_key_ids). The 2.6.1.1.1 set sort is not checked at the v57 door (finding F1); persist refuses an unsorted set with federation_set_semantics_unsorted from the cut after v58 (CIRISPersist#1098); duplicates are an open question."
+        "note": "Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit (src/federation/mod.rs#validate_subject_key_ids). The 2.6.1.1.1 set sort is not checked at the v57 door (finding F1); persist refuses an unsorted set with federation_set_semantics_unsorted from the cut after v58 (CIRISPersist#1098); sorted AND unique by the steward's ruling of 2026-10-18, duplicates refused under the same token."
       },
       {
         "member": "row.cohort_scope",
