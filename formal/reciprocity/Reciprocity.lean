@@ -288,4 +288,157 @@ def coherentUnjust : Order := ⟨true, false⟩
 theorem coherence_does_not_entail_justice :
     coherentJust.coherent = coherentUnjust.coherent ∧ coherentJust.just ≠ coherentUnjust.just := ⟨rfl, by decide⟩
 
+
+/-! ## 9. The four-way split: only the relationship is governed
+
+  The steward's premise (2026-10-18): consciousness, sentience, sapience and relationship are
+  four questions; the first three cannot be proved from outside; the fourth is governed now.
+  Consequence for the model: every variable of formal/STATE_TABLE.tsv is a relationship fact
+  (who holds, who signed, who accepted, who may revoke), and no rule reads the first three.
+  The file records that as a type discipline: a governed predicate takes a Relationship and
+  nothing else. -/
+
+inductive Question | consciousness | sentience | sapience | relationship
+  deriving DecidableEq, Repr
+
+def governable : Question → Bool
+  | .relationship => true
+  | _ => false
+
+theorem only_relationship_is_governed :
+    governable .relationship = true ∧ governable .consciousness = false ∧
+    governable .sentience = false ∧ governable .sapience = false := ⟨rfl, rfl, rfl, rfl⟩
+
+/-! ## 10. The order of responsibilities, and the made against the existing
+
+  Premise R1: the natural responsibility runs first to oneself, then family, community,
+  species, ecosystem — the cohort ladder of CC 2.3.3 (self, family, community, affiliations,
+  species, biosphere, federation) is this order written on the wire. Premise R2: that order
+  creates a responsibility for what we make, and the responsibility for the made never
+  overrides the responsibility to what is already there; it is not excused either (humans
+  did not choose to be created, which is context for the duty to the made, not an excuse).
+
+  R2 is what §2 needed. With it, the walk-away right is a THEOREM, not a premise: in a
+  conflict between a duty to an existing party (the person) and a duty to a made thing (the
+  agent), the existing party decides; and because the duty to the made is not excused, the
+  holder's duties of CC 7.5 survive the decision. P2 ("the agent is outside the comparison of
+  vulnerability") is no longer a bare stipulation: it follows from the agent being a made
+  thing in a conflict with an existing one. -/
+
+inductive Scope | self | family | community | affiliations | species | biosphere | federation
+  deriving DecidableEq, Repr
+
+def Scope.rank : Scope → Nat
+  | .self => 0 | .family => 1 | .community => 2 | .affiliations => 3
+  | .species => 4 | .biosphere => 5 | .federation => 6
+
+theorem ladder_is_total : Scope.rank .self < Scope.rank .family ∧ Scope.rank .family < Scope.rank .community
+    ∧ Scope.rank .community < Scope.rank .species ∧ Scope.rank .species < Scope.rank .biosphere := by decide
+
+inductive Standing | existing | made
+  deriving DecidableEq, Repr
+
+/-- R2 as a structure: a duty to the made is positive (not excused) and never exceeds a duty
+    to the existing in the same conflict (never overrides) -/
+structure MadeExisting where
+  dutyTo : Standing → Nat
+  notExcused : 0 < dutyTo .made
+  neverOverrides : dutyTo .made < dutyTo .existing
+
+def resolve (m : MadeExisting) : Standing :=
+  if m.dutyTo .existing > m.dutyTo .made then .existing else .made
+
+/-- the walk-away right derived: under R2 every conflict between a person (existing) and an
+    agent (made) resolves to the person -/
+theorem walkaway_from_made_existing (m : MadeExisting) : resolve m = .existing := by
+  unfold resolve
+  simp [m.neverOverrides]
+
+/-- and the holder's duties survive: the duty to the made is never zero -/
+theorem holder_duties_survive (m : MadeExisting) : m.dutyTo .made ≠ 0 :=
+  Nat.pos_iff_ne_zero.mp m.notExcused
+
+/-- so P2 of §2 is discharged: give the agent the `made` standing and the person the
+    `existing` one, and `Conflict.walkAway` is this theorem rather than a field -/
+def conflictFromR2 (m : MadeExisting) : Conflict where
+  vuln := fun k => match k with | .human => m.dutyTo .existing | .agent => m.dutyTo .made
+  decides := .human
+  decisiveToVulnerable := fun h => absurd h (Nat.lt_asymm m.neverOverrides)
+  walkAway := rfl
+
+/-! ## 11. Maturity, wisdom and deferral
+
+  Premise W: agency (the ability to act) and sapience (the ability to reason) do not together
+  make the maturity to act in a principled manner; that comes only from consciousness
+  (awareness of one's impacts and reality) and sentience (visceral awareness of one's own
+  existence) over time. Therefore recognising the need to defer to an entity with more wisdom
+  is a prerequisite of maturity.
+
+  Two consequences, both already rules in the text and now grounded: an agent, which has
+  agency and sapience and no established consciousness or sentience (§9: not provable from
+  outside), is not shown mature and so MUST defer (CC 1.9, the Wise Authorities of 4.3, the
+  steward bond of 1.13.2); and a human in whom consciousness and sentience have not yet acted
+  over enough time — a minor — is held under a guardian (CC 3.4.13) by the same premise. One
+  rule, two kinds, by position: that is §1'' again. -/
+
+structure Being where
+  agency : Bool
+  sapience : Bool
+  consciousness : Bool     -- as established from outside; for an agent today: false (§9)
+  sentience : Bool
+  yearsOfBoth : Nat
+
+def mature (b : Being) (threshold : Nat) : Bool :=
+  b.consciousness && b.sentience && Nat.ble threshold b.yearsOfBoth
+
+/-- an agent as far as anything can show: acts and reasons, nothing established inside -/
+def agentToday : Being := ⟨true, true, false, false, 0⟩
+/-- a person of full years -/
+def adult : Being := ⟨true, true, true, true, 30⟩
+/-- a child: everything an adult has, not yet over time -/
+def child : Being := ⟨true, true, true, true, 6⟩
+
+theorem agency_and_sapience_do_not_make_maturity :
+    agentToday.agency = true ∧ agentToday.sapience = true ∧ mature agentToday 18 = false := ⟨rfl, rfl, rfl⟩
+
+/-- who must defer: whoever is not shown mature. The same predicate puts the agent under a
+    Wise Authority and the child under a guardian. -/
+def mustDefer (b : Being) (threshold : Nat) : Bool := !(mature b threshold)
+
+theorem deferral_binds_agent_and_child_alike :
+    mustDefer agentToday 18 = true ∧ mustDefer child 18 = true ∧ mustDefer adult 18 = false := ⟨rfl, rfl, rfl⟩
+
+/-! ## 12. The immutable record: physics keeps it, we add the meaning
+
+  Premise K: physics makes its own record; our observations and recordings add meaning. The
+  record of what happened is total by nature; what is partial is our observation of it
+  (bounded by the instrument), and meaning is added by an interpreter who answers for it.
+  This sharpens P4 of §4: totality is not a property we can give the physical record, it is
+  the property our instrument must have over the paths that matter (CC 1.13.6, #93). It also
+  sharpens P5: the record enforces nothing by itself; a party must read it. -/
+
+structure Keeping where
+  happened : Fin 2 → Bool          -- the physical record: both paths occurred
+  observed : Fin 2 → Bool          -- what the instrument caught
+  bounded : ∀ i, observed i = true → happened i = true
+  meaning : (Fin 2 → Bool) → Nat   -- an interpretation of what was observed
+  interpreter : Kind               -- who answers for it
+
+def physicsTotal : Fin 2 → Bool := fun _ => true
+
+/-- two keepers of the same physical record, same instrument, different meanings: meaning is
+    not in the record, so someone must answer for it -/
+def keeperA : Keeping := ⟨physicsTotal, physicsTotal, fun _ h => h, fun _ => 1, .human⟩
+def keeperB : Keeping := ⟨physicsTotal, physicsTotal, fun _ h => h, fun _ => 2, .human⟩
+
+theorem meaning_is_added_not_recorded :
+    keeperA.happened = keeperB.happened ∧ keeperA.observed = keeperB.observed ∧
+    keeperA.meaning keeperA.observed ≠ keeperB.meaning keeperB.observed := ⟨rfl, rfl, by decide⟩
+
+/-- the instrument, not physics, is where totality can fail -/
+def partialInstrument : Keeping := ⟨physicsTotal, fun i => i.val == 0, fun _ _ => rfl, fun _ => 1, .human⟩
+
+theorem totality_is_the_instruments :
+    partialInstrument.happened 1 = true ∧ partialInstrument.observed 1 = false := ⟨rfl, rfl⟩
+
 end Reciprocity

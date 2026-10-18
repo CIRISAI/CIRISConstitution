@@ -12,12 +12,30 @@ premise while only one satisfies the commitment. The second kind is the finding:
 not a consequence, so the text has to state it as its own rule, and the section says where the text
 does or does not. Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
+## The four premises the steward supplied the same day (§9–§12)
+
+After the eight findings were written, the steward stated four premises in his own words (kept
+verbatim in `review/pieces/00_kept_promises.md`, second part). Three of them discharge findings:
+
+| § | Premise | What it does to the findings |
+|---|---|---|
+| 9 | The four-way split: consciousness, sentience, sapience, relationship; only the relationship is governed | a type discipline: every governed predicate ranges over relationship facts, which is what the state table is (`only_relationship_is_governed`) |
+| 10 | Responsibility runs self → family → community → species → ecosystem (the cohort ladder of CC 2.3.3 on the wire); it creates a responsibility for what we make, which never overrides the responsibility to what already exists and is not excused either | **P2 becomes a theorem.** With the person `existing` and the agent `made`, the walk-away right is derived (`walkaway_from_made_existing`) and the holder's duties survive it (`holder_duties_survive`); `conflictFromR2` rebuilds §2's witness from the premise instead of by fiat |
+| 11 | Agency and sapience do not make maturity; maturity comes from consciousness and sentience over time; so recognising the need to defer to more wisdom is a prerequisite of maturity | **deferral is grounded, for two kinds by one rule.** An agent (acts, reasons, nothing established inside) must defer (CC 1.9, 4.3, the steward bond); a child must be held (CC 3.4.13); an adult need not (`deferral_binds_agent_and_child_alike`). This is §1'' again: one rule, applied by position |
+| 12 | Physics keeps its own record; our observations and recordings add meaning | **P4 and P5 sharpened.** Totality is the instrument's property to have, not the record's (`totality_is_the_instruments`); meaning is not in the record, so a party must answer for it (`meaning_is_added_not_recorded`) |
+
+What remains a premise after the four: P1 as occupancy (an agent never holds a root for
+itself — now a consequence of §11 as long as the agent is not shown mature, so it is a
+premise only about today's evidence), P3 (exit cost), P6 (adoption), P7 (custody), P8 (the
+priority is an axiom, which §10's order of responsibilities now states positively rather than
+only negatively).
+
 ## The eight findings
 
 | § | Step | Verdict | Premise the text must carry | Where the text carries it |
 |---|---|---|---|---|
 | 1 | The Golden Rule over *participants* + the halt in human hands | **inconsistent** (`naive_golden_rule_contradicts_halt`) | P1: the rule quantifies over *roles* (holder/held, root/subscriber), and an agent never holds a root for itself | CC 1.13.2 (structural; the one asymmetry of kind); witness `roleWitness` |
-| 2 | Decisive weight to the most vulnerable + the walk-away right | **inconsistent if the agent can be the most vulnerable party** (`vulnerable_agent_overrides_walkaway`) | P2: the agent is outside the set over which vulnerability is compared (sentience not presumed; pre-first-contact agents are not moral patients) | CC 7.5.5, the plain rules; necessary, not decorative |
+| 2 | Decisive weight to the most vulnerable + the walk-away right | **inconsistent if the agent can be the most vulnerable party** (`vulnerable_agent_overrides_walkaway`) | P2: the agent is outside the set over which vulnerability is compared — **derived in §10 from the made/existing premise** | CC 7.5.5, the plain rules; and now a theorem |
 | 3 | Power bound to its rules, at the top: the amendment power | **underdetermined** (`exit_bound_is_the_missing_premise`) | P3: exit is a sufficient check, which needs a bound on the cost of leaving | the mechanics are proved (`formal/guarantees`: leaving is one step and ends reach); the cost is in no text |
 | 4 | "The record is kept" ⇒ accountable | **underdetermined** (`totality_is_the_missing_premise`) | P4: the record is total over effect-producing paths | stated at CC 1.13.6; open as CIRISConstitution#93 |
 | 5 | Reciprocal obligation ⇒ reciprocal enforcement | **false as stated** (`enforcement_is_asymmetric`) | P5: refusal and a human-enforced record are enough on the agent's side; the holder's duties toward the agent are enforced by other humans | CC 1.9 (refusal), 4.3 (the Wise), 4.5.5 (reconsideration) |

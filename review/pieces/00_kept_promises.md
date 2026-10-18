@@ -96,3 +96,19 @@ We don't need to know everything an intelligence is before we decide how to beha
 The record will not absolve us. It will not decide what matters, excuse what we overlooked, or accept responsibility in our place. Those duties remain with the people who build, deploy, govern, and observe the system.
 
 > The record is kept. We add the meaning. The responsibility remains ours.
+
+---
+
+## Four premises (the steward, 2026-10-18, later the same day)
+
+**The 4 way split:** consciousness, sentience, sapience, relationship.
+
+**The immutable record:** physics makes its own record, our observations and recordings add meaning.
+
+**The responsibilities:** first to yourself, then to your family, community, species, ecosystem. That is the natural responsibility, and that creates a responsibility for our actions, including things we make.
+
+The responsibility for things we make never overrides the responsibility to what is already there. Human beings did not choose to be created, that provides context to the responsibility to the things they make, it does not excuse said responsibility.
+
+**Maturity and wisdom:** the ability to act (agency) and the ability to reason (sapience) do not together create the maturity or wisdom to act in a principled manner. That can only come from consciousness (awareness of one's impacts and reality) and sentience (visceral or emotional awareness of one's own existence) over time. Therefore, recognition of the need to defer to a higher power (here understood as an entity with more wisdom) is a prerequisite to maturity.
+
+*Each is written as a section of `formal/reciprocity/Reciprocity.lean` (§9–§12), where the third makes the walk-away right a theorem and the fourth grounds deferral for an agent and guardianship for a child by one rule.*
