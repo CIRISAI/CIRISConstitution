@@ -56,6 +56,8 @@ Every model states its residuals in its README: what it does not cover, the boun
 
 | [`consent`](consent/) | the consent fold: a revocation is a boundary, the owner can always recant, backdating is bounded by the window, decay runs forward, replication needs a directed grant | the person whose trace is captured or whose content is replicated | 3.3.1, 3.3.7, 2.6.7 | closes (4,210,336 and 467,692 states); three twins fail |
 
+| [`two_path`](two_path/) (TLA+ + Lean) | one decision shape for every governance change: enact at once above one threshold, cancel within a window above a lower one, no instant landing for the irreversible; and the corridor that keeps a roster's policy away from the liberum veto and from one-voice takedown | every member of a community whose roster could otherwise be configured against them | 3.3.6.3, 4.2.1.1, 3.3.4 | five instances close; corridor compiles |
+
 Being built (2026-10-18): the membership ceremony, the last plane the state table lists with no model.
 
 ## Running

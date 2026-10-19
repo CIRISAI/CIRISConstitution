@@ -288,3 +288,30 @@ jobs:
           grep -q 'Invariant Inv_OwnerCanRecant is violated' ls.log || exit 1
           java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nw" -deadlock -config Consent_no_W.cfg Consent.tla | tee nw.log
           grep -q 'Invariant Inv_BackdateBounded is violated' nw.log || exit 1
+
+  two_path:
+    name: TLC + Lean — the two-path decision and its corridor (formal/two_path)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Five instances close
+        working-directory: formal/two_path
+        run: |
+          set -e
+          for c in TwoPath_3_selfroster TwoPath_6_enact23_cancel13_1coerced TwoPath_6_enact23_cancel13_2coerced TwoPath_6_irreversible TwoPath_7_enact23_cancel13_2coerced; do
+            java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-$c" -deadlock -config $c.cfg TwoPath.tla
+          done
+      - name: Install Lean 4.14.0 (core only)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The corridor compiles
+        working-directory: formal/two_path
+        run: lean PolicyCorridor.lean
