@@ -268,10 +268,10 @@ def build_section_body(rows, meta):
           K)
     L.append("**Findings recorded by this table (each is a question for a ruling or a ticket, not a wire fact).** "
              "**F1** the [CC 2.6.1.1.1](#2.6.1.1.1) set sort of `subject_key_ids` is not checked at persist's door at the pin (`validate_subject_key_ids` checks case, whitespace and the canonical tag; `check_set_semantics_sorted` in verify-core is applied to capability lists, not to rows); an unsorted set is admitted and a relay that re-sorted it would break the signature. "
-             "**F2** `scope` has two admissible byte forms for one meaning. "
-             "**F3** four members persist types have no [CC 2.1](#2.1) row: `consent_supersedes`, `deletion_window`, `widened_at`, `accord_root`. "
-             "**F4** whether an explicit JSON `null` is admissible for an optional member is unstated. "
-             "**F5** `witnesses[]` declares no array kind. "
+             "**F2** closed 2026-10-18: the canonical `scope` is the array; a bare token is admitted as the one-element array it denotes, nothing is normalised in signed bytes. "
+             "**F3** closed 2026-10-18: `consent_supersedes`, `deletion_window`, `widened_at` and `accord_root` now have [CC 2.1](#2.1) rows. "
+             "**F4** closed 2026-10-18: an explicit JSON `null` on an optional member is refused as malformed ([CC 2.6.1.1.1](#2.6.1.1.1)). "
+             "**F5** closed 2026-10-18: `witnesses[]` is a set. "
              "**F6** `cosignatures[]` as named in [CC 2.1](#2.1) and [CC 2.4](#2.4) is not shipped; the shipped quorum carrier is `additional_scrubs[]` beside the row, which is also where a cosignature can only be.")
     L.append("")
     L.append("**Vectors.** [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) carries two test identities (Ed25519 and ML-DSA-65 seeds, public keys and the [CC 2.6.8](#2.6.8) `key_id` derived from each), and for each vector the envelope, its JCS bytes, `original_content_hash`, both signature halves and the assembled row: a minimal `scores`; the same claim with an explicit default (different bytes, both verify, [CC 2.6.1.1](#2.6.1.1)); a cosigned variant; a `withdraws`; the at-cap and cap-plus-one envelopes as a recipe with their hashes; and refusal cases with their tokens. Signatures were produced and verified by the reference crate (`ciris-crypto` at the CIRISVerify pin); `tools/build_cc_signed_object.py --self-test` recomputes the JCS bytes, the hashes and the Ed25519 half in CI. A second implementation that reproduces these bytes and signatures has met the [CC 2.6.1.1.1](#2.6.1.1.1) byte-identity target for this object.")

@@ -2,10 +2,10 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "bded6f232813e0937a95caad0f0e59ac6f5bc8d666dd4a52dce20960a0d8e2db",
+    "source_sha256": "88023c8ee7126cf8ba819928cd56a6822fc1f1c92f44c210fba0befafc8e1550",
     "typed_from": {
       "repo": "CIRISPersist",
-      "commit": "d5a80253",
+      "commit": "770156ef",
       "file": "src/federation/envelope.rs",
       "structs": [
         "EnvelopeCore",
@@ -62,10 +62,7 @@
     },
     "findings": [
       "F1",
-      "F2",
       "F3",
-      "F4",
-      "F5",
       "F6"
     ]
   },
@@ -225,7 +222,7 @@
         "default": "-",
         "cc_ref": "2.1 3.3.1 4.4.3.4.3",
         "impl": "src/federation/envelope.rs#ScopeSet",
-        "note": "Two wire shapes are established, a bare token and an array of tokens, and admission normalises neither: \"retain\" and [\"retain\"] are two byte forms of one meaning (finding F2; CC 2.1 calls both admissible)."
+        "note": "The canonical form is the array (reading 2026-10-18, closing finding F2): an emitter writes [\"retain\"], and a bare token is admitted as the one-element array it denotes; admission normalises nothing in the signed bytes (CIRISPersist#1098)."
       },
       {
         "member": "pre_rotation_commitment",
@@ -513,7 +510,7 @@
         "default": "absent (per-cell default)",
         "cc_ref": "2.1 2.6.1.2",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "CC 2.1 writes the default as null; this table reads that as absent. Whether an explicit JSON null is admissible for any optional member is unstated (finding F4)."
+        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused as malformed (CC 2.6.1.1.1, closing finding F4)."
       },
       {
         "member": "occurrence_id",
@@ -688,12 +685,12 @@
         "placement": "signed:envelope-extra",
         "cc_name": "-",
         "type": "[* key-record]",
-        "array_kind": "undeclared",
+        "array_kind": "set",
         "presence": "REQUIRED on a witnessed lineage's charter",
         "default": "-",
         "cc_ref": "2.1 3.2",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "Array kind not declared in CC 2.1; by the 2.6.1.1.1 default it is a set, sorted by each element's JCS string (finding F5)."
+        "note": "A set, sorted by each element's JCS string (declared here 2026-10-18, closing finding F5; the 2.6.1.1.1 default made explicit)."
       },
       {
         "member": "history_on_join",
