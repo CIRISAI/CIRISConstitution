@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "d1b209f2ce35e96abc203e5ef2f061b0717cc9bdacea95bb7c095389271e398f",
+  "policy_sha256": "b7d2370da9d9a91193f5a5b904fdec3c0a629c3873429f3e1a0439a5e0502264",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -167,7 +167,7 @@
     "num": 1,
     "den": 2
    },
-   "cancel": "1/2 of the others",
+   "cancel": "more than 1/2 of the others (strict majority)",
    "floor": "one_voter",
    "cancel_over": "others",
    "at_window": "stay_open",
@@ -192,7 +192,7 @@
     "num": 1,
     "den": 2
    },
-   "cancel": "1/2 of the others",
+   "cancel": "more than 1/2 of the others (strict majority)",
    "floor": "one_voter",
    "cancel_over": "others",
    "at_window": "stay_open",
