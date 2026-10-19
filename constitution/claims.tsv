@@ -42,7 +42,7 @@ CLM-canonicalization-boundary	6.1.3	CC 6.1 binary preimage discipline — length
 CLM-billing-offwire	3.3.9	Billing/settlement is off-wire; value transfer rides external rails	normative-only:—	normative
 CLM-meta-goal	1.1	M-1 (sustainable adaptive coherence) is the single apex every mechanism serves	normative-only:—	normative
 CLM-wbd	1.9	Wisdom-Based Deferral: halt/escalate rather than guess beyond competence	impl:CIRISAgent#911	established
-CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-6)	normative-only:—	normative
+CLM-amendment	4.5.1	Amendment process (federation contribution → witness diversity → WA quorum → 1-of-n (n the accord roster size; 1-of-3 at genesis))	normative-only:—	normative
 CLM-entrenchment	4.5.1.2	Entrenchment: CC 4.2 / 4.5.1 / 1.2 need a MAJOR bump + dedicated accord ratification	normative-only:—	normative
 CLM-halt-authority	4.2	HUMANITY_ACCORD constitutional halt layer — wire- and scope-isolated	impl:CIRISServer/src/halt_gate.rs#in_effect impl:CIRISServer/src/accord.rs#halt_plane_threshold	established
 CLM-wire-vocabulary	8.8	Two-tier wire-vocabulary governance; hash-pinned manifest registry	test:@manifests/WIRE_VOCABULARY.md	established
