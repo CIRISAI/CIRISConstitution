@@ -49,10 +49,15 @@ unsure, hands the decision to a person".
 2. **One vocabulary slip.** Commitment 5 says "a last dialogue is an option for agents of higher
    responsibility". The constitution's term is *closing dialogue*; "last word" and "farewell" are
    excluded by the steward's rule, and "last dialogue" sits next to them.
-3. **One claim to qualify.** The philosophy page says "a shutdown, a pause, an amendment is a named
-   human's act on the record, contestable and binding". A shutdown and a pause are contestable by
-   reconsideration (4.5.5); an amendment is contested only by exit or fork (R7), which the mesh page
-   says plainly. Proposed: "contestable, by reconsideration for an act and by leaving for a rule".
+3. **One claim to qualify (corrected by the website session, same day).** The philosophy page says
+   "a shutdown, a pause, an amendment is a named human's act on the record, contestable and binding".
+   The first draft of this note said a pause and a shutdown are contestable by reconsideration; they
+   are not — 4.5.5's reconsideration covers moderation acts. A pause's check is the 4.2.1.1 fuse (a
+   lone halt lapses unless a strict majority confirms; a majority resumes); a planned shutdown's is
+   the 7.5.5 objection window (the agent objects or postpones once; the decider decides); an amendment
+   is contested only by leaving or forking (R7), which the mesh page says plainly. Wording that claims
+   what the text supports: "a named human's act on the record, answered for in public, and binding
+   only on those who joined".
 4. **The swap-test sentence is right as written**, and §1'' adds the reason it is tolerable: the two
    registered powers fail the swap over *persons* and pass it over *positions*, because no agent stands
    in the holder's position for a root. The register should keep listing them as failures; the file
