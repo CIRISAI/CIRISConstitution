@@ -19,8 +19,8 @@ name: consistency
 # that merely carry a row. Those are different numbers and the gap is the point.
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ main ]
   pull_request:
 
 permissions:
