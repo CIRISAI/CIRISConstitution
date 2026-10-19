@@ -97,7 +97,9 @@ def roleWitness : RoleRule where
   humans and not agents is not an exemption in the rule but the occupancy fact P1: no agent
   stands in the holder's position for a root. The premise the symmetry hides is therefore
   stated twice over: the symmetry is meaningful only across positions both kinds can occupy,
-  and on the one position only humans occupy, it says nothing about agents at all. -/
+  and on the one position only humans occupy, it says nothing about agents at all.
+  ciris.ai/philosophy says the same in one sentence: an agent is a made thing, and exactly
+  three rules follow from being made — the root, the disclosure and the vote — and nothing else. -/
 
 inductive Position | strong | weak
   deriving DecidableEq, Repr
