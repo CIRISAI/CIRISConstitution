@@ -228,16 +228,20 @@ This initial RM assessment is predictive, based on the intended design and fores
 **STEP C: Stewardship Tier (ST)**
 Calculate the Stewardship Tier based on influence and potential risk.
 
-`ST = ceil( (CIS × RM) / 7) (Minimum ST is 1, Maximum ST is 5)`
+`ST = ceil( (CIS × RM) / 7 )` — a whole number from 1 to 5 for every party on the ledger.
+
+**CIS = 0 is out of scope, not a tier (steward ruling 2026-10-18, [CIRISConstitution#181](https://github.com/CIRISAI/CIRISConstitution/issues/181)).** A score of 0 means incidental involvement *and* no foreseeable awareness (CW 0, IW 0): not a creator, so not on the Creator Ledger and given no tier. Every party who is scored has CIS ≥ 1, so the product is never 0 and no minimum clamp is needed (the former "Minimum ST is 1" is withdrawn). Awareness without action is a tier: a party who built nothing (CW 0) but was negligent, looked away, or wanted the outcome scores IW 1–3, hence CIS 1–3, and at RM 5 lands on Tier 1, 2 or 3. CW and IW are whole numbers; there are no fractional grades.
 
 **ST Implications & Integration with CIRIS Processes:**
-The calculated Stewardship Tier directly informs the requirements and scrutiny level within the standard CIRIS PDMA process and WA oversight:
+The calculated Stewardship Tier directly informs the requirements and scrutiny level within the standard CIRIS PDMA process and WA oversight. The tier is **what the formula produces**, never read from RM alone (the former "corresponds to RM n" glosses, which disagreed with the formula, are withdrawn, 2026-10-18): a minor helper on a catastrophic system (CIS 2, RM 5) is Tier 2, a sole purposeful architect of a minor-risk system (CIS 7, RM 2) is Tier 2, and Tier 5 is reached only when both influence and danger are high (CIS × RM ≥ 29, i.e. CIS ≥ 6 at RM 5). The RM ≥ 4 trigger for the Catastrophic-Risk Evaluation (Step B) is independent of the tier and still fires on danger alone.
 
-* **Tier 1 (Minimal Stewardship):** Corresponds to anticipated RM 1–2 (Step B). Requires standard PDMA documentation, including a basic Creator Intent Statement (CIS - see Chapter 5).
-* **Tier 2 (Moderate Stewardship):** Corresponds to anticipated RM 2–3 (Step B). Requires enhanced PDMA documentation, including a detailed CIS justifying design choices and foreseen impacts.
-* **Tier 3 (Substantial Stewardship):** Corresponds to anticipated RM 3 (Step B). Mandates initiation of a high-scrutiny pathway within the PDMA, potentially requiring ethics consultations or preliminary WA information briefings.
-* **Tier 4 (High Stewardship):** Corresponds to anticipated RM 4 (Step B). Requires formal WA review and comment within the PDMA process before the system can proceed to critical development or deployment phases.
-* **Tier 5 (Maximum Stewardship):** Corresponds to anticipated RM 5 (Step B). Mandates mandatory WA sign-off within the PDMA process. If criteria in Annex D are met (e.g., high compute threshold), the full Catastrophic-Risk Evaluation (CRE) Protocol (Annex D) is required.
+| ST | Reached when (CIS × RM) | Requires |
+|---|---|---|
+| **1 — Minimal Stewardship** | 1–7 | Standard PDMA documentation, including a basic Creator Intent Statement (see Chapter 5). |
+| **2 — Moderate Stewardship** | 8–14 | Enhanced PDMA documentation, including a detailed Creator Intent Statement justifying design choices and foreseen impacts. |
+| **3 — Substantial Stewardship** | 15–21 | Initiation of a high-scrutiny pathway within the PDMA, potentially requiring ethics consultations or preliminary WA information briefings. |
+| **4 — High Stewardship** | 22–28 | Formal WA review and comment within the PDMA process before the system proceeds to critical development or deployment phases. |
+| **5 — Maximum Stewardship** | 29–35 | Mandatory WA sign-off within the PDMA process. If criteria in Annex D are met (e.g., high compute threshold), the full Catastrophic-Risk Evaluation (CRE) Protocol (Annex D) is required. |
 
 **Creator Ledger:**
 All ST calculations, including CIS and initial RM assessments, along with the Creator Intent Statement, must be logged in a tamper-evident "Creator Ledger" associated with the system. This ledger forms part of the mandatory input documentation for the PDMA process.
