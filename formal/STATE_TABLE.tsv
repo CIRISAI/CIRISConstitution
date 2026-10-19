@@ -2,7 +2,7 @@ plane	entity	variable	state	cc_ref	enters_by	signer	model_ref	atoms	status
 node	node	node.claim	unclaimed	2.6.8	first boot	—	—	node.unclaimed	text-only
 node	node	node.claim	claimed	2.6.8 1.13.2	owner-signed delegates_to (owner_binding)	owner	guarantees.Guarantees.tla:stewarded	node.claimed	modelled-partial
 node	node	node.announce	unannounced	5.4.6	default	—	—	node.unannounced	text-only
-node	node	node.announce	announced	5.4.6 4.2.1	widening of the owner-binding to federation scope	owner	mesh_net.MeshNet.tla:scope	node.announced	modelled-partial
+node	node	node.announce	announced	5.4.6 4.2.1	widening of the owner-binding to federation scope	owner	mesh_net.MeshNet.tla:scope	node.announced node.announce.announced	modelled-partial
 node	node	node.occurrence	pending	2.6.8 3.3.6	node self-registers a pending identity_occurrence	node	—	device.join_requested	text-only
 node	node	node.occurrence	owned	3.3.6 3.3.6.3	owner approves; occurrence admitted	owner (a live roster key)	self_roster.SelfRoster.tla:member	device.joined	modelled
 node	node	node.subscribed	no	3.2 4.2.1	no trust:accepts:v1 edge, or edge deleted	node owner	mesh_net.RootReach.tla:sub=FALSE	party.outside_roots	modelled
@@ -12,39 +12,39 @@ node	node	node.halt_latch	latched	4.2.1.1	one holder's constitutional halt row r
 node	node	node.serve	not_serving	3.2 T8	no seat or edge	—	—	—	text-only
 node	node	node.serve	serving	3.2 T8 4.2	seated serve node announced by its owner	owner	—	canonical.peered	text-only
 root	root	root.standing	NotRooted	3.2 T8	no edge; edge deleted; head removes a leg	evaluating node	trust_root.TrustRootVerdict.tla:V=NotRooted	party.outside_roots	modelled
-root	root	root.standing	Stalled	3.2 T7 T8	revocation/withdraws/revoked_after leaves ≤ M active	founders	trust_root.TrustRootVerdict.tla:V=Stalled	—	modelled
+root	root	root.standing	Stalled	3.2 T7 T8	revocation/withdraws/revoked_after leaves ≤ M active	founders	trust_root.TrustRootVerdict.tla:V=Stalled	root.standing.Stalled	modelled
 root	root	root.standing	Rooted	3.2 T8	acceptance edge on a fresh witnessed head; T7 recovery widening	evaluating node; conferred human	trust_root.TrustRootVerdict.tla:V=Rooted	root.rooted pair.rooted	modelled
-root	root	root.liveness	live	3.2 T7	≥ M+1 active human founders	—	trust_root.TrustRootVerdict.tla:Inv_T7	—	modelled
-root	root	root.liveness	stalled	3.2 T7	≤ M active; hard_case:community_liveness_stalled	the admitting substrate	trust_root.TrustRootVerdict.tla:Inv_T7	—	modelled
-root	seat	seat.identity_type	human	3.4.7.1 3.2	key record identity_type (a key is substrate or actor, never both)	key holder	trust_root.TrustRootVerdict.tla:Founders\NodeKeys	—	modelled
-root	seat	seat.identity_type	node_bearing	3.4.7.1 3.2 T8	identity_type ⊇ {node}; never counted as a seat	key holder	trust_root.TrustRootVerdict.tla:NodeKeys	—	modelled
+root	root	root.liveness	live	3.2 T7	≥ M+1 active human founders	—	trust_root.TrustRootVerdict.tla:Inv_T7	root.liveness.live	modelled
+root	root	root.liveness	stalled	3.2 T7	≤ M active; hard_case:community_liveness_stalled	the admitting substrate	trust_root.TrustRootVerdict.tla:Inv_T7	root.liveness.stalled	modelled
+root	seat	seat.identity_type	human	3.4.7.1 3.2	key record identity_type (a key is substrate or actor, never both)	key holder	trust_root.TrustRootVerdict.tla:Founders\NodeKeys	seat.identity_type.human	modelled
+root	seat	seat.identity_type	node_bearing	3.4.7.1 3.2 T8	identity_type ⊇ {node}; never counted as a seat	key holder	trust_root.TrustRootVerdict.tla:NodeKeys	seat.identity_type.node_bearing	modelled
 root	root	root.head	none	3.2 T4a T6	no version chain (a key root)	—	trust_root.TrustRootVerdict.tla:heads=<<>>	root.key	modelled
 root	root	root.head	witnessed_fresh	3.2 T6	K cosignatures newer than attach_window	witness directory	trust_root.TrustRootVerdict.tla:cosig	root.infrastructure	modelled
-root	root	root.head	stale	3.2 T4a	newest counted cosignature older than attach_window	—	trust_root.TrustRootVerdict.tla:AttachWindow	—	modelled
+root	root	root.head	stale	3.2 T4a	newest counted cosignature older than attach_window	—	trust_root.TrustRootVerdict.tla:AttachWindow	root.head.stale	modelled
 root	root	root.head	frozen	3.2 T6 3.1.9	hard_case:lineage_equivocation (two heads at one size)	persist	—	—	text-only
 root	accord	root.halt	not_halted	4.2.1.1	initial; lapse at halt_fuse_secs; majority lifecycle:active	strict majority of the standing roster	accord_halt.AccordHaltFuse.tla:halted=FALSE	root.resumed	modelled
 root	accord	root.halt	latched_lone	4.2.1.1	one holder's constitutional halt	one holder	accord_halt.AccordHaltFuse.tla:halted∧¬confirmed	root.halted	modelled
 root	accord	root.halt	confirmed	4.2.1.3	cosigned accord:lifecycle:confirmed within the fuse	strict majority	accord_halt.AccordHaltFuse.tla:confirmed	root.halt_confirmed	modelled
-root	accord	root.holder_disposition	honest	4.2.6	—	—	accord_roster.AccordRoster.lean:Cfg.h	—	modelled
-root	accord	root.holder_disposition	censored	4.2.6	adversary blocks the channel	adversary	accord_roster.AccordRoster.lean:Cfg.s	—	modelled
-root	accord	root.holder_disposition	lost	4.2.6	holder unreachable for good	—	accord_roster.AccordRoster.lean:Cfg.d	—	modelled
-root	accord	root.holder_disposition	coerced	4.2.6	adversary controls the key	adversary	accord_roster.AccordRoster.lean:Cfg.c	—	modelled
+root	accord	root.holder_disposition	honest	4.2.6	—	—	accord_roster.AccordRoster.lean:Cfg.h	root.holder_disposition.honest	modelled
+root	accord	root.holder_disposition	censored	4.2.6	adversary blocks the channel	adversary	accord_roster.AccordRoster.lean:Cfg.s	root.holder_disposition.censored	modelled
+root	accord	root.holder_disposition	lost	4.2.6	holder unreachable for good	—	accord_roster.AccordRoster.lean:Cfg.d	root.holder_disposition.lost	modelled
+root	accord	root.holder_disposition	coerced	4.2.6	adversary controls the key	adversary	accord_roster.AccordRoster.lean:Cfg.c	root.holder_disposition.coerced	modelled
 root	root	root.count	none	4.2.1 3.2	offline	—	—	root.none	text-only
 root	root	root.count	one	3.2	a canonical holds one root	—	—	root.key root.infrastructure	text-only
 root	root	root.count	two	3.2 4.2.1	two canonicals hold distinct roots	—	—	root.two	text-only
-self	roster key	key.holder	owner	3.3.6.3	—	—	self_roster.SelfRoster.tla:holder=owner	—	modelled
-self	roster key	key.holder	thief	3.3.6.3 1.13.3	device stolen with authentication	adversary	self_roster.SelfRoster.tla:holder=thief	—	modelled
-self	roster key	key.holder	lost	3.3.6.3	device lost	—	self_roster.SelfRoster.tla:holder=lost	—	modelled
+self	roster key	key.holder	owner	3.3.6.3	—	—	self_roster.SelfRoster.tla:holder=owner	key.holder.owner	modelled
+self	roster key	key.holder	thief	3.3.6.3 1.13.3	device stolen with authentication	adversary	self_roster.SelfRoster.tla:holder=thief	key.holder.thief	modelled
+self	roster key	key.holder	lost	3.3.6.3	device lost	—	self_roster.SelfRoster.tla:holder=lost	key.holder.lost	modelled
 self	roster key	key.membership	proposed_add	3.3.6.3	proposal by a live roster key	roster key	self_roster.SelfRoster.tla:pending(add)	device.join_requested	modelled
 self	roster key	key.membership	member	3.3.6 3.3.6.3	quorum path at once or lone path after W_self	roster majority / silence	self_roster.SelfRoster.tla:member	device.joined roster.visible person.multi_device	modelled
-self	roster key	key.membership	proposed_evict	3.3.6.3	eviction proposal	roster key	self_roster.SelfRoster.tla:pending(evict)	—	modelled
-self	roster key	key.membership	evicted	3.3.6 3.3.6.3	withdraws against the occurrence row lands	roster majority / silence	self_roster.SelfRoster.tla:Devices\member	—	modelled
-self	roster	self.roster_size	one	3.3.6.3	genesis only; add is unilateral	owner	self_roster.SelfRoster_combined1_*.cfg	—	modelled
+self	roster key	key.membership	proposed_evict	3.3.6.3	eviction proposal	roster key	self_roster.SelfRoster.tla:pending(evict)	key.membership.proposed_evict	modelled
+self	roster key	key.membership	evicted	3.3.6 3.3.6.3	withdraws against the occurrence row lands	roster majority / silence	self_roster.SelfRoster.tla:Devices\member	key.membership.evicted	modelled
+self	roster	self.roster_size	one	3.3.6.3	genesis only; add is unilateral	owner	self_roster.SelfRoster_combined1_*.cfg	self.roster_size.one	modelled
 self	roster	self.roster_size	two	3.3.6.3	lone path; theft is a stalemate	—	self_roster.SelfRoster_combined2_*.cfg	person.multi_device	modelled
-self	roster	self.roster_size	three_or_more	3.3.6.3	two paths	—	self_roster.SelfRoster_combined3_*.cfg	—	modelled
-self	key record	key.revocation	none	2.4.1.1	—	—	trust_root.TrustRootVerdict.tla:revokedAll=∅	—	modelled
-self	key record	key.revocation	revoked_after	2.4.1.1	key:revocation:v1 with revoked_after	revoking key	trust_root.TrustRootVerdict.tla:revokedAll (all-form only)	—	modelled-partial
-self	key record	key.revocation	revoked_all	2.4.1.1	key:revocation:v1 without bound	revoking key	trust_root.TrustRootVerdict.tla:revokedAll	—	modelled
+self	roster	self.roster_size	three_or_more	3.3.6.3	two paths	—	self_roster.SelfRoster_combined3_*.cfg	self.roster_size.three_more	modelled
+self	key record	key.revocation	none	2.4.1.1	—	—	trust_root.TrustRootVerdict.tla:revokedAll=∅	key.revocation.none	modelled
+self	key record	key.revocation	revoked_after	2.4.1.1	key:revocation:v1 with revoked_after	revoking key	trust_root.TrustRootVerdict.tla:revokedAll (all-form only)	key.revocation.revoked_after	modelled-partial
+self	key record	key.revocation	revoked_all	2.4.1.1	key:revocation:v1 without bound	revoking key	trust_root.TrustRootVerdict.tla:revokedAll	key.revocation.revoked_all	modelled
 self	key record	key.pqc	pending	5.3.2.4.3.1	Ed25519 registered, ML-DSA-65 in flight	—	—	—	text-only
 self	key record	key.pqc	complete	5.3.2.4.3.1	both halves bound	key holder	—	—	text-only
 self	device join	device.join	requested	3.3.6.3 (FSD/ADD_DEVICE)	join request on the first-contact plane	new device	CIRISServer formal/add_device	device.join_requested	modelled-elsewhere
@@ -52,47 +52,47 @@ self	device join	device.join	approved	3.3.6.3 (FSD/ADD_DEVICE)	owner's two rows 
 self	device join	device.join	joined	3.3.6	approval applied: occurrence admitted	—	self_roster.SelfRoster.tla:member	device.joined	modelled
 self	exchange	session.claim	unclaimed	3.1.3.1	no session:* claim row for the exchange; never acted on	—	—	—	text-only
 self	exchange	session.claim	claimed	3.1.3.1	session:* claim row with a validity window; the convergent merge names one handler on every device	claiming occurrence	—	session.unified	text-only
-membership	key×group	member.stage	proposed	3.1.3.2	membership:proposal (expires_at ≤ 30 d)	inviter	membership.Membership.tla:stage=proposed	—	modelled
-membership	key×group	member.stage	accepted_awaiting_group	3.1.3.2	membership:acceptance by the invitee	invitee	membership.Membership.tla:stage=accepted_awaiting_group	—	modelled
-membership	key×group	member.stage	declined	3.1.3.2	membership:decline (terminal)	invitee	membership.Membership.tla:stage=declined	—	modelled
+membership	key×group	member.stage	proposed	3.1.3.2	membership:proposal (expires_at ≤ 30 d)	inviter	membership.Membership.tla:stage=proposed	member.stage.proposed	modelled
+membership	key×group	member.stage	accepted_awaiting_group	3.1.3.2	membership:acceptance by the invitee	invitee	membership.Membership.tla:stage=accepted_awaiting_group	member.stage.accepted_awaiting_group	modelled
+membership	key×group	member.stage	declined	3.1.3.2	membership:decline (terminal)	invitee	membership.Membership.tla:stage=declined	member.stage.declined	modelled
 membership	key×group	member.stage	member	3.1.3.2	widening lands under the group's consensus_protocol	cosigned group	membership.Membership.tla:stage=member	household.member community.member child.member room.pair.keyed	modelled
-membership	key×group	member.stage	removed	3.1.3.2	membership:removal cosigned	cosigned group	membership.Membership.tla:stage=removed	—	modelled
-membership	key×group	member.stage	resigned	3.1.3.2	membership:resignation	leaving member	membership.Membership.tla:stage=resigned	—	modelled
+membership	key×group	member.stage	removed	3.1.3.2	membership:removal cosigned	cosigned group	membership.Membership.tla:stage=removed	member.stage.removed	modelled
+membership	key×group	member.stage	resigned	3.1.3.2	membership:resignation	leaving member	membership.Membership.tla:stage=resigned	member.stage.resigned	modelled
 membership	group	group.quorum_change	held	3.2 3.1.3.2	change proposed below quorum (409 community.quorum_pending)	proposer	membership.Membership.tla:QuorumChange=held	quorum_change.held	modelled
 membership	group	group.quorum_change	applied	3.2	cosigners reach the protocol	cosigned group	membership.Membership.tla:QuorumChange=applied	quorum_change.applied	modelled
 membership	group	group.formed	formed	3.2 3.3.4	founder's first row	founder	membership.Membership.tla:formed=formed	household.formed community.formed	modelled
 membership	group	group.moderator	named	4.5.4 4.5.13	moderator duty held	group / substrate	mesh_net.MeshNet.tla:mods	moderator.named	modelled
-membership	group	group.moderator	lapsed	4.5.4 4.5.13	withdraws or inactivity	group / substrate	mesh_net.MeshNet.tla:mods	—	modelled
-membership	group	group.moderator	merit_promoted	4.5.4 4.5.13	most trusted member promoted in the same step	group / substrate	mesh_net.MeshNet.tla:mods	—	modelled
+membership	group	group.moderator	lapsed	4.5.4 4.5.13	withdraws or inactivity	group / substrate	mesh_net.MeshNet.tla:mods	group.moderator.lapsed	modelled
+membership	group	group.moderator	merit_promoted	4.5.4 4.5.13	most trusted member promoted in the same step	group / substrate	mesh_net.MeshNet.tla:mods	group.moderator.merit_promoted	modelled
 membership	group	group.moderator	recovery_48h	4.5.4 4.5.13	no candidate: 48 h recovery	group / substrate	—	—	text-only
 membership	group	group.moderator	candidacy_24h	4.5.4 4.5.13	24 h candidacy phase	group / substrate	—	—	text-only
-membership	group	group.moderator	fail_secure	4.5.4 4.5.13	no moderator: the community does not federate	group / substrate	mesh_net.MeshNet.tla:mods	—	modelled
+membership	group	group.moderator	fail_secure	4.5.4 4.5.13	no moderator: the community does not federate	group / substrate	mesh_net.MeshNet.tla:mods	group.moderator.fail_secure	modelled
 membership	group	group.federating	yes	4.5.4	moderated	—	mesh_net.MeshNet.tla:federating	community.formed	modelled
-membership	group	group.federating	no	4.5.4	fail-secure or restricted by root	root / substrate	mesh_net.MeshNet.tla:restricted	—	modelled
-consent	subject×scope	consent.state	granted	3.3.1	consent:state:granted	subject	consent.Consent.tla:state=granted	—	modelled
-consent	subject×scope	consent.state	revoked	3.3.1	consent:state:revoked (overrides)	subject	consent.Consent.tla:state=revoked	—	modelled
-consent	subject×scope	consent.state	expired	3.3.1	consent:state:expired	persist	consent.Consent.tla:state=expired	—	modelled
-consent	agent memory	consent.decay	identity_severed	3.3.1	consent:decay:identity_severed self-report	agent consent module	consent.Consent.tla:decay=identity_severed	—	modelled
-consent	agent memory	consent.decay	patterns_anonymized	3.3.1	consent:decay:patterns_anonymized self-report	agent consent module	consent.Consent.tla:decay=patterns_anonymized	—	modelled
-consent	agent memory	consent.decay	complete	3.3.1	consent:decay:complete self-report	agent consent module	consent.Consent.tla:decay=complete	—	modelled
-consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-authored grant (#179)	owner or node	consent.Consent.tla:community_trust=granted	—	modelled
-consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a boundary; capture resumes on a fresh grant	any withdraws signer	consent.Consent.tla:community_trust=bounded	—	modelled
-consent	node×peer node	consent.replication	none	3.3.7	—	—	consent.Consent.tla:replication=none	—	modelled
+membership	group	group.federating	no	4.5.4	fail-secure or restricted by root	root / substrate	mesh_net.MeshNet.tla:restricted	group.federating.no	modelled
+consent	subject×scope	consent.state	granted	3.3.1	consent:state:granted	subject	consent.Consent.tla:state=granted	consent.state.granted	modelled
+consent	subject×scope	consent.state	revoked	3.3.1	consent:state:revoked (overrides)	subject	consent.Consent.tla:state=revoked	consent.state.revoked	modelled
+consent	subject×scope	consent.state	expired	3.3.1	consent:state:expired	persist	consent.Consent.tla:state=expired	consent.state.expired	modelled
+consent	agent memory	consent.decay	identity_severed	3.3.1	consent:decay:identity_severed self-report	agent consent module	consent.Consent.tla:decay=identity_severed	consent.decay.identity_severed	modelled
+consent	agent memory	consent.decay	patterns_anonymized	3.3.1	consent:decay:patterns_anonymized self-report	agent consent module	consent.Consent.tla:decay=patterns_anonymized	consent.decay.patterns_anonymized	modelled
+consent	agent memory	consent.decay	complete	3.3.1	consent:decay:complete self-report	agent consent module	consent.Consent.tla:decay=complete	consent.decay.complete	modelled
+consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-authored grant (#179)	owner or node	consent.Consent.tla:community_trust=granted	consent.community_trust.granted	modelled
+consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a boundary; capture resumes on a fresh grant	any withdraws signer	consent.Consent.tla:community_trust=bounded	consent.community_trust.bounded	modelled
+consent	node×peer node	consent.replication	none	3.3.7	—	—	consent.Consent.tla:replication=none	consent.replication.none	modelled
 consent	node×peer node	consent.replication	granted	3.3.7	consent:replication:v1 by the adder naming the contact's node(s) as subject	adder (node owner)	consent.Consent.tla:replication=granted	contact.added contact.via_code	modelled
 content	row	row.tier	local	5.3.2.4	local-tier write, signature deferred	producer	—	—	text-only
 content	row	row.tier	federation	5.3.2.4 2.6.1.7	promotion: hybrid signature over JCS(attestation_envelope)	producer	—	—	text-only
-content	row	row.standing	admitted	2.1 2.6.1.7	admission gates pass	producer	withdraws_admission.WithdrawsAdmission.tla:admitted	—	modelled
+content	row	row.standing	admitted	2.1 2.6.1.7	admission gates pass	producer	withdraws_admission.WithdrawsAdmission.tla:admitted	row.standing.admitted	modelled
 content	row	row.standing	withdrawn	2.4.1.1	withdraws under rules 0–5	producer / subject / proxy / delegate	withdraws_admission.WithdrawsAdmission.tla:withdrawn	file.withdrawn	modelled
 content	row	row.standing	recanted	2.4.1.3	recants by the producer	producer	—	—	text-only
 content	row	row.standing	superseded	2.4.1	supersedes by the same attester	producer	—	—	text-only
-content	row	row.standing	tombstoned	4.5.3 3.3.2	cosigned takedown_notice; tombstone by digest	trust-root quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	—	modelled
+content	row	row.standing	tombstoned	4.5.3 3.3.2	cosigned takedown_notice; tombstone by digest	trust-root quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	row.standing.tombstoned	modelled
 content	blob	blob.custody	held	3.1.3.3	custody:ack here	holder / author / quorum	mesh_net.MeshNet.tla:held	file.held message.delivered note.synced	modelled
 content	blob	blob.custody	custody_received	3.1.3.3 5.3.3.6	delivery receipt on the author's custody	holder / author / quorum	mesh_net.MeshNet.tla:claimed	file.custody_received	modelled
 content	blob	blob.custody	withdrawn	2.4.1.1	no device serves it	holder / author / quorum	mesh_net.MeshNet.tla:withdrawn	file.withdrawn	modelled
-content	blob	blob.custody	purged	4.5.3	bytes-plane tombstone; withheld at every byte door	holder / author / quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	—	modelled
+content	blob	blob.custody	purged	4.5.3	bytes-plane tombstone; withheld at every byte door	holder / author / quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	blob.custody.purged	modelled
 content	row	row.scope	self	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	room.self.keyed	modelled
-content	row	row.scope	family	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	—	modelled
-content	row	row.scope	community	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	—	modelled
+content	row	row.scope	family	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	row.scope.family	modelled
+content	row	row.scope	community	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	row.scope.community	modelled
 content	row	row.scope	affiliations	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
 content	row	row.scope	species	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
 content	row	row.scope	biosphere	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
@@ -100,21 +100,21 @@ content	row	row.scope	federation	2.3.3 5.2	the producer's cohort_scope (mirrored
 content	blob	blob.delivery	inline	2.6.1.3	JCS image at or below 1 MiB carried in the row	producer	—	—	text-only
 content	blob	blob.delivery	chunked	2.6.1.3 5.3.3 5.3.3.6	above the cap: fountain plane, chunk-DAG, per-device delivery receipts	producer	—	file.large	text-only
 authority	delegation link	delegation.link	live	2.4.1.2 4.4.3.2.8	delegates_to admitted at the door (term within ceiling)	principal	authority_tree.authority_tree.py:links	delegation.chain	modelled
-authority	delegation link	delegation.link	withdrawn	4.4.3.4.3	withdraws by the principal; cascade	principal	authority_tree.authority_tree.py:withdraw	—	modelled
-authority	delegation link	delegation.link	expired	4.4.3.2.8	delegation_valid_until passed (a withdrawal)	principal	authority_tree.authority_tree.py:I10	—	modelled
+authority	delegation link	delegation.link	withdrawn	4.4.3.4.3	withdraws by the principal; cascade	principal	authority_tree.authority_tree.py:withdraw	delegation.link.withdrawn	modelled
+authority	delegation link	delegation.link	expired	4.4.3.2.8	delegation_valid_until passed (a withdrawal)	principal	authority_tree.authority_tree.py:I10	delegation.link.expired	modelled
 authority	licence	licence.state	held	2.4.1.2.1	licensure:{authority_id} row	the authority	authority_tree.authority_tree.py:licensees	authority.licensing	modelled
 authority	licence	licence.state	revoked	2.4.1.2.1 4.4.3.2.8	revocation:* by the authority	the authority	—	—	text-only
 authority	licence	licence.state	contested	4.5.5	reconsideration:{grounds} by the subject	subject	—	—	text-only
-authority	grant	grant.state	held	3.3.2	key_grant:{axis}:v1 one row per recipient	owner / steward	authority_tree.authority_tree.py:grantees	—	modelled
+authority	grant	grant.state	held	3.3.2	key_grant:{axis}:v1 one row per recipient	owner / steward	authority_tree.authority_tree.py:grantees	grant.state.held	modelled
 authority	grant	grant.state	rotated	3.3.2	supersedes in rotation_chain	owner / steward	—	—	text-only
 authority	grant	grant.state	expired	3.3.2 5.1	grant term or epoch ended	owner / steward	—	—	text-only
-authority	guardian	guardian.bond	none	3.4.13	—	—	guarantees.Guarantees.tla:bond	—	modelled-partial
+authority	guardian	guardian.bond	none	3.4.13	—	—	guarantees.Guarantees.tla:bond	guardian.bond.none	modelled-partial
 authority	guardian	guardian.bond	bound	3.4.13	guardian bond row over a child member	guardian	guarantees.Guarantees.tla:bond	guardian.bound	modelled-partial
 authority	age	age.assurance	none	3.4.13	—	—	—	—	text-only
 authority	age	age.assurance	assured	3.4.13	age_self_declared / assurance row	subject or guardian	—	age.assured	text-only
-agent	agent	agent.bond	unbound	1.13.2 7.5	no live steward bond: the key cannot operate	—	guarantees.Guarantees.tla:bond=none	—	modelled
+agent	agent	agent.bond	unbound	1.13.2 7.5	no live steward bond: the key cannot operate	—	guarantees.Guarantees.tla:bond=none	agent.bond.unbound	modelled
 agent	agent	agent.bond	bonded	1.13.2 7.5	steward bond row with listed powers, reviewed yearly	steward	guarantees.Guarantees.tla:bond	agent.bound steward.bonded	modelled
-agent	agent	agent.bond	lapsed	1.13.2	bond not renewed; the key stops	—	guarantees.Guarantees.tla:bond=none	—	modelled
+agent	agent	agent.bond	lapsed	1.13.2	bond not renewed; the key stops	—	guarantees.Guarantees.tla:bond=none	agent.bond.lapsed	modelled
 agent	agent	agent.status	idle	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=idle	—	model-only
 agent	agent	agent.status	operating	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=operating	—	model-only
 agent	agent	agent.status	backgrounded	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=backgrounded	—	model-only
@@ -123,16 +123,16 @@ agent	agent	agent.status	forced_auth	7.5 1.13.2 (G15)	model vocabulary; no wire 
 agent	agent	agent.status	forced_other	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=forced_other	—	model-only
 agent	agent	agent.status	unbound	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=unbound	—	model-only
 agent	agent	agent.status	erased	7.5 1.13.2 (G15)	model vocabulary; no wire token	—	guarantees.Guarantees.tla:status=erased	—	model-only
-agent	agent	agent.retirement	decided	7.5.5	retirement:decided row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=decided	—	modelled
-agent	agent	agent.retirement	frozen	7.5.5	retirement:frozen row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=frozen	—	modelled
-agent	agent	agent.retirement	secrets_destroyed	7.5.5	retirement:secrets_destroyed row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=secrets_destroyed	—	modelled
-agent	agent	agent.retirement	handed_over	7.5.5	retirement:handed_over row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=handed_over	—	modelled
-agent	agent	agent.retirement	notified	7.5.5	retirement:notified row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=notified	—	modelled
-agent	agent	agent.retirement	custodian_minted	7.5.5	retirement:custodian_minted row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=custodian_minted	—	modelled
-agent	agent	agent.retirement	retired	7.5.5	retirement:retired row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=retired	—	modelled
+agent	agent	agent.retirement	decided	7.5.5	retirement:decided row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=decided	agent.retirement.decided	modelled
+agent	agent	agent.retirement	frozen	7.5.5	retirement:frozen row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=frozen	agent.retirement.frozen	modelled
+agent	agent	agent.retirement	secrets_destroyed	7.5.5	retirement:secrets_destroyed row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=secrets_destroyed	agent.retirement.secrets_destroyed	modelled
+agent	agent	agent.retirement	handed_over	7.5.5	retirement:handed_over row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=handed_over	agent.retirement.handed_over	modelled
+agent	agent	agent.retirement	notified	7.5.5	retirement:notified row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=notified	agent.retirement.notified	modelled
+agent	agent	agent.retirement	custodian_minted	7.5.5	retirement:custodian_minted row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=custodian_minted	agent.retirement.custodian_minted	modelled
+agent	agent	agent.retirement	retired	7.5.5	retirement:retired row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=retired	agent.retirement.retired	modelled
 agent	agent	agent.wa	absent	4.3	—	—	—	—	text-only
 agent	agent	agent.wa	present	4.3	a Wise Authority reachable for deferrals	WA	—	wa.present	text-only
-agent	agent	agent.halt_gate	acting	4.2.1.1 1.13.6	no latched halt read by the act gate	—	guarantees.Guarantees.tla:halted=FALSE	—	modelled
+agent	agent	agent.halt_gate	acting	4.2.1.1 1.13.6	no latched halt read by the act gate	—	guarantees.Guarantees.tla:halted=FALSE	agent.halt_gate.acting	modelled
 agent	agent	agent.halt_gate	refusing	4.2.1.1 1.13.6	latched halt: effectful acts refused as one terminal ACTION_RESULT	—	guarantees.Guarantees.tla:halted=TRUE	root.halted	modelled
 governance	event	event.state	open	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
 governance	event	event.state	cancelled	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only

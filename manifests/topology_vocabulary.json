@@ -1,14 +1,15 @@
 {
   "_meta": {
-    "catalogue_version": 1,
+    "catalogue_version": 2,
     "owner": "CIRISConstitution (steward decision 2026-10-18: CC publishes the atom vocabulary; CIRISServer harness/native/model.py loads it)",
     "source_of_atoms": "CIRISServer feat/csd4-catalogue 5c4fdbaa harness/native/model.py ATOMS (51), meanings verbatim",
     "state_table": "formal/STATE_TABLE.tsv",
     "invariants": "formal/INVARIANTS.tsv",
     "bump_rule": "a new entry, a new atom, a change to an atom's meaning or to an entry's promises bumps catalogue_version; lifting a builder refusal or re-laying nodes that keep every promise does not",
-    "n_atoms": 51,
-    "n_atoms_in_state_table": 47,
-    "revision_note": "2026-10-18 b: session.unified, contact.added, contact.via_code and file.large mapped to state-table rows (server reading accepted); no atom or meaning changed, catalogue_version stays 1"
+    "n_atoms": 109,
+    "n_atoms_in_state_table": 105,
+    "revision_note": "2026-10-18 b: session.unified, contact.added, contact.via_code and file.large mapped to state-table rows (server reading accepted); no atom or meaning changed, catalogue_version stays 1",
+    "version_2_note": "2026-10-18: steward ruling that the catalogue push waits on exhaustiveness over the formally defined states (formal/STATE_TABLE.tsv); version 2 adds one atom per modelled state no version-1 entry exercised (58) and proposes entries T10–T19 whose promises close them; version-1 atoms and meanings unchanged; the four reached-but-unpromised atoms are to be promised"
   },
   "atoms": {
     "root.none": {
@@ -86,7 +87,8 @@
       "state_predicate": "∃ person node: node.announce=announced",
       "cc_ref": "5.4.6",
       "in_state_table": true,
-      "meaning": "some person node announced its owner-binding (placeable)"
+      "meaning": "some person node announced its owner-binding (placeable)",
+      "note": "reached in the existing entries, promised by none; to be promised at version 2"
     },
     "node.unannounced": {
       "plane": "node",
@@ -100,7 +102,8 @@
       "state_predicate": "node.serve=serving ∧ record held by every dialing node",
       "cc_ref": "3.2",
       "in_state_table": true,
-      "meaning": "every node that dials a canonical holds its record (the owner's peering act)"
+      "meaning": "every node that dials a canonical holds its record (the owner's peering act)",
+      "note": "reached in the existing entries, promised by none; to be promised at version 2"
     },
     "person.multi_device": {
       "plane": "self",
@@ -149,7 +152,8 @@
       "state_predicate": "peering relation both ways (no table state; transport)",
       "cc_ref": "5.4.6",
       "in_state_table": false,
-      "meaning": "two person nodes peered directly (production peering both ways)"
+      "meaning": "two person nodes peered directly (production peering both ways)",
+      "note": "reached in the existing entries, promised by none; to be promised at version 2"
     },
     "pair.rooted": {
       "plane": "root",
@@ -366,7 +370,603 @@
       "state_predicate": "the actor's values.json is written (runner meta-atom)",
       "cc_ref": "—",
       "in_state_table": false,
-      "meaning": "the actor's values.json is written"
+      "meaning": "the actor's values.json is written",
+      "note": "reached in the existing entries, promised by none; to be promised at version 2"
+    },
+    "node.announce.announced": {
+      "plane": "node",
+      "state_predicate": "node.announce=announced",
+      "cc_ref": "5.4.6 4.2.1",
+      "in_state_table": true,
+      "meaning": "node: announce = announced — entered by widening of the owner-binding to federation scope (signer: owner)",
+      "added_in": 2
+    },
+    "root.standing.Stalled": {
+      "plane": "root",
+      "state_predicate": "root.standing=Stalled",
+      "cc_ref": "3.2 T7 T8",
+      "in_state_table": true,
+      "meaning": "root: standing = Stalled — entered by revocation/withdraws/revoked_after leaves ≤ M active (signer: founders)",
+      "added_in": 2
+    },
+    "root.liveness.live": {
+      "plane": "root",
+      "state_predicate": "root.liveness=live",
+      "cc_ref": "3.2 T7",
+      "in_state_table": true,
+      "meaning": "root: liveness = live — entered by ≥ M+1 active human founders (signer: —)",
+      "added_in": 2
+    },
+    "root.liveness.stalled": {
+      "plane": "root",
+      "state_predicate": "root.liveness=stalled",
+      "cc_ref": "3.2 T7",
+      "in_state_table": true,
+      "meaning": "root: liveness = stalled — entered by ≤ M active; hard_case:community_liveness_stalled (signer: the admitting substrate)",
+      "added_in": 2
+    },
+    "seat.identity_type.human": {
+      "plane": "root",
+      "state_predicate": "seat.identity_type=human",
+      "cc_ref": "3.4.7.1 3.2",
+      "in_state_table": true,
+      "meaning": "seat: identity_type = human — entered by key record identity_type (a key is substrate or actor, never both) (signer: key holder)",
+      "added_in": 2
+    },
+    "seat.identity_type.node_bearing": {
+      "plane": "root",
+      "state_predicate": "seat.identity_type=node_bearing",
+      "cc_ref": "3.4.7.1 3.2 T8",
+      "in_state_table": true,
+      "meaning": "seat: identity_type = node_bearing — entered by identity_type ⊇ {node}; never counted as a seat (signer: key holder)",
+      "added_in": 2
+    },
+    "root.head.stale": {
+      "plane": "root",
+      "state_predicate": "root.head=stale",
+      "cc_ref": "3.2 T4a",
+      "in_state_table": true,
+      "meaning": "root: head = stale — entered by newest counted cosignature older than attach_window (signer: —)",
+      "added_in": 2
+    },
+    "root.holder_disposition.honest": {
+      "plane": "root",
+      "state_predicate": "root.holder_disposition=honest",
+      "cc_ref": "4.2.6",
+      "in_state_table": true,
+      "meaning": "accord: holder_disposition = honest — entered by — (signer: —)",
+      "added_in": 2
+    },
+    "root.holder_disposition.censored": {
+      "plane": "root",
+      "state_predicate": "root.holder_disposition=censored",
+      "cc_ref": "4.2.6",
+      "in_state_table": true,
+      "meaning": "accord: holder_disposition = censored — entered by adversary blocks the channel (signer: adversary)",
+      "added_in": 2
+    },
+    "root.holder_disposition.lost": {
+      "plane": "root",
+      "state_predicate": "root.holder_disposition=lost",
+      "cc_ref": "4.2.6",
+      "in_state_table": true,
+      "meaning": "accord: holder_disposition = lost — entered by holder unreachable for good (signer: —)",
+      "added_in": 2
+    },
+    "root.holder_disposition.coerced": {
+      "plane": "root",
+      "state_predicate": "root.holder_disposition=coerced",
+      "cc_ref": "4.2.6",
+      "in_state_table": true,
+      "meaning": "accord: holder_disposition = coerced — entered by adversary controls the key (signer: adversary)",
+      "added_in": 2
+    },
+    "key.holder.owner": {
+      "plane": "self",
+      "state_predicate": "key.holder=owner",
+      "cc_ref": "3.3.6.3",
+      "in_state_table": true,
+      "meaning": "roster key: holder = owner — entered by — (signer: —)",
+      "added_in": 2
+    },
+    "key.holder.thief": {
+      "plane": "self",
+      "state_predicate": "key.holder=thief",
+      "cc_ref": "3.3.6.3 1.13.3",
+      "in_state_table": true,
+      "meaning": "roster key: holder = thief — entered by device stolen with authentication (signer: adversary)",
+      "added_in": 2
+    },
+    "key.holder.lost": {
+      "plane": "self",
+      "state_predicate": "key.holder=lost",
+      "cc_ref": "3.3.6.3",
+      "in_state_table": true,
+      "meaning": "roster key: holder = lost — entered by device lost (signer: —)",
+      "added_in": 2
+    },
+    "key.membership.proposed_evict": {
+      "plane": "self",
+      "state_predicate": "key.membership=proposed_evict",
+      "cc_ref": "3.3.6.3",
+      "in_state_table": true,
+      "meaning": "roster key: membership = proposed_evict — entered by eviction proposal (signer: roster key)",
+      "added_in": 2
+    },
+    "key.membership.evicted": {
+      "plane": "self",
+      "state_predicate": "key.membership=evicted",
+      "cc_ref": "3.3.6 3.3.6.3",
+      "in_state_table": true,
+      "meaning": "roster key: membership = evicted — entered by withdraws against the occurrence row lands (signer: roster majority / silence)",
+      "added_in": 2
+    },
+    "self.roster_size.one": {
+      "plane": "self",
+      "state_predicate": "self.roster_size=one",
+      "cc_ref": "3.3.6.3",
+      "in_state_table": true,
+      "meaning": "roster: roster_size = one — entered by genesis only; add is unilateral (signer: owner)",
+      "added_in": 2
+    },
+    "self.roster_size.three_more": {
+      "plane": "self",
+      "state_predicate": "self.roster_size=three_or_more",
+      "cc_ref": "3.3.6.3",
+      "in_state_table": true,
+      "meaning": "roster: roster_size = three_or_more — entered by two paths (signer: —)",
+      "added_in": 2
+    },
+    "key.revocation.none": {
+      "plane": "self",
+      "state_predicate": "key.revocation=none",
+      "cc_ref": "2.4.1.1",
+      "in_state_table": true,
+      "meaning": "key record: revocation = none — entered by — (signer: —)",
+      "added_in": 2
+    },
+    "key.revocation.revoked_after": {
+      "plane": "self",
+      "state_predicate": "key.revocation=revoked_after",
+      "cc_ref": "2.4.1.1",
+      "in_state_table": true,
+      "meaning": "key record: revocation = revoked_after — entered by key:revocation:v1 with revoked_after (signer: revoking key)",
+      "added_in": 2
+    },
+    "key.revocation.revoked_all": {
+      "plane": "self",
+      "state_predicate": "key.revocation=revoked_all",
+      "cc_ref": "2.4.1.1",
+      "in_state_table": true,
+      "meaning": "key record: revocation = revoked_all — entered by key:revocation:v1 without bound (signer: revoking key)",
+      "added_in": 2
+    },
+    "member.stage.proposed": {
+      "plane": "membership",
+      "state_predicate": "member.stage=proposed",
+      "cc_ref": "3.1.3.2",
+      "in_state_table": true,
+      "meaning": "key×group: stage = proposed — entered by membership:proposal (expires_at ≤ 30 d) (signer: inviter)",
+      "added_in": 2
+    },
+    "member.stage.accepted_awaiting_group": {
+      "plane": "membership",
+      "state_predicate": "member.stage=accepted_awaiting_group",
+      "cc_ref": "3.1.3.2",
+      "in_state_table": true,
+      "meaning": "key×group: stage = accepted_awaiting_group — entered by membership:acceptance by the invitee (signer: invitee)",
+      "added_in": 2
+    },
+    "member.stage.declined": {
+      "plane": "membership",
+      "state_predicate": "member.stage=declined",
+      "cc_ref": "3.1.3.2",
+      "in_state_table": true,
+      "meaning": "key×group: stage = declined — entered by membership:decline (terminal) (signer: invitee)",
+      "added_in": 2
+    },
+    "member.stage.removed": {
+      "plane": "membership",
+      "state_predicate": "member.stage=removed",
+      "cc_ref": "3.1.3.2",
+      "in_state_table": true,
+      "meaning": "key×group: stage = removed — entered by membership:removal cosigned (signer: cosigned group)",
+      "added_in": 2
+    },
+    "member.stage.resigned": {
+      "plane": "membership",
+      "state_predicate": "member.stage=resigned",
+      "cc_ref": "3.1.3.2",
+      "in_state_table": true,
+      "meaning": "key×group: stage = resigned — entered by membership:resignation (signer: leaving member)",
+      "added_in": 2
+    },
+    "group.moderator.lapsed": {
+      "plane": "membership",
+      "state_predicate": "group.moderator=lapsed",
+      "cc_ref": "4.5.4 4.5.13",
+      "in_state_table": true,
+      "meaning": "group: moderator = lapsed — entered by withdraws or inactivity (signer: group / substrate)",
+      "added_in": 2
+    },
+    "group.moderator.merit_promoted": {
+      "plane": "membership",
+      "state_predicate": "group.moderator=merit_promoted",
+      "cc_ref": "4.5.4 4.5.13",
+      "in_state_table": true,
+      "meaning": "group: moderator = merit_promoted — entered by most trusted member promoted in the same step (signer: group / substrate)",
+      "added_in": 2
+    },
+    "group.moderator.fail_secure": {
+      "plane": "membership",
+      "state_predicate": "group.moderator=fail_secure",
+      "cc_ref": "4.5.4 4.5.13",
+      "in_state_table": true,
+      "meaning": "group: moderator = fail_secure — entered by no moderator: the community does not federate (signer: group / substrate)",
+      "added_in": 2
+    },
+    "group.federating.no": {
+      "plane": "membership",
+      "state_predicate": "group.federating=no",
+      "cc_ref": "4.5.4",
+      "in_state_table": true,
+      "meaning": "group: federating = no — entered by fail-secure or restricted by root (signer: root / substrate)",
+      "added_in": 2
+    },
+    "consent.state.granted": {
+      "plane": "consent",
+      "state_predicate": "consent.state=granted",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "subject×scope: state = granted — entered by consent:state:granted (signer: subject)",
+      "added_in": 2
+    },
+    "consent.state.revoked": {
+      "plane": "consent",
+      "state_predicate": "consent.state=revoked",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "subject×scope: state = revoked — entered by consent:state:revoked (overrides) (signer: subject)",
+      "added_in": 2
+    },
+    "consent.state.expired": {
+      "plane": "consent",
+      "state_predicate": "consent.state=expired",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "subject×scope: state = expired — entered by consent:state:expired (signer: persist)",
+      "added_in": 2
+    },
+    "consent.decay.identity_severed": {
+      "plane": "consent",
+      "state_predicate": "consent.decay=identity_severed",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "agent memory: decay = identity_severed — entered by consent:decay:identity_severed self-report (signer: agent consent module)",
+      "added_in": 2
+    },
+    "consent.decay.patterns_anonymized": {
+      "plane": "consent",
+      "state_predicate": "consent.decay=patterns_anonymized",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "agent memory: decay = patterns_anonymized — entered by consent:decay:patterns_anonymized self-report (signer: agent consent module)",
+      "added_in": 2
+    },
+    "consent.decay.complete": {
+      "plane": "consent",
+      "state_predicate": "consent.decay=complete",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "agent memory: decay = complete — entered by consent:decay:complete self-report (signer: agent consent module)",
+      "added_in": 2
+    },
+    "consent.community_trust.granted": {
+      "plane": "consent",
+      "state_predicate": "consent.community_trust=granted",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "node×community: community_trust = granted — entered by owner- or node-authored grant (#179) (signer: owner or node)",
+      "added_in": 2
+    },
+    "consent.community_trust.bounded": {
+      "plane": "consent",
+      "state_predicate": "consent.community_trust=bounded",
+      "cc_ref": "3.3.1",
+      "in_state_table": true,
+      "meaning": "node×community: community_trust = bounded — entered by a revocation is a boundary; capture resumes on a fresh grant (signer: any withdraws signer)",
+      "added_in": 2
+    },
+    "consent.replication.none": {
+      "plane": "consent",
+      "state_predicate": "consent.replication=none",
+      "cc_ref": "3.3.7",
+      "in_state_table": true,
+      "meaning": "node×peer node: replication = none — entered by — (signer: —)",
+      "added_in": 2
+    },
+    "row.standing.admitted": {
+      "plane": "content",
+      "state_predicate": "row.standing=admitted",
+      "cc_ref": "2.1 2.6.1.7",
+      "in_state_table": true,
+      "meaning": "row: standing = admitted — entered by admission gates pass (signer: producer)",
+      "added_in": 2
+    },
+    "row.standing.tombstoned": {
+      "plane": "content",
+      "state_predicate": "row.standing=tombstoned",
+      "cc_ref": "4.5.3 3.3.2",
+      "in_state_table": true,
+      "meaning": "row: standing = tombstoned — entered by cosigned takedown_notice; tombstone by digest (signer: trust-root quorum)",
+      "added_in": 2
+    },
+    "blob.custody.purged": {
+      "plane": "content",
+      "state_predicate": "blob.custody=purged",
+      "cc_ref": "4.5.3",
+      "in_state_table": true,
+      "meaning": "blob: custody = purged — entered by bytes-plane tombstone; withheld at every byte door (signer: holder / author / quorum)",
+      "added_in": 2
+    },
+    "row.scope.family": {
+      "plane": "content",
+      "state_predicate": "row.scope=family",
+      "cc_ref": "2.3.3 5.2",
+      "in_state_table": true,
+      "meaning": "row: scope = family — entered by the producer's cohort_scope (mirrored in the signed row) (signer: producer)",
+      "added_in": 2
+    },
+    "row.scope.community": {
+      "plane": "content",
+      "state_predicate": "row.scope=community",
+      "cc_ref": "2.3.3 5.2",
+      "in_state_table": true,
+      "meaning": "row: scope = community — entered by the producer's cohort_scope (mirrored in the signed row) (signer: producer)",
+      "added_in": 2
+    },
+    "delegation.link.withdrawn": {
+      "plane": "authority",
+      "state_predicate": "delegation.link=withdrawn",
+      "cc_ref": "4.4.3.4.3",
+      "in_state_table": true,
+      "meaning": "delegation link: link = withdrawn — entered by withdraws by the principal; cascade (signer: principal)",
+      "added_in": 2
+    },
+    "delegation.link.expired": {
+      "plane": "authority",
+      "state_predicate": "delegation.link=expired",
+      "cc_ref": "4.4.3.2.8",
+      "in_state_table": true,
+      "meaning": "delegation link: link = expired — entered by delegation_valid_until passed (a withdrawal) (signer: principal)",
+      "added_in": 2
+    },
+    "grant.state.held": {
+      "plane": "authority",
+      "state_predicate": "grant.state=held",
+      "cc_ref": "3.3.2",
+      "in_state_table": true,
+      "meaning": "grant: state = held — entered by key_grant:{axis}:v1 one row per recipient (signer: owner / steward)",
+      "added_in": 2
+    },
+    "guardian.bond.none": {
+      "plane": "authority",
+      "state_predicate": "guardian.bond=none",
+      "cc_ref": "3.4.13",
+      "in_state_table": true,
+      "meaning": "guardian: bond = none — entered by — (signer: —)",
+      "added_in": 2
+    },
+    "agent.bond.unbound": {
+      "plane": "agent",
+      "state_predicate": "agent.bond=unbound",
+      "cc_ref": "1.13.2 7.5",
+      "in_state_table": true,
+      "meaning": "agent: bond = unbound — entered by no live steward bond: the key cannot operate (signer: —)",
+      "added_in": 2
+    },
+    "agent.bond.lapsed": {
+      "plane": "agent",
+      "state_predicate": "agent.bond=lapsed",
+      "cc_ref": "1.13.2",
+      "in_state_table": true,
+      "meaning": "agent: bond = lapsed — entered by bond not renewed; the key stops (signer: —)",
+      "added_in": 2
+    },
+    "agent.retirement.decided": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=decided",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = decided — entered by retirement:decided row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.retirement.frozen": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=frozen",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = frozen — entered by retirement:frozen row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.retirement.secrets_destroyed": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=secrets_destroyed",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = secrets_destroyed — entered by retirement:secrets_destroyed row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.retirement.handed_over": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=handed_over",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = handed_over — entered by retirement:handed_over row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.retirement.notified": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=notified",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = notified — entered by retirement:notified row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.retirement.custodian_minted": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=custodian_minted",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = custodian_minted — entered by retirement:custodian_minted row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.retirement.retired": {
+      "plane": "agent",
+      "state_predicate": "agent.retirement=retired",
+      "cc_ref": "7.5.5",
+      "in_state_table": true,
+      "meaning": "agent: retirement = retired — entered by retirement:retired row (agent self-emits to retired; custodian after) (signer: agent / custodian)",
+      "added_in": 2
+    },
+    "agent.halt_gate.acting": {
+      "plane": "agent",
+      "state_predicate": "agent.halt_gate=acting",
+      "cc_ref": "4.2.1.1 1.13.6",
+      "in_state_table": true,
+      "meaning": "agent: halt_gate = acting — entered by no latched halt read by the act gate (signer: —)",
+      "added_in": 2
     }
-  }
+  },
+  "entries_proposed": [
+    {
+      "id": "T10",
+      "title": "A stolen device: the owner evicts it by the quorum path",
+      "promises": [
+        "key.holder.owner",
+        "key.holder.thief",
+        "key.membership.proposed_evict",
+        "key.membership.evicted",
+        "self.roster_size.three_more"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T11",
+      "title": "Two lost devices: recovery by the lone path over the window",
+      "promises": [
+        "key.holder.lost",
+        "key.membership.evicted",
+        "self.roster_size.one"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T12",
+      "title": "A root stalls (a founder resigns below the margin) and recovers by a conferred human",
+      "promises": [
+        "root.standing.Stalled",
+        "root.liveness.stalled",
+        "root.liveness.live",
+        "seat.identity_type.human"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T13",
+      "title": "A witnessed lineage: a stale head refuses attach, a fresh head admits; a node-bearing seat never counts",
+      "promises": [
+        "root.head.stale",
+        "seat.identity_type.node_bearing"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T14",
+      "title": "Consent end to end: grant, capture, revoke as a boundary, expiry, decay to complete; replication grant and its withdrawal",
+      "promises": [
+        "consent.state.granted",
+        "consent.state.revoked",
+        "consent.state.expired",
+        "consent.decay.identity_severed",
+        "consent.decay.patterns_anonymized",
+        "consent.decay.complete",
+        "consent.community_trust.granted",
+        "consent.community_trust.bounded",
+        "consent.replication.none"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T15",
+      "title": "A community's ceremony: decline, removal, resignation; a moderator lapses, merit-promotes, and a room fails secure",
+      "promises": [
+        "member.stage.proposed",
+        "member.stage.accepted_awaiting_group",
+        "member.stage.declined",
+        "member.stage.removed",
+        "member.stage.resigned",
+        "group.moderator.lapsed",
+        "group.moderator.merit_promoted",
+        "group.moderator.fail_secure",
+        "group.federating.no"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T16",
+      "title": "An agent retired under the Standard: decided, objection window, frozen, secrets destroyed, handed over, notified, custodian minted, retired; a subject withdrawal inside the record",
+      "promises": [
+        "agent.bond.unbound",
+        "agent.bond.lapsed",
+        "agent.retirement.decided",
+        "agent.retirement.frozen",
+        "agent.retirement.secrets_destroyed",
+        "agent.retirement.handed_over",
+        "agent.retirement.notified",
+        "agent.retirement.custodian_minted",
+        "agent.retirement.retired",
+        "agent.halt_gate.acting"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T17",
+      "title": "A takedown and a steward purge: tombstone by digest, the dwell, a withheld blob; family and community scope content",
+      "promises": [
+        "row.standing.admitted",
+        "row.standing.tombstoned",
+        "blob.custody.purged",
+        "row.scope.family",
+        "row.scope.community"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T18",
+      "title": "Delegation ends: a withdrawal cascades, a term expires, a grant held and rotated; a guardian bond made and absent",
+      "promises": [
+        "delegation.link.withdrawn",
+        "delegation.link.expired",
+        "grant.state.held",
+        "guardian.bond.none"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    },
+    {
+      "id": "T19",
+      "title": "A holder under coercion and censorship: the standing rule holds; an announced node",
+      "promises": [
+        "root.holder_disposition.honest",
+        "root.holder_disposition.coerced",
+        "root.holder_disposition.censored",
+        "root.holder_disposition.lost",
+        "node.announce.announced",
+        "key.revocation.revoked_after",
+        "key.revocation.revoked_all",
+        "key.revocation.none"
+      ],
+      "status": "proposed (CC 2026-10-18); buildability per CIRISServer's survey in the catalogue issue"
+    }
+  ]
 }
