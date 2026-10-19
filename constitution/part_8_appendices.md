@@ -207,7 +207,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | Gap | Status | Resolution |
 |---|---|---|
 | G1 — Revocation privacy | **RETRACTED** | Wrong threat model. The Registered path's thesis is public verifiability per [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.1. |
-| G2 — Rules-layer Sybil | **MITIGATED** | [CC 4.5.1](#) step 5 1-of-6 accord/steward sign-off + CC 4.5.1.2 meta-amendment entrenchment. |
+| G2 — Rules-layer Sybil | **MITIGATED** | [CC 4.5.1](#) step 5 1-of-n accord/steward sign-off (n = the accord roster size) + CC 4.5.1.2 meta-amendment entrenchment. |
 | G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** | [CC 4.4.3.1](#) locality-scaled quorum + CC 4.4.3.1.1 sub-quorum fallback. |
 | v1.4 T-3 #1 testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](#) new prefix; opened to open vocabulary. |
 | v1.4 T-3 #2 labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |

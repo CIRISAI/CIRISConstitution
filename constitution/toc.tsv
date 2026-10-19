@@ -222,7 +222,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.3.13	policy-weighted	Policy C — weighted graph (EigenTrust-style)	§8.1.3	0.00092	300	0.11	IV	ceg	policies
 4.4.4	sovereign-registered	Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)	§8.4	0.00167	146	0.2	IV	ceg	policies
 4.5	discipline	Governance discipline	§11	0.00174	140	0.21	IV	ceg	constitution
-4.5.1	amendment	Amendment process — federation Contribution + WA quorum + 1-of-6 sign-off	§11.2	0.00711	27	0.85	IV	ceg	constitution
+4.5.1	amendment	Amendment process — federation Contribution + WA quorum + 1-of-n sign-off	§11.2	0.00711	27	0.85	IV	ceg	constitution
 4.5.1.1	axis	Axis-vocabulary discipline	§11.2.1	0.00585	32	0.7	IV	ceg	constitution
 4.5.1.2	meta-amendment	Meta-amendment + entrenchment	§11.2.3	0.00239	103	0.29	IV	ceg	constitution
 4.5.1.3	open-vocabulary	Open-vocabulary collision rule	§11.2.2	0.00095	225	0.11	IV	ceg	constitution
