@@ -99,3 +99,17 @@ The glossary (8.1.1) defines CEWP as the network formed when nodes exchange CEG 
 ## 9. The first layer of the closure, built the same day
 
 `formal/cewp_node/`: the ten catalogue entries vendored with a pin; `tools/topology_to_cfg.py --all` writes every applicable plane model's constants per entry and a `closure.json`; four plane models made parametric for it (`AccordHalt`, `AccordHaltFuse`, `RootReach`, `MeshNet`) with their known verdicts re-run; and the spine `CewpNode.tla` with the five cross-plane invariants X1–X5 over the state-table variables, closing at 419,328 states, plus a breaker twin that reproduces the G7 defect of the rc8 cut and fails as it must. Coverage across the catalogue: 41 of 57 promised atoms have a plane model; the 16 without are membership and consent (B and C). Catalogue maxima: 2 roots, 2 canonicals, 4 nodes, 3 persons, 2 devices per person, 3 holders. A four-node `RootReach` closes at 167,041 states; T8's accord fuse re-closes at 319,090.
+
+## 10. The set, closed the same day
+
+Models B (membership), C (consent) and D (retirement) landed; with the spine, the generated closure
+configurations, the two-path decision and its corridor, and the reciprocity file, the directory holds
+fourteen model directories. Counts at close of 2026-10-18: state table 155 states over 51 variables;
+invariant table 134 properties, 122 fully normalized, 11 partial, 1 model-internal; 33 of 51 variables
+carry at least one invariant, the 18 without are the governance leftovers whose state sets the text
+has not enumerated plus node claim/announce/occurrence/serve, key PQC, device join, age assurance,
+the agent's WA, blob delivery, capacity, event, ledger and moderation outcome; register 359
+established, 26 normative, 82 staged. The adequacy claim's A9 moved from building to proved. What the
+models surfaced for the steward is collected on CIRISConstitution#180 (the two-path policy, its
+corridor and its base) and in the three READMEs' ambiguity sections (retirement four, consent five,
+membership two).

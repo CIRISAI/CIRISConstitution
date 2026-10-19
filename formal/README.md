@@ -58,7 +58,7 @@ Every model states its residuals in its README: what it does not cover, the boun
 
 | [`two_path`](two_path/) (TLA+ + Lean) | one decision shape for every governance change: enact at once above one threshold, cancel within a window above a lower one, no instant landing for the irreversible; and the corridor that keeps a roster's policy away from the liberum veto and from one-voice takedown | every member of a community whose roster could otherwise be configured against them | 3.3.6.3, 4.2.1.1, 3.3.4 | five instances close; corridor compiles |
 
-Being built (2026-10-18): the membership ceremony, the last plane the state table lists with no model.
+| [`membership`](membership/) | the ceremony: acceptance bound to one proposal, decline terminal, widening and removal cosigned under the group's protocol, resignation unilateral, a departed member re-seated only by a new proposal, every member consented | the invitee who must not be seated without their own yes; the honest member one coerced key must not remove | 3.1.3.2, 3.3.4 | four protocols close (3.2M to 3.5M states); eight twins fail |
 
 ## Running
 

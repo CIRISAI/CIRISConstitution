@@ -26,7 +26,7 @@ with the bound written), **open** (a named gap with a ticket).
 | A6 | The halt reaches every subscriber and nobody else, lapses at the fuse unless a majority confirms, moves no trust state, stops nothing but the agent's act gate | `accord_halt`, `accord_roster` (any N), `RootReach`, `cewp_node` X1 + breaker twin | **proved** (roster arithmetic for any N); **measured** CSD-129 runs 5/6; breaker closed at persist v58 |
 | A7 | Erasure at the subject's request reaches every subject kind by one door and never launders an adverse row | `withdraws_admission` | **proved**; persist v58 rows graduated |
 | A8 | Consent is a fold with a revocation as a boundary; the owner can always recant; backdating is bounded by W; replication needs a directed grant | `consent` | **proved**; #179's sentence **open** in the text |
-| A9 | Membership is a ceremony: acceptance bound to one proposal, decline terminal, widening and removal cosigned, resignation unilateral, a held change resolves | `membership` | **building** (instance being cut to size) |
+| A9 | Membership is a ceremony: acceptance bound to one proposal, decline terminal, widening and removal cosigned, resignation unilateral, a held change resolves | `membership` (four protocols, eight twins) | **proved**; founder_only's coerced-founder removal is the stated bound; two text findings on #180's list |
 | A10 | The planes compose: an evicted key's authority ends, a local row never leaves, leaving lifts the latch and keeps the record | `cewp_node` X2–X5 | **proved**; 419,328 states |
 | A11 | Every state the design reaches has a rule and a witness | `STATE_TABLE.tsv` (155 states, 51 variables) + `INVARIANTS.tsv` (124 properties) + `check_formal_tables.py` | **bounded**: 32 of 51 variables carry an invariant; the 19 without are listed (governance leftovers: objection, quarantine, WA adjudication, event, capacity, ledger, moderation outcome; node claim/announce/serve; key PQC; device join) |
 | A12 | Every topology the harness stands up is covered plane by plane with the same constants | `cewp_node/catalog` + `tools/topology_to_cfg.py` + `closure.json` | **bounded** at the catalogue's maxima (2 roots, 4 nodes, 3 persons, 2 devices, 3 holders); 41/57 promised atoms have a plane model before membership lands |
@@ -60,7 +60,7 @@ runner); and an ethical premise that turns out to be doing work it was not state
 
 ## What is left, in order
 
-1. Membership (A9), the last plane model.
+1. ~~Membership (A9)~~ landed 2026-10-18; the two-path policy and its corridor (`two_path`, CIRISConstitution#180) are the next governance object.
 2. The nineteen unconstrained variables of A11: the governance state sets have to be written before
    they can be modelled (objection, quarantine, WA adjudication).
 3. The text items the models surfaced: the #179 sentence; the new owner's revocation door (3.3.1 vs

@@ -52,15 +52,15 @@ self	device join	device.join	approved	3.3.6.3 (FSD/ADD_DEVICE)	owner's two rows 
 self	device join	device.join	joined	3.3.6	approval applied: occurrence admitted	—	self_roster.SelfRoster.tla:member	device.joined	modelled
 self	exchange	session.claim	unclaimed	3.1.3.1	no session:* claim row for the exchange; never acted on	—	—	—	text-only
 self	exchange	session.claim	claimed	3.1.3.1	session:* claim row with a validity window; the convergent merge names one handler on every device	claiming occurrence	—	session.unified	text-only
-membership	key×group	member.stage	proposed	3.1.3.2	membership:proposal (expires_at ≤ 30 d)	inviter	—	—	text-only
-membership	key×group	member.stage	accepted_awaiting_group	3.1.3.2	membership:acceptance by the invitee	invitee	—	—	text-only
-membership	key×group	member.stage	declined	3.1.3.2	membership:decline (terminal)	invitee	—	—	text-only
-membership	key×group	member.stage	member	3.1.3.2	widening lands under the group's consensus_protocol	cosigned group	—	household.member community.member child.member room.pair.keyed	text-only
-membership	key×group	member.stage	removed	3.1.3.2	membership:removal cosigned	cosigned group	—	—	text-only
-membership	key×group	member.stage	resigned	3.1.3.2	membership:resignation	leaving member	—	—	text-only
-membership	group	group.quorum_change	held	3.2 3.1.3.2	change proposed below quorum (409 community.quorum_pending)	proposer	—	quorum_change.held	text-only
-membership	group	group.quorum_change	applied	3.2	cosigners reach the protocol	cosigned group	—	quorum_change.applied	text-only
-membership	group	group.formed	formed	3.2 3.3.4	founder's first row	founder	mesh_net.MeshNet.tla:members	household.formed community.formed	modelled-partial
+membership	key×group	member.stage	proposed	3.1.3.2	membership:proposal (expires_at ≤ 30 d)	inviter	membership.Membership.tla:stage=proposed	—	modelled
+membership	key×group	member.stage	accepted_awaiting_group	3.1.3.2	membership:acceptance by the invitee	invitee	membership.Membership.tla:stage=accepted_awaiting_group	—	modelled
+membership	key×group	member.stage	declined	3.1.3.2	membership:decline (terminal)	invitee	membership.Membership.tla:stage=declined	—	modelled
+membership	key×group	member.stage	member	3.1.3.2	widening lands under the group's consensus_protocol	cosigned group	membership.Membership.tla:stage=member	household.member community.member child.member room.pair.keyed	modelled
+membership	key×group	member.stage	removed	3.1.3.2	membership:removal cosigned	cosigned group	membership.Membership.tla:stage=removed	—	modelled
+membership	key×group	member.stage	resigned	3.1.3.2	membership:resignation	leaving member	membership.Membership.tla:stage=resigned	—	modelled
+membership	group	group.quorum_change	held	3.2 3.1.3.2	change proposed below quorum (409 community.quorum_pending)	proposer	membership.Membership.tla:QuorumChange=held	quorum_change.held	modelled
+membership	group	group.quorum_change	applied	3.2	cosigners reach the protocol	cosigned group	membership.Membership.tla:QuorumChange=applied	quorum_change.applied	modelled
+membership	group	group.formed	formed	3.2 3.3.4	founder's first row	founder	membership.Membership.tla:formed=formed	household.formed community.formed	modelled
 membership	group	group.moderator	named	4.5.4 4.5.13	moderator duty held	group / substrate	mesh_net.MeshNet.tla:mods	moderator.named	modelled
 membership	group	group.moderator	lapsed	4.5.4 4.5.13	withdraws or inactivity	group / substrate	mesh_net.MeshNet.tla:mods	—	modelled
 membership	group	group.moderator	merit_promoted	4.5.4 4.5.13	most trusted member promoted in the same step	group / substrate	mesh_net.MeshNet.tla:mods	—	modelled

@@ -315,3 +315,31 @@ jobs:
       - name: The corridor compiles
         working-directory: formal/two_path
         run: lean PolicyCorridor.lean
+
+  membership:
+    name: TLC — the membership ceremony (formal/membership)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The four protocols close; each twin fails its named property
+        working-directory: formal/membership
+        run: |
+          set +e
+          for c in founder_only unanimous majority quorum2of3; do
+            java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/mb-$c" -deadlock -config Membership_$c.cfg Membership.tla || exit 1
+          done
+          t() { java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/mb-$1" -deadlock -config Membership_$1.cfg Membership.tla | tee $1.log; grep -q "$2" $1.log || exit 1; }
+          t founder_only_coerced 'Inv_CoercedCannotRemoveHonest is violated'
+          t unanimous_two 'Inv_CoercedCannotRemoveHonest is violated'
+          t any_member_removes 'Inv_QuorumGovernsRoster is violated'
+          t no_binding 'Inv_AcceptanceBindsOneProposal is violated'
+          t unspent 'Inv_LeavingNotUndone is violated'
+          t stale_founder 'Inv_NoSelfAdmission is violated'
+          t founding_unsigned 'Inv_JoinerConsented is violated'
+          t no_hold_expiry 'Temporal properties were violated'

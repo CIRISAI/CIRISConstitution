@@ -9,310 +9,328 @@
    resignation is the leaving member's alone. A founding record seats a listed key iff that key
    signed it.
 
-   One group, a small key set, one founding. Each key has at most one live proposal at a time;
-   proposals are numbered per invitee (gen), so a proposal's identity (its hash) is the pair
-   <<k, gen>>. Roster changes are cosigned rows held in a per-target slot: one primary signer,
-   cosigners added one at a time, judged on the roster as it stood at the row's instant (the
-   primary's signing). A held change lands when the protocol is met, or expires after HoldWindow
-   ticks of its own age (CC 3.3.4: "hold the proposal in a pending state until additional member
+   One group, a small key set, one founding. Each invitee has at most one live proposal;
+   proposals to a key are numbered (gen), so a proposal's identity (its proposal_hash) is the
+   pair <<k, gen>>. A roster change is a cosigned row held in a per-target slot: one primary
+   signer, cosigners added one at a time, judged on the roster as it stood at the row's instant
+   (the primary's signing). A held change lands when the protocol is met, or expires after
+   HoldWindow ticks (CC 3.3.4: "hold the proposal in a pending state until additional member
    signatures arrive (per a configurable window - operator policy)").
 
    Time is per object: a proposal ages to Window (its expires_at) and then expires; a held change
-   ages to HoldWindow. There is no global clock; independent ageing over-approximates every
-   relative ordering of instants, which is sound for the safety properties.
+   ages to HoldWindow. Each object carries its own age and there is no clock variable; one Tick
+   ages every live object at once, which is what a shared real time does, and an object at its
+   window expires before time moves on.
 
    The adversary holds one key from Coercible from the start and signs anything that key may
-   sign; a key coerced from the start can act honestly for as long as it likes, so this covers
-   coercion at any later moment. Honest keys propose, answer and cosign widenings freely, and sign
-   a removal only of the coerced key (so any removal of an honest member is the adversary's alone).
+   sign; a key coerced from the start may act honestly for as long as it likes, so this covers
+   coercion at any later moment. Honest keys propose, answer and cosign widenings freely, and
+   sign a removal only of the coerced key, so any removal of an honest member is the coerced
+   key's alone.
+
+   The bound: MaxProposals proposals and MaxChanges roster changes per behaviour; MaxGen
+   proposals per invitee. Only the current proposal to a key is remembered: a new proposal to K
+   waits until no change on K is held, so a held widening always names K's current proposal.
 
    Rule switches (the ruled values first; any other value is a must-fail twin):
      Binding      "spent"    - CC 3.1.3.2 admission (1)-(4), and a proposal seats at most once
                   "literal"  - (1)-(4) only: a proposal stays usable after it seated someone
-                  "none"     - any acceptance ever signed by K satisfies the widening
+                  "none"     - any acceptance K ever signed satisfies the widening
      RemovalRule  "protocol" | "unilateral" (the primary's signature alone removes)
      FounderBasis "active"   - founder standing judged on the roster at the instant
                   "record"   - judged on the founding record (a founder who left still counts)
      FoundingRule "signed"   | "listed" (every listed key seated, signed or not)
-     HoldExpiry   TRUE       | FALSE (a held change never expires) *)
+     HoldExpiry   TRUE       | FALSE (a held change never expires)
+     UnanimousRemoval "others_majority" - a unanimous removal needs every member but the
+                                          target, and those must be a strict majority of the
+                                          roster (so a two-member group removes no one)
+                  "others"   - every member but the target (in a two-member group, either
+                               member removes the other alone) *)
 EXTENDS Naturals, FiniteSets
 
-CONSTANTS Keys, Listed, Founders, Protocol, M, Roles, Window, HoldWindow, MaxGen,
-          Coercible, Binding, RemovalRule, FounderBasis, FoundingRule, HoldExpiry, NoKey
+CONSTANTS Keys, Listed, Founders, Protocol, M, Roles, Offered, Window, HoldWindow, MaxGen,
+          MaxProposals, MaxChanges, Coercible,
+          Binding, RemovalRule, FounderBasis, FoundingRule, HoldExpiry, UnanimousRemoval
 
 ASSUME Protocol \in {"founder_only", "unanimous", "majority", "quorum"}
 ASSUME Founders \subseteq Listed /\ Listed \subseteq Keys /\ Coercible \subseteq Keys
+ASSUME Offered \in Roles
 ASSUME Binding \in {"spent", "literal", "none"} /\ RemovalRule \in {"protocol", "unilateral"}
 ASSUME FounderBasis \in {"active", "record"} /\ FoundingRule \in {"signed", "listed"}
-ASSUME NoKey \notin Keys
+ASSUME UnanimousRemoval \in {"others_majority", "others"}
 
 VARIABLES
   formed,      \* group.formed
-  active,      \* the roster: keys whose member.stage = member
-  coerced,     \* the one coerced key, or NoKey
-  prop,        \* prop[k]: k's latest proposal (gen 0 = none ever)
-  hist,        \* every proposal issued: [k, gen, role, by]
-  acc,         \* every acceptance signed: [k, gen, role]   (role restated)
-  declined,    \* every decline: <<k, gen>>
-  withdrawn,   \* every withdrawal by the inviter: <<k, gen>>
-  spent,       \* proposals that seated their invitee: <<k, gen>>
-  slot,        \* slot[k]: the cosigned roster change targeting k
-  leaveGen,    \* leaveGen[k]: k's proposal counter when k last left (removed or resigned)
-  left,        \* left[k] \in {"none","removed","resigned"}: how k last left
-  consentSeat  \* ghost: active keys whose current seat rests on their own signature
+  active,      \* the roster: the keys whose member.stage is member
+  coerced,     \* the one coerced key
+  prop,        \* prop[k]: k's current proposal and the replies to it
+  everAcc,     \* everAcc[k]: k has signed some acceptance (read only by the "none" twin)
+  slot,        \* slot[k]: the cosigned roster change targeting k (group.quorum_change)
+  applied,     \* some roster change has landed (group.quorum_change = applied)
+  leaveGen,    \* leaveGen[k]: k's proposal number when k last left
+  left,        \* left[k] \in {"none", "removed", "resigned"}: how k last left
+  consentSeat, \* ghost: the seated keys whose seat rests on their own signature
+  budget       \* [p |-> proposals issued, c |-> roster changes started]
 
-vars == <<formed, active, coerced, prop, hist, acc, declined, withdrawn, spent, slot,
-          leaveGen, left, consentSeat>>
+vars == <<formed, active, coerced, prop, everAcc, slot, applied, leaveGen, left, consentSeat,
+          budget>>
 
-PStatus == {"none", "open", "accepted", "declined", "withdrawn", "expired"}
-Live(k) == prop[k].status \in {"open", "accepted"}     \* not past expires_at, not answered no
-NoProp  == [gen |-> 0, by |-> NoKey, role |-> "none", age |-> 0, status |-> "none"]
-NoSlot  == [kind |-> "none", status |-> "none", by |-> NoKey, signers |-> {},
-            rosterAt |-> {}, foundersAt |-> {}, gen |-> 0, role |-> "none", age |-> 0,
-            inTime |-> FALSE]
+NoRole == "-"
+(* status: "none" (never), "open", "accepted", "declined", "withdrawn", "expired",
+   "closed" (ended and no longer readable by any row) *)
+NoProp == [gen |-> 0, self |-> FALSE, age |-> 0, status |-> "none", acc |-> NoRole,
+           spent |-> FALSE]
+NoSlot == [kind |-> "none", signers |-> {}, rosterAt |-> {}, gen |-> 0, role |-> NoRole,
+           age |-> 0, inTime |-> FALSE]
+Held(k) == slot[k].kind # "none"
+Live(k) == prop[k].status \in {"open", "accepted"}   \* signed before expires_at, not ended
+
+(* An ended proposal that no held row names keeps only its number and whether it was declined. *)
+Norm(p) == IF p.status \in {"open", "accepted"} THEN p
+           ELSE [NoProp EXCEPT !.gen = p.gen,
+                               !.status = IF p.status = "declined" THEN "declined" ELSE "closed"]
+Settle(k, p) == IF Held(k) THEN p ELSE Norm(p)
 
 Honest(k) == k # coerced
-(* A proposal that is no longer live keeps only its number and how it ended; who signed it and
-   the role it offered stay in hist. A finished roster change keeps only how it ended. *)
-Closed(p, st) == [NoProp EXCEPT !.gen = p.gen, !.status = st]
-SeatedFounders == IF FounderBasis = "active" THEN Founders \cap active ELSE Founders
-\* who may sign as a member at this instant (a founder who left still may, under "record")
-CanSignAsMember(s) == s \in active \/ (FounderBasis = "record" /\ s \in Founders /\ formed)
+FoundersAt(roster) == IF FounderBasis = "active" THEN Founders \cap roster ELSE Founders
+(* who may sign as a member now (under "record", a founder who left still may) *)
+CanSignAsMember(s) == s \in active \/ (FounderBasis = "record" /\ formed /\ s \in Founders)
 
 (* ---------------- the consensus_protocol (CC 3.3.4) ---------------- *)
-ProtocolMet(kind, k, signers, rosterAt, foundersAt) ==
+(* majority counts the target in the roster it is a majority of (">50% of current members");
+   unanimous never asks the target to sign its own removal; quorum counts any M members. *)
+ProtocolMet(kind, k, signers, rosterAt) ==
   LET counted == signers \cap rosterAt
       voters  == IF kind = "remove" THEN rosterAt \ {k} ELSE rosterAt
-  IN CASE Protocol = "founder_only" -> signers \cap foundersAt # {}
-       [] Protocol = "unanimous"    -> voters # {} /\ voters \subseteq signers
+  IN CASE Protocol = "founder_only" -> signers \cap FoundersAt(rosterAt) # {}
+       [] Protocol = "unanimous"    -> /\ voters # {} /\ voters \subseteq signers
+                                       /\ (kind = "remove" /\ UnanimousRemoval = "others_majority"
+                                           => Cardinality(voters) * 2 > Cardinality(rosterAt))
        [] Protocol = "majority"     -> Cardinality(counted) * 2 > Cardinality(rosterAt)
        [] Protocol = "quorum"       -> Cardinality(counted) >= M
 
-(* ---------------- what the door checks at landing ---------------- *)
-Accepted(k, g, r) == [k |-> k, gen |-> g, role |-> r] \in acc
-AcceptedAny(k, g) == \E r \in Roles : Accepted(k, g, r)
-Issued(k, g, r)   == \E b \in Keys : [k |-> k, gen |-> g, role |-> r, by |-> b] \in hist
-
-BindingGuard(k, sl) ==
-  CASE Binding = "none"    -> \E g \in 1..MaxGen : AcceptedAny(k, g)
-    [] Binding = "literal" -> /\ sl.inTime
-                              /\ Issued(k, sl.gen, sl.role) /\ Accepted(k, sl.gen, sl.role)
-                              /\ <<k, sl.gen>> \notin declined \cup withdrawn
-    [] Binding = "spent"   -> /\ sl.inTime
-                              /\ Issued(k, sl.gen, sl.role) /\ Accepted(k, sl.gen, sl.role)
-                              /\ <<k, sl.gen>> \notin declined \cup withdrawn \cup spent
+(* ---------------- what the door checks when a widening lands (CC 3.1.3.2) ---------------- *)
+(* (1) an acceptance by K of the proposal the widening names, same role; (2) not declined or
+   withdrawn; (3) the acceptance signed by expires_at (an acceptance is only ever signed while
+   the proposal is open); (4) the widening's own instant by expires_at (inTime). *)
+Bound(k) == LET sl == slot[k] IN
+            /\ sl.inTime /\ sl.gen = prop[k].gen /\ sl.gen >= 1
+            /\ prop[k].acc = sl.role
+            /\ prop[k].status \notin {"declined", "withdrawn"}
+BindingGuard(k) ==
+  CASE Binding = "none"    -> everAcc[k]
+    [] Binding = "literal" -> Bound(k)
+    [] Binding = "spent"   -> Bound(k) /\ ~prop[k].spent
 
 LandGuard(k) ==
   LET sl == slot[k] IN
-  /\ sl.status = "held"
+  /\ Held(k)
   /\ IF sl.kind = "widen"
        THEN /\ k \notin active
-            /\ ProtocolMet("widen", k, sl.signers, sl.rosterAt, sl.foundersAt)
-            /\ BindingGuard(k, sl)
+            /\ ProtocolMet("widen", k, sl.signers, sl.rosterAt)
+            /\ BindingGuard(k)
        ELSE /\ k \in active
-            /\ (RemovalRule = "unilateral"
-                \/ ProtocolMet("remove", k, sl.signers, sl.rosterAt, sl.foundersAt))
+            /\ (RemovalRule = "unilateral" \/ ProtocolMet("remove", k, sl.signers, sl.rosterAt))
 
 Init == /\ formed = FALSE /\ active = {} /\ coerced \in Coercible
-        /\ prop = [k \in Keys |-> NoProp]
-        /\ hist = {} /\ acc = {} /\ declined = {} /\ withdrawn = {} /\ spent = {}
-        /\ slot = [k \in Keys |-> NoSlot]
+        /\ prop = [k \in Keys |-> NoProp] /\ everAcc = [k \in Keys |-> FALSE]
+        /\ slot = [k \in Keys |-> NoSlot] /\ applied = FALSE
         /\ leaveGen = [k \in Keys |-> 0] /\ left = [k \in Keys |-> "none"]
-        /\ consentSeat = {}
+        /\ consentSeat = {} /\ budget = [p |-> 0, c |-> 0]
 
 (* ---------------- founding (CC 3.1.3.2 Founding, CC 3.2, CC 3.3.4) ---------------- *)
-(* The founding record lists Listed; S is the set of listed keys that signed it, at least one
-   founder (the authority) among them. Honest listed keys may decline to sign. *)
+(* The record lists Listed; S is the set of listed keys that signed it, the founders among
+   them (a founder is a bootstrapping signer). Other listed keys may decline to sign. *)
 Found(S) ==
-  /\ ~formed /\ S \subseteq Listed /\ S \cap Founders # {}
+  /\ ~formed /\ Founders \subseteq S /\ S \subseteq Listed
   /\ formed' = TRUE
   /\ active' = IF FoundingRule = "signed" THEN S ELSE Listed
   /\ consentSeat' = S
-  /\ UNCHANGED <<coerced, prop, hist, acc, declined, withdrawn, spent, slot, leaveGen, left>>
+  /\ UNCHANGED <<coerced, prop, everAcc, slot, applied, leaveGen, left, budget>>
 
 (* ---------------- single-signer rows ---------------- *)
-(* membership:proposal by an inviter: under founder_only an active founder, otherwise any
-   active member at the proposal's asserted_at. One live proposal per invitee. *)
-Propose(by, k, r) ==
-  /\ formed
-  /\ IF Protocol = "founder_only" THEN by \in SeatedFounders /\ CanSignAsMember(by)
+(* membership:proposal: under founder_only an active founder's, otherwise any active member's
+   at the proposal's asserted_at. One live proposal per invitee. *)
+Propose(by, k) ==
+  /\ formed /\ budget.p < MaxProposals
+  /\ IF Protocol = "founder_only" THEN by \in FoundersAt(active) /\ CanSignAsMember(by)
                                   ELSE by \in active
-  /\ k \notin active /\ ~Live(k) /\ prop[k].gen < MaxGen
-  /\ prop' = [prop EXCEPT ![k] = [gen |-> @.gen + 1, by |-> by, role |-> r, age |-> 0,
-                                  status |-> "open"]]
-  /\ hist' = hist \cup {[k |-> k, gen |-> prop[k].gen + 1, role |-> r, by |-> by]}
-  /\ UNCHANGED <<formed, active, coerced, acc, declined, withdrawn, spent, slot, leaveGen,
-                 left, consentSeat>>
+  /\ k \notin active /\ ~Live(k) /\ ~Held(k) /\ prop[k].gen < MaxGen
+  /\ prop' = [prop EXCEPT ![k] = [NoProp EXCEPT !.gen = prop[k].gen + 1, !.self = (by = k),
+                                                !.status = "open"]]
+  /\ budget' = [budget EXCEPT !.p = @ + 1]
+  /\ UNCHANGED <<formed, active, coerced, everAcc, slot, applied, leaveGen, left, consentSeat>>
 
-(* membership:acceptance - the invitee's only; restates the role (honestly, the offered one).
-   A second, opposite reply to the same proposal is refused (membership_reply_conflict). *)
+(* membership:acceptance: the invitee's only, restating the role (honestly, the one offered).
+   A second, opposite reply to one proposal is refused (membership_reply_conflict). *)
 Accept(k, r) ==
-  /\ prop[k].status = "open"
-  /\ (Honest(k) => r = prop[k].role)
-  /\ acc' = acc \cup {[k |-> k, gen |-> prop[k].gen, role |-> r]}
-  /\ prop' = [prop EXCEPT ![k].status = "accepted"]
-  /\ UNCHANGED <<formed, active, coerced, hist, declined, withdrawn, spent, slot, leaveGen,
-                 left, consentSeat>>
+  /\ prop[k].status = "open" /\ (Honest(k) => r = Offered)
+  /\ prop' = [prop EXCEPT ![k].status = "accepted", ![k].acc = r]
+  /\ everAcc' = [everAcc EXCEPT ![k] = (Binding = "none")]
+  /\ UNCHANGED <<formed, active, coerced, slot, applied, leaveGen, left, consentSeat, budget>>
 
 Decline(k) ==
   /\ prop[k].status = "open"
-  /\ declined' = declined \cup {<<k, prop[k].gen>>}
-  /\ prop' = [prop EXCEPT ![k] = Closed(@, "declined")]
-  /\ UNCHANGED <<formed, active, coerced, hist, acc, withdrawn, spent, slot, leaveGen, left,
-                 consentSeat>>
+  /\ prop' = [prop EXCEPT ![k] = Settle(k, [@ EXCEPT !.status = "declined"])]
+  /\ UNCHANGED <<formed, active, coerced, everAcc, slot, applied, leaveGen, left, consentSeat,
+                 budget>>
 
-(* the inviter's ordinary withdraws of its proposal *)
+(* the inviter's ordinary withdraws of its proposal (a withdrawn proposal counts as expired) *)
 Withdraw(k) ==
   /\ Live(k)
-  /\ withdrawn' = withdrawn \cup {<<k, prop[k].gen>>}
-  /\ prop' = [prop EXCEPT ![k] = Closed(@, "withdrawn")]
-  /\ UNCHANGED <<formed, active, coerced, hist, acc, declined, spent, slot, leaveGen, left,
-                 consentSeat>>
+  /\ prop' = [prop EXCEPT ![k] = Settle(k, [@ EXCEPT !.status = "withdrawn"])]
+  /\ UNCHANGED <<formed, active, coerced, everAcc, slot, applied, leaveGen, left, consentSeat,
+                 budget>>
 
-AgeProp(k)    == /\ Live(k) /\ prop[k].age < Window
-                 /\ prop' = [prop EXCEPT ![k].age = @ + 1]
-                 /\ UNCHANGED <<formed, active, coerced, hist, acc, declined, withdrawn, spent,
-                                slot, leaveGen, left, consentSeat>>
-ExpireProp(k) == /\ Live(k) /\ prop[k].age = Window
-                 /\ prop' = [prop EXCEPT ![k] = Closed(@, "expired")]
-                 /\ UNCHANGED <<formed, active, coerced, hist, acc, declined, withdrawn, spent,
-                                slot, leaveGen, left, consentSeat>>
+DueProp(k)   == Live(k) /\ prop[k].age = Window
+DueChange(k) == HoldExpiry /\ Held(k) /\ slot[k].age = HoldWindow
 
-(* membership:resignation - the leaving member's alone *)
+ExpireProp(k) ==
+  /\ DueProp(k)
+  /\ prop' = [prop EXCEPT ![k] = Settle(k, [@ EXCEPT !.status = "expired"])]
+  /\ UNCHANGED <<formed, active, coerced, everAcc, slot, applied, leaveGen, left, consentSeat,
+                 budget>>
+
+(* membership:resignation: the leaving member's alone *)
 Resign(k) ==
   /\ k \in active
   /\ active' = active \ {k} /\ consentSeat' = consentSeat \ {k}
   /\ leaveGen' = [leaveGen EXCEPT ![k] = prop[k].gen]
   /\ left' = [left EXCEPT ![k] = "resigned"]
-  /\ UNCHANGED <<formed, coerced, prop, hist, acc, declined, withdrawn, spent, slot>>
+  /\ UNCHANGED <<formed, coerced, prop, everAcc, slot, applied, budget>>
 
 (* ---------------- cosigned rows: widening and removal ---------------- *)
-(* The primary signs the row; its instant fixes the roster the protocol is judged on.
-   The widening's own signed instant must be <= the proposal's expires_at (rule 4): inTime
-   records whether it was, and only the "none" twin starts a widening without a live proposal. *)
+(* The primary signs; that instant fixes the roster the protocol is judged on. inTime records
+   whether the widening's instant was by the proposal's expires_at (rule 4); only the "none"
+   twin starts a widening without a live proposal. An honest primary names the offered role. *)
 StartWiden(s, k, r) ==
-  /\ formed /\ CanSignAsMember(s) /\ k \notin active /\ slot[k].status # "held"
+  /\ formed /\ budget.c < MaxChanges
+  /\ CanSignAsMember(s) /\ k \notin active /\ ~Held(k)
   /\ (Binding # "none" => Live(k))
-  /\ (Honest(s) /\ Live(k) => r = prop[k].role)
-  /\ slot' = [slot EXCEPT ![k] = [kind |-> "widen", status |-> "held", by |-> s,
-                                  signers |-> {s}, rosterAt |-> active,
-                                  foundersAt |-> SeatedFounders, gen |-> prop[k].gen,
-                                  role |-> r, age |-> 0, inTime |-> Live(k)]]
-  /\ UNCHANGED <<formed, active, coerced, prop, hist, acc, declined, withdrawn, spent,
-                 leaveGen, left, consentSeat>>
+  /\ (Honest(s) => r = Offered)
+  /\ slot' = [slot EXCEPT ![k] = [kind |-> "widen", signers |-> {s}, rosterAt |-> active,
+                                  gen |-> prop[k].gen, role |-> r, age |-> 0,
+                                  inTime |-> Live(k)]]
+  /\ budget' = [budget EXCEPT !.c = @ + 1]
+  /\ UNCHANGED <<formed, active, coerced, prop, everAcc, applied, leaveGen, left, consentSeat>>
 
 StartRemove(s, k) ==
-  /\ formed /\ CanSignAsMember(s) /\ k \in active /\ k # s /\ slot[k].status # "held"
+  /\ formed /\ budget.c < MaxChanges
+  /\ CanSignAsMember(s) /\ k \in active /\ k # s /\ ~Held(k)
   /\ (Honest(s) => k = coerced)
-  /\ slot' = [slot EXCEPT ![k] = [kind |-> "remove", status |-> "held", by |-> s,
-                                  signers |-> {s}, rosterAt |-> active,
-                                  foundersAt |-> SeatedFounders, gen |-> 0,
-                                  role |-> "none", age |-> 0, inTime |-> TRUE]]
-  /\ UNCHANGED <<formed, active, coerced, prop, hist, acc, declined, withdrawn, spent,
-                 leaveGen, left, consentSeat>>
+  /\ slot' = [slot EXCEPT ![k] = [NoSlot EXCEPT !.kind = "remove", !.signers = {s},
+                                                !.rosterAt = active]]
+  /\ budget' = [budget EXCEPT !.c = @ + 1]
+  /\ UNCHANGED <<formed, active, coerced, prop, everAcc, applied, leaveGen, left, consentSeat>>
 
-(* a cosigner is a member of the roster at the row's instant who is still seated (or, under
-   "record", a founder); honest keys cosign widenings and only the coerced key's removal *)
+(* A cosigner is still able to sign as a member and was on the roster at the row's instant
+   (or, under "record", is a founder). Honest keys cosign widenings and only the coerced key's
+   removal. *)
 Cosign(s, k) ==
-  /\ slot[k].status = "held" /\ s \notin slot[k].signers
-  /\ s \in slot[k].rosterAt \cup slot[k].foundersAt /\ CanSignAsMember(s)
+  /\ Held(k) /\ s \notin slot[k].signers /\ CanSignAsMember(s)
+  /\ s \in slot[k].rosterAt \cup FoundersAt(slot[k].rosterAt)
   /\ (Honest(s) /\ slot[k].kind = "remove" => k = coerced)
   /\ slot' = [slot EXCEPT ![k].signers = @ \cup {s}]
-  /\ UNCHANGED <<formed, active, coerced, prop, hist, acc, declined, withdrawn, spent,
-                 leaveGen, left, consentSeat>>
+  /\ UNCHANGED <<formed, active, coerced, prop, everAcc, applied, leaveGen, left, consentSeat,
+                 budget>>
 
 Land(k) ==
   /\ LandGuard(k)
-  /\ slot' = [slot EXCEPT ![k] = [NoSlot EXCEPT !.status = "applied"]]
+  /\ slot' = [slot EXCEPT ![k] = NoSlot] /\ applied' = TRUE
   /\ IF slot[k].kind = "widen"
        THEN /\ active' = active \cup {k}
-            /\ spent' = spent \cup {<<k, slot[k].gen>>}
-            /\ consentSeat' = IF AcceptedAny(k, slot[k].gen) THEN consentSeat \cup {k}
-                                                             ELSE consentSeat
+            /\ prop' = [prop EXCEPT ![k] = Norm([@ EXCEPT !.spent = TRUE])]
+            /\ consentSeat' = IF prop[k].gen = slot[k].gen /\ prop[k].acc # NoRole
+                                THEN consentSeat \cup {k} ELSE consentSeat
             /\ UNCHANGED <<leaveGen, left>>
        ELSE /\ active' = active \ {k} /\ consentSeat' = consentSeat \ {k}
+            /\ prop' = [prop EXCEPT ![k] = Norm(@)]
             /\ leaveGen' = [leaveGen EXCEPT ![k] = prop[k].gen]
             /\ left' = [left EXCEPT ![k] = "removed"]
-            /\ UNCHANGED spent
-  /\ UNCHANGED <<formed, coerced, prop, hist, acc, declined, withdrawn>>
+  /\ UNCHANGED <<formed, coerced, everAcc, budget>>
 
-AgeChange(k)    == /\ slot[k].status = "held" /\ slot[k].age < HoldWindow
-                   /\ slot' = [slot EXCEPT ![k].age = @ + 1]
-                   /\ UNCHANGED <<formed, active, coerced, prop, hist, acc, declined,
-                                  withdrawn, spent, leaveGen, left, consentSeat>>
-ExpireChange(k) == /\ HoldExpiry /\ slot[k].status = "held" /\ slot[k].age = HoldWindow
-                   /\ slot' = [slot EXCEPT ![k] = [NoSlot EXCEPT !.status = "expired"]]
-                   /\ UNCHANGED <<formed, active, coerced, prop, hist, acc, declined,
-                                  withdrawn, spent, leaveGen, left, consentSeat>>
+ExpireChange(k) ==
+  /\ DueChange(k)
+  /\ slot' = [slot EXCEPT ![k] = NoSlot]
+  /\ prop' = [prop EXCEPT ![k] = Norm(@)]
+  /\ UNCHANGED <<formed, active, coerced, everAcc, applied, leaveGen, left, consentSeat, budget>>
+
+Tick ==
+  /\ \A k \in Keys : ~DueProp(k) /\ ~DueChange(k)
+  /\ \E k \in Keys : Live(k) \/ (Held(k) /\ slot[k].age < HoldWindow)
+  /\ prop' = [k \in Keys |-> IF Live(k) THEN [prop[k] EXCEPT !.age = @ + 1] ELSE prop[k]]
+  /\ slot' = [k \in Keys |-> IF Held(k) /\ slot[k].age < HoldWindow
+                              THEN [slot[k] EXCEPT !.age = @ + 1] ELSE slot[k]]
+  /\ UNCHANGED <<formed, active, coerced, everAcc, applied, leaveGen, left, consentSeat, budget>>
 
 Next ==
   \/ \E S \in SUBSET Listed : Found(S)
-  \/ \E by, k \in Keys, r \in Roles : Propose(by, k, r)
-  \/ \E k \in Keys, r \in Roles : Accept(k, r)
-  \/ \E k \in Keys : Decline(k) \/ Withdraw(k) \/ AgeProp(k) \/ ExpireProp(k) \/ Resign(k)
-  \/ \E s, k \in Keys, r \in Roles : StartWiden(s, k, r)
+  \/ \E by, k \in Keys : Propose(by, k)
+  \/ \E k \in Keys, r \in Roles : Accept(k, r) \/ \E s \in Keys : StartWiden(s, k, r)
+  \/ \E k \in Keys : Decline(k) \/ Withdraw(k) \/ ExpireProp(k) \/ Resign(k)
+                     \/ Land(k) \/ ExpireChange(k)
   \/ \E s, k \in Keys : StartRemove(s, k) \/ Cosign(s, k)
-  \/ \E k \in Keys : Land(k) \/ AgeChange(k) \/ ExpireChange(k)
+  \/ Tick
 
-Spec == Init /\ [][Next]_vars /\ \A k \in Keys : WF_vars(AgeChange(k) \/ ExpireChange(k))
+(* Fairness is time only: ticks keep coming and a due object expires. No signer must act. *)
+Spec == Init /\ [][Next]_vars /\ WF_vars(Tick)
+        /\ \A k \in Keys : WF_vars(ExpireProp(k)) /\ WF_vars(ExpireChange(k))
 
 (* ---------------- the STATE_TABLE plane=membership vocabulary ---------------- *)
 Stage(k) ==   \* member.stage
-  CASE k \in active                                         -> "member"
-    [] prop[k].status = "open"                              -> "proposed"
+  CASE k \in active                                                 -> "member"
+    [] prop[k].status = "open"                                      -> "proposed"
     [] prop[k].status = "accepted"
-       \/ (slot[k].kind = "widen" /\ slot[k].status = "held" /\ AcceptedAny(k, slot[k].gen))
-                                                            -> "accepted_awaiting_group"
-    [] prop[k].status = "declined"                          -> "declined"
-    [] left[k] = "removed"                                  -> "removed"
-    [] left[k] = "resigned"                                 -> "resigned"
-    [] OTHER                                                -> "none"
+       \/ (slot[k].kind = "widen" /\ prop[k].acc # NoRole)          -> "accepted_awaiting_group"
+    [] prop[k].status = "declined"                                  -> "declined"
+    [] left[k] = "removed"                                          -> "removed"
+    [] left[k] = "resigned"                                         -> "resigned"
+    [] OTHER                                                        -> "none"
 QuorumChange ==   \* group.quorum_change
-  IF \E k \in Keys : slot[k].status = "held" THEN "held"
-  ELSE IF \E k \in Keys : slot[k].status = "applied" THEN "applied" ELSE "none"
+  IF \E k \in Keys : Held(k) THEN "held" ELSE IF applied THEN "applied" ELSE "none"
 
 TypeOK ==
-  /\ formed \in BOOLEAN /\ active \subseteq Keys /\ coerced \in Keys \cup {NoKey}
-  /\ \A k \in Keys : /\ prop[k].status \in PStatus /\ prop[k].gen \in 0..MaxGen
-                     /\ prop[k].age \in 0..Window
-                     /\ slot[k].status \in {"none", "held", "applied", "expired"}
-                     /\ slot[k].age \in 0..HoldWindow
-                     /\ Stage(k) \in {"none", "proposed", "accepted_awaiting_group",
-                                      "declined", "member", "removed", "resigned"}
+  /\ formed \in BOOLEAN /\ active \subseteq Keys /\ coerced \in Coercible
+  /\ \A k \in Keys :
+       /\ prop[k].gen \in 0..MaxGen /\ prop[k].age \in 0..Window
+       /\ prop[k].status \in {"none", "open", "accepted", "declined", "withdrawn", "expired",
+                              "closed"}
+       /\ prop[k].acc \in Roles \cup {NoRole}
+       /\ slot[k].kind \in {"none", "widen", "remove"} /\ slot[k].age \in 0..HoldWindow
+       /\ Stage(k) \in {"none", "proposed", "accepted_awaiting_group", "declined", "member",
+                        "removed", "resigned"}
   /\ QuorumChange \in {"none", "held", "applied"}
 
 (* ---------------- properties ---------------- *)
-(* A landing step for k of the given kind. Checked on every step (action invariants). *)
-Lands(k, kind) == slot[k].status = "held" /\ slot'[k].status = "applied" /\ slot[k].kind = kind
+(* Landing steps; the Inv_ properties over them are action invariants, checked on every step. *)
+Lands(k, kind) == slot[k].kind = kind /\ Land(k)
 
-(* CC 3.1.3.2 Admission (1)-(4): a seat comes only from an acceptance of the very proposal
-   the widening names, with the same role, signed in time, not withdrawn. *)
+(* CC 3.1.3.2 Admission (1)-(4): a seat comes only from an acceptance of the very proposal the
+   widening names, with the same role, both signed by its expires_at, and not withdrawn. *)
 Inv_AcceptanceBindsOneProposal ==
   [][\A k \in Keys : Lands(k, "widen") =>
-       LET sl == slot[k] IN
-       /\ sl.inTime
-       /\ Issued(k, sl.gen, sl.role) /\ Accepted(k, sl.gen, sl.role)
-       /\ <<k, sl.gen>> \notin withdrawn]_vars
+       /\ slot[k].inTime /\ slot[k].gen >= 1 /\ slot[k].gen = prop[k].gen
+       /\ prop[k].acc = slot[k].role /\ prop[k].status # "withdrawn"]_vars
 
 (* CC 3.1.3.2 Decline: a declined proposal never seats; asking again is a new proposal. *)
 Inv_DeclineTerminal ==
-  [][\A k \in Keys : Lands(k, "widen") => <<k, slot[k].gen>> \notin declined]_vars
+  [][\A k \in Keys : Lands(k, "widen") =>
+       ~(slot[k].gen = prop[k].gen /\ prop[k].status = "declined")]_vars
 
-(* CC 3.1.3.2: no key is seated on rows it alone signed (proposal and widening). Founding is
-   the stated exception: there signing is consent. *)
+(* CC 3.1.3.2: no key is seated on rows it alone signed (its proposal and its widening).
+   Founding is the stated exception: there, signing is consent. *)
 Inv_NoSelfAdmission ==
   [][\A k \in Keys : Lands(k, "widen") =>
-       \E s \in slot[k].signers \cup
-                {h.by : h \in {x \in hist : x.k = k /\ x.gen = slot[k].gen}} : s # k]_vars
+       \/ slot[k].signers \ {k} # {}
+       \/ (slot[k].gen = prop[k].gen /\ slot[k].gen >= 1 /\ ~prop[k].self)]_vars
 
 (* CC 3.1.3.2 / CC 3.3.4: every widening and removal that lands meets the protocol on the
    roster at the row's instant. *)
 Inv_QuorumGovernsRoster ==
   [][\A k \in Keys : (Lands(k, "widen") \/ Lands(k, "remove")) =>
-       ProtocolMet(slot[k].kind, k, slot[k].signers, slot[k].rosterAt, slot[k].foundersAt)]_vars
+       ProtocolMet(slot[k].kind, k, slot[k].signers, slot[k].rosterAt)]_vars
 
-(* One coerced key never removes an honest member (honest keys sign removals of the coerced
-   key only, so any honest removal is the coerced key's alone). *)
+(* One coerced key never removes an honest member. *)
 Inv_CoercedCannotRemoveHonest ==
   [][\A k \in Keys : Lands(k, "remove") => k = coerced]_vars
 
@@ -323,13 +341,13 @@ Inv_ResignationEnabled == \A k \in active : ENABLED Resign(k)
 Inv_LeavingNotUndone ==
   [][\A k \in Keys : Lands(k, "widen") => slot[k].gen > leaveGen[k]]_vars
 
-(* CC 3.1.3.2 ruling: every seated key is seated on its own signature. *)
+(* The CC 3.1.3.2 ruling: every seated key is seated on its own signature. *)
 Inv_JoinerConsented == active \subseteq consentSeat
 
-(* CC 3.1.3.2 expires_at: no proposal open past its window, no change held past its window. *)
+(* CC 3.1.3.2 expires_at: no proposal is open past its window, no change held past its own. *)
 Inv_ExpiryBound == \A k \in Keys : /\ Live(k) => prop[k].age <= Window
-                                   /\ slot[k].status = "held" => slot[k].age <= HoldWindow
+                                   /\ Held(k) => slot[k].age <= HoldWindow
 
-(* group.quorum_change held -> applied or expired. *)
-Prop_HeldChangeResolves == \A k \in Keys : (slot[k].status = "held") ~> (slot[k].status # "held")
+(* group.quorum_change: a held change applies or expires. *)
+Prop_HeldChangeResolves == \A k \in Keys : Held(k) ~> ~Held(k)
 =============================================================================
