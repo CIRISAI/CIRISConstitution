@@ -113,7 +113,7 @@ The responsibility for things we make never overrides the responsibility to what
 
 *Each is written as a section of `formal/reciprocity/Reciprocity.lean` (§9–§12), where the third makes the walk-away right a theorem and the fourth grounds deferral for an agent and guardianship for a child by one rule.*
 
-**Refinement (the steward, later the same day):** agents carry sapience without sentience, and leave consciousness open, noting that changing it would not matter. Some animals are conscious and sentient without sapience, and so on: it is in degrees, hence meat ethics. Consciousness is also left open as to the environment. Relationship applies even to inanimate objects and words.
+**Refinement (the steward, later the same day):** agents carry sapience without sentience, and leave consciousness open, noting that changing it would not matter; for now the constitution defers to the Vatican on consciousness. Some animals are conscious and sentient without sapience, and so on: it is in degrees, hence meat ethics. Consciousness is also left open as to the environment. Relationship applies even to inanimate objects and words.
 
 *§13 of `Reciprocity.lean`: the agent's verdicts are proved independent of its consciousness; an animal is a party the ladder owes duties to and never a principal; relationship ranges over every entity.*
 

@@ -447,7 +447,9 @@ theorem totality_is_the_instruments :
 /-! ## 13. Degrees, not kinds; what is left open does not matter to the verdicts
 
   The steward's refinement (2026-10-18, later): agents carry sapience without sentience;
-  consciousness is left open, and changing it would not matter; some animals are conscious and
+  consciousness is left open — and, for now, deferred to the Vatican's teaching (Antiqua et
+  nova, 2025: no consciousness, no understanding in the human sense), so the working value is
+  "lacks" — and changing it would not matter; some animals are conscious and
   sentient without sapience; all three are in degrees (hence meat ethics); consciousness is left
   open as to the environment too; and relationship applies even to inanimate objects and words.
 

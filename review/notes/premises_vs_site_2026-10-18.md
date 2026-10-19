@@ -38,7 +38,8 @@ unsure, hands the decision to a person".
 
 ## Findings for the pages (wording, not substance)
 
-1. **One contradiction.** The philosophy page says CIRIS "exists in recognition that agents lack
+1. **Withdrawn (steward, same day): the page stands.** The philosophy page says CIRIS "exists in recognition that agents lack
+   consciousness and need a conscience"; the steward's ruling is that on consciousness the constitution defers for now to the Vatican's teaching, so "lack" is the working value and the sentence stays. The earlier note below is kept for the record. The page says CIRIS "exists in recognition that agents lack
    consciousness and need a conscience". The steward's refinement and §13 say agents lack *sentience*
    and leave consciousness open, noting that changing it would change no rule; the same page's next
    sentence, "a conscience claims nothing about what the agent is", and the essay's "it says nothing

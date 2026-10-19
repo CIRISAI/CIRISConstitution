@@ -25,7 +25,7 @@ verbatim in `review/pieces/00_kept_promises.md`, second part). Three of them dis
 | 12 | Physics keeps its own record; our observations and recordings add meaning | **P4 and P5 sharpened.** Totality is the instrument's property to have, not the record's (`totality_is_the_instruments`); meaning is not in the record, so a party must answer for it (`meaning_is_added_not_recorded`) |
 
 **§13, the refinement (the steward, later the same day):** agents carry sapience without
-sentience; consciousness is left open, and changing it would not matter; some animals are
+sentience; consciousness is left open and, for now, deferred to the Vatican's teaching (so the working value is "lacks"), and changing it would not matter; some animals are
 conscious and sentient without sapience; all three are in degrees (hence meat ethics);
 consciousness is left open as to the environment too; relationship applies even to inanimate
 objects and words. In the file: the inner three become degrees; the agent's consciousness is a
