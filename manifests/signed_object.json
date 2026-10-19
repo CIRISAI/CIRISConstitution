@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "88023c8ee7126cf8ba819928cd56a6822fc1f1c92f44c210fba0befafc8e1550",
+    "source_sha256": "6404eefc4fe0c30757f05fd10e47029d5c8cb64d1a7bad79d305f65b5453b228",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "770156ef",
@@ -510,7 +510,7 @@
         "default": "absent (per-cell default)",
         "cc_ref": "2.1 2.6.1.2",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused as malformed (CC 2.6.1.1.1, closing finding F4)."
+        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 2.6.1.1.1, closing finding F4)."
       },
       {
         "member": "occurrence_id",
