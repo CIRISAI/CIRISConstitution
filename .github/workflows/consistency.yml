@@ -63,7 +63,7 @@ jobs:
           pip install -q pyyaml
           python3 tools/topology_to_cfg.py --all
           git diff --exit-code formal/cewp_node/generated/
-      - name: Catalogue coverage of the formally defined states (reported, not gated: exhaustiveness is the steward's call)
+      - name: "Catalogue coverage of the formally defined states (reported, not gated; exhaustiveness is the steward's call)"
         run: python3 tools/catalogue_coverage.py
       - name: Formal state table, invariant table and atom vocabulary agree with the models, the toc and the register
         run: python3 tools/check_formal_tables.py
