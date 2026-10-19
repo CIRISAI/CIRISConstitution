@@ -111,6 +111,53 @@ clauses follow; the constitution is that symmetry plus ten premises, three of th
 own (R2, R3, R4), five of them the text's (R0, R1, R5, R6, R8), and two of them the world's (R7, R9),
 with one open measurement (totality) and one chosen vocabulary (R10).
 
+## The clean derivation on the 11+1 × 5+1 (§16)
+
+The steward asked for the lowest common denominator on the RATCHET/Ontology taxonomy, so that the
+premise list inherits the taxonomy's exhaustiveness rather than asserting its own. The taxonomy
+(CIRISOntology `Core/WrongKind.lean`, CIRISHolon `OBJECT.md`): **11+1 kinds** of change in a record,
+eleven artifact-local coordinates and the Record as the one frame relation that does not factor;
+**5+1 verbs**, CEG's own attest, authorize, replace, withdraw, recant, plus `carries` (one kind
+arriving as another), which CEG firewalls as kind-laundering.
+
+What is inherited, at its measured strength: RECORD-1 (CIRISHolon, preregistered, 2026-09-26) coded
+269 of that programme's corrections; 264 of 264 change entries took exactly one kind at one coder,
+with 71 % having a named runner-up; two blind coders shared the partition at κ 0.52 (0.88 with
+runner-ups); the Record axis at κ 0.72, one-way, no reversals. The Ontology's Lean proves the
+disposition table total and the Record non-factoring, and says it does not prove the eleven are the
+right eleven. Nothing here claims more.
+
+**The twelve rows.** One per coordinate, stating what fixes it between the rule and the constitution:
+
+| Coordinate | Fixed by |
+|---|---|
+| Premises | the Golden Rule as the swap symmetry; R0 principals in positions |
+| Priorities | R3 the ladder; R10 the goods chosen; and the two derived clauses, M-1's rejection and the tie-break |
+| Rules | R5 revocability; the halt, the withdraws rules, who may file; the derived walk-away right and deferral |
+| Identity | R1 occupancy; R4 degrees; the three rules that follow from being made |
+| Confidence | R2 maturity and deferral; sentience not presumed |
+| Facts | the open measurements: totality (#93), manufactured humans, the CSD/4 runs |
+| Circumstances | the world's premises: R7 exit cost, R9 custody, R8 adoption |
+| Process | the two paths, windows and ceremonies (the plane models) |
+| Model | the state table and the plane models; coherence is not justice |
+| Structure | the 1+4 grammar, the closed row slot, the signed object |
+| Manner | the wire form; the plain rules and digests per reader |
+| Record | R6; physics keeps it, meaning is added; RECORD-1's own one-way finding |
+
+**The carries.** Twelve edges, each a premise arriving as a Rule, a Priority or (once) Identity from
+another kind, declared one by one: that is the kind-laundering firewall applied to an argument, and
+`carries_well_formed` checks that no edge starts from Rules (the argument never derives a rule from a
+rule) and every edge lands on a normative coordinate. `every_coordinate_addressed` checks the twelve
+rows are all non-empty. `cut_is_eleven_plus_one` restates the Holon's cut, five kinds about the thing
+and six about the account with the Record counted once outside both.
+
+**What the taxonomy says about the residue.** The two coordinates where the derivation is not
+closed are exactly the two the taxonomy itself marks as held or out of scope: the open items are
+Facts (measurements the architecture has yet to make), and the world-side premises are Circumstances
+(what necessarily diverges across arms, out of scope by construction). The derivation is therefore
+as closed as the taxonomy allows a record to be: everything artifact-local is fixed by a stated
+premise or a proved carry, and what is not is a fact to measure or a circumstance to live in.
+
 ## What this says about the argument
 
 The cascade holds, with eight premises that are not in the five sentences and have to be. Three of

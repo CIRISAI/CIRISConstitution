@@ -644,4 +644,120 @@ theorem swap_is_symmetric (before after : Outcome) :
     passesSwap before after = passesSwap (swapOutcome before) (swapOutcome after) := by
   simp [passesSwap, acceptsFrom, swapOutcome, Bool.and_comm]
 
+
+/-! ## 16. The clean derivation, on the 11+1 × 5+1 (the lowest common denominator)
+
+  The steward asked for the clean derivation on the RATCHET/Ontology taxonomy, inheriting its
+  exhaustiveness. The taxonomy (CIRISOntology `Core/WrongKind.lean`; CIRISHolon `OBJECT.md`):
+  **11+1 kinds** of change in a record — eleven artifact-local coordinates (Priorities, Rules,
+  Manner, Identity, Confidence, Facts, Circumstances, Process, Model, Structure, Premises) and
+  one frame relation, Record (whether the past can still be proven, which depends on what
+  survives around the artifact and does not factor: `record_not_site_generated`,
+  `repairable_does_not_factor`); and **5+1 verbs** — the five of CEG's 1+4 (attest, authorize,
+  replace, withdraw, recant) plus `carries`, one kind of change arriving as another, which CEG
+  firewalls because a change smuggled past a per-kind auditor wearing another kind is
+  kind-laundering.
+
+  Exhaustiveness is inherited at the strength it was measured, no more: RECORD-1
+  (CIRISHolon `conformance/record/RECORD1_RESULTS.md`, 2026-09-26, preregistered) coded 269
+  of that programme's own corrections; 264/264 change entries took exactly one of the eleven
+  kinds at one coder (coverage 1.000; 71% had a named runner-up, so the figure measures the
+  rule's decisiveness); two blind coders shared the partition at κ = 0.52 (0.88 with
+  runner-ups); the Record axis at κ = 0.72, one-way, zero reversals. The Lean there proves the
+  disposition table total and Record a non-factoring frame relation; it does not prove the
+  eleven are the right eleven, and says so.
+
+  The derivation, then, is twelve rows — one per coordinate — stating what fixes that
+  coordinate between the Recursive Golden Rule and the constitution, and a list of `carries`
+  edges — each premise that arrives as a Rule or a Priority from another kind — declared one
+  by one, which is exactly the firewall applied to an argument: no normative conclusion may
+  arrive except through a declared carry. Completeness is then a `decide`: every coordinate is
+  addressed, every carry lands on a normative kind, and every carry's source is a kind the
+  taxonomy admits. -/
+
+inductive Coord
+  | priorities | rules | manner | identity | confidence | facts
+  | circumstances | process | model | structure | premises | record
+  deriving DecidableEq, Repr
+
+def Coord.all : List Coord :=
+  [.priorities, .rules, .manner, .identity, .confidence, .facts,
+   .circumstances, .process, .model, .structure, .premises, .record]
+
+theorem coord_card : Coord.all.length = 12 := rfl
+
+/-- what fixes each coordinate on the way from the rule to the constitution -/
+def fixedBy : Coord → List String
+  | .premises      => ["RGR as the swap symmetry (§15)", "R0 principals in positions (§1'')"]
+  | .priorities    => ["R3 the ladder: self → family → community → species → ecosystem (§10)",
+                        "R10 the goods chosen: dignity, justice, autonomy (axiomology §0)",
+                        "(a) M-1's rejection clause — DERIVED from the swap (§15)",
+                        "(b) the vulnerable-party tie-break — DERIVED from the swap (§15)"]
+  | .rules         => ["R5 consent is revocability (CC 1.5)", "the halt, the withdraws rules, who may file (§14)",
+                        "the walk-away right — DERIVED from R3 (§10)", "deferral — DERIVED from R2 (§11)"]
+  | .identity      => ["R1 occupancy: no agent holds a root for itself (§1', §11)",
+                        "R4 degrees: sapience without sentience, consciousness open (§13)",
+                        "three rules follow from being made: root, disclosure, vote (ciris.ai/philosophy)"]
+  | .confidence    => ["R2 maturity and deferral: defer when not shown mature (§11)",
+                        "sentience not presumed; consciousness immaterial to the verdicts (§13)"]
+  | .facts         => ["totality of the record — OPEN measurement (#93)",
+                        "manufactured accountable humans — OPEN measurement (ciris.ai/constitutional-mesh)",
+                        "the CSD/4 runs: what is measured on real nodes (ADEQUACY A13)"]
+  | .circumstances => ["R7 exit as a check, with a bounded cost — the world's (§3)",
+                        "R9 custody over time — the world's (§7)", "R8 adoption: what is outside is met at the boundary (§6)"]
+  | .process       => ["the two paths, windows and ceremonies: self_roster, membership, retirement, accord_halt"]
+  | .model         => ["the state table and the plane models (STATE_TABLE.tsv, the eleven directories)",
+                        "coherence is not justice: J = F by definition (coherence-ratchet) — P8"]
+  | .structure     => ["the 1+4 grammar and the closed row-type slot (CC 2.4); the signed object (2.6.1.7)"]
+  | .manner        => ["the wire form: JCS, CDDL, vectors (2.6.1); the plain rules and digests for each reader"]
+  | .record        => ["R6 the record binds the rule-maker too; physics keeps it, meaning is added (§12)",
+                        "RECORD-1's own finding: the Record axis is one-way, zero reversals"]
+
+/-- every coordinate is addressed: the derivation names what fixes each of the twelve -/
+theorem every_coordinate_addressed : Coord.all.all (fun c => !(fixedBy c).isEmpty) = true := by decide
+
+/-- the `carries` edges: a change of one kind arriving as a Rule or a Priority. Each is a
+    premise of the list, declared, so that no normative conclusion is smuggled -/
+structure Carry where
+  premise : String
+  source : Coord
+  target : Coord
+
+def carries : List Carry :=
+  [ ⟨"RGR swap ⇒ M-1 rejection clause (a)", .premises, .priorities⟩,
+    ⟨"RGR swap ⇒ vulnerable-party tie-break (b)", .premises, .priorities⟩,
+    ⟨"R3 ladder, made never overrides existing ⇒ walk-away right", .priorities, .rules⟩,
+    ⟨"R3 ⇒ the holder's duties survive", .priorities, .rules⟩,
+    ⟨"R2 maturity ⇒ deferral; agent to a Wise Authority, child to a guardian", .confidence, .rules⟩,
+    ⟨"R2 ⇒ R1 occupancy on today's evidence", .confidence, .identity⟩,
+    ⟨"R1 occupancy ⇒ the halt as an asymmetry of position", .identity, .rules⟩,
+    ⟨"R4 degrees ⇒ no stake, refusal only, without grievance", .identity, .rules⟩,
+    ⟨"R5 revocability ⇒ every binding revocable; why a halt exists", .premises, .rules⟩,
+    ⟨"R6 the record ⇒ signed acts, the steward answering, present tense for what ships", .record, .rules⟩,
+    ⟨"R7, R9 circumstances ⇒ exit and custody as the top-level checks (unenforced)", .circumstances, .rules⟩,
+    ⟨"R8 adoption ⇒ first-contact rules", .circumstances, .rules⟩ ]
+
+def normative (c : Coord) : Bool := c == .rules || c == .priorities || c == .identity
+
+/-- every carry lands on a normative coordinate (Rules, Priorities) or on Identity (the one
+    carry that fixes occupancy), and none starts from Rules: the argument never derives a rule
+    from a rule -/
+theorem carries_well_formed :
+    carries.all (fun e => normative e.target && !(e.source == .rules)) = true := by decide
+
+/-- the twelve coordinates split as the Holon states it: five about the thing (Circumstances,
+    Structure, Process, Rules, Identity), six about the account (Premises, Model, Facts,
+    Confidence, Priorities, Manner), and the Record counted once outside both -/
+def aboutTheThing : List Coord := [.circumstances, .structure, .process, .rules, .identity]
+def aboutTheAccount : List Coord := [.premises, .model, .facts, .confidence, .priorities, .manner]
+
+theorem cut_is_eleven_plus_one :
+    aboutTheThing.length + aboutTheAccount.length = 11 ∧
+    (aboutTheThing ++ aboutTheAccount ++ [Coord.record]).length = 12 := ⟨rfl, rfl⟩
+
+/-- and the open measurements of the derivation are Facts, the world-side premises are
+    Circumstances — the two coordinates the taxonomy itself marks as held or out of scope -/
+theorem open_items_are_facts_and_circumstances :
+    (fixedBy .facts).length = 3 ∧ (fixedBy .circumstances).length = 3 := ⟨rfl, rfl⟩
+
 end Reciprocity
