@@ -325,6 +325,23 @@ jobs:
         working-directory: formal/two_path
         run: lean PolicyCorridor.lean
 
+  influence:
+    name: Lean — Structural Influence normalisation (formal/influence)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.14.0 (core only)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The model compiles with no sorry
+        working-directory: formal/influence
+        run: |
+          lean StructuralInfluence.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' StructuralInfluence.lean
+
   membership:
     name: TLC — the membership ceremony (formal/membership)
     runs-on: ubuntu-latest
