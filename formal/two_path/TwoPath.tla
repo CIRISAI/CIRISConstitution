@@ -22,72 +22,84 @@ EXTENDS Naturals, FiniteSets
 
 CONSTANTS Voters,        \* the standing set, |Voters| = N
           Coerced,       \* voters the adversary holds
+          Silent,        \* voters who never answer (the inactive part of a large community)
           EnactNum, EnactDen,      \* enact threshold as a fraction: approvals * Den > Num * N  (strict) ...
           CancelNum, CancelDen,    \* ... objections * Den >= Num * N  (at least)
+          FloorNum, FloorDen,      \* the reverse path lands only with approvals * Den >= Num * N: silence alone never admits
           Window,        \* ticks a proposal lives before the reverse path decides it
           Irreversible,  \* TRUE: no instant landing
           MaxChanges     \* changes per behaviour (the bound)
 
 ASSUME Coerced \subseteq Voters
+ASSUME Silent \subseteq Voters /\ Silent \cap Coerced = {}
 ASSUME CancelNum * EnactDen <= EnactNum * CancelDen   \* Cancel ≤ Enact
+ASSUME FloorNum * EnactDen <= EnactNum * FloorDen     \* Floor ≤ Enact (a floor at Enact switches the reverse path off)
 
 N == Cardinality(Voters)
 Honest == Voters \ Coerced
+Active == Voters \ Silent          \* who will ever answer
+HonestActive == Honest \ Silent
 
 VARIABLES
   pending,     \* the one open proposal: [by, age, approvers, objectors, adversarial] or none
   landed,      \* how many adversarial changes landed
   honestLanded,\* how many honest changes landed
   cancelled,   \* how many honest changes were cancelled
-  wrong        \* an adversarial change landed although honest objections reached Cancel
+  wrong,       \* an adversarial change landed although honest objections reached Cancel
+  lone         \* a change landed carrying exactly one approval: one voice admitted
 
-vars == <<pending, landed, honestLanded, cancelled, wrong>>
+vars == <<pending, landed, honestLanded, cancelled, wrong, lone>>
 
 None == [by |-> "none"]
 Open == pending # None
 
 EnactReached(p)  == Cardinality(p.approvers) * EnactDen > EnactNum * N
 CancelReached(p) == Cardinality(p.objectors) * CancelDen >= CancelNum * N
+FloorReached(p)  == Cardinality(p.approvers) * FloorDen >= FloorNum * N
 
-Init == /\ pending = None /\ landed = 0 /\ honestLanded = 0 /\ cancelled = 0 /\ wrong = FALSE
+Init == /\ pending = None /\ landed = 0 /\ honestLanded = 0 /\ cancelled = 0 /\ wrong = FALSE /\ lone = FALSE
 
 (* a voter proposes; the proposer approves; a coerced proposer's change is adversarial *)
 Propose(v) == /\ ~Open /\ landed + honestLanded + cancelled < MaxChanges
               /\ pending' = [by |-> v, age |-> 0, approvers |-> {v}, objectors |-> {}, adversarial |-> (v \in Coerced)]
-              /\ UNCHANGED <<landed, honestLanded, cancelled, wrong>>
+              /\ UNCHANGED <<landed, honestLanded, cancelled, wrong, lone>>
 
 (* every voter answers once: honest approve honest changes and object to adversarial ones;
    coerced do the reverse *)
 Wants(v, p) == IF v \in Coerced THEN p.adversarial ELSE ~p.adversarial
-Answer(v) == /\ Open /\ v \notin pending.approvers /\ v \notin pending.objectors
+Answer(v) == /\ Open /\ v \in Active /\ v \notin pending.approvers /\ v \notin pending.objectors
              /\ pending' = IF Wants(v, pending)
                            THEN [pending EXCEPT !.approvers = @ \cup {v}]
                            ELSE [pending EXCEPT !.objectors = @ \cup {v}]
-             /\ UNCHANGED <<landed, honestLanded, cancelled, wrong>>
+             /\ UNCHANGED <<landed, honestLanded, cancelled, wrong, lone>>
 
 (* forward path: lands at once at Enact — unless irreversible *)
 LandForward == /\ Open /\ ~Irreversible /\ EnactReached(pending)
                /\ landed' = IF pending.adversarial THEN landed + 1 ELSE landed
                /\ honestLanded' = IF pending.adversarial THEN honestLanded ELSE honestLanded + 1
                /\ wrong' = wrong \/ (pending.adversarial /\ CancelReached(pending))
+               /\ lone' = (lone \/ Cardinality(pending.approvers) = 1)
                /\ pending' = None /\ UNCHANGED cancelled
 
-(* reverse path: the window closes; cancelled if objections reached Cancel, else lands *)
+(* reverse path: the window closes; cancelled if objections reached Cancel or approvals never reached
+   the Floor (silence alone never admits), else lands *)
 WindowCloses == /\ Open /\ pending.age >= Window
-                /\ IF CancelReached(pending)
+                /\ IF CancelReached(pending) \/ ~FloorReached(pending)
                    THEN /\ cancelled' = IF pending.adversarial THEN cancelled ELSE cancelled + 1
-                        /\ UNCHANGED <<landed, honestLanded, wrong>>
+                        /\ UNCHANGED <<landed, honestLanded, wrong, lone>>
                    ELSE /\ landed' = IF pending.adversarial THEN landed + 1 ELSE landed
                         /\ honestLanded' = IF pending.adversarial THEN honestLanded ELSE honestLanded + 1
                         /\ wrong' = wrong \/ pending.adversarial   \* adversarial change landed by silence
+                        /\ lone' = (lone \/ Cardinality(pending.approvers) = 1)
                         /\ UNCHANGED cancelled
                 /\ pending' = None
 
-(* the window ages only after every voter present has answered (the owner-present reading) *)
+(* the window ages only after every honest voter who will answer has answered (the owner-present
+   reading); the silent never answer, so the window runs past them *)
 Tick == /\ Open /\ pending.age < Window
-        /\ \A v \in Honest : v \in pending.approvers \/ v \in pending.objectors
+        /\ \A v \in HonestActive : v \in pending.approvers \/ v \in pending.objectors
         /\ pending' = [pending EXCEPT !.age = @ + 1]
-        /\ UNCHANGED <<landed, honestLanded, cancelled, wrong>>
+        /\ UNCHANGED <<landed, honestLanded, cancelled, wrong, lone>>
 
 Next == \/ \E v \in Voters : Propose(v) \/ Answer(v)
         \/ LandForward \/ WindowCloses \/ Tick
@@ -95,12 +107,22 @@ Next == \/ \E v \in Voters : Propose(v) \/ Answer(v)
 Spec == Init /\ [][Next]_vars /\ WF_vars(Next)
 
 (* ---------------- what the policy promises ---------------- *)
-\* a coerced minority below Cancel never blocks an honest change
+\* a coerced minority below Cancel never blocks an honest change the active honest can floor
 Inv_AdversaryBelowCancelCannotBlock ==
-  (Cardinality(Coerced) * CancelDen < CancelNum * N) => cancelled = 0
-\* an honest set at or above Cancel always stops an adversarial change: nothing adversarial lands
+  (Cardinality(Coerced) * CancelDen < CancelNum * N /\ Cardinality(HonestActive) * FloorDen >= FloorNum * N) => cancelled = 0
+\* one voice never admits by either path: with a floor above one voter (and enact above one),
+\* no change ever lands on a single approval however many voters stay silent
+Inv_OneVoiceNeverAdmits ==
+  (FloorNum * N > FloorDen /\ EnactNum * N >= EnactDen) => lone = FALSE
+\* an active honest set at or above Cancel always stops an adversarial change: nothing adversarial lands
 Inv_HonestAtCancelStopsAdversary ==
-  (Cardinality(Honest) * CancelDen >= CancelNum * N) => landed = 0
+  (Cardinality(HonestActive) * CancelDen >= CancelNum * N) => landed = 0
+\* unconditional form, for the twins: no change ever lands on one approval
+Inv_NoLoneLanding == lone = FALSE
+\* below the floor the reverse path admits nothing: with the active honest below the floor and the
+\* coerced below enact, nothing lands at all (the silent community is not spoken for)
+Inv_BelowFloorNothingLands ==
+  (Cardinality(Active) * FloorDen < FloorNum * N) => landed + honestLanded = 0
 \* an irreversible change never lands before its window: every landing happens at the window
 Prop_IrreversibleWaits ==
   [][Irreversible => ((landed' + honestLanded' > landed + honestLanded) => pending.age >= Window)]_vars

@@ -300,13 +300,19 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Five instances close
+      - name: Seven instances close
         working-directory: formal/two_path
         run: |
           set -e
-          for c in TwoPath_3_selfroster TwoPath_6_enact23_cancel13_1coerced TwoPath_6_enact23_cancel13_2coerced TwoPath_6_irreversible TwoPath_7_enact23_cancel13_2coerced; do
+          for c in TwoPath_3_selfroster TwoPath_6_enact23_cancel13_1coerced TwoPath_6_enact23_cancel13_2coerced TwoPath_6_irreversible TwoPath_7_enact23_cancel13_2coerced TwoPath_6_silent4_floor13 TwoPath_6_silent4_floor_dead; do
             java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-$c" -deadlock -config $c.cfg TwoPath.tla
           done
+      - name: The no-floor twin fails by one voice landing over silence
+        working-directory: formal/two_path
+        run: |
+          set +e
+          out=$(java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-twin" -deadlock -config TwoPath_6_no_floor_silence_admits.cfg TwoPath.tla 2>&1)
+          echo "$out" | grep -q "Invariant Inv_NoLoneLanding is violated" || { echo "twin unexpectedly closed"; echo "$out" | tail -20; exit 1; }
       - name: Install Lean 4.14.0 (core only)
         run: |
           curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
