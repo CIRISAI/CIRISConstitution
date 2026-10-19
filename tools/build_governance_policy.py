@@ -27,7 +27,12 @@ The one decision function, which every consumer implements and replays against t
     else:                                              cancelled (below the floor, or no reverse path)
 
 The floor is a reverse-path predicate only: it never lands anything before the window closes (the
-machine's Prop_FloorNeverLandsEarly). The base is the standing roster at or below k members and the
+machine's Prop_FloorNeverLandsEarly). Two per-row fields answer the implementer's questions: `cancel_over`
+is the denominator of the cancel fraction — `base` for a community (the proposer counted), `others` for a
+self roster (every key is one person's, so the proposer is not asked to object to itself); `at_window` is
+what happens to a proposal that has not landed when the window closes — `cancelled` for every community
+row (a held change resolves: formal/membership no_hold_expiry), `stay_open` for the self roster as ruled
+(cleared by the proposer's withdraws or the target's act), `lapsed` for the halt, `tallied` for moderation. The base is the standing roster at or below k members and the
 expected-active count above it, never below `min` (the law's constants are provisional; the exponent
 is a measurement, #180 item 2).
 
@@ -240,6 +245,7 @@ def build():
         for k in ("enact", "cancel", "floor"):
             v = r["_" + k]
             d[k] = {"num": v[0], "den": v[1]} if isinstance(v, tuple) and len(v) == 2 else (None if v is None else (v[0] if isinstance(v, tuple) else v))
+        d["cancel_over"] = r["cancel_over"]; d["at_window"] = r["at_window"]   # persist v59 questions (b) and (c)
         d["window_secs"] = r["window_secs"]; d["window_class"] = r["window_class"]
         d["irreversible"] = r["irreversible"]; d["reverse_path"] = r["reverse_path"]
         d["corridor"] = r["corridor"]; d["model"] = r["model"].split(); d["status"] = r["status"]; d["note"] = r["note"]
