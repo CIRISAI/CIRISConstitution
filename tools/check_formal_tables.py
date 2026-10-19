@@ -57,7 +57,7 @@ def main():
         txt = srccache.setdefault(p, open(p, encoding="utf-8", errors="replace").read())
         sym = r["symbol"]
         pat = (rf"theorem\s+{re.escape(sym)}\b" if p.endswith(".lean")
-               else rf"#\s*{re.escape(sym)}\b" if p.endswith(".py")
+               else rf"(#\s*{re.escape(sym)}\b|^\s*def\s+{re.escape(sym)}\s*\()" if p.endswith(".py")
                else rf"^{re.escape(sym)}\s*==")
         if not re.search(pat, txt, re.M):
             errs.append(f"INVARIANTS {r['inv_id']}: symbol {sym} not found in {r['source']}")
