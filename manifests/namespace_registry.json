@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "22b029cfd977acce779c9481cdb381a4ad274b15e5b8206ac3d502ba7535b495",
+    "registry_sha256": "44fb663283c6c6a2aff4e14615953eb324267cb7542330d38c161ddb721f7dc6",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "7c46d9caae23782b53bf7c067c272521a11a190e1437a5f1349bf6225085969f"
+    "source_sha256": "cd7d16c679e93e468fdc34c0482dba6ad9f3cbc88de865f94351d1abd5d4db6d"
   },
   "families": [
     {
@@ -3355,7 +3355,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Reverse-quorum objection marker (CIRISConstitution#67): a signed, roster-pinned objection to a pending commons act; state lifecycle per the minting cut.",
+      "description": "Reverse-quorum objection marker (CIRISConstitution#67): a signed, roster-pinned vote on a pending act.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3368,7 +3368,13 @@
         },
         {
           "class": "vocab",
-          "segment": "{state}"
+          "open": true,
+          "segment": "{state}",
+          "values": [
+            "proposal",
+            "assent",
+            "raised"
+          ]
         }
       ]
     },

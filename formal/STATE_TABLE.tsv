@@ -138,7 +138,9 @@ governance	event	event.state	open	3.3.8	event:lifecycle row / withdraws / supers
 governance	event	event.state	cancelled	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
 governance	event	event.state	completed	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
 governance	event	event.state	superseded	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
-governance	objection	objection.state	(unenumerated)	3.1.9.2	objection:{state}; state set not written	—	—	—	missing-text
+governance	objection	objection.state	proposal	3.1.9.2 3.3.6.3	the proposer's own row; counts as its approval	any voter of the standing set	self_roster.SelfRoster.tla:pending.by; two_path.TwoPath.tla:pending.by	—	modelled-elsewhere
+governance	objection	objection.state	assent	3.1.9.2 3.3.6.3	a +1 on an open proposal	any voter of the standing set	self_roster.SelfRoster.tla:approvers; two_path.TwoPath.tla:approvers	—	modelled-elsewhere
+governance	objection	objection.state	raised	3.1.9.2 3.3.6.3	a −1 on an open proposal or a pending act	any voter of the standing set	self_roster.SelfRoster.tla:objectors; two_path.TwoPath.tla:objectors	—	modelled-elsewhere
 governance	quarantine	quarantine.state	withhold	3.1.9.4	quarantine:{state}; withhold beats release at a tie	slash-duty holder	—	—	text-only
 governance	quarantine	quarantine.state	release	3.1.9.4	quarantine:{state}	slash-duty holder	—	—	text-only
 governance	wa_adjudication	wa_adjudication.state	(unenumerated)	3.1.9.4	wa_adjudication:{state}; state set not written	WA quorum	—	—	missing-text
