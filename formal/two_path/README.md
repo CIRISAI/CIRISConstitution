@@ -10,7 +10,20 @@ takedown very easy). The self roster (CC 3.3.6.3) and the halt (4.2.1.1) are the
 text already has; persist is building the shared decision function for the roster door
 (CIRISPersist#1099) and has surveyed every other door (below).
 
-**Prior art, so the shape is not claimed as new.** The reverse path is the silence procedure (NATO,
+**Prior art, so the shape is not claimed as new (the refined shape, with the floor).** The closest
+single artefact is Polkadot OpenGov (2023): per-track parameters — a decision period, an enactment
+delay by sensitivity, an approval curve and a *support* curve (a minimum share of the electorate in
+favour, which is the floor) — one object per class of change; it differs in having no cancel
+threshold inside the object (cancelling is a separate track with its own body) and in taking support
+over the whole electorate rather than the active. The **participation quorum as an approval floor**
+is the ordinary DAO shape (Compound/OpenZeppelin Governor: quorum of FOR votes, voting period,
+timelock), Apache's release vote (at least three binding +1, more +1 than −1, 72 hours), and
+Delaware §228 written consent (a change by signatures of at least the votes a meeting would need —
+a floor over the standing base with no window). The **silence question the floor settles** is a
+live split in administrative law: canon law 57 §2 presumes silence a refusal; French law since 2013
+presumes it acceptance, with carve-outs for anything sensitive; EU merger control clears by
+deadline. **Scaling to the active base** is Nouns DAO's dynamic quorum (2022: the quorum rises
+with opposition between a floor and a cap) and Polkadot's earlier adaptive quorum biasing. The reverse path is the silence procedure (NATO,
 the EU Council), Apache's lazy consensus, Wikipedia's proposed deletion, the suspensive veto; in
 protocol governance it is optimistic governance (Aragon, Safe's delay module, UMA's optimistic
 oracle, oSnap), with Lido's dual governance the closest single artefact (two signalling thresholds,
@@ -20,6 +33,31 @@ irreversibility delay is the governor timelock (Compound, OpenZeppelin), MakerDA
 security module, Optimism's security-council veto. What is composed here and not found elsewhere:
 the four as one parametrized object per roster, thresholds over the standing set, and a proved
 corridor.
+
+## The table (`constitution/governance_policy.tsv` → `manifests/governance_policy.json`)
+
+The steward's instruction (2026-10-18): the point of the models is to take these decisions and make
+them data backed, with the floor still waiting its window and a DX that is clear and simple. So the
+policy is **five numbers per door** in one TSV, built by `tools/build_governance_policy.py` into a
+JSON with its decision function, base law, count minimum and pin; a vector file an implementation
+replays; and one generated TLC instance per two-path row (`generated/`, CI). The build refuses a row
+outside the corridor. The decision function, in full:
+
+```
+enact_votes  = enact_num  * base // enact_den + 1                   strictly more than the fraction
+cancel_votes = max(min_count, ceil(cancel_num * base / cancel_den))  at least the fraction, never one voice
+floor_votes  = max(min_count, ceil(floor_num  * base / floor_den))   min_count = 2 community, 1 self
+approvals >= enact_votes and not irreversible  → lands (forward, now)
+elapsed < window                                → pending
+objections >= cancel_votes                      → cancelled
+approvals >= enact_votes                        → lands (forward; it waited its window)
+reverse_path and approvals >= floor_votes       → lands (reverse: floored, unopposed, window closed)
+otherwise                                       → cancelled
+```
+
+`python3 tools/build_governance_policy.py decide community_invite --base 344 --approvals 115 --elapsed 259200`
+answers `lands reverse`; the same at `--elapsed 1000` answers `pending` — the floor never lands early
+(`Prop_FloorNeverLandsEarly`, checked in all seventeen instances).
 
 ## `TwoPath.tla` — the generic machine
 

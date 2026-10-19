@@ -300,12 +300,15 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Seven instances close
+      - name: Seven instances close, and every row of the governance policy table as an instance
         working-directory: formal/two_path
         run: |
           set -e
           for c in TwoPath_3_selfroster TwoPath_6_enact23_cancel13_1coerced TwoPath_6_enact23_cancel13_2coerced TwoPath_6_irreversible TwoPath_7_enact23_cancel13_2coerced TwoPath_6_silent4_floor13 TwoPath_6_silent4_floor_dead; do
             java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-$c" -deadlock -config $c.cfg TwoPath.tla
+          done
+          for c in $(cat generated/INSTANCES.txt); do
+            java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-$c" -deadlock -config generated/$c.cfg TwoPath.tla
           done
       - name: The no-floor twin fails by one voice landing over silence
         working-directory: formal/two_path

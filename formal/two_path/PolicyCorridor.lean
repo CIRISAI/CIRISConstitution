@@ -159,6 +159,18 @@ theorem floor_holds : effectiveBase 12 3 2 = 3 ∧ effectiveBase 12 3 10 = 10 :=
 theorem floor_scales_with_size :
     floorVotes ruled (expectedActive 12 10000) = 115 ∧ floorVotes ruled 10000 = 3334 ∧ floorVotes ruled 10 = 4 :=
   ⟨rfl, rfl, rfl⟩
+/-- the count minimum: a community's floor and cancel never resolve to fewer than two voices, so the
+    ruled third, which is one voice at three members, is lifted to two there (the self roster keeps
+    one, every key being the same person's) -/
+def minCount (community : Bool) : Nat := if community then 2 else 1
+def floorVotesMin (p : Policy) (base : Nat) (community : Bool) : Nat := max (minCount community) (floorVotes p base)
+def cancelVotesMin (p : Policy) (base : Nat) (community : Bool) : Nat := max (minCount community) (cancelVotes p base)
+theorem ruled_at_three_is_one_voice : floorVotes ruled 3 = 1 := rfl
+theorem ruled_at_three_lifted_to_two : floorVotesMin ruled 3 true = 2 ∧ cancelVotesMin ruled 3 true = 2 := ⟨rfl, rfl⟩
+theorem self_keeps_one : floorVotesMin selfRoster 3 false = 1 := rfl
+theorem lifted_floor_never_one (p : Policy) (base : Nat) : 2 ≤ floorVotesMin p base true := by
+  unfold floorVotesMin minCount; simp; omega
+
 /-- a community may tighten: a floor at enact switches the reverse path off (every landing is
     forward), and it is still inside the corridor — strictness is allowed, laxity is not -/
 def strict : Policy := ⟨2, 3, 1, 3, 2, 3, 259200, false, by decide, by decide, by decide⟩

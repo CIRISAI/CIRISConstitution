@@ -28,6 +28,8 @@ CONSTANTS Voters,        \* the standing set, |Voters| = N
           FloorNum, FloorDen,      \* the reverse path lands only with approvals * Den >= Num * N: silence alone never admits
           Window,        \* ticks a proposal lives before the reverse path decides it
           Irreversible,  \* TRUE: no instant landing
+          ReversePath,   \* FALSE: the door is forward only; the window closing never lands anything
+          MinCount,      \* cancel and floor count no fewer voices than this (2 for a community, 1 for a self)
           MaxChanges     \* changes per behaviour (the bound)
 
 ASSUME Coerced \subseteq Voters
@@ -54,8 +56,8 @@ None == [by |-> "none"]
 Open == pending # None
 
 EnactReached(p)  == Cardinality(p.approvers) * EnactDen > EnactNum * N
-CancelReached(p) == Cardinality(p.objectors) * CancelDen >= CancelNum * N
-FloorReached(p)  == Cardinality(p.approvers) * FloorDen >= FloorNum * N
+CancelReached(p) == Cardinality(p.objectors) >= MinCount /\ Cardinality(p.objectors) * CancelDen >= CancelNum * N
+FloorReached(p)  == Cardinality(p.approvers) >= MinCount /\ Cardinality(p.approvers) * FloorDen >= FloorNum * N
 
 Init == /\ pending = None /\ landed = 0 /\ honestLanded = 0 /\ cancelled = 0 /\ wrong = FALSE /\ lone = FALSE
 
@@ -81,10 +83,11 @@ LandForward == /\ Open /\ ~Irreversible /\ EnactReached(pending)
                /\ lone' = (lone \/ Cardinality(pending.approvers) = 1)
                /\ pending' = None /\ UNCHANGED cancelled
 
-(* reverse path: the window closes; cancelled if objections reached Cancel or approvals never reached
-   the Floor (silence alone never admits), else lands *)
+(* the window closes: cancelled if objections reached Cancel; else lands if approvals reached Enact
+   (the forward path that waited, or was not taken before the window) or — on a door with a reverse
+   path — reached the Floor (silence alone never admits); else cancelled *)
 WindowCloses == /\ Open /\ pending.age >= Window
-                /\ IF CancelReached(pending) \/ ~FloorReached(pending)
+                /\ IF CancelReached(pending) \/ ~(EnactReached(pending) \/ (ReversePath /\ FloorReached(pending)))
                    THEN /\ cancelled' = IF pending.adversarial THEN cancelled ELSE cancelled + 1
                         /\ UNCHANGED <<landed, honestLanded, wrong, lone>>
                    ELSE /\ landed' = IF pending.adversarial THEN landed + 1 ELSE landed
@@ -113,7 +116,7 @@ Inv_AdversaryBelowCancelCannotBlock ==
 \* one voice never admits by either path: with a floor above one voter (and enact above one),
 \* no change ever lands on a single approval however many voters stay silent
 Inv_OneVoiceNeverAdmits ==
-  (FloorNum * N > FloorDen /\ EnactNum * N >= EnactDen) => lone = FALSE
+  ((FloorNum * N > FloorDen \/ MinCount >= 2) /\ EnactNum * N >= EnactDen) => lone = FALSE
 \* an active honest set at or above Cancel always stops an adversarial change: nothing adversarial lands
 Inv_HonestAtCancelStopsAdversary ==
   (Cardinality(HonestActive) * CancelDen >= CancelNum * N) => landed = 0
@@ -123,6 +126,10 @@ Inv_NoLoneLanding == lone = FALSE
 \* coerced below enact, nothing lands at all (the silent community is not spoken for)
 Inv_BelowFloorNothingLands ==
   (Cardinality(Active) * FloorDen < FloorNum * N) => landed + honestLanded = 0
+\* the floor is a reverse-path predicate only: a landing before the window closes is a forward landing
+\* at Enact, never a floored one (steward 2026-10-18: the floor still requires the time to expire)
+Prop_FloorNeverLandsEarly ==
+  [][((landed' + honestLanded' > landed + honestLanded) /\ pending.age < Window) => EnactReached(pending)]_vars
 \* an irreversible change never lands before its window: every landing happens at the window
 Prop_IrreversibleWaits ==
   [][Irreversible => ((landed' + honestLanded' > landed + honestLanded) => pending.age >= Window)]_vars

@@ -53,6 +53,11 @@ jobs:
           python3 tools/build_cc_signed_object.py
           python3 tools/build_cc_signed_object.py --self-test
           git diff --exit-code manifests/ constitution/part_2_the_grammar.md
+      - name: Governance policy table (CC 4.5.13) is in the corridor, regenerated, and its vectors recompute (no drift)
+        run: |
+          python3 tools/build_governance_policy.py
+          python3 tools/build_governance_policy.py --self-test
+          git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/
       - name: Closure configurations are regenerated from the vendored catalogue (no drift)
         run: |
           pip install -q pyyaml
