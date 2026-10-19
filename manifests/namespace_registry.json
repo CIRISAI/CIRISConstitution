@@ -221,7 +221,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 174,
+    "n_families": 175,
     "per_component": {
       "accord-agent": 34,
       "anti-sybil": 6,
@@ -229,7 +229,7 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 22,
+      "persist": 23,
       "registry": 21,
       "transport-delivery": 6
     },
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "44fb663283c6c6a2aff4e14615953eb324267cb7542330d38c161ddb721f7dc6",
+    "registry_sha256": "27f6f519870d2879b89db998cc1152fd62b18e164b7530c80d53134ae75842b3",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "e729db5fc65cff18aa2cbb80d1e742a6380ca591825d731138fe7797cfff6be6"
+    "source_sha256": "58258e27332ff4e11ece33a6e42bbc46035e4a1cb1c32335ebc1d7c74bc5ad30"
   },
   "families": [
     {
@@ -2703,6 +2703,29 @@
         {
           "class": "literal",
           "segment": "occurrence"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The carrier of a legacy occurrence revocation (registered 2026-10-19 under CC 3.1.7 R2(a) at persist's mint, v59; the planes-as-rows precedent of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed before the tw",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "-1 only",
+      "prefix": "identity:occurrence_revocation",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "signed by the identity or a live occurrence of it (signer_acts_for)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "identity"
+        },
+        {
+          "class": "literal",
+          "segment": "occurrence_revocation"
         }
       ]
     },

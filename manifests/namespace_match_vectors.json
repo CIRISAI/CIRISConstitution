@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc9",
-    "registry_sha256": "44fb663283c6c6a2aff4e14615953eb324267cb7542330d38c161ddb721f7dc6",
+    "registry_sha256": "27f6f519870d2879b89db998cc1152fd62b18e164b7530c80d53134ae75842b3",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -3675,6 +3675,42 @@
     {
       "dimension": "identity:occurrence",
       "family": "identity:occurrence",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "identity:occurrence_revocation:v1",
+      "family": "identity:occurrence_revocation",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "identity:occurrence_revocation:V1",
+      "family": "identity:occurrence_revocation",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity:occurrence_revocation:v1:v2",
+      "family": "identity:occurrence_revocation",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity:occurrence_revocation:v1beta",
+      "family": "identity:occurrence_revocation",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Identity:occurrence_revocation:v1",
+      "family": "identity:occurrence_revocation",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity:occurrence_revocation",
+      "family": "identity:occurrence_revocation",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
