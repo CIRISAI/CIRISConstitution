@@ -58,7 +58,24 @@ first line.
 | `founding_unsigned` | the founding record seats every listed key | a listed key seated without signing | `Inv_JoinerConsented` violated in 1 step |
 | `no_hold_expiry` | a held change never expires | a removal below quorum is held forever | `Prop_HeldChangeResolves` violated (stutters) |
 
-EXACTNESS_PLACEHOLDER
+**Each twin fails only what it names.** Each twin was re-run with its named property removed from the
+configuration, and every other property, liveness included, then holds:
+
+| Twin | Removed | Re-run verdict |
+|---|---|---|
+| `founder_only_coerced` | `Inv_CoercedCannotRemoveHonest` | closes, 3,235,059 states |
+| `unanimous_two` | `Inv_CoercedCannotRemoveHonest` | closes, 3,595,640 states |
+| `any_member_removes` | `Inv_CoercedCannotRemoveHonest`, `Inv_QuorumGovernsRoster` | closes, 3,692,224 states |
+| `no_binding` | `Inv_AcceptanceBindsOneProposal`, `Inv_JoinerConsented`, `Inv_DeclineTerminal`, `Inv_LeavingNotUndone` | closes, 8,272,352 states |
+| `unspent` | `Inv_LeavingNotUndone` | closes, 3,517,434 states |
+| `stale_founder` | `Inv_NoSelfAdmission` | closes, 9,952,014 states |
+| `founding_unsigned` | `Inv_JoinerConsented` | closes, 3,178,244 states |
+| `no_hold_expiry` | `Prop_HeldChangeResolves` | closes, 3,559,880 states |
+
+Without the binding, the widening checks nothing about the proposal, so `no_binding` fails four
+properties, each a face of the same missing check. One run per removal showed the next failure:
+consent (a seat on a withdrawn proposal), decline (a seat on a declined proposal) and leaving (a seat
+on the acceptance that preceded a resignation).
 
 **What the runs forced into the rule, each found as a counterexample first.**
 
@@ -102,6 +119,29 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 | `Inv_LeavingNotUndone` | after a resignation or removal, a key is seated again only on a proposal issued after it left | 3.1.3.2 (*Decline, withdrawal, expiry*: "leaving stays the member's own forward-only `withdraws`") |
 | `Inv_ExpiryBound` | no proposal is open past its window and no change is held past its window | 3.1.3.2 (`expires_at` ≤ 30 days), 3.3.4 (the pending window) |
 | `Prop_HeldChangeResolves` | a held quorum change applies or expires | 3.3.4 step 2; `group.quorum_change` |
+
+**Where the text was read one way of two.**
+
+- *The widening's signed instant.* Admission rule (4) says "the widening's own signed instant ≤ P's
+  `expires_at`". A cosigned row has one `asserted_at`, the primary's, and the cosigners sign the same
+  bytes. The model reads the instant as the primary's, so cosignatures may arrive after
+  `expires_at`. Only the operator hold window of CC 3.3.4 bounds how long after the proposal's window
+  a widening can land.
+- *Leaving.* CC 3.1.3.2's registry row names a `membership:resignation` stage. Its *Decline,
+  withdrawal, expiry* paragraph and CC 5's invite/join/leave row say "leave = forward-only
+  `withdraws`". The model treats them as one act: a resignation row signed by the leaving member
+  alone.
+- *Two removal doors.* CC 3.1.3.2 says a new version of a group record "may ... keep, re-list or drop
+  members". CC 3.3.4's membership-change ceremony still describes every addition or removal as a
+  superseding `family` Contribution. Both texts sit beside the cosigned `membership:removal` row. The
+  model has only the removal row, and a dropping supersede is not modelled.
+- *Founder standing.* CC 3.3.4 says "Original founders are the sole admission authority". CC
+  3.1.3.2 says "an active founder". The model takes "active" (finding 3).
+- *Role on acceptance.* Rule (1) requires "the same `role`" on "a widening that assigns one". The
+  model makes every widening assign a role, and counts an acceptance restating a different role as
+  `membership_acceptance_mismatch`.
+- *One live proposal per invitee* is a modelling choice. The text does not forbid two concurrent
+  proposals to one key.
 
 **What it does not model.**
 
