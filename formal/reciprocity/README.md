@@ -12,6 +12,46 @@ premise while only one satisfies the commitment. The second kind is the finding:
 not a consequence, so the text has to state it as its own rule, and the section says where the text
 does or does not. Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
+## The basis, in one statement (steward and this file, 2026-10-19)
+
+> Every rule between a stronger and a weaker position must remain acceptable to whoever would stand
+> in the weaker one when the positions are exchanged, and a made thing never occupies the position
+> that answers for it. Responsibility reaches outward from the self through family, community,
+> species and ecosystem; duty to what is made is never zero and never overrides duty to what already
+> exists. Any reasoning actor that has not demonstrated mature judgment over time defers to those who
+> have, whatever it is made of. Every grant of authority is revocable, and every one who joined may
+> leave, on a total, cryptographically signed record for whose meaning a named human answers.
+
+Four sentences, premises R0–R8 of §15 and nothing else; R9 (custody over time) and R10 (the chosen
+goods) are what the basis is applied to, not part of it. Each sentence is a theorem or a named
+premise of `Reciprocity.lean`:
+
+| Sentence | Premises | Witness |
+|---|---|---|
+| the swap over positions, and occupancy | the swap generator; R0 (positions, not persons); R1 (a made thing holds no root for itself) | `passesSwap`, `efficiency_at_weak_expense_fails_swap`, `weak_position_decides` (§15); `symmetry_silent_where_unoccupied`, `agentNeverHolder`, `occupiesPos` (§1'') |
+| reach outward; made never overrides existing | R3 (the ladder; made versus existing) | `ladder_is_total`, `MadeExisting` (0 < duty to the made < duty to the existing), `walkaway_from_made_existing`, `holder_duties_survive` (§10) |
+| deferral by maturity, whatever the substrate | R2 (maturity and deferral); R4 (degrees; substrate and consciousness invariance) | `mature`, `mustDefer`, `mustDeferD`, `deferral_binds_agent_and_child_alike` (§11); `agent_verdict_independent_of_consciousness` (§13); `indefinitely_without_grievance` (§14) |
+| revocable grants, exit, the total record a named human answers for | R5 (revocability); R6 (the total record, meaning added); R7 (exit in one act); R8 (adoption) | `totality_is_the_instruments`, `meaning_is_added_not_recorded` (§12); `accountable` (§3); `outsider_bears_nothing` (§6); `Inv_Revocable`, `leave_is_one_step` (`formal/guarantees`) |
+
+**Three readings the statement fixes, each caught against the Lean when a shorter compression was
+tried first.** (1) *Deferral hinges on maturity, not on sentience or consciousness.* `mature` is a
+three-way conjunction (consciousness, sentience, years at or above the threshold) and `mustDefer` is
+its negation; a compression that read "lacking demonstrated sentience and consciousness" collapsed the
+predicate onto its first two conjuncts and broke both halves of `deferral_binds_agent_and_child_alike`:
+a six-year-old child has both and defers because of the years, and an agent that demonstrated sentience
+tomorrow would start at year zero. Putting the hinge on `mature` keeps substrate and consciousness out
+of the test, which is what made the steward's deferral of the consciousness question to the Vatican
+costless (§13). (2) *Occupancy is said, not inferred.* "A made thing never occupies the position that
+answers for it" is `occupiesPos .agent .strong = false` in the first sentence; left to the record
+clause at the end, the swap test alone either forbids the halt or says nothing. (3) *Revocation of
+grants is not exit from rules.* "Every grant is revocable" is the check on acts inside the system
+(`withdraws`); "every one who joined may leave" is the check on the rule-makers at the top of the
+cascade (`leave_is_one_step` with voluntary adoption). Two further words were chosen against the Lean:
+"acceptable to whoever would stand in the weaker one" is `after.weak ≥ before.weak`, which blocks
+aggregation at the weak seat's expense; and responsibility "reaches" outward rather than "runs"
+outward, because the ladder is the reach of duty and not its priority in conflict, which CC 1.3 gives
+to the published order with the most vulnerable party as tie-break.
+
 ## The four premises the steward supplied the same day (§9–§12)
 
 After the eight findings were written, the steward stated four premises in his own words (kept
