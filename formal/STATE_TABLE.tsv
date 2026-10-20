@@ -35,7 +35,7 @@ root	root	root.count	two	3.2 4.2.1	two canonicals hold distinct roots	—	—	ro
 self	roster key	key.holder	owner	3.3.6.3	—	—	self_roster.SelfRoster.tla:holder=owner	key.holder.owner	modelled
 self	roster key	key.holder	thief	3.3.6.3 1.13.3	device stolen with authentication	adversary	self_roster.SelfRoster.tla:holder=thief	key.holder.thief	modelled
 self	roster key	key.holder	lost	3.3.6.3	device lost	—	self_roster.SelfRoster.tla:holder=lost	key.holder.lost	modelled
-self	roster key	key.membership	proposed_add	3.3.6.3	proposal by a live roster key	roster key	self_roster.SelfRoster.tla:pending(add)	device.join_requested	modelled
+self	roster key	key.membership	proposed_add	3.3.6.3	proposal by a live roster key (held: from two keys the add-device approval is a proposal until another key assents or W_self passes)	roster key	self_roster.SelfRoster.tla:pending(add)	key.membership.proposed_add device.join_requested	modelled
 self	roster key	key.membership	member	3.3.6 3.3.6.3	quorum path at once or lone path after W_self	roster majority / silence	self_roster.SelfRoster.tla:member	device.joined roster.visible person.multi_device	modelled
 self	roster key	key.membership	proposed_evict	3.3.6.3	eviction proposal	roster key	self_roster.SelfRoster.tla:pending(evict)	key.membership.proposed_evict	modelled
 self	roster key	key.membership	evicted	3.3.6 3.3.6.3	withdraws against the occurrence row lands	roster majority / silence	self_roster.SelfRoster.tla:Devices\member	key.membership.evicted	modelled
