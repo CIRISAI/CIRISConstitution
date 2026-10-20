@@ -64,6 +64,8 @@ unsure, hands the decision to a person".
    explains why the failures are of kind of occupancy, not of rule.
 5. **The values page's conflict sentence** should name the order before the deferral (above).
 
+**Landed (2026-10-20, ciris-website cd819777, on the steward's yes in that session; live in 29 languages, verified by cache-busted fetches):** finding 2 (commitment 5 now "A closing dialogue is an option…"), finding 3 (the decisions sentence now ends "…a named human's act on the record, answered for in public, and binding only on those who joined"), and finding 5 (the values page now reads "When principles pull against each other, the agent applies the published order. Where that still leaves it unsure, it hands the decision to a person." — two sentences for translation; "you trust" dropped because 7c sends the question to the Wise Authority). Finding 1 withdrawn earlier; finding 4 was a confirmation, not a change.
+
 ## What the pages carry that the premise list did not name
 
 - The three rules that follow from being made (root, disclosure, vote) — a cleaner statement of R1
