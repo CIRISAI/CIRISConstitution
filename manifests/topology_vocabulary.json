@@ -1,23 +1,16 @@
 {
  "_meta": {
-  "catalogue_version": 2,
+  "catalogue_version": 3,
   "owner": "CIRISConstitution (steward decision 2026-10-18: CC publishes the atom vocabulary; CIRISServer harness/native/model.py loads it)",
   "source_of_atoms": "CIRISServer feat/csd4-catalogue 5c4fdbaa harness/native/model.py ATOMS (51), meanings verbatim",
   "state_table": "formal/STATE_TABLE.tsv",
   "invariants": "formal/INVARIANTS.tsv",
   "bump_rule": "a new entry, a new atom, a change to an atom's meaning or to an entry's promises bumps catalogue_version; lifting a builder refusal or re-laying nodes that keep every promise does not",
-  "n_atoms": 109,
-  "n_atoms_in_state_table": 105,
+  "n_atoms": 110,
+  "n_atoms_in_state_table": 106,
   "revision_note": "2026-10-18 b: session.unified, contact.added, contact.via_code and file.large mapped to state-table rows (server reading accepted); no atom or meaning changed, catalogue_version stays 1",
   "version_2_note": "2026-10-18: steward ruling that the catalogue push waits on exhaustiveness over the formally defined states (formal/STATE_TABLE.tsv); version 2 adds one atom per modelled state no version-1 entry exercised (58) and proposes entries T10–T19 whose promises close them; version-1 atoms and meanings unchanged; the four reached-but-unpromised atoms are to be promised",
-  "version": 3,
-  "history": [
-   {
-    "version": 3,
-    "date": "2026-10-20",
-    "change": "one atom added at the server's request for CSD-095 (held addition): key.membership.proposed_add"
-   }
-  ]
+  "version_3_note": "2026-10-20: one atom added at the server's request for CSD-095 (the held addition), key.membership.proposed_add; version-2 atoms and meanings unchanged; per the bump rule a new atom bumps catalogue_version, so catalogue entries re-pin at 3 (T10 promises the atom)"
  },
  "atoms": {
   "root.none": {
