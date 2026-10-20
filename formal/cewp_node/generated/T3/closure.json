@@ -1,7 +1,7 @@
 {
  "catalog_id": "T3",
  "title": "Two people, contact by code, second device by approval",
- "catalogue_version": 2,
+ "catalogue_version": 3,
  "serves": [
   "CSD-092",
   "CSD-093",

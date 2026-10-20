@@ -1,10 +1,10 @@
 {
  "catalog_id": "T1",
  "title": "One person, two devices, self room",
- "catalogue_version": 2,
+ "catalogue_version": 3,
  "serves": [
   "CSD-107",
-  "CSD-095"
+  "CSD-096"
  ],
  "derives": [],
  "entity_counts": {

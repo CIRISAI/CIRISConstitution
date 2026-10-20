@@ -1,9 +1,10 @@
 {
  "catalog_id": "T11",
  "title": "Two lost devices — recovery by the lone path over the window",
- "catalogue_version": 2,
+ "catalogue_version": 3,
  "serves": [
-  "CSD-037"
+  "CSD-037",
+  "CSD-095"
  ],
  "derives": [],
  "entity_counts": {
@@ -29,6 +30,13 @@
   "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
  ],
  "promised_atoms": {
+  "key.membership.proposed_add": {
+   "plane": "self",
+   "state_predicate": "key.membership=proposed_add",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
   "key.holder.lost": {
    "plane": "self",
    "state_predicate": "key.holder=lost",
@@ -51,6 +59,6 @@
    "plane_models": "self_roster"
   }
  },
- "atoms_with_a_plane_model": 3,
+ "atoms_with_a_plane_model": 4,
  "atoms_without": 0
 }

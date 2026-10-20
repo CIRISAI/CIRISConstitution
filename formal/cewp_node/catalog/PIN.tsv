@@ -1,5 +1,5 @@
 repo	CIRISServer
 branch	feat/multi-device-csd4
-commit	e1201b6924a4defb12e5779e841ce491c7bd5a66
+commit	003871fd67c1215a0afe7da5a8eb523363562cb2
 path	harness/native/topologies/catalog/
 vendored	2026-10-20

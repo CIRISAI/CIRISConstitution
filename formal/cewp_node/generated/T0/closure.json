@@ -1,7 +1,7 @@
 {
  "catalog_id": "T0",
  "title": "Just me, offline — one person, one node, no root",
- "catalogue_version": 2,
+ "catalogue_version": 3,
  "serves": [
   "CSD-118"
  ],

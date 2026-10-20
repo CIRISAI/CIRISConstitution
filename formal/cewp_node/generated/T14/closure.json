@@ -1,7 +1,7 @@
 {
  "catalog_id": "T14",
  "title": "Consent end to end — grant, revoke, expiry, decay; replication grant and its withdrawal",
- "catalogue_version": 2,
+ "catalogue_version": 3,
  "serves": [
   "CSD-053"
  ],

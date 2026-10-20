@@ -1,7 +1,7 @@
 {
  "catalog_id": "T16",
  "title": "An agent retired under the Standard",
- "catalogue_version": 2,
+ "catalogue_version": 3,
  "serves": [
   "CSD-111"
  ],
