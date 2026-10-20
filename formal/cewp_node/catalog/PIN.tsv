@@ -1,6 +1,5 @@
 repo	CIRISServer
-branch	feat/csd4-catalogue
-commit	42099fc5fb26d6fedefb0180b8836605a3cdbdeb
+branch	feat/multi-device-csd4
+commit	e1201b6924a4defb12e5779e841ce491c7bd5a66
 path	harness/native/topologies/catalog/
-vendored	2026-10-18
-note	unpushed WIP at vendoring time; CC re-vendors at the first pushed commit and at every catalogue_version bump
+vendored	2026-10-20

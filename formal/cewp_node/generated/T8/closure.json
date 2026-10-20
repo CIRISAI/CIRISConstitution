@@ -1,7 +1,7 @@
 {
  "catalog_id": "T8",
  "title": "A trust root with M-of-N holders — halt, confirm, resume",
- "catalogue_version": 1,
+ "catalogue_version": 2,
  "serves": [
   "CSD-067",
   "CSD-068",

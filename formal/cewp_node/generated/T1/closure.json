@@ -1,7 +1,7 @@
 {
  "catalog_id": "T1",
  "title": "One person, two devices, self room",
- "catalogue_version": 1,
+ "catalogue_version": 2,
  "serves": [
   "CSD-107",
   "CSD-095"
@@ -27,6 +27,27 @@
   "person one: two keys — a theft is the stated two-key stalemate (CC 3.3.6.3)"
  ],
  "promised_atoms": {
+  "canonical.peered": {
+   "plane": "node",
+   "state_predicate": "node.serve=serving ∧ record held by every dialing node",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "node.announced": {
+   "plane": "node",
+   "state_predicate": "∃ person node: node.announce=announced",
+   "cc_ref": "5.4.6",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "peer.direct": {
+   "plane": "node",
+   "state_predicate": "peering relation both ways (no table state; transport)",
+   "cc_ref": "5.4.6",
+   "in_state_table": false,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
   "person.multi_device": {
    "plane": "self",
    "state_predicate": "self.roster_size∈{two,three_or_more}",
@@ -84,6 +105,6 @@
    "plane_models": "mesh_net"
   }
  },
- "atoms_with_a_plane_model": 8,
+ "atoms_with_a_plane_model": 11,
  "atoms_without": 0
 }

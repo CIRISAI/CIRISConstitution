@@ -1,0 +1,66 @@
+{
+ "catalog_id": "T12",
+ "title": "A root stalls (a founder resigns below the margin) and recovers by a conferred human",
+ "catalogue_version": 2,
+ "serves": [
+  "CSD-105"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 2,
+  "persons": 2,
+  "devices_max_per_person": 1,
+  "holders": 3
+ },
+ "generated": [
+  "trust_root_HA.cfg",
+  "accord_halt_HA.cfg",
+  "accord_fuse_HA.cfg",
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T12.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root HA: witnessed mode off; trust_root model not applicable until extended (residual E)",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "root.standing.Stalled": {
+   "plane": "root",
+   "state_predicate": "root.standing=Stalled",
+   "cc_ref": "3.2 T7 T8",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.liveness.stalled": {
+   "plane": "root",
+   "state_predicate": "root.liveness=stalled",
+   "cc_ref": "3.2 T7",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.liveness.live": {
+   "plane": "root",
+   "state_predicate": "root.liveness=live",
+   "cc_ref": "3.2 T7",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "seat.identity_type.human": {
+   "plane": "root",
+   "state_predicate": "seat.identity_type=human",
+   "cc_ref": "3.4.7.1 3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  }
+ },
+ "atoms_with_a_plane_model": 4,
+ "atoms_without": 0
+}

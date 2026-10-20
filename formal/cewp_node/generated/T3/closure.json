@@ -1,7 +1,7 @@
 {
  "catalog_id": "T3",
  "title": "Two people, contact by code, second device by approval",
- "catalogue_version": 1,
+ "catalogue_version": 2,
  "serves": [
   "CSD-092",
   "CSD-093",
@@ -95,12 +95,12 @@
    "in_state_table": true,
    "plane_models": "self_roster"
   },
-  "person.outsider": {
-   "plane": "membership",
-   "state_predicate": "∀ groups: member.stage=none ∧ no contact relation",
-   "cc_ref": "5.2",
+  "negatives.held": {
+   "plane": "harness",
+   "state_predicate": "every declared negative held (runner meta-atom)",
+   "cc_ref": "—",
    "in_state_table": false,
-   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+   "plane_models": "—"
   }
  },
  "atoms_with_a_plane_model": 7,

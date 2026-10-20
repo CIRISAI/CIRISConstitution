@@ -71,10 +71,10 @@ def main():
            "vocabulary_atoms_promised_by_no_entry": sorted(a for a in voc if a not in promised)}
     if "--json" in sys.argv:
         print(json.dumps(out, indent=1, ensure_ascii=False)); return
-    print(f"catalogue coverage: {ex}/{tot} states exercised by T0–T9; {len(unexercised)} modelled states unexercised")
+    print(f"catalogue coverage: {ex}/{tot} states exercised by the {len(set(c for v in promised.values() for c in v))} catalogue entries; {len(unexercised)} modelled states unexercised")
     for p, v in by_plane.items():
         print(f"  {p:11} {v[0]:2}/{v[1]:2} exercised, {v[2]:2} modelled-but-unexercised")
-    print(f"proposed entries T10–T19 would close {len(covered_by_proposal & set(unexercised))} of {len(unexercised)}; still open: {still}")
+    print(f"proposed entries (T10–T19, landed in catalogue v2 at e1201b69) would close {len(covered_by_proposal & set(unexercised))} of {len(unexercised)}; still open: {still}")
     print("atoms promised by no entry:", out["vocabulary_atoms_promised_by_no_entry"])
 
 

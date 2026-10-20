@@ -2,6 +2,16 @@
  "entries": [
   "T0",
   "T1",
+  "T10",
+  "T11",
+  "T12",
+  "T13",
+  "T14",
+  "T15",
+  "T16",
+  "T17",
+  "T18",
+  "T19",
   "T2",
   "T3",
   "T4",
@@ -14,11 +24,11 @@
  "max": {
   "roots": 2,
   "canonicals": 2,
-  "nodes": 4,
-  "persons": 3,
-  "devices_max_per_person": 2,
+  "nodes": 7,
+  "persons": 7,
+  "devices_max_per_person": 3,
   "holders": 3
  },
- "atoms_with_a_plane_model": 41,
- "atoms_promised": 57
+ "atoms_with_a_plane_model": 85,
+ "atoms_promised": 120
 }

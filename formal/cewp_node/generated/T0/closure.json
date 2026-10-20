@@ -1,7 +1,7 @@
 {
  "catalog_id": "T0",
  "title": "Just me, offline — one person, one node, no root",
- "catalogue_version": 1,
+ "catalogue_version": 2,
  "serves": [
   "CSD-118"
  ],
@@ -54,8 +54,15 @@
    "cc_ref": "5.4.6",
    "in_state_table": true,
    "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "values.ready": {
+   "plane": "harness",
+   "state_predicate": "the actor's values.json is written (runner meta-atom)",
+   "cc_ref": "—",
+   "in_state_table": false,
+   "plane_models": "—"
   }
  },
  "atoms_with_a_plane_model": 4,
- "atoms_without": 0
+ "atoms_without": 1
 }

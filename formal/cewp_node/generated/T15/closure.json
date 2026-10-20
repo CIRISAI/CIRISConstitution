@@ -1,0 +1,116 @@
+{
+ "catalog_id": "T15",
+ "title": "A community's ceremony — decline, removal, resignation; a moderator lapses, the room fails secure",
+ "catalogue_version": 2,
+ "serves": [
+  "CSD-102",
+  "CSD-103",
+  "CSD-128"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 7,
+  "persons": 7,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "self_roster_carol_stolen.cfg",
+  "self_roster_carol_lost.cfg",
+  "self_roster_dave_stolen.cfg",
+  "self_roster_dave_lost.cfg",
+  "self_roster_erin_stolen.cfg",
+  "self_roster_erin_lost.cfg",
+  "self_roster_frank_stolen.cfg",
+  "self_roster_frank_lost.cfg",
+  "self_roster_gus_stolen.cfg",
+  "self_roster_gus_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T15.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person carol: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person dave: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person erin: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person frank: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person gus: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "mesh_net: 7 persons × 8 nodes is above the rc7 instance (3×3); expect a long TLC run or reduce with symmetry"
+ ],
+ "promised_atoms": {
+  "member.stage.proposed": {
+   "plane": "membership",
+   "state_predicate": "member.stage=proposed",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "member.stage.accepted_awaiting_group": {
+   "plane": "membership",
+   "state_predicate": "member.stage=accepted_awaiting_group",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "member.stage.declined": {
+   "plane": "membership",
+   "state_predicate": "member.stage=declined",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "member.stage.removed": {
+   "plane": "membership",
+   "state_predicate": "member.stage=removed",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "member.stage.resigned": {
+   "plane": "membership",
+   "state_predicate": "member.stage=resigned",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "group.moderator.lapsed": {
+   "plane": "membership",
+   "state_predicate": "group.moderator=lapsed",
+   "cc_ref": "4.5.4 4.5.13",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "group.moderator.merit_promoted": {
+   "plane": "membership",
+   "state_predicate": "group.moderator=merit_promoted",
+   "cc_ref": "4.5.4 4.5.13",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "group.moderator.fail_secure": {
+   "plane": "membership",
+   "state_predicate": "group.moderator=fail_secure",
+   "cc_ref": "4.5.4 4.5.13",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "group.federating.no": {
+   "plane": "membership",
+   "state_predicate": "group.federating=no",
+   "cc_ref": "4.5.4",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  }
+ },
+ "atoms_with_a_plane_model": 0,
+ "atoms_without": 9
+}
