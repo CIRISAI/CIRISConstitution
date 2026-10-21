@@ -120,16 +120,18 @@ def main(argv):
     md = os.path.join(IETF, name + ".md")
     open(md, "w", encoding="utf-8").write(src)
     xml = os.path.join(IETF, name + ".xml")
-    with open(xml, "w") as f:
-        r = subprocess.run([tool("kramdown-rfc"), os.path.basename(md)], cwd=IETF, stdout=f, stderr=subprocess.PIPE, text=True)
-    if r.returncode:
-        sys.exit(r.stderr)
-    for fmt in ("--text", "--html"):
-        r = subprocess.run([tool("xml2rfc"), "--v3", fmt, os.path.basename(xml)], cwd=IETF, capture_output=True, text=True)
-        warn = [l for l in (r.stdout + r.stderr).splitlines() if "Warning" in l or "Error" in l]
-        if r.returncode or warn:
-            sys.exit("\n".join(warn) or r.stderr)
-    os.remove(md)
+    try:
+        with open(xml, "w") as f:
+            r = subprocess.run([tool("kramdown-rfc"), os.path.basename(md)], cwd=IETF, stdout=f, stderr=subprocess.PIPE, text=True)
+        if r.returncode:
+            sys.exit(r.stderr)
+        for fmt in ("--text", "--html"):
+            r = subprocess.run([tool("xml2rfc"), "--v3", fmt, os.path.basename(xml)], cwd=IETF, capture_output=True, text=True)
+            warn = [l for l in (r.stdout + r.stderr).splitlines() if "Warning" in l or "Error" in l]
+            if r.returncode or warn:
+                sys.exit("\n".join(warn) or r.stderr)
+    finally:
+        os.remove(md)
     print(f"built ietf/{name}.xml, .txt, .html with no xml2rfc warnings")
 
     if "--idnits" in argv:

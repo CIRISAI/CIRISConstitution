@@ -90,7 +90,7 @@ Table of Contents
      1.1.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   4
      1.2.  Requirements Language . . . . . . . . . . . . . . . . . .   4
      1.3.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   5
-   2.  The Signed Object . . . . . . . . . . . . . . . . . . . . . .   5
+   2.  The Signed Object . . . . . . . . . . . . . . . . . . . . . .   6
      2.1.  Members of a Row  . . . . . . . . . . . . . . . . . . . .   6
      2.2.  The Mirror  . . . . . . . . . . . . . . . . . . . . . . .   7
      2.3.  Members of the Signed Object  . . . . . . . . . . . . . .   8
@@ -101,7 +101,7 @@ Table of Contents
      4.3.  Strings That Carry Bytes  . . . . . . . . . . . . . . . .  10
      4.4.  Instants  . . . . . . . . . . . . . . . . . . . . . . . .  10
      4.5.  Numbers . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     4.6.  Size  . . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     4.6.  Size  . . . . . . . . . . . . . . . . . . . . . . . . . .  11
      4.7.  The Content Hash  . . . . . . . . . . . . . . . . . . . .  11
    5.  Signatures  . . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  The Hybrid Signature  . . . . . . . . . . . . . . . . . .  11
@@ -116,9 +116,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
      5.3.  Keys  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
    6.  Admission as a Registration Policy  . . . . . . . . . . . . .  13
-     6.1.  Who May Withdraw a Row  . . . . . . . . . . . . . . . . .  15
+     6.1.  Who May Withdraw a Row  . . . . . . . . . . . . . . . . .  14
    7.  The Safety Model the Rows Carry . . . . . . . . . . . . . . .  15
-     7.1.  Two Planes  . . . . . . . . . . . . . . . . . . . . . . .  16
+     7.1.  Two Planes  . . . . . . . . . . . . . . . . . . . . . . .  15
      7.2.  Consent-Bounded Flow  . . . . . . . . . . . . . . . . . .  16
      7.3.  Accountable Key Relationships . . . . . . . . . . . . . .  16
      7.4.  A Bounded Human Halt  . . . . . . . . . . . . . . . . . .  17
@@ -253,7 +253,11 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    Refusal token:  A fixed, case-sensitive ASCII string that names why a
       row was refused, so that two implementations agree on a refusal as
       well as on an acceptance.  The tokens of [CC] are either all
-      lowercase or all uppercase, and are compared byte for byte.
+      lowercase or all uppercase, and are compared byte for byte.  A
+      refusal of the shape of a row uses the token
+      federation_malformed_row together with a reason from a closed set;
+      "refused with reason R" in this document means that token with
+      reason R.
 
    Local tier, federation tier:  A row at the local tier stays on the
       node that wrote it and is not replicated.  A row at the federation
@@ -267,10 +271,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       base32 [RFC4648] encoding of the SHA-256 digest of the raw 32-byte
       Ed25519 public key.  The label is chosen by the key holder.
 
-2.  The Signed Object
-
-
-
 
 
 
@@ -281,6 +281,8 @@ Moore                     Expires 24 April 2027                 [Page 5]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
+
+2.  The Signed Object
 
 2.1.  Members of a Row
 
@@ -328,8 +330,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      +---------------------------+-----------+-----------------------+
      | scrub_signature_classical | beside    | Ed25519 signature,    |
      |                           |           | base64.               |
-     +---------------------------+-----------+-----------------------+
-     | scrub_signature_pqc       | beside    | ML-DSA-65 signature,  |
 
 
 
@@ -338,6 +338,8 @@ Moore                     Expires 24 April 2027                 [Page 6]
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
+     +---------------------------+-----------+-----------------------+
+     | scrub_signature_pqc       | beside    | ML-DSA-65 signature,  |
      |                           |           | base64.               |
      +---------------------------+-----------+-----------------------+
      | scrub_timestamp           | beside    | When the signature    |
@@ -353,11 +355,11 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    object under the member row (Section 2.2).  asserted_at and
    expires_at beside the row are read out of the signed object: a
    Substrate MUST refuse a row whose asserted_at column differs from the
-   signed member, with typed_diverges_from_envelope, and expires_at is
-   present beside the row exactly when it is present in the signed
-   object.  scrub_timestamp uses the instant form of Section 4.4.  A
-   Substrate MAY add members of its own beside the row; they are not
-   part of this specification.
+   signed member, with reason typed_diverges_from_envelope, and
+   expires_at is present beside the row exactly when it is present in
+   the signed object.  scrub_timestamp uses the instant form of
+   Section 4.4.  A Substrate MAY add members of its own beside the row;
+   they are not part of this specification.
 
 2.2.  The Mirror
 
@@ -367,23 +369,21 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    optionally weight.  The set is closed.  A Substrate MUST refuse a
    row:
 
-   *  whose signed object has no row member, with
+   *  whose signed object has no row member, with reason
       envelope_member_missing;
 
-   *  whose row object has any member not in this list;
+   *  whose row object has any member not in this list, with reason
+      envelope_row_member_unknown;
 
    *  where any column beside the row differs from its mirror, with
-      typed_diverges_from_envelope.
+      reason typed_diverges_from_envelope.
 
    The mirror exists because the columns beside a row are what a
    Substrate indexes and a Consumer filters on.  If those columns were
    not signed, a relay could change who a row is about or who may see it
    while the signature still verified.
 
-   subject_key_ids is always present in the mirror; an empty array means
-   the row has no subject beyond attested_key_id.  cohort_scope takes
-   one of the values self, family, community, affiliations, species,
-   biosphere, federation.
+
 
 
 
@@ -393,6 +393,11 @@ Moore                     Expires 24 April 2027                 [Page 7]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
+
+   subject_key_ids is always present in the mirror; an empty array means
+   the row has no subject beyond attested_key_id.  cohort_scope takes
+   one of the values self, family, community, affiliations, species,
+   biosphere, federation.
 
 2.3.  Members of the Signed Object
 
@@ -437,11 +442,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       by references_attestation_id.  It MAY list the changed members in
       differs_in.
 
-   withdraws:  The attester retracts an earlier row, named by
-      references_attestation_id, without saying the row was false.
-      Section 6.1 says who may withdraw a row.
-
-   recants:  The attester says one of its own earlier rows was false
 
 
 
@@ -450,6 +450,11 @@ Moore                     Expires 24 April 2027                 [Page 8]
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
+   withdraws:  The attester retracts an earlier row, named by
+      references_attestation_id, without saying the row was false.
+      Section 6.1 says who may withdraw a row.
+
+   recants:  The attester says one of its own earlier rows was false
       when it was made.  Only the original attester can recant a row.
 
    A withdrawal and a recantation are different statements.  A
@@ -491,13 +496,8 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    Each array member is declared as either a set or a sequence.  The
    declarations are in Appendix A.
 
-   *  A set MUST be sorted in ascending order of the JCS serialisation
-      of each element, compared as sequences of UTF-16 code units (the
-      comparison JCS uses for member names), and its elements MUST be
-      unique.  A Substrate MUST refuse a row with an unsorted or
-      duplicated set, with federation_set_semantics_unsorted naming the
-      member.  It MUST NOT sort the set itself, because that would
-      change the signing input.
+
+
 
 
 
@@ -505,6 +505,14 @@ Moore                     Expires 24 April 2027                 [Page 9]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
+
+   *  A set MUST be sorted in ascending order of the JCS serialisation
+      of each element, compared as sequences of UTF-16 code units (the
+      comparison JCS uses for member names), and its elements MUST be
+      unique.  A Substrate MUST refuse a row with an unsorted or
+      duplicated set, with federation_set_semantics_unsorted naming the
+      member.  It MUST NOT sort the set itself, because that would
+      change the signing input.
 
    *  A sequence keeps the order its author gave it.
 
@@ -534,8 +542,8 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    DDTHH:MM:SS.sssZ: UTC, the literal uppercase Z, and exactly three
    fractional digits.  This is a profile of [RFC3339].  A Producer MUST
    emit this form.  A Substrate MUST refuse any other form inside the
-   signing input with envelope_member_invalid, even though a signature
-   over those bytes would still verify.
+   signing input with reason envelope_member_invalid, even though a
+   signature over those bytes would still verify.
 
 4.5.  Numbers
 
@@ -546,14 +554,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    numbers at arbitrary precision would otherwise emit bytes that
    another implementation cannot reproduce.
 
-4.6.  Size
-
-   The signing input MUST NOT exceed 1 MiB (1,048,576 bytes).  A
-   Substrate MUST refuse a larger row on every path by which rows reach
-   it, with ENVELOPE_TOO_LARGE.  Because the limit is on canonical
-   bytes, it can only be decided after parsing; each intake path
-   therefore also needs a local limit on how many bytes it will read
-   before it stops.  That local limit MUST NOT be less than 1 MiB and is
 
 
 
@@ -562,6 +562,14 @@ Moore                     Expires 24 April 2027                [Page 10]
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
+4.6.  Size
+
+   The signing input MUST NOT exceed 1 MiB (1,048,576 bytes).  A
+   Substrate MUST refuse a larger row on every path by which rows reach
+   it, with ENVELOPE_TOO_LARGE.  Because the limit is on canonical
+   bytes, it can only be decided after parsing; each intake path
+   therefore also needs a local limit on how many bytes it will read
+   before it stops.  That local limit MUST NOT be less than 1 MiB and is
    not part of the interoperable contract.  A Substrate that receives a
    non-canonical serialisation larger than its local limit MAY refuse it
    even if its canonical form would fit; the interoperable serialisation
@@ -602,14 +610,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    row cannot be paired with a different Ed25519 signature.  The
    construction is not the composite signature of
    [I-D.ietf-lamps-pq-composite-sigs] and
-   [I-D.ietf-jose-pq-composite-sigs], in which both components sign the
-   same prefixed message representative and neither covers the other.
-   Deployed rows use the nested form, and this document describes what
-   they carry.
-
-
-
-
 
 
 
@@ -617,6 +617,11 @@ Moore                     Expires 24 April 2027                [Page 11]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
+
+   [I-D.ietf-jose-pq-composite-sigs], in which both components sign the
+   same prefixed message representative and neither covers the other.
+   Deployed rows use the nested form, and this document describes what
+   they carry.
 
    A Producer MAY use either the hedged or the deterministic variant of
    ML-DSA.Sign.  A Consumer MUST accept any valid signature and MUST NOT
@@ -661,11 +666,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    how keys are registered and revoked.  Verification also requires
    that:
 
-   *  the fingerprint in the key_id MUST match the SHA-256 digest of the
-      Ed25519 public key the directory returns, so a directory entry
-      cannot be substituted for another key with the same label; and
-
-
 
 
 
@@ -673,6 +673,10 @@ Moore                     Expires 24 April 2027                [Page 12]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
+
+   *  the fingerprint in the key_id MUST match the SHA-256 digest of the
+      Ed25519 public key the directory returns, so a directory entry
+      cannot be substituted for another key with the same label; and
 
    *  a revoked key MAY carry an instant revoked_after, so that rows the
       key signed before that instant still stand and rows signed after
@@ -721,62 +725,58 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-
-
-
-
 Moore                     Expires 24 April 2027                [Page 13]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
     +=============================+===================================+
-    | Check                       | Refusal token                     |
+    | Check                       | Refusal                           |
     +=============================+===================================+
-    | The signing input is at     | ENVELOPE_TOO_LARGE                |
-    | most 1 MiB                  |                                   |
+    | Signing input at most 1 MiB | ENVELOPE_TOO_LARGE                |
     +-----------------------------+-----------------------------------+
-    | original_content_hash       | none defined                      |
-    | matches the signing input   |                                   |
+    | Content hash matches        | (R) content_hash_mismatch         |
     +-----------------------------+-----------------------------------+
     | Both signature parts verify | SIGNATURE_VERIFICATION_FAILED     |
-    | at the federation tier      |                                   |
     +-----------------------------+-----------------------------------+
-    | attestation_type is one of  | attestation_type_unregistered     |
-    | the five                    |                                   |
+    | Type is one of the five     | attestation_type_unregistered     |
     +-----------------------------+-----------------------------------+
-    | The mirror is present       | envelope_member_missing           |
+    | Mirror present              | (R) envelope_member_missing       |
     +-----------------------------+-----------------------------------+
-    | The mirror has no other     | none defined                      |
-    | member                      |                                   |
+    | Mirror has no other member  | (R) envelope_row_member_unknown   |
     +-----------------------------+-----------------------------------+
-    | Every mirrored column       | typed_diverges_from_envelope      |
-    | equals its mirror           |                                   |
+    | Columns equal the mirror    | (R) typed_diverges_from_envelope  |
     +-----------------------------+-----------------------------------+
-    | No optional member is null  | federation_malformed_row          |
-    |                             | (envelope_member_null)            |
+    | No optional member is null  | (R) envelope_member_null          |
     +-----------------------------+-----------------------------------+
-    | Sets are sorted and unique  | federation_set_semantics_unsorted |
+    | Sets sorted and unique      | federation_set_semantics_unsorted |
     +-----------------------------+-----------------------------------+
-    | Instants have the canonical | envelope_member_invalid           |
-    | form                        |                                   |
+    | Instants in canonical form  | (R) envelope_member_invalid       |
     +-----------------------------+-----------------------------------+
-    | Subject identifiers are     | none defined                      |
-    | well formed                 |                                   |
+    | Subject identifiers well    | (R) subject_key_id_malformed      |
+    | formed                      |                                   |
     +-----------------------------+-----------------------------------+
-    | A termed delegation has a   | delegation_term_required          |
-    | term of at most 365 days    |                                   |
+    | Termed delegation within    | delegation_term_required          |
+    | 365 days                    |                                   |
     +-----------------------------+-----------------------------------+
-    | A withdrawal meets          | none defined                      |
+    | Withdrawal meets            | federation_withdraws_not_admitted |
     | Section 6.1                 |                                   |
     +-----------------------------+-----------------------------------+
-    | The dimension resolves in   | see [CC]                          |
-    | the namespace               |                                   |
+    | dimension resolves          | see [CC]                          |
     +-----------------------------+-----------------------------------+
 
                          Table 2: Admission checks
 
+   "(R) r" means the token federation_malformed_row with reason r.
 
+   The namespace rules that decide whether a dimension resolves, and
+   their tokens, are defined in [CC] and are outside the scope of this
+   document.
+
+6.1.  Who May Withdraw a Row
+
+   A withdraws row against a target row T is admitted when its attester
+   meets any one of these rules:
 
 
 
@@ -785,15 +785,6 @@ Moore                     Expires 24 April 2027                [Page 14]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
-
-   "None defined" means that [CC] requires the refusal but does not yet
-   name a token for it (Section 10).  A Substrate refuses such a row
-   with a token of its own choosing until one is defined.
-
-6.1.  Who May Withdraw a Row
-
-   A withdraws row against a target row T is admitted when its attester
-   meets any one of these rules:
 
    1.  It is T's attester.
 
@@ -832,6 +823,15 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    says which member or check carries each property, and what is not
    claimed.
 
+7.1.  Two Planes
+
+   The network has a public plane and a private plane.  The CIRIS
+   documents call them the lightnet and the darknet.
+
+
+
+
+
 
 
 
@@ -841,11 +841,6 @@ Moore                     Expires 24 April 2027                [Page 15]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
-
-7.1.  Two Planes
-
-   The network has a public plane and a private plane.  The CIRIS
-   documents call them the lightnet and the darknet.
 
    The identity plane (lightnet) is public.  Key records, announced
    transport destinations and trust roots are visible to every node, and
@@ -889,6 +884,11 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    Some parties cannot accept obligations for themselves.  The rows give
    each of them a named human:
 
+   *  A key whose identity type includes agent or node MUST have a
+      steward: a human identity with a live delegates_to row binding the
+      key.  Without one, the key cannot be admitted to any family,
+      community or organisation.  It MAY trust and serve infrastructure
+      communities without a steward (CC 3.2).
 
 
 
@@ -897,12 +897,6 @@ Moore                     Expires 24 April 2027                [Page 16]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
-
-   *  A key whose identity type includes agent or node MUST have a
-      steward: a human identity with a live delegates_to row binding the
-      key.  Without one, the key cannot be admitted to any family,
-      community or organisation.  It MAY trust and serve infrastructure
-      communities without a steward (CC 3.2).
 
    *  A minor has a guardian bound by a signed row (CC 3.4.13).
 
@@ -945,6 +939,12 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 8.  Relationship to SCITT
 
    This section is informative.
+
+
+
+
+
+
 
 
 
@@ -1048,16 +1048,16 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    Note to the RFC Editor: please remove this section before
    publication.
 
-   *  [CC] requires a refusal, but names no token, for a content hash
-      mismatch, an extra member in the mirror, a malformed subject
-      identifier, and a withdrawal that meets no rule.
-
    *  CIRISPersist does not yet refuse an unsorted or duplicated
-      subject_key_ids set at admission (Section 11).
+      subject_key_ids set at admission, and does not yet emit the
+      reasons content_hash_mismatch, envelope_row_member_unknown and
+      subject_key_id_malformed, which [CC] named on 2026-10-21
+      (Section 11).
 
    *  No COSE encoding of a row is defined (Section 8.2).
 
    *  No second implementation exists (Section 11).
+
 
 
 

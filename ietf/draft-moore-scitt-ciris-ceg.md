@@ -184,7 +184,10 @@ Refusal token:
 : A fixed, case-sensitive ASCII string that names why a row was
   refused, so that two implementations agree on a refusal as well as
   on an acceptance.  The tokens of {{CC}} are either all lowercase or
-  all uppercase, and are compared byte for byte.
+  all uppercase, and are compared byte for byte.  A refusal of the
+  shape of a row uses the token `federation_malformed_row` together
+  with a reason from a closed set; "refused with reason R" in this
+  document means that token with reason R.
 
 Local tier, federation tier:
 : A row at the local tier stays on the node that wrote it and is not
@@ -233,7 +236,7 @@ The seven members marked "mirrored" are repeated inside the signed
 object under the member `row` ({{mirror}}).  `asserted_at` and
 `expires_at` beside the row are read out of the signed object: a
 Substrate MUST refuse a row whose `asserted_at` column differs from
-the signed member, with `typed_diverges_from_envelope`, and `expires_at`
+the signed member, with reason `typed_diverges_from_envelope`, and `expires_at`
 is present beside the row exactly when it is present in the signed
 object.  `scrub_timestamp` uses the instant form of {{time}}.  A
 Substrate MAY add members of its own beside the row; they are not part
@@ -248,12 +251,13 @@ with exactly these members: `attestation_id`, `attesting_key_id`,
 Substrate MUST refuse a row:
 
 - whose signed object has no `row` member, with
-  `envelope_member_missing`;
+  reason `envelope_member_missing`;
 
-- whose `row` object has any member not in this list;
+- whose `row` object has any member not in this list, with reason
+  `envelope_row_member_unknown`;
 
 - where any column beside the row differs from its mirror, with
-  `typed_diverges_from_envelope`.
+  reason `typed_diverges_from_envelope`.
 
 The mirror exists because the columns beside a row are what a
 Substrate indexes and a Consumer filters on.  If those columns were not signed, a
@@ -394,7 +398,7 @@ Every instant inside the signing input is written as
 `YYYY-MM-DDTHH:MM:SS.sssZ`: UTC, the literal uppercase `Z`, and exactly
 three fractional digits.  This is a profile of {{RFC3339}}.  A Producer
 MUST emit this form.  A Substrate MUST refuse any other form inside the
-signing input with `envelope_member_invalid`, even though a signature
+signing input with reason `envelope_member_invalid`, even though a signature
 over those bytes would still verify.
 
 ## Numbers
@@ -521,27 +525,29 @@ MUST apply them, in any order, to every row before storing or relaying
 it, and MUST refuse a failing row with the token given.  It MUST NOT
 truncate, repair or re-encode a row in order to admit it.
 
-| Check | Refusal token |
+| Check | Refusal |
 |---|---|
-| The signing input is at most 1 MiB | ENVELOPE_TOO_LARGE |
-| `original_content_hash` matches the signing input | none defined |
-| Both signature parts verify at the federation tier | SIGNATURE_VERIFICATION_FAILED |
-| `attestation_type` is one of the five | attestation_type_unregistered |
-| The mirror is present | envelope_member_missing |
-| The mirror has no other member | none defined |
-| Every mirrored column equals its mirror | typed_diverges_from_envelope |
-| No optional member is `null` | federation_malformed_row (envelope_member_null) |
-| Sets are sorted and unique | federation_set_semantics_unsorted |
-| Instants have the canonical form | envelope_member_invalid |
-| Subject identifiers are well formed | none defined |
-| A termed delegation has a term of at most 365 days | delegation_term_required |
-| A withdrawal meets {{withdraw-rule}} | none defined |
-| The `dimension` resolves in the namespace | see {{CC}} |
+| Signing input at most 1 MiB | ENVELOPE_TOO_LARGE |
+| Content hash matches | (R) content_hash_mismatch |
+| Both signature parts verify | SIGNATURE_VERIFICATION_FAILED |
+| Type is one of the five | attestation_type_unregistered |
+| Mirror present | (R) envelope_member_missing |
+| Mirror has no other member | (R) envelope_row_member_unknown |
+| Columns equal the mirror | (R) typed_diverges_from_envelope |
+| No optional member is `null` | (R) envelope_member_null |
+| Sets sorted and unique | federation_set_semantics_unsorted |
+| Instants in canonical form | (R) envelope_member_invalid |
+| Subject identifiers well formed | (R) subject_key_id_malformed |
+| Termed delegation within 365 days | delegation_term_required |
+| Withdrawal meets {{withdraw-rule}} | federation_withdraws_not_admitted |
+| `dimension` resolves | see {{CC}} |
 {: title="Admission checks"}
 
-"None defined" means that {{CC}} requires the refusal but does not yet
-name a token for it ({{open}}).  A Substrate refuses such a row with a
-token of its own choosing until one is defined.
+"(R) r" means the token `federation_malformed_row` with reason r.
+
+The namespace rules that decide whether a `dimension` resolves, and
+their tokens, are defined in {{CC}} and are outside the scope of this
+document.
 
 ## Who May Withdraw a Row {#withdraw-rule}
 
@@ -753,12 +759,11 @@ row.
 
 Note to the RFC Editor: please remove this section before publication.
 
-- {{CC}} requires a refusal, but names no token, for a content hash
-  mismatch, an extra member in the mirror, a malformed subject
-  identifier, and a withdrawal that meets no rule.
-
 - CIRISPersist does not yet refuse an unsorted or duplicated
-  `subject_key_ids` set at admission ({{implementation-status}}).
+  `subject_key_ids` set at admission, and does not yet emit the reasons
+  `content_hash_mismatch`, `envelope_row_member_unknown` and
+  `subject_key_id_malformed`, which {{CC}} named on 2026-10-21
+  ({{implementation-status}}).
 
 - No COSE encoding of a row is defined ({{deltas}}).
 

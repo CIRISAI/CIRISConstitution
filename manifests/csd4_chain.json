@@ -32,14 +32,14 @@
    "invariants": 152,
    "claims": 487,
    "entries": 20,
-   "refusal_tokens": 69
+   "refusal_tokens": 70
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "fae24ab7db66abd3590efa700462e53267f74b201b0220e43eff230bcada162d"
+  "chain_sha256": "a78f2ca50568a5ce3baf5851baf17e54cb02934d3c8c65f2ba768d9b57380787"
  },
  "chain": [
   {
@@ -38462,6 +38462,7 @@
   },
   "federation_malformed_row": {
    "2.6.1.1": "after_refusal",
+   "2.6.1.7": "after_refusal",
    "6.1.1": "after_refusal"
   },
   "federation_set_semantics_unsorted": {
@@ -38470,6 +38471,9 @@
   },
   "federation_trace_dimension_invalid": {
    "3.4.5": "after_refusal"
+  },
+  "federation_withdraws_not_admitted": {
+   "2.6.1.7": "after_refusal"
   },
   "internal_normative_regime": {
    "4.4.3.2": "bold"
