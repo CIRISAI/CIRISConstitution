@@ -33,9 +33,9 @@ Keyed    == {"hk", "ag"}            \* hold a federation key: rule 2 is availabl
 External == {"ext", "agx"}          \* canonical-hash subjects: only a proxy can act (rule 3)
 Natural  == {"hk", "ext"}           \* natural persons: the people Article 17 is for
 Agents   == {"ag", "agx"}
-Kinds    == {"ordinary", "detection"}
+Kinds    == {"ordinary", "detection", "hard_case"}   \* hard_case: an equivocation proof or a liveness transition about a root (#170), adverse to its subject
 Rows     == [kind : Kinds, subject : Subjects]
-Adverse(r) == r.kind = "detection"
+Adverse(r) == r.kind \in {"detection", "hard_case"}
 
 VARIABLES withdrawn,   \* rows removed by an admitted withdraws
           admitted,    \* [Rows -> 0..3]  which rule admitted the withdraws (0 = none yet)

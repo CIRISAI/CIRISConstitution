@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "b7ebac457a5e5de84e47fea252aee54226cea527231ea8d5d20a025540165829",
-   "invariants_sha256": "4cc9f451033b9aa8881a9002a2e21afe959e01fa4daff898c6a3d23d3052b836",
+   "invariants_sha256": "84e23a1ee470c76ccc5f7e2d9c774d9247eccaaafb297c273d70f3341257f4a4",
    "vocabulary_sha256": "b0b220507d08424a8ced6f5390fc2a01a9987123530b0cf620be2d34bfc69afc",
    "vocabulary_catalogue_version": 3,
-   "claims_sha256": "c07dfe55d95bfb142bd86b0b2876dd5e0f426831c26f8a22156d62159e0c044a",
+   "claims_sha256": "caa92e2fc8cda8c03abe50d71b273682d56fc4991a8aa748f9294c61682150a4",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "feat/multi-device-csd4",
@@ -38,7 +38,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "b481298238b4ca99eb7c078c5b83898c209114deb3ba87241076416017034d09"
+  "chain_sha256": "e4c445b5190e1199c30a8245fd88d7aa121f02a728a0324a0e4b737012c03641"
  },
  "chain": [
   {
@@ -2188,6 +2188,14 @@
        "symbols": [
         "retraction_admissible"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
+       ]
       }
      ]
     },
@@ -3938,6 +3946,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
@@ -7252,6 +7268,14 @@
        "symbols": [
         "retraction_admissible"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
+       ]
       }
      ]
     },
@@ -9447,6 +9471,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
@@ -12123,6 +12155,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
@@ -17996,6 +18036,14 @@
        "symbols": [
         "retraction_admissible"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
+       ]
       }
      ]
     },
@@ -18486,6 +18534,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
@@ -25235,6 +25291,14 @@
        "symbols": [
         "retraction_admissible"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
+       ]
       }
      ]
     }
@@ -25449,6 +25513,14 @@
        "symbols": [
         "retraction_admissible"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
+       ]
       }
      ]
     }
@@ -25662,6 +25734,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
@@ -33362,6 +33442,14 @@
        "symbols": [
         "retraction_admissible"
        ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
+       ]
       }
      ]
     },
@@ -33852,6 +33940,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
@@ -37370,6 +37466,14 @@
        "path": "src/federation/steward_purge.rs",
        "symbols": [
         "retraction_admissible"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/withdraws_admission/WithdrawsAdmission.tla",
+       "symbols": [
+        "Inv_AntiGoodhart"
        ]
       }
      ]
