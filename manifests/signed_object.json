@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "6404eefc4fe0c30757f05fd10e47029d5c8cb64d1a7bad79d305f65b5453b228",
+    "source_sha256": "d501e42c21afda17bcb40be438468c507f8e100e847dca3eccacbc4c4ddbef81",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "32512f52",
@@ -54,7 +54,6 @@
       "signed:envelope": 22,
       "signed:row": 7,
       "signed:envelope-extra": 32,
-      "not-on-wire": 1,
       "beside": 27,
       "local": 4,
       "beside:signature": 10,
@@ -62,8 +61,7 @@
     },
     "findings": [
       "F1",
-      "F3",
-      "F6"
+      "F3"
     ]
   },
   "objects": {
@@ -787,18 +785,6 @@
         "cc_ref": "2.4.1 4.4.3.2.8",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "At most 365 days after delegation_valid_from; refused delegation_term_required."
-      },
-      {
-        "member": "cosignatures",
-        "placement": "not-on-wire",
-        "cc_name": "cosignatures",
-        "type": "[* cosignature]",
-        "array_kind": "-",
-        "presence": "not shipped at the v57 pin",
-        "default": "-",
-        "cc_ref": "2.1 2.4 2.4.1.1",
-        "impl": "staged:CIRISPersist#991",
-        "note": "CC 2.1 names an envelope member; a cosignature cannot be inside the bytes it signs, and persist's shipped multi-signer carrier is additional_scrubs[] beside the row (below). The {key_id, role, ...} shape sorted by key_id is the planned shape on CIRISPersist#991, not a wire fact (finding F6)."
       },
       {
         "member": "*",
