@@ -143,6 +143,10 @@ NUC = {
  '⚠':r'[!]','️':'','∃':r'$\exists$','ρ':r'$\rho$','⌈':r'$\lceil$','⌉':r'$\rceil$',
  '∪':r'$\cup$','≫':r'$\gg$','≈':r'$\approx$','🔴':r'[\textbullet]','⇒':r'$\Rightarrow$',
  '⟹':r'$\Longrightarrow$','∞':r'$\infty$','µ':r'$\mu$','ε':r'$\varepsilon$',
+ 'Θ':r'$\Theta$','Σ':r'$\Sigma$','Δ':r'$\Delta$','λ':r'$\lambda$','σ':r'$\sigma$','κ':r'$\kappa$',
+ '₀':r'\textsubscript{0}','₁':r'\textsubscript{1}','₂':r'\textsubscript{2}','₃':r'\textsubscript{3}',
+ '∉':r'$\notin$','∅':r'$\emptyset$','⅔':r'$\frac{2}{3}$','ℝ':r'$\mathbb{R}$','↑':r'$\uparrow$','↓':r'$\downarrow$',
+ '⌊':r'$\lfloor$','⌋':r'$\rfloor$','⟨':r'$\langle$','⟩':r'$\rangle$','⟶':r'$\longrightarrow$',
 }
 nuc_lines = '\n'.join(r'\newunicodechar{%s}{%s}' % (k, v) for k, v in NUC.items())
 
