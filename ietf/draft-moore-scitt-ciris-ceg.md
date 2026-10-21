@@ -657,8 +657,11 @@ a group's existence, and what its members do in it, are hidden from
 non-members.  Beyond that:
 
 - The identity plane is not anonymous.
-- No multi-hop anonymity is provided, and the design does not resist a
-  global passive observer of traffic.
+- No multi-hop anonymity is provided today, and the deployed design
+  does not resist a global passive observer of traffic.  An opt-in
+  anonymous tier using onion routing is planned for deployments that
+  need that protection (CC 1.13.3.1).  It is not yet specified in
+  {{CC}} or shipped, and this document does not describe it.
 - Members of a group can read, and keep, what the group shares.
   Ballots within a group are accountable to its members, not secret
   from them.
