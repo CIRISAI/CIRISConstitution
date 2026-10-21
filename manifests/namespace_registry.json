@@ -8,7 +8,7 @@
         "literal": "CC-fixed stem; lowercase (build-gated)",
         "value": "caller-supplied identity; verbatim, case-preserved",
         "vocab": "CC-defined vocabulary; MUST match vocab_pattern; refuse, never fold",
-        "wildcard": "the `*` tail; not a segment value; VARIADIC \u2014 matches one or more remaining segments (CIRISConstitution#108)"
+        "wildcard": "the `*` tail; not a segment value; VARIADIC \u2014 matches one or more remaining segments"
       },
       "compare": "byte-exact; consumers MUST NOT case-fold",
       "external_standards": {
@@ -30,7 +30,7 @@
         }
       },
       "literal_pattern": "^[a-z0-9][a-z0-9_]*$",
-      "match_semantics": "full-match: a segment pattern (vocab_pattern, literal_pattern, version_segment.pattern, segments[].pattern, external_standards[].pattern) must match the WHOLE segment; a `$` anchor does not admit a trailing newline (CIRISConstitution#116)",
+      "match_semantics": "full-match: a segment pattern (vocab_pattern, literal_pattern, version_segment.pattern, segments[].pattern, external_standards[].pattern) must match the WHOLE segment; a `$` anchor does not admit a trailing newline",
       "placeholder_classes": {
         "allegation_type": "vocab",
         "approach_id": "value",
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "fc852f8d972d8ab8152bd70cadfac8e9a9c4a98776a75cbfd6d5e7d823124f9e",
+    "registry_sha256": "a279534d7383c752f4047fad04ddb480109c9f833bff9b56914c05c583a0947b",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "2b94c0ec8e0ccba7bd4e336ba0590779930e73a820ae073179def73611e77865"
+    "source_sha256": "a9b7a53c302b60df335e765cfd045996be64c2b0382346533cc51577d8007bef"
   },
   "families": [
     {
@@ -346,7 +346,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Catalogue row (CC 3.1.7 R1); provisional accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1 (CIRISConstitution#112).",
+      "description": "Catalogue row (CC 3.1.7 R1); provisional accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
@@ -660,7 +660,7 @@
     },
     {
       "cc_section": "3.1.9.7",
-      "description": "Strategic pathway from current state toward Goals (Piece 10 karma \u2014 the per-agent forward post-selection structure; the universal-grace half of Piece 10 is upstream-retracted, F-11).",
+      "description": "Strategic pathway from current state toward Goals (Piece 10 karma \u2014 the per-agent forward post-selection structure; the universal-grace half of Piece 10 is upstream-retracted).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -1355,7 +1355,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "A public community's own discovery row (CIRISConstitution#142; CC 3.2 public): a federation-scoped scores row by the founder carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, rank",
+      "description": "A public community's own discovery row (CC 3.2 public): a federation-scoped scores row by the founder carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, ranked by NodeCore votes.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
@@ -1651,7 +1651,7 @@
     },
     {
       "cc_section": "3.1.5",
-      "description": "Catalogue row (CC 3.1.7 R1); a descriptive scope row \u2014 the scope of a grant is the scope envelope member of consent:state:granted (CC 3.3.1, #103).",
+      "description": "Catalogue row (CC 3.1.7 R1); a descriptive scope row \u2014 the scope of a grant is the scope envelope member of consent:state:granted (CC 3.3.1).",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "enumerated",
@@ -2165,7 +2165,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "The name a person gives one of their own devices (steward ruling 2026-10-01, CIRISConstitution#137; the server's shipped self:device_label, renamed \u2014 self is a cohort scope and names no family).",
+      "description": "The name a person gives one of their own devices (not self:device_label: self is a cohort scope and names no family).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
@@ -2708,7 +2708,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "The carrier of a legacy occurrence revocation (registered 2026-10-19 under CC 3.1.7 R2(a) at persist's mint, v59; the planes-as-rows precedent of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed before the tw",
+      "description": "The carrier of a legacy occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed before the two-path roster door existed (CC 3.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "-1 only",
@@ -3178,7 +3178,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Mesh-configuration row (CC 4.2.1, #57 ratified): trust-root-emitted on the delegation plane; relieve-never-expand; most-restrictive-across-roots; a key naming no consumer processor is refused at admission; emergency form TTL \u2264 72 h.",
+      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted on the delegation plane; relieve-never-expand; most-restrictive-across-roots; a key naming no consumer processor is refused at admission; emergency form TTL \u2264 72 h.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3378,7 +3378,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Reverse-quorum objection marker (CIRISConstitution#67): a signed, roster-pinned vote on a pending act.",
+      "description": "Reverse-quorum objection marker: a signed, roster-pinned vote on a pending act.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3403,7 +3403,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "What one witness assumed about its view of a subject when it made a claim about that subject: which consent grants were in force, at what trace level, over which occurrences, over which window, through which channel classes (steward ruling",
+      "description": "What one witness assumed about its view of a subject when it made a claim about that subject: which consent grants were in force, at what trace level, over which occurrences, over which window, through which channel classes.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3730,7 +3730,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Subject-scoped quarantine marker (CIRISConstitution#76): slash-duty-holder-only emitter.",
+      "description": "Subject-scoped quarantine marker: slash-duty-holder-only emitter.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3910,7 +3910,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Regime declaration for {artifact} \u2208 manifest/composition/gate/onwire (CIRISConstitution#81 / CIRISPersist#571): reserved \u2014 substrate-steward-emitted, the emitter rule pinned at mint per R2(a); registered to end the ProducerSteward default.",
+      "description": "Regime declaration for {artifact} \u2208 manifest/composition/gate/onwire: reserved \u2014 substrate-steward-emitted, the emitter rule pinned at mint per R2(a), so the ProducerSteward default never applies.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3937,7 +3937,7 @@
     },
     {
       "cc_section": "3.1.5",
-      "description": "The agent's own retirement row (CC 7.5.5, the Retirement Standard; CIRISAgent#1250).",
+      "description": "The agent's own retirement row (CC 7.5.5, the Retirement Standard).",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "enumerated",
@@ -4161,7 +4161,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "A takedown notice as a row (CIRISConstitution#165; shape and bases at CC 3.3.2): the scores row whose envelope is the takedown_notice payload, subject_kind: takedown_notice, so that every notice has an attestation_id a tombstone cites and a",
+      "description": "A takedown notice as a row (shape and bases at CC 3.3.2): the scores row whose envelope is the takedown_notice payload, subject_kind: takedown_notice, so that every notice has an attestation_id a tombstone cites and a reconsideration:{groun",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "-1 only",
@@ -4305,7 +4305,7 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Witness cosignature on an STH (substrate-conformance path; the interim uses a per-region registry_sth_cosignatures table; see CC 5.3.1 endpoints).",
+      "description": "Witness cosignature on an STH (substrate-conformance path; see CC 5.3.1 endpoints).",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
@@ -4352,7 +4352,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered 2026-10-19 under CC 3.1.7 R2(a) at persist's mint, v59, CIRISPersist#1106; the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about",
+      "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered under CC 3.1.7 R2(a); the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about a seated serve node, authored by an accord holder an",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -4485,7 +4485,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "CC 4.3 Wise-Authority quorum adjudication finding (CIRISConstitution#73) \u2014 the attestation a wa_adjudication_ref resolves to (abandonment/seizure and successor findings).",
+      "description": "CC 4.3 Wise-Authority quorum adjudication finding \u2014 the attestation a wa_adjudication_ref resolves to (abandonment/seizure and successor findings).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",

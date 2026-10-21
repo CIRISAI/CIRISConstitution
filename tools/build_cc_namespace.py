@@ -705,7 +705,7 @@ def main():
              "components'. This catalog extracts every distinct backtick prefix family at "
              "leaf granularity (the granularity a vendoring crate needs), deduping the one "
              "cross-section joint claim (agent_files, CC 3.1.1 + CC 3.1.9.1). The observed "
-             "count exceeds 83 because the normative summary predates later-added families "
+             "count exceeds 83 because the normative summary does not count every family "
              "(e.g. CC 3.1.8.4/3.1.8.5 structural-injustice + distributive-access detectors, "
              "CC 3.1.9.4 health:liveness / watchlist / judge_model). CIRISBench (CC 3.1.10) is "
              "the 9th owning_component here but is cited from a README rather than a MISSION.md, "
@@ -720,7 +720,7 @@ def main():
         ("compare", "byte-exact; consumers MUST NOT case-fold"),
         ("match_semantics", "full-match: a segment pattern (vocab_pattern, literal_pattern, version_segment.pattern, "
                             "segments[].pattern, external_standards[].pattern) must match the WHOLE segment; "
-                            "a `$` anchor does not admit a trailing newline (CIRISConstitution#116)"),
+                            "a `$` anchor does not admit a trailing newline"),
         ("refusal_token", "namespace_dimension_case_malformed"),
         ("vocab_pattern", VOCAB_PATTERN),
         ("literal_pattern", LITERAL_PATTERN),
@@ -730,7 +730,7 @@ def main():
             ("external", "outside-standard token; verbatim canonical form (ISO 4217, BCP 47, rating scheme)"),
             ("value", "caller-supplied identity; verbatim, case-preserved"),
             ("hex", "CC 2.6.3 digest; lowercase"),
-            ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments (CIRISConstitution#108)"),
+            ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments"),
         ])),
         ("version_segment", OrderedDict([        # CC 3.1.7 R3 — CIRISConstitution#112
             ("pattern", "^v[0-9]+(\\.[0-9]+)*$"),   # v1, v2 … and a dotted suite version (HE-300 v1.2)
