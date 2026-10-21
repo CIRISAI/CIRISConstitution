@@ -1,0 +1,49 @@
+{
+ "catalog_id": "T13",
+ "title": "A witnessed lineage — a stale head refuses attach; a node-bearing seat never counts",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-105"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 1,
+  "persons": 1,
+  "devices_max_per_person": 1,
+  "holders": 3
+ },
+ "generated": [
+  "trust_root_HA.cfg",
+  "accord_halt_HA.cfg",
+  "accord_fuse_HA.cfg",
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T13.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root HA: witnessed mode off; trust_root model not applicable until extended (residual E)",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "root.head.stale": {
+   "plane": "root",
+   "state_predicate": "root.head=stale",
+   "cc_ref": "3.2 T4a",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "seat.identity_type.node_bearing": {
+   "plane": "root",
+   "state_predicate": "seat.identity_type=node_bearing",
+   "cc_ref": "3.4.7.1 3.2 T8",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  }
+ },
+ "atoms_with_a_plane_model": 2,
+ "atoms_without": 0
+}

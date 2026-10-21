@@ -112,12 +112,18 @@ def convert(md):
             out.append(r'\begin{itemize}\setlength\itemsep{0pt}')
             while i < n and re.match(r'^\s*[-*]\s+', lines[i]):
                 out.append(r'\item ' + inline(re.sub(r'^\s*[-*]\s+','',lines[i]))); i += 1
+                # a blank line between items does not end the list (the master writes lists both ways)
+                if i + 1 < n and lines[i].strip() == '' and re.match(r'^\s*[-*]\s+', lines[i+1]):
+                    i += 1
             out.append(r'\end{itemize}'); out.append(''); continue
         # ordered list
         if re.match(r'^\s*\d+\.\s+', line):
             out.append(r'\begin{enumerate}\setlength\itemsep{0pt}')
             while i < n and re.match(r'^\s*\d+\.\s+', lines[i]):
                 out.append(r'\item ' + inline(re.sub(r'^\s*\d+\.\s+','',lines[i]))); i += 1
+                # a blank line between items does not end the list; numbering continues
+                if i + 1 < n and lines[i].strip() == '' and re.match(r'^\s*\d+\.\s+', lines[i+1]):
+                    i += 1
             out.append(r'\end{enumerate}'); out.append(''); continue
         # blank
         if not line.strip():

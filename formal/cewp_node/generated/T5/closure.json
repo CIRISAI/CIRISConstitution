@@ -1,0 +1,81 @@
+{
+ "catalog_id": "T5",
+ "title": "A community — a held quorum change, a moderator duty",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-102",
+  "CSD-103",
+  "CSD-065",
+  "CSD-128"
+ ],
+ "derives": [
+  "6c",
+  "6d",
+  "3d",
+  "2d"
+ ],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 3,
+  "persons": 3,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "self_roster_carol_stolen.cfg",
+  "self_roster_carol_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T5.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person carol: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "community.formed": {
+   "plane": "membership",
+   "state_predicate": "group.formed=formed (community)",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "community.member": {
+   "plane": "membership",
+   "state_predicate": "member.stage=member (community)",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "quorum_change.held": {
+   "plane": "membership",
+   "state_predicate": "group.quorum_change=held",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "quorum_change.applied": {
+   "plane": "membership",
+   "state_predicate": "group.quorum_change=applied",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "moderator.named": {
+   "plane": "membership",
+   "state_predicate": "group.moderator=named",
+   "cc_ref": "4.5.4",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  }
+ },
+ "atoms_with_a_plane_model": 0,
+ "atoms_without": 5
+}

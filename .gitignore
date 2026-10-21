@@ -12,3 +12,4 @@ __pycache__/
 # Editor / OS
 .DS_Store
 *.swp
+volumes/*.pdf

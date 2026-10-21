@@ -19,8 +19,8 @@ name: consistency
 # that merely carry a row. Those are different numbers and the gap is the point.
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ main ]
   pull_request:
 
 permissions:
@@ -48,3 +48,31 @@ jobs:
           python3 tools/cc_namespace_match.py --self-test
           python3 tools/cc_namespace_match.py --write-vectors
           git diff --exit-code manifests/
+      - name: Signed object (CC 2.6.1.7) is regenerated from its table and its vectors recompute
+        run: |
+          python3 tools/build_cc_signed_object.py
+          python3 tools/build_cc_signed_object.py --self-test
+          git diff --exit-code manifests/ constitution/part_2_the_grammar.md
+      - name: Governance policy table (CC 4.5.13) is in the corridor, regenerated, and its vectors recompute (no drift)
+        run: |
+          python3 tools/build_governance_policy.py
+          python3 tools/build_governance_policy.py --self-test
+          git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/
+      - name: CSD/4 chain manifest (models → state table → atoms → claims → evidence → catalogue) is regenerated (no drift)
+        run: |
+          pip install -q pyyaml
+          python3 tools/build_csd4_chain.py
+          git diff --exit-code manifests/csd4_chain.json
+      - name: Closure configurations are regenerated from the vendored catalogue (no drift)
+        run: |
+          pip install -q pyyaml
+          python3 tools/topology_to_cfg.py --all
+          git diff --exit-code formal/cewp_node/generated/
+      - name: "Catalogue coverage of the formally defined states (reported, not gated; exhaustiveness is the steward's call)"
+        run: python3 tools/catalogue_coverage.py
+      - name: Formal state table, invariant table and atom vocabulary agree with the models, the toc and the register
+        run: python3 tools/check_formal_tables.py
+      - name: Volume map (toc.tsv volume column) is regenerated from review/pieces.tsv
+        run: |
+          python3 build_pdf.py --write-toc-volumes
+          git diff --exit-code constitution/toc.tsv

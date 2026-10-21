@@ -1,0 +1,102 @@
+{
+ "catalog_id": "T16",
+ "title": "An agent retired under the Standard",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-111"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 1,
+  "persons": 1,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_steward_stolen.cfg",
+  "self_roster_steward_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T16.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person steward: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "agent.bond.unbound": {
+   "plane": "agent",
+   "state_predicate": "agent.bond=unbound",
+   "cc_ref": "1.13.2 7.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.bond.lapsed": {
+   "plane": "agent",
+   "state_predicate": "agent.bond=lapsed",
+   "cc_ref": "1.13.2",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.decided": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=decided",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.frozen": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=frozen",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.secrets_destroyed": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=secrets_destroyed",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.handed_over": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=handed_over",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.notified": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=notified",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.custodian_minted": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=custodian_minted",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.retirement.retired": {
+   "plane": "agent",
+   "state_predicate": "agent.retirement=retired",
+   "cc_ref": "7.5.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "agent.halt_gate.acting": {
+   "plane": "agent",
+   "state_predicate": "agent.halt_gate=acting",
+   "cc_ref": "4.2.1.1 1.13.6",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  }
+ },
+ "atoms_with_a_plane_model": 10,
+ "atoms_without": 0
+}

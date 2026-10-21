@@ -1,0 +1,10 @@
+default_content_6
+default_content_7
+default_standing_6
+default_standing_7
+default_irreversible_6
+default_irreversible_7
+community_invite_6
+community_invite_7
+community_remove_6
+community_remove_7

@@ -1,0 +1,69 @@
+{
+ "catalog_id": "T7",
+ "title": "An agent under a steward with a Wise Authority",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-111",
+  "CSD-112",
+  "CSD-113",
+  "CSD-114",
+  "CSD-115",
+  "CSD-116",
+  "CSD-117"
+ ],
+ "derives": [
+  "5a",
+  "5b",
+  "5c",
+  "5d",
+  "5e",
+  "5f",
+  "5g",
+  "7c",
+  "8b"
+ ],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 1,
+  "persons": 1,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_steward_stolen.cfg",
+  "self_roster_steward_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T7.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person steward: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "agent.bound": {
+   "plane": "agent",
+   "state_predicate": "agent.bond=bonded (hard-bound to a node)",
+   "cc_ref": "1.13.2",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "steward.bonded": {
+   "plane": "agent",
+   "state_predicate": "agent.bond=bonded ∧ steward bond row",
+   "cc_ref": "1.13.2 7.5",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  },
+  "wa.present": {
+   "plane": "agent",
+   "state_predicate": "agent.wa=present",
+   "cc_ref": "4.3",
+   "in_state_table": true,
+   "plane_models": "guarantees"
+  }
+ },
+ "atoms_with_a_plane_model": 3,
+ "atoms_without": 0
+}

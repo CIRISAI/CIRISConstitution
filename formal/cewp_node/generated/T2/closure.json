@@ -1,0 +1,87 @@
+{
+ "catalog_id": "T2",
+ "title": "Two people, pair room, one outsider",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-091"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 3,
+  "persons": 3,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "self_roster_eve_stolen.cfg",
+  "self_roster_eve_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T2.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person eve: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "contact.reachable": {
+   "plane": "content",
+   "state_predicate": "row.scope=federation for the node binding, held on the other's node",
+   "cc_ref": "5.4.6",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "contact.added": {
+   "plane": "membership",
+   "state_predicate": "consent.replication=granted by the adder naming the contact's node(s)",
+   "cc_ref": "3.1.3",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "room.pair.keyed": {
+   "plane": "membership",
+   "state_predicate": "member.stage=member for both in a pair room ∧ key_grant each",
+   "cc_ref": "3.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "message.delivered": {
+   "plane": "content",
+   "state_predicate": "blob.custody=held on the recipient's node",
+   "cc_ref": "3.1.3.3",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  },
+  "person.outsider": {
+   "plane": "membership",
+   "state_predicate": "∀ groups: member.stage=none ∧ no contact relation",
+   "cc_ref": "5.2",
+   "in_state_table": false,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "node.unannounced": {
+   "plane": "node",
+   "state_predicate": "∃ person node: node.announce=unannounced",
+   "cc_ref": "5.4.6",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "negatives.held": {
+   "plane": "harness",
+   "state_predicate": "every declared negative held (runner meta-atom)",
+   "cc_ref": "—",
+   "in_state_table": false,
+   "plane_models": "—"
+  }
+ },
+ "atoms_with_a_plane_model": 3,
+ "atoms_without": 4
+}

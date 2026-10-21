@@ -4,8 +4,7 @@
    mesh_config restrictions, and multiplying them into MeshNet's holding state only multiplied
    states (coverage profile, 2026-10-05: Untrust / AccordAct / Restrict were the top producers). *)
 EXTENDS Naturals
-CONSTANTS n1, n2, n3
-Nodes == {n1, n2, n3}
+CONSTANTS Nodes
 Cohorts == {"fam", "room", "pub", "commons"}
 AccordActs == {"halt", "lifecycle", "other"}   \* CC 4.2.1's closed set; the acts that change no
                                                 \* modelled state are one representative

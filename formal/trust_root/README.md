@@ -10,7 +10,7 @@ keys `node`-bearing), a bounded independent witness directory, and discrete inst
 founder seats with `identity_type` read at seating; revocations / withdraws with `effective_at`;
 lower-only `revoked_after` bounds; lineage heads chained by previous digest and signed by the
 active founders (T6); witness cosignatures with `signed_at`; acceptance edges written only on a
-fresh, witnessed head (T4a) and deleted in one row (T3); the halt latch and `lifecycle:active`;
+fresh, witnessed head (T4a) and deleted in one row (T3); no halt branch (a `constitutional` halt moves no state here, ruling 2026-10-15);
 ceremony-plane conferrals and the T7 recovery widening.
 
 **What it checks** (`TrustRootVerdict.cfg`):
@@ -26,7 +26,7 @@ ceremony-plane conferrals and the T7 recovery widening.
 | `Inv_RecoverEnabled` | from `Stalled` with a conferrable human, the T7 recovery path is enabled |
 
 Three clauses hold **by construction** in this cut and are stated in the module rather than
-checked: (iii) rows are sets admitted at `now`, so nothing reaches behind; (v) the halt latch is
+checked: (iii) rows are sets admitted at `now`, so nothing reaches behind; (v) a halt moves no state, so there is nothing to check: the model has no halt variable; before 2026-10-15 the latch was
 a definitional leg of `V` (its second branch) and is not toggled, since toggling it doubled the
 space for no information; (vii) `V` reads only the row variables and `now`. Two representation
 choices to know when reading a trace: each witness keeps only its latest cosignature (all T4a

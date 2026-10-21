@@ -1,25 +1,45 @@
 # CIRIS evidence registry — impl: tier (CIRISEdge#410 / CIRISConstitution#17)
 # Edge's routing-processor evidence rows, resolving the Constitution's
 # CLM-nsproc-* namespace-processing claims, plus the transport-rule claims
-# edge carries (EDGE_CC_CLAIM_CONFORMANCE, CIRISEdge#718). GENERATED from
+# edge carries (EDGE_CC_CLAIM_CONFORMANCE, CIRISEdge#718), and the claims edge
+# evidences with a test (EDGE_CC_TEST_EVIDENCE, CIRISEdge#872: the row names
+# the implementing src symbol and the tests are its witnesses, #410 §3; rows
+# under CLM-bundle-seeds-transit-pairs and CLM-serve-seat-announced SUPPORT
+# persist's claims). GENERATED from
 # src/field_conformance.rs#EDGE_FIELD_CONFORMANCE (the live, tested processor
 # table); regenerate on version bump. Kept in sync with the code by the test
 # field_conformance::tests::evidence_tsv_matches_emitted — a drift is a build
 # failure. Vendored by CIRISConstitution/tools/check_evidence.py.
 # Columns: cc_section <TAB> clm <TAB> repo <TAB> path#symbol <TAB> crate@version
 decimal_id	claim_id	repo	path#symbol	crate@version
-5.3.3	CLM-nsproc-delivery-mode	CIRISEdge	src/delivery_mode.rs#decide	ciris-edge@v42.0.0
-3.3.6	CLM-nsproc-cohort-scope	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v42.0.0
-3.1	CLM-nsproc-dimension	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v42.0.0
-3.4	CLM-nsproc-key-boundary-scope	CIRISEdge	src/key_boundary.rs#KeyBoundaryScope	ciris-edge@v42.0.0
-5.3.3.5	CLM-nsproc-recipient-serve-capability	CIRISEdge	src/replication/bridge.rs#peer_has_serve_capability	ciris-edge@v42.0.0
-5.3.2.4	CLM-nsproc-recipient-capability	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v42.0.0
-5.3.2.4	CLM-nsproc-attestation-prefixes	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v42.0.0
-5.4.6	CLM-scoped-body-identity-link	CIRISEdge	src/blob_swarm/scope.rs#choose_scoped_carrier	ciris-edge@v42.0.0
-5.3.3.2.1	CLM-namespace-realtime	CIRISEdge	src/transport/realtime_av.rs#CODEC_AV1_SVC	ciris-edge@v42.0.0
-5.3.3.2.4	CLM-chunklayer	CIRISEdge	src/transport/realtime_av.rs#ReceiverLayerPolicy::admits	ciris-edge@v42.0.0
-5.3.3.4	CLM-liveness	CIRISEdge	src/transport/realtime_av.rs#RealtimeFanout::plan_layered	ciris-edge@v42.0.0
-5.4.4	CLM-welcome-wrap	CIRISEdge	src/mls/welcome_wrap.rs#unwrap_welcome	ciris-edge@v42.0.0
-5.4.6	CLM-announce-suppress	CIRISEdge	src/announce_suppression.rs#ScopePrivacyAnnouncePolicy::decide	ciris-edge@v42.0.0
-6.1.5.1	CLM-registry-replication	CIRISEdge	src/holonomic/fountain_defaults.rs#recommended_policy	ciris-edge@v42.0.0
-6.1.6	CLM-deterministic-alm	CIRISEdge	src/holonomic/deterministic_topology.rs#compute_alm_topology_verified	ciris-edge@v42.0.0
+5.3.3	CLM-nsproc-delivery-mode	CIRISEdge	src/delivery_mode.rs#decide	ciris-edge@v43.1.1
+3.3.6	CLM-nsproc-cohort-scope	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v43.1.1
+3.1	CLM-nsproc-dimension	CIRISEdge	src/replication/bridge.rs#attestation_is_advertised	ciris-edge@v43.1.1
+3.4	CLM-nsproc-key-boundary-scope	CIRISEdge	src/key_boundary.rs#KeyBoundaryScope	ciris-edge@v43.1.1
+5.3.3.5	CLM-nsproc-recipient-serve-capability	CIRISEdge	src/replication/bridge.rs#peer_has_serve_capability	ciris-edge@v43.1.1
+5.3.2.4	CLM-nsproc-recipient-capability	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v43.1.1
+5.3.2.4	CLM-nsproc-attestation-prefixes	CIRISEdge	src/replication/bridge.rs#recipient_capability_withholds	ciris-edge@v43.1.1
+5.4.6	CLM-scoped-body-identity-link	CIRISEdge	src/blob_swarm/scope.rs#choose_scoped_carrier	ciris-edge@v43.1.1
+5.3.3.2.1	CLM-namespace-realtime	CIRISEdge	src/transport/realtime_av.rs#CODEC_AV1_SVC	ciris-edge@v43.1.1
+5.3.3.2.3	CLM-registry-wire	CIRISEdge	src/transport/realtime_av.rs#SealedAvChunk::to_bytes	ciris-edge@v43.1.1
+5.3.3.2.4	CLM-chunklayer	CIRISEdge	src/transport/realtime_av.rs#ReceiverLayerPolicy::admits	ciris-edge@v43.1.1
+5.3.3.4	CLM-liveness	CIRISEdge	src/transport/realtime_av.rs#RealtimeFanout::plan_layered	ciris-edge@v43.1.1
+5.4.4	CLM-welcome-wrap	CIRISEdge	src/mls/welcome_wrap.rs#unwrap_welcome	ciris-edge@v43.1.1
+5.4.6	CLM-announce-suppress	CIRISEdge	src/announce_suppression.rs#ScopePrivacyAnnouncePolicy::decide	ciris-edge@v43.1.1
+6.1.5.1	CLM-registry-replication	CIRISEdge	src/holonomic/fountain_defaults.rs#recommended_policy	ciris-edge@v43.1.1
+6.1.6	CLM-deterministic-alm	CIRISEdge	src/holonomic/deterministic_topology.rs#compute_alm_topology_verified	ciris-edge@v43.1.1
+3.2	CLM-first-contact-seal-key-bound	CIRISEdge	src/transport/link_seal.rs#admit_unattributed_frame	ciris-edge@v43.1.1
+3.2	CLM-first-contact-seal-key-bound	CIRISEdge	src/first_contact.rs#first_contact_matching_code	ciris-edge@v43.1.1
+3.2	CLM-pairing-payload-transit-pin	CIRISEdge	src/transport/link_seal.rs#PairingTransitPin::pair_for	ciris-edge@v43.1.1
+3.2	CLM-pairing-payload-transit-pin	CIRISEdge	src/transport/reticulum.rs#ReticulumTransport::send_first_contact_pinned	ciris-edge@v43.1.1
+5.3.3.5	CLM-transport-edge	CIRISEdge	src/transport/link_seal.rs#LinkSeals::seal	ciris-edge@v43.1.1
+5.3.3.5	CLM-transport-edge	CIRISEdge	src/transport/link_seal.rs#LinkSeals::inbound	ciris-edge@v43.1.1
+5.3.3.5	CLM-transport-edge	CIRISEdge	src/transport/av_transit_handshake.rs#respond	ciris-edge@v43.1.1
+5.3.3.5	CLM-transport-edge	CIRISEdge	src/transport/reticulum.rs#DialCtx::dial_transit_pair	ciris-edge@v43.1.1
+3.3.6.2	CLM-seal-authenticated-pair	CIRISEdge	src/transport/transit_kex_peer.rs#PeerTransitResolver::resolve_authenticated	ciris-edge@v43.1.1
+3.3.6.2	CLM-seal-authenticated-pair	CIRISEdge	src/replication/bridge.rs#FederationDirectoryReplicationBridge::relayable_signed_route	ciris-edge@v43.1.1
+5.3.4	CLM-bundle-seeds-transit-pairs	CIRISEdge	src/transport/transit_kex_peer.rs#PeerTransitResolver::resolve	ciris-edge@v43.1.1
+6.1.1	CLM-wholeness-witness	CIRISEdge	src/holonomic/wholeness_witness.rs#unique_merkle_root	ciris-edge@v43.1.1
+6.1.1	CLM-member-commitment-unique	CIRISEdge	src/holonomic/wholeness_witness.rs#unique_merkle_root	ciris-edge@v43.1.1
+6.1.1	CLM-member-commitment-unique	CIRISEdge	src/holonomic/aggregation.rs#first_repeated_source_id	ciris-edge@v43.1.1
+5.3	CLM-serve-seat-announced	CIRISEdge	src/replication/bridge.rs#IdentityRowReach::withholds	ciris-edge@v43.1.1

@@ -1,0 +1,48 @@
+{
+ "config": "combined1_stolen",
+ "kind": "bound",
+ "checked": "Inv_SelfSurvives",
+ "tlc": "Invariant Inv_SelfSurvives is violated",
+ "reading": "a stated bound: no policy on the wire resolves this behaviour",
+ "lasso_back_to_state": null,
+ "states": [
+  {
+   "n": 1,
+   "tlc_action": "Initial predicate",
+   "holder": {
+    "d1": "owner",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": false,
+   "stolen": 0,
+   "step": "init"
+  },
+  {
+   "n": 2,
+   "tlc_action": "Steal",
+   "holder": {
+    "d1": "thief",
+    "d2": "owner",
+    "d3": "owner"
+   },
+   "pending": [],
+   "member": [
+    "d1"
+   ],
+   "acted": [],
+   "lostN": 0,
+   "wrong": false,
+   "started": false,
+   "stolen": 1,
+   "step": "Steal(d1)"
+  }
+ ]
+}

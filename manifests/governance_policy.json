@@ -1,0 +1,327 @@
+{
+ "_meta": {
+  "source": "constitution/governance_policy.tsv",
+  "cc_section": "4.5.13",
+  "policy_sha256": "b7d2370da9d9a91193f5a5b904fdec3c0a629c3873429f3e1a0439a5e0502264",
+  "corridor": "formal/two_path/PolicyCorridor.lean",
+  "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
+ },
+ "families": [
+  {
+   "family": "default_content",
+   "cc_ref": "4.5.13",
+   "kind": "two_path",
+   "standing_set": "the community's roster",
+   "base": "active",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": {
+    "num": 1,
+    "den": 3
+   },
+   "floor": {
+    "num": 1,
+    "den": 3
+   },
+   "cancel_over": "base",
+   "at_window": "cancelled",
+   "window_secs": 86400,
+   "window_class": "content_24h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "community",
+   "model": [
+    "formal/two_path"
+   ],
+   "status": "default (steward 2026-10-18)",
+   "note": "the class every reversible content change inherits unless a row names it"
+  },
+  {
+   "family": "default_standing",
+   "cc_ref": "4.5.13",
+   "kind": "two_path",
+   "standing_set": "the roster the change is about",
+   "base": "active",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": {
+    "num": 1,
+    "den": 3
+   },
+   "floor": {
+    "num": 1,
+    "den": 3
+   },
+   "cancel_over": "base",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "community",
+   "model": [
+    "formal/two_path"
+   ],
+   "status": "default (steward 2026-10-18)",
+   "note": "roster and standing changes: who is a member, who holds a duty"
+  },
+  {
+   "family": "default_irreversible",
+   "cc_ref": "4.5.13",
+   "kind": "two_path",
+   "standing_set": "the roster the change is about",
+   "base": "active",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": {
+    "num": 1,
+    "den": 3
+   },
+   "floor": {
+    "num": 1,
+    "den": 3
+   },
+   "cancel_over": "base",
+   "at_window": "cancelled",
+   "window_secs": 604800,
+   "window_class": "irreversible_7d",
+   "irreversible": true,
+   "reverse_path": true,
+   "corridor": "community",
+   "model": [
+    "formal/two_path"
+   ],
+   "status": "default (steward 2026-10-18)",
+   "note": "no instant landing: secrets destroyed, a hard delete, a key destroyed"
+  },
+  {
+   "family": "community_invite",
+   "cc_ref": "3.1.3.2 4.5.12.5",
+   "kind": "two_path",
+   "standing_set": "the community's roster",
+   "base": "active",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": {
+    "num": 1,
+    "den": 3
+   },
+   "floor": {
+    "num": 1,
+    "den": 3
+   },
+   "cancel_over": "base",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "community",
+   "model": [
+    "formal/membership",
+    "formal/two_path"
+   ],
+   "status": "ruled 2026-10-18",
+   "note": "the invitee's own acceptance is still required (3.1.3.2); no single vote admits by silence"
+  },
+  {
+   "family": "community_remove",
+   "cc_ref": "3.1.3.2 4.5.12.5",
+   "kind": "two_path",
+   "standing_set": "the community's roster",
+   "base": "active",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": null,
+   "floor": null,
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "formal/membership"
+   ],
+   "status": "ruled 2026-10-18",
+   "note": "forward only, cosigned; an unanimous removal is every other member and a strict majority"
+  },
+  {
+   "family": "self_roster_add",
+   "cc_ref": "3.3.6.3",
+   "kind": "two_path",
+   "standing_set": "the live roster keys of one fedID",
+   "base": "standing",
+   "enact": {
+    "num": 1,
+    "den": 2
+   },
+   "cancel": "more than 1/2 of the others (strict majority)",
+   "floor": "one_voter",
+   "cancel_over": "others",
+   "at_window": "stay_open",
+   "window_secs": 86400,
+   "window_class": "ruled_24h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "self",
+   "model": [
+    "formal/self_roster"
+   ],
+   "status": "ruled 2026-10-18",
+   "note": "one person's own keys: a floor of one key is right here; unilateral at one key; two keys stalemate"
+  },
+  {
+   "family": "self_roster_evict",
+   "cc_ref": "3.3.6.3",
+   "kind": "two_path",
+   "standing_set": "the live roster keys of one fedID",
+   "base": "standing",
+   "enact": {
+    "num": 1,
+    "den": 2
+   },
+   "cancel": "more than 1/2 of the others (strict majority)",
+   "floor": "one_voter",
+   "cancel_over": "others",
+   "at_window": "stay_open",
+   "window_secs": 86400,
+   "window_class": "ruled_24h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "self",
+   "model": [
+    "formal/self_roster"
+   ],
+   "status": "ruled 2026-10-18",
+   "note": "as add, and the target silent all window"
+  },
+  {
+   "family": "moderation_action",
+   "cc_ref": "4.5.13 4.5.5",
+   "kind": "mirror",
+   "standing_set": "the live community",
+   "base": "active",
+   "enact": "role:moderator|steward at 1",
+   "cancel": null,
+   "floor": {
+    "num": 1,
+    "den": 2
+   },
+   "cancel_over": "—",
+   "at_window": "tallied",
+   "window_secs": 172800,
+   "window_class": "ruled_48h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "role",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "ruled (CEG 0.7)",
+   "note": "a moderator or steward acts alone in the window; on their absence a live majority at the window"
+  },
+  {
+   "family": "accord_halt",
+   "cc_ref": "4.2.1.1 4.2.6",
+   "kind": "mirror",
+   "standing_set": "the accord holders",
+   "base": "standing",
+   "enact": "1/N fires",
+   "cancel": "1/2 confirms",
+   "floor": null,
+   "cancel_over": "base",
+   "at_window": "lapsed",
+   "window_secs": 86400,
+   "window_class": "fuse_24h",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "halt",
+   "model": [
+    "formal/accord_halt"
+   ],
+   "status": "ruled 2026-10-05",
+   "note": "one holder fires at once; lapses at the fuse unless a majority confirms; a majority resumes"
+  },
+  {
+   "family": "custodian_replace",
+   "cc_ref": "7.5.5",
+   "kind": "cosigned",
+   "standing_set": "the operator holding the record + the Wise Authority",
+   "base": "standing",
+   "enact": {
+    "num": 2,
+    "den": 2
+   },
+   "cancel": null,
+   "floor": null,
+   "cancel_over": "—",
+   "at_window": "—",
+   "window_secs": 0,
+   "window_class": "none",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "formal/retirement"
+   ],
+   "status": "ruled 2026-10-18",
+   "note": "the operator and the WA name the successor by one cosigned row; the old key's custody rows stay valid to that instant"
+  }
+ ],
+ "base_law": {
+  "kind": "standing_then_expected_active",
+  "k": 12,
+  "tail": 30,
+  "min": 3,
+  "status": "provisional: k and the tail are a stand-in for the measured participation law (#180 item 2)",
+  "rule": "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N"
+ },
+ "min_count": {
+  "community": 2,
+  "self": 1
+ },
+ "window_classes": {
+  "content_24h": 86400,
+  "standing_72h": 259200,
+  "irreversible_7d": 604800,
+  "ruled_24h": 86400,
+  "ruled_48h": 172800,
+  "fuse_24h": 86400,
+  "none": 0
+ },
+ "decider": [
+  "enact_votes  = enact_num  * base // enact_den + 1              (strictly more than the fraction)",
+  "cancel_votes = max(min_count, ceil(cancel_num * base / cancel_den))   (at least the fraction, never one voice)",
+  "floor_votes  = max(min_count, ceil(floor_num  * base / floor_den))    (min_count = 2 for a community, 1 for a self)",
+  "if approvals >= enact_votes and not irreversible:  lands  (forward, now)",
+  "if elapsed < window:                               pending",
+  "if objections >= cancel_votes:                     cancelled (cancel reached)",
+  "if approvals >= enact_votes:                       lands  (forward; it waited its window)",
+  "if reverse_path and approvals >= floor_votes:      lands  (reverse: floored, unopposed, window closed)",
+  "else:                                              cancelled (below the floor, or no reverse path)"
+ ],
+ "verdicts": [
+  "lands",
+  "pending",
+  "cancelled"
+ ],
+ "paths": [
+  "forward",
+  "reverse",
+  "none"
+ ],
+ "floor_is_reverse_only": "the floor is consulted only when the window has closed; before that only enact lands (Prop_FloorNeverLandsEarly)",
+ "votes_family": "objection:{state} — proposal (counts as the proposer's approval), assent (+1), raised (−1); CC 3.1.9.2"
+}

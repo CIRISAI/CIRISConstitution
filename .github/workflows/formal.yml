@@ -51,14 +51,14 @@ jobs:
         run: java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-rr" -deadlock -config RootReach.cfg RootReach.tla
       - name: The ruled configuration closes (#141)
         working-directory: formal/mesh_net
-        run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-ruled" -deadlock -config MeshNet_ruled.cfg MeshNet.tla
+        run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-ruled" -deadlock -config MeshNet_ruled.cfg MeshNet3.tla
       - name: The shipped configurations each fail their one invariant (the defects #141 corrects)
         working-directory: formal/mesh_net
         run: |
           set +e
-          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s1" -deadlock -config MeshNet_shipped_scope.cfg MeshNet.tla | tee s1.log
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s1" -deadlock -config MeshNet_shipped_scope.cfg MeshNet3.tla | tee s1.log
           grep -q 'Invariant Inv_Invisible is violated' s1.log || exit 1
-          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s2" -deadlock -config MeshNet_shipped_bind.cfg MeshNet.tla | tee s2.log
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-s2" -deadlock -config MeshNet_shipped_bind.cfg MeshNet3.tla | tee s2.log
           grep -q 'Invariant Inv_ClaimNotBinding is violated' s2.log || exit 1
 
   roster:
@@ -172,3 +172,200 @@ jobs:
           grep -q 'Invariant Inv_AntiGoodhart is violated' l.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/w4" -deadlock -config WithdrawsAdmission_local.cfg WithdrawsAdmission.tla | tee n.log
           grep -q 'Invariant Inv_OneDoor is violated' n.log || exit 1
+
+  self_roster:
+    name: TLC — key states under one self (formal/self_roster)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The ruled configurations close; each must-fail twin fails its named property
+        working-directory: formal/self_roster
+        run: |
+          set +e
+          for c in combined3_stolen combined3_lost combined4_mixed combined2_lost combined1_add; do
+            java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/sr-$c" -deadlock -config SelfRoster_$c.cfg SelfRoster.tla || exit 1
+          done
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-u" -deadlock -config SelfRoster_unilateral3_stolen.cfg SelfRoster.tla | tee u.log
+          grep -q 'Invariant Inv_ThiefCannotEvictHonest is violated' u.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-q" -deadlock -config SelfRoster_quorum3_lost.cfg SelfRoster.tla | tee q.log
+          grep -q 'Temporal properties were violated' q.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-r" -deadlock -config SelfRoster_reverse3_stolen.cfg SelfRoster.tla | tee r.log
+          grep -q 'Temporal properties were violated' r.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-c2" -deadlock -config SelfRoster_combined2_stolen.cfg SelfRoster.tla | tee c2.log
+          grep -q 'Temporal properties were violated' c2.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-c1" -deadlock -config SelfRoster_combined1_stolen.cfg SelfRoster.tla | tee c1.log
+          grep -q 'Invariant Inv_SelfSurvives is violated' c1.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-a" -deadlock -config SelfRoster_combined3_absent.cfg SelfRoster.tla | tee a.log
+          grep -q 'Invariant Inv_ThiefCannotEvictHonest is violated' a.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/sr-m" -deadlock -config SelfRoster_combined3_mixed.cfg SelfRoster.tla | tee m.log
+          grep -q 'Invariant Inv_ThiefNeverMajority is violated' m.log || exit 1
+
+  cewp_node:
+    name: TLC — the spine (formal/cewp_node) and the generated closure configurations
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The spine closes; the G7 breaker twin fails the serve invariant
+        working-directory: formal/cewp_node
+        run: |
+          set +e
+          java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/sp" -deadlock -config CewpNode.cfg CewpNode.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/spb" -deadlock -config CewpNode_breaker.cfg CewpNode.tla | tee b.log
+          grep -q 'Invariant Inv_X1_LatchDoesNotBlockServing is violated' b.log || exit 1
+      - name: Generated closure configurations run (one per plane, the catalogue's largest instance of each)
+        working-directory: formal/cewp_node/generated
+        run: |
+          set -e
+          java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g1" -deadlock -config T3/root_reach.cfg ../../mesh_net/RootReach.tla
+          java -Xmx3g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g2" -deadlock -config T8/accord_fuse_HA.cfg ../../accord_halt/AccordHaltFuse.tla
+          java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g3" -deadlock -config T8/accord_halt_HA.cfg ../../accord_halt/AccordHalt.tla
+          java -Xmx2g -cp ../../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/g4" -deadlock -config T1/self_roster_one_lost.cfg ../../self_roster/SelfRoster.tla
+
+  reciprocity:
+    name: Lean — from reciprocal service to CIRIS (formal/reciprocity)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.14.0 (core only; no Mathlib)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Every section compiles; no sorry
+        working-directory: formal/reciprocity
+        run: |
+          lean Reciprocity.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean
+
+  retirement:
+    name: TLC — the Retirement Standard as a machine (formal/retirement)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Every configuration gives its expected verdict; every witness is reached
+        working-directory: formal/retirement
+        run: TLA2TOOLS=../../tla2tools.jar ./run.sh
+
+  consent:
+    name: TLC — the consent plane (formal/consent)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Both ruled configurations close; each twin fails its named property
+        working-directory: formal/consent
+        run: |
+          set +e
+          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/c-st" -deadlock -config Consent_ruled_st.cfg Consent.tla || exit 1
+          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/c-ct" -deadlock -config Consent_ruled_ct.cfg Consent.tla || exit 1
+          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nb" -deadlock -config Consent_no_boundary.cfg Consent.tla | tee nb.log
+          grep -q 'Invariant Inv_RevocationIsBoundary is violated' nb.log || exit 1
+          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-ls" -deadlock -config Consent_literal_signer.cfg Consent.tla | tee ls.log
+          grep -q 'Invariant Inv_OwnerCanRecant is violated' ls.log || exit 1
+          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/c-nw" -deadlock -config Consent_no_W.cfg Consent.tla | tee nw.log
+          grep -q 'Invariant Inv_BackdateBounded is violated' nw.log || exit 1
+
+  two_path:
+    name: TLC + Lean — the two-path decision and its corridor (formal/two_path)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: Seven instances close, and every row of the governance policy table as an instance
+        working-directory: formal/two_path
+        run: |
+          set -e
+          for c in TwoPath_3_selfroster TwoPath_6_enact23_cancel13_1coerced TwoPath_6_enact23_cancel13_2coerced TwoPath_6_irreversible TwoPath_7_enact23_cancel13_2coerced TwoPath_6_silent4_floor13 TwoPath_6_silent4_floor_dead; do
+            java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-$c" -deadlock -config $c.cfg TwoPath.tla
+          done
+          for c in $(cat generated/INSTANCES.txt); do
+            java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-$c" -deadlock -config generated/$c.cfg TwoPath.tla
+          done
+      - name: The no-floor twin fails by one voice landing over silence
+        working-directory: formal/two_path
+        run: |
+          set +e
+          out=$(java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tp-twin" -deadlock -config TwoPath_6_no_floor_silence_admits.cfg TwoPath.tla 2>&1)
+          echo "$out" | grep -q "Invariant Inv_NoLoneLanding is violated" || { echo "twin unexpectedly closed"; echo "$out" | tail -20; exit 1; }
+      - name: Install Lean 4.14.0 (core only)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The corridor compiles
+        working-directory: formal/two_path
+        run: lean PolicyCorridor.lean
+
+  influence:
+    name: Lean — Structural Influence normalisation (formal/influence)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.14.0 (core only)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The model compiles with no sorry
+        working-directory: formal/influence
+        run: |
+          lean StructuralInfluence.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' StructuralInfluence.lean
+
+  membership:
+    name: TLC — the membership ceremony (formal/membership)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The four protocols close; each twin fails its named property
+        working-directory: formal/membership
+        run: |
+          set +e
+          for c in founder_only unanimous majority quorum2of3; do
+            java -XX:+UseParallelGC -Xmx5g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/mb-$c" -deadlock -config Membership_$c.cfg Membership.tla || exit 1
+          done
+          t() { java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/mb-$1" -deadlock -config Membership_$1.cfg Membership.tla | tee $1.log; grep -q "$2" $1.log || exit 1; }
+          t founder_only_coerced 'Inv_CoercedCannotRemoveHonest is violated'
+          t unanimous_two 'Inv_CoercedCannotRemoveHonest is violated'
+          t any_member_removes 'Inv_QuorumGovernsRoster is violated'
+          t no_binding 'Inv_AcceptanceBindsOneProposal is violated'
+          t unspent 'Inv_LeavingNotUndone is violated'
+          t stale_founder 'Inv_NoSelfAdmission is violated'
+          t founding_unsigned 'Inv_JoinerConsented is violated'
+          t no_hold_expiry 'Temporal properties were violated'

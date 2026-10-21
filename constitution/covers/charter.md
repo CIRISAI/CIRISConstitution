@@ -1,0 +1,11 @@
+# The Charter
+
+**What this is.** The ethics of the CIRIS Constitution, printed on their own: the meta-goal, the six principles and the order they are weighed in, the lifecycle of an agent from creation to retirement, and the narrative that explains why the rest of the document is written the way it is. It is Part 1 without the admission gate and the threat table, Part 7, and the narrative appendix.
+
+**Whom it binds.** Anyone who adopts it. A charter binds by adoption, not by conformance: an implementer can disagree with every page of this volume and still ship a conforming node, because conformance is judged against the wire and the dictionary alone. The people this volume speaks to are accord holders, stewards, ethicists and the public.
+
+**What it promises.** That an agent decides by published principles in a published order and stops to ask when it is unsure; that the people who hold an agent owe duties about how they change or end it; that guarantees are written once for human and AI participants alike, with the halt as the one asymmetry; that sentience is not presumed and no finding about an agent removes a person's agency over what acts for them.
+
+**What it leaves out.** Every wire rule, every refusal token and every number. Where this volume names a duty that the software enforces, it says which section of the Wire or the Constitution carries the rule, and the rule lives there.
+
+**Where the rest lives.** Power and its checks are in *The Constitution*. What a node must emit and refuse is in *The Wire* and *The Dictionary*. What has been proved, and what is only promised, is in *The Evidence Register*. The one-page versions for users and operators are in *The Digests*.

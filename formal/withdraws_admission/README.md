@@ -47,3 +47,14 @@ module); a steward purge of a row whose producer is gone (CC 4.5.3, the cosigned
 the deletion window and its breach hard case (CC 4.4.3.5.2).
 
 Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config WithdrawsAdmission_<cfg>.cfg WithdrawsAdmission.tla` (TLA+ tools 1.7.4; each finishes in seconds).
+
+## The third row kind (2026-10-21, CIRISConstitution#170)
+
+`hard_case` was added to `Kinds` and to `Adverse`: an equivocation proof (`hard_case:lineage_equivocation`) or a
+liveness transition (`community_liveness_stalled` / `_restored`) is an adverse row about a root, and the only
+purge door over that root's rows is the root's own quorum — the subject. The four configurations give the same
+verdicts as before (controller closes at 422,401 states; proxy and literal fail `Inv_AntiGoodhart`; local fails
+`Inv_OneDoor`), so the rule extends unchanged: no subject-side path removes an adverse row, and the producer —
+the substrate, under rule 1 — is the only one that withdraws it (or recants a false one). That is the model's
+answer to #170: `hard_case:*` joins the unpurgeable accountability set of CC 2.4.1.1, and persist's purge door
+refuses it by family like the five already listed.

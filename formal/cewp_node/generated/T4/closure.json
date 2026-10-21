@@ -1,0 +1,88 @@
+{
+ "catalog_id": "T4",
+ "title": "A household — guardian on two devices, one child",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-100",
+  "CSD-101",
+  "CSD-119"
+ ],
+ "derives": [
+  "3c"
+ ],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 3,
+  "persons": 2,
+  "devices_max_per_person": 2,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_guardian_stolen.cfg",
+  "self_roster_guardian_lost.cfg",
+  "self_roster_child_stolen.cfg",
+  "self_roster_child_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T4.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person guardian: two keys — a theft is the stated two-key stalemate (CC 3.3.6.3)",
+  "person child: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "household.formed": {
+   "plane": "membership",
+   "state_predicate": "group.formed=formed (family)",
+   "cc_ref": "3.3.4",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "household.member": {
+   "plane": "membership",
+   "state_predicate": "member.stage=member (family)",
+   "cc_ref": "3.1.3.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "child.member": {
+   "plane": "membership",
+   "state_predicate": "member.stage=member ∧ subject in minor band",
+   "cc_ref": "3.1.3.2 3.4.13",
+   "in_state_table": true,
+   "plane_models": "mesh_net (moderation, cohorts) — ceremony: no model"
+  },
+  "guardian.bound": {
+   "plane": "authority",
+   "state_predicate": "guardian.bond=bound",
+   "cc_ref": "3.4.13",
+   "in_state_table": true,
+   "plane_models": "authority_tree"
+  },
+  "age.assured": {
+   "plane": "authority",
+   "state_predicate": "age.assurance=assured",
+   "cc_ref": "3.4.13",
+   "in_state_table": true,
+   "plane_models": "authority_tree"
+  },
+  "person.multi_device": {
+   "plane": "self",
+   "state_predicate": "self.roster_size∈{two,three_or_more}",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "room.self.keyed": {
+   "plane": "content",
+   "state_predicate": "∀ devices: row.scope=self room keyed (key_grant per recipient)",
+   "cc_ref": "3.3.2 5.2",
+   "in_state_table": true,
+   "plane_models": "mesh_net"
+  }
+ },
+ "atoms_with_a_plane_model": 4,
+ "atoms_without": 3
+}

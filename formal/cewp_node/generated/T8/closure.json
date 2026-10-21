@@ -1,0 +1,89 @@
+{
+ "catalog_id": "T8",
+ "title": "A trust root with M-of-N holders — halt, confirm, resume",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-067",
+  "CSD-068",
+  "CSD-069",
+  "CSD-105",
+  "CSD-129"
+ ],
+ "derives": [
+  "4a",
+  "4b",
+  "4c",
+  "4d"
+ ],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 2,
+  "persons": 2,
+  "devices_max_per_person": 1,
+  "holders": 3
+ },
+ "generated": [
+  "trust_root_HA.cfg",
+  "accord_halt_HA.cfg",
+  "accord_fuse_HA.cfg",
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T8.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root HA: witnessed mode off; trust_root model not applicable until extended (residual E)",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "root.infrastructure": {
+   "plane": "root",
+   "state_predicate": "root.count=one ∧ root.head≠none",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.rooted": {
+   "plane": "root",
+   "state_predicate": "root.standing=Rooted",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "pair.rooted": {
+   "plane": "root",
+   "state_predicate": "∀ both: node.subscribed=yes ∧ root.standing=Rooted",
+   "cc_ref": "3.2",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.halted": {
+   "plane": "root",
+   "state_predicate": "root.halt∈{latched_lone,confirmed} ∧ ∀ subscribed n: node.halt_latch=latched",
+   "cc_ref": "4.2.1.1",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.halt_confirmed": {
+   "plane": "root",
+   "state_predicate": "root.halt=confirmed",
+   "cc_ref": "4.2.1.3",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "root.resumed": {
+   "plane": "root",
+   "state_predicate": "root.halt=not_halted ∧ ∀n: node.halt_latch=clear",
+   "cc_ref": "4.2.1.1",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  }
+ },
+ "atoms_with_a_plane_model": 6,
+ "atoms_without": 0
+}

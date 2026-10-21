@@ -91,7 +91,8 @@ def contents_md():
             out.append(f"- **{dec}** `{r['semantic_id']}` — {r['title'].strip()}")
     return "\n".join(out)
 
-PREAMBLE = r"""\documentclass[11pt]{article}
+def preamble(title="The CIRIS Constitution", subtitle=None):
+    return r"""\documentclass[11pt]{article}
 \usepackage[a4paper,margin=2.4cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -114,34 +115,36 @@ PREAMBLE = r"""\documentclass[11pt]{article}
 \linespread{1.05}
 \renewcommand{\arraystretch}{1.25}
 """ + nuc_lines + r"""
-\title{\vspace{-1cm}\Huge\bfseries\color{accent}The CIRIS Constitution\\[10pt]
-\normalsize\mdseries Version """ + VERSION + r"""\\[6pt]\itshape Stewarded by Eric Moore}
+\title{\vspace{-1cm}\Huge\bfseries\color{accent}""" + title + r"""\\[10pt]
+\normalsize\mdseries """ + (subtitle or "Version " + VERSION) + r"""\\[6pt]\itshape Stewarded by Eric Moore}
 \author{}\date{}
 \begin{document}
 \maketitle\thispagestyle{empty}
 """
 
-body = [PREAMBLE]
-body.append(B.convert(prefilter((DOC / "EXECUTIVE_SUMMARY.md").read_text(encoding="utf-8"))))  # exec summary before the opening
-body.append(r"\clearpage")
-body.append(B.convert(prefilter((DOC / "FOREWORD.md").read_text(encoding="utf-8"))))   # foreword sets the tone
-body.append(r"\clearpage")
-body.append(B.convert(prefilter((DOC / "SCOPE_AND_DISCLAIMERS.md").read_text(encoding="utf-8"))))  # scope + disclaimers
-body.append(r"\clearpage")
-body.append(B.convert(contents_md()))                                                  # explicit contents
-body.append(r"\clearpage")
-for p in PARTS:
-    body.append(B.convert(prefilter(p.read_text(encoding="utf-8"))))
+def build_full():
+    body = [preamble()]
+    body.append(B.convert(prefilter((DOC / "EXECUTIVE_SUMMARY.md").read_text(encoding="utf-8"))))  # exec summary before the opening
     body.append(r"\clearpage")
-body.append(B.convert(prefilter(evidence_appendix_md())))                               # generated evidence register
-body.append(r"\clearpage")
-body.append(B.convert(prefilter((DOC / "STEWARDSHIP.md").read_text(encoding="utf-8"))))
-body.append(r"\end{document}")
+    body.append(B.convert(prefilter((DOC / "FOREWORD.md").read_text(encoding="utf-8"))))   # foreword sets the tone
+    body.append(r"\clearpage")
+    body.append(B.convert(prefilter((DOC / "SCOPE_AND_DISCLAIMERS.md").read_text(encoding="utf-8"))))  # scope + disclaimers
+    body.append(r"\clearpage")
+    body.append(B.convert(contents_md()))                                                  # explicit contents
+    body.append(r"\clearpage")
+    for p in PARTS:
+        body.append(B.convert(prefilter(p.read_text(encoding="utf-8"))))
+        body.append(r"\clearpage")
+    body.append(B.convert(prefilter(evidence_appendix_md())))                               # generated evidence register
+    body.append(r"\clearpage")
+    body.append(B.convert(prefilter((DOC / "STEWARDSHIP.md").read_text(encoding="utf-8"))))
+    body.append(r"\end{document}")
+    stem = f"ciris-constitution-{VERSION}"
+    tex = HERE / f"{stem}.tex"
+    tex.write_text("\n".join(body), encoding="utf-8")
+    print(f"wrote {tex.name} (foreword + scope + contents + {len(PARTS)} parts)")
+    return stem, tex
 
-stem = f"ciris-constitution-{VERSION}"
-tex = HERE / f"{stem}.tex"
-tex.write_text("\n".join(body), encoding="utf-8")
-print(f"wrote {tex.name} (foreword + scope + contents + {len(PARTS)} parts)")
 
 def _branch():
     import os
@@ -230,7 +233,9 @@ def _history_build_numbers(numbered):
         pass
     return out
 
-if shutil.which("pdflatex"):
+def render_full(stem, tex):
+    if not shutil.which("pdflatex"):
+        print("pdflatex not found -- wrote .tex only; install TeX Live to render the PDF"); return
     for _ in range(2):  # two passes to resolve hyperref/toc references
         subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", tex.name],
                        cwd=HERE, check=True, stdout=subprocess.DEVNULL)
@@ -249,5 +254,169 @@ if shutil.which("pdflatex"):
     for ext in (".aux", ".log", ".out", ".tex"):
         (HERE / f"{stem}{ext}").unlink(missing_ok=True)
     print(f"wrote {pdf_name}")
-else:
-    print("pdflatex not found -- wrote .tex only; install TeX Live to render the PDF")
+
+
+# ---------------------------------------------------------------- volumes (#123)
+# One edition, several volumes: the same sections, the same decimal spine, cut by the
+# `volume` column of review/pieces.tsv (a piece may feed two volumes). A volume opens
+# with its plain-language cover (constitution/covers/<volume>.md). Volume PDFs are
+# written under volumes/ and are not tracked; the full edition stays the file of record.
+VOLUMES = ["charter", "constitution", "wire", "dictionary", "policies", "maths", "register", "threats", "digest"]
+VOLUME_TITLE = {"charter": "The Charter", "constitution": "The Constitution", "wire": "The Wire",
+                "dictionary": "The Dictionary", "policies": "The Reader's Policies", "maths": "The Mathematics",
+                "register": "The Evidence Register", "threats": "The Threat Model", "digest": "The Digests"}
+REVIEW = HERE / "review"
+OMIT = re.compile(r"\*\[(\d+(?:\.\d+)*) reviewed in another piece — omitted here\]\*")
+
+
+def _pieces():
+    import build_review_piece as R
+    return R, R.load_pieces()
+
+
+def volume_pieces(vol):
+    R, pieces = _pieces()
+    return R, [p for p in pieces.values() if vol in R.split_list(p["volume"])]
+
+
+def section_volumes():
+    """decimal -> sorted list of volumes that print it (from pieces.tsv include/exclude)."""
+    R, pieces = _pieces()
+    rows = list(csv.DictReader(open(DOC / "toc.tsv", encoding="utf-8"), delimiter="\t"))
+    out = {}
+    for r in rows:
+        dec = r["decimal_id"]; vols = set()
+        for p in pieces.values():
+            inc, exc = R.split_list(p["include"]), R.split_list(p["exclude"])
+            if any(R.under(dec, x) for x in inc) and not any(R.under(dec, x) for x in exc):
+                vols.update(R.split_list(p["volume"]))
+        out[dec] = sorted(vols)
+    return out
+
+
+def write_toc_volumes():
+    """Add/refresh the `volume` column of constitution/toc.tsv from the pieces map (generated; CI diffs it)."""
+    path = DOC / "toc.tsv"
+    lines = path.read_text(encoding="utf-8").split("\n")
+    hdr = lines[0].split("\t")
+    sv = section_volumes()
+    if "volume" not in hdr:
+        hdr.append("volume")
+    vi = hdr.index("volume")
+    out = ["\t".join(hdr)]
+    for ln in lines[1:]:
+        if not ln.strip():
+            out.append(ln); continue
+        cells = ln.split("\t")
+        cells = (cells + [""] * (len(hdr) - len(cells)))[:len(hdr)]
+        cells[vi] = " ".join(sv.get(cells[0], [])) or "-"
+        out.append("\t".join(cells))
+    new = "\n".join(out)
+    changed = new != path.read_text(encoding="utf-8")
+    path.write_text(new, encoding="utf-8")
+    n = sum(1 for v in sv.values() if v)
+    print(f"toc.tsv volume column: {n}/{len(sv)} sections placed; {'updated' if changed else 'unchanged'}")
+
+
+def volume_md(vol):
+    """The markdown of one volume: cover, then its sections in decimal order, grouped by Part."""
+    cover = (DOC / "covers" / f"{vol}.md").read_text(encoding="utf-8")
+    parts_md = [cover]
+    if vol == "digest":
+        for f in (DOC / "EXECUTIVE_SUMMARY.md", REVIEW / "pieces" / "00_guarantees_plain.md",
+                  REVIEW / "pieces" / "00_operator_digest.md", REVIEW / "pieces" / "00_guarantees.md",
+                  REVIEW / "pieces" / "00_status_quo.md"):
+            parts_md.append(f.read_text(encoding="utf-8"))
+        return parts_md
+    R, pieces = volume_pieces(vol)
+    chunks = {}
+    for p in pieces:
+        cs, _missing = R.slice_sections(R.split_list(p["include"]), R.split_list(p["exclude"]))
+        for dec, hdr, text in cs:
+            chunks.setdefault(dec, text)
+    # splice a child printed in this volume back into the parent's omission marker
+    for dec in list(chunks):
+        def splice(m):
+            child = m.group(1)
+            if child in chunks and child != dec:
+                txt = chunks.pop(child)
+                return txt
+            return f"*[{m.group(1)} printed in another volume]*"
+        chunks[dec] = OMIT.sub(splice, chunks[dec])
+    for dec in list(chunks):
+        chunks[dec] = OMIT.sub(lambda m: f"*[{m.group(1)} printed in another volume]*", chunks[dec])
+    order = sorted(chunks, key=lambda d: [int(x) for x in d.split(".")])
+    cur, group = None, []
+    for dec in order:
+        part = int(dec.split(".")[0])
+        if part != cur:
+            if group:
+                parts_md.append("\n\n".join(group))
+            cur, group = part, [f"# Part {part} — {PART_TITLE[part]}\n"]
+        group.append(chunks[dec])
+    if group:
+        parts_md.append("\n\n".join(group))
+    if vol == "charter":
+        parts_md.insert(1, (DOC / "FOREWORD.md").read_text(encoding="utf-8"))
+        parts_md.append((DOC / "STEWARDSHIP.md").read_text(encoding="utf-8"))
+    if vol == "register":
+        parts_md.append(evidence_appendix_md())
+    return parts_md
+
+
+def build_volume(vol):
+    body = [preamble(f"The CIRIS Constitution: {VOLUME_TITLE[vol]}", f"A volume of edition {VERSION}")]
+    for md in volume_md(vol):
+        body.append(B.convert(prefilter(md)))
+        body.append(r"\clearpage")
+    body.append(r"\end{document}")
+    vdir = HERE / "volumes"; vdir.mkdir(exist_ok=True)
+    stem = f"ciris_constitution-{VERSION}-{vol}"
+    tex = vdir / f"{stem}.tex"
+    tex.write_text("\n".join(body), encoding="utf-8")
+    if not shutil.which("pdflatex"):
+        print(f"wrote {tex.name} (.tex only; no pdflatex)"); return None
+    for _ in range(2):
+        subprocess.run(["pdflatex", "-interaction=nonstopmode", "-halt-on-error", tex.name],
+                       cwd=vdir, check=True, stdout=subprocess.DEVNULL)
+    pages = None
+    if shutil.which("pdfinfo"):
+        info = subprocess.run(["pdfinfo", f"{stem}.pdf"], cwd=vdir, capture_output=True, text=True).stdout
+        m = re.search(r"Pages:\s+(\d+)", info); pages = int(m.group(1)) if m else None
+    for ext in (".aux", ".log", ".out", ".tex"):
+        (vdir / f"{stem}{ext}").unlink(missing_ok=True)
+    print(f"wrote volumes/{stem}.pdf" + (f" ({pages} pages)" if pages else ""))
+    return pages
+
+
+def build_volumes(which):
+    vols = VOLUMES if which == "all" else [which]
+    counts = {}
+    for v in vols:
+        if v not in VOLUMES:
+            raise SystemExit(f"unknown volume {v!r}; one of {', '.join(VOLUMES)} or all")
+        counts[v] = build_volume(v)
+    if which == "all":
+        sv = section_volumes()
+        lines = [f"# Volumes of edition {VERSION}", "",
+                 "One edition, one decimal spine, several volumes (CIRISConstitution#123). Built by "
+                 "`python3 build_pdf.py --volume all`; the PDFs are not tracked, the full edition is the file of record. "
+                 "Each volume opens with its plain-language cover from `constitution/covers/`.", "",
+                 "| Volume | Sections | Pages |", "|---|---|---|"]
+        for v in VOLUMES:
+            n = sum(1 for vols in sv.values() if v in vols)
+            lines.append(f"| {VOLUME_TITLE[v]} (`{v}`) | {n if v != 'digest' else 'digests + executive summary'} | {counts[v] or '—'} |")
+        (HERE / "volumes" / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def main(argv):
+    if "--write-toc-volumes" in argv:
+        write_toc_volumes(); return
+    if "--volume" in argv:
+        build_volumes(argv[argv.index("--volume") + 1]); return
+    stem, tex = build_full()
+    render_full(stem, tex)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

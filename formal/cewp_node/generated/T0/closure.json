@@ -1,0 +1,68 @@
+{
+ "catalog_id": "T0",
+ "title": "Just me, offline — one person, one node, no root",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-118"
+ ],
+ "derives": [
+  "9c"
+ ],
+ "entity_counts": {
+  "roots": 0,
+  "canonicals": 0,
+  "nodes": 1,
+  "persons": 1,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_me_stolen.cfg",
+  "self_roster_me_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T0.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "person me: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "root.none": {
+   "plane": "root",
+   "state_predicate": "root.count=none",
+   "cc_ref": "4.2.1",
+   "in_state_table": true,
+   "plane_models": "trust_root / accord_halt / accord_roster"
+  },
+  "node.unclaimed": {
+   "plane": "node",
+   "state_predicate": "node.claim=unclaimed",
+   "cc_ref": "2.6.8",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "node.claimed": {
+   "plane": "node",
+   "state_predicate": "∀ owned n: node.claim=claimed",
+   "cc_ref": "2.6.8",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "node.unannounced": {
+   "plane": "node",
+   "state_predicate": "∃ person node: node.announce=unannounced",
+   "cc_ref": "5.4.6",
+   "in_state_table": true,
+   "plane_models": "mesh_net.RootReach / guarantees (subscription, latch)"
+  },
+  "values.ready": {
+   "plane": "harness",
+   "state_predicate": "the actor's values.json is written (runner meta-atom)",
+   "cc_ref": "—",
+   "in_state_table": false,
+   "plane_models": "—"
+  }
+ },
+ "atoms_with_a_plane_model": 4,
+ "atoms_without": 1
+}

@@ -214,14 +214,14 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc8.1",
+    "cc_version": "1.0-rc9",
     "components_outside_normative": [
       "cirisbench"
     ],
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 174,
+    "n_families": 176,
     "per_component": {
       "accord-agent": 34,
       "anti-sybil": 6,
@@ -229,7 +229,7 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 48,
-      "persist": 22,
+      "persist": 24,
       "registry": 21,
       "transport-delivery": 6
     },
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "22b029cfd977acce779c9481cdb381a4ad274b15e5b8206ac3d502ba7535b495",
+    "registry_sha256": "feeb06a02026b220055a3a521e799aaf6615c958a44b667d834b31d8f965c601",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "73aa281f38b6d486ae24127393b8a3b3ec79ddad56fb19a8538db2a87e18f947"
+    "source_sha256": "afd1948e5e6fb280b67388485bd82c97c86e56ad1dde6377382bab2efdf2a0ad"
   },
   "families": [
     {
@@ -2708,6 +2708,29 @@
     },
     {
       "cc_section": "3.1.3",
+      "description": "The carrier of a legacy occurrence revocation (registered 2026-10-19 under CC 3.1.7 R2(a) at persist's mint, v59; the planes-as-rows precedent of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed before the tw",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "-1 only",
+      "prefix": "identity:occurrence_revocation",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "signed by the identity or a live occurrence of it (signer_acts_for)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "identity"
+        },
+        {
+          "class": "literal",
+          "segment": "occurrence_revocation"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
       "description": "",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
@@ -3355,7 +3378,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Reverse-quorum objection marker (CIRISConstitution#67): a signed, roster-pinned objection to a pending commons act; state lifecycle per the minting cut.",
+      "description": "Reverse-quorum objection marker (CIRISConstitution#67): a signed, roster-pinned vote on a pending act.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -3368,7 +3391,13 @@
         },
         {
           "class": "vocab",
-          "segment": "{state}"
+          "open": true,
+          "segment": "{state}",
+          "values": [
+            "proposal",
+            "assent",
+            "raised"
+          ]
         }
       ]
     },
@@ -4291,6 +4320,29 @@
         {
           "class": "literal",
           "segment": "inclusion"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The holders' re-bind of a seated serve node's transport destination and transit pair (registered 2026-10-19 under CC 3.1.7 R2(a) at persist's mint, v59, CIRISPersist#1106; the quorum act of CC 3.3.6.2 and CC 5.3.4): an attestation row about",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "transport:canonical_rebind",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.3",
+        "rule": "substrate-self-report"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "transport"
+        },
+        {
+          "class": "literal",
+          "segment": "canonical_rebind"
         }
       ]
     },

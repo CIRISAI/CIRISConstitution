@@ -1,0 +1,98 @@
+{
+ "catalog_id": "T14",
+ "title": "Consent end to end — grant, revoke, expiry, decay; replication grant and its withdrawal",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-053"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 2,
+  "persons": 2,
+  "devices_max_per_person": 1,
+  "holders": 0
+ },
+ "generated": [
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "self_roster_bob_stolen.cfg",
+  "self_roster_bob_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T14.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "consent.state.granted": {
+   "plane": "consent",
+   "state_predicate": "consent.state=granted",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.state.revoked": {
+   "plane": "consent",
+   "state_predicate": "consent.state=revoked",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.state.expired": {
+   "plane": "consent",
+   "state_predicate": "consent.state=expired",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.decay.identity_severed": {
+   "plane": "consent",
+   "state_predicate": "consent.decay=identity_severed",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.decay.patterns_anonymized": {
+   "plane": "consent",
+   "state_predicate": "consent.decay=patterns_anonymized",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.decay.complete": {
+   "plane": "consent",
+   "state_predicate": "consent.decay=complete",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.community_trust.granted": {
+   "plane": "consent",
+   "state_predicate": "consent.community_trust=granted",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.community_trust.bounded": {
+   "plane": "consent",
+   "state_predicate": "consent.community_trust=bounded",
+   "cc_ref": "3.3.1",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  },
+  "consent.replication.none": {
+   "plane": "consent",
+   "state_predicate": "consent.replication=none",
+   "cc_ref": "3.3.7",
+   "in_state_table": true,
+   "plane_models": "no model (withdraws_admission covers erasure only)"
+  }
+ },
+ "atoms_with_a_plane_model": 0,
+ "atoms_without": 9
+}

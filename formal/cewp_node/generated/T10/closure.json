@@ -1,0 +1,78 @@
+{
+ "catalog_id": "T10",
+ "title": "A stolen device — the owner evicts it by the quorum path",
+ "catalogue_version": 3,
+ "serves": [
+  "CSD-037",
+  "CSD-095"
+ ],
+ "derives": [],
+ "entity_counts": {
+  "roots": 1,
+  "canonicals": 1,
+  "nodes": 3,
+  "persons": 1,
+  "devices_max_per_person": 3,
+  "holders": 3
+ },
+ "generated": [
+  "trust_root_HA.cfg",
+  "accord_halt_HA.cfg",
+  "accord_fuse_HA.cfg",
+  "self_roster_alice_stolen.cfg",
+  "self_roster_alice_lost.cfg",
+  "root_reach.cfg",
+  "MeshNet_T10.tla",
+  "mesh_net.cfg"
+ ],
+ "notes": [
+  "root HA: witnessed mode off; trust_root model not applicable until extended (residual E)",
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+ ],
+ "promised_atoms": {
+  "key.membership.proposed_add": {
+   "plane": "self",
+   "state_predicate": "key.membership=proposed_add",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "key.holder.owner": {
+   "plane": "self",
+   "state_predicate": "key.holder=owner",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "key.holder.thief": {
+   "plane": "self",
+   "state_predicate": "key.holder=thief",
+   "cc_ref": "3.3.6.3 1.13.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "key.membership.proposed_evict": {
+   "plane": "self",
+   "state_predicate": "key.membership=proposed_evict",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "key.membership.evicted": {
+   "plane": "self",
+   "state_predicate": "key.membership=evicted",
+   "cc_ref": "3.3.6 3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  },
+  "self.roster_size.three_more": {
+   "plane": "self",
+   "state_predicate": "self.roster_size=three_or_more",
+   "cc_ref": "3.3.6.3",
+   "in_state_table": true,
+   "plane_models": "self_roster"
+  }
+ },
+ "atoms_with_a_plane_model": 6,
+ "atoms_without": 0
+}

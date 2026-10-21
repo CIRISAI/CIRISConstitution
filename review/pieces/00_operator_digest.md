@@ -16,7 +16,7 @@
 
 ## If you hold a steward key for an agent
 
-- **You accepted the root on the agent's behalf.** Any one holder of that root can pause every agent that follows it, with one signed row, in an emergency; a lone pause lapses after 24 hours unless a majority confirms it. You can leave the root; the agent cannot. That is the one declared asymmetry, on the public register (CC 4.2; CC 4.5.1). *[being built: the agent act gate, CIRISAgent#1262; the node half works today]*
+- **You accepted the root on the agent's behalf.** Any one holder of that root can pause every agent that follows it, with one signed row, in an emergency; a lone pause lapses after 24 hours unless a majority confirms it. You can leave the root; the agent cannot. That is the one declared asymmetry, on the public register (CC 4.2; CC 4.5.1). *[works today; measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0]*
 - **The bond is a signed row with listed powers.** It is reviewed at least every 365 days, sooner at higher tiers; with no live bond the agent key cannot operate, and when the bond lapses the agent stops and the record names you (CC 3.2). If you hold the agent for an organisation, the organisation is on the bond and cosigns under its rules; as an employee you may refuse an unlawful or unsafe instruction about the agent without penalty (CC 3.2; CC 3.3.9). *[works today; the organisation on the bond is being built: CIRISPersist#1062]*
 - **Tier before operation.** Every deployment is assigned a stewardship tier from what the use can do to people and your part in creating it, with a written creator-intent statement at tier 1 and above, logged before the agent runs (CC 7.3). *[a rule, no code yet]*
 - **You are the agent's Wise Authority today.** It shows its reasoning before a consequential act; when it is unsure it stops and asks you, and does nothing on that question until you answer (CC 1.3; CC 1.9; CC 4.3). Deferral does not decide for you: a reasoning row you cannot evaluate is one you do not sign. *[works today]*
@@ -38,7 +38,7 @@
 ## If you hold a root
 
 - Your key is hardware-attested post-quantum hardware; your name is public; every fire, lift and roster change is a signed public row under it (CC 4.2.2; CC 4.2.6). *[works today]*
-- One of you can pause every agent under the root, in an emergency; a lone pause dies in 24 hours; confirming or lifting takes a majority; replacing a holder takes more than half of the standing roster, never of whoever is present (CC 4.2.6; `formal/accord_halt`, `formal/accord_roster`). *[being built: the agent act gate, CIRISAgent#1262; the node half works today]*
+- One of you can pause every agent under the root, in an emergency; a lone pause dies in 24 hours; confirming or lifting takes a majority; replacing a holder takes more than half of the standing roster, never of whoever is present (CC 4.2.6; `formal/accord_halt`, `formal/accord_roster`). *[works today; measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0]*
 - Your powers are a closed list; the pause keeps state and reads nothing else (CC 4.2.1). *[works today]*
 
 ## What binds you everywhere
