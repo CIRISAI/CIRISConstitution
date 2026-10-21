@@ -598,8 +598,10 @@ its own self-signed key, so it is unowned but never anonymous (CC 3.2).
 The group plane (darknet) is derived from the identity plane.  Each
 member of a family or community computes the group's address from
 directory state it already holds (a per-group HKDF), so the address is
-never announced and there is no emission from which an outsider could
-learn that the group exists (CC 5.2, CC 5.4.6).  A node never announces
+never announced and an outsider cannot map an address to a group or
+fetch its content (CC 5.2, CC 5.4.6).  An observer of link traffic can
+still see which node opens links to some derived address, and the
+timing and size of that traffic (CC 5.4.6).  A node never announces
 that it holds content scoped to a family or community outside that
 group.  Members relay for members.
 

@@ -639,7 +639,7 @@ All three reserved under [CC 3.4.2](part_3_the_namespace.md).
 
 ##### Per-community `archive_mode` — key-retention policy
 
-The DEK cascade above fixes *how* community content is encrypted; `archive_mode` fixes *how long it stays readable*. It is a per-community config field governing whether the community's per-epoch content keys (`K_record_id` / `K_symbol`, derived from the community DEK cascade) survive past their MLS epoch or are deleted — i.e. whether community content remains individually recoverable or descends below the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise floor as epochs advance. MLS epoch advance bounds the lifetime of those keys; `archive_mode` chooses what holders do with the past-epoch keys at each advance.
+The DEK cascade above fixes *how* community content is encrypted; `archive_mode` fixes *how long it stays readable*. It is a per-community config field governing whether the community's per-epoch content keys (`K_record_id` / `K_symbol`, derived from the group's MLS exporter secret per [CC 5.4.1](part_5_transport_substrate.md), not from the community DEK cascade, which is the `key_grant` plane) survive past their MLS epoch or are deleted — i.e. whether community content remains individually recoverable or descends below the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise floor as epochs advance. MLS epoch advance bounds the lifetime of those keys; `archive_mode` chooses what holders do with the past-epoch keys at each advance.
 
 ```
 community {

@@ -805,7 +805,21 @@ A Reticulum **announce** is the broadcast that tells the whole network a destina
   their L1-relay parent over a relay-blinded path.
 ```
 
-The per-group HKDF derivation is the same group-and-epoch-bound key schedule the substrate already uses to diversify record-ids and symbols; destination resolution reuses it, so the addressing argument is HMAC-opaque to non-members and no new key material is introduced.
+**The derivation (normative; steward, 2026-10-21: the text adopts what ships).** The destination is derived per member, per group epoch, from the group's MLS exporter and the member's `key_id` (the cached directory entry). It is pinned by CIRISVerify `ciris-crypto` (`scope_privacy.rs#k_destination`, `#derive_destination`) and reproduced by CIRISEdge (`scope_addressing.rs#ScopePrivacyDeriver`) against the golden vector CIRISVerify published at v13.4.0:
+
+```
+S_dest        = MLS-Exporter("ciris-scope-destination-v1", context = "", L = 32)
+k_destination = HKDF-SHA256-Expand(PRK = S_dest,
+                  info = "ciris-edge/scope-privacy/destination/v1", L = 32)
+destination   = HKDF-SHA3-256(IKM = k_destination, salt = "",
+                  info = "ciris-edge/scope-privacy/destination/v1"
+                         || u32_be(len(member_key_id)) || member_key_id,
+                  L = 16)
+```
+
+The expand step is bare `HKDF-SHA256-Expand`, not RFC 9420 `ExpandWithLabel`. `S_dest` is a **separate** exporter from `S_record` (`"ciris-scope-record-v1"`, which feeds `K_record_id` and `K_symbol`, [CC 5.4.1](#5.4.1)). Storage holds the record secret and only transport holds the destination secret, so a compromise of the record layer cannot recompute or link the addresses a node has used. Two members of one group get unrelated addresses. A destination is derived once per `(group, epoch)` at a membership or epoch change, never per packet; it rotates with install-next, activate, seal, so an epoch advance never silences a group.
+
+**What an outside observer of link traffic still sees (normative framing; steward, 2026-10-21).** Every node announces its identity destination, so an observer sees that each member node exists and is reachable. For a group it sees link requests to 16-byte derived destinations that it cannot map to a group or a member, the identity of the node that opened each link, and then sealed frames with their timing and sizes. It cannot fetch the content. What this section hides is the group's content, its membership and its address-to-group mapping. It does not hide the fact that node X opens links to some derived destination, or the shape of that traffic, which is the relationship-existence and traffic-analysis boundary of [CC 5.2](#5.2) and [CC 1.13.3.1](part_1_foundation.md).
 
 **The anonymity target is outsiders, not in-group members (normative framing).** Trust-enforceability to insiders and anonymity to outsiders are the same property viewed from opposite sides of the cohort encryption boundary ([CC 1.13.3.4](part_1_foundation.md)). In-group members already hold the per-group key and resolve every peer's destination from the cache — they see the group fully. The construction hides the group's existence, membership, and `querier → invitee` edges from **outsiders only**, including a subpoena against the federation-public directory: because no announce is broadcast and no resolution query is emitted, the directory exposes no edge linking a resolver to the resolved destination. *Outsiders* here means the directory and any reader of wire identifiers; against an on-path forwarder's observation of link traffic the claim is [CC 1.13.3.1](part_1_foundation.md)'s, not this section's ([CIRISConstitution#132](https://github.com/CIRISAI/CIRISConstitution/issues/132), ruled below).
 
