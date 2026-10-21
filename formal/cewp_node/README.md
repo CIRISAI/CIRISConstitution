@@ -11,11 +11,11 @@ constants the harness builds it from, and the coverage gate says where no model 
 
 | Path | What |
 |---|---|
-| `catalog/` | the ten entries `T0`–`T9` and `requirements.yaml`, vendored byte for byte from CIRISServer `feat/csd4-catalogue` (`PIN.tsv` names the commit); CC re-vendors at the first pushed commit and at every `catalogue_version` bump |
+| `catalog/` | the twenty entries `T0`–`T19` and `requirements.yaml`, vendored byte for byte from CIRISServer `feat/multi-device-csd4` (`PIN.tsv` names the commit); CC re-vendors at the first pushed commit and at every `catalogue_version` bump |
 | `generated/<Tn>/` | written by `python3 tools/topology_to_cfg.py --all`; CI regenerates and diffs. Per entry: `trust_root_<root>.cfg`, `accord_halt_<root>.cfg`, `accord_fuse_<root>.cfg` (infrastructure roots), `self_roster_<person>_{stolen,lost}.cfg` (every person), `root_reach.cfg`, `MeshNet_<Tn>.tla` + `mesh_net.cfg` (a wrapper instantiating the parametric `MeshNet`), `closure.json` |
 | `generated/SUMMARY.json` | the catalogue's maxima (roots 2, canonicals 2, nodes 4, persons 3, devices per person 2, holders 3) and the atom coverage count |
-| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (155 states, 51 variables, 9 planes) and the 98 properties restated over it; `tools/check_formal_tables.py` gates them |
-| `manifests/topology_vocabulary.json` | the 51 atoms (CC's since 2026-10-18), each mapped to a state-table predicate; `closure.json` reads it |
+| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (157 states, 51 variables, 9 planes) and the 152 properties restated over it; `tools/check_formal_tables.py` gates them |
+| `manifests/topology_vocabulary.json` | the 110 atoms (CC's since 2026-10-18; catalogue version 3), each mapped to a state-table predicate; `closure.json` reads it |
 
 ## Running a generated configuration
 

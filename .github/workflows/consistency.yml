@@ -72,6 +72,10 @@ jobs:
         run: python3 tools/catalogue_coverage.py
       - name: Formal state table, invariant table and atom vocabulary agree with the models, the toc and the register
         run: python3 tools/check_formal_tables.py
+      - name: Counts the formal prose quotes (states, properties, atoms, catalogue) equal the tables and the chain
+        run: |
+          pip install -q pyyaml
+          python3 tools/check_formal_counts.py
       - name: Volume map (toc.tsv volume column) is regenerated from review/pieces.tsv
         run: |
           python3 build_pdf.py --write-toc-volumes
