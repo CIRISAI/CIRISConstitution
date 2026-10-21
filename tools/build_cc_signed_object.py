@@ -121,11 +121,11 @@ def build_json(rows):
 # ---------------------------------------------------------------- CDDL
 TYPE_MAP = {
     "uuid": "uuid", "key-id": "key-id", "row-type": "row-type", "cohort-scope": "cohort-scope",
-    "float": "float", "uint": "uint", "tstr": "tstr", "hex64": "hex64", "base64": "base64",
+    "float": "number", "uint": "uint", "tstr": "tstr", "hex64": "hex64", "base64": "base64",
     "rfc3339-ms": "rfc3339-ms", "rfc3339": "rfc3339", "object": "{ * tstr => any }", "any": "any",
     "row-mirror": "row-mirror", "envelope": "envelope", "[* subject-id]": "[* subject-id]",
     "[* key-id]": "[* key-id]", "[* tstr]": "[* tstr]", "[* scrub-sig]": "[* scrub-sig]",
-    "[* key-record]": "[* key-record]", "[* cosignature]": "[* cosignature]",
+    "[* key-record]": "[* key-record]",
     "tstr / [* tstr]": "tstr / [* tstr]", "{* key-id => hex64}": "{ * key-id => hex64 }",
 }
 
@@ -208,18 +208,15 @@ def build_cddl(rows, meta):
             out.append(e)
     out.append("}")
     out.append("")
-    out.append("; Named when it ships (CIRISPersist#991); not on the wire at this pin.")
-    out.append("cosignature = { * tstr => any }")
-    out.append("")
     out.append("row-type = " + " / ".join(f'"{t}"' for t in ROW_TYPES))
     out.append("cohort-scope = " + " / ".join(f'"{t}"' for t in COHORT_SCOPES))
-    out.append('uuid = tstr .regexp "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"')
+    out.append('uuid = tstr .regexp "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}"')
     out.append('key-id = tstr .regexp "[a-z0-9-]+"  ; <label>-<fingerprint>, CC 2.6.8; a legacy 64-hex id is also a key-id')
     out.append('canonical-id = tstr .regexp "canonical:[a-z0-9-]+:[0-9a-f]+"  ; CC 2.3.2.1, tag required')
     out.append("subject-id = key-id / canonical-id")
     out.append('hex64 = tstr .regexp "[0-9a-f]{64}"  ; CC 2.6.3')
     out.append('base64 = tstr .regexp "[A-Za-z0-9+/]+={0,2}"  ; RFC 4648 section 4, padded, no whitespace')
-    out.append('rfc3339-ms = tstr .regexp "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z"  ; CC 2.6.2')
+    out.append('rfc3339-ms = tstr .regexp "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\\\.[0-9]{3}Z"  ; CC 2.6.2')
     out.append("rfc3339 = tstr  ; a column rendered by the store; the signed twin inside the envelope is rfc3339-ms")
     out.append("")
     return "\n".join(out) + "\n"

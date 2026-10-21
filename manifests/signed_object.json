@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "d501e42c21afda17bcb40be438468c507f8e100e847dca3eccacbc4c4ddbef81",
+    "source_sha256": "8c388f951870f05f0286f059e6324c91f5d705864a9a92f1ea9179fab6c4237e",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "32512f52",
@@ -948,7 +948,7 @@
         "cc_name": "-",
         "type": "hex64",
         "array_kind": "-",
-        "presence": "REQUIRED",
+        "presence": "OPTIONAL (store-computed; absent on a row as emitted)",
         "default": "-",
         "cc_ref": "-",
         "impl": "src/federation/types.rs#compute_persist_row_hash",

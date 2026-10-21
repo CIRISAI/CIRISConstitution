@@ -6,7 +6,7 @@
     "signatures": "produced and verified by ciris-crypto (CIRISVerify 3c16f9c6, ml-dsa 0.1.1, ed25519-dalek) through HybridSigner/HybridVerifier; every vector also failed verification after a one-byte tamper",
     "construction": "Ed25519 over JCS(envelope); ML-DSA-65 over JCS(envelope) || ed25519_signature (raw 64 bytes); base64 RFC 4648 section 4 padded",
     "key_id": "<label>-<first 10 lowercase base32 chars of sha256(ed25519 public key)> (CC 2.6.8)",
-    "ml_dsa_note": "ML-DSA-65 signing is hedged (randomised) per FIPS 204; the signatures here are one valid pair per vector, verifiable but not reproducible bit-for-bit from the seeds",
+    "ml_dsa_note": "ML-DSA-65 signing in the reference crate (ml-dsa 0.1.1 through ciris-crypto) is the deterministic variant of FIPS 204 with an empty context string, so each signature here is reproducible bit-for-bit from the seeds (re-checked 2026-10-21 by re-signing scores_minimal twice; both runs equal the published value). A FIPS 204 hedged signer produces different, equally valid signatures; a verifier MUST NOT require byte equality of the ML-DSA-65 half.",
     "dimension_used": "expertise:cardiology:en:v1",
     "envelope_cap_bytes": 1048576
   },
