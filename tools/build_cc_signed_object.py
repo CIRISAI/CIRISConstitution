@@ -125,7 +125,7 @@ TYPE_MAP = {
     "rfc3339-ms": "rfc3339-ms", "rfc3339": "rfc3339", "object": "{ * tstr => any }", "any": "any",
     "row-mirror": "row-mirror", "envelope": "envelope", "[* subject-id]": "[* subject-id]",
     "[* key-id]": "[* key-id]", "[* tstr]": "[* tstr]", "[* scrub-sig]": "[* scrub-sig]",
-    "[* key-record]": "[* key-record]",
+    "[* key-record]": "[* key-record]", "number": "number", "[* consent-basis]": "[* consent-basis]",
     "tstr / [* tstr]": "tstr / [* tstr]", "{* key-id => hex64}": "{ * key-id => hex64 }",
 }
 
@@ -207,6 +207,9 @@ def build_cddl(rows, meta):
         if e:
             out.append(e)
     out.append("}")
+    out.append("")
+    out.append("; CC 2.1 consent_basis entry (CIRISPersist#1041 shape; CIRISConstitution#183).")
+    out.append('consent-basis = { principal: key-id, paths: [* ("subject" / "occurrence_of" / "delegates_to")], attestation_id: uuid }')
     out.append("")
     out.append("row-type = " + " / ".join(f'"{t}"' for t in ROW_TYPES))
     out.append("cohort-scope = " + " / ".join(f'"{t}"' for t in COHORT_SCOPES))

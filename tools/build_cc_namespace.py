@@ -87,7 +87,7 @@ GATED_STEMS = [
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
     ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
-    ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
+    ("observation:", "closed: observation:reachability and observation:access_assumption:v1 are the only leaves", "CC 3.1.9.4"),
     ("takedown_notice:", "closed: takedown_notice:{basis}:v1 is the only family", "CC 3.1.1"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
@@ -225,6 +225,9 @@ def _reserved_rules():
         # CC 3.1.9.4 (#137): a monitoring node's first-person probe result.
         (lambda p, c: p.startswith("observation:reachability"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
+        # CC 3.1.9.4 (#183 N1, #184): a witness's first-person record of the view it scored through.
+        (lambda p, c: p.startswith("observation:access_assumption"),
+         "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids non-empty, the observed agent; never the subject itself)", "CC 3.1.9.4"),
         # CC 3.2 T6 / CIRISPersist#974: the lineage-witness consent ceremony — per-leaf emitter.
         (lambda p, c: p.startswith("lineage_witness:"),
          "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),

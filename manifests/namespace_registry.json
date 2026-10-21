@@ -183,7 +183,7 @@
         {
           "cc_ref": "CC 3.1.9.4",
           "kind": "gated",
-          "rule": "closed: observation:reachability is the only leaf",
+          "rule": "closed: observation:reachability and observation:access_assumption:v1 are the only leaves",
           "stem": "observation:"
         },
         {
@@ -221,14 +221,14 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 176,
+    "n_families": 177,
     "per_component": {
       "accord-agent": 34,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
       "lens": 15,
-      "node": 48,
+      "node": 49,
       "persist": 24,
       "registry": 21,
       "transport-delivery": 6
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "feeb06a02026b220055a3a521e799aaf6615c958a44b667d834b31d8f965c601",
+    "registry_sha256": "fc852f8d972d8ab8152bd70cadfac8e9a9c4a98776a75cbfd6d5e7d823124f9e",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "735653280ce88380a14e14c14556116999a09f8e545e8a406c3f47530e3d928f"
+    "source_sha256": "2b94c0ec8e0ccba7bd4e336ba0590779930e73a820ae073179def73611e77865"
   },
   "families": [
     {
@@ -3398,6 +3398,33 @@
             "assent",
             "raised"
           ]
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9.4",
+      "description": "What one witness assumed about its view of a subject when it made a claim about that subject: which consent grants were in force, at what trace level, over which occurrences, over which window, through which channel classes (steward ruling",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "observation:access_assumption:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.9.4",
+        "rule": "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids non-empty, the observed agent; never the subject itself)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "observation"
+        },
+        {
+          "class": "literal",
+          "segment": "access_assumption"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },

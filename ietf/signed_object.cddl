@@ -132,6 +132,48 @@ envelope = {
   ; REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL;
   ; default absent (open-ended)
   ? delegation_valid_until: rfc3339-ms,
+  ; OPTIONAL (capacity:*, observation:access_assumption:v1); default
+  ; absent; array kind: sequence
+  ? consent_basis: [* consent-basis],
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? n_eff_pr: number,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? n_eff_h: number,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? sample_size: uint,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? feature_dim: uint,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? sample_size_gate: uint,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? target_n_eff: number,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? min_feature_dim: uint,
+  ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+  ; gate); default absent
+  ? n_eff_floor: number,
+  ; OPTIONAL (capacity:*, observation:access_assumption:v1); default
+  ; absent
+  ? window: uint,
+  ; REQUIRED on observation:access_assumption:v1; default absent
+  ? trace_level: "generic" / "detailed" / "full_traces",
+  ; REQUIRED on observation:access_assumption:v1; default absent;
+  ; array kind: set
+  ? occurrence_key_ids: [* key-id],
+  ; REQUIRED on observation:access_assumption:v1; default absent
+  ? window_from: rfc3339-ms,
+  ; REQUIRED on observation:access_assumption:v1; default absent
+  ? window_to: rfc3339-ms,
+  ; REQUIRED on observation:access_assumption:v1; default absent;
+  ; array kind: set
+  ? channel_classes: [* tstr],
   ; family payload members (CC 3.3) and anything a consumer has not
   ; learned yet
   * tstr => any,
@@ -181,6 +223,11 @@ key-record = {
   ; sequence
   ? additional_scrubs: [* scrub-sig],
 }
+
+; CC 2.1 consent_basis entry (CIRISPersist#1041 shape;
+; CIRISConstitution#183).
+consent-basis = { principal: key-id, paths: [* ("subject"
+  / "occurrence_of" / "delegates_to")], attestation_id: uuid }
 
 row-type = "scores" / "delegates_to" / "supersedes" / "withdraws"
   / "recants"

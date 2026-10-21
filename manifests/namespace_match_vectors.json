@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc10",
-    "registry_sha256": "feeb06a02026b220055a3a521e799aaf6615c958a44b667d834b31d8f965c601",
+    "registry_sha256": "fc852f8d972d8ab8152bd70cadfac8e9a9c4a98776a75cbfd6d5e7d823124f9e",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -4823,6 +4823,42 @@
       "family": "objection:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:v1",
+      "family": "observation:access_assumption:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:V1",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:v1:v2",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:v1beta",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Observation:access_assumption:v1:v1",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "observation:access_assumption:v1",
+      "family": "observation:access_assumption:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "observation:reachability:v1",
