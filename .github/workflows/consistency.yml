@@ -58,6 +58,11 @@ jobs:
           python3 tools/build_governance_policy.py
           python3 tools/build_governance_policy.py --self-test
           git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/
+      - name: CSD/4 chain manifest (models → state table → atoms → claims → evidence → catalogue) is regenerated (no drift)
+        run: |
+          pip install -q pyyaml
+          python3 tools/build_csd4_chain.py
+          git diff --exit-code manifests/csd4_chain.json
       - name: Closure configurations are regenerated from the vendored catalogue (no drift)
         run: |
           pip install -q pyyaml
