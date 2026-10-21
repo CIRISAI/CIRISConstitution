@@ -6,7 +6,7 @@
    "invariants_sha256": "4cc9f451033b9aa8881a9002a2e21afe959e01fa4daff898c6a3d23d3052b836",
    "vocabulary_sha256": "b0b220507d08424a8ced6f5390fc2a01a9987123530b0cf620be2d34bfc69afc",
    "vocabulary_catalogue_version": 3,
-   "claims_sha256": "e4e9cc5a05a92f3ef71e0b954b4c7f7d862fdb55d4655dc69dce68b180c85556",
+   "claims_sha256": "c07dfe55d95bfb142bd86b0b2876dd5e0f426831c26f8a22156d62159e0c044a",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "feat/multi-device-csd4",
@@ -22,7 +22,7 @@
     "CIRISAgent": "ef02367",
     "CIRISVerify": "3c16f9c6",
     "CIRISPersist": "32512f52",
-    "CIRISEdge": "1d538837"
+    "CIRISEdge": "d44e1c57"
    }
   },
   "counts": {
@@ -38,7 +38,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "bd947a69b1853f40d5e4a12dc5501833da0b66d4231273cb2d80d02083f39ff9"
+  "chain_sha256": "b481298238b4ca99eb7c078c5b83898c209114deb3ba87241076416017034d09"
  },
  "chain": [
   {
@@ -848,24 +848,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -1530,24 +1554,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -2776,24 +2824,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -3420,24 +3492,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -6122,24 +6218,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -7768,24 +7888,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -9940,24 +10084,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -13097,24 +13265,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     },
@@ -14794,24 +14986,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     },
@@ -15957,24 +16173,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -16651,24 +16891,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -19245,24 +19509,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -19899,24 +20187,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -20553,24 +20865,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
@@ -21349,24 +21685,48 @@
     {
      "claim_id": "CLM-first-contact-seal-key-bound",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
       }
      ]
     },
     {
      "claim_id": "CLM-pairing-payload-transit-pin",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#172"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
       }
      ]
     }
