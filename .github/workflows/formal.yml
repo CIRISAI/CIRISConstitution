@@ -369,3 +369,30 @@ jobs:
           t stale_founder 'Inv_NoSelfAdmission is violated'
           t founding_unsigned 'Inv_JoinerConsented is violated'
           t no_hold_expiry 'Temporal properties were violated'
+
+  onion_layers:
+    name: TLC + Lean — the onion layer deal (formal/onion_layers)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch tla2tools (pinned release)
+        run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The deal closes on every ranking and every hostile placement
+        working-directory: formal/onion_layers
+        run: |
+          for cfg in OnionLayers_2s3o OnionLayers_2s4o OnionLayers_3s3o OnionLayers_3s3o_c1; do
+            java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-$cfg" -deadlock -config $cfg.cfg OnionLayers.tla
+          done
+      - name: Install Lean 4.14.0 (elan)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The counting bounds close (no sorry, core only)
+        working-directory: formal/onion_layers
+        run: lean OnionLayersCount.lean

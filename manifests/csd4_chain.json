@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "636ba406b1d564670e0572fc442a975e9e2746d7fb73328d2e81b526fd46e4ae",
-   "invariants_sha256": "84e23a1ee470c76ccc5f7e2d9c774d9247eccaaafb297c273d70f3341257f4a4",
+   "state_table_sha256": "fcab58f374ac30ff6e3ccc45257fd98794636eb47f9a67235baee261f19362af",
+   "invariants_sha256": "3fed4fc5532986716f38403f1bb4496ac43d245ad765a4c04e7b77a5afa5f22b",
    "vocabulary_sha256": "928edefc358fa36eee3cb891373c7c0bf5e2f8e83bb5edc093366e0267aca1e8",
    "vocabulary_catalogue_version": 4,
-   "claims_sha256": "98e77d222f6e69d839871109a83017b769fef826380e4584eb0eccb5bb3e4254",
+   "claims_sha256": "50497103f322f95676d3f136c988887b1db28c0dd0b23f0dbe349230c3a6fb75",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -28,9 +28,9 @@
   },
   "counts": {
    "atoms": 116,
-   "states": 162,
-   "invariants": 152,
-   "claims": 500,
+   "states": 170,
+   "invariants": 160,
+   "claims": 501,
    "entries": 20,
    "refusal_tokens": 75
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "044d9f56f1f7b460ee1a14311a1fc9662531e99fdc59a01586b1e6586377b697"
+  "chain_sha256": "bf37d9b6e95ba54a639a194106072db6935346a6cee8696bce25f92cfb1bd9e1"
  },
  "chain": [
   {
@@ -5538,6 +5538,62 @@
        "ticket": "CIRISConstitution#172"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-onion-layer-model",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_DealDeterministic"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_HostileShareBound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_NeverWorse"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Prop_FloorHonest"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "hostile_share_bound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "dealt_le"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -5680,6 +5736,62 @@
       {
        "kind": "staged",
        "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-layer-model",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_DealDeterministic"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_HostileShareBound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_NeverWorse"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Prop_FloorHonest"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "hostile_share_bound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "dealt_le"
+       ]
       }
      ]
     }
@@ -9016,6 +9128,62 @@
        "ticket": "CIRISConstitution#172"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-onion-layer-model",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_DealDeterministic"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_HostileShareBound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_NeverWorse"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Prop_FloorHonest"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "hostile_share_bound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "dealt_le"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -10561,6 +10729,62 @@
       {
        "kind": "staged",
        "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-layer-model",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_DealDeterministic"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_HostileShareBound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_NeverWorse"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Prop_FloorHonest"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "hostile_share_bound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "dealt_le"
+       ]
       }
      ]
     }
@@ -19119,6 +19343,62 @@
       {
        "kind": "staged",
        "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-layer-model",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_DealDeterministic"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_HostileShareBound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Inv_NeverWorse"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayers.tla",
+       "symbols": [
+        "Prop_FloorHonest"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "hostile_share_bound"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/onion_layers/OnionLayersCount.lean",
+       "symbols": [
+        "dealt_le"
+       ]
       }
      ]
     }
