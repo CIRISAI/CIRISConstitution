@@ -147,6 +147,12 @@ agent	agent	agent.wa	absent	4.3	—	—	—	—	text-only
 agent	agent	agent.wa	present	4.3	a Wise Authority reachable for deferrals	WA	—	wa.present	text-only
 agent	agent	agent.halt_gate	acting	4.2.1.1 1.13.6	no latched halt read by the act gate	—	guarantees.Guarantees.tla:halted=FALSE	agent.halt_gate.acting	modelled
 agent	agent	agent.halt_gate	refusing	4.2.1.1 1.13.6	latched halt: effectful acts refused as one terminal ACTION_RESULT	—	guarantees.Guarantees.tla:halted=TRUE	root.halted	modelled
+agent	agent	agent.deferral	none	1.9 4.3	no deferral open	—	—	—	text-only
+agent	agent	agent.deferral	pending	1.9 4.3 3.1.9.4	deferral:request:v1 admitted; the agent inactive on the issue	agent occurrence key	—	agent.deferral.pending	text-only
+agent	agent	agent.deferral	approved	4.3 3.1.9.4	deferral:response:approved:v1 by a seated WA	WA key	—	agent.deferral.approved	text-only
+agent	agent	agent.deferral	rejected	4.3 3.1.9.4	deferral:response:rejected:v1 by a seated WA	WA key	—	agent.deferral.rejected	text-only
+agent	agent	agent.identity	baseline	3.1.5	no amendment applied since registration	—	—	—	text-only
+agent	agent	agent.identity	amended	3.1.5 4.3	identity_amendment:v1 admitted citing an approved response	agent occurrence key	—	agent.identity.amended	text-only
 governance	event	event.state	open	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
 governance	event	event.state	cancelled	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
 governance	event	event.state	completed	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
@@ -156,7 +162,6 @@ governance	objection	objection.state	assent	3.1.9.2 3.3.6.3	a +1 on an open prop
 governance	objection	objection.state	raised	3.1.9.2 3.3.6.3	a −1 on an open proposal or a pending act	any voter of the standing set	self_roster.SelfRoster.tla:objectors; two_path.TwoPath.tla:objectors	—	modelled-elsewhere
 governance	quarantine	quarantine.state	withhold	3.1.9.4	quarantine:{state}; withhold beats release at a tie	slash-duty holder	—	—	text-only
 governance	quarantine	quarantine.state	release	3.1.9.4	quarantine:{state}	slash-duty holder	—	—	text-only
-governance	wa_adjudication	wa_adjudication.state	(unenumerated)	3.1.9.4	wa_adjudication:{state}; state set not written	WA quorum	—	—	missing-text
 governance	capacity binding	capacity.band	capacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
 governance	capacity binding	capacity.band	incapacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
 governance	capacity binding	capacity.band	reversible_pending	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
@@ -169,3 +174,6 @@ governance	ledger	ledger.state	fork	3.3.10.1	ledger:fork row (fork = evidence)	o
 governance	moderation outcome	moderation.outcome	hard_removal	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	—	—	text-only
 governance	moderation outcome	moderation.outcome	consent_gated	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	—	—	text-only
 governance	moderation outcome	moderation.outcome	kept_visible	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	—	—	text-only
+governance	wa_adjudication	wa_adjudication.state	abandonment	3.1.9.4 4.3	a quorum finds a seat abandoned	WA quorum (full seated roster)	—	—	text-only
+governance	wa_adjudication	wa_adjudication.state	seizure	3.1.9.4 4.3	a quorum finds a seat seized	WA quorum (full seated roster)	—	—	text-only
+governance	wa_adjudication	wa_adjudication.state	successor	3.1.9.4 4.3	a quorum names a successor to a seat	WA quorum (full seated roster)	—	—	text-only

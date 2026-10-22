@@ -96,6 +96,8 @@ envelope = {
   ? window_from: rfc3339-ms,  ; REQUIRED on observation:access_assumption:v1; default absent
   ? window_to: rfc3339-ms,  ; REQUIRED on observation:access_assumption:v1; default absent
   ? channel_classes: [* tstr],  ; REQUIRED on observation:access_assumption:v1; default absent; array kind: set
+  ? amendment_digest: hex64,  ; REQUIRED on identity_amendment:v1; default absent
+  ? authorized_by: uuid,  ; REQUIRED on identity_amendment:v1; default absent
   * tstr => any,  ; family payload members (CC 3.3) and anything a consumer has not learned yet
 }
 

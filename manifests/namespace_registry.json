@@ -221,14 +221,14 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 178,
+    "n_families": 181,
     "per_component": {
-      "accord-agent": 34,
+      "accord-agent": 35,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
       "lens": 15,
-      "node": 49,
+      "node": 51,
       "persist": 24,
       "registry": 21,
       "transport-delivery": 7
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "8531f6d46766f52e0c397c2675516c9e09fddaa33a046c60b9142e0944c026f2",
+    "registry_sha256": "66337e652e8bbe60119ebed2e4319ba57a562d6e4b79366d27c34248f5a9973f",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "0a5e901b8b348cabf12cde942fb61a2a230918661cc49dd28bda4ea81e9f43bd"
+    "source_sha256": "b044919ca76a67f9eea66f4aeb92fa4fa82af86e2c20fe2ba9d2158355edb7ef"
   },
   "families": [
     {
@@ -1940,6 +1940,69 @@
       ]
     },
     {
+      "cc_section": "3.1.9.3",
+      "description": "An agent's deferral: one ask routed to a Wise Authority within the agent's cell (CC 1.9, CC 4.3).",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "deferral:request:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.9.4",
+        "rule": "the deferring agent's occurrence key; audience = the agent's cell"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "deferral"
+        },
+        {
+          "class": "literal",
+          "segment": "request"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.9.3",
+      "description": "A Wise Authority's answer to one deferral, {outcome} \u2208 approved | rejected.",
+      "owning_component": "node",
+      "owning_repo": "CIRISNodeCore",
+      "polarity": "signed",
+      "prefix": "deferral:response:{outcome}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.9.4",
+        "rule": "a Wise Authority's key that held a seat in the live set at asserted_at; subject = the agent; references the deferral:request"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "deferral"
+        },
+        {
+          "class": "literal",
+          "segment": "response"
+        },
+        {
+          "class": "vocab",
+          "open": true,
+          "segment": "{outcome}",
+          "values": [
+            "approved",
+            "rejected"
+          ]
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.4",
       "description": "",
       "owning_component": "transport-delivery",
@@ -2726,6 +2789,29 @@
         {
           "class": "literal",
           "segment": "occurrence_revocation"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
+      "description": "The identity change a Wise Authority authorised, as applied (promise 5: nobody edits an agent's identity record without a Wise Authority; CC 4.3).",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "signed",
+      "prefix": "identity_amendment:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.5",
+        "rule": "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "identity_amendment"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },
@@ -4512,7 +4598,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "CC 4.3 Wise-Authority quorum adjudication finding \u2014 the attestation a wa_adjudication_ref resolves to (abandonment/seizure and successor findings).",
+      "description": "CC 4.3 Wise-Authority quorum adjudication finding \u2014 the attestation a wa_adjudication_ref resolves to.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -4525,7 +4611,13 @@
         },
         {
           "class": "vocab",
-          "segment": "{state}"
+          "open": false,
+          "segment": "{state}",
+          "values": [
+            "abandonment",
+            "seizure",
+            "successor"
+          ]
         }
       ]
     },

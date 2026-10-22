@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "fcab58f374ac30ff6e3ccc45257fd98794636eb47f9a67235baee261f19362af",
+   "state_table_sha256": "5cb33282b4f1fbcfa955cb6eb11cc18d4611dc6364fe9a2df77121cd76e82571",
    "invariants_sha256": "3fed4fc5532986716f38403f1bb4496ac43d245ad765a4c04e7b77a5afa5f22b",
-   "vocabulary_sha256": "928edefc358fa36eee3cb891373c7c0bf5e2f8e83bb5edc093366e0267aca1e8",
-   "vocabulary_catalogue_version": 4,
-   "claims_sha256": "19f767b444f5e9527c9e1906dfd781014717ec643658674ded6c5e5182d007ab",
+   "vocabulary_sha256": "5957a96d509c66c23d5546f36fb8e9e3e12b83cf6526f064fa67f58ff6ac4d1e",
+   "vocabulary_catalogue_version": 5,
+   "claims_sha256": "fe6545dbf1d837cd46845b92d6c72c45c2554cc2d43f869becfd3ba2c7fe3e19",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -27,19 +27,19 @@
    }
   },
   "counts": {
-   "atoms": 116,
-   "states": 170,
+   "atoms": 120,
+   "states": 178,
    "invariants": 160,
-   "claims": 501,
+   "claims": 504,
    "entries": 20,
-   "refusal_tokens": 75
+   "refusal_tokens": 77
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "32fd1bdab198f7f3db74599c487e89ed6b40d3dc5640b42dba2b8910b038c78a"
+  "chain_sha256": "c914266cd618041705b57d3cb87bac25333527841e4aae7dae457aa43de8ae08"
  },
  "chain": [
   {
@@ -38959,6 +38959,410 @@
     }
    ],
    "promised_by": []
+  },
+  "agent.deferral.pending": {
+   "plane": "agent",
+   "state_predicate": "agent.deferral=pending",
+   "cc_ref": "1.9 4.3",
+   "added_in": 5,
+   "states": [
+    {
+     "variable": "agent.deferral",
+     "state": "pending",
+     "plane": "agent",
+     "cc_ref": "1.9 4.3 3.1.9.4",
+     "enters_by": "deferral:request:v1 admitted; the agent inactive on the issue",
+     "signer": "agent occurrence key",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-wbd",
+     "cc_ref": "1.9",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "",
+       "symbols": [
+        "911"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-agent-refusal-not-overridden",
+     "cc_ref": "1.9",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/processors/core/thought_processor/conscience_execution.py",
+       "symbols": [
+        "ConscienceExecutionPhase._conscience_execution_step"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/conscience/updated_status_conscience.py",
+       "symbols": [
+        "UpdatedStatusConscience.check"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/processors/support/task_manager.py",
+       "symbols": [
+        "TaskManager.requeue_updates_from_rejected_tasks"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/runtime/identity_manager.py",
+       "symbols": [
+        "IdentityManager._get_default_permitted_actions"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/handlers/control/reject_handler.py",
+       "symbols": [
+        "RejectHandler.handle"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "tests/ciris_engine/logic/test_cc_agent_guarantees_1250.py",
+       "symbols": [
+        "test_every_shipped_template_offers_the_refuse_verb"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "tests/ciris_engine/logic/test_cc_agent_guarantees_1250.py",
+       "symbols": [
+        "test_a_failing_normal_conscience_never_overrides_reject"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "tests/ciris_engine/logic/test_cc_agent_guarantees_1250.py",
+       "symbols": [
+        "test_new_information_never_rewrites_a_reject"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "tests/ciris_engine/logic/test_cc_agent_guarantees_1250.py",
+       "symbols": [
+        "test_reject_is_terminal_for_thought_depth"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "tests/ciris_engine/logic/test_cc_agent_guarantees_1250.py",
+       "symbols": [
+        "test_requeue_gives_the_pending_message_its_own_task"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "agent.deferral.approved": {
+   "plane": "agent",
+   "state_predicate": "agent.deferral=approved",
+   "cc_ref": "4.3",
+   "added_in": 5,
+   "states": [
+    {
+     "variable": "agent.deferral",
+     "state": "approved",
+     "plane": "agent",
+     "cc_ref": "4.3 3.1.9.4",
+     "enters_by": "deferral:response:approved:v1 by a seated WA",
+     "signer": "WA key",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-wa-symmetry",
+     "cc_ref": "4.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#71"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "agent.deferral.rejected": {
+   "plane": "agent",
+   "state_predicate": "agent.deferral=rejected",
+   "cc_ref": "4.3",
+   "added_in": 5,
+   "states": [
+    {
+     "variable": "agent.deferral",
+     "state": "rejected",
+     "plane": "agent",
+     "cc_ref": "4.3 3.1.9.4",
+     "enters_by": "deferral:response:rejected:v1 by a seated WA",
+     "signer": "WA key",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-wa-symmetry",
+     "cc_ref": "4.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#71"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "agent.identity.amended": {
+   "plane": "agent",
+   "state_predicate": "agent.identity=amended",
+   "cc_ref": "3.1.5 4.3",
+   "added_in": 5,
+   "states": [
+    {
+     "variable": "agent.identity",
+     "state": "amended",
+     "plane": "agent",
+     "cc_ref": "3.1.5 4.3",
+     "enters_by": "identity_amendment:v1 admitted citing an approved response",
+     "signer": "agent occurrence key",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trace-family",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_trace_dimension_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-manifest-schema-trace-manifest",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_trace_dimension_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-trace-xor-manifest-shape-trace-manifest",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_trace_dimension_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-cohort-scope-trace-manifest",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/types.rs",
+       "symbols": [
+        "LocalAttestationInput"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trace-run-kind-refusal",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/steward_purge.rs",
+       "symbols": [
+        "refuse_mock_trace_attestation"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/schema/trace.rs",
+       "symbols": [
+        "RUN_KINDS"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trace-run-kind-carried",
+     "cc_ref": "3.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1249"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trace-schema-pinned",
+     "cc_ref": "3.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1249"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-retirement-rows",
+     "cc_ref": "3.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1283"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1083"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-occurrence-revocation-carrier",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/occurrence_revocation_carrier.rs",
+       "symbols": [
+        "carrier_row"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/occurrence_revocation_carrier.rs",
+       "symbols": [
+        "check_carrier_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-canonical-rebind",
+     "cc_ref": "3.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/transport_rebind.rs",
+       "symbols": [
+        "check_rebind_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/transport_rebind.rs",
+       "symbols": [
+        "check_serve_rotation"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-identity-amendment-row",
+     "cc_ref": "3.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1316"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
   }
  },
  "entries": {
@@ -39278,6 +39682,7 @@
   "federation_malformed_row": {
    "2.6.1.1": "after_refusal",
    "2.6.1.7": "after_refusal",
+   "3.1.9.7": "after_refusal",
    "6.1.1": "after_refusal"
   },
   "federation_rendezvous_key_not_an_identity": {
@@ -39292,6 +39697,12 @@
   },
   "federation_withdraws_not_admitted": {
    "2.6.1.7": "after_refusal"
+  },
+  "goal_meta_alignment_malformed": {
+   "3.1.9.7": "after_refusal"
+  },
+  "identity_amendment_unauthorized": {
+   "3.1.5": "after_refusal"
   },
   "internal_normative_regime": {
    "4.4.3.2": "bold"

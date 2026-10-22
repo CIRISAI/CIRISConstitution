@@ -225,6 +225,14 @@ def _reserved_rules():
         # CC 3.1.9.4 (#137): a monitoring node's first-person probe result.
         (lambda p, c: p.startswith("observation:reachability"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
+        # CC 3.1.9.4 / 4.3: a WA's answer to one deferral is signed by the WA's own key.
+        (lambda p, c: p.startswith("deferral:response"),
+         "a Wise Authority's key that held a seat in the live set at asserted_at; subject = the agent; references the deferral:request", "CC 3.1.9.4"),
+        (lambda p, c: p.startswith("deferral:request"),
+         "the deferring agent's occurrence key; audience = the agent's cell", "CC 3.1.9.4"),
+        # CC 3.1.5 / promise 5: an identity amendment is the agent's own row about its identity key, admitted only against an approved deferral response.
+        (lambda p, c: p.startswith("identity_amendment"),
+         "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
         # CC 3.1.4: a receiver's per-period rendezvous route, self-signed by a fresh rendezvous key.
         (lambda p, c: p.startswith("rendezvous:route"),
          "self: attester == subject == the period's fresh rendezvous key (identity_type rendezvous; key record inline); federation-wide reach", "CC 3.1.4"),

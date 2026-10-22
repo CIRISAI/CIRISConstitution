@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "b6c6b1b1b98eeb6a94e1c2a2d59443fe585d0d63f0d97572026bfd2e7bf778b8",
+    "source_sha256": "68256d7e76567d3bf8629f790d2664da2124df2f31bc66feccf43edae465a2cd",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "32512f52",
@@ -53,7 +53,7 @@
     "counts": {
       "signed:envelope": 22,
       "signed:row": 7,
-      "signed:envelope-extra": 47,
+      "signed:envelope-extra": 49,
       "beside": 27,
       "local": 4,
       "beside:signature": 10,
@@ -974,6 +974,30 @@
         "cc_ref": "2.1 3.1.9.4",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "Channel classes the witness saw the subject through, as the emitter names them."
+      },
+      {
+        "member": "amendment_digest",
+        "placement": "signed:envelope-extra",
+        "cc_name": "-",
+        "type": "hex64",
+        "array_kind": "-",
+        "presence": "REQUIRED on identity_amendment:v1",
+        "default": "absent",
+        "cc_ref": "2.1 3.1.5",
+        "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
+        "note": "SHA-256 of the applied identity amendment."
+      },
+      {
+        "member": "authorized_by",
+        "placement": "signed:envelope-extra",
+        "cc_name": "-",
+        "type": "uuid",
+        "array_kind": "-",
+        "presence": "REQUIRED on identity_amendment:v1",
+        "default": "absent",
+        "cc_ref": "2.1 3.1.5 4.3",
+        "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
+        "note": "The deferral:response:approved:v1 row that authorised it; admission checks it."
       },
       {
         "member": "attestation_id",
