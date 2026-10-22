@@ -6,7 +6,7 @@
    "invariants_sha256": "84e23a1ee470c76ccc5f7e2d9c774d9247eccaaafb297c273d70f3341257f4a4",
    "vocabulary_sha256": "b0b220507d08424a8ced6f5390fc2a01a9987123530b0cf620be2d34bfc69afc",
    "vocabulary_catalogue_version": 3,
-   "claims_sha256": "c7364baa2995017d1d84d1a1532e0c11a200859779d5c0172d6041160c604a91",
+   "claims_sha256": "554f4212a0966c82eaab91e0b9abf24013d14859a910b2d929726da9e77bbb23",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,16 +30,16 @@
    "atoms": 110,
    "states": 157,
    "invariants": 152,
-   "claims": 496,
+   "claims": 500,
    "entries": 20,
-   "refusal_tokens": 74
+   "refusal_tokens": 75
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "7d316ff81e0a86d882e1d71adaa18d02b5939a8a61394255a21f29e6cb2d6b9e"
+  "chain_sha256": "dd06e0da9e52b9b22cc993d2e03953022c852768fb231f95ea4c73ebb11dca8a"
  },
  "chain": [
   {
@@ -38703,6 +38703,9 @@
    "2.6.1.1": "after_refusal",
    "2.6.1.7": "after_refusal",
    "6.1.1": "after_refusal"
+  },
+  "federation_rendezvous_key_not_an_identity": {
+   "3.1.4": "after_refusal"
   },
   "federation_set_semantics_unsorted": {
    "2.6.1.1": "bold",

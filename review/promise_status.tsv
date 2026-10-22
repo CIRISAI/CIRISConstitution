@@ -1,7 +1,7 @@
 surface	key	status	note
 plain	1a	works today	G1
 plain	1b	works today	G1
-plain	1c	works today	purge rows graduated at re-pin 16, G2
+plain	1c	works today	purge rows graduated, G2
 plain	1d	works today	G3
 plain	1e	works today	one path changing: CIRISAgent#1251
 plain	1f	works today	G3
@@ -18,14 +18,14 @@ plain	3b	being built: CIRISPersist#1062
 plain	3c	works today for the binding and the age line	the report duty is a rule
 plain	3d	works today	G6
 plain	3e	a rule, no code yet	
-plain	4a	works today	measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0
+plain	4a	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 plain	4b	works today	
 plain	4c	modelled, no code test yet	G10
-plain	4d	works today	measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0
+plain	4d	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 plain	4e	checked in the models	formal/accord_halt, formal/accord_roster
 plain	5a	works today	G15, G16
 plain	5b	works today	G16
-plain	5c	works today	G17, five tests at agent ef02367
+plain	5c	works today	G17, five tests
 plain	5d	works today	one gap, dream edges, G19
 plain	5e	works today	G21: above the threshold a Wise Authority review is requested
 plain	5f	being built: CIRISAgent#1250	
@@ -50,14 +50,14 @@ plain	10b	being built: CIRISAgent#1242
 plain	10c	being built: CIRISAgent#1242	
 plain	10d	a rule, no code yet	
 plain	11a	works today	G28
-plain	11b	works today where a lineage runs witnessed	the shipped roots run with witnessed mode off, rc7
+plain	11b	works today where a lineage runs witnessed	the shipped roots run with witnessed mode off
 plain	11c	in the document	CC 1.13.3
 plain	11d	works today	attestation ladder, G28
 plain	11e	a rule, no code yet	
 exec	1	works today	one retention path changing: CIRISAgent#1251
 exec	2	works today	run_kind being built: CIRISAgent#1255; the detectors are a rule, no code yet
 exec	3	works today	the organisation on the bond is being built: CIRISPersist#1062
-exec	4	works today	measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0
+exec	4	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 exec	5	works today	the Retirement Standard is being built: CIRISAgent#1250; manager-side upgrades: CIRISManager#27
 exec	6	mixed	no ban works today by construction; one voice once is proved in the model and in code only on the coherence leg, R14; no ranking by what you are is a rule, no code yet
 exec	7	works today	register row being added: CIRISAgent#1250
@@ -72,7 +72,7 @@ operator	If you run a node|You keep working when timers lapse.	works today for a
 operator	If you run a node|Traces say what run they are.	works today	run_kind being built: CIRISAgent#1255
 operator	If you run a node|A purge is a tombstone.	works today	
 operator	If you run a node|Your exit:	works today	
-operator	If you hold a steward key for an agent|You accepted the root on the agent's behalf.	works today	measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0
+operator	If you hold a steward key for an agent|You accepted the root on the agent's behalf.	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 operator	If you hold a steward key for an agent|The bond is a signed row with listed powers.	works today	the organisation on the bond is being built: CIRISPersist#1062
 operator	If you hold a steward key for an agent|Tier before operation.	a rule, no code yet	
 operator	If you hold a steward key for an agent|You are the agent's Wise Authority today.	works today	
@@ -88,5 +88,5 @@ operator	If you moderate a community|You report harm to a child the moment you l
 operator	If you moderate a community|You cannot ban a room, and nobody can ban yours.	works today, by construction	
 operator	If you moderate a community|A takedown on the fast path still passes the duty-holder gate	works today	
 operator	If you hold a root|Your key is hardware-attested	works today	
-operator	If you hold a root|One of you can pause every agent	works today	measured end to end (CSD-129 run 6 on the pinned pair); the agent act gate shipped at CIRISAgent ef02367; the serve-gate breaker closed at persist v58.0.0
+operator	If you hold a root|One of you can pause every agent	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
 operator	If you hold a root|Your powers are a closed list	works today	
