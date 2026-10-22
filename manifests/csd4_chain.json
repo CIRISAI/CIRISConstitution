@@ -6,7 +6,7 @@
    "invariants_sha256": "84e23a1ee470c76ccc5f7e2d9c774d9247eccaaafb297c273d70f3341257f4a4",
    "vocabulary_sha256": "b0b220507d08424a8ced6f5390fc2a01a9987123530b0cf620be2d34bfc69afc",
    "vocabulary_catalogue_version": 3,
-   "claims_sha256": "8d1638bba43e62f641a2d4c4f4092f6667afb16d68b9504b915a9ab9f1949f8c",
+   "claims_sha256": "225be59b6f70a10af2bf1b3979dd58526d094e491169b53465ea0dcb05b27feb",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 110,
    "states": 157,
    "invariants": 152,
-   "claims": 491,
+   "claims": 494,
    "entries": 20,
    "refusal_tokens": 71
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "bc7f706fe857549d8b4e7ba441c632482f79ca323fe250ab9d430b2224e0556a"
+  "chain_sha256": "b9e0cd0b2c6d71ca35aadb5a1e9d6d6cafaa4352f0136c90bc83bc635fd5a55a"
  },
  "chain": [
   {
@@ -5502,6 +5502,30 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-onion-relay-mandatory",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-route",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -5608,6 +5632,30 @@
        "symbols": [
         "check_minor_owner_binding_not_announced"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-relay-mandatory",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-route",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
       }
      ]
     }
@@ -8908,6 +8956,30 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-onion-relay-mandatory",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-route",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -10417,6 +10489,30 @@
        "symbols": [
         "check_minor_owner_binding_not_announced"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-relay-mandatory",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-route",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
       }
      ]
     }
@@ -18939,6 +19035,30 @@
        "symbols": [
         "check_minor_owner_binding_not_announced"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-relay-mandatory",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-onion-route",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#172"
       }
      ]
     }
