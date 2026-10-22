@@ -4,7 +4,7 @@
   "pins": {
    "state_table_sha256": "5cb33282b4f1fbcfa955cb6eb11cc18d4611dc6364fe9a2df77121cd76e82571",
    "invariants_sha256": "3fed4fc5532986716f38403f1bb4496ac43d245ad765a4c04e7b77a5afa5f22b",
-   "vocabulary_sha256": "5957a96d509c66c23d5546f36fb8e9e3e12b83cf6526f064fa67f58ff6ac4d1e",
+   "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
    "claims_sha256": "fe6545dbf1d837cd46845b92d6c72c45c2554cc2d43f869becfd3ba2c7fe3e19",
    "catalogue": {
