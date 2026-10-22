@@ -221,7 +221,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 177,
+    "n_families": 178,
     "per_component": {
       "accord-agent": 34,
       "anti-sybil": 6,
@@ -231,7 +231,7 @@
       "node": 49,
       "persist": 24,
       "registry": 21,
-      "transport-delivery": 6
+      "transport-delivery": 7
     },
     "polarity_classes": {
       "+1.0 only": {
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "a279534d7383c752f4047fad04ddb480109c9f833bff9b56914c05c583a0947b",
+    "registry_sha256": "8531f6d46766f52e0c397c2675516c9e09fddaa33a046c60b9142e0944c026f2",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "b414e12fbafb8eca65f8e611909a3114af1f79fbb728cbe49c63de0bcaf5f520"
+    "source_sha256": "8e512a3e0071cb7391ae501bc915269a6776b15495c3f39eb252b29ea621590f"
   },
   "families": [
     {
@@ -3932,6 +3932,33 @@
         {
           "class": "vocab",
           "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.4",
+      "description": "A receiver's published route for targeted delivery through the Anonymous Tier (CC 5.4.6).",
+      "owning_component": "transport-delivery",
+      "owning_repo": "CIRISEdge",
+      "polarity": "signed",
+      "prefix": "rendezvous:route:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.4",
+        "rule": "self: attester == subject == the period's fresh rendezvous key (identity_type rendezvous; key record inline); federation-wide reach"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "rendezvous"
+        },
+        {
+          "class": "literal",
+          "segment": "route"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },

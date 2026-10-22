@@ -225,6 +225,9 @@ def _reserved_rules():
         # CC 3.1.9.4 (#137): a monitoring node's first-person probe result.
         (lambda p, c: p.startswith("observation:reachability"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
+        # CC 3.1.4: a receiver's per-period rendezvous route, self-signed by a fresh rendezvous key.
+        (lambda p, c: p.startswith("rendezvous:route"),
+         "self: attester == subject == the period's fresh rendezvous key (identity_type rendezvous; key record inline); federation-wide reach", "CC 3.1.4"),
         # CC 3.1.9.4 (#183 N1, #184): a witness's first-person record of the view it scored through.
         (lambda p, c: p.startswith("observation:access_assumption"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids non-empty, the observed agent; never the subject itself)", "CC 3.1.9.4"),

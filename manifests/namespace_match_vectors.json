@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc10",
-    "registry_sha256": "a279534d7383c752f4047fad04ddb480109c9f833bff9b56914c05c583a0947b",
+    "registry_sha256": "8531f6d46766f52e0c397c2675516c9e09fddaa33a046c60b9142e0944c026f2",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -5675,6 +5675,42 @@
       "family": "regime:{artifact}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "rendezvous:route:v1:v1",
+      "family": "rendezvous:route:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "rendezvous:route:v1:V1",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rendezvous:route:v1:v1:v2",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rendezvous:route:v1:v1beta",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Rendezvous:route:v1:v1",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rendezvous:route:v1",
+      "family": "rendezvous:route:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "retirement:sample:v1",
