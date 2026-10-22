@@ -718,9 +718,28 @@ A claim's bytes rarely fit one packet, and the split is where privacy is most ea
 
 1. **A link property, negotiated per link.** Shaping is agreed in the transit key-exchange handshake (the CTKX frame of the [CC 5.3.3.5](#5.3.3.5) E1 seal) on each link, not set per node. Each end offers a budget class, `server`, `home`, `phone-wifi`, `phone-cellular` or `off`; the link runs at the lower of the two offers, and a node divides a node-wide cap across its shaped links. Shaping is **off by default** until the steward sets a fleet default.
 2. **Both directions or neither.** On a shaped link both directions are shaped at the negotiated rate: a responder that accepts a shaped link shapes its replies on it, and a node that cannot meet an offer declines the link rather than run it half-shaped. One shaped side beside one unshaped side is exposed by the unshaped side's timed replies.
-3. **The stream.** Every frame on a shaped link is a constant-size sealed frame; real frames are fragmented to that size, and cover frames are indistinguishable from them under the seal. Frames leave on a per-link Poisson timer at the negotiated rate λ. Cover dominates by the budget rule: real traffic is at most a fraction ρ of the stream over a window W. ρ and W are explicit settings, because they trade latency against how much load an observer can infer; the slow tail of delivery comes from W, not from the timer. Their defaults are set by the steward from the modelled study.
+3. **The stream.** Every frame on a shaped link is a constant-size sealed frame; real frames are fragmented to that size, and cover frames are indistinguishable from them under the seal. Frames leave on a per-link Poisson timer at the negotiated rate λ. Cover dominates by the budget rule: real traffic is at most a fraction ρ of the stream over a window W. ρ and W are explicit settings, because they trade latency against how much load an observer can infer; the slow tail of delivery comes from W, not from the timer. Their defaults are in the table below.
 4. **Scope.** Maintenance traffic (anti-entropy, replication, witness, repair) and ordinary rows are shaped. The real-time audio and video plane ([CC 5.3.3.2](#5.3.3.2)) is never shaped.
 5. **What shaping does not hide.** Link setup stays observable: the request to open a link to a derived destination is visible, and shaping runs only inside established links. A node with any unshaped link can be told apart from a node that shapes every link. Shaping hides timing and volume inside a shaped link, not which links exist ([CC 5.4.6](#5.4.6), [CC 1.13.3.1](part_1_foundation.md)).
+
+**Fleet defaults (normative defaults; every value stays a per-node setting).** Shaping is **off** by default. When a node turns it on, it offers its budget class with these values:
+
+| Budget class | ρ | W | Byte budget per link |
+|---|---|---|---|
+| `server` | 0.5 | 600 s | 7,000 B/s |
+| `home` | 0.5 | 600 s | 2,800 B/s |
+| `phone-wifi` | 0.5 | 600 s | 1,400 B/s |
+| `phone-cellular` | 0.5 | 3,600 s | 350 B/s |
+
+A node's shaped links together use at most eight links' worth of its class budget.
+
+*Why these values (informative).* They come from a model run on the production scheduler and budget meter over a virtual clock with real row sizes. They are not measurements from a live mesh, and they are revised when live measurements exist. What the model found:
+
+- ρ must sit above the link's real load with margin. When real load exceeds ρ the link saturates: useful throughput is capped at ρ·λ and the sender is held back. ρ = 0.25 halves useful throughput and saturates at ordinary load. ρ = 0.8 leaves the peer almost no uncertainty about the real share. 0.5 is the balance.
+- Well below ρ, neither ρ nor W changes latency; the Poisson timer sets it (about 1.6 s mean on `server`, 4 s on `home`, 8 s on `phone-wifi`, 26–32 s on `phone-cellular`). Near ρ, W decides: a 60 s window costs one to two minutes at the mean and up to five at the 95th percentile, 600 s costs 6 to 36 s, and 3,600 s returns to the timer's base.
+- `phone-cellular` uses W = 3,600 s because at its low rate a 600 s window admits only 75 to 260 real frames, and near the limit delay rose to about 380 s mean and 910 s at the 95th percentile, against 29 s and 54 s at 3,600 s. No phone class uses W = 60 s.
+- The cover share is the unused capacity (90 % at 10 % load, 50 % at 50 %), the same at every W.
+- The wire learns nothing from a shaped link at any setting. The peer learns the real share, bounded by ρ, and the timing of real frames smeared over W; a relay learns nothing more than the wire.
 
 **Uniform AEAD framing across real + cover (normative).** Every envelope — real publication AND synthetic cover alike — MUST use uniform **XChaCha20-Poly1305** AEAD framing. A synthetic cover envelope MUST be marked `type=cover` in the **AEAD-protected** header; the `type` discriminator MUST live inside the AEAD envelope so an on-path observer cannot separate real from cover by inspecting cleartext. This XChaCha20-Poly1305 envelope/symbol framing is distinct from the streaming chunk-seal AES-256-GCM of [CC 5.3.3.1](#5.3.3.1) and from the HPKE-layer AES-256-GCM of the MLS Welcome wrap; they are different layers and MUST NOT be conflated.
 
