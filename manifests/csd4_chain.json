@@ -6,7 +6,7 @@
    "invariants_sha256": "3fed4fc5532986716f38403f1bb4496ac43d245ad765a4c04e7b77a5afa5f22b",
    "vocabulary_sha256": "928edefc358fa36eee3cb891373c7c0bf5e2f8e83bb5edc093366e0267aca1e8",
    "vocabulary_catalogue_version": 4,
-   "claims_sha256": "50497103f322f95676d3f136c988887b1db28c0dd0b23f0dbe349230c3a6fb75",
+   "claims_sha256": "19f767b444f5e9527c9e1906dfd781014717ec643658674ded6c5e5182d007ab",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "bf37d9b6e95ba54a639a194106072db6935346a6cee8696bce25f92cfb1bd9e1"
+  "chain_sha256": "32fd1bdab198f7f3db74599c487e89ed6b40d3dc5640b42dba2b8910b038c78a"
  },
  "chain": [
   {
@@ -5550,30 +5550,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayers.tla",
        "symbols": [
-        "Inv_DealDeterministic"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_HostileShareBound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_NeverWorse"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
+        "Inv_DealDeterministic",
+        "Inv_HostileShareBound",
+        "Inv_NeverWorse",
         "Prop_FloorHonest"
        ]
       },
@@ -5582,14 +5561,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayersCount.lean",
        "symbols": [
-        "hostile_share_bound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
+        "hostile_share_bound",
+        "size_le",
+        "floor_needs_three_seats",
         "dealt_le"
        ]
       }
@@ -5750,30 +5724,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayers.tla",
        "symbols": [
-        "Inv_DealDeterministic"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_HostileShareBound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_NeverWorse"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
+        "Inv_DealDeterministic",
+        "Inv_HostileShareBound",
+        "Inv_NeverWorse",
         "Prop_FloorHonest"
        ]
       },
@@ -5782,14 +5735,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayersCount.lean",
        "symbols": [
-        "hostile_share_bound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
+        "hostile_share_bound",
+        "size_le",
+        "floor_needs_three_seats",
         "dealt_le"
        ]
       }
@@ -9140,30 +9088,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayers.tla",
        "symbols": [
-        "Inv_DealDeterministic"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_HostileShareBound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_NeverWorse"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
+        "Inv_DealDeterministic",
+        "Inv_HostileShareBound",
+        "Inv_NeverWorse",
         "Prop_FloorHonest"
        ]
       },
@@ -9172,14 +9099,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayersCount.lean",
        "symbols": [
-        "hostile_share_bound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
+        "hostile_share_bound",
+        "size_le",
+        "floor_needs_three_seats",
         "dealt_le"
        ]
       }
@@ -10743,30 +10665,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayers.tla",
        "symbols": [
-        "Inv_DealDeterministic"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_HostileShareBound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_NeverWorse"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
+        "Inv_DealDeterministic",
+        "Inv_HostileShareBound",
+        "Inv_NeverWorse",
         "Prop_FloorHonest"
        ]
       },
@@ -10775,14 +10676,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayersCount.lean",
        "symbols": [
-        "hostile_share_bound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
+        "hostile_share_bound",
+        "size_le",
+        "floor_needs_three_seats",
         "dealt_le"
        ]
       }
@@ -19357,30 +19253,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayers.tla",
        "symbols": [
-        "Inv_DealDeterministic"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_HostileShareBound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_NeverWorse"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
+        "Inv_DealDeterministic",
+        "Inv_HostileShareBound",
+        "Inv_NeverWorse",
         "Prop_FloorHonest"
        ]
       },
@@ -19389,14 +19264,9 @@
        "repo": "CIRISConstitution",
        "path": "formal/onion_layers/OnionLayersCount.lean",
        "symbols": [
-        "hostile_share_bound"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
+        "hostile_share_bound",
+        "size_le",
+        "floor_needs_three_seats",
         "dealt_le"
        ]
       }
