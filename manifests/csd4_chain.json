@@ -6,7 +6,7 @@
    "invariants_sha256": "84e23a1ee470c76ccc5f7e2d9c774d9247eccaaafb297c273d70f3341257f4a4",
    "vocabulary_sha256": "b0b220507d08424a8ced6f5390fc2a01a9987123530b0cf620be2d34bfc69afc",
    "vocabulary_catalogue_version": 3,
-   "claims_sha256": "459acc6ea269736eb1128d4ecc53b7072e8c516086334a7747bd60610aebedb0",
+   "claims_sha256": "d14c88c1b0f7ba54ca10df262a83e881a1ded210fc7297dd7eb14087e210680e",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
