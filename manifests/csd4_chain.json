@@ -2,10 +2,10 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "b7ebac457a5e5de84e47fea252aee54226cea527231ea8d5d20a025540165829",
+   "state_table_sha256": "636ba406b1d564670e0572fc442a975e9e2746d7fb73328d2e81b526fd46e4ae",
    "invariants_sha256": "84e23a1ee470c76ccc5f7e2d9c774d9247eccaaafb297c273d70f3341257f4a4",
-   "vocabulary_sha256": "b0b220507d08424a8ced6f5390fc2a01a9987123530b0cf620be2d34bfc69afc",
-   "vocabulary_catalogue_version": 3,
+   "vocabulary_sha256": "928edefc358fa36eee3cb891373c7c0bf5e2f8e83bb5edc093366e0267aca1e8",
+   "vocabulary_catalogue_version": 4,
    "claims_sha256": "554f4212a0966c82eaab91e0b9abf24013d14859a910b2d929726da9e77bbb23",
    "catalogue": {
     "repo": "CIRISServer",
@@ -27,8 +27,8 @@
    }
   },
   "counts": {
-   "atoms": 110,
-   "states": 157,
+   "atoms": 116,
+   "states": 162,
    "invariants": 152,
    "claims": 500,
    "entries": 20,
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "dd06e0da9e52b9b22cc993d2e03953022c852768fb231f95ea4c73ebb11dca8a"
+  "chain_sha256": "044d9f56f1f7b460ee1a14311a1fc9662531e99fdc59a01586b1e6586377b697"
  },
  "chain": [
   {
@@ -38383,6 +38383,432 @@
     "T10",
     "T11"
    ]
+  },
+  "file.durable.unmarked": {
+   "plane": "content",
+   "state_predicate": "blob.durability=unmarked",
+   "cc_ref": "6.1.5",
+   "added_in": 4,
+   "states": [
+    {
+     "variable": "blob.durability",
+     "state": "unmarked",
+     "plane": "content",
+     "cc_ref": "6.1.5",
+     "enters_by": "publish without the durable mark (default retention)",
+     "signer": "owner",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-load-bearing-reachability",
+     "cc_ref": "6.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/load_bearing.rs",
+       "symbols": [
+        "is_load_bearing"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-item",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-descent",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "file.durable": {
+   "plane": "content",
+   "state_predicate": "blob.durability=marked",
+   "cc_ref": "6.1.5",
+   "added_in": 4,
+   "states": [
+    {
+     "variable": "blob.durability",
+     "state": "marked",
+     "plane": "content",
+     "cc_ref": "6.1.5",
+     "enters_by": "the owner's durable mark on publish, with a target holder count",
+     "signer": "owner",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-load-bearing-reachability",
+     "cc_ref": "6.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/load_bearing.rs",
+       "symbols": [
+        "is_load_bearing"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-item",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-descent",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "file.durable.at_target": {
+   "plane": "content",
+   "state_predicate": "blob.durability=at_target",
+   "cc_ref": "6.1.5.1",
+   "added_in": 4,
+   "states": [
+    {
+     "variable": "blob.durability",
+     "state": "at_target",
+     "plane": "content",
+     "cc_ref": "6.1.5.1",
+     "enters_by": "holding claims reach the item's target (the holonomic view)",
+     "signer": "holders",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-registry-replication",
+     "cc_ref": "6.1.5.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "file.durable.below_floor": {
+   "plane": "content",
+   "state_predicate": "blob.durability=below_floor",
+   "cc_ref": "6.1.5.1",
+   "added_in": 4,
+   "states": [
+    {
+     "variable": "blob.durability",
+     "state": "below_floor",
+     "plane": "content",
+     "cc_ref": "6.1.5.1",
+     "enters_by": "holders fall toward the floor; repair runs",
+     "signer": "holders",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-registry-replication",
+     "cc_ref": "6.1.5.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "file.durable.descending": {
+   "plane": "content",
+   "state_predicate": "blob.durability=descending",
+   "cc_ref": "6.1.5",
+   "added_in": 4,
+   "states": [
+    {
+     "variable": "blob.durability",
+     "state": "descending",
+     "plane": "content",
+     "cc_ref": "6.1.5",
+     "enters_by": "un-mark or withdraws by the owner; holders drop to normal retention, then none",
+     "signer": "owner",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-load-bearing-reachability",
+     "cc_ref": "6.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/load_bearing.rs",
+       "symbols": [
+        "is_load_bearing"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-item",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-descent",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "file.durable.recovered": {
+   "plane": "content",
+   "state_predicate": "blob.custody=held on a fresh device of the owner after the loss of every earlier device",
+   "cc_ref": "6.1.5",
+   "added_in": 4,
+   "states": [
+    {
+     "variable": "blob.custody",
+     "state": "held",
+     "plane": "content",
+     "cc_ref": "3.1.3.3",
+     "enters_by": "custody:ack here",
+     "signer": "holder / author / quorum",
+     "model_ref": "mesh_net.MeshNet.tla:held",
+     "status": "modelled"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "MN.known",
+     "model": "mesh_net",
+     "source": "formal/mesh_net/MeshNet.tla",
+     "symbol": "Inv_KnownHold",
+     "kind": "safety",
+     "claim_id": "CLM-custody-receipt",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "MN.consent",
+     "model": "mesh_net",
+     "source": "formal/mesh_net/MeshNet.tla",
+     "symbol": "Inv_Consent",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "MN.invis",
+     "model": "mesh_net",
+     "source": "formal/mesh_net/MeshNet.tla",
+     "symbol": "Inv_Invisible",
+     "kind": "safety",
+     "claim_id": "CLM-structural-invisibility",
+     "verdict": "closes; shipped_scope twin fails by design"
+    },
+    {
+     "inv_id": "MN.claim",
+     "model": "mesh_net",
+     "source": "formal/mesh_net/MeshNet.tla",
+     "symbol": "Inv_ClaimNotBinding",
+     "kind": "safety",
+     "claim_id": "CLM-custody-receipt",
+     "verdict": "closes; shipped_bind twin fails by design"
+    },
+    {
+     "inv_id": "CN.replication",
+     "model": "consent",
+     "source": "formal/consent/Consent.tla",
+     "symbol": "Inv_ReplicationNeedsDirectedGrant",
+     "kind": "safety",
+     "claim_id": "CLM-consent-directed",
+     "verdict": "closes"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-custody-receipt",
+     "cc_ref": "3.1.3.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/holding_claim.rs",
+       "symbols": [
+        "emit_holding_claim"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/holding_claim.rs",
+       "symbols": [
+        "check_holding_claim_scope"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/custody_ack.rs",
+       "symbols": [
+        "check_custody_withdraws_signer"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-directed",
+     "cc_ref": "3.3.7",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/peer.rs",
+       "symbols": [
+        "emit_replication_consent"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-structural-invisibility",
+     "cc_ref": "5.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_570_structural_invisibility"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-load-bearing-reachability",
+     "cc_ref": "6.1.5",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/load_bearing.rs",
+       "symbols": [
+        "is_load_bearing"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-item",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-durable-descent",
+     "cc_ref": "6.1.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#809"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
   }
  },
  "entries": {

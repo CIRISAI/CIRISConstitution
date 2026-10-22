@@ -86,10 +86,15 @@ content	row	row.standing	withdrawn	2.4.1.1	withdraws under rules 0–5	producer 
 content	row	row.standing	recanted	2.4.1.3	recants by the producer	producer	—	—	text-only
 content	row	row.standing	superseded	2.4.1	supersedes by the same attester	producer	—	—	text-only
 content	row	row.standing	tombstoned	4.5.3 3.3.2	cosigned takedown_notice; tombstone by digest	trust-root quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	row.standing.tombstoned	modelled
-content	blob	blob.custody	held	3.1.3.3	custody:ack here	holder / author / quorum	mesh_net.MeshNet.tla:held	file.held message.delivered note.synced	modelled
+content	blob	blob.custody	held	3.1.3.3	custody:ack here	holder / author / quorum	mesh_net.MeshNet.tla:held	file.held message.delivered note.synced file.durable.recovered	modelled
 content	blob	blob.custody	custody_received	3.1.3.3 5.3.3.6	delivery receipt on the author's custody	holder / author / quorum	mesh_net.MeshNet.tla:claimed	file.custody_received	modelled
 content	blob	blob.custody	withdrawn	2.4.1.1	no device serves it	holder / author / quorum	mesh_net.MeshNet.tla:withdrawn	file.withdrawn	modelled
 content	blob	blob.custody	purged	4.5.3	bytes-plane tombstone; withheld at every byte door	holder / author / quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	blob.custody.purged	modelled
+content	blob	blob.durability	unmarked	6.1.5	publish without the durable mark (default retention)	owner	—	file.durable.unmarked	text-only
+content	blob	blob.durability	marked	6.1.5	the owner's durable mark on publish, with a target holder count	owner	—	file.durable	text-only
+content	blob	blob.durability	at_target	6.1.5.1	holding claims reach the item's target (the holonomic view)	holders	—	file.durable.at_target	text-only
+content	blob	blob.durability	below_floor	6.1.5.1	holders fall toward the floor; repair runs	holders	—	file.durable.below_floor	text-only
+content	blob	blob.durability	descending	6.1.5	un-mark or withdraws by the owner; holders drop to normal retention, then none	owner	—	file.durable.descending	text-only
 content	row	row.scope	self	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	room.self.keyed	modelled
 content	row	row.scope	family	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	row.scope.family	modelled
 content	row	row.scope	community	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	row.scope.community	modelled
