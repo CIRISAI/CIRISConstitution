@@ -177,3 +177,14 @@ governance	moderation outcome	moderation.outcome	kept_visible	4.5.4	moderator or
 governance	wa_adjudication	wa_adjudication.state	abandonment	3.1.9.4 4.3	a quorum finds a seat abandoned	WA quorum (full seated roster)	—	—	text-only
 governance	wa_adjudication	wa_adjudication.state	seizure	3.1.9.4 4.3	a quorum finds a seat seized	WA quorum (full seated roster)	—	—	text-only
 governance	wa_adjudication	wa_adjudication.state	successor	3.1.9.4 4.3	a quorum names a successor to a seat	WA quorum (full seated roster)	—	—	text-only
+governance	census return	census.return	pending	6.1.9	the owner's two shares for the period not yet both accepted	—	census_ballot.CensusBallot.tla:returns	—	model-only
+governance	census return	census.return	accepted	6.1.9	both aggregators accepted the same token; the one-hot proof passed; counted once	the owner (hybrid)	census_ballot.CensusBallot.tla:returns	—	model-only
+governance	census return	census.return	refused	6.1.9	validity failed, a duplicate token, or one share of two at period close	—	census_ballot.CensusBallot.tla:dup	—	model-only
+governance	census composite	census.composite	withheld	6.1.9	fewer than k owners behind the cell; published as below the floor	—	census_ballot.CensusBallot.tla:agg	—	model-only
+governance	census composite	census.composite	published	6.1.9	partial_a + partial_b with source_count ≥ k and no owner over half the mass	the share-index-0 aggregator (hybrid)	census_ballot.CensusBallot.tla:agg	—	model-only
+governance	census base	census.base	ratcheting	6.1.9	the base follows the expected-active count, falling at most a tenth per period	—	census_ballot.CensusBallot.tla:base	—	model-only
+governance	census base	census.base	floored	6.1.9	the floor binds: the base is held above the count	—	census_ballot.CensusBallot.tla:lower	—	model-only
+governance	census base	census.base	frozen	6.1.9	a fall of more than a third read as a partition; the base holds until two stable periods	—	census_ballot.CensusBallot.tla:frozen	—	model-only
+governance	secret poll	poll.state	closed	6.1.9	no poll open; every member's cell still emitted at the fixed size	—	census_ballot.CensusBallot.tla:open	—	model-only
+governance	secret poll	poll.state	open	6.1.9	a poll fills the padded field of each member's cell; invisible to an outsider	—	census_ballot.CensusBallot.tla:open	—	model-only
+governance	secret poll	poll.state	decided	6.1.9	the tally met or missed the governance threshold against the base of its period	the share-index-0 tally member (hybrid)	census_ballot.CensusBallot.tla:decision	—	model-only

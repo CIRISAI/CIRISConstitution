@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "5cb33282b4f1fbcfa955cb6eb11cc18d4611dc6364fe9a2df77121cd76e82571",
-   "invariants_sha256": "809702597714af118b44e5b0a903df6d8396ba2f9f7d03251c514b813a2b49c3",
+   "state_table_sha256": "01707152a8e1b350325b0e0a75a1975bf89abf04604c1a6bc2aa53a49c5b53aa",
+   "invariants_sha256": "d6bd558e2dc292247eeae7d1c29fbacceb2f6d151f1a0c5f0eea0efa0ee49e1d",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "3c32d158241a96d85f80d70f574a3059d6db5e692b938a9b92c47aae1a44f7a2",
+   "claims_sha256": "ef1b02be3ea81dee3ae2b3a8b6b594967536af11606d114383065b2b1d584f8c",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -28,9 +28,9 @@
   },
   "counts": {
    "atoms": 120,
-   "states": 178,
-   "invariants": 155,
-   "claims": 501,
+   "states": 189,
+   "invariants": 166,
+   "claims": 502,
    "entries": 20,
    "refusal_tokens": 84
   },

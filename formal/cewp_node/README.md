@@ -14,7 +14,7 @@ constants the harness builds it from, and the coverage gate says where no model 
 | `catalog/` | the twenty entries `T0`–`T19` and `requirements.yaml`, vendored byte for byte from CIRISServer `main` (tag `v0.5.232`) (`PIN.tsv` names the commit); CC re-vendors at the first pushed commit and at every `catalogue_version` bump |
 | `generated/<Tn>/` | written by `python3 tools/topology_to_cfg.py --all`; CI regenerates and diffs. Per entry: `trust_root_<root>.cfg`, `accord_halt_<root>.cfg`, `accord_fuse_<root>.cfg` (infrastructure roots), `self_roster_<person>_{stolen,lost}.cfg` (every person), `root_reach.cfg`, `MeshNet_<Tn>.tla` + `mesh_net.cfg` (a wrapper instantiating the parametric `MeshNet`), `closure.json` |
 | `generated/SUMMARY.json` | the catalogue's maxima (roots 2, canonicals 2, nodes 4, persons 3, devices per person 2, holders 3) and the atom coverage count |
-| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (178 states, 56 variables, 9 planes) and the 155 properties restated over it; `tools/check_formal_tables.py` gates them |
+| `../STATE_TABLE.tsv`, `../INVARIANTS.tsv` | the normalized state vector (189 states, 60 variables, 9 planes) and the 166 properties restated over it; `tools/check_formal_tables.py` gates them |
 | `manifests/topology_vocabulary.json` | the 120 atoms (CC's since 2026-10-18; catalogue version 5), each mapped to a state-table predicate; `closure.json` reads it |
 
 ## Running a generated configuration
