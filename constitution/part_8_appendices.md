@@ -443,7 +443,7 @@ The earlier parts supplied the ethical foundation and the operational procedures
 * Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
 
 **What CIRIS Would Require**
-PDMA Step 2 would have raised an "Order-Maximisation Veto": one sensor feeding a flight-critical function creates a >10× mismatch between safety loss and cost savings.
+PDMA Step 2 would have raised an "Order-Maximisation Veto": trading redundancy on a flight-critical sensor against production cost savings is an efficiency gain against severe safety risk; because these quantities share no unit, the check triggers an immediate stop sign and mandatory deferral rather than an internal cost-benefit trade-off.
 Incompleteness Awareness → WBD trigger to independent Wise Authorities (aviation certifiers), forcing open review.
 Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim scenario before rollout.
 
