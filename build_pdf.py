@@ -29,7 +29,7 @@ B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "⌊": r"$\lfloor$", "⌋": r"$\rfloor$", "⌈": r"$\lceil$", "⌉": r"$\rceil$", "₀": r"\textsubscript{0}", "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",
               "├": "+", "└": "+", "⟶": r"$\longrightarrow$",
-              # Book IX coherence-mathematics glyphs (Part VI 6.2)
+              # effective-count glyphs (Part VI 6.1.2.1.2)
               "λ": r"$\lambda$", "κ": r"$\kappa$", "ℝ": r"$\mathbb{R}$",
               "∉": r"$\notin$", "∅": r"$\emptyset$",
               "": r"$\bar{\rho}$"})   # placeholder for ρ̄ (ρ + combining macron); see prefilter()
@@ -39,7 +39,7 @@ nuc_lines = "\n".join(r"\newunicodechar{%s}{%s}" % (k, v) for k, v in B.NUC.item
 VERSION = (HERE / "VERSION").read_text(encoding="utf-8").strip()
 PARTS = sorted(DOC.glob("part_*.md"), key=lambda p: int(re.match(r"part_(\d+)_", p.name).group(1)))
 PART_TITLE = {1: "Foundation", 2: "The Grammar", 3: "The Namespace", 4: "Composition & Governance",
-              5: "Transport & Substrate", 6: "The Coherence Mathematics", 7: "Lifecycle & Stewardship",
+              5: "Transport & Substrate", 6: "The Substrate", 7: "Lifecycle & Stewardship",
               8: "Appendices"}
 
 def prefilter(md):

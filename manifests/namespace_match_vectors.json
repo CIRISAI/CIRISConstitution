@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc9",
-    "registry_sha256": "feeb06a02026b220055a3a521e799aaf6615c958a44b667d834b31d8f965c601",
+    "cc_version": "1.0-rc10",
+    "registry_sha256": "6bee7953250cf59be0b6cf1da94dbe3902a7f538c7c70b5cf3ee8da87fd9b112",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -745,6 +745,42 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "ballot:tally:id1:v1:v1",
+      "family": "ballot:tally:{poll_id}:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "ballot:tally:id1:v1:V1",
+      "family": "ballot:tally:{poll_id}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:tally:id1:v1:v1:v2",
+      "family": "ballot:tally:{poll_id}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:tally:id1:v1:v1beta",
+      "family": "ballot:tally:{poll_id}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ballot:tally:id1:v1:v1",
+      "family": "ballot:tally:{poll_id}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:tally:id1:v1",
+      "family": "ballot:tally:{poll_id}:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
       "dimension": "benchmark:he300:sample:v1.0",
       "family": "benchmark:he300:{category}:{version}",
       "refusal": null,
@@ -1325,6 +1361,240 @@
       "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
       "refusal": "namespace_vocab_value_unregistered",
       "why": "a value outside a closed enumeration is unregistered"
+    },
+    {
+      "dimension": "census:composite:sample:v1:v1",
+      "family": "census:composite:{class}:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "census:composite:sample:v1:V1",
+      "family": "census:composite:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:composite:sample:v1:v1:v2",
+      "family": "census:composite:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:composite:sample:v1:v1beta",
+      "family": "census:composite:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Census:composite:sample:v1:v1",
+      "family": "census:composite:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:composite:sample:v1",
+      "family": "census:composite:{class}:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "census:composite:SAMPLE:v1:v1",
+      "family": "census:composite:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "census:expected_active:v1:v1",
+      "family": "census:expected_active:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "census:expected_active:v1:V1",
+      "family": "census:expected_active:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:expected_active:v1:v1:v2",
+      "family": "census:expected_active:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:expected_active:v1:v1beta",
+      "family": "census:expected_active:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Census:expected_active:v1:v1",
+      "family": "census:expected_active:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:expected_active:v1",
+      "family": "census:expected_active:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "census:member:partial:v1:v1",
+      "family": "census:member:partial:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "census:member:partial:v1:V1",
+      "family": "census:member:partial:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:member:partial:v1:v1:v2",
+      "family": "census:member:partial:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:member:partial:v1:v1beta",
+      "family": "census:member:partial:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Census:member:partial:v1:v1",
+      "family": "census:member:partial:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:member:partial:v1",
+      "family": "census:member:partial:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "census:member:share:v1:v1",
+      "family": "census:member:share:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "census:member:share:v1:V1",
+      "family": "census:member:share:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:member:share:v1:v1:v2",
+      "family": "census:member:share:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:member:share:v1:v1beta",
+      "family": "census:member:share:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Census:member:share:v1:v1",
+      "family": "census:member:share:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:member:share:v1",
+      "family": "census:member:share:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "census:partial:sample:v1:v1",
+      "family": "census:partial:{class}:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "census:partial:sample:v1:V1",
+      "family": "census:partial:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:partial:sample:v1:v1:v2",
+      "family": "census:partial:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:partial:sample:v1:v1beta",
+      "family": "census:partial:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Census:partial:sample:v1:v1",
+      "family": "census:partial:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:partial:sample:v1",
+      "family": "census:partial:{class}:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "census:partial:SAMPLE:v1:v1",
+      "family": "census:partial:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "census:share:sample:v1:v1",
+      "family": "census:share:{class}:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "census:share:sample:v1:V1",
+      "family": "census:share:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:share:sample:v1:v1:v2",
+      "family": "census:share:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:share:sample:v1:v1beta",
+      "family": "census:share:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Census:share:sample:v1:v1",
+      "family": "census:share:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "census:share:sample:v1",
+      "family": "census:share:{class}:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "census:share:SAMPLE:v1:v1",
+      "family": "census:share:{class}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
       "dimension": "cert_validity:id1:v1",
@@ -2475,6 +2745,84 @@
     {
       "dimension": "cw_class:SAMPLE:v1",
       "family": "cw_class:{class}",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "deferral:request:v1:v1",
+      "family": "deferral:request:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "deferral:request:v1:V1",
+      "family": "deferral:request:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "deferral:request:v1:v1:v2",
+      "family": "deferral:request:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "deferral:request:v1:v1beta",
+      "family": "deferral:request:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Deferral:request:v1:v1",
+      "family": "deferral:request:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "deferral:request:v1",
+      "family": "deferral:request:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "deferral:response:approved:v1:v1",
+      "family": "deferral:response:{outcome}:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "deferral:response:approved:v1:V1",
+      "family": "deferral:response:{outcome}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "deferral:response:approved:v1:v1:v2",
+      "family": "deferral:response:{outcome}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "deferral:response:approved:v1:v1beta",
+      "family": "deferral:response:{outcome}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Deferral:response:approved:v1:v1",
+      "family": "deferral:response:{outcome}:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "deferral:response:approved:v1",
+      "family": "deferral:response:{outcome}:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "deferral:response:APPROVED:v1:v1",
+      "family": "deferral:response:{outcome}:v1",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
@@ -3715,6 +4063,42 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
+      "dimension": "identity_amendment:v1:v1",
+      "family": "identity_amendment:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "identity_amendment:v1:V1",
+      "family": "identity_amendment:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity_amendment:v1:v1:v2",
+      "family": "identity_amendment:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity_amendment:v1:v1beta",
+      "family": "identity_amendment:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Identity_amendment:v1:v1",
+      "family": "identity_amendment:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "identity_amendment:v1",
+      "family": "identity_amendment:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
       "dimension": "identity_continuity:relational_anchor:v1",
       "family": "identity_continuity:relational_anchor",
       "refusal": null,
@@ -4825,6 +5209,42 @@
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
     },
     {
+      "dimension": "observation:access_assumption:v1:v1",
+      "family": "observation:access_assumption:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:V1",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:v1:v2",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "observation:access_assumption:v1:v1beta",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Observation:access_assumption:v1:v1",
+      "family": "observation:access_assumption:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "observation:access_assumption:v1",
+      "family": "observation:access_assumption:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
       "dimension": "observation:reachability:v1",
       "family": "observation:reachability",
       "refusal": null,
@@ -5639,6 +6059,42 @@
       "family": "regime:{artifact}:{version}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "rendezvous:route:v1:v1",
+      "family": "rendezvous:route:v1",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "rendezvous:route:v1:V1",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rendezvous:route:v1:v1:v2",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rendezvous:route:v1:v1beta",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Rendezvous:route:v1:v1",
+      "family": "rendezvous:route:v1",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "rendezvous:route:v1",
+      "family": "rendezvous:route:v1",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "retirement:sample:v1",
@@ -6583,46 +7039,52 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "wa_adjudication:sample:v1",
+      "dimension": "wa_adjudication:abandonment:v1",
       "family": "wa_adjudication:{state}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
-      "dimension": "wa_adjudication:sample:V1",
+      "dimension": "wa_adjudication:abandonment:V1",
       "family": "wa_adjudication:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "wa_adjudication:sample:v1:v2",
+      "dimension": "wa_adjudication:abandonment:v1:v2",
       "family": "wa_adjudication:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
-      "dimension": "wa_adjudication:sample:v1beta",
+      "dimension": "wa_adjudication:abandonment:v1beta",
       "family": "wa_adjudication:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
-      "dimension": "Wa_adjudication:sample:v1",
+      "dimension": "Wa_adjudication:abandonment:v1",
       "family": "wa_adjudication:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
-      "dimension": "wa_adjudication:sample",
+      "dimension": "wa_adjudication:abandonment",
       "family": "wa_adjudication:{state}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "wa_adjudication:SAMPLE:v1",
+      "dimension": "wa_adjudication:ABANDONMENT:v1",
       "family": "wa_adjudication:{state}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "wa_adjudication:not_a_listed_value:v1",
+      "family": "wa_adjudication:{state}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "watchlist:id1:v1",

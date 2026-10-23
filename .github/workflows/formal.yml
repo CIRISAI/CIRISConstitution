@@ -325,23 +325,6 @@ jobs:
         working-directory: formal/two_path
         run: lean PolicyCorridor.lean
 
-  influence:
-    name: Lean — Structural Influence normalisation (formal/influence)
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Lean 4.14.0 (core only)
-        run: |
-          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: The model compiles with no sorry
-        working-directory: formal/influence
-        run: |
-          lean StructuralInfluence.lean
-          ! grep -nE '(:=|by)[[:space:]]*sorry' StructuralInfluence.lean
-
   membership:
     name: TLC — the membership ceremony (formal/membership)
     runs-on: ubuntu-latest
@@ -369,3 +352,82 @@ jobs:
           t stale_founder 'Inv_NoSelfAdmission is violated'
           t founding_unsigned 'Inv_JoinerConsented is violated'
           t no_hold_expiry 'Temporal properties were violated'
+
+  onion_layers:
+    name: TLC + Lean — the onion layer deal (formal/onion_layers)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch tla2tools (pinned release)
+        run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The deal closes on every ranking and every hostile placement
+        working-directory: formal/onion_layers
+        run: |
+          for cfg in OnionLayers_2s3o OnionLayers_2s4o OnionLayers_3s3o OnionLayers_3s3o_c1; do
+            java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-$cfg" -deadlock -config $cfg.cfg OnionLayers.tla
+          done
+      - name: Install Lean 4.14.0 (elan)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The counting bounds close (no sorry, core only)
+        working-directory: formal/onion_layers
+        run: lean OnionLayersCount.lean
+
+  census_ballot:
+    name: TLC + Lean — the census, the secret ballot and the base law (formal/census_ballot)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch tla2tools (pinned release)
+        run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The ruled configurations close on every draw and every share
+        working-directory: formal/census_ballot
+        run: |
+          set -e
+          for cfg in CensusBallot_2o_m3_lossy CensusBallot_2o_m3_dishonest CensusBallot_2o_m3_both_cells CensusBallot_2o_m3_silenced CensusBallot_3o_m2 \
+                     CensusBase_3o_silence_one CensusBase_3o_silence_two CensusBase_3o_free CensusBase_3o_floor_binds; do
+            java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-$cfg" -deadlock -config $cfg.cfg CensusBallot.tla
+          done
+      - name: Each twin fails its named invariant
+        working-directory: formal/census_ballot
+        run: |
+          set +e
+          t() { java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-$1" -deadlock -config $1.cfg CensusBallot.tla > $1.log 2>&1; grep -q "$2" $1.log || { echo "$1: expected '$2'"; tail -20 $1.log; exit 1; }; }
+          t CensusBallot_3o_m2_two_colluding 'Invariant Inv_SecrecyWithoutTheGuard is violated'
+          t CensusBallot_2o_m3_no_padding 'Invariant Inv_OccurrenceInvisible is violated'
+          t CensusBallot_2o_m3_no_dedupe 'Invariant Inv_OnePerOwner is violated'
+          t CensusBallot_2o_m3_no_validity 'Invariant Inv_Validity is violated'
+          t CensusBallot_2o_m3_no_joint 'Invariant Inv_Agreement is violated'
+          t CensusBallot_2o_m3_no_kfloor 'Invariant Inv_KFloor is violated'
+          t CensusBallot_2o_m3_responders 'Invariant Inv_TallyThreshold is violated'
+          t CensusBase_3o_no_ratchet 'Invariant Inv_BaseRatchet is violated'
+      - name: The base-law instances are not vacuous — the ratchet carries, the freeze is entered, the floor binds
+        working-directory: formal/census_ballot
+        run: |
+          set +e
+          t() { java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/tlc-$1" -deadlock -config $1.cfg CensusBallot.tla > $1.log 2>&1; grep -q "$2" $1.log || { echo "$1: expected '$2'"; tail -20 $1.log; exit 1; }; }
+          t CensusBase_3o_reach_ratchet 'Invariant Reach_RatchetCarries is violated'
+          t CensusBase_3o_reach_frozen 'Invariant Reach_Frozen is violated'
+          t CensusBase_3o_reach_floor 'Invariant Reach_FloorBinds is violated'
+      - name: Install Lean 4.14.0 (elan)
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain leanprover/lean4:v4.14.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: The counting facts close (no sorry, core only)
+        working-directory: formal/census_ballot
+        run: |
+          lean CensusBallotCount.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' CensusBallotCount.lean

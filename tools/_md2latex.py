@@ -32,23 +32,30 @@ CODE_ASCII = {'§':'S','—':'--','→':'->','←':'<-','≤':'<=','≥':'>=','�
 def code_ascii(s):
     return ''.join(CODE_ASCII.get(c, c if ord(c)<128 else '?') for c in s)
 
+CHUNK = 10  # break a long code token every CHUNK characters
+
+
 def inline(s):
     """Inline markdown -> LaTeX. Operates on already-escaped-safe segments."""
     # links [text](url) -> text (drop url to avoid overflow; refs are self-describing)
     s = re.sub(r'\[([^\]]+)\]\([^)]*\)', r'\1', s)
     # inline code `x` -> \texttt{escaped}
-    def code_sub(m): return r'\texttt{' + esc(m.group(1)) + '}'
-    parts = re.split(r'(`[^`]*`)', s)
-    out = []
-    for p in parts:
-        if p.startswith('`') and p.endswith('`') and len(p) >= 2:
-            out.append(r'\texttt{' + esc(p[1:-1]) + '}')
-        else:
-            t = esc(p)
-            t = re.sub(r'\*\*([^*]+)\*\*', r'\\textbf{\1}', t)
-            t = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\\textit{\1}', t)
-            out.append(t)
-    return ''.join(out)
+    def breakable(t):
+        # a long token with no spaces (a hex digest, a key id, a dotted path) may break
+        # anywhere after the 16th character, so a table cell never clips it
+        if len(t) <= CHUNK + 4 or ' ' in t:
+            return esc(t)
+        return r'\allowbreak{}'.join(esc(t[k:k+CHUNK]) for k in range(0, len(t), CHUNK))
+    # code spans are stashed first so that bold / italic markers may wrap them
+    # (**`token`** is common); the stash marker survives esc() untouched
+    codes = []
+    def stash(m):
+        codes.append(r'\texttt{' + breakable(m.group(1)) + '}')
+        return '\x01%d\x01' % (len(codes) - 1)
+    t = esc(re.sub(r'`([^`]*)`', stash, s))
+    t = re.sub(r'\*\*([^*]+)\*\*', r'\\textbf{\1}', t)
+    t = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\\textit{\1}', t)
+    return re.sub('\x01(\\d+)\x01', lambda m: codes[int(m.group(1))], t)
 
 NAV = re.compile(r'^\[.←.*\]\(.*\)\s*\|.*\|.*\)\s*$|^\[←|Next:.*→')
 def is_nav(line):
@@ -88,14 +95,48 @@ def convert(md):
                 cells = [c.strip() for c in lines[i].strip().strip('|').split('|')]
                 cells = (cells + ['']*ncol)[:ncol]
                 rows.append(cells); i += 1
-            w = round(16.0/max(ncol,1), 2)
-            colspec = '|' + '|'.join([f'p{{{w}cm}}']*ncol) + '|'
+            # column widths follow content: each column's share is the square root of its
+            # longest-cell length (damped so one long note does not starve the others),
+            # with a floor so a short key column stays readable
+            import math
+            lens = [max([len(header[k])] + [len(r[k]) for r in rows]) for k in range(ncol)]
+            # a column can never be narrower than its longest unbreakable run: code
+            # breaks every CHUNK characters (about 0.11 cm each at \scriptsize mono),
+            # plain tokens break at : _ . / - (about 0.09 cm per character)
+            def longest_run(c):
+                best = 0
+                for t in c.split(' '):
+                    if t.startswith('`'):
+                        best = max(best, min(CHUNK, len(t) - 2) * 0.11 + 0.25)
+                    else:
+                        best = max(best, max((len(x) for x in re.split(r'[:_./\-]', t)), default=0) * 0.09 + 0.2)
+                return best
+            floors = [max([longest_run(header[k])] + [longest_run(r[k]) for r in rows]) for k in range(ncol)]
+            # each column also costs two \tabcolsep (0.6 cm) plus a rule; keep the sum
+            # of the p-widths inside the text width after that overhead
+            avail = max(8.0, 15.4 - 0.5 * ncol)
+            floors = [min(f, avail / ncol * 1.5) for f in floors]
+            rest = max(0.0, avail - sum(floors))
+            shares = [math.sqrt(max(l, 4)) for l in lens]
+            total = sum(shares) or 1.0
+            ws = [round(f + rest * sh / total, 2) for f, sh in zip(floors, shares)]
+            scale = avail / sum(ws)
+            ws = [round(w * scale, 2) for w in ws]
+            colspec = '|' + '|'.join(f'p{{{w}cm}}' for w in ws) + '|'
             sz = r'\scriptsize' if ncol >= 4 else r'\footnotesize'
             out.append(r'{%s' % sz)
             out.append(r'\begin{longtable}{%s}\hline' % colspec)
             out.append(' & '.join(r'\textbf{%s}' % inline(c) for c in header) + r' \\ \hline\endhead')
+            def cell(c):
+                # a table cell may hold a long bare token (beside:signature, a dotted
+                # path); give it break points at its separators so the column never clips
+                def tok(t):
+                    if len(t) > 12 and ' ' not in t and not t.startswith('`'):
+                        return re.sub(r'([:_./\-])', lambda m: m.group(1) + '\u200b', t)
+                    return t
+                return inline(' '.join(tok(t) for t in c.split(' ')))
             for r in rows:
-                out.append(' & '.join(inline(c) for c in r) + r' \\ \hline')
+                out.append(' & '.join(cell(c) for c in r) + r' \\ \hline')
             out.append(r'\end{longtable}}'); out.append(''); continue
         # blockquote
         if line.startswith('>'):
@@ -146,7 +187,7 @@ NUC = {
  'Θ':r'$\Theta$','Σ':r'$\Sigma$','Δ':r'$\Delta$','λ':r'$\lambda$','σ':r'$\sigma$','κ':r'$\kappa$',
  '₀':r'\textsubscript{0}','₁':r'\textsubscript{1}','₂':r'\textsubscript{2}','₃':r'\textsubscript{3}',
  '∉':r'$\notin$','∅':r'$\emptyset$','⅔':r'$\frac{2}{3}$','ℝ':r'$\mathbb{R}$','↑':r'$\uparrow$','↓':r'$\downarrow$',
- '⌊':r'$\lfloor$','⌋':r'$\rfloor$','⟨':r'$\langle$','⟩':r'$\rangle$','⟶':r'$\longrightarrow$',
+ '⌊':r'$\lfloor$','⌋':r'$\rfloor$','⟨':r'$\langle$','⟩':r'$\rangle$','⟶':r'$\longrightarrow$','\u200b':r'\allowbreak{}',
 }
 nuc_lines = '\n'.join(r'\newunicodechar{%s}{%s}' % (k, v) for k, v in NUC.items())
 

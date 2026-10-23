@@ -87,7 +87,7 @@ GATED_STEMS = [
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
     ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
-    ("observation:", "closed: observation:reachability is the only leaf", "CC 3.1.9.4"),
+    ("observation:", "closed: observation:reachability and observation:access_assumption:v1 are the only leaves", "CC 3.1.9.4"),
     ("takedown_notice:", "closed: takedown_notice:{basis}:v1 is the only family", "CC 3.1.1"),
 ]
 # CC 2.4 — the row-type slot is closed (CIRISConstitution#137): the five primitives and the
@@ -225,6 +225,29 @@ def _reserved_rules():
         # CC 3.1.9.4 (#137): a monitoring node's first-person probe result.
         (lambda p, c: p.startswith("observation:reachability"),
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
+        # CC 3.1.9.4 / 4.3: a WA's answer to one deferral is signed by the WA's own key.
+        (lambda p, c: p.startswith("deferral:response"),
+         "a Wise Authority's key that held a seat in the live set at asserted_at; subject = the agent; references the deferral:request", "CC 3.1.9.4"),
+        (lambda p, c: p.startswith("deferral:request"),
+         "the deferring agent's occurrence key; audience = the agent's cell", "CC 3.1.9.4"),
+        # CC 3.1.5 / promise 5: an identity amendment is the agent's own row about its identity key, admitted only against an approved deferral response.
+        (lambda p, c: p.startswith("identity_amendment"),
+         "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
+        # CC 6.1.9 / 3.1.3: the mesh census and the secret poll — node-, seat- and member-emitted, never a substrate self-report.
+        (lambda p, c: p.startswith("census:share:"),
+         "the returning node's key (rooted owner binding); addressed: for_key_id = one of the period's two serve seats; reach is that seat only", "CC 6.1.9"),
+        (lambda p, c: p.startswith("census:member:share"),
+         "a member of the room; addressed: for_key_id = one of the period's two tally members drawn from the roster; reach is that member only", "CC 6.1.9"),
+        (lambda p, c: p.startswith("census:partial:") or p.startswith("census:composite:"),
+         "a serve seat acting as one of the period's two aggregators (census_partial_signer_not_seat / census_composite_signer_not_seat); federation scope", "CC 6.1.9"),
+        (lambda p, c: p.startswith("census:member:partial") or p.startswith("census:expected_active") or p.startswith("ballot:tally"),
+         "a tally member of the room for the period (the share-index-0 member for expected_active and the tally); recomputed by every member; community scope", "CC 6.1.9"),
+        # CC 3.1.4: a receiver's per-period rendezvous route, self-signed by a fresh rendezvous key.
+        (lambda p, c: p.startswith("rendezvous:route"),
+         "self: attester == subject == the period's fresh rendezvous key (identity_type rendezvous; key record inline); federation-wide reach", "CC 3.1.4"),
+        # CC 3.1.9.4 (#183 N1, #184): a witness's first-person record of the view it scored through.
+        (lambda p, c: p.startswith("observation:access_assumption"),
+         "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids non-empty, the observed agent; never the subject itself)", "CC 3.1.9.4"),
         # CC 3.2 T6 / CIRISPersist#974: the lineage-witness consent ceremony — per-leaf emitter.
         (lambda p, c: p.startswith("lineage_witness:"),
          "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),
@@ -268,7 +291,7 @@ PLACEHOLDER_CLASS = {
     "external": {"currency", "lang_code", "rating", "unit"},
     "value": {
         "approach_id", "authority", "authority_id", "cell", "cohort", "community_key_id",
-        "contribution_id", "days", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id",
+        "contribution_id", "days", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id", "poll_id",
         "notify_id",
         "prior_contribution_id", "source", "stream_id", "subject", "target", "tree_size",
     },
@@ -702,7 +725,7 @@ def main():
              "components'. This catalog extracts every distinct backtick prefix family at "
              "leaf granularity (the granularity a vendoring crate needs), deduping the one "
              "cross-section joint claim (agent_files, CC 3.1.1 + CC 3.1.9.1). The observed "
-             "count exceeds 83 because the normative summary predates later-added families "
+             "count exceeds 83 because the normative summary does not count every family "
              "(e.g. CC 3.1.8.4/3.1.8.5 structural-injustice + distributive-access detectors, "
              "CC 3.1.9.4 health:liveness / watchlist / judge_model). CIRISBench (CC 3.1.10) is "
              "the 9th owning_component here but is cited from a README rather than a MISSION.md, "
@@ -717,7 +740,7 @@ def main():
         ("compare", "byte-exact; consumers MUST NOT case-fold"),
         ("match_semantics", "full-match: a segment pattern (vocab_pattern, literal_pattern, version_segment.pattern, "
                             "segments[].pattern, external_standards[].pattern) must match the WHOLE segment; "
-                            "a `$` anchor does not admit a trailing newline (CIRISConstitution#116)"),
+                            "a `$` anchor does not admit a trailing newline"),
         ("refusal_token", "namespace_dimension_case_malformed"),
         ("vocab_pattern", VOCAB_PATTERN),
         ("literal_pattern", LITERAL_PATTERN),
@@ -727,7 +750,7 @@ def main():
             ("external", "outside-standard token; verbatim canonical form (ISO 4217, BCP 47, rating scheme)"),
             ("value", "caller-supplied identity; verbatim, case-preserved"),
             ("hex", "CC 2.6.3 digest; lowercase"),
-            ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments (CIRISConstitution#108)"),
+            ("wildcard", "the `*` tail; not a segment value; VARIADIC — matches one or more remaining segments"),
         ])),
         ("version_segment", OrderedDict([        # CC 3.1.7 R3 — CIRISConstitution#112
             ("pattern", "^v[0-9]+(\\.[0-9]+)*$"),   # v1, v2 … and a dotted suite version (HE-300 v1.2)

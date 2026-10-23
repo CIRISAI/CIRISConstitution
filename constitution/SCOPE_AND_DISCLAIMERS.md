@@ -12,7 +12,7 @@ is known, the document names it rather than papering over it.
 
 **Metaphysical modesty.** One limit is not of the kind evidence closes: whether the generator behind
 the observed law-structure is Selection or Intention is returned by no function of the observables
-(`generator_underdetermined` in `Core/ConsentFoundation.lean`, [coherence-ratchet](https://doi.org/10.5281/zenodo.21316928):
+([coherence-ratchet](https://doi.org/10.5281/zenodo.21316928):
 *machine-checked and axiom-free* as a theorem; *theorem-given-model* as a claim about the world,
 since the formalisation stipulates that both generators present identical observables). This
 constitution therefore takes no position on that question and confers no standing on any party
