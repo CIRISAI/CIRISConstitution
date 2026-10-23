@@ -57,7 +57,7 @@ The system is running: apps on both mobile stores, published packages, five open
 | 3 nobody who cannot answer for themselves alone | CC 3.2, 3.4.11, 3.4.13, 4.5.4, 7.3 | `Inv_Moderated`; `formal/guarantees` `Inv_NotAlone`, `Inv_BondDepthOne`; conformance suite |
 | 4 the bounded, public pause | CC 4.2.1, 4.2.6, 3.2 T3, 4.5.1 | `formal/accord_halt`, `formal/accord_roster` (Lean); `RootReach.tla` `Prop_HaltReach`, `Inv_HaltOnlySubscribers`, `Prop_RestrictOnly`, `Untrust` |
 | 5 holders' duties; no finding gives a claim | CC 7.1.1, 7.5, 7.5.5, 1.13.2 | `formal/guarantees` `Inv_RetirementStandard`, `Inv_RefusalStands`, `Prop_NoEndingAgainstRefusal`; CIRISAgent suite |
-| 6 no ban, no rank, first contact | CC 4.2.1, 3.2, 6.2, 4.4.1, 7.2.4 | `RootReach.tla` `Prop_NoBan`; `lean:coherence-ratchet` (one voice once); measured |
+| 6 no ban, no rank, first contact | CC 4.2.1, 3.2, 6.1.2.1.2, 4.4.1, 7.2.4 | `RootReach.tla` `Prop_NoBan`; `lean:coherence-ratchet` (one voice once); measured |
 | 7 how an agent decides | CC 1.3, 1.9 | CIRISAgent safety batteries |
 | 8 remedy under law; the record reachable | CC 7.3.5, 4.3, 3.4 | conformance suite |
 | 9 never-allowed uses; force | Annex TX-9, TX-10; CC 7.4 | CIRISAgent safety batteries |

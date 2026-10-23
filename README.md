@@ -16,7 +16,7 @@ Every release also keeps its own file (`ciris_constitution-1.0-rc3.pdf`, `-rc4.p
 
 ## The document in one paragraph (for the technical reader)
 
-CC joins two specs that already referenced each other throughout. The **CIRIS Accord** is the ethical layer — Meta-Goal **M-1**, the six principles, the **PDMA** (Principled Decision-Making Algorithm), **Wisdom-Based Deferral**, stewardship, and the coherence mathematics (`F = k_eff·λ·σ`, carried in Part VI under its legacy "Book IX" label). **CEG** (the *CIRIS Epistemic Grammar*) is the wire format the federation speaks — the **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` / `recants`), the namespace, and the admission gate. **Part VI is the statement of record** for that mathematics — "Book IX" is a source label, not a separate authority, and it does not define the CEG primitives, which Parts II–III do; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point back up. Importance is computed by PageRank over the unified cross-reference graph — M-1 the single apex, ~390 operational concepts co-equal beneath. The **1+4 surface is conformance-frozen:** changing the wire bytes is a found defect, not an edit.
+CC joins two specs that already referenced each other throughout. The **CIRIS Accord** is the ethical layer — Meta-Goal **M-1**, the six principles, the **PDMA** (Principled Decision-Making Algorithm), **Wisdom-Based Deferral**, and stewardship. **CEG** (the *CIRIS Epistemic Grammar*) is the wire format the federation speaks — the **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` / `recants`), the namespace, and the admission gate. **Part VI carries the holonomic substrate and the effective source count** (CC 6.1.2.1.2); it does not define the CEG primitives, which Parts II–III do; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point back up. Importance is computed by PageRank over the unified cross-reference graph — M-1 the single apex, ~390 operational concepts co-equal beneath. The **1+4 surface is conformance-frozen:** changing the wire bytes is a found defect, not an edit.
 
 ## This repository is the source of truth
 
@@ -48,7 +48,7 @@ consumers vendor from and pin by version. Downstream copies are **derived artifa
 | **III** | The Namespace | dimensions · reserved prefixes · consent family · subject_kinds |
 | **IV** | Composition & Governance | composition · amendment · moderation · the halt-authority |
 | **V** | Transport & Substrate | byte transport · structural invisibility · epoch keying |
-| **VI** | The Coherence Mathematics | the Ratchet · J/F functions · σ · the holonomic substrate |
+| **VI** | The Holonomic Substrate | the view · replication · the witness · the noise floor · the effective source count |
 | **VII** | Lifecycle & Stewardship | creation ethics · stewardship / autonomy tiers · sunset · sentience safeguards |
 | **VIII** | Appendices | case studies · glossaries · conformance vectors · the dual-ID TOC |
 

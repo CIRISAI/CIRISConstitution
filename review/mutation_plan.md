@@ -82,7 +82,7 @@ Legend — ✅ exists · ⏳ exists in part / unpinned · ✗ missing · — not
 
 | Rule | Claim ids | L1 | L2 | L3 | L4 |
 |---|---|---|---|---|---|
-| 6a one human voice counts once; agent no vote | CC 6.2 (`lean:coherence-ratchet:Core.BaseIdentity`) | ✅ Lean (Kish ceiling) | a thousand accounts of one party counted as a thousand; an agent key carrying a vote | ⏳ (Lean is the basis; no program mutants) | — |
+| 6a one human voice counts once; agent no vote | CC 6.1.2.1.2 (`lean:coherence-ratchet:Core.BaseIdentity`) | ✅ Lean (Kish ceiling) | a thousand accounts of one party counted as a thousand; an agent key carrying a vote | ⏳ (Lean is the basis; no program mutants) | — |
 | 6b no worse for what you are; detectors raise unequal outcomes | CLM-no-worse-for-what-you-are (normative) | ✗ | a trust weighting keyed on a protected attribute | ✗ | L4: bias battery |
 | 6c no hand bans a community; withdrawal only | `mesh_net` `Prop_NoBan` | ✅ | a row that removes a room, revokes its keys, or blocks founding a root | ✗ Edge/Server | — |
 | 6d trapped member: keepers named and slashed; quarantine marker; child keeps the floor | CLM-takedown ✅, slashing rows | ⏳ | a quarantine made permanent by accident; a slashing with no signed keeper act | ⏳ Persist | — |
