@@ -6,7 +6,7 @@
    "invariants_sha256": "d6bd558e2dc292247eeae7d1c29fbacceb2f6d151f1a0c5f0eea0efa0ee49e1d",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "ef1b02be3ea81dee3ae2b3a8b6b594967536af11606d114383065b2b1d584f8c",
+   "claims_sha256": "3e205cf27778e76209d7a2c0f999254046a6dc50964678ac705d2ffdbd57114a",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -16,11 +16,11 @@
     "tag": "v0.5.232"
    },
    "evidence_pins": {
-    "CIRISServer": "a75da61c",
+    "CIRISServer": "f773b13e",
     "CIRISConformance": "6b43bf3",
     "coherence-ratchet": "0c4edfb",
-    "RATCHET": "c34064e",
-    "CIRISAgent": "ef02367",
+    "RATCHET": "9e322778",
+    "CIRISAgent": "81e9bf26",
     "CIRISVerify": "3c16f9c6",
     "CIRISPersist": "32512f52",
     "CIRISEdge": "d44e1c57"
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "b8af8c89f5d2ce5e401129be7f9cd87879ac02f10bf790d43c245918baf0bf1c"
+  "chain_sha256": "f6322f1f10830dc196244942da9176382188dbddb0c80a42836da711ca22f255"
  },
  "chain": [
   {
@@ -18042,12 +18042,16 @@
     {
      "claim_id": "CLM-consent-stream-is-data-choice",
      "cc_ref": "4.4.3.4.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISAgent#1250"
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/services/governance/consent/service.py",
+       "symbols": [
+        "ConsentService.grant_consent"
+       ]
       }
      ]
     }
@@ -32715,12 +32719,16 @@
     {
      "claim_id": "CLM-consent-stream-is-data-choice",
      "cc_ref": "4.4.3.4.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISAgent#1250"
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/services/governance/consent/service.py",
+       "symbols": [
+        "ConsentService.grant_consent"
+       ]
       }
      ]
     }
