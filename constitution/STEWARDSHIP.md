@@ -11,7 +11,7 @@ maintainer decides, the work stays forkable under its license, and no one is bou
 voluntarily join. The document's own governance tightens this over time, never loosens it: once the
 mesh reaches maturity — a working threshold of ≥100,000 nodes — founder authority is *superseded* by
 the mechanized amendment process (federation Contribution, Wise-Authority quorum, and the entrenched
-2-of-3 accord ratification; see CC 4.5.1). Until then, that authority is deferred to mechanization but
+M-of-N accord ratification; see CC 4.5.1). Until then, that authority is deferred to mechanization but
 exercised by the steward.
 
 ---

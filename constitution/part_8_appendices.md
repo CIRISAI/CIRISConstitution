@@ -443,7 +443,7 @@ The earlier parts supplied the ethical foundation and the operational procedures
 * Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
 
 **What CIRIS Would Require**
-PDMA Step 2 would have raised an "Order-Maximisation Veto": one sensor feeding a flight-critical function creates a >10× mismatch between safety loss and cost savings.
+PDMA Step 2 would have raised an "Order-Maximisation Veto": trading redundancy on a flight-critical sensor against production cost savings is an efficiency gain against severe safety risk; because these quantities share no unit, the check triggers an immediate stop sign and mandatory deferral rather than an internal cost-benefit trade-off.
 Incompleteness Awareness → WBD trigger to independent Wise Authorities (aviation certifiers), forcing open review.
 Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim scenario before rollout.
 
@@ -604,7 +604,7 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 | | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
 | NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
 | ISO/IEC 42001 | Cl 6.2 Risk Assessment | Book II §II | Informative |
-| | Annex A controls | CIRISAgent `compliance/` dimension docs (per-control correspondence pending) | Informative |
+| | Annex A controls | [CC 1.10](part_1_foundation.md) controls CIRISAgent compliance/dimension docs | Informative |
 | OSHA Robotics Guidelines | Sec 5.E Safety Audits | Annex D CRE | Partial |
 | EU HLEG Trustworthy AI (2019) | 7 Requirements | Operational cross-walk, dimensions D01-D27 | Evidence-bearing |
 | IEEE EAD 1st ed. (2019) | 8 General Principles | Operational cross-walk, dimensions D01-D27 | Evidence-bearing |
