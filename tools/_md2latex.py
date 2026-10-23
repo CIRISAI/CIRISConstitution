@@ -46,17 +46,16 @@ def inline(s):
         if len(t) <= CHUNK + 4 or ' ' in t:
             return esc(t)
         return r'\allowbreak{}'.join(esc(t[k:k+CHUNK]) for k in range(0, len(t), CHUNK))
-    parts = re.split(r'(`[^`]*`)', s)
-    out = []
-    for p in parts:
-        if p.startswith('`') and p.endswith('`') and len(p) >= 2:
-            out.append(r'\texttt{' + breakable(p[1:-1]) + '}')
-        else:
-            t = esc(p)
-            t = re.sub(r'\*\*([^*]+)\*\*', r'\\textbf{\1}', t)
-            t = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\\textit{\1}', t)
-            out.append(t)
-    return ''.join(out)
+    # code spans are stashed first so that bold / italic markers may wrap them
+    # (**`token`** is common); the stash marker survives esc() untouched
+    codes = []
+    def stash(m):
+        codes.append(r'\texttt{' + breakable(m.group(1)) + '}')
+        return '\x01%d\x01' % (len(codes) - 1)
+    t = esc(re.sub(r'`([^`]*)`', stash, s))
+    t = re.sub(r'\*\*([^*]+)\*\*', r'\\textbf{\1}', t)
+    t = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\\textit{\1}', t)
+    return re.sub('\x01(\\d+)\x01', lambda m: codes[int(m.group(1))], t)
 
 NAV = re.compile(r'^\[.←.*\]\(.*\)\s*\|.*\|.*\)\s*$|^\[←|Next:.*→')
 def is_nav(line):
