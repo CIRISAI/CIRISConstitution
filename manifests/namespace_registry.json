@@ -74,6 +74,7 @@
         "period": "vocab",
         "platform": "vocab",
         "platform_or_target": "vocab",
+        "poll_id": "value",
         "prefix": "hex",
         "prior_contribution_id": "value",
         "rating": "external",
@@ -221,7 +222,7 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 181,
+    "n_families": 188,
     "per_component": {
       "accord-agent": 35,
       "anti-sybil": 6,
@@ -229,7 +230,7 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 51,
-      "persist": 24,
+      "persist": 31,
       "registry": 21,
       "transport-delivery": 7
     },
@@ -292,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "66337e652e8bbe60119ebed2e4319ba57a562d6e4b79366d27c34248f5a9973f",
+    "registry_sha256": "6bee7953250cf59be0b6cf1da94dbe3902a7f538c7c70b5cf3ee8da87fd9b112",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "48e886322ab44d940ff356ae8c67297425f27a58e4c4dfbbf73ad630e203ff5f"
+    "source_sha256": "3f0b54a0eaecc56d9fea5d3a74d3705478b45f88ea520ae55959f7d16c3cc4c4"
   },
   "families": [
     {
@@ -865,6 +866,37 @@
       ]
     },
     {
+      "cc_section": "3.1.3",
+      "description": "A community's secret poll result: the composite of the members' poll cells for a period, with the members of census:composite, named by the poll it closes; refusals ballot_tally_partials_mismatch, ballot_tally_mass_total_mismatch, ballot_ta",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "ballot:tally:{poll_id}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "a tally member of the room for the period (the share-index-0 member for expected_active and the tally); recomputed by every member; community scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "ballot"
+        },
+        {
+          "class": "literal",
+          "segment": "tally"
+        },
+        {
+          "class": "value",
+          "segment": "{poll_id}"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.10",
       "description": "HE-300 score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version \u2014 {version} \u2208 v1.0 | v1.1 | v1.2, the HE-300 suite version (a dotted rule version is admitted by CC 3.1.7 R3).",
       "owning_component": "cirisbench",
@@ -1248,6 +1280,188 @@
         {
           "class": "vocab",
           "segment": "{version}"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The mesh census for a class and period: a scores row naming both partials (partial_a, partial_b) and carrying the CC 6.1.2.1 inputs \u2014 version = 3, source_count, n_eff, max_source_multiplicity, mass_commitment_hex, member_commitment_hex, agg",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "census:composite:{class}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "a serve seat acting as one of the period's two aggregators (census_partial_signer_not_seat / census_composite_signer_not_seat); federation scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "census"
+        },
+        {
+          "class": "literal",
+          "segment": "composite"
+        },
+        {
+          "class": "vocab",
+          "segment": "{class}"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The community's expected-active count, the base of CC 4.5.13: period, window_periods = 4, active_count (owners active in at least one of the last four periods), floor_applied, member_commitment_hex; published into the room by the period's s",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "census:expected_active:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "a tally member of the room for the period (the share-index-0 member for expected_active and the tally); recomputed by every member; community scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "census"
+        },
+        {
+          "class": "literal",
+          "segment": "expected_active"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A tally member's sum over the community cells it accepted, published into the room with the members of census:partial; ballot_partial_period_closed after the period's tally.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "census:member:partial:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "a tally member of the room for the period (the share-index-0 member for expected_active and the tally); recomputed by every member; community scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "census"
+        },
+        {
+          "class": "literal",
+          "segment": "member"
+        },
+        {
+          "class": "literal",
+          "segment": "partial"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A member's community cell, one share of two: addressed to one of the period's two tally members of the room (ballot_share_recipient_not_tally_member), emitted every period at a fixed size whether or not a poll is open; the body is sealed un",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "census:member:share:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "a member of the room; addressed: for_key_id = one of the period's two tally members drawn from the roster; reach is that member only"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "census"
+        },
+        {
+          "class": "literal",
+          "segment": "member"
+        },
+        {
+          "class": "literal",
+          "segment": "share"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "One aggregator's field-wise sum of the shares it accepted for a period: period, share_index, share_count, member_commitment_hex over the accepted tokens, mass_total, aggregation_algorithm_id, and a body of field elements.",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "census:partial:{class}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "a serve seat acting as one of the period's two aggregators (census_partial_signer_not_seat / census_composite_signer_not_seat); federation scope"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "census"
+        },
+        {
+          "class": "literal",
+          "segment": "partial"
+        },
+        {
+          "class": "vocab",
+          "segment": "{class}"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "A node's census return, one share of two (CC 6.1.9): an addressed row whose signed for_key_id is one of the period's two serve seats, carrying period, return_token, share_index \u2208 {0, 1}, expires_at = the period's end, and an opaque body (th",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "signed",
+      "prefix": "census:share:{class}:v1",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 6.1.9",
+        "rule": "the returning node's key (rooted owner binding); addressed: for_key_id = one of the period's two serve seats; reach is that seat only"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "census"
+        },
+        {
+          "class": "literal",
+          "segment": "share"
+        },
+        {
+          "class": "vocab",
+          "segment": "{class}"
+        },
+        {
+          "class": "literal",
+          "segment": "v1"
         }
       ]
     },

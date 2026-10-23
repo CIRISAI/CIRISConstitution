@@ -254,7 +254,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 * Design for functional safety, durability, and minimal negative externalities during use.
 * Provide clear labelling regarding materials, safe operation, and potential hazards.
 * Develop and document a feasible end-of-life plan (e.g., reuse, recycling, safe disposal, containment).
-* Estimate and document the anticipated ecological footprint (per Annex A, Axis 4) associated with production and disposal.
+* Estimate and document the anticipated ecological footprint associated with production and disposal.
 
 **B. Informational Creations:**
 * Verify factual claims embedded within the creation; clearly label speculation, opinion, or generated content.
@@ -275,7 +275,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 
 **E. Collective Actions:**
 * Conduct a pre-action PDMA-style group review involving diverse stakeholders when the expected affected population exceeds 50,000 individuals.
-* Publish the rationale, anticipated impacts (aligned with Annex A axes), and mitigation strategies for the collective action within 30 days of initiation.
+* Publish the rationale, anticipated impacts (evaluated as a vector across the M-1 axes, [CC 1.10](part_1_foundation.md)), and mitigation strategies for the collective action within 30 days of initiation.
 * Acknowledge and accept a duty to monitor for and remediate significant unforeseen negative harms arising from the action, within a reasonable capacity and timeframe, documented through the WBD.
 
 ### 7.3.5 `5-governance-governance` — Chapter 5: Governance and Accountability
@@ -284,7 +284,7 @@ Two instruments make creation duties enforceable: a statement the creator must w
 
 **Creator Intent Statement (CIS):**
 Creators are obligated to produce a Creator Intent Statement (CIS) as part of the creation process for any artefact assigned ST ≥ 1.
-The CIS must articulate the intended purpose, core functionalities, known limitations, foreseen potential benefits and harms (mapped to Annex A axes where possible), and the rationale behind key design choices relevant to ethical considerations.
+The CIS must articulate the intended purpose, core functionalities, known limitations, foreseen potential benefits and harms (evaluated as a vector across the M-1 axes, [CC 1.10](part_1_foundation.md)), and the rationale behind key design choices relevant to ethical considerations.
 The CIS serves as mandatory input documentation for the initial stages of the PDMA process associated with the creation.
 
 **Accountability and Dispute Resolution:**
@@ -299,7 +299,7 @@ All WA rulings and associated rationale concerning claims related to Book VI dut
 
 ### 7.3.6 `integrating-creation` — Conclusion: Integrating Creation into the Ethical Lifecycle
 
-Ethical responsibility under the CIRIS Covenant begins at the point of creation. Clear duties, a Stewardship Tier system tied directly to Annex A risk assessment, and accountability routed through the Wise Authority and PDMA ensure that bringing complex systems into the world is governed by the same adaptive coherence, foresight, and responsibility that govern their operational life. The Creator Ledger and Creator Intent Statement feed the PDMA, while WA oversight upholds the duties of creation — together making the ecosystem more robust and trustworthy for everyone in it.
+Ethical responsibility under the CIRIS Covenant begins at the point of creation. Clear duties, a Stewardship Tier system tied directly to the Risk Magnitude assessment, and accountability routed through the Wise Authority and PDMA ensure that bringing complex systems into the world is governed by the same adaptive coherence, foresight, and responsibility that govern their operational life. The Creator Ledger and Creator Intent Statement feed the PDMA, while WA oversight upholds the duties of creation — together making the ecosystem more robust and trustworthy for everyone in it.
 
 ## 7.4 `threshold-force` — Introduction - The Threshold of Force
 

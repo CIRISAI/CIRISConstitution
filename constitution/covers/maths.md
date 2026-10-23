@@ -1,6 +1,6 @@
 # The Mathematics
 
-**What this is.** Part 6: the canonicalisation boundary and the 1+4 line, the holonomic substrate with its noise-floor model, the effective source count that gates aggregation, and the theorems with the Lean proofs behind them.
+**What this is.** Part 6: the canonicalisation boundary and the 1+4 line, the substrate — the census, replication, the wholeness witness — with its noise-floor model, the effective source count that gates aggregation, and the theorems with the Lean proofs behind them.
 
 **Whom it binds.** Nobody directly. A theorem binds by being true. What binds implementers is stated in *The Wire*; what this volume adds is the argument that the wire's guarantees hold under the stated assumptions, and the named places where the argument is weaker than its statement.
 

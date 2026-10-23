@@ -16,7 +16,7 @@ The CC is one document (eight Parts, about 440 numbered sections, 405 register r
 | P05 | 4.1 anti-patterns, 4.4 composition and delegation | authorization / graph |
 | P06 | 4.5 governance discipline: moderation, redress, child safety, purge | trust and safety + legal |
 | P07 | Part 5 transport and privacy + 1.13.3 adversary model | cryptographer / network |
-| P08 | Part 6 holonomic substrate and the effective count | mathematician (the original #72 scope) |
+| P08 | Part 6 substrate and the effective count | mathematician (the original #72 scope) |
 | P09 | Part 8 appendices: glossary, concerns ledger, references, annexes, stubs | editor + review coordinator |
 
 Every register row maps to exactly one piece (`build_review_piece.py --check`; the one non-decimal row, `corpus`, is assigned to P09).

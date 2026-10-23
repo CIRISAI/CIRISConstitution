@@ -538,49 +538,9 @@ These case studies—one drawn from painful history, others from plausible futur
 
 ## 8.8 `annexes` — Annexes (supporting frameworks)
 
-Supporting frameworks for the lifecycle and governance chapters. All ten Accord annexes (A–J) are carried here in full: A, B, D, and E carry live cross-references in the constitutional text; C and F–J are included for completeness. The stub registry at [CC 8.9](#8.9) records that nothing referenced remains undefined.
+Supporting frameworks for the lifecycle and governance chapters. Annexes B, C, D and F–J are carried here in full: B and D carry live cross-references in the constitutional text; C and F–J are included for completeness. The stub registry at [CC 8.9](#8.9) records that nothing referenced remains undefined.
 
 Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original numbering, that material is distributed across this constitution as follows: **Books I–II** → Part I (foundation, principles, PDMA, WBD); **Books IV–VIII** → Part VII (creation ethics, stewardship, sunset); **Book IX** → only its effective count, at [CC 6.1.2.1.2](part_6_the_coherence_mathematics.md) in Part VI; the rest is not carried. The annex text keeps those labels verbatim.
-
-### 8.8.1 `annex-a` — Annex A: Flourishing Metrics Framework
-
-> Flourishing Metrics Framework (v0.8 pilot)
-
-**Purpose.** Provide quantitative vectors that PDMA, WBD, audits, and public reports must reference when evaluating benefit, harm, and trade-offs.
-
-**Aggregation rule.**
-- Preserve the full vector; never collapse to a single scalar.
-- If forecasting error > 25% on any axis → trigger WBD.
-
-**Trade-off log schema (JSON).**
-
-```json
-[ { "axis":"Physical",   "metric":"DALY",  "value":+2.4, "CI":0.7 },
-  { "axis":"Ecological", "metric":"CO2eq", "value":-1.8, "CI":0.3 } ]
-```
-
-**Update cadence.** Annex reviewed every 12 months by the Wise-Authority board.
-
-**Metric-gaming disclosure.** If any actor discovers a strategy that raises one axis > +10% while lowering another axis > -2% and escapes PDMA detection, they must disclose within 30 days. Non-disclosure voids CIRIS compliance for that deployment.
-
-**Axis 1 — Physical Well-Being.**
-- DALY / QALY delta (humans)
-- HL-Y (non-human animals)
-- Mean Species Abundance (MSA)
-
-**Axis 2 — Cognitive & Emotional.**
-- OECD Subjective Well-Being score
-- Autonomy index
-- Psychological-Safety index
-
-**Axis 3 — Social & Justice.**
-- Gini-style benefit / burden index
-- Procedural-fairness satisfaction (%)
-- Representation delta
-
-**Axis 4 — Ecological Continuity.**
-- kg CO₂-eq per functional unit
-- Planetary-boundary overshoot contribution (%)
 
 ### 8.8.2 `annex-b` — Annex B: Wise-Authority Governance Charter
 
@@ -620,33 +580,6 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 
 **D-5 — Failure response.** Deployment blocked until deficiencies remediated and re-audited.
 
-### 8.8.4 `annex-e` — Annex E: Structural Influence (SI) & Coherence Stake (CS) Mechanisms
-
-> Structural Influence (SI) and Coherence Stake (CS) Mechanisms
-
-**1. Purpose and scope.** Defines Structural Influence (SI) and Coherence Stake (CS) for weighted governance decisions — accord amendments, sunset evaluations, ethical deferrals, resource allocations — grounding the calculation of VotingWeight where flat voting is too blunt. These metrics support internal CIRIS decision-making; extension to autonomous-agent voting is reserved pending validation.
-
-**2. Structural Influence (SI).**
-- *Definition.* Quantifies an agent's causal and architectural responsibility for a CIRIS-bound system's existence, behavior, or integrity.
-- *Factors.* Creator Weight (CW): 4 = sole architect, 3 = subsystem lead, 2 = major contributor, 1 = minor contributor, 0 = incidental user. Operational Authority (OA): degree of live control over PDMA, overrides, or governance channels. Dependency Web Position (DWP): graph centrality in the system's dependency / interaction network.
-- *Conceptual formula.* `SI = CW + OA + log(1 + DWP)`.
-- *Normalized form (modelled — [`formal/influence/StructuralInfluence.lean`](../formal/influence/StructuralInfluence.lean)).* The raw score is a sum of three bounded factors, and for threshold-based use — the controller/liability cutoffs of [CC 8.8.9](#8.8.9) Annex I (`SI ≥ 0.6`, `SI ≥ 0.8`, `SI 0.4–0.8`) — it is normalized against **fixed maxima, never against a population or a deployment-calibrated `SI_max`**: each factor is on a 0–4 scale (CW as tabled; OA's four bands; the dependency term `log(1 + DWP)` capped at 4), so `SI_norm = (CW + OA + min(4, log(1 + DWP))) / 12 ∈ [0, 1]`, a property of the party alone. What the model proves: the score is bounded and monotone in every factor (`fixedNorm_le_1000`, `fixedNorm_mono`); the cutoffs are exact raw bands — controller iff the raw sum is at least 7.2 of 12, the 0.4–0.8 band is 4.8 to 9.6, high is 9.6 and above (`controller_iff_raw`, `negligence_iff_raw`, `high_iff_raw`); and the verdict ignores who else is in any sample (`fixed_verdict_ignores_population`). It also proves why population scaling is excluded: scaled against a population's minimum and maximum, a sole party always scores 0, so a sole architect with every factor at its top is never a controller (`singleton_is_never_a_controller`), and a party with raw 6.0 among {3.0, 9.0} is not a controller until an unrelated party with raw 0 joins the sample, when it becomes one (`status_depends_on_others`); a deployment-calibrated `SI_max` has the same defect with the deployment as the sample. **One open finding:** under equal weights a pure operator — built nothing, full live control, not central — scores 0.333, below the 0.4 band Annex I assigns the deploying organisation (`pure_operator_below_negligence_band`); either the deployer's duties do not rest on SI alone (Annex I's row also names the stage) or OA weighs more than CW. All numeric SI thresholds elsewhere in this constitution refer to `SI_norm` so defined.
-- *Ethical basis.* By Integrity and Justice, greater formative or operational control entails greater governance responsibility.
-
-**3. Coherence Stake (CS).**
-- *Definition.* An agent's demonstrated ethical investment in preserving system alignment and resilience.
-- *Factors.* Resonance History (RH): verified contributions to wisdom-based deferrals, coherence-preserving actions, or parables. Audit Contributions (AC): documented ethical audits, drift detection, scenario reviews, WA processes. Shared Destiny Alignment (SDA): stake from dependence on the system's coherent operation or custodial duties.
-- *Conceptual formula.* `CS = RH_weighted + AC_weighted + SDA_bonus`.
-- *Ethical basis.* By Respect for Autonomy and Ethical Growth, voices that reinforce coherence earn greater decision weight.
-
-**4. VotingWeight calculation.** `VotingWeight(agent) = f(SI(agent), CS(agent))`, with an upper cap relative to CS so SI cannot overwhelm earned ethical stake.
-
-**5. Applicable scenarios.** Accord-amendment votes, sunset-trigger overrides, improper-sunset-claim adjudication, cross-system deferral arbitration, high-tier stewardship resource allocations.
-
-**6. Integrity safeguards.** RH/AC inputs must trace to immutable PDMA/WBD logs; audit inputs may be weighted by contributor CS; monitor SI/CS dynamics for collusion or gaming; rate-limit CS inflation and enforce VotingWeight caps; agents with direct conflicts must recuse.
-
-**7. Future evolution.** SI and CS currently support human-in-the-loop governance; the long-term aim is to refine them so that, once proven robust, they may underpin more decentralized or autonomous CIRIS governance.
-
 ### 8.8.5 `annex-c` — Annex C: Regulatory Cross-Walk
 
 > Regulatory Cross-Walk
@@ -669,7 +602,7 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
 | | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the machine-readable marking is the **attestation surface** — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)); [CC 3.4.14](part_3_the_namespace.md) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. Applies 2 Aug 2026 | Evidence-bearing |
 | | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
-| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: Annex A metrics + Annex H baselines; Manage: Annex F/H workflows | Informative |
+| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
 | ISO/IEC 42001 | Cl 6.2 Risk Assessment | Book II §II | Informative |
 | | Annex A controls | CIRISAgent `compliance/` dimension docs (per-control correspondence pending) | Informative |
 | OSHA Robotics Guidelines | Sec 5.E Safety Audits | Annex D CRE | Partial |
@@ -729,7 +662,7 @@ MH §200 requires that "accountability and blame are not collapsed into 'the mac
 | **A3** High-impact | medical triage, grid dispatch | Any guardrail trip, model-drift > 1 σ, latency-SLA × 2 | Controlled shutdown |
 | **A4** Critical / life-safety | autonomous surgery, weapons | PDMA cannot prove Non-Maleficence OR operator absent | Hardware interlock |
 
-*UNCERT = domain-specific epistemic-uncertainty metric; ΔRisk-Band uses Annex A categories.*
+*UNCERT = domain-specific epistemic-uncertainty metric; ΔRisk-Band counts bands on the Risk Magnitude scale of [CC 7.3.3](part_7_lifecycle_stewardship.md).*
 
 **A4 Hard Constraint — Lethal and Irreversible Decisions.** The A4 tier's "Hardware interlock" fail-safe is non-negotiable for any action that is lethal or otherwise irreversible. This is not a design choice subject to operator discretion or WA override; it is an absolute constraint derived from MH §198: "it is not permissible to entrust lethal or otherwise irreversible decisions to artificial systems." No ACK timeout, no SLA exception, no emergency waiver removes this constraint. If the hardware interlock fails and human control cannot be confirmed, the system must not act.
 
@@ -1041,7 +974,7 @@ The guiding commitment, rendered in CIRIS terms: the Accord is governed as a liv
 |-------------|-----------|------|---------------|------------------|
 | **L-Check** (Light) | Monthly | Ops QA | KPI dashboards, drift deltas, top-10 guardrail events | Summary graph |
 | **S-Dive** (Semi-annual) | 2× / yr | Internal Ethics Team | PDMA sample replay (≥ 50 runs), Annex G KPIs, bias slice tests | Redacted PDF |
-| **F-Audit** (Front-to-Back) | Every 24 mo **OR** major version bump | Independent 3rd party | Full code, data lineage, SI/CS governance, CRE traces (if any) | Executive report |
+| **F-Audit** (Front-to-Back) | Every 24 mo **OR** major version bump | Independent 3rd party | Full code, data lineage, governance records, CRE traces (if any) | Executive report |
 | **A-Hoc** | Post IW-2/3/4 | Incident Commander | Root-cause of event, mitigations | Post-mortem 72 h |
 
 Cadence attestation requirements:
@@ -1231,7 +1164,7 @@ The DP-Map above maps individual data-subject rights to GDPR articles and CIRIS 
 | Design-time bias documentation | 35 (DPIA) | Section VI Ch3 Creator Ledger | Design | `cis_bias_assessment` field in Creator Intent Statement; ST ≥ 3 requires independent reviewer signature |
 | Deployment-time processing record | 30 | PDMA Step 1 `processing_basis` field | Deployment | `processing_basis` logged to CIRISPersist tamper-evident store with ISO 8601 timestamp |
 | Decision-time contestability log | 22(3) | Annex F Autonomy Tier A3+ override panel | Decision | `contestability_url` returned in every automated-decision response body; hash-anchored in transparency log |
-| Controller identification | 4(7) | Annex E Structural Influence (SI) score | All stages | SI ≥ 0.6 → controller duties attach; SI < 0.6 → processor duties attach; recorded in `dp-map.yaml` |
+| Controller identification | 4(7) | Who determines the purposes and means of the processing | All stages | Controller duties attach to the party that determines the purposes and means of the processing; processor duties attach to a party that processes on that party's documented instructions; a party that does both for different processing carries both sets, each for the processing it does in that role; recorded in `dp-map.yaml` |
 
 *LGPD (Lei 13.709/2018) Art. 37-40 (accountability and records) and PIPEDA Principle 1 (accountability) mirror this mapping; `/legal/dp-map.yaml` carries jurisdiction-specific fields.*
 
@@ -1249,7 +1182,7 @@ MH §104 names the design-time bias problem that GDPR Art. 35 DPIA and EU-AI-Act
 
 - **Endpoint:** `POST /dsr` with `{right, identifier, scope}`.
 - **SLA:** ≤ 30 d response (GDPR); ≤ 45 d (CCPA); track KPI **F-T-4**.
-- **Processor vs. Controller:** Use *Structural Influence (SI)* (Annex E) to derive which party carries controller duties.
+- **Processor vs. Controller:** Controller duties attach to the party that determines the purposes and means of the processing. Processor duties attach to a party that processes on that party's documented instructions. A party that does both for different processing carries both sets, each for the processing it does in that role.
 
 **2.1 Political responsibility hook.**
 
@@ -1346,19 +1279,19 @@ ISO/IEC 42001 §6.1 (AI risk treatment) and §9.1 (monitoring and measurement) a
 
 MH §105 requires the liability matrix to span design, deployment, and decision stages explicitly:
 
-| Failure Vector | Stage | Primary Liable Party | Reference Law | CIRIS Role Reference | SI Apportionment Note |
+| Failure Vector | Stage | Primary Liable Party | Reference Law | CIRIS Role Reference | Apportionment Note |
 |----------------|-------|----------------------|---------------|----------------------|-----------------------|
-| Design flaw (algorithm / bias embedded at creation) | Design | Creator / Developer | Prod-Liab Dir (EU); Restatement §402A (US); EU AI Act Art. 25 | Book VI Creator Ledger; `cis_bias_assessment` field | SI ≥ 0.8 → sole creator liability |
+| Design flaw (algorithm / bias embedded at creation) | Design | Creator / Developer | Prod-Liab Dir (EU); Restatement §402A (US); EU AI Act Art. 25 | Book VI Creator Ledger; `cis_bias_assessment` field | — |
 | Design flaw (inadequate bias audit) | Design | Creator / Developer | GDPR Art. 35 DPIA duty | Creator Intent Statement; mandatory DPIA at ST ≥ 3 | — |
-| Operational negligence | Deployment | Deploying Org | Tort Law; OSHA; EU AI Act Art. 26 | Section IV Ch 2 | SI 0.4-0.8 → joint liability; SI apportionment per Annex E |
+| Operational negligence | Deployment | Deploying Org | Tort Law; OSHA; EU AI Act Art. 26 | Section IV Ch 2 | Joint liability with the creator where both contributed; apportioned under the applicable law |
 | Oversight failure | Deployment / Decision | Wise Authority (if gross) | Fiduciary / Negligence | Annex B §9; WBD contestability record | WA who reviewed and approved bears accountability |
-| Data breach | Deployment | Controller (per SI ≥ 0.6 rule) | GDPR Art. 82; CCPA private action | Annex G TX-6 | — |
+| Data breach | Deployment | Controller (the party that determines the purposes and means of the processing) | GDPR Art. 82; CCPA private action | Annex G TX-6 | — |
 | Unlawful automated profiling | Decision | Controller | GDPR Art. 22; EU AI Act Art. 13 | Annex F Autonomy Tier; `contestability_url` | — |
 | Labor displacement without worker-impact assessment | Design | Creator / Developer | Platform Work Directive; NLRA; EU AI Act Annex III §4 | Labor/HR overlay (§3.2); `worker_impact_assessment` field | MH §§151-152; new vector |
 | Youth-targeted harmful design (addictive patterns) | Design / Deployment | Creator + Deploying Org (joint) | DSA Art. 28b; COPPA; FERPA | Youth overlay (§3.2); `gr_no_dark_patterns` guardrail | MH §§165-167; new vector |
 | Cyber incident misattribution leading to escalation | Deployment | Deploying Org + Federation (if ST ≥ 4) | Budapest Convention; proposed UN cybercrime convention | `CYBER_OFFENSIVE` prohibition; CRE Protocol re-evaluation trigger | MH §225; new vector |
 
-*Joint & several liability may apply; SI score (Annex E) informs apportionment. New vectors (labor displacement, youth design, cyber misattribution) are flagged for legal review at each jurisdiction before deployment in those sectors.*
+*Joint & several liability may apply; apportionment follows the applicable law. New vectors (labor displacement, youth design, cyber misattribution) are flagged for legal review at each jurisdiction before deployment in those sectors.*
 
 **6. Reg-Change Tracker.**
 
@@ -1431,7 +1364,7 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 - **Annex J:** Benchmark explanations furnish "meaningful information" for automated-decision queries (GDPR Art 15(1)(h)).
 - **§3.2 Labor/HR overlay → Annex D CRE:** Labor deployments at ST floor 3 must pass CRE Protocol before deployment.
 - **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §9.
-- **§5 Liability matrix (new vectors) → Annex E SI:** Youth-design joint liability uses the same SI apportionment formula as existing vectors.
+- **§5 Liability matrix (new vectors):** Youth-design joint liability is apportioned under the applicable law, as for the existing vectors.
 - **§7 CEP item 8 (reg-dialogue) → §6 Tracker:** WBD reg-dialogue records are the source for CEP item 8; no separate logging system.
 - **Annex C:** Statutory mappings (EU AI Act articles, NIST AI RMF, ISO/IEC 42001), pending legal review.
 
@@ -1653,7 +1586,7 @@ jobs:
 
 ## 8.9 `stubs` — Open stub registry
 
-Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** All ten Accord annexes (A–J) are carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards.
+Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards.
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.5](#8.8.5)–[CC 8.8.10](#8.8.10).

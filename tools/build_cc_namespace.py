@@ -233,6 +233,15 @@ def _reserved_rules():
         # CC 3.1.5 / promise 5: an identity amendment is the agent's own row about its identity key, admitted only against an approved deferral response.
         (lambda p, c: p.startswith("identity_amendment"),
          "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
+        # CC 6.1.9 / 3.1.3: the mesh census and the secret poll — node-, seat- and member-emitted, never a substrate self-report.
+        (lambda p, c: p.startswith("census:share:"),
+         "the returning node's key (rooted owner binding); addressed: for_key_id = one of the period's two serve seats; reach is that seat only", "CC 6.1.9"),
+        (lambda p, c: p.startswith("census:member:share"),
+         "a member of the room; addressed: for_key_id = one of the period's two tally members drawn from the roster; reach is that member only", "CC 6.1.9"),
+        (lambda p, c: p.startswith("census:partial:") or p.startswith("census:composite:"),
+         "a serve seat acting as one of the period's two aggregators (census_partial_signer_not_seat / census_composite_signer_not_seat); federation scope", "CC 6.1.9"),
+        (lambda p, c: p.startswith("census:member:partial") or p.startswith("census:expected_active") or p.startswith("ballot:tally"),
+         "a tally member of the room for the period (the share-index-0 member for expected_active and the tally); recomputed by every member; community scope", "CC 6.1.9"),
         # CC 3.1.4: a receiver's per-period rendezvous route, self-signed by a fresh rendezvous key.
         (lambda p, c: p.startswith("rendezvous:route"),
          "self: attester == subject == the period's fresh rendezvous key (identity_type rendezvous; key record inline); federation-wide reach", "CC 3.1.4"),
@@ -282,7 +291,7 @@ PLACEHOLDER_CLASS = {
     "external": {"currency", "lang_code", "rating", "unit"},
     "value": {
         "approach_id", "authority", "authority_id", "cell", "cohort", "community_key_id",
-        "contribution_id", "days", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id",
+        "contribution_id", "days", "drill_id", "forum", "goal_id", "halt_id", "id", "method_id", "model_id", "poll_id",
         "notify_id",
         "prior_contribution_id", "source", "stream_id", "subject", "target", "tree_size",
     },

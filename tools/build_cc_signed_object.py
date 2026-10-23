@@ -126,7 +126,7 @@ TYPE_MAP = {
     "row-mirror": "row-mirror", "envelope": "envelope", "[* subject-id]": "[* subject-id]",
     "[* key-id]": "[* key-id]", "[* tstr]": "[* tstr]", "[* scrub-sig]": "[* scrub-sig]",
     "[* key-record]": "[* key-record]", "number": "number", "[* consent-basis]": "[* consent-basis]",
-    "tstr / [* tstr]": "tstr / [* tstr]", "{* key-id => hex64}": "{ * key-id => hex64 }",
+    "tstr / [* tstr]": "tstr / [* tstr]", "bool": "bool", "{* key-id => hex64}": "{ * key-id => hex64 }",
 }
 
 

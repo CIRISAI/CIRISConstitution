@@ -39,7 +39,7 @@ nuc_lines = "\n".join(r"\newunicodechar{%s}{%s}" % (k, v) for k, v in B.NUC.item
 VERSION = (HERE / "VERSION").read_text(encoding="utf-8").strip()
 PARTS = sorted(DOC.glob("part_*.md"), key=lambda p: int(re.match(r"part_(\d+)_", p.name).group(1)))
 PART_TITLE = {1: "Foundation", 2: "The Grammar", 3: "The Namespace", 4: "Composition & Governance",
-              5: "Transport & Substrate", 6: "The Holonomic Substrate", 7: "Lifecycle & Stewardship",
+              5: "Transport & Substrate", 6: "The Substrate", 7: "Lifecycle & Stewardship",
               8: "Appendices"}
 
 def prefilter(md):
