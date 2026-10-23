@@ -41,7 +41,9 @@ jobs:
         run: sudo apt-get update -q && sudo apt-get install -y -q texlive-latex-extra texlive-fonts-recommended
       - name: Rebuild as the release name
         if: steps.state.outputs.finalize == 'yes'
-        run: PDF_BRANCH=main python3 build_pdf.py
+        run: |
+          PDF_BRANCH=main python3 build_pdf.py
+          PDF_BRANCH=main python3 build_pdf.py --volume all
       - name: Commit the finalized PDF and refresh the permalink
         if: steps.state.outputs.finalize == 'yes'
         run: |
@@ -55,6 +57,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf ciris_constitution.pdf
+          git add -f volumes/*.pdf
           git rm -q --cached ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true
           rm -f ciris_constitution-${V}.[0-9]*.pdf
           git commit -m "PDF: finalize ${V} on main${FROM}; permalink refreshed; earlier releases retained" && git push
