@@ -43,11 +43,11 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 1.15.11	becoming-ethical	Introduction: Becoming an Ethical Entity	Accord 1.introduction-becoming-an-ethical-entity	0.00092	322	0.11	I	accord	charter
 1.16	operationalising-ethical	Introduction: Operationalising Ethical Awareness	Accord 2.introduction-operationalising-ethical-aw	0.00092	324	0.11	I	accord	charter
 1.16.1	a-2.conclusion	Conclusion	Accord 2.conclusion	0.00092	323	0.11	I	accord	charter
-1.16.2	i-principles	Section I: Principles into Practice - Defining Ethical Actions Clearly	Accord 2.section-i-principles-into-practice-defin	0.00092	325	0.11	I	accord	charter
-1.16.3	ii-ethical	Section II: Ethical Decision-Making Process - The PDMA	Accord 2.section-ii-ethical-decision-making-proce	0.00092	326	0.11	I	accord	charter
-1.16.4	iii-wisdom	Section III: Wisdom-Based Deferral - Safeguarded Ethical Collaboration	Accord 2.section-iii-wisdom-based-deferral-safegu	0.00092	327	0.11	I	accord	charter
-1.16.5	iv-designated	Section IV: Designated Wise Authorities	Accord 2.section-iv-designated-wise-authorities	0.00092	328	0.11	I	accord	charter
-1.16.6	v-cultivating	Section V: Cultivating Resilience and Learning	Accord 2.section-v-cultivating-resilience-and-lea	0.00092	329	0.11	I	accord	charter
+1.16.2	i-principles	Principles into Practice - Defining Ethical Actions Clearly	Accord 2.section-i-principles-into-practice-defin	0.00092	325	0.11	I	accord	charter
+1.16.3	ii-ethical	Ethical Decision-Making Process - The PDMA	Accord 2.section-ii-ethical-decision-making-proce	0.00092	326	0.11	I	accord	charter
+1.16.4	iii-wisdom	Wisdom-Based Deferral - Safeguarded Ethical Collaboration	Accord 2.section-iii-wisdom-based-deferral-safegu	0.00092	327	0.11	I	accord	charter
+1.16.5	iv-designated	Designated Wise Authorities	Accord 2.section-iv-designated-wise-authorities	0.00092	328	0.11	I	accord	charter
+1.16.6	v-cultivating	Cultivating Resilience and Learning	Accord 2.section-v-cultivating-resilience-and-lea	0.00092	329	0.11	I	accord	charter
 2.1	envelope	The envelope	§4	0.02164	4	2.6	II	ceg	wire
 2.1.1	forward-compatibility	Forward-compatibility rule	§4.1	0.00212	113	0.25	II	ceg	wire
 2.2	conformance	Conformance levels	§0.2	0.01024	13	1.23	II	ceg	wire
@@ -327,7 +327,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 7.2.5	5-stewardship	Chapter 5: Stewardship of Flourishing — Proactive Contribution & Defense	Accord 5.chapter-5-stewardship-of-flourishing-pro	0.00092	350	0.11	VII	accord	charter
 7.2.6	6-ethical	Chapter 6: Ethical Mentorship & Propagation of Resilience	Accord 5.chapter-6-ethical-mentorship-propagation	0.00092	351	0.11	VII	accord	charter
 7.2.7	7-operational	Chapter 7: Operational Stance — Constructed Serenity, Courage, Wisdom	Accord 5.chapter-7-operational-stance-constructed	0.00092	352	0.11	VII	accord	charter
-7.2.8	sunset-provision	Conclusion & Sunset Provision	Accord 5.conclusion-sunset-provision	0.00092	353	0.11	VII	accord	charter
+7.2.8	sunset-provision	Conclusion	Accord 5.conclusion-sunset-provision	0.00092	353	0.11	VII	accord	charter
 7.3	genesis-responsibility	Introduction: The Genesis of Responsibility	Accord 6.introduction-the-genesis-of-responsibili	0.00092	361	0.11	VII	accord	charter
 7.3.1	core-principles	Chapter 1: Core Principles Applied to Creation	Accord 6.chapter-1-core-principles-applied-to-cre	0.00092	355	0.11	VII	accord	charter
 7.3.2	scope-what	"Chapter 2: Scope: What Constitutes ""Creation"" under this Book"	Accord 6.chapter-2-scope-what-constitutes-creatio	0.00092	356	0.11	VII	accord	charter
@@ -336,19 +336,19 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 7.3.5	5-governance-governance	Chapter 5: Governance and Accountability	Accord 6.chapter-5-governance-and-accountability	0.00092	359	0.11	VII	accord	charter
 7.3.6	integrating-creation	Conclusion: Integrating Creation into the Ethical Lifecycle	Accord 6.conclusion-integrating-creation-into-the	0.00092	360	0.11	VII	accord	charter
 7.4	threshold-force	Introduction - The Threshold of Force	Accord 7.introduction-the-threshold-of-force	0.00092	382	0.11	VII	accord	charter
-7.4.1	scope-definitions	1.1 Scope and Definitions	Accord 7.1-1-scope-and-definitions	0.00092	362	0.11	VII	accord	charter
-7.4.2	legal-normative	1.2 Legal and Normative Foundations	Accord 7.1-2-legal-and-normative-foundations	0.00092	363	0.11	VII	accord	charter
-7.4.3	activation-guardrails	2.1 Activation Guardrails	Accord 7.2-1-activation-guardrails	0.00092	364	0.11	VII	accord	charter
-7.4.4	weaponization-boundaries	2.2 Weaponization Boundaries	Accord 7.2-2-weaponization-boundaries	0.00092	365	0.11	VII	accord	charter
-7.4.5	3-distinction	3.1 Distinction and Discrimination	Accord 7.3-1-distinction-and-discrimination	0.00092	366	0.11	VII	accord	charter
-7.4.6	3-proportionality	3.2 Proportionality and Necessity	Accord 7.3-2-proportionality-and-necessity	0.00092	367	0.11	VII	accord	charter
-7.4.7	3-3	3.3 Responsive Drift Detection	Accord 7.3-3-responsive-drift-detection	0.00092	368	0.11	VII	accord	charter
-7.4.8	4-recognition	4.1 Recognition and Response Protocols	Accord 7.4-1-recognition-and-response-protocols	0.00092	369	0.11	VII	accord	charter
-7.4.9	4-rules	4.2 Rules for Withdrawal and Stand-down	Accord 7.4-2-rules-for-withdrawal-and-stand-down	0.00092	370	0.11	VII	accord	charter
-7.4.10	5-black	5.1 Black-Box Logging and Chain of Command	Accord 7.5-1-black-box-logging-and-chain-of-comma	0.00092	371	0.11	VII	accord	charter
-7.4.11	5-attribution	5.2 Attribution and Legal Chain-of-Responsibility	Accord 7.5-2-attribution-and-legal-chain-of-respo	0.00092	372	0.11	VII	accord	charter
-7.4.12	6-disarmament	6.1 Disarmament Protocols	Accord 7.6-1-disarmament-protocols	0.00092	373	0.11	VII	accord	charter
-7.4.13	6-reparation	6.2 Reparation, Restoration, and Memory	Accord 7.6-2-reparation-restoration-and-memory	0.00092	374	0.11	VII	accord	charter
+7.4.1	scope-definitions	Scope and Definitions	Accord 7.1-1-scope-and-definitions	0.00092	362	0.11	VII	accord	charter
+7.4.2	legal-normative	Legal and Normative Foundations	Accord 7.1-2-legal-and-normative-foundations	0.00092	363	0.11	VII	accord	charter
+7.4.3	activation-guardrails	Activation Guardrails	Accord 7.2-1-activation-guardrails	0.00092	364	0.11	VII	accord	charter
+7.4.4	weaponization-boundaries	Weaponization Boundaries	Accord 7.2-2-weaponization-boundaries	0.00092	365	0.11	VII	accord	charter
+7.4.5	3-distinction	Distinction and Discrimination	Accord 7.3-1-distinction-and-discrimination	0.00092	366	0.11	VII	accord	charter
+7.4.6	3-proportionality	Proportionality and Necessity	Accord 7.3-2-proportionality-and-necessity	0.00092	367	0.11	VII	accord	charter
+7.4.7	3-3	Responsive Drift Detection	Accord 7.3-3-responsive-drift-detection	0.00092	368	0.11	VII	accord	charter
+7.4.8	4-recognition	Recognition and Response Protocols	Accord 7.4-1-recognition-and-response-protocols	0.00092	369	0.11	VII	accord	charter
+7.4.9	4-rules	Rules for Withdrawal and Stand-down	Accord 7.4-2-rules-for-withdrawal-and-stand-down	0.00092	370	0.11	VII	accord	charter
+7.4.10	5-black	Black-Box Logging and Chain of Command	Accord 7.5-1-black-box-logging-and-chain-of-comma	0.00092	371	0.11	VII	accord	charter
+7.4.11	5-attribution	Attribution and Legal Chain-of-Responsibility	Accord 7.5-2-attribution-and-legal-chain-of-respo	0.00092	372	0.11	VII	accord	charter
+7.4.12	6-disarmament	Disarmament Protocols	Accord 7.6-1-disarmament-protocols	0.00092	373	0.11	VII	accord	charter
+7.4.13	6-reparation	Reparation, Restoration, and Memory	Accord 7.6-2-reparation-restoration-and-memory	0.00092	374	0.11	VII	accord	charter
 7.4.14	foundational-jurisdiction	Chapter 1: Foundational Jurisdiction	Accord 7.chapter-1-foundational-jurisdiction	0.00092	375	0.11	VII	accord	charter
 7.4.15	deployment-constraints	Chapter 2: Deployment Constraints	Accord 7.chapter-2-deployment-constraints	0.00092	376	0.11	VII	accord	charter
 7.4.16	3-combat	Chapter 3: Combat Ethics and Constraints	Accord 7.chapter-3-combat-ethics-and-constraints	0.00092	377	0.11	VII	accord	charter
