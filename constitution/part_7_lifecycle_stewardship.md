@@ -367,7 +367,7 @@ Between an agent's creation and its death lies the gravest test of its operating
 - Controlled deactivation
 - Ethical data disposal and model lockdown
 
-### 7.4.13 `6-reparation` — Reparation, Restoration, and Memory
+### 7.4.13 `6-reparation` — 6.2 Reparation, Restoration, and Memory
 
 - Support for restitution processes
 - Role in truth and reconciliation efforts

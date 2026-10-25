@@ -4,7 +4,7 @@ One edition, one decimal spine, several volumes (CIRISConstitution#123). Built b
 
 | Volume | Sections | Pages |
 |---|---|---|
-| The Charter (`charter`) | 108 | 42 |
+| The Charter (`charter`) | 108 | 44 |
 | The Constitution (`constitution`) | 53 | 68 |
 | The Wire (`wire`) | 92 | 103 |
 | The Dictionary (`dictionary`) | 74 | 108 |
