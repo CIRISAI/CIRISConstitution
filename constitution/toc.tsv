@@ -380,7 +380,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.3	concerns	Concerns + acknowledged gaps	§15	0.00174	139	0.21	APP	ceg	register threats
 8.3.1	acknowledged	Acknowledged risks (named as bets)	§15.2	0.00205	116	0.25	APP	ceg	register threats
 8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit (the honest line)	§15.7	0.00118	188	0.14	APP	ceg	register threats
-8.3.3	observer-share	Observer-share + streaming multicast (normative-landed; streaming half substrate-pending)	§15.6	0.00114	196	0.14	APP	ceg	register threats
+8.3.3	observer-share	Observer-share + streaming multicast	§15.6	0.00114	196	0.14	APP	ceg	register threats
 8.3.4	closed	Closed gaps	§15.1	0.00092	263	0.11	APP	ceg	register threats
 8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	§15.3	0.00092	264	0.11	APP	ceg	register threats
 8.3.6	deferred	Deferred to design workshops	§15.4	0.00092	265	0.11	APP	ceg	register threats

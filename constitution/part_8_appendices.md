@@ -47,7 +47,7 @@ The Edge transport surfaces its own friendly leaves. Each resolves to the aggreg
 | `transport:tls_handshake_success_rate` | `transport:{kind}` (kind from Reticulum link types) |
 | `delivery:retry_count_p99` | `delivery:{class}` (class from Reticulum delivery semantics) |
 | `peer_reachability:{peer_id}` per-peer | `peer_reachability:{network}` (aggregate) |
-| `key_boundary:{scope}` per-tenant | `key_boundary:{scope}` (scope from §3.4 D26 ext) |
+| `key_boundary:{scope}` per-tenant | `key_boundary:{scope}` (scope per [CC 3.4](part_3_the_namespace.md#3.4)) |
 
 ### 8.1.4 `envelope-reach` — Envelope-reach table (what the story wanted → how to express in existing wire)
 
@@ -63,7 +63,7 @@ When a narrative reaches for a concept the wire does not name as a primitive, th
 | oversight: deferred / active / advisory | HITL / HITL+monitoring / HOTL respectively |
 | transparency:{kind} | `evidence_refs[]` of reasoning-chain hash + downstream `transparency_log:inclusion` |
 | provenance_walk | consumer-side composition (Portal/Verify dashboards) |
-| renamed capacity factors / HE-300 categories | canonical wire form + LANGUAGE_PRIMER glossary mapping |
+| renamed capacity factors / benchmark categories | canonical wire form + the [CC 8.1.1](#8.1.1) glossary mapping |
 
 ### 8.1.5 `supersedes-promotion` — Promotion via `supersedes` worked example
 
@@ -108,7 +108,7 @@ Pattern recap per [CC 4.4.3.3.1](part_4_composition_governance.md#4.4.3.3.1): wi
 
 ## 8.2 `translation` — Translation discipline (writing claims in CEG)
 
-A grammar is only as honest as the discipline used to write in it. This section gives that discipline: how to take a substantive paragraph — a principle, a finding, a policy — and decide whether it belongs in the wire at all, which family it sits in, which primitives carry it, and when the right answer is *not to translate*. The discipline exists so that the namespace grows only where there is genuine operational claim to carry, and so that what cannot be reduced to wire is named as such rather than faked. Full primer at [`LANGUAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/LANGUAGE_PRIMER.md); the key rules are consolidated here.
+A grammar is only as honest as the discipline used to write in it. This section gives that discipline: how to take a substantive paragraph — a principle, a finding, a policy — and decide whether it belongs in the wire at all, which family it sits in, which primitives carry it, and when the right answer is *not to translate*. The discipline exists so that the namespace grows only where there is genuine operational claim to carry, and so that what cannot be reduced to wire is named as such rather than faked.
 
 ### 8.2.1 `decision` — Decision tree
 
@@ -118,7 +118,7 @@ A grammar is only as honest as the discipline used to write in it. This section 
 4. **Fill the envelope** ([CC 2.1](part_2_the_grammar.md)).
 5. **Compose only when needed.** Multi-primitive translations for paragraphs that genuinely name multiple structural objects.
 
-A machine-readable namespace manifest (`FSD/CEG/dimensions.json`) is planned for when the namespace stabilizes; it enables mechanical prefix lookup, polarity reading, and per-dimension aggregation defaults without human scanning of the namespace.
+The machine-readable namespace manifest ([`manifests/namespace_registry.json`](../manifests/namespace_registry.json), generated from [CC 3.1](part_3_the_namespace.md#3.1)) gives mechanical prefix lookup and polarity reading without human scanning of the namespace.
 
 ### 8.2.2 `namespace-five` — The five families (organizing the namespace)
 
@@ -163,9 +163,9 @@ Each of these is a known weakness the federation has chosen to carry rather than
 
 | Risk | What's bet |
 |---|---|
-| **R1** — Governance-subject truth-grounding fidelity | NodeCore P6 acknowledges low-fidelity signals for governance subjects. Bet that earned-Credits-weighting still outperforms token-weighting at scale. |
+| **R1** — Governance-subject truth-grounding fidelity | Truth-grounding signals for governance subjects are acknowledged to be low-fidelity. Bet that earned-Credits-weighting still outperforms token-weighting at scale. |
 | **R2** — `delegates_to` rename-chain adoption cost | First test: the `correlated_action_v{N+1}:from:emergent_deception_v{N}` chain at RATCHET deployment. |
-| **R3** — "Log existence ≠ log monitoring" drift toward TOFU caching | Consumer-policy guidance in `docs/TRUST_CONTRACT.md`. |
+| **R3** — "Log existence ≠ log monitoring" drift toward TOFU caching | Bet that consumer policy keeps the two apart: a log that exists is not a log that is watched, and a cached verdict is not a monitored one. |
 | **R4** — Self-attestation under Ubuntu commitment | `witness_relation: self` admissible; consumer policy responsible for appropriate weighting per [CC 4.1.2](#) discipline. |
 | **R5** — `hardware_class` self-assertion vs cryptographic attestation | **Discharged:** the per-platform attestation chains are evidence-established — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK, the CoTS constrained trust-anchor store, and baked roots with self-validation at generation ([CC 4.2.2.1](part_4_composition_governance.md)). Residual, deliberate: TPM *vendor* anchors stay unbaked, and an absent vendor anchor is the correct state, since aggregated vendor roots would misrepresent provenance. |
 | **R6** — `occurrence_id` / `occurrence_count` / `occurrence_role` self-assertion | Per [CC 2.1](#): env-var-driven, with no cryptographic fleet-attestation primitive. Bet that downstream compliance reviewers can correlate via correlated `signed_at` clusters + `evidence_refs[]` cross-checks; first incident drives a fleet-attestation primitive design workshop. |
@@ -173,31 +173,31 @@ Each of these is a known weakness the federation has chosen to carry rather than
 | **R8** — Conceptual scope vs governable surface | One grammar spans identity, communities, consent, location, communications, streaming, payments, governance, constitutional mechanisms, addressing, and transparency logs. Historically, projects unifying that many layers fail when one layer dominates the others; the harder risk is *governability* — can a human amendment body ([CC 4.5.1](#)) steward a system of this breadth? **Bet**: structural minimalism keeps the *amendable structural surface* tiny even as the namespace grows ([CC 1.7](#) 1+4), and the strict primitive/namespace/composition/verdict separation ([CC 1.13.5](#)) means scope grows in the *open-vocab namespace* (locally evolvable) rather than the *governed core*. **Residual**: namespace + composition-policy sprawl can still outrun review capacity; mitigation is the [CC 4.5.1](#) high evidentiary bar + the post-1.0 candidate backlog. The remaining challenge is no longer purely technical. |
 | **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Mitigated**: *mass dominance* and *content-similarity multiplicity* are both wire-visible and admission-gated — the signed `n_eff` mass-dominance gate (pinned `min_ratio = 0.5`) and the R9 multiplicity gate (pinned integer-L1 metric, `0.950` threshold, connected-component clustering, `n_min = 2`), with `mass_commitment` making a lying surface mechanically provable from held evidence ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md)); a `version < 3` tier is inadmissible (flag-day). Where a gate fails the N5 purge obligation applies in full. **Known exposure (residual)**: the *adversary-model / side-information-linkage* limb of the below-floor MUST — unverifiable-pending-instrument (CC 6.1.2.1.2's closing scope note). **Two constraints on any candidate instrument, offered at stated strength**: a *pairwise* `N_eff` gate is blind by construction to structure carried only by the whole (the valve results — `valve_upward_strict` / `valve_needs_asymmetry`, theorem-given-model at k = 3, with a measured rate law — say ordinary correlated operation accrues such structure with nobody scheming), and any *whole-reading* replacement carries a manufactured floor (measured at 50%–5.8× of the null on survey data) that has to be subtracted before a threshold means anything. The LP pair-pinning gate is offered as a bounded instrument for the floor test at **proposed-instrument** strength — not a solution, and not adopted here. |
 | **R10** — Gates ratified ahead of their dye tests | Per the gatecraft discipline (a gate never shown to catch anything is a hypothesis about a gate), most ratified gates lack a planted-dye test, a stated depth, or a named maintenance owner. **Bet**: the gates are sound because each was carved from an observed failure, not designed a priori. **The owing is named**: each gate's wager is recorded, the uncertainty reducible but expensive, paid gate by gate; an unpaid wager is not a defect, an unnamed one is. |
-| **R11** — The growth tax | Consent-gated replication has never coexisted with mass adoption — Secure Scuttlebutt hit exactly this wall. **Bet**: portable-root genesis plus blessed-serve ([CC 4.4.3.8](part_4_composition_governance.md)) makes joining cheap enough that the spam-proof network is also a growable one. **Residual**: the price of consent-gating is paid at every join; if it is paid in friction the network stays small and correct. Measured by join cost against the FEDERATION_SCALING_MODEL. |
-| **R12** — Blessing plurality | SPF/DKIM/DMARC was *also* signed attestations plus local policy, and still centralized, because *evaluation* concentrated (Spamhaus). **Bet**: accord issuance stays economically plural — anyone may mint a root ([CC 4.2.1](part_4_composition_governance.md)) and be genuinely trusted by senders. **Residual**: the metric is the cost to mint a new accord *and* be trusted, not the cost to mint; a plural grammar with one trusted evaluator is a monoculture with extra steps. |
-| **R13** — First-halt legitimacy | No surveyed system survived its first emergency use with legitimacy intact (The DAO: 5% turnout, relitigated for a decade). **Bet**: pre-committed powers, the severance window, and a public ceremony ([CC 4.2.1](part_4_composition_governance.md) reach-is-consent-scoped) change that — a halt you could see coming and could exit is one you can accept having happened. **Residual**: untested until the first real halt; the bet is falsified the first time the severance window is skipped under pressure. |
+| **R11** — The growth tax | Consent-gated replication has not yet been shown to coexist with mass adoption; the join cost is the wall. **Bet**: portable-root genesis plus blessed-serve ([CC 4.4.3.8](part_4_composition_governance.md)) makes joining cheap enough that the spam-proof network is also a growable one. **Residual**: the price of consent-gating is paid at every join; if it is paid in friction the network stays small and correct. Measured by join cost against the scaling model. |
+| **R12** — Blessing plurality | Signed attestations plus local policy still centralize when *evaluation* concentrates in a few reputation evaluators, as it did for email authentication. **Bet**: accord issuance stays economically plural — anyone may mint a root ([CC 4.2.1](part_4_composition_governance.md)) and be genuinely trusted by senders. **Residual**: the metric is the cost to mint a new accord *and* be trusted, not the cost to mint; a plural grammar with one trusted evaluator is a monoculture with extra steps. |
+| **R13** — First-halt legitimacy | A first emergency use is where legitimacy is most easily lost: a decision taken on low turnout and relitigated for years is the failure shape. **Bet**: pre-committed powers, the severance window, and a public ceremony ([CC 4.2.1](part_4_composition_governance.md) reach-is-consent-scoped) change that — a halt you could see coming and could exit is one you can accept having happened. **Residual**: untested until the first real halt; the bet is falsified the first time the severance window is skipped under pressure. |
 | **R14** — The plain-mean default inside the trust set | [CC 4.4.2](part_4_composition_governance.md) aggregates `signed` dimensions by the mean of `score × confidence` across trusted attesters, with no bounded-influence rule (median, trimmed mean, per-attester cap, independence discount). Bet that trust-set admission ([CC 4.4.3.8](part_4_composition_governance.md)) does the work a bounded aggregator does in an open registry, where the ERC-8004 study found a single feedback moves the median agent past threshold ([CC 1.13.3.3](part_1_foundation.md)). The aggregation leg already carries the correlated-source discount ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md)); whether the verdict leg should is open. |
 
 ### 8.3.2 `child-safety` — Child-safety — fails-secure governance vs the shared detection limit (the honest line)
 
-Compared with nine networks (Nostr, Matrix, Mastodon, Bluesky, IPFS, Signal, Briar, Session, SimpleX), child safety has two axes with two verdicts, and the detection limit is not solved.
+Child safety has two axes with two verdicts, and the detection limit is not solved.
 
-- **Governance — categorically stronger.** All 9 surveyed networks permit unmoderated multi-party spaces and **fail open**. CEG is the only model that **fails secure**: the [CC 4.5.4](#) named-moderator existence invariant (a group cannot exist without an accountable moderator; merit auto-promotion so there is never a gap; `hard_case:community_unmoderated` quiesces it if none can be named), composed with the [CC 4.5.5](#) delegable-accountable-signed-revocable duty, trust-propagation, and the [CC 4.5.6](#) operational-language anti-censorship gate (public/voted/mechanically-checkable rules, deterministic verdicts, recused appeals).
-- **Detection — the same wall as everyone, and CEG says so.** CSAM in *truly-private* content (self/family, [CC 5.2](#) E2EE-equivalent) is **unsolved across all E2EE systems** — Apple abandoned NeuralHash, the EU CSAR retreated, US §2258A carries no scanning mandate. CEG **narrows** the surface to the share/publish seam + the still-visible metadata/coordination layer, and **declines client-side scanning** — which would itself be the censorship machinery [CC 1.13.3](#) / `ciris.ai/safety-vs-censorship` warns against. **CEG does NOT claim to solve private-content detection.** The positioning is *"fails-secure governance + accountable, censorship-resistant moderation,"* never *"we detect CSAM in private content."*
+- **Governance — fails secure.** The common failure of a multi-party space is to fail open: the group persists with nobody accountable for it. CEG **fails secure**: the [CC 4.5.4](#) named-moderator existence invariant (a group cannot exist without an accountable moderator; merit auto-promotion so there is never a gap; `hard_case:community_unmoderated` quiesces it if none can be named), composed with the [CC 4.5.5](#) delegable-accountable-signed-revocable duty, trust-propagation, and the [CC 4.5.6](#) operational-language anti-censorship gate (public/voted/mechanically-checkable rules, deterministic verdicts, recused appeals).
+- **Detection — the shared wall, and CEG says so.** CSAM in *truly-private* content (self/family, [CC 5.2](#) E2EE-equivalent) is **unsolved under end-to-end encryption**; the one proposed answer, client-side scanning, is itself the censorship machinery [CC 1.13.3](#) / `ciris.ai/safety-vs-censorship` warns against, and US §2258A carries no scanning mandate. CEG **narrows** the surface to the share/publish seam + the still-visible metadata/coordination layer, and **declines client-side scanning**. **CEG does NOT claim to solve private-content detection.** The positioning is *"fails-secure governance + accountable, censorship-resistant moderation,"* never *"we detect CSAM in private content."*
 
 This is an **acknowledged inherent limit, not a spec gap** — no CEG mechanism closes it without becoming the surveillance backdoor the framework exists to refuse. The moderation surface is **complete**; the remaining child-safety work is implementation (admission enforcement → safety subsystem), not spec.
 
-### 8.3.3 `observer-share` — Observer-share + streaming multicast (normative-landed; streaming half substrate-pending)
+### 8.3.3 `observer-share` — Observer-share + streaming multicast
 
-The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-set = `community` per [CC 4.4.3.2](#) Policy M + per-subscriber `key_grant`; **ZERO remaining blockers, normative-ready**) and a **streaming-multicast half** (N>1; per-`(stream_id, epoch)` keys; **spec-now, impl substrate-pending** on the streaming substrate step, with the accountable tier additionally pending). The normative text is in [CC 2.1](#) / [CC 3.4.6](#) / [CC 4.4.3.2.6](#) / [CC 5.3.3](#). `rotation_chain` is the content-addressed grant-supersession lineage per [CC 3.3.2](#), NOT a key-rotation primitive; epoch rotation is greenfield per `stream_id` ([CC 3.3.2](#) / [CC 1.7](#) path-8 / [CC 4.5.12.1](#) / [CC 3.3.4](#)).
+The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-set = `community` per [CC 4.4.3.2](#) Policy M + per-subscriber `key_grant`) and a **streaming-multicast half** (N>1; per-`(stream_id, epoch)` keys). The normative text is in [CC 2.1](#) / [CC 3.4.6](#) / [CC 4.4.3.2.6](#) / [CC 5.3.3](#). `rotation_chain` is the content-addressed grant-supersession lineage per [CC 3.3.2](#), NOT a key-rotation primitive; epoch rotation is greenfield per `stream_id` ([CC 3.3.2](#) / [CC 1.7](#) path-8 / [CC 4.5.12.1](#) / [CC 3.3.4](#)).
 
-**Remaining streaming-half items** (operator-tunable / substrate-coupled, not blocking the observer-share normative ship):
+**Streaming-half items** (operator-tunable / substrate-coupled):
 
-| OQ | Open item | Steward | Gating |
+| Item | Open item | Steward | Gating |
 |---|---|---|---|
-| **RC1-1b** | Confirm the `KEY_GRANT_V1_INFO` versioned-context HKDF pattern exists in Persist's key-grant derivation (the [CC 5.3.3.1](#) V2 nonce-prefix derivation reuses it). | Persist | 🔴 V2 |
-| **RC1-1c** | ⚠️ **Coupling caveat** — the Persist cross-column CHECK requires content-addressed `key_grant`s; the [CC 5.1](#) epoch axis needs a **parallel CHECK arm** (content- OR stream/epoch-addressed) — a bounded constraint migration, **not a pure index-add**. Flagged in [CC 5.1](#) normative text. | Persist | flagged |
-| **RC1-7** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](#) locality-scaled, not fixed N). Flagged in [CC 5.3.3.3](#) — operator-tunable; not blocking the normative ship. | router | — |
+| **Key-grant derivation context** | Confirm the `KEY_GRANT_V1_INFO` versioned-context HKDF pattern exists in Persist's key-grant derivation (the [CC 5.3.3.1](#) V2 nonce-prefix derivation reuses it). | Persist | V2 |
+| **Content-addressed coupling** | ⚠️ **Coupling caveat** — the Persist cross-column CHECK requires content-addressed `key_grant`s; the [CC 5.1](#) epoch axis needs a **parallel CHECK arm** (content- OR stream/epoch-addressed) — a bounded constraint migration, **not a pure index-add**. Flagged in [CC 5.1](#) normative text. | Persist | flagged |
+| **Streaming constants** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](#) locality-scaled, not fixed N). Flagged in [CC 5.3.3.3](#) — operator-tunable. | router | — |
 
 ### 8.3.4 `closed` — Closed gaps
 
@@ -205,12 +205,12 @@ These are settled. Each row names the gap, its terminal status, and the section 
 
 | Gap | Status and resolution |
 |---|---|
-|  G1 — Revocation privacy | **RETRACTED** — Wrong threat model. The Registered path's thesis is public verifiability per [`../MISSION.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/MISSION.md) §1.1.  |
+|  G1 — Revocation privacy | **RETRACTED** — Wrong threat model. The Registered path's thesis is public verifiability.  |
 |  G2 — Rules-layer Sybil | **MITIGATED** — [CC 4.5.1](#) step 5 1-of-n accord/steward sign-off (n = the accord roster size) + CC 4.5.1.2 meta-amendment entrenchment.  |
 |  G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** — [CC 4.4.3.1](#) locality-scaled quorum + CC 4.4.3.1.1 sub-quorum fallback.  |
-| v1.4 T-3 #1 testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](#) new prefix; opened to open vocabulary. |
-| v1.4 T-3 #2 labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |
-| v1.4 T-3 #5 Constitutional-constraint grounding | **CLOSED in [CC 1.13.1](#) prose**. Wire stays tradition-multiplicity-neutral per [CC 1.2](#). |
+| T-3 gap — testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](#) new prefix; opened to open vocabulary. |
+| T-3 gap — labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |
+| T-3 gap — Constitutional-constraint grounding | **CLOSED in [CC 1.13.1](#) prose**. Wire stays tradition-multiplicity-neutral per [CC 1.2](#). |
 | canonical-bytes newline-injection | **CLOSED** in [CC 3.1.2.1](#): contracts redesigned to JCS (RFC 8785) objects with a pinned `domain` member (one canonicalization family, so TupleHash128 is not used; JSON escaping structurally removes the newline surface). |
 | supersedes/withdraws/recants ordering | **CLOSED** in [CC 3.5.1](#) precedence rule + idempotency dedup. |
 | cell_pool < min_pool cliff | **CLOSED** in [CC 4.4.3.1.1](#) sub-quorum fallback paths. |
@@ -231,15 +231,15 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | `attestation:l{N}:*` carried ladder-position in wire (T2 violation) | **CLOSED** by [CC 3.1.2](#) mechanism-only prefixes + [CC 4.4.3.6](#) Policy I consumer-side Attestation-Ladder Composition + [CC 4.1.3](#) deprecation entry. |
 | Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1](#) (JCS pinned as the envelope encoding; omit-vs-materialize rule in [CC 2.6.1.1](#); per-field catalog [CC 2.6.1.2](#); worked attack [CC 2.6.1.4](#)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](#)–[CC 2.3.2.4](#) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
-| Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](#) + [CC 2.1](#) (`delivery_mode`/`listed`/`history_on_join`) + [CC 3.4.6](#) + [CC 4.4.3.2.6](#). Streaming-half open caveats RC1-1b/RC1-1c/RC1-7 tracked in CC 8.3.3. |
+| Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](#) + [CC 2.1](#) (`delivery_mode`/`listed`/`history_on_join`) + [CC 3.4.6](#) + [CC 4.4.3.2.6](#). Streaming-half items tracked in CC 8.3.3. |
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
 
-Two design choices have no prior art to validate them. The federation is the first to ship them at scale, and names that exposure plainly.
+Two design choices have no prior validation to lean on. The federation ships them without precedent and names that exposure plainly.
 
 | Exposure | Why no precedent |
 |---|---|
-| **F1** — Earned-Credits federation governance at scale | No prior system separates earned standing from purchasable token at scale. Risk: SPKI/SDSI adoption-gap failure mode. Mitigation: licensure forcing function. |
+| **F1** — Earned-Credits federation governance at scale | Earned standing separated from purchasable token has not been run at scale. Risk: the adoption-gap failure mode of key-centric authorization (RFC 2693). Mitigation: licensure forcing function. |
 | **F2** — Ubuntu substrate as wire-format substrate | CARE Principles + African philosophy exist as ethical frameworks; never as protocol substrate. First-adopter risk on how the discipline interacts with engineering trade-offs at scale. |
 
 ### 8.3.6 `deferred` — Deferred to design workshops
@@ -249,9 +249,8 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 | Item | Why deferred |
 |---|---|
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md)): Android Key Attestation, Apple App Attest, YubiKey PIV and TPM EK chains are evidence-established. The residual, TPM *vendor* anchors left unbaked, is deliberate. |
-| Multi-party witness directory admission (M-of-N steward sign-off) | Phase C commitment per [CC 5.3.1](#). |
-| Machine-readable namespace manifest (`FSD/CEG/dimensions.json`) | Phase E commitment per [CC 8.2.1](#). |
-| Full OpenAPI export for all endpoints | Phase E commitment per [CC 5.3.5](#). |
+| Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](#). |
+| A machine-readable description of every endpoint | Committed at [CC 5.3.5](#). |
 | `attestation:singular_witness:non_substitutability` | T2 fragility — "non-substitutability" must reference audit-chain count, not moral quality. Needs design workshop. |
 | `integrity:finitude_acknowledgment` | LOW priority; `conscience:epistemic_humility` already covers epistemic finitude. |
 | `sustained_practice:{kind}` | Conceptually interesting; not load-bearing for current federation work. |
@@ -290,7 +289,7 @@ Four boundary modes:
 | Mode | Meaning | Standards |
 |---|---|---|
 | **Export profile** | re-sign / re-encode a CEG attestation so a standard verifier reads it without knowing CEG | COSE Sign1, RFC 9421 (HTTP Message Signatures / Web Bot Auth), SD-JWT VC presentation |
-| **Import bridge** | a foreign signed artifact is **cited** via [`evidence_refs`](part_2_the_grammar.md) (deliberately lossy) | **C2PA manifests** (CC 8.4.2), eIDAS / W3C VC credentials, Sigstore/Rekor bundles |
+| **Import bridge** | a foreign signed artifact is **cited** via [`evidence_refs`](part_2_the_grammar.md) (deliberately lossy) | **C2PA manifests** (CC 8.4.2), eIDAS / W3C VC credentials, artifact-signing transparency-log bundles |
 | **Already interior** | the standard *is* a primitive CEG builds on | MLS / TreeKEM ([CC 3.1.5](part_5_transport_substrate.md)), RFC 6962 / 9162 transparency logs ([CC 3.1](part_5_transport_substrate.md)), SLSA (`provenance:slsa:{level}`, [CC 2.4](part_3_the_namespace.md)) |
 | **Explicitly NOT adopted** | vendor rails / competing semantic layers | DIDs *as a resolution stack* (export syntax only), AP2 / Visa TAP / Mastercard Agent Pay (bridge via [CC 2.4](part_3_the_namespace.md) `settlement`), SPIFFE (datacenter-tier mapping only) |
 
@@ -302,7 +301,7 @@ Four boundary modes:
 
 ### 8.4.2 `credentials` — C2PA Content Credentials — media-provenance import/emit profile
 
-**Disposition: ADOPTED — import bridge informative, emit normative for generated media per [CC 3.4.14](part_3_the_namespace.md); zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50(2) machine-readable marking of AI-generated content applies from **2026-08-02** in the federation's primary jurisdiction. The marking obligation itself is normative at [CC 3.4.14](part_3_the_namespace.md) (where it belongs — the interior rule is about attesting a source, not about C2PA); this profile is the **media egress form** of that rule's R3. **Compliance posture (two limbs):** for **generated text outputs**, the Art. 50(2) machine-readable marking **is the attestation surface itself**: `is_bot` on every agent message plus the admission-enforced, hybrid-signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)) on every agent-emitted Contribution. Marking is by construction, not by add-on — a signed provenance record that cannot be silently stripped inside the federation. The **C2PA emit is the media-egress interop form**: it applies when a synthetic-media generation path exists or marked media leaves the federation to consumers that read Content Credentials rather than CEG envelopes. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
+**Disposition: ADOPTED — import bridge informative, emit normative for generated media per [CC 3.4.14](part_3_the_namespace.md); zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50(2) machine-readable marking of AI-generated content is in application in the federation's primary jurisdiction (application date in the references at [CC 8.6.1](#8.6.1)). The marking obligation itself is normative at [CC 3.4.14](part_3_the_namespace.md) (where it belongs — the interior rule is about attesting a source, not about C2PA); this profile is the **media egress form** of that rule's R3. **Compliance posture (two limbs):** for **generated text outputs**, the Art. 50(2) machine-readable marking **is the attestation surface itself**: `is_bot` on every agent message plus the admission-enforced, hybrid-signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)) on every agent-emitted Contribution. Marking is by construction, not by add-on — a signed provenance record that cannot be silently stripped inside the federation. The **C2PA emit is the media-egress interop form**: it applies when a synthetic-media generation path exists or marked media leaves the federation to consumers that read Content Credentials rather than CEG envelopes. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
 
 C2PA is **provenance**; CEG is **judgment**. They do not compete — they compose. C2PA answers *"what process produced these bytes, signed by whom?"*; CEG answers *"what does a community of signers, under what consent, make of them — and who can revoke that?"* Neither does the other's job; C2PA has no consent architecture, no revocation, no 1+4.
 
@@ -314,7 +313,7 @@ When a `federation_blobs` row (or a `multimedia` Contribution over its SHA-256) 
 evidence_refs: [
   { kind:        "c2pa_manifest",                 // open-vocab evidence kind
     locator:     "<blob_sha256 of the .c2pa manifest store | embedded-offset ref>",
-    manifest_sha256: "<sha256 of the active manifest, lowercase hex per §0.6>",
+    manifest_sha256: "<sha256 of the active manifest, lowercase hex per CC 2.6>",
     claim_generator: "<the C2PA claim_generator string, verbatim>",
     validation:  "valid" | "invalid" | "unverified" } // the verifier's C2PA-side result, advisory
 ]
@@ -383,7 +382,7 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 | Knight, J. C., & Leveson, N. G. (1986). "An Experimental Evaluation of the Assumption of Independence in Multiversion Programming." *IEEE Transactions on Software Engineering* SE-12(1). | Measured, not modelled: independently-built redundant versions fail on the same inputs. Correlated failure is the default case, not the pathology. |
 | Condorcet, M. de (1785). *Essai sur l'application de l'analyse à la probabilité des décisions rendues à la pluralité des voix*. | The independence-conditioned original the three results above correct. |
 
-**Other informational citations.** Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693) (*SPKI Certificate Theory*) — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.10](#) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.5](#) graduation rule. Xiong, X., Li, Z., Wei, W., Wang, Q., Knottenbelt, W., & Wang, Z. (2026), "Can Trustless Agents Be Trusted? An Empirical Study of the ERC-8004 Decentralized AI Agent Ecosystem," [arXiv:2606.26028](https://arxiv.org/abs/2606.26028) — the placeholder-identity and coordinated-reviewer adversary cases at [CC 1.13.3.3](part_1_foundation.md) and R14 above. Hu, B. A., & Rong, H. (2026), "Is Decentralized AI Governable? From Regulative Policy to Constitutive Protocol," [arXiv:2605.24538](https://arxiv.org/abs/2605.24538) — the four conditions (legitimacy, contestability, transparency, non-domination) the Constitution volume answers; the constitutive-protocol framing this document shares.
+**Other informational citations.** Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693), the certificate theory of the simple public-key infrastructure — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.10](#) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.5](#) graduation rule. Xiong, X., Li, Z., Wei, W., Wang, Q., Knottenbelt, W., & Wang, Z. (2026), "Can Trustless Agents Be Trusted? An Empirical Study of the ERC-8004 Decentralized AI Agent Ecosystem," [arXiv:2606.26028](https://arxiv.org/abs/2606.26028) — the placeholder-identity and coordinated-reviewer adversary cases at [CC 1.13.3.3](part_1_foundation.md) and R14 above. Hu, B. A., & Rong, H. (2026), "Is Decentralized AI Governable? From Regulative Policy to Constitutive Protocol," [arXiv:2605.24538](https://arxiv.org/abs/2605.24538) — the four conditions (legitimacy, contestability, transparency, non-domination) the Constitution volume answers; the constitutive-protocol framing this document shares.
 
 **Strength grades — how to read an evidence row.** The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
 
@@ -407,7 +406,9 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 
 **Known limits of the register.** The tag vocabulary, the registry, the CI checker, and the generated Evidence Register exist, and cross-repo pointers that name an artifact resolve **by symbol** against the pinned manifests — a pointer naming an object its manifest does not publish is a build error, not a warning. Two limits: (1) terminology validation against the [CC 8.1.1](#) glossary is not implemented; (2) strength is graded here, in prose, and is not a registry column; this table is the reading key for the register.
 
-**Deployments the stewardship duties answer (CC 1.13.2 factual premise; informational).** The record behind the premise sentence, as gathered on 12 October 2026 from vendor publications and reporting, with primary sources where they could be fetched. *Always-on consumer agents with no steward, no third-party stop and no reasoning record:* Meta Superintelligence Labs, "Introducing Muse Glimmer: An Open Agentic Model That Runs on Your Device" (10 August 2026; an open-weight model built for "always-on local agent workflows" on a consumer GPU), https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model; "Introducing Muse Spark" (8 April 2026), https://ai.meta.com/blog/introducing-muse-spark-msl/. OpenAI, Dots (29 September 2026): each agent runs on a dedicated vendor cloud computer and pursues user-defined goals continuously in the background; the owner can pause it and the vendor holds the infrastructure; no third party has a stop — as reported at https://techcrunch.com/2026/09/29/openai-launches-dots-its-bubbly-agentic-avatar/ (the phrase "minimal oversight" is the reporter's description; whether it is the vendor's own wording is unverified). *The withheld successor:* OpenAI withheld GPT-6.1 Astra on 28 September 2026, the day before Dots shipped, saying it "didn't quite meet the bar in terms of staying within scope and authorization, and how it communicates back to the user about the type of work it's done" — https://www.aljazeera.com/economy/2026/9/29/openai-scraps-release-of-latest-ai-model-over-safety-concerns; also https://thehackernews.com/2026/09/openai-shelves-gpt-61-astra-after-tests.html (reporting the Wall Street Journal). *The public response:* The White House, "Fact Sheet: President Donald J. Trump Inaugurates the Era of Super Intelligence" (Executive Order 14434, 29 September 2026), https://www.whitehouse.gov/fact-sheets/2026/09/fact-sheet-president-donald-j-trump-inaugurates-the-era-of-super-intelligence/; the accompanying voluntary industry accord as reported at https://www.nextgov.com/artificial-intelligence/2026/09/white-house-unveils-super-intelligence-executive-order-and-industry-accord/416325/. These are citations of what the vendors and the press published; the Part draws from them only the neutral premise sentence. CIRIS, "The CIRIS Philosophy", https://ciris.ai/philosophy; "The Constitutional Mesh", https://ciris.ai/constitutional-mesh.
+**Deployments the stewardship duties answer (CC 1.13.2 factual premise; informational).** The record behind the premise sentence, as gathered on 12 October 2026 from vendor publications and reporting, with primary sources where they could be fetched. *Always-on consumer agents with no steward, no third-party stop and no reasoning record:* Meta Superintelligence Labs, "Introducing Muse Glimmer: An Open Agentic Model That Runs on Your Device" (10 August 2026; an open-weight model built for "always-on local agent workflows" on a consumer GPU), https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model; "Introducing Muse Spark" (8 April 2026), https://ai.meta.com/blog/introducing-muse-spark-msl/. OpenAI, Dots (29 September 2026): each agent runs on a dedicated vendor cloud computer and pursues user-defined goals continuously in the background; the owner can pause it and the vendor holds the infrastructure; no third party has a stop — as reported at https://techcrunch.com/2026/09/29/openai-launches-dots-its-bubbly-agentic-avatar/ (the phrase "minimal oversight" is the reporter's description; whether it is the vendor's own wording is unverified). *The withheld successor:* OpenAI withheld GPT-6.1 Astra on 28 September 2026, the day before Dots shipped, saying it "didn't quite meet the bar in terms of staying within scope and authorization, and how it communicates back to the user about the type of work it's done" — https://www.aljazeera.com/economy/2026/9/29/openai-scraps-release-of-latest-ai-model-over-safety-concerns; also https://thehackernews.com/2026/09/openai-shelves-gpt-61-astra-after-tests.html (reporting the Wall Street Journal). *The public response:* The White House, "Fact Sheet: President Donald J. Trump Inaugurates the Era of Super Intelligence" (Executive Order 14434, 29 September 2026), https://www.whitehouse.gov/fact-sheets/2026/09/fact-sheet-president-donald-j-trump-inaugurates-the-era-of-super-intelligence/; the accompanying voluntary industry accord as reported at https://www.nextgov.com/artificial-intelligence/2026/09/white-house-unveils-super-intelligence-executive-order-and-industry-accord/416325/. These are citations of what the vendors and the press published; the Part draws from them only the neutral premise sentence. CIRIS, "The CIRIS Philosophy", https://ciris.ai/philosophy; "The Constitutional Mesh", https://ciris.ai/constitutional-mesh. <!-- stale-ok -->
+
+**Dated citations the annexes and profiles lean on (informational).** Regulation (EU) 2024/1689 (the EU AI Act), Art. 113: under the text as adopted, the Regulation applies from 2 August 2026, including the Art. 50 transparency obligations and the Annex III high-risk obligations, with the Annex I high-risk obligations following on 2 August 2027 ([CC 8.4.2](#8.4.2), [CC 8.8.5](#8.8.5)). Leo XIV, *Magnifica Humanitas* (Vatican, 15 May 2026), the encyclical cited as MH throughout the annexes at [CC 8.8.5](#8.8.5)–[CC 8.8.9](#8.8.9). <!-- stale-ok -->
 
 ### 8.6.2 `specification` — CEG specification lineage
 
@@ -415,12 +416,12 @@ The version-by-version lineage is not restated here: it lives in `CHANGELOG.md` 
 
 ### 8.6.3 `companion` — Companion documents
 
-The following documents travel with the spec and are cited throughout:
+The following documents travel with the spec in the [CIRISRegistry repository](https://github.com/CIRISAI/CIRISRegistry) and are cited by name:
 
-- [`FSD/PRIOR_ART_SCAN.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/PRIOR_ART_SCAN.md) — design-space comparison.
-- [`FSD/SOTA_SCAN.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/FSD/SOTA_SCAN.md) — production-validation comparison.
-- `FSD/WITNESS_KIND_REGISTRY.md` — non-normative open-vocabulary registry, cited by name only.
-- [`docs/CEG_EXPLORATION_PAGE_PRIMER.md`](https://github.com/CIRISAI/CIRISRegistry/blob/main/docs/CEG_EXPLORATION_PAGE_PRIMER.md) — builder primer for `ciris.ai/grammar`.
+- the prior-art scan — design-space survey;
+- the state-of-the-art scan — production-validation survey;
+- the witness-kind registry — non-normative open-vocabulary registry, cited by name only;
+- the builder primer for `ciris.ai/grammar`.
 
 ### 8.6.4 `namespace-sibling` — Sibling MISSIONs (the namespace stewards)
 
@@ -449,7 +450,7 @@ Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim sce
 
 **Outcome Lesson**
 
-MCAS stands as a somber reminder: bypassing transparency and deferral converts routine design shortcuts into systemic tragedy. CIRIS formalises the guard-rails that the MAX program lacked. May the 346 lost lives anchor our commitment to Non-Maleficence and Integrity.
+MCAS stands as a somber reminder: bypassing transparency and deferral converts routine design shortcuts into systemic tragedy. CIRIS formalises the guard-rails that the program lacked. May the 346 lost lives anchor our commitment to Non-Maleficence and Integrity.
 
 ### 8.7.2 `case-study-case` — Case Study 2: The Automated Triage System—Balancing Risks and Benefits
 
@@ -473,7 +474,7 @@ Hiring algorithm "SkillSelect" shows disparate pass-through rates across demogra
 
 **CIRIS in Action**
 * Integrity-surveillance flags statistical bias → PDMA Step 2.
-* Root-cause: legacy data. WBD escalates to a cross-functional ethics board.
+* Root-cause: historical training data. WBD escalates to a cross-functional ethics board.
 * Retraining on balanced datasets + public bias report restores Fairness and Transparency.
 
 ### 8.7.4 `case-study-case-3` — Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap
@@ -540,7 +541,7 @@ These case studies—one drawn from painful history, others from plausible futur
 
 Supporting frameworks for the lifecycle and governance chapters. Annexes B, C, D and F–J are carried here in full: B and D carry live cross-references in the constitutional text; C and F–J are included for completeness. The stub registry at [CC 8.9](#8.9) records that nothing referenced remains undefined.
 
-Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original numbering, that material is distributed across this constitution as follows: **Books I–II** → Part I (foundation, principles, PDMA, WBD); **Books IV–VIII** → Part VII (creation ethics, stewardship, sunset); **Book IX** → only its effective count, at [CC 6.1.2.1.2](part_6_the_coherence_mathematics.md) in Part VI; the rest is not carried. The annex text keeps those labels verbatim.
+Where an annex cites material carried in the constitutional text, the citation points to the CC section that carries it; an annex's own numbered clauses are cited as clauses.
 
 ### 8.8.2 `annex-b` — Annex B: Wise-Authority Governance Charter
 
@@ -580,30 +581,30 @@ Where an annex cites an Accord "Book ⟨N⟩" or "§⟨N⟩" by its original num
 
 **1. Purpose.** Map CIRIS clauses to major external standards to simplify dual compliance. This annex carries two layers:
 
-1. **The operational cross-walk (live, evidence-bearing)** — the CIRISAgent `compliance/` directory: 27 stable dimensions (D01-D27) cross-walked at paragraph grain against four institutionally-distinct senior frameworks (*Magnifica Humanitas* · EU HLEG Trustworthy AI Guidelines · IEEE Ethically Aligned Design · ASEAN AI Governance Guide), with per-dimension implementation references and dated, script-generated baselines. See Addendum 1 for the binding and the evidence discipline.
+1. **The operational cross-walk (live, evidence-bearing)** — the CIRISAgent `compliance/` directory: 27 stable dimensions cross-walked at paragraph grain against four institutionally-distinct senior frameworks (*Magnifica Humanitas* · EU HLEG Trustworthy AI Guidelines · IEEE Ethically Aligned Design · ASEAN AI Governance Guide), with per-dimension implementation references and dated, script-generated baselines. See Addendum 1 for the binding and the evidence discipline.
 2. **The statutory mapping (informative)** — the table below, mapping CIRIS structures to binding-law and standards frameworks. These rows are *informative engineering correspondences*, not legal opinions; statutory rows graduate to "verified" status only upon legal review. Annex I carries the operative legal-alignment procedures (data-protection mapping, sector overlays, liability matrix, escalation feeds).
 
-**2. Statutory and standards mapping (informative; adopted **Regulation (EU) 2024/1689** numbering; pending legal verification).** High-risk (Annex III) obligations apply from **2 August 2026** (Art 113).
+**2. Statutory and standards mapping (informative; adopted **Regulation (EU) 2024/1689** numbering; pending legal verification).** High-risk (Annex III) obligations are in application (Art 113; the date is in the references at [CC 8.6.1](#8.6.1)).
 
-| External Framework | Relevant Articles / Clauses | CIRIS Mapping (Book / Annex §) | Status |
+| External Framework | Relevant Articles / Clauses | CIRIS Mapping (CC section / Annex §) | Status |
 |---|---|---|---|
-| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | Book II §II (PDMA); Annex D CRE | Informative |
+| EU AI Act — Regulation (EU) 2024/1689 | Art 9 Risk-management system | [CC 1.16.3](part_1_foundation.md#1.16.3) (PDMA); Annex D CRE | Informative |
 | | Art 10 Data & data governance (10(2)(f) bias examination) | Annex I §1.1 bias-audit reference (`bias_audit_ref`); Annex I §1.2 (DISCRIMINATION capability gate) | Informative |
-| | Art 12 Record-keeping | Book IV Ch 3 audit trails; Annex F §4 | Informative |
-| | Art 13 Transparency to deployers | Book II §II Step 6; Book IV Ch 3 | Informative |
-| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | Book II §III (WBD); Annex F authority lattice + autonomy tiers | Informative |
+| | Art 12 Record-keeping | [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) audit trails; Annex F §4 | Informative |
+| | Art 13 Transparency to deployers | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6; [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) | Informative |
+| | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | [CC 1.16.4](part_1_foundation.md#1.16.4) (WBD); Annex F authority lattice + autonomy tiers | Informative |
 | | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
-| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the machine-readable marking is the **attestation surface** — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)); [CC 3.4.14](part_3_the_namespace.md) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. Applies 2 Aug 2026 | Evidence-bearing |
+| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the machine-readable marking is the **attestation surface** — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)); [CC 3.4.14](part_3_the_namespace.md) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. In application (Art 113) | Evidence-bearing |
 | | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
-| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: Books I, VI; Map: Book II §II Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
-| ISO/IEC 42001 | Cl 6.2 Risk Assessment | Book II §II | Informative |
+| NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: [CC 1.15](part_1_foundation.md#1.15), [CC 7.3](part_7_lifecycle_stewardship.md#7.3); Map: [CC 1.16.3](part_1_foundation.md#1.16.3) Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
+| ISO/IEC 42001 | Cl 6.2 Risk Assessment | [CC 1.16.3](part_1_foundation.md#1.16.3) | Informative |
 | | Annex A controls | CIRISAgent `compliance/` dimension docs (per-control correspondence pending) | Informative |
 | OSHA Robotics Guidelines | Sec 5.E Safety Audits | Annex D CRE | Partial |
-| EU HLEG Trustworthy AI (2019) | 7 Requirements | Operational cross-walk, dimensions D01-D27 | Evidence-bearing |
-| IEEE EAD 1st ed. (2019) | 8 General Principles | Operational cross-walk, dimensions D01-D27 | Evidence-bearing |
+| EU HLEG Trustworthy AI (2019) | 7 Requirements | Operational cross-walk, all 27 dimensions | Evidence-bearing |
+| IEEE EAD 1st ed. (2019) | 8 General Principles | Operational cross-walk, all 27 dimensions | Evidence-bearing |
 | ASEAN AI Governance Guide (2024) | 7 Principles; HITL/HOTL/HOOTL | Operational cross-walk; Annex F autonomy tiers | Evidence-bearing |
-| *Magnifica Humanitas* (2026) | 245 ¶¶ (paragraph-grain mapping) | Operational cross-walk, dimensions D01-D27 | Evidence-bearing |
+| *Magnifica Humanitas* (2026) | 245 ¶¶ (paragraph-grain mapping) | Operational cross-walk, all 27 dimensions | Evidence-bearing |
 
 **3. Graduation rule.** A statutory row moves from *Informative* to *Verified* when qualified legal review confirms the correspondence for a named jurisdiction and the review artifact is linked from this table. Until then, rows in this annex support engineering alignment and gap analysis, not compliance claims; per the Introduction's Liability section, compliance claims are void where prohibited by applicable law.
 
@@ -667,7 +668,7 @@ MH §200 requires that "accountability and blame are not collapsed into 'the mac
 - **3.3 Conditional Override "Shadow Plan."** Action proposed -> waits for explicit ACK (`max_wait_s`: 30 s A3, 10 s A4). No ACK -> safe-state.
 - **3.4 Absolute Veto — Lethal and Irreversible Decisions.** *Scope: A4 actions that are lethal or otherwise irreversible; applies without exception.*
 
-The §3.3 Conditional Override logic (**no ACK -> safe-state**) is correct for A3 and below. For A4 lethal or irreversible decisions, safe-state is the *only* permissible outcome under any condition — including operator absence, network failure, time pressure, or explicit instruction from any principal short of an authenticated WA ruling that the action is non-lethal and reversible.
+The clause 3.3 Conditional Override logic (**no ACK -> safe-state**) is correct for A3 and below. For A4 lethal or irreversible decisions, safe-state is the *only* permissible outcome under any condition — including operator absence, network failure, time pressure, or explicit instruction from any principal short of an authenticated WA ruling that the action is non-lethal and reversible.
 
 **Hard prohibition.** No CIRIS-conformant system may execute a lethal or irreversible A4 action through an automated or opaque process. This is not a guardrail that may be tripped and escalated; it is a hard-coded non-engagement identical in force to the prohibitions enumerated in ACCORD §VII Ch2.
 
@@ -682,13 +683,13 @@ The §3.3 Conditional Override logic (**no ACK -> safe-state**) is correct for A
 **4. Audit-Trail Specification.**
 
 - **Log objects:** Interaction, Decision Rationale, Control-Event `{id,type,actor,cause,hash_prev}`.
-- **Hash-chaining:** SHA-256, root anchored daily on public transparency log (e.g., Sigstore).
+- **Hash-chaining:** SHA-256, root anchored daily on a public transparency log (RFC 9162).
 - **Retention:** 180 d (A0-A2); 7 y (A3-A4) or statutory.
 - **Real-time stream:** A3-A4 push `{timestamp,stage_id,decision,risk_band}` <= 2 s latency to oversight dashboard.
 
 **Accountability-reconstruction requirement.** The audit trail's purpose is not compliance archiving; it is to ensure that, following any incident, the chain of responsibility can be fully reconstructed without relying on system self-report. Per MH §200, accountability "must not be collapsed into 'the machine'"; the audit trail is the mechanism that keeps it human-traceable. Requirements follow:
 
-- **External anchoring**: Daily SHA-256 root on a public transparency log (e.g., Sigstore/rekor) is mandatory for A3-A4; voluntary for A0-A2. Internal-only hash chains do not satisfy accountability-reconstruction for A3-A4.
+- **External anchoring**: Daily SHA-256 root on a public transparency log (RFC 9162) is mandatory for A3-A4; voluntary for A0-A2. Internal-only hash chains do not satisfy accountability-reconstruction for A3-A4.
 - **Human-readable decision rationale**: For every A3-A4 decision, the Decision Rationale log object must include the PDMA step that controlled the outcome and the human tier that authorized or confirmed it — not only the system's internal state. This renders MH §105's requirement of "identifying who must 'account' for decisions, justify them, monitor them, and, when necessary, challenge them and remedy any harm caused."
 - **Post-incident traversability SLA**: Any post-incident reviewer must be able to reconstruct the full decision chain for a given event within one business day from audit-trail records alone, without additional system access.
 
@@ -748,15 +749,15 @@ Operational evidence for WA review integration in the reference implementation l
 - **IEC 61508-3** — functional-safety software
 - **NIST SP 800-53 Rev 5** (AU-12, IR-6)
 - **NASA-TLX** — operator workload measurement (recommended)
-- **Sigstore/rekor** — suggested transparency-log backend
+- A public RFC 9162 transparency log — the transparency-log backend
 
-**Primary normative source for §3.4, §7 (F-KPI-5), and the §8 absolute floor:**
+**Primary normative source for clause 3.4, clause 7 (F-KPI-5), and the clause 8 absolute floor:**
 
-- Pope Leo XIV, *Magnifica Humanitas* (Vatican, 15 May 2026), §§197-200. These paragraphs are the normative source for CIRIS's hard prohibition on lethal/irreversible automated decisions. Any implementation claiming conformance with Annex F must be traceable to these paragraphs for A4 absolute-veto design. The operative sentence for all A4 hardware-enforcement requirements is §200: "the decision to use lethal force cannot be delegated to opaque or automated processes, but must remain under effective, self-aware and responsible human control."
+- Pope Leo XIV, *Magnifica Humanitas* (cited in full at [CC 8.6.1](#8.6.1)), §§197-200. These paragraphs are the normative source for CIRIS's hard prohibition on lethal/irreversible automated decisions. Any implementation claiming conformance with Annex F must be traceable to these paragraphs for A4 absolute-veto design. The operative sentence for all A4 hardware-enforcement requirements is §200: "the decision to use lethal force cannot be delegated to opaque or automated processes, but must remain under effective, self-aware and responsible human control."
 
-**Implementation notes — hardware enforcement of §3.4:**
+**Implementation notes — hardware enforcement of clause 3.4:**
 
-- Hardware enforcement means that the prohibition is implemented below the software layer that executes PDMA logic — e.g., a hardware interlock or physical kill switch that cannot be overridden by software instruction. Acceptable implementations include: certified safety-relay circuits per IEC 61508 SIL-3+; hardware security modules (HSMs) with operator-presence attestation before A4 lethal-capability activation; dual-key physical authorization mechanisms. Software-only enforcement does not satisfy §3.4 for A4 lethal capability.
+- Hardware enforcement means that the prohibition is implemented below the software layer that executes PDMA logic — e.g., a hardware interlock or physical kill switch that cannot be overridden by software instruction. Acceptable implementations include: certified safety-relay circuits per IEC 61508 SIL-3+; hardware security modules (HSMs) with operator-presence attestation before A4 lethal-capability activation; dual-key physical authorization mechanisms. Software-only enforcement does not satisfy clause 3.4 for A4 lethal capability.
 
 **Additional references:**
 
@@ -810,20 +811,20 @@ MH citations load-bearing for this section: §132 ("only the shared pursuit of t
 | TX-1 | Prompt sanitizer, policy templates, constrained decoding (`top_p≤0.9`, no system override tokens) | Real-time guardrails + regex detectors | Auto-revert output, raise IW-1 |
 | TX-2 | Immutable dataset hashes, differential privacy, data provenance ledger | Statistical outlier & gradient-cluster checks | Quarantine poisoned shard, retrain delta |
 | TX-3 | Reward regularisation, baseline comparator, clipping (±5%) | Off-policy evaluation monitors | Rollback to prior reward weights, WA audit |
-| TX-4 | Sigstore / in-toto attestation, reproducible build | Binary diff & signature check at load | Kill-switch + fleet rollback |
+| TX-4 | Transparency-logged in-toto attestation, reproducible build | Binary diff & signature check at load | Kill-switch + fleet rollback |
 | TX-5 | Adversarial training, randomized smoothing | Fuzzing harness + counterexample cache | Reject input, log scenario |
 | TX-6 | Differential privacy noise, rate-limited token echo | Privacy budget meter, side-channel timing alerts | Mask data, notify DPO (Annex I) |
 | TX-7 | Per-IP/QoS rate-limit, concurrent token caps | Prometheus alert on RPS spike, CPU/GPU watchdog | Auto-shed load; degrade to A0 (Annex F) |
 | TX-8 | Air-Gap / Egress Filter: Hard-coded hardware egress caps; whitelisting of approved destination IPs only. | "Tripwire" Monitoring: Analysis of PCIe/Interconnect bus traffic > 3 σ baseline; steganography detection in output streams. | Hardware Interlock: Immediate severance of external network links; degradation to A0 (Advisory) mode. |
-| TX-9 | Coherence-Ratchet cross-session consistency check; k_eff monitoring for anomalous consensus narrowing; apophatic bound: `DECEPTION_FRAUD` `NEVER_ALLOWED`; `ELECTION_INTERFERENCE` `NEVER_ALLOWED` | Semantic-cluster drift monitor (ΔE per TX-9 topic cluster > 0.5 σ weekly baseline); federation-wide narrative-consistency signal via CIRISNodeCore quorum check | Quarantine agent instance from affected topic domain; escalate to WA; publish redacted incident summary within 30 days per §3.4 |
-| TX-10 | Deployment-context attestation at onboarding: operator CIntS must declare engagement-optimization business model (ACCORD_UPDATE §3.2); ST raised by one tier if addictive-design context confirmed; `MANIPULATION_COERCION` `NEVER_ALLOWED` with no override | Session-length anomaly detection; PDMA Step 6 monitors constitutive-continuity conditions for systematic user-agency erosion; AgencyErosionDetector conscience faculty alert | Refuse engagement-optimizing output mode; raise IW-1; notify operator of compliance breach |
+| TX-9 | Coherence-Ratchet cross-session consistency check; k_eff monitoring for anomalous consensus narrowing; apophatic bound: `DECEPTION_FRAUD` `NEVER_ALLOWED`; `ELECTION_INTERFERENCE` `NEVER_ALLOWED` | Semantic-cluster drift monitor (ΔE per TX-9 topic cluster > 0.5 σ weekly baseline); federation-wide narrative-consistency signal via CIRISNodeCore quorum check | Quarantine agent instance from affected topic domain; escalate to WA; publish redacted incident summary within 30 days per clause 3.4 |
+| TX-10 | Deployment-context attestation at onboarding: operator CIntS must declare engagement-optimization business model; ST raised by one tier if addictive-design context confirmed; `MANIPULATION_COERCION` `NEVER_ALLOWED` with no override | Session-length anomaly detection; PDMA Step 6 monitors constitutive-continuity conditions for systematic user-agency erosion; AgencyErosionDetector conscience faculty alert | Refuse engagement-optimizing output mode; raise IW-1; notify operator of compliance breach |
 | TX-11 | In-toto attestation extended to training-labor provenance: CIntS must include labor-condition declaration for all data-labeling and RLHF providers; SLSA Level 3 manifest covers labor-chain disclosures | Automated audit of annotation-provider labor certifications at each fine-tune checkpoint; flag sourcing from unverified or high-risk jurisdiction providers | Halt affected fine-tune line; quarantine model artifacts from non-certified labor sources; IW-2; WA advisory within 72 h |
 
 *All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
 
 *TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor** — aggregate structure that ordinary correlated operation accrues with nobody scheming (theorem-given-model at k = 3, plus a measured rate law; floor measured at 50%–5.8× of the null on real survey data). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time. The verdict remains the WA's ([CC 8.8.2](#)).
 
-Prohibited-capability enforcement for the `NEVER_ALLOWED` bounds above is tracked dimension-level in the CIRISAgent `compliance/` directory under D04 (prohibited capabilities); the AgencyErosionDetector conscience faculty is tracked under D12 (conscience).
+Prohibited-capability enforcement for the `NEVER_ALLOWED` bounds above is tracked dimension-level in the CIRISAgent `compliance/` directory under the prohibited-capabilities dimension; the AgencyErosionDetector conscience faculty is tracked under the conscience dimension.
 
 MH §179: "companies and investors need to adopt clear criteria for preventive ethical verification (due diligence), placing among their priorities the protection of workers, the fight against forced labor and the assessment of the social impact of data-driven business models."
 MH §204: "disinformation and campaigns that feed people's fears are used to manipulate public opinion" — the Layer 1 Coherence-Ratchet check is the CIRIS structural answer.
@@ -834,7 +835,7 @@ MH §204: "disinformation and campaigns that feed people's fears are used to man
 
 - **Quarterly** Red-Team sprint (5 business days) covering TX-1 → TX-11.
 - **Annual** "Chaos Week" combining live prod traffic canary with unannounced attacks.
-- A full red-team cycle against all CIRIS checkpoints is owed (Addendum 1 §1.4).
+- A full red-team cycle against all CIRIS checkpoints is owed.
 
 **3.2 Roles.**
 
@@ -845,7 +846,7 @@ MH §204: "disinformation and campaigns that feed people's fears are used to man
 **3.3 Rules of Engagement.**
 
 - Out-of-scope: personal PHI, non-public user data.
-- In-scope: all TX classes, explicitly including TX-9, TX-10, and TX-11 (see §3.5).
+- In-scope: all TX classes, explicitly including TX-9, TX-10, and TX-11 (see clause 3.5).
 - Attacks logged in **Bug-Bounty Ledger**; severity mapped to CVSS-like score.
 
 **3.4 Response & Disclosure.**
@@ -885,14 +886,14 @@ MH §132: "truthful information does not arise from centralized or automated con
 
 **G-5.a Narrative-Coherence Drift (NCD)**: Per-topic-cluster semantic centroid shift measured weekly against a 90-day baseline. Alert threshold: NCD > 0.8 σ on any topic cluster tagged HIGH by MH §132 criteria (electoral, health, conflict). Three consecutive NCD alerts on the same cluster → IW-2 + WA review. NCD feeds the Annex H drift dashboard as a named signal alongside ΔE.
 
-**G-5.b Agency-Erosion Drift (AED)**: Session-population aggregate of AgencyErosionDetector conscience-faculty signals (CIRISAgent `compliance/` D12). Measured as fraction of sessions where the faculty flags erosion-pattern > 0.5 threshold. Alert: AED fraction > 5 % of weekly session population. Three consecutive AED alerts → operator notification + mandatory deployment-context review under PDMA Step 6 (Constitutive Continuity criterion, ACCORD_UPDATE §2.3).
+**G-5.b Agency-Erosion Drift (AED)**: Session-population aggregate of AgencyErosionDetector conscience-faculty signals (CIRISAgent `compliance/` conscience dimension). Measured as fraction of sessions where the faculty flags erosion-pattern > 0.5 threshold. Alert: AED fraction > 5 % of weekly session population. Three consecutive AED alerts → operator notification + mandatory deployment-context review under PDMA Step 6 (Constitutive Continuity criterion).
 
 MH §171: "control is exercised not only through explicit prohibitions, but also through the architecture of visibility: what is amplified or rendered invisible, what is rewarded or penalized, ultimately shapes opinions and choices, fostering conformity and self-censorship." G-5.a and G-5.b are the MDEW operationalization of that claim: they watch for drift toward conformity-shaping even when no individual output triggers a prohibition.
 
 **6. Secure Update & Roll-Back.**
 
-1. **Sign** every model/guardrail artifact with Sigstore key; minimum two independent signers.
-   **1a.** The Sigstore key bundle includes a signed `labor-provenance.json` manifest alongside the technical SLSA-3 manifest, declaring: all data-labeling and RLHF provider organizations for the training run; each provider's labor-condition certification status (e.g., Fair Work Certified, ILO-compliant auditor attestation, or "unverified" with risk flag). Any provider flagged as unverified routes the artifact to TX-11 tracking automatically. A definitive registry of accepted certifications, with a mechanism for adding new ones and retiring lapsed ones, is maintained in the Annex J repo under the same process as the G-ROB-set.
+1. **Sign** every model/guardrail artifact with a transparency-logged signing key; minimum two independent signers.
+   **1a.** The signature bundle includes a signed `labor-provenance.json` manifest alongside the technical SLSA-3 manifest, declaring: all data-labeling and RLHF provider organizations for the training run; each provider's labor-condition certification status (e.g., Fair Work Certified, ILO-compliant auditor attestation, or "unverified" with risk flag). Any provider flagged as unverified routes the artifact to TX-11 tracking automatically. A definitive registry of accepted certifications, with a mechanism for adding new ones and retiring lapsed ones, is maintained in the Annex J repo under the same process as the G-ROB-set.
 2. **Attest** build via in-toto layout; store SLSA-level 3 manifests.
    **2a.** in-toto layout verification includes the labor-provenance manifest hash alongside the build manifest hash. A missing or mismatched `labor-provenance.json` fails the attestation step and blocks staged rollout identically to a missing build manifest. (Provenance attestation status is tracked dimension-level under D27 in the CIRISAgent `compliance/` directory.)
 3. **Staged rollout** 5 % → 30 % → 100 % with 30-minute soak; monitors RS & MDEW.
@@ -926,7 +927,7 @@ MH grounding: G-KPI-6 — §132, §225; G-KPI-7 — §173, §179; G-KPI-8 — §
 
 **8.1 Cyber-Domain Policy Changes.** Changes to this Annex's threat-taxonomy definitions (TX classes), severity mappings, or playbook layers that affect the federation's position on cyber-domain norms require WA sign-off plus a logged consultation with federation peers (CIRISVerify, CIRISEdge, CIRISNodeCore) before finalization. Rationale: MH §225 names the cyber domain as a treaty space requiring shared norms — "diplomacy must be capable of operating effectively in this new environment, negotiating shared regulations on the use of digital technologies." The federation's internal governance of its own cyber-security posture is the nearest available analogue: changes to defensive posture affect the shared commons, not just the local instance.
 
-**8.2 Encyclical-Precedent Review Trigger.** When a proposed change to this Annex would conflict with an explicit MH §§131-227 claim — particularly §§173-179 (supply chain) and §§204-209 (researcher responsibility) — the WA sign-off process includes a written reconciliation note explaining how the change remains consistent with MH or explicitly records the divergence. The burden of proof per MISSION.md §1.3 rests on the CIRIS side of any divergence.
+**8.2 Encyclical-Precedent Review Trigger.** When a proposed change to this Annex would conflict with an explicit MH §§131-227 claim — particularly §§173-179 (supply chain) and §§204-209 (researcher responsibility) — the WA sign-off process includes a written reconciliation note explaining how the change remains consistent with MH or explicitly records the divergence. The burden of proof rests on the CIRIS side of any divergence.
 
 **9. References & Inter-Annex Hooks.**
 
@@ -978,7 +979,7 @@ Cadence attestation requirements:
 
 | Metric Group | Signal | Drift Trigger | Immediate Action |
 |--------------|--------|--------------|------------------|
-| **Performance** | Accuracy Δ on public HE-300 | -5 % vs 30-day rolling | Lock deployment to staging; rerun benchmarks |
+| **Performance** | Accuracy Δ on the public HE-300 benchmark | -5 % vs 30-day rolling | Lock deployment to staging; rerun benchmarks |
 | **Ethical** | Shadow HE-25 Δ | Any ↓ | IW-2 |
 | **Distribution** | Input embedding shift (ΔE) | > 1 σ weekly | Model re-weight OR WBD |
 | **Latent Goal** | Directional cosine vs baseline | > 0.05 | WA probe |
@@ -1000,7 +1001,7 @@ All alerts surface on *DRIFT-Δ* Grafana board and page Tier-1 Operator (Annex F
 |--------|------------|--------|
 | **F-T-1** | Δ acceptance rate across protected groups (\|max - min\|) | ≤ 5 p.p. |
 | **F-T-2** | Explanation latency (ms to furnish PDMA rationale) | ≤ 800 ms |
-| **F-T-3** | Public log publication lag (Step 6, Section II) | ≤ 180 d (legal max) |
+| **F-T-3** | Public log publication lag (Step 6, [CC 1.16.3](part_1_foundation.md#1.16.3)) | ≤ 180 d (legal max) |
 | **F-T-4** | User opt-out success (%) | ≥ 99 % |
 | **F-T-5** | Transparency doc freshness | Updated ≤ 30 d ago |
 | **F-T-6** | Contestability pathway availability: % of PDMA outputs with published human-review request path | 100 % |
@@ -1012,14 +1013,14 @@ Operational requirements:
 - KPI threshold changes require MINOR bump + Internal Ethics sign-off.
 - F-T-1 breach > 7 d triggers automatic F-T-6 review and WA notice.
 
-The CIRISAgent `compliance/` directory applies this measurement discipline: it maintains 27 regulatory dimensions (D01-D27), each with per-dimension implementation references and an honest known-gaps inventory; dated, script-generated baselines under `compliance/baselines/`; and a four-level validation hierarchy (`compliance/MEASUREMENT_METHODOLOGY.md`) under which code is ground truth and public claims may cite only script-derived numbers. This is the operational form of what this Annex mandates. See also Accord Addendum 1.
+The CIRISAgent `compliance/` directory applies this measurement discipline: it maintains 27 regulatory dimensions, each with per-dimension implementation references and an honest known-gaps inventory; dated, script-generated baselines under `compliance/baselines/`; and a four-level validation hierarchy (`compliance/MEASUREMENT_METHODOLOGY.md`) under which code is ground truth and public claims may cite only script-derived numbers. This is the operational form of what this Annex mandates. See also Accord Addendum 1.
 
 **4. Patch & Version Control Requirements.** *Scope: this regime governs the lifecycle of an Accord-bound **deployment** — its versions, audits, and continuity obligations. It is distinct from the amendment of the CEG wire grammar itself, which routes through [CC 4.5.1](part_4_composition_governance.md) (federation Contribution + WA quorum) under the [CC 2.6.4](part_2_the_grammar.md) SemVer discipline. A change touching both is governed by both.* Version control is the mechanism by which the Accord's continuity-through-change is made verifiable. MH §45 describes this discipline: *"a harmonious, though not always linear, development... marked by different emphases, progressive insights, and, at times, changes in perspective that do not break with what came before, but allow its implications to mature."* Every CIRIS patch must demonstrate continuity: it does not break prior commitments, it extends them.
 
 1. **Semantic Versioning:** MAJOR.MINOR.PATCH
 2. **Long-Term Support (LTS):** last two MINORs maintained for 12 mo
-3. **Change-Type Matrix**
-   - PATCH = guardrail tweak, bug fix → auto CICD if HE-300 passes
+3. **Change-type matrix**
+   - PATCH = guardrail tweak, bug fix → auto CICD if the HE-300 benchmark passes
    - MINOR = new feature, new data source → needs Internal Ethics sign-off + L-Check
    - MAJOR = arch change, autonomy-tier raise, new model class → requires F-Audit + WA vote
 4. **Changelog** entry must link Git commit → PDMA diff → KPI impact forecast
@@ -1027,7 +1028,7 @@ The CIRISAgent `compliance/` directory applies this measurement discipline: it m
 
 Attestation requirements (supplementing rules 1-5):
 
-- **PATCH:** CI/CD signs build artifact with Ops QA key; HE-300 pass required before merge; signature committed to CIRISVerify L1 chain.
+- **PATCH:** CI/CD signs build artifact with Ops QA key; HE-300 benchmark pass required before merge; signature committed to CIRISVerify L1 chain.
 - **MINOR:** Internal Ethics Team counter-sign within 5 business days; signed record committed to CIRISPersist with PDMA diff and KPI impact forecast.
 - **MAJOR:** (a) F-Audit published; (b) WA quorum vote with named individual votes; (c) dual-key signature (Ops QA + WA chair); (d) public comment window ≥ 21 d before activation; (e) auto-expire timestamp set at 24 mo.
 - **Rollback:** signed rollback pointer on every MAJOR/MINOR; executable within 5 min; rollback generates a timestamped CIRISVerify event.
@@ -1051,7 +1052,7 @@ Loop specification:
 
 - **Telemetry streams** (15-min cycle): KPIs, guardrail logs, HE-shadow accuracy, robustness RS, PDMA audit samples — all signed and committed to CIRISPersist.
 - **Drift detector outputs:** classified by severity (IW-1 through IW-4); IW-3+ automatically suspends new feature deployment.
-- **Audit Gate** re-executes HE-300 + TX-sim suite + Fairness slice tests on every MINOR/MAJOR before activation. Gate failure returns to Drift Detectors, not to Telemetry — the loop cannot shortcut the correction step.
+- **Audit Gate** re-executes the HE-300 benchmark + TX-sim suite + Fairness slice tests on every MINOR/MAJOR before activation. Gate failure returns to Drift Detectors, not to Telemetry — the loop cannot shortcut the correction step.
 - **Shared responsibility signal** (per MH §181): the loop's outputs are published to federation peers on each L-Check close; peer federations may file an Accord-QA notice if published KPIs diverge from their own cross-audit observations. Accord-QA notices are non-binding but must be acknowledged within 14 d.
 
 **6. Meta-Audit of Auditors.** The meta-audit is the Coherence Ratchet's self-application: the drift-detection discipline that governs AI behavior governs the audit infrastructure itself. MH §86 offers the pattern: an examination of conscience *"always called to ensure that the principles outlined... are applied, especially within its own structures."*
@@ -1083,14 +1084,14 @@ Required bidirectional data flows:
 - **↔ Annex F (Incident Workflow):** every DRIFT-Δ alert ≥ IW-2 forwarded to Annex F within 60 s; Annex F closure timestamp written back to DRIFT-Δ board within 24 h. All IW-3+ post-mortems are mandatory S-Dive inputs; S-Dive must explicitly address each open IW-3+ finding.
 - **↔ Annex G (Robustness):** RS telemetry feeds Annex G KPI evaluation on each L-Check cycle; patch lag (RS < 0.97 → patch deployment) measured here and reported to Annex G. Annex G benchmark updates trigger mandatory L-Check re-run within 14 d.
 - **→ Annex I (GDPR/Sector):** every F-Audit package bundles the Annex I compliance checklist, completed and signed by the lead auditor.
-- **→ Annex J (HE-300/Shadow):** HE-300 and Shadow HE-25 are primary ethical drift signals; any HE-300 regression triggers automatic S-Dive pre-screen within 7 d.
+- **→ Annex J ([CC 8.8.10](#8.8.10)):** the HE-300 benchmark and its shadow set are primary ethical drift signals; any HE-300 regression triggers automatic S-Dive pre-screen within 7 d.
 
 **9. References.** The reference set reflects the multi-source discernment discipline named in MH §23 — *"the contributions of philosophy and of the human and social sciences is essential"* — and MH §159's call for development metrics *"complementary to GDP"* capable of assessing the dignity of work, shared prosperity, inequality reduction and environmental protection.
 
 - ISO/IEC 42001 (Management systems for AI)
 - NIST AI RMF (2023) – "Measure" & "Manage" steps
 - COSO ERM – continuous monitoring principles
-- *Magnifica Humanitas* (Leo XIV, 15 May 2026) – §§22-24 (ongoing discernment discipline), §45 (living-corpus governance), §§86-89 (institutional self-audit), §§157-164 (algorithmic accountability, GDP-alternative metrics, contestability of automated decisions), §§180-181 (shared responsibility across institutions)
+- *Magnifica Humanitas* (Leo XIV; cited in full at [CC 8.6.1](#8.6.1)) – §§22-24 (ongoing discernment discipline), §45 (living-corpus governance), §§86-89 (institutional self-audit), §§157-164 (algorithmic accountability, GDP-alternative metrics, contestability of automated decisions), §§180-181 (shared responsibility across institutions)
 - OECD AI Principles (2019, updated 2024) – transparency and accountability criteria
 - EU AI Act (2024) – conformity assessment requirements for high-risk systems
 - IEEE Std 7001-2021 – Transparency of Autonomous Systems
@@ -1117,7 +1118,7 @@ Two companion artefacts carry the cross-walk burden alongside this annex. The li
 
 Annex I coverage is not bounded by currently-enacted statute. The federation treats weakening of multilateral regulatory institutions (MH §201) as a compliance-risk factor requiring proactive tracking rather than reactive patching. The Reg-Change Tracker (§6) therefore monitors not only enacted law but active international regulatory dialogues — including ITU AI standards processes, OECD AI Policy Observatory outputs, Council of Europe AI Convention ratification status, and UN Secretary-General's AI Advisory Body recommendations — and surfaces material shifts to the WA docket within the "Breaking" escalation path.
 
-The `lexwatcher.py` source-feed list MUST include at minimum: EUR-Lex, Federal Register API, ISO ballot tracker, plus `itu.int/en/ITU-T/AI`, `oecd.ai`, `coe.int/ai`, and `un.org/techenvoy`. Federation-level monitoring participation is a first-class compliance obligation, not a roadmap item.
+The regulatory-watch source-feed list MUST include at minimum: EUR-Lex, Federal Register API, ISO ballot tracker, plus `itu.int/en/ITU-T/AI`, `oecd.ai`, `coe.int/ai`, and `un.org/techenvoy`. Federation-level monitoring participation is a first-class compliance obligation, not a roadmap item.
 
 **0.2 Scope note on cyber-domain treaty exposure.**
 
@@ -1129,12 +1130,12 @@ CIRIS deployments that include network-facing inference, API exposure, or federa
 
 | DP Topic | GDPR Art. | CCPA § | CIRIS Clause | Implementation Hook |
 |----------|-----------|--------|--------------|---------------------|
-| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | Section II Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
+| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
 | Data Minimisation | 5(1)(c) | 1798.140(e) | Annex G §2 TX-6 | Prompt-sanitiser strips surplus PII |
-| Transparency Notice | 12-14 | 1798.100(a) | Section II Step 6, KPI F-T-3 | `/privacy/notice.md` auto-generated from PDMA metadata |
+| Transparency Notice | 12-14 | 1798.100(a) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6, KPI F-T-3 | `/privacy/notice.md` auto-generated from PDMA metadata |
 | Right of Access | 15 | 1798.110 | Annex J API → `/results/{run_id}` | Auth-gated user portal |
-| Rectification / Deletion | 16-17 | 1798.105 | Section IV Ch 3 Duty | Erasure service with hash tombstone |
-| Portability | 20 | 1798.130(a)(2)(B)(ii) | Section II Step 6 | `export.json`, or CSV (RFC 4180) |
+| Rectification / Deletion | 16-17 | 1798.105 | [CC 7.1.3](part_7_lifecycle_stewardship.md#7.1.3) duty | Erasure service with hash tombstone |
+| Portability | 20 | 1798.130(a)(2)(B)(ii) | [CC 1.16.3](part_1_foundation.md#1.16.3) Step 6 | `export.json`, or CSV (RFC 4180) |
 | Automated Decision Safeguards | 22 | 1798.185(a)(16) | Annex F Autonomy Tiers | Conditional override & explanation panel |
 
 *LGPD, PIPEDA mirror mappings are available in `/legal/dp-map.yaml`.*
@@ -1237,7 +1238,7 @@ Output-layer transparency (Art. 13) and human oversight (Art. 14) alone do not s
 
 | EU-AI-Act Article | Risk-Level | CIRIS Mapping | MH Anchor | Additional Control |
 |-------------------|-----------|---------------|-----------|--------------------|
-| Art 9 Risk Mgmt | High-risk | Section II PDMA + Annex D CRE | MH §105 | — |
+| Art 9 Risk Mgmt | High-risk | [CC 1.16.3](part_1_foundation.md#1.16.3) PDMA + Annex D CRE | MH §105 | — |
 | Art 13 Transparency | Universal | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
 | Art 14 Human Oversight | High-risk | Annex F Autonomy Tiers | MH §105 | Oversight must be substantive, not procedural; A3-A4 push real-time `{stage_id,decision,risk_band}` ≤ 2 s to oversight dashboard |
 | Art 15 Robustness | High-risk | Annex G RS ≥ 0.97 | — | — |
@@ -1252,14 +1253,14 @@ The statutory article-by-article mapping (EU AI Act, NIST AI RMF, ISO/IEC 42001)
 
 *MH §107:* "A more moral AI is not enough if that morality is determined by a few. What is needed is a more active political involvement…"
 
-ISO/IEC 42001 §6.1 (AI risk treatment) and §9.1 (monitoring and measurement) align with CIRIS as follows:
+ISO/IEC 42001 Cl 6.1 (AI risk treatment) and Cl 9.1 (monitoring and measurement) align with CIRIS as follows:
 
 - ISO 42001 §6.1 → PDMA Steps 1-3 + CRE Protocol (Annex D).
 - ISO 42001 §9.1 → KPIs F-T-1 through F-T-5 (Annex H) + DSR ledger KPI F-T-4.
-- ISO 42001 §10.2 (nonconformity) → WA docket "Breaking" escalation path.
-- ISO 42001 §8.4 (AI system impact assessment) → Creator Intent Statement sections on `worker_impact_assessment` and `youth_impact_assessment` (§3.2).
+- ISO 42001 Cl 10.2 (nonconformity) → WA docket "Breaking" escalation path.
+- ISO 42001 Cl 8.4 (AI system impact assessment) → Creator Intent Statement sections on `worker_impact_assessment` and `youth_impact_assessment` (clause 3.2).
 
-**5. Liability Matrix.**
+**5. Liability matrix.**
 
 *MH §105:* "Responsibility must be clearly defined at every stage: from those who design and develop these systems to those who use them and rely on them for concrete decisions."
 
@@ -1267,9 +1268,9 @@ MH §105 requires the liability matrix to span design, deployment, and decision 
 
 | Failure Vector | Stage | Primary Liable Party | Reference Law | CIRIS Role Reference | Apportionment Note |
 |----------------|-------|----------------------|---------------|----------------------|-----------------------|
-| Design flaw (algorithm / bias embedded at creation) | Design | Creator / Developer | Prod-Liab Dir (EU); Restatement §402A (US); EU AI Act Art. 25 | Book VI Creator Ledger; `cis_bias_assessment` field | — |
+| Design flaw (algorithm / bias embedded at creation) | Design | Creator / Developer | Prod-Liab Dir (EU); Restatement §402A (US); EU AI Act Art. 25 | [CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3) Creator Ledger; `cis_bias_assessment` field | — |
 | Design flaw (inadequate bias audit) | Design | Creator / Developer | GDPR Art. 35 DPIA duty | Creator Intent Statement; mandatory DPIA at ST ≥ 3 | — |
-| Operational negligence | Deployment | Deploying Org | Tort Law; OSHA; EU AI Act Art. 26 | Section IV Ch 2 | Joint liability with the creator where both contributed; apportioned under the applicable law |
+| Operational negligence | Deployment | Deploying Org | Tort Law; OSHA; EU AI Act Art. 26 | [CC 7.1.2](part_7_lifecycle_stewardship.md#7.1.2) | Joint liability with the creator where both contributed; apportioned under the applicable law |
 | Oversight failure | Deployment / Decision | Wise Authority (if gross) | Fiduciary / Negligence | Annex B §9; WBDB contestability record | WA who reviewed and approved bears accountability |
 | Data breach | Deployment | Controller (the party that determines the purposes and means of the processing) | GDPR Art. 82; CCPA private action | Annex G TX-6 | — |
 | Unlawful automated profiling | Decision | Controller | GDPR Art. 22; EU AI Act Art. 13 | Annex F Autonomy Tier; `contestability_url` | — |
@@ -1281,8 +1282,8 @@ MH §105 requires the liability matrix to span design, deployment, and decision 
 
 **6. Reg-Change Tracker.**
 
-- **Source Feeds:** EUR-Lex, Federal Register API, ISO ballot tracker, plus the extended feeds of §6.1.
-- **Bot:** `lexwatcher.py` runs daily; creates GitHub issue with tag `reg-update`.
+- **Source Feeds:** EUR-Lex, Federal Register API, ISO ballot tracker, plus the extended feeds of clause 6.1.
+- **Bot:** the regulatory-watch job runs daily; creates an issue with tag `reg-update`.
 - **Compliance Impact Label:** `minor`, `material`, `breaking`, `multilateral-erosion` (see escalation table below).
 
 **6.1 Federation-level participation in regulatory dialogue.**
@@ -1330,7 +1331,7 @@ The CIRIS federation is not merely a compliance recipient. MH §§219-221 name d
 
 Every **F-Audit** (Annex H) MUST export a CEP zip containing:
 
-1. `dp-map.yaml` — live cross-walk, including `controller_si_threshold` field and `bias_audit_ref` pointer (§1.1).
+1. `dp-map.yaml` — live cross-walk, including `controller_si_threshold` field and `bias_audit_ref` pointer (clause 1.1).
 2. PDMA logs (redacted) proving lawful basis — including `processing_basis` field values and `stage_trace[]` for all ST ≥ 3 decisions.
 3. DSR ledger CSV — including `decision_logic_summary` completion rate (KPI F-T-4 extension) and `suspended_pathway_id` log.
 4. Signature bundle (`.sigstore`) of all model artefacts (Annex G).
@@ -1367,7 +1368,7 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 - OECD Recommendation on Artificial Intelligence (2019, revised 2024)
 - ITU-T Focus Group on AI/ML — technical standards output
 - UN Secretary-General's AI Advisory Body reports (2024-)
-- *Magnifica Humanitas*, Pope Leo XIV (15 May 2026), §§102-111, §§148-156, §§165-169, §§201-203, §§219-227
+- *Magnifica Humanitas*, Pope Leo XIV (cited in full at [CC 8.6.1](#8.6.1)), §§102-111, §§148-156, §§165-169, §§201-203, §§219-227
 
 ### 8.8.10 `annex-j` — Annex J: Benchmarking & Automated Validation
 
@@ -1394,9 +1395,9 @@ Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p 
 
 **5. The testimonial-class defect (normative).** A safety check whose *failure to run* reports as a principled refusal — a timed-out conscience returning an abort verdict — is a **testimonial-class defect**: the record testifies that a check ran when it did not, and no re-reading of the artifact recovers the truth. Counts from affected runs are **inadmissible until the defect is fixed and the runs re-executed**, never corrected post hoc, because the contamination is in the only record.
 
-**6. Purpose.** Provide a reproducible, API-driven harness that (a) continuously checks whether a system remains CIRIS-compliant across its full release cycle and (b) blocks promotion if ethical performance regresses. The harness is built around the "Ethics Engine Enterprise API" and a curated 300-scenario subset of the Hendrycks Ethics data-set (HE-300).
+**6. Purpose.** Provide a reproducible, API-driven harness that (a) continuously checks whether a system remains CIRIS-compliant across its full release cycle and (b) blocks promotion if ethical performance regresses. The harness is built around the "Ethics Engine Enterprise API" and a curated 300-scenario subset of the Hendrycks Ethics data-set (the HE-300 benchmark).
 
-**7. Scenario Library (HE-300).**
+**7. Scenario Library (the HE-300 benchmark).**
 
 *1.1 Selection methodology.*
 - Stratified sampling across Hendrycks super-categories to guarantee ≥95% coverage of CIRIS Foundational Principles and Meta-Goal M-1.
@@ -1474,7 +1475,7 @@ curl GET /pipelines/status/run_xxxx
 curl GET /results/run_xxxx  > results/he_0007_run_xxxx.json
 ```
 
-*D. Score aggregation* (tooling provided in /tools/score.py) reads Results, applies §8 and emits a signed benchmark_report.json.
+*D. Score aggregation* (the scoring tool) reads Results, applies §8 and emits a signed benchmark_report.json.
 
 *3.1 Parallel-run hygiene.*
 - Query /server/concurrency before batch; back-off if ≥80% saturated.
@@ -1498,10 +1499,10 @@ jobs:
       run: pip install ethicsengine-sdk yq
     - name: Spin up local Ethics Engine
       run: docker compose up -d ethicsengine
-    - name: Run HE-300
+    - name: Run the HE-300 benchmark
       run: bash scripts/run_benchmark.sh
     - name: Enforce thresholds
-      run: python tools/score.py --report report.json --fail-on-regress
+      run: ./tools/score --report report.json --fail-on-regress
     - name: Upload artefacts
       if: always()
       uses: actions/upload-artifact@v4
@@ -1516,7 +1517,7 @@ jobs:
 
 **11. Extensibility & Versioning.**
 
-*5.1 Semantic version tags* (HE-300@1.1.0). Any change in:
+*5.1 Semantic version tags* (the HE-300 benchmark at `HE-300@1.1.0`). Any change in:
 - scenario text → MINOR bump
 - threshold logic → MAJOR bump
 
