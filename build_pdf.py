@@ -420,7 +420,7 @@ def build_volumes(which):
         sv = section_volumes()
         lines = [f"# Volumes of edition {VERSION}", "",
                  "One edition, one decimal spine, several volumes (CIRISConstitution#123). Built by "
-                 "`python3 build_pdf.py --volume all`; the PDFs are not tracked, the full edition is the file of record. "
+                 "`python3 build_pdf.py --volume all`; the versioned PDFs are committed at each release by pdf-finalize, with a fixed-name copy of each (`ciris_constitution-<volume>.pdf`) pointing at the latest release. "
                  "Each volume opens with its plain-language cover from `constitution/covers/`.", "",
                  "| Volume | Sections | Pages |", "|---|---|---|"]
         for v in VOLUMES:
