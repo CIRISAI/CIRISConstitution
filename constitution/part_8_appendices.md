@@ -249,7 +249,7 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 | Item | Why deferred |
 |---|---|
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md)): Android Key Attestation, Apple App Attest, YubiKey PIV and TPM EK chains are evidence-established. The residual, TPM *vendor* anchors left unbaked, is deliberate. |
-| Multi-party witness directory admission (2-of-3 steward sign-off) | Phase C commitment per [CC 5.3.1](#). |
+| Multi-party witness directory admission (M-of-N steward sign-off) | Phase C commitment per [CC 5.3.1](#). |
 | Machine-readable namespace manifest (`FSD/CEG/dimensions.json`) | Phase E commitment per [CC 8.2.1](#). |
 | Full OpenAPI export for all endpoints | Phase E commitment per [CC 5.3.5](#). |
 | `attestation:singular_witness:non_substitutability` | T2 fragility — "non-substitutability" must reference audit-chain count, not moral quality. Needs design workshop. |
