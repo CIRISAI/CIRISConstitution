@@ -6,7 +6,7 @@ Most AI-governance writing splits in two: ethics with no teeth (principles no ma
 
 It reads like a standard, not a manifesto, and it is deliberately layered: read Part I (the ethics) and stop, jump straight to the wire grammar, or cite any single concept by a stable address. Rejecting a later Part costs you nothing in the earlier ones.
 
-**This tree:** CC 1.0-rc7 · **Status:** release candidate, cut 2026-10-05 and released as guidance — the text the substrate implements against; 316 claim rows established on pinned artifacts, 57 staged on open tickets in the repositories that own the code, 10 normative, 0 unresolved (see CHANGELOG for the criterion, met in full with adoption carried); opened 2026-10-02 as the release in which the row-type slot closed to the five and the halt became a pause with a fuse; rc6 was cut 2026-10-02 as guidance (the trust-root release); rc5 was cut 2026-09-27 as guidance; rc4 was cut 2026-09-03 (six RC4 revisions — the announce ruling, in-grammar ledgers, the trace anchor, the actor/substrate separation — and the evidence lockdown: every claim row resolves to a pinned artifact or names an open ticket; supersedes 1.0-rc3) · **Source fidelity:** validated (0 REJECT) · **License:** AGPL-3.0-or-later
+**This tree:** CC 1.0-rc11, open · **Latest release:** 1.0-rc10, cut 2026-10-22 and released as guidance (tag `v1.0-rc10`) — the text the substrate implements against; register 370 established / 30 normative / 102 staged; fourteen machine-checked models; nine volumes under `volumes/`. See the CHANGELOG for each cut.
 **Stewarded by** Eric Moore — perpetual, no expiry ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)).
 
 **PDF permalinks — two fixed names, either one is safe to link:**
