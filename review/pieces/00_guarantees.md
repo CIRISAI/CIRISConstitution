@@ -22,7 +22,7 @@
 
 **Who holds a root (CC 4.2.3, 4.2.1, 4.2.2).** The shipped root is held by named humans with hardware-attested keys, not a company, on the public record; the roster is being widened toward about seven seats by roster change under the standing-majority rule. Founding a root takes a charter and named human holders; a node chooses its roots and the CIRIS root is only the default. The admitted limit: a vendor can pin a device to a root it holds; the answer is visibility, named holders, public acts, and one-step re-rooting (CIRISServer `FSD/PRIOR_ART.md`: pluggable roots are "the escape valve").
 
-**Reviewer standing.** A reviewer of this piece may kill a row on either of two grounds: the row is not backed (no witness and no basis, and no ticket that will produce one), or the row is not universal (it names a substrate where it should name a maturity line).
+**Reviewer standing.** A reviewer of this piece may kill a row on either of two grounds: the row is not backed (no witness and no basis, and no ticket that will produce one), or the row is not universal (it names a substrate where it should name kind or stewardship).
 
 ## 0b. The eleven promises
 
