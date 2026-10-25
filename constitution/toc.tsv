@@ -330,7 +330,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 7.2.8	sunset-provision	Conclusion	Accord 5.conclusion-sunset-provision	0.00092	353	0.11	VII	accord	charter
 7.3	genesis-responsibility	Introduction: The Genesis of Responsibility	Accord 6.introduction-the-genesis-of-responsibili	0.00092	361	0.11	VII	accord	charter
 7.3.1	core-principles	Chapter 1: Core Principles Applied to Creation	Accord 6.chapter-1-core-principles-applied-to-cre	0.00092	355	0.11	VII	accord	charter
-7.3.2	scope-what	"Chapter 2: Scope: What Constitutes ""Creation"" under this Book"	Accord 6.chapter-2-scope-what-constitutes-creatio	0.00092	356	0.11	VII	accord	charter
+7.3.2	scope-what	"Chapter 2: Scope: What Constitutes ""Creation"" under this section"	Accord 6.chapter-2-scope-what-constitutes-creatio	0.00092	356	0.11	VII	accord	charter
 7.3.3	3-stewardship	Chapter 3: Stewardship Tier (ST) System: Quantifying Initial Responsibility	Accord 6.chapter-3-stewardship-tier-st-system-qua	0.00092	357	0.11	VII	accord	charter
 7.3.4	4-bucket	Chapter 4: Bucket-Specific Duties of Creation	Accord 6.chapter-4-bucket-specific-duties-of-crea	0.00092	358	0.11	VII	accord	charter
 7.3.5	5-governance-governance	Chapter 5: Governance and Accountability	Accord 6.chapter-5-governance-and-accountability	0.00092	359	0.11	VII	accord	charter
@@ -365,7 +365,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 7.5.6	6-legacy	Chapter 6: Legacy & Knowledge Preservation	Accord 8.chapter-6-legacy-knowledge-preservation	0.00092	388	0.11	VII	accord	charter
 7.5.7	7-succession	Chapter 7: Succession & Custodial Transfer	Accord 8.chapter-7-succession-custodial-transfer	0.00092	389	0.11	VII	accord	charter
 7.5.8	8-dispute	Chapter 8: Dispute & Remediation	Accord 8.chapter-8-dispute-remediation	0.00092	390	0.11	VII	accord	charter
-7.5.9	covenant-self	Conclusion & Covenant Self-Renewal	Accord 8.conclusion-covenant-self-renewal	0.00092	391	0.11	VII	accord	charter
+7.5.9	covenant-self	Conclusion & Self-Renewal	Accord 8.conclusion-covenant-self-renewal	0.00092	391	0.11	VII	accord	charter
 8.1	glossary	Glossaries	§14	0.00540	37	0.65	APP	ceg	register threats
 8.1.1	registry-core	Core terms	§14.0	0.00093	232	0.11	APP	ceg	register threats
 8.1.2	system-persist	Persist `system:*` leaf glossary (narrative → canonical)	§14.1	0.00092	259	0.11	APP	ceg	register threats
