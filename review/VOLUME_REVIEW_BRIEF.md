@@ -57,3 +57,7 @@ pages contradict each other, that is the most valuable finding you can report â€
 sentence that reads as history, attribution, marketing, or a comparison with another project. Flag
 numbers quoted in prose that you cannot see the source of. If the volume is clean, say so and give it
 a 1 or 2; do not invent findings to fill the template.
+
+A note on dates: the text cites publications and events from 2026, gathered by web search on the dates it
+states. A citation dated after your training data is not thereby fabricated; if you cannot verify it, say
+"unverifiable from here", not "invented".

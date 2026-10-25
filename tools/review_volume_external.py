@@ -6,7 +6,7 @@ Sends a volume's text (pdftotext -layout) with the review brief to a model serve
 writes the model's report. The brief is the same one the in-house reviewers use, so passes by
 different model families are comparable. The key is read from ~/.openrouter_key and never printed.
 
-Run:  python3 tools/review_volume_external.py <volume> [--model x-ai/grok-4.7] [--out DIR]
+Run:  python3 tools/review_volume_external.py <volume> [--model x-ai/grok-4.7] [--out DIR] [--max-tokens N]
       python3 tools/review_volume_external.py all --model x-ai/grok-4.7 --out review/notes/pass3_grok
 volume ∈ charter constitution wire dictionary policies maths register threats digest, or all.
 Needs: pdftotext (poppler), a built volumes/ciris_constitution-<VERSION>-<volume>.pdf, the brief at
@@ -35,14 +35,14 @@ def volume_text(vol):
     return pages, "".join(out)
 
 
-def review(vol, model, out_dir):
+def review(vol, model, out_dir, max_tokens=12000):
     pages, text = volume_text(vol)
     brief = open(BRIEF, encoding="utf-8").read()
     prompt = (f"{brief}\n\n---\n\nYour volume: \"{TITLES[vol]}\" (ciris_constitution-{VERSION}-{vol}.pdf, {pages} pages). "
               f"The full text follows, one block per page, with page markers for your page references. "
               f"Produce only the structured report the brief specifies.\n\n{text}")
     key = open(os.path.expanduser("~/.openrouter_key")).read().strip()
-    body = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_tokens": 12000}).encode()
+    body = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_tokens": max_tokens}).encode()
     req = urllib.request.Request("https://openrouter.ai/api/v1/chat/completions", data=body,
                                  headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
                                           "HTTP-Referer": "https://github.com/CIRISAI/CIRISConstitution", "X-Title": "CC volume review"})
@@ -61,9 +61,10 @@ def review(vol, model, out_dir):
 def main(argv):
     model = argv[argv.index("--model") + 1] if "--model" in argv else "x-ai/grok-4.7"
     out_dir = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(ROOT, "review", "notes", "pass3_external")
+    max_tokens = int(argv[argv.index("--max-tokens") + 1]) if "--max-tokens" in argv else 12000
     vols = VOLUMES if argv[0] == "all" else [argv[0]]
     for v in vols:
-        review(v, model, out_dir)
+        review(v, model, out_dir, max_tokens)
 
 
 if __name__ == "__main__":
