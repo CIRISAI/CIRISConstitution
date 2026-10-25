@@ -366,38 +366,38 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 7.5.7	7-succession	Chapter 7: Succession & Custodial Transfer	Accord 8.chapter-7-succession-custodial-transfer	0.00092	389	0.11	VII	accord	charter
 7.5.8	8-dispute	Chapter 8: Dispute & Remediation	Accord 8.chapter-8-dispute-remediation	0.00092	390	0.11	VII	accord	charter
 7.5.9	covenant-self	Conclusion & Self-Renewal	Accord 8.conclusion-covenant-self-renewal	0.00092	391	0.11	VII	accord	charter
-8.1	glossary	Glossaries	§14	0.00540	37	0.65	APP	ceg	register threats
-8.1.1	registry-core	Core terms	§14.0	0.00093	232	0.11	APP	ceg	register threats
-8.1.2	system-persist	Persist `system:*` leaf glossary (narrative → canonical)	§14.1	0.00092	259	0.11	APP	ceg	register threats
-8.1.3	system-edge	Edge `system:*` leaf glossary (narrative → canonical)	§14.2	0.00092	260	0.11	APP	ceg	register threats
-8.1.4	envelope-reach	Envelope-reach table (what the story wanted → how to express in existing wire)	§14.3	0.00092	261	0.11	APP	ceg	register threats
-8.1.5	supersedes-promotion	Promotion via `supersedes` worked example	§14.4	0.00092	262	0.11	APP	ceg	register threats
-8.2	translation	Translation discipline (writing claims in CEG)	§12	0.00176	137	0.21	APP	ceg	register threats
-8.2.1	decision	Decision tree	§12.4	0.00107	208	0.13	APP	ceg	register threats
-8.2.2	namespace-five	The five families (organizing the namespace)	§12.1	0.00107	209	0.13	APP	ceg	register threats
-8.2.3	verdict	The four verdict categories (STRICT)	§12.2	0.00092	257	0.11	APP	ceg	register threats
-8.2.4	not-translated	The not-translated taxonomy	§12.3	0.00092	258	0.11	APP	ceg	register threats
-8.3	concerns	Concerns + acknowledged gaps	§15	0.00174	139	0.21	APP	ceg	register threats
-8.3.1	acknowledged	Acknowledged risks (named as bets)	§15.2	0.00205	116	0.25	APP	ceg	register threats
-8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit (the honest line)	§15.7	0.00118	188	0.14	APP	ceg	register threats
-8.3.3	observer-share	Observer-share + streaming multicast	§15.6	0.00114	196	0.14	APP	ceg	register threats
-8.3.4	closed	Closed gaps	§15.1	0.00092	263	0.11	APP	ceg	register threats
-8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	§15.3	0.00092	264	0.11	APP	ceg	register threats
-8.3.6	deferred	Deferred to design workshops	§15.4	0.00092	265	0.11	APP	ceg	register threats
-8.3.7	identified	Identified overlaps	§15.5	0.00092	266	0.11	APP	ceg	register threats
-8.4	interoperability	Interoperability profiles (informative)	§18	0.00148	162	0.18	APP	ceg	register threats
-8.4.1	edge	The governing principle — speak CEG inside, standards at the edge	§18.2	0.00170	144	0.2	APP	ceg	register threats
-8.4.2	credentials	C2PA Content Credentials — media-provenance import/emit profile	§18.1	0.00103	215	0.12	APP	ceg	register threats
-8.4.2.1	evidence_refs	Import — a C2PA manifest as `evidence_refs`	§18.1.1	0.00092	270	0.11	APP	ceg	register threats
-8.4.2.2	emit	Emit — CEG judgment as a C2PA assertion (egress)	§18.1.2	0.00092	271	0.11	APP	ceg	register threats
-8.4.2.3	profile	What this profile does NOT do	§18.1.3	0.00092	272	0.11	APP	ceg	register threats
-8.4.3	registry-tracked	Tracked boundary profiles (stubs)	§18.0	0.00092	269	0.11	APP	ceg	register threats
-8.5	update	Update cadence	§17	0.00133	174	0.16	APP	ceg	register threats
-8.6	references-lineage	References + lineage	§16	0.00119	187	0.14	APP	ceg	register threats
-8.6.1	external	External references (informational)	§16.4	0.00136	170	0.16	APP	ceg	register threats
-8.6.2	specification	CEG specification lineage	§16.1	0.00101	219	0.12	APP	ceg	register threats
-8.6.3	companion	Companion documents	§16.2	0.00092	267	0.11	APP	ceg	register threats
-8.6.4	namespace-sibling	Sibling MISSIONs (the namespace stewards)	§16.3	0.00092	268	0.11	APP	ceg	register threats
+8.1	glossary	Glossaries	§14	0.00540	37	0.65	APP	ceg	register
+8.1.1	registry-core	Core terms	§14.0	0.00093	232	0.11	APP	ceg	register
+8.1.2	system-persist	Persist `system:*` leaf glossary (narrative → canonical)	§14.1	0.00092	259	0.11	APP	ceg	register
+8.1.3	system-edge	Edge `system:*` leaf glossary (narrative → canonical)	§14.2	0.00092	260	0.11	APP	ceg	register
+8.1.4	envelope-reach	Envelope-reach table (what the story wanted → how to express in existing wire)	§14.3	0.00092	261	0.11	APP	ceg	register
+8.1.5	supersedes-promotion	Promotion via `supersedes` worked example	§14.4	0.00092	262	0.11	APP	ceg	register
+8.2	translation	Translation discipline (writing claims in CEG)	§12	0.00176	137	0.21	APP	ceg	register
+8.2.1	decision	Decision tree	§12.4	0.00107	208	0.13	APP	ceg	register
+8.2.2	namespace-five	The five families (organizing the namespace)	§12.1	0.00107	209	0.13	APP	ceg	register
+8.2.3	verdict	The four verdict categories (STRICT)	§12.2	0.00092	257	0.11	APP	ceg	register
+8.2.4	not-translated	The not-translated taxonomy	§12.3	0.00092	258	0.11	APP	ceg	register
+8.3	concerns	Concerns + acknowledged gaps	§15	0.00174	139	0.21	APP	ceg	register
+8.3.1	acknowledged	Acknowledged risks (named as bets)	§15.2	0.00205	116	0.25	APP	ceg	register
+8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit (the honest line)	§15.7	0.00118	188	0.14	APP	ceg	register
+8.3.3	observer-share	Observer-share + streaming multicast	§15.6	0.00114	196	0.14	APP	ceg	register
+8.3.4	closed	Closed gaps	§15.1	0.00092	263	0.11	APP	ceg	register
+8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	§15.3	0.00092	264	0.11	APP	ceg	register
+8.3.6	deferred	Deferred to design workshops	§15.4	0.00092	265	0.11	APP	ceg	register
+8.3.7	identified	Identified overlaps	§15.5	0.00092	266	0.11	APP	ceg	register
+8.4	interoperability	Interoperability profiles (informative)	§18	0.00148	162	0.18	APP	ceg	register
+8.4.1	edge	The governing principle — speak CEG inside, standards at the edge	§18.2	0.00170	144	0.2	APP	ceg	register
+8.4.2	credentials	C2PA Content Credentials — media-provenance import/emit profile	§18.1	0.00103	215	0.12	APP	ceg	register
+8.4.2.1	evidence_refs	Import — a C2PA manifest as `evidence_refs`	§18.1.1	0.00092	270	0.11	APP	ceg	register
+8.4.2.2	emit	Emit — CEG judgment as a C2PA assertion (egress)	§18.1.2	0.00092	271	0.11	APP	ceg	register
+8.4.2.3	profile	What this profile does NOT do	§18.1.3	0.00092	272	0.11	APP	ceg	register
+8.4.3	registry-tracked	Tracked boundary profiles (stubs)	§18.0	0.00092	269	0.11	APP	ceg	register
+8.5	update	Update cadence	§17	0.00133	174	0.16	APP	ceg	register
+8.6	references-lineage	References + lineage	§16	0.00119	187	0.14	APP	ceg	register
+8.6.1	external	External references (informational)	§16.4	0.00136	170	0.16	APP	ceg	register
+8.6.2	specification	CEG specification lineage	§16.1	0.00101	219	0.12	APP	ceg	register
+8.6.3	companion	Companion documents	§16.2	0.00092	267	0.11	APP	ceg	register
+8.6.4	namespace-sibling	Sibling MISSIONs (the namespace stewards)	§16.3	0.00092	268	0.11	APP	ceg	register
 8.7	enacting-ethics	Introduction: Enacting Ethics through Narrative	Accord 3.introduction-enacting-ethics-through-nar	0.00092	338	0.11	APP	accord	charter
 8.7.1	case-study	Case Study 1: MCAS and the High Cost of Ignoring WBD	Accord 3.case-study-1-mcas-and-the-high-cost-of-i	0.00092	330	0.11	APP	accord	charter
 8.7.2	case-study-case	Case Study 2: The Automated Triage System—Balancing Risks and Benefits	Accord 3.case-study-2-the-automated-triage-system	0.00092	331	0.11	APP	accord	charter
@@ -426,13 +426,13 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 5.4.5	witness-content	Witness-chain content discipline (privacy witness, normative)	(spine-reconciled)	0.00050	415	0.1	V	ceg	threats wire
 5.4.6	announce-suppress	Announce suppression for group-scoped destinations (normative)	(spine-reconciled)	0.00050	416	0.1	V	ceg	threats wire
 7.5.3.1	autonomy-tiers	Operational autonomy tiers (A0–A4)	(spine-reconciled)	0.00050	417	0.1	VII	accord	charter
-8.8	annexes	Annexes (supporting frameworks)	(spine-reconciled)	0.00050	418	0.1	APP	accord	register threats
-8.8.2	annex-b	Annex B: Wise-Authority Governance Charter	Accord Annex B	0.00050	420	0.1	APP	accord	register threats
-8.8.3	annex-d	Annex D: Catastrophic-Risk Evaluation (CRE) Protocol	Accord Annex D	0.00050	421	0.1	APP	accord	register threats
-8.8.5	annex-c	Annex C: Regulatory Cross-Walk	Accord Annex C	0.00050	423	0.1	APP	accord	register threats
-8.8.6	annex-f	Annex F: Human-in-the-Loop & Oversight	Accord Annex F	0.00050	424	0.1	APP	accord	register threats
-8.8.7	annex-g	Annex G: Adversarial Security & Robustness	Accord Annex G	0.00050	425	0.1	APP	accord	register threats
-8.8.8	annex-h	Annex H: Continuous Compliance & Review	Accord Annex H	0.00050	426	0.1	APP	accord	register threats
-8.8.9	annex-i	Annex I: Legal & Regulatory Alignment	Accord Annex I	0.00050	427	0.1	APP	accord	register threats
-8.8.10	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register threats
-8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg	register threats
+8.8	annexes	Annexes (supporting frameworks)	(spine-reconciled)	0.00050	418	0.1	APP	accord	register
+8.8.2	annex-b	Annex B: Wise-Authority Governance Charter	Accord Annex B	0.00050	420	0.1	APP	accord	register
+8.8.3	annex-d	Annex D: Catastrophic-Risk Evaluation (CRE) Protocol	Accord Annex D	0.00050	421	0.1	APP	accord	register
+8.8.5	annex-c	Annex C: Regulatory Cross-Walk	Accord Annex C	0.00050	423	0.1	APP	accord	register
+8.8.6	annex-f	Annex F: Human-in-the-Loop & Oversight	Accord Annex F	0.00050	424	0.1	APP	accord	register
+8.8.7	annex-g	Annex G: Adversarial Security & Robustness	Accord Annex G	0.00050	425	0.1	APP	accord	register
+8.8.8	annex-h	Annex H: Continuous Compliance & Review	Accord Annex H	0.00050	426	0.1	APP	accord	register
+8.8.9	annex-i	Annex I: Legal & Regulatory Alignment	Accord Annex I	0.00050	427	0.1	APP	accord	register
+8.8.10	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register
+8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg	register

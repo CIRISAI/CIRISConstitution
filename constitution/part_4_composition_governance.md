@@ -549,8 +549,10 @@ The three resolutions and their trust roots: **WHO** = `resolve_community` (sign
   - admit + emit hard_case:community_membership_change:austin-community
 
 4. Alice now receives cohort-filtered visibility for cohort_scope:community content
-  with community_id: austin-community. No key_grant cascade (community is unencrypted);
-  no at-rest wrap; holding claims stay within the community's roster.
+  with community_id: austin-community. At the next sealed write in the community's epoch
+  the sealer wraps the epoch DEK to Alice's occurrences (key_grant:epoch:v1, wrap v2);
+  holding claims stay within the community's roster. (Only an authorized infrastructure
+  community or a public room is plaintext, by its record; this one is neither.)
 ```
 
 ##### 4.4.3.2.6 `delivery-extension` — Delivery extension — `delivery_mode` × Policy M
