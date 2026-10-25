@@ -1871,9 +1871,9 @@ Reserved leaves:
 
 | Prefix | Polarity | Emitter rule |
 |---|---|---|
-| `accord:invoke:constitutional:{halt_id}` | +1.0 only | 2-of-3 accord-holder multi-sig per [CC 4.2.1](part_4_composition_governance.md) |
-| `accord:invoke:notify:{notify_id}` | +1.0 only | 2-of-3 accord-holder multi-sig per [CC 4.2.1](part_4_composition_governance.md); UI MUST distinguish from `constitutional` |
-| `accord:invoke:drill:{drill_id}` | +1.0 only | 2-of-3 accord-holder multi-sig per [CC 4.2.1](part_4_composition_governance.md) |
+| `accord:invoke:constitutional:{halt_id}` | +1.0 only | **One accord holder's signed row** — pre-signable, fired on receipt, no vote ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); lifting takes a majority of the standing roster ([CC 4.2.6](part_4_composition_governance.md#4.2.6)) |
+| `accord:invoke:notify:{notify_id}` | +1.0 only | One accord holder's signed row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); UI MUST distinguish from `constitutional` ([CC 4.2.1.2](part_4_composition_governance.md#4.2.1.2)) |
+| `accord:invoke:drill:{drill_id}` | +1.0 only | One accord holder's signed row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)) — a drill rehearses the fire path, so it needs no more signatures than the fire |
 | `accord:lifecycle` | +1.0 only | **The accord heartbeat** — wire `accord:lifecycle:v1`, frozen and genesis-signed; accord-holder self-attestation about the accord; `valid_until` refreshes on a cadence ≤ 90 days |
 | `accord:lifecycle:active` | +1.0 only | **Resumption** from a `constitutional` halt — the [CC 4.2.1.3](part_4_composition_governance.md) invocation kind, its own signed domain |
 | `accord:human_dignity` | signed | **Provisional.** The accord-holder verdict on an agent's human-dignity conduct, carried as `accord:human_dignity:v1` (`attested_key_id` = the agent scored); registered so the closed leaf set refuses nothing the substrate admits |

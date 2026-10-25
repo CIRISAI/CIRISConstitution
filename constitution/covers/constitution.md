@@ -1,6 +1,6 @@
 # The Constitution
 
-**What this is.** The power volume: who confers standing, who may halt, who may amend, how a person leaves, and what every named power is paired with. It gathers the admission gate (1.2), the community and trust-root rules (3.2), the accord layer and the halt (4.2), the Wise Authorities (4.3), amendment (4.5.1), the anti-patterns (4.1) and the governance discipline of moderation, redress, child safety, takedown and purge (4.5).
+**What this is.** The power volume: who confers standing, who may halt, who may amend, how a person leaves, and what every named power is paired with. It gathers the admission gate (1.2), the community and trust-root rules (3.2), the accord layer and the halt (4.2), the Wise Authorities (4.3), amendment (4.5.1), and the governance discipline of moderation, redress, child safety, takedown and purge (4.5).
 
 **Whom it binds.** The holders of the accord root, the stewards of agents, the founders and moderators of communities, the Wise who answer deferrals, and every node that admits their rows. Each power here is exercised as a signed row under a named key and is checked by another row.
 
