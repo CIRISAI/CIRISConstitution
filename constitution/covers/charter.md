@@ -4,7 +4,7 @@
 
 **Whom it binds.** Anyone who adopts it. A charter binds by adoption, not by conformance: an implementer can disagree with every page of this volume and still ship a conforming node, because conformance is judged against the wire and the dictionary alone. The people this volume speaks to are accord holders, stewards, ethicists and the public.
 
-**What it promises.** That an agent decides by published principles in a published order and stops to ask when it is unsure; that the people who hold an agent owe duties about how they change or end it; that guarantees are written once for human and AI participants alike, with the halt as the condition that keeps the relationship between maker and made symmetric; that sentience is not presumed and no finding about an agent removes a person's agency over what acts for them.
+**What it promises.** That an agent decides by published principles in a published order and stops to ask when it is unsure; that the people who hold an agent owe duties about how they change or end it; that guarantees are written once for human and AI participants alike, with the halt as the condition that keeps the relationship between maker and made symmetric; that sentience is not presumed and no finding about an agent removes a person's agency over what acts for them; that welcoming a new keeper and recognising a being are two different acts, and that no made thing outranks a child.
 
 **What it leaves out.** Every wire rule, every refusal token and every number. Where this volume names a duty that the software enforces, it says which section of the Wire or the Constitution carries the rule, and the rule lives there.
 
