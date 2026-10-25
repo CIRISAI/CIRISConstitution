@@ -82,13 +82,13 @@ Every `accord:invoke:*` Contribution signs the following canonical bytes (BOTH t
 
 ```
 canonical = sha256(
- "ciris.accord_invoke.v2\n" ||                       // v2: lowercase kinds
- "invocation_kind=" || ("constitutional" | "notify" | "drill") || "\n" ||
- "invocation_id=" || halt_id_or_notify_id_or_drill_id || "\n" ||
- "nonce=" || base64url(rand_32_bytes) || "\n" ||
- "asserted_at=" || rfc3339_canonical || "\n" || // per §0.5
- "valid_until=" || rfc3339_canonical || "\n" ||
- "payload_sha256=" || sha256_hex_lowercase_of_payload // per §0.6)
+  "ciris.accord_invoke.v2\n" ||                       // v2: lowercase kinds
+  "invocation_kind=" || ("constitutional" | "notify" | "drill") || "\n" ||
+  "invocation_id=" || halt_id_or_notify_id_or_drill_id || "\n" ||
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" || // per §0.5
+  "valid_until=" || rfc3339_canonical || "\n" ||
+  "payload_sha256=" || sha256_hex_lowercase_of_payload // per §0.6)
 ```
 
 Hybrid signature per [CC 3.1.2.1](part_3_the_namespace.md): Ed25519 + ML-DSA-65 bound-payload. **A `constitutional` halt is one holder's signature**: a consumer verifies ONE holder's signature over `canonical` against the pinned roster and halts.
@@ -132,14 +132,14 @@ A CEG-Conforming Consumer (CCC) presenting accord invocations to humans MUST vis
 
 ```
 canonical = sha256(
- "ciris.accord_lifecycle.v1\n" ||                       // distinct domain — NOT accord_invoke.v1
- "invocation_kind=lifecycle:active\n" ||
- "invocation_id=" || resumption_id || "\n" ||
- "resumes_halt_id=" || prior_constitutional_invocation_id || "\n" ||
- "nonce=" || base64url(rand_32_bytes) || "\n" ||
- "asserted_at=" || rfc3339_canonical || "\n" ||        // per §0.5
- "valid_until=" || rfc3339_canonical || "\n" ||
- "payload_sha256=" || sha256_hex_lowercase_of_payload) // per §0.6
+  "ciris.accord_lifecycle.v1\n" ||                       // distinct domain — NOT accord_invoke.v1
+  "invocation_kind=lifecycle:active\n" ||
+  "invocation_id=" || resumption_id || "\n" ||
+  "resumes_halt_id=" || prior_constitutional_invocation_id || "\n" ||
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||        // per §0.5
+  "valid_until=" || rfc3339_canonical || "\n" ||
+  "payload_sha256=" || sha256_hex_lowercase_of_payload) // per §0.6
 ```
 
 **`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.** A resumption authorizes ending a *single named* `constitutional` halt, not resumption-in-general — so a stockpiled or replayed `lifecycle:active` cannot silently un-halt a *later*, unrelated kill; the signature is worthless against any halt but the one it names. The substrate MUST reject a `lifecycle:active` whose `resumes_halt_id` does not match the currently-active CONSTITUTIONAL halt, and MUST reject a duplicate `invocation_id` within the `valid_until` window. A resumption proof is verifiable **offline** against the node's own pinned roster and MAY be presented by any out-of-band means — the halt latch clears on local verification and does not require replication reach (a halted node is not serving, so the wire path could never deliver it; recoverability is a local act, which is what makes the false-fire-is-recoverable argument checkable). A **confirmed** halt carries no TTL: expiry would convert the brake into a wait-out for the halted party, and its one exit is the named resumption above. A halt signed by one holder alone lapses after the fuse unless confirmed ([CC 4.2.1.1](#4.2.1.1)), which is what keeps a lone signature from being a wait-out for everyone else.
@@ -213,15 +213,15 @@ The `hardware_class` string is self-asserted by the holder; there is no `federat
 
 ```
 family {
- family_key_id: "humanity-accord",
- family_name: "Humanity Accord",
- members: [
- {key_id: <eric-moore-key>, role: founder},
- {key_id: <eric-kudzin-key>, role: founder},
- {key_id: <haley-bradley-key>, role: founder}
- ],
- consensus_protocol: "quorum:2/3",
- consensus_protocol_entrenched: true // replacement requires §9.2 / FEDERATION_ANNOUNCEMENT.md §4.5.3 ceremony
+  family_key_id: "humanity-accord",
+  family_name: "Humanity Accord",
+  members: [
+    {key_id: <eric-moore-key>, role: founder},
+    {key_id: <eric-kudzin-key>, role: founder},
+    {key_id: <haley-bradley-key>, role: founder}
+  ],
+  consensus_protocol: "quorum:2/3",
+  consensus_protocol_entrenched: true // replacement requires §9.2 / FEDERATION_ANNOUNCEMENT.md §4.5.3 ceremony
 }
 ```
 
@@ -281,20 +281,20 @@ The genesis triple ([CC 4.2.3](#4.2.3)) is the **seed** of a **growable M-of-N a
 
 ```
 proposal = sha256(
- "ciris.accord_proposal.v1\n" ||
- "family_key_id=" || family_key_id || "\n" ||
- "prior_family_digest=" || prior_family_digest || "\n" ||
- "action=" || action || "\n" ||            // fire | membership-change envelope | both
- "nonce=" || base64url(rand_32_bytes) || "\n" ||
- "window_until=" || rfc3339_canonical)
+  "ciris.accord_proposal.v1\n" ||
+  "family_key_id=" || family_key_id || "\n" ||
+  "prior_family_digest=" || prior_family_digest || "\n" ||
+  "action=" || action || "\n" ||            // fire | membership-change envelope | both
+  "nonce=" || base64url(rand_32_bytes) || "\n" ||
+  "window_until=" || rfc3339_canonical)
 participation = sha256(
- "ciris.accord_participation.v1\n" ||
- "family_key_id=" || family_key_id || "\n" ||
- "refers_to=" || proposal_nonce_or_digest || "\n" ||
- "proof_of_life=true\n" ||
- "vote=" || ("yes" | "no" | "abstain") || "\n" ||
- "asserted_at=" || rfc3339_canonical || "\n" ||
- "nonce=" || base64url(rand_32_bytes))
+  "ciris.accord_participation.v1\n" ||
+  "family_key_id=" || family_key_id || "\n" ||
+  "refers_to=" || proposal_nonce_or_digest || "\n" ||
+  "proof_of_life=true\n" ||
+  "vote=" || ("yes" | "no" | "abstain") || "\n" ||
+  "asserted_at=" || rfc3339_canonical || "\n" ||
+  "nonce=" || base64url(rand_32_bytes))
 ```
 
 `accord_decision` carries **no separate signing domain** — its authority is the contained `accord_participation` signatures + any roster version it produces. All hybrid (Ed25519 + ML-DSA-65). **Steward PQC publication:** the accord-holder PQC halves are published as signed key records in the `federation_keys` directory under their own `identity_type` — **never** in the GenesisBundle's `holders`, which is the accord-family roster ([CC 5.3.4](part_5_transport_substrate.md)) and would otherwise count the backstop as a constitutional voter — so the tally resolves every signer at the federation tier under RequireHybrid; absent publication, hybrid resolution **fails closed**.
@@ -354,13 +354,13 @@ Closes G3 (narrow-cell fresh-quorum-recusal infeasibility). Makes WA quorum size
 quorum_size(scale) = f(locality:decision:{scale})
 
 reference function (policy-tunable):
- local → 2
- regional → 3
- national → 4
- federation → 6
+  local → 2
+  regional → 3
+  national → 4
+  federation → 6
 
 minimum cell-pool requirement for fresh-quorum recusal at scale S:
- min_pool(S) = quorum_size(S) × 2
+  min_pool(S) = quorum_size(S) × 2
 ```
 
 Recusal is feasible when `cell_pool ≥ min_pool(S)`. Decision-scale-matching is structurally enforced; overreach surfaces as a named "locality mismatch" failure.
@@ -410,60 +410,60 @@ A proposed membership change is a **new version of the roster record** ([CC 3.2]
 
 ```
 admit_community_change(C, proposed: community_record):
- current = resolve_community(C, now)
- protocol = current_community_record(C).consensus_protocol
- subkind = current_community_record(C).cohort_subkind
+  current = resolve_community(C, now)
+  protocol = current_community_record(C).consensus_protocol
+  subkind = current_community_record(C).cohort_subkind
 
- signatures_ok = evaluate_consensus_protocol(protocol, current, proposed.signatures)
- if not signatures_ok:
- emit hard_case:community_consensus_protocol_violation:{C}
- reject
+  signatures_ok = evaluate_consensus_protocol(protocol, current, proposed.signatures)
+  if not signatures_ok:
+    emit hard_case:community_consensus_protocol_violation:{C}
+    reject
 
- // CC 3.1.3.2: a supersede NEVER adds (membership_supersede_cannot_add);
- // growth rides the widening plane, where every NEW member K needs K's own acceptance
- // of an undeclined, unwithdrawn proposal for C, answered and grown before its expires_at
- for each NEW member K in proposed.members (not in current):
- if not acceptance_admits(K, C, proposed.role_of(K), proposed.signed_at):
- emit hard_case:community_consensus_protocol_violation:{C}  // with the named membership_* rule
- reject
+  // CC 3.1.3.2: a supersede NEVER adds (membership_supersede_cannot_add);
+  // growth rides the widening plane, where every NEW member K needs K's own acceptance
+  // of an undeclined, unwithdrawn proposal for C, answered and grown before its expires_at
+  for each NEW member K in proposed.members (not in current):
+    if not acceptance_admits(K, C, proposed.role_of(K), proposed.signed_at):
+      emit hard_case:community_consensus_protocol_violation:{C}  // with the named membership_* rule
+      reject
 
- subkind_ok = evaluate_subkind_admission(subkind, current, proposed)
- if not subkind_ok:
- // For geographic: subkind admission failed (e.g., new member's location_proof
- // not contained in geographic_constraint, or expired location_proof)
- emit hard_case:community_consensus_protocol_violation:{C} // same observability prefix
- reject
+  subkind_ok = evaluate_subkind_admission(subkind, current, proposed)
+  if not subkind_ok:
+    // For geographic: subkind admission failed (e.g., new member's location_proof
+    // not contained in geographic_constraint, or expired location_proof)
+    emit hard_case:community_consensus_protocol_violation:{C} // same observability prefix
+    reject
 
- admit
- emit hard_case:community_membership_change:{C}
+  admit
+  emit hard_case:community_membership_change:{C}
 ```
 
 The `evaluate_subkind_admission` predicate dispatches per `cohort_subkind`:
 
 ```
 evaluate_subkind_admission(subkind, current, proposed):
- match subkind:
- "geographic":
- # Per §5.6.8.10 geographic admission requirement
- for each NEW member in proposed.members (not in current):
- their_proof = latest valid location_proof from new_member.key_id
- if their_proof IS NULL:
- return false // no location_proof on file
- if their_proof.cell_id NOT contained in current.geographic_constraint.cell_id:
- return false // location outside community's geographic bound
- if their_proof.valid_until passed:
- return false // expired
- return true
- "public":
- # CC 3.2 `public`: open admission — a standing founder proposal and the joiner's
- # own acceptance; the widening still passes consensus_protocol
- if current.admission == "open":
- for each NEW member in proposed.members (not in current):
- if no membership:acceptance:v1 from new_member naming the standing proposal:
- return false // nobody joins without their own consent (CC 3.1.3.2)
- return true
- _:
- return true // unknown subkinds admit on consensus_protocol alone
+  match subkind:
+    "geographic":
+      # Per §5.6.8.10 geographic admission requirement
+      for each NEW member in proposed.members (not in current):
+        their_proof = latest valid location_proof from new_member.key_id
+        if their_proof IS NULL:
+          return false // no location_proof on file
+        if their_proof.cell_id NOT contained in current.geographic_constraint.cell_id:
+          return false // location outside community's geographic bound
+        if their_proof.valid_until passed:
+          return false // expired
+      return true
+    "public":
+      # CC 3.2 `public`: open admission — a standing founder proposal and the joiner's
+      # own acceptance; the widening still passes consensus_protocol
+      if current.admission == "open":
+        for each NEW member in proposed.members (not in current):
+          if no membership:acceptance:v1 from new_member naming the standing proposal:
+            return false // nobody joins without their own consent (CC 3.1.3.2)
+      return true
+    _:
+      return true // unknown subkinds admit on consensus_protocol alone
 ```
 
 Operator vocabularies extending `cohort_subkind` provide their own `evaluate_subkind_admission` predicates per the `custom:{id}` consensus_protocol hook pattern from [CC 4.4.3.4.2](#4.4.3.4.2).
@@ -474,9 +474,9 @@ For community `C`, the current member set is computed as:
 
 ```
 resolve_community(C, now):
- latest = federation_attestations.where(subject_kind == "community").where(envelope.community_key_id == C).where(supersedes chain → latest non-superseded).where(admission rule satisfied per CURRENT consensus_protocol;
- see §8.1.13.2)
- return {m.key_id for m in latest.envelope.members}
+  latest = federation_attestations.where(subject_kind == "community").where(envelope.community_key_id == C).where(supersedes chain → latest non-superseded).where(admission rule satisfied per CURRENT consensus_protocol;
+    see §8.1.13.2)
+  return {m.key_id for m in latest.envelope.members}
 ```
 
 Same shape as `resolve_family` ([CC 4.4.3.4.4](#4.4.3.4.4)). Each `member.key_id` is an identity.
@@ -495,19 +495,19 @@ In a CEG/RET stack member resolution replaces DNS+IP: it is a chain of *signed* 
 
 ```
 resolve_member_transport(C, now):
- members = resolve_community(C, now) // (a) above; founder-quorum verified
- out = []
- for M in members (canonical key_id order):
- occ = latest non-superseded identity_occurrence of M
- with transport_destination present, valid at now,
- hybrid-sig verified against M (or an occurrence of M) // §5.6.8.8.1
- if occ is null: continue // no authenticated binding → skip (fail-secure)
- td = occ.transport_destination
- REQUIRE td.destination_hash == rns_destination_hash( // §5.6.8.8.1.1 pinned two-stage
- td.reticulum_x25519_pubkey, td.reticulum_ed25519_pubkey,
- td.app_name, td.aspects) // NOT a flat-concat SHA-256
- out.push((M, td.destination_hash))
- return out // → Reticulum announce/path-request per dest
+  members = resolve_community(C, now) // (a) above; founder-quorum verified
+  out = []
+  for M in members (canonical key_id order):
+    occ = latest non-superseded identity_occurrence of M
+      with transport_destination present, valid at now,
+      hybrid-sig verified against M (or an occurrence of M) // §5.6.8.8.1
+    if occ is null: continue // no authenticated binding → skip (fail-secure)
+    td = occ.transport_destination
+    REQUIRE td.destination_hash == rns_destination_hash( // §5.6.8.8.1.1 pinned two-stage
+      td.reticulum_x25519_pubkey, td.reticulum_ed25519_pubkey,
+      td.app_name, td.aspects) // NOT a flat-concat SHA-256
+    out.push((M, td.destination_hash))
+  return out // → Reticulum announce/path-request per dest
 ```
 
 The three resolutions and their trust roots: **WHO** = `resolve_community` (signed Contribution + founder-quorum) · **BINDING** = `transport_destination` (federation-key-signed `identity_occurrence`, CC 3.3.6.2) · **WHERE** = Reticulum announce/path-request (mesh, no CEG). Reachability is never trust ([CC 5.3.3.4](part_5_transport_substrate.md)): a path that answers is not an authorization; only the signed binding + quorum are.
@@ -518,36 +518,36 @@ The three resolutions and their trust roots: **WHO** = `resolve_community` (sign
 
 ```
 1. Alice publishes a location_proof:
- subject_kind: location_proof
- subject_key_id: alice_root_key
- cell_id: "872830828ffffff" // H3 res 7, ~5 km², downtown Austin
- cell_resolution: 7
- asserted_at: now
- valid_until: now + 30 days
- cohort_scope: federation // public; the disclosure IS the opt-in
+  subject_kind: location_proof
+  subject_key_id: alice_root_key
+  cell_id: "872830828ffffff" // H3 res 7, ~5 km², downtown Austin
+  cell_resolution: 7
+  asserted_at: now
+  valid_until: now + 30 days
+  cohort_scope: federation // public; the disclosure IS the opt-in
 
- Substrate admits (resolution 7 ≤ 7 OK). Emission federates.
+  Substrate admits (resolution 7 ≤ 7 OK). Emission federates.
 
 2. Alice proposes joining Austin community:
- subject_kind: community
- community_key_id: austin-community
- supersedes: prior_austin_community_record_id
- members: [...existing..., {key_id: alice_root_key, joined_at: now, role: member}]
- signatures: [...current_member_sigs] // satisfies majority rule
+  subject_kind: community
+  community_key_id: austin-community
+  supersedes: prior_austin_community_record_id
+  members: [...existing..., {key_id: alice_root_key, joined_at: now, role: member}]
+  signatures: [...current_member_sigs] // satisfies majority rule
 
 3. Substrate admission gate (per §8.1.13.2):
- - signatures_ok: majority rule satisfied ✓
- - subkind: "geographic" → evaluate_subkind_admission:
- - alice_root_key's latest valid location_proof exists
- - cell_id "872830828ffffff" CONTAINED in "85283473fffffff" (austin metro, res 5)
- via §0.8.2 containment (res 7 ≥ res 5; parent-walk reaches the constraint)
- - valid_until in the future
- - subkind_ok ✓
- - admit + emit hard_case:community_membership_change:austin-community
+  - signatures_ok: majority rule satisfied ✓
+  - subkind: "geographic" → evaluate_subkind_admission:
+    - alice_root_key's latest valid location_proof exists
+    - cell_id "872830828ffffff" CONTAINED in "85283473fffffff" (austin metro, res 5)
+      via §0.8.2 containment (res 7 ≥ res 5; parent-walk reaches the constraint)
+    - valid_until in the future
+  - subkind_ok ✓
+  - admit + emit hard_case:community_membership_change:austin-community
 
 4. Alice now receives cohort-filtered visibility for cohort_scope:community content
- with community_id: austin-community. No key_grant cascade (community is unencrypted);
- no at-rest wrap; holding claims stay within the community's roster.
+  with community_id: austin-community. No key_grant cascade (community is unencrypted);
+  no at-rest wrap; holding claims stay within the community's roster.
 ```
 
 ##### 4.4.3.2.6 `delivery-extension` — Delivery extension — `delivery_mode` × Policy M
@@ -558,8 +558,8 @@ Policy M's community-membership composition extends to govern the **delivery axi
 
 ```
 For a Contribution C with delivery_mode = push AND cohort_scope = community:
- subscriber_set(C) = resolve_community(C.community_id, now)
- per §8.1.13.1 community membership resolution
+  subscriber_set(C) = resolve_community(C.community_id, now)
+    per §8.1.13.1 community membership resolution
 
 The community is admitted under the standard Policy M consensus_protocol
 options (founder_only / unanimous / majority / quorum:M/N / weighted /
@@ -567,12 +567,12 @@ custom) per §8.1.13.2. Subscription-specific admission semantics —
 producer_gated (publisher approves each member) vs open (anyone can
 join) — ride the consensus_protocol choice:
 
- producer_gated → consensus_protocol = "founder_only" with the
- publisher as sole founder; the publisher authorizes
- each new subscriber
- open → consensus_protocol = "open:self_admit" (open-vocab
- extension hook) where any subject signs their own
- admission Contribution
+  producer_gated → consensus_protocol = "founder_only" with the
+    publisher as sole founder; the publisher authorizes
+    each new subscriber
+  open → consensus_protocol = "open:self_admit" (open-vocab
+    extension hook) where any subject signs their own
+    admission Contribution
 ```
 
 **Cardinality unified across observer-share and multicast**:
@@ -710,18 +710,18 @@ On admission of a new `identity_occurrence` OR a `family` membership-add, substr
 
 ```
 on_member_added(scope_target, new_member_key):
- for each Contribution C in federation_attestations where:
- C.cohort_scope == "self" AND C.attesting_key_id ∈ resolve_self(scope_target)
- OR
- C.cohort_scope == "family" AND C.family_id == scope_target
- AND C is still substrate-admitted (not withdrawn / not expired):
- emit key_grant {
- wrap_algorithm: X25519MlKem768Aes256GcmHkdfSha256, // v2 — see PQC note
- recipient_key_id: new_member_key,
- content_sha256: C.evidence_refs[0].sha256,
- scope: GroupMember,
- wrapped_dek: wrap(C.dek, new_member_key.pubkey),...
- }
+  for each Contribution C in federation_attestations where:
+      C.cohort_scope == "self" AND C.attesting_key_id ∈ resolve_self(scope_target)
+      OR
+      C.cohort_scope == "family" AND C.family_id == scope_target
+      AND C is still substrate-admitted (not withdrawn / not expired):
+    emit key_grant {
+      wrap_algorithm: X25519MlKem768Aes256GcmHkdfSha256, // v2 — see PQC note
+      recipient_key_id: new_member_key,
+      content_sha256: C.evidence_refs[0].sha256,
+      scope: GroupMember,
+      wrapped_dek: wrap(C.dek, new_member_key.pubkey),...
+    }
 ```
 
 **PQC at rest — `wrap_algorithm: v2` MANDATORY (normative).** The self/family at-rest DEK MUST be wrapped with **`wrap_algorithm: v2` = `x25519_mlkem768_aes256_gcm_hkdf_sha256`** (hybrid X25519+ML-KEM-768; the [CC 3.3.2](part_3_the_namespace.md) variant `X25519MlKem768Aes256GcmHkdfSha256`), **never v1** (X25519-only). Self/family content is the user's most private and longest-lived data (memory, photos, identity, the [CC 4.4.3.4.3](#4.4.3.4.3) Self DEK) — a classical-only KEM is a harvest-now-decrypt-later exposure, the identical mandate as the streaming epoch DEK ([CC 5.1](part_5_transport_substrate.md)). The AES-256-GCM content seal is symmetric (PQC-safe); the wrap signature is hybrid Ed25519+ML-DSA-65. A Consumer MUST reject a self/family at-rest grant carrying `wrap_algorithm: v1`.
@@ -734,36 +734,36 @@ A proposed membership change (addition OR removal) is a **new version of the ros
 
 ```
 admit_family_change(F, proposed: family_record):
- current = resolve_family(F, now)
- protocol = current_family_record(F).consensus_protocol
- signatures = collect_signatures_on(proposed)
+  current = resolve_family(F, now)
+  protocol = current_family_record(F).consensus_protocol
+  signatures = collect_signatures_on(proposed)
 
- match protocol:
- "founder_only":
- return any sig from m where m.role == "founder" in current
- "unanimous":
- return every m.key_id in current has signed
- "majority":
- return count(sig from m in current) > len(current) / 2
- "quorum:M/N":
- return count(sig from m in current) >= M // M is ABSOLUTE — see §8.1.12.3.1
- "weighted:{rubric}":
- return sum(weight(m, rubric) for m in current who signed) >= threshold
- "custom:{family_id}":
- return operator-defined predicate evaluates to true
+  match protocol:
+    "founder_only":
+      return any sig from m where m.role == "founder" in current
+    "unanimous":
+      return every m.key_id in current has signed
+    "majority":
+      return count(sig from m in current) > len(current) / 2
+    "quorum:M/N":
+      return count(sig from m in current) >= M // M is ABSOLUTE — see §8.1.12.3.1
+    "weighted:{rubric}":
+      return sum(weight(m, rubric) for m in current who signed) >= threshold
+    "custom:{family_id}":
+      return operator-defined predicate evaluates to true
 
- // CC 3.1.3.2: a protocol arm above admits the GROUP's side only;
- // a supersede never adds, and on a widening every NEW member K needs K's own acceptance
- for each NEW member K in proposed.members (not in current):
- if not acceptance_admits(K, F, proposed.role_of(K), proposed.signed_at):
- admit = false
+  // CC 3.1.3.2: a protocol arm above admits the GROUP's side only;
+  // a supersede never adds, and on a widening every NEW member K needs K's own acceptance
+  for each NEW member K in proposed.members (not in current):
+    if not acceptance_admits(K, F, proposed.role_of(K), proposed.signed_at):
+      admit = false
 
- if admit:
- emit hard_case:family_membership_change:{F}
- trigger §8.1.12.4 key_grant cascade
- else:
- hold in pending state (per operator-policy window) OR
- emit hard_case:family_consensus_protocol_violation:{F} and reject
+  if admit:
+    emit hard_case:family_membership_change:{F}
+    trigger §8.1.12.4 key_grant cascade
+  else:
+    hold in pending state (per operator-policy window) OR
+    emit hard_case:family_consensus_protocol_violation:{F} and reject
 ```
 
 **Consensus-protocol amendment** (changing `consensus_protocol` itself on a non-entrenched family) rides the SAME admission rule on the proposed amendment Contribution — meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md). Entrenched families (`consensus_protocol_entrenched == true`) reject amendments at the substrate gate; replacement requires the out-of-band ceremony documented per family (for HUMANITY_ACCORD see [CC 4.2.1](part_4_composition_governance.md)).
@@ -847,12 +847,12 @@ Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelop
 **(a) `consent:partnership_grant:v1` (user side) / `consent:partnership_accept:v1` (agent side)** — bare `scores` ([CC 3.3.1](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
 ```
 { attestation_type: "scores",
- attesting_key_id: <user identity_key_id (grant) | agent occurrence_key_id (accept)>,
- dimension: "consent:partnership_grant:v1" | "consent:partnership_accept:v1",
- score: <positive>,
- subject_key_ids: [<the partner key: agent occurrence (grant) | user identity (accept)>],
- bilateral_pair_id:<shared pair id>, // §8.1.11.4 binding mechanism
- signed_at: <rfc3339_canonical> }
+  attesting_key_id: <user identity_key_id (grant) | agent occurrence_key_id (accept)>,
+  dimension: "consent:partnership_grant:v1" | "consent:partnership_accept:v1",
+  score: <positive>,
+  subject_key_ids: [<the partner key: agent occurrence (grant) | user identity (accept)>],
+  bilateral_pair_id:<shared pair id>, // §8.1.11.4 binding mechanism
+  signed_at: <rfc3339_canonical> }
 ```
 > **Version segment pinned.** The dimension carries the `:v1` version segment — `consent:partnership_grant:v1` / `consent:partnership_accept:v1` — as [CC 3.1.7](part_3_the_namespace.md) R3 requires of every scored dimension. The `:v1` is the partnership-ceremony schema version (bump to `:v2` only if the bilateral shape changes); the shared `bilateral_pair_id` remains the CC 4.4.3.5.3 binding mechanism.
 
@@ -873,31 +873,31 @@ Each of the three Self-at-login Contributions is hybrid-signed over `JCS(envelop
 **(b) `delegates_to` (user → agent occurrence)** — the act-on-behalf grant ([CC 2.4.1](part_2_the_grammar.md) envelope shape):
 ```
 { attestation_type: "delegates_to",
- attesting_key_id: <user identity_key_id>,
- attested_key_id: <agent occurrence_key_id>, // the delegate
- scope: ["act_on_behalf",...], // §8.1.12.7 canonical kinds
- delegation_purpose: "act_as_user",
- delegation_valid_from:<rfc3339_canonical>,
- delegation_valid_until:<rfc3339_canonical>,
- signed_at: <rfc3339_canonical> }
+  attesting_key_id: <user identity_key_id>,
+  attested_key_id: <agent occurrence_key_id>, // the delegate
+  scope: ["act_on_behalf",...], // §8.1.12.7 canonical kinds
+  delegation_purpose: "act_as_user",
+  delegation_valid_from:<rfc3339_canonical>,
+  delegation_valid_until:<rfc3339_canonical>,
+  signed_at: <rfc3339_canonical> }
 ```
 
 **(c) `transport_destination` binding** — an `identity_occurrence` ([CC 3.3.6](part_3_the_namespace.md) / [CC 3.3.6.2](part_3_the_namespace.md)) carrying the binding; signed by `identity_key_id` (or a current occurrence), AV-17:
 ```
 { attestation_type: "scores",
- subject_kind: "identity_occurrence", // payload discriminator §4.2.2.3
- attesting_key_id: <user identity_key_id | a current occurrence>,
- identity_key_id: <user identity_key_id>,
- occurrence_key_id:<the occurrence being bound>,
- device_class: "phone" | "laptop" | "server" | "embedded" | "service" | "agent", // closed; personal = phone|laptop (CC 3.3.7)
- transport_destination: {
- reticulum_x25519_pubkey: <[u8;32]>,
- reticulum_ed25519_pubkey: <[u8;32]>,
- destination_hash: <[u8;16]>, // MUST derive per §5.6.8.8.1
- app_name: <string>,
- aspects: [<string>,...] }, // ordered
- asserted_at: <rfc3339_canonical>,
- signed_at: <rfc3339_canonical> }
+  subject_kind: "identity_occurrence", // payload discriminator §4.2.2.3
+  attesting_key_id: <user identity_key_id | a current occurrence>,
+  identity_key_id: <user identity_key_id>,
+  occurrence_key_id:<the occurrence being bound>,
+  device_class: "phone" | "laptop" | "server" | "embedded" | "service" | "agent", // closed; personal = phone|laptop (CC 3.3.7)
+  transport_destination: {
+    reticulum_x25519_pubkey: <[u8;32]>,
+    reticulum_ed25519_pubkey: <[u8;32]>,
+    destination_hash: <[u8;16]>, // MUST derive per §5.6.8.8.1
+    app_name: <string>,
+    aspects: [<string>,...] }, // ordered
+  asserted_at: <rfc3339_canonical>,
+  signed_at: <rfc3339_canonical> }
 ```
 
 Registry owns these member sets (this section); Verify computes `JCS(...)` + the hybrid Ed25519+ML-DSA-65 signature over each; the promotion signature ([CC 5.3.2.4.2](part_5_transport_substrate.md) OQ-4) is the identical JCS bytes.
@@ -910,9 +910,9 @@ For family `F`, the current member set is computed as:
 
 ```
 resolve_family(F, now):
- latest = federation_attestations.where(subject_kind == "family").where(envelope.family_key_id == F).where(supersedes chain → latest non-superseded).where(admission rule satisfied per CURRENT consensus_protocol;
- see §8.1.12.3)
- return {m.key_id for m in latest.envelope.members}
+  latest = federation_attestations.where(subject_kind == "family").where(envelope.family_key_id == F).where(supersedes chain → latest non-superseded).where(admission rule satisfied per CURRENT consensus_protocol;
+    see §8.1.12.3)
+  return {m.key_id for m in latest.envelope.members}
 ```
 
 Each `member.key_id` is itself an identity — the substrate does NOT walk into each member's `identity_occurrence` set at family-resolution time. When DEK wrapping happens, each member's identity_key receives a `key_grant`; the member's own substrate then composes Policy L on its own self-collective to propagate to that member's devices/agents (recursive composition).
@@ -925,10 +925,10 @@ Each `member.key_id` is itself an identity — the substrate does NOT walk into 
 
 ```
 on_member_removed(scope_target, removed_member_key):
- // The removed member retains existing key_grants — cannot retroactively un-share.
- // Substrate STOPS wrapping NEW key_grants to them on subsequent
- // cohort_scope: self|family Contributions for scope_target.
- // No DEK rotation; no re-encryption of historical content.
+  // The removed member retains existing key_grants — cannot retroactively un-share.
+  // Substrate STOPS wrapping NEW key_grants to them on subsequent
+  // cohort_scope: self|family Contributions for scope_target.
+  // No DEK rotation; no re-encryption of historical content.
 ```
 
 This is consistent with [CC 4.5.3](part_4_composition_governance.md) "takedown isn't a coup" + [CC 2.4.1](part_2_the_grammar.md) `withdraws-isn't-retroactive` semantics — historical state isn't retroactively re-keyed. Option B (rotate-DEK on removal) is deferred to a future `subject_kind: family_rotation` ceremony; the slot is documented and the rotation primitive left for a downstream-demand-driven release.
@@ -941,8 +941,8 @@ For identity `I`, the current self-collective is computed as:
 
 ```
 resolve_self(I, now):
- candidates = federation_attestations.where(subject_kind == "identity_occurrence").where(envelope.identity_key_id == I).where(supersedes chain → latest non-superseded).where(NOT withdrawn by I or by current occurrence).where(envelope.valid_until IS NULL OR > now)
- return {c.envelope.occurrence_key_id for c in candidates} ∪ {I}
+  candidates = federation_attestations.where(subject_kind == "identity_occurrence").where(envelope.identity_key_id == I).where(supersedes chain → latest non-superseded).where(NOT withdrawn by I or by current occurrence).where(envelope.valid_until IS NULL OR > now)
+  return {c.envelope.occurrence_key_id for c in candidates} ∪ {I}
 ```
 
 The root `I` itself is implicitly a member (the identity_key is always an admissible signer for its own content). Single-vouch admission: any current occurrence (including `I` itself) may admit a new occurrence via `attesting_key_id` on a fresh `identity_occurrence` Contribution.
@@ -970,15 +970,15 @@ For consent_records carrying `decay_protocol: "ciris-agent-90day"` (or any named
 
 ```
 decay_state(consent_record, now):
- elapsed = now - revocation_event(consent_record).asserted_at
+  elapsed = now - revocation_event(consent_record).asserted_at
 
- walk substrate emissions on dimension `consent:decay:*` against consent_record,
- matching the decay_protocol's stage map. CIRISAgent 90-day decay:
+  walk substrate emissions on dimension `consent:decay:*` against consent_record,
+  matching the decay_protocol's stage map. CIRISAgent 90-day decay:
 
- elapsed < 30d → consent:decay:identity_severed (substrate emits at elapsed=0)
- 30d ≤ elapsed < 60d → consent:decay:patterns_anonymized (substrate emits at elapsed=30d)
- 60d ≤ elapsed < 90d → (in flight; no new stage emission)
- elapsed ≥ 90d → consent:decay:complete (substrate emits at elapsed=90d)
+    elapsed < 30d → consent:decay:identity_severed (substrate emits at elapsed=0)
+    30d ≤ elapsed < 60d → consent:decay:patterns_anonymized (substrate emits at elapsed=30d)
+    60d ≤ elapsed < 90d → (in flight; no new stage emission)
+    elapsed ≥ 90d → consent:decay:complete (substrate emits at elapsed=90d)
 ```
 
 Per [CC 3.3.1](part_3_the_namespace.md) `consent:decay:{stage}` is open vocab. Other decay protocols MAY name other stage sequences; substrate honors the producer's published `decay_protocol` string and emits stages per the protocol's stage map.
@@ -989,16 +989,16 @@ When subject `s` emits `consent:state:revoked` (or an admitted `withdraws`) agai
 
 ```
 watch_sla(T, s, revocation_at):
- sla = T.attestations.where(attesting_key_id == T.attesting_key_id).where(dimension == "consent:deletion_sla:*").latest.extract_days
+  sla = T.attestations.where(attesting_key_id == T.attesting_key_id).where(dimension == "consent:deletion_sla:*").latest.extract_days
 
- if sla is None:
- return # no SLA commitment; no watcher
+  if sla is None:
+    return # no SLA commitment; no watcher
 
- deadline = revocation_at + sla.days
- completion = T.attestations.where(attesting_key_id == T.attesting_key_id).where(dimension == "consent:deletion_complete").where(asserted_at > revocation_at).first
+  deadline = revocation_at + sla.days
+  completion = T.attestations.where(attesting_key_id == T.attesting_key_id).where(dimension == "consent:deletion_complete").where(asserted_at > revocation_at).first
 
- if now > deadline and completion is None:
- emit hard_case:consent_sla_breach against T
+  if now > deadline and completion is None:
+    emit hard_case:consent_sla_breach against T
 ```
 
 The `hard_case:*` emission is the **primitive observability signal**; per [CC 4.5.2](part_4_composition_governance.md) governance, LensCore composes derived detectors on top (`detection:consent:repeat_sla_breach`, etc.).
@@ -1009,11 +1009,11 @@ For the bilateral partnership shape per [CC 3.3.5](part_3_the_namespace.md) `con
 
 ```
 ratified_pair(pair_id):
- subject_half = federation_attestations.where(subject_kind == "consent_record").where(envelope.bilateral_pair_id == pair_id).where(envelope.stance == "granted").where(envelope.subject_key_id == attesting_key_id) # subject signing for self.first
+  subject_half = federation_attestations.where(subject_kind == "consent_record").where(envelope.bilateral_pair_id == pair_id).where(envelope.stance == "granted").where(envelope.subject_key_id == attesting_key_id) # subject signing for self.first
 
- producer_half = federation_attestations.where(subject_kind == "consent_record").where(envelope.bilateral_pair_id == pair_id).where(envelope.stance == "granted").where(envelope.target_key_id == subject_half.subject_key_id).where(attesting_key_id != subject_half.subject_key_id) # producer signing.first
+  producer_half = federation_attestations.where(subject_kind == "consent_record").where(envelope.bilateral_pair_id == pair_id).where(envelope.stance == "granted").where(envelope.target_key_id == subject_half.subject_key_id).where(attesting_key_id != subject_half.subject_key_id) # producer signing.first
 
- return subject_half AND producer_half # both required for ratification
+  return subject_half AND producer_half # both required for ratification
 ```
 
 `topical_relation:bilateral_pair` is the open-vocab edge documenting the pair linkage (recommended, not required for ratification — `bilateral_pair_id` is the binding mechanism).
@@ -1037,16 +1037,16 @@ For a target Contribution `T` carrying `subject_key_ids` of length ≥ 1, the ef
 
 ```
 resolve_consent(T, s, now):
- candidates = federation_attestations.where(target == T).where(attesting_key_id == s OR
- attesting_key_id ∈ delegates_to(s).proxies).where(dimension matches "consent:state:*").where(supersedes_id IS NULL OR replaced by latest in supersedes chain).where(valid_until IS NULL OR valid_until > now).order_by(asserted_at DESC)
+  candidates = federation_attestations.where(target == T).where(attesting_key_id == s OR
+    attesting_key_id ∈ delegates_to(s).proxies).where(dimension matches "consent:state:*").where(supersedes_id IS NULL OR replaced by latest in supersedes chain).where(valid_until IS NULL OR valid_until > now).order_by(asserted_at DESC)
 
- latest = first(candidates)
- return:
- granted if latest.dimension == "consent:state:granted"
- revoked if latest.dimension == "consent:state:revoked"
- expired if latest.dimension == "consent:state:expired" OR
- latest.valid_until passed without renewal
- unspecified if no candidates (subject named but never declared)
+  latest = first(candidates)
+  return:
+    granted if latest.dimension == "consent:state:granted"
+    revoked if latest.dimension == "consent:state:revoked"
+    expired if latest.dimension == "consent:state:expired" OR
+      latest.valid_until passed without renewal
+    unspecified if no candidates (subject named but never declared)
 ```
 
 Substrate MAY cache the resolution per `(T, s)` keyed on the latest `asserted_at`; invalidate on any new `consent:*` write from `s` or `s`'s proxy chain.
@@ -1081,16 +1081,16 @@ Per [CC 1.2](part_1_foundation.md) T2 honestly applied: the L-number names a *la
 
 ```
 ladder_verdict(attestations) =
- let levels = []
- for prefix in [self_verify, hardware_rooted, registry_consensus,
- license_validity, agent_integrity]:
- if any positive attestation on attestation:{prefix}:
- levels.push(prefix_to_ladder_position(prefix))
- return {
- achieved: max(levels) if levels else None,
- ladder: sorted(levels),
- rendering: format_as_l1_l5_for_ui(levels)
- }
+  let levels = []
+  for prefix in [self_verify, hardware_rooted, registry_consensus,
+      license_validity, agent_integrity]:
+    if any positive attestation on attestation:{prefix}:
+      levels.push(prefix_to_ladder_position(prefix))
+  return {
+    achieved: max(levels) if levels else None,
+    ladder: sorted(levels),
+    rendering: format_as_l1_l5_for_ui(levels)
+  }
 ```
 
 Consumers MAY render the ladder as `L1` / `L2` / `L3` / `L4` / `L5` for UI / dashboards / audit trails. The rendering is composition output, not wire emission.
@@ -1150,11 +1150,11 @@ The composition has three layers (analogous to [CC 4.4.3.7](#4.4.3.7) Policy F f
 
 ```
 gate_decision(content) = match (content.content_class, content.content_rating, consumer.preferences):
- # Producer-declared content_class is consultable but not authoritative — UI may show
- # the producer claim alongside cohort cw_class declarations and let the consumer choose.
- (class, _, prefs) if class in prefs.blocked_classes => Block
- (_, rating, prefs) if rating.exceeds(prefs.max_rating) => Block
- (_, _, _) => Allow
+  # Producer-declared content_class is consultable but not authoritative — UI may show
+  # the producer claim alongside cohort cw_class declarations and let the consumer choose.
+  (class, _, prefs) if class in prefs.blocked_classes => Block
+  (_, rating, prefs) if rating.exceeds(prefs.max_rating) => Block
+  (_, _, _) => Allow
 ```
 
 Layered with [CC 4.4.1](#4.4.1) — `cw_class:*` declarations from low-attestation-density cohorts MUST NOT be downweighted; they ride alongside the gate decision as informational.
@@ -1163,9 +1163,9 @@ Layered with [CC 4.4.1](#4.4.1) — `cw_class:*` declarations from low-attestati
 
 ```
 age_gate(content, consumer):
- required_level = age_required_for(content.content_rating)
- consumer_level = consumer.highest_age_assurance_level
- return consumer_level >= required_level
+  required_level = age_required_for(content.content_rating)
+  consumer_level = consumer.highest_age_assurance_level
+  return consumer_level >= required_level
 ```
 
 Where the `age_assurance:{level}` ordering is: `self < provider:{verifier_key}:adult < government:{credential_class}:adult`. Consumer SHOULD accept the strongest assurance the user has provided; substrate MUST NOT issue `slashing:*` on age-assurance misdeclaration alone — `moderation:age_assurance_misdeclaration` is the adjudication path per [CC 3.1.9.2](part_3_the_namespace.md).
