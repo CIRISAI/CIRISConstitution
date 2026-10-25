@@ -44,7 +44,7 @@ CLASSES = {
         (r"\bSection (?:I|II|III|IV|V)\b", None),
     ],
     "pointers": [
-        (r"MISSION\.md|LANGUAGE_PRIMER\.md|FEDERATION_ANNOUNCEMENT\.md|TRUST_CONTRACT\.md|PRIOR_ART\.md|LIGHTNET_DARKNET\.md|CLAUDE\.md|README\b", None),
+        (r"MISSION\.md|LANGUAGE_PRIMER\.md|FEDERATION_ANNOUNCEMENT\.md|TRUST_CONTRACT\.md|PRIOR_ART\.md|LIGHTNET_DARKNET\.md|CLAUDE\.md|README\b", r"master index\]\(\.\./README\.md\)"),
         (r"\bFSD-\d{3}\b|\bFSD/", None),
         (r"\b[a-z_]+\.py\b|\b[a-z_]+\.rs#|\b[a-z_]+\.rs\b|::[a-z_]+\(", None),
         (r"ciris-crypto|scope_privacy::|AlmJoinPlanner|serde\(skip\)|PeerResolver|registry_signing_keys|cirisnode_contributions|Rust handlers|OpenAPI export", None),
