@@ -165,7 +165,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.1	anti-pattern	Anti-patterns	§13	0.01375	7	1.65	IV	ceg	policies
 4.1.1	anti-pattern-delegation	Delegation-laundering anti-pattern	§13.3	0.00155	155	0.19	IV	ceg	policies
 4.1.2	pattern	Discipline pattern	§13.5	0.00122	183	0.15	IV	ceg	policies
-4.1.3	already-rejected	Already-rejected wire additions	§13.1	0.00108	205	0.13	IV	ceg	policies
+4.1.3	rejected-additions	Rejected wire additions	§13.1	0.00108	205	0.13	IV	ceg	policies
 4.1.4	withdraws-arbitrage	`withdraws` arbitrage	§13.4	0.00095	226	0.11	IV	ceg	policies
 4.1.5	registry-rejections	Rejected stress-test reaches	§13.2	0.00093	231	0.11	IV	ceg	policies
 4.2	accord	The HUMANITY_ACCORD constitutional layer	§9	0.01163	10	1.4	IV	ceg	constitution
@@ -186,14 +186,14 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.3.1.1	sub-quorum	Sub-quorum fallback	§8.1.5.1	0.00397	61	0.48	IV	ceg	policies
 4.4.3.2	community-policy	Policy M — Community membership composition	§8.1.13	0.00543	36	0.65	IV	ceg	policies
 4.4.3.2.1	community-three	The three crypto tiers + the Community DEK cascade (normative)	§8.1.13.3	0.00376	68	0.45	IV	ceg	policies
-4.4.3.2.2	community-forward	Forward secrecy on community member removal (Option A)	§8.1.13.4	0.00173	142	0.21	IV	ceg	policies
+4.4.3.2.2	community-forward	Forward secrecy on community member removal	§8.1.13.4	0.00173	142	0.21	IV	ceg	policies
 4.4.3.2.3	community-admission	Community admission per `consensus_protocol` + `cohort_subkind`	§8.1.13.2	0.00151	160	0.18	IV	ceg	policies
 4.4.3.2.4	community-membership	Community membership resolution	§8.1.13.1	0.00146	163	0.18	IV	ceg	policies
 4.4.3.2.4.1	deterministic	Deterministic resolution + member→address resolution (NORMATIVE)	§8.1.13.1.1	0.00262	95	0.31	IV	ceg	policies
 4.4.3.2.5	admission-geographic	Geographic-community admission flow (worked example)	§8.1.13.5	0.00121	184	0.15	IV	ceg	policies
 4.4.3.2.6	delivery-extension	Delivery extension — `delivery_mode` × Policy M	§8.1.13.7	0.00103	212	0.12	IV	ceg	policies
 4.4.3.2.7	composition-8-1-13-6	Composition with consent + self-collectives	§8.1.13.6	0.00092	298	0.11	IV	ceg	policies
-4.4.3.3	policy	Policy H — Tiered-Scope Composition (LIVE)	§8.1.8	0.00456	47	0.55	IV	ceg	policies
+4.4.3.3	policy	Policy H — Tiered-Scope Composition	§8.1.8	0.00456	47	0.55	IV	ceg	policies
 4.4.3.3.1	supersedes	Promotion via `supersedes` (worked pattern)	§8.1.8.1	0.00376	69	0.45	IV	ceg	policies
 4.4.3.4	family-policy	Policy L — Self/family membership composition	§8.1.12	0.00450	49	0.54	IV	ceg	policies
 4.4.3.4.1	cascade	Key-grant cascade (the at-rest encryption flow)	§8.1.12.4	0.00401	60	0.48	IV	ceg	policies
@@ -202,11 +202,11 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.3.4.3	cohort	"The ""Self at login"" — app + agent co-self + partnered delegation (normative composition)"	§8.1.12.7	0.00218	108	0.26	IV	ceg	policies
 4.4.3.4.3.1	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg	policies
 4.4.3.4.4	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg	policies
-4.4.3.4.5	forward-secrecy	Forward secrecy on member removal (Option A, recommended for v1)	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
+4.4.3.4.5	forward-secrecy	Forward secrecy on member removal — forward-only	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
 4.4.3.4.6	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg	policies
 4.4.3.4.7	composition-subject	Composition with subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg	policies
-4.4.3.5	policy-cem	Policy K — CEM composition	§8.1.11	0.00445	50	0.53	IV	ceg	policies
-4.4.3.5.1	composition-decay	Decay-protocol stage composition (CIRISAgent CEM ANONYMOUS)	§8.1.11.5	0.00239	102	0.29	IV	ceg	policies
+4.4.3.5	policy-cem	Policy K — Consent composition	§8.1.11	0.00445	50	0.53	IV	ceg	policies
+4.4.3.5.1	composition-decay	Decay-protocol stage composition (the CIRISAgent ANONYMOUS stream)	§8.1.11.5	0.00239	102	0.29	IV	ceg	policies
 4.4.3.5.2	deletion-sla	Deletion-SLA watcher (substrate emission)	§8.1.11.3	0.00224	106	0.27	IV	ceg	policies
 4.4.3.5.3	composition-bilateral	Bilateral pair composition (PARTNERED ceremony)	§8.1.11.4	0.00178	133	0.21	IV	ceg	policies
 4.4.3.5.4	multi-subject	Multi-subject revocation (any-subject-binding)	§8.1.11.2	0.00140	167	0.17	IV	ceg	policies
@@ -219,7 +219,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.3.10	policy-trusted	Policy J — Trusted-Publisher composition	§8.1.10	0.00116	193	0.14	IV	ceg	policies
 4.4.3.11	policy-trust	Policy G — Trust-Fresh / Lighthouse	§8.1.7	0.00095	228	0.11	IV	ceg	policies
 4.4.3.12	policy-one	Policy B — one-hop transitive	§8.1.2	0.00092	299	0.11	IV	ceg	policies
-4.4.3.13	policy-weighted	Policy C — weighted graph (EigenTrust-style)	§8.1.3	0.00092	300	0.11	IV	ceg	policies
+4.4.3.13	policy-weighted	Policy C — weighted graph	§8.1.3	0.00092	300	0.11	IV	ceg	policies
 4.4.4	sovereign-registered	Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)	§8.4	0.00167	146	0.2	IV	ceg	policies
 4.5	discipline	Governance discipline	§11	0.00174	140	0.21	IV	ceg	constitution
 4.5.1	amendment	Amendment process — federation Contribution + WA quorum + 1-of-n sign-off	§11.2	0.00711	27	0.85	IV	ceg	constitution
@@ -248,11 +248,11 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.10	registry-hash	Hash-database operator policy	§11.5	0.00100	220	0.12	IV	ceg	constitution
 4.5.10.1	hash-database	Hash-database access landscape	§11.5.1	0.00103	214	0.12	IV	ceg	constitution
 4.5.10.2	registry-operator	Operator path (default)	§11.5.2	0.00092	244	0.11	IV	ceg	constitution
-4.5.10.3	future	Future hash-coalition path (deferred; awaits CIRIS hash-coalition emergence)	§11.5.3	0.00092	245	0.11	IV	ceg	constitution
+4.5.10.3	future	Future hash-coalition path	§11.5.3	0.00092	245	0.11	IV	ceg	constitution
 4.5.10.4	documents-what-2	What this documents	§11.5.4	0.00092	246	0.11	IV	ceg	constitution
 4.5.11	bootstrap-content	Bootstrap-content pattern	§11.3	0.00097	221	0.12	IV	ceg	constitution
 4.5.12	family-self-2	Self/family membership governance	§11.7	0.00094	230	0.11	IV	ceg	constitution
-4.5.12.1	forward	Forward secrecy on member departure — Option A (default)	§11.7.1	0.00423	55	0.51	IV	ceg	constitution
+4.5.12.1	forward	Forward secrecy on member departure — forward-only (default)	§11.7.1	0.00423	55	0.51	IV	ceg	constitution
 4.5.12.2	envelope-multi	Multi-family membership — envelope `family_id`	§11.7.2	0.00127	178	0.15	IV	ceg	constitution
 4.5.12.3	admission-self	Self-occurrence admission — single-vouch	§11.7.4	0.00097	222	0.12	IV	ceg	constitution
 4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in CC 3.4.4	§11.7.3	0.00092	249	0.11	IV	ceg	constitution
