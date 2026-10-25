@@ -8,4 +8,4 @@
 
 **What it leaves out.** The rows themselves, which are *The Wire* and *The Dictionary*; the authorities whose rows a reader chooses to trust, which is *The Constitution*; and the mathematics of coherence under which the aggregation is analysed, which is *The Mathematics*.
 
-**Where the rest lives.** The consumer verdict contract per policy, the table a reviewer asked for, is an rc9 item and will print here when it exists. Until then each policy's section states its inputs and its output in prose.
+**Where the rest lives.** Each policy's section states its inputs and its output in prose.

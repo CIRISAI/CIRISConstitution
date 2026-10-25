@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "6bee7953250cf59be0b6cf1da94dbe3902a7f538c7c70b5cf3ee8da87fd9b112",
+    "registry_sha256": "0ce5fdc4bf4b987d6345e8f83efd177474e4eb98ee2f53069fd29935b9d468fc",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "066862ad3f6b33eb4b3faa7af852501249f5385a76af6d6733fb6f558c2940e1"
+    "source_sha256": "0e45eb20c086f624ca675e8f3eb437c285beb26339aa43c7855ac855f81c7ef6"
   },
   "families": [
     {
@@ -3349,7 +3349,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1; authority is conferred by quorum, never by delegates_to).",
+      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",

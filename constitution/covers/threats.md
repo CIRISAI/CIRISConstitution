@@ -8,4 +8,4 @@
 
 **What it leaves out.** The ethics, which are *The Charter*, and the composition policies that a consumer applies after the adversary has been accounted for, which are *The Reader's Policies*.
 
-**Where the rest lives.** The conditioned adversary table the rc8 review asked for is an rc9 item. The formal models under `formal/` are the mechanised half of this volume: each names the property it checks and the configurations under which it fails.
+**Where the rest lives.** The formal models under `formal/` are the mechanised half of this volume: each names the property it checks and the configurations under which it fails.

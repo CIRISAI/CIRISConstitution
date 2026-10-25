@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "193afc2109a29c955ac0f54c61aabf540e3d0bcb6ade92f688d732e1da0d1b6f",
+    "source_sha256": "72b8063d484532e0d01a9744c2de89599a587c9d8684ab8fc2706becbf2080f3",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "32512f52",
@@ -457,7 +457,7 @@
         "default": "absent",
         "cc_ref": "2.1 2.6.1.1.1 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "Producer-asserted order, preserved. Above the 1 MiB cap the payload moves to the fountain plane and is named here by content hash."
+        "note": "Producer-asserted order, preserved. Above the 1 MiB cap the payload moves to the blob plane and is named here by content hash."
       },
       {
         "member": "valid_until",
