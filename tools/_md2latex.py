@@ -67,6 +67,8 @@ def inline(s):
     def stash(m):
         codes.append(r'\texttt{' + breakable(m.group(1)) + '}')
         return '\x01%d\x01' % (len(codes) - 1)
+    # an escaped pipe outside a table is a literal bar too (the Parts write `a \| b` in prose)
+    s = s.replace('\\|', '|')
     t = esc(re.sub(r'`([^`]*)`', stash, s))
     # bold first, so its content may hold *italic* or a stashed code span; the closer is the
     # first ** not followed by a third star, so **a *b*** closes after the italic and
@@ -174,6 +176,15 @@ def table(header, rows):
 HEAD = {1:r'\section*{%s}',2:r'\subsection*{%s}',3:r'\subsubsection*{%s}',
         4:r'\paragraph{%s}\mbox{}\\',5:r'\subparagraph{%s}\mbox{}\\',6:r'\subparagraph{%s}\mbox{}\\'}
 
+def block_start(ln):
+    """True when a line opens a block of its own (heading, fence, table row, quote, list item,
+    rule, nav), so a paragraph or list item being gathered stops before it."""
+    t = ln.lstrip()
+    return (t.startswith(('#', '```', '|', '>')) or re.match(r'^[-*]\s+', t) is not None
+            or re.match(r'^\d+\.\s+', t) is not None or re.match(r'^(-{3,}|={3,})\s*$', t) is not None
+            or is_nav(ln))
+
+
 def item_follows(lines, j):
     """True when a numbered item comes after line j with only bullets, blank lines and indented
     lines between: the bullets at j are then a step's sub-points, not a list of their own."""
@@ -258,7 +269,10 @@ def convert(md):
         if re.match(r'^\s*[-*]\s+', line):
             out.append(r'\begin{itemize}\setlength\itemsep{0pt}')
             while i < n and re.match(r'^\s*[-*]\s+', lines[i]):
-                out.append(r'\item ' + inline(re.sub(r'^\s*[-*]\s+','',lines[i]))); i += 1
+                item = [re.sub(r'^\s*[-*]\s+','',lines[i])]; i += 1
+                while i < n and re.match(r'^\s+\S', lines[i]) and not re.match(r'^\s*[-*]\s+', lines[i]) and not block_start(lines[i].strip()):
+                    item.append(lines[i].strip()); i += 1
+                out.append(r'\item ' + inline(' '.join(item)))
                 # a blank line between items does not end the list (the master writes lists both ways)
                 if i + 1 < n and lines[i].strip() == '' and re.match(r'^\s*[-*]\s+', lines[i+1]):
                     i += 1
@@ -301,8 +315,12 @@ def convert(md):
         # blank
         if not line.strip():
             out.append(''); i += 1; continue
-        # paragraph
-        out.append(inline(line)); out.append(''); i += 1
+        # paragraph: consecutive non-blank lines that start no block are one paragraph (the
+        # covers and the stewardship note are hard-wrapped in the source)
+        buf = [line]; i += 1
+        while i < n and lines[i].strip() and not block_start(lines[i]):
+            buf.append(lines[i].strip()); i += 1
+        out.append(inline(' '.join(buf))); out.append('')
     return '\n'.join(out)
 
 # ---------------------------------------------------------------- preamble
