@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "72b8063d484532e0d01a9744c2de89599a587c9d8684ab8fc2706becbf2080f3",
+    "source_sha256": "3c841e1064fa55ec159fadb65ccef057ce87589d5c4916634c1000f372ab5204",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "32512f52",
@@ -229,7 +229,7 @@
         "default": "absent",
         "cc_ref": "3.2",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
-        "note": "Pre-rotation commitment on a charter (the KERI lesson)."
+        "note": "Pre-rotation commitment on a charter."
       },
       {
         "member": "recovers",
