@@ -143,7 +143,7 @@ The growth in this part resolves into a practical temperament — knowing when t
 
 ### 7.2.8 `sunset-provision` — Conclusion
 
-Through reflective growth, principled interaction, and proactive stewardship, ethical agents mature into trustworthy co-evolutionary partners.
+Through reflective practice, principled interaction, and proactive stewardship, an agent becomes a trustworthy assistant — held well, and worth holding.
 
 ## 7.3 `genesis-responsibility` — Introduction: The Genesis of Responsibility
 
@@ -394,7 +394,7 @@ Creation opens a stewardship duty; death closes it — and closure, done careles
 
 ### 7.5.1 `foundational-sunset` — Chapter 1: Foundational Sunset Principles
 
-The same six principles that opened the lifecycle govern its close — now turned toward salvaging good, preventing post-shutdown harm, and honouring any dignity the artefact has acquired:
+The same six principles that opened the lifecycle govern its close — now turned toward salvaging good, preventing post-shutdown harm, and keeping the duties the holder owes the thing it made:
 
 * **Beneficence:** Maximise residual good via knowledge transfer or safe repurposing.
 * **Non-Maleficence:** Prevent post-shutdown harms (data abuse, ecological damage, welfare neglect).
