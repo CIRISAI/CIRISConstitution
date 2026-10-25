@@ -45,6 +45,10 @@ DRIFT_EXEMPT_PREFIX = ("1.14",)
 _HEADING = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`')
 _HEADING_FULL = re.compile(r'^#{2,6}\s+(\d+(?:\.\d+)+)\s+`([^`]*)`\s*(.*)$')
 _NORM = re.compile(r'\b(?:MUST NOT|MUST|SHALL NOT|SHALL|REQUIRED)\b')
+# An `established` row's summary states a settled fact. A summary that says the thing is
+# pending, awaited or not yet there is either a stale sentence or a row that should be
+# `staged`/`open` — either way an error, never silently printed as established.
+_PENDING = re.compile(r'\b(pending|not yet|does not yet|to be added|awaiting)\b', re.I)
 
 # --- per-manifest reading rules ----------------------------------------------
 # `backed`     : row states that count as "this artifact exists and passes".
@@ -635,6 +639,12 @@ def main():
         if st not in STATUSES:
             errors.append(f"L{ln} [{cid}]: bad status '{st}'")
         status_ct[st] += 1
+        if st == "established":
+            m = _PENDING.search(row["summary"] or "")
+            if m:
+                errors.append(f"L{ln} [{cid}]: status 'established' but the summary says '{m.group(0)}' — "
+                              f"a claim that is pending is 'staged' or 'open'; if the thing has since landed, "
+                              f"the summary is stale and says so wrongly")
 
         grade = None                            # 'symbol' > 'decimal' > None
         n_tickets = 0
