@@ -69,7 +69,7 @@ Facts below were gathered 12 October 2026 from vendor policies, model cards, reg
 - One voice: bots were over 53% of web traffic in Imperva's 2026 report. [Imperva](https://community.imperva.com/blogs/tim-chang/2026/05/05/the-2026-bad-bot-report-is-here) Meta actioned about 1.1 billion fake Facebook accounts in Q4 2025 and estimates 4% of monthly users are fake. [UK Parliament submission](https://committees.parliament.uk/publications/53679/documents/299534/default/), [Social Media Today](https://www.socialmediatoday.com/news/meta-content-enforcement-widely-viewed-content-report-q2-2025/758814/)
 - I found no vendor or platform with published first-contact rules for a non-human party.
 
-## Promise 7. An agent decides by published principles, in a published order, and stops to ask when it is unsure
+## Promise 7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure
 
 - OpenAI's Model Spec (18 August 2026) publishes a chain of command: Root, then System (OpenAI), Developer, User, Guideline. "When two root-level principles conflict, the model should default to inaction." Agents act within "an agreed-upon scope of autonomy", and the spec warns that too many confirmations "could habituate the user to automatically confirming all requests." [OpenAI Model Spec](https://model-spec.openai.com/2026-08-18.html)
 - Anthropic's constitution (21 January 2026, CC0) orders conflicts: broadly safe, broadly ethical, compliant with Anthropic's guidelines, genuinely helpful. [Anthropic](https://www.anthropic.com/constitution)

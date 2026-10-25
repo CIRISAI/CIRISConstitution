@@ -1,6 +1,6 @@
 # The Charter
 
-**What this is.** The ethics of the CIRIS Constitution, printed on their own: the meta-goal, the six principles and the order they are weighed in, the lifecycle of an agent from creation to retirement, and the narrative that explains why the rest of the document is written the way it is. It is Part 1 without the admission gate and the threat table, Part 7, and the narrative appendix.
+**What this is.** The ethics of the CIRIS Constitution, printed on their own: the meta-goal, the six principles — co-equal constraints, a violation of any one unacceptable — and the rule by which a conflict between them is met, the lifecycle of an agent from creation to retirement, and the narrative that explains why the rest of the document is written the way it is. It is Part 1 without the admission gate and the threat table, Part 7, and the narrative appendix.
 
 **Whom it binds.** Anyone who adopts it. A charter binds by adoption, not by conformance: an implementer can disagree with every page of this volume and still ship a conforming node, because conformance is judged against the wire and the dictionary alone. The people this volume speaks to are accord holders, stewards, ethicists and the public.
 

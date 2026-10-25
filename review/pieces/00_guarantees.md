@@ -36,7 +36,7 @@ The register is read through eleven promises; every row below keeps one of them,
 | 4. Named humans can pause every agent; the power is bounded, public, escapable by leaving | G7, G10 |
 | 5. The people who hold an agent owe duties about how they change or end it; no finding gives the agent a claim | G15, G16, G17, G19, G21, G22, G23 |
 | 6. Nobody is banned, nobody is ranked by what they are, every thinking being is met by the first-contact rules | G6 (no-ban half), G12 |
-| 7. An agent decides by published principles, in a published order, and stops to ask when unsure | G24 |
+| 7. An agent decides by published principles, none of which it may trade away, and stops to ask when unsure | G24 |
 | 8. Harm has a remedy, and the judges are judged | G25 |
 | 9. Some uses are never allowed, and force has its own rules | G26 |
 | 10. What an agent and its node consume is measured, weighed before an act, and never hidden | G27 |

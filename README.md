@@ -16,7 +16,7 @@ The network exists to protect ordinary people from three things: being spoken fo
 4. Named humans can pause every agent under a root; the power is bounded, public, and left by leaving.
 5. The people who hold an agent owe duties about how they change or end it; no finding gives the agent a claim.
 6. No hand bans a community, nobody is ranked by what they are, and every thinking being is met by the first-contact rules.
-7. An agent decides by published principles, in a published order, and stops to ask when it is unsure.
+7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure.
 8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.
 9. Some uses are never allowed, and force has its own rules.
 10. What an agent and its node consume is measured, weighed before an act, and never hidden.
