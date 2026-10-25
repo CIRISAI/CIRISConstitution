@@ -126,8 +126,8 @@ From the philosophy: Meta-Goal M-1, the promotion of sustainable adaptive cohere
 
 From the philosophy: a philosophy that cannot be enforced is a mood, and enforcement needs a wire that holds.
 
-11a. Every link and every record is encrypted end to end with hybrid post-quantum keys, the key rotates when a member leaves, and a removed member cannot read what comes after. *[works today; G28]*
-11b. Nobody can forge another's act, a producer cannot show two viewers two histories, and a founder cannot fork a lineage silently; an equivocation is a named hard case on the record, never a silent first-seen fork. *[works today where a lineage runs witnessed; the shipped roots run with witnessed mode off]*
+11a. Every link and every record is encrypted end to end with hybrid post-quantum keys, a removed member cannot read what is written after they leave and keeps what they already received. *[works today; G28]*
+11b. Nobody can forge another's act, a producer cannot show two viewers two histories of an accountable stream, and a founder cannot fork a witnessed lineage silently; an equivocation is a named hard case on the record, never a silent first-seen fork. *[works today on accountable streams and where a lineage runs witnessed; a best-effort stream has a producer-signed root only; the shipped roots run with witnessed mode off until it is turned on]*
 11c. The adversary model is published together with what it does not cover, and nobody may represent the network as providing more: who talks to whom, traffic patterns, a global passive observer, and a compromised member's key are not covered (N3). *[a rule, no code yet; CC 1.13.3]*
 11d. Software is verified against a registered build before it runs, a node refuses what it cannot verify, a rollback is detected and recorded, and a failed update can be rolled back. *[works today; attestation ladder, G28]*
 11e. Attack is rehearsed on a cadence by people who did not write the code, findings are disclosed under published rules, and a published robustness gate decides a release. *[a rule, no code yet]*
