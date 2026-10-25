@@ -52,7 +52,7 @@ CLASSES = {
     "history": [
         (r"\brc\d+\b|\bRC\d+-\d|\bRC\d+\b|1\.0-RC\d+", r"1\.0-rc1[01]\b"),
         (r"\bv1\.4 T-3|\bPhase [A-E]\b|\bOption [AB]\b|\(LIVE\)|already-rejected|next generation of authors|downstream-demand-driven|recommended for v1\b|deferred to 1\.1", None),
-        (r"\bdeprecated\b|\bDEPRECATED\b|\blegacy\b|\bLegacy\b", r"Legacy label, closed|legacy_ref|legacy unprefixed"),
+        (r"\bdeprecated\b|\bDEPRECATED\b|\blegacy\b|\bLegacy\b", r"Legacy label, closed|legacy_ref|legacy unprefixed|Legacy & Knowledge|6-legacy|agent's legacy|its legacy"),
         (r"\bAs shipped\b|as of rc|at rc\d|at re-pin|re-pin \d|steward ruling|steward direction|operator ruling|ruled \d{4}|ruling on #|ruling 20\d\d", None),
         (r"not yet (?:built|shipped|published|installed|wired)|is an rc\d+ item|will print here", None),
     ],
