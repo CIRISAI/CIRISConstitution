@@ -991,7 +991,6 @@
     "not-translated": "12.3",
     "decision": "12.4",
     "anti-pattern": "13",
-    "already-rejected": "13.1",
     "registry-rejections": "13.2",
     "anti-pattern-delegation": "13.3",
     "withdraws-arbitrage": "13.4",
@@ -1316,7 +1315,8 @@
     "substrate": "19",
     "census": "cc:6.1.9",
     "signed-object": "cc:2.6.1.7",
-    "self-roster": "cc:3.3.6.3"
+    "self-roster": "cc:3.3.6.3",
+    "rejected-additions": "13.1"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1430,7 +1430,7 @@
     "12.3": "not-translated",
     "12.4": "decision",
     "13": "anti-pattern",
-    "13.1": "already-rejected",
+    "13.1": "rejected-additions",
     "13.2": "registry-rejections",
     "13.3": "anti-pattern-delegation",
     "13.4": "withdraws-arbitrage",
