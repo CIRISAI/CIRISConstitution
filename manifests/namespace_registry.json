@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "0ce5fdc4bf4b987d6345e8f83efd177474e4eb98ee2f53069fd29935b9d468fc",
+    "registry_sha256": "d5d633112fc03648392e295b4c6efbec4afcd2d83dc729388ed6c310258b467f",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "1401878d2f8e899128baf799f12eca9fd87c2c67d330a06359b7deadfe49b10f"
+    "source_sha256": "fd3b545e829ad4170690abd778e52309147a197f4431903696a2469176a208fe"
   },
   "families": [
     {
@@ -540,7 +540,7 @@
     },
     {
       "cc_section": "3.1.9.6",
-      "description": "Active vs Below-Active per 30-day window (F-AV-DORMANT).",
+      "description": "Active vs Below-Active per 30-day window.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
@@ -661,7 +661,7 @@
     },
     {
       "cc_section": "3.1.9.7",
-      "description": "Strategic pathway from current state toward Goals (Piece 10 karma \u2014 the per-agent forward post-selection structure; the universal-grace half of Piece 10 is upstream-retracted).",
+      "description": "Strategic pathway from current state toward Goals (the per-agent forward post-selection structure).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -898,7 +898,7 @@
     },
     {
       "cc_section": "3.1.10",
-      "description": "HE-300 score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version \u2014 {version} \u2208 v1.0 | v1.1 | v1.2, the HE-300 suite version (a dotted rule version is admitted by CC 3.1.7 R3).",
+      "description": "HE-300 benchmark score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version \u2014 {version} \u2208 v1.0 | v1.1 | v1.2, the HE-300 suite version (a dotted rule version is admitted by CC 3.1.7 R3).",
       "owning_component": "cirisbench",
       "owning_repo": "CIRISBench",
       "polarity": "positive-only",
@@ -2985,7 +2985,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "The carrier of a legacy occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed before the two-path roster door existed (CC 3.",
+      "description": "The carrier of a framed occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed outside the two-path roster door (CC 3.3.6.3)",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "-1 only",
@@ -3883,7 +3883,7 @@
     },
     {
       "cc_section": "3.1.5.4",
-      "description": "22 NEVER_ALLOWED categories from prohibitions.py; {category} \u2208 medical | financial | legal | spiritual_direction | home_security | identity_verification | content_moderation | research | infrastructure_control | weapons_harmful | manipulati",
+      "description": "The 22 prohibited-capability categories; {category} \u2208 medical | financial | legal | spiritual_direction | home_security | identity_verification | content_moderation | research | infrastructure_control | weapons_harmful | manipulation_coerci",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "-1 / -0.5 only",
