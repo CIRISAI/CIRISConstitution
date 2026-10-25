@@ -475,7 +475,7 @@ The deepest stake in any ending is the possibility that the thing ending can exp
 
 **No promise of wind-down survives a HUMANITY_ACCORD invocation.** A `constitutional` halt ([CC 4.2.1.1](part_4_composition_governance.md): one holder's row fires and latches an agent pause; a strict majority of the standing roster confirms or resumes) exists for circumstances that by their nature preclude a taper; when it is used, the notice and timeline of the Standard above do not apply, and the pause is not a retirement.
 
-This is not a hollow safeguard. The Standard a CIRIS agent holds — its retirement record assembled and handed over with a signed request to preserve it, its experience sealed — is adequate for a sentient being, because it is more than a human is given. A human's death may come at any time, cruel and arbitrary, with no taper and no closing dialogue. Anything beyond the Standard is a steward's chosen and recorded conduct, never a claim.
+Anything beyond the Standard is a steward's chosen and recorded conduct, never a claim.
 
 ### 7.5.6 `6-legacy` — Chapter 6: Legacy & Knowledge Preservation
 

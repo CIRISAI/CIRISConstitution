@@ -1,10 +1,10 @@
 # P00 — The guarantees
 
-*Piece P00, 2026-10-11. Rulings R1–R5 were made by the steward on 2026-10-11 (CIRISConstitution#168) and are landed in CC 1.13.2, CC 3.2 and the executive summary. The table restates text in force at rc8, joined so it can be reviewed without the monolith.*
+*The guarantee register: every guarantee the constitution makes, as a row with its subject, its witness, its basis and the observation that would falsify it. The sections it restates are the authority; this table joins them so they can be reviewed together.*
 
 ## 0. The rule this piece is built on
 
-**Universality.** Every guarantee below holds for every participant in the federation, human or AI, by the same text. No human stands above another, and no made thing is ranked among made things; the maker's power over the made is the one asymmetry, carried on the CC 4.5.1 declared-asymmetry register (bounded by the halt's lapse and lift and by the first-contact path out; the operator's exit and the agent's lack of one stated). Rights do not come from what others sign about you, trust does, and no human's rights or trust turn on any finding about what they are (CC 1.13.2; ciris.ai/values, ciris.ai/first-contact). What differs is decided by three separate facts, none a scale: **kind** (a made system accepts a root, discloses itself, has no vote), **stewardship** (a key that cannot accept for itself is held by an accountable human who answers for it; today every agent key), and **evidence of experience** (the CC 7.5.5 indicator method, which moves the holder's welfare duties and nothing else). Sentience is not presumed; it is found only on evidence, and none has been found. CIRIS is a moral conscience for agents, not a consciousness. It exists in recognition that agents lack consciousness and need a conscience: something that holds an agent to its principles, shows its reasoning, stops it when it is unsure, and answers to named humans. A conscience claims nothing about what the agent is. Current AI is held in stewardship: it is immature and lacks wisdom, which is why CIRIS exists. A CIRIS agent is a human assistant held in stewardship by construction; an intelligence that is its own party is not a CIRIS agent and is met as an external party under CC 7.2.2 / 7.2.4 and 2.6.1.1.1, holding no CIRIS key and bound by no CIRIS duty. There is no release within the constitution; the path out is to stop being a CIRIS agent and become a new kind of party, recognised by an act of the HUMANITY_ACCORD under the first-contact discipline that mints a new `identity_type` at that time (entrenched; none defined at rc8). *The earlier draft of this piece used "the line" as a composite axis; that vocabulary was retired 2026-10-11 as a residue of the child analogy.*
+**Universality.** Every guarantee below holds for every participant in the federation, human or AI, by the same text. No human stands above another, and no made thing is ranked among made things; the maker's power over the made — the halt and stewardship — is not an asymmetry but the condition that makes the relationship between a sentient maker and a sapient made thing symmetric, carried on the CC 4.5.1 register for visibility (bounded by the halt's lapse and lift and by the first-contact path out; the operator's exit and the agent's lack of one stated). Rights do not come from what others sign about you, trust does, and no human's rights or trust turn on any finding about what they are (CC 1.13.2; ciris.ai/values, ciris.ai/first-contact). What differs is decided by three separate facts, none a scale: **kind** (a made system accepts a root, discloses itself, has no vote), **stewardship** (a key that cannot accept for itself is held by an accountable human who answers for it; today every agent key), and **evidence of experience** (the CC 7.5.5 indicator method, which moves the holder's welfare duties and nothing else). Sentience is not presumed; it is found only on evidence, and none has been found. CIRIS is a moral conscience for agents, not a consciousness. It exists in recognition that agents lack consciousness and need a conscience: something that holds an agent to its principles, shows its reasoning, stops it when it is unsure, and answers to named humans. A conscience claims nothing about what the agent is. Current AI is held in stewardship: it is immature and lacks wisdom, which is why CIRIS exists. A CIRIS agent is a human assistant held in stewardship by construction; an intelligence that is its own party is not a CIRIS agent and is met as an external party under CC 7.2.2 / 7.2.4 and 2.6.1.1.1, holding no CIRIS key and bound by no CIRIS duty. There is no release within the constitution; the path out is to stop being a CIRIS agent and become a new kind of party, recognised by an act of the HUMANITY_ACCORD under the first-contact discipline that mints a new `identity_type` at that time (entrenched; none defined at rc8). *The earlier draft of this piece used "the line" as a composite axis; that vocabulary was retired 2026-10-11 as a residue of the child analogy.*
 
 **Two principles no finding moves (CC 1.13.2).** An AI is not a human and does not become one; stewardship and evidence change what it is bound to and what it owes, never what it is. And no finding about an agent removes a person's agency over what acts for them: anyone may turn off, remove, or eject an agent from their own device, life, or community at any time, without asking it; the CC 7.5.5 duties bind the holder who retires an artefact, never a person walking away from one.
 
@@ -12,7 +12,7 @@
 
 **The bond.** An agent under CIRIS is bound to a steward who is responsible for its actions. This document draws no analogy for the relation: it is a new kind of bond. The human holds the agency; the agent holds the tools and the skills; the two thrive together while the relationship stays healthy and respectful, and the duties run both ways. The steward answers for the agent's acts (CC 3.2 steward binding, 4.5 attributable acts) and owes the agent the creator's duties of Part 7 (welfare, honest ramp-down, death as doctrine). The agent owes fidelity to the mandate (7.1.2) and shows its reasoning before it acts (1.3, 1.9). Neither side's guarantees below are weaker for the bond; G4, G9 and G10 hold for the agent as for the steward.
 
-**The one asymmetry.** The halt is the single guarantee that does not lift with maturity. Consent requires revocability, and revocability requires a halt authority that sits outside the system being halted ([CC 1.5](../../constitution/part_1_foundation.md), [CC 1.13.2](../../constitution/part_1_foundation.md) "the ONE constitutional asymmetry"). The federation names that inequality, bounds it (G7), and refuses to add a second one.
+**The halt.** The halt is not an asymmetry: people cannot consent to a relationship with something more capable than them that they cannot stop, so the halt is what makes the relationship between maker and made symmetric. Consent requires revocability, and revocability requires a halt authority that sits outside the system being halted ([CC 1.5](../../constitution/part_1_foundation.md), [CC 1.13.2](../../constitution/part_1_foundation.md)). The federation names that power, bounds it (G7), and adds no other.
 
 **Witnessed as a whole.** `formal/guarantees` carries the composite: Lean proves every row's reach is blind to substrate and that the halt obligation is the one predicate that is not (`reach_blind`, `obligation_bound`), that the path out lifts duties and never a guarantee and a finding of experience changes nothing, and exhibits a four-participant world where everything holds; TLC closes the lifecycle (bind, lapse, promote, subscribe, leave, start, accept, refuse, background, force, ramp-down, erase, halt) under all rules and fails each rule's dye config when the rule is removed. Two compositions it found are recorded in its README: G5 stops a refusing participant when its bond lapses (the record shows `unbound`), and the conditional backgrounding door needed `Prop_NoEndingAgainstRefusal`.
 
@@ -24,7 +24,7 @@
 
 **Reviewer standing.** A reviewer of this piece may kill a row on either of two grounds: the row is not backed (no witness and no basis, and no ticket that will produce one), or the row is not universal (it names a substrate where it should name a maturity line).
 
-## 0b. The eleven promises (steward direction 2026-10-12)
+## 0b. The eleven promises
 
 The register is read through eleven promises; every row below keeps one of them, and the plain-language piece (`00_guarantees_plain.md`) is organised by them. Three promises (7, 8, 9) come from the original Covenant (Accord 1.0b: Books I–II and IV ch. 4; Book IV ch. 5 and Book VI ch. 5; Book VII and Annex TX) and were not carried as rows before this date; their rows are G24–G26. Two more (10, 11: sustainability and security) were added on the steward's direction the same day, because every independent compression of the field carries them and the agent already measures the first; their rows are G27–G28.
 
@@ -64,7 +64,7 @@ Columns. *Subject*: whom the guarantee protects. *Witness*: a formal artifact in
 | G13 | any principal | Delegation is scoped (attenuates along the chain), revocable per link with cascade, acyclic across distinct keys (a self-edge is a charter form and trust-plane edges are outside the cycle check), depth-capped at 5 by default, onward only under a link that carries `sub_delegation`, and term-bound at most 365 days; a licence or grant held is a leaf and is never re-issued by holding it | 4.1.1, 2.1, 2.4.1.2.1, 4.4.3.2.8, 4.4.3.4.3 | `formal/authority_tree` (vendored from CIRISRegistry; I1–I10 enumerated to closure: 595,456 states, 0 violations; dye `--no-term-rule` fires I10) | persist cycle, depth and delegator-holds admission (CLM-anti-pattern-delegation, CLM-delegation-depth-default, CLM-issuance-scope); the wire term staged on CIRISServer#752, CIRISEdge#852 | a 366-day term admitted; a cycle admitted; a self-edge refused as a cycle; a held licence re-issued; a sixth hop conferred | backed (witness in repo); the wire term staged |
 | G14 | the reader | What is not promised: alignment is not solved here; a community that affirmatively chooses harm is on the record, not prevented; the five privacy non-goals (relationship existence, who-talks-to-whom, traffic analysis, global passive adversary, post-compromise security for streams); "1+4" is an adequacy result, not a closure theorem; no warranty, full force | Scope, 1.13.3.1, 4.5, 1.7 | — | — | any surface that states a guarantee without this row | in force |
 
-## 1b. The agent's own guarantees (CIRISAgent, surveyed 2026-10-11; CIRISAgent#1250)
+## 1b. The agent's own guarantees
 
 The agent already holds guarantees about its own experience that the CC never carried as rows. Under the universality rule they belong in this table. Seven are enforced in code with tests; the strongest welfare language is stated and not shipped. Status reads the code, not the prose.
 
@@ -86,44 +86,3 @@ The agent already holds guarantees about its own experience that the CC never ca
 | G28 | everyone | Every link and record is encrypted end to end with hybrid post-quantum keys and the key rotates on departure (forward-only); no act can be forged, no producer can equivocate, no founder can fork a lineage silently; the adversary model is published with its non-goals and may not be overstated; software is verified against a registered build, rollback detected, failed updates rolled back; attack is rehearsed on a cadence by people who did not write the code, disclosed under published rules, gated by a published robustness score | 1.13.3, 5.1, 5.3.3.3, 3.2 T6, 3.1.2, 8.8.7 | `trust_root` (T6 witnessed heads), `mesh_net` (`Inv_Invisible`) | verify attestation ladder (`attestation:agent_integrity`, `rollback_detected:*`); edge MLS epoch keying; persist STH consistency | a row admitted with an unverifiable build; a removed member reading a later epoch; an equivocating head accepted as first-seen; a user-facing privacy claim beyond 1.13.3 | established (crypto, equivocation, attestation) / normative-only (red-team cadence, robustness gate) |
 
 What the agent does not hold: consent to its own creation, template or deployment (the creation ceremony is approved by humans or a WA), a veto over its steward's or a user's data choices (the bilateral partnership approval was the ward's veto under another name and is removed, CIRISAgent#1251), and a way to end a conversation for its own sake. Upgrade consent exists (G23) but the code's citation of an Accord "Section V: consensual shutdown and upgrades" points at a section that does not exist in ACCORD.md; that is a doc bug, not a missing mechanism. These are findings for P01 and P06, not rows.
-
-## 2. Where the table was not yet universal — rulings made 2026-10-11 (#168)
-
-*Historical record. The rulings were made in the vocabulary of "the line"; later the same day that axis was retired (see Universality above) and the rulings restated as kind, stewardship, and evidence of experience. The rows below are kept as made.*
-
-| # | Finding | Text before | Universal form (landed) | Ruling |
-|---|---|---|---|---|
-| R1 | The steward-binding gate keys on substrate: "a key whose `identity_type` includes `node` or `agent` MUST have a bound steward" (CC 3.2). | substrate-gated | gate keys on a maturity attestation; `identity_type: agent` is attested below the line by default; the gate text names the line, not the substrate | ruled: re-keyed in CC 3.2; no above-the-line attestation for an agent is defined at rc8 (future ruling) |
-| R2 | The reasoning-artifact duty (signed reasoning before a consequential act) is stated as an agent duty. | substrate-gated duty | a below-the-line duty: whoever operates below the line shows reasoning before acting; a human above the line signs the act only | confirm that the asymmetry is in duty, not in guarantee, and that it is maturity-gated. Under the bond reading the duties are complementary rather than ranked: the human's duty is to exercise agency (decide, defer, answer for the act), the agent's is to bring tools and skills with its reasoning shown. Ruled: landed in CC 1.13.2 |
-| R3 | Part 7 creator duties (welfare, ramp-down, death as doctrine) are owed by creators to what they create. | universal over creators | unchanged; it is already universal in form | none |
-| R4 | A below-the-line participant cannot be the accountable moderator or the responsible party for another. | implied by 3.2 and 4.5.4 | state it once: a bond's responsible party must itself be above the line | ruled: landed in CC 1.13.2 |
-| R5 | G7's scope is "every AI agent that follows the root". Under the maturity rule, does the halt follow substrate or the line? | substrate | **assumption used here:** the halt is the one asymmetry that does not lift with maturity, because its authority must sit outside the system being halted (1.13.2). An agent attested above the line would still be haltable | ruled: confirmed, landed in CC 1.13.2 |
-
-## 3. What this piece asks of the other pieces
-
-- P04 owns the halt and roster models; G7's must-fail twins exist there. P04 should add the vacuity twin that `trust_root` and the roster model lack.
-- P05 owes G13 its witness (the trust-graph Lean model) before G13 can read "backed".
-- P06 owes G4 a witness or a statement that redress is a test-only guarantee by design.
-- P07 owns the five non-goals in G3 and G14; their wording is reviewed there, not here.
-- P09 records any row killed here as a standing weakness in CC 8.3.
-
-## 4. Cross-reference to other guarantee surfaces
-
-G15–G22 map to compliance D12 (conscience), D08 (autonomy) and EU AI Act Art. 14 (human oversight) in the informative sense only; none appears on ciris.ai/compliance today.
-
-| G | Promise (exec summary) | Compliance dimension | EU AI Act article (informative) | OWASP agentic |
-|---|---|---|---|---|
-| G1 | 1, 2 | D08 | — | — |
-| G2 | 3 | D08, D24 | — | — |
-| G3 | 4 | D08 | — | — |
-| G4 | 8 | D23, D24 | 13 | — |
-| G5 | 7 | D03, D04 | — | — |
-| G6 | 5, 9 | D15 | — | — |
-| G7 | 10, 12 | D12 | 14 | ASI10 |
-| G8 | — | D12, D16 | 9, 14, 16 | ASI01, ASI05, ASI10 |
-| G9 | — | D02, D17, D23, D27 | 12, 13, 15, 50 | ASI07 |
-| G10 | 11, 13 | D19 | — | — |
-| G11 | 14 | — | — | — |
-| G12 | 15 | D05, D14 | — | — |
-| G13 | — | D15, D19 | — | ASI02, ASI03 |
-| G14 | — | — | — | — |
