@@ -33,7 +33,7 @@ B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "λ": r"$\lambda$", "κ": r"$\kappa$", "ℝ": r"$\mathbb{R}$",
               "∉": r"$\notin$", "∅": r"$\emptyset$",
               "": r"$\bar{\rho}$"})   # placeholder for ρ̄ (ρ + combining macron); see prefilter()
-B.CODE_ASCII.update({"├": "+", "└": "+", "⟶": "-->"})
+B.CODE_ASCII.update({"├": "+", "└": "+", "⟶": "-->", "\ue000": "rho_bar"})   # ρ̄ in a formula block
 nuc_lines = "\n".join(r"\newunicodechar{%s}{%s}" % (k, v) for k, v in B.NUC.items())
 
 VERSION = (HERE / "VERSION").read_text(encoding="utf-8").strip()
@@ -64,16 +64,32 @@ def evidence_appendix_md():
            "implementation, or an acknowledged **open** gap. The tag vocabulary and the four-artifact "
            "convention are defined in `constitution/EVIDENCE.md`; consistency (evidence pointers, the "
            "dual-ID spine, and normative coverage) is machine-checked by `tools/check_claims.py` as a CI gate.\n",
-           f"**{len(rows)} claims** — established {st['established']} · staged {st['staged']} · open {st['open']}. "
+           f"**{len(rows)} claims** — established {st['established']} · staged {st['staged']} · "
+           f"normative {st['normative']} · open {st['open']}. "
            "Cross-repo pointers resolve against the pinned sibling spec-map manifests.\n",
            "| CC | Claim | Evidence | Status |",
            "|---|---|---|---|"]
     for r in rows:
-        summ = r["summary"].replace("|", "/")
-        if len(summ) > 66: summ = summ[:64].rstrip() + "…"
+        summ = provenance_stripped(r["summary"]).replace("|", "/")
         ev = r["evidence"].replace("|", "/")
         out.append(f"| {r['decimal_id']} | {summ} | {ev} | {r['status']} |")
     return "\n".join(out)
+
+
+# A claim summary in claims.tsv may carry the history of its own minting -- "(designated via
+# CC#67; persist-shipped)", "(agent v-major evidence pack; designated in bulk, ...)", "(CEG 0.8
+# addition)", "(1.0-RC4, ...)", "amended rc7, #139" -- which is register bookkeeping, not the
+# claim. The printed register drops it; the TSV keeps it.
+PROVENANCE = [
+    re.compile(r"\s*\((?:designated via|designated in|persist-designated|minted for|agent v-major|CEG \d|1\.0-RC\d|added rc|new in rc|since rc)[^)]*\)"),
+    re.compile(r",?\s*amended rc\d+(?:,\s*#\d+)*"),
+]
+
+
+def provenance_stripped(summary):
+    for rx in PROVENANCE:
+        summary = rx.sub("", summary)
+    return re.sub(r"\s+([,.:;])", r"\1", summary).strip()
 
 
 def contents_md():
@@ -99,6 +115,8 @@ def preamble(title="The CIRIS Constitution", subtitle=None):
 \usepackage{newunicodechar}
 \usepackage{amssymb,amsmath}
 \usepackage{longtable,array,booktabs}
+\usepackage{pdflscape}
+\usepackage{needspace}
 \usepackage{listings}
 \usepackage{xcolor}
 \definecolor{accent}{HTML}{2a4d69}
@@ -109,7 +127,8 @@ def preamble(title="The CIRIS Constitution", subtitle=None):
 \titleformat{\subsubsection}{\normalsize\bfseries}{}{0pt}{}
 \titlespacing*{\section}{0pt}{16pt}{8pt}
 \lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible,
-        keepspaces=true,frame=leftline,framerule=1pt,rulecolor=\color{accent!40},
+        keepspaces=true,upquote=true,literate={~}{{$\sim$}}1,
+        frame=leftline,framerule=1pt,rulecolor=\color{accent!40},
         backgroundcolor=\color{accent!4},xleftmargin=8pt,aboveskip=6pt,belowskip=6pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
 \linespread{1.05}
@@ -364,7 +383,9 @@ def volume_md(vol):
 
 
 def build_volume(vol):
-    body = [preamble(f"The CIRIS Constitution: {VOLUME_TITLE[vol]}", f"A volume of edition {VERSION}")]
+    # the volume named for the whole is not "The CIRIS Constitution: The Constitution"
+    title = "The CIRIS Constitution" if vol == "constitution" else f"The CIRIS Constitution: {VOLUME_TITLE[vol]}"
+    body = [preamble(title, f"{VOLUME_TITLE[vol]}, a volume of edition {VERSION}")]
     for md in volume_md(vol):
         body.append(B.convert(prefilter(md)))
         body.append(r"\clearpage")
