@@ -57,6 +57,11 @@ def inline(s):
     t = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\\textit{\1}', t)
     return re.sub('\x01(\\d+)\x01', lambda m: codes[int(m.group(1))], t)
 
+def split_row(line):
+    """A table row's cells. An escaped pipe (\\|) is a literal bar inside a cell, not a
+    column break: the registry tables write closed vocabularies as `a \\| b \\| c`."""
+    return [c.strip().replace('\x02', '|') for c in line.strip().replace('\\|', '\x02').strip('|').split('|')]
+
 NAV = re.compile(r'^\[.←.*\]\(.*\)\s*\|.*\|.*\)\s*$|^\[←|Next:.*→')
 def is_nav(line):
     return bool(re.search(r'\]\(\d\d_.*\.md\)', line)) and '|' in line
@@ -89,10 +94,10 @@ def convert(md):
             out.append(HEAD[lvl] % txt); out.append(''); i += 1; continue
         # table: header row '|...|' followed by separator '|---|'
         if line.strip().startswith('|') and i+1 < n and re.match(r'^\s*\|[\s:|-]+\|\s*$', lines[i+1]):
-            header = [c.strip() for c in line.strip().strip('|').split('|')]
+            header = split_row(line)
             ncol = len(header); i += 2; rows = []
             while i < n and lines[i].strip().startswith('|'):
-                cells = [c.strip() for c in lines[i].strip().strip('|').split('|')]
+                cells = split_row(lines[i])
                 cells = (cells + ['']*ncol)[:ncol]
                 rows.append(cells); i += 1
             # column widths follow content: each column's share is the square root of its
