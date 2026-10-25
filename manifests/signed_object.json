@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "3c841e1064fa55ec159fadb65ccef057ce87589d5c4916634c1000f372ab5204",
+    "source_sha256": "7bb095fe60e2acfb28ea139fa52c490af3672ede3e63ce1a2f50ca0a2ce559bf",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "32512f52",
@@ -142,10 +142,10 @@
         "type": "cohort-scope",
         "array_kind": "-",
         "presence": "REQUIRED",
-        "default": "federation",
+        "default": "-",
         "cc_ref": "2.3.3 5.2",
         "impl": "src/federation/envelope.rs#RowMirror",
-        "note": "Closed set of seven. The one mirror member a placement-touching re-sign may narrow; it may never be re-authored."
+        "note": "Closed set of seven. No wire default: the member is required. The authoring default is the smallest scope (CC 1.13.3.4). The one mirror member a placement-touching re-sign may narrow; it may never be re-authored."
       },
       {
         "member": "row.weight",
@@ -1330,10 +1330,10 @@
         "type": "cohort-scope",
         "array_kind": "-",
         "presence": "REQUIRED",
-        "default": "federation",
+        "default": "-",
         "cc_ref": "2.3.3",
         "impl": "src/federation/admission.rs#check_row_column_binding",
-        "note": "Equals row.cohort_scope."
+        "note": "Equals row.cohort_scope. No wire default; the authoring default is the smallest scope (CC 1.13.3.4)."
       },
       {
         "member": "attestation_envelope",

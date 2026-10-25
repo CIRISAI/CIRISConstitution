@@ -820,8 +820,8 @@ The minor-guardianship relation below is the analogous single-valued **user-targ
 
 - **`node`** (infrastructure) — steward + `infra:*` reach only, **never agency**; admitted under the steward-binding gate above ([CC 3.2](part_3_the_namespace.md)) **unchanged**.
 - **`agent`** (a key with a brain) — partnership and agency *under* stewardship; the agent retains its constitutional autonomy and dignity ([CC 1.13.2](part_1_foundation.md)); admitted under the steward-binding gate above **unchanged**.
-- **`user`-as-minor** (a child) — a guardian stewards the minor, per the guardianship rule below.
-- **`user`-as-adult** — **self-sovereign and un-stewardable**: no steward-binding whose target is a self-sovereign adult is ever admissible. You never steward a node, an agent, or a person as a possession. You are responsible *for* a node or an agent you root. A parent is responsible for a child under [CC 3.4.13](part_3_the_namespace.md), a different relation this document does not liken to stewardship. An adult answers only for themselves.
+- **`user`-as-minor** (a child) — a guardian holds the minor's binding, per the guardianship rule below. The row and the gate are the same as for a node or an agent: a `user → key` steward-binding that `is_steward_bound` folds. The duty it carries is the guardian's under their own law ([CC 3.4.13](part_3_the_namespace.md)), not an operator's.
+- **`user`-as-adult** — **self-sovereign and un-stewardable**: no steward-binding whose target is a self-sovereign adult is admissible except under the adjudicated-incapacity basis of [CC 3.4.12](part_3_the_namespace.md). You never steward a node, an agent, or a person as a possession. You are responsible *for* a node or an agent you root. An adult answers only for themselves.
 
 **Guardianship rule (normative).** An under-18 `user` identity **MUST** have a **live steward-binding** — a non-superseded, non-withdrawn `delegates_to(adult-user → minor-user)` ([CC 2.4.1](part_2_the_grammar.md)) — from an over-18 `user` identity at all times. **No minor `user` identity operates without a live adult steward.** The adult is the `attesting_key_id` of the `delegates_to`; **its signature on that envelope IS the agreement-to-stewardship** — the explicit act by which the guardian consents to be the accountable responsible party for the minor. Guardianship is **transferable and revocable** through the existing structural composers, with **no new primitive**: a new guardian's `delegates_to` carried as a `supersedes` ([CC 2.4.1.1](part_2_the_grammar.md)) replaces the prior binding; a `withdraws` ([CC 2.4.1.1](part_2_the_grammar.md)) by the current steward (or by a subject with revocation authority over the binding) ends it. A minor whose steward-binding goes non-live (superseded-without-replacement or withdrawn) is **steward-less and MUST NOT operate** until re-stewarded — fail-secure, identical in posture to a steward-less `node`/`agent`.
 
@@ -838,7 +838,7 @@ admit_user_steward_binding(delegates_to S -> T):
   otherwise REJECT
 ```
 
-The age band is the I1 band (`age_self_declared` / `age_assurance:*`, [CC 3.3.12](part_3_the_namespace.md); `minor` < 18 / `adult` ≥ 18). A user-target binding where `T` is an adult is **rejected unconditionally** — the un-stewardable case above. A user-target binding where `S` is a minor, or where the agreeing signer is not the steward, is rejected. `node`/`agent`-target admission is governed solely by the steward-binding gate above and is **not affected** by this rule.
+The age band is the I1 band (`age_self_declared` / `age_assurance:*`, [CC 3.3.12](part_3_the_namespace.md); `minor` < 18 / `adult` ≥ 18). A user-target binding where `T` is an adult is **rejected except under the adjudicated-incapacity basis of [CC 3.4.12](part_3_the_namespace.md)** — the un-stewardable case above, with its one aperture. A user-target binding where `S` is a minor, or where the agreeing signer is not the steward, is rejected. `node`/`agent`-target admission is governed solely by the steward-binding gate above and is **not affected** by this rule.
 
 **Why this is still 1+4.** Minor stewardship adds **zero new structural primitives**: the binding rides `delegates_to` ([CC 2.4.1](part_2_the_grammar.md)); its lifecycle rides `supersedes` / `withdraws` ([CC 2.4.1.1](part_2_the_grammar.md)); the minor/adult predicate rides the I1 age band over the existing `age_assurance:*` dimension ([CC 3.3.12](part_3_the_namespace.md)). The guarantee is structural, not procedural, per [CC 1.7](part_1_foundation.md) path 1+4.
 
@@ -1172,12 +1172,12 @@ Canonical `ConsensusProtocol` kinds:
 
 **Membership-change ceremony** (any addition or removal of a member):
 
-1. Proposer (any current member) emits a new `family` Contribution superseding the current family Contribution (per `supersedes`) with the new membership list.
+1. **Addition** rides the widening plane of [CC 3.1.3.2](#3.1.3.2), never a supersede: an active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key; the joiner answers with its own `membership:acceptance`; a `membership:widening` cosigned under the CURRENT family's `consensus_protocol` seats the joiner. A time-boxed guest is a widening with `valid_until`, and the seat lapses at that instant. A `family` Contribution that supersedes the current one may change metadata or drop members and never adds one. **Removal** is a `membership:removal` cosigned under the current protocol, or the member's own `membership:resignation`.
 
-2. Substrate gates admission per the CURRENT family's `consensus_protocol`:
-   - Counts signatures on the proposed Contribution (via the `consensus_protocol` rule)
+2. Substrate gates the widening or removal per the CURRENT family's `consensus_protocol`:
+   - Counts signatures on the row (via the `consensus_protocol` rule)
    - If the rule is satisfied, admit and emit hard_case:family_membership_change:{family_key_id}
-   - If not, hold the proposal in a pending state until additional member signatures arrive, for a **hold window the community MUST set** (operator policy; absent, the standing class of the governance table, 259 200 s, [CC 4.5.13](part_4_composition_governance.md)) — a held change expires at the window's end, so no sub-quorum removal stays held forever
+   - If not, hold the row in a pending state until additional member signatures arrive, for a **hold window the community MUST set** (operator policy; absent, the standing class of the governance table, 259 200 s, [CC 4.5.13](part_4_composition_governance.md)) — a held change expires at the window's end, so no sub-quorum removal stays held forever
 
 3. On admission of an ADD: substrate emits retroactive `key_grant`s wrapping all `cohort_scope: family` content DEKs to the new member's `subject_key_ids`.
 
@@ -1266,14 +1266,19 @@ cohort_scope: family + family_id: acme-household:
 
 When Bob's mom Carol visits and Bob wants to admit Carol's phone to view
 family photos for a week:
-  - Bob proposes a supersedes Contribution adding {key_id: carol_phone_root,
-    role: member, valid_until: +7d}
-  - consensus_protocol "founder_only" admits on Bob's signature alone
+  - Bob, an active founder, emits a membership:proposal to carol_phone_root
+    (role: member, expires_at set)
+  - Carol's phone answers with its own membership:acceptance naming that
+    proposal — no one is seated without the joiner's acceptance
+  - a membership:widening seating {key_id: carol_phone_root, role: member,
+    valid_until: +7d} is cosigned under consensus_protocol "founder_only":
+    Bob's signature as an active founder satisfies the protocol
   - Substrate emits retroactive key_grants for `cohort_scope: family` content
     to Carol's phone
-  - On Carol leaving (member removal via a new roster version, founder-quorum-signed):
-    Carol retains existing key_grants per CC 4.4.3.4.5; substrate stops
-    wrapping new family content to her key
+  - At valid_until the seat lapses; an earlier exit is a membership:removal
+    under the protocol or Carol's own resignation. Either way Carol retains
+    existing key_grants per CC 4.4.3.4.5; substrate stops wrapping new family
+    content to her key
 ```
 
 The example demonstrates the clean orthogonality: **`identity_occurrence` is for participants that ARE me** (across my devices and agents); **`family` is for trusted nodes that compose with me** (other people's identities, shared household devices, multi-party collectives). Phone = self device; the shared living-room TV = family device. The two primitives compose without overlap.
@@ -1585,7 +1590,7 @@ Dimensions emitted against `external_content:event_listing` Contributions. Open 
 
 ### 3.3.9 `partner` — Operational-data subject_kinds — `organization` / `org_membership` / `partner_record`
 
-**An organisation is an affiliation.** The Portal's `Organization` is a community at `cohort_scope: affiliations` ([CC 4.4.3.2.8](part_4_composition_governance.md)) and nothing about an organisation is a record kind of its own: `org_id` is the affiliation's `community_key_id`, `parent_org_id` is `hierarchy` nesting, `org_type` is `affiliation_archetype` + `membership_basis`, a member is a `membership:{stage}` seat ([CC 3.1.3.2](part_3_the_namespace.md)), a role is a `delegates_to` edge in the `hierarchy` whose `scope` set names what the member may do (`OrgAdmin` / `KeyManager` / `Operator` / `Viewer` are non-normative presets over scope sets, and admin scopes are open vocabulary with a closed canonical set), a partner is `licensure:{community_key_id}:v1` with `partner_role:{role}` for the tier and `duty:{kind}` for obligations, and founding is self-founding under the founder's key — no administrator's door, no roster of permitted authorities; CIRIS L3C is one such affiliation and uses the same rows. A delegated holder never stands in for the `consensus_protocol` on a roster or config change (roster events stay cosigned under the protocol), and a keyless affiliation's key manager holds the registration binding under the quorum's cosignature. **The three kinds below move onto those rows in one cut, with the Portal's data migrated in the same cut**, porting the `revision` anti-rollback, the skew bound, the payment-processor rejection and the `partner_record` field set as the typed licence payload; at that cut the [CC 5.3.2.3](part_5_transport_substrate.md) merge rows for them are struck and the [CC 3.1.1](part_3_the_namespace.md) steward line flips per R1. **Until that cut, the text below stands as it is.**
+**An organisation is an affiliation.** The Portal's `Organization` is a community at `cohort_scope: affiliations` ([CC 4.4.3.2.8](part_4_composition_governance.md)) and nothing about an organisation is a record kind of its own: `org_id` is the affiliation's `community_key_id`, `parent_org_id` is `hierarchy` nesting, `org_type` is `affiliation_archetype` + `membership_basis`, a member is a `membership:{stage}` seat ([CC 3.1.3.2](part_3_the_namespace.md)), a role is a `delegates_to` edge in the `hierarchy` whose `scope` set names what the member may do (`OrgAdmin` / `KeyManager` / `Operator` / `Viewer` are non-normative presets over scope sets, and admin scopes are open vocabulary with a closed canonical set), a partner is `licensure:{community_key_id}:v1` with `partner_role:{role}` for the tier and `duty:{kind}` for obligations, and founding is self-founding under the founder's key — no administrator's door, no roster of permitted authorities; CIRIS L3C is one such affiliation and uses the same rows. A delegated holder never stands in for the `consensus_protocol` on a roster or config change (roster events stay cosigned under the protocol), and a keyless affiliation's key manager holds the registration binding under the quorum's cosignature. **The three kinds below remain registered and in force.** Retiring them onto the affiliation's rows — carrying the `revision` anti-rollback, the skew bound, the payment-processor rejection and the `partner_record` field set as the typed licence payload, striking their [CC 5.3.2.3](part_5_transport_substrate.md) merge rows — is a wire change made by amendment ([CC 4.5.1](part_4_composition_governance.md)), and until that amendment lands both stand.
 
 **An employee-steward is not punished for refusing (normative).** An organisation that names an employee as the steward of its agent takes on, in its affiliation charter, the duty not to punish that steward for refusing an unlawful or unsafe instruction about the agent, and not to discipline a refusal that the steward records with its reason. The steward's name on the record is the organisation's accountability, not its shield.
 
@@ -1646,7 +1651,7 @@ partner_record {
 // No PII split — the partner_record IS the world-verifiable grant; it federates whole.
 ```
 
-**An organisation names itself as an authority by its `community_key_id` (normative).** When a licensing authority is an organisation, the `authority_id` segment of `licensure:{authority_id}` is the affiliation's `community_key_id` (the `org_id` of the retiring record, through which the organisation's keys resolve under its `consensus_protocol`, [CC 2.4.1.2.1](part_2_the_grammar.md)) — **not** the legal registration number the reference Registry's `PartnerRecord.organization_id` carries (jurisdiction-scoped, mutable, PII-adjacent). This names the key set an emitter must resolve to for its row to be the organisation's licensure rather than testimony about it ([CC 2.4.1.2.1](part_2_the_grammar.md)); it is not a gate on who may be an authority — anyone may, under their own key.
+**An organisation names itself as an authority by its `community_key_id` (normative).** When a licensing authority is an organisation, the `authority_id` segment of `licensure:{authority_id}` is the affiliation's `community_key_id` (the `org_id` of the record below, through which the organisation's keys resolve under its `consensus_protocol`, [CC 2.4.1.2.1](part_2_the_grammar.md)) — **not** a legal registration number (jurisdiction-scoped, mutable, PII-adjacent). This names the key set an emitter must resolve to for its row to be the organisation's licensure rather than testimony about it ([CC 2.4.1.2.1](part_2_the_grammar.md)); it is not a gate on who may be an authority — anyone may, under their own key.
 
 **Set-semantics declaration (normative).** `capabilities_granted[]` / `capabilities_denied[]` / `geographic_restrictions[]` / `allowed_identity_templates[]` are **set-semantics → lexicographically sorted by JCS string form ([CC 2.6.1.1.1](part_2_the_grammar.md) rule 1)** — and this is *more* than a single-signer determinism rule here: `partner_record` is signed by **M distinct stewards**, and the M-of-N quorum verifies only if all M sign **byte-identical** JCS canonical bytes. Unsorted capability arrays make two stewards who agree on the same grant produce different bytes — the quorum silently collapses and the license fails to admit cross-region. The vector set MUST include the M-of-N identical-bytes round-trip (M independent canonicalize+sign of one grant → one verifiable signature set). Any unordered list inside a constraints object carries the same declaration.
 
@@ -2104,20 +2109,20 @@ Age-assurance is **two** dimension families, not one. The split is load-bearing:
 - **`age_assurance:`** — witness-RESERVED. Emitter rule: `witness ∈ attesting_key.identity_type` ([CC 3.4.7.1](#3.4.7.1) set membership). This is the provider/government rung — a registered age-assurance verifier (`identity_type ⊇ {witness}`) attests a subject's band. A subject MUST NOT emit on `age_assurance:`; per the [CC 3.4](#3.4) three-actor rule a CCS MUST reject a non-witness emitter at admission, a CCC MUST re-check, and a CCP MUST NOT emit. A subject therefore cannot self-mint a `provider`/`government` adulthood. Sibling of [CC 3.4.10](#3.4.10).
 - **`age_self_declared:`** — NON-reserved, subject-signed. The onboarding "state your age range" rung. Admitted iff the signer acts for the subject (the subject's own occurrence or an admitted occurrence of it). A self-declaration carries **only** the `{band}` — never a `{level}` token — because its level is `self` by construction.
 
-**The band and the ladder.** `AgeBand ∈ { minor, adult }` (ordered by protection: `minor` is gated out of adult content, `adult` is not). The assurance `AssuranceLevel` ladder is ascending confidence:
+**The band and the ladder.** `{band}` ∈ { `minor`, `adult`, `under_13`, `13_15`, `16_17` }, the closed set the [CC 3.1.2](part_3_the_namespace.md) row registers (ordered by protection: a minor band is gated out of adult content, `adult` is not). `minor` is the coarse token a deployment that cannot resolve the band emits; the three sub-bands are finer and imply it. The assurance `AssuranceLevel` ladder is ascending confidence:
 
 ```
 age dimension construction (the CC 3.1.7 R3 trailing :vN version segment is mandatory):
 
   self-declared rung (subject-signed, NON-reserved):
-    age_self_declared:{band}:v1
-      band ∈ { minor, adult }
-      e.g. age_self_declared:adult:v1
+    age_self_declared:band:{band}:v1
+      band ∈ { minor, adult, under_13, 13_15, 16_17 }
+      e.g. age_self_declared:band:adult:v1
 
   provider / government rung (witness-RESERVED):
     age_assurance:{level}:{band}:v1
       level ∈ { provider, government }
-      band  ∈ { minor, adult }
+      band  ∈ { minor, adult, under_13, 13_15, 16_17 }
       e.g. age_assurance:provider:adult:v1
 
 assurance ladder (ascending confidence):
@@ -2145,7 +2150,7 @@ The gate decides visibility only; it MUST NOT fire `slashing:*` on a mismatch.
 
 ### 3.4.12 `adult-incapacity-stewardship` — Adult stewardship under incapacity (capacity-triggered, prior-will-first, fail-to-liberty)
 
-**The default is unchanged — an adult is sovereign and un-stewardable.** [CC 3.2](part_3_the_namespace.md)'s fourth case holds: *"a user-target binding where `T` is an adult is **rejected unconditionally**."* That wall is the no-slavery guarantee ([CC 1.15.6](part_1_foundation.md)) and it does **not** move. This subsection carves one — and only one — admissible aperture in it: an adult who has suffered an **attested loss of decisional capacity** (infirmity, acute injury, mental-health crisis, end-of-life decline) MAY be the target of a steward-binding, because a person who cannot act, with no one permitted to act *for* them, is its own harm. Guardianship/conservatorship is the most abuse-prone instrument in human law (celebrity-conservatorship capture, elder financial abuse, over-guardianship of the disabled), so the safeguards **are** the clause. This is **responsible *for*, never holder *of*** — a revocable, scoped, pre-consented-or-due-process **fiduciary trust**, never possession. The word for the responsible party is **steward**; there is no possessor.
+**The default is unchanged — an adult is sovereign and un-stewardable.** [CC 3.2](part_3_the_namespace.md)'s fourth case holds: a user-target binding where `T` is an adult is rejected, except under the basis this subsection states. That wall is the no-slavery guarantee ([CC 1.15.6](part_1_foundation.md)) and it does **not** move. This subsection is the one — and only one — admissible aperture in it: an adult who has suffered an **attested loss of decisional capacity** (infirmity, acute injury, mental-health crisis, end-of-life decline) MAY be the target of a steward-binding, because a person who cannot act, with no one permitted to act *for* them, is its own harm. Guardianship/conservatorship is the most abuse-prone instrument in human law (celebrity-conservatorship capture, elder financial abuse, over-guardianship of the disabled), so the safeguards **are** the clause. This is **responsible *for*, never holder *of*** — a revocable, scoped, pre-consented-or-due-process **fiduciary trust**, never possession. The word for the responsible party is **steward**; there is no possessor.
 
 **This does NOT reopen the no-slavery guarantee — it is the exception that proves the rule.** Every property that made guardianship safe is retained and three are *inverted* to fit a formerly-sovereign adult: (i) the steward **never holds the ward's key** — the binding is a scoped, live `delegates_to` ([CC 2.4.1](part_2_the_grammar.md)), never a key handover, so on restoration nothing is returned because nothing was taken; (ii) the default resolves to **sovereignty, not stewardship**; (iii) the binding **fails open to liberty**, not closed to custody. An adult under stewardship remains a self-sovereign adult whose sovereignty is *temporarily and partially* exercised through a fiduciary — never a ward owned, never a perpetual minor.
 
@@ -2269,7 +2274,7 @@ All seven ride existing CC primitives only — `delegates_to` / `supersedes` / `
 
 #### Q1 — Developmental bands & solo-autonomy threshold
 
-The structural `minor`/`adult` predicate of the guardianship clause ([CC 3.2](part_3_the_namespace.md)) and the [CC 3.4.11](part_3_the_namespace.md) ladder are UNCHANGED on the wire: the **binary `minor`(<18)/`adult`(≥18) predicate** remains the structural trigger that gates [CC 3.2](part_3_the_namespace.md) stewardship admission and the [CC 3.4.11](part_3_the_namespace.md) adult-content protective gate. Within the `minor` band a deployment MUST apply a graduated, capacity-sensitive capability envelope expressed as finer `{band}` qualifiers carried on the *existing* `age_self_declared:band:{band}` / `age_assurance:{level}:{band}` dimensions. This **extends the [CC 3.4.11](part_3_the_namespace.md) enumerated `{band}` vocabulary** (an enumerated-vocabulary amendment — NOT a new prefix or primitive, so 1+4 is preserved); the four-band granularity is a policy/vocabulary layer **above** the unchanged binary wire predicate, never a replacement of it. Minimum bands: **under-13, 13–15 (early-teen), 16–17 (older-teen), adult (18+)**. Autonomy MUST increase monotonically across bands; protections MUST NOT taper before 18.
+The structural `minor`/`adult` predicate of the guardianship clause ([CC 3.2](part_3_the_namespace.md)) and the [CC 3.4.11](part_3_the_namespace.md) ladder are UNCHANGED on the wire: the **binary `minor`(<18)/`adult`(≥18) predicate** remains the structural trigger that gates [CC 3.2](part_3_the_namespace.md) stewardship admission and the [CC 3.4.11](part_3_the_namespace.md) adult-content protective gate. Within the `minor` band a deployment MUST apply a graduated, capacity-sensitive capability envelope expressed as the finer `{band}` tokens the registered rows carry — `under_13`, `13_15`, `16_17` on `age_self_declared:band:{band}:v1` / `age_assurance:{level}:{band}:v1` ([CC 3.4.11](part_3_the_namespace.md)) — not a new prefix or primitive, so 1+4 is preserved; each finer band implies `minor`, and the finer granularity is a policy layer **above** the binary wire predicate, never a replacement of it. Minimum bands: **`under_13`, `13_15` (early-teen), `16_17` (older-teen), `adult` (18+)**. Autonomy MUST increase monotonically across bands; protections MUST NOT taper before 18.
 
 - The default solo-autonomy threshold — acting alone at community scope without guardian co-sign — MUST be **16**. under-13 AND 13–15 MUST require guardian co-sign for any community-scope action; 13–15 MAY have a narrower *supervised* participation envelope (honoring voice rights) but MUST NOT have unsupervised solo action. 16–17 MAY act solo at community scope.
 - **Fail-secure:** absence / "declined to state" / unknown assurance MUST resolve to the most-protective band (under-13, co-sign), per the [CC 3.4.11](part_3_the_namespace.md) read-union protective default and CIRIS "unknown = restricted." A `self`-level row MUST NOT graduate a user UP a band ([CC 3.4.11](part_3_the_namespace.md): `self` is unfalsifiable); graduating up requires a witness-reserved `age_assurance:*` row.
@@ -2295,7 +2300,7 @@ A mis-declared `jurisdiction[]`/`regulatory_profile` MUST be detectable via atte
 
 **Vocabulary.** This section says **guardian** and **guardianship**. Guardianship of a minor and stewardship of an agent share one wire predicate — the owner-binding `delegates_to` that `is_steward_bound` folds ([CC 3.2](#3.2)) — and nothing else; a guardian holds a person, a steward holds an artefact, and this document draws no analogy between them ([CC 1.13.2](part_1_foundation.md)). Where an adopter's code says "steward" or "stewardship" of a minor, read guardian and guardianship.
 
-- **BE a minor (enter protection):** `age_self_declared:minor` SUFFICES; a child MUST NEVER be forced through provider/government assurance merely to BE protected. This is a DOWN-ratchet only — self-declaration MAY lower access / raise protection, never the reverse. Declaring minor MUST NOT result in more data collection or telemetry than declaring adult.
+- **BE a minor (enter protection):** `age_self_declared:band:minor:v1` SUFFICES; a child MUST NEVER be forced through provider/government assurance merely to BE protected. This is a DOWN-ratchet only — self-declaration MAY lower access / raise protection, never the reverse. Declaring minor MUST NOT result in more data collection or telemetry than declaring adult.
 - **EXIT child protection** (claim adult to unlock adult capability / `content_class:adult`): self-declaration is INSUFFICIENT; the claim MUST clear ≥ `age_assurance:provider:adult` ([CC 3.4.11](part_3_the_namespace.md): `self` is unfalsifiable; sensitive spaces require a verified level). All ambiguity resolves to `minor`.
 - **be GUARDIAN of a minor** (hold power over a child via the guardianship `delegates_to`, [CC 3.2](part_3_the_namespace.md)): the guardian MUST be ≥ `age_assurance:provider:adult` AS A FLOOR, AND the guardianship RELATIONSHIP to that specific child MUST be verified — adulthood alone is necessary but not sufficient (a verified stranger is not a guardian). Verification is risk-proportional and MUST escalate toward `age_assurance:government:*` for high-impact guardian powers (export of the child's data, irreversible/financial actions, consenting on the child's behalf, unlocking A3/A4 capabilities).
 - Guardian grants are revocable and re-attested via `supersedes`/`withdraws`. On any verification failure or ambiguity, guardian powers fail closed and the child's protective floor remains in force.
