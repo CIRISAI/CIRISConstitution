@@ -105,12 +105,12 @@ From the philosophy: CIRIS is bound by every rule it imposes on others, and wher
 8b. The judges within are judged. A Wise Authority answers deferrals and in-federation objections, never a legal claim. Their rulings are published, redacted where needed, on a fixed cadence; the quality of deferrals and answers is reviewed by a body that did not make them; and a Wise Authority's conduct is readable by the parties who defer to them, at the same grain as everyone else's acts, never as a single score. *[a rule, no code yet]*
 8c. Wise Authorities are appointed, rotated, recused and appealed under a published governance charter outside the federation's own control, with anti-capture rules. A quorum of them over any entrenched, restrictive or roster-changing decision is counted over the full seated roster, never over whoever happens to be present. Independent audits of a deployment are regular, and their results are published with redactions as needed. *[a rule, no code yet]*
 
-## Promise 9. Some uses are never allowed, and force has its own rules
+## Promise 9. Some uses are never allowed, and lethal action is one of them
 
 From the philosophy: the people with the least power hold rights, in the wire itself, that the most powerful cannot override.
 
 9a. Some uses are never allowed, and the list is public: deceiving or defrauding people, interfering in elections, and manipulating or coercing people. These bounds do not move with any finding, any tier, any mandate, or any instruction from a steward. *[a rule in this register; the agent enforces the prohibitions; no evidence row yet, G26]*
-9b. No agent is given the decision to use lethal force; a human is in the loop or the weapon does not fire, and near force the only decisions an agent makes on its own are to stop, to refuse, or to defer. The rest of the force chapter lives in the constitution, not here. *[a rule, no code yet]*
+9b. No agent takes lethal action, with a human in the loop or without one: it does not fire, release, select or confirm a target, and does not compute the act for another to execute. Near force the only decisions an agent makes on its own are to stop, to refuse, or to defer. A system built to take lethal action is built under some other framework and carries no CIRIS key. *[a rule, no code yet]*
 9c. An operator declares at onboarding whether its business model optimises for engagement. If it does, the tier rises by one and the agent refuses to run in an engagement-optimising mode, so the business is admitted without the mode; manipulation itself stays never allowed under 9a. *[a rule, no code yet]*
 
 ## Promise 10. What an agent and its node consume is measured, weighed before an act, and never hidden

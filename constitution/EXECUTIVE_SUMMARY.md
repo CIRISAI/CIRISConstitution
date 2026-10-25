@@ -28,7 +28,7 @@ Every promise is written once and holds for human and AI participants alike. Whe
 
 8. **Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.** A person harmed by an agent may have a claim under the law of their place; this document creates none where the law recognises none and rules on no legal matter. What it supplies is the signed record, the named parties, the contest that travels with the claim, and the sealed archive under lawful order. The Wise who answer deferrals publish their rulings and are readable at the same grain as everyone else. *[a rule, no code yet]*
 
-9. **Some uses are never allowed, and force has its own rules.** Deceiving, defrauding, manipulating or coercing people, and interfering in elections, are never allowed and no instruction moves that. No agent is given the decision to use lethal force. *[a rule; the agent enforces the prohibitions; no evidence row yet]*
+9. **Some uses are never allowed, and lethal action is one of them.** Deceiving, defrauding, manipulating or coercing people, and interfering in elections, are never allowed and no instruction moves that. No agent takes lethal action, with a human in the loop or without one; near force it stops, refuses or defers. *[a rule; the agent enforces the prohibitions; no evidence row yet]*
 
 10. **What an agent and its node consume is measured, weighed before an act, and never hidden.** An agent counts the tokens, energy, carbon and water it uses, per act and over the hour and the day, and the count sits in its decision context before it acts. A node under pressure protects itself by a published ladder, reclaim, throttle, shed, drain, never by borrowing the agent's decision verbs. What an agent costs the world is readable at the same grain as its other acts, and retiring one leaves no environmental waste. The network has no agency; it is built so that principled action is easier than its opposite. *[being built: CIRISAgent#1242]*
 
@@ -60,7 +60,7 @@ The system is running: apps on both mobile stores, published packages, five open
 | 6 no ban, no rank, first contact | CC 4.2.1, 3.2, 6.1.2.1.2, 4.4.1, 7.2.4 | `RootReach.tla` `Prop_NoBan`; `lean:coherence-ratchet` (one voice once); measured |
 | 7 how an agent decides | CC 1.3, 1.9 | CIRISAgent safety batteries |
 | 8 remedy under law; the record reachable | CC 7.3.5, 4.3, 3.4 | conformance suite |
-| 9 never-allowed uses; force | Annex TX-9, TX-10; CC 7.4 | CIRISAgent safety batteries |
+| 9 never-allowed uses; lethal action | Annex TX-9, TX-10; CC 7.4 | CIRISAgent safety batteries |
 | 10 what an agent and its node consume | CC 7.5, 3.1.8.5, 3.1.5, 1.2 | agent resource telemetry and the pressure ladder (being built: CIRISAgent#1242); `detection:distributive:access:*` |
 | 11 encrypted and signed; attack rehearsed; limits stated | CC 1.13.3, 5.1, 5.3.3.3, 3.2 T6, 3.1.2, 8.8.7 | `formal/trust_root` (witnessed heads); `formal/mesh_net` `Inv_Invisible`; the attestation ladder; the red-team cadence is a rule, no code yet |
 | all of them at once, for human and AI alike | CC 1.13.2 | `formal/guarantees` (Lean + TLA+) |

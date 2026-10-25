@@ -18,7 +18,7 @@ The network exists to protect ordinary people from three things: being spoken fo
 6. No hand bans a community, nobody is ranked by what they are, and every thinking being is met by the first-contact rules.
 7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure.
 8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.
-9. Some uses are never allowed, and force has its own rules.
+9. Some uses are never allowed, and lethal action is one of them.
 10. What an agent and its node consume is measured, weighed before an act, and never hidden.
 11. Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated.
 
