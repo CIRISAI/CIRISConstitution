@@ -324,8 +324,7 @@ def volume_md(vol):
     parts_md = [cover]
     if vol == "digest":
         for f in (DOC / "EXECUTIVE_SUMMARY.md", REVIEW / "pieces" / "00_guarantees_plain.md",
-                  REVIEW / "pieces" / "00_operator_digest.md", REVIEW / "pieces" / "00_guarantees.md",
-                  REVIEW / "pieces" / "00_status_quo.md"):
+                  REVIEW / "pieces" / "00_operator_digest.md", REVIEW / "pieces" / "00_guarantees.md"):
             parts_md.append(f.read_text(encoding="utf-8"))
         return parts_md
     R, pieces = volume_pieces(vol)
