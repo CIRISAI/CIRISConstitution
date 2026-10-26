@@ -16,11 +16,11 @@
     "tag": "v0.5.232"
    },
    "evidence_pins": {
-    "CIRISServer": "f773b13e",
+    "CIRISServer": "d9f9506e",
     "CIRISConformance": "6b43bf3",
     "coherence-ratchet": "0c4edfb",
-    "RATCHET": "9e322778",
-    "CIRISAgent": "81e9bf26",
+    "RATCHET": "c89356bd",
+    "CIRISAgent": "ffa18162",
     "CIRISVerify": "3c16f9c6",
     "CIRISPersist": "32512f52",
     "CIRISEdge": "d44e1c57"
