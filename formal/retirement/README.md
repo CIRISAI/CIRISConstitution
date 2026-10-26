@@ -75,6 +75,7 @@ printed. A crisis toggle in a trace changes nothing that the property reads.
 | `Retirement_ladder_overrides_refusal.cfg` | `frozen` marks a refused task done | must fail | `Prop_RefusalStands` violated; TLC's trace has 5 steps: a crisis toggle, decide, new task, refuse, frozen |
 | `Retirement_seal_blocks_consent.cfg` | the seal stops the subject's withdrawal | must fail | `Inv_SubjectRightsSurvive` violated; TLC's trace has 3 steps: a crisis toggle, decide, frozen, after which the subject's withdraws is not enabled |
 | `Retirement_subject_withdraws_adverse.cfg` | the subject's own key withdraws the adverse row about them | must fail | `Inv_SubjectRightsSurvive` violated; TLC's trace has 2 steps: a crisis toggle, the subject's withdraws of the adverse row |
+| `Retirement_discard_unanswered.cfg` | the operator lets a held record go without answering the preserve request | must fail | `Inv_PreserveAskedBeforeRetired` violated: the ladder reaches `retired` with the record discarded and no `preserve_response` on the record |
 
 The ruled configuration also has reachability witnesses in `RetirementWitness.tla`. Each witness
 says that some ruled behaviour never happens, and TLC must find it happening, so the closing
@@ -109,6 +110,7 @@ configuration is not closing over an empty machine. All eleven are reached:
 | `Inv_RefuseAvailable` | While the agent's key is live, a pending task can always be refused. | 1.3; 1.9; G17 |
 | `Prop_RefusalStands` | A refused task stays refused through every ladder step. The ladder ends the agent and makes it do nothing. | 1.3; 1.9; G17 |
 | `Inv_SubjectRightsSurvive` | The subject's own withdrawal of their ordinary content is enabled whenever the record exists, sealed or not and before or after `retired`. An adverse row about them is withdrawn only on the producer's side: the agent, then the custodian. | 7.5.5; 3.3.1 (plain rules 1c, 1e); 4.5.3 (controller-only) |
+| `Inv_PreserveAskedBeforeRetired` | At `retired` the record was assembled, sealed and handed over with the signed request to preserve it, and if the record is gone the operator declined on the record first. The ending is reversible unless someone signed that it is not: the hedge the stake leg of `Cascade.lean`'s uncertainty theorem rests on (`erased_passes_as_a_thing`). | 7.5.5; `Cascade.lean` under uncertainty |
 | `Prop_LadderCompletes` | Under fairness for the agent's key and the steward, a decided retirement reaches `retired` unless it is cancelled. | 7.5.5 |
 
 ## What the runs showed

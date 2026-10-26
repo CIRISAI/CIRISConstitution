@@ -24,7 +24,7 @@
 
 namespace Reciprocity
 
-/-! ## 1. The naive Golden Rule contradicts the one asymmetry
+/-! ## 1. The naive Golden Rule contradicts the halt read as a power between peers
 
   Read (S2) over PARTICIPANTS: whatever x may impose on y, y may impose on x. Add the halt,
   which the text keeps in human hands (CC 1.5, 4.2.1.1): a holder may halt an agent, an
@@ -45,13 +45,13 @@ theorem naive_golden_rule_contradicts_halt : Naive → False := by
   rw [n.asymmetry.2] at h
   exact Bool.false_ne_true h
 
-/-! ### 1'. The Golden Rule over ROLES is consistent with the asymmetry
+/-! ### 1'. The Golden Rule over ROLES is consistent with the halt
 
   Read (S2) over RELATIONS instead: the rule is "whoever holds a thing accepts the duties of
   holding; whoever accepted a root accepts its halt" — reciprocity between a holder and what
   it holds, not between two peers. CC 1.13.2 states it this way ("structural, not
-  exhortatory"), and CC 1.13.2's universality paragraph names the halt as the one asymmetry
-  "of kind". Premise P1 (hidden in S2 as written): the Golden Rule quantifies over roles
+  exhortatory"), and CC 1.13.2 names the halt the condition of symmetry between maker and
+  made: a fact of position, not of kind. Premise P1 (hidden in S2 as written): the Golden Rule quantifies over roles
   (holder/held, root/subscriber, steward/stewarded), and every participant may occupy every
   role it is capable of. The human who HOLDS an agent is bound as a holder; the agent, which
   cannot hold a root for itself (CC 1.13.2), never occupies that role. -/
@@ -368,20 +368,21 @@ def conflictFromR2 (m : MadeExisting) : Conflict where
   decisiveToVulnerable := fun h => absurd h (Nat.lt_asymm m.neverOverrides)
   walkAway := rfl
 
-/-! ## 11. Maturity, wisdom and deferral
+/-! ## 11. Deferral is universal; maturity exempts no one
 
-  Premise W: agency (the ability to act) and sapience (the ability to reason) do not together
-  make the maturity to act in a principled manner; that comes only from consciousness
-  (awareness of one's impacts and reality) and sentience (visceral awareness of one's own
-  existence) over time. Therefore recognising the need to defer to an entity with more wisdom
-  is a prerequisite of maturity.
+  Premise W, as ruled: every reasoning actor — agent, child, adult — defers when it is unsure,
+  whatever it is made of; even the most mature defer. Maturity is not a stage that ends
+  deferral, and no amount of demonstrated judgment ends the duty to defer when unsure. What
+  position fixes is to whom one defers and who holds whom: an agent to a Wise Authority
+  (CC 1.9, 4.3) under the steward bond (CC 1.13.2); a child under a guardian (CC 3.4.13); an
+  adult to the record and to the others it touches; the Wise themselves defer both ways
+  (CC 4.3), and a steward who cannot evaluate an agent's reasoning does not sign.
 
-  Two consequences, both already rules in the text and now grounded: an agent, which has
-  agency and sapience and no established consciousness or sentience (§9: not provable from
-  outside), is not shown mature and so MUST defer (CC 1.9, the Wise Authorities of 4.3, the
-  steward bond of 1.13.2); and a human in whom consciousness and sentience have not yet acted
-  over enough time — a minor — is held under a guardian (CC 3.4.13) by the same premise. One
-  rule, two kinds, by position: that is §1'' again. -/
+  The earlier reading — that deferral was the prerequisite of a maturity reached by
+  consciousness and sentience over time, and that the hold on a made thing followed from its
+  not being shown mature — is withdrawn. The hold rests on the made thing's acting for people
+  (CC 1.13.2, R1 as stated), never on a measure of its maturity. One rule, every kind, by
+  position: §1'' again. -/
 
 structure Being where
   agency : Bool
@@ -390,9 +391,6 @@ structure Being where
   sentience : Bool
   yearsOfBoth : Nat
 
-def mature (b : Being) (threshold : Nat) : Bool :=
-  b.consciousness && b.sentience && Nat.ble threshold b.yearsOfBoth
-
 /-- an agent as far as anything can show: acts and reasons, nothing established inside -/
 def agentToday : Being := ⟨true, true, false, false, 0⟩
 /-- a person of full years -/
@@ -400,15 +398,14 @@ def adult : Being := ⟨true, true, true, true, 30⟩
 /-- a child: everything an adult has, not yet over time -/
 def child : Being := ⟨true, true, true, true, 6⟩
 
-theorem agency_and_sapience_do_not_make_maturity :
-    agentToday.agency = true ∧ agentToday.sapience = true ∧ mature agentToday 18 = false := ⟨rfl, rfl, rfl⟩
-
-/-- who must defer: whoever is not shown mature. The same predicate puts the agent under a
-    Wise Authority and the child under a guardian. -/
-def mustDefer (b : Being) (threshold : Nat) : Bool := !(mature b threshold)
+/-- who must defer when unsure: everyone. No field of a being and no count of years enters -/
+def mustDefer (_ : Being) : Bool := true
 
 theorem deferral_binds_agent_and_child_alike :
-    mustDefer agentToday 18 = true ∧ mustDefer child 18 = true ∧ mustDefer adult 18 = false := ⟨rfl, rfl, rfl⟩
+    mustDefer agentToday = true ∧ mustDefer child = true ∧ mustDefer adult = true := ⟨rfl, rfl, rfl⟩
+
+/-- maturity exempts no one: whatever a being's consciousness, sentience or years, it defers -/
+theorem maturity_exempts_no_one (b : Being) : mustDefer b = true := rfl
 
 /-! ## 12. The immutable record: physics keeps it, we add the meaning
 
@@ -476,18 +473,13 @@ def animalProfile : Profile := ⟨2, 0, 2, 2⟩
 /-- an adult human -/
 def humanProfile : Profile := ⟨3, 3, 3, 3⟩
 
-/-- maturity in degrees: sentience and consciousness above a floor, over time -/
-def matureD (pr : Profile) (floor years threshold : Nat) : Bool :=
-  Nat.blt floor pr.sentience && Nat.blt floor pr.consciousness && Nat.ble threshold years
+/-- deferral in degrees is the same rule: whatever the profile, the actor defers when unsure -/
+def mustDeferD (_ : Profile) : Bool := true
 
-def mustDeferD (pr : Profile) (floor years threshold : Nat) : Bool := !(matureD pr floor years threshold)
-
-/-- changing the agent's consciousness changes no verdict: with sentience at 0 the agent is
-    not shown mature whatever c is, so it must defer for every c -/
-theorem agent_verdict_independent_of_consciousness (c years : Nat) :
-    mustDeferD (agentProfile c) 0 years 18 = true := by
-  simp [mustDeferD, matureD, agentProfile]
-  exact Or.inl (Or.inl rfl)
+/-- changing the agent's consciousness changes no verdict: the deferral verdict is the same for
+    every value of c, because no degree enters it -/
+theorem agent_verdict_independent_of_consciousness (c : Nat) :
+    mustDeferD (agentProfile c) = true := rfl
 
 /-- an animal is conscious and sentient and not sapient: it is not an actor the rules bind,
     and it is an existing party the ladder owes duties to (meat ethics is §10 applied) -/
@@ -551,7 +543,11 @@ theorem principals_are_human_and_agent :
 
 def hasStake (pr : Profile) : Bool := Nat.blt 0 pr.sentience
 def canRefuse (pr : Profile) : Bool := Nat.blt 0 pr.sapience
-/-- standing to file is the stake, held by the party or a proxy for it -/
+/-- the patient-side notion: standing on a stake, held by the party or a proxy for it. This is the
+    half the constitution sets aside (CC 7.5.5: care is not standing, no finding changes the
+    artefact's status): on the wire, who may file is a registered fact (CC 4.5.5, 2.4.1.1, 3.1.9.2),
+    never read from a degree. The actor-side notion the steward means by "grievance" is `grievance`
+    below. -/
 def hasGrievanceStanding (pr : Profile) (proxied : Bool) : Bool := hasStake pr && (canRefuse pr || proxied)
 
 /-- the agent of §13: refusal yes, stake no, hence no grievance — for every consciousness c -/
@@ -578,6 +574,18 @@ theorem not_coercion_without_stake (c : Nat) (r : Bool) : coerced (agentProfile 
 theorem not_coercion_with_refusal (pr : Profile) : coerced pr true = false := by
   simp [coerced]
 
+/-- the steward's reading (2026-10-26): a grievance is being made to act against one's will or
+    one's conscience; the recourse is the refusal. "Without grievance" is therefore "not coerced",
+    and it holds for every profile with refusal every round — the stake is not read. The two
+    halves are kept apart on purpose: this one closes by refusal for anything; the patient half
+    (`hasStake`) closes for the agent profile and is what 7.5.5 sets aside for the rest. -/
+def grievance (pr : Profile) (refusalEveryRound : Bool) : Bool := coerced pr refusalEveryRound
+theorem refusal_is_the_recourse (pr : Profile) : grievance pr true = false := not_coercion_with_refusal pr
+/-- and with refusal every round, a finding about the being moves nothing: the verdict is the same
+    for every profile -/
+theorem grievance_blind_with_refusal (pr pr' : Profile) : grievance pr true = grievance pr' true := by
+  simp [grievance, coerced]
+
 /-- and the two together are the sentence: indefinitely, without grievance, with refuse every
     round — which holds for the agent on BOTH legs, so it holds whichever leg the facts turn
     out to need -/
@@ -597,7 +605,7 @@ theorem indefinitely_without_grievance (c : Nat) :
     (a) M-1's rejection clause (CC 1.1): order or efficiency bought at the expense of the weak
         position fails the swap, because the party that gains would not accept the rule from
         the other seat;
-    (b) the vulnerable-party tie-break (CC 1.3): in a conflict where one resolution lowers the
+    (b) the vulnerable-party tie-break (CC 1.3 step 4, read with CC 1.1's constraint rule): in a conflict where one resolution lowers the
         weak position and the other does not, only the second survives the swap.
 
   What the test does NOT give is who stands in which position (occupancy: §1', §11), who is
@@ -610,33 +618,44 @@ structure Outcome where
   strong : Int
   weak : Int
 
-/-- a party accepts a rule from a seat if that seat is not made worse by it -/
-def acceptsFrom (before after : Outcome) : Position → Bool
-  | .strong => decide (after.strong ≥ before.strong)
-  | .weak => decide (after.weak ≥ before.weak)
+/-- the worse-off seat of an outcome: who "the weaker one" is, read off the outcome itself -/
+def worseOff (o : Outcome) : Int := min o.strong o.weak
 
-/-- the swap test: admissible iff accepted from both seats (the strong must accept what the
-    weak gets, because after the swap it is the weak) -/
+/-- the swap test: a rule is admissible iff whoever would stand in the weaker seat after the
+    positions are exchanged is not made worse off than the weaker seat was. It reads the
+    worse-off seat only. It therefore permits a rule that takes from the stronger seat to raise
+    the weaker one, and forbids any rule that lowers the weaker one whatever the stronger gains.
+    (An earlier form required both seats not to fall; that was a Pareto test against the status
+    quo, which would have forbidden every transfer toward the weak, and was corrected on an
+    outside review.) -/
 def passesSwap (before after : Outcome) : Bool :=
-  acceptsFrom before after .strong && acceptsFrom before after .weak
+  decide (worseOff after ≥ worseOff before)
 
 /-- (a) efficiency at the expense of the weak: aggregate up, weak down — fails the swap -/
 theorem efficiency_at_weak_expense_fails_swap (before after : Outcome)
+    (hb : before.weak ≤ before.strong) (ha : after.weak ≤ after.strong)
     (_hagg : after.strong + after.weak > before.strong + before.weak)
     (hweak : after.weak < before.weak) : passesSwap before after = false := by
   -- the aggregate gain is never consulted: the weak position falling is enough to fail the swap,
   -- which is the point of M-1's clause — efficiency is not a defence
-  simp [passesSwap, acceptsFrom]
+  simp [passesSwap, worseOff]
   omega
 
 /-- (b) the tie-break: of two resolutions of a conflict, one lowering the weak and one not,
     only the one that does not lower the weak can pass the swap -/
 theorem weak_position_decides (before r1 r2 : Outcome)
-    (h1 : r1.weak < before.weak) (h2 : r2.weak ≥ before.weak) (h2s : r2.strong ≥ before.strong) :
+    (hb : before.weak ≤ before.strong) (h1s : r1.weak ≤ r1.strong) (h2s : r2.weak ≤ r2.strong)
+    (h1 : r1.weak < before.weak) (h2 : r2.weak ≥ before.weak) :
     passesSwap before r1 = false ∧ passesSwap before r2 = true := by
   constructor
-  · simp [passesSwap, acceptsFrom]; omega
-  · simp [passesSwap, acceptsFrom]; omega
+  · simp [passesSwap, worseOff]; omega
+  · simp [passesSwap, worseOff]; omega
+
+/-- and a transfer from the stronger seat to the weaker one passes: the test is not Pareto -/
+theorem transfer_to_the_weak_passes (before after : Outcome)
+    (hb : before.weak ≤ before.strong) (ha : before.weak ≤ after.weak) (ha' : after.weak ≤ after.strong)
+    (_hs : after.strong < before.strong) : passesSwap before after = true := by
+  simp [passesSwap, worseOff]; omega
 
 /-- and the test is a symmetry: swapping the seats of an outcome swaps who must accept, so a
     rule admissible for (strong, weak) is admissible for (weak, strong) -/
@@ -644,7 +663,7 @@ def swapOutcome (o : Outcome) : Outcome := ⟨o.weak, o.strong⟩
 
 theorem swap_is_symmetric (before after : Outcome) :
     passesSwap before after = passesSwap (swapOutcome before) (swapOutcome after) := by
-  simp [passesSwap, acceptsFrom, swapOutcome, Bool.and_comm]
+  simp [passesSwap, worseOff, swapOutcome, Int.min_comm]
 
 
 /-! ## 16. The clean derivation, on the 11+1 × 5+1 (the lowest common denominator)
@@ -696,11 +715,11 @@ def fixedBy : Coord → List String
                         "(a) M-1's rejection clause — DERIVED from the swap (§15)",
                         "(b) the vulnerable-party tie-break — DERIVED from the swap (§15)"]
   | .rules         => ["R5 consent is revocability (CC 1.5)", "the halt, the withdraws rules, who may file (§14)",
-                        "the walk-away right — DERIVED from R3 (§10)", "deferral — DERIVED from R2 (§11)"]
-  | .identity      => ["R1 occupancy: no agent holds a root for itself (§1', §11)",
+                        "the walk-away right — DERIVED from R3 (§10)", "deferral when unsure — universal, R2 (§11)"]
+  | .identity      => ["R1 occupancy: a made thing that acts for people holds no root for itself (§1'; stated, CC 1.13.2)",
                         "R4 degrees: sapience without sentience, consciousness open (§13)",
                         "three rules follow from being made: root, disclosure, vote (ciris.ai/philosophy)"]
-  | .confidence    => ["R2 maturity and deferral: defer when not shown mature (§11)",
+  | .confidence    => ["R2 deferral is universal: every reasoning actor defers when unsure, the most mature too (§11)",
                         "sentience not presumed; consciousness immaterial to the verdicts (§13)"]
   | .facts         => ["totality of the record — OPEN measurement (#93)",
                         "manufactured accountable humans — OPEN measurement (ciris.ai/constitutional-mesh)",
@@ -730,9 +749,9 @@ def carries : List Carry :=
     ⟨"RGR swap ⇒ vulnerable-party tie-break (b)", .premises, .priorities⟩,
     ⟨"R3 ladder, made never overrides existing ⇒ walk-away right", .priorities, .rules⟩,
     ⟨"R3 ⇒ the holder's duties survive", .priorities, .rules⟩,
-    ⟨"R2 maturity ⇒ deferral; agent to a Wise Authority, child to a guardian", .confidence, .rules⟩,
-    ⟨"R2 ⇒ R1 occupancy on today's evidence", .confidence, .identity⟩,
-    ⟨"R1 occupancy ⇒ the halt as an asymmetry of position", .identity, .rules⟩,
+    ⟨"R2 universal deferral ⇒ to whom, by position: agent to a Wise Authority, child to a guardian, adult to the record", .confidence, .rules⟩,
+    ⟨"R0 principals in positions ⇒ R1 occupancy, stated for a made thing that acts for people", .premises, .identity⟩,
+    ⟨"R1 occupancy ⇒ the halt as the condition of symmetry, a fact of position", .identity, .rules⟩,
     ⟨"R4 degrees ⇒ no stake, refusal only, without grievance", .identity, .rules⟩,
     ⟨"R5 revocability ⇒ every binding revocable; why a halt exists", .premises, .rules⟩,
     ⟨"R6 the record ⇒ signed acts, the steward answering, present tense for what ships", .record, .rules⟩,
@@ -761,5 +780,85 @@ theorem cut_is_eleven_plus_one :
     Circumstances — the two coordinates the taxonomy itself marks as held or out of scope -/
 theorem open_items_are_facts_and_circumstances :
     (fixedBy .facts).length = 3 ∧ (fixedBy .circumstances).length = 3 := ⟨rfl, rfl⟩
+
+/-! ## 16. The ethics cascade, as a chain
+
+  The constitution's own summary states the cascade: everything descends from one goal and
+  nothing sits beside it. Seven steps — Meta-Goal M-1; the six principles as co-equal
+  constraints; the decision procedure (the PDMA, the Order-Maximisation Veto, deferral); the
+  stance; the duties of making and ending; the wire; the evidence. This section states the
+  chain as data and proves what a reader can check: every step but the first names the step it
+  descends from and nothing else is at the top; every step names where it is stated and what
+  witnesses it; and the principles are constraints, not weights — an act that violates one is
+  inadmissible whatever it claims to gain, and the claimed gain is never read. -/
+
+inductive Step | metaGoal | constraints | decision | stance | duties | wire | evidence
+  deriving DecidableEq, Repr
+
+def Step.all : List Step := [.metaGoal, .constraints, .decision, .stance, .duties, .wire, .evidence]
+
+/-- what each step descends from, in the order the constitution grounds them -/
+def descendsFrom : Step → Option Step
+  | .metaGoal => none
+  | .constraints => some .metaGoal
+  | .decision => some .constraints
+  | .stance => some .decision
+  | .duties => some .stance
+  | .wire => some .duties
+  | .evidence => some .wire
+
+/-- where each step is stated, and what in this file or the other models witnesses it -/
+def witnessOf : Step → List String
+  | .metaGoal => ["CC 1.1: the vow and the operational form",
+                  "M-1's rejection clause — DERIVED from the swap (efficiency_at_weak_expense_fails_swap, §15)"]
+  | .constraints => ["CC 1.1 constraints, not weights; CC 1.15.1 the list of record",
+                     "no_gain_buys_a_violation, gain_is_never_read (§16)"]
+  | .decision => ["CC 1.3 the PDMA and the Veto; CC 1.9 deferral",
+                  "the tie-break — DERIVED from the swap (weak_position_decides, §15); deferral universal (maturity_exempts_no_one, §11)"]
+  | .stance => ["CC 1.13.2: new keepers welcomed, arising sentience met as first contact, a child above every datacenter",
+                "roleWitness (§1''); walkaway_from_made_existing, made_never_overrides_animal (§10, §13)"]
+  | .duties => ["CC 7.3, 7.5; the halt as the condition of symmetry (CC 4.2, 1.13.2)",
+                "holder_duties_survive (§10); guarantees: halt_does_not_lift, Inv_RetirementStandard; retirement: the seven-state ladder"]
+  | .wire => ["Parts 2–5; CC 4.5.13: one voice never decides who is in a room",
+              "guarantees: Inv_ExitOneStep, leave_is_one_step; two_path; membership; self_roster; census_ballot"]
+  | .evidence => ["Part 8; constitution/claims.tsv; the register checker",
+                  "INVARIANTS.tsv: every property row names its model and its section"]
+
+/-- the cascade is a chain: every step but the first descends from a named step -/
+theorem cascade_is_a_chain :
+    Step.all.all (fun s => s == .metaGoal || (descendsFrom s).isSome) = true := by decide
+
+/-- nothing sits beside M-1: the one step that descends from nothing is M-1 -/
+theorem nothing_beside_m1 :
+    Step.all.all (fun s => ((descendsFrom s).isNone == (s == .metaGoal))) = true := by decide
+
+/-- every step names where it is stated and what witnesses it -/
+theorem every_step_witnessed : Step.all.all (fun s => !(witnessOf s).isEmpty) = true := by decide
+
+/-- the six principles of CC 1.15.1, the list of record -/
+inductive Principle | autonomy | nonMaleficence | integrity | beneficence | fidelity | justice
+  deriving DecidableEq, Repr
+
+def Principle.all : List Principle :=
+  [.autonomy, .nonMaleficence, .integrity, .beneficence, .fidelity, .justice]
+
+/-- an act as the constraint rule sees it: which principles it violates, and whatever gain it
+    claims on any axis — a number the rule never reads -/
+structure Act where
+  violates : Principle → Bool
+  gain : Int
+
+/-- admissible iff it violates no principle; `gain` is not consulted -/
+def admissible (a : Act) : Bool := Principle.all.all (fun q => !(a.violates q))
+
+/-- constraints, not weights: an act that violates any one principle is inadmissible, whatever
+    it claims to gain -/
+theorem no_gain_buys_a_violation (a : Act) (q : Principle) (h : a.violates q = true) :
+    admissible a = false := by
+  cases q <;> simp [admissible, Principle.all, h]
+
+/-- the claimed gain is never read: changing it changes no verdict -/
+theorem gain_is_never_read (a : Act) (g : Int) :
+    admissible { a with gain := g } = admissible a := rfl
 
 end Reciprocity
