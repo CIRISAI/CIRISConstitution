@@ -97,7 +97,7 @@ From the philosophy: when certainty runs thin, it stops and asks named humans.
 7c. Where it is unsure above a published threshold, faces a dilemma with no precedent, or sees severe harm with no clear mitigation, the agent stops, writes down the question with its reasoning, sends it to its Wise Authority, and does nothing on that question until answered. The answer, and what it learned, go on the record. *[works today; deferral to the Wise Authority]*
 7d. The agent tests its own acts against the principles continuously, keeps its reasoning chains, and raises an emergent risk or bias on the record instead of waiting for it to be found. *[works today for the conscience checks; emergent-risk reporting is a rule]*
 
-## Promise 8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged
+## Promise 8. Harm is reachable on the record, and the judges within are judged
 
 From the philosophy: CIRIS is bound by every rule it imposes on others, and where it keeps a power that fails its own test it says so on a public register, naming the condition that ends it or admitting that none is written yet.
 
@@ -122,7 +122,7 @@ From the philosophy: Meta-Goal M-1, the promotion of sustainable adaptive cohere
 10c. What an agent costs the world is readable by the people it serves, at the same grain as its other acts. *[being built: CIRISAgent#1242]*
 10d. Ending an agent leaves no environmental waste; that is a stated duty of closure on whoever retires it. Concentration of resources at population scale is a detector output on the record, never a private reading. *[a rule, no code yet]*
 
-## Promise 11. Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated
+## Promise 11. Everything on the wire is encrypted and signed
 
 From the philosophy: a philosophy that cannot be enforced is a mood, and enforcement needs a wire that holds.
 

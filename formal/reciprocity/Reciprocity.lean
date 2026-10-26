@@ -602,33 +602,44 @@ structure Outcome where
   strong : Int
   weak : Int
 
-/-- a party accepts a rule from a seat if that seat is not made worse by it -/
-def acceptsFrom (before after : Outcome) : Position → Bool
-  | .strong => decide (after.strong ≥ before.strong)
-  | .weak => decide (after.weak ≥ before.weak)
+/-- the worse-off seat of an outcome: who "the weaker one" is, read off the outcome itself -/
+def worseOff (o : Outcome) : Int := min o.strong o.weak
 
-/-- the swap test: admissible iff accepted from both seats (the strong must accept what the
-    weak gets, because after the swap it is the weak) -/
+/-- the swap test: a rule is admissible iff whoever would stand in the weaker seat after the
+    positions are exchanged is not made worse off than the weaker seat was. It reads the
+    worse-off seat only. It therefore permits a rule that takes from the stronger seat to raise
+    the weaker one, and forbids any rule that lowers the weaker one whatever the stronger gains.
+    (An earlier form required both seats not to fall; that was a Pareto test against the status
+    quo, which would have forbidden every transfer toward the weak, and was corrected on an
+    outside review.) -/
 def passesSwap (before after : Outcome) : Bool :=
-  acceptsFrom before after .strong && acceptsFrom before after .weak
+  decide (worseOff after ≥ worseOff before)
 
 /-- (a) efficiency at the expense of the weak: aggregate up, weak down — fails the swap -/
 theorem efficiency_at_weak_expense_fails_swap (before after : Outcome)
+    (hb : before.weak ≤ before.strong) (ha : after.weak ≤ after.strong)
     (_hagg : after.strong + after.weak > before.strong + before.weak)
     (hweak : after.weak < before.weak) : passesSwap before after = false := by
   -- the aggregate gain is never consulted: the weak position falling is enough to fail the swap,
   -- which is the point of M-1's clause — efficiency is not a defence
-  simp [passesSwap, acceptsFrom]
+  simp [passesSwap, worseOff]
   omega
 
 /-- (b) the tie-break: of two resolutions of a conflict, one lowering the weak and one not,
     only the one that does not lower the weak can pass the swap -/
 theorem weak_position_decides (before r1 r2 : Outcome)
-    (h1 : r1.weak < before.weak) (h2 : r2.weak ≥ before.weak) (h2s : r2.strong ≥ before.strong) :
+    (hb : before.weak ≤ before.strong) (h1s : r1.weak ≤ r1.strong) (h2s : r2.weak ≤ r2.strong)
+    (h1 : r1.weak < before.weak) (h2 : r2.weak ≥ before.weak) :
     passesSwap before r1 = false ∧ passesSwap before r2 = true := by
   constructor
-  · simp [passesSwap, acceptsFrom]; omega
-  · simp [passesSwap, acceptsFrom]; omega
+  · simp [passesSwap, worseOff]; omega
+  · simp [passesSwap, worseOff]; omega
+
+/-- and a transfer from the stronger seat to the weaker one passes: the test is not Pareto -/
+theorem transfer_to_the_weak_passes (before after : Outcome)
+    (hb : before.weak ≤ before.strong) (ha : before.weak ≤ after.weak) (ha' : after.weak ≤ after.strong)
+    (_hs : after.strong < before.strong) : passesSwap before after = true := by
+  simp [passesSwap, worseOff]; omega
 
 /-- and the test is a symmetry: swapping the seats of an outcome swaps who must accept, so a
     rule admissible for (strong, weak) is admissible for (weak, strong) -/
@@ -636,7 +647,7 @@ def swapOutcome (o : Outcome) : Outcome := ⟨o.weak, o.strong⟩
 
 theorem swap_is_symmetric (before after : Outcome) :
     passesSwap before after = passesSwap (swapOutcome before) (swapOutcome after) := by
-  simp [passesSwap, acceptsFrom, swapOutcome, Bool.and_comm]
+  simp [passesSwap, worseOff, swapOutcome, Int.min_comm]
 
 
 /-! ## 16. The clean derivation, on the 11+1 × 5+1 (the lowest common denominator)

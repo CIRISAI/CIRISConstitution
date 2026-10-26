@@ -37,10 +37,10 @@ The register is read through eleven promises; every row below keeps one of them,
 | 5. The people who hold an agent owe duties about how they change or end it; no finding gives the agent a claim | G15, G16, G17, G19, G21, G22, G23 |
 | 6. Nobody is banned, nobody is ranked by what they are, every thinking being is met by the first-contact rules | G6 (no-ban half), G12 |
 | 7. An agent decides by published principles, none of which it may trade away, and stops to ask when unsure | G24 |
-| 8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged | G25 |
+| 8. Harm is reachable on the record, and the judges within are judged | G25 |
 | 9. Some uses are never allowed, and lethal action is one of them | G26 |
 | 10. What an agent and its node consume is measured, weighed before an act, and never hidden | G27 |
-| 11. Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated | G28 |
+| 11. Everything on the wire is encrypted and signed | G28; the rehearsal of attack and the statement of what is not protected are practices the register carries, not promises |
 | Limits on all eleven | G14 |
 
 ## 1. The table

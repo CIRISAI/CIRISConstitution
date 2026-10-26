@@ -17,10 +17,12 @@ The network exists to protect ordinary people from three things: being spoken fo
 5. The people who hold an agent owe duties about how they change or end it; no finding gives the agent a claim.
 6. No hand bans a community, nobody is ranked by what they are, and every thinking being is met by the first-contact rules.
 7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure.
-8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.
+8. Harm is reachable on the record, and the judges within are judged.
 9. Some uses are never allowed, and lethal action is one of them.
 10. What an agent and its node consume is measured, weighed before an act, and never hidden.
-11. Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated.
+11. Everything on the wire is encrypted and signed.
+
+Two things sit beside the promises and are not promises. A disclaimer: this document creates no legal claim and rules on no legal matter; whether harm has a remedy is the law's. And the practices the register carries: attack is rehearsed, what is not protected is stated, and every rule either names the code, test or proof that keeps it or the register says it does not yet. Ten of the eleven are theorems of the four-sentence basis; the eleventh, that the principles are constraints and not weights, is the one rule the constitution chooses (`formal/reciprocity/Cascade.lean`).
 
 **Where it stands.** The system runs: apps on both mobile stores, five open-source implementations of the software that carries the rows, a conformance suite that checks them against each other, fourteen machine-checked models of the governance rules, and a register that ties every rule to the code, test or proof behind it — or says plainly that nothing does yet. **The bet:** there are two roads to safe powerful AI — train values you trust, or assume the model may be wrong and make its consequential acts checkable by parties it does not control. This is the second road.
 
@@ -54,7 +56,7 @@ Everything in the document descends from one goal and nothing sits beside it.
 6. **The wire that carries it** — consent as rows the subject signs and withdraws, scope as the smallest cohort by default, the halt as one pre-signable row, every threshold M of N over a standing roster, nothing admitted on one voice (Parts 2–5).
 7. **The evidence** — every rule either names the code, test or proof that keeps it, or the register says it does not yet (Part 8, `constitution/claims.tsv`, `formal/`).
 
-The cascade itself is mechanised, and the claim is exact. [`formal/reciprocity`](formal/reciprocity/) states the basis in four sentences and proves, from the Recursive Golden Rule as a swap test, which steps between it and the constitution are theorems (M-1's rejection of order bought at the weak position's expense; the tie-break that the weak position decides) and which are premises the text states as its own rules. Over three roles and finite flags, `Cascade.lean` then takes the eleven promises one by one: four stand on the four sentences alone (1, 2, 3, 5), seven need a rule the constitution chose and names (4, 6, 7, 8, 9, 10, 11), and two of those rest on no sentence of the basis at all (6, 10); a finite world that satisfies the basis and keeps the four while failing the others is the witness. [`formal/guarantees`](formal/guarantees/) checks every guarantee at once, for human and AI participants by the same text.
+The cascade itself is mechanised, and the claim is exact. [`formal/reciprocity`](formal/reciprocity/) states the basis in four sentences and proves, from the Recursive Golden Rule as a swap test, which steps between it and the constitution are theorems (M-1's rejection of order bought at the weak position's expense; the tie-break that the weak position decides) and which are premises the text states as its own rules. Over three roles and finite flags, `Cascade.lean` then takes the eleven promises one by one. On the basis read narrowly, four stand on the four sentences alone; read one notch wider, each widening named, seven; and once the practices are taken out of the promises and the disclaimer is just that, ten of the eleven are theorems of the basis and exactly one rule remains that it does not carry, the principles as constraints (`ten_from_the_basis`, `the_one_rule`). Finite worlds that satisfy the basis and lack what it does not carry are the witnesses. [`formal/guarantees`](formal/guarantees/) checks every guarantee at once, for human and AI participants by the same text.
 
 ## The repository
 

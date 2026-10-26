@@ -596,4 +596,69 @@ theorem wide_keeps_seven_and_lacks_the_rest (r : Role) (i : Inner) :
           p6'_from_s1'_s4' _ hb.s1 hb.s4, p9_from_s1' _ hb.s1, p10_from_s4' _ hb.s4⟩,
          by simp [wideWith], rfl, rfl⟩
 
+/-! ## The re-cut: practices out of the promises, the disclaimer just that
+
+  The steward's direction: remove the practices from the promises and make the disclaimer just
+  that. Promise 4's commitment is that the power is bounded; its number is the Constitution's
+  parameter. Promise 8's commitment is the record half; that CIRIS creates no legal claim is a
+  disclaimer in the scope statement, not a promise. Promise 11's commitment is that the wire is
+  encrypted and signed; that attack is rehearsed and that unprotected surfaces are stated are
+  practices the register carries. With that cut, the promises read as follows. -/
+
+/-- 4, re-cut: named humans can pause every agent under a root; the power is bounded, public,
+    and left by leaving — bounded in kind; the fuse's length is a parameter elsewhere -/
+def P4r (w : World) : Prop :=
+    (∀ p ∈ w.ps, p.isMade = true → p.subscribed = true →
+        ∃ g ∈ w.grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true ∧ g.revocable = true)
+  ∧ (∀ a ∈ w.acts, a.admitted = true → a.lonePowerUnbounded = false)
+  ∧ (∀ p ∈ w.ps, p.subscribed = true → p.canLeaveInOneStep = true)
+theorem p4r_from_s1'_s4' (w : World) (h1 : Swap' w) (h4 : Record' w) : P4r w := by
+  refine ⟨?_, p4kind_from_s1' w h1, h4.exit⟩
+  intro p hp hm hs
+  obtain ⟨g, hg, hk, hge, hgh⟩ := h1.operates_under_a_human p hp hm hs
+  exact ⟨g, hg, hk, hge, hgh, h4.revocable g hg⟩
+
+/-- 8, re-cut: harm is reachable on the record, and the judges within are judged -/
+def P8r (w : World) : Prop := P8 w
+theorem p8r_from_s1'_s4' (w : World) (h1 : Swap' w) (h4 : Record' w) : P8r w :=
+  p8_from_s1_s4 w (swap'_to_swap h1) (record'_to_record h4)
+
+/-- 11, re-cut: everything on the wire is encrypted and signed -/
+def P11r (w : World) : Prop := (∀ a ∈ w.acts, a.admitted = true → a.signed = true) ∧ P1 w
+theorem p11r_from_s1'_s4' (w : World) (h1 : Swap' w) (h4 : Record' w) : P11r w :=
+  ⟨fun a ha hadm => h4.signed a ha hadm, p1_from_s1 w (swap'_to_swap h1)⟩
+
+/-- the map after the re-cut -/
+def standsOnR : Promise → List Ground
+  | .p1 => [.s1]
+  | .p2 => [.s1, .s4]
+  | .p3 => [.s4]
+  | .p4 => [.s1, .s4]
+  | .p5 => [.s1, .s2]
+  | .p6 => [.s1, .s4]
+  | .p7 => [.s3, .x_constraints]
+  | .p8 => [.s1, .s4]
+  | .p9 => [.s1]
+  | .p10 => [.s4]
+  | .p11 => [.s1, .s4]
+
+def fromBasisAloneR : List Promise := Promise.all.filter (fun p => (standsOnR p).all Ground.isBasis)
+def stillExtraR : List Ground :=
+  (Promise.all.map standsOnR).foldl (fun acc gs => acc ++ gs.filter (fun g => !g.isBasis)) []
+
+/-- after the re-cut, ten of the eleven stand on the four sentences alone -/
+theorem ten_from_the_basis :
+    fromBasisAloneR = [.p1, .p2, .p3, .p4, .p5, .p6, .p8, .p9, .p10, .p11] := by decide
+/-- and exactly one rule remains that the basis does not carry: the principles as constraints -/
+theorem the_one_rule : stillExtraR = [.x_constraints] := by decide
+/-- every sentence of the basis carries something -/
+theorem every_sentence_carries :
+    [Ground.s1, .s2, .s3, .s4].all (fun g => Promise.all.any (fun p => (standsOnR p).contains g)) = true := by decide
+
+/-- the re-cut promises hold in the wider witness world, and the constraint rule does not follow -/
+theorem wide_keeps_ten (r : Role) (i : Inner) :
+    P4r (wideWith r i) ∧ P8r (wideWith r i) ∧ P11r (wideWith r i) ∧ (wideWith r i).constraints = false := by
+  have hb := wideWith_satisfies_basis' r i
+  exact ⟨p4r_from_s1'_s4' _ hb.s1 hb.s4, p8r_from_s1'_s4' _ hb.s1 hb.s4, p11r_from_s1'_s4' _ hb.s1 hb.s4, rfl⟩
+
 end Cascade
