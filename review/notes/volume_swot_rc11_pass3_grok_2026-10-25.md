@@ -58,7 +58,7 @@ The in-house passes were run by the model that wrote most of the text. The value
 - `subject_key_ids` "member absent" is the column beside the row; "always present, `[]` when empty" is the row mirror inside the envelope. Two positions, two rules, both in `signed_object.tsv`. The 2.1 catalog row should say which position it describes; not a contradiction.
 - The 8.6.1 citations (Muse Glimmer, Dots, GPT-6.1 Astra, EO 14434) are dated after the reviewing model's training. They were gathered by web search on 2026-10-12 at the steward's request and the Part says so. The reviewer's "fabricated evidence" is a knowledge-cutoff artefact, and a warning: a reader with an older cutoff will react the same way. The claim row `CLM-factual-premise` is `normative-only` by design.
 - "Section 8.7 is missing" from the Register: 8.7 (the case studies) prints in the Charter by `pieces.tsv`; the Register volume's cover could say which Part 8 sections it carries.
-- "Levicium" (threats p. 44) does not occur in the source or the PDF text; a reviewer artefact.
+- "Levicium" (threats p. 44): the source token is `Leviculum` (3.x and 5.4.6), an unnamed substrate; the reviewer misspelled it, and this note first said the token did not exist, which was wrong (corrected in the pass-5 note).
 - `test_drain_requests_graceful_shutdown_only` is the name of a test in another repository, carried as an evidence pointer; it is not CC prose and is not renamed.
 
 ## Rulings, pass 3 (R41–R56), and the mechanical sets (M1–M8)

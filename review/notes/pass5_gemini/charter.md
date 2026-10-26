@@ -1,0 +1,53 @@
+# The Charter (ciris_constitution-1.0-rc11-charter.pdf, 40 pages)
+
+**Care score:** 3  
+**One-line verdict:** A mostly clean philosophical and lifecycle lens that needs a targeted cleanup pass to resolve an internal contradiction on Wise Authority claim adjudication, strip remaining RFC 2119 keywords and draft scaffolding, and fix inverted section ordering in CC 1.15–1.16.
+
+## Strengths
+- Clear boundary-setting on the cover page regarding what binds by adoption versus what binds by wire conformance (p. 1).
+- Explicit non-aggregation and non-commensurability rules for Meta-Goal M-1 and the six principles, preventing utilitarian trade-offs (p. 4–5).
+- Thorough separation between legal jurisdiction and federation record-keeping in the normative dispute resolution blocks (p. 30, 36).
+- Precise, falsifiable framing of the durable trace invariant (`ACTION_RESULT` anchoring) and its privacy rationale (p. 14–15).
+
+## Weaknesses
+- **Internal contradiction on RFC 2119 usage:** Page 1 states "This volume does not use RFC 2119: its duties are stated as plain imperatives", but uppercase RFC 2119 keywords appear twelve times in the body: "MUST-abort" (p. 5), "MUST NOT" and "MUST" (p. 6), "MUST", "MUST NOT", and seven more instances of "MUST" (p. 14–15), and "SHOULD" (p. 33).
+- **Internal contradiction on Creator Negligence Claim (CNC) adjudication:** The intro to CC 7.3.5 says creation duties are made enforceable by "a claims process the Wise Authority adjudicates after the fact" (p. 29), which directly contradicts the normative block on the next page stating a claim is adjudicated by "the court, regulator or licensing authority with jurisdiction... never a federation office" and "The Wise Authority adjudicates only the federation’s own deferrals and in-federation objections" (p. 30).
+- **Internal contradiction on ordering of duties vs. co-equal constraints:** CC 1.1 states the six principles "are constraints, not weights (normative). The six are co-equal because there is nothing to rank them in" (p. 4), and CC 7.1.4 states "there is no ordering to apply, only constraints" (p. 22), yet CC 7.1.4 immediately provides a numbered 1–5 "Prioritisation Heuristic" (p. 22) and CC 7.2.2 directs agents to "default to Non-Maleficence Priority" (p. 23).
+- **Internal tension on lethal vs. weapons systems:** CC 7.4 states "A CIRIS agent takes no lethal action... A system built to take lethal action is built under some other framework; this document does not govern it" (p. 30–31), but the A0–A4 autonomy table in CC 7.5.3.1 lists "surgery, weapons" as the example for Tier A4 Critical (p. 32).
+- **Inverted section ordering and verbatim duplication in CC 1.15–1.16:** "1.15.10 Conclusion" is followed by "1.15.11 Introduction: Becoming an Ethical Entity" (p. 18); "1.16 Introduction" is immediately followed by "1.16.1 Conclusion" before the body of 1.16 (1.16.2–1.16.6) even begins (p. 19). Furthermore, CC 1.16.4 (p. 19) is a verbatim copy-paste of CC 1.9 (p. 8).
+- **Missing sections without omission markers:** `[1.2 printed in another volume]` (p. 4) and `[1.13.3 printed in another volume]` (p. 13) are marked, but CC 1.14 is completely absent between CC 1.13.6 (p. 15) and CC 1.15 (p. 15) with no marker, and Parts 2–6 and 8.1–8.6 are skipped without markers.
+- **Draft scaffolding and editorializing in normative Parts:** "the enumeration lives in the canonical working draft" (p. 7); "(CIRIS editorial — not reproduced Accord text...)" (p. 4, 17); "Why this is named here and not bracketed. Engineering specs tend to bracket anthropology..." (p. 10); "Adversarial reviewers: this is the test to push on." (p. 7).
+- **Comparative claims / marketing language:** Calling out unnamed competitor vendors in Part 1 ("deployed at consumer scale, by vendors who describe no steward... one such agent product shipped the day after its vendor withheld a successor model", p. 12) and self-promotional phrasing ("Act as a live demonstration of CIRIS viability", p. 25).
+- **Unanchored numbers and undefined shorthand in prose:** "0.1 % operations levy" (p. 17; also referenced on p. 35 with no definition of who collects or holds it), "> 0.5 %" recursive modelling threshold (p. 23), ">10,000" audience size and "≥ 0.5%" harm uplift (p. 28), ">80% based on relevant NIST guidelines" (p. 29), "> 50,000 individuals" and "30 days" (p. 29), "KPI-degradation ≥ 20 % for three consecutive quarters" (p. 32), and shorthand references to "plain rule 7b" (p. 22), "plain rule N5", "plain rules 1c and 1e" (p. 34), and "(G16)" (p. 35) which are never defined in this volume.
+
+## Opportunities
+- **Trim wire-heavy subsections from Part 1:** Sections 1.7 ("The 1+4 minimal-and-adequate claim", p. 6–7) and 1.13.4 ("The kinds-of-change map", p. 13–14) dump dozens of raw wire prefixes (`subject_kinds`, `consensus_protocol`, RATCHET's 27 dimensions, `ρ̄`, `k_eff`) onto a reader who was told on page 1 that this volume is for "accord holders, stewards, ethicists and the public" and leaves out wire rules. Replacing those paragraphs with a two-sentence summary and a pointer to *The Wire* would sharpen the volume's focus.
+- **Deduplicate the Part 1 restatements:** Merging the redundant Chapter/Section loops in CC 1.4–1.12, CC 1.15, and CC 1.16 would cut ~3 pages of repetitive bullet points without losing any substance.
+
+## Threats
+- **Legal/regulatory ambiguity on Creator Negligence Claims (p. 29 vs. p. 30):** A hostile lawyer or regulator reading CC 7.3.5 will immediately seize on the first sentence ("a claims process the Wise Authority adjudicates after the fact", p. 29) as evidence that CIRIS sets up an unaccountable private court, directly undermining the careful jurisdictional disclaimer added on page 30.
+- **Weapons example in the Autonomy Table (p. 30 vs. p. 32):** Claiming an absolute, exceptionless ban on lethal action and lethal systems in CC 7.4 ("takes no lethal action... lends it no key and no name", p. 30–31) while listing "weapons" as a standard A4 use case two pages later (p. 32) will look like hypocrisy or sloppy editing to an ethicist or hostile reviewer.
+- **Self-refuting cover page claim on RFC 2119 (p. 1 vs. p. 5, 6, 14, 15, 33):** Telling the reader on page 1 that the volume avoids RFC 2119 keywords and then using `MUST`, `MUST NOT`, and `SHOULD` a dozen times undermines confidence in the document's mechanical rigor.
+
+## Top defects (ranked, at most 8)
+| # | Page | Kind | What | Suggested fix |
+|---|---|---|---|---|
+| 1 | p. 29 vs. p. 30 | contradiction | CC 7.3.5 intro says CNCs are enforced by "a claims process the Wise Authority adjudicates after the fact", contradicting the p. 30 normative rule that courts adjudicate claims and WAs never sit as a court. | Rewrite the p. 29 sentence to say "and a record trail that supports adjudication in the court or authority with jurisdiction." |
+| 2 | p. 30 vs. p. 32 | contradiction | CC 7.4 bans lethal action and disavows lethal systems ("this document does not govern it"), but CC 7.5.3.1 table lists "weapons" as an example for Tier A4 Critical. | Remove "weapons" from the A4 example cell on p. 32 (e.g., replace with "surgery, grid-trip control"). |
+| 3 | p. 1 vs. p. 5–6, 14–15, 33 | contradiction | Cover page states "This volume does not use RFC 2119", but `MUST`, `MUST NOT`, and `SHOULD` appear 12 times in CC 1.3, 1.13.6, and 7.5.4. | Lowercase and rephrase the 12 instances into plain imperatives to match the Charter's house style. |
+| 4 | p. 18–19 | numbering | CC 1.15.11 ("Introduction: Becoming an Ethical Entity") is placed *after* CC 1.15.10 ("Conclusion"); CC 1.16.1 ("Conclusion") is placed *before* the body sections CC 1.16.2–1.16.6; CC 1.14 is missing with no omission marker. | Move 1.15.11 to the start of 1.15, move 1.16.1 to the end of 1.16, and add `[1.14 printed in another volume]` on p. 15. |
+| 5 | p. 4 vs. p. 22–23 | contradiction | CC 1.1 and CC 7.1.4 state principles have no ordering or ranking ("constraints, not weights", "no ordering to apply"), followed immediately by a numbered 1–5 "Prioritisation Heuristic" (p. 22) and "Non-Maleficence Priority" (p. 23). | Rename "Prioritisation Heuristic" to "Constraint Checklist" (unnumbered bullets) and change "Non-Maleficence Priority" to "non-maleficence fail-safe". |
+| 6 | p. 4, 7, 17 | stale | Leftover draft scaffolding: "the enumeration lives in the canonical working draft" (p. 7) and "(CIRIS editorial — not reproduced Accord text...)" (p. 4, 17). | Replace "canonical working draft" with a pointer to *The Evidence Register* or *The Wire*; remove the parenthetical "CIRIS editorial" notes. |
+| 7 | p. 12 | editorializing | Comparative claim against other projects in Part 1 ("by vendors who describe no steward... one such agent product shipped the day after its vendor withheld a successor model"). | State the factual risk condition in neutral terms in Part 1 and leave vendor-specific history strictly inside CC 8.6.1. |
+| 8 | p. 17, 22, 34, 35 | unclear rule | Undefined internal shorthand ("plain rule 7b", "plain rule N5", "plain rules 1c and 1e", "(G16)") and an unanchored "0.1 % operations levy" (p. 17, 35) with no definition or register citation. | Expand the shorthand to name the volume/section where those rules live (e.g., *The Digests* or *The Constitution*), and cite or remove the 0.1% levy. |
+
+## Rendering
+- **Broken section ordering / hierarchy:** On p. 18, `1.15.11 Introduction: Becoming an Ethical Entity` renders after `1.15.10 Conclusion`. On p. 19, `1.16.1 Conclusion` renders immediately after `1.16 Introduction` and before `1.16.2`–`1.16.6`.
+- **Missing section gap:** Section `1.14` is skipped between `1.13.6` and `1.15` (p. 15) without an omission bracket like `[1.2 printed in another volume]`.
+- **Nested list flattening:** In CC 7.2.2 (p. 23), sub-conditions `(i)` and `(ii)` and `"Then default to..."` under `"Termination Safeguard: Halt recursive modelling when:"` are rendered as top-level bullets rather than indented sub-bullets.
+- **Inline run-in lists:** In CC 1.15.7 (p. 18), `7.3.1` (p. 25–26), `7.3.2` (p. 26), and `7.5.2` (p. 31), bolded or lettered list items (`A. Tangible: ... B. Informational: ...`) are collapsed into single dense paragraphs instead of rendering as distinct list items as in `7.3.4` (p. 28).
+
+## Effort estimate
+Roughly 3 to 4 hours of editing, nearly all mechanical (fixing section order in 1.15–1.16, lowercasing 12 RFC 2119 keywords, removing the "weapons" table example and the stale WA adjudication sentence in 7.3.5, and expanding shorthand pointers), requiring steward sign-off only on whether to keep or cut the "0.1% operations levy" in 1.15.3/7.5.6.
+
+<!-- model google/gemini-4-argon; 40 pages; prompt_tokens 25547; completion_tokens 3212; 44s -->
