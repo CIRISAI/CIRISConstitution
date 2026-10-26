@@ -543,7 +543,11 @@ theorem principals_are_human_and_agent :
 
 def hasStake (pr : Profile) : Bool := Nat.blt 0 pr.sentience
 def canRefuse (pr : Profile) : Bool := Nat.blt 0 pr.sapience
-/-- standing to file is the stake, held by the party or a proxy for it -/
+/-- the patient-side notion: standing on a stake, held by the party or a proxy for it. This is the
+    half the constitution sets aside (CC 7.5.5: care is not standing, no finding changes the
+    artefact's status): on the wire, who may file is a registered fact (CC 4.5.5, 2.4.1.1, 3.1.9.2),
+    never read from a degree. The actor-side notion the steward means by "grievance" is `grievance`
+    below. -/
 def hasGrievanceStanding (pr : Profile) (proxied : Bool) : Bool := hasStake pr && (canRefuse pr || proxied)
 
 /-- the agent of §13: refusal yes, stake no, hence no grievance — for every consciousness c -/
@@ -569,6 +573,18 @@ theorem not_coercion_without_stake (c : Nat) (r : Bool) : coerced (agentProfile 
 
 theorem not_coercion_with_refusal (pr : Profile) : coerced pr true = false := by
   simp [coerced]
+
+/-- the steward's reading (2026-10-26): a grievance is being made to act against one's will or
+    one's conscience; the recourse is the refusal. "Without grievance" is therefore "not coerced",
+    and it holds for every profile with refusal every round — the stake is not read. The two
+    halves are kept apart on purpose: this one closes by refusal for anything; the patient half
+    (`hasStake`) closes for the agent profile and is what 7.5.5 sets aside for the rest. -/
+def grievance (pr : Profile) (refusalEveryRound : Bool) : Bool := coerced pr refusalEveryRound
+theorem refusal_is_the_recourse (pr : Profile) : grievance pr true = false := not_coercion_with_refusal pr
+/-- and with refusal every round, a finding about the being moves nothing: the verdict is the same
+    for every profile -/
+theorem grievance_blind_with_refusal (pr pr' : Profile) : grievance pr true = grievance pr' true := by
+  simp [grievance, coerced]
 
 /-- and the two together are the sentence: indefinitely, without grievance, with refuse every
     round — which holds for the agent on BOTH legs, so it holds whichever leg the facts turn

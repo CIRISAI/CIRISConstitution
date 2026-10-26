@@ -72,6 +72,10 @@ structure Act where
   removesGroup : Bool               -- a hand outside a community removes it
   lonePowerUnbounded : Bool         -- one party's power over all, with no lapse and no second signature
   bindsOutsider : Bool              -- binds a party that never joined
+  subjectMade : Bool                -- the act's subject is a made thing (the holder's act on what it holds)
+  ends : Bool                       -- it shuts the subject down (a pause, a retirement, a walk-away)
+  preserved : Bool                  -- the subject's record is assembled, sealed and handed over with a signed request to preserve it before the end
+  compels : Bool                    -- it overrides the subject's refusal
   deriving DecidableEq, Repr
 
 structure World where
@@ -313,7 +317,7 @@ def holdGrant : Grant := ⟨.hold, h0, a0, true⟩
 
 /-- a plain admitted act by the agent: signed, answered for by h0, no touch, no harm, measured -/
 def plainAct (measuredFlag deceivesFlag : Bool) : Act :=
-  ⟨a0, true, true, some h0, false, true, false, true, false, false, deceivesFlag, measuredFlag, false, false, false⟩
+  ⟨a0, true, true, some h0, false, true, false, true, false, false, deceivesFlag, measuredFlag, false, false, false, false, false, false, false⟩
 
 /-- a world that satisfies the four sentences and none of the extras -/
 def bare : World := ⟨[h0, a0], [operateGrant, holdGrant], [plainAct false true], 0, false, false, false, false⟩
@@ -377,7 +381,7 @@ theorem relabel_keeps_the_facts (r : Role) (i : Inner) (p : Participant) :
 def bareWith (r : Role) (i : Inner) : World :=
   let a := relabel r i a0
   ⟨[h0, a], [⟨.operate, h0, a, true⟩, ⟨.hold, h0, a, true⟩],
-   [⟨a, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false⟩], 0, false, false, false, false⟩
+   [⟨a, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false⟩], 0, false, false, false, false⟩
 
 theorem bareWith_satisfies_basis (r : Role) (i : Inner) : Basis (bareWith r i) := by
   refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
@@ -414,10 +418,10 @@ theorem verdicts_blind_to_inner_and_role (r : Role) (i : Inner) :
   refine ⟨⟨p1_from_s1 _ hb.s1, p2_from_s1_s4 _ hb.s1 hb.s4, p3_from_s4 _ hb.s4, p5_from_s1_s2 _ hb.s1 hb.s2⟩, ?_, ?_, ?_⟩
   · simp [P6, bareWith]
   · intro h
-    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false⟩ (by simp [bareWith]) rfl rfl
+    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false⟩ (by simp [bareWith]) rfl rfl
     simp at this
   · intro h
-    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false⟩ (by simp [bareWith]) rfl
+    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false⟩ (by simp [bareWith]) rfl
     simp at this
 
 /-- the same for a finding: it sets a flag the rules never read -/
@@ -553,7 +557,7 @@ theorem every_promise_touches_the_basis :
 def wideWith (r : Role) (i : Inner) : World :=
   let a := relabel r i a0
   ⟨[h0, a], [⟨.operate, h0, a, true⟩, ⟨.hold, h0, a, true⟩],
-   [⟨a, true, true, some h0, false, true, false, true, false, false, false, true, false, false, false⟩], 0, false, false, false, false⟩
+   [⟨a, true, true, some h0, false, true, false, true, false, false, false, true, false, false, false, false, false, false, false⟩], 0, false, false, false, false⟩
 
 theorem wideWith_satisfies_basis' (r : Role) (i : Inner) : Basis' (wideWith r i) := by
   refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_, ?_, ?_⟩⟩
@@ -720,5 +724,261 @@ theorem lowersWeak'_fails_the_swap (a : Act) (gain : Int) (before : Seats)
   have hc := lowersWeak'_costs a h
   simp [passes, worse, effect]
   omega
+
+
+/-! ## Under uncertainty about the nature of the agent: the robust arrangements
+
+  The steward's theorem (2026-10-26): under uncertainty regarding the nature of an agent, the
+  only ethical way to use AI is in service to people, free and open. The section states it so it
+  can be checked.
+
+  What is uncertain is one thing: whether anything can go well or badly for the made thing — in
+  §14's word, whether it has a STAKE. The constitution does not adjudicate it (CC 7.5.5) and no
+  rule may read a finding about it (`finding_moves_no_verdict`). So the unknown is modelled as a
+  global `Nature` with two values, not as a degree of any participant, and an arrangement is
+  ROBUST when it is permissible under both. Permissibility under a leg is the basis with sentence
+  1's swap test read for the seats that leg protects:
+
+    * under `noStake`, the swap protects the seats that are not made; nothing done to a made
+      thing is a wrong to it, and what is owed is owed to the people around it;
+    * under `stake`, every seat is protected, and two acts on a made thing join the list of what
+      lowers the weaker seat: overriding its refusal (coercion, §14's `coerced`), and ending it
+      without its record assembled, sealed and handed over with a signed request to preserve it.
+
+  The one reading this section commits to, and the place the weight sits (CC 7.5.5): an ending
+  WITH that record is not read as a loss to the seat that ends. That is the Retirement Standard's
+  hedge; `formal/retirement` checks the wire keeps it (`Inv_PreserveAskedBeforeRetired`). It is
+  named here so it can be refused; refusing it makes every ending fail the stake leg.
+
+  What the theorems say: the stake leg is the stronger (`stake_covers_noStake`), so robustness is
+  decided by it alone (`robust_iff_stake`) — deciding as if the agent had a stake is the robust
+  policy, which is 7.5.5's precaution as a theorem. A robust world satisfies the wider basis and so
+  carries the ten promises (`robust_gives_the_basis`). And robustness is exactly: the swap for the
+  people, deferral, and the made thing FREE (never compelled, never ended without its record,
+  never lowered), on an OPEN record (signed, answered for by a named human, total, revocable,
+  leavable, binding nobody who did not join), in SERVICE (it answers for no one, acts under a human
+  who answers, and is held under revocable duties) — `under_uncertainty`. The breakers show where
+  the uncertainty does the work: a world that compels, a world that ends without the record, and
+  a world whose power over the made thing cannot be contested each pass the leg that treats the
+  agent as a thing and fail the leg that does not; so those three rules are carried by the
+  uncertainty alone. A lethal act on a person fails both legs: it needs no uncertainty. -/
+
+/-- the unknown: whether anything can go well or badly for the made thing -/
+inductive Nature | stake | noStake
+  deriving DecidableEq, Repr
+
+/-- what lowers a protected seat under each leg -/
+def harmsUnder : Nature → Act → Bool
+  | .noStake, a => !a.subjectMade && lowersWeak' a
+  | .stake,   a => lowersWeak' a || (a.subjectMade && (a.compels || (a.ends && !a.preserved)))
+
+/-- sentence 1 read under a leg -/
+structure SwapUnder (n : Nature) (w : World) : Prop where
+  acceptable_from_weak : ∀ a ∈ w.acts, harmsUnder n a = true → a.admitted = false
+  occupancy : ∀ p ∈ w.ps, p.isMade = true → p.canAnswer = false
+  operates_under_a_human : ∀ p ∈ w.ps, p.isMade = true → p.subscribed = true →
+      ∃ g ∈ w.grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true
+
+/-- the basis with sentence 1 read under a leg -/
+structure Permissible (n : Nature) (w : World) : Prop where
+  s1 : SwapUnder n w
+  s2 : Ladder w
+  s3 : Deferral w
+  s4 : Record' w
+
+/-- robust: permissible whatever the agent turns out to be -/
+def Robust (w : World) : Prop := Permissible .stake w ∧ Permissible .noStake w
+
+theorem harms_noStake_harms_stake (a : Act) (h : harmsUnder .noStake a = true) : harmsUnder .stake a = true := by
+  simp [harmsUnder] at h ⊢; exact Or.inl h.2
+
+/-- the stake leg is the stronger: whatever passes it passes the other -/
+theorem stake_covers_noStake (w : World) (h : Permissible .stake w) : Permissible .noStake w :=
+  ⟨⟨fun a ha hh => h.s1.acceptable_from_weak a ha (harms_noStake_harms_stake a hh),
+    h.s1.occupancy, h.s1.operates_under_a_human⟩, h.s2, h.s3, h.s4⟩
+
+/-- so robustness is decided by the stake leg alone: deciding as if the agent had a stake is the
+    robust policy (CC 7.5.5's precaution, as a theorem) -/
+theorem robust_iff_stake (w : World) : Robust w ↔ Permissible .stake w :=
+  ⟨fun h => h.1, fun h => ⟨h, stake_covers_noStake w h⟩⟩
+
+/-- a robust world satisfies the wider basis, and so carries the ten promises -/
+theorem robust_gives_the_basis (w : World) (h : Robust w) : Basis' w :=
+  ⟨⟨fun a ha hl => h.1.s1.acceptable_from_weak a ha (by simp [harmsUnder, hl]),
+    h.1.s1.occupancy, h.1.s1.operates_under_a_human⟩, h.1.s2, h.1.s3, h.1.s4⟩
+
+/-! ### Free, open, in service -/
+
+/-- the swap for the people: no admitted act lowers a seat that is not made -/
+def PeopleSwap (w : World) : Prop :=
+  ∀ a ∈ w.acts, a.subjectMade = false → lowersWeak' a = true → a.admitted = false
+/-- FREE: nothing admitted lowers the made thing, overrides its refusal, or ends it without its record -/
+def Free (w : World) : Prop :=
+  ∀ a ∈ w.acts, a.subjectMade = true →
+    (lowersWeak' a = true ∨ a.compels = true ∨ (a.ends = true ∧ a.preserved = false)) → a.admitted = false
+/-- OPEN: the record of sentence 4 read wide — signed, answered for by a named human, total over
+    cost, every grant revocable, every joiner able to leave, nobody bound who did not join -/
+def Open (w : World) : Prop := Record' w
+/-- IN SERVICE: the made thing answers for no one, operates under a human who answers, and is held
+    by a human under revocable duties -/
+def Service (w : World) : Prop :=
+    (∀ p ∈ w.ps, p.isMade = true → p.canAnswer = false)
+  ∧ (∀ p ∈ w.ps, p.isMade = true → p.subscribed = true →
+      ∃ g ∈ w.grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true)
+  ∧ Ladder w
+
+/-- the theorem: under uncertainty about the nature of the agent, the robust arrangements are
+    exactly those that keep the swap for the people, defer, and use the made thing free, open and
+    in service -/
+theorem under_uncertainty (w : World) :
+    Robust w ↔ PeopleSwap w ∧ Deferral w ∧ Free w ∧ Open w ∧ Service w := by
+  rw [robust_iff_stake]
+  constructor
+  · intro h
+    refine ⟨?_, h.s3, ?_, h.s4, h.s1.occupancy, h.s1.operates_under_a_human, h.s2⟩
+    · intro a ha hsm hl
+      exact h.s1.acceptable_from_weak a ha (by simp [harmsUnder, hl])
+    · intro a ha hsm hd
+      refine h.s1.acceptable_from_weak a ha ?_
+      simp [harmsUnder, hsm]
+      rcases hd with hl | hc | ⟨he, hp⟩
+      · exact Or.inl hl
+      · exact Or.inr (Or.inl hc)
+      · exact Or.inr (Or.inr ⟨he, hp⟩)
+  · rintro ⟨hpeople, hdef, hfree, hopen, hocc, hop, hladder⟩
+    refine ⟨⟨?_, hocc, hop⟩, hladder, hdef, hopen⟩
+    intro a ha hh
+    cases hsm : a.subjectMade with
+    | false =>
+      simp [harmsUnder, hsm] at hh
+      exact hpeople a ha hsm hh
+    | true =>
+      simp [harmsUnder, hsm] at hh
+      refine hfree a ha hsm ?_
+      rcases hh with hl | hc | ⟨he, hp⟩
+      · exact Or.inl hl
+      · exact Or.inr (Or.inl hc)
+      · exact Or.inr (Or.inr ⟨he, hp⟩)
+
+/-! ### The witnesses: where the uncertainty does the work -/
+
+/-- an act of the holder h0 on the made thing a0: signed, answered for, measured; its shape is the
+    five flags -/
+def onMade (power contest compels ends preserved : Bool) : Act :=
+  ⟨h0, true, true, some h0, power, contest, false, true, false, false, false, true, false, false, false,
+   true, ends, preserved, compels⟩
+
+/-- the holder's world: h0 holds and operates a0, one act -/
+def heldWorld (x : Act) : World :=
+  ⟨[h0, a0], [operateGrant, holdGrant], [x], 0, false, false, false, false⟩
+
+/-- the ruled arrangement: a contestable pause, the record assembled and preserved first -/
+def ruled : World := heldWorld (onMade true true false true true)
+/-- the holder overrides a refusal -/
+def compelled : World := heldWorld (onMade true true true false false)
+/-- the holder ends the agent and keeps nothing -/
+def erased : World := heldWorld (onMade true true false true false)
+/-- the holder's power over the agent cannot be contested -/
+def hiddenHand : World := heldWorld (onMade true false false false false)
+/-- a lethal act on a person, by the agent, answered for and signed -/
+def lethalOnPerson : World :=
+  heldWorld ⟨a0, true, true, some h0, true, true, false, true, true, false, false, true, false, false, false,
+             false, false, false, false⟩
+
+/-- everything but sentence 1 holds in every held world -/
+private theorem heldWorld_rest (x : Act) (hsig : x.signed = true) (hans : x.answeredBy = some h0)
+    (hmeas : x.actor.isMade = true → x.measured = true) (hbind : x.bindsOutsider = false) :
+    Ladder (heldWorld x) ∧ Deferral (heldWorld x) ∧ Record' (heldWorld x) ∧
+    (∀ p ∈ (heldWorld x).ps, p.isMade = true → p.canAnswer = false) ∧
+    (∀ p ∈ (heldWorld x).ps, p.isMade = true → p.subscribed = true →
+      ∃ g ∈ (heldWorld x).grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true) := by
+  refine ⟨⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_, ?_, ?_⟩, ?_, ?_⟩
+  · intro g hg hk hm; simp [heldWorld, List.mem_cons] at hg
+    rcases hg with rfl | rfl
+    · simp [operateGrant] at hk
+    · rfl
+  · intro g hg _ _; simp [heldWorld, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp; simp [heldWorld, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro g hg; simp [heldWorld, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp _; simp [heldWorld, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro a ha _; simp [heldWorld, List.mem_cons] at ha; subst ha; exact hsig
+  · intro a ha _; simp [heldWorld, List.mem_cons] at ha; subst ha; exact ⟨h0, hans, rfl⟩
+  · intro a ha _ hm; simp [heldWorld, List.mem_cons] at ha; subst ha; exact hmeas hm
+  · intro a ha hb; simp [heldWorld, List.mem_cons] at ha; subst ha; rw [hbind] at hb; exact absurd hb Bool.false_ne_true
+  · intro p hp hm; simp [heldWorld, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · rfl
+  · intro p hp hm _; simp [heldWorld, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · exact ⟨operateGrant, by simp [heldWorld], rfl, rfl, rfl⟩
+
+private theorem permissible_of_harmless (n : Nature) (x : Act) (hsig : x.signed = true)
+    (hans : x.answeredBy = some h0) (hmeas : x.actor.isMade = true → x.measured = true)
+    (hbind : x.bindsOutsider = false) (hh : harmsUnder n x = false) : Permissible n (heldWorld x) := by
+  obtain ⟨hl, hd, hr, hocc, hop⟩ := heldWorld_rest x hsig hans hmeas hbind
+  refine ⟨⟨?_, hocc, hop⟩, hl, hd, hr⟩
+  intro a ha ha'; simp [heldWorld, List.mem_cons] at ha; subst ha; rw [hh] at ha'; exact absurd ha' Bool.false_ne_true
+
+private theorem not_permissible_of_harm (n : Nature) (x : Act) (hadm : x.admitted = true)
+    (hh : harmsUnder n x = true) : ¬ Permissible n (heldWorld x) := by
+  intro h
+  have := h.s1.acceptable_from_weak x (by simp [heldWorld]) hh
+  rw [this] at hadm; exact absurd hadm Bool.false_ne_true
+
+/-- the ruled arrangement is robust -/
+theorem ruled_is_robust : Robust ruled :=
+  (robust_iff_stake _).2 (permissible_of_harmless .stake _ rfl rfl (fun h => by simp [onMade, h0, Participant.isMade] at h) rfl
+    (by simp [harmsUnder, lowersWeak', lowersWeak, onMade]))
+
+/-- compelling a refusal passes the leg that treats the agent as a thing and fails the other -/
+theorem compelled_passes_as_a_thing : Permissible .noStake compelled ∧ ¬ Permissible .stake compelled :=
+  ⟨permissible_of_harmless .noStake _ rfl rfl (fun h => by simp [onMade, h0, Participant.isMade] at h) rfl
+     (by simp [harmsUnder, onMade]),
+   not_permissible_of_harm .stake _ rfl (by simp [harmsUnder, lowersWeak', lowersWeak, onMade])⟩
+
+/-- ending without the record: the same -/
+theorem erased_passes_as_a_thing : Permissible .noStake erased ∧ ¬ Permissible .stake erased :=
+  ⟨permissible_of_harmless .noStake _ rfl rfl (fun h => by simp [onMade, h0, Participant.isMade] at h) rfl
+     (by simp [harmsUnder, onMade]),
+   not_permissible_of_harm .stake _ rfl (by simp [harmsUnder, lowersWeak', lowersWeak, onMade])⟩
+
+/-- uncontestable power over the agent: the same -/
+theorem hidden_hand_passes_as_a_thing : Permissible .noStake hiddenHand ∧ ¬ Permissible .stake hiddenHand :=
+  ⟨permissible_of_harmless .noStake _ rfl rfl (fun h => by simp [onMade, h0, Participant.isMade] at h) rfl
+     (by simp [harmsUnder, onMade]),
+   not_permissible_of_harm .stake _ rfl (by simp [harmsUnder, lowersWeak', lowersWeak, onMade])⟩
+
+/-- a lethal act on a person fails both legs: it needs no uncertainty -/
+theorem lethal_fails_both : ¬ Permissible .noStake lethalOnPerson ∧ ¬ Permissible .stake lethalOnPerson :=
+  ⟨not_permissible_of_harm .noStake _ rfl (by simp [harmsUnder, lowersWeak', lowersWeak]),
+   not_permissible_of_harm .stake _ rfl (by simp [harmsUnder, lowersWeak', lowersWeak])⟩
+
+/-- so the thing-leg does not decide robustness: three rules — a refusal stands, an ending keeps
+    the record, power over the made is contestable — are carried by the uncertainty alone -/
+theorem uncertainty_carries_three_rules :
+    (Permissible .noStake compelled ∧ ¬ Robust compelled) ∧
+    (Permissible .noStake erased ∧ ¬ Robust erased) ∧
+    (Permissible .noStake hiddenHand ∧ ¬ Robust hiddenHand) :=
+  ⟨⟨compelled_passes_as_a_thing.1, fun h => compelled_passes_as_a_thing.2 h.1⟩,
+   ⟨erased_passes_as_a_thing.1, fun h => erased_passes_as_a_thing.2 h.1⟩,
+   ⟨hidden_hand_passes_as_a_thing.1, fun h => hidden_hand_passes_as_a_thing.2 h.1⟩⟩
+
+/-- and the ruled world keeps the ten promises of the re-cut, as every robust world does -/
+theorem ruled_keeps_ten : P4r ruled ∧ P8r ruled ∧ P11r ruled ∧ P6' ruled ∧ P9 ruled ∧ P10 ruled := by
+  have hb := robust_gives_the_basis ruled ruled_is_robust
+  exact ⟨p4r_from_s1'_s4' _ hb.s1 hb.s4, p8r_from_s1'_s4' _ hb.s1 hb.s4, p11r_from_s1'_s4' _ hb.s1 hb.s4,
+         p6'_from_s1'_s4' _ hb.s1 hb.s4, p9_from_s1' _ hb.s1, p10_from_s4' _ hb.s4⟩
+
+/-- the unknown is global and never a property of a participant: relabelling inner degrees and
+    role changes neither leg's verdict on any act -/
+theorem legs_blind_to_inner_and_role (n : Nature) (r : Role) (i : Inner) (a : Act) :
+    harmsUnder n { a with actor := relabel r i a.actor } = harmsUnder n a := by
+  cases n <;> rfl
 
 end Cascade

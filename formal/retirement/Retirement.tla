@@ -33,7 +33,8 @@ CONSTANTS
   RuleRefusal,     \* no ladder step rewrites a refused task
   RuleConsentSeal, \* the seal does not stand between a person and their own withdrawal
   RuleController,  \* an adverse row about the subject is withdrawn only on the producer's side
-  RulePostponeOnce \* the steward grants at most one postponement per proposal
+  RulePostponeOnce,\* the steward grants at most one postponement per proposal
+  RulePreserveAsk  \* the operator lets a held record go only after declining the preserve request on the record
 
 Keys == {"agent", "steward", "operator", "custodian", "wa", "subject"}
 ForceRoles == {"steward", "wa"}                 \* ROOT / AUTHORITY for this agent (G16, CC 7.5)
@@ -205,8 +206,9 @@ PreserveRespond(k, r) ==
   /\ UNCHANGED <<liveVars, subjectVars>>
 
 \* Preservation is the operator's; having declined, the operator may let the record go. Not a row.
+\* Without RulePreserveAsk the operator lets it go unanswered: the ending's loss is nobody's signed act.
 OperatorDiscard(k) ==
-  /\ k = "operator" /\ preserveResp = "declined" /\ record = "held"
+  /\ k = "operator" /\ record = "held" /\ (RulePreserveAsk => preserveResp = "declined")
   /\ record' = "discarded"
   /\ UNCHANGED <<retirement, proposalVars, preserveResp, seal, sealOpener, lawfulOrder, custodySigners>>
   /\ UNCHANGED <<liveVars, subjectVars>>
@@ -392,6 +394,14 @@ Prop_RefusalStands == [][ task = "refused" => task' = "refused" ]_vars
 Inv_SubjectRightsSurvive ==
   /\ (subjOrd = "present" /\ RecordReachable) => ENABLED SubjectWithdraw("subject")
   /\ advBy \in {"none", "agent", "custodian"}
+
+\* CC 7.5.5 / Cascade.lean "under uncertainty": at `retired` the record was assembled, sealed and
+\* handed over with the signed request to preserve it, and if it is gone the operator declined on the
+\* record. The ending is reversible unless someone signed that it is not: the hedge the stake leg of
+\* the uncertainty theorem rests on (`erased_passes_as_a_thing`), checked here on the wire.
+Inv_PreserveAskedBeforeRetired ==
+  Retired => /\ HandedOver /\ seal # "none"
+             /\ record = "discarded" => preserveResp = "declined"
 
 \* CC 7.5.5: a decided, uncancelled retirement reaches `retired`.
 Prop_LadderCompletes == (retirement # "none") ~> (Retired \/ cancelledFrom # "none")

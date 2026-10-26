@@ -3,7 +3,7 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "01707152a8e1b350325b0e0a75a1975bf89abf04604c1a6bc2aa53a49c5b53aa",
-   "invariants_sha256": "413ec55b74e131c6e35d5393ff7ca257f955d28f8625a49a9b50ea4f5433b1f0",
+   "invariants_sha256": "a186bcd16fadd5982c77f7c9ba4bcb10f9ad97f598618ae6c9cceaf7141c6555",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
    "claims_sha256": "87f3211f8f841675d104f50fa38f5e4928420db442de6e65ecc6713a9d846005",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 120,
    "states": 189,
-   "invariants": 166,
+   "invariants": 167,
    "claims": 503,
    "entries": 20,
    "refusal_tokens": 86
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "3d35ebc708a9f573f5a578ad273d65df8daffce8747d17f75dab47f1b8df7b2a"
+  "chain_sha256": "369a4fa76c9fd6e7fdca8da8da5a7525e3f80dc3cbc84bc08d1099eb8766dda9"
  },
  "chain": [
   {
@@ -12122,6 +12122,15 @@
      "kind": "safety",
      "claim_id": "CLM-erasure-subject-route",
      "verdict": "closes; two twins fail"
+    },
+    {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
     }
    ],
    "claims": [
@@ -30961,6 +30970,15 @@
      "kind": "safety",
      "claim_id": "CLM-erasure-subject-route",
      "verdict": "closes; two twins fail"
+    },
+    {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
     }
    ],
    "claims": [
@@ -31242,6 +31260,15 @@
      "kind": "safety",
      "claim_id": "CLM-erasure-subject-route",
      "verdict": "closes; two twins fail"
+    },
+    {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
     }
    ],
    "claims": [
@@ -34617,6 +34644,15 @@
      "verdict": "closes; two twins fail"
     },
     {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
+    },
+    {
      "inv_id": "RT.completes",
      "model": "retirement",
      "source": "formal/retirement/Retirement.tla",
@@ -35056,6 +35092,15 @@
      "kind": "safety",
      "claim_id": "CLM-erasure-subject-route",
      "verdict": "closes; two twins fail"
+    },
+    {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
     },
     {
      "inv_id": "RT.completes",
@@ -35499,6 +35544,15 @@
      "verdict": "closes; two twins fail"
     },
     {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
+    },
+    {
      "inv_id": "RT.completes",
      "model": "retirement",
      "source": "formal/retirement/Retirement.tla",
@@ -35938,6 +35992,15 @@
      "kind": "safety",
      "claim_id": "CLM-erasure-subject-route",
      "verdict": "closes; two twins fail"
+    },
+    {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
     },
     {
      "inv_id": "RT.completes",
@@ -36381,6 +36444,15 @@
      "verdict": "closes; two twins fail"
     },
     {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
+    },
+    {
      "inv_id": "RT.completes",
      "model": "retirement",
      "source": "formal/retirement/Retirement.tla",
@@ -36822,6 +36894,15 @@
      "verdict": "closes; two twins fail"
     },
     {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
+    },
+    {
      "inv_id": "RT.completes",
      "model": "retirement",
      "source": "formal/retirement/Retirement.tla",
@@ -37261,6 +37342,15 @@
      "kind": "safety",
      "claim_id": "CLM-erasure-subject-route",
      "verdict": "closes; two twins fail"
+    },
+    {
+     "inv_id": "RT.preserve",
+     "model": "retirement",
+     "source": "formal/retirement/Retirement.tla",
+     "symbol": "Inv_PreserveAskedBeforeRetired",
+     "kind": "safety",
+     "claim_id": "CLM-retirement-ladder-model",
+     "verdict": "closes; one twin fails"
     },
     {
      "inv_id": "RT.completes",

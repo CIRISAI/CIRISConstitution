@@ -17,6 +17,7 @@ expect=(
   "operator_forces:Inv_ForceRoleGate" "walkaway_erases:Prop_WalkAwayKeepsRecord"
   "ladder_overrides_refusal:Prop_RefusalStands" "seal_blocks_consent:Inv_SubjectRightsSurvive"
   "subject_withdraws_adverse:Inv_SubjectRightsSurvive"
+  "discard_unanswered:Inv_PreserveAskedBeforeRetired"
 )
 for e in "${expect[@]}"; do
   c="${e%%:*}"; want="${e#*:}"
