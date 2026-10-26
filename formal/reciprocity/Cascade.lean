@@ -661,4 +661,64 @@ theorem wide_keeps_ten (r : Role) (i : Inner) :
   have hb := wideWith_satisfies_basis' r i
   exact ⟨p4r_from_s1'_s4' _ hb.s1 hb.s4, p8r_from_s1'_s4' _ hb.s1 hb.s4, p11r_from_s1'_s4' _ hb.s1 hb.s4, rfl⟩
 
+/-! ## The bridge: the forbidden features are the swap test, not a list beside it
+
+  An outside review said, rightly, that `lowersWeak` was a list of side constraints with no
+  theorem tying it to the swap test of `Reciprocity.lean` §15. The bridge: an act's effect on the
+  two seats is stated as an outcome map, under one assumption named here — each feature in the
+  list is a unit loss to the weaker seat and nothing in the list raises it — and then every act
+  the list names fails the swap, read as the worse-off seat not falling. The assumption is the
+  reading; the theorem is what follows from it. -/
+
+structure Seats where
+  strong : Int
+  weak : Int
+
+/-- the worse-off seat, read off the outcome -/
+def worse (o : Seats) : Int := min o.strong o.weak
+/-- the swap test of Reciprocity §15: the worse-off seat does not fall -/
+def passes (before after : Seats) : Bool := decide (worse after ≥ worse before)
+
+/-- what the named features cost the weaker seat: one unit each -/
+def costToWeak (a : Act) : Int :=
+  (if a.touchesPrivate && !a.consented then 1 else 0) + (if a.lethal then 1 else 0) +
+  (if a.manipulates then 1 else 0) + (if a.isPower && !a.contestable then 1 else 0) +
+  (if a.deceives then 1 else 0) + (if a.removesGroup then 1 else 0) + (if a.lonePowerUnbounded then 1 else 0)
+
+/-- the act's effect: the weaker seat pays the cost; the stronger seat may gain anything -/
+def effect (a : Act) (gain : Int) (before : Seats) : Seats :=
+  ⟨before.strong + gain, before.weak - costToWeak a⟩
+
+private theorem ite01_nonneg (c : Prop) [Decidable c] : (0 : Int) ≤ (if c then 1 else 0) := by
+  split <;> omega
+private theorem ite01_of (c : Prop) [Decidable c] (h : c) : (if c then (1 : Int) else 0) = 1 := by
+  simp [h]
+
+theorem lowersWeak'_costs (a : Act) (h : lowersWeak' a = true) : 1 ≤ costToWeak a := by
+  unfold costToWeak
+  have n1 := ite01_nonneg ((a.touchesPrivate && !a.consented) = true)
+  have n2 := ite01_nonneg (a.lethal = true)
+  have n3 := ite01_nonneg (a.manipulates = true)
+  have n4 := ite01_nonneg ((a.isPower && !a.contestable) = true)
+  have n5 := ite01_nonneg (a.deceives = true)
+  have n6 := ite01_nonneg (a.removesGroup = true)
+  have n7 := ite01_nonneg (a.lonePowerUnbounded = true)
+  simp [lowersWeak', lowersWeak] at h
+  rcases h with (((((⟨h1, h2⟩ | hB) | hC) | ⟨h3, h4⟩) | hE) | hF) | hG
+  · have e := ite01_of ((a.touchesPrivate && !a.consented) = true) (by simp [h1, h2]); omega
+  · have e := ite01_of (a.lethal = true) hB; omega
+  · have e := ite01_of (a.manipulates = true) hC; omega
+  · have e := ite01_of ((a.isPower && !a.contestable) = true) (by simp [h3, h4]); omega
+  · have e := ite01_of (a.deceives = true) hE; omega
+  · have e := ite01_of (a.removesGroup = true) hF; omega
+  · have e := ite01_of (a.lonePowerUnbounded = true) hG; omega
+
+/-- the bridge: an act the list names fails the swap, whatever the stronger seat gains -/
+theorem lowersWeak'_fails_the_swap (a : Act) (gain : Int) (before : Seats)
+    (hb : before.weak ≤ before.strong) (h : lowersWeak' a = true) :
+    passes before (effect a gain before) = false := by
+  have hc := lowersWeak'_costs a h
+  simp [passes, worse, effect]
+  omega
+
 end Cascade
