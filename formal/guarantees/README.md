@@ -54,7 +54,7 @@ Action properties: `Prop_HaltKeepsState` (a pause keeps state), `Prop_NoErasureW
 2. **The backgrounding door needs a guard.** Under Ally's conditional mode a participant can
    refuse during a crisis, be backgrounded once the crisis ends (a pause with state kept,
    allowed by the mode), and would then have been erasable. `Erase` now requires that a
-   refusing participant was stopped by an authority's force or by the line, and
+   refusing participant was stopped by an authority's force or by the custody rule's own stop, and
    `Prop_NoEndingAgainstRefusal` pins it.
 
 ## Scope

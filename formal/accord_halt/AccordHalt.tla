@@ -8,7 +8,7 @@
      pre-signable offline, fired on receipt at every subscribed node and latched. The only
      observable event is the row itself, which lands in the step it is observed.
 
-   Resumption needs two of three holder signatures in both modes. The adversary can coerce at
+   Resumption needs a strict majority of the standing roster in both modes (two of the three holders modelled). The adversary can coerce at
    most one holder (the roster rule's bound), steal a sealed row, jam, or kill the server.
    Signatures are unforgeable. Three holders, two nodes (one subscribed, one not). *)
 EXTENDS Naturals, FiniteSets
@@ -66,7 +66,7 @@ Publish(h) == /\ Mode = "row" /\ (h \in intent \/ h \in sealed) /\ ~jammed
               /\ Fire /\ seen' = TRUE /\ resumeSigs' = {}
               /\ UNCHANGED <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed>>
 
-\* resumption: two of three holders sign lifecycle:active
+\* resumption: a strict majority of the standing roster (two of the three modelled) signs lifecycle:active
 SignResume(h) == /\ LatchedSub /\ h \notin resumeSigs
                  /\ resumeSigs' = resumeSigs \cup {h}
                  /\ UNCHANGED <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed, seen, halted>>
