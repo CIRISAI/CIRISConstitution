@@ -199,10 +199,10 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.3.4.1	cascade	Key-grant cascade (the at-rest encryption flow)	§8.1.12.4	0.00401	60	0.48	IV	ceg	policies
 4.4.3.4.2	admission-membership	Membership-change admission per consensus_protocol	§8.1.12.3	0.00220	107	0.26	IV	ceg	policies
 4.4.3.4.2.1	quorum-absolute	`quorum:M/N` is absolute-M (normative)	§8.1.12.3.1	0.00109	204	0.13	IV	ceg	policies
-4.4.3.4.3	cohort	"The ""Self at login"" — app + agent co-self + partnered delegation (normative composition)"	§8.1.12.7	0.00218	108	0.26	IV	ceg	policies
+4.4.3.4.3	cohort	The "Self at login" — app + agent co-self + partnered delegation (normative composition)	§8.1.12.7	0.00218	108	0.26	IV	ceg	policies
 4.4.3.4.3.1	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg	policies
 4.4.3.4.4	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg	policies
-4.4.3.4.5	forward-secrecy	Forward secrecy on member removal — forward-only	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
+4.4.3.4.5	forward-secrecy	Forward secrecy on member removal	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
 4.4.3.4.6	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg	policies
 4.4.3.4.7	composition-subject	Composition with subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg	policies
 4.4.3.5	policy-cem	Policy K — Consent composition	§8.1.11	0.00445	50	0.53	IV	ceg	policies
@@ -252,7 +252,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.10.4	documents-what-2	What this documents	§11.5.4	0.00092	246	0.11	IV	ceg	constitution
 4.5.11	bootstrap-content	Bootstrap-content pattern	§11.3	0.00097	221	0.12	IV	ceg	constitution
 4.5.12	family-self-2	Self/family membership governance	§11.7	0.00094	230	0.11	IV	ceg	constitution
-4.5.12.1	forward	Forward secrecy on member departure — forward-only (default)	§11.7.1	0.00423	55	0.51	IV	ceg	constitution
+4.5.12.1	forward	Forward secrecy on member departure	§11.7.1	0.00423	55	0.51	IV	ceg	constitution
 4.5.12.2	envelope-multi	Multi-family membership — envelope `family_id`	§11.7.2	0.00127	178	0.15	IV	ceg	constitution
 4.5.12.3	admission-self	Self-occurrence admission — single-vouch	§11.7.4	0.00097	222	0.12	IV	ceg	constitution
 4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in CC 3.4.4	§11.7.3	0.00092	249	0.11	IV	ceg	constitution
@@ -277,17 +277,17 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 5.3.2.5	full-sha	Full-SHA verification before consumption (normative)	§10.1.1	0.00095	224	0.11	V	ceg	threats wire
 5.3.2.6	render-tier	The render tier is receiver policy, computed from verified, sniffed bytes (normative)	(spine-reconciled)	0.00050	439	0.35	V	ceg	threats wire
 5.3.3	transport-streaming	Streaming transport, per-stream logs & delivery receipts	§10.5	0.00379	67	0.45	V	ceg	threats wire
-5.3.3.1	stream	Chunk seal + STREAM nonce (normative — V2 lock)	§10.5.2	0.00419	56	0.5	V	ceg	threats wire
+5.3.3.1	stream	Chunk seal + STREAM nonce (normative)	§10.5.2	0.00419	56	0.5	V	ceg	threats wire
 5.3.3.2	composition	Realtime group communication — composition	§10.5.8	0.00381	66	0.46	V	ceg	threats wire
 5.3.3.2.1	namespace-realtime	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	§10.5.8.2	0.00190	125	0.23	V	ceg	threats wire
 5.3.3.2.2	realtime	Realtime non-A/V data streams (normative scope boundary)	§10.5.8.1	0.00132	175	0.16	V	ceg	threats wire
 5.3.3.2.3	registry-wire	`SealedAvChunk` wire layout (normative)	§10.5.8.3	0.00114	195	0.14	V	ceg	threats wire
 5.3.3.2.4	chunklayer	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	§10.5.8.4	0.00113	197	0.14	V	ceg	threats wire
 5.3.3.2.5	stream-double	Double-seal + deterministic nonce derivation (normative)	§10.5.8.5	0.00092	243	0.11	V	ceg	threats wire
-5.3.3.3	per-stream	Per-stream log + stream-root (normative — V1 lock)	§10.5.1	0.00301	82	0.36	V	ceg	threats wire
+5.3.3.3	per-stream	Per-stream log + stream-root (normative)	§10.5.1	0.00301	82	0.36	V	ceg	threats wire
 5.3.3.4	liveness	D6 liveness invariant — entitled vs reachable (normative)	§10.5.6	0.00295	84	0.35	V	ceg	threats wire
-5.3.3.5	transport-edge	Transport — Edge layer (normative — E1–E4 lock)	§10.5.5	0.00242	101	0.29	V	ceg	threats wire
-5.3.3.6	delivery	Delivery receipts (normative — D5 / V3 lock)	§10.5.4	0.00227	105	0.27	V	ceg	threats wire
+5.3.3.5	transport-edge	Transport — Edge layer (normative)	§10.5.5	0.00242	101	0.29	V	ceg	threats wire
+5.3.3.6	delivery	Delivery receipts (normative)	§10.5.4	0.00227	105	0.27	V	ceg	threats wire
 5.3.3.7	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg	threats wire
 5.3.3.8	documents-what	What the streaming surface documents	§10.5.7	0.00092	242	0.11	V	ceg	threats wire
 5.3.4	multi-steward	Trust-root discovery — the GenesisBundle + accord holders	§10.2	0.00264	94	0.32	V	ceg	threats wire
@@ -330,7 +330,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 7.2.8	sunset-provision	Conclusion	Accord 5.conclusion-sunset-provision	0.00092	353	0.11	VII	accord	charter
 7.3	genesis-responsibility	Introduction: The Genesis of Responsibility	Accord 6.introduction-the-genesis-of-responsibili	0.00092	361	0.11	VII	accord	charter
 7.3.1	core-principles	Chapter 1: Core Principles Applied to Creation	Accord 6.chapter-1-core-principles-applied-to-cre	0.00092	355	0.11	VII	accord	charter
-7.3.2	scope-what	"Chapter 2: Scope: What Constitutes ""Creation"" under this section"	Accord 6.chapter-2-scope-what-constitutes-creatio	0.00092	356	0.11	VII	accord	charter
+7.3.2	scope-what	Chapter 2: Scope: What Constitutes "Creation" under this section	Accord 6.chapter-2-scope-what-constitutes-creatio	0.00092	356	0.11	VII	accord	charter
 7.3.3	3-stewardship	Chapter 3: Stewardship Tier (ST) System: Quantifying Initial Responsibility	Accord 6.chapter-3-stewardship-tier-st-system-qua	0.00092	357	0.11	VII	accord	charter
 7.3.4	4-bucket	Chapter 4: Bucket-Specific Duties of Creation	Accord 6.chapter-4-bucket-specific-duties-of-crea	0.00092	358	0.11	VII	accord	charter
 7.3.5	5-governance-governance	Chapter 5: Governance and Accountability	Accord 6.chapter-5-governance-and-accountability	0.00092	359	0.11	VII	accord	charter
@@ -359,7 +359,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.2.4	not-translated	The not-translated taxonomy	§12.3	0.00092	258	0.11	APP	ceg	register
 8.3	concerns	Concerns + acknowledged gaps	§15	0.00174	139	0.21	APP	ceg	register
 8.3.1	acknowledged	Acknowledged risks (named as bets)	§15.2	0.00205	116	0.25	APP	ceg	register
-8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit (the honest line)	§15.7	0.00118	188	0.14	APP	ceg	register
+8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit	§15.7	0.00118	188	0.14	APP	ceg	register
 8.3.3	observer-share	Observer-share + streaming multicast	§15.6	0.00114	196	0.14	APP	ceg	register
 8.3.4	closed	Closed gaps	§15.1	0.00092	263	0.11	APP	ceg	register
 8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	§15.3	0.00092	264	0.11	APP	ceg	register

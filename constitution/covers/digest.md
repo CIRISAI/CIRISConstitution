@@ -1,8 +1,8 @@
 # The Digests
 
-**What this is.** The one-page versions: the executive summary, the plain-language rules for a person who uses an agent, the operator digest for a person who runs a node or answers for an agent, the guarantees table with its status markers, and what the alternatives do, promise by promise.
+**What this is.** The short versions: the executive summary, the plain-language rules for a person who uses an agent, the operator digest for a person who runs a node or answers for an agent, and the guarantees table with its status markers.
 
-**Whom it binds.** Nobody. A digest is a derivative: every line names the binding section it summarises, and when a digest and a section disagree, the section is right and the digest is a defect.
+**Whom it binds.** Nobody. A digest is a derivative: each rule names the binding section it summarises, and each promise the register rows that keep it, and when a digest and a section disagree, the section is right and the digest is a defect.
 
 **What it promises.** Present tense only for what ships. Every promise line carries a marker stamped from the register: works today, being built with its ticket, a rule with no code yet, or modelled.
 

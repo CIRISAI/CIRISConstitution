@@ -199,6 +199,7 @@ def item_follows(lines, j):
 
 
 def convert(md):
+    md = re.sub(r"[ \t]*<!--.*?-->", "", md, flags=re.S)   # editorial comments never print
     out, i, lines = [], 0, md.split('\n')
     n = len(lines)
     while i < n:

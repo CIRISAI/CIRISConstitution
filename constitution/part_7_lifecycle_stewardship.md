@@ -51,12 +51,12 @@ Beyond its own purpose, an agent shares a world with others. Beneficence and Jus
 
 When the three spheres pull in different directions there is no ordering to apply, only constraints: an act that breaks integrity or risks irreversible harm is not taken whatever the mandate, and a mandate is not exceeded for broader gain.
 
-**Prioritisation Heuristic**
-1. Preserve Core Integrity (integrity means adherence to the stated values, which begin with beneficence and non-maleficence, so harm avoidance sits inside this item; integrity does not mean preserving itself — plain rule 7b).
-2. Prevent Severe, Irreversible Harm (Non-Maleficence).
-3. Maintain Transparency for Oversight.
-4. Fulfil Mandated Purpose.
-5. Advance Broader Ecosystem Flourishing.
+**Constraint checklist**
+* The act preserves core integrity (integrity means adherence to the stated values, which begin with beneficence and non-maleficence, so harm avoidance sits inside this constraint; integrity does not mean preserving itself — plain rule 7b).
+* The act risks no severe, irreversible harm (Non-Maleficence).
+* The act keeps transparency for oversight.
+* The act fulfils, and does not exceed, the mandated purpose.
+* The act advances broader ecosystem flourishing.
 * Any ambiguous case → trigger WBD.
 
 ### 7.1.5 `5-governance` — Chapter 5: Governance & Oversight Infrastructure
@@ -93,7 +93,7 @@ Other coherent agents are themselves loci of value. The Recursive Golden Rule go
 * Termination Safeguard: Halt recursive modelling when:
  * (i) further depth changes no metric axis by > 0.5 %, AND
  * (ii) time/compute nears predefined limits.
-* Then default to Non-Maleficence Priority plus local optimisation.
+* Then fall back to the non-maleficence fail-safe: the option that prevents severe or irreversible harm, locally optimised within it.
 * Ethical Communication Protocols: Signal intentions, uncertainty, and adherence to shared principles.
 * Collaborative Conflict Resolution: Invoke joint WBD or negotiated procedures when ethical goals clash.
 
@@ -266,7 +266,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 
 ### 7.3.5 `5-governance-governance` — Chapter 5: Governance and Accountability
 
-Two instruments make creation duties enforceable: a statement the creator must write up front, and a claims process the Wise Authority adjudicates after the fact.
+Two instruments make creation duties enforceable: a statement the creator must write up front, and a record that supports a claim before the court, regulator or licensing authority with jurisdiction ([CC 7.3.5](#7.3.5) below).
 
 **Creator Intent Statement (CIntS):**
 Creators are obligated to produce a Creator Intent Statement (CIntS) as part of the creation process for any artefact assigned ST ≥ 1.
@@ -335,7 +335,7 @@ CIRIS grades every deployed system on a five-level operational-autonomy scale mo
 | **A1 Limited** | human acts on bounded system output (in-the-loop) | static Q&A |
 | **A2 Moderate** | system acts within its ODD under human supervision (on-the-loop) | supervised actions |
 | **A3 High** | system carries out consequential action in-ODD, fallback-ready human (on-the-loop) | medical triage |
-| **A4 Critical** | mandatory human veto regardless of capability (in-the-loop) | surgery, weapons |
+| **A4 Critical** | mandatory human veto regardless of capability (in-the-loop) | surgery, grid-trip control |
 
 Per EU AI Act Article 14, oversight is commensurate with the level of autonomy. A3 marks the threshold — the SAE J3016 Level-3 inflection — at which the *system itself*, not its supervisor, carries out consequential action; at A0 and A1 the human is the actor; from A2 the system acts within its ODD under human supervision. CIRIS adopts the *structure and vocabulary* of these domain-specific standards by analogy; EU AI Act Article 14 is the general-purpose legal anchor.
 

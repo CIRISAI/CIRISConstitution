@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "01707152a8e1b350325b0e0a75a1975bf89abf04604c1a6bc2aa53a49c5b53aa",
-   "invariants_sha256": "d6bd558e2dc292247eeae7d1c29fbacceb2f6d151f1a0c5f0eea0efa0ee49e1d",
+   "invariants_sha256": "413ec55b74e131c6e35d5393ff7ca257f955d28f8625a49a9b50ea4f5433b1f0",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "0a366790e73a6cb39e021490119d296451a12fca6444121866fd71c767e6f032",
+   "claims_sha256": "87f3211f8f841675d104f50fa38f5e4928420db442de6e65ecc6713a9d846005",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -32,14 +32,14 @@
    "invariants": 166,
    "claims": 503,
    "entries": 20,
-   "refusal_tokens": 85
+   "refusal_tokens": 84
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "4e3082e41246b2ced2642ef9b7bc06b2f6a0a301487cadcafa54ab076d1f4a16"
+  "chain_sha256": "3c3d84276ac4671e9c33dc23675aa625ae33f8899db5a3aa8b5fa3ac9940a514"
  },
  "chain": [
   {
@@ -581,7 +581,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -609,7 +609,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1287,7 +1287,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -1315,7 +1315,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -2565,7 +2565,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -2593,7 +2593,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3221,7 +3221,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -3249,7 +3249,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4215,21 +4215,13 @@
        "symbols": [
         "Invocation::canonical_bytes"
        ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISVerify",
-       "path": "src/ciris-verify-core/src/humanity_accord.rs",
-       "symbols": [
-        "Invocation::canonical_bytes"
-       ]
       }
      ]
     },
     {
      "claim_id": "CLM-accord-invoke-lowercase",
      "cc_ref": "4.2.1.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -4672,14 +4664,6 @@
        "symbols": [
         "verify_invocation"
        ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISVerify",
-       "path": "src/ciris-verify-core/src/humanity_accord.rs",
-       "symbols": [
-        "verify_invocation"
-       ]
       }
      ]
     }
@@ -5103,21 +5087,13 @@
        "symbols": [
         "Invocation::canonical_bytes"
        ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISVerify",
-       "path": "src/ciris-verify-core/src/humanity_accord.rs",
-       "symbols": [
-        "Invocation::canonical_bytes"
-       ]
       }
      ]
     },
     {
      "claim_id": "CLM-accord-invoke-lowercase",
      "cc_ref": "4.2.1.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -6087,7 +6063,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -6115,7 +6091,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -7789,7 +7765,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -7817,7 +7793,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10071,7 +10047,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -10099,7 +10075,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -13338,7 +13314,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -13366,7 +13342,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -15059,7 +15035,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -15087,7 +15063,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -16246,7 +16222,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -16274,7 +16250,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -16964,7 +16940,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -16992,7 +16968,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -18021,14 +17997,6 @@
      "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISVerify",
-       "path": "src/ciris-verify-core/src/self_at_login.rs",
-       "symbols": [
-        "perform_self_at_login"
-       ]
-      },
       {
        "kind": "impl",
        "repo": "CIRISVerify",
@@ -19680,7 +19648,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -19708,7 +19676,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -20370,7 +20338,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -20398,7 +20366,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21048,7 +21016,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21076,7 +21044,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21856,7 +21824,7 @@
     {
      "claim_id": "CLM-attach-freshness",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -21884,7 +21852,7 @@
     {
      "claim_id": "CLM-witnessed-lineage",
      "cc_ref": "3.2",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -32705,14 +32673,6 @@
        "symbols": [
         "perform_self_at_login"
        ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISVerify",
-       "path": "src/ciris-verify-core/src/self_at_login.rs",
-       "symbols": [
-        "perform_self_at_login"
-       ]
       }
      ]
     },
@@ -37936,21 +37896,13 @@
        "symbols": [
         "Invocation::canonical_bytes"
        ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISVerify",
-       "path": "src/ciris-verify-core/src/humanity_accord.rs",
-       "symbols": [
-        "Invocation::canonical_bytes"
-       ]
       }
      ]
     },
     {
      "claim_id": "CLM-accord-invoke-lowercase",
      "cc_ref": "4.2.1.1",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
@@ -39837,9 +39789,6 @@
   },
   "retention_priority": {
    "6.1.3": "bold"
-  },
-  "revocation_id": {
-   "2.4.1.1": "after_refusal"
   },
   "revoked_key_sha256_ed25519_raw": {
    "2.4.1.1": "bold"

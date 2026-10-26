@@ -58,9 +58,15 @@ CLASSES = {
     ],
     "labels": [
         (r"\bAV-\d+\b|\bF-AV-[A-Z]+|\bOQ-\d\b|NodeCore P\d+\b|\bPiece \d+\b|§Q\b|\bR1/Q1\b|\bV0\d\d\b|\bD0\d\b|\bCONFIRM-\d\b|\bF-3 detector|\bCEM\b|\bHE-300\b", r"8\.8\.10|HE-300 benchmark"),
+        (r"\(normative: [A-Z]\d|\bV\d lock\b|\bE\d–E\d lock|\bCatch-up bound \(P\d\)|\bCloses G\d\b|\bcloses R\d\b|\b\d+ stories\b|\(1 reviewer\)|\bS4 default\b", None),
+        (r"Accord Addendum 1|\bAddendum 1\b|ACCORD_UPDATE|ACCORD §|Accord §[IVX]|Section VI Ch\d|ACCORD §VII", None),
+        (r"\(part_\d [a-z]|_ID env var|LensCore knob|\[configurable; default", None),
     ],
     "comparisons": [
         (PROJECTS, None),
+        (r"\bLeviculum\b|\bERC-8004\b|arXiv:\d|\bMegolm\b|\bSideband\b|Vasserman et al|Guerraoui et al|\beltoo\b|Lightning-class|Ubuntu-aligned|AT Protocol|app\.bsky|Britney|Texas HB|Paxton 20\d\d|DigiNotar|Delaware/BFT|webpsan|\bSignal’s\b|\bSignal's\b|Tor v3|I2P b33", r"8\.6\.1"),
+        (r"Per [A-Z][a-z]+ [A-Z][a-z]+['’]s\b|Bostrom \(2011\)", r"8\.6|Other informational citations"),
+        (r"ciris\.ai/(?:cewp|constitutional-mesh|safety|philosophy)|the cewp (?:claim|privacy promise)|cewp scaling model|need so dire|CEG['’]s moat|differentiated story|Cheapest win|the honest line|most product-complete|thirteenth path|named as a bet|named bet|Considered and not adopted|This boundary is provisional|This answers the open question|open transport question|kept alias|share a household|street address|transparent translation rate", r"8\.6\.1|Fact Sheet"),
         (r"\b(?:PGP|X\.509|W3C VC)\b.{0,80}(?:treat|types|prior)", None),
         (r"all \d+ surveyed|surveyed systems|surveyed networks|categorically stronger|the only model|first to ship|No prior (?:system|identity)|against the field", None),
     ],

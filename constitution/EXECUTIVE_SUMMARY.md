@@ -8,7 +8,7 @@
 
 ## The eleven promises, and how each is kept
 
-*Status markers:* **works today** = evidence in the register at a pinned commit; **being built** = a named ticket; **a rule, no code yet** = normative only; **modelled** = a formal witness, no code test. Source: `review/promise_status.tsv`.
+*Status markers:* **works today** = evidence in the register at a pinned commit; **being built** = a named ticket; **a rule, no code yet** = normative only; **modelled** = a formal witness, no code test. The markers are stamped from *The Evidence Register*.
 
 Every promise is written once and holds for human and AI participants alike. Where a promise can be checked by a machine, it has been: the names in the table at the end are automated proofs that the rule cannot be broken in a model of the network, and the table says where each promise lives. The plain-language rules under each promise are in `review/pieces/00_guarantees_plain.md`; what keeping them asks of an operator is in `review/pieces/00_operator_digest.md`.
 

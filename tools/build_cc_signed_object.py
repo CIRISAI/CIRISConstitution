@@ -281,7 +281,7 @@ def build_section_body(rows, meta):
              "The canonical `scope` is the array; a bare token is admitted as the one-element array it denotes, and nothing is normalised in signed bytes. "
              "An explicit JSON `null` on an optional member is refused as malformed ([CC 2.6.1.1.1](#2.6.1.1.1)). "
              "`witnesses[]` is a set. "
-             "The quorum carrier is `additional_scrubs[]` beside the row, as [CC 2.1](#2.1) and [CC 2.4](#2.4) name it; the name `cosignatures[]` is retired.")
+             "The quorum carrier is `additional_scrubs[]` beside the row, as [CC 2.1](#2.1) and [CC 2.4](#2.4) name it.")
     L.append("")
     L.append("**Vectors.** [`manifests/signed_object_vectors.json`](../manifests/signed_object_vectors.json) carries two test identities (Ed25519 and ML-DSA-65 seeds, public keys and the [CC 2.6.8](#2.6.8) `key_id` derived from each), and for each vector the envelope, its JCS bytes, `original_content_hash`, both signature halves and the assembled row: a minimal `scores`; the same claim with an explicit default (different bytes, both verify, [CC 2.6.1.1](#2.6.1.1)); a cosigned variant; a `withdraws`; the at-cap and cap-plus-one envelopes as a recipe with their hashes; and refusal cases with their tokens. Signatures were produced and verified by the reference implementation (CIRISVerify); the JCS bytes, the hashes and the Ed25519 half are recomputed from the vectors on every change to this document. A second implementation that reproduces these bytes and signatures has met the [CC 2.6.1.1.1](#2.6.1.1.1) byte-identity target for this object.")
     L.append("")

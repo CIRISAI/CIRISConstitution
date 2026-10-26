@@ -639,6 +639,13 @@ def main():
         if st not in STATUSES:
             errors.append(f"L{ln} [{cid}]: bad status '{st}'")
         status_ct[st] += 1
+        toks = ev.split()
+        if len(toks) != len(set(toks)):
+            dup = sorted({t for t in toks if toks.count(t) > 1})[0]
+            errors.append(f"L{ln} [{cid}]: evidence lists the same pointer twice ({dup}); one pointer, once")
+        if st == "established" and any(t.startswith("staged:") for t in toks):
+            errors.append(f"L{ln} [{cid}]: status 'established' with a staged: ticket in the evidence — "
+                          f"a row with outstanding work is 'staged'; split the landed part into its own row if it must read established")
         if st == "established":
             m = _PENDING.search(row["summary"] or "")
             if m:

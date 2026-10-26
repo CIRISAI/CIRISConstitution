@@ -1,6 +1,6 @@
 # The Evidence Register
 
-**What this is.** Every load-bearing claim of the constitution, one row each, with its section, its status, the artefact that establishes it and the commit it was checked at: implementation symbols, conformance tests, mechanised proofs and benchmarks, or a named ticket where the claim is staged, or an acknowledged gap. With it, the appendices: the glossary, the translation discipline, the concerns ledger, the interoperability profiles and the cadence.
+**What this is.** Every load-bearing claim of the constitution, one row each, with its section, its status, the artefact that establishes it and the commit it was checked at: implementation symbols, conformance tests, mechanised proofs and benchmarks, or a named ticket where the claim is staged, or an acknowledged gap. With it, Part 8 except the case studies (8.7, which print in *The Charter*): the glossary, the translation discipline, the concerns ledger, the interoperability profiles, the sources, the annexes and the stub registry.
 
 **Whom it binds.** The stewards of this document, who may not call a claim established without a resolvable pointer, and the repositories that publish the manifests the pointers resolve against. It is what an auditor, a regulator or a sceptical engineer reads first.
 
