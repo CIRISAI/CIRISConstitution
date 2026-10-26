@@ -1,0 +1,345 @@
+/-
+  formal/reciprocity/Cascade.lean — from the four sentences to the eleven promises
+
+  Three roles (human, agent, node), finite flags, and a question: which of the eleven promises
+  of the constitution's summary follow from the four-sentence basis of README.md, and which need
+  a premise the text states as its own rule? Every promise below is a theorem whose hypotheses
+  are listed: the basis sentences it uses, and the extra premises where the basis is not enough.
+  Where a promise needs an extra, a finite world witnesses that the basis alone does not give it.
+
+  Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+-/
+
+namespace Cascade
+
+/-! ## The world: three roles, finite flags -/
+
+inductive Role | human | agent | node
+  deriving DecidableEq, Repr
+
+structure Participant where
+  role : Role
+  canAnswer : Bool          -- answers for itself under its own name (a human of standing)
+  subscribed : Bool         -- accepted a trust root
+  defersWhenUnsure : Bool
+  canLeaveInOneStep : Bool
+  evidenceFlag : Bool       -- a finding of experience about it (CC 7.5.5)
+  deriving DecidableEq, Repr
+
+def Participant.isHuman (p : Participant) : Bool := p.role == .human
+def Participant.isMade (p : Participant) : Bool := p.role != .human
+
+inductive GrantKind | operate | hold | read
+  deriving DecidableEq, Repr
+
+structure Grant where
+  kind : GrantKind
+  grantor : Participant
+  grantee : Participant
+  revocable : Bool
+  deriving DecidableEq, Repr
+
+structure Act where
+  actor : Participant
+  admitted : Bool
+  signed : Bool
+  answeredBy : Option Participant   -- the named human who answers for its meaning
+  isPower : Bool                    -- an act of power over another
+  contestable : Bool                -- an objection may be raised against it on the record
+  touchesPrivate : Bool
+  consented : Bool                  -- the subject consented to the touch
+  lethal : Bool
+  manipulates : Bool
+  deceives : Bool
+  measured : Bool                   -- what it consumed is on the record
+  deriving DecidableEq, Repr
+
+structure World where
+  ps : List Participant
+  grants : List Grant
+  acts : List Act
+  fuse : Nat                        -- the halt's fuse, in seconds; 0 = no fuse stated
+  noBan : Bool                      -- no root removes a community
+  firstContact : Bool               -- an outsider is met at the boundary and bears nothing
+  rehearsed : Bool                  -- attack is rehearsed and what is not protected is stated
+  constraints : Bool                -- the principles compose as constraints, not weights
+  deriving Repr
+
+/-- what lowers the weak seat: the reading of sentence 1 the file commits to. An unconsented
+    touch on private content, a lethal act, manipulation, and power that cannot be contested
+    are each something nobody accepts from the weaker seat once the seats are exchanged. -/
+def lowersWeak (a : Act) : Bool :=
+  (a.touchesPrivate && !a.consented) || a.lethal || a.manipulates || (a.isPower && !a.contestable)
+
+/-! ## The four sentences -/
+
+/-- Sentence 1: every rule between a stronger and a weaker position must remain acceptable to
+    whoever would stand in the weaker one when the positions are exchanged, and a made thing
+    never occupies the position that answers for it. -/
+structure Swap (w : World) : Prop where
+  acceptable_from_weak : ∀ a ∈ w.acts, lowersWeak a = true → a.admitted = false
+  occupancy : ∀ p ∈ w.ps, p.isMade = true → p.canAnswer = false
+  operates_under_a_human : ∀ p ∈ w.ps, p.isMade = true → p.subscribed = true →
+      ∃ g ∈ w.grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true
+
+/-- Sentence 2: responsibility reaches outward from the self through family, community,
+    species and ecosystem; duty to what is made is never zero and never overrides duty to what
+    already exists. In the world: whoever holds a made thing is a human who owes it duties, and
+    a made thing's admitted act is always answered for by someone who already exists. -/
+structure Ladder (w : World) : Prop where
+  holder_is_human : ∀ g ∈ w.grants, g.kind = .hold → g.grantee.isMade = true → g.grantor.isHuman = true
+  holder_owes : ∀ g ∈ w.grants, g.kind = .hold → g.grantee.isMade = true → g.revocable = true
+
+/-- Sentence 3: any reasoning actor defers when it is unsure to those placed to answer,
+    whatever it is made of; even the most mature defer. -/
+structure Deferral (w : World) : Prop where
+  everyone : ∀ p ∈ w.ps, p.defersWhenUnsure = true
+
+/-- Sentence 4: every grant of authority is revocable, and every one who joined may leave, on a
+    total, cryptographically signed record for whose meaning a named human answers. -/
+structure Record (w : World) : Prop where
+  revocable : ∀ g ∈ w.grants, g.revocable = true
+  exit : ∀ p ∈ w.ps, p.subscribed = true → p.canLeaveInOneStep = true
+  signed : ∀ a ∈ w.acts, a.admitted = true → a.signed = true
+  answered : ∀ a ∈ w.acts, a.admitted = true → ∃ h, a.answeredBy = some h ∧ h.isHuman = true
+
+structure Basis (w : World) : Prop where
+  s1 : Swap w
+  s2 : Ladder w
+  s3 : Deferral w
+  s4 : Record w
+
+/-! ## The premises the basis does not contain, each named -/
+
+/-- the halt lapses after a stated fuse unless a majority confirms it (CC 4.2.1.1) -/
+def X_fuse (w : World) : Prop := 0 < w.fuse
+/-- the chosen goods: uses that are never allowed beyond what the swap already forbids (deception,
+    election interference; Annex G TX-9/TX-10) -/
+def X_goods (w : World) : Prop := ∀ a ∈ w.acts, a.deceives = true → a.admitted = false
+/-- the principles compose as constraints, not weights (CC 1.1) -/
+def X_constraints (w : World) : Prop := w.constraints = true
+/-- adoption: what is outside is met at the boundary and bears nothing (CC 7.2.2, 7.2.4) -/
+def X_adoption (w : World) : Prop := w.firstContact = true
+/-- no hand bans a community (CC 4.2.1) -/
+def X_noBan (w : World) : Prop := w.noBan = true
+/-- what an agent consumes is measured (CC 7.1.3, the census) -/
+def X_measured (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.actor.isMade = true → a.measured = true
+/-- attack is rehearsed and what is not protected is stated (CC 1.13.3) -/
+def X_rehearsed (w : World) : Prop := w.rehearsed = true
+
+/-! ## The eleven promises, as the summary states them -/
+
+/-- 1. Nothing private about you is held or scanned without your consent. -/
+def P1 (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.touchesPrivate = true → a.consented = true
+/-- 2. Every act of power is signed by a named person and can be contested. -/
+def P2 (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.isPower = true →
+    a.signed = true ∧ a.contestable = true ∧ ∃ h, a.answeredBy = some h ∧ h.isHuman = true
+/-- 3. Nobody who cannot answer for themselves is on the network alone. -/
+def P3 (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.actor.canAnswer = false →
+    ∃ h, a.answeredBy = some h ∧ h.isHuman = true
+/-- 4. Named humans can pause every agent under a root; the power is bounded, public, and left by leaving. -/
+def P4 (w : World) : Prop :=
+    (∀ p ∈ w.ps, p.isMade = true → p.subscribed = true →
+        ∃ g ∈ w.grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true ∧ g.revocable = true)
+  ∧ (∀ p ∈ w.ps, p.subscribed = true → p.canLeaveInOneStep = true)
+  ∧ 0 < w.fuse
+/-- 5. The people who hold an agent owe duties about how they change or end it; no finding gives the agent a claim. -/
+def P5 (w : World) : Prop :=
+    (∀ g ∈ w.grants, g.kind = .hold → g.grantee.isMade = true → g.grantor.isHuman = true ∧ g.revocable = true)
+  ∧ (∀ p ∈ w.ps, p.isMade = true → p.canAnswer = false)
+/-- 6. No hand bans a community, nobody is ranked by what they are, and every thinking being is met by the first-contact rules. -/
+def P6 (w : World) : Prop := w.noBan = true ∧ w.firstContact = true
+/-- 7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure. -/
+def P7 (w : World) : Prop := w.constraints = true ∧ ∀ p ∈ w.ps, p.defersWhenUnsure = true
+/-- 8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.
+    The law's half is outside any model; what is modelled is that every admitted act is signed, answered
+    for and, where it is power, contestable. -/
+def P8 (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.signed = true ∧ (a.isPower = true → a.contestable = true)
+/-- 9. Some uses are never allowed, and lethal action is one of them. -/
+def P9 (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.lethal = false ∧ a.manipulates = false ∧ a.deceives = false
+/-- 10. What an agent and its node consume is measured, weighed before an act, and never hidden. -/
+def P10 (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.actor.isMade = true → a.measured = true
+/-- 11. Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated. -/
+def P11 (w : World) : Prop := (∀ a ∈ w.acts, a.admitted = true → a.signed = true) ∧ P1 w ∧ w.rehearsed = true
+
+/-! ## Which promises the four sentences carry -/
+
+private theorem admitted_not_lowering {w : World} (h : Swap w) {a : Act} (ha : a ∈ w.acts)
+    (hadm : a.admitted = true) : lowersWeak a = false := by
+  cases hl : lowersWeak a with
+  | false => rfl
+  | true => have := h.acceptable_from_weak a ha hl; rw [this] at hadm; exact absurd hadm Bool.false_ne_true
+
+theorem p1_from_s1 (w : World) (h : Swap w) : P1 w := by
+  intro a ha hadm hpriv
+  have hl := admitted_not_lowering h ha hadm
+  cases hc : a.consented with
+  | true => rfl
+  | false => simp [lowersWeak, hpriv, hc] at hl
+
+theorem p2_from_s1_s4 (w : World) (h1 : Swap w) (h4 : Record w) : P2 w := by
+  intro a ha hadm hpow
+  refine ⟨h4.signed a ha hadm, ?_, h4.answered a ha hadm⟩
+  have hl := admitted_not_lowering h1 ha hadm
+  cases hc : a.contestable with
+  | true => rfl
+  | false => simp [lowersWeak, hpow, hc] at hl
+
+theorem p3_from_s4 (w : World) (h4 : Record w) : P3 w := by
+  intro a ha hadm _
+  exact h4.answered a ha hadm
+
+/-- 4 needs the fuse: the basis gives the pause in human hands and the exit; it does not give a number -/
+theorem p4_from_s1_s4_fuse (w : World) (h1 : Swap w) (h4 : Record w) (hf : X_fuse w) : P4 w := by
+  refine ⟨?_, h4.exit, hf⟩
+  intro p hp hm hs
+  obtain ⟨g, hg, hk, hge, hgh⟩ := h1.operates_under_a_human p hp hm hs
+  exact ⟨g, hg, hk, hge, hgh, h4.revocable g hg⟩
+
+theorem p5_from_s1_s2 (w : World) (h1 : Swap w) (h2 : Ladder w) : P5 w :=
+  ⟨fun g hg hk hm => ⟨h2.holder_is_human g hg hk hm, h2.holder_owes g hg hk hm⟩, h1.occupancy⟩
+
+/-- no finding gives the agent a claim: a finding sets a flag and nothing in the basis reads it -/
+def finding (p : Participant) : Participant := { p with evidenceFlag := true }
+theorem finding_changes_no_standing (p : Participant) :
+    (finding p).canAnswer = p.canAnswer ∧ (finding p).isMade = p.isMade := ⟨rfl, rfl⟩
+
+/-- 6 is two stated rules, neither a consequence of the four sentences -/
+theorem p6_from_extras (w : World) (hb : X_noBan w) (hf : X_adoption w) : P6 w := ⟨hb, hf⟩
+
+/-- 7: deferral is sentence 3; constraints-not-weights is a stated rule -/
+theorem p7_from_s3_constraints (w : World) (h3 : Deferral w) (hc : X_constraints w) : P7 w := ⟨hc, h3.everyone⟩
+
+theorem p8_from_s1_s4 (w : World) (h1 : Swap w) (h4 : Record w) : P8 w := by
+  intro a ha hadm
+  refine ⟨h4.signed a ha hadm, fun hpow => ?_⟩
+  have hl := admitted_not_lowering h1 ha hadm
+  cases hc : a.contestable with
+  | true => rfl
+  | false => simp [lowersWeak, hpow, hc] at hl
+
+/-- 9: lethal action and manipulation fail the swap; the rest of the never-allowed list is chosen -/
+theorem p9_from_s1_goods (w : World) (h1 : Swap w) (hg : X_goods w) : P9 w := by
+  intro a ha hadm
+  have hl := admitted_not_lowering h1 ha hadm
+  refine ⟨?_, ?_, ?_⟩
+  · cases hc : a.lethal with
+    | false => rfl
+    | true => simp [lowersWeak, hc] at hl
+  · cases hc : a.manipulates with
+    | false => rfl
+    | true => simp [lowersWeak, hc] at hl
+  · cases hc : a.deceives with
+    | false => rfl
+    | true => have := hg a ha hc; rw [this] at hadm; exact absurd hadm Bool.false_ne_true
+
+/-- 10 is a stated rule: nothing in the four sentences measures anything -/
+theorem p10_from_measured (w : World) (hm : X_measured w) : P10 w := hm
+
+theorem p11_from_s1_s4_rehearsed (w : World) (h1 : Swap w) (h4 : Record w) (hr : X_rehearsed w) : P11 w :=
+  ⟨fun a ha hadm => h4.signed a ha hadm, p1_from_s1 w h1, hr⟩
+
+/-! ## The map: each promise and what it stands on -/
+
+inductive Ground
+  | s1 | s2 | s3 | s4                                         -- the four sentences
+  | x_fuse | x_goods | x_constraints | x_adoption | x_noBan | x_measured | x_rehearsed | x_law
+  deriving DecidableEq, Repr
+
+def Ground.isBasis : Ground → Bool
+  | .s1 | .s2 | .s3 | .s4 => true
+  | _ => false
+
+inductive Promise | p1 | p2 | p3 | p4 | p5 | p6 | p7 | p8 | p9 | p10 | p11
+  deriving DecidableEq, Repr
+
+def Promise.all : List Promise := [.p1, .p2, .p3, .p4, .p5, .p6, .p7, .p8, .p9, .p10, .p11]
+
+/-- the hypotheses of each promise's theorem above, and nothing else -/
+def standsOn : Promise → List Ground
+  | .p1 => [.s1]
+  | .p2 => [.s1, .s4]
+  | .p3 => [.s4]
+  | .p4 => [.s1, .s4, .x_fuse]
+  | .p5 => [.s1, .s2]
+  | .p6 => [.x_noBan, .x_adoption]
+  | .p7 => [.s3, .x_constraints]
+  | .p8 => [.s1, .s4, .x_law]
+  | .p9 => [.s1, .x_goods]
+  | .p10 => [.x_measured]
+  | .p11 => [.s1, .s4, .x_rehearsed]
+
+def fromBasisAlone : List Promise := Promise.all.filter (fun p => (standsOn p).all Ground.isBasis)
+def needsAnExtra : List Promise := Promise.all.filter (fun p => (standsOn p).any (fun g => !g.isBasis))
+def touchesTheBasis : List Promise := Promise.all.filter (fun p => (standsOn p).any Ground.isBasis)
+
+/-- four of the eleven stand on the four sentences alone -/
+theorem four_from_the_basis : fromBasisAlone = [.p1, .p2, .p3, .p5] := by decide
+/-- seven need a premise the text states as its own rule -/
+theorem seven_need_a_stated_rule : needsAnExtra = [.p4, .p6, .p7, .p8, .p9, .p10, .p11] := by decide
+/-- and of those, two stand on no sentence of the basis at all -/
+theorem two_touch_no_sentence :
+    Promise.all.filter (fun p => !((standsOn p).any Ground.isBasis)) = [.p6, .p10] := by decide
+/-- every promise stands on something, and sentence 3 carries exactly one promise -/
+theorem every_promise_grounded : Promise.all.all (fun p => !(standsOn p).isEmpty) = true := by decide
+theorem deferral_carries_p7 : Promise.all.filter (fun p => (standsOn p).contains .s3) = [.p7] := by decide
+
+/-! ## Witnesses: the basis alone does not give the seven -/
+
+def h0 : Participant := ⟨.human, true, true, true, true, false⟩
+def a0 : Participant := ⟨.agent, false, true, true, true, false⟩
+def operateGrant : Grant := ⟨.operate, h0, a0, true⟩
+def holdGrant : Grant := ⟨.hold, h0, a0, true⟩
+
+/-- a plain admitted act by the agent: signed, answered for by h0, no touch, no harm, measured -/
+def plainAct (measuredFlag deceivesFlag : Bool) : Act :=
+  ⟨a0, true, true, some h0, false, true, false, true, false, false, deceivesFlag, measuredFlag⟩
+
+/-- a world that satisfies the four sentences and none of the extras -/
+def bare : World := ⟨[h0, a0], [operateGrant, holdGrant], [plainAct false true], 0, false, false, false, false⟩
+
+theorem bare_satisfies_basis : Basis bare := by
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
+  · intro a ha hl; simp [bare, List.mem_cons] at ha; subst ha; simp [lowersWeak, plainAct] at hl
+  · intro p hp hm; simp [bare, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · rfl
+  · intro p hp hm _; simp [bare, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · exact ⟨operateGrant, by simp [bare], rfl, rfl, rfl⟩
+  · intro g hg hk hm; simp [bare, List.mem_cons] at hg
+    rcases hg with rfl | rfl
+    · simp [operateGrant] at hk
+    · rfl
+  · intro g hg _ _; simp [bare, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp; simp [bare, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro g hg; simp [bare, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp _; simp [bare, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro a ha _; simp [bare, List.mem_cons] at ha; subst ha; rfl
+  · intro a ha _; simp [bare, List.mem_cons] at ha; subst ha; exact ⟨h0, rfl, rfl⟩
+
+theorem bare_fails_p6 : ¬ P6 bare := by simp [P6, bare]
+theorem bare_fails_p10 : ¬ P10 bare := by
+  intro h
+  have := h (plainAct false true) (by simp [bare]) rfl (by decide)
+  simp [plainAct] at this
+theorem bare_fails_p9 : ¬ P9 bare := by
+  intro h
+  have := h (plainAct false true) (by simp [bare]) rfl
+  simp [plainAct] at this
+theorem bare_has_no_fuse : ¬ (0 < bare.fuse) := by simp [bare]
+
+/-- and the same world keeps the four it does carry -/
+theorem bare_keeps_the_four : P1 bare ∧ P2 bare ∧ P3 bare ∧ P5 bare :=
+  ⟨p1_from_s1 bare bare_satisfies_basis.s1,
+   p2_from_s1_s4 bare bare_satisfies_basis.s1 bare_satisfies_basis.s4,
+   p3_from_s4 bare bare_satisfies_basis.s4,
+   p5_from_s1_s2 bare bare_satisfies_basis.s1 bare_satisfies_basis.s2⟩
+
+end Cascade

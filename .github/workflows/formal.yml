@@ -248,7 +248,8 @@ jobs:
         working-directory: formal/reciprocity
         run: |
           lean Reciprocity.lean
-          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean
+          lean Cascade.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean
 
   retirement:
     name: TLC — the Retirement Standard as a machine (formal/retirement)
