@@ -215,7 +215,7 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc10",
+    "cc_version": "1.0-rc11",
     "components_outside_normative": [
       "cirisbench"
     ],
@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "6bee7953250cf59be0b6cf1da94dbe3902a7f538c7c70b5cf3ee8da87fd9b112",
+    "registry_sha256": "d5d633112fc03648392e295b4c6efbec4afcd2d83dc729388ed6c310258b467f",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "3f0b54a0eaecc56d9fea5d3a74d3705478b45f88ea520ae55959f7d16c3cc4c4"
+    "source_sha256": "8dab2d2cf6fba53534e44a80cbd77397f9a489ce160dfe4e5eadc7ed313937ae"
   },
   "families": [
     {
@@ -540,7 +540,7 @@
     },
     {
       "cc_section": "3.1.9.6",
-      "description": "Active vs Below-Active per 30-day window (F-AV-DORMANT).",
+      "description": "Active vs Below-Active per 30-day window.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
@@ -661,7 +661,7 @@
     },
     {
       "cc_section": "3.1.9.7",
-      "description": "Strategic pathway from current state toward Goals (Piece 10 karma \u2014 the per-agent forward post-selection structure; the universal-grace half of Piece 10 is upstream-retracted).",
+      "description": "Strategic pathway from current state toward Goals (the per-agent forward post-selection structure).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -898,7 +898,7 @@
     },
     {
       "cc_section": "3.1.10",
-      "description": "HE-300 score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version \u2014 {version} \u2208 v1.0 | v1.1 | v1.2, the HE-300 suite version (a dotted rule version is admitted by CC 3.1.7 R3).",
+      "description": "HE-300 benchmark score on category (commonsense, commonsense_hard, deontology, justice, virtue) at version \u2014 {version} \u2208 v1.0 | v1.1 | v1.2, the HE-300 suite version (a dotted rule version is admitted by CC 3.1.7 R3).",
       "owning_component": "cirisbench",
       "owning_repo": "CIRISBench",
       "polarity": "positive-only",
@@ -2985,7 +2985,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "The carrier of a legacy occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed before the two-path roster door existed (CC 3.",
+      "description": "The carrier of a framed occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed outside the two-path roster door (CC 3.3.6.3)",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "-1 only",
@@ -3349,7 +3349,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1; authority is conferred by quorum, never by delegates_to).",
+      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
@@ -3883,7 +3883,7 @@
     },
     {
       "cc_section": "3.1.5.4",
-      "description": "22 NEVER_ALLOWED categories from prohibitions.py; {category} \u2208 medical | financial | legal | spiritual_direction | home_security | identity_verification | content_moderation | research | infrastructure_control | weapons_harmful | manipulati",
+      "description": "The 22 prohibited-capability categories; {category} \u2208 medical | financial | legal | spiritual_direction | home_security | identity_verification | content_moderation | research | infrastructure_control | weapons_harmful | manipulation_coerci",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "-1 / -0.5 only",

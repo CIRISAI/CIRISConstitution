@@ -12,7 +12,7 @@ attestation-row = {
   asserted_at: rfc3339,  ; REQUIRED
   ? expires_at: rfc3339,  ; OPTIONAL; default absent
   ? subject_key_ids: [* subject-id],  ; OPTIONAL (absent when empty); default absent; array kind: set
-  cohort_scope: cohort-scope,  ; REQUIRED; default federation
+  cohort_scope: cohort-scope,  ; REQUIRED
   attestation_envelope: envelope,  ; REQUIRED
   original_content_hash: hex64,  ; REQUIRED
   ? additional_scrubs: [* scrub-sig],  ; OPTIONAL (absent when empty); default absent; array kind: sequence
@@ -127,7 +127,7 @@ row-mirror = {
   attestation_type: row-type,  ; REQUIRED
   attested_key_id: key-id,  ; REQUIRED; default the attester
   subject_key_ids: [* subject-id],  ; REQUIRED (may be empty); default []; array kind: set
-  cohort_scope: cohort-scope,  ; REQUIRED; default federation
+  cohort_scope: cohort-scope,  ; REQUIRED
   ? weight: number,  ; OPTIONAL; default absent
 }
 

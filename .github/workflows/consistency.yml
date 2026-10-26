@@ -42,6 +42,8 @@ jobs:
         run: python3 tools/check_claims.py
       - name: Relative links resolve (no dangling paths)
         run: python3 tools/check_links.py
+      - name: The Parts carry no stale reference, pointer, history, label, comparison or dated fact
+        run: python3 tools/check_stale_refs.py
       - name: Namespace registry and match vectors are regenerated (no drift)
         run: |
           python3 tools/build_cc_namespace.py

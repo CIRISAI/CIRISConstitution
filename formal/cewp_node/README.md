@@ -60,7 +60,7 @@ guard). It checks only what no plane sees alone:
 | X4 | a local-tier row never leaves its node; a served row is a signed federation-tier row | 5.3.2.4, 2.6.1.7 |
 | X5 | leaving the root is one act: the subscription falls and the latch lifts together, the record stands | 4.2.1 |
 
-`CewpNode.cfg` (three roster keys, one peer, two rows) **closes at 419,328 distinct states**.
+`CewpNode.cfg` (three roster keys, one peer, two rows) **closes at 483,840 distinct states** (the reach pin `bound` of CC 4.2.1 added the difference).
 `CewpNode_breaker.cfg` switches on `LatchBlocksServe`, the breaker named on G7 at the rc8 cut
 (persist's trust verdict folding the latch and edge's serve gate reading it, closed at the v58 pin):
 `Inv_X1_LatchDoesNotBlockServing` is violated in one step, which is the spine catching the one

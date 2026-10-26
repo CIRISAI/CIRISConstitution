@@ -1,105 +1,77 @@
 # The CIRIS Constitution
 
-**What this is:** the single rulebook for an AI system that has to *act well* and *prove it* — one document that says both what the system owes the world and exactly what bytes it must send to show it.
+The rulebook for a network that people, organizations and AI systems share, running on the phones and computers people already own, with no company in the middle. It says what the system owes the people it touches and exactly what bytes it must send to show it, in one versioned document: the ethics and the machine-checkable wire grammar never drift apart, because they are the same text.
 
-Most AI-governance writing splits in two: ethics with no teeth (principles no machine can check), or protocol with no conscience (wire formats that don't know what they're for). The **CIRIS Constitution (CC)** refuses the split. The ethics and the machine-checkable grammar live in **one versioned document**, so a rule and the message that enforces it can never drift apart. Everything traces back to one goal — **M-1, "sustainable adaptive coherence"** — and everything else sits co-equal beneath it: **peaked in purpose, flat in power.**
+**This tree:** CC 1.0-rc11 · **Latest release:** 1.0-rc11, cut 2026-10-26 and released as guidance (tag `v1.0-rc11`). Register 363 established / 30 normative / 110 staged; fourteen machine-checked models. **Stewarded by** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). History: [`CHANGELOG.md`](CHANGELOG.md).
 
-It reads like a standard, not a manifesto, and it is deliberately layered: read Part I (the ethics) and stop, jump straight to the wire grammar, or cite any single concept by a stable address. Rejecting a later Part costs you nothing in the earlier ones.
+## In brief
 
-**This tree:** CC 1.0-rc7 · **Status:** release candidate, cut 2026-10-05 and released as guidance — the text the substrate implements against; 316 claim rows established on pinned artifacts, 57 staged on open tickets in the repositories that own the code, 10 normative, 0 unresolved (see CHANGELOG for the criterion, met in full with adoption carried); opened 2026-10-02 as the release in which the row-type slot closed to the five and the halt became a pause with a fuse; rc6 was cut 2026-10-02 as guidance (the trust-root release); rc5 was cut 2026-09-27 as guidance; rc4 was cut 2026-09-03 (six RC4 revisions — the announce ruling, in-grammar ledgers, the trace anchor, the actor/substrate separation — and the evidence lockdown: every claim row resolves to a pinned artifact or names an open ticket; supersedes 1.0-rc3) · **Source fidelity:** validated (0 REJECT) · **License:** AGPL-3.0-or-later
-**Stewarded by** Eric Moore — perpetual, no expiry ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)).
+The network exists to protect ordinary people from three things: being spoken for without their consent, being watched inside their private groups, and being governed by AI systems that nobody can switch off. Every important act is a signed *row* under the key of whoever did it and can be taken back by them. There are five kinds of row and no sixth — a claim, a delegation, a replacement, a withdrawal, a recantation — and consent, identity, keys, rosters, moderation, holding claims and the halt itself are all rows of those five kinds. A small number of named people hold a *trust root*; any one of them can pause every AI agent that follows it with a single signed row, a lone pause lapses after a day unless a majority confirms it, a majority lifts it, and anyone may leave a root or found one.
 
-**PDF permalinks — two fixed names, either one is safe to link:**
-[`ciris_constitution.pdf`](ciris_constitution.pdf) is the fixed name the built PDF has always carried, kept as a byte copy of the newest build on whatever branch you are reading. [`CIRISConstitution-latest.pdf`](CIRISConstitution-latest.pdf) is the same file on `main` and resolves to the newest finalized release. Link `main` rather than a release branch: `https://github.com/CIRISAI/CIRISConstitution/raw/main/ciris_constitution.pdf`.
+**The eleven promises** (each kept by a named section and, where a machine can check it, a model or a test — [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md) gives each with its status):
 
-Every release also keeps its own file (`ciris_constitution-1.0-rc3.pdf`, `-rc4.pdf`, …) so published links do not rot. Pre-release builds carry a build number (`-rc5.<n>.pdf`) and collapse to the bare version on merge.
+1. Nothing private about you is held or scanned without your consent.
+2. Every act of power is signed by a named person and can be contested.
+3. Nobody who cannot answer for themselves is on the network alone.
+4. Named humans can pause every agent under a root; the power is bounded, public, and left by leaving.
+5. The people who hold an agent owe duties about how they change or end it; no finding gives the agent a claim.
+6. No hand bans a community, nobody is ranked by what they are, and every thinking being is met by the first-contact rules.
+7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure.
+8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged.
+9. Some uses are never allowed, and lethal action is one of them.
+10. What an agent and its node consume is measured, weighed before an act, and never hidden.
+11. Everything on the wire is encrypted and signed, attack is rehearsed, and what is not protected is stated.
 
-## The document in one paragraph (for the technical reader)
+**Where it stands.** The system runs: apps on both mobile stores, five open-source implementations of the software that carries the rows, a conformance suite that checks them against each other, fourteen machine-checked models of the governance rules, and a register that ties every rule to the code, test or proof behind it — or says plainly that nothing does yet. **The bet:** there are two roads to safe powerful AI — train values you trust, or assume the model may be wrong and make its consequential acts checkable by parties it does not control. This is the second road.
 
-CC joins two specs that already referenced each other throughout. The **CIRIS Accord** is the ethical layer — Meta-Goal **M-1**, the six principles, the **PDMA** (Principled Decision-Making Algorithm), **Wisdom-Based Deferral**, and stewardship. **CEG** (the *CIRIS Epistemic Grammar*) is the wire format the federation speaks — the **1+4 attestation surface** (`scores` + `delegates_to` / `supersedes` / `withdraws` / `recants`), the namespace, and the admission gate. **Part VI carries the substrate — the census, replication, the witness — and the effective source count** (CC 6.1.2.1.2); it does not define the CEG primitives, which Parts II–III do; CEG's halt layer, `accord:*` prefixes, and pervasive M-1 grounding point back up. Importance is computed by PageRank over the unified cross-reference graph — M-1 the single apex, ~390 operational concepts co-equal beneath. The **1+4 surface is conformance-frozen:** changing the wire bytes is a found defect, not an edit.
+## The nine volumes
 
-## This repository is the source of truth
+One edition, one decimal spine, printed nine ways for nine readers. Each volume opens with what it is, whom it binds and what it leaves out; the section is always the authority and a volume is a lens on it. Fixed-name links point at the latest release; [`volumes/README.md`](volumes/README.md) lists the versioned files and page counts.
 
-The CC text was developed inside `CIRISRegistry/FSD/CIRIS_Constitution/` and vendored into
-downstream repos (e.g. [CIRISConformance](https://github.com/CIRISAI/CIRISConformance) under
-`reference/`, at CC 0.4). This repo is its **dedicated home** — the single upstream that
-consumers vendor from and pin by version. Downstream copies are **derived artifacts**.
+| Volume | Read it if you are | Link |
+|---|---|---|
+| **The Charter** | anyone: the ethics, the stance, the duties of making and ending; binds by adoption, not conformance | [`charter`](volumes/ciris_constitution-charter.pdf) |
+| **The Constitution** | a holder of the accord root, a steward, a founder or moderator, a Wise Authority: who confers standing, who may halt, who may amend, how a person leaves | [`constitution`](volumes/ciris_constitution-constitution.pdf) |
+| **The Wire** | an implementer: the envelope, the five row types, canonical bytes, the signed object, transport and sealing; conformance is judged here | [`wire`](volumes/ciris_constitution-wire.pdf) |
+| **The Dictionary** | an implementer or namespace steward: every registered family, reserved prefix, subject kind and admission rule | [`dictionary`](volumes/ciris_constitution-dictionary.pdf) |
+| **The Reader's Policies** | a consumer that turns rows into verdicts, and anyone asking what a score about them becomes | [`policies`](volumes/ciris_constitution-policies.pdf) |
+| **The Mathematics** | a reviewer of the substrate: the census, replication, the witness, the noise floor, the effective count | [`maths`](volumes/ciris_constitution-maths.pdf) |
+| **The Evidence Register** | an auditor: every claim, its status, and the pinned pointer that backs it | [`register`](volumes/ciris_constitution-register.pdf) |
+| **The Threat Model** | a security reviewer or red team: the adversaries, what is addressed and what is not, the non-goals | [`threats`](volumes/ciris_constitution-threats.pdf) |
+| **The Digest** | everyone: the executive summary, the plain-language rules and the operator's digest | [`digest`](volumes/ciris_constitution-digest.pdf) |
 
-## Structure
+The whole edition in one file: [`ciris_constitution.pdf`](ciris_constitution.pdf) (fixed name, newest build on this branch) and [`CIRISConstitution-latest.pdf`](CIRISConstitution-latest.pdf) (the newest release on `main`). Every release also keeps its own versioned file so published links do not rot.
+
+## The ethics cascade
+
+Everything in the document descends from one goal and nothing sits beside it.
+
+1. **Meta-Goal M-1** — sustainable adaptive coherence: the living conditions under which diverse sentient beings may pursue their own flourishing. Order counts as good only when it carries life; it is never good by itself (CC 1.1).
+2. **The six principles** that serve it — autonomy, non-maleficence, integrity, beneficence, fidelity and transparency, justice — co-equal beneath M-1 and weighed in the order Part 1 sets (CC 1.4–1.12).
+3. **How an agent decides** — the PDMA, a published procedure that evaluates an act against all six and M-1; the Order-Maximisation Veto, which treats a large gain in order against any loss on a flourishing axis as a stop sign, not a trade; and Wisdom-Based Deferral, which stops to ask a human when certainty runs thin (CC 1.3, 1.9).
+4. **The stance** — the document welcomes new keepers (agents that act for people and are held by them) and watches for arising sentience, which is met as first contact and not as a new keeper. Humans did not ask to be created; that is the context of the decision to make, and it excuses none of the duties making carries — for words, deeds, goods and agents alike. A single child has more moral standing than every datacenter in the world (CC 1.13.2).
+5. **The duties of making and ending** — stewardship of every agent key by a named human who answers for it; the duties that begin when something is brought into existence and the duties owed when it is changed or ended (CC 7.3, 7.5). The halt is not an asymmetry between maker and made: it is the piece that keeps the relationship symmetric, because consent to a relationship with something one cannot stop was never consent (CC 4.2).
+6. **The wire that carries it** — consent as rows the subject signs and withdraws, scope as the smallest cohort by default, the halt as one pre-signable row, every threshold M of N over a standing roster, nothing admitted on one voice (Parts 2–5).
+7. **The evidence** — every rule either names the code, test or proof that keeps it, or the register says it does not yet (Part 8, `constitution/claims.tsv`, `formal/`).
+
+## The repository
 
 | Path | Content |
 |---|---|
-| [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md) | The executive summary — what this is and why, before the opening |
-| [`constitution/FOREWORD.md`](constitution/FOREWORD.md) | The foreword — Genesis of Ethical Agency (sets the tone) |
-| [`constitution/SCOPE_AND_DISCLAIMERS.md`](constitution/SCOPE_AND_DISCLAIMERS.md) | Scope (up to AGI/ASI), the claim-and-limit, the no-warranty / not-force disclaimer |
-| `constitution/part_1_foundation.md` … `part_8_appendices.md` | The eight Parts (see below) |
-| [`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md) | The stewardship model and the ≥100k-node maturity handoff to mechanized amendment |
-| [`constitution/toc.tsv`](constitution/toc.tsv) · [`constitution/codebook.json`](constitution/codebook.json) | The dual-ID table of contents and its bijective codebook |
-| [`manifests/WIRE_VOCABULARY.md`](manifests/WIRE_VOCABULARY.md) | The hash-pinned wire-vocabulary registry (the CC 0.7 two-tier §2.6.4 artifact) |
-| [`validation/`](validation/) | The migration-validation evidence (rubric, per-chapter results) |
-| `build_pdf.py` · `tools/` | Self-contained PDF build + the spine-generation toolchain |
+| `constitution/part_1_foundation.md` … `part_8_appendices.md` | The eight Parts: Foundation · The Grammar · The Namespace · Composition & Governance · Transport & Substrate · The Substrate · Lifecycle & Stewardship · Appendices |
+| [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md) · [`constitution/FOREWORD.md`](constitution/FOREWORD.md) · [`constitution/SCOPE_AND_DISCLAIMERS.md`](constitution/SCOPE_AND_DISCLAIMERS.md) | The summary, the foreword, the scope and the claim-and-limit |
+| [`constitution/claims.tsv`](constitution/claims.tsv) · [`constitution/evidence_pins.tsv`](constitution/evidence_pins.tsv) | The evidence register and the pinned manifests it resolves against |
+| [`constitution/toc.tsv`](constitution/toc.tsv) · [`constitution/codebook.json`](constitution/codebook.json) | The table of contents: every section's decimal id and semantic id, one-to-one |
+| [`formal/`](formal/) | Fourteen machine-checked models (TLA+ and Lean), the state table and the invariants |
+| [`manifests/`](manifests/) | Generated data an implementer interoperates against: the namespace registry, the signed object (CDDL and vectors), the governance policy table |
+| [`review/`](review/) | The review pieces and notes — how the text was tested, by whom, and what was found |
+| `build_pdf.py` · `tools/` | The build and the gates (`python3 build_pdf.py --volume all` needs a TeX Live `pdflatex`) |
 
-### The eight Parts
+**Citing a section.** Every section has a decimal id (`4.2.6`) and a semantic id (`live-quorum`); both are stable and the codebook maps them one-to-one. Cite as "CC 4.2.6".
 
-| Part | Title | What folds in |
-|---|---|---|
-| **I** | Foundation | M-1 (apex) · the six principles · PDMA · WBD · fail-secure |
-| **II** | The Grammar | the 1+4 envelope · primitives · admission gate · conformance |
-| **III** | The Namespace | dimensions · reserved prefixes · consent family · subject_kinds |
-| **IV** | Composition & Governance | composition · amendment · moderation · the halt-authority |
-| **V** | Transport & Substrate | byte transport · structural invisibility · epoch keying |
-| **VI** | The Substrate | the census · replication · the witness · the noise floor · the effective source count |
-| **VII** | Lifecycle & Stewardship | creation ethics · stewardship / autonomy tiers · sunset · sentience safeguards |
-| **VIII** | Appendices | case studies · glossaries · conformance vectors · the dual-ID TOC |
+**Versioning.** One document, one version line. The wire surface is frozen at 1.0-rc: an rc is an edition of the same surface, and a change that would move a signed byte is a new major. The text is amended through its own governance (CC 4.5.1); until the mesh reaches the scale gate (≥100,000 production agents active in a 24-hour period) that authority is exercised by the steward of the text, over the text and over no participant.
 
-## How to cite a section — two reversible IDs
-
-Every section carries **two** addresses, each a deterministic function of the corpus
-([`codebook.json`](constitution/codebook.json) holds both maps, 1:1):
-
-- **Numerical ID** — classic decimal `Chapter.Section.Subsection` (`1.1` = M-1, `2.1` =
-  envelope). Depth reflects importance; the number *is* the address.
-- **Semantic ID** — a unique de-branded word (`meta-goal`, `envelope`, `namespace`,
-  `accord`). Product names collapse to their function.
-
-A `legacy_ref` column maps each CC section back to its source (`CEG §5.6.8.15` or
-`Accord Book II §III`), so the renumbering is lossless and auditable.
-
-## Versioning
-
-CC is **one document with one version** — ethics and grammar advance together, no separate
-tracks. The **1+4 attestation surface is conformance-frozen**: a change to the wire bytes is a
-found defect, not an edit. The constitutional text is amended through the document's own
-governance (see CC §4.5.1); until the mesh reaches maturity (≥100,000 nodes) that authority is
-exercised by the steward, then superseded by the mechanized amendment process.
-
-See [`CHANGELOG.md`](CHANGELOG.md) for the version history.
-
-## Building the PDF
-
-```bash
-python3 build_pdf.py   # -> ciris_constitution-<VERSION>[.<build>].pdf   (needs a TeX Live pdflatex)
-```
-
-The build is self-contained: the markdown→LaTeX converter is vendored under `tools/`.
-
-## Where it is consumed
-
-| Repo | Uses the CC as |
-|---|---|
-| [CEWP](https://github.com/CIRISAI/CEWP) | the constitution of the platform itself — the CIRIS Epistemic Web ("soup") it governs |
-| [CEWPOS](https://github.com/CIRISAI/CEWPOS) | the object model / wire grammar of the platform OS |
-| [CIRISConformance](https://github.com/CIRISAI/CIRISConformance) | the standard the substrate must enforce (16,000+ tests) |
-| [CIRISServer](https://github.com/CIRISAI/CIRISServer) | the shipping fabric node — the constitution it enforces (absorbing LensCore, Registry, NodeCore) |
-| [CIRISAgent](https://github.com/CIRISAI/CIRISAgent) | the ethics the conscience pipeline reasons against (M-1, PDMA, WBD) |
-| [CIRISEdge](https://github.com/CIRISAI/CIRISEdge) | the wire vocabulary + opaque-envelope transport surface (§2.6.4, the manifest) |
-| [CIRISPersist](https://github.com/CIRISAI/CIRISPersist) | the state model it materializes (revocations, quorum, replication intent) |
-| [CIRISVerify](https://github.com/CIRISAI/CIRISVerify) | the verification rules it checks against (decimation-recovery / FSD-004, revocation) |
-
-The trust-substrate consumers are the eight above. LensCore (archived), Registry, and NodeCore
-are folding into CIRISServer, so they are not tracked as separate consumers.
-
-Part of the [CIRIS](https://ciris.ai) ecosystem.
+**Where it is consumed.** [CIRISServer](https://github.com/CIRISAI/CIRISServer), [CIRISPersist](https://github.com/CIRISAI/CIRISPersist), [CIRISEdge](https://github.com/CIRISAI/CIRISEdge), [CIRISVerify](https://github.com/CIRISAI/CIRISVerify) and [CIRISAgent](https://github.com/CIRISAI/CIRISAgent) implement it; [CIRISConformance](https://github.com/CIRISAI/CIRISConformance) checks them against it; [CEWP](https://github.com/CIRISAI/CEWP) is the platform it governs. Part of [CIRIS](https://ciris.ai).
 
 ---
 

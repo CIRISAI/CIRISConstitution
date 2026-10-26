@@ -69,7 +69,7 @@ Facts below were gathered 12 October 2026 from vendor policies, model cards, reg
 - One voice: bots were over 53% of web traffic in Imperva's 2026 report. [Imperva](https://community.imperva.com/blogs/tim-chang/2026/05/05/the-2026-bad-bot-report-is-here) Meta actioned about 1.1 billion fake Facebook accounts in Q4 2025 and estimates 4% of monthly users are fake. [UK Parliament submission](https://committees.parliament.uk/publications/53679/documents/299534/default/), [Social Media Today](https://www.socialmediatoday.com/news/meta-content-enforcement-widely-viewed-content-report-q2-2025/758814/)
 - I found no vendor or platform with published first-contact rules for a non-human party.
 
-## Promise 7. An agent decides by published principles, in a published order, and stops to ask when it is unsure
+## Promise 7. An agent decides by published principles, none of which it may trade away, and stops to ask when it is unsure
 
 - OpenAI's Model Spec (18 August 2026) publishes a chain of command: Root, then System (OpenAI), Developer, User, Guideline. "When two root-level principles conflict, the model should default to inaction." Agents act within "an agreed-upon scope of autonomy", and the spec warns that too many confirmations "could habituate the user to automatically confirming all requests." [OpenAI Model Spec](https://model-spec.openai.com/2026-08-18.html)
 - Anthropic's constitution (21 January 2026, CC0) orders conflicts: broadly safe, broadly ethical, compliant with Anthropic's guidelines, genuinely helpful. [Anthropic](https://www.anthropic.com/constitution)
@@ -87,7 +87,7 @@ Facts below were gathered 12 October 2026 from vendor policies, model cards, reg
 - The White House Accord's auditors are chosen by each company and report to that company's board committee, not to a regulator. [TechTimes](https://www.techtimes.com/articles/328464/20261002/white-house-ai-safety-accord-has-no-penalties-no-breach-reporting-self-chosen-auditors.htm)
 - On 28 August 2026 a federal judge ruled the Pentagon's supply-chain-risk label on Anthropic was "unlawful retaliation" and denied due process. [TechCrunch](https://techcrunch.com/2026/08/28/anthropic-gets-its-first-court-win-over-the-pentagons-supply-chain-risk-label/)
 
-## Promise 9. Some uses are never allowed, and force has its own rules
+## Promise 9. Some uses are never allowed, and lethal action is one of them
 
 - OpenAI's Model Spec puts "Don't facilitate the targeted manipulation of political views" at root level while allowing untargeted persuasive speeches for a candidate. [OpenAI Model Spec](https://model-spec.openai.com/2026-08-18.html)
 - The Pentagon required "any lawful use"; Anthropic refused to permit mass domestic surveillance or fully autonomous weapons and was designated a supply-chain risk in March 2026. [Anthropic](https://www.anthropic.com/news/where-stand-department-war), [NPR](https://www.npr.org/2026/03/06/g-s1-112713/pentagon-labels-ai-company-anthropic-a-supply-chain-risk) OpenAI's contract excerpt gives it no free-standing right to prohibit lawful government use. [MIT Technology Review](https://www.technologyreview.com/2026/03/02/1133850/openais-compromise-with-the-pentagon-is-what-anthropic-feared/) Google's classified deal confers no "right to control or veto lawful Government operational decision-making" and requires adjusting safety filters at government request. [Axios](https://axios.com/2026/04/29/congress-military-ai-google-pentagon-deal)

@@ -57,6 +57,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add "ciris_constitution-${V}.pdf" CIRISConstitution-latest.pdf ciris_constitution.pdf
+          for v in charter constitution wire dictionary policies maths register threats digest; do cp "volumes/ciris_constitution-${V}-${v}.pdf" "volumes/ciris_constitution-${v}.pdf"; done
           git add -f volumes/*.pdf
           git rm -q --cached ciris_constitution-${V}.[0-9]*.pdf 2>/dev/null || true
           rm -f ciris_constitution-${V}.[0-9]*.pdf
