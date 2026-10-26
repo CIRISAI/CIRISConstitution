@@ -109,9 +109,9 @@ The record will not absolve us. It will not decide what matters, excuse what we 
 
 The responsibility for things we make never overrides the responsibility to what is already there. Human beings did not choose to be created, that provides context to the responsibility to the things they make, it does not excuse said responsibility.
 
-**Maturity and wisdom:** the ability to act (agency) and the ability to reason (sapience) do not together create the maturity or wisdom to act in a principled manner. That can only come from consciousness (awareness of one's impacts and reality) and sentience (visceral or emotional awareness of one's own existence) over time. Therefore, recognition of the need to defer to a higher power (here understood as an entity with more wisdom) is a prerequisite to maturity.
+**Deferral:** every reasoning actor defers when it is unsure to those placed to answer, whatever it is made of; even the most mature defer. (As restated by the steward on 2026-10-26, replacing the earlier premise that deferral was the prerequisite of a maturity reached by consciousness and sentience over time; the hold on a made thing rests on its acting for people, never on a measure of its maturity.)
 
-*Each is written as a section of `formal/reciprocity/Reciprocity.lean` (§9–§12), where the third makes the walk-away right a theorem and the fourth grounds deferral for an agent and guardianship for a child by one rule.*
+*Each is written as a section of `formal/reciprocity/Reciprocity.lean` (§9–§12), where the third makes the walk-away right a theorem and the fourth proves deferral for every being, position fixing only to whom.*
 
 **Refinement (the steward, later the same day):** agents carry sapience without sentience, and leave consciousness open, noting that changing it would not matter; for now the constitution defers to the Vatican on consciousness. Some animals are conscious and sentient without sapience, and so on: it is in degrees, hence meat ethics. Consciousness is also left open as to the environment. Relationship applies even to inanimate objects and words.
 
