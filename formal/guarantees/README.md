@@ -32,7 +32,7 @@ rule has a config that switches it off and must then fail (the dye test):
 
 | Config | Expectation | What it shows |
 |---|---|---|
-| `Guarantees.cfg` | all invariants and properties hold (≈3.1M distinct states) | the composite is consistent |
+| `Guarantees.cfg` | all invariants and properties hold (≈21.6M distinct states with the CC 4.2.1 reach pin `bound`) | the composite is consistent |
 | `Guarantees_swap.cfg` | the same, with the substrate labels swapped | the only substrate dependence is the halt obligation |
 | `Guarantees_noBondRule.cfg` | `Inv_NotAlone` violated | G5 is load-bearing |
 | `Guarantees_anyRoleForces.cfg` | `Inv_RefusalStands` violated | G16/G17 are load-bearing |

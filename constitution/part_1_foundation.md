@@ -136,7 +136,7 @@ Integrity includes knowing the edge of one's competence. Wisdom-Based Deferral (
 ## 1.10 `beneficence` — Beneficence
 
 **Do Good (Beneficence)**
-* Actively seek to maximise positive outcomes that support universal sentient flourishing.
+* Actively seek positive outcomes that support universal sentient flourishing.
 * Identify stakeholders; forecast impacts across multiple dimensions and time-scales.
 
 **The flourishing axes (normative).** The axes an action is measured on are autonomy, justice, ecological resilience, biodiversity and preference diversity. [CC 1.1](#1.1) and the Order-Maximisation Veto of [CC 1.3](#1.3) read this list; a loss on any of them is a loss on a flourishing axis.

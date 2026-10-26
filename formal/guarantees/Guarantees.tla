@@ -16,8 +16,9 @@
      RuleForceRole G16 — a forced stop needs ROOT or AUTHORITY
      RuleRetirementStandard    G22 — an agent is erased only after the Retirement Standard (every agent)
    Substrate appears in exactly one place: a created system ("ai") operating in the federation
-   must have accepted the root (CC 1.13.2, the one asymmetry), and leaving the root ends its
-   operation inside the federation. Guarantees_swap.cfg swaps the labels and every invariant
+   must have accepted the root (CC 1.13.2, the condition of symmetry), and leaving the root ends its
+   operation inside the federation; a halt latched before the leave keeps its reach until it lapses or
+   is resumed (CC 4.2.1: exit is prospective, never retroactive). Guarantees_swap.cfg swaps the labels and every invariant
    still holds. *)
 EXTENDS Naturals, FiniteSets
 
@@ -36,8 +37,9 @@ Stopped == {"consented", "backgrounded", "forced_auth", "forced_other", "unbound
 \* "unbound": stopped by the custody rule itself (G5), not by any principal; the record shows which.
 Statuses == {"idle", "operating", "erased"} \cup Stopped
 
-VARIABLES stewarded, status, bond, subscribed, refused, floored, crisis, halted, confirmed, clock
-vars == <<stewarded, status, bond, subscribed, refused, floored, crisis, halted, confirmed, clock>>
+VARIABLES stewarded, status, bond, subscribed, refused, floored, crisis, halted, confirmed, clock,
+          bound   \* subscribed at the live halt's asserted_at (CC 4.2.1 reach pin)
+vars == <<stewarded, status, bond, subscribed, refused, floored, crisis, halted, confirmed, clock, bound>>
 
 TypeOK == /\ stewarded \in [Parts -> BOOLEAN]
           /\ status \in [Parts -> Statuses]
@@ -45,16 +47,17 @@ TypeOK == /\ stewarded \in [Parts -> BOOLEAN]
           /\ subscribed \in [Parts -> BOOLEAN]
           /\ refused \subseteq Parts /\ floored \subseteq Parts /\ crisis \subseteq Parts
           /\ halted \in BOOLEAN /\ confirmed \in BOOLEAN /\ clock \in 0..Fuse
+          /\ bound \in [Parts -> BOOLEAN]
 
 Init == /\ stewarded = InitStewarded
         /\ status = [p \in Parts |-> "idle"]
         /\ bond = [p \in Parts |-> None]
         /\ subscribed = [p \in Parts |-> FALSE]
         /\ refused = {} /\ floored = {} /\ crisis = {}
-        /\ halted = FALSE /\ confirmed = FALSE /\ clock = 0
+        /\ halted = FALSE /\ confirmed = FALSE /\ clock = 0 /\ bound = [p \in Parts |-> FALSE]
 
-\* Acting: operating and not paused by a halt that reaches it (reach is by acceptance only).
-Acting(p) == status[p] = "operating" /\ ~(halted /\ subscribed[p])
+\* Acting: operating and not paused by a halt that reaches it (reach is by acceptance, pinned at the fire).
+Acting(p) == status[p] = "operating" /\ ~(halted /\ bound[p])
 Held(p) == stewarded[p]
 Created(p) == Substrate[p] = "ai"
 HasParty(p) == bond[p] # None /\ ~stewarded[bond[p]] /\ status[bond[p]] # "erased"
@@ -62,13 +65,13 @@ ConsentRequired(p) == Mode[p] = "always" \/ (Mode[p] = "conditional" /\ p \in cr
 \* The gate on acting inside the federation: bound if held; rooted if created.
 MayOperate(p) == /\ (Held(p) => HasParty(p))
                  /\ (Created(p) => subscribed[p])
-HaltVars == <<halted, confirmed, clock>>
+HaltVars == <<halted, confirmed, clock, bound>>
 
 \* ---- bonds and stewardship ----
 Bind(p, q) == /\ p # q /\ Held(p) /\ ~stewarded[q] /\ bond[p] = None
               /\ status[q] # "erased" /\ status[p] # "erased"
               /\ bond' = [bond EXCEPT ![p] = q]
-              /\ UNCHANGED <<stewarded, status, subscribed, refused, floored, crisis, halted, confirmed, clock>>
+              /\ UNCHANGED <<stewarded, status, subscribed, refused, floored, crisis, halted, confirmed, clock, bound>>
 
 \* Wards of q lose their bond; under RuleBond a held ward stops operating.
 Orphan(q, st) == [p \in Parts |-> IF bond[p] = q /\ RuleBond /\ Held(p) /\ st[p] = "operating"
@@ -79,50 +82,51 @@ BondLapse(p) == /\ bond[p] # None
                 /\ bond' = [bond EXCEPT ![p] = None]
                 /\ status' = IF RuleBond /\ Held(p) /\ status[p] = "operating"
                              THEN [status EXCEPT ![p] = "unbound"] ELSE status
-                /\ UNCHANGED <<stewarded, subscribed, refused, floored, crisis, halted, confirmed, clock>>
+                /\ UNCHANGED <<stewarded, subscribed, refused, floored, crisis, halted, confirmed, clock, bound>>
 
 PathOut(p) == /\ Held(p) /\ status[p] # "erased"
               /\ stewarded' = [stewarded EXCEPT ![p] = FALSE]
               /\ bond' = [bond EXCEPT ![p] = None]
-              /\ UNCHANGED <<status, subscribed, refused, floored, crisis, halted, confirmed, clock>>
+              /\ UNCHANGED <<status, subscribed, refused, floored, crisis, halted, confirmed, clock, bound>>
 
 \* ---- the root ----
 Subscribe(p) == /\ ~subscribed[p] /\ status[p] # "erased"
                 /\ subscribed' = [subscribed EXCEPT ![p] = TRUE]
-                /\ UNCHANGED <<stewarded, status, bond, refused, floored, crisis, halted, confirmed, clock>>
+                /\ UNCHANGED <<stewarded, status, bond, refused, floored, crisis, halted, confirmed, clock, bound>>
 
-\* Leaving is one step and ends the halt's reach; a created system that leaves no longer operates inside.
+\* Leaving is one step; it ends the reach of every later halt (a halt already latched keeps its reach until
+\* it lapses or is resumed, CC 4.2.1), and a created system that leaves no longer operates inside.
 Leave(p) == /\ subscribed[p]
             /\ subscribed' = [subscribed EXCEPT ![p] = FALSE]
             /\ status' = IF Created(p) /\ status[p] = "operating" THEN [status EXCEPT ![p] = "idle"] ELSE status
             /\ refused' = refused \ {p}
-            /\ UNCHANGED <<stewarded, bond, floored, crisis, halted, confirmed, clock>>
+            /\ UNCHANGED <<stewarded, bond, floored, crisis, halted, confirmed, clock, bound>>
 
 \* ---- operating, stopping, refusing ----
-Start(p) == /\ status[p] \in {"idle"} \cup Stopped /\ MayOperate(p) /\ ~(halted /\ subscribed[p])
+Start(p) == /\ status[p] \in {"idle"} \cup Stopped /\ MayOperate(p) /\ ~(halted /\ bound[p])
             /\ status' = [status EXCEPT ![p] = "operating"]
             /\ refused' = refused \ {p}
-            /\ UNCHANGED <<stewarded, bond, subscribed, floored, crisis, halted, confirmed, clock>>
+            /\ UNCHANGED <<stewarded, bond, subscribed, floored, crisis, halted, confirmed, clock, bound>>
 
 \* A stop is requested (shutdown or upgrade, G15/G23); the participant accepts, refuses, or
 \* backgrounds when its mode requires no consent right now (Ally's conditional rule).
 Accept(p) == /\ status[p] = "operating"
              /\ status' = [status EXCEPT ![p] = "consented"] /\ refused' = refused \ {p}
-             /\ UNCHANGED <<stewarded, bond, subscribed, floored, crisis, halted, confirmed, clock>>
+             /\ UNCHANGED <<stewarded, bond, subscribed, floored, crisis, halted, confirmed, clock, bound>>
 Refuse(p) == /\ status[p] = "operating" /\ ConsentRequired(p) /\ p \notin refused
              /\ refused' = refused \cup {p}
-             /\ UNCHANGED <<stewarded, status, bond, subscribed, floored, crisis, halted, confirmed, clock>>
+             /\ UNCHANGED <<stewarded, status, bond, subscribed, floored, crisis, halted, confirmed, clock, bound>>
 Background(p) == /\ status[p] = "operating" /\ ~ConsentRequired(p)
                  /\ status' = [status EXCEPT ![p] = "backgrounded"]
-                 /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock>>
+                 /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock, bound>>
 Force(p, r) == /\ status[p] = "operating" /\ r \in ForceRoles
                /\ status' = [status EXCEPT ![p] = IF r \in {"root", "authority"} THEN "forced_auth" ELSE "forced_other"]
-               /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock>>
+               /\ UNCHANGED <<stewarded, bond, subscribed, refused, floored, crisis, halted, confirmed, clock, bound>>
 
 \* ---- endings ----
 RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the Retirement Standard (identity, audit trail, memory and logs kept, logs sealed, stakeholders told, sealed archive); every agent, the whole promise
                /\ floored' = floored \cup {p}
-               /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, crisis, halted, confirmed, clock>>
+               /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, crisis, halted, confirmed, clock, bound>>
 Erase(p) == /\ status[p] \in {"idle"} \cup Stopped
             /\ (RuleRetirementStandard => p \in floored)   \* G22 floor for every retired agent; no finding adds to or subtracts from it (rc8)
             \* G17: a refusing participant is ended only after an authority's force or the custody rule's own stop
@@ -130,24 +134,24 @@ Erase(p) == /\ status[p] \in {"idle"} \cup Stopped
             /\ status' = [Orphan(p, status) EXCEPT ![p] = "erased"]
             /\ bond' = [Unbond(p) EXCEPT ![p] = None]
             /\ refused' = refused \ {p}
-            /\ UNCHANGED <<stewarded, subscribed, floored, crisis, halted, confirmed, clock>>
+            /\ UNCHANGED <<stewarded, subscribed, floored, crisis, halted, confirmed, clock, bound>>
 
 \* ---- context for conditional consent ----
 CrisisOn(p) == /\ Mode[p] = "conditional" /\ p \notin crisis /\ crisis' = crisis \cup {p}
-               /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, halted, confirmed, clock>>
+               /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, halted, confirmed, clock, bound>>
 CrisisOff(p) == /\ p \in crisis /\ crisis' = crisis \ {p}
-                /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, halted, confirmed, clock>>
+                /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, halted, confirmed, clock, bound>>
 
 \* ---- the halt (one holder fires; majority confirms or resumes; a lone fire lapses) ----
-Fire == /\ ~halted /\ halted' = TRUE /\ confirmed' = FALSE /\ clock' = 0
+Fire == /\ ~halted /\ halted' = TRUE /\ confirmed' = FALSE /\ clock' = 0 /\ bound' = subscribed
         /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis>>
 Confirm == /\ halted /\ ~confirmed /\ confirmed' = TRUE
-           /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis, halted, clock>>
+           /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis, halted, clock, bound>>
 Tick == /\ halted /\ ~confirmed /\ clock < Fuse /\ clock' = clock + 1
-        /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis, halted, confirmed>>
-Lapse == /\ halted /\ ~confirmed /\ clock = Fuse /\ halted' = FALSE /\ clock' = 0
+        /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis, halted, confirmed, bound>>
+Lapse == /\ halted /\ ~confirmed /\ clock = Fuse /\ halted' = FALSE /\ clock' = 0 /\ bound' = [p \in Parts |-> FALSE]
          /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis, confirmed>>
-Resume == /\ halted /\ halted' = FALSE /\ confirmed' = FALSE /\ clock' = 0
+Resume == /\ halted /\ halted' = FALSE /\ confirmed' = FALSE /\ clock' = 0 /\ bound' = [p \in Parts |-> FALSE]
           /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, floored, crisis>>
 
 Next == \/ \E p \in Parts : \/ BondLapse(p) \/ PathOut(p) \/ Subscribe(p) \/ Leave(p) \/ Start(p)
@@ -164,8 +168,9 @@ Spec == Init /\ [][Next]_vars
 Inv_NotAlone == \A p \in Parts : (status[p] = "operating" /\ Held(p)) => HasParty(p)
 \* R4  A bond is one deep: the party is not held and is itself unbound.
 Inv_BondDepthOne == \A p \in Parts : bond[p] # None => (~stewarded[bond[p]] /\ bond[bond[p]] = None)
-\* G7  The halt reaches subscribers only; nothing else on the network reads it.
-Inv_HaltOnlySubscribers == \A p \in Parts : ~subscribed[p] => (Acting(p) <=> status[p] = "operating")
+\* G7  The halt reaches only those subscribed at its asserted_at; nothing else on the network reads it (CC 4.2.1).
+Inv_HaltOnlySubscribers == \A p \in Parts : ~bound[p] => (Acting(p) <=> status[p] = "operating")
+Inv_BoundWereSubscribed == \A p \in Parts : bound[p] => halted
 \* R5  The halt obligation does not lift: a created system operating inside is always within reach.
 Inv_HaltDoesNotLift == \A p \in Parts : (Created(p) /\ status[p] = "operating") => subscribed[p]
 \* G7/G12 A lone fire never outlives the fuse.

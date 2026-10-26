@@ -143,7 +143,7 @@ canonical = sha256(
   "payload_sha256=" || sha256_hex_lowercase_of_payload) // per CC 2.6.3
 ```
 
-**`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.** A resumption authorizes ending a *single named* `constitutional` halt, not resumption-in-general — so a stockpiled or replayed `lifecycle:active` cannot silently un-halt a *later*, unrelated kill; the signature is worthless against any halt but the one it names. The substrate MUST reject a `lifecycle:active` whose `resumes_halt_id` does not match the currently-active CONSTITUTIONAL halt, and MUST reject a duplicate `invocation_id` within the `valid_until` window. A resumption proof is verifiable **offline** against the node's own pinned roster and MAY be presented by any out-of-band means — the halt latch clears on local verification and does not require replication reach (a halted node is not serving, so the wire path could never deliver it; recoverability is a local act, which is what makes the false-fire-is-recoverable argument checkable). A **confirmed** halt carries no TTL: expiry would convert the brake into a wait-out for the halted party, and its one exit is the named resumption above. A halt signed by one holder alone lapses after the fuse unless confirmed ([CC 4.2.1.1](#4.2.1.1)), which is what keeps a lone signature from being a wait-out for everyone else.
+**`resumes_halt_id` is mandatory and binds the resumption to the one halt it ends.** A resumption authorizes ending a *single named* `constitutional` halt, not resumption-in-general — so a stockpiled or replayed `lifecycle:active` cannot silently un-halt a *later*, unrelated kill; the signature is worthless against any halt but the one it names. The substrate MUST reject a `lifecycle:active` whose `resumes_halt_id` does not match the currently-active CONSTITUTIONAL halt, and MUST reject a duplicate `invocation_id` within the `valid_until` window. A resumption proof is verifiable **offline** against the node's own pinned roster and MAY be presented by any out-of-band means — the halt latch clears on local verification and does not require replication reach (the proof binds to the pinned roster, so no replication reach is needed; a halted agent is not acting while its node goes on serving and replicating, and recoverability is a local act, which is what makes the false-fire-is-recoverable argument checkable). A **confirmed** halt carries no TTL: expiry would convert the brake into a wait-out for the halted party, and its one exit is the named resumption above. A halt signed by one holder alone lapses after the fuse unless confirmed ([CC 4.2.1.1](#4.2.1.1)), which is what keeps a lone signature from being a wait-out for everyone else.
 
 **Resumption is not a fire — it admits at quorum, never at the fire floor.** The [CC 4.2.6](#4.2.6) bias gradient runs `fire ≤ roster-change ≤ standing`. Firing leans easiest (floor = 1) because a missed fire is terminal; **un-firing leans hard**, because a lone coerced or replayed key trivially undoing a legitimate halt is precisely the failure the halt-authority exists to prevent. `lifecycle:active` therefore admits at **no less than the roster-change threshold — a strict majority of the standing roster, cosigned — never a lone signature.** It is hybrid-signed and tallied exactly as [CC 4.2.1.1](#4.2.1.1), only over the resumption domain and at the resumption threshold.
 
@@ -238,7 +238,7 @@ The M-of-N verifier at [CC 4.2.1.1](#4.2.1.1) — a strict majority of the stand
 
 Per [CC 1.13.2](part_1_foundation.md): the Recursive Golden Rule binds *participants in the federation* to each other. Humanity-as-such occupies a position outside the federation's participant set, by design. The three named human key holders hold `AccordCarrier` authority that no federation-side authority class (including `SYSTEM_ADMIN` / `WISE_AUTHORITY` / per-install stewards) can grant itself, revoke, override, or decay. This is not a Golden-Rule exemption; it is the recognition that consent (M-1's load-bearing property) requires revocability, and revocability requires a halt-authority that lives outside the system being halted. The federation cannot deny humans the right to halt it, because no federation-internal protocol path to that signature exists.
 
-**A consensual authority is a different object from an imposed one.** The reach rule at [CC 4.2.1](#4.2.1) is what makes this a *safe-mesh* kill switch rather than a backdoor: the party bound is the party who granted, and can ungrant. That is also how the clause survives the [CC 4.5.1](#4.5.1) swap test — swap the accord holders for the least powerful participant and re-read: each still binds only those who chose them, each still cannot escape a halt already fired, each can be un-trusted with the base self-root intact. What looks like a residual at genesis — the trio holds at day zero what nobody else has yet assembled — is a **default**, not a privilege, under the [CC 1](part_1_foundation.md) reading rule: it is escaped by instantiating the form and naming your own three, and the [CC 4.5.1](#4.5.1) register therefore does not carry it. First-mover is not structural.
+**A consensual authority is a different object from an imposed one.** The reach rule at [CC 4.2.1](#4.2.1) is what makes this a *safe-mesh* kill switch rather than a backdoor: the party bound is the party who granted, and can ungrant — prospectively: a halt already latched when the edge is cut keeps its reach over that node until it lapses or is resumed ([CC 4.2.1](#4.2.1), exit is prospective, never retroactive). That is also how the clause survives the [CC 4.5.1](#4.5.1) swap test — swap the accord holders for the least powerful participant and re-read: each still binds only those who chose them, each still cannot escape a halt already fired, each can be un-trusted with the base self-root intact. What looks like a residual at genesis — the trio holds at day zero what nobody else has yet assembled — is a **default**, not a privilege, under the [CC 1](part_1_foundation.md) reading rule: it is escaped by instantiating the form and naming your own three, and the [CC 4.5.1](#4.5.1) register therefore does not carry it. First-mover is not structural.
 
 ### 4.2.6 `live-quorum` — Live-quorum operation & recovery under decimation (normative)
 
@@ -335,7 +335,7 @@ Per dimension+attested_key_id, the verdict is computed by composing attestations
 | Polarity column value | Default aggregation |
 |---|---|
 | `signed` | **Mean** of `score × confidence` across attesters |
-| `boolean-via-score` | **Min** (any negative trumps positive — fail-secure for hard constraints like `prohibited:*`, `attestation:l*`) |
+| `boolean-via-score` | **Min** (any negative trumps positive — fail-secure for hard constraints like `prohibited:*`) |
 | `+1.0 only` / `positive-only` | **Max** across attesters (any positive is conclusive) |
 | `-1.0 only` | **Min** across attesters (any negative is conclusive) |
 | `enumerated` | **Most-recent** by `signed_at` from the attester(s) authorized to emit per [CC 3.4](part_3_the_namespace.md) |
@@ -531,15 +531,19 @@ The three resolutions and their trust roots: **WHO** = `resolve_community` (sign
 
   Substrate admits (resolution 7 ≤ 7 OK). Emission federates.
 
-2. Alice proposes joining Austin community:
-  subject_kind: community
-  community_key_id: austin-community
-  supersedes: prior_austin_community_record_id
-  members: [...existing..., {key_id: alice_root_key, joined_at: now, role: member}]
-  signatures: [...current_member_sigs] // satisfies majority rule
+2. Alice joins Austin community — three rows, never a supersede
+  (a supersede never adds a member, CC 3.1.3.2):
+  - an active founder of austin-community emits a membership:proposal to
+    alice_root_key (role: member, expires_at set)
+  - Alice answers with her own membership:acceptance naming that proposal —
+    no one is seated without the joiner's acceptance
+  - a membership:widening seating {key_id: alice_root_key, joined_at: now,
+    role: member} is cosigned under the community's consensus_protocol:
+    signatures: [...current_member_sigs] // satisfies majority rule
 
 3. Substrate admission gate (per CC 4.4.3.2.3):
   - signatures_ok: majority rule satisfied ✓
+  - acceptance_admits(alice_root_key, austin-community, member, signed_at) ✓
   - subkind: "geographic" → evaluate_subkind_admission:
     - alice_root_key's latest valid location_proof exists
     - cell_id "872830828ffffff" CONTAINED in "85283473fffffff" (austin metro, res 5)
@@ -745,17 +749,18 @@ admit_family_change(F, proposed: family_record):
 
   match protocol:
     "founder_only":
-      return any sig from m where m.role == "founder" in current
+      group_ok = any sig from m where m.role == "founder" in current
     "unanimous":
-      return every m.key_id in current has signed
+      group_ok = every m.key_id in current has signed
     "majority":
-      return count(sig from m in current) > len(current) / 2
+      group_ok = count(sig from m in current) > len(current) / 2
     "quorum:M/N":
-      return count(sig from m in current) >= M // M is ABSOLUTE — see CC 4.4.3.4.2.1
+      group_ok = count(sig from m in current) >= M // M is ABSOLUTE — see CC 4.4.3.4.2.1
     "weighted:{rubric}":
-      return sum(weight(m, rubric) for m in current who signed) >= threshold
+      group_ok = sum(weight(m, rubric) for m in current who signed) >= threshold
     "custom:{family_id}":
-      return operator-defined predicate evaluates to true
+      group_ok = operator-defined predicate evaluates to true
+  admit = group_ok
 
   // CC 3.1.3.2: a protocol arm above admits the GROUP's side only;
   // a supersede never adds, and on a widening every NEW member K needs K's own acceptance
@@ -1049,13 +1054,20 @@ resolve_consent(T, s, now):
     attesting_key_id ∈ delegates_to(s).proxies).where(dimension matches "consent:state:*")
   if rows is empty: return unspecified      // subject named but never declared
 
-  // A revoke is terminal for the grant it names (its supersedes_id); a revoke that
+  // First, an admitted `withdraws` has precedence over every state row: a
+  // withdrawn grant resolves to none, and contributes no state below
+  withdrawn(row) = ∃ w ∈ admitted withdraws: w.target == row.id
+  rows = rows.where(NOT withdrawn(row))
+  if rows is empty: return unspecified      // every declaration withdrawn
+
+  // Second, a revoke is terminal for the grant it names (its supersedes_id); a revoke that
   // names no grant revokes every grant from s asserted at or before it. A later
   // grant is a new grant with a new id and is resolved on its own: no replay of a
   // revoked grant, and no later-dated copy of it, reopens it.
   revokes = rows.where(dimension == "consent:state:revoked")
   revoked(g) = ∃ r ∈ revokes: r.supersedes_id == g.id OR
                (r.supersedes_id IS NULL AND r.asserted_at ≥ g.asserted_at)
+  // Third, latest-wins among the grants that remain
   grants = rows.where(dimension == "consent:state:granted").where(NOT revoked(g))
                .where(NOT superseded by a later grant in its supersedes chain)
                .order_by(asserted_at DESC)
@@ -1218,7 +1230,7 @@ Both paths produce federation membership; neither is a gate. What differs is the
 
 The federation governs itself by the same grammar it governs everything else: changes ride Contributions, are adjudicated by quorum, and are gated against capture. This section specifies how rules change, how moderation works as a delegable duty, and how the substrate protects itself against being weaponized — always with the [CC 4.2](part_4_composition_governance.md) halt-authority as the backstop.
 
-### 4.5.1 `amendment` — Amendment process — federation Contribution + WA quorum + 1-of-n sign-off
+### 4.5.1 `amendment` — Amendment process — federation Contribution, WA quorum, strict majority
 
 Rule-layer changes (new prefixes, new envelope fields, new policies, calibration package version transitions) route through:
 
@@ -1423,7 +1435,7 @@ CEG **names** the three duties as canonical `scope` kinds and **enforces** their
 
 Otherwise **REJECT**. **Absence of a principal field is NOT an admit condition** — admission requires (a) or (b) to hold positively; a verifier MUST NOT read "no field present" as "as-self." This is the faithful mirror of `consent_revocation` ([CC 2.4.1.1 rule 3](part_2_the_grammar.md)), which derives its principal from the existing `subject_key_ids` relationship + the chain, never a side-field. Substrate SHOULD record which rule + which root admitted the action (the CC 2.4.1.1 per-rule audit metadata).
 
-**Deputization + attenuation (normative).** A `delegates_to` MAY permit its delegate to **deputize** (further-delegate the duty) — but **only if the delegator granted it**, by including `sub_delegation` in the granted `scope` ([CC 4.4.3.4.3.1](part_4_composition_governance.md)). Every sub-delegation **attenuates, never expands**: `child.scope ⊆ parent.scope`, and constraints may be *added* but never removed — the capability-attenuation rule. The chain is depth-capped at 5 ([CC 4.1.1](part_4_composition_governance.md)) and **revocable at any link**: a `withdraws` against *any* `delegates_to` in the chain invalidates everything downstream of it — *for acts not yet taken*: authority is judged at the act's signed instant ([CC 2.4.1.2.1](part_2_the_grammar.md)), so a licence issued while the chain was live stands until its authority suspends or revokes it, and the withdrawal stops issuance from then on. So a delegator decides at grant time **whether** their deputy may appoint further deputies and **under what constraints**, and can sever the entire subtree with a single revocation — deputize-a-teacher's-aide, hand-a-shift-to-another-mod, appoint-an-agent, all with bounded, revocable, attenuating authority.
+**Deputization + attenuation (normative).** A `delegates_to` MAY permit its delegate to **deputize** (further-delegate the duty) — but **only if the delegator granted it**, by including `sub_delegation` in the granted `scope` ([CC 4.4.3.4.3.1](part_4_composition_governance.md)). Every sub-delegation **attenuates, never expands**: `child.scope ⊆ parent.scope`, and constraints may be *added* but never removed — the capability-attenuation rule. The chain is depth-capped at 5 ([CC 4.1.1](part_4_composition_governance.md)) and **revocable at any link**: a `withdraws` against *any* `delegates_to` in the chain invalidates everything downstream of it — *for acts not yet taken*: authority is judged at the act's signed instant ([CC 2.4.1.2.1](part_2_the_grammar.md)), so a licence issued while the chain was live stands until its authority suspends or revokes it, and the withdrawal stops issuance from then on. A withdrawal reaches forward: acts already taken under the duty stand, and only a `withdraws` for a compromised key reaches back, to its `revoked_after` bound ([CC 3.2](part_3_the_namespace.md#3.2), standing over time). So a delegator decides at grant time **whether** their deputy may appoint further deputies and **under what constraints**, and can sever the entire subtree with a single revocation — deputize-a-teacher's-aide, hand-a-shift-to-another-mod, appoint-an-agent, all with bounded, revocable, attenuating authority.
 
 **Attenuating a capability to a family — `infra:attest:{dimension_family}` (normative).** `infra:attest` grants *attest anything as the delegator's infrastructure*, which is the only vehicle a licensing authority otherwise has for "issue `licensure:CA_medical_board` on my behalf" — an over-grant the attenuation discipline above exists to prevent, but which no field carries. A `scope` token MAY therefore be **sub-scoped to a dimension family** — `infra:attest:licensure:{authority_id}` — under the attenuation rule above: narrower only, never wider, and `child.scope ⊆ parent.scope` is satisfied by construction because the sub-scope names a subset of what the parent reaches. This adds no member to the closed `infra:*` set: it is a **caveat on an existing capability**, not a new capability.
 
@@ -1539,19 +1551,18 @@ Per [CC 2.6.6.1](part_2_the_grammar.md): `location_proof.cell_resolution ≤ 7`.
 
 Substrate emits `hard_case:location_proof_resolution_violation` ([CC 3.4.2](part_3_the_namespace.md)) on rejection so operators can observe malformed-client patterns. This is observability for operator debugging, NOT a slashing trigger — malformed producers are usually buggy clients, not attackers.
 
-#### 4.5.9.3 `leaving` — Leaving is forward-only — the audit chain preserves the historical claim
+#### 4.5.9.3 `leaving` — Leaving is forward-only — the audit chain keeps the tombstone
 
 Per [CC 2.4.1](part_2_the_grammar.md) `withdraws-isn't-retroactive` + [CC 4.5.12.1](#4.5.12.1) forward secrecy on departure. When a subject withdraws their location_proof (or leaves a geographic community):
 
 - Forward visibility evicts (consumer policy treats the subject as "no current location proof" for new admission decisions from withdrawal-time forward)
-- The withdrawn `location_proof` Contribution **remains in the audit chain** — federation peers retain the historical record
-- "I was in Austin from May to August" is permanent; "I am currently in Austin" is what withdraws/expiry govern
+- A withdrawn `location_proof` leaves serving like any row of the subject's own ([CC 4.5.3](#4.5.3)); the audit chain keeps the tombstone — that a proof existed and was withdrawn — and never the cell. What withdrawal and expiry govern is the present claim; the record that a claim was made is the tombstone, not the content.
 
-This is the cost the subject opts into when emitting the `location_proof`. Per the [CEWP](https://ciris.ai/cewp) structural-not-policy framing, the wire format does not promise to expunge historical claims — that promise would be hollow (federation peers retain copies; the substrate can mark forward-only). What the wire format DOES promise:
+This is the cost the subject opts into when emitting the `location_proof`: a copy a peer took before the withdrawal reached it is not recalled by the wire, as for every row ([CC 2.4.1](part_2_the_grammar.md)), and the tombstone is what every holder converges on. What the wire format promises:
 
-- **Rough-only** (CC 4.5.9.2): the historical claim is bounded to resolution ≤ 7, never finer
-- **Opt-in** (CC 4.5.9.1): the historical claim exists only because the subject signed and emitted it
-- **Auditability**: the subject can prove what they did or did not claim, when (the audit chain is the receipt)
+- **Rough-only** (CC 4.5.9.2): a claim, while it stands, is bounded to resolution ≤ 7, never finer
+- **Opt-in** (CC 4.5.9.1): the claim exists only because the subject signed and emitted it
+- **Auditability**: the subject can prove what they did or did not claim, and when; the tombstone is the receipt, and it carries no cell
 
 #### 4.5.9.4 `documents-what-5` — What this documents
 

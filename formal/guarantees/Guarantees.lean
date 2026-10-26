@@ -22,7 +22,8 @@
        held in stewardship, and a party not held is not bound;
     6. consent stays revocable: a created system operating in the federation is always within
        reach of a halt it did not grant itself (`revocable`), and every participant can leave
-       a root in one step, after which the halt no longer reaches it (`leave_ends_reach`);
+       a root in one step, after which no later halt reaches it (`leave_ends_reach`; a halt already
+       latched keeps its reach until it lapses or is resumed, which the TLA+ half pins with `bound`);
     7. the whole set is satisfiable — a world of four participants in which every row holds
        (`witness_world`), so nothing here is proved vacuously.
 

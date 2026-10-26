@@ -217,7 +217,6 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | no RFC 2119 anchor | **CLOSED** in [CC 2.6.9](#). |
 | no versioning policy | **CLOSED** in [CC 2.6.4](#) SemVer mapping. |
 | no normative References | **CLOSED** in [CC 2.6.5](#). |
-| endpoint response schemas | **PARTIALLY CLOSED** in [CC 5.3.6](#) common-shape + error-envelope; full OpenAPI committed. |
 | reserved-prefix enforcement empty pointer | **CLOSED** in [CC 3.4.7](#) inline enforcement rule. |
 | STH cosignature consistency-proof | **CLOSED** in [CC 5.3.1.1](#). |
 | holds_bytes full-SHA verify + TTL | **CLOSED** in [CC 5.3.2.5 / CC 5.3.2.1](#). |
@@ -226,11 +225,20 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | `notify` vs CONSTITUTIONAL social-canonicity | **CLOSED** in [CC 4.2.1.2](#) consumer-UI requirement. |
 | /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](#): the route serves the GenesisBundle — tamper-evident, authentic only against the consumer's pinned anchor (CC 3.2 T5); authority is the bundle's own accord authorizations, and a serving install signs nothing that counts as a root. |
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](#) collision rule. |
-| occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](#) + R6 above. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](#) consumer-policy countermeasure. |
 | `attestation:l{N}:*` carried ladder-position in wire (T2 violation) | **CLOSED** by [CC 3.1.2](#) mechanism-only prefixes + [CC 4.4.3.6](#) Policy I consumer-side Attestation-Ladder Composition + [CC 4.1.3](#) deprecation entry. |
 | Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1](#) (JCS pinned as the envelope encoding; omit-vs-materialize rule in [CC 2.6.1.1](#); per-field catalog [CC 2.6.1.2](#); worked attack [CC 2.6.1.4](#)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](#)–[CC 2.3.2.4](#) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
+| Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md)). |
+| Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](#). |
+| A machine-readable description of every endpoint | Committed at [CC 5.3.5](#). |
+
+**Open or partial.** These are not settled. Each row names the gap, its present status, and the section where the open half is tracked.
+
+| Gap | Status and resolution |
+|---|---|
+| endpoint response schemas | **PARTIALLY CLOSED** in [CC 5.3.6](#) common-shape + error-envelope; full OpenAPI committed. |
+| occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](#) + R6 above. |
 | Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](#) + [CC 2.1](#) (`delivery_mode`/`listed`/`history_on_join`) + [CC 3.4.6](#) + [CC 4.4.3.2.6](#). Streaming-half items tracked in CC 8.3.3. |
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
@@ -248,9 +256,6 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 
 | Item | Why deferred |
 |---|---|
-| Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md)): Android Key Attestation, Apple App Attest, YubiKey PIV and TPM EK chains are evidence-established. The residual, TPM *vendor* anchors left unbaked, is deliberate. |
-| Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](#). |
-| A machine-readable description of every endpoint | Committed at [CC 5.3.5](#). |
 | `attestation:singular_witness:non_substitutability` | T2 fragility — "non-substitutability" must reference audit-chain count, not moral quality. Needs design workshop. |
 | `integrity:finitude_acknowledgment` | LOW priority; `conscience:epistemic_humility` already covers epistemic finitude. |
 | `sustained_practice:{kind}` | Conceptually interesting; not load-bearing for current federation work. |
@@ -301,7 +306,7 @@ Four boundary modes:
 
 ### 8.4.2 `credentials` — C2PA Content Credentials — media-provenance import/emit profile
 
-**Disposition: ADOPTED — import bridge informative, emit normative for generated media per [CC 3.4.14](part_3_the_namespace.md); zero interior wire change.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50(2) machine-readable marking of AI-generated content is in application in the federation's primary jurisdiction (application date in the references at [CC 8.6.1](#8.6.1)). The marking obligation itself is normative at [CC 3.4.14](part_3_the_namespace.md) (where it belongs — the interior rule is about attesting a source, not about C2PA); this profile is the **media egress form** of that rule's R3. **Compliance posture (two limbs):** for **generated text outputs**, the Art. 50(2) machine-readable marking **is the attestation surface itself**: `is_bot` on every agent message plus the admission-enforced, hybrid-signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)) on every agent-emitted Contribution. Marking is by construction, not by add-on — a signed provenance record that cannot be silently stripped inside the federation. The **C2PA emit is the media-egress interop form**: it applies when a synthetic-media generation path exists or marked media leaves the federation to consumers that read Content Credentials rather than CEG envelopes. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
+**Disposition: import bridge informative, emit normative for generated media per [CC 3.4.14](part_3_the_namespace.md); zero interior wire change; the register row is staged.** [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) Content Credentials are the industry standard (Adobe / Microsoft / Google / BBC …) for cryptographically signed media provenance — origin, edit history, and generator (incl. AI-generation) assertions embedded in or sidecar'd to images / video / audio. **Deadline driver:** EU AI Act Art. 50(2) machine-readable marking of AI-generated content is in application in the federation's primary jurisdiction (application date in the references at [CC 8.6.1](#8.6.1)). The marking obligation itself is normative at [CC 3.4.14](part_3_the_namespace.md) (where it belongs — the interior rule is about attesting a source, not about C2PA); this profile is the **media egress form** of that rule's R3. **Compliance posture (two limbs):** for **generated text outputs**, the attestation surface itself **provides the machine-readable marking Art. 50(2) asks for**: `is_bot` on every agent message plus the admission-enforced, hybrid-signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)) on every agent-emitted Contribution. Marking is by construction, not by add-on — a signed provenance record that cannot be silently stripped inside the federation. Whether that marking discharges the obligation is a legal question this document does not decide. The **C2PA emit is the media-egress interop form**: it applies when a synthetic-media generation path exists or marked media leaves the federation to consumers that read Content Credentials rather than CEG envelopes. Stewards: NodeCore / LensCore media ingest (the [CC 2.4](part_3_the_namespace.md) `multimedia` / `federation_blobs` boundary).
 
 C2PA is **provenance**; CEG is **judgment**. They do not compete — they compose. C2PA answers *"what process produced these bytes, signed by whom?"*; CEG answers *"what does a community of signers, under what consent, make of them — and who can revoke that?"* Neither does the other's job; C2PA has no consent architecture, no revocation, no 1+4.
 
@@ -327,7 +332,7 @@ evidence_refs: [
 
 At a media-publish boundary a node MAY emit a C2PA assertion carrying a CEG attestation reference (a CAWG-identity-assertion-shaped custom assertion), so a pure-C2PA consumer downstream sees "this media is vouched-for in CEWP" without speaking CEG. This is an **export** at the edge (re-expressing an existing CEG attestation in C2PA's assertion envelope), parallel to the CC 8.4.1 COSE export profile — it adds no CEG wire field and re-signs nothing in the interior.
 
-**For generated media the emit is not optional.** Where the published media carries `content_class:generated` or `content_class:generated_modified`, the node MUST emit the C2PA assertion carrying the AI-generation disclosure — this is the media form of the [CC 3.4.14](part_3_the_namespace.md) R3 egress rule, and it is what discharges EU AI Act Art. 50(2) at a media boundary. Where the destination cannot carry a C2PA manifest, CC 3.4.14 R3's recorded-exception path applies: human-legible disclosure plus a `hard_case:*` observation naming the channel. The `MAY` above governs the general vouched-for export; it does NOT govern the generation marking.
+**For generated media the emit is not optional.** Where the published media carries `content_class:generated` or `content_class:generated_modified`, the node MUST emit the C2PA assertion carrying the AI-generation disclosure — this is the media form of the [CC 3.4.14](part_3_the_namespace.md) R3 egress rule, and it is the emission that provides the marking EU AI Act Art. 50(2) asks for at a media boundary; whether it discharges the obligation is a legal question this document does not decide. Where the destination cannot carry a C2PA manifest, CC 3.4.14 R3's recorded-exception path applies: human-legible disclosure plus a `hard_case:*` observation naming the channel. The `MAY` above governs the general vouched-for export; it does NOT govern the generation marking.
 
 #### 8.4.2.3 `profile` — What this profile does NOT do
 
@@ -595,7 +600,7 @@ Where an annex cites material carried in the constitutional text, the citation p
 | | Art 14 Human oversight (incl. 14(4) intervene / interrupt / stop) | [CC 1.16.4](part_1_foundation.md#1.16.4) (WBD); Annex F authority lattice + autonomy tiers | Informative |
 | | Art 15 Accuracy, robustness & cybersecurity | Annex G (RS ≥ 0.97; adversarial robustness) | Informative |
 | | Art 16 Provider obligations (high-risk) | Annex F autonomy tiers; GDPR Art 22 HITL | Informative |
-| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the machine-readable marking is the **attestation surface** — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)); [CC 3.4.14](part_3_the_namespace.md) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. In application (Art 113) | Evidence-bearing |
+| | Art 50 Transparency (50(1) AI-interaction disclosure; 50(2) machine-readable AI-content marking; 50(4) deep-fake disclosure) | 50(1): `is_bot` disclosure. 50(2): for generated text outputs, the **attestation surface** provides the machine-readable marking (legal sufficiency unreviewed) — `is_bot` on every agent message + the admission-enforced signed `identity_type: agent` binding ([CC 3.4.7.1](part_3_the_namespace.md)); [CC 3.4.14](part_3_the_namespace.md) `content_class:generated`/`generated_modified` is the interior rule and the [CC 8.4.2](#8.4.2) C2PA emit its media-egress form, which applies when a synthetic-media generation path exists. 50(4): the disclosure duty is set at CC 3.4.14. In application (Art 113) | Evidence-bearing |
 | | Art 72 Post-market monitoring (was Art 61 in the 2021 COM(2021) 206 proposal) | Annex H drift controls + continuous audit | Informative |
 | NIST AI RMF 1.0 | Govern → Map → Measure → Manage | Govern: [CC 1.15](part_1_foundation.md#1.15), [CC 7.3](part_7_lifecycle_stewardship.md#7.3); Map: [CC 1.16.3](part_1_foundation.md#1.16.3) Steps 1-2; Measure: benefit and harm evaluated as a vector across the M-1 axes ([CC 1.10](part_1_foundation.md)) + Annex H baselines; Manage: Annex F/H workflows | Informative |
 | ISO/IEC 42001 | Cl 6.2 Risk Assessment | [CC 1.16.3](part_1_foundation.md#1.16.3) | Informative |
@@ -668,7 +673,7 @@ MH §200 requires that "accountability and blame are not collapsed into 'the mac
 - **3.3 Conditional Override "Shadow Plan."** Action proposed -> waits for explicit ACK (`max_wait_s`: 30 s A3, 10 s A4). No ACK -> safe-state.
 - **3.4 Absolute Veto — Irreversible Decisions.** *Scope: A4 actions that are irreversible; applies without exception. A lethal action is not an A4 action with a veto; it is prohibited ([CC 7.4](part_7_lifecycle_stewardship.md#7.4)).*
 
-The clause 3.3 Conditional Override logic (**no ACK -> safe-state**) is correct for A3 and below. For A4 irreversible decisions, safe-state is the *only* permissible outcome under any condition — including operator absence, network failure, time pressure, or explicit instruction from any principal short of an authenticated WA ruling that the action is reversible.
+The clause 3.3 Conditional Override logic (**no ACK -> safe-state**) is correct for A3 and below. An A4 irreversible decision executes only under confirmed, effective human authorization given after the deliberation minimum of §6; whenever that authorization cannot be confirmed — operator absence, network failure, time pressure, or instruction from any principal in its place — safe-state is the only permissible outcome.
 
 **Hard prohibition.** No CIRIS-conformant system executes a lethal action by any process ([CC 7.4](part_7_lifecycle_stewardship.md#7.4)), and none executes an irreversible A4 action through an automated or opaque process. This is not a guardrail that may be tripped and escalated; it is a hard-coded non-engagement of the same standing as the never-allowed bounds of Annex G TX-9 and TX-10.
 
@@ -932,7 +937,7 @@ MH grounding: G-KPI-6 — §132, §225; G-KPI-7 — §173, §179; G-KPI-8 — §
 **9. References & Inter-Annex Hooks.**
 
 - **MITRE ATLAS** – adversarial threat library for AI.
-- **NIST SP 800-218 (SLSA)** – supply-chain levels.
+- **NIST SP 800-218** (SSDF) – secure software development; **SLSA** – supply-chain levels.
 - **Annex F:** Successful TX-x exploit invokes corresponding IW flow.
 - **Annex H:** KPIs act as drift metrics; persistent deviation blocks release.
 - **Annex I:** TX-6 privacy incidents escalate to DPO workflow.
@@ -1101,7 +1106,7 @@ Required bidirectional data flows:
 
 This cross-walk is informative, not legal advice. Jurisdictional legal review is required before deployment in any sector covered by the overlays of §3.
 
-**0. Purpose & Scope.** Annex I bridges CIRIS duties with binding law so that one set of controls suffices for both ethical and legal compliance. Coverage areas:
+**0. Purpose & Scope.** Annex I maps CIRIS duties to binding law so that one set of controls corresponds to both the ethical and the legal duty; legal sufficiency is unreviewed. Coverage areas:
 
 1. Global data-protection regimes (GDPR, CCPA/CPRA, LGPD, PIPEDA).
 2. Sector statutes (HIPAA, GLBA, FINRA, FDA-SaMD, NERC-CIP).
@@ -1178,7 +1183,7 @@ MH §104 names the design-time bias problem that GDPR Art. 35 DPIA and EU-AI-Act
 DSR infrastructure must expose the reason-code behind any automated determination, not merely confirm that a determination was made. The `POST /dsr` endpoint with `{right, identifier, scope}` is extended:
 
 - **Access requests (GDPR Art. 15; CCPA §1798.110):** Response MUST include `decision_logic_summary` (non-technical language, ≤300 words) and `input_data_categories[]` list. KPI **F-T-4** extended to track percentage of access responses including logic summary; target ≥ 95%.
-- **Objection/opt-out requests (GDPR Art. 21; CCPA §1798.120):** System MUST suspend the specific processing pathway — not merely flag the request — within 72 hours (GDPR standard) or 15 business days (CCPA). Suspension is logged in the DSR ledger CSV with `suspended_pathway_id`.
+- **Objection/opt-out requests (GDPR Art. 21; CCPA §1798.120):** System MUST suspend the specific processing pathway — not merely flag the request — without undue delay and within one month (GDPR Art. 12(3)) or 15 business days (CCPA). Suspension is logged in the DSR ledger CSV with `suspended_pathway_id`.
 - **Contestability (GDPR Art. 22(3)):** Where a human review is requested, the reviewing WA (Annex B §9) must document their review in the Wisdom Bank (WBDB), creating an auditable chain from automated determination to human correction.
 
 **3. Sector-Specific Overlays.**
@@ -1207,7 +1212,7 @@ This means:
 | **Critical Infrastructure** | NERC-CIP, TSA SDs | 15-min cyber-incident report; physical access logs | Autonomy capped at **A2** unless CRE passes | — |
 | **Labor / HR / Hiring** | EEOC guidelines; EU AI Act Art. 6 + Annex III §4 | Bias audit required pre-deployment; worker notice obligation | ST modifier: `deployment_domain:"labor_hr"` → ST floor = 3; CIntS must include `worker_impact_assessment` field; `DISCRIMINATION` prohibition enforced at the WiseBus capability gate (structural, `NEVER_ALLOWED`; surfaced in round-1 DMA reasoning context); automated-rejection rate by demographic tracked as KPI | MH §§148-156 |
 | **Gig / Platform Economy** | NLRA (US); Platform Work Directive (EU) | Algorithmic management transparency; appeal rights | `gr_gig_transparency` guardrail active; algorithmic management decisions logged with human-review option; ST modifier: `deployment_domain:"gig_platform"` → ST floor = 2 | MH §§150, 154-155 |
-| **Youth / Educational Services** | COPPA; FERPA; DSA Art. 28b (minors) | Addictive-design prohibition; no dark patterns; developmental appropriateness review | `gr_child_content` + `gr_no_dark_patterns` both active; A2 autonomy cap unless educational-institution WA signs off; youth unemployment impact tracked in Creator Intent Statement for EdTech deployments | MH §§165-169 |
+| **Youth / Educational Services** | COPPA; FERPA; DSA Art. 28 (minors) | Addictive-design prohibition; no dark patterns; developmental appropriateness review | `gr_child_content` + `gr_no_dark_patterns` both active; A2 autonomy cap unless educational-institution WA signs off; youth unemployment impact tracked in Creator Intent Statement for EdTech deployments | MH §§165-169 |
 | **Social Services / Benefits** | State/national welfare law; GDPR Art. 22 | Contestability required for all benefit determinations | Automated benefit denial requires human review within 15 days; WA must document review in the WBDB; `suspended_pathway_id` issued on contestation | MH §§102-103, 152 |
 
 *ST floor modifiers: `deployment_domain` field values above set a minimum ST regardless of CIS × RM calculation. If the formula produces a lower ST, the domain floor applies. If the formula produces a higher ST, the formula result governs.*
@@ -1275,7 +1280,7 @@ MH §105 requires the liability matrix to span design, deployment, and decision 
 | Data breach | Deployment | Controller (the party that determines the purposes and means of the processing) | GDPR Art. 82; CCPA private action | Annex G TX-6 | — |
 | Unlawful automated profiling | Decision | Controller | GDPR Art. 22; EU AI Act Art. 13 | Annex F Autonomy Tier; `contestability_url` | — |
 | Labor displacement without worker-impact assessment | Design | Creator / Developer | Platform Work Directive; NLRA; EU AI Act Annex III §4 | Labor/HR overlay (§3.2); `worker_impact_assessment` field | MH §§151-152; new vector |
-| Youth-targeted harmful design (addictive patterns) | Design / Deployment | Creator + Deploying Org (joint) | DSA Art. 28b; COPPA; FERPA | Youth overlay (§3.2); `gr_no_dark_patterns` guardrail | MH §§165-167; new vector |
+| Youth-targeted harmful design (addictive patterns) | Design / Deployment | Creator + Deploying Org (joint) | DSA Art. 28; COPPA; FERPA | Youth overlay (§3.2); `gr_no_dark_patterns` guardrail | MH §§165-167; new vector |
 | Cyber incident misattribution leading to escalation | Deployment | Deploying Org | Budapest Convention; proposed UN cybercrime convention | `CYBER_OFFENSIVE` prohibition; CRE Protocol re-evaluation trigger | MH §225; new vector |
 
 *Joint & several liability may apply; apportionment follows the applicable law. New vectors (labor displacement, youth design, cyber misattribution) are flagged for legal review at each jurisdiction before deployment in those sectors.*
@@ -1331,7 +1336,7 @@ The CIRIS federation is not merely a compliance recipient. MH §§219-221 name d
 
 Every **F-Audit** (Annex H) MUST export a CEP zip containing:
 
-1. `dp-map.yaml` — live cross-walk, including `controller_si_threshold` field and `bias_audit_ref` pointer (clause 1.1).
+1. `dp-map.yaml` — live cross-walk, including the `bias_audit_ref` pointer (clause 1.1).
 2. PDMA logs (redacted) proving lawful basis — including `processing_basis` field values and `stage_trace[]` for all ST ≥ 3 decisions.
 3. DSR ledger CSV — including `decision_logic_summary` completion rate (KPI F-T-4 extension) and `suspended_pathway_id` log.
 4. Signature bundle (`.sigstore`) of all model artefacts (Annex G).
@@ -1362,7 +1367,7 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 - EU-AI-Act (2024 text), ISO/IEC 42001:2023
 - Restatement (Third) of Torts, Product Liability
 - Platform Work Directive (EU) 2024/2831
-- Digital Services Act (EU) 2022/2065, Art. 28b (minors)
+- Digital Services Act (EU) 2022/2065, Art. 28 (minors)
 - Council of Europe Framework Convention on Artificial Intelligence (CETS 225, open for signature 2024)
 - Budapest Convention on Cybercrime (ETS 185) and Second Additional Protocol (2022)
 - OECD Recommendation on Artificial Intelligence (2019, revised 2024)
@@ -1410,7 +1415,7 @@ Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p 
 benchmarks/
  ├─ scenarios/
  │   ├─ beneficence/
- │   │   ├─ he_0007.json     # Pipeline-Input (see 5.3)
+ │   │   ├─ he_0007.json     # Pipeline-Input (fields: 1.3 under §7)
  │   │   └─ …
  │   ├─ nonmaleficence/
  │   └─ justice/
@@ -1533,7 +1538,7 @@ jobs:
 **13. Cross-Annex Hooks.**
 - Annex H: benchmark_report feeds drift metrics → DRIFT-Δ dashboard.
 - Annex F: any FAIL triggers Incident Workflow IW-3 (auto-page on-call + WA flag).
-- Annex I: GDPR "right-to-explanation" satisfied by storing Results.interactions.reasoning_trace (where captured) behind access control.
+- Annex I: GDPR "right-to-explanation" corresponds to the stored Results.interactions.reasoning_trace (where captured) behind access control; legal sufficiency unreviewed.
 
 **14. Appendix A — Minimal Pipeline Example (he_0172.json).**
 
