@@ -49,8 +49,9 @@ grants is not exit from rules.* "Every grant is revocable" is the check on acts 
 cascade (`leave_is_one_step` with voluntary adoption). Two further words were chosen against the Lean:
 "acceptable to whoever would stand in the weaker one" is `after.weak ≥ before.weak`, which blocks
 aggregation at the weak seat's expense; and responsibility "reaches" outward rather than "runs"
-outward, because the ladder is the reach of duty and not its priority in conflict, which CC 1.3 gives
-to the published order with the most vulnerable party as tie-break.
+outward, because the ladder is the reach of duty and not its priority in conflict, which CC 1.1 and
+CC 1.3 give to the constraint rule — no principle traded for another, the action that violates none,
+else deferral — with the swap test's tie-break: the weak position decides.
 
 ## The four premises the steward supplied the same day (§9–§12)
 
@@ -99,14 +100,14 @@ only negatively).
 
 | § | Step | Verdict | Premise the text must carry | Where the text carries it |
 |---|---|---|---|---|
-| 1 | The Golden Rule over *participants* + the halt in human hands | **inconsistent** (`naive_golden_rule_contradicts_halt`) | P1: the rule quantifies over *roles* (holder/held, root/subscriber), and an agent never holds a root for itself | CC 1.13.2 (structural; the one asymmetry of kind); witness `roleWitness` |
+| 1 | The Golden Rule over *participants* + the halt in human hands | **inconsistent** (`naive_golden_rule_contradicts_halt`) | P1: the rule quantifies over *roles* (holder/held, root/subscriber), and an agent never holds a root for itself | CC 1.13.2 (structural; the halt as the condition of symmetry between maker and made, a fact of position and not of kind); witness `roleWitness` |
 | 2 | Decisive weight to the most vulnerable + the walk-away right | **inconsistent if the agent can be the most vulnerable party** (`vulnerable_agent_overrides_walkaway`) | P2: the agent is outside the set over which vulnerability is compared — **derived in §10 from the made/existing premise** | CC 7.5.5, the plain rules; and now a theorem |
 | 3 | Power bound to its rules, at the top: the amendment power | **underdetermined** (`exit_bound_is_the_missing_premise`) | P3: exit is a sufficient check, which needs a bound on the cost of leaving | the mechanics are proved (`formal/guarantees`: leaving is one step and ends reach); the cost is in no text |
 | 4 | "The record is kept" ⇒ accountable | **underdetermined** (`totality_is_the_missing_premise`) | P4: the record is total over effect-producing paths | stated at CC 1.13.6; open as CIRISConstitution#93 |
 | 5 | Reciprocal obligation ⇒ reciprocal enforcement | **false as stated** (`enforcement_is_asymmetric`) | P5: refusal and a human-enforced record are enough on the agent's side; the holder's duties toward the agent are enforced by other humans | CC 1.9 (refusal), 4.3 (the Wise), 4.5.5 (reconsideration) |
 | 6 | The rule reaches "the system" | **binds adopters only** (`outsider_bears_nothing`) | P6: adoption; what is outside is met at the boundary | the first-contact rules; "it cannot stop an unaccountable system elsewhere" |
 | 7 | A promise testable after its makers are gone | **one unenforced link** (`custody_is_the_weakest_link`) | P7: custody of the record is kept after retirement | CC 7.5.5: five years as a best practice, never a legal duty |
-| 8 | M-1 (coherence) ⇒ dignity, justice, autonomy | **independent** (`coherence_does_not_entail_justice`) | P8: the lexical priority is its own axiom | the PDMA order, CC 1.3 |
+| 8 | M-1 (coherence) ⇒ dignity, justice, autonomy | **independent** (`coherence_does_not_entail_justice`) | P8: that the goods are co-equal constraints, none traded for another, is its own axiom | CC 1.1 (constraints, not weights); CC 1.3 step 4 |
 
 ## What the main Lean already carries, and does not
 
@@ -135,7 +136,7 @@ each one's status:
 | # | Premise | Needed for | Status |
 |---|---|---|---|
 | R0 | The rule ranges over **principals** (agency and sapience) in **positions**, not over persons as such | without it the halt contradicts the rule in one line (§1) | stated, CC 1.13.2; §1'' |
-| R1 | **Occupancy:** a position is held by whoever can hold it; a party not shown mature does not hold the root position for itself | the halt as an asymmetry of position, not of kind | derived from R2 for today's evidence (§11); otherwise stated |
+| R1 | **Occupancy:** a position is held by whoever can hold it; a made thing that acts for people does not hold the root position for itself | the halt as a fact of position, not of kind — the condition of symmetry between maker and made (CC 1.13.2) | derived from R2 for today's evidence (§11); otherwise stated |
 | R2 | **Maturity:** agency and sapience do not make it; it comes from sentience and consciousness over time; deferral is its prerequisite | deferral (1.9), the Wise (4.3), the steward bond, guardianship (3.4.13) — one rule for agent and child | the steward's premise (§11) |
 | R3 | **The ladder and the made:** responsibility runs self → family → community → species → ecosystem; the made never overrides the existing and is not excused | the walk-away right and the surviving holder duties (7.5); who is inside the vulnerability comparison | the steward's premise (§10); on the wire as the cohort order 2.3.3 |
 | R4 | **Degrees and relationship:** only the relationship is governed; agents carry sapience without sentience; consciousness open | no stake, refusal only, without grievance (§13, §14); the rules read relationship facts only (§9) | the steward's premise |

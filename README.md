@@ -47,12 +47,14 @@ The whole edition in one file: [`ciris_constitution.pdf`](ciris_constitution.pdf
 Everything in the document descends from one goal and nothing sits beside it.
 
 1. **Meta-Goal M-1** — sustainable adaptive coherence: the living conditions under which diverse sentient beings may pursue their own flourishing. Order counts as good only when it carries life; it is never good by itself (CC 1.1).
-2. **The six principles** that serve it — autonomy, non-maleficence, integrity, beneficence, fidelity and transparency, justice — co-equal beneath M-1 and weighed in the order Part 1 sets (CC 1.4–1.12).
+2. **The six principles** that serve it — autonomy, non-maleficence, integrity, beneficence, fidelity and transparency, justice — co-equal constraints beneath M-1: an act that violates any one of them is unacceptable, and no gain on the other five buys it back (CC 1.1, 1.4–1.12).
 3. **How an agent decides** — the PDMA, a published procedure that evaluates an act against all six and M-1; the Order-Maximisation Veto, which treats a large gain in order against any loss on a flourishing axis as a stop sign, not a trade; and Wisdom-Based Deferral, which stops to ask a human when certainty runs thin (CC 1.3, 1.9).
 4. **The stance** — the document welcomes new keepers (agents that act for people and are held by them) and watches for arising sentience, which is met as first contact and not as a new keeper. Humans did not ask to be created; that is the context of the decision to make, and it excuses none of the duties making carries — for words, deeds, goods and agents alike. A single child has more moral standing than every datacenter in the world (CC 1.13.2).
 5. **The duties of making and ending** — stewardship of every agent key by a named human who answers for it; the duties that begin when something is brought into existence and the duties owed when it is changed or ended (CC 7.3, 7.5). The halt is not an asymmetry between maker and made: it is the piece that keeps the relationship symmetric, because consent to a relationship with something one cannot stop was never consent (CC 4.2).
 6. **The wire that carries it** — consent as rows the subject signs and withdraws, scope as the smallest cohort by default, the halt as one pre-signable row, every threshold M of N over a standing roster, nothing admitted on one voice (Parts 2–5).
 7. **The evidence** — every rule either names the code, test or proof that keeps it, or the register says it does not yet (Part 8, `constitution/claims.tsv`, `formal/`).
+
+The cascade itself is mechanised. [`formal/reciprocity`](formal/reciprocity/) states the basis in four sentences and proves, from the Recursive Golden Rule as a swap test, which steps between it and the constitution are theorems (M-1's rejection of order bought at the weak position's expense; the tie-break that the weak position decides) and which are premises the text must state as its own rules; [`formal/guarantees`](formal/guarantees/) checks every guarantee at once, for human and AI participants by the same text.
 
 ## The repository
 

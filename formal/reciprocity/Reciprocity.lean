@@ -24,7 +24,7 @@
 
 namespace Reciprocity
 
-/-! ## 1. The naive Golden Rule contradicts the one asymmetry
+/-! ## 1. The naive Golden Rule contradicts the halt read as a power between peers
 
   Read (S2) over PARTICIPANTS: whatever x may impose on y, y may impose on x. Add the halt,
   which the text keeps in human hands (CC 1.5, 4.2.1.1): a holder may halt an agent, an
@@ -45,13 +45,13 @@ theorem naive_golden_rule_contradicts_halt : Naive → False := by
   rw [n.asymmetry.2] at h
   exact Bool.false_ne_true h
 
-/-! ### 1'. The Golden Rule over ROLES is consistent with the asymmetry
+/-! ### 1'. The Golden Rule over ROLES is consistent with the halt
 
   Read (S2) over RELATIONS instead: the rule is "whoever holds a thing accepts the duties of
   holding; whoever accepted a root accepts its halt" — reciprocity between a holder and what
   it holds, not between two peers. CC 1.13.2 states it this way ("structural, not
-  exhortatory"), and CC 1.13.2's universality paragraph names the halt as the one asymmetry
-  "of kind". Premise P1 (hidden in S2 as written): the Golden Rule quantifies over roles
+  exhortatory"), and CC 1.13.2 names the halt the condition of symmetry between maker and
+  made: a fact of position, not of kind. Premise P1 (hidden in S2 as written): the Golden Rule quantifies over roles
   (holder/held, root/subscriber, steward/stewarded), and every participant may occupy every
   role it is capable of. The human who HOLDS an agent is bound as a holder; the agent, which
   cannot hold a root for itself (CC 1.13.2), never occupies that role. -/
@@ -597,7 +597,7 @@ theorem indefinitely_without_grievance (c : Nat) :
     (a) M-1's rejection clause (CC 1.1): order or efficiency bought at the expense of the weak
         position fails the swap, because the party that gains would not accept the rule from
         the other seat;
-    (b) the vulnerable-party tie-break (CC 1.3): in a conflict where one resolution lowers the
+    (b) the vulnerable-party tie-break (CC 1.3 step 4, read with CC 1.1's constraint rule): in a conflict where one resolution lowers the
         weak position and the other does not, only the second survives the swap.
 
   What the test does NOT give is who stands in which position (occupancy: §1', §11), who is
