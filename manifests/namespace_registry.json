@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "d5d633112fc03648392e295b4c6efbec4afcd2d83dc729388ed6c310258b467f",
+    "registry_sha256": "73636797cc536e59863a2916bfb5a22ff63b7eaaad7c7cd03987a883d65005c1",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "8dab2d2cf6fba53534e44a80cbd77397f9a489ce160dfe4e5eadc7ed313937ae"
+    "source_sha256": "68e341fce0634c7252e5f74488007456fb57d69d38dea19199140573b8e7c14a"
   },
   "families": [
     {
@@ -3706,7 +3706,7 @@
       "description": "What one witness assumed about its view of a subject when it made a claim about that subject: which consent grants were in force, at what trace level, over which occurrences, over which window, through which channel classes.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
-      "polarity": "signed",
+      "polarity": "+1.0 only",
       "prefix": "observation:access_assumption:v1",
       "reserved": true,
       "reserved_rule": {
