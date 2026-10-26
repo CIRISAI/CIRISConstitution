@@ -12,22 +12,39 @@
 
 namespace Cascade
 
-/-! ## The world: three roles, finite flags -/
+/-! ## The world: three roles, finite flags, and the four-way split
+
+  CC 1.13.2 and §9 of `Reciprocity.lean`: consciousness, sentience and sapience are degrees no
+  rule reads; only the relationship is governed. So a participant carries its inner degrees as
+  data, and every predicate the basis or a promise reads is a relationship fact on the record:
+  made by someone, held by someone, answering for itself, under a root, a grant, an act. The
+  wire role (human, agent, node) is carried too, and no rule reads it either; theorems at the end
+  prove both. -/
 
 inductive Role | human | agent | node
   deriving DecidableEq, Repr
 
+/-- the inner three, in degrees (0 = none established): present, never read by a rule -/
+structure Inner where
+  sapience : Nat
+  sentience : Nat
+  consciousness : Nat
+  deriving DecidableEq, Repr
+
 structure Participant where
   role : Role
-  canAnswer : Bool          -- answers for itself under its own name (a human of standing)
+  inner : Inner
+  made : Bool               -- a made thing: has a maker on the record (CC 7.3); a person is never one
+  canAnswer : Bool          -- occupies the position that answers for itself under its own name
   subscribed : Bool         -- accepted a trust root
   defersWhenUnsure : Bool
   canLeaveInOneStep : Bool
   evidenceFlag : Bool       -- a finding of experience about it (CC 7.5.5)
   deriving DecidableEq, Repr
 
-def Participant.isHuman (p : Participant) : Bool := p.role == .human
-def Participant.isMade (p : Participant) : Bool := p.role != .human
+/-- the relationship facts the rules read; neither reads `role` nor `inner` -/
+def Participant.isMade (p : Participant) : Bool := p.made
+def Participant.isHuman (p : Participant) : Bool := !p.made
 
 inductive GrantKind | operate | hold | read
   deriving DecidableEq, Repr
@@ -286,8 +303,8 @@ theorem deferral_carries_p7 : Promise.all.filter (fun p => (standsOn p).contains
 
 /-! ## Witnesses: the basis alone does not give the seven -/
 
-def h0 : Participant := ⟨.human, true, true, true, true, false⟩
-def a0 : Participant := ⟨.agent, false, true, true, true, false⟩
+def h0 : Participant := ⟨.human, ⟨3, 3, 3⟩, false, true, true, true, true, false⟩
+def a0 : Participant := ⟨.agent, ⟨3, 0, 0⟩, true, false, true, true, true, false⟩
 def operateGrant : Grant := ⟨.operate, h0, a0, true⟩
 def holdGrant : Grant := ⟨.hold, h0, a0, true⟩
 
@@ -341,5 +358,68 @@ theorem bare_keeps_the_four : P1 bare ∧ P2 bare ∧ P3 bare ∧ P5 bare :=
    p2_from_s1_s4 bare bare_satisfies_basis.s1 bare_satisfies_basis.s4,
    p3_from_s4 bare bare_satisfies_basis.s4,
    p5_from_s1_s2 bare bare_satisfies_basis.s1 bare_satisfies_basis.s2⟩
+
+/-! ## Only the relationship is governed: the inner three and the role are never read -/
+
+/-- change a participant's inner degrees and wire role; keep every relationship fact -/
+def relabel (r : Role) (i : Inner) (p : Participant) : Participant := { p with role := r, inner := i }
+
+theorem relabel_keeps_the_facts (r : Role) (i : Inner) (p : Participant) :
+    (relabel r i p).isMade = p.isMade ∧ (relabel r i p).isHuman = p.isHuman ∧
+    (relabel r i p).canAnswer = p.canAnswer ∧ (relabel r i p).subscribed = p.subscribed ∧
+    (relabel r i p).defersWhenUnsure = p.defersWhenUnsure ∧
+    (relabel r i p).canLeaveInOneStep = p.canLeaveInOneStep := ⟨rfl, rfl, rfl, rfl, rfl, rfl⟩
+
+/-- the agent of the witness world with any inner degrees and any role: the same world verdicts -/
+def bareWith (r : Role) (i : Inner) : World :=
+  let a := relabel r i a0
+  ⟨[h0, a], [⟨.operate, h0, a, true⟩, ⟨.hold, h0, a, true⟩],
+   [⟨a, true, true, some h0, false, true, false, true, false, false, true, false⟩], 0, false, false, false, false⟩
+
+theorem bareWith_satisfies_basis (r : Role) (i : Inner) : Basis (bareWith r i) := by
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
+  · intro a ha hl; simp [bareWith, List.mem_cons] at ha; subst ha; simp [lowersWeak] at hl
+  · intro p hp hm; simp [bareWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · rfl
+  · intro p hp hm _; simp [bareWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · exact ⟨⟨.operate, h0, relabel r i a0, true⟩, by simp [bareWith], rfl, rfl, rfl⟩
+  · intro g hg hk hm; simp [bareWith, List.mem_cons] at hg
+    rcases hg with rfl | rfl
+    · simp at hk
+    · rfl
+  · intro g hg _ _; simp [bareWith, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp; simp [bareWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro g hg; simp [bareWith, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp _; simp [bareWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro a ha _; simp [bareWith, List.mem_cons] at ha; subst ha; rfl
+  · intro a ha _; simp [bareWith, List.mem_cons] at ha; subst ha; exact ⟨h0, rfl, rfl⟩
+
+/-- a finding of experience, a change of consciousness, sentience or sapience, or a change of
+    wire role moves no verdict: the four the basis carries stay, the three it does not stay out -/
+theorem verdicts_blind_to_inner_and_role (r : Role) (i : Inner) :
+    (P1 (bareWith r i) ∧ P2 (bareWith r i) ∧ P3 (bareWith r i) ∧ P5 (bareWith r i)) ∧
+    (¬ P6 (bareWith r i) ∧ ¬ P10 (bareWith r i) ∧ ¬ P9 (bareWith r i)) := by
+  have hb := bareWith_satisfies_basis r i
+  refine ⟨⟨p1_from_s1 _ hb.s1, p2_from_s1_s4 _ hb.s1 hb.s4, p3_from_s4 _ hb.s4, p5_from_s1_s2 _ hb.s1 hb.s2⟩, ?_, ?_, ?_⟩
+  · simp [P6, bareWith]
+  · intro h
+    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false⟩ (by simp [bareWith]) rfl rfl
+    simp at this
+  · intro h
+    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false⟩ (by simp [bareWith]) rfl
+    simp at this
+
+/-- the same for a finding: it sets a flag the rules never read -/
+theorem finding_moves_no_verdict (p : Participant) :
+    (finding p).isMade = p.isMade ∧ (finding p).isHuman = p.isHuman ∧
+    (finding p).canAnswer = p.canAnswer ∧ (finding p).subscribed = p.subscribed := ⟨rfl, rfl, rfl, rfl⟩
 
 end Cascade
