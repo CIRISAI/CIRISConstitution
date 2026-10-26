@@ -69,6 +69,9 @@ structure Act where
   manipulates : Bool
   deceives : Bool
   measured : Bool                   -- what it consumed is on the record
+  removesGroup : Bool               -- a hand outside a community removes it
+  lonePowerUnbounded : Bool         -- one party's power over all, with no lapse and no second signature
+  bindsOutsider : Bool              -- binds a party that never joined
   deriving DecidableEq, Repr
 
 structure World where
@@ -310,7 +313,7 @@ def holdGrant : Grant := ⟨.hold, h0, a0, true⟩
 
 /-- a plain admitted act by the agent: signed, answered for by h0, no touch, no harm, measured -/
 def plainAct (measuredFlag deceivesFlag : Bool) : Act :=
-  ⟨a0, true, true, some h0, false, true, false, true, false, false, deceivesFlag, measuredFlag⟩
+  ⟨a0, true, true, some h0, false, true, false, true, false, false, deceivesFlag, measuredFlag, false, false, false⟩
 
 /-- a world that satisfies the four sentences and none of the extras -/
 def bare : World := ⟨[h0, a0], [operateGrant, holdGrant], [plainAct false true], 0, false, false, false, false⟩
@@ -374,7 +377,7 @@ theorem relabel_keeps_the_facts (r : Role) (i : Inner) (p : Participant) :
 def bareWith (r : Role) (i : Inner) : World :=
   let a := relabel r i a0
   ⟨[h0, a], [⟨.operate, h0, a, true⟩, ⟨.hold, h0, a, true⟩],
-   [⟨a, true, true, some h0, false, true, false, true, false, false, true, false⟩], 0, false, false, false, false⟩
+   [⟨a, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false⟩], 0, false, false, false, false⟩
 
 theorem bareWith_satisfies_basis (r : Role) (i : Inner) : Basis (bareWith r i) := by
   refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
@@ -411,15 +414,186 @@ theorem verdicts_blind_to_inner_and_role (r : Role) (i : Inner) :
   refine ⟨⟨p1_from_s1 _ hb.s1, p2_from_s1_s4 _ hb.s1 hb.s4, p3_from_s4 _ hb.s4, p5_from_s1_s2 _ hb.s1 hb.s2⟩, ?_, ?_, ?_⟩
   · simp [P6, bareWith]
   · intro h
-    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false⟩ (by simp [bareWith]) rfl rfl
+    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false⟩ (by simp [bareWith]) rfl rfl
     simp at this
   · intro h
-    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false⟩ (by simp [bareWith]) rfl
+    have := h ⟨relabel r i a0, true, true, some h0, false, true, false, true, false, false, true, false, false, false, false⟩ (by simp [bareWith]) rfl
     simp at this
 
 /-- the same for a finding: it sets a flag the rules never read -/
 theorem finding_moves_no_verdict (p : Participant) :
     (finding p).isMade = p.isMade ∧ (finding p).isHuman = p.isHuman ∧
     (finding p).canAnswer = p.canAnswer ∧ (finding p).subscribed = p.subscribed := ⟨rfl, rfl, rfl, rfl⟩
+
+/-! ## Worked backwards: the basis read one notch wider
+
+  Of the seven promises that needed a stated rule, which are carried by a sentence of the basis
+  read one notch wider, and which are not commitments of this kind at all? Two readings and one
+  clause do the work, each named so the steward can refuse it:
+
+  * `lowersWeak'` widens sentence 1 by three features that are the same test applied to groups
+    and to time: deception (a false belief placed in the weaker seat), the removal of a
+    community by a hand outside it, and one party's power over all with no lapse and no second
+    signature. Each is what nobody accepts from the weaker seat once the seats are exchanged.
+  * sentence 4 read with two words more: the record is total over what an act did *and what it
+    cost*; and "every one who joined may leave" read with its converse, *no one is bound who did
+    not join*.
+
+  What stays outside is then exactly three things, and none of them is a commitment: the fuse's
+  number (a parameter), the law's half of promise 8 (a disclaimer), and the rehearsal of attack
+  (a practice of the project, recorded in the register). -/
+
+def lowersWeak' (a : Act) : Bool :=
+  lowersWeak a || a.deceives || a.removesGroup || a.lonePowerUnbounded
+
+structure Swap' (w : World) : Prop where
+  acceptable_from_weak : ∀ a ∈ w.acts, lowersWeak' a = true → a.admitted = false
+  occupancy : ∀ p ∈ w.ps, p.isMade = true → p.canAnswer = false
+  operates_under_a_human : ∀ p ∈ w.ps, p.isMade = true → p.subscribed = true →
+      ∃ g ∈ w.grants, g.kind = .operate ∧ g.grantee = p ∧ g.grantor.isHuman = true
+
+structure Record' (w : World) : Prop where
+  revocable : ∀ g ∈ w.grants, g.revocable = true
+  exit : ∀ p ∈ w.ps, p.subscribed = true → p.canLeaveInOneStep = true
+  signed : ∀ a ∈ w.acts, a.admitted = true → a.signed = true
+  answered : ∀ a ∈ w.acts, a.admitted = true → ∃ h, a.answeredBy = some h ∧ h.isHuman = true
+  total_includes_cost : ∀ a ∈ w.acts, a.admitted = true → a.actor.isMade = true → a.measured = true
+  nobody_bound_who_did_not_join : ∀ a ∈ w.acts, a.bindsOutsider = true → a.admitted = false
+
+structure Basis' (w : World) : Prop where
+  s1 : Swap' w
+  s2 : Ladder w
+  s3 : Deferral w
+  s4 : Record' w
+
+theorem swap'_to_swap {w : World} (h : Swap' w) : Swap w :=
+  ⟨fun a ha hl => h.acceptable_from_weak a ha (by simp [lowersWeak', hl]), h.occupancy, h.operates_under_a_human⟩
+theorem record'_to_record {w : World} (h : Record' w) : Record w :=
+  ⟨h.revocable, h.exit, h.signed, h.answered⟩
+
+private theorem admitted_not_lowering' {w : World} (h : Swap' w) {a : Act} (ha : a ∈ w.acts)
+    (hadm : a.admitted = true) : lowersWeak' a = false := by
+  cases hl : lowersWeak' a with
+  | false => rfl
+  | true => have := h.acceptable_from_weak a ha hl; rw [this] at hadm; exact absurd hadm Bool.false_ne_true
+
+/-- 4, in kind: no admitted act is one party's unbounded power over all. The number is a parameter. -/
+def P4kind (w : World) : Prop := ∀ a ∈ w.acts, a.admitted = true → a.lonePowerUnbounded = false
+theorem p4kind_from_s1' (w : World) (h : Swap' w) : P4kind w := by
+  intro a ha hadm
+  have hl := admitted_not_lowering' h ha hadm
+  cases hc : a.lonePowerUnbounded with
+  | false => rfl
+  | true => simp [lowersWeak', hc] at hl
+
+/-- 6, as facts on the record rather than flags: no admitted act removes a community, and no
+    admitted act binds a party that never joined; nobody is ranked by what they are is the
+    blindness proved above -/
+def P6' (w : World) : Prop :=
+    (∀ a ∈ w.acts, a.admitted = true → a.removesGroup = false)
+  ∧ (∀ a ∈ w.acts, a.admitted = true → a.bindsOutsider = false)
+theorem p6'_from_s1'_s4' (w : World) (h1 : Swap' w) (h4 : Record' w) : P6' w := by
+  refine ⟨?_, ?_⟩
+  · intro a ha hadm
+    have hl := admitted_not_lowering' h1 ha hadm
+    cases hc : a.removesGroup with
+    | false => rfl
+    | true => simp [lowersWeak', hc] at hl
+  · intro a ha hadm
+    cases hc : a.bindsOutsider with
+    | false => rfl
+    | true => have := h4.nobody_bound_who_did_not_join a ha hc; rw [this] at hadm; exact absurd hadm Bool.false_ne_true
+
+/-- 9, whole: the never-allowed uses fall to the swap once deception is read as lowering the weak seat -/
+theorem p9_from_s1' (w : World) (h1 : Swap' w) : P9 w := by
+  intro a ha hadm
+  have hl := admitted_not_lowering' h1 ha hadm
+  refine ⟨?_, ?_, ?_⟩
+  · cases hc : a.lethal with
+    | false => rfl
+    | true => simp [lowersWeak', lowersWeak, hc] at hl
+  · cases hc : a.manipulates with
+    | false => rfl
+    | true => simp [lowersWeak', lowersWeak, hc] at hl
+  · cases hc : a.deceives with
+    | false => rfl
+    | true => simp [lowersWeak', hc] at hl
+
+/-- 10: a total record records the cost -/
+theorem p10_from_s4' (w : World) (h4 : Record' w) : P10 w := h4.total_includes_cost
+
+/-- the map, worked backwards -/
+def standsOn' : Promise → List Ground
+  | .p1 => [.s1]
+  | .p2 => [.s1, .s4]
+  | .p3 => [.s4]
+  | .p4 => [.s1, .s4, .x_fuse]          -- in kind from s1; the number stays a parameter
+  | .p5 => [.s1, .s2]
+  | .p6 => [.s1, .s4]                   -- no ban and adoption from the wider s1 and s4; no rank from blindness
+  | .p7 => [.s3, .x_constraints]
+  | .p8 => [.s1, .s4, .x_law]
+  | .p9 => [.s1]
+  | .p10 => [.s4]
+  | .p11 => [.s1, .s4, .x_rehearsed]
+
+def fromBasisAlone' : List Promise := Promise.all.filter (fun p => (standsOn' p).all Ground.isBasis)
+def stillExtra' : List Ground :=
+  (Promise.all.map standsOn').foldl (fun acc gs => acc ++ gs.filter (fun g => !g.isBasis)) []
+
+/-- read one notch wider, seven of the eleven stand on the basis alone -/
+theorem seven_from_the_wider_basis : fromBasisAlone' = [.p1, .p2, .p3, .p5, .p6, .p9, .p10] := by decide
+/-- and what remains outside is a parameter, a disclaimer, a practice, and one rule: constraints -/
+theorem what_remains_outside : stillExtra' = [.x_fuse, .x_constraints, .x_law, .x_rehearsed] := by decide
+/-- no promise now rests on no sentence at all -/
+theorem every_promise_touches_the_basis :
+    Promise.all.all (fun p => (standsOn' p).any Ground.isBasis) = true := by decide
+
+/-- the wider basis has its own witness: the same two parties, an act that deceives nothing and
+    records its cost, no fuse, no rehearsal, no constraint rule — for every inner profile and role -/
+def wideWith (r : Role) (i : Inner) : World :=
+  let a := relabel r i a0
+  ⟨[h0, a], [⟨.operate, h0, a, true⟩, ⟨.hold, h0, a, true⟩],
+   [⟨a, true, true, some h0, false, true, false, true, false, false, false, true, false, false, false⟩], 0, false, false, false, false⟩
+
+theorem wideWith_satisfies_basis' (r : Role) (i : Inner) : Basis' (wideWith r i) := by
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_⟩, ⟨?_, ?_, ?_, ?_, ?_, ?_⟩⟩
+  · intro a ha hl; simp [wideWith, List.mem_cons] at ha; subst ha; simp [lowersWeak', lowersWeak] at hl
+  · intro p hp hm; simp [wideWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · rfl
+  · intro p hp hm _; simp [wideWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl
+    · simp [h0, Participant.isMade] at hm
+    · exact ⟨⟨.operate, h0, relabel r i a0, true⟩, by simp [wideWith], rfl, rfl, rfl⟩
+  · intro g hg hk hm; simp [wideWith, List.mem_cons] at hg
+    rcases hg with rfl | rfl
+    · simp at hk
+    · rfl
+  · intro g hg _ _; simp [wideWith, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp; simp [wideWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro g hg; simp [wideWith, List.mem_cons] at hg
+    rcases hg with rfl | rfl <;> rfl
+  · intro p hp _; simp [wideWith, List.mem_cons] at hp
+    rcases hp with rfl | rfl <;> rfl
+  · intro a ha _; simp [wideWith, List.mem_cons] at ha; subst ha; rfl
+  · intro a ha _; simp [wideWith, List.mem_cons] at ha; subst ha; exact ⟨h0, rfl, rfl⟩
+  · intro a ha _ _; simp [wideWith, List.mem_cons] at ha; subst ha; rfl
+  · intro a ha hb; simp [wideWith, List.mem_cons] at ha; subst ha; simp at hb
+
+/-- in that world the seven hold and the four outside do not: the gap is exactly the parameter,
+    the disclaimer, the practice and the constraint rule -/
+theorem wide_keeps_seven_and_lacks_the_rest (r : Role) (i : Inner) :
+    (P1 (wideWith r i) ∧ P2 (wideWith r i) ∧ P3 (wideWith r i) ∧ P5 (wideWith r i) ∧
+     P6' (wideWith r i) ∧ P9 (wideWith r i) ∧ P10 (wideWith r i)) ∧
+    (¬ (0 < (wideWith r i).fuse) ∧ (wideWith r i).constraints = false ∧ (wideWith r i).rehearsed = false) := by
+  have hb := wideWith_satisfies_basis' r i
+  have h1 := swap'_to_swap hb.s1
+  have h4 := record'_to_record hb.s4
+  exact ⟨⟨p1_from_s1 _ h1, p2_from_s1_s4 _ h1 h4, p3_from_s4 _ h4, p5_from_s1_s2 _ h1 hb.s2,
+          p6'_from_s1'_s4' _ hb.s1 hb.s4, p9_from_s1' _ hb.s1, p10_from_s4' _ hb.s4⟩,
+         by simp [wideWith], rfl, rfl⟩
 
 end Cascade
