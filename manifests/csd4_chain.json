@@ -16,7 +16,7 @@
     "tag": "v0.5.232"
    },
    "evidence_pins": {
-    "CIRISServer": "d9f9506e",
+    "CIRISServer": "8c1dec21",
     "CIRISConformance": "6b43bf3",
     "coherence-ratchet": "0c4edfb",
     "RATCHET": "c89356bd",
