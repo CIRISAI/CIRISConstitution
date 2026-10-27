@@ -255,7 +255,6 @@
         ]
       },
       "_aliases": {
-        "boolean-via-score; Indeterminate allowed \u2192 RESTRICTED": "boolean-via-score",
         "per-leaf (CC 3.3.1)": "per-leaf",
         "see CC 3.4.1": "+1.0 only"
       },
@@ -293,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "73636797cc536e59863a2916bfb5a22ff63b7eaaad7c7cd03987a883d65005c1",
+    "registry_sha256": "ef8833cbf62b30f1603ac5d4a8f5d1149653b772f572a1514f0ce0a7c6e42c69",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "68e341fce0634c7252e5f74488007456fb57d69d38dea19199140573b8e7c14a"
+    "source_sha256": "2263869c981641fa9c4d7c5436ebe2bbff7636d3af9a060865bc8438843292af"
   },
   "families": [
     {
@@ -347,7 +346,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Catalogue row (CC 3.1.7 R1); provisional accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1.",
+      "description": "Catalogue row (CC 3.1.7 R1); the accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
@@ -768,7 +767,7 @@
       "description": "2-of-3 multi-source registry consensus on key / build / license validity.",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
-      "polarity": "boolean-via-score; Indeterminate allowed \u2192 RESTRICTED",
+      "polarity": "boolean-via-score",
       "prefix": "attestation:registry_consensus",
       "reserved": false,
       "segments": [
@@ -972,7 +971,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Bond posted per $1-Sybil-resistance per PoB; forfeited on revocation.",
+      "description": "A bond posted for Sybil resistance (proof of bond); forfeited on revocation.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
@@ -2182,10 +2181,10 @@
     },
     {
       "cc_section": "3.1.9.3",
-      "description": "A Wise Authority's answer to one deferral, {outcome} \u2208 approved | rejected.",
+      "description": "A Wise Authority's answer to one deferral, {outcome} \u2208 approved \\ Open emitter.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
-      "polarity": "signed",
+      "polarity": "rejected. Attester = the WA's own key (a key that held a WA seat in the live set at asserted_at), subject = the agent, references_attestation_id \u2192 the request. It is the ruling CC 4.3 publishes on the accountability cadence and composes into the WA's conduct record; it is not a wa_adjudication finding, which is a quorum's decision about seats. The wire shape of the response is the substrate's.",
       "prefix": "deferral:response:{outcome}:v1",
       "reserved": true,
       "reserved_rule": {
@@ -2206,8 +2205,7 @@
           "open": true,
           "segment": "{outcome}",
           "values": [
-            "approved",
-            "rejected"
+            "approved"
           ]
         },
         {
@@ -3095,7 +3093,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "Independent foundation-model judge verdict (PASS/FAIL/UNDETERMINED).",
+      "description": "Independent foundation-model judge verdict: PASS is +1, FAIL is \u22121; UNDETERMINED is no row, never a third point.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",

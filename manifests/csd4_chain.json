@@ -6,7 +6,7 @@
    "invariants_sha256": "a186bcd16fadd5982c77f7c9ba4bcb10f9ad97f598618ae6c9cceaf7141c6555",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "60e4583f7c6259292242fd708fb3fee572beea93d0ba21b5eb355723cbeabdc2",
+   "claims_sha256": "3b5de6d039c787457b3678aca95fe9008876212003179bae92946b96e5873d12",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "69a61a2f3be1386e94724c8092d96d0465feca92bc493db247e1698ac5baa1bf"
+  "chain_sha256": "6db5d5fc6e03b226f0e8a44d6e9d632b14f8453482077b77fb689ef7e81e3335"
  },
  "chain": [
   {
@@ -31517,7 +31517,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISPersist#1048"
+       "ticket": "CIRISPersist#1131"
       }
      ]
     },
@@ -40096,7 +40096,8 @@
    "2.6.7": "bold"
   },
   "attestation_type_unregistered": {
-   "2.4": "after_refusal"
+   "2.4": "after_refusal",
+   "5.3.6.1": "after_refusal"
   },
   "authority_id": {
    "2.4.1.2.1": "bold",
@@ -40183,6 +40184,7 @@
    "2.6.1.1": "after_refusal",
    "2.6.1.7": "after_refusal",
    "3.1.9.7": "after_refusal",
+   "5.3.6.1": "after_refusal",
    "6.1.1": "after_refusal"
   },
   "federation_rendezvous_key_not_an_identity": {
@@ -40190,7 +40192,8 @@
   },
   "federation_set_semantics_unsorted": {
    "2.6.1.1": "bold",
-   "2.6.1.7": "after_refusal"
+   "2.6.1.7": "after_refusal",
+   "5.3.6.1": "after_refusal"
   },
   "federation_trace_dimension_invalid": {
    "3.4.5": "after_refusal"

@@ -2,7 +2,7 @@
 
 *Status markers:* **works today** = evidence in the register at a pinned commit; **being built** = a named ticket; **a rule, no code yet** = normative only; **modelled** = a formal witness, no code test. The markers are stamped from *The Evidence Register*.
 
-*One page, second person, derivative of the rules and the shipped implementation. The plain-language rules (`00_guarantees_plain.md`) say what the network promises people; this says what keeping those promises asks of you when you run a node, hold a steward key, moderate a room, or hold a root. Each line names the binding section. Nothing here is a promise to you; it is the technical detail the promises lack.*
+*One page, second person, derivative of the rules and the shipped implementation. The plain-language guarantees say what the network promises people; this says what keeping those promises asks of you when you run a node, hold a steward key, moderate a room, or hold a root. Each line names the binding section. Nothing here is a promise to you; it is the technical detail the promises lack.*
 
 ## If you run a node
 
@@ -44,7 +44,7 @@
 ## What binds you everywhere
 
 - Every consequential act you sign arrives signed and can be contested; consequences fall on you, under your name (CC 1.13.6; CC 3.4).
-- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and has no cycles (CC 4.4.3.2.8; CC 4.1.1).
+- Delegation you grant is scoped, revocable, never re-delegates a listed power, lasts at most 365 days, and is acyclic across distinct keys; a self-edge is a charter form (CC 4.4.3.2.8; CC 4.1.1).
 - A deployment serving more than 100,000 monthly users publishes its redacted decision logs and deferral tickets within 180 days or forfeits any claim of compliance (CC 1.11).
 - Some uses are never allowed and no instruction moves that: deception, fraud, manipulation, coercion, election interference; an engagement-optimising business model declared at onboarding raises your tier and the mode is refused (Annex TX-9, TX-10).
 - Nothing here limits a duty the law imposes on you as a developer, deployer or steward, and nothing here creates a claim the law does not recognise (CC 7.3.5; plain rule N5).

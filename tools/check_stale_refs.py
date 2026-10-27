@@ -70,6 +70,16 @@ CLASSES = {
         (r"\b(?:PGP|X\.509|W3C VC)\b.{0,80}(?:treat|types|prior)", None),
         (r"all \d+ surveyed|surveyed systems|surveyed networks|categorically stronger|the only model|first to ship|No prior (?:system|identity)|against the field", None),
     ],
+    "working-notes": [
+        (r"is, honestly,|honestly, near|Adversarial reviewers|canonical working draft|nobody has implemented|trio Phase|\bFirst deployment\b", None),
+        (r"in 1\.0 scope|(?:NOT |not )?required for 1\.0\b|CHECK-arm", None),
+        (r"\bplain rules? \d+[a-z]?\b|\(G\d{1,2}\)|\(Scope; plain", None),
+        (r"ethically optimal|prioritisation heuristic|must be balanced|locally optimised|principle conflicts or trade-offs", None),
+    ],
+    "raw-paths": [
+        (r"\bformal/[a-z_]+(?:/[A-Za-z_]+\.(?:tla|lean|py|md))?|\btools/[a-z_]+\.py|\bconstitution/[a-z_]+\.tsv|\blean:[a-z-]+:", r"Where the rest lives|What it promises|^\| (?:\d+|all of them) |evidence_refs|governance_policy\.tsv|claims\.tsv|evidence_pins\.tsv"),
+        (r"Portal / Verify|\bciris-registry-core\b|ciris_keyring::|\bPolicyCorridor\.lean\b", None),
+    ],
     "dated-facts": [
         (r"\b20\d\d-\d\d-\d\d\b|\bCVE-\d{4}-\d+", r"produced_at|asserted_at|valid_until|effective_at|revoked_after|applicable from|\d{4}-\d{2}-\d{2}T"),
         (r"\b(?:January|February|March|April|May|June|July|August|September|October|November|December) 20\d\d\b", r"8\.6\.1|Fact Sheet"),

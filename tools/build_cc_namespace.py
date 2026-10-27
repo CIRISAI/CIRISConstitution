@@ -817,7 +817,6 @@ def main():
         ("_aliases", OrderedDict([
             ("see CC 3.4.1", "+1.0 only"),                                   # accord:* parent: every leaf is +1.0 only
             ("per-leaf (CC 3.3.1)", "per-leaf"),
-            ("boolean-via-score; Indeterminate allowed → RESTRICTED", "boolean-via-score"),
         ])),
         ("refusal", "score_outside_declared_polarity"),
         ("note", "points are points, never intervals; a score outside the class is refused at admission (CC 3.1.7 R4)"),
