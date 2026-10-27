@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "ef8833cbf62b30f1603ac5d4a8f5d1149653b772f572a1514f0ce0a7c6e42c69",
+    "registry_sha256": "dec7e54b58c6011fbade95f2fafa0e4d01e94b6273fb21494545220a3d110e4f",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "2263869c981641fa9c4d7c5436ebe2bbff7636d3af9a060865bc8438843292af"
+    "source_sha256": "eb81f79bbcbd4f3525b9c9d4bd7b20238fefdcfd5bd9ef03aa6737f4e5c50ace"
   },
   "families": [
     {
@@ -2181,10 +2181,10 @@
     },
     {
       "cc_section": "3.1.9.3",
-      "description": "A Wise Authority's answer to one deferral, {outcome} \u2208 approved \\ Open emitter.",
+      "description": "A Wise Authority's answer to one deferral, {outcome} \u2208 approved | rejected.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
-      "polarity": "rejected. Attester = the WA's own key (a key that held a WA seat in the live set at asserted_at), subject = the agent, references_attestation_id \u2192 the request. It is the ruling CC 4.3 publishes on the accountability cadence and composes into the WA's conduct record; it is not a wa_adjudication finding, which is a quorum's decision about seats. The wire shape of the response is the substrate's.",
+      "polarity": "signed",
       "prefix": "deferral:response:{outcome}:v1",
       "reserved": true,
       "reserved_rule": {
@@ -2205,7 +2205,8 @@
           "open": true,
           "segment": "{outcome}",
           "values": [
-            "approved"
+            "approved",
+            "rejected"
           ]
         },
         {
