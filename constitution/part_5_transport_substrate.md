@@ -783,7 +783,7 @@ A node's shaped links together use at most eight links' worth of its class budge
 
 MLS Welcome messages MUST be wrapped by **HPKE `mode_base`** ([RFC 9180](https://www.rfc-editor.org/rfc/rfc9180), section 5.1.1) encrypted to the invitee's **static X-Wing KEM** public key (ML-KEM-768 + X25519; [draft-connolly-cfrg-xwing-kem](https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/); confirmed in [draft-ietf-hpke-pq](https://datatracker.ietf.org/doc/draft-ietf-hpke-pq/), section 7.2). This is the admission-ceremony half of the MLS construction whose epoch rekey is specified in [CC 5.1](part_5_transport_substrate.md) — the same hybrid KEM (X25519 + ML-KEM-768) the MLS ciphersuite uses as its HPKE KEM.
 
-**`mode_auth` is structurally unavailable.** X-Wing has no `AuthEncap` (per draft-connolly-cfrg-xwing-kem; confirmed in draft-ietf-hpke-pq, section 7.2), so HPKE `mode_auth` cannot be used. Sender authentication therefore MUST NOT be claimed at the HPKE layer; it is provided out-of-band by an **ML-DSA-65 signature from the inviter** over the encapsulation bytes (below). Both halves of MLS ciphersuite `0x004D` are used.
+**`mode_auth` is structurally unavailable.** X-Wing has no `AuthEncap` (per draft-connolly-cfrg-xwing-kem; confirmed in draft-ietf-hpke-pq, section 7.2), so HPKE `mode_auth` cannot be used. Sender authentication therefore MUST NOT be claimed at the HPKE layer; it is provided out-of-band by the **inviter's hybrid signature** (Ed25519 ‖ ML-DSA-65, as every federation-tier signature, [CC 5.3.2.4.3.1](#5.3.2.4.3.1)) over the encapsulation bytes (below); a single-primitive signature is not admitted. Both halves of MLS ciphersuite `0x004D` are used.
 
 **HPKE parameters (cross-impl pinned; private-use suite-id, since X-Wing has no IANA KEM-id):**
 
@@ -795,7 +795,7 @@ AEAD          = AES-256-GCM
 
 The `HPKE_SUITE_ID` string MUST be used, byte-for-byte identically on both sides, in every RFC 9180 `LabeledExtract` / `LabeledExpand` call. It is a **domain-separation byte literal, not a wire-vocabulary identifier** ([CC 5.1](part_5_transport_substrate.md) class rule): its hyphens are KDF input bytes and MUST NOT be snake_cased to match the `wrap_algorithm` vocabulary form. The HPKE-layer AEAD is **AES-256-GCM** — distinct from the XChaCha20-Poly1305 of the scope-privacy envelope framing ([CC 5.4.3](#5.4.3)); the live A/V chunk is sealed with AES-256-GCM at every layer ([CC 5.3.3.2.5](#5.3.3.2.5)).
 
-**Inviter signature.** The inviter MUST sign the encapsulation bytes with ML-DSA-65 over the following length-delimited encoding (no `algorithm` field):
+**Inviter signature.** The inviter MUST sign the encapsulation bytes with the hybrid pair, Ed25519 then ML-DSA-65, each over the following length-delimited encoding (no `algorithm` field; the verifier checks both halves and refuses a Welcome that carries one):
 
 ```
 encap_signing_bytes
