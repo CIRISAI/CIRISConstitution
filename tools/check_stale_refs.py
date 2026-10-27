@@ -74,6 +74,7 @@ CLASSES = {
         (r"is, honestly,|honestly, near|Adversarial reviewers|canonical working draft|nobody has implemented|trio Phase|\bFirst deployment\b", None),
         (r"in 1\.0 scope|(?:NOT |not )?required for 1\.0\b|CHECK-arm", None),
         (r"\bplain rules? \d+[a-z]?\b|\(G\d{1,2}\)|\(Scope; plain", None),
+        (r"^#{2,6} .*\bD[1-9]\b|\(normative — D\d|\bD\d(?: / D\d)+\b", r"3\.3\.1|D-rules"),
         (r"ethically optimal|prioritisation heuristic|must be balanced|locally optimised|principle conflicts or trade-offs", None),
     ],
     "raw-paths": [

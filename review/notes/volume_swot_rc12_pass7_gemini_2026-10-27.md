@@ -59,3 +59,7 @@ The KDF-hash "inconsistency" and the witnessed-mode "exposure" in the Threat Mod
 ## What to do before the rc12 cut
 
 Land M17, about forty-five mechanical items listed in the verify files with file:line, as one batch with the same file-set ownership and the same regression review as M16, plus the two pipeline items (nested bullets; the matcher's trailing-version read). Then cut. The rulings above are each one sentence; R114 and R115 wait on edge, R117 on persist, and none of them blocks a cut as guidance.
+
+## The landing (2026-10-27)
+
+M17 landed as one batch by file set with three regression reviews over the diff first (twenty-one problems caught before the commit; the CHANGELOG names the largest). Rulings as made: R110 cut; R111 the row rule, rotation as a trail; R112 stated as the rule; R113 the text's integer rule, with Verify and edge tickets for the float rounding (CIRISVerify#317, CIRISEdge#909); R114 confirmed by edge, 5.4.2 retargeted; R116 the default; R117 confirmed by persist with the exact walk. R115 open: edge's "deliberate" was withdrawn, no reason is recorded, edge leans hybrid; the steward decides. The matcher's trailing-version defect (verify_dictionary's aside) was the rc8.1 defect recurring over twelve families and is fixed at the source with a generator gate. Four measured figures stage on RATCHET#30.

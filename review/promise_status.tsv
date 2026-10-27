@@ -1,7 +1,7 @@
 surface	key	status	note
 plain	1a	works today	G1
 plain	1b	works today	G1
-plain	1c	works today	purge rows graduated, G2
+plain	1c	works today	G2
 plain	1d	works today	G3
 plain	1e	works today	one path changing: CIRISAgent#1251
 plain	1f	works today	G3

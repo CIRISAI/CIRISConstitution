@@ -343,6 +343,11 @@ VERSION_EXEMPT = [
 
 def classify_segments(prefix):
     """Return [{'segment': str, 'class': str}] for a catalogued prefix, or raise."""
+    import re as _re
+    if _re.fullmatch(r"v[0-9]+", prefix.split(":")[-1]):
+        raise SystemExit(f"build_cc_namespace: {prefix!r} declares its version inside the prefix; declare the "
+                         "family without it — the trailing version segment is implicit (CC 3.1.7 R3). "
+                         "This refused every row written as the prose says in rc8.1 and again in rc12.")
     out = []
     for seg in prefix.split(":"):
         if seg == "*":
@@ -863,6 +868,20 @@ def main():
         "preserve_response:v1",                # -> preserve_response
         "archive_release:{basis}:v1",          # -> archive_release:{basis}
         "lawful_order:release:v1",             # -> lawful_order:release
+        # rc12 (2026-10-27): the same defect recurred for twelve rc10–rc11 families; the generator
+        # now refuses a declared prefix whose last segment is a literal version. Renamed, not retired.
+        "ballot:tally:{poll_id}:v1",           # -> ballot:tally:{poll_id}
+        "census:composite:{class}:v1",         # -> census:composite:{class}
+        "census:expected_active:v1",           # -> census:expected_active
+        "census:member:partial:v1",            # -> census:member:partial
+        "census:member:share:v1",              # -> census:member:share
+        "census:partial:{class}:v1",           # -> census:partial:{class}
+        "census:share:{class}:v1",             # -> census:share:{class}
+        "rendezvous:route:v1",                 # -> rendezvous:route
+        "identity_amendment:v1",               # -> identity_amendment
+        "deferral:request:v1",                 # -> deferral:request
+        "deferral:response:{outcome}:v1",      # -> deferral:response:{outcome}
+        "observation:access_assumption:v1",    # -> observation:access_assumption
     }
     if os.path.exists(OUT):
         try:

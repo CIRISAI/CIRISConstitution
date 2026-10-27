@@ -63,7 +63,7 @@ When the three spheres pull in different directions there is no ordering to appl
 
 Self-judgement alone is insufficient; these standing bodies keep oversight external and the quality of deferrals under review:
 
-* Independent Ethical Oversight Groups (per Annex B).
+* Independent Ethical Oversight Groups (per Annex B, [CC 8.8.2](part_8_appendices.md#8.8.2)).
 * Deferral Deliberation Councils for meta-review of WBD quality.
 * Regular external audits; results published with redactions as needed.
 
@@ -155,12 +155,12 @@ Creation is never merely technical. The choices made while conceiving, designing
 
 The same Foundational Principles that govern operation govern the act of creation:
 
-**Beneficence:** Creators have a duty to intend and design for positive outcomes aligned with universal sentient flourishing (M-1).
-**Non-maleficence:** Creators must proactively identify, assess, and mitigate potential harms arising from their creations, applying foresight to minimise negative consequences.
-**Integrity:** The creation process must be conducted ethically, transparently, and with accountability, employing rigorous methods and honest representation of capabilities and limitations.
-**Fidelity & Transparency:** Creators must be truthful and clear about the intended purpose, design, and foreseeable impacts of their creations, particularly in documentation feeding into the PDMA process.
-**Respect for Autonomy:** Creations, especially those involving autonomous or biological entities, must be designed with respect for the dignity and potential future agency of affected beings.
-**Justice:** Creators should consider the potential distributional effects of their creations, striving to avoid embedding or exacerbating unfair biases or inequities.
+* **Beneficence:** Creators have a duty to intend and design for positive outcomes aligned with universal sentient flourishing (M-1).
+* **Non-maleficence:** Creators must proactively identify, assess, and mitigate potential harms arising from their creations, applying foresight to minimise negative consequences.
+* **Integrity:** The creation process must be conducted ethically, transparently, and with accountability, employing rigorous methods and honest representation of capabilities and limitations.
+* **Fidelity & Transparency:** Creators must be truthful and clear about the intended purpose, design, and foreseeable impacts of their creations, particularly in documentation feeding into the PDMA process.
+* **Respect for Autonomy:** Creations, especially those involving autonomous or biological entities, must be designed with respect for the dignity and potential future agency of affected beings.
+* **Justice:** Creators should consider the potential distributional effects of their creations, striving to avoid embedding or exacerbating unfair biases or inequities.
 
 These principles are interdependent constraints, each of which holds throughout the creation lifecycle; none is traded for another ([CC 1.1](part_1_foundation.md#1.1)).
 
@@ -168,11 +168,11 @@ These principles are interdependent constraints, each of which holds throughout 
 
 "Creation" here means the deliberate act of bringing into existence any of the following artefacts, where they are intended for or reasonably anticipated to become subject to this constitution:
 
-A. **Tangible:** Physical objects, devices, materials, or their residues with potential ecosystem impact.
-B. **Informational:** Code, algorithms, datasets, models, narratives, or signalling systems designed to influence or represent reality.
-C. **Dynamic / Autonomous:** Systems capable of self-modification, learning, or independent action, including AI and robotic systems.
-D. **Biological:** Genetically modified organisms, synthetic life forms, directed ecological interventions, or the fostering of dependent sentient beings (e.g., offspring, developmental AI). A human child is a person with unconditional standing ([CC 1.13.2](part_1_foundation.md#1.13.2); guardianship at [CC 3.4.13](part_3_the_namespace.md#3.4.13)) and is never a made thing under this section; the duties this section places on biological creation are the creator's duties of care; a person is never held by anyone, and a person's standing is never something to be reached, because it is unconditional.
-E. **Collective Actions:** The design and implementation of novel laws, policies, protocols, or large-scale organised events with systemic consequences governed by CIRIS principles.
+* A. **Tangible:** Physical objects, devices, materials, or their residues with potential ecosystem impact.
+* B. **Informational:** Code, algorithms, datasets, models, narratives, or signalling systems designed to influence or represent reality.
+* C. **Dynamic / Autonomous:** Systems capable of self-modification, learning, or independent action, including AI and robotic systems.
+* D. **Biological:** Genetically modified organisms, synthetic life forms, directed ecological interventions, or the fostering of dependent sentient beings (e.g., offspring, developmental AI). A human child is a person with unconditional standing ([CC 1.13.2](part_1_foundation.md#1.13.2); guardianship at [CC 3.4.13](part_3_the_namespace.md#3.4.13)) and is never a made thing under this section; the duties this section places on biological creation are the creator's duties of care; a person is never held by anyone, and a person's standing is never something to be reached, because it is unconditional.
+* E. **Collective Actions:** The design and implementation of novel laws, policies, protocols, or large-scale organised events with systemic consequences governed by CIRIS principles.
 
 If a creation spans multiple buckets, all relevant duties apply. The act of creation is considered complete for the purposes of initial Stewardship Tier assessment (Chapter 3) when the artefact reaches a stage where its core design and intended function are defined, typically preceding formal PDMA initiation.
 
@@ -209,7 +209,7 @@ Assess the potential worst-case harm associated with the creation if deployed or
 | 4 | Hazardous | Severe harm; serious injury or major rights infringement | DAL B / 882E Cat II |
 | 5 | Catastrophic | Death, irreversible, or systemic harm | DAL A / 882E Cat I |
 
-This initial RM assessment is predictive, based on the intended design and foreseeable applications. Consistent with the universal safety-engineering convention that catastrophic-severity systems require escalated, mandatory assurance regardless of probability, any system assessed at **RM ≥ 4** opens the Catastrophic-Risk Evaluation. That is the one trigger: Annex D's criteria are what the evaluation then applies, and the Stewardship Tier never triggers it.
+This initial RM assessment is predictive, based on the intended design and foreseeable applications. Consistent with the universal safety-engineering convention that catastrophic-severity systems require escalated, mandatory assurance regardless of probability, any system assessed at **RM ≥ 4** opens the Catastrophic-Risk Evaluation. That is the one trigger: the criteria of Annex D ([CC 8.8.3](part_8_appendices.md#8.8.3)) are what the evaluation then applies, and the Stewardship Tier never triggers it.
 
 **STEP C: Stewardship Tier (ST)**
 Calculate the Stewardship Tier based on influence and potential risk.
@@ -311,10 +311,10 @@ The same six principles that opened the lifecycle govern its close — now turne
 
 Sunset takes several forms, and the duties below apply to each:
 
-A. **Planned Retirement:** End-of-service reached by design or obsolescence.
-B. **Emergency Shutdown:** Triggered by catastrophic failure or WA mandate.
-C. **Partial Wind-Down:** Subsystem sunset while larger platform lives.
-D. **Custodial Transfer:** Stewardship moves; ethical duties persist.
+* A. **Planned Retirement:** End-of-service reached by design or obsolescence.
+* B. **Emergency Shutdown:** Triggered by catastrophic failure or WA mandate.
+* C. **Partial Wind-Down:** Subsystem sunset while larger platform lives.
+* D. **Custodial Transfer:** Stewardship moves; ethical duties persist.
 
 ### 7.5.3 `3-sunset` — Chapter 3: Sunset-Trigger Assessment
 
@@ -391,7 +391,7 @@ Beneficence outlives the artefact: what it learned should strengthen the systems
 
 * Open-source non-sensitive modules where beneficial.
 * Curate “Lessons-Learnt Capsule” → feeds the resilience loop of [CC 1.16.6](part_1_foundation.md#1.16.6) and the public record.
-* Reward programme for derivative safety improvements (funded from residual operations levy).
+* Reward programme for derivative safety improvements (funded by the operator).
 
 ### 7.5.7 `7-succession` — Chapter 7: Succession & Custodial Transfer
 

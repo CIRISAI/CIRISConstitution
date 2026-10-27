@@ -43,9 +43,9 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 1.15.11	becoming-ethical	Introduction: Becoming an Ethical Entity	Accord 1.introduction-becoming-an-ethical-entity	0.00092	322	0.11	I	accord	charter
 1.16	operationalising-ethical	Introduction: Operationalising Ethical Awareness	Accord 2.introduction-operationalising-ethical-aw	0.00092	324	0.11	I	accord	charter
 1.16.1	a-2.conclusion	Summary of the sections below	Accord 2.conclusion	0.00092	323	0.11	I	accord	charter
-1.16.2	i-principles	Principles into Practice - Defining Ethical Actions Clearly	Accord 2.section-i-principles-into-practice-defin	0.00092	325	0.11	I	accord	charter
-1.16.3	ii-ethical	Ethical Decision-Making Process - The PDMA	Accord 2.section-ii-ethical-decision-making-proce	0.00092	326	0.11	I	accord	charter
-1.16.4	iii-wisdom	Wisdom-Based Deferral - Safeguarded Ethical Collaboration	Accord 2.section-iii-wisdom-based-deferral-safegu	0.00092	327	0.11	I	accord	charter
+1.16.2	i-principles	Principles into Practice: Defining Ethical Actions Clearly	Accord 2.section-i-principles-into-practice-defin	0.00092	325	0.11	I	accord	charter
+1.16.3	ii-ethical	Ethical Decision-Making Process: The PDMA	Accord 2.section-ii-ethical-decision-making-proce	0.00092	326	0.11	I	accord	charter
+1.16.4	iii-wisdom	Wisdom-Based Deferral: Safeguarded Ethical Collaboration	Accord 2.section-iii-wisdom-based-deferral-safegu	0.00092	327	0.11	I	accord	charter
 1.16.5	iv-designated	Designated Wise Authorities	Accord 2.section-iv-designated-wise-authorities	0.00092	328	0.11	I	accord	charter
 1.16.6	v-cultivating	Cultivating Resilience and Learning	Accord 2.section-v-cultivating-resilience-and-lea	0.00092	329	0.11	I	accord	charter
 2.1	envelope	The envelope	§4	0.02164	4	2.6	II	ceg	wire
@@ -258,7 +258,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in CC 3.4.4	§11.7.3	0.00092	249	0.11	IV	ceg	constitution
 4.5.12.5	family-admission	Family admission — consensus_protocol (normative)	§11.7.5	0.00092	250	0.11	IV	ceg	constitution
 4.5.12.6	documents-what-4	What this documents	§11.7.6	0.00092	251	0.11	IV	ceg	constitution
-5.1	epoch	Epoch keying + cascade (normative — D2 / D3)	§10.5.3	0.01114	12	1.34	V	ceg	threats wire
+5.1	epoch	Epoch keying + cascade (normative)	§10.5.3	0.01114	12	1.34	V	ceg	threats wire
 5.2	family	Structural invisibility — no holding claim leaves a bounded cohort	§10.1.4	0.00869	19	1.04	V	ceg	threats wire
 5.3	endpoint	Endpoint shapes	§10	0.00180	132	0.22	V	ceg	threats wire
 5.3.1	witness	STH cosigning + witness directory	§10.3	0.00740	25	0.89	V	ceg	threats wire
@@ -285,7 +285,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 5.3.3.2.4	chunklayer	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	§10.5.8.4	0.00113	197	0.14	V	ceg	threats wire
 5.3.3.2.5	stream-double	Double-seal + deterministic nonce derivation (normative)	§10.5.8.5	0.00092	243	0.11	V	ceg	threats wire
 5.3.3.3	per-stream	Per-stream log + stream-root (normative)	§10.5.1	0.00301	82	0.36	V	ceg	threats wire
-5.3.3.4	liveness	D6 liveness invariant — entitled vs reachable (normative)	§10.5.6	0.00295	84	0.35	V	ceg	threats wire
+5.3.3.4	liveness	Liveness invariant — entitled vs reachable (normative)	§10.5.6	0.00295	84	0.35	V	ceg	threats wire
 5.3.3.5	transport-edge	Transport — Edge layer (normative)	§10.5.5	0.00242	101	0.29	V	ceg	threats wire
 5.3.3.6	delivery	Delivery receipts (normative)	§10.5.4	0.00227	105	0.27	V	ceg	threats wire
 5.3.3.7	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg	threats wire
@@ -400,7 +400,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.13	reverse-quorum	Reverse-quorum governance — presence is authority, absence forfeits it	(spine-reconciled)	0.00050	409	0.1	IV	ceg	constitution
 5.4	scope-privacy-wire	Scope-Native Privacy wire profile	(spine-reconciled)	0.00050	410	0.1	V	ceg	threats wire
 5.4.1	record-id	Deterministic `record_id` (CBOR profile, normative)	(spine-reconciled)	0.00050	411	0.1	V	ceg	threats wire
-5.4.2	symbol	Uniform symbol AEAD framing for A/V symbols (normative)	(spine-reconciled)	0.00050	412	0.1	V	ceg	threats wire
+5.4.2	symbol	Uniform symbol AEAD framing for scope-privacy symbols (normative)	(spine-reconciled)	0.00050	412	0.1	V	ceg	threats wire
 5.4.3	fragmentation	Uniform-envelope fragmentation & reassembly (normative)	(spine-reconciled)	0.00050	413	0.1	V	ceg	threats wire
 5.4.4	welcome-wrap	MLS Welcome HPKE wrap under invitee static X-Wing key (normative)	(spine-reconciled)	0.00050	414	0.1	V	ceg	threats wire
 5.4.5	witness-content	Witness-chain content discipline (privacy witness, normative)	(spine-reconciled)	0.00050	415	0.1	V	ceg	threats wire
