@@ -510,3 +510,5 @@ CLM-r9-manufactured-floor	8.3.1	The whole-reading manufactured floor, measured a
 CLM-tx9-detector-negatives	8.8.7	Two planted-signal-powered detectors return validated negatives against a model lying 45 % of the time (Annex G TX-9)	staged:RATCHET#30	staged
 CLM-similarity-calibration	6.1.2.1.2	The similarity calibration points of the multiplicity gate: 1.000 identical, ≥ 0.99 near-duplicate, ≈ 0.667 unrelated uniform bytes, as a replayed vector	staged:RATCHET#30	staged
 CLM-r9-near-duplicate-negative	6.1.2.1.2	The 900-near-duplicate R9 negative of the retained floor, as a replayed vector	staged:RATCHET#30	staged
+CLM-takedown-reversal	4.5.3	A takedown is reversed by an admitted reconsideration:{grounds} row with outcome reversed that names the takedown_notice, signed by a key holding the review duty over the content's community; withheld is computed at read, never rewritten	staged:CIRISPersist#1113	staged
+CLM-scope-infra-relay	4.4.3.4.3	infra:relay is a server-class delegation scope token (the conferred relay role of CC 5.4.6), appended to the closed scope set for node-role delegates	staged:CIRISPersist#1119	staged

@@ -6,7 +6,7 @@
    "invariants_sha256": "a186bcd16fadd5982c77f7c9ba4bcb10f9ad97f598618ae6c9cceaf7141c6555",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "59e4d59c5d8392f682a257c0d819b4a1c709f5f7f4e3926368d4e7587e2a2b80",
+   "claims_sha256": "612622de67da492a3c4895fa4bd4a2405676828ff7aa298b5c2767fe62aa6584",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 120,
    "states": 189,
    "invariants": 167,
-   "claims": 511,
+   "claims": 513,
    "entries": 20,
    "refusal_tokens": 87
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "84ab81797309d7cf97db6b7b5c8c811f281c38e76c140b8f884c59bf043476ad"
+  "chain_sha256": "87e2e688e719f29959025eb600b04c5ec693b2eeee9faca555970b9723cd55e1"
  },
  "chain": [
   {
@@ -18259,6 +18259,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1119"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32022,6 +32034,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-takedown-reversal",
+     "cc_ref": "4.5.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1113"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32467,6 +32491,18 @@
         "Inv_AntiGoodhart",
         "Inv_OneDoor"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-takedown-reversal",
+     "cc_ref": "4.5.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1113"
       }
      ]
     }
@@ -33108,6 +33144,18 @@
        "symbols": [
         "ConsentService.grant_consent"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1119"
       }
      ]
     }

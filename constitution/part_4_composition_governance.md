@@ -855,7 +855,7 @@ So a user MAY grant a device co-self (it manages their data locally) while revok
 
 | prefix | class | scopes |
 |---|---|---|
-| `infra:*` | server-class (allowed for a `node`-role delegate) | `infra:serve`, `infra:store`, `infra:transport`, `infra:attest`, `infra:network_presence`, `infra:hold_community_membership`, `infra:hold_family_membership` |
+| `infra:*` | server-class (allowed for a `node`-role delegate) | `infra:serve`, `infra:store`, `infra:transport`, `infra:attest`, `infra:network_presence`, `infra:hold_community_membership`, `infra:hold_family_membership`, `infra:relay` (the conferred relay role of [CC 5.4.6](part_5_transport_substrate.md#5.4.6)) |
 | `agency:*` | brain-only (forbidden for a pure `node`-role delegate) | `agency:act_on_behalf`, `agency:message_io`, `agency:reason`, `agency:decide` |
 
 **Pinned `infra:*` one-liners (closed set).** `serve` — run a service endpoint under the delegator; `store` — retain what it receives; `transport` — relay for others; `attest` — vouch as the delegator's infrastructure; `network_presence` — announce/resolve the delegator's `transport_destination`; `hold_community_membership` / `hold_family_membership` — occupy a member seat on **community** / **family** rosters under the delegator's standing. The two membership tokens **replace `infra:join_communities` outright, with no alias**: `community` and `family` are distinct CEG objects in different sensitivity classes, and because scopes are exact-string matched a vague token is a silent interop hole, not a fallback. Retirement is a coordinated cut per [CC 2.2](part_2_the_grammar.md), not a deprecation window.
