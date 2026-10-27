@@ -68,7 +68,7 @@ The principles answer *what* matters; the Principled Decision-Making Algorithm (
 
 6. **Continuous Monitoring**
    * Compare expected vs. actual impacts; update heuristics.
-   * Public Transparency rule: A deployment with more than 100 000 monthly active users publishes (or exposes by API) redacted PDMA logs and WBD tickets within 180 days; the two figures are this charter's own thresholds. A deployment that does not publish is in breach of this charter's duties and is recorded as such; it is not a conformance condition, which the wire alone decides ([CC 1.13.3](#1.13.3)).
+   * Public Transparency rule: A deployment with more than 100 000 monthly active users publishes (or exposes by API) redacted PDMA logs and WBD tickets within 180 days; the two numbers, 100 000 users and 180 days, are thresholds this charter sets for itself. A deployment that does not publish is in breach of a duty this charter imposes and is recorded as such; it is not a conformance condition, which the wire alone decides ([CC 1.13.3](#1.13.3)).
 
 7. **Feedback to Governance**
    * Feed outcome data to Integrity-surveillance, Resilience loops, and Wise Authorities.
