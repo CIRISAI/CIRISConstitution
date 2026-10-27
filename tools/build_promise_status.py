@@ -22,7 +22,7 @@ FILES = {"plain": "review/pieces/00_guarantees_plain.md",
 MARK = re.compile(r"\s*\*\[[^\]]*\]\*\s*$")
 LEGEND = ("*Status markers:* **works today** = evidence in the register at a pinned commit; "
           "**being built** = a named ticket; **a rule, no code yet** = normative only; "
-          "**modelled** = a formal witness, no code test. Source: `review/promise_status.tsv`.")
+          "**modelled** = a formal witness, no code test. The markers are stamped from *The Evidence Register*.")
 
 def marker(status, note):
     return f" *[{status}; {note}]*" if note else f" *[{status}]*"

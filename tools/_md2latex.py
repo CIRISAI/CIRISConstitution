@@ -198,6 +198,27 @@ def item_follows(lines, j):
     return False
 
 
+def bullet_indent(ln):
+    """Column at which a bullet line's marker sits (tabs count four), or None for a non-bullet."""
+    m = re.match(r'^(\s*)[-*]\s+', ln)
+    return len(m.group(1).expandtabs(4)) if m else None
+
+
+def bullet_item(lines, i, n):
+    """One bullet's text: its line plus the indented continuation lines that open no block."""
+    item = [re.sub(r'^\s*[-*]\s+', '', lines[i])]; i += 1
+    while i < n and re.match(r'^\s+\S', lines[i]) and not re.match(r'^\s*[-*]\s+', lines[i]) and not block_start(lines[i].strip()):
+        item.append(lines[i].strip()); i += 1
+    return inline(' '.join(item)), i
+
+
+def skip_gap(lines, i, n):
+    """A blank line between items does not end the list (the master writes lists both ways)."""
+    if i + 1 < n and lines[i].strip() == '' and re.match(r'^\s*[-*]\s+', lines[i+1]):
+        return i + 1
+    return i
+
+
 def convert(md):
     md = re.sub(r"[ \t]*<!--.*?-->", "", md, flags=re.S)   # editorial comments never print
     out, i, lines = [], 0, md.split('\n')
@@ -270,13 +291,19 @@ def convert(md):
         if re.match(r'^\s*[-*]\s+', line):
             out.append(r'\begin{itemize}\setlength\itemsep{0pt}')
             while i < n and re.match(r'^\s*[-*]\s+', lines[i]):
-                item = [re.sub(r'^\s*[-*]\s+','',lines[i])]; i += 1
-                while i < n and re.match(r'^\s+\S', lines[i]) and not re.match(r'^\s*[-*]\s+', lines[i]) and not block_start(lines[i].strip()):
-                    item.append(lines[i].strip()); i += 1
-                out.append(r'\item ' + inline(' '.join(item)))
-                # a blank line between items does not end the list (the master writes lists both ways)
-                if i + 1 < n and lines[i].strip() == '' and re.match(r'^\s*[-*]\s+', lines[i+1]):
-                    i += 1
+                depth = bullet_indent(lines[i])
+                text, i = bullet_item(lines, i, n)
+                out.append(r'\item ' + text)
+                # bullets indented under this one (two or more spaces, or a tab) are its sub-points
+                # and nest one level; deeper indents stay at that level
+                if i < n and (d := bullet_indent(lines[i])) is not None and d > depth and d >= 2:
+                    out.append(r'\begin{itemize}\setlength\itemsep{0pt}')
+                    while i < n and (d := bullet_indent(lines[i])) is not None and d > depth:
+                        text, i = bullet_item(lines, i, n)
+                        out.append(r'\item ' + text)
+                        i = skip_gap(lines, i, n)
+                    out.append(r'\end{itemize}')
+                i = skip_gap(lines, i, n)
             out.append(r'\end{itemize}'); out.append(''); continue
         # ordered list
         if re.match(r'^\s*\d+\.\s+', line):

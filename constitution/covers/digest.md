@@ -1,4 +1,4 @@
-# The Digests
+# The Digest
 
 **What this is.** The short versions: the executive summary, the plain-language rules for a person who uses an agent, the operator digest for a person who runs a node or answers for an agent, and the guarantees table with its status markers.
 

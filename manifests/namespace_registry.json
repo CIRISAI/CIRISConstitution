@@ -215,7 +215,7 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc11",
+    "cc_version": "1.0-rc12",
     "components_outside_normative": [
       "cirisbench"
     ],
@@ -255,7 +255,6 @@
         ]
       },
       "_aliases": {
-        "boolean-via-score; Indeterminate allowed \u2192 RESTRICTED": "boolean-via-score",
         "per-leaf (CC 3.3.1)": "per-leaf",
         "see CC 3.4.1": "+1.0 only"
       },
@@ -293,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "d5d633112fc03648392e295b4c6efbec4afcd2d83dc729388ed6c310258b467f",
+    "registry_sha256": "d587156605dd8de7c0c56e271625293eb05b3f9b5debd44cf8bc822d4e701c5b",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "8dab2d2cf6fba53534e44a80cbd77397f9a489ce160dfe4e5eadc7ed313937ae"
+    "source_sha256": "17fb549762970de09efb9adf00dec81e11a9dc8ce8fd8fa4884ee5db8d39ac41"
   },
   "families": [
     {
@@ -347,7 +346,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Catalogue row (CC 3.1.7 R1); provisional accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1.",
+      "description": "Catalogue row (CC 3.1.7 R1); the accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",
@@ -768,7 +767,7 @@
       "description": "2-of-3 multi-source registry consensus on key / build / license validity.",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
-      "polarity": "boolean-via-score; Indeterminate allowed \u2192 RESTRICTED",
+      "polarity": "boolean-via-score",
       "prefix": "attestation:registry_consensus",
       "reserved": false,
       "segments": [
@@ -871,7 +870,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "ballot:tally:{poll_id}:v1",
+      "prefix": "ballot:tally:{poll_id}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -889,10 +888,6 @@
         {
           "class": "value",
           "segment": "{poll_id}"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -972,7 +967,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Bond posted per $1-Sybil-resistance per PoB; forfeited on revocation.",
+      "description": "A bond posted for Sybil resistance (proof of bond); forfeited on revocation.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
@@ -1289,7 +1284,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "census:composite:{class}:v1",
+      "prefix": "census:composite:{class}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -1307,10 +1302,6 @@
         {
           "class": "vocab",
           "segment": "{class}"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -1320,7 +1311,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "census:expected_active:v1",
+      "prefix": "census:expected_active",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -1334,10 +1325,6 @@
         {
           "class": "literal",
           "segment": "expected_active"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -1347,7 +1334,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "census:member:partial:v1",
+      "prefix": "census:member:partial",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -1365,10 +1352,6 @@
         {
           "class": "literal",
           "segment": "partial"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -1378,7 +1361,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "census:member:share:v1",
+      "prefix": "census:member:share",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -1396,10 +1379,6 @@
         {
           "class": "literal",
           "segment": "share"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -1409,7 +1388,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "census:partial:{class}:v1",
+      "prefix": "census:partial:{class}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -1427,10 +1406,6 @@
         {
           "class": "vocab",
           "segment": "{class}"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -1440,7 +1415,7 @@
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "signed",
-      "prefix": "census:share:{class}:v1",
+      "prefix": "census:share:{class}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 6.1.9",
@@ -1458,10 +1433,6 @@
         {
           "class": "vocab",
           "segment": "{class}"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -2159,7 +2130,7 @@
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
-      "prefix": "deferral:request:v1",
+      "prefix": "deferral:request",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.9.4",
@@ -2173,10 +2144,6 @@
         {
           "class": "literal",
           "segment": "request"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -2186,7 +2153,7 @@
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
-      "prefix": "deferral:response:{outcome}:v1",
+      "prefix": "deferral:response:{outcome}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.9.4",
@@ -2209,10 +2176,6 @@
             "approved",
             "rejected"
           ]
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -3012,7 +2975,7 @@
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "signed",
-      "prefix": "identity_amendment:v1",
+      "prefix": "identity_amendment",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.5",
@@ -3022,10 +2985,6 @@
         {
           "class": "literal",
           "segment": "identity_amendment"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -3095,7 +3054,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "Independent foundation-model judge verdict (PASS/FAIL/UNDETERMINED).",
+      "description": "Independent foundation-model judge verdict: PASS is +1, FAIL is \u22121; UNDETERMINED is no row, never a third point.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "boolean-via-score",
@@ -3706,8 +3665,8 @@
       "description": "What one witness assumed about its view of a subject when it made a claim about that subject: which consent grants were in force, at what trace level, over which occurrences, over which window, through which channel classes.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
-      "polarity": "signed",
-      "prefix": "observation:access_assumption:v1",
+      "polarity": "+1.0 only",
+      "prefix": "observation:access_assumption",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.9.4",
@@ -3721,10 +3680,6 @@
         {
           "class": "literal",
           "segment": "access_assumption"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -4241,7 +4196,7 @@
       "owning_component": "transport-delivery",
       "owning_repo": "CIRISEdge",
       "polarity": "signed",
-      "prefix": "rendezvous:route:v1",
+      "prefix": "rendezvous:route",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.4",
@@ -4255,10 +4210,6 @@
         {
           "class": "literal",
           "segment": "route"
-        },
-        {
-          "class": "literal",
-          "segment": "v1"
         }
       ]
     },
@@ -4348,7 +4299,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "Legacy label, closed.",
+      "description": "Closed label, no job.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",
@@ -4371,7 +4322,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "Legacy label, closed.",
+      "description": "Closed label, no job.",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "positive-only",

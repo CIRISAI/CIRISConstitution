@@ -78,7 +78,7 @@ Facts below were gathered 12 October 2026 from vendor policies, model cards, reg
 - Muse Glimmer's card leaves oversight to deployers: "human-in-the-loop confirmation for irreversible actions" is a recommendation. [Hugging Face](https://huggingface.co/meta-models/Muse-Glimmer-30B)
 - I found no published principle conflict order from Google or Meta (unverified negative).
 
-## Promise 8. Harm may have a remedy under the law, the record makes it reachable, and the judges within are judged
+## Promise 8. Harm is reachable on the record, and the judges within are judged
 
 - Raine v. OpenAI (filed 26 August 2025) is pending in JCCP 5431; no ruling, no settlement as of October 2026. [Wikipedia](https://en.wikipedia.org/wiki/Raine_v._OpenAI), [Lawsuit Informer](https://lawsuitinformer.com/raine-v-openai-lawsuit)
 - Character.AI, its founders and Google settled Garcia and four other minors' cases on 7 January 2026; terms were not made public. [CNN via KVIA](https://kvia.com/news/business-technology/cnn-business-consumer/2026/01/07/character-ai-and-google-agree-to-settle-lawsuits-over-teen-mental-health-harms-and-suicides/)

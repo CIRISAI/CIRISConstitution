@@ -278,7 +278,7 @@ def build_section_body(rows, meta):
           K)
     L.append("**Rules this table carries.** "
              "A set-kind array is sorted **and** unique, refused otherwise as `federation_set_semantics_unsorted` with the member named; a relay never re-sorts it, since re-sorting would move signed bytes. "
-             "The canonical `scope` is the array; a bare token is admitted as the one-element array it denotes, and nothing is normalised in signed bytes. "
+             "The form an emitter writes for `scope` is the array; a bare token is admitted as the one-element array it denotes, and nothing is normalised in signed bytes. "
              "An explicit JSON `null` on an optional member is refused as malformed ([CC 2.6.1.1.1](#2.6.1.1.1)). "
              "`witnesses[]` is a set. "
              "The quorum carrier is `additional_scrubs[]` beside the row, as [CC 2.1](#2.1) and [CC 2.4](#2.4) name it.")

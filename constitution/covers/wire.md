@@ -4,7 +4,7 @@
 
 **Whom it binds.** Any CEG-Conforming Producer, Consumer or Substrate. Conformance is judged against this volume, *The Dictionary* (the reservations and admission rules of 3.4 and 3.5) and *The Reader's Policies* (the composition policies of 4.4).
 
-**What it promises.** One envelope, one signing input, one signature construction; a closed row-type slot; byte identity across implementations as a target with a published vector set as its proof; a refusal with a named reason, never a silent truncation; fixed-size frames on a shaped link, and a 1 MiB cap on the signed object.
+**What it promises.** One envelope, one signing input and one signature construction for the attestation row (the tree-head and lineage-head cosigns of 5.3.1, the stream root of 5.3.3.3 and the delivery receipt of 5.3.3.6 are framing constructions of their own); a closed row-type slot; byte identity across implementations as a target with a published vector set as its proof; a refusal with a named reason, never a silent truncation; fixed-size frames on a shaped link, and a 1 MiB cap on the signed object.
 
 **What it leaves out.** The meaning of any dimension, which is the dictionary's; the reasons a rule exists, which are the charter's; and whether a given MUST has shipped, which is the register's. Where this volume states a rule as normative, it means the bytes; where it explains, it says so.
 

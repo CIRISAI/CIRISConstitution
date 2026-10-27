@@ -6,7 +6,7 @@
    "invariants_sha256": "a186bcd16fadd5982c77f7c9ba4bcb10f9ad97f598618ae6c9cceaf7141c6555",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "5803dd5f48ff37c5ae1bd9c9c1e3ab0f06aa89fdf345403c3b939e933fafc6e6",
+   "claims_sha256": "5595e0655611e71158cd26fb64f5f1ed7e3f8a1966810f9db29c6483bdaa08c0",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -16,13 +16,13 @@
     "tag": "v0.5.232"
    },
    "evidence_pins": {
-    "CIRISServer": "d9f9506e",
+    "CIRISServer": "8c1dec21",
     "CIRISConformance": "6b43bf3",
     "coherence-ratchet": "0c4edfb",
     "RATCHET": "c89356bd",
     "CIRISAgent": "ffa18162",
     "CIRISVerify": "3c16f9c6",
-    "CIRISPersist": "32512f52",
+    "CIRISPersist": "8dec0dea",
     "CIRISEdge": "d44e1c57"
    }
   },
@@ -30,16 +30,16 @@
    "atoms": 120,
    "states": 189,
    "invariants": 167,
-   "claims": 503,
+   "claims": 513,
    "entries": 20,
-   "refusal_tokens": 84
+   "refusal_tokens": 87
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "bd3884557bb9d4042ed7474b433e4bb7bdcd9e71a9355558e24d39b73d9a129d"
+  "chain_sha256": "87e2e688e719f29959025eb600b04c5ec693b2eeee9faca555970b9723cd55e1"
  },
  "chain": [
   {
@@ -473,12 +473,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -1179,12 +1191,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -2457,12 +2481,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -3113,12 +3149,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -5544,6 +5592,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-serve-dependency-closure",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#897"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -5716,6 +5776,18 @@
         "floor_needs_three_seats",
         "dealt_le"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-serve-dependency-closure",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#897"
       }
      ]
     }
@@ -5955,12 +6027,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -7657,12 +7741,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -9082,6 +9178,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-serve-dependency-closure",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#897"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -9939,12 +10047,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -10657,6 +10777,18 @@
         "floor_needs_three_seats",
         "dealt_le"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-serve-dependency-closure",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#897"
       }
      ]
     }
@@ -12324,12 +12456,24 @@
     {
      "claim_id": "CLM-licence-contest",
      "cc_ref": "2.4.1.1",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_reconsideration_admission"
+       ]
       }
      ]
     },
@@ -13215,12 +13359,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -14936,12 +15092,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -16123,12 +16291,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -16841,12 +17021,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -17558,6 +17750,14 @@
      "join": "by_invariant",
      "evidence": [
       {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
        "kind": "staged",
        "ticket": "CIRISServer#752"
       },
@@ -17662,8 +17862,20 @@
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "community_quorum_cosigned_at"
+       ]
       },
       {
        "kind": "staged",
@@ -17674,12 +17886,16 @@
     {
      "claim_id": "CLM-licence-judged-at-issuance",
      "cc_ref": "2.4.1.2.1",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "licence_roots_at"
+       ]
       }
      ]
     },
@@ -17690,8 +17906,12 @@
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licence_audience"
+       ]
       },
       {
        "kind": "staged",
@@ -17983,6 +18203,14 @@
      "join": "by_invariant",
      "evidence": [
       {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
        "kind": "staged",
        "ticket": "CIRISServer#752"
       },
@@ -18029,6 +18257,18 @@
        "symbols": [
         "ConsentService.grant_consent"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1119"
       }
      ]
     }
@@ -19264,6 +19504,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-serve-dependency-closure",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#897"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -19549,12 +19801,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -20239,12 +20503,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -20917,12 +21193,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -21725,12 +22013,24 @@
     {
      "claim_id": "CLM-org-on-the-bond",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1062"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
       }
      ]
     },
@@ -25545,12 +25845,24 @@
     {
      "claim_id": "CLM-licence-contest",
      "cc_ref": "2.4.1.1",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_reconsideration_admission"
+       ]
       }
      ]
     },
@@ -25767,12 +26079,24 @@
     {
      "claim_id": "CLM-licence-contest",
      "cc_ref": "2.4.1.1",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_reconsideration_admission"
+       ]
       }
      ]
     },
@@ -25989,12 +26313,24 @@
     {
      "claim_id": "CLM-licence-contest",
      "cc_ref": "2.4.1.1",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1036"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_reconsideration_admission"
+       ]
       }
      ]
     },
@@ -28444,12 +28780,32 @@
     {
      "claim_id": "CLM-admission-freshness-window",
      "cc_ref": "2.6.7",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1049"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "check_key_grant_row_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_consent_for_key_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
       }
      ]
     },
@@ -28788,12 +29144,32 @@
     {
      "claim_id": "CLM-admission-freshness-window",
      "cc_ref": "2.6.7",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1049"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "check_key_grant_row_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_consent_for_key_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
       }
      ]
     },
@@ -29132,12 +29508,32 @@
     {
      "claim_id": "CLM-admission-freshness-window",
      "cc_ref": "2.6.7",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1049"
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "check_key_grant_row_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_consent_for_key_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
       }
      ]
     },
@@ -31133,7 +31529,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISPersist#1048"
+       "ticket": "CIRISPersist#1131"
       }
      ]
     },
@@ -31638,6 +32034,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-takedown-reversal",
+     "cc_ref": "4.5.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1113"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32083,6 +32491,18 @@
         "Inv_AntiGoodhart",
         "Inv_OneDoor"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-takedown-reversal",
+     "cc_ref": "4.5.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1113"
       }
      ]
     }
@@ -32670,6 +33090,14 @@
      "join": "by_invariant",
      "evidence": [
       {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
        "kind": "staged",
        "ticket": "CIRISServer#752"
       },
@@ -32716,6 +33144,18 @@
        "symbols": [
         "ConsentService.grant_consent"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1119"
       }
      ]
     }
@@ -33002,6 +33442,14 @@
      "status": "staged",
      "join": "by_invariant",
      "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
       {
        "kind": "staged",
        "ticket": "CIRISServer#752"
@@ -33351,6 +33799,14 @@
      "status": "staged",
      "join": "by_invariant",
      "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
       {
        "kind": "staged",
        "ticket": "CIRISServer#752"
@@ -39688,7 +40144,8 @@
    "2.6.7": "bold"
   },
   "attestation_type_unregistered": {
-   "2.4": "after_refusal"
+   "2.4": "after_refusal",
+   "5.3.6.1": "after_refusal"
   },
   "authority_id": {
    "2.4.1.2.1": "bold",
@@ -39775,6 +40232,7 @@
    "2.6.1.1": "after_refusal",
    "2.6.1.7": "after_refusal",
    "3.1.9.7": "after_refusal",
+   "5.3.6.1": "after_refusal",
    "6.1.1": "after_refusal"
   },
   "federation_rendezvous_key_not_an_identity": {
@@ -39782,7 +40240,8 @@
   },
   "federation_set_semantics_unsorted": {
    "2.6.1.1": "bold",
-   "2.6.1.7": "after_refusal"
+   "2.6.1.7": "after_refusal",
+   "5.3.6.1": "after_refusal"
   },
   "federation_trace_dimension_invalid": {
    "3.4.5": "after_refusal"
@@ -39874,11 +40333,20 @@
   "purge_unauthorised": {
    "2.4.1.1": "after_refusal"
   },
+  "received_at": {
+   "5.3.3.6": "after_refusal"
+  },
   "retention_policy": {
    "4.4.3.2": "bold"
   },
   "retention_priority": {
    "6.1.3": "bold"
+  },
+  "revocation_envelope": {
+   "2.6.1.1": "after_refusal"
+  },
+  "revoked_after": {
+   "2.4.1.1": "after_refusal"
   },
   "revoked_key_sha256_ed25519_raw": {
    "2.4.1.1": "bold"

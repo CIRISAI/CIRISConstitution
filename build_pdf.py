@@ -283,7 +283,7 @@ def render_full(stem, tex):
 VOLUMES = ["charter", "constitution", "wire", "dictionary", "policies", "maths", "register", "threats", "digest"]
 VOLUME_TITLE = {"charter": "The Charter", "constitution": "The Constitution", "wire": "The Wire",
                 "dictionary": "The Dictionary", "policies": "The Reader's Policies", "maths": "The Mathematics",
-                "register": "The Evidence Register", "threats": "The Threat Model", "digest": "The Digests"}
+                "register": "The Evidence Register", "threats": "The Threat Model", "digest": "The Digest"}
 REVIEW = HERE / "review"
 OMIT = re.compile(r"\*\[(\d+(?:\.\d+)*) reviewed in another piece — omitted here\]\*")
 
@@ -425,7 +425,7 @@ def build_volumes(which):
                  "| Volume | Sections | Pages |", "|---|---|---|"]
         for v in VOLUMES:
             n = sum(1 for vols in sv.values() if v in vols)
-            lines.append(f"| {VOLUME_TITLE[v]} (`{v}`) | {n if v != 'digest' else 'digests + executive summary'} | {counts[v] or '—'} |")
+            lines.append(f"| {VOLUME_TITLE[v]} (`{v}`) | {n if v != 'digest' else 'digest + executive summary'} | {counts[v] or '—'} |")
         (HERE / "volumes" / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
