@@ -6,7 +6,7 @@
    "invariants_sha256": "a186bcd16fadd5982c77f7c9ba4bcb10f9ad97f598618ae6c9cceaf7141c6555",
    "vocabulary_sha256": "871c5dfa1c20892db214c1a0bf60a04dfd1e117e7f5b82bc483d0cf3ce376587",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "6dc124c34f2fe038b6da422d7abfd68e4804b8778af2a2a884b89e8cef317dff",
+   "claims_sha256": "d4da6a3325e76e4c7e0e02428b34c5a58352e24c6156eae6d97b55cbc5e5499f",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -32,14 +32,14 @@
    "invariants": 167,
    "claims": 514,
    "entries": 20,
-   "refusal_tokens": 87
+   "refusal_tokens": 92
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "d5591f2870a28c6b90c63a54384b2eaf2a80b8103ad770d5b00bf3d4db789d13"
+  "chain_sha256": "75093c96d8ffbd866e0b0bec2aa7ac158dcc3be5c4992e978c2b4fa489f1028a"
  },
  "chain": [
   {
@@ -41309,6 +41309,12 @@
   "legal_hold": {
    "4.4.3.2": "bold"
   },
+  "licence_class_not_trusted": {
+   "4.4.3.8": "after_refusal"
+  },
+  "licence_issuer_not_trusted": {
+   "4.4.3.8": "after_refusal"
+  },
   "licensure_delegator_not_authority": {
    "2.4.1.2.1": "bold"
   },
@@ -41424,6 +41430,15 @@
   },
   "transport_rebind_without_holder_quorum": {
    "3.1.3": "after_refusal"
+  },
+  "trust_accepts_classes_malformed": {
+   "4.4.3.8": "after_refusal"
+  },
+  "trust_accepts_depth_out_of_range": {
+   "4.4.3.8": "after_refusal"
+  },
+  "trust_depth": {
+   "4.4.3.8": "after_refusal"
   },
   "trust_root_head_stale": {
    "3.2": "after_refusal"

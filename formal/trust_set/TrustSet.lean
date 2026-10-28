@@ -25,8 +25,9 @@ abbrev Key := Nat
 /-- a licence class: medical, legal, financial, … -/
 abbrev Class := Nat
 
-/-- an acceptance edge: `from` trusts `to` as a licensor. `classes = []` means every class the
-    target declares; otherwise only the classes listed. `depth` is how far the trust walk may
+/-- an acceptance edge: `from` trusts `to` as a licensor. `classes = []` is the wire's ABSENT
+    `trust_classes` (every class the target declares); otherwise only the classes listed (on the
+    wire a present list is non-empty; the empty list is refused at admission). `depth` is how far the trust walk may
     continue past `to` (0 = this authority alone, no licensors-of-licensors). -/
 structure Accepts where
   src : Key
