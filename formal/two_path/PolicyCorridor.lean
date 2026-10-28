@@ -1,5 +1,5 @@
 /-
-  PolicyCorridor.lean — the admissible region of two-path policies (steward direction 2026-10-18):
+  PolicyCorridor.lean — the admissible region of two-path policies (CC 4.5.13):
   a governance policy (enact fraction, cancel fraction, window, irreversible) must lie in a
   corridor between the most open community the constitution allows (a takedown very hard) and
   the most restricted (a takedown very easy), across roster and content, invites and accepts,
@@ -25,8 +25,8 @@
 namespace TwoPathCorridor
 
 /-- a policy: enact, cancel and floor as fractions, window in seconds, irreversible.
-    The floor (steward 2026-10-18, on membership: "I don't like a single vote being able to admit
-    someone to a 10k community") is the least approval the reverse path needs before silence may
+    The floor (CC 4.5.13: no single vote admits someone to a community of ten thousand) is the
+    least approval the reverse path needs before silence may
     land a change; without it the reverse path is the chaos pole reached through the back door. -/
 structure Policy where
   enactNum : Nat
@@ -68,7 +68,7 @@ def inCorridor (p : Policy) (base windowFloor : Nat) : Bool :=
   && decide (p.floorNum * p.enactDen ≤ p.enactNum * p.floorDen)         -- floor ≤ enact
   && decide (windowFloor ≤ p.windowSecs)
 
-/-- the steward's example: enact 2/3, cancel 1/3, 72 h — in the corridor at N = 6 -/
+/-- the default policy: enact 2/3, cancel 1/3, 72 h — in the corridor at N = 6 -/
 def ruled : Policy := ⟨2, 3, 1, 3, 1, 3, 259200, false, by decide, by decide, by decide⟩
 theorem ruled_in_corridor : inCorridor ruled 6 86400 = true := by decide
 theorem ruled_in_corridor_at_7 : inCorridor ruled 7 86400 = true := by decide
@@ -102,7 +102,7 @@ theorem unanimity_is_rigidity : rigidityPole unanimity 6 = true := by decide
 def tooFast : Policy := ⟨2, 3, 1, 3, 1, 3, 60, false, by decide, by decide, by decide⟩
 theorem too_fast_outside : inCorridor tooFast 6 86400 = false := by decide
 
-/-- the steward's case: a sound forward policy with NO floor on the reverse path (floor 0) lets one
+/-- the case the floor exists for: a sound forward policy with NO floor on the reverse path (floor 0) lets one
     voice admit to a community of 10,000 by silence — it is the chaos pole however the enact and
     cancel fractions sit, at every size -/
 def noFloor : Policy := ⟨2, 3, 1, 3, 0, 1, 259200, false, by decide, by decide, by decide⟩
@@ -154,13 +154,13 @@ def effectiveBase (k floor N : Nat) : Nat := max floor (expectedActive k N)
 theorem floor_holds : effectiveBase 12 3 2 = 3 ∧ effectiveBase 12 3 10 = 10 := ⟨rfl, rfl⟩
 
 /-- the approval floor scaled with the community: over the expected-active base of a 10,000
-    community the ruled floor of one third is 115 approvals, reachable; over the standing roster it
+    community the default floor of one third is 115 approvals, reachable; over the standing roster it
     would be 3,334, dead (the same arithmetic as the cancel path); at 10 it is 4 of 10 -/
 theorem floor_scales_with_size :
     floorVotes ruled (expectedActive 12 10000) = 115 ∧ floorVotes ruled 10000 = 3334 ∧ floorVotes ruled 10 = 4 :=
   ⟨rfl, rfl, rfl⟩
 /-- the count minimum: a community's floor and cancel never resolve to fewer than two voices, so the
-    ruled third, which is one voice at three members, is lifted to two there (the self roster keeps
+    default third, which is one voice at three members, is lifted to two there (the self roster keeps
     one, every key being the same person's) -/
 def minCount (community : Bool) : Nat := if community then 2 else 1
 def floorVotesMin (p : Policy) (base : Nat) (community : Bool) : Nat := max (minCount community) (floorVotes p base)

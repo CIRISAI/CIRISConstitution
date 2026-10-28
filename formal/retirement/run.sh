@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run every configuration of formal/retirement and check each verdict against its expectation;
-# then check that every reachability witness in RetirementWitness.tla is reached under the ruled
-# constants. Usage: TLA2TOOLS=/path/to/tla2tools.jar ./run.sh   (exit 1 on any mismatch)
+# then check that every reachability witness in RetirementWitness.tla is reached under the closing
+# configuration's constants. Usage: TLA2TOOLS=/path/to/tla2tools.jar ./run.sh   (exit 1 on any mismatch)
 set -u
 cd "$(dirname "$0")"
 J="${TLA2TOOLS:-tla2tools.jar}"

@@ -4,7 +4,7 @@
   instances for every hash; this file proves the arithmetic they rest on in general.
 
   A layer holds `s` seat-like relays (serve seats and conferred infra:relay standings)
-  and `n` others, dealt under the cap `n ≤ c * s` (c the steward's cap factor, default 2).
+  and `n` others, dealt under the cap `n ≤ c * s` (c the cap factor of CC 5.4.6, default 2).
   Core Lean 4.14, no Mathlib, no `sorry`; every theorem closes by `omega` over the
   products named as atoms.
 -/

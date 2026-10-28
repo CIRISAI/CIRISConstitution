@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Dump SelfRoster behaviours as JSON for implementers to replay against their roster door
-(CIRISPersist#1099). Run from formal/self_roster:  python3 dump_traces.py <tla2tools.jar>
+Run from formal/self_roster:  python3 dump_traces.py <tla2tools.jar>
 
 Six traces, written to traces/<config>.json:
   refuse  unilateral3_stolen   — the thief's lone eviction lands at once; a conforming door REFUSES it
@@ -8,7 +8,7 @@ Six traces, written to traces/<config>.json:
   bound   combined2_stolen     — two keys, one stolen: the stalemate; the stated two-key bound (a
                                  behaviour that never reaches Recovered; printed as a lasso)
   land    combined3_stolen / combined3_lost / combined4_mixed — the shortest behaviour reaching
-                                 Recovered under the ruled policy; every Execute in it must land
+                                 Recovered under the combined policy; every Execute in it must land
 
 Each state carries the model variables and a derived `step` naming the transition that produced it.
 stdlib only; TLC output parsed, never edited by hand."""
@@ -124,7 +124,7 @@ def run(config, kind, prop):
             "tlc": violated.group(1) if violated else "no violation (unexpected)",
             "reading": {"refuse": "the last Execute in this trace is the one a conforming door refuses",
                         "bound": "a stated bound: no policy on the wire resolves this behaviour",
-                        "land": "every Execute in this trace lands under the ruled two-path policy; the final state is Recovered"}[kind],
+                        "land": "every Execute in this trace lands under the combined two-path policy; the final state is Recovered"}[kind],
             "lasso_back_to_state": int(lasso.group(1)) if lasso else ("stutter" if stutter else None),
             "states": states}
 

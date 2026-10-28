@@ -1,6 +1,6 @@
 # `formal/membership` — the membership ceremony, model-checked
 
-**Why.** Plane model B of `review/notes/formal_closure_rc9_2026-10-18.md` §5. The membership plane of
+**Why.** The membership plane of
 `formal/STATE_TABLE.tsv` was text-only: `member.stage` (none, proposed, accepted_awaiting_group,
 declined, member, removed, resigned), `group.quorum_change` (none, held, applied) and `group.formed`
 had no model. This module states the ceremony of CC 3.1.3.2 and the consensus protocols of CC 3.3.4
@@ -39,17 +39,17 @@ configuration.
 is `QuorumChange`: held while any `slot[k]` is held, applied once any change has landed (`applied`).
 `TypeOK` checks that both definitions stay inside the table's states.
 
-**Twelve configurations, one module.** TLC 2.19 (rev 5a47802), four workers, run 2026-10-18.
+**Twelve configurations, one module.** TLC 2.19 (rev 5a47802), four workers.
 Each configuration checks every property below. A twin changes one rule switch, named in its file's
 first line.
 
 | Config | Rule / adversary | Expectation | TLC verdict |
 |---|---|---|---|
-| `founder_only` | ruled; founder k1; a non-founder coerced | every property holds | **closes**, 3,209,876 states |
-| `unanimous` | ruled; any key coerced | every property holds | **closes**, 3,510,314 states |
-| `majority` | ruled; any key coerced | every property holds | **closes**, 3,514,458 states |
-| `quorum2of3` | ruled, M = 2; any key coerced | every property holds | **closes**, 3,495,550 states |
-| `founder_only_coerced` | ruled; the founder coerced | one founder removes alone: the stated bound | `Inv_CoercedCannotRemoveHonest` violated in 3 steps |
+| `founder_only` | every rule on; founder k1; a non-founder coerced | every property holds | **closes**, 3,209,876 states |
+| `unanimous` | every rule on; any key coerced | every property holds | **closes**, 3,510,314 states |
+| `majority` | every rule on; any key coerced | every property holds | **closes**, 3,514,458 states |
+| `quorum2of3` | every rule on, M = 2; any key coerced | every property holds | **closes**, 3,495,550 states |
+| `founder_only_coerced` | every rule on; the founder coerced | one founder removes alone: the stated bound | `Inv_CoercedCannotRemoveHonest` violated in 3 steps |
 | `unanimous_two` | unanimous removal read as "every other member" | at two members either removes the other | `Inv_CoercedCannotRemoveHonest` violated in 4 steps |
 | `any_member_removes` | a removal lands on its primary alone | the coerced key evicts an honest member | `Inv_QuorumGovernsRoster` violated in 3 steps, the same step `Inv_CoercedCannotRemoveHonest` fails |
 | `no_binding` | the widening reads any acceptance K ever signed | a seat from a mismatched acceptance | `Inv_AcceptanceBindsOneProposal` violated in 6 steps |
@@ -81,14 +81,14 @@ on the acceptance that preceded a resignation).
 
 1. **A proposal seats at most once** (the `unspent` twin). CC 3.1.3.2 *Admission* (1)–(4) do not say
    that a widening spends its proposal. The counterexample: K accepts, a widening seats K, K resigns,
-   and within the same 30-day window a second widening re-seats K on the same acceptance. The ruled
+   and within the same 30-day window a second widening re-seats K on the same acceptance. The
    door also refuses a widening whose proposal already seated someone.
 2. **Unanimous removal needs every other member, and those others must be a strict majority of the
    roster** (the `unanimous_two` twin). Read as "every current member", the target must sign its own
    removal, so nobody can be removed, the coerced key included. Read as "every member but the
    target", a two-member group lets either member remove the other alone. The first full unanimous
    run failed this way: one honest member resigns, and the coerced key removes the remaining honest
-   member. The ruled reading removes nobody at two members, which is a stalemate. At three or more
+   member. The model removes nobody at two members, which is a stalemate. At three or more
    members, the signatures of every member but the target suffice.
 3. **Founder standing is judged on the roster at the instant, never on the founding record** (the
    `stale_founder` twin). CC 3.3.4 says "Original founders are the sole admission authority". Read as
@@ -98,9 +98,9 @@ on the acceptance that preceded a resignation).
    operator policy. Without one, a change below the protocol, such as the coerced key's removal of an
    honest member, stays held for ever.
 5. **The landing step must be identified by the landing action.** An earlier version detected a
-   landing from the slot clearing. That version reported a false violation when a held removal of a
-   key that had resigned expired after another change had landed. This was a defect of the model, not
-   of the rule, and is recorded so the action invariants are read as checks on `Land`.
+   landing from the slot clearing, and reported a false violation when a held removal of a key that
+   had resigned expired after another change had landed. That is a defect of a model, not of the
+   rule, which is why the action invariants are checks on `Land`.
 
 **The properties.** Every `Inv_` property over a landing is an action invariant, checked on every
 step through `PROPERTIES`. `Inv_ExpiryBound`, `Inv_JoinerConsented` and `Inv_ResignationEnabled` are
@@ -109,10 +109,10 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 
 | Property | What it states | CC |
 |---|---|---|
-| `Inv_JoinerConsented` | every seated key is seated on its own signature: the founding record it signed, or an acceptance of the proposal its widening names | 3.1.3.2 (the ruling; *Founding*) |
+| `Inv_JoinerConsented` | every seated key is seated on its own signature: the founding record it signed, or an acceptance of the proposal its widening names | 3.1.3.2 (*Founding*) |
 | `Inv_AcceptanceBindsOneProposal` | a widening lands only on an acceptance of the very proposal it names (the `proposal_hash`), with the same role, the widening signed by the proposal's `expires_at`, the proposal not withdrawn | 3.1.3.2 (registry row; *Admission* (1)–(4)) |
 | `Inv_DeclineTerminal` | a declined proposal never seats; asking again is a new proposal | 3.1.3.2 (*Decline, withdrawal, expiry*) |
-| `Inv_NoSelfAdmission` | no key is seated on rows it alone signed; founding is the stated exception | 3.1.3.2 (the ruling; *Founding*) |
+| `Inv_NoSelfAdmission` | no key is seated on rows it alone signed; founding is the stated exception | 3.1.3.2 (*Founding*) |
 | `Inv_QuorumGovernsRoster` | every widening and removal that lands meets the protocol on the roster at the row's instant | 3.1.3.2 (*The proposal is an invitation*), 3.3.4, 3.2 T6 |
 | `Inv_CoercedCannotRemoveHonest` | one coerced key never removes an honest member; under `founder_only` a coerced founder can, and that is the stated bound | 3.3.4 (`ConsensusProtocol` kinds) |
 | `Inv_ResignationEnabled` | a member can resign, alone, in every state | 3.1.3.2 (registry row: "a resignation is signed by the leaving member") |
@@ -161,4 +161,4 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 - Concurrent proposals to one key while a change on that key is held (the bound above).
 
 Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config Membership_<cfg>.cfg Membership.tla`.
-A ruled configuration runs in about five minutes with `-Xmx3g`, and a twin runs in seconds.
+A closing configuration runs in about five minutes with `-Xmx3g`, and a twin runs in seconds.

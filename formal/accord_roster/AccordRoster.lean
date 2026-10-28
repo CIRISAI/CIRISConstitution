@@ -1,6 +1,6 @@
 /-
-  AccordRoster.lean — which roster-change rule the HUMANITY_ACCORD needs once the
-  regional-steward backstop of CC 4.2.6 is removed.
+  AccordRoster.lean — which roster-change rule the HUMANITY_ACCORD needs with no
+  backstop outside its roster (CC 4.2.6).
 
   Scope (stated): a counting model of ONE roster decision. Holders are partitioned by
   what an adversary has done to them before the participation window W closes:

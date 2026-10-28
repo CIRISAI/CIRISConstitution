@@ -1,8 +1,7 @@
 ---------------------------- MODULE MeshNet3 ----------------------------
-(* The rc7 instance of MeshNet: three persons, three nodes (n3 is p1's server), two blobs.
-   MeshNet itself is parametric since 2026-10-18 so tools/topology_to_cfg.py can instantiate
-   it per CSD/4 catalogue entry; this module keeps the ruled and shipped configurations
-   exactly as they were checked. *)
+(* The fixed instance of MeshNet: three persons, three nodes (n3 is p1's server), two blobs.
+   MeshNet itself is parametric so tools/topology_to_cfg.py can instantiate it per CSD/4
+   catalogue entry; this module carries the three checked configurations. *)
 EXTENDS Naturals, FiniteSets
 CONSTANTS p1, p2, p3, n1, n2, n3, b1, b2, ClaimScope, ClaimsBind
 VARIABLES scope, author, held, claimed, allow, withdrawn, members, mods, federating, restricted

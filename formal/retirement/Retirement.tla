@@ -2,7 +2,7 @@
 (* The agent retirement ladder of CC 7.5.5 (the Retirement Standard on the wire), with the
    steward's planned shutdown of CC 7.5, the role gate of G16, the walk-away of CC 1.13.2, the
    refuse verb of CC 1.3/1.9 and the subject's rights inside the sealed record (CC 3.3.1, 4.5.3).
-   Plane model D of review/notes/formal_closure_rc9_2026-10-18.md section 5. It refines the one
+   It refines the one
    step `RetirementFloor` of formal/guarantees into the seven-state machine.
 
    One agent, one retirement_id. Six keys: the agent's own key, the steward (the ROOT / AUTHORITY

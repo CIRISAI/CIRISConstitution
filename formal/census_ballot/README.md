@@ -1,7 +1,7 @@
 # `formal/census_ballot` — the census, the secret ballot and the base law, model-checked and counted
 
-**What this is.** The steward's rulings of 2026-10-22 (CC 4.5.13 the policy's base; 5.4.6 the cohort's
-invisibility; 6.1.2.1.2 `n_eff`) and the edge/persist design of the same day, final: each period every
+**What this is.** CC 4.5.13 (the policy's base), 5.4.6 (the cohort's invisibility) and 6.1.2.1.2
+(`n_eff`), with the edge/persist design that implements them: each period every
 owner-bound rooted node of a community emits exactly one **census report**; a report is a vector of
 community cells, each a **one-hot over its buckets** (the expected-active cell `ea: yes/no` — was the owner
 active in this or the previous three periods, computed by the owner from its own history — and, when the
@@ -20,12 +20,12 @@ small-community size the base a governance fraction is taken over is census-deri
 than 10 % in one period (`base_t ≥ ⌈0.9 · base_{t−1}⌉`), never below the floor
 `max(owners active this period, ⌈½ · last stable composite⌉)`, and a one-period fall of the composite by
 more than one third **freezes** it (`base_t = base_{t−1}`) until the composite recovers to within that
-third of the composite before the fall. Readings this model fixes (each a steward's word, not the
+third of the composite before the fall. Readings this model fixes (each the constitution's, not the
 design's): *stable* means the composite stood on its own — `EA ≥` the ratchet term, so the base was not
 propping it; the freeze is released by recovery to `⅔` of the pre-fall composite; a period whose composite
 is refused (below the k-floor) leaves the base where it was.
 
-**Two paths, one base (steward, 2026-10-22).** Governance acts — enact, cancel, roster, moderation — stay
+**Two paths, one base.** Governance acts — enact, cancel, roster, moderation — stay
 **identified** rows under [`formal/two_path`](../two_path/) and take from the census only their **base**:
 `Inv_BaseRatchet` and `Inv_KFloor` are what that path relies on. The secret-shared tally is a community
 instrument for **polls and elections**, used at the community's discretion; `Inv_TallyThreshold` is its
@@ -59,7 +59,7 @@ Each defence is a switch (`PadWhenClosed`, `Dedupe`, `Validate`, `JointAccept`, 
 The owners are `1..N`, the roster order; the configurations are read against the design's defaults
 (enact ⅔, cancel ⅓, approval floor ⅓, two voices minimum, ratchet 9/10, freeze ⅓, floor ½).
 
-## Configurations and results (2026-10-22, TLC 1.7.4, Java 21, this host)
+## Configurations and results (TLC 1.7.4, Java 21, this host)
 
 See [`RESULTS.md`](RESULTS.md) for the measured counts and times. In short:
 
@@ -120,7 +120,7 @@ See [`RESULTS.md`](RESULTS.md) for the measured counts and times. In short:
 - **Availability is not modelled.** A silenced or offline tally member, or a lossy network, loses a
   period's cell; the invariants are about what is published, not that something is.
 - **The tally is public by design.** With two voters the published counts reveal each vote to the other
-  voter; the k-floor (`K = 2` in the ruled instances) is the minimum the dominance gate requires, not a
+  voter; the k-floor (`K = 2` in the closing instances) is the minimum the dominance gate requires, not a
   privacy guarantee. `K` is the community's to set.
 - **The draw is a constant per period.** `agg` is chosen with the first report of the period; the model
   does not let the pair change mid-period.
@@ -147,5 +147,5 @@ java -cp ../../tla2tools.jar tlc2.TLC -workers auto -deadlock -config CensusBall
 lean CensusBallotCount.lean
 ```
 
-CI: the `census_ballot` job in `.github/workflows/formal.yml` runs every ruled configuration to closure,
+CI: the `census_ballot` job in `.github/workflows/formal.yml` runs every closing configuration to closure,
 each twin to its named failure, and the Lean file.

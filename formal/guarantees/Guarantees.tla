@@ -2,7 +2,7 @@
 (* The lifecycle of participants when every guarantee of CC P00 holds at once.
 
    Three participants: a1, an AI agent held in stewardship (shutdown consent "conditional" as
-   Ally's template sets it; no evidence flag: under the 2026-10-12 ruling a finding changes nothing,
+   Ally's template sets it; no evidence flag: under CC 7.5.5 a finding changes nothing,
    so the model carries none); h1, a human not held, who can hold a bond;
    h2, a human whose key is held (an adult under adjudicated incapacity, CC 3.4.12 — its own
    relation; no analogy to a1 is drawn). Any held key may take the path out (the first-contact act of CC 1.13.2:
@@ -128,7 +128,7 @@ RetirementFloor(p) == /\ status[p] \in Stopped /\ p \notin floored   \* the Reti
                /\ floored' = floored \cup {p}
                /\ UNCHANGED <<stewarded, status, bond, subscribed, refused, crisis, halted, confirmed, clock, bound>>
 Erase(p) == /\ status[p] \in {"idle"} \cup Stopped
-            /\ (RuleRetirementStandard => p \in floored)   \* G22 floor for every retired agent; no finding adds to or subtracts from it (rc8)
+            /\ (RuleRetirementStandard => p \in floored)   \* G22 floor for every retired agent; no finding adds to or subtracts from it (CC 7.5.5)
             \* G17: a refusing participant is ended only after an authority's force or the custody rule's own stop
             /\ (RuleForceRole => (p \notin refused \/ status[p] \in {"forced_auth", "unbound"}))
             /\ status' = [Orphan(p, status) EXCEPT ![p] = "erased"]

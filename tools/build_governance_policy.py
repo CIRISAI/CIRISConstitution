@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-CC — the governance policy table as data (CIRISConstitution#180; steward 2026-10-18: "the whole point of
-the models is to take these decisions and make them data backed").
+CC — the governance policy table as data: the decisions the models take, published so an implementation
+replays them.
 
 One row per door in constitution/governance_policy.tsv: five numbers (enact, cancel, floor, window,
 irreversible) over a named standing set and base. This tool
@@ -31,10 +31,10 @@ machine's Prop_FloorNeverLandsEarly). Two per-row fields answer the implementer'
 is the denominator of the cancel fraction — `base` for a community (the proposer counted), `others` for a
 self roster (every key is one person's, so the proposer is not asked to object to itself); `at_window` is
 what happens to a proposal that has not landed when the window closes — `cancelled` for every community
-row (a held change resolves: formal/membership no_hold_expiry), `stay_open` for the self roster as ruled
+row (a held change resolves: formal/membership no_hold_expiry), `stay_open` for the self roster
 (cleared by the proposer's withdraws or the target's act), `lapsed` for the halt, `tallied` for moderation. The base is the standing roster at or below k members and the
-expected-active count above it, never below `min` (the law's constants are provisional; the exponent
-is a measurement, #180 item 2).
+expected-active count above it, never below `min` (the law's constants are provisional until the
+participation law is measured).
 
 Run: python3 tools/build_governance_policy.py            # build
      python3 tools/build_governance_policy.py --self-test  # replay the vectors + the Lean examples
@@ -50,7 +50,7 @@ VEC = os.path.join(ROOT, "manifests", "governance_policy_vectors.json")
 GEN = os.path.join(ROOT, "formal", "two_path", "generated")
 
 BASE_LAW = OrderedDict([("kind", "standing_then_expected_active"), ("k", 12), ("tail", 30), ("min", 3),
-                        ("status", "provisional: k and the tail are a stand-in for the measured participation law (#180 item 2)"),
+                        ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
                         ("rule", "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N")])
 WINDOW_CLASSES = OrderedDict([("content_24h", 86400), ("standing_72h", 259200), ("irreversible_7d", 604800),
                               ("ruled_24h", 86400), ("ruled_48h", 172800), ("fuse_24h", 86400), ("none", 0)])

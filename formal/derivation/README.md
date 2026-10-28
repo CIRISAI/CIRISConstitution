@@ -1,9 +1,9 @@
 # Derivation — do the surfaces and the namespace fall out of the promises?
 
-*Run against the nine promises of 2026-10-12 morning; promises 10 and 11 were added that evening and are not in these tables.*
+*Run against the first nine promises; promises 10 and 11 are not in these tables.*
 
-Review artefacts, not normative. Produced 2026-10-12 against the plain rules at rc8
-(`review/pieces/00_guarantees_plain.md`), the CSD corpus (CIRISClient `FSD/CSD/` at e040ae76,
+Review artefacts, not normative. Produced against the plain rules
+(`constitution/digest/00_guarantees_plain.md`), the CSD corpus (CIRISClient `FSD/CSD/` at e040ae76,
 87 documents including the seven Registry fold cards), and the namespace registry
 (`manifests/namespace_registry.json`, 169 families).
 
@@ -15,7 +15,7 @@ Review artefacts, not normative. Produced 2026-10-12 against the plain rules at 
 | `family_kind_grid.md` | the kinds × verbs occupancy grid and a reading of each empty cell (principled or gap) | same pass |
 | `reach.py` | computes which families each promise reaches through the Constitution sections its guarantee rows cite (P00 §0b → G rows → decimals → section text), and which families the CSDs name | mechanical; run from the repo root with an output path |
 
-Headline numbers (2026-10-12): 87 CSDs, 29 forced by a promise, 35 supporting one, 23 operations
+Headline numbers: 87 CSDs, 29 forced by a promise, 35 supporting one, 23 operations
 or unlinked; 14 of 46 sub-rules have no screen, almost all from promises 5, 7, 8 and 9. 169
 families: 120 reached by a promise through cited text (74 when catalogue-sized cites are
 dropped), 98 named by a CSD, 26 by neither (content types, the identity substrate, telemetry,
@@ -24,4 +24,4 @@ promise; `carries` has six families; Model/replace is empty.
 
 Caveats: the kind and necessity columns are one reviewer's judgement at mostly medium
 confidence; the promise reach is by section text and whole-section cites inflate it. The
-tables are inputs to a ruling, not findings of fact.
+tables are inputs to a decision, not findings of fact.

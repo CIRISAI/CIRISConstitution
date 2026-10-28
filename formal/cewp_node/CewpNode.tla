@@ -1,15 +1,15 @@
 ---------------------------- MODULE CewpNode ----------------------------
 (* The spine: one mesh node's planes composed, over the variables of formal/STATE_TABLE.tsv.
 
-   Each plane is abstracted to its state-table variable and the ruled rule that moves it; the
+   Each plane is abstracted to its state-table variable and the CC rule that moves it; the
    detail of each plane is proved by its own model (trust_root, accord_halt, self_roster,
    mesh_net, withdraws_admission, authority_tree, guarantees) and is ASSUMED here, stated as
    the guard of the corresponding action. What this module checks is only what no plane sees
-   alone — the cross-plane invariants of CC rc9:
+   alone — the cross-plane invariants:
 
      X1  a constitutional halt is not a trust leg: the latch moves no standing, stops no
          serving and no replication; it moves exactly the agent's act gate (CC 3.2 T8 (v),
-         4.2.1.1, ruling 2026-10-15);
+         4.2.1.1);
      X2  the authority of a roster key ends with its eviction: an owner act by an evicted key
          is refused, an owner act by any live roster key is admitted (CC 3.3.6.3);
      X3  a node replicates a peer's content only under that peer's replication consent, and a
@@ -27,8 +27,8 @@ EXTENDS Naturals, FiniteSets
 CONSTANTS Keys,        \* the self's roster keys (genesis included; symmetric)
           Peer,        \* one peer node whose content this node may replicate
           Rows,        \* row identifiers
-          LatchBlocksServe   \* FALSE as ruled; TRUE = the breaker named on G7 at rc8 (persist's trust verdict
-                             \*   folding the latch, edge's serve gate reading it; closes at the v58 pin)
+          LatchBlocksServe   \* FALSE in CC; TRUE = the breaker named on G7 (a trust verdict
+                             \*   folding the latch, a serve gate reading it)
 
 VARIABLES
   member,        \* key.membership = member            : SUBSET Keys

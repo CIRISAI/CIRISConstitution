@@ -23,7 +23,7 @@ for pf in parts:
         sections.setdefault(dec,'')
         sections[dec]+='\n'.join(lines[i:j])+'\n'
 # promise -> G rows (P00 0b) ; G -> cites
-p00=open(f'{CC}/review/pieces/00_guarantees.md',encoding='utf-8').read()
+p00=open(f'{CC}/constitution/digest/00_guarantees.md',encoding='utf-8').read()
 pm={}
 for m in re.finditer(r'^\| (\d)\. [^|]+\| ([^|]+)\|',p00,re.M):
     pm[int(m.group(1))]=re.findall(r'G\d+',m.group(2))

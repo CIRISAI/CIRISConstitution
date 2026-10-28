@@ -1,6 +1,6 @@
 ------------------------ MODULE RetirementWitness ------------------------
-(* Reachability witnesses for the ruled configuration: each Wit_* says "this never happens";
-   TLC must find it happening, so a ruled run that closes is not closing on an empty machine.
+(* Reachability witnesses for the closing configuration: each Wit_* says "this never happens";
+   TLC must find it happening, so a run that closes is not closing on an empty machine.
    Run with Retirement_witness.cfg, one invariant at a time (tools: see README). *)
 EXTENDS Retirement
 

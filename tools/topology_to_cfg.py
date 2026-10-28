@@ -91,7 +91,7 @@ def gen(entry_path):
             aw = ch.get("attach_window_secs"); cad = ch.get("witness_cadence_secs")
             attach = math.ceil(aw / cad) if aw and cad else 2
             witnesses = [f"w{i}" for i in range(1, wn + 1)]
-            mark = "" if wn else "\\* witnessed mode OFF (no witness directory declared): TrustRootVerdict needs K >= 1; residual E in review/notes/formal_closure_rc9_2026-10-18.md — cfg written for the record, not run\n"
+            mark = "" if wn else "\\* witnessed mode OFF (no witness directory declared): TrustRootVerdict needs K >= 1\n"
             if not wn:
                 notes.append(f"root {r['id']}: witnessed mode off; trust_root model not applicable until extended (residual E)")
             txt = (f"\\* generated from {os.path.basename(entry_path)} root {r['id']} by tools/topology_to_cfg.py\n{mark}"

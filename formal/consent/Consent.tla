@@ -1,15 +1,15 @@
 ------------------------------ MODULE Consent ------------------------------
-(* The consent plane (plane model "C", review/notes/formal_closure_rc9_2026-10-18.md §5).
+(* The consent plane.
 
    Two consent series over one receiver's held rows, one fold for both (CC 3.3.1):
      "st"  consent:state  - the subject's stance on a Contribution about them (subject x scope).
            Granted / revoked by the subject (a subject_key_id); `expired` is emitted by the
            substrate (persist) when a grant's valid_until passes, carrying consent_supersedes
-           naming the grant; scope is the `scope` member of the granted envelope (#103), and a
+           naming the grant; scope is the `scope` member of the granted envelope, and a
            grant naming no scope matches nothing.
      "ct"  consent:community_trust - the capture grant for one node's sealed traces
            (node x community).  Authored by the node or by its owner at the grant's asserted_at
-           (CIRISConstitution#179); subject_key_ids lists node, owner-at-asserted_at and the agent
+           (CC 3.3.1); subject_key_ids lists node, owner-at-asserted_at and the agent
            key, and any of the three may withdraw.  A grant or revocation from a key that was
            neither the node nor its owner at the row's asserted_at is not this node's consent.
    The fold (CC 3.3.1, normative): the latest admitted revocation's asserted_at is R; every grant
@@ -37,9 +37,9 @@
    row already signed; forges `expired` under a non-substrate key; grants replication as a stranger.
 
    Mode picks the reading under test:
-     "ruled"          - the CC 3.3.1 fold, #179 standing, the CC 2.6.7 W bound.
+     "ruled"          - the CC 3.3.1 fold and standing, the CC 2.6.7 W bound.
      "no_boundary"    - the latest grant wins regardless of revocation.
-     "literal_signer" - only the node may revoke a community_trust grant (the pre-#179 reading
+     "literal_signer" - only the node may revoke a community_trust grant (the reading
                         that the owner speaks only through the node).
      "no_W"           - no freshness bound: a backdated row is admitted however old.            *)
 EXTENDS Integers, FiniteSets, Sequences
@@ -225,7 +225,7 @@ Inv_StrangerNeverGrants ==
      /\ IsGrant(i, "ct") => rows[i].signer \in {"node", OwnerAt(rows[i].at)}
      /\ (rows[i].series = "st" /\ rows[i].kind # "expired") => rows[i].signer = "subject"
 
-(* CC 3.3.1 revocation authority, #179: while a grant stands, a revocation signed now by the
+(* CC 3.3.1 revocation authority: while a grant stands, a revocation signed now by the
    node, by the node's current owner, or by the agent key (ct), or by the subject (st), is
    admitted.  A semantic ENABLED: the model's row budget is not a party's limit. *)
 RevNow(s, p) == Row(s, "revoke", p, now, {}, NoVU, 0)
@@ -249,7 +249,7 @@ LateRevOk(s, t) ==
      (IsRev(i, s) /\ i > Uses(s)[t] /\ rows[i].at <= t) => t <= rows[i].at + W
 Inv_LateRevocationWithinW == \A t \in Instants, s \in Planes : LateRevOk(s, t)
 
-(* CC 3.3.1 (#103): a grant naming no scope matches nothing. *)
+(* CC 3.3.1: a grant naming no scope matches nothing. *)
 Inv_EmptyScopeMatchesNothing ==
   \A t \in Instants : scored[t] = -1 \/ "analyze" \in rows[Fold("st", t, Pre(scored[t])).by].scope
 
@@ -269,7 +269,7 @@ Inv_ExpiryEmittedBySubstrate ==
 Inv_ReplicationNeedsDirectedGrant == ~badSend
 
 (* ---------------------------------------------------------------- witnesses ------------- *)
-(* Each Wit_* is the negation of a scenario that must be REACHABLE under the ruled reading; a
+(* Each Wit_* is the negation of a scenario that must be REACHABLE under the CC reading; a
    witness configuration lists one and TLC must report it violated (the scenario happens). *)
 Wit_O1WithinW      == ~\E t \in Instants : capt[t] # -1 /\
                          LET g == Fold("ct", t, Pre(capt[t])).by IN

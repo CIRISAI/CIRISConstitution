@@ -9,8 +9,7 @@ CC — the formal state table and invariant table, kept honest.
                            kind, statement, the same property restated over the state table's
                            variables, the CC decimal, the claim id, the TLC/Lean verdict, and how
                            far the normalization goes (full | partial | model-internal).
-  manifests/topology_vocabulary.json  the CSD/4 atom vocabulary (steward decision 2026-10-18:
-                           CC publishes it), each atom mapped to a state-table predicate.
+  manifests/topology_vocabulary.json  the CSD/4 atom vocabulary (published by CC), each atom mapped to a state-table predicate.
 
 Checks (exit 1 on any failure):
   - every INVARIANTS symbol exists in its source file (grep); every source file exists;

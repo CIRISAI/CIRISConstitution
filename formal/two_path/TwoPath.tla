@@ -1,5 +1,5 @@
 ---------------------------- MODULE TwoPath ----------------------------
-(* The two-path decision, generalized (steward direction 2026-10-18): every governance change
+(* The two-path decision, generalized (CC 4.5.13): every governance change
    runs under one policy  (Enact, Cancel, Window, Irreversible)  over a standing set of N voters.
 
      forward path   — the change lands at once when approvals reach the ENACT threshold;
@@ -127,7 +127,7 @@ Inv_NoLoneLanding == lone = FALSE
 Inv_BelowFloorNothingLands ==
   (Cardinality(Active) * FloorDen < FloorNum * N) => landed + honestLanded = 0
 \* the floor is a reverse-path predicate only: a landing before the window closes is a forward landing
-\* at Enact, never a floored one (steward 2026-10-18: the floor still requires the time to expire)
+\* at Enact, never a floored one (CC 4.5.13: the floor still requires the time to expire)
 Prop_FloorNeverLandsEarly ==
   [][((landed' + honestLanded' > landed + honestLanded) /\ pending.age < Window) => EnactReached(pending)]_vars
 \* an irreversible change never lands before its window: every landing happens at the window

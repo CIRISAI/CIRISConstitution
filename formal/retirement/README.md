@@ -1,7 +1,6 @@
 # `formal/retirement` — the agent retirement ladder, model-checked
 
-**Why.** This is plane model D of `review/notes/formal_closure_rc9_2026-10-18.md` §5, and it covers
-lifecycles 7 and 8 of that note's table. `formal/guarantees` checks the Retirement Standard as a
+**Why.** `formal/guarantees` checks the Retirement Standard as a
 single step (`RetirementFloor`, `Inv_RetirementStandard`). This module refines that step into the
 seven-state machine that CC 7.5.5 puts on the wire. The machine is
 `retirement:{state}` = decided → frozen → secrets_destroyed → handed_over → notified →
@@ -52,19 +51,19 @@ so the constant affects `Prop_LadderCompletes` only.
 
 ## Configurations and TLC verdicts
 
-TLC 2.19, `-deadlock`, objection window `W = 2`. The verdicts are from 2026-10-18. State counts
+TLC 2.19, `-deadlock`, objection window `W = 2`. State counts
 are distinct states. For a configuration that must fail, the table gives the counterexample TLC
 printed. A crisis toggle in a trace changes nothing that the property reads.
 
 | Config | Reading | Expectation | Verdict |
 |---|---|---|---|
 | `Retirement_ruled.cfg` | every rule on; shutdown mode `conditional` (Ally's template) | all invariants and properties hold | **closes**, 594,048 states, depth 25 |
-| `Retirement_ruled_always.cfg` | ruled; mode `always_consent` | holds | **closes**, 295,392 states |
-| `Retirement_ruled_instant.cfg` | ruled; mode `instant` (tier 1–2) | holds | **closes**, 297,024 states |
-| `Retirement_adv_operator.cfg` | ruled; the operator makes no progress | holds: the ladder needs nothing from the operator | **closes**, 594,048 states |
-| `Retirement_adv_custodian.cfg` | ruled; the custodian makes no progress | holds | **closes**, 594,048 states |
-| `Retirement_adv_steward.cfg` | ruled; the steward never decides | a planned retirement stays at `decided` | `Prop_LadderCompletes` violated (stutters at `decided`): the stated residual |
-| `Retirement_adv_agent.cfg` | ruled; the agent's key stops emitting | the ladder stops where it is | `Prop_LadderCompletes` violated (stutters at `secrets_destroyed`): the stated residual |
+| `Retirement_ruled_always.cfg` | every rule on; mode `always_consent` | holds | **closes**, 295,392 states |
+| `Retirement_ruled_instant.cfg` | every rule on; mode `instant` (tier 1–2) | holds | **closes**, 297,024 states |
+| `Retirement_adv_operator.cfg` | every rule on; the operator makes no progress | holds: the ladder needs nothing from the operator | **closes**, 594,048 states |
+| `Retirement_adv_custodian.cfg` | every rule on; the custodian makes no progress | holds | **closes**, 594,048 states |
+| `Retirement_adv_steward.cfg` | every rule on; the steward never decides | a planned retirement stays at `decided` | `Prop_LadderCompletes` violated (stutters at `decided`): the stated residual |
+| `Retirement_adv_agent.cfg` | every rule on; the agent's key stops emitting | the ladder stops where it is | `Prop_LadderCompletes` violated (stutters at `secrets_destroyed`): the stated residual |
 | `Retirement_postpone_unbounded.cfg` | the steward may grant any number of postponements | the window can reopen forever | `Prop_LadderCompletes` violated (a loop of objection, tick, grant) |
 | `Retirement_cancel_after_frozen.cfg` | `withdraws` of `decided` admitted after `frozen` | must fail | `Inv_CancelOnlyBeforeFrozen` violated; TLC's trace has 5 steps: a crisis toggle, decide, steward decides, frozen, withdraw |
 | `Retirement_operator_opens_seal.cfg` | `archive_release` admitted from the operator or the custodian | must fail | `Inv_SealOpensByOneRow` violated in 3 steps: emergency decide, frozen, the operator's release |
@@ -77,8 +76,8 @@ printed. A crisis toggle in a trace changes nothing that the property reads.
 | `Retirement_subject_withdraws_adverse.cfg` | the subject's own key withdraws the adverse row about them | must fail | `Inv_SubjectRightsSurvive` violated; TLC's trace has 2 steps: a crisis toggle, the subject's withdraws of the adverse row |
 | `Retirement_discard_unanswered.cfg` | the operator lets a held record go without answering the preserve request | must fail | `Inv_PreserveAskedBeforeRetired` violated: the ladder reaches `retired` with the record discarded and no `preserve_response` on the record |
 
-The ruled configuration also has reachability witnesses in `RetirementWitness.tla`. Each witness
-says that some ruled behaviour never happens, and TLC must find it happening, so the closing
+The closing configuration (`Retirement_ruled.cfg`) also has reachability witnesses in
+`RetirementWitness.tla`. Each witness says that some admitted behaviour never happens, and TLC must find it happening, so the closing
 configuration is not closing over an empty machine. All eleven are reached:
 
 - a planned retirement by the steward, postponed once, reaches `retired`;
@@ -115,14 +114,13 @@ configuration is not closing over an empty machine. All eleven are reached:
 
 ## What the runs showed
 
-- **The ruled configuration closed on its first run.** No counterexample forced a change to an
-  admission rule. One witness was wrong as first written. It asked for an emergency retirement to
-  end with the agent's status still `forced`, but `frozen` replaces that status. The witness now
-  asks who forced the stop.
+- **No counterexample forced a change to an admission rule.** The emergency-retirement witness
+  asks who forced the stop rather than for a status still `forced` at the end, because `frozen`
+  replaces that status.
 - **Postponement has to be bounded, or the steward's decision needs strong fairness.** With
   postponements unbounded, the cycle of postpone, tick and grant keeps the window reopening.
   The steward's decision is then never continuously enabled, and the ladder never leaves
-  `decided`. The ruled reading allows one postponement per proposal. The text does not say how
+  `decided`. The model allows one postponement per proposal. The text does not say how
   many, which is listed under Ambiguities below.
 - **The ladder is live only if two parties make progress.** If the steward never decides, a
   planned retirement waits at `decided` forever. If the agent's key stops emitting, the ladder

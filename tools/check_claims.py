@@ -299,7 +299,7 @@ def report_toc_drift(toc, prose, errors, warnings, notes):
 # --- main --------------------------------------------------------------------
 
 
-# ── Namespace coverage gate (CIRISConstitution#102) ──────────────────────────
+# ── Namespace coverage gate ──────────────────────────────────────────────────
 # CC 3.1.7 R2: an unregistered family "admits under the ProducerSteward
 # fallback, an authority nobody chose for it, silently and cumulatively." The
 # namespace generator harvests ONLY tables under a `3.1.x` component heading,
@@ -325,13 +325,12 @@ NON_CATALOGUE_SECTIONS = {
 # Families with no registered owner, documented outside CC 3.1. Each admits
 # under R2's unchosen fallback until an owning component is assigned.
 #
-# EMPTY as of the #102 owner decision: the 13 families measured at the audit
-# (CC 3.3.8 event:*, CC 3.3.11 inter-content, CC 3.3.12 media-type) were
-# assigned to NodeCore and carry CC 3.1.7 R1 catalogue rows under CC 3.1.9.
+# EMPTY: every family documented outside CC 3.1 carries a CC 3.1.7 R1 catalogue
+# row under an owning component.
 # The machinery stays: a new orphan is still an error, and a family pinned
 # here that later registers is still an error (a pin must not outlive its gap).
 PINNED_UNOWNED_FAMILIES = {}
-PINNED_UNOWNED_TRACKED_BY = "CIRISConstitution#102 (owner assignment)"
+PINNED_UNOWNED_TRACKED_BY = "the CC 3.1 owner assignment"
 
 
 def check_namespace_coverage(errors, warnings, notes):
@@ -345,7 +344,7 @@ def check_namespace_coverage(errors, warnings, notes):
         _fams = _json.load(fh)["families"]
     reg = {f["prefix"] for f in _fams}
     reg_stems = {p.split(":")[0] for p in reg}
-    # CIRISConstitution#112 — a reserved wildcard family with leaves is CLOSED: a prose
+    # A reserved wildcard family with leaves is CLOSED: a prose
     # leaf under it must be one of the leaves the registry lists, else it is exactly
     # the "reservation used as a namespace" R2(b) refuses.
     closed = {f["prefix"].split(":")[0]: set(f.get("leaves", []))
@@ -385,11 +384,10 @@ def check_namespace_coverage(errors, warnings, notes):
             m = table_row.match(line)
             if not m:
                 continue
-            # A header row is one whose FIRST cell is the word "Prefix". The
-            # earlier substring test ("prefix" anywhere in the line) mis-read the
-            # CC 3.3.8 `event:rsvp_count` row as a header because its description
-            # links to `#…--relation-prefixes`, so that family was never audited
-            # (CIRISConstitution#105).
+            # A header row is one whose FIRST cell is the word "Prefix"; a substring
+            # test ("prefix" anywhere in the line) would mis-read a row whose
+            # description links to `#…--relation-prefixes` as a header and skip
+            # the family.
             first_cell = m.group(1).split("|")[0].strip().strip("*` ").lower()
             if first_cell == "prefix":
                 in_prefix_table = True
@@ -413,7 +411,7 @@ def check_namespace_coverage(errors, warnings, notes):
             # under that stem (CC 3.4.5), not a family of its own.
             if fam.endswith(":*") and any(p.startswith(stem + ":") for p in reg):
                 continue
-            # Coverage by SHAPE, through the reference matcher (#113 review): a prose
+            # Coverage by SHAPE, through the reference matcher: a prose
             # family is covered iff its instantiated sample resolves to a registered
             # family with no refusal. Sharing a stem is not coverage — `consent:scope:{kind}`
             # was "covered" by `consent:{kind}` while no matcher could resolve it — and a
@@ -425,7 +423,7 @@ def check_namespace_coverage(errors, warnings, notes):
                 errors.append(
                     f"namespace coverage: CC {sec} documents '{fam}' under the CLOSED family "
                     f"'{stem}:…' but no registered leaf resolves it — a reservation is not a namespace "
-                    f"(CC 3.1.7 R3, CIRISConstitution#112); add its CC 3.1 row or remove it."
+                    f"(CC 3.1.7 R3); add its CC 3.1 row or remove it."
                 )
                 continue
             orphans.append((fam, sec))
@@ -453,15 +451,15 @@ def check_namespace_coverage(errors, warnings, notes):
 
 
 
-# ── Ticket-state + pin-staleness gates (CIRISConstitution#65, #63) ──────────
-# #65: "check_claims.py cannot see any of this because it never queries issue
-# state, so the decay is silent by construction." A `staged:`/`open:` token
+# ── Ticket-state + pin-staleness gates ──────────────────────────────────────
+# check_claims.py cannot otherwise see issue state, so the decay would be silent
+# by construction. A `staged:`/`open:` token
 # names work that is pending; when the ticket closes, the token becomes a lie
 # in one of two directions — the work shipped (the row should have graduated)
 # or the ticket was closed unfixed (the row is unanchored). Either way the
 # registry is asserting something untrue and nothing notices.
 #
-# #63: a pin that never moves silently freezes the evidence surface at an old
+# A pin that never moves silently freezes the evidence surface at an old
 # commit while the manifests advance.
 #
 # Both need the network. When `gh` is unavailable they degrade to a NOTE — a
@@ -483,7 +481,7 @@ def _gh_json(args):
 
 
 def check_ticket_states(rows, errors, warnings, notes):
-    """A staged:/open: token must name an OPEN ticket (CIRISConstitution#65)."""
+    """A staged:/open: token must name an OPEN ticket."""
     import re as _re
     targets = {}
     for ln, row in rows:
@@ -530,7 +528,7 @@ def check_unevidenced_slices(errors, warnings, notes):
 
     A CC 3.1 slice whose repository has no pinned manifest has zero `impl:`
     evidence by construction — the pin-staleness gate cannot even be stale for
-    it. Report it as a WARNING (CIRISConstitution#113): today Registry, LensCore,
+    it. Report it as a WARNING: today Registry, LensCore,
     NodeCore and the catalogued-only CIRISBench; the registry fold moves that
     slice's evidence to CIRISServer rather than vendoring a manifest that would
     be archived.
@@ -557,7 +555,7 @@ def check_unevidenced_slices(errors, warnings, notes):
 
 
 def check_pin_staleness(errors, warnings, notes):
-    """Report pins behind their upstream head (CIRISConstitution#63)."""
+    """Report pins behind their upstream head."""
     path = os.path.join(DOC, "evidence_pins.tsv")
     if not os.path.exists(path):
         return
@@ -753,7 +751,7 @@ def main():
                 # A manifest may HOST rows for another repository (the CIRISServer monorepo manifest
                 # carries persist/verify/edge/client rows at old versions). A pointer naming repo X
                 # must resolve against a row whose `repo` column is X; otherwise the claim rests on
-                # a copy nobody re-pins (rc8 register review, P10).
+                # a copy nobody re-pins.
                 hosts = set()
                 for (s_, d_), rs in m.get("sym_repo", {}).items():
                     if d_ == dec and _sym_eq(frag, s_):

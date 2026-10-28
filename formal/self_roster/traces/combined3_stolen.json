@@ -3,7 +3,7 @@
  "kind": "land",
  "checked": "Inv_NotRecovered",
  "tlc": "Invariant Inv_NotRecovered is violated",
- "reading": "every Execute in this trace lands under the ruled two-path policy; the final state is Recovered",
+ "reading": "every Execute in this trace lands under the combined two-path policy; the final state is Recovered",
  "lasso_back_to_state": null,
  "states": [
   {

@@ -1,11 +1,11 @@
 ------------------------- MODULE AccordHaltFuse -------------------------
-(* The one-row halt with a FUSE (steward ruling 2026-10-05): one holder's row pauses every
+(* The one-row halt with a FUSE (CC 4.2.1.1): one holder's row pauses every
    subscribed agent on receipt; the pause lapses after `Fuse` ticks unless a strict majority of
    the standing roster (M of N) confirms it; a confirmed pause ends only by a majority resumption.
    Adversary: coerces at most one holder, jams, steals a sealed row. N = 3, M = 2, Fuse = 2. *)
 EXTENDS Naturals, FiniteSets
 CONSTANTS Holders, Fuse
-M == Cardinality(Holders) \div 2 + 1   \* strict majority of the standing roster (2 of 3 in the rc7 instance)
+M == Cardinality(Holders) \div 2 + 1   \* strict majority of the standing roster (2 of 3 in this instance)
 VARIABLES honest, intent, sealed, stolen, jammed, halted, confirmed, confirmSigs, resumeSigs, clock
 vars == <<honest, intent, sealed, stolen, jammed, halted, confirmed, confirmSigs, resumeSigs, clock>>
 
