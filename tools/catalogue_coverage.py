@@ -3,14 +3,13 @@
 CC — does the CSD/4 catalogue exercise the states the formal definition reaches?
 
 The forward gate (closure.json) asks: does every atom a catalogue entry promises have a plane
-model behind it. This is the reverse gate, the one the steward set before the catalogue may be
-pushed (2026-10-18): of the states formal/STATE_TABLE.tsv names and a model constrains, which
+model behind it. This is the reverse gate: of the states formal/STATE_TABLE.tsv names and a model constrains, which
 does NO catalogue entry exercise? A state is exercised when some vocabulary atom that implies it
 (the table's `atoms` column) is promised by some entry in formal/cewp_node/catalog/.
 
 Prints coverage by plane, the modelled-but-unexercised states, and the entries that would close
 them (the proposal list, maintained by hand below so it stays a proposal). Exit 0 always; CI
-records, it does not fail, because exhaustiveness is the steward's call.
+records, it does not fail, because exhaustiveness is a judgement for the catalogue's owner, not a check.
 Run: python3 tools/catalogue_coverage.py [--json]
 """
 import csv, glob, json, os, sys, collections
@@ -74,7 +73,7 @@ def main():
     print(f"catalogue coverage: {ex}/{tot} states exercised by the {len(set(c for v in promised.values() for c in v))} catalogue entries; {len(unexercised)} modelled states unexercised")
     for p, v in by_plane.items():
         print(f"  {p:11} {v[0]:2}/{v[1]:2} exercised, {v[2]:2} modelled-but-unexercised")
-    print(f"proposed entries (T10–T19, landed in catalogue v2 at e1201b69) would close {len(covered_by_proposal & set(unexercised))} of {len(unexercised)}; still open: {still}")
+    print(f"proposed entries (T10–T19, in catalogue v2) would close {len(covered_by_proposal & set(unexercised))} of {len(unexercised)}; still open: {still}")
     print("atoms promised by no entry:", out["vocabulary_atoms_promised_by_no_entry"])
 
 

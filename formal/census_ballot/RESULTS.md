@@ -1,10 +1,10 @@
-# Results — TLC 1.7.4 on OpenJDK 21 (`-workers auto`, `-Xmx3g`), Lean 4.14.0, this host, 2026-10-22
+# Results — TLC 1.7.4 on OpenJDK 21 (`-workers auto`, `-Xmx3g`), Lean 4.14.0, this host
 
 Every configuration below closes or fails as named in under 75 seconds on this host; the longest is the
 floor-binding base instance (2.1 M distinct states, 1 min 10 s) and the one liveness instance (17 k states,
 1 min, almost all of it TLC's fairness check).
 
-## Ruled configurations (close)
+## Closing configurations
 
 | Config | Distinct states | States generated | Time | Result |
 |---|---|---|---|---|

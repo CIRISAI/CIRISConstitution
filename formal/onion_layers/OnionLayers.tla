@@ -1,5 +1,5 @@
 ---------------------------- MODULE OnionLayers ----------------------------
-(* CC 5.4.6 item 4 (rc10) — the per-period onion layer deal, as coded in CIRISEdge
+(* CC 5.4.6 item 4 — the per-period onion layer deal, as coded in CIRISEdge
    src/transport/onion_layers.rs#deal_layers and witnessed there over the CSD/4 catalogue.
 
    Inputs are the fold: the set of relays that passed the five-leg membership predicate

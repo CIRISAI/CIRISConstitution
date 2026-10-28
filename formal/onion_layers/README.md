@@ -1,12 +1,12 @@
 # `formal/onion_layers` — the onion layer deal, model-checked and counted
 
-**What this is.** CC 5.4.6 item 4 (rc10) rules that the three onion layers are dealt once per rendezvous
+**What this is.** CC 5.4.6 item 4 states that the three onion layers are dealt once per rendezvous
 period as a pure function of the fold: who relays (the five-leg membership predicate), the seat-like first
 (serve seats and steward-conferred `infra:relay` standings), then the others, sorted by `H(key_id ‖ period)`,
 round-robin over three layers, the others capped at `c × seat-like` in each layer, and a floor of three per
 layer. CIRISEdge implements it in `src/transport/onion_layers.rs#deal_layers` and witnesses it over the
 CSD/4 catalogue T0–T19. This directory is the same deal as a TLA+ model and a Lean counting file, built from
-that Rust witness (edge branch `feat/onion-fsd`, FSD `FSD/ONION_ROUTING.md` §4).
+that Rust witness (CIRISEdge `FSD/ONION_ROUTING.md` §4).
 
 **The hash, abstracted.** `H` is SHA-256 over a domain tag, the key id and the period; the model cannot
 compute it and does not need to: `rank` ranges over **every** ordering of the relays (`PermsOf`), so each

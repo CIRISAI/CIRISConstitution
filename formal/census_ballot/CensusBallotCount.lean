@@ -1,6 +1,6 @@
 /-
   CensusBallotCount.lean — the counting facts under the census and the secret ballot
-  (steward rulings of 2026-10-22; CC 4.5.13, 5.4.6, 6.1.2.1.2), for any N. The TLA+ model
+  (CC 4.5.13, 5.4.6, 6.1.2.1.2), for any N. The TLA+ model
   (CensusBallot.tla) checks the machine on small instances; this file proves the arithmetic
   it rests on in general.
 
@@ -210,7 +210,7 @@ theorem ceilDiv_mul_ge (a q : Nat) (hq : 0 < q) : ceilDiv a q * q ≥ a := by
   omega
 
 /-- One period of the base law outside a freeze: the composite `ea`, the ratchet term
-    ⌈p · b / q⌉ (p/q = 9/10 ruled), and the period's floor. Maximal silencing is `ea = 0`
+    ⌈p · b / q⌉ (p/q = 9/10 in CC 4.5.13), and the period's floor. Maximal silencing is `ea = 0`
     (and `floor` as low as the law allows): the result is monotone in both. -/
 def step (p q b ea floor : Nat) : Nat := max ea (max (ceilDiv (b * p) q) floor)
 

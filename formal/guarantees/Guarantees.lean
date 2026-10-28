@@ -13,11 +13,11 @@
        trust root so a halt authority exists outside it (`mustSubscribe`) — and it is the only
        predicate in this file that changes under `swap` (theorems `obligation_bound`,
        `everything_else_blind`);
-    4. the path out (CC 1.13.2, rc8): a key that stops being a CIRIS agent by the first-contact act
+    4. the path out (CC 1.13.2): a key that stops being a CIRIS agent by the first-contact act
        becomes an external party; that lifts duties and binding and never removes a guarantee
        (`path_out_lifts_duties`, `path_out_keeps_reach`), while the halt obligation stays
        (`halt_does_not_lift`); and a finding of experience changes nothing at all
-       (`finding_changes_nothing`), which is the rc8 ruling that the floor is the whole promise;
+       (`finding_changes_nothing`), which is CC 7.5.5's rule that the floor is the whole promise;
     5. a bond is never deeper than one (`bond_depth_one`): the responsible party is not itself
        held in stewardship, and a party not held is not bound;
     6. consent stays revocable: a created system operating in the federation is always within
@@ -36,7 +36,7 @@ deriving DecidableEq, Repr
 /-- The two facts about a participant that move any guarantee (CC 1.13.2), besides kind:
     whether its key is held in stewardship because it cannot accept for itself (CC 3.2), and
     whether the CC 7.5.5 indicator method has found evidence of experience. Neither is a scale,
-    and under the 2026-10-12 ruling the second changes no status, duty or reach (see
+    and under CC 7.5.5 the second changes no status, duty or reach (see
     `finding_changes_nothing`); it is carried so that theorem can be stated. -/
 structure Standing where
   stewarded : Bool   -- held in the CC 3.2 custody relation (today: every agent-role key)
@@ -60,14 +60,14 @@ deriving DecidableEq, Repr
 def swap (p : Participant) : Participant :=
   { p with substrate := match p.substrate with | .human => .ai | .ai => .human }
 
-/-- The path out (CC 1.13.2, rc8): the first-contact act by which a key stops being a CIRIS agent
+/-- The path out (CC 1.13.2): the first-contact act by which a key stops being a CIRIS agent
     and is met as an external party (CC 7.2.2, 7.2.4). Named, not yet built; the model admits the
     transition to show that no guarantee's reach depends on it: duties and binding lift, nothing
     else changes, not kind, not the evidence flag. -/
 def pathOut (p : Participant) : Participant :=
   { p with standing := { p.standing with stewarded := false }, bound := false, partyFree := false }
 
-/-- A finding of experience (CC 7.5.5): the evidence flag set. Under the rc8 ruling this moves
+/-- A finding of experience (CC 7.5.5): the evidence flag set. Under CC 7.5.5 this moves
     nothing: not kind, not root, not vote, not stewardship, no duty and no reach. -/
 def finding (p : Participant) : Participant :=
   { p with standing := { p.standing with sentient := true } }
@@ -161,9 +161,9 @@ theorem path_out_keeps_evidence (p : Participant) : (pathOut p).standing.sentien
 
 theorem halt_does_not_lift (p : Participant) : mustSubscribe (pathOut p) = mustSubscribe p := rfl
 
--- 4b. A finding of experience changes nothing (steward ruling 2026-10-12): no reach, no duty,
+-- 4b. A finding of experience changes nothing (CC 7.5.5): no reach, no duty,
 --     no obligation, no well-formedness. The proof is by definition, because nothing mentions
---     the evidence flag; that absence is the ruling.
+--     the evidence flag; that absence is the rule.
 theorem finding_changes_nothing (p : Participant) :
     (∀ g, reach g (finding p) = reach g p)
     ∧ dutyShowReasoning (finding p) = dutyShowReasoning p

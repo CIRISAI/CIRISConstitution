@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """The authority state tree: licensure, grant, delegation, enumerated to closure.
 
-Vendored into CIRISConstitution/formal on 2026-10-12 from CIRISRegistry
+Vendored into CIRISConstitution/formal from CIRISRegistry
 `formal/authority_tree/authority_tree.py` at 1553d68 (FSD-005 §5), because the Registry folds
 into CIRISServer and the Constitution carries its own witnesses. One invariant is added here,
-I10 (the term, CIRISConstitution#163), with its dye test. Everything else is the Registry's text.
+I10 (the term, CC 4.4.3.2.8), with its dye test. Everything else is the Registry's text.
 
-CC 2.4.1.2.1 (rc7) says a key comes to hold something in exactly three ways, and
+CC 2.4.1.2.1 says a key comes to hold something in exactly three ways, and
 that only one of them composes:
 
     licensure   an authority confers standing       does not chain
@@ -41,7 +41,7 @@ makes normative:
                        reached by different histories yields the same verdicts)
   I10 term             every live scope-bearing link carries a term of at most
                        MAX_TERM; a perpetual link (term 0) or one past the ceiling
-                       is refused at the door (CC 4.4.3.2.8, #163: 365 days is
+                       is refused at the door (CC 4.4.3.2.8: 365 days is
                        constitutional, the term a charter parameter). Expiry is a
                        withdrawal, so its cascade is I3. Dye: `--no-term-rule`
                        admits a perpetual link and I10 MUST then fire.
@@ -191,7 +191,7 @@ def delegate(state: State, root: str, src: str, dst: str, scope: FrozenSet[str],
     if src == dst:
         return None
     # I10 at the door: a scope-bearing link carries a term within the ceiling; a
-    # perpetual link or one past the ceiling is refused (CC 4.4.3.2.8, #163).
+    # perpetual link or one past the ceiling is refused (CC 4.4.3.2.8).
     if TERM_RULE and (term < 1 or term > MAX_TERM):
         return None
     if Link(src, dst, scope, term) in state.links:

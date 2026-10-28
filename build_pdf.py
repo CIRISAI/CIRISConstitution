@@ -198,7 +198,7 @@ def versioned_pdf_name():
     if not is_prerelease or _branch() == "main":
         return clean, [p for p in same_version if Path(p).name != clean]
     nums = [int(m.group(1)) for p in same_version if (m := numbered.search(p))]
-    # The counter is monotonic across a finalize (#122 review): when main collapses
+    # The counter is monotonic across a finalize: when main collapses
     # rc5.20 to the bare name it deletes the numbered file, and a branch cut from that
     # main would otherwise restart at .1 — a newer build with a smaller number. So the
     # tree is only the floor: every numbered same-version name git has ever seen, and
@@ -220,7 +220,7 @@ COUNTER = HERE / "ciris_constitution.build"   # "<VERSION> <N>" — the floor, t
 def _floor_from_tree():
     """The last build number recorded for this VERSION in the tracked counter file —
     the floor a depth-1 checkout can see when neither the deleted numbered file nor
-    the finalize commit is in its history (#122 review)."""
+    the finalize commit is in its history."""
     try:
         v, n = COUNTER.read_text(encoding="utf-8").split()
         return [int(n)] if v == VERSION else []
@@ -275,21 +275,21 @@ def render_full(stem, tex):
     print(f"wrote {pdf_name}")
 
 
-# ---------------------------------------------------------------- volumes (#123)
+# ---------------------------------------------------------------- volumes
 # One edition, several volumes: the same sections, the same decimal spine, cut by the
-# `volume` column of review/pieces.tsv (a piece may feed two volumes). A volume opens
+# `volume` column of constitution/volumes.tsv (a row may feed two volumes). A volume opens
 # with its plain-language cover (constitution/covers/<volume>.md). Volume PDFs are
 # written under volumes/ and are not tracked; the full edition stays the file of record.
 VOLUMES = ["charter", "constitution", "wire", "dictionary", "policies", "maths", "register", "threats", "digest"]
 VOLUME_TITLE = {"charter": "The Charter", "constitution": "The Constitution", "wire": "The Wire",
                 "dictionary": "The Dictionary", "policies": "The Reader's Policies", "maths": "The Mathematics",
                 "register": "The Evidence Register", "threats": "The Threat Model", "digest": "The Digest"}
-REVIEW = HERE / "review"
+DIGEST = DOC / "digest"
 OMIT = re.compile(r"\*\[(\d+(?:\.\d+)*) reviewed in another piece — omitted here\]\*")
 
 
 def _pieces():
-    import build_review_piece as R
+    import volume_map as R
     return R, R.load_pieces()
 
 
@@ -342,8 +342,8 @@ def volume_md(vol):
     cover = (DOC / "covers" / f"{vol}.md").read_text(encoding="utf-8")
     parts_md = [cover]
     if vol == "digest":
-        for f in (DOC / "EXECUTIVE_SUMMARY.md", REVIEW / "pieces" / "00_guarantees_plain.md",
-                  REVIEW / "pieces" / "00_operator_digest.md", REVIEW / "pieces" / "00_guarantees.md"):
+        for f in (DOC / "EXECUTIVE_SUMMARY.md", DIGEST / "00_guarantees_plain.md",
+                  DIGEST / "00_operator_digest.md", DIGEST / "00_guarantees.md"):
             parts_md.append(f.read_text(encoding="utf-8"))
         return parts_md
     R, pieces = volume_pieces(vol)

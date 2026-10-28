@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CC — the CSD/4 chain as data (persist's ask via the steward, 2026-10-21): the end-to-end join from the
+CC — the CSD/4 chain as data: the end-to-end join from the
 formal models to the catalogue, stated so a downstream repo can key its tests, QA and mutation scopes
 to it from disk.
 

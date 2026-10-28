@@ -1,7 +1,7 @@
 # Accord roster rule (CC 4.2.6)
 
 `AccordRoster.lean` is a counting model of one HUMANITY_ACCORD roster decision, written
-to decide what replaced the regional-steward backstop (CIRISConstitution#139). Holders are
+to decide the roster rule CC 4.2.6 adopts with no backstop outside the roster. Holders are
 honest and reachable (`h`), honest and censored (`s`), lost (`d`), or coerced, including a
 seated insider (`c`). Signatures are assumed unforgeable. Firing (floor 1 over the live
 set) is not modelled as gated, because no roster rule gates it.

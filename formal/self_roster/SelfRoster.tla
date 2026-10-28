@@ -2,14 +2,14 @@
 (* Key states under one self: the devices that can sign for an identity, who holds each,
    and the policy under which one device may evict another or add a new one.
 
-   The steward's invariant (2026-10-16): with three or more keypairs under a self, a stolen
+   The invariant (CC 3.3.6.3): with three or more keypairs under a self, a stolen
    device cannot on its own kick the other devices off, yet two lost devices are recoverable
    from the one that remains. Possession and authentication are kept apart: a device is HELD
    by the owner, by a thief, or by nobody (lost); a holder can ACT on it only if they can
    authenticate on it (the owner always; a thief only when StolenAuth is TRUE, the worst case).
    Data at rest is not modelled; this is the policy layer only.
 
-   Two paths, the steward's "quorum rules and reverse quorum applied to the self":
+   Two paths, quorum rules and the reverse quorum applied to the self:
      the QUORUM path - a proposal approved by a strict majority of the roster lands at once;
      the LONE path   - a proposal by one device lands when its window closes unless a strict
                        majority of the OTHER members (target included) object -- the CC reverse
@@ -17,13 +17,13 @@
                        eviction, only if the target was SILENT for the whole window: a device that
                        signed anything since the proposal is not lost, and is evictable only by
                        quorum. Votes from a key no longer on the roster are void.
-   Three findings of earlier runs are now rules: without the silence rule a thief's lone
+   Three rules the counterexamples forced: without the silence rule a thief's lone
    eviction landed on a present owner whose devices had not yet objected when the window closed;
    an owner device proposing to evict another owner device gave a thief the vote it needed, so an
    owner proposes only against what it lost or had stolen; and an approval kept from a device
    evicted meanwhile made a thief's second eviction a majority of a smaller roster.
    Mode: "unilateral" (any authenticated member acts at once), "quorum" (quorum path only),
-   "reverse" (lone path only), "combined" (both; the ruled shape).
+   "reverse" (lone path only), "combined" (both; the CC 3.3.6.3 shape).
    Adding a device goes through the same policy, or a thief would mint a majority.
    OwnerPresent: TRUE means the owner's devices act every tick (and so object to what they
    dislike); FALSE is the owner away for a whole window, the stated residual.

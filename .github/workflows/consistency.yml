@@ -38,7 +38,7 @@ jobs:
           python-version: '3.12'
       - name: Evidence registry + toc/prose drift + normative coverage + ticket-state and pin gates
         env:
-          GH_TOKEN: ${{ github.token }}   # the #65/#63 gates query issue state; unauthenticated gh only NOTEs
+          GH_TOKEN: ${{ github.token }}   # the ticket-state gates query issue state; unauthenticated gh only NOTEs
         run: python3 tools/check_claims.py
       - name: Relative links resolve (no dangling paths)
         run: python3 tools/check_links.py
@@ -70,7 +70,7 @@ jobs:
           pip install -q pyyaml
           python3 tools/topology_to_cfg.py --all
           git diff --exit-code formal/cewp_node/generated/
-      - name: "Catalogue coverage of the formally defined states (reported, not gated; exhaustiveness is the steward's call)"
+      - name: "Catalogue coverage of the formally defined states (reported, not gated)"
         run: python3 tools/catalogue_coverage.py
       - name: Formal state table, invariant table and atom vocabulary agree with the models, the toc and the register
         run: python3 tools/check_formal_tables.py
@@ -82,7 +82,7 @@ jobs:
         run: |
           pip install -q pyyaml
           python3 tools/check_formal_counts.py
-      - name: Volume map (toc.tsv volume column) is regenerated from review/pieces.tsv
+      - name: Volume map (toc.tsv volume column) is regenerated from constitution/volumes.tsv
         run: |
           python3 build_pdf.py --write-toc-volumes
           git diff --exit-code constitution/toc.tsv

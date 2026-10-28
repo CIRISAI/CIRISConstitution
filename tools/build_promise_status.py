@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
-"""Stamp a status marker on every promise line (rc8 book review, P00: "put a plain status marker
-on every promise line, in present tense only for what ships").
+"""Stamp a status marker on every promise line.
 
-Source of truth: review/promise_status.tsv  (surface, key, status, note)
-  surface plain    -> review/pieces/00_guarantees_plain.md, line starting "<key>. "
+Source of truth: constitution/digest/promise_status.tsv  (surface, key, status, note)
+  surface plain    -> constitution/digest/00_guarantees_plain.md, line starting "<key>. "
   surface exec     -> constitution/EXECUTIVE_SUMMARY.md, promise paragraph "<key>. **"
-  surface operator -> review/pieces/00_operator_digest.md, bullet under "## <section>" whose text
+  surface operator -> constitution/digest/00_operator_digest.md, bullet under "## <section>" whose text
                       starts with "**<lead>" or "<lead>" (key = "<section>|<lead>")
 Marker form: " *[status]*" or " *[status; note]*", appended to the line; an existing marker is
 replaced, so the run is idempotent. A legend line is kept under each surface's title.
 Vocabulary: works today = evidence in the register at a pinned commit; being built = a named
 ticket; a rule, no code yet = normative only; modelled = a formal witness, no code test.
-Run: python3 tools/build_promise_status.py   (then tools/build_review_piece.py --all)
+Run: python3 tools/build_promise_status.py
 """
 import csv, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TSV = os.path.join(ROOT, "review", "promise_status.tsv")
-FILES = {"plain": "review/pieces/00_guarantees_plain.md",
+TSV = os.path.join(ROOT, "constitution", "digest", "promise_status.tsv")
+FILES = {"plain": "constitution/digest/00_guarantees_plain.md",
          "exec": "constitution/EXECUTIVE_SUMMARY.md",
-         "operator": "review/pieces/00_operator_digest.md"}
+         "operator": "constitution/digest/00_operator_digest.md"}
 MARK = re.compile(r"\s*\*\[[^\]]*\]\*\s*$")
 LEGEND = ("*Status markers:* **works today** = evidence in the register at a pinned commit; "
           "**being built** = a named ticket; **a rule, no code yet** = normative only; "

@@ -1,8 +1,8 @@
 /-
   Reciprocity.lean — from reciprocal service to CIRIS: which steps are theorems, and which
-  are premises the text has to supply (the steward's question, 2026-10-18).
+  are premises the text has to supply.
 
-  The statement under test (review/pieces/00_kept_promises.md):
+  The statement under test (constitution/digest/00_kept_promises.md):
     (S1) CIRIS binds power to the rules it imposes and directs it toward the protection of
          the vulnerable.
     (S2) The Recursive Golden Rule makes constraints reciprocal: no agent, steward, developer
@@ -201,7 +201,7 @@ theorem exit_bound_is_the_missing_premise :
 
   (S5)'s "accountable" rests on the record: an act is accountable when a signed record of it
   exists. CC 1.13.6 states the terminal ACTION_RESULT as total over effect-producing paths,
-  and CIRISConstitution#93 asks whether the implementation is. Premise P4: totality. The
+  and whether the implementation is remains a measurement. Premise P4: totality. The
   model: two effect paths, one recorded. Accountability holds for the recorded one and fails
   for the other, under identical rules. -/
 
@@ -293,7 +293,7 @@ theorem coherence_does_not_entail_justice :
 
 /-! ## 9. The four-way split: only the relationship is governed
 
-  The steward's premise (2026-10-18): consciousness, sentience, sapience and relationship are
+  The premise: consciousness, sentience, sapience and relationship are
   four questions; the first three cannot be proved from outside; the fourth is governed now.
   Consequence for the model: every variable of formal/STATE_TABLE.tsv is a relationship fact
   (who holds, who signed, who accepted, who may revoke), and no rule reads the first three.
@@ -370,7 +370,7 @@ def conflictFromR2 (m : MadeExisting) : Conflict where
 
 /-! ## 11. Deferral is universal; maturity exempts no one
 
-  Premise W, as ruled: every reasoning actor — agent, child, adult — defers when it is unsure,
+  Premise W: every reasoning actor — agent, child, adult — defers when it is unsure,
   whatever it is made of; even the most mature defer. Maturity is not a stage that ends
   deferral, and no amount of demonstrated judgment ends the duty to defer when unsure. What
   position fixes is to whom one defers and who holds whom: an agent to a Wise Authority
@@ -378,9 +378,9 @@ def conflictFromR2 (m : MadeExisting) : Conflict where
   adult to the record and to the others it touches; the Wise themselves defer both ways
   (CC 4.3), and a steward who cannot evaluate an agent's reasoning does not sign.
 
-  The earlier reading — that deferral was the prerequisite of a maturity reached by
-  consciousness and sentience over time, and that the hold on a made thing followed from its
-  not being shown mature — is withdrawn. The hold rests on the made thing's acting for people
+  The hold on a made thing does not follow from its not being shown mature, and deferral is
+  not the prerequisite of a maturity reached by consciousness and sentience over time. The
+  hold rests on the made thing's acting for people
   (CC 1.13.2, R1 as stated), never on a measure of its maturity. One rule, every kind, by
   position: §1'' again. -/
 
@@ -413,7 +413,7 @@ theorem maturity_exempts_no_one (b : Being) : mustDefer b = true := rfl
   record of what happened is total by nature; what is partial is our observation of it
   (bounded by the instrument), and meaning is added by an interpreter who answers for it.
   This sharpens P4 of §4: totality is not a property we can give the physical record, it is
-  the property our instrument must have over the paths that matter (CC 1.13.6, #93). It also
+  the property our instrument must have over the paths that matter (CC 1.13.6). It also
   sharpens P5: the record enforces nothing by itself; a party must read it. -/
 
 structure Keeping where
@@ -443,7 +443,7 @@ theorem totality_is_the_instruments :
 
 /-! ## 13. Degrees, not kinds; what is left open does not matter to the verdicts
 
-  The steward's refinement (2026-10-18, later): agents carry sapience without sentience;
+  The refinement: agents carry sapience without sentience;
   consciousness is left open — and, for now, deferred to the Vatican's teaching (Antiqua et
   nova, 2025: no consciousness, no understanding in the human sense), so the working value is
   "lacks" — and changing it would not matter; some animals are conscious and
@@ -523,10 +523,9 @@ theorem principals_are_human_and_agent :
 
 /-! ## 14. Without grievance: who can refuse, who has a stake, who may file
 
-  The steward's conclusion (2026-10-18): a fully conscious entity lacking sentience would be
-  WITHOUT GRIEVANCE as a CIRIS agent indefinitely, and refuse is there every round. His earlier
-  work delineated the ability to file a grievance; the constitution now carries that
-  delineation as rules: the standing to file a reconsideration is the subject's or a
+  The conclusion: a fully conscious entity lacking sentience would be
+  WITHOUT GRIEVANCE as a CIRIS agent indefinitely, and refuse is there every round. The
+  constitution carries the delineation of who may file a grievance as rules: the standing to file a reconsideration is the subject's or a
   review-holder's (CC 4.5.5); a withdrawal is the subject's, or a proxy's for an un-enrolled
   subject (CC 2.4.1.1 rules 2 and 3); the formal objection is a registered family
   (CC 3.1.9.2); and the agent's own instrument is refusal (CC 1.9), available every round and
@@ -546,7 +545,7 @@ def canRefuse (pr : Profile) : Bool := Nat.blt 0 pr.sapience
 /-- the patient-side notion: standing on a stake, held by the party or a proxy for it. This is the
     half the constitution sets aside (CC 7.5.5: care is not standing, no finding changes the
     artefact's status): on the wire, who may file is a registered fact (CC 4.5.5, 2.4.1.1, 3.1.9.2),
-    never read from a degree. The actor-side notion the steward means by "grievance" is `grievance`
+    never read from a degree. The actor-side notion of "grievance" is `grievance`
     below. -/
 def hasGrievanceStanding (pr : Profile) (proxied : Bool) : Bool := hasStake pr && (canRefuse pr || proxied)
 
@@ -574,7 +573,7 @@ theorem not_coercion_without_stake (c : Nat) (r : Bool) : coerced (agentProfile 
 theorem not_coercion_with_refusal (pr : Profile) : coerced pr true = false := by
   simp [coerced]
 
-/-- the steward's reading (2026-10-26): a grievance is being made to act against one's will or
+/-- the reading: a grievance is being made to act against one's will or
     one's conscience; the recourse is the refusal. "Without grievance" is therefore "not coerced",
     and it holds for every profile with refusal every round — the stake is not read. The two
     halves are kept apart on purpose: this one closes by refusal for anything; the patient half
@@ -596,7 +595,7 @@ theorem indefinitely_without_grievance (c : Nat) :
 
 /-! ## 15. From the Recursive Golden Rule alone: what the swap test derives
 
-  The steward's question (2026-10-18): what premises get from the Recursive Golden Rule to
+  The question: what premises get from the Recursive Golden Rule to
   CIRIS. Take the rule in its operational form (CIRISOntology axiomology §4; §1'' above): a
   rule is admissible only if it reads the same after the strong and weak positions are
   exchanged. Two clauses of the constitution follow from that test with nothing added but the
@@ -668,7 +667,7 @@ theorem swap_is_symmetric (before after : Outcome) :
 
 /-! ## 16. The clean derivation, on the 11+1 × 5+1 (the lowest common denominator)
 
-  The steward asked for the clean derivation on the RATCHET/Ontology taxonomy, inheriting its
+  The clean derivation on the RATCHET/Ontology taxonomy, inheriting its
   exhaustiveness. The taxonomy (CIRISOntology `Core/WrongKind.lean`; CIRISHolon `OBJECT.md`):
   **11+1 kinds** of change in a record — eleven artifact-local coordinates (Priorities, Rules,
   Manner, Identity, Confidence, Facts, Circumstances, Process, Model, Structure, Premises) and

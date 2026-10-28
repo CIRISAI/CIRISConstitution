@@ -8,4 +8,4 @@
 
 **What it leaves out.** The rules themselves, which are in the other volumes. This volume says whether a rule has evidence, not what the rule is.
 
-**Where the rest lives.** The machine form is `constitution/claims.tsv` with `constitution/evidence_pins.tsv` and the vendored manifests under `constitution/vendor/evidence/`. The change log is the rulings log.
+**Where the rest lives.** The machine form is `constitution/claims.tsv` with `constitution/evidence_pins.tsv` and the vendored manifests under `constitution/vendor/evidence/`. The change log records each amendment by release.

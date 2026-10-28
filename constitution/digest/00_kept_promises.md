@@ -1,6 +1,6 @@
 # Kept Promises: The Working Discipline of CIRIS
 
-*The steward's statement of what the constitution is for, in his words (2026-10-18). It is the reader's entry to the formal models: `formal/README.md` explains how each line below becomes a rule, an invariant and a checked model.*
+*What the constitution is for, stated as a working discipline. It is the reader's entry to the formal models: `formal/README.md` explains how each line below becomes a rule, an invariant and a checked model.*
 
 CIRIS binds power to the rules it imposes, and directs that power toward the protection of the vulnerable.
 

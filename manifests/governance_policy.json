@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "b7d2370da9d9a91193f5a5b904fdec3c0a629c3873429f3e1a0439a5e0502264",
+  "policy_sha256": "0af940f8726b3848ddf75ed389e76d54cedbdd9f038a87e86afe2b06c6924b14",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -35,7 +35,7 @@
    "model": [
     "formal/two_path"
    ],
-   "status": "default (steward 2026-10-18)",
+   "status": "default",
    "note": "the class every reversible content change inherits unless a row names it"
   },
   {
@@ -66,7 +66,7 @@
    "model": [
     "formal/two_path"
    ],
-   "status": "default (steward 2026-10-18)",
+   "status": "default",
    "note": "roster and standing changes: who is a member, who holds a duty"
   },
   {
@@ -97,7 +97,7 @@
    "model": [
     "formal/two_path"
    ],
-   "status": "default (steward 2026-10-18)",
+   "status": "default",
    "note": "no instant landing: secrets destroyed, a hard delete, a key destroyed"
   },
   {
@@ -129,7 +129,7 @@
     "formal/membership",
     "formal/two_path"
    ],
-   "status": "ruled 2026-10-18",
+   "status": "normative",
    "note": "the invitee's own acceptance is still required (3.1.3.2); no single vote admits by silence"
   },
   {
@@ -154,7 +154,7 @@
    "model": [
     "formal/membership"
    ],
-   "status": "ruled 2026-10-18",
+   "status": "normative",
    "note": "forward only, cosigned; an unanimous removal is every other member and a strict majority"
   },
   {
@@ -179,7 +179,7 @@
    "model": [
     "formal/self_roster"
    ],
-   "status": "ruled 2026-10-18",
+   "status": "normative",
    "note": "one person's own keys: a floor of one key is right here; unilateral at one key; two keys stalemate"
   },
   {
@@ -204,7 +204,7 @@
    "model": [
     "formal/self_roster"
    ],
-   "status": "ruled 2026-10-18",
+   "status": "normative",
    "note": "as add, and the target silent all window"
   },
   {
@@ -229,7 +229,7 @@
    "model": [
     "4.5.13"
    ],
-   "status": "ruled (CEG 0.7)",
+   "status": "normative",
    "note": "a moderator or steward acts alone in the window; on their absence a live majority at the window"
   },
   {
@@ -251,7 +251,7 @@
    "model": [
     "formal/accord_halt"
    ],
-   "status": "ruled 2026-10-05",
+   "status": "normative",
    "note": "one holder fires at once; lapses at the fuse unless a majority confirms; a majority resumes"
   },
   {
@@ -276,7 +276,7 @@
    "model": [
     "formal/retirement"
    ],
-   "status": "ruled 2026-10-18",
+   "status": "normative",
    "note": "the operator and the WA name the successor by one cosigned row; the old key's custody rows stay valid to that instant"
   }
  ],
@@ -285,7 +285,7 @@
   "k": 12,
   "tail": 30,
   "min": 3,
-  "status": "provisional: k and the tail are a stand-in for the measured participation law (#180 item 2)",
+  "status": "provisional: k and the tail are a stand-in for the measured participation law",
   "rule": "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N"
  },
  "min_count": {

@@ -7,7 +7,7 @@
    (4) a delegate of 1-3.  One carve-out, the anti-Goodhart retraction dual: a SUBJECT-authority
    path (2-4) MUST NOT withdraw a third-party capacity:*, detection:*, licensure:* or revocation:*
    row about itself; the subject's contest path is reconsideration (CC 4.5.5).
-   CC 4.5.3 (ruled 2026-10-15, #174) says an erasure at the subject's request is executed by a
+   CC 4.5.3 says an erasure at the subject's request is executed by a
    withdraws and leaves a replicated tombstone by digest; no node-local erasure basis.
 
    Mode picks the reading of the carve-out for ADVERSE rows (detection:* stands for the class):
@@ -33,7 +33,7 @@ Keyed    == {"hk", "ag"}            \* hold a federation key: rule 2 is availabl
 External == {"ext", "agx"}          \* canonical-hash subjects: only a proxy can act (rule 3)
 Natural  == {"hk", "ext"}           \* natural persons: the people Article 17 is for
 Agents   == {"ag", "agx"}
-Kinds    == {"ordinary", "detection", "hard_case"}   \* hard_case: an equivocation proof or a liveness transition about a root (#170), adverse to its subject
+Kinds    == {"ordinary", "detection", "hard_case"}   \* hard_case: an equivocation proof or a liveness transition about a root, adverse to its subject
 Rows     == [kind : Kinds, subject : Subjects]
 Adverse(r) == r.kind \in {"detection", "hard_case"}
 
@@ -93,7 +93,7 @@ TypeOK == /\ withdrawn \subseteq Rows /\ localErased \subseteq Rows /\ tomb \sub
    by a subject-authority path.  Only its producer, the controller, removes it. *)
 Inv_AntiGoodhart == \A r \in withdrawn : Adverse(r) => admitted[r] = 1
 
-(* One door (CC 4.5.3, #165/#174): whatever is erased anywhere is erased by a withdraws whose
+(* One door (CC 4.5.3): whatever is erased anywhere is erased by a withdraws whose
    tombstone by digest reached the peers.  A node-local erasure leaves replicas alive. *)
 Inv_OneDoor == \A r \in Rows : (r \in withdrawn \/ r \in localErased) => r \in tomb
 
