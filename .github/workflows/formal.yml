@@ -249,7 +249,8 @@ jobs:
         run: |
           lean Reciprocity.lean
           lean Cascade.lean
-          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean
+          lean ../trust_set/TrustSet.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean
 
   retirement:
     name: TLC — the Retirement Standard as a machine (formal/retirement)
