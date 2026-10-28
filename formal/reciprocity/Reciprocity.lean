@@ -720,7 +720,7 @@ def fixedBy : Coord → List String
                         "three rules follow from being made: root, disclosure, vote (ciris.ai/philosophy)"]
   | .confidence    => ["R2 deferral is universal: every reasoning actor defers when unsure, the most mature too (§11)",
                         "sentience not presumed; consciousness immaterial to the verdicts (§13)"]
-  | .facts         => ["totality of the record — OPEN measurement (#93)",
+  | .facts         => ["totality of the record — OPEN measurement",
                         "manufactured accountable humans — OPEN measurement (ciris.ai/constitutional-mesh)",
                         "the CSD/4 runs: what is measured on real nodes (ADEQUACY A13)"]
   | .circumstances => ["R7 exit as a check, with a bounded cost — the world's (§3)",
