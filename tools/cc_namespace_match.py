@@ -2,7 +2,7 @@
 """
 cc_namespace_match.py — the CC dimension-grammar REFERENCE MATCHER and its vectors.
 
-CC 3.1.7 R3 (CIRISConstitution#112): a wire dimension is matched to a registry
+CC 3.1.7 R3: a wire dimension is matched to a registry
 family by ONE rule, carried as data in manifests/namespace_registry.json:
 
   * segments split on ':' and compare byte-exactly (no consumer case-folds);
@@ -66,7 +66,7 @@ class Rules:
         self.families = OrderedDict((f["prefix"], f) for f in manifest["families"])
         # stems of CLOSED families (a reserved wildcard, or a parameterized parent whose row is
         # closed in its leaves): any unmatched descendant beneath one is unregistered, never
-        # open vocabulary — exactly as the reserved stems above (#122 review)
+        # open vocabulary — exactly as the reserved stems above
         self.closed_stems = sorted({
             (f["prefix"][:-1] if f["segments"][-1]["class"] == "wildcard" else f["prefix"].split(":")[0] + ":")
             for f in self.families.values() if f.get("leaves_closed")})
@@ -82,9 +82,9 @@ def _score(fam):
 VERSION_LIKE = re.compile(r"^[vV][0-9]+(\.[0-9]+)*$")
 # Every pattern is applied with full-match semantics (`re.fullmatch`): the WHOLE segment
 # must match, so a segment carrying a trailing newline fails a `$`-anchored pattern here
-# exactly as it does in a byte-exact port (CIRISConstitution#116). The two version-shape
+# exactly as it does in a byte-exact port. The two version-shape
 # detectors (VERSION_LIKE / VERSION_ATTEMPT) are applied with `fullmatch` for the same
-# reason (#128): `re.match` + `$` would admit one trailing newline, and a strict port would not.
+# reason: `re.match` + `$` would admit one trailing newline, and a strict port would not.
 # a LAST segment that starts like a version tail (v + digit) but is not one — v1beta,
 # v1., V1x: an attempt at the version segment, so the family is the one the other
 # segments name. A bare `vx` is a leaf name (a version begins `v` + digit, R3).
@@ -149,7 +149,7 @@ def _match_segments(fam, parts, rules):
                 # every component of a multi-segment value is verbatim — `registry:v1` is a
                 # source id — so no version-shape test applies inside the span: once the real
                 # trailing version is stripped, a duplicated tail and a version-shaped value are
-                # the same bytes, and a value class resolves that ambiguity as a value (#113 review)
+                # the same bytes, and a value class resolves that ambiguity as a value
                 refusal = refusal or _check_seg(seg, got, rules)
             binds[seg["segment"].strip("{}")] = ":".join(span)
             continue
@@ -200,7 +200,7 @@ def _resolve(rules, parts):
             if ok:
                 if not versioned and _mutated_tail(rules, parts[-1]):
                     # an unversioned input whose last segment is a MUTATED version tail
-                    # (`V1`, `v1beta`) is malformed whatever class absorbed it (#113 review)
+                    # (`V1`, `v1beta`) is malformed whatever class absorbed it
                     refusal = refusal or rules.tokens["case_malformed"]
                 candidates.append((_score(fam), prefix, binds, refusal, ends_version))
         elif len(parts) > 1:
@@ -273,13 +273,13 @@ def match_family(manifest_or_rules, dimension):
         if any(dimension.startswith(stem) for stem in fenced):
             return None, {}, rules.tokens["family_unregistered"]
         # a case-mutated reserved or closed stem (`Capacity:zz:v1`) is malformed, never a
-        # bypass: fold only to DETECT the fence, never to admit (#113 review)
+        # bypass: fold only to DETECT the fence, never to admit
         low = dimension.lower()
         if low != dimension and any(low.startswith(stem) for stem in fenced):
             return None, {}, rules.tokens["case_malformed"]
         # open vocabulary: no row claims it and no refusal — but R3's version grammar is
         # global: exactly one trailing version segment. An unversioned open dimension owes
-        # its tail; a duplicated tail (`third_party:signal:v1:v2`) is malformed (#122 review)
+        # its tail; a duplicated tail (`third_party:signal:v1:v2`) is malformed
         if rules.version_required and not rules.version.fullmatch(parts[-1]):
             # a last segment that is a version ATTEMPT (`V1`, `v1beta`) is malformed, as R3
             # says; one that is not version-shaped at all is a missing tail
@@ -288,7 +288,7 @@ def match_family(manifest_or_rules, dimension):
             return None, {}, rules.tokens["missing_version_segment"]
         # a duplicated tail is a VERSION (or its uppercase) right before the real one; a
         # vocabulary segment that merely starts `v` + digit (`v1beta`) is a family segment
-        # here, since a valid version follows it (#122 review)
+        # here, since a valid version follows it
         if len(parts) >= 2 and VERSION_LIKE.fullmatch(parts[-2]):
             return None, {}, rules.tokens["case_malformed"]
         if len(parts) < 2:                # `v1` alone: a version with no family segment before it
@@ -300,7 +300,7 @@ def match_family(manifest_or_rules, dimension):
         # a refused hit may be a MALFORMED form of a different row that resolves cleanly once
         # folded or stripped — a leaf under a wildcard parent (`accord:lifecycle:V1`), or a
         # companion row hidden by an arity-exact sibling (`capacity_assurance:reversible_excluded:
-        # medical:v1:v2`). The clean row is the family it mutates (#116, #117): the reference
+        # medical:v1:v2`). The clean row is the family it mutates: the reference
         # answers what the vectors name, so a consumer can compare exactly.
         # (clean_only: the alternative must resolve without refusal, or the hit stands)
         mutated = _detect_malformed(rules, parts, clean_only=True)
@@ -364,8 +364,8 @@ def generate_row_type_vectors(manifest):
         add(c["sample"].upper(), None, None, tok, "byte-exact: a case variant is not the carrier")
         add(c["kind"], None, None, tok, "the bare carrier stem is not a row type")
         add(c["kind"] + ":zz_unminted:v1", None, None, tok, "an unregistered tail beneath a carrier stem is refused")
-    add("holds_bytes:sha256:0a1b2c3d", None, None, tok, "the retired rc6 holds_bytes carrier is not a row type (#141)")
-    add("key_grant:epoch:v1", None, None, tok, "the retired rc6 key-grant set is not a row type; key_grant:{axis}:v1 is a scores dimension (#143)")
+    add("holds_bytes:sha256:0a1b2c3d", None, None, tok, "the retired holds_bytes carrier is not a row type")
+    add("key_grant:epoch:v1", None, None, tok, "the retired key-grant set is not a row type; key_grant:{axis}:v1 is a scores dimension")
     add("custody:ack:v1", None, None, tok, "a dimension is not a row type")
     add("membership", None, None, tok, "an unlisted type is refused, however plausible")
     add("", None, None, tok, "the empty string is not a row type")
@@ -525,22 +525,22 @@ def generate_vectors(manifest):
         "the Private Use prefix never admits at federation tier (R2)")
     add("no_such_family:leaf:v1", None, None, "open vocabulary: no row claims it, no refusal")
     add("config:admission\n:v1", "config:{scope}", rules.tokens["case_malformed"],
-        "a segment carrying a newline fails its pattern under full-match semantics (#116: `$` is not a byte)")
+        "a segment carrying a newline fails its pattern under full-match semantics (`$` is not a byte)")
     add("no_such_family:leaf", None, rules.tokens["missing_version_segment"],
         "open vocabulary still owes the trailing version segment (R3 is global)")
     add("no_such_family:leaf:v1:v2", None, rules.tokens["case_malformed"],
         "a duplicated version tail on open vocabulary is malformed (R3: exactly one)")
     add("no_such_family:leaf:V1", None, rules.tokens["case_malformed"],
         "a version attempt in last place on open vocabulary is malformed, not a missing tail")
-    # CIRISConstitution#128 — the version-shape detectors are full-match too, so a segment
+    # The version-shape detectors are full-match too, so a segment
     # carrying a trailing newline is never a version or a version attempt; a strict
     # byte-exact port (`\z`) answers these exactly as the reference does.
     add("no_such_family:v1\n:v2", None, None,
-        "a newline-bearing segment is not a version attempt (#128): open vocabulary, no charset rule binds an unregistered family's own segments")
+        "a newline-bearing segment is not a version attempt: open vocabulary, no charset rule binds an unregistered family's own segments")
     add("no_such_family:V1\n:v2", None, None,
-        "same as above with an uppercase v — not a version attempt once the detector is full-match (#128)")
+        "same as above with an uppercase v — not a version attempt once the detector is full-match")
     add("system:foo:v1beta\n:v1", "system:*", rules.tokens["case_malformed"],
-        "under a registered wildcard the vocab pattern binds the leaf, and a newline fails it (#128, #116)")
+        "under a registered wildcard the vocab pattern binds the leaf, and a newline fails it")
     add("no_such_family:v1beta:v2", None, None,
         "a family segment that merely starts v+digit is open vocabulary when a valid version follows")
     add("v1:v2", None, rules.tokens["case_malformed"],
@@ -576,7 +576,7 @@ def self_test(manifest):
             problems.append("reserved stem %r admitted an unminted leaf as open vocabulary" % stem)
     for v in generate_vectors(manifest):
         got, _, refusal = match_family(rules, v["dimension"])
-        # exact: every vector names the family the reference itself answers (#116)
+        # exact: every vector names the family the reference itself answers
         if got != v["family"] or refusal != v["refusal"]:
             problems.append("vector %r: expected (%r, %r) got (%r, %r)"
                             % (v["dimension"], v["family"], v["refusal"], got, refusal))
@@ -613,11 +613,11 @@ def main(argv):
                 ("contract", "every consumer replays these against its own matcher; "
                              "expected (family, refusal) per dimension, exactly as the reference "
                              "answers them — a malformed form is attributed to the registered leaf it "
-                             "mutates where one exists, else to its wildcard parent (#116). Patterns are "
+                             "mutates where one exists, else to its wildcard parent. Patterns are "
                              "applied whole-segment (full-match): a `$` anchor never admits a trailing newline"),
             ])),
             ("vectors", generate_vectors(manifest)),
-            ("row_type_vectors", generate_row_type_vectors(manifest)),   # CC 2.4 (#137)
+            ("row_type_vectors", generate_row_type_vectors(manifest)),   # CC 2.4
             ("polarity_vectors", generate_polarity_vectors(manifest)),   # CC 3.1.7 R4
         ])
         text = json.dumps(out, indent=2) + "\n"

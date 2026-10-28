@@ -49,10 +49,10 @@ jobs:
       - name: RootReach closes
         working-directory: formal/mesh_net
         run: java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-rr" -deadlock -config RootReach.cfg RootReach.tla
-      - name: The ruled configuration closes (#141)
+      - name: The normative configuration closes
         working-directory: formal/mesh_net
         run: java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/tlc-ruled" -deadlock -config MeshNet_ruled.cfg MeshNet3.tla
-      - name: The shipped configurations each fail their one invariant (the defects #141 corrects)
+      - name: The pre-rule configurations each fail their one invariant
         working-directory: formal/mesh_net
         run: |
           set +e
@@ -137,7 +137,7 @@ jobs:
           lean Guarantees.lean 2>&1 | tee lean.log
           test "${PIPESTATUS[0]}" -eq 0
           ! grep -qi sorry lean.log
-      - name: Temporal half — the ruled and swapped worlds close; each rule's dye test fires
+      - name: Temporal half — the normative and swapped worlds close; each rule's dye test fires
         working-directory: formal/guarantees
         run: |
           set +e
@@ -184,7 +184,7 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: The ruled configurations close; each must-fail twin fails its named property
+      - name: The normative configurations close; each must-fail twin fails its named property
         working-directory: formal/self_roster
         run: |
           set +e
@@ -279,7 +279,7 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: Both ruled configurations close; each twin fails its named property
+      - name: Both normative configurations close; each twin fails its named property
         working-directory: formal/consent
         run: |
           set +e
@@ -395,7 +395,7 @@ jobs:
           java-version: '21'
       - name: Fetch tla2tools (pinned release)
         run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
-      - name: The ruled configurations close on every draw and every share
+      - name: The normative configurations close on every draw and every share
         working-directory: formal/census_ballot
         run: |
           set -e

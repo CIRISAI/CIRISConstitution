@@ -1,8 +1,7 @@
 ---------------------------- MODULE Membership ----------------------------
-(* The membership ceremony of a family or community (CC 3.1.3.2), plane model B of
-   review/notes/formal_closure_rc9_2026-10-18.md section 5.
+(* The membership ceremony of a family or community (CC 3.1.3.2).
 
-   Admission is two consents (CC 3.1.3.2, ruling of 2026-09-30): the group's, on a cosigned
+   Admission is two consents (CC 3.1.3.2): the group's, on a cosigned
    membership:widening judged under the group's consensus_protocol (CC 3.3.4), and the joiner's
    own membership:acceptance, bound to exactly one membership:proposal by proposal_hash. The
    proposal is an invitation and carries no quorum. A removal is cosigned like a widening; a
@@ -32,7 +31,7 @@
    proposals per invitee. Only the current proposal to a key is remembered: a new proposal to K
    waits until no change on K is held, so a held widening always names K's current proposal.
 
-   Rule switches (the ruled values first; any other value is a must-fail twin):
+   Rule switches (the CC values first; any other value is a must-fail twin):
      Binding      "spent"    - CC 3.1.3.2 admission (1)-(4), and a proposal seats at most once
                   "literal"  - (1)-(4) only: a proposal stays usable after it seated someone
                   "none"     - any acceptance K ever signed satisfies the widening
@@ -341,7 +340,7 @@ Inv_ResignationEnabled == \A k \in active : ENABLED Resign(k)
 Inv_LeavingNotUndone ==
   [][\A k \in Keys : Lands(k, "widen") => slot[k].gen > leaveGen[k]]_vars
 
-(* The CC 3.1.3.2 ruling: every seated key is seated on its own signature. *)
+(* CC 3.1.3.2: every seated key is seated on its own signature. *)
 Inv_JoinerConsented == active \subseteq consentSeat
 
 (* CC 3.1.3.2 expires_at: no proposal is open past its window, no change held past its own. *)

@@ -1,9 +1,8 @@
 /-
-  formal/trust_set/TrustSet.lean — the reader's pinned trust set, as the steward stated it
+  formal/trust_set/TrustSet.lean — the reader's pinned trust set
 
-  "One of the options is 'who I trust', and that is how you would add licensors, or licensors
-  of licensors, or a class of licensor (medical, legal, financial), or remove them — you can
-  even remove CIRIS L3C as the trust root." (steward, 2026-10-28)
+  "Who I trust" is one of the reader's options: it adds licensors, licensors of licensors, or a
+  class of licensor (medical, legal, financial), and removes them — the shipped root included.
 
   CC 4.4.3.8: the pinned trust set is a graph and its roots are pluggable; a reader trusts an
   authority by hanging an acceptance edge off its own base, "added and removed freely"; the
@@ -270,7 +269,7 @@ theorem reaches_perm (w w' : World) (h : ∀ e, e ∈ w.edges ↔ e ∈ w'.edges
   · exact absurd (h1 hx) (by simp [hy])
   · rfl
 
-/-! ## The worked world: the steward's sentence, as a run
+/-! ## The worked world: the clause as a run
 
   The reader ships with one edge, to the CIRIS root (key 1), every class, depth 5. A hospital
   board (key 2) declares the medical class and licenses a clinician (key 10). The reader adds

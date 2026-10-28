@@ -1,6 +1,6 @@
 # `formal/affiliation` — the affiliation tier split in two, and the promises it maps to
 
-The steward (2026-10-28): "I am a solo practitioner who wants the data protections — it just is; how do we protect that small-business scenario while keeping the protection? The second protection is for people; we don't want affiliations to become where despots despot."
+Two things have to hold at once: a sole practitioner who wants the data protections is an affiliation, and an affiliation never becomes a place where one voice rules its members.
 
 **The split.** An affiliation bundles two things the text can hold apart. The **data regime** (CC 4.4.3.2.8: classification, retention, legal hold, erasure policy, designated officials, disclosure, custody) attaches to the record and its subjects at any size, so a one-member affiliation exists, holds data and licenses under the limbs from creation. The **floors** (CC 4.5.13: no single vote admits, no single vote removes, a named moderator) bind power over *members*, and where the body has one deciding voice the second voice comes from outside the deciding seat: the designated official where that is a distinct key, or a review-holder of the body that conferred or oversees the affiliation. Appointment is the body's signature plus the appointee's own acceptance, two consents.
 
@@ -16,6 +16,6 @@ The steward (2026-10-28): "I am a solo practitioner who wants the data protectio
 | `commitments_mapped` | every rule descends from a named promise and the five promises the split touches (1, 2, 4, 6, 8) are each carried by a rule | — |
 | the worked world | the solo practitioner: hires with acceptance; cannot fire alone; cannot countersign herself; fires with the professional body's review-holder; the limbs bind from day one; a two-seat partnership decides as a community | — |
 
-**What it does not model.** The reconsideration path a refused act falls into (CC 4.5.5); the protocol arithmetic of a multi-seat body (`formal/membership`, `formal/two_path`); the data limbs' own rules (CC 4.4.3.2.8 prose; Annex I). The wire door is CIRISPersist#1143.
+**What it does not model.** The reconsideration path a refused act falls into (CC 4.5.5); the protocol arithmetic of a multi-seat body (`formal/membership`, `formal/two_path`); the data limbs' own rules (CC 4.4.3.2.8 prose; Annex I). The wire shape is the implementer's; the register's staged rows name the ticket.
 
 **Running.** `lean Affiliation.lean`; the CI job `reciprocity` compiles it beside the cascade and the trust set.

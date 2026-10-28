@@ -1,10 +1,10 @@
 # `formal/consent` — the consent plane, model-checked
 
-**Why.** Plane model "C" of `review/notes/formal_closure_rc9_2026-10-18.md` §5. The consent plane
+**Why.** The consent plane
 had four state-table variables (`consent.state`, `consent.decay`, `consent.community_trust`,
 `consent.replication`) and no model. This module realises all four and checks the rules CC 3.3.1,
-3.3.7, 2.4.1.1 and 2.6.7 state about them. It also checks the 2026-10-18 ruling on
-CIRISConstitution#179: the owner may author the capture grant, and the node, the owner and the
+3.3.7, 2.4.1.1 and 2.6.7 state about them. It also checks CC 3.3.1's revocation
+authority: the owner may author the capture grant, and the node, the owner and the
 agent key are each listed so that each may withdraw.
 
 **What it models.** One receiver, holding the rows it admitted in admission order (the index is
@@ -50,12 +50,11 @@ its owner. The node ships captured traces to a peer only while a grant naming th
 | `consent.replication` | `p \in replLive` per peer | `none`, `granted` |
 
 **Configurations.** Constants are the same in all five: instants `0..4`, `W = 1`, `TX = 2`,
-`valid_until` two instants after the grant, at most three admitted rows. TLA+ tools 1.7.4, run
-2026-10-18.
+`valid_until` two instants after the grant, at most three admitted rows. TLA+ tools 1.7.4.
 
 | Config | Mode, planes | Reading | TLC verdict |
 |---|---|---|---|
-| `Consent_ruled_ct.cfg` | `ruled`, `ct` | the CC 3.3.1 fold, #179 standing, the CC 2.6.7 bound; capture and replication | **closes**: every invariant holds, 4,210,336 distinct states, depth 19 |
+| `Consent_ruled_ct.cfg` | `ruled`, `ct` | the CC 3.3.1 fold and standing, the CC 2.6.7 bound; capture and replication | **closes**: every invariant holds, 4,210,336 distinct states, depth 19 |
 | `Consent_ruled_st.cfg` | `ruled`, `st` | the same fold over the subject's stance; scope, expiry, decay; the three temporal properties | **closes**: every invariant and property holds, 467,692 distinct states, depth 16 |
 | `Consent_no_boundary.cfg` | `no_boundary`, `ct` | the latest grant wins whatever was revoked | `Inv_RevocationIsBoundary` violated in 3 steps: `o1` grants at 0, `o1` revokes at 0, a trace is captured at 0 |
 | `Consent_literal_signer.cfg` | `literal_signer`, `ct` | only the node may revoke the capture grant | `Inv_OwnerCanRecant` violated in 1 step: `o1` grants at 0, and `o1` then has no admissible revocation |
@@ -69,8 +68,8 @@ its owner. The node ships captured traces to a peer only while a grant naming th
 - `no_W` also breaks `Inv_LateRevocationWithinW`, the same bound read from the revocation side.
   With both removed it closes (15,462,256 distinct states).
 
-**Witnesses.** The ruled closes are not vacuous. Each scenario below is the negation of a `Wit_*`
-predicate in the module, and TLC reaches it under the ruled reading.
+**Witnesses.** The closing runs are not vacuous. Each scenario below is the negation of a `Wit_*`
+predicate in the module, and TLC reaches it under the CC reading.
 
 - `o1` signs after `TX` with a grant dated before `TX`, within `W`, and a capture rests on it.
   This is the honest divergence CC 2.6.7 states.
@@ -89,10 +88,10 @@ predicate in the module, and TLC reaches it under the ruled reading.
 | `Inv_RevocationIsBoundary` | No capture or `analyze` use at an instant after a revocation the deciding node held, unless it also held a grant dated after that revocation and not after the use. Stated without the fold. | 3.3.1 (`community_trust` fold), 2.4.1.1 rules 2–4 |
 | `Inv_RevokedOverridesGranted` | No use rests on a grant dated at the same instant as a held revocation. | 3.3.1 (`revoked` overrides `granted`; grants at or before `R` are out) |
 | `Inv_StrangerNeverGrants` | No held row is a stranger's. A held capture grant is the node's or its owner's at the grant's `asserted_at`. A held `st` grant or revocation is the subject's. | 3.3.1 (emitter classes; "neither the node nor its owner … MUST NOT be folded") |
-| `Inv_OwnerCanRecant` | While a grant stands, a revocation signed now by the node, the current owner or the agent key (`ct`), or by the subject (`st`), is admitted. The model's row budget is not counted as a party's limit. | 3.3.1 ("the node's owner MUST always be able to revoke"), #179 |
+| `Inv_OwnerCanRecant` | While a grant stands, a revocation signed now by the node, the current owner or the agent key (`ct`), or by the subject (`st`), is admitted. The model's row budget is not counted as a party's limit. | 3.3.1 ("the node's owner MUST always be able to revoke") |
 | `Inv_BackdateBounded` | No capture rests on a row from the withdrawn signer `o1` admitted at or after `TX + W`. | 2.6.7 (a withdrawn delegate keeps at most `W` of backdatable authority) |
 | `Inv_LateRevocationWithinW` | A revocation admitted after a use reaches back to it only if the use's instant is within `W` of the revocation's `asserted_at`. | 2.6.7 (a withdrawal takes full effect everywhere within `W`) |
-| `Inv_EmptyScopeMatchesNothing` | Every `analyze` use rests on a grant whose `scope` names `analyze`. | 3.3.1 (`consent:scope`, #103), 3.4.5 |
+| `Inv_EmptyScopeMatchesNothing` | Every `analyze` use rests on a grant whose `scope` names `analyze`. | 3.3.1 (`consent:scope`), 3.4.5 |
 | `Inv_DecayForwardOnly` | Decay starts only when the `st` fold reads revoked or expired. | 3.3.1 (`consent:decay:{stage}`) |
 | `Prop_DecayForwardOnly` | Decay never steps backward (action property). | 3.3.1 |
 | `Prop_DecayCompletes` | Once started, decay reaches `complete`. | 3.3.1 |

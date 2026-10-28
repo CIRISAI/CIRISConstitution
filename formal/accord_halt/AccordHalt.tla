@@ -1,10 +1,10 @@
 --------------------------- MODULE AccordHalt ---------------------------
 (* The halt's fire path, two ways, against an adversary that watches the network.
 
-   Mode = "proposal": the CC 4.2.6 (rc7) path — a server-issued proposal opens a window, holders
+   Mode = "proposal": the earlier proposal path — a server-issued proposal opens a window, holders
      participate over its nonce, a decision fires. The proposal is VISIBLE before any signature
      exists; the adversary may act on it (jam the channels, take the server down, coerce).
-   Mode = "row": the proposed path — a halt is one self-contained signed row by any holder,
+   Mode = "row": the CC 4.2.1.1 path — a halt is one self-contained signed row by any holder,
      pre-signable offline, fired on receipt at every subscribed node and latched. The only
      observable event is the row itself, which lands in the step it is observed.
 
@@ -29,7 +29,7 @@ VARIABLES honest,       \* holders not coerced
           resumeSigs    \* holders who signed lifecycle:active since the latch
 vars == <<honest, intent, serverUp, proposal, participated, sealed, stolen, jammed, seen, halted, resumeSigs>>
 
-\* The latch as seen on the subscribed nodes (one node in the rc7 instance). A strict majority of
+\* The latch as seen on the subscribed nodes (one node in this instance). A strict majority of
 \* the standing roster resumes (CC 4.2.1.1); with three holders that is the two the text first said.
 LatchedSub == \E n \in Subscribed : halted[n]
 StrictMajority(S) == Cardinality(S) * 2 > Cardinality(Holders)

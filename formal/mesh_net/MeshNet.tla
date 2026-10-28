@@ -5,12 +5,12 @@
 
      MeshNet_shipped_scope.cfg  ClaimScope = "federation", ClaimsBind = FALSE
                           -- holding claims for community / public content are emitted at federation
-                             scope (persist's holds_bytes builder; the rc6/rc7 text). Inv_Invisible fails.
+                             scope (an implementation's holds_bytes builder). Inv_Invisible fails.
      MeshNet_shipped_bind.cfg   ClaimScope = "content", ClaimsBind = TRUE
-                          -- a live holding claim is folded as a content binding (persist v53, witnessed
-                             on #141). Inv_ClaimNotBinding fails.
+                          -- a live holding claim is folded as a content binding (an implementation's
+                             fold). Inv_ClaimNotBinding fails.
      MeshNet_ruled.cfg          ClaimScope = "content", ClaimsBind = FALSE
-                          -- the #141 ruling: one holding claim at the content's own scope; a claim is
+                          -- CC 2.4.1.1 and 5.4.6: one holding claim at the content's own scope; a claim is
                              never a binding. Every property holds.
 
    Scope, stated: three persons, three nodes (one a server), one family, one community, one
@@ -36,7 +36,7 @@ VARIABLES scope, author, held, claimed, allow, withdrawn, members, mods, federat
 vars == <<scope, author, held, claimed, allow, withdrawn, members, mods, federating, restricted>>
 
 \* Derived, not stored: the tripwire has run on exactly the blobs published into the Commons or a
-\* public room (CC 1.13, #142); scope is immutable, so this is a function of scope.
+\* public room (CC 1.13); scope is immutable, so this is a function of scope.
 scanned == {b \in Blobs : scope[b] \in {"commons", "pub"}}
 
 None == "none"
@@ -56,7 +56,7 @@ InAudience(n, c) ==
 Observers(c) == IF c = "commons" THEN Persons ELSE members[c]
 
 \* The bytes plane's liveness fold. With ClaimsBind, a live holding claim is read as a binding
-\* that keeps withdrawn content live (the defect persist witnessed on CIRISConstitution#141).
+\* that keeps withdrawn content live (a defect an implementation exhibited).
 HasClaim(b) == b \in claimed
 Live(b) == b \notin withdrawn \/ (ClaimsBind /\ HasClaim(b))
 
@@ -78,7 +78,7 @@ Init ==
 
 \* A node's owner authors a blob at a scope the owner belongs to. Scope is immutable: a promotion is a
 \* NEW Contribution of the same bytes at the wider scope (CC 5.2), so it is this action again. Posting
-\* into the Commons or a public room is a publication: the tripwire runs at that seam (CC 1.13 / #142).
+\* into the Commons or a public room is a publication: the tripwire runs at that seam (CC 1.13).
 Author(n, b, c) ==
   /\ scope[b] = None
   /\ Owner[n] \in members[c]
@@ -129,7 +129,7 @@ ModLapse(c, p) ==
                   /\ federating' = [federating EXCEPT ![c] = FALSE]
   /\ UNCHANGED <<scope, author, held, claimed, allow, withdrawn, members, restricted>>
 
-\* Open admission to a public room (#142): the joiner's own acceptance seats them.
+\* Open admission to a public room (CC 4.5.4): the joiner's own acceptance seats them.
 JoinPub(p) ==
   /\ p \notin members["pub"] /\ federating["pub"]
   /\ members' = [members EXCEPT !["pub"] = @ \cup {p}]

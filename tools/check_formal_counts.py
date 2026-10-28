@@ -68,7 +68,7 @@ def main():
         ("formal/cewp_node/README.md", r"the (\w+) entries `T0`–`T(\d+)`", (WORDS.get(c["entries"], str(c["entries"])), last)),
         ("formal/cewp_node/README.md", r"\((\d+) states, (\d+) variables, (\d+) planes\) and the (\d+) properties",
          (c["states"], c["variables"], c["planes"], c["properties"])),
-        ("formal/cewp_node/README.md", r"the (\d+) atoms \(CC's since 2026-10-18; catalogue version (\d+)\)", (c["atoms"], c["catalogue_version"])),
+        ("formal/cewp_node/README.md", r"the (\d+) atoms \(catalogue version (\d+)\)", (c["atoms"], c["catalogue_version"])),
         ("formal/ADEQUACY.md", r"`STATE_TABLE\.tsv` \((\d+) states, (\d+) variables\) \+ `INVARIANTS\.tsv` \((\d+) properties\)",
          (c["states"], c["variables"], c["properties"])),
         ("formal/ADEQUACY.md", r"(\d+) of (\d+) variables carry an invariant; the (\d+) without are",

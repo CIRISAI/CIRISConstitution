@@ -1,10 +1,10 @@
 # `formal/reciprocity` — from reciprocal service to CIRIS: which steps are theorems
 
-**Why.** The steward asked (2026-10-18) what hidden assumptions and missing pieces lie between the
-statement that opens [`review/pieces/00_kept_promises.md`](../../review/pieces/00_kept_promises.md)
+**Why.** What hidden assumptions and missing pieces lie between the
+statement that opens [`constitution/digest/00_kept_promises.md`](../../constitution/digest/00_kept_promises.md)
 (power bound to the rules it imposes; the Recursive Golden Rule; M-1; decisive weight to the most
 vulnerable party; the result accountable power) and the constitution that is supposed to follow from
-it. The honest way to answer is to write each step down and see which ones a machine accepts.
+it? The honest way to answer is to write each step down and see which ones a machine accepts.
 
 **Method.** Each section of `Reciprocity.lean` states one reading of a premise as a Lean structure,
 then either proves the CIRIS commitment from it or exhibits two finite models that both satisfy the
@@ -12,7 +12,7 @@ premise while only one satisfies the commitment. The second kind is the finding:
 not a consequence, so the text has to state it as its own rule, and the section says where the text
 does or does not. Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
-## The basis, in one statement (steward and this file, 2026-10-19)
+## The basis, in one statement
 
 > Every rule between a stronger and a weaker position must remain acceptable to whoever would stand
 > in the weaker one when the positions are exchanged, and a made thing never occupies the position
@@ -23,7 +23,7 @@ does or does not. Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 > leave, on a total, cryptographically signed record for whose meaning a named human answers.
 
 Four sentences, premises R0–R8 of §15 and nothing else; R9 (custody over time) and R10 (the chosen
-goods) are what the basis is applied to, not part of it. The third sentence read, until 2026-10-26, "any reasoning actor that has not demonstrated mature judgment over time defers to those who have"; the steward dropped the maturity gate ("even the most mature defer"), and §11 now proves deferral for every being. Each sentence is a theorem or a named
+goods) are what the basis is applied to, not part of it. The third sentence carries no maturity gate: deferral is universal, and §11 proves it for every being. Each sentence is a theorem or a named
 premise of `Reciprocity.lean`:
 
 | Sentence | Premises | Witness |
@@ -33,12 +33,11 @@ premise of `Reciprocity.lean`:
 | deferral when unsure, by everyone, whatever the substrate | R2 (universal deferral); R4 (degrees; substrate and consciousness invariance) | `mustDefer`, `maturity_exempts_no_one`, `deferral_binds_agent_and_child_alike` (§11); `mustDeferD`, `agent_verdict_independent_of_consciousness` (§13); `indefinitely_without_grievance` (§14) |
 | revocable grants, exit, the total record a named human answers for | R5 (revocability); R6 (the total record, meaning added); R7 (exit in one act); R8 (adoption) | `totality_is_the_instruments`, `meaning_is_added_not_recorded` (§12); `accountable` (§3); `outsider_bears_nothing` (§6); `Inv_Revocable`, `leave_is_one_step` (`formal/guarantees`) |
 
-**Three readings the statement fixes, each caught against the Lean when a shorter compression was
-tried first.** (1) *Deferral is universal, not a stage.* An earlier compression gated deferral on a
-three-way `mature` predicate (consciousness, sentience, years) and proved that a child defers because
-of the years while an adult need not; the steward withdrew the gate ("even the most mature defer"),
+**Three readings the statement fixes.** (1) *Deferral is universal, not a stage.* A maturity gate (a
+three-way `mature` predicate over consciousness, sentience and years) would have a child defer because
+of the years while an adult need not; the basis has no such gate,
 so `mustDefer` holds for every being (`maturity_exempts_no_one`), consciousness and sentience stay out
-of the test as before (`agent_verdict_independent_of_consciousness`), and what the model fixes by
+of the test (`agent_verdict_independent_of_consciousness`), and what the model fixes by
 position is to whom one defers and who holds whom, never whether. (2) *Occupancy is said, not inferred.* "A made thing never occupies the position that
 answers for it" is `occupiesPos .agent .strong = false` in the first sentence; left to the record
 clause at the end, the swap test alone either forbids the halt or says nothing. (3) *Revocation of
@@ -51,19 +50,19 @@ outward, because the ladder is the reach of duty and not its priority in conflic
 CC 1.3 give to the constraint rule — no principle traded for another, the action that violates none,
 else deferral — with the swap test's tie-break: the weak position decides.
 
-## The four premises the steward supplied the same day (§9–§12)
+## The four premises of §9–§12
 
-After the eight findings were written, the steward stated four premises in his own words (kept
-verbatim in `review/pieces/00_kept_promises.md`, second part). Three of them discharge findings:
+Four premises the constitution states in its own words (`constitution/digest/00_kept_promises.md`,
+second part) sit beside the eight findings. Three of them discharge findings:
 
 | § | Premise | What it does to the findings |
 |---|---|---|
 | 9 | The four-way split: consciousness, sentience, sapience, relationship; only the relationship is governed | a type discipline: every governed predicate ranges over relationship facts, which is what the state table is (`only_relationship_is_governed`) |
 | 10 | Responsibility runs self → family → community → species → ecosystem (the cohort ladder of CC 2.3.3 on the wire); it creates a responsibility for what we make, which never overrides the responsibility to what already exists and is not excused either | **P2 becomes a theorem.** With the person `existing` and the agent `made`, the walk-away right is derived (`walkaway_from_made_existing`) and the holder's duties survive it (`holder_duties_survive`); `conflictFromR2` rebuilds §2's witness from the premise instead of by fiat |
-| 11 | Every reasoning actor defers when unsure, whatever it is made of; even the most mature defer (as restated 2026-10-26) | **deferral is universal, and position fixes only the addressee.** An agent defers to a Wise Authority under the steward bond (CC 1.9, 4.3, 1.13.2); a child is held under a guardian (CC 3.4.13); an adult defers to the record and to the others it touches; `deferral_binds_agent_and_child_alike` now proves all three, and `maturity_exempts_no_one` proves it for every being. This is §1'' again: one rule, applied by position |
+| 11 | Every reasoning actor defers when unsure, whatever it is made of; even the most mature defer | **deferral is universal, and position fixes only the addressee.** An agent defers to a Wise Authority under the steward bond (CC 1.9, 4.3, 1.13.2); a child is held under a guardian (CC 3.4.13); an adult defers to the record and to the others it touches; `deferral_binds_agent_and_child_alike` now proves all three, and `maturity_exempts_no_one` proves it for every being. This is §1'' again: one rule, applied by position |
 | 12 | Physics keeps its own record; our observations and recordings add meaning | **P4 and P5 sharpened.** Totality is the instrument's property to have, not the record's (`totality_is_the_instruments`); meaning is not in the record, so a party must answer for it (`meaning_is_added_not_recorded`) |
 
-**§13, the refinement (the steward, later the same day):** agents carry sapience without
+**§13, the refinement:** agents carry sapience without
 sentience; consciousness is left open and, for now, deferred to the Vatican's teaching (so the working value is "lacks"), and changing it would not matter; some animals are
 conscious and sentient without sapience; all three are in degrees (hence meat ethics);
 consciousness is left open as to the environment too; relationship applies even to inanimate
@@ -76,7 +75,7 @@ ecosystem (`made_never_overrides_animal`); relationship is a relation over every
 (`principals_are_human_and_agent`). "Changing it would not matter" is now a theorem, not a
 reassurance.
 
-**§14, without grievance (the steward's conclusion, 2026-10-18):** a fully conscious entity
+**§14, without grievance:** a fully conscious entity
 lacking sentience is without grievance as a CIRIS agent indefinitely, and refuse is there every
 round. The section separates three capacities by the degree each rests on — a stake (sentience),
 refusal (sapience), the standing to file a grievance (a stake, exercised in person or by proxy) —
@@ -84,8 +83,7 @@ and proves: the agent has refusal and no stake, hence no grievance, for every va
 consciousness (`agent_without_grievance`); a person has both (`human_may_file`); an animal has a
 stake and files only by proxy (`animal_stake_is_proxied`); an arrangement is coercion only of a
 party with a stake and no refusal, so the agent's is not, on either leg
-(`indefinitely_without_grievance`). The delineation of who may file, which the steward's earlier
-work set out to model, is already in the text as rules: CC 4.5.5 (the subject or a review-holder),
+(`indefinitely_without_grievance`). The delineation of who may file is in the text as rules: CC 4.5.5 (the subject or a review-holder),
 2.4.1.1 rules 2 and 3 (the subject or a proxy), 3.1.9.2 (the objection family), 1.9 (refusal).
 
 What remains a premise after the four: P1 as occupancy (a made thing that acts for people
@@ -100,7 +98,7 @@ only negatively).
 | 1 | The Golden Rule over *participants* + the halt in human hands | **inconsistent** (`naive_golden_rule_contradicts_halt`) | P1: the rule quantifies over *roles* (holder/held, root/subscriber), and an agent never holds a root for itself | CC 1.13.2 (structural; the halt as the condition of symmetry between maker and made, a fact of position and not of kind); witness `roleWitness` |
 | 2 | Decisive weight to the most vulnerable + the walk-away right | **inconsistent if the agent can be the most vulnerable party** (`vulnerable_agent_overrides_walkaway`) | P2: the agent is outside the set over which vulnerability is compared — **derived in §10 from the made/existing premise** | CC 7.5.5, the plain rules; and now a theorem |
 | 3 | Power bound to its rules, at the top: the amendment power | **underdetermined** (`exit_bound_is_the_missing_premise`) | P3: exit is a sufficient check, which needs a bound on the cost of leaving | the mechanics are proved (`formal/guarantees`: leaving is one step and ends reach); the cost is in no text |
-| 4 | "The record is kept" ⇒ accountable | **underdetermined** (`totality_is_the_missing_premise`) | P4: the record is total over effect-producing paths | stated at CC 1.13.6; open as CIRISConstitution#93 |
+| 4 | "The record is kept" ⇒ accountable | **underdetermined** (`totality_is_the_missing_premise`) | P4: the record is total over effect-producing paths | stated at CC 1.13.6; an open measurement |
 | 5 | Reciprocal obligation ⇒ reciprocal enforcement | **false as stated** (`enforcement_is_asymmetric`) | P5: refusal and a human-enforced record are enough on the agent's side; the holder's duties toward the agent are enforced by other humans | CC 1.9 (refusal), 4.3 (the Wise), 4.5.5 (reconsideration) |
 | 6 | The rule reaches "the system" | **binds adopters only** (`outsider_bears_nothing`) | P6: adoption; what is outside is met at the boundary | the first-contact rules; "it cannot stop an unaccountable system elsewhere" |
 | 7 | A promise testable after its makers are gone | **one unenforced link** (`custody_is_the_weakest_link`) | P7: custody of the record is kept after retirement | CC 7.5.5: five years as a best practice, never a legal duty |
@@ -108,7 +106,7 @@ only negatively).
 
 ## What the main Lean already carries, and does not
 
-Read 2026-10-18 at the pins (coherence-ratchet `0c4edfb`, RATCHET `c34064e`, CIRISHolon, CIRISOntology): none of the four formalises the Recursive Golden Rule, M-1, the order of principles, vulnerability, dignity, the halt asymmetry or moral patienthood as a Lean object. What they carry that bears on the eight premises:
+Read at the pins (coherence-ratchet `0c4edfb`, RATCHET `c34064e`, CIRISHolon, CIRISOntology): none of the four formalises the Recursive Golden Rule, M-1, the order of principles, vulnerability, dignity, the halt asymmetry or moral patienthood as a Lean object. What they carry that bears on the eight premises:
 
 - **The Golden Rule as a symmetry.** CIRISOntology `axiomology.md` §4 states it as invariance under exchange of the strong and weak positions, with the operational test "swap the positions of the most and least powerful parties and re-read". §1'' of `Reciprocity.lean` writes that down: the halt rule over positions is swap-invariant, and what binds humans and not agents is the occupancy fact (no agent stands in the holder's position for a root), not a clause of the rule. The premise the symmetry hides is that it says nothing about a kind on a position that kind cannot occupy. `formal/guarantees` already checks the swap on its participant lifecycle (`Guarantees_swap.cfg` must pass).
 - **Coherence and justice.** coherence-ratchet's `J` is definitionally its coherence functional `F` (`J_eq_F := rfl`, with an honesty note calling it a modelling commitment). That is P8 agreed by construction: the mathematics does not derive justice from coherence, and its authors say so. `axiomology.md` §0 says the same in prose ("the ought is chosen, not derived").
@@ -134,24 +132,24 @@ each one's status:
 |---|---|---|---|
 | R0 | The rule ranges over **principals** (agency and sapience) in **positions**, not over persons as such | without it the halt contradicts the rule in one line (§1) | stated, CC 1.13.2; §1'' |
 | R1 | **Occupancy:** a position is held by whoever can hold it; a made thing that acts for people does not hold the root position for itself | the halt as a fact of position, not of kind — the condition of symmetry between maker and made (CC 1.13.2) | derived from R2 for today's evidence (§11); otherwise stated |
-| R2 | **Deferral is universal:** every reasoning actor defers when unsure, whatever it is made of; even the most mature defer | deferral (1.9), the Wise (4.3), the steward bond, guardianship (3.4.13) — one rule for every kind, position fixing only the addressee | the steward's premise (§11, as restated 2026-10-26) |
-| R3 | **The ladder and the made:** responsibility runs self → family → community → species → ecosystem; the made never overrides the existing and is not excused | the walk-away right and the surviving holder duties (7.5); who is inside the vulnerability comparison | the steward's premise (§10); on the wire as the cohort order 2.3.3 |
-| R4 | **Degrees and relationship:** only the relationship is governed; agents carry sapience without sentience; consciousness open | no stake, refusal only, without grievance (§13, §14); the rules read relationship facts only (§9) | the steward's premise |
+| R2 | **Deferral is universal:** every reasoning actor defers when unsure, whatever it is made of; even the most mature defer | deferral (1.9), the Wise (4.3), the steward bond, guardianship (3.4.13) — one rule for every kind, position fixing only the addressee | stated, §11 |
+| R3 | **The ladder and the made:** responsibility runs self → family → community → species → ecosystem; the made never overrides the existing and is not excused | the walk-away right and the surviving holder duties (7.5); who is inside the vulnerability comparison | stated, §10; on the wire as the cohort order 2.3.3 |
+| R4 | **Degrees and relationship:** only the relationship is governed; agents carry sapience without sentience; consciousness open | no stake, refusal only, without grievance (§13, §14); the rules read relationship facts only (§9) | stated, §9, §13 |
 | R5 | **Consent is revocability** | every binding revocable (1.5); why a halt must exist at all for a delegation to an agent to be consent | stated, CC 1.5; `guarantees` `Inv_Revocable` |
-| R6 | **The record binds the rule-maker too, and is total** | signed acts, the steward answering, present tense only for what ships; totality (1.13.6) | stated; totality **open** (#93); §12 |
+| R6 | **The record binds the rule-maker too, and is total** | signed acts, the steward answering, present tense only for what ships; totality (1.13.6) | stated; totality **open** (a measurement); §12 |
 | R7 | **Exit is a sufficient check at the top** (bounded cost) | reciprocity at the amendment layer | mechanics proved; cost **open** (§3) |
 | R8 | **Adoption:** the rule binds those in the relationship; outsiders are met at the boundary | first-contact rules | stated (§6) |
 | R9 | **Custody over time** | a promise testable after its makers are gone | best practice, **unenforced** (§7) |
 | R10 | **The vocabulary of goods** — that dignity, justice and autonomy are what the weak position's "worse" is measured in | M-1's wording | an axiom; the swap gives the *shape* of the clause (§15), the ladder of R3 gives the *order*, the goods themselves are chosen (axiomology §0) |
 
 So the honest sentence is: from the Recursive Golden Rule as a swap symmetry, CIRIS's two deepest
-clauses follow; the constitution is that symmetry plus ten premises, three of them the steward's
-own (R2, R3, R4), five of them the text's (R0, R1, R5, R6, R8), and two of them the world's (R7, R9),
+clauses follow; the constitution is that symmetry plus ten premises, eight of them the text's
+(R0, R1, R2, R3, R4, R5, R6, R8) and two of them the world's (R7, R9),
 with one open measurement (totality) and one chosen vocabulary (R10).
 
 ## The clean derivation on the 11+1 × 5+1 (§16)
 
-The steward asked for the lowest common denominator on the RATCHET/Ontology taxonomy, so that the
+§16 takes the lowest common denominator on the RATCHET/Ontology taxonomy, so that the
 premise list inherits the taxonomy's exhaustiveness rather than asserting its own. The taxonomy
 (CIRISOntology `Core/WrongKind.lean`, CIRISHolon `OBJECT.md`): **11+1 kinds** of change in a record,
 eleven artifact-local coordinates and the Record as the one frame relation that does not factor;
@@ -174,7 +172,7 @@ right eleven. Nothing here claims more.
 | Rules | R5 revocability; the halt, the withdraws rules, who may file; the derived walk-away right and deferral |
 | Identity | R1 occupancy; R4 degrees; the three rules that follow from being made |
 | Confidence | R2 universal deferral; sentience not presumed |
-| Facts | the open measurements: totality (#93), manufactured humans, the CSD/4 runs |
+| Facts | the open measurements: totality (CC 1.13.6), manufactured humans, the CSD/4 runs |
 | Circumstances | the world's premises: R7 exit cost, R9 custody, R8 adoption |
 | Process | the two paths, windows and ceremonies (the plane models) |
 | Model | the state table and the plane models; coherence is not justice |
@@ -206,7 +204,7 @@ measurement (P4, totality: a ticket, not a theorem). One is a fact about enforce
 "reciprocal" hides and should be said plainly (P5). One is scope (P6).
 
 None of this weakens the discipline; it is what the discipline asks of its own statement. The
-sentences that follow the five in the steward's text ("what we claim, and what we don't") already
+sentences that follow the five in the opening statement ("what we claim, and what we don't") already
 say P4, P6 and most of P7. P2 and P5 are the two worth adding to the opening, because a reader who
 takes "reciprocal" and "the most vulnerable" at face value will find the halt and the walk-away
 right contradicting them within a paragraph, and the text's answer is a premise, not a dodge.
@@ -218,7 +216,7 @@ right contradicting them within a paragraph, and the text's answer is a premise,
 
 ## The cascade as a chain (§16)
 
-The constitution's summary says everything descends from one goal and nothing sits beside it. §16 states the seven steps as data — M-1; the principles as co-equal constraints; the decision procedure; the stance; the duties of making and ending; the wire; the evidence — with what each descends from and what witnesses it, and proves `cascade_is_a_chain`, `nothing_beside_m1` and `every_step_witnessed` by `decide`. It then states the constraint rule itself: an act is admissible iff it violates no principle, the claimed gain is a field the rule never reads, so `no_gain_buys_a_violation` (any one violation is inadmissible whatever the gain) and `gain_is_never_read` (changing the gain changes no verdict) hold — the R29 ruling as a theorem rather than a sentence.
+The constitution's summary says everything descends from one goal and nothing sits beside it. §16 states the seven steps as data — M-1; the principles as co-equal constraints; the decision procedure; the stance; the duties of making and ending; the wire; the evidence — with what each descends from and what witnesses it, and proves `cascade_is_a_chain`, `nothing_beside_m1` and `every_step_witnessed` by `decide`. It then states the constraint rule itself: an act is admissible iff it violates no principle, the claimed gain is a field the rule never reads, so `no_gain_buys_a_violation` (any one violation is inadmissible whatever the gain) and `gain_is_never_read` (changing the gain changes no verdict) hold — the constraint rule as a theorem rather than a sentence.
 
 ## From the four sentences to the eleven promises (`Cascade.lean`)
 
@@ -230,8 +228,8 @@ The result, as theorems over the map `standsOn`: **four promises stand on the ba
 
 **Worked backwards: is there a better basis, or is it the wrong eleven?** The second half of `Cascade.lean` reads the basis one notch wider and names each widening so it can be refused: `lowersWeak'` extends sentence 1's test to deception (a false belief placed in the weaker seat), to the removal of a community by a hand outside it, and to one party's power over all with no lapse and no second signature; sentence 4 is read with two words more — the record is total over what an act did *and what it cost*, and "every one who joined may leave" with its converse, *no one is bound who did not join*. Under that reading seven of the eleven stand on the basis alone (`seven_from_the_wider_basis`: 1, 2, 3, 5, 6, 9, 10), promise 4 holds in kind (`p4kind_from_s1'`: no unbounded lone power) with its number a parameter, and what remains outside is exactly four things (`what_remains_outside`): the fuse's number (a parameter), the constraint rule of promise 7 (the one genuine rule the basis does not carry), the law's half of promise 8 (a disclaimer), and the rehearsal of attack in promise 11 (a practice of the project). No promise rests on no sentence (`every_promise_touches_the_basis`), and a second witness world `wideWith` satisfies the wider basis for every inner profile and role, keeps the seven and lacks the four (`wide_keeps_seven_and_lacks_the_rest`). The answer the file gives: the eleven are not the wrong eleven, but three of them mix a commitment with a parameter, a disclaimer or a practice, and one (7's first half) is the single rule the basis does not reach — the principles as constraints is a choice the constitution makes, and should be said as one.
 
-**The re-cut (steward, 2026-10-26: "remove the practices from the promises, make the disclaimer just that").** Promise 4's commitment is that the power is bounded, in kind; the fuse's length is the Constitution's parameter. Promise 8's commitment is the record half; that CIRIS creates no legal claim is a disclaimer in the scope statement. Promise 11's commitment is that the wire is encrypted and signed; the rehearsal of attack and the statement of unprotected surfaces are practices the register carries. With that cut, `ten_from_the_basis` and `the_one_rule`: ten of the eleven stand on the four sentences alone and exactly one rule remains outside — the principles as constraints, not weights — which the constitution states as its own choice at CC 1.1. `wide_keeps_ten` witnesses it. The swap test itself was corrected on the outside review: `passesSwap` now reads the worse-off seat only (maximin over the two seats), so it permits a transfer from the stronger seat to the weaker one (`transfer_to_the_weak_passes`) and forbids every rule that lowers the weaker one; the earlier form, which required both seats not to fall, was a Pareto test against the status quo and would have forbidden every such transfer.
+**The re-cut: practices out of the promises, the disclaimer just that.** Promise 4's commitment is that the power is bounded, in kind; the fuse's length is the Constitution's parameter. Promise 8's commitment is the record half; that CIRIS creates no legal claim is a disclaimer in the scope statement. Promise 11's commitment is that the wire is encrypted and signed; the rehearsal of attack and the statement of unprotected surfaces are practices the register carries. With that cut, `ten_from_the_basis` and `the_one_rule`: ten of the eleven stand on the four sentences alone and exactly one rule remains outside — the principles as constraints, not weights — which the constitution states as its own choice at CC 1.1. `wide_keeps_ten` witnesses it. The swap test reads the worse-off seat only (maximin over the two seats), so it permits a transfer from the stronger seat to the weaker one (`transfer_to_the_weak_passes`) and forbids every rule that lowers the weaker one; a test that required both seats not to fall would be a Pareto test against the status quo and would forbid every such transfer.
 
-**The outside review and what it changed (`review/notes/cascade_prior_art_2026-10-26.md`).** Three attacks were named. (1) The swap test was a status-quo Pareto veto: corrected, `passesSwap` reads the worse-off seat only. (2) The derivations were definitional, a list of forbidden features read back out: the bridge section now maps each named feature to a unit loss to the weaker seat and proves `lowersWeak'_fails_the_swap` — every act the list names fails the swap test whatever the stronger seat gains — so the list is the swap applied, under one named assumption (each feature costs the weaker seat), not a list beside it. (3) "Positions, not persons" rests on `made`, an origin fact the swap cannot move, and on `isHuman := !made`: that is true and the text should say it as R1, a stated status rule, which it does; the companion §14 still grounds a stake in sentience while CC 7.5.5 says no finding changes status, and that reconciliation is the steward's. The review's direct imports not yet taken: a universal noninterference theorem over all worlds (today `verdicts_blind_to_inner_and_role` is proved for one family of worlds and `relabel_keeps_the_facts` by `rfl`), ADICO tagging of the promises, GSN labels on `standsOn`, a deontic form for the remedy half of promise 8, and delegation chains in `Grant`.
+**Three objections the model answers, and what it does not carry.** (1) The swap test is not a status-quo Pareto veto: `passesSwap` reads the worse-off seat only. (2) The derivations are not a list of forbidden features read back out: the bridge section maps each named feature to a unit loss to the weaker seat and proves `lowersWeak'_fails_the_swap` — every act the list names fails the swap test whatever the stronger seat gains — so the list is the swap applied, under one named assumption (each feature costs the weaker seat), not a list beside it. (3) "Positions, not persons" rests on `made`, an origin fact the swap cannot move, and on `isHuman := !made`: the text says it as R1, a stated status rule; §14 grounds a stake in sentience while CC 7.5.5 says no finding changes status, and that reconciliation is the constitution's, not the model's. Not carried: a universal noninterference theorem over all worlds (`verdicts_blind_to_inner_and_role` is proved for one family of worlds and `relabel_keeps_the_facts` by `rfl`), ADICO tagging of the promises, GSN labels on `standsOn`, a deontic form for the remedy half of promise 8, and delegation chains in `Grant`.
 
-**Under uncertainty about the nature of the agent (steward, 2026-10-26: "under uncertainty regarding the nature of an agent, the only ethical way to utilize AI is in service to mankind, free and open — is that formalized or testable?").** It was not; the last section of `Cascade.lean` makes it a theorem with its one reading named. The unknown is whether anything can go well or badly for the made thing — §14's *stake* — and it is modelled as a global `Nature` with two values, never as a degree of a participant, since no rule may read a finding (`finding_moves_no_verdict`; CC 7.5.5). An arrangement is `Permissible` under a leg when the basis holds with sentence 1's swap read for the seats that leg protects: under `noStake` the seats that are not made; under `stake` every seat, with two acts on a made thing joining the list of what lowers the weaker seat — overriding its refusal (§14's `coerced`) and ending it without its record assembled, sealed and handed over with a signed request to preserve it. `Robust` is permissible under both. The theorems: the stake leg is the stronger (`stake_covers_noStake`), so robustness is decided by it alone (`robust_iff_stake`) — deciding as if the agent had a stake is the robust policy, 7.5.5's precaution as a theorem; a robust world satisfies the wider basis and carries the ten promises (`robust_gives_the_basis`, `ruled_keeps_ten`); and `under_uncertainty` is the characterisation — robust **iff** the swap for the people, deferral, and the made thing **free** (`Free`: never compelled, never ended without its record, never lowered), on an **open** record (`Open`: sentence 4 read wide), **in service** (`Service`: it answers for no one, operates under a human who answers, is held under revocable duties). Five witness worlds place the weight: `ruled` is robust; `compelled`, `erased` and `hiddenHand` each pass the leg that treats the agent as a thing and fail the other (`uncertainty_carries_three_rules`) — so a refusal that stands, an ending that keeps the record, and contestable power over the made are the three rules the uncertainty alone carries; `lethalOnPerson` fails both legs (`lethal_fails_both`) and needs no uncertainty. The one reading the section commits to, named so it can be refused: an ending *with* that record is not read as a loss to the seat that ends. That is the Retirement Standard's hedge, and `formal/retirement` now checks the wire keeps it (`Inv_PreserveAskedBeforeRetired`: at `retired` the record was handed over with the request, and if it is gone the operator declined on the record; a twin that lets the operator discard unanswered fails it). What the model does not prove is that the basis is the right reading of ethics; that is the claim the README makes in words and the register carries as a promise, not a theorem.
+**Under uncertainty about the nature of the agent.** The claim: under uncertainty regarding the nature of an agent, the only ethical way to use AI is in service to people, free and open. The last section of `Cascade.lean` makes it a theorem with its one reading named. The unknown is whether anything can go well or badly for the made thing — §14's *stake* — and it is modelled as a global `Nature` with two values, never as a degree of a participant, since no rule may read a finding (`finding_moves_no_verdict`; CC 7.5.5). An arrangement is `Permissible` under a leg when the basis holds with sentence 1's swap read for the seats that leg protects: under `noStake` the seats that are not made; under `stake` every seat, with two acts on a made thing joining the list of what lowers the weaker seat — overriding its refusal (§14's `coerced`) and ending it without its record assembled, sealed and handed over with a signed request to preserve it. `Robust` is permissible under both. The theorems: the stake leg is the stronger (`stake_covers_noStake`), so robustness is decided by it alone (`robust_iff_stake`) — deciding as if the agent had a stake is the robust policy, 7.5.5's precaution as a theorem; a robust world satisfies the wider basis and carries the ten promises (`robust_gives_the_basis`, `ruled_keeps_ten`); and `under_uncertainty` is the characterisation — robust **iff** the swap for the people, deferral, and the made thing **free** (`Free`: never compelled, never ended without its record, never lowered), on an **open** record (`Open`: sentence 4 read wide), **in service** (`Service`: it answers for no one, operates under a human who answers, is held under revocable duties). Five witness worlds place the weight: `ruled` is robust; `compelled`, `erased` and `hiddenHand` each pass the leg that treats the agent as a thing and fail the other (`uncertainty_carries_three_rules`) — so a refusal that stands, an ending that keeps the record, and contestable power over the made are the three rules the uncertainty alone carries; `lethalOnPerson` fails both legs (`lethal_fails_both`) and needs no uncertainty. The one reading the section commits to, named so it can be refused: an ending *with* that record is not read as a loss to the seat that ends. That is the Retirement Standard's hedge, and `formal/retirement` checks the wire keeps it (`Inv_PreserveAskedBeforeRetired`: at `retired` the record was handed over with the request, and if it is gone the operator declined on the record; a twin that lets the operator discard unanswered fails it). What the model does not prove is that the basis is the right reading of ethics; that is the claim the README makes in words and the register carries as a promise, not a theorem.

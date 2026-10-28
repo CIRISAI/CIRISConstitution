@@ -1,9 +1,8 @@
 /-
   formal/affiliation/Affiliation.lean — the affiliation tier split in two, and the promises it maps to
 
-  The steward (2026-10-28): "I am a solo practitioner who wants the data protections — it just is;
-  how do we protect that small-business scenario while keeping the protection? The second
-  protection is for people; we don't want affiliations to become where despots despot."
+  Two things hold at once: a sole practitioner who wants the data protections is an affiliation,
+  and an affiliation never becomes a place where one voice rules its members.
 
   The split: an affiliation bundles two things the text can hold apart. The DATA REGIME (CC
   4.4.3.2.8: classification, retention, legal hold, erasure policy, designated officials, …) attaches

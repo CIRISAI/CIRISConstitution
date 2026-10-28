@@ -13,11 +13,9 @@ meant (matched by the decimal digits in the old slug, then by heading words),
 moving the link to the right Part when the section lives in another one, and
 lists any it cannot resolve.
 
-Why this exists: the CC was extracted from CIRISRegistry, and eleven links
-kept pointing at `../../MISSION.md` — a path that resolved in the old tree
-and silently stopped resolving in this one. A fold moves files again; a
-gate that fails on the first dangling path is cheaper than a reader who
-finds it.
+Why this exists: a fold moves files, and a relative path that resolved in
+one tree silently stops resolving in the next. A gate that fails on the
+first dangling path is cheaper than a reader who finds it.
 
 Exit 1 on any dangling target. `--quiet` prints only failures.
 """

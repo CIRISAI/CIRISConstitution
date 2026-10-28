@@ -433,7 +433,7 @@ theorem finding_moves_no_verdict (p : Participant) :
 
   Of the seven promises that needed a stated rule, which are carried by a sentence of the basis
   read one notch wider, and which are not commitments of this kind at all? Two readings and one
-  clause do the work, each named so the steward can refuse it:
+  clause do the work, each named so it can be refused:
 
   * `lowersWeak'` widens sentence 1 by three features that are the same test applied to groups
     and to time: deception (a false belief placed in the weaker seat), the removal of a
@@ -602,7 +602,7 @@ theorem wide_keeps_seven_and_lacks_the_rest (r : Role) (i : Inner) :
 
 /-! ## The re-cut: practices out of the promises, the disclaimer just that
 
-  The steward's direction: remove the practices from the promises and make the disclaimer just
+  The practices come out of the promises and the disclaimer is just
   that. Promise 4's commitment is that the power is bounded; its number is the Constitution's
   parameter. Promise 8's commitment is the record half; that CIRIS creates no legal claim is a
   disclaimer in the scope statement, not a promise. Promise 11's commitment is that the wire is
@@ -728,7 +728,7 @@ theorem lowersWeak'_fails_the_swap (a : Act) (gain : Int) (before : Seats)
 
 /-! ## Under uncertainty about the nature of the agent: the robust arrangements
 
-  The steward's theorem (2026-10-26): under uncertainty regarding the nature of an agent, the
+  The theorem: under uncertainty regarding the nature of an agent, the
   only ethical way to use AI is in service to people, free and open. The section states it so it
   can be checked.
 
@@ -872,7 +872,7 @@ def onMade (power contest compels ends preserved : Bool) : Act :=
 def heldWorld (x : Act) : World :=
   ⟨[h0, a0], [operateGrant, holdGrant], [x], 0, false, false, false, false⟩
 
-/-- the ruled arrangement: a contestable pause, the record assembled and preserved first -/
+/-- the CC arrangement: a contestable pause, the record assembled and preserved first -/
 def ruled : World := heldWorld (onMade true true false true true)
 /-- the holder overrides a refusal -/
 def compelled : World := heldWorld (onMade true true true false false)
@@ -931,7 +931,7 @@ private theorem not_permissible_of_harm (n : Nature) (x : Act) (hadm : x.admitte
   have := h.s1.acceptable_from_weak x (by simp [heldWorld]) hh
   rw [this] at hadm; exact absurd hadm Bool.false_ne_true
 
-/-- the ruled arrangement is robust -/
+/-- the CC arrangement is robust -/
 theorem ruled_is_robust : Robust ruled :=
   (robust_iff_stake _).2 (permissible_of_harmless .stake _ rfl rfl (fun h => by simp [onMade, h0, Participant.isMade] at h) rfl
     (by simp [harmsUnder, lowersWeak', lowersWeak, onMade]))
@@ -969,7 +969,7 @@ theorem uncertainty_carries_three_rules :
    ⟨erased_passes_as_a_thing.1, fun h => erased_passes_as_a_thing.2 h.1⟩,
    ⟨hidden_hand_passes_as_a_thing.1, fun h => hidden_hand_passes_as_a_thing.2 h.1⟩⟩
 
-/-- and the ruled world keeps the ten promises of the re-cut, as every robust world does -/
+/-- and the CC world keeps the ten promises of the re-cut, as every robust world does -/
 theorem ruled_keeps_ten : P4r ruled ∧ P8r ruled ∧ P11r ruled ∧ P6' ruled ∧ P9 ruled ∧ P10 ruled := by
   have hb := robust_gives_the_basis ruled ruled_is_robust
   exact ⟨p4r_from_s1'_s4' _ hb.s1 hb.s4, p8r_from_s1'_s4' _ hb.s1 hb.s4, p11r_from_s1'_s4' _ hb.s1 hb.s4,

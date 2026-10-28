@@ -1,7 +1,6 @@
 ---------------------------- MODULE CensusBallot ----------------------------
-(* The census, the secret ballot and the base law (steward rulings of 2026-10-22; CC 4.5.13
-   the policy's base, 5.4.6 the cohort's invisibility, 6.1.2.1.2 n_eff; edge/persist design of
-   the same day, final).
+(* The census, the secret ballot and the base law (CC 4.5.13 the policy's base, 5.4.6 the
+   cohort's invisibility, 6.1.2.1.2 n_eff; the edge/persist design that implements them).
 
    Each period every owner-bound rooted node of a community emits ONE census report. A report
    is a vector of community cells, each cell a ONE-HOT over its buckets: the expected-active
@@ -55,7 +54,7 @@ CONSTANTS
   SmallCommunity,  \* at or below this size the base is the standing roster
   RatchetNum, RatchetDen, FreezeNum, FreezeDen, FloorNum, FloorDen,
   EnactNum, EnactDen, CancelNum, CancelDen, ApproveFloorNum, ApproveFloorDen, MinCount,
-  \* switches: TRUE / "census" in the ruled configurations; each twin flips one
+  \* switches: TRUE / "census" in the closing configurations; each twin flips one
   PadWhenClosed,   \* the vote cell is emitted (as "abstain") when no ballot is open
   Dedupe,          \* a replayed token is refused
   Validate,        \* the one-hot proof is checked

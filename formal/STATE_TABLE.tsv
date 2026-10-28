@@ -83,7 +83,7 @@ consent	subject×scope	consent.state	expired	3.3.1	consent:state:expired	persist
 consent	agent memory	consent.decay	identity_severed	3.3.1	consent:decay:identity_severed self-report	agent consent module	consent.Consent.tla:decay=identity_severed	consent.decay.identity_severed	modelled
 consent	agent memory	consent.decay	patterns_anonymized	3.3.1	consent:decay:patterns_anonymized self-report	agent consent module	consent.Consent.tla:decay=patterns_anonymized	consent.decay.patterns_anonymized	modelled
 consent	agent memory	consent.decay	complete	3.3.1	consent:decay:complete self-report	agent consent module	consent.Consent.tla:decay=complete	consent.decay.complete	modelled
-consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-authored grant (#179)	owner or node	consent.Consent.tla:community_trust=granted	consent.community_trust.granted	modelled
+consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-authored grant	owner or node	consent.Consent.tla:community_trust=granted	consent.community_trust.granted	modelled
 consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a boundary; capture resumes on a fresh grant	any withdraws signer	consent.Consent.tla:community_trust=bounded	consent.community_trust.bounded	modelled
 consent	node×peer node	consent.replication	none	3.3.7	—	—	consent.Consent.tla:replication=none	consent.replication.none	modelled
 consent	node×peer node	consent.replication	granted	3.3.7	consent:replication:v1 by the adder naming the contact's node(s) as subject	adder (node owner)	consent.Consent.tla:replication=granted	contact.added contact.via_code	modelled

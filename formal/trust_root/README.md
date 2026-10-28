@@ -3,14 +3,14 @@
 **What this is.** A TLA+ model of the standing verdict `V(rows, t)` that CC 3.2 T8 states as a
 normative state machine — `Rooted` / `Stalled` / `NotRooted` over the rows a node holds and a
 signer-stamped instant — together with the T8 invariants as TLC-checkable properties. It is the
-evidence artifact for the claims-register row `CLM-standing-verdict` (CIRISConstitution#127).
+evidence artifact for the claims-register row `CLM-standing-verdict`.
 
 **What it models.** One evaluating node, one `infrastructure` root, a bounded founder set (some
 keys `node`-bearing), a bounded independent witness directory, and discrete instants. The rows:
 founder seats with `identity_type` read at seating; revocations / withdraws with `effective_at`;
 lower-only `revoked_after` bounds; lineage heads chained by previous digest and signed by the
 active founders (T6); witness cosignatures with `signed_at`; acceptance edges written only on a
-fresh, witnessed head (T4a) and deleted in one row (T3); no halt branch (a `constitutional` halt moves no state here, ruling 2026-10-15);
+fresh, witnessed head (T4a) and deleted in one row (T3); no halt branch (a `constitutional` halt moves no state here, CC 3.2 T3/T8);
 ceremony-plane conferrals and the T7 recovery widening.
 
 **What it checks** (`TrustRootVerdict.cfg`):
@@ -26,9 +26,7 @@ ceremony-plane conferrals and the T7 recovery widening.
 | `Inv_RecoverEnabled` | from `Stalled` with a conferrable human, the T7 recovery path is enabled |
 
 Three clauses hold **by construction** in this cut and are stated in the module rather than
-checked: (iii) rows are sets admitted at `now`, so nothing reaches behind; (v) a halt moves no state, so there is nothing to check: the model has no halt variable; before 2026-10-15 the latch was
-a definitional leg of `V` (its second branch) and is not toggled, since toggling it doubled the
-space for no information; (vii) `V` reads only the row variables and `now`. Two representation
+checked: (iii) rows are sets admitted at `now`, so nothing reaches behind; (v) a halt moves no state, so there is nothing to check: the model has no halt variable; (vii) `V` reads only the row variables and `now`. Two representation
 choices to know when reading a trace: each witness keeps only its latest cosignature (all T4a
 and T6 read), so a witness moving to a newer head un-witnesses the older one; and a
 `revoked_after` bound has one modelled value, revoke-all, since a bound at `now` is
@@ -50,10 +48,7 @@ edge and a single-flag halt made `V` impure in `t`). No run found a defect in th
 **What it does not model.** **Witnessed mode off** (`witness_quorum: 0`, the 0.5.219 re-mint configuration, CC 3.2 T6): there the head leg is satisfied by out-of-band anchoring and first-seen-wins holds, and this model's `HasCurrentHead` (valid AND witnessed) does not represent it — the closed run says nothing about that mode. The charter legs (recovery commitment, scope) are constants; witness
 independence is by construction (disjoint constant sets) rather than derived from steward
 bindings; the directory does not rotate; the accord family is out of scope (T7 excludes it).
-Persist's five rc5 review corners are **not** encoded — #127 asks persist to list them, and they
-become `Corner1..Corner5` here before any further property is added.
-
-**2026-10-15.** The halt branch of `V` is removed (steward ruling: a constitutional halt is not a leg of the trust chain, CC 3.2 T3/T8, CC 4.2.1.1). The constant was fixed `FALSE` in the checked-in configuration, so the state space and every property are unchanged; SANY parses the revised module and the CI job re-runs TLC on this change.
+An implementation's own review corners are **not** encoded.
 
 **Run it.**
 
@@ -61,7 +56,7 @@ become `Corner1..Corner5` here before any further property is added.
 java -cp tla2tools.jar tlc2.TLC -workers auto -deadlock TrustRootVerdict.tla
 ```
 
-**Status (2026-09-29).** The checked-in configuration (five founders, one node-bearing, one human
+**Status.** The checked-in configuration (five founders, one node-bearing, one human
 unseated; three witnesses; `M = 2`, `K = 2`; four instants; window 2) **closes**: 22,152,480
 distinct states to depth 25, no invariant or property violated. The CI job
 (`.github/workflows/formal.yml`) runs it on every change to this directory or to CC 3.2, and

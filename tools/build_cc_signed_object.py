@@ -193,7 +193,7 @@ def build_cddl(rows, meta):
     out.append("  * tstr => any,  ; family payload members (CC 3.3) and anything a consumer has not learned yet")
     out.append("}")
     out.append("")
-    out.append("; Closed: exactly these seven members (CIRISPersist#643). deny_unknown_fields.")
+    out.append("; Closed: exactly these seven members. deny_unknown_fields.")
     out.append("row-mirror = {")
     for r in mirror:
         e = cddl_entry(r)
@@ -217,7 +217,7 @@ def build_cddl(rows, meta):
             out.append(e)
     out.append("}")
     out.append("")
-    out.append("; CC 2.1 consent_basis entry (CIRISPersist#1041 shape; CIRISConstitution#183).")
+    out.append("; CC 2.1 consent_basis entry.")
     out.append('consent-basis = { principal: key-id, paths: [* ("subject" / "occurrence_of" / "delegates_to")], attestation_id: uuid }')
     out.append("")
     out.append("row-type = " + " / ".join(f'"{t}"' for t in ROW_TYPES))

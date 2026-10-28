@@ -13,16 +13,16 @@ into the Commons or a public room runs the tripwire); replicate under the one au
 (CC 6.1.5.3: the owner's membership, the node's allow list, a root's restrictions, the community
 federating); emit a holding claim with the audience its emitter gives it; withdraw; widen scope;
 a moderator lapses (auto-promote or fail secure in the same step, CC 4.5.4); open admission to the
-public room (#142); a root restricts (relieve-never-expand); the owner widens an allow list;
+public room (CC 4.5.4); a root restricts (relieve-never-expand); the owner widens an allow list;
 un-trust in one row (T3); an accord act from the closed enumeration.
 
 **Three configurations, one module.**
 
 | Config | Parameters | Result |
 |---|---|---|
-| `MeshNet_shipped_scope.cfg` | holding claims for community/public content at federation scope (persist's `holds_bytes` builder; the rc6/rc7 text) | `Inv_Invisible` violated in 4 steps: author in the room, claim, and every person can see the room's content exists |
-| `MeshNet_shipped_bind.cfg` | a live holding claim folded as a content binding (persist v53, witnessed on CIRISConstitution#141) | `Inv_ClaimNotBinding` violated in 5 steps: author, claim, withdraw, and the blob is still live |
-| `MeshNet_ruled.cfg` | one holding claim at the content's scope; a claim is never a binding (#141) | every invariant and action property holds: 2,013,648 distinct states, depth 18, 17 s on 8 workers |
+| `MeshNet_shipped_scope.cfg` | holding claims for community/public content at federation scope (an implementation's `holds_bytes` builder) | `Inv_Invisible` violated in 4 steps: author in the room, claim, and every person can see the room's content exists |
+| `MeshNet_shipped_bind.cfg` | a live holding claim folded as a content binding (an implementation's fold) | `Inv_ClaimNotBinding` violated in 5 steps: author, claim, withdraw, and the blob is still live |
+| `MeshNet_ruled.cfg` | one holding claim at the content's scope; a claim is never a binding (CC 2.4.1.1) | every invariant and action property holds: 2,013,648 distinct states, depth 18, 17 s on 8 workers |
 
 **How it got small — by TLC's per-action coverage profile, as for `formal/trust_root`.** The first
 cut ran past 73 M distinct states at depth 13 without closing. The profile ranked the producers:
@@ -39,4 +39,4 @@ the content's scope, not of the emitting node, so one claim per blob carries eve
 
 **Run.** `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config
 MeshNet_<cfg>.cfg MeshNet.tla` with TLA+ tools 1.7.4; the two shipped configurations finish in
-under a second, the ruled one in minutes. Always pass `-metadir`.
+under a second, the closing one in minutes. Always pass `-metadir`.

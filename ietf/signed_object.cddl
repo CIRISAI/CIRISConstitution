@@ -2,7 +2,7 @@
 ; tools/build_cc_signed_object.py from
 ; constitution/signed_object.tsv; do not edit. RFC 8610 CDDL, JSON
 ; profile (Appendix E).
-; Typed from CIRISPersist 32512f52 src/federation/envelope.rs.
+; Typed from CIRISPersist ee30310f src/federation/envelope.rs.
 ; The signing input is JCS(attestation-row.attestation_envelope), RFC
 ; 8785, and nothing else.
 
@@ -16,7 +16,7 @@ attestation-row = {
   ? expires_at: rfc3339,  ; OPTIONAL; default absent
   ; OPTIONAL (absent when empty); default absent; array kind: set
   ? subject_key_ids: [* subject-id],
-  cohort_scope: cohort-scope,  ; REQUIRED; default federation
+  cohort_scope: cohort-scope,  ; REQUIRED
   attestation_envelope: envelope,  ; REQUIRED
   original_content_hash: hex64,  ; REQUIRED
   ; OPTIONAL (absent when empty); default absent; array kind:
@@ -243,8 +243,7 @@ envelope = {
   * tstr => any,
 }
 
-; Closed: exactly these seven members (CIRISPersist#643).
-; deny_unknown_fields.
+; Closed: exactly these seven members. deny_unknown_fields.
 row-mirror = {
   attestation_id: uuid,  ; REQUIRED
   attesting_key_id: key-id,  ; REQUIRED
@@ -252,7 +251,7 @@ row-mirror = {
   attested_key_id: key-id,  ; REQUIRED; default the attester
   ; REQUIRED (may be empty); default []; array kind: set
   subject_key_ids: [* subject-id],
-  cohort_scope: cohort-scope,  ; REQUIRED; default federation
+  cohort_scope: cohort-scope,  ; REQUIRED
   ? weight: number,  ; OPTIONAL; default absent
 }
 
@@ -288,8 +287,7 @@ key-record = {
   ? additional_scrubs: [* scrub-sig],
 }
 
-; CC 2.1 consent_basis entry (CIRISPersist#1041 shape;
-; CIRISConstitution#183).
+; CC 2.1 consent_basis entry.
 consent-basis = { principal: key-id, paths: [* ("subject"
   / "occurrence_of" / "delegates_to")], attestation_id: uuid }
 

@@ -3,7 +3,7 @@
     "cc_version": "1.0-rc13",
     "registry_sha256": "d587156605dd8de7c0c56e271625293eb05b3f9b5debd44cf8bc822d4e701c5b",
     "generator": "tools/cc_namespace_match.py",
-    "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent (#116). Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
+    "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
   "vectors": [
     {
@@ -7282,7 +7282,7 @@
       "dimension": "config:admission\n:v1",
       "family": "config:{scope}",
       "refusal": "namespace_dimension_case_malformed",
-      "why": "a segment carrying a newline fails its pattern under full-match semantics (#116: `$` is not a byte)"
+      "why": "a segment carrying a newline fails its pattern under full-match semantics (`$` is not a byte)"
     },
     {
       "dimension": "no_such_family:leaf",
@@ -7306,19 +7306,19 @@
       "dimension": "no_such_family:v1\n:v2",
       "family": null,
       "refusal": null,
-      "why": "a newline-bearing segment is not a version attempt (#128): open vocabulary, no charset rule binds an unregistered family's own segments"
+      "why": "a newline-bearing segment is not a version attempt: open vocabulary, no charset rule binds an unregistered family's own segments"
     },
     {
       "dimension": "no_such_family:V1\n:v2",
       "family": null,
       "refusal": null,
-      "why": "same as above with an uppercase v \u2014 not a version attempt once the detector is full-match (#128)"
+      "why": "same as above with an uppercase v \u2014 not a version attempt once the detector is full-match"
     },
     {
       "dimension": "system:foo:v1beta\n:v1",
       "family": "system:*",
       "refusal": "namespace_dimension_case_malformed",
-      "why": "under a registered wildcard the vocab pattern binds the leaf, and a newline fails it (#128, #116)"
+      "why": "under a registered wildcard the vocab pattern binds the leaf, and a newline fails it"
     },
     {
       "dimension": "no_such_family:v1beta:v2",
@@ -7569,14 +7569,14 @@
       "class": null,
       "name": null,
       "refusal": "attestation_type_unregistered",
-      "why": "the retired rc6 holds_bytes carrier is not a row type (#141)"
+      "why": "the retired holds_bytes carrier is not a row type"
     },
     {
       "attestation_type": "key_grant:epoch:v1",
       "class": null,
       "name": null,
       "refusal": "attestation_type_unregistered",
-      "why": "the retired rc6 key-grant set is not a row type; key_grant:{axis}:v1 is a scores dimension (#143)"
+      "why": "the retired key-grant set is not a row type; key_grant:{axis}:v1 is a scores dimension"
     },
     {
       "attestation_type": "custody:ack:v1",
