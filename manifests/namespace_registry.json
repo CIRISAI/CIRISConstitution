@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "d587156605dd8de7c0c56e271625293eb05b3f9b5debd44cf8bc822d4e701c5b",
+    "registry_sha256": "b84116a725c4578e8108f24d23668814ab80900f57f5491638928432f61c832a",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "7636ff7d7dfaed255d4516cb5d7a6c5a02458acca439a42bf0dced0981b70b3f"
+    "source_sha256": "8070c7ba77ed8a7c7da0f34f9bd9fb4e4651c138e16564fb8daaef5d2a7eae88"
   },
   "families": [
     {
@@ -4781,7 +4781,8 @@
           "values": [
             "abandonment",
             "seizure",
-            "successor"
+            "successor",
+            "petition"
           ]
         }
       ]

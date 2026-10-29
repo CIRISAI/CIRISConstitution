@@ -8,6 +8,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The affiliation tier is split in two (4.4.3.2.8): the data regime attaches to the record at any size, so a sole practitioner is an affiliation, and the floors bind power over members: appointment is two consents, a one-voice body acts against a member only with a countersign from outside the deciding seat, and two or more seats decide as a community. The affiliation model maps every rule to its promise.
 - The affiliation record declares its cohort kind in one member; the charter names licence classes, a role-term ceiling and a successor seat or a dissolution date; an affiliation's existence, key, officers and declared classes are Commons-visible; dissolution is the record's withdrawal, under which issued licences stand and read lapsed and a dissolved authority relays no trust.
 - Admin presets are published as data; `affiliations` sits beside `community` in the scope order.
+- `wa_adjudication:{state}` admits `petition`, the petitioner's own row that opens the ownership-reclaim ceremony (3.1.9.4, 3.2); the three findings stay the quorum's.
 - The Digest no longer carries the dated comparison of named vendors' practices; the promises stand on their own.
 - The repository presents its finished state: the review notes and the migration validation are gone from the head, the change log is a release history, and no document attributes a rule to the person who decided it.
 - Register now: 371 established, 30 normative, 115 staged.
