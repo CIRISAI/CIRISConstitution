@@ -2,7 +2,7 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
-## 1.0-rc13 (open)
+## 1.0-rc13 (released 2026-10-29, tag v1.0-rc13)
 
 - Who I trust (4.4.3.8): the reader's pinned trust set is its own acceptance edges, each naming the licence classes it admits and the depth of further hops it allows; admission refuses shape only, the charter is read at read, and a licence confers no trust. The trust-set model proves the clause.
 - The affiliation tier is split in two (4.4.3.2.8): the data regime attaches to the record at any size, so a sole practitioner is an affiliation, and the floors bind power over members: appointment is two consents, a one-voice body acts against a member only with a countersign from outside the deciding seat, and two or more seats decide as a community. The affiliation model maps every rule to its promise.
@@ -14,7 +14,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A row at a targeted scope names its own producer in `attested_key_id` (2.1, 3.1.3.2); the signed-object vector that placed a third party there is re-minted.
 - The Digest no longer carries the dated comparison of named vendors' practices; the promises stand on their own.
 - The repository presents its finished state: the review notes and the migration validation are gone from the head, the change log is a release history, and no document attributes a rule to the person who decided it.
-- Register now: 371 established, 30 normative, 115 staged.
+- Register at the cut: 371 established, 30 normative, 116 staged; fourteen formal models in the chain, 167 properties over 189 states, and two models beside it, the trust set and the affiliation tier.
 
 ## 1.0-rc12 (released 2026-10-27, tag v1.0-rc12)
 
