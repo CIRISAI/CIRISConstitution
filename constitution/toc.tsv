@@ -107,6 +107,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 3.1.5.2	accord-principle	Accord-principle prefixes (the six core principles)	§5.1.1	0.00092	280	0.11	III	ceg	dictionary
 3.1.5.3	conscience-verdict	Conscience-verdict prefixes (four consciences)	§5.1.3	0.00092	281	0.11	III	ceg	dictionary
 3.1.5.4	apophatic	Apophatic / prohibited-capability prefix	§5.1.4	0.00092	282	0.11	III	ceg	dictionary
+3.1.5.5	safety-battery	Safety-battery evidence (registry rows)	(spine-reconciled)	0.00050	447	0.2	III	ceg	dictionary
 3.1.6	anti-sybil	RATCHET — anti-Sybil / Counter-RII flags	§5.7	0.00103	213	0.12	III	ceg	dictionary
 3.1.7	namespace-summary	Namespace summary	§5.10	0.00092	283	0.11	III	ceg	dictionary
 3.1.8	lens	CIRISLensCore — manifold conformity, Coherence Ratchet, Capacity Score	§5.5	0.00092	284	0.11	III	ceg	dictionary

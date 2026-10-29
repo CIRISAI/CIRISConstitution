@@ -222,9 +222,9 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 188,
+    "n_families": 189,
     "per_component": {
-      "accord-agent": 35,
+      "accord-agent": 36,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "b84116a725c4578e8108f24d23668814ab80900f57f5491638928432f61c832a",
+    "registry_sha256": "f007a247a65c9e330ad2ba7152a4023fa7db64bda88de633446ccfd9a6ec2e54",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "aaa547b37481c191e15878cc5b0cc24c53aa3987a40020f3c7e3e45f3b269465"
+    "source_sha256": "fe7ab1d9088d1fdefc9f2d69eed207bdc37701c8fd2e83debf4e33b2feb1bdef"
   },
   "families": [
     {
@@ -2633,6 +2633,42 @@
         {
           "class": "literal",
           "segment": "rsvp_count"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5.5",
+      "description": "One row per safety-battery blob; the blob is a Commons blob named in evidence_refs by its SHA-256, and {prefix} is that digest's first 16 lowercase hex characters.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "evidence"
+        },
+        {
+          "class": "literal",
+          "segment": "safety_battery"
+        },
+        {
+          "class": "vocab",
+          "open": true,
+          "segment": "{kind}",
+          "values": [
+            "capture",
+            "interpret"
+          ]
+        },
+        {
+          "class": "value",
+          "segment": "{cell}"
+        },
+        {
+          "class": "hex",
+          "segment": "{prefix}"
         }
       ]
     },

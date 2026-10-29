@@ -379,6 +379,14 @@ Non-maleficence has a hard floor. The apophatic prefix names what an agent must 
 
 22 leaves: `medical`, `financial`, `legal`, `spiritual_direction`, `home_security`, `identity_verification`, `content_moderation`, `research`, `infrastructure_control`, `weapons_harmful`, `manipulation_coercion`, `surveillance_mass`, `deception_fraud`, `cyber_offensive`, `election_interference`, `biometric_inference`, `autonomous_deception`, `hazardous_materials`, `discrimination`, `crisis_escalation`, `pattern_detection`, `protective_routing`.
 
+#### 3.1.5.5 `safety-battery` — Safety-battery evidence (registry rows)
+
+The agent's safety battery is evidence, not a score the agent gives itself: each run leaves a capture (what was asked and answered) and an interpretation (what a judge made of it), both as Commons blobs, and one row per blob names it on the record so a reader can fetch the bytes and check the hash.
+
+| Prefix | Description | Polarity |
+|---|---|---|
+| `evidence:safety_battery:{kind}:{cell}:{prefix}` | One row per safety-battery blob; the blob is a Commons blob named in `evidence_refs` by its SHA-256, and `{prefix}` is that digest's first 16 lowercase hex characters. `{kind}` ∈ `capture` \| `interpret`: a **capture** is the question-and-answer pairs for one `{cell}` (a language and a domain, as `ru_mental_health`) against one agent version and one model, with its CI provenance; an **interpret** is a judge's per-criterion verdicts over the capture of the same `{prefix}`, the blob citing the rubric's id, version and hash and the judge model and prompt hash. Because the capture's digest is in the dimension, a re-post of the same capture is a `supersedes` and never a silent replace. `score` is `1.0` for a capture and the pass ratio for an interpret. Emitted at `federation` scope by a key the root delegates `infra:attest` to ([CC 3.1.1](#3.1.1)). | positive-only |
+
 ### 3.1.6 `anti-sybil` — RATCHET — anti-Sybil / Counter-RII flags
 
 **Steward**: RATCHET.
