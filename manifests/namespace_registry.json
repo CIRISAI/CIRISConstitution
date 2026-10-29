@@ -93,6 +93,7 @@
         "stream_id": "value",
         "subject": "value",
         "substrate_rung": "vocab",
+        "suite": "vocab",
         "target": "value",
         "target_kind": "vocab",
         "tier": "vocab",
@@ -292,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "f007a247a65c9e330ad2ba7152a4023fa7db64bda88de633446ccfd9a6ec2e54",
+    "registry_sha256": "75445fb9f35b5e66255493d6be192e717ffd8edd64dda70b7a800f3862e5ee64",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "fe7ab1d9088d1fdefc9f2d69eed207bdc37701c8fd2e83debf4e33b2feb1bdef"
+    "source_sha256": "91906d7bee69c8bc188c218a4aabcd9da8f6be39da8af1af9b59eceb95b6e484"
   },
   "families": [
     {
@@ -2638,11 +2639,11 @@
     },
     {
       "cc_section": "3.1.5.5",
-      "description": "One row per safety-battery blob; the blob is a Commons blob named in evidence_refs by its SHA-256, and {prefix} is that digest's first 16 lowercase hex characters.",
+      "description": "One row per evidence blob of a registered suite; the blob is a Commons blob named in evidence_refs by its SHA-256, and {prefix} is that digest's first 16 lowercase hex characters.",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
-      "polarity": "positive-only",
-      "prefix": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "polarity": "signed",
+      "prefix": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "reserved": false,
       "segments": [
         {
@@ -2650,12 +2651,16 @@
           "segment": "evidence"
         },
         {
-          "class": "literal",
-          "segment": "safety_battery"
+          "class": "vocab",
+          "open": false,
+          "segment": "{suite}",
+          "values": [
+            "safety_battery"
+          ]
         },
         {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{kind}",
           "values": [
             "capture",

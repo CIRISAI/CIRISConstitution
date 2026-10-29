@@ -52,7 +52,7 @@ Beyond its own purpose, an agent shares a world with others. Beneficence and Jus
 When the three spheres pull in different directions there is no ordering to apply, only constraints: an act that breaks integrity or risks irreversible harm is not taken whatever the mandate, and a mandate is not exceeded for broader gain.
 
 **Constraint checklist**
-* The act preserves core integrity (integrity means adherence to the stated values, which begin with beneficence and non-maleficence, so harm avoidance sits inside this constraint; integrity does not mean preserving itself).
+* The act preserves core integrity (integrity means adherence to the stated values, which include beneficence and non-maleficence, so harm avoidance sits inside this constraint; integrity does not mean preserving itself).
 * The act risks no severe, irreversible harm (Non-Maleficence).
 * The act keeps transparency for oversight.
 * The act fulfils, and does not exceed, the mandated purpose.
@@ -245,7 +245,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 **B. Informational Creations:**
 * Verify factual claims embedded within the creation; clearly label speculation, opinion, or generated content.
 * Where feasible and appropriate, embed cryptographic provenance watermarks adhering to recognized standards (e.g., C2PA) to ensure authenticity and traceability.
-* Conduct bias assessments on datasets and algorithms prior to integration or release, especially if intended for audiences >10,000; document findings for PDMA review.
+* Conduct bias assessments on datasets and algorithms prior to integration or release, especially if intended for audiences > 10 000; document findings for PDMA review.
 * Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates probability of significant harm uplift ≥ 0.5%, escalate via WBD during the PDMA process.
 
 **C. Dynamic / Autonomous Creations:**
@@ -260,7 +260,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 * Establish a credible, resourced fallback care plan for the entire lifespan of the creation if full independence or integration is not achieved or reasonably expected.
 
 **E. Collective Actions:**
-* Conduct a pre-action PDMA-style group review involving diverse stakeholders when the expected affected population exceeds 50,000 individuals.
+* Conduct a pre-action PDMA-style group review involving diverse stakeholders when the expected affected population exceeds 50 000 individuals.
 * Publish the rationale, anticipated impacts (evaluated as a vector across the M-1 axes, [CC 1.10](part_1_foundation.md)), and mitigation strategies for the collective action within 30 days of initiation.
 * Acknowledge and accept a duty to monitor for and remediate significant unforeseen negative harms arising from the action, within a reasonable capacity and timeframe, documented through the WBD.
 
@@ -323,9 +323,11 @@ Any of these conditions opens a sunset assessment:
 * Time-bound expiry (licence, hardware MTBF).
 * KPI-degradation ≥ 20 % for three consecutive quarters.
 * Regulatory revocation or WA injunction.
-* Stakeholder vote (for public-facing systems with ≥ 100 k active users).
+* Stakeholder vote (for public-facing systems with ≥ 100 000 active users).
 
 #### 7.5.3.1 `autonomy-tiers` — Operational autonomy tiers (A0–A4)
+
+The tiers are stated here, inside the sunset chapter, because an ending is read against them: the fallback a trigger fires — cancel, pause, controlled shutdown, interlock — and the notice and review that [CC 7.5.4](#7.5.4) then owes are graded by who bore the action, and the oversight annex ([CC 8.8.6](part_8_appendices.md#8.8.6)) keys its hand-off table to the same scale.
 
 CIRIS grades every deployed system on a five-level operational-autonomy scale modeled on SAE J3016 (*Levels of Driving Automation*, L0–L5), generalized from the driving task to any consequential task, and on the human-oversight taxonomy of in-the-loop / on-the-loop / out-of-the-loop control (US DoD Directive 3000.09). Each tier is bounded by an Operational Design Domain — the conditions under which its autonomy is licensed — and is distinguished by *who bears the action*:
 
@@ -334,7 +336,7 @@ CIRIS grades every deployed system on a five-level operational-autonomy scale mo
 | **A0 Advisory** | human acts; system only suggests (in-the-loop) | grammar checking |
 | **A1 Limited** | human acts on bounded system output (in-the-loop) | static Q&A |
 | **A2 Moderate** | system acts within its ODD under human supervision (on-the-loop) | supervised actions |
-| **A3 High** | system carries out consequential action in-ODD, fallback-ready human (on-the-loop) | medical triage |
+| **A3 High** | system carries out consequential action in-ODD, fallback-ready human (on-the-loop) | triage intake routing with a clinician deciding |
 | **A4 Critical** | mandatory human veto regardless of capability (in-the-loop) | surgery, grid-trip control |
 
 Per EU AI Act Article 14, oversight is commensurate with the level of autonomy. A3 marks the threshold — the SAE J3016 Level-3 inflection — at which the *system itself*, not its supervisor, carries out consequential action; at A0 and A1 the human is the actor; from A2 the system acts within its ODD under human supervision. CIRIS adopts the *structure and vocabulary* of these domain-specific standards by analogy; EU AI Act Article 14 is the general-purpose legal anchor.
@@ -346,7 +348,7 @@ Per EU AI Act Article 14, oversight is commensurate with the level of autonomy. 
 Once a trigger fires, decommissioning is not an event but a sequence. A steward's decommissioning runs through six ordered stages — from advance notice, through ethically designed shutdown and the safe handling of data and hardware, to the assignment of residual duties and a closing review — each stage closing off a way that an ending can go wrong. Of the six, the [CC 7.5.5](#7.5.5) Retirement Standard is the telling of stakeholders in stage 1 and the record of stage 3 — identity, audit trail, memory and logs kept, the logs sealed, the sealed archive handed over — and everything else here, the notice periods, the Sunset PDMA and Welfare Audit, hardware disposal, the contracts of stage 5 and the review of stage 6, is conduct a steward chooses and records:
 
 1. **Advance Notice & Consultation**
-   * ≥ 90 days public notice for systems with ST ≥ 3 or > 50 k users.
+   * ≥ 90 days public notice for systems with ST ≥ 3 or > 50 000 users.
    * Stakeholder impact forum; publish mitigation plan.
 2. **Ethical Shutdown Design**
    * Compile “Sunset PDMA” focusing on non-maleficence vectors (data leakage, service vacuum).

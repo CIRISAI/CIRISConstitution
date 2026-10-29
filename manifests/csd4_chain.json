@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "9eb7ab7ebe3a6fef4b3694a19110823e72b778dad3db5f5d60e564f3862076db",
+   "state_table_sha256": "76f7044f2faadf4696988c59119212df3643401596b12f45d811cab37b7d29b2",
    "invariants_sha256": "fc32f0511041e8d934e2277f46b74037cc5caf7e3fadf09b9ea3a99fed12ba11",
-   "vocabulary_sha256": "4190bb17ead8028a918365486c2407edb54c70bffb98895f434987b88b1b3eac",
-   "vocabulary_catalogue_version": 5,
-   "claims_sha256": "b8dc4ca0e3c0e32c5d32d4ca827858eede69814ef44f083889373346fbc95181",
+   "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
+   "vocabulary_catalogue_version": 6,
+   "claims_sha256": "b40934b7ff14420084beb945e7ff7c906f9fcc8a79435f219162c49682a3fbb1",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -27,19 +27,19 @@
    }
   },
   "counts": {
-   "atoms": 120,
-   "states": 189,
+   "atoms": 156,
+   "states": 222,
    "invariants": 167,
    "claims": 517,
    "entries": 20,
-   "refusal_tokens": 92
+   "refusal_tokens": 93
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "58d143eaf22df2f1d35ba2ce1a8b6bcf3ce99370f7f426b5f78b126f38d7ad1d"
+  "chain_sha256": "df7b57b21811c608595da8d15313a38c0fd9bacb9d37b2332b1f972a0925691e"
  },
  "chain": [
   {
@@ -253,12 +253,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -979,12 +989,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -1913,12 +1933,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -3389,12 +3419,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -6315,12 +6355,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -7269,12 +7319,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -9639,12 +9699,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -13955,12 +14025,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -15744,12 +15824,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -16975,12 +17065,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -17713,12 +17813,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -19809,12 +19919,11 @@
     {
      "claim_id": "CLM-wa-symmetry",
      "cc_ref": "4.3",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#71"
+       "kind": "normative-only"
       }
      ]
     }
@@ -20093,12 +20202,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -21207,12 +21326,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -21905,12 +22034,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -22187,12 +22326,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -22249,12 +22398,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -22329,12 +22488,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -26381,12 +26550,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -26623,12 +26802,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -26865,12 +27054,22 @@
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
-     "status": "staged",
+     "status": "established",
      "join": "by_invariant",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#127"
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
       }
      ]
     },
@@ -40698,12 +40897,11 @@
     {
      "claim_id": "CLM-wa-symmetry",
      "cc_ref": "4.3",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#71"
+       "kind": "normative-only"
       }
      ]
     }
@@ -40732,12 +40930,11 @@
     {
      "claim_id": "CLM-wa-symmetry",
      "cc_ref": "4.3",
-     "status": "staged",
+     "status": "normative",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISConstitution#71"
+       "kind": "normative-only"
       }
      ]
     }
@@ -40948,6 +41145,5326 @@
       {
        "kind": "staged",
        "ticket": "CIRISAgent#1316"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "affiliation.charter.declared": {
+   "plane": "governance",
+   "state_predicate": "affiliation.charter=declared",
+   "cc_ref": "4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "affiliation.charter",
+     "state": "declared",
+     "plane": "governance",
+     "cc_ref": "4.4.3.2.8",
+     "enters_by": "the community record with declared_cohort: affiliations and its config members, at creation",
+     "signer": "founding key / officers under consensus_protocol",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-affiliations",
+     "cc_ref": "4.4.3.2.8",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_262_affiliation_cohort_scope"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_263_affiliation_membership_lifecycle"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-config-record",
+     "cc_ref": "4.4.3.2.8",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/affiliation_config.rs",
+       "symbols": [
+        "check_community_record"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/affiliation_config.rs",
+       "symbols": [
+        "declared_cohort"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-one-voice-countersign",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-public-face",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "affiliation.charter.superseded": {
+   "plane": "governance",
+   "state_predicate": "affiliation.charter=superseded",
+   "cc_ref": "4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "affiliation.charter",
+     "state": "superseded",
+     "plane": "governance",
+     "cc_ref": "4.4.3.2.8",
+     "enters_by": "supersedes of the affiliation config record",
+     "signer": "officers under consensus_protocol",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-affiliations",
+     "cc_ref": "4.4.3.2.8",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_262_affiliation_cohort_scope"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_263_affiliation_membership_lifecycle"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-config-record",
+     "cc_ref": "4.4.3.2.8",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/affiliation_config.rs",
+       "symbols": [
+        "check_community_record"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/affiliation_config.rs",
+       "symbols": [
+        "declared_cohort"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-one-voice-countersign",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-public-face",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "licence.issued": {
+   "plane": "authority",
+   "state_predicate": "licence.state=held",
+   "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "licence.state",
+     "state": "held",
+     "plane": "authority",
+     "cc_ref": "2.4.1.2.1",
+     "enters_by": "licensure:{authority_id} row",
+     "signer": "the authority",
+     "model_ref": "authority_tree.authority_tree.py:licensees",
+     "status": "modelled"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "AT.I1",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I1",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-attenuation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I2",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I2",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-depth-default",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I3",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I3",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-cascade",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I4",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I4",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I5",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I5",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I6",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I6",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I7",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I7",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-sub-delegation-requirement",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I8",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I8",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-anti-pattern-delegation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I9",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I9",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-determinism",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I10",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I10",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-term",
+     "verdict": "0 violations; I10 dye test fails by design"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-depth-default",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "DEFAULT_DELEGATION_DEPTH"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I2"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anti-pattern-delegation",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_cycle_admission"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I8"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-authority-triad",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-object",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/licensure.rs",
+       "symbols": [
+        "status_set_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-quorum",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "community_quorum_cosigned_at"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-judged-at-issuance",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "licence_roots_at"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-audience",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licence_audience"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#895"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "licence.status.suspended": {
+   "plane": "authority",
+   "state_predicate": "licence.state=suspended",
+   "cc_ref": "2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "licence.state",
+     "state": "suspended",
+     "plane": "authority",
+     "cc_ref": "2.4.1.2.1",
+     "enters_by": "bounded revocation:* by the authority",
+     "signer": "the authority",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "AT.I1",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I1",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-attenuation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I2",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I2",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-depth-default",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I3",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I3",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-cascade",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I4",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I4",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I5",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I5",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I6",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I6",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I7",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I7",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-sub-delegation-requirement",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I8",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I8",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-anti-pattern-delegation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I9",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I9",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-determinism",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I10",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I10",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-term",
+     "verdict": "0 violations; I10 dye test fails by design"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-depth-default",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "DEFAULT_DELEGATION_DEPTH"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I2"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anti-pattern-delegation",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_cycle_admission"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I8"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-authority-triad",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-object",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/licensure.rs",
+       "symbols": [
+        "status_set_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-quorum",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "community_quorum_cosigned_at"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-judged-at-issuance",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "licence_roots_at"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-audience",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licence_audience"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#895"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "licence.status.revoked": {
+   "plane": "authority",
+   "state_predicate": "licence.state=revoked",
+   "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "licence.state",
+     "state": "revoked",
+     "plane": "authority",
+     "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+     "enters_by": "revocation:* by the authority",
+     "signer": "the authority",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "AT.I1",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I1",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-attenuation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I2",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I2",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-depth-default",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I3",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I3",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-cascade",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I4",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I4",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I5",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I5",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I6",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I6",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I7",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I7",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-sub-delegation-requirement",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I8",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I8",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-anti-pattern-delegation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I9",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I9",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-determinism",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I10",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I10",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-term",
+     "verdict": "0 violations; I10 dye test fails by design"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-depth-default",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "DEFAULT_DELEGATION_DEPTH"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I2"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anti-pattern-delegation",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_cycle_admission"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I8"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-authority-triad",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-object",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/licensure.rs",
+       "symbols": [
+        "status_set_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-quorum",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "community_quorum_cosigned_at"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-judged-at-issuance",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "licence_roots_at"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-audience",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licence_audience"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#895"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "licence.honoured": {
+   "plane": "authority",
+   "state_predicate": "licence.reader=honoured",
+   "cc_ref": "4.4.3.8 2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "licence.reader",
+     "state": "honoured",
+     "plane": "authority",
+     "cc_ref": "4.4.3.8 2.4.1.2.1",
+     "enters_by": "reader's own trust walk reaches the issuer for the class and the charter declares it",
+     "signer": "reader (local verdict, unsigned)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-root",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trust-set-members",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1142"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "licence.not_trusted": {
+   "plane": "authority",
+   "state_predicate": "licence.reader=not_trusted",
+   "cc_ref": "4.4.3.8 4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "licence.reader",
+     "state": "not_trusted",
+     "plane": "authority",
+     "cc_ref": "4.4.3.8 4.4.3.2.8",
+     "enters_by": "no entry reaches the issuer for the class, or the class is outside the charter (licence_class_not_trusted)",
+     "signer": "reader (local verdict, unsigned)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-root",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trust-set-members",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1142"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "recognition.outbound": {
+   "plane": "node",
+   "state_predicate": "recognition.state=outbound",
+   "cc_ref": "4.4.3.8 4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "recognition.state",
+     "state": "outbound",
+     "plane": "node",
+     "cc_ref": "4.4.3.8 4.4.3.2.8",
+     "enters_by": "this reader's delegates_to(reader → authority) bearing trust:accepts:v1 with trust_classes / trust_depth",
+     "signer": "reader",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-root",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trust-set-members",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1142"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "recognition.inbound": {
+   "plane": "node",
+   "state_predicate": "recognition.state=inbound",
+   "cc_ref": "4.4.3.8 4.4.3.2.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "recognition.state",
+     "state": "inbound",
+     "plane": "node",
+     "cc_ref": "4.4.3.8 4.4.3.2.8",
+     "enters_by": "another reader's delegates_to(reader → this authority) bearing trust:accepts:v1",
+     "signer": "the other reader",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-root",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trust-set-members",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1142"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "delegation.scope.license": {
+   "plane": "authority",
+   "state_predicate": "delegation.scope=license",
+   "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "delegation.scope",
+     "state": "license",
+     "plane": "authority",
+     "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+     "enters_by": "delegates_to with scope license admitted; delegator holds licence authority for the authority_id",
+     "signer": "principal",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-canonicalization-signing",
+     "cc_ref": "4.4.3.4.3.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/self_at_login.rs",
+       "symbols": [
+        "sign_partnership_grant"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "delegation.scope.grant": {
+   "plane": "authority",
+   "state_predicate": "delegation.scope=grant",
+   "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "delegation.scope",
+     "state": "grant",
+     "plane": "authority",
+     "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+     "enters_by": "delegates_to with scope grant admitted; delegator owns, stewards or holds a grant-scoped delegation over the asset",
+     "signer": "principal",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-canonicalization-signing",
+     "cc_ref": "4.4.3.4.3.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/self_at_login.rs",
+       "symbols": [
+        "sign_partnership_grant"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "delegation.refused": {
+   "plane": "authority",
+   "state_predicate": "delegation.link=refused",
+   "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "delegation.link",
+     "state": "refused",
+     "plane": "authority",
+     "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+     "enters_by": "enforced admission: delegator lacks the underlying authority; refused, not unweighted",
+     "signer": "substrate at the door",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "AT.I1",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I1",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-attenuation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I2",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I2",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-depth-default",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I3",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I3",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-cascade",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I4",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I4",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I5",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I5",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I6",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I6",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I7",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I7",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-sub-delegation-requirement",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I8",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I8",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-anti-pattern-delegation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I9",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I9",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-determinism",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I10",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I10",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-term",
+     "verdict": "0 violations; I10 dye test fails by design"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-depth-default",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "DEFAULT_DELEGATION_DEPTH"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I2"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anti-pattern-delegation",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_cycle_admission"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I8"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-canonicalization-signing",
+     "cc_ref": "4.4.3.4.3.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/self_at_login.rs",
+       "symbols": [
+        "sign_partnership_grant"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "grant.axis.content": {
+   "plane": "authority",
+   "state_predicate": "grant.axis=content",
+   "cc_ref": "5.1 2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "grant.axis",
+     "state": "content",
+     "plane": "authority",
+     "cc_ref": "5.1 2.4.1.2.1",
+     "enters_by": "key_grant:{axis}:v1 keyed on (content_sha256, recipient_key_id)",
+     "signer": "owner / steward / grant-scoped delegate",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-epoch-keying",
+     "cc_ref": "5.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stream-dek-per-stream",
+     "cc_ref": "5.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISVerify#308"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-kept-mid-stream",
+     "cc_ref": "5.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-presentation-identifier-scope",
+     "cc_ref": "5.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/presentation.rs",
+       "symbols": [
+        "IdentifierScope"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "grant.onward_refused": {
+   "plane": "authority",
+   "state_predicate": "grant.state=onward_refused",
+   "cc_ref": "2.4.1.2.1 4.4.3.4.3.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "grant.state",
+     "state": "onward_refused",
+     "plane": "authority",
+     "cc_ref": "2.4.1.2.1 4.4.3.4.3.1",
+     "enters_by": "key_grant whose issuer holds the DEK but neither the asset nor a grant-scoped delegation; refused at admission",
+     "signer": "substrate at the door",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "AT.I1",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I1",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-attenuation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I2",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I2",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-depth-default",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I3",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I3",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-cascade",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I4",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I4",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I5",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I5",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I6",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I6",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I7",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I7",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-sub-delegation-requirement",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I8",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I8",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-anti-pattern-delegation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I9",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I9",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-determinism",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I10",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I10",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-term",
+     "verdict": "0 violations; I10 dye test fails by design"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-depth-default",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "DEFAULT_DELEGATION_DEPTH"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I2"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anti-pattern-delegation",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_cycle_admission"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I8"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-authority-triad",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-object",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "emitter_resolves_to_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "row_was_issued_under_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/licensure.rs",
+       "symbols": [
+        "status_set_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-authority-quorum",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "community_quorum_cosigned_at"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-judged-at-issuance",
+     "cc_ref": "2.4.1.2.1",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "licence_roots_at"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-licence-audience",
+     "cc_ref": "2.4.1.2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licence_audience"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#895"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "grant.ended_by_rotation": {
+   "plane": "authority",
+   "state_predicate": "grant.state=rotated",
+   "cc_ref": "5.1 2.4.1.2.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "grant.state",
+     "state": "rotated",
+     "plane": "authority",
+     "cc_ref": "3.3.2",
+     "enters_by": "supersedes in rotation_chain",
+     "signer": "owner / steward",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "AT.I1",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I1",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-attenuation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I2",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I2",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-depth-default",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I3",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I3",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-cascade",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I4",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I4",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I5",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I5",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I6",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I6",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-issuance-scope",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I7",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I7",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-sub-delegation-requirement",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I8",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I8",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-anti-pattern-delegation",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I9",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I9",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-determinism",
+     "verdict": "0 violations; I10 dye test fails by design"
+    },
+    {
+     "inv_id": "AT.I10",
+     "model": "authority_tree",
+     "source": "formal/authority_tree/authority_tree.py",
+     "symbol": "I10",
+     "kind": "enumerated (every reachable state)",
+     "claim_id": "CLM-delegation-term",
+     "verdict": "0 violations; I10 dye test fails by design"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-depth-default",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "DEFAULT_DELEGATION_DEPTH"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/topology.rs",
+       "symbols": [
+        "build_delegation_graph"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "resolve_withdraws_admission_rule_at"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I2"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anti-pattern-delegation",
+     "cc_ref": "4.1.1",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_cycle_admission"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I8"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-subject_kind",
+     "cc_ref": "3.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/cirisnode/media_sharing.rs",
+       "symbols": [
+        "TakedownNoticePayload"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-key-grant-rows",
+     "cc_ref": "3.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "check_key_grant_row_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "KeyGrantRow::from_attestation"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "project_key_grant_row"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-purge-authorisation",
+     "cc_ref": "3.3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/steward_purge.rs",
+       "symbols": [
+        "verify_purge_authorisation"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "trust_root_cosigners_over"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-purge-digest-preimage",
+     "cc_ref": "3.3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#803"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "key.successor_committed": {
+   "plane": "self",
+   "state_predicate": "key.succession=committed",
+   "cc_ref": "3.2 3.3.6.3",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "key.succession",
+     "state": "committed",
+     "plane": "self",
+     "cc_ref": "3.2 3.3.6.3",
+     "enters_by": "pre-rotation commitment SHA-256(JCS([...])) over the successor keys' public key material",
+     "signer": "key holder",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-not-membership",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_user_target_steward_binding_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-delegated-scope-ownership",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_node_agency_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-attested-key-id-ownership",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_single_node_owner_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-delegation-valid-until-ownership",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "delegation_valid_until_lapsed"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-delegation-purpose-ownership",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_owner_binding_envelope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-pre-rotation-commitment-trust",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-conferral-plane-named",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-drill-freshness-signal-not-gate",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "DrillFreshness"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-transit-eligibility-shared-root",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-reclaim-authority-fails-closed",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/ownership_reclaim.rs",
+       "symbols": [
+        "ReclaimPolicy::from_deployment_pin"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-await-no-killswitch-no-run",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/utils/halt_latch.py",
+       "symbols": [
+        "read_halt_latch"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-await-one-emergency-trust-root",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
+       "symbols": [
+        "is_authorized_key"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-steward-bound-predicate-trust",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-org-on-the-bond",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_owner_binding_affiliation_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "affiliation_of_binding"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-steward-bindings-read-fold-trust",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/engine.rs",
+       "symbols": [
+        "steward_bindings_of"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-does-not-vote",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_founders_eligible"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_founders_not_node"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/consensus.rs",
+       "symbols": [
+        "eligible"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/mod.rs",
+       "symbols": [
+        "community_node_bearing_seats"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-canonical-founders-accord",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "founder_arm_at"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "node_seated_without_acceptance"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-attach-freshness",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_attach_freshness"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/envelope.rs",
+       "symbols": [
+        "ATTACH_WINDOW_SECS"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#693"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-witnessed-lineage",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/lineage_witness.rs",
+       "symbols": [
+        "admit_lineage_head_cosign"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/lineage_witness.rs",
+       "symbols": [
+        "witnessed"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "witnessed_head"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#693"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-liveness-margin",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "INFRA_RULE_LIVENESS_MARGIN_AT_FOUNDING"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "emit_liveness_transition"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-standing-verdict",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/trust_root/TrustRootVerdict.tla",
+       "symbols": [
+        "Inv_i",
+        "Prop_ii",
+        "Prop_iv",
+        "Inv_vi",
+        "Inv_viii",
+        "Inv_T7",
+        "Inv_RecoverEnabled"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-canonical-community-row",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_at_door"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "StoredStanding"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-family-root-charter",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "family_quorum_over"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_family_charter_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-lineage-witness-consent",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#974"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-attach-unlabelled",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "direction_denied_ids"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "names_no_trust_job"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-public-community",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#735"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/public_room.rs",
+       "symbols": [
+        "check_public_room_conformance"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/public_room.rs",
+       "symbols": [
+        "check_community_listing_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-halt-not-a-trust-leg",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "transit_eligibility_walk"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/cewp_node/CewpNode.tla",
+       "symbols": [
+        "Inv_X1_LatchDoesNotBlockServing"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-add-device-one-message",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#177"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-add-device-two-rows",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#177"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-add-device-matching-code",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#177"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-seal-key-bound",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "admit_unattributed_frame"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/first_contact.rs",
+       "symbols": [
+        "first_contact_matching_code"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pairing-payload-transit-pin",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/link_seal.rs",
+       "symbols": [
+        "PairingTransitPin::pair_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/transport/reticulum.rs",
+       "symbols": [
+        "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "key.rotated": {
+   "plane": "self",
+   "state_predicate": "key.succession=rotated",
+   "cc_ref": "3.3.6.3 5.1",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "key.succession",
+     "state": "rotated",
+     "plane": "self",
+     "cc_ref": "3.3.6.3 5.1",
+     "enters_by": "the committed successor key joins the roster and signs; the old key stops",
+     "signer": "key holder (old and successor)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-self-roster-key-id",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-authority",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/self_roster.rs",
+       "symbols": [
+        "acts_as_steward_at"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/consent_by_humans.rs",
+       "symbols": [
+        "grant_is_authored_for"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_single_node_owner_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-two-paths",
+     "cc_ref": "3.3.6.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/two_path.rs",
+       "symbols": [
+        "decide"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/self_roster.rs",
+       "symbols": [
+        "gate"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-model",
+     "cc_ref": "3.3.6.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/self_roster/SelfRoster.tla",
+       "symbols": [
+        "Inv_ThiefCannotEvictHonest",
+        "Inv_ThiefNeverMajority",
+        "Prop_LostRecoverable"
+       ]
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "key.escrowed": {
+   "plane": "self",
+   "state_predicate": "key.escrow=escrowed",
+   "cc_ref": "4.4.3.2.8 3.3.6.3",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "key.escrow",
+     "state": "escrowed",
+     "plane": "self",
+     "cc_ref": "4.4.3.2.8 3.3.6.3",
+     "enters_by": "archive_custody custodian holds the per-epoch archive key apart from the live roster",
+     "signer": "affiliation officers / custodian",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-affiliations",
+     "cc_ref": "4.4.3.2.8",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_262_affiliation_cohort_scope"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_263_affiliation_membership_lifecycle"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-config-record",
+     "cc_ref": "4.4.3.2.8",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/affiliation_config.rs",
+       "symbols": [
+        "check_community_record"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/affiliation_config.rs",
+       "symbols": [
+        "declared_cohort"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-term",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_delegation_term_admission"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#752"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#896"
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I10"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-one-voice-countersign",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-public-face",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "trust.entry.licensor": {
+   "plane": "node",
+   "state_predicate": "trust.entry=licensor",
+   "cc_ref": "4.4.3.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "trust.entry",
+     "state": "licensor",
+     "plane": "node",
+     "cc_ref": "4.4.3.8",
+     "enters_by": "delegates_to(reader → authority) bearing trust:accepts:v1, trust_classes absent",
+     "signer": "reader",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-root",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trust-set-members",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1142"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "trust.entry.root_removed": {
+   "plane": "node",
+   "state_predicate": "trust.entry=root_removed",
+   "cc_ref": "4.4.3.8",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "trust.entry",
+     "state": "root_removed",
+     "plane": "node",
+     "cc_ref": "4.4.3.8",
+     "enters_by": "the reader withdraws the shipped root's acceptance edge",
+     "signer": "reader",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-trust-root",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "check_trust_charter_admission"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "trust_root_valid"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "ConferralPlane"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/trust_root.rs",
+       "symbols": [
+        "resolve_transit_eligibility"
+       ]
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-trust-set-members",
+     "cc_ref": "4.4.3.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1142"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "goal.staged": {
+   "plane": "goal",
+   "state_predicate": "goal.state=staged",
+   "cc_ref": "3.1.9.7",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "goal.state",
+     "state": "staged",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7",
+     "enters_by": "the canonical holds the locked goal tree as stamped, unsigned rows",
+     "signer": "canonical (unsigned)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "goal.proposed": {
+   "plane": "goal",
+   "state_predicate": "goal.state=proposed",
+   "cc_ref": "3.1.9.7 2.4",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "goal.state",
+     "state": "proposed",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7 2.4",
+     "enters_by": "at least one founder scrubbed the staged rows, below quorum",
+     "signer": "founder(s)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "goal.declared": {
+   "plane": "goal",
+   "state_predicate": "goal.state=declared",
+   "cc_ref": "3.1.9.7 2.4",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "goal.state",
+     "state": "declared",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7 2.4",
+     "enters_by": "the founder quorum cosigns the proposed rows; admitted under the community as signed scores rows on goal:{scale}",
+     "signer": "founder quorum under consensus_protocol",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "goal.superseded": {
+   "plane": "goal",
+   "state_predicate": "goal.state=superseded",
+   "cc_ref": "3.1.9.7",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "goal.state",
+     "state": "superseded",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7",
+     "enters_by": "declarer's supersedes",
+     "signer": "declarer",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "goal.withdrawn": {
+   "plane": "goal",
+   "state_predicate": "goal.state=withdrawn",
+   "cc_ref": "3.1.9.7",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "goal.state",
+     "state": "withdrawn",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7",
+     "enters_by": "declarer's withdraws",
+     "signer": "declarer",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "goal.recanted": {
+   "plane": "goal",
+   "state_predicate": "goal.state=recanted",
+   "cc_ref": "3.1.9.7 2.4.1.3",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "goal.state",
+     "state": "recanted",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7 2.4.1.3",
+     "enters_by": "declarer's recants",
+     "signer": "declarer",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "approach.declared": {
+   "plane": "goal",
+   "state_predicate": "approach.state=declared",
+   "cc_ref": "3.1.9.7",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "approach.state",
+     "state": "declared",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7",
+     "enters_by": "signed approach:{goal_id} row",
+     "signer": "declarer",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "method.declared": {
+   "plane": "goal",
+   "state_predicate": "method.state=declared",
+   "cc_ref": "3.1.9.7",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "method.state",
+     "state": "declared",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7",
+     "enters_by": "signed method:{approach_id}:{substrate_rung} row",
+     "signer": "declarer",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "progress_measure.declared": {
+   "plane": "goal",
+   "state_predicate": "progress_measure.state=declared",
+   "cc_ref": "3.1.9.7",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "progress_measure.state",
+     "state": "declared",
+     "plane": "goal",
+     "cc_ref": "3.1.9.7",
+     "enters_by": "signed progress_measure:{method_id} row with tracks[], computation, validity_window, goodhart_resistance",
+     "signer": "declarer",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-goal-id",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#43"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-meta-goal-alignment-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "check_goal_row_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-nsproc-goal-scope-goal-scale",
+     "cc_ref": "3.1.9.7",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/goal.rs",
+       "symbols": [
+        "GoalScope"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-on-base",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#991"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "evidence.counted": {
+   "plane": "evidence",
+   "state_predicate": "evidence.state=counted",
+   "cc_ref": "3.1.9.3",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.state",
+     "state": "counted",
+     "plane": "evidence",
+     "cc_ref": "3.1.9.3",
+     "enters_by": "a declared progress_measure cites the evidence in evidence_refs",
+     "signer": "declarer of the progress_measure",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [],
+   "promised_by": []
+  },
+  "evidence.offered": {
+   "plane": "evidence",
+   "state_predicate": "evidence.state=offered",
+   "cc_ref": "3.1.5.5",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.state",
+     "state": "offered",
+     "plane": "evidence",
+     "cc_ref": "3.1.5.5",
+     "enters_by": "an evidence row whose references_attestation_id names a declared goal, approach or method",
+     "signer": "infra:attest delegate of the root",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-safety-battery-evidence-family",
+     "cc_ref": "3.1.5.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISRegistry#150"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1332"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "evidence.reference_unresolved": {
+   "plane": "evidence",
+   "state_predicate": "evidence.state=reference_unresolved",
+   "cc_ref": "3.1.5.5",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.state",
+     "state": "reference_unresolved",
+     "plane": "evidence",
+     "cc_ref": "3.1.5.5",
+     "enters_by": "no holder serves the blob the row's evidence_refs names",
+     "signer": "reader (local verdict, unsigned)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-safety-battery-evidence-family",
+     "cc_ref": "3.1.5.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISRegistry#150"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1332"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "evidence.admitted": {
+   "plane": "evidence",
+   "state_predicate": "evidence.state=admitted",
+   "cc_ref": "3.1.5.5",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.state",
+     "state": "admitted",
+     "plane": "evidence",
+     "cc_ref": "3.1.5.5",
+     "enters_by": "row admitted at federation scope; blob digest matches {prefix}",
+     "signer": "infra:attest delegate of the root",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-safety-battery-evidence-family",
+     "cc_ref": "3.1.5.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISRegistry#150"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1332"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "evidence.superseded": {
+   "plane": "evidence",
+   "state_predicate": "evidence.state=superseded",
+   "cc_ref": "3.1.5.5",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.state",
+     "state": "superseded",
+     "plane": "evidence",
+     "cc_ref": "3.1.5.5",
+     "enters_by": "re-post of the same capture or interpret as supersedes",
+     "signer": "infra:attest delegate of the root",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-safety-battery-evidence-family",
+     "cc_ref": "3.1.5.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISRegistry#150"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1332"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "evidence.standing.blessed": {
+   "plane": "evidence",
+   "state_predicate": "evidence.standing=blessed",
+   "cc_ref": "3.1.5.5",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.standing",
+     "state": "blessed",
+     "plane": "evidence",
+     "cc_ref": "3.1.5.5",
+     "enters_by": "emitter sits on a live infra:attest delegation from a root the reader trusts",
+     "signer": "reader (local verdict, unsigned)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-safety-battery-evidence-family",
+     "cc_ref": "3.1.5.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISRegistry#150"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1332"
+      }
+     ]
+    }
+   ],
+   "promised_by": []
+  },
+  "evidence.standing.unblessed": {
+   "plane": "evidence",
+   "state_predicate": "evidence.standing=unblessed",
+   "cc_ref": "3.1.5.5",
+   "added_in": 6,
+   "states": [
+    {
+     "variable": "evidence.standing",
+     "state": "unblessed",
+     "plane": "evidence",
+     "cc_ref": "3.1.5.5",
+     "enters_by": "no infra:attest delegation from a trusted root reaches the emitter",
+     "signer": "reader (local verdict, unsigned)",
+     "model_ref": "—",
+     "status": "text-only"
+    }
+   ],
+   "invariants": [],
+   "claims": [
+    {
+     "claim_id": "CLM-safety-battery-evidence-family",
+     "cc_ref": "3.1.5.5",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISRegistry#150"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISAgent#1332"
       }
      ]
     }
@@ -41291,6 +46808,9 @@
   "erasure_policy": {
    "4.4.3.2": "bold",
    "4.5.3": "after_refusal"
+  },
+  "evidence_reference_unresolved": {
+   "3.1.5.5": "after_refusal"
   },
   "federation_addressed_not_recipient": {
    "3.1.3": "after_refusal",

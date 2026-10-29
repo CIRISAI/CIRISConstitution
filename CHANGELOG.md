@@ -5,6 +5,13 @@ The CIRIS Constitution is one document with one version line. Each release below
 ## 1.0-rc14 (open)
 
 - Opened 2026-10-29 after the rc13 tag.
+- The outside review of the rc13 volumes, verified against the text and landed: a system never selects or ranks a person for a scarce life-saving resource, so the triage case defers and the specialists allocate (7.4, Annex F); the counter-notice on an expeditious takedown is a reconsideration decided by the review-duty holders (4.5.3, 4.5.5); the halt fuse is a constant of the document (4.2.1.1); a transparency-seeking class is placed at Commons scope (4.4.3.2.8); the self and family re-key walk is total (4.4.3.2.6); the four unprefixed kinds are the only agent scope strings (4.4.3.4.3.1); the Veto reads the one axis list of 1.10.
+- The producer-signed stream root states the signing bytes as shipped: the signed tree head's length-prefixed log id, tree size, root hash and two-part timestamp, little-endian, hybrid-signed; the labelled digest of 5.3.1 is the witness cosign input only (5.3.3.3).
+- The retired organisation kinds keep only what survives of them, bound to the affiliation record and the licence (3.3.9); a key wrap's members are the row model's and nothing else (3.3.2); a ledger is owner-serialized (3.3.10.1); open admission is the protocol `open:self_admit`, not a record field (3.2, 4.4.3.2); hard-case dimensions are emitted without the readability suffix (3.1.9.4).
+- Evidence of work: one `evidence` family with the suite as a closed segment, polarity signed (an interpretation's score is twice the pass ratio minus one), and an evidence row naming the Goal-side row it is offered against; a community declares Goals as it issues licences, cosigned under its protocol with `authority_id`; the seven Meta-Goal dimensions named (3.1.5.5, 3.1.9.3).
+- The catalogue vocabulary reaches version 6 with thirty-six atoms for the affiliation tier, goals and evidence, each with its state-table row (222 states, 74 variables, 11 planes).
+- The Digest's status markers match the register row they cite; the comparison paragraph and the two site citations are gone; the register carries no product names; the wire-vocabulary manifest's header names this repository as its steward.
+- The build breaks long code spans at sensible points, ties section ids, maps ≠ and × in every context, wraps bare URLs, and names the volume a printed-elsewhere section lives in; every volume's cover says released as guidance.
 
 ## 1.0-rc13 (released 2026-10-29, tag v1.0-rc13)
 

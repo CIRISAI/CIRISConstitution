@@ -4,7 +4,7 @@
 
 **Whom it binds.** The stewards of this document, who may not call a claim established without a resolvable pointer, and the repositories that publish the manifests the pointers resolve against. It is what an auditor, a regulator or a sceptical engineer reads first.
 
-**What it promises.** That present tense is used only for what ships. A row is *established* only when the pinned manifest of the owning repository publishes the named symbol in a backed state; a row is *staged* when a ticket names the work; a row is *normative* when it is a rule with no code. The checker that enforces this runs on every commit, and the counts at each cut are printed in the change log.
+**What it promises.** That in the register's rows present tense is used only for what ships; the annexes of 8.8 state operational targets and say so. A row is *established* only when the pinned manifest of the owning repository publishes the named symbol in a backed state; a row is *staged* when a ticket names the work; a row is *normative* when it is a rule with no code. The checker that enforces this runs on every commit, and the counts at each cut are printed in the change log.
 
 **What it leaves out.** The rules themselves, which are in the other volumes. This volume says whether a rule has evidence, not what the rule is.
 

@@ -18,8 +18,11 @@ def esc(s):
 
 # ASCII fallbacks for unicode INSIDE code blocks (verbatim can't use newunicodechar)
 CODE_ASCII = {'§':'S','—':'--','→':'->','←':'<-','≤':'<=','≥':'>=','∈':'in','‖':'||',
-   '²':'^2','³':'^3','⁴':'^4','⁵':'^5','⁶':'^6','⁰':'^0','¹':'^1','⁷':'^7','⁸':'^8','⁹':'^9','✅':'[x]','↔':'<->','·':'*','×':'x','–':'-',
-   '∧':'/\\','≠':'!=','│':'|','…':'...','≡':'==','±':'+-','─':'-','𝒞':'C','−':'-',
+   '²':'^2','³':'^3','⁴':'^4','⁵':'^5','⁶':'^6','⁰':'^0','¹':'^1','⁷':'^7','⁸':'^8','⁹':'^9','✅':'[x]','↔':'<->','·':'*','–':'-',
+   '∧':'/\\','│':'|','…':'...','≡':'==','±':'+-','─':'-','𝒞':'C','−':'-',
+   # two glyphs a formula block keeps as glyphs, through the listings escape (escapeinside
+   # in the preamble): a multiplication sign is not an x and a not-equal is not a bang
+   '≠':r'(*@$\neq$@*)','×':r'(*@$\times$@*)',
    '⊇':'>=','∩':'^','┐':'+','┘':'+','✓':'[ok]','á':'a','⚠':'(!)','️':'','∃':'exists',
    'ρ':'rho','⌈':'|','⌉':'|','∪':'U','≫':'>>','≈':'~=','🔴':'(R)','┌':'+','┴':'+',
    '┬':'+','├':'+','┤':'+','┼':'+','╔':'+','╗':'+','╚':'+','╝':'+','║':'|','═':'=',
@@ -29,41 +32,76 @@ CODE_ASCII = {'§':'S','—':'--','→':'->','←':'<-','≤':'<=','≥':'>=','�
 def code_ascii(s):
     return ''.join(CODE_ASCII.get(c, c if ord(c)<128 else '?') for c in s)
 
-CHUNK = 10  # a code run with no separator breaks every CHUNK characters ...
+CHUNK = 10  # in a table cell a code run with no separator breaks every CHUNK characters ...
 RUN = 24    # ... but only when the run is longer than RUN (a bare hex digest)
-SEP = re.compile(r'(?<=[_:/.\-])')  # a code token may break after one of these
+CELL_RUN = 12   # in a table cell a code token longer than this breaks after its separators
+BODY_WHOLE = 20 # in running text an identifier up to this long never breaks inside
+BODY_RUN = 45   # ... one up to this long stays whole unless the line cannot be set any other way
+BODY_CHUNK = 16 # ... and a longer separator-less run (a digest) is cut every BODY_CHUNK characters
+SEP = re.compile(r'(?<=[_:/.\-,])')  # a code token may break after one of these
+# the interword space of a code span: a typewriter space has no stretch, so a span with spaces
+# could not otherwise break at them inside a justified line
+CODE_SPACE = r'\hspace{0.525em plus 0.3em minus 0.1em}'
+# a bare URL in prose; the closing character is never punctuation that ends the sentence
+URL = re.compile(r'https?://[^\s<>"\'\])]*[^\s<>"\'\]).,;:]')
+CC_REF = re.compile(r'\bCC (\d+(?:\.\d+)*)')   # a decimal cross-reference never breaks after "CC"
 
 
-def code_runs(t):
-    """The pieces of a code token between its break points: split after _ : / . - ; a piece
-    longer than RUN (no separator in sight) is cut every CHUNK characters."""
+def code_runs(t, run=RUN, chunk=CHUNK):
+    """The pieces of a code token between its break points: split after _ : / . - , ; a piece
+    longer than run (no separator in sight) is cut every chunk characters."""
     out = []
     for p in SEP.split(t):
-        out += [p[k:k+CHUNK] for k in range(0, len(p), CHUNK)] if len(p) > RUN else [p]
+        out += [p[k:k+chunk] for k in range(0, len(p), chunk)] if len(p) > run else [p]
     return [p for p in out if p]
 
 
-def inline(s):
-    """Inline markdown -> LaTeX. Operates on already-escaped-safe segments."""
+def breakable(t, cell=False):
+    """A code span's text with its break points. Each space-separated token is handled on its
+    own and the spaces between them are stretchable glue, so a span with spaces breaks at them
+    like prose. In running text a token up to BODY_WHOLE characters never breaks, one up to
+    BODY_RUN stays whole unless no line could otherwise be set (the paragraph breaks before it,
+    which \\emergencystretch in the preamble makes feasible; the penalty break is the last
+    resort), and a longer one breaks after its separators, a separator-less run (a digest) in
+    fixed chunks. In a
+    table cell a token longer than CELL_RUN breaks after its separators, as the column floors
+    in table() assume, so a narrow column never clips it."""
+    def tok(w):
+        if cell:
+            return esc(w) if len(w) <= CELL_RUN else r'\allowbreak{}'.join(esc(p) for p in code_runs(w))
+        if len(w) <= BODY_WHOLE:
+            return esc(w)
+        if len(w) <= BODY_RUN:   # last resort only: the penalty is paid when no line could otherwise be set
+            return r'\penalty9999{}'.join(esc(p) for p in code_runs(w, BODY_RUN, BODY_CHUNK))
+        return r'\allowbreak{}'.join(esc(p) for p in code_runs(w, BODY_RUN, BODY_CHUNK))
+    return CODE_SPACE.join(tok(w) for w in t.split(' ') if w)
+
+
+def inline(s, cell=False):
+    """Inline markdown -> LaTeX. Operates on already-escaped-safe segments. cell=True inside a
+    table cell, where code tokens break more freely (see breakable)."""
     # links [text](url) -> text (drop url to avoid overflow; refs are self-describing)
     s = re.sub(r'\[([^\]]+)\]\([^)]*\)', r'\1', s)
-    # inline code `x` -> \texttt{escaped}
-    def breakable(t):
-        # a long token with no spaces (a key id, a dotted path) may break after its separators,
-        # so a table cell never clips it and a pasted identifier keeps its pieces whole; only a
-        # run with no separator (a hex digest) falls back to fixed chunks
-        if len(t) <= 12 or ' ' in t:
-            return esc(t)
-        return r'\allowbreak{}'.join(esc(p) for p in code_runs(t))
     # code spans are stashed first so that bold / italic markers may wrap them
     # (**`token`** is common); the stash marker survives esc() untouched
     codes = []
     def stash(m):
-        codes.append(r'\texttt{' + breakable(m.group(1)) + '}')
+        codes.append(r'\texttt{' + breakable(m.group(1), cell) + '}')
+        return '\x01%d\x01' % (len(codes) - 1)
+    # a bare URL is set with \url (xurl lets it break anywhere), so it wraps instead of
+    # running past the margin; one holding a character \url cannot take inside another
+    # macro's argument is escaped text with a break point after each slash instead
+    def stash_url(m):
+        u = m.group(0)
+        if any(c in u for c in '#%{}\\'):
+            codes.append(re.sub(r'/(?=[^/])', r'/\\allowbreak{}', esc(u)))
+        else:
+            codes.append(r'\url{' + u + '}')
         return '\x01%d\x01' % (len(codes) - 1)
     # an escaped pipe outside a table is a literal bar too (the Parts write `a \| b` in prose)
     s = s.replace('\\|', '|')
-    t = esc(re.sub(r'`([^`]*)`', stash, s))
+    t = esc(URL.sub(stash_url, re.sub(r'`([^`]*)`', stash, s)))
+    t = CC_REF.sub(r'CC~\1', t)
     # bold first, so its content may hold *italic* or a stashed code span; the closer is the
     # first ** not followed by a third star, so **a *b*** closes after the italic and
     # ***x*** is bold italic
@@ -96,9 +134,10 @@ def cell_tex(c):
     separators so the column never clips it; code spans break the same way inside inline()."""
     def tok(t):
         if len(t) > 12 and ' ' not in t and not t.startswith('`'):
-            return re.sub(r'([:_./\-])', lambda m: m.group(1) + '​', t)
+            # never between the digits of a decimal id ("CC 4.2.1.1" stays whole)
+            return re.sub(r'([:_/\-]|\.(?!\d))', lambda m: m.group(1) + '​', t)
         return t
-    return inline(' '.join(tok(t) for t in c.split(' ')))
+    return inline(' '.join(tok(t) for t in c.split(' ')), cell=True)
 
 
 def table(header, rows):
@@ -350,7 +389,10 @@ NUC = {
  '§':r'\S','—':'---','→':r'$\rightarrow$','←':r'$\leftarrow$','≤':r'$\leq$','≥':r'$\geq$',
  '∈':r'$\in$','‖':r'$\|$','²':r'\textsuperscript{2}','³':r'\textsuperscript{3}',
  '⁴':r'\textsuperscript{4}','⁵':r'\textsuperscript{5}','⁶':r'\textsuperscript{6}','⁰':r'\textsuperscript{0}','¹':r'\textsuperscript{1}','⁷':r'\textsuperscript{7}','⁸':r'\textsuperscript{8}','⁹':r'\textsuperscript{9}','✅':r'[\checkmark]','↔':r'$\leftrightarrow$',
- '·':r'\textperiodcentered{}','×':r'$\times$','–':'--','∧':r'$\wedge$','≠':r'$\neq$',
+ '·':r'\textperiodcentered{}','×':r'$\times$','–':'--','∧':r'$\wedge$',
+ # \neq is an = with a slash struck over it, which a text extractor reads as "=" plus a
+ # combining stroke; the ActualText (accsupp) tells it the pair is one U+2260
+ '≠':r'\BeginAccSupp{method=hex,unicode,ActualText=2260}$\neq$\EndAccSupp{}',
  '│':'|','…':r'\ldots{}','≡':r'$\equiv$','±':r'$\pm$','─':'-','𝒞':r'$\mathcal{C}$',
  '−':'-','⊇':r'$\supseteq$','⊆':r'$\subseteq$','≔':r'$:=$','∩':r'$\cap$','┐':'+','┘':'+','✓':r'\checkmark{}','á':r"\'a",
  '⚠':r'[!]','️':'','∃':r'$\exists$','ρ':r'$\rho$','⌈':r'$\lceil$','⌉':r'$\rceil$',

@@ -3,18 +3,18 @@ plain	1a	works today	G1
 plain	1b	works today	G1
 plain	1c	works today	G2
 plain	1d	works today	G3
-plain	1e	works today	one path changing: CIRISAgent#1251
+plain	1e	works today	
 plain	1f	works today	G3
 plain	2a	works today for the signed act and the reasoning shown first	the detectors are staged
-plain	2b	works today	run_kind being built: CIRISAgent#1255
+plain	2b	works today	run_kind being built: CIRISAgent#1249
 plain	2c	works today, test-backed	G4
 plain	2d	works today	moderation ledger rows, CC 3.1.9.2
-plain	2e	works today for a joined node	the first-join witness rule is being built: CIRISPersist#1049
+plain	2e	works today for a joined node	the first-join witness rule is being built: CIRISServer#693
 plain	2f	works today	G13
 plain	2g	works today	G20
 plain	2h	a rule, no code yet	
 plain	3a	works today, test-backed	G5
-plain	3b	being built: CIRISPersist#1062	
+plain	3b	in code; no register row yet	
 plain	3c	works today for the binding and the age line	the report duty is a rule
 plain	3d	works today	G6
 plain	3e	a rule, no code yet	
@@ -42,42 +42,42 @@ plain	7d	works today for the conscience checks	emergent-risk reporting is a rule
 plain	8a	a rule, no code yet	it names the law, not code
 plain	8b	a rule, no code yet	
 plain	8c	a rule, no code yet	
-plain	9a	a rule in this register	the agent enforces the prohibitions; no evidence row yet, G26
+plain	9a	a rule, no code yet	G26
 plain	9b	a rule, no code yet	
 plain	9c	a rule, no code yet	
-plain	10a	being built: CIRISAgent#1242	
-plain	10b	being built: CIRISAgent#1242	
-plain	10c	being built: CIRISAgent#1242	
+plain	10a	in code; no register row yet	
+plain	10b	in code; no register row yet	
+plain	10c	in code; no register row yet	
 plain	10d	a rule, no code yet	
 plain	11a	works today	G28
-plain	11b	works today on accountable streams and where a lineage runs witnessed	a best-effort stream has a producer-signed root only; the shipped roots run with witnessed mode off until it is turned on
+plain	11b	works today on accountable streams	witnessed lineage being built: CIRISServer#693; shipped roots run witnessed mode off
 plain	11c	works today	attestation ladder, G28
-exec	1	works today	one retention path changing: CIRISAgent#1251
-exec	2	works today for the signed act, the record, the contest and delegation	run_kind and the first-join witnesses are being built: CIRISAgent#1255, CIRISPersist#1049; the detectors are staged; the scale-disclosure duty is a rule, no code yet
-exec	3	works today for the bond, the moderator, and the child's binding and age line	the organisation on the bond is being built: CIRISPersist#1062; the report duty and the stewardship tier are a rule, no code yet
+exec	1	works today	
+exec	2	works today for the signed act, the record, the contest and delegation	run_kind and the first-join witnesses are being built: CIRISAgent#1249, CIRISServer#693; the detectors are staged; the scale-disclosure duty is a rule, no code yet
+exec	3	works today for the bond, the moderator, and the child's binding and age line	the organisation on the bond is in code, no register row yet; the report duty and the stewardship tier are a rule, no code yet
 exec	4	works today for the pause and the roster	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped; that a root can only restrict is modelled, no code test yet
 exec	5	works today for consensual shutdown, refusal, identity and drift; the force path is in code with its row staged: CIRISAgent#1250	the Retirement Standard is being built: CIRISAgent#1250; manager-side upgrades: CIRISManager#27
 exec	6	mixed	no ban works today by construction; one voice once is modelled and in code only on the coherence leg, R14; no ranking by what you are and the first-contact rule are a rule, no code yet
 exec	7	in code today	the register row is staged: CIRISAgent#1250; emergent-risk reporting is a rule, no code yet
 exec	8	a rule, no code yet	
-exec	9	a rule	the agent enforces the prohibitions; no evidence row yet
-exec	10	being built: CIRISAgent#1242; the closure duty (no environmental waste) is a rule, no code yet	
-exec	11	works today	equivocation resistance holds where a lineage runs witnessed, and the shipped roots run with witnessed mode off until it is turned on
+exec	9	a rule, no code yet	
+exec	10	in code; no register row yet; the closure duty (no environmental waste) is a rule, no code yet	
+exec	11	works today on accountable streams	witnessed lineage being built: CIRISServer#693; shipped roots run witnessed mode off
 operator	If you run a node|You choose your roots.	choosing and pinning roots works today	root attenuation is modelled, no code test yet (G10)
 operator	If you run a node|Your node holds only what it is entitled to.	works today	
 operator	If you run a node|Presence is local.	works today	
-operator	If you run a node|You keep working when timers lapse.	works today for a joined node	the first-join witness rule is being built: CIRISPersist#1049
-operator	If you run a node|Traces say what run they are.	works today	run_kind being built: CIRISAgent#1255
+operator	If you run a node|You keep working when timers lapse.	works today for a joined node	the first-join witness rule is being built: CIRISServer#693
+operator	If you run a node|Traces say what run they are.	works today	run_kind being built: CIRISAgent#1249
 operator	If you run a node|A purge is a tombstone.	works today	
 operator	If you run a node|Your exit:	works today	
 operator	If you hold a steward key for an agent|You accepted the root on the agent's behalf.	works today	measured end to end on the pinned pair; the agent act gate and the serve-gate breaker shipped
-operator	If you hold a steward key for an agent|The bond is a signed row with listed powers.	works today	the organisation on the bond is being built: CIRISPersist#1062
+operator	If you hold a steward key for an agent|The bond is a signed row with listed powers.	works today	the organisation on the bond is in code; no register row yet
 operator	If you hold a steward key for an agent|Tier before operation.	a rule, no code yet	
 operator	If you hold a steward key for an agent|You are the agent's Wise Authority today.	deferral works today	the duty not to sign reasoning you cannot evaluate does not bind anyone yet
 operator	If you hold a steward key for an agent|Shutdown, in two acts.	works today	
 operator	If you hold a steward key for an agent|Identity and upgrades.	works today on the agent	the manager still has paths that restart or force without asking and re-stage a refused update without recording who refused: CIRISManager#27
 operator	If you hold a steward key for an agent|Retirement Standard.	being built: CIRISAgent#1250	
-operator	If you hold a steward key for an agent|The data people choose.	works today	one path changing: CIRISAgent#1251
+operator	If you hold a steward key for an agent|The data people choose.	works today	
 operator	If you hold a steward key for an agent|Licensed professions.	works today	
 operator	If you hold a steward key for an agent|Your exit:	works today	
 operator	If you moderate a community|A room always has a named moderator.	works today	

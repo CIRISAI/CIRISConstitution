@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc14",
-    "registry_sha256": "f007a247a65c9e330ad2ba7152a4023fa7db64bda88de633446ccfd9a6ec2e54",
+    "registry_sha256": "75445fb9f35b5e66255493d6be192e717ffd8edd64dda70b7a800f3862e5ee64",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -3542,45 +3542,51 @@
     },
     {
       "dimension": "evidence:safety_battery:capture:id1:ab12:v1",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": null,
       "why": "instantiated sample resolves to its row"
     },
     {
       "dimension": "evidence:safety_battery:capture:id1:ab12:V1",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "an uppercase version tail is malformed, not open vocabulary"
     },
     {
       "dimension": "evidence:safety_battery:capture:id1:ab12:v1:v2",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a duplicated version tail is malformed, not open vocabulary"
     },
     {
       "dimension": "evidence:safety_battery:capture:id1:ab12:v1beta",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
     },
     {
       "dimension": "Evidence:safety_battery:capture:id1:ab12:v1",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a case-mutated registered stem is malformed, not open vocabulary"
     },
     {
       "dimension": "evidence:safety_battery:capture:id1:ab12",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "missing_version_segment",
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
-      "dimension": "evidence:safety_battery:CAPTURE:id1:ab12:v1",
-      "family": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "dimension": "evidence:SAFETY_BATTERY:capture:id1:ab12:v1",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "evidence:not_a_listed_value:capture:id1:ab12:v1",
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
+      "refusal": "namespace_vocab_value_unregistered",
+      "why": "a value outside a closed enumeration is unregistered"
     },
     {
       "dimension": "expertise:sample:sample:v1",
