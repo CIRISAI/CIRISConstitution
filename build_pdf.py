@@ -419,8 +419,10 @@ def build_volumes(which):
     if which == "all":
         sv = section_volumes()
         lines = [f"# Volumes of edition {VERSION}", "",
-                 "One edition, one decimal spine, several volumes (CIRISConstitution#123). Built by "
-                 "`python3 build_pdf.py --volume all`; the versioned PDFs are committed at each release by pdf-finalize, with a fixed-name copy of each (`ciris_constitution-<volume>.pdf`) pointing at the latest release. "
+                 "One edition, one decimal spine, printed nine ways for nine readers. Built by `python3 build_pdf.py --volume all`; "
+                 "each release commits its versioned set (`ciris_constitution-<version>-<volume>.pdf`) and refreshes the fixed-name copies "
+                 "(`ciris_constitution-<volume>.pdf`) the README links to; earlier releases live in git history under their tags. "
+                 "The map of sections to volumes is `constitution/volumes.tsv`; the section is always the authority and a volume is a lens on it. ",
                  "Each volume opens with its plain-language cover from `constitution/covers/`.", "",
                  "| Volume | Sections | Pages |", "|---|---|---|"]
         for v in VOLUMES:
