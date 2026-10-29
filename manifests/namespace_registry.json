@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "75445fb9f35b5e66255493d6be192e717ffd8edd64dda70b7a800f3862e5ee64",
+    "registry_sha256": "df79a1dde30a380380da83f0d776737e580705b6305741f037a5a78c2bef9898",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "bff222fb9a3bbece7d3bc19e94f82449fdeb6e34dd2c1bf2e1cece5a75dea297"
+    "source_sha256": "7af252ad3275d9e56aaa2a6c2e64504d90b2e3b0cbeadd09a79218390518c850"
   },
   "families": [
     {
@@ -3822,7 +3822,7 @@
     },
     {
       "cc_section": "3.1.5",
-      "description": "The signed request handed to the operator with the retirement record (CC 7.5.5): retirement_id, manifest digest, preserve_until and its inputs (shutdown + 5 y as the best practice; a law or contract period with its citation; active legal_ho",
+      "description": "The signed request handed to the operator with the retirement record (CC 7.5.5): retirement_id, manifest digest, preserve_until and its inputs (shutdown + 5 y as the default; a law or contract period with its citation; active legal_hold ids",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "+1.0 only",

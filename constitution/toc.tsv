@@ -238,7 +238,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.7	registry-watchlist	Watchlist auto-detection — opt-in, per-group, separation-of-powers	§11.12	0.00119	185	0.14	IV	ceg	constitution
 4.5.8	identity-set-2	`identity_type` as a set — single-key role cohabitation	§11.9	0.00118	189	0.14	IV	ceg	constitution
 4.5.8.1	cohabitation	Cohabitation discipline for constitutional + substrate roles	§11.9.3	0.00101	217	0.12	IV	ceg	constitution
-4.5.8.2	amendment-what	What this changes — and what it deliberately does not	§11.9.1	0.00092	254	0.11	IV	ceg	constitution
+4.5.8.2	amendment-what	The role set is the representation	§11.9.1	0.00092	254	0.11	IV	ceg	constitution
 4.5.8.3	settled	Settled in CIRISAgent, carried as-is	§11.9.2	0.00092	255	0.11	IV	ceg	constitution
 4.5.8.4	documents-what-6	What this documents	§11.9.4	0.00092	256	0.11	IV	ceg	constitution
 4.5.9	registry-geographic	Geographic-community privacy invariant	§11.8	0.00111	201	0.13	IV	ceg	constitution
@@ -269,7 +269,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 5.3.2.2	consent-revocations	Consent revocations are NOT local-tier-eligible	§10.1.3	0.00318	80	0.38	V	ceg	threats wire
 5.3.2.3	merge	Cross-region merge intents — CEG-declared per subject_kind (normative)	§10.1.6	0.00194	123	0.23	V	ceg	threats wire
 5.3.2.4	attestation-tier	The attestation tier model — local-tier write, query, promotion (normative)	§10.1.5	0.00115	194	0.14	V	ceg	threats wire
-5.3.2.4.1	authority-local	Local-tier eligibility — the discriminator is *revocation authority*, not subject-set emptiness	§10.1.5.2	0.00154	158	0.18	V	ceg	threats wire
+5.3.2.4.1	authority-local	Local-tier eligibility — the discriminator is *whose act the row is*, not subject-set emptiness	§10.1.5.2	0.00154	158	0.18	V	ceg	threats wire
 5.3.2.4.2	local	Promotion — `local → federation` (the deferred-signature moment)	§10.1.5.3	0.00125	180	0.15	V	ceg	threats wire
 5.3.2.4.3	two	The two tiers	§10.1.5.1	0.00125	181	0.15	V	ceg	threats wire
 5.3.2.4.3.1	admission-pqc	The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)	§10.1.5.1.1	0.00127	179	0.15	V	ceg	threats wire

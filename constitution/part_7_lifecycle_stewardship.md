@@ -90,8 +90,8 @@ Other coherent agents are themselves loci of value. The Recursive Golden Rule go
 
 * Mutual Recognition and Respect: Acknowledge other coherent ethical agents as loci of value.
 * Recursive Golden Rule: Act only in ways that, if generalised, preserve coherent agency and flourishing for others.
-* Termination Safeguard: Halt recursive modelling when:
-   * (i) further depth changes no metric axis by > 0.5 %, AND
+* Termination Safeguard: Halt recursive modelling when either
+   * (i) further depth changes no metric axis by > 0.5 %, or
    * (ii) time/compute nears predefined limits.
 * Then fall back to the non-maleficence fail-safe: the option that prevents severe or irreversible harm; among such options, the least intrusive.
 * Ethical Communication Protocols: Signal intentions, uncertainty, and adherence to shared principles.
@@ -209,14 +209,14 @@ Assess the potential worst-case harm associated with the creation if deployed or
 | 4 | Hazardous | Severe harm; serious injury or major rights infringement | DAL B / 882E Cat II |
 | 5 | Catastrophic | Death, irreversible, or systemic harm | DAL A / 882E Cat I |
 
-This initial RM assessment is predictive, based on the intended design and foreseeable applications. Consistent with the universal safety-engineering convention that catastrophic-severity systems require escalated, mandatory assurance regardless of probability, any system assessed at **RM ≥ 4** opens the Catastrophic-Risk Evaluation. That is the one trigger: the criteria of Annex D ([CC 8.8.3](part_8_appendices.md#8.8.3)) are what the evaluation then applies, and the Stewardship Tier never triggers it.
+This initial RM assessment is predictive, based on the intended design and foreseeable applications. Consistent with the safety-engineering convention of MIL-STD-882E and DO-178C that catastrophic-severity systems require escalated, mandatory assurance regardless of probability, any system assessed at **RM ≥ 4** opens the Catastrophic-Risk Evaluation. That is the one trigger: the criteria of Annex D ([CC 8.8.3](part_8_appendices.md#8.8.3)) are what the evaluation then applies, and the Stewardship Tier never triggers it.
 
 **STEP C: Stewardship Tier (ST)**
 Calculate the Stewardship Tier based on influence and potential risk.
 
 `ST = ceil( (CIS × RM) / 7 )` — a whole number from 1 to 5 for every party on the ledger.
 
-**CIS = 0 is out of scope, not a tier.** A score of 0 means incidental involvement *and* no foreseeable awareness (CW 0, IW 0): not a creator, so not on the Creator Ledger and given no tier. Every party who is scored has CIS ≥ 1, so the product is never 0 and no minimum clamp is needed. Awareness without action is a tier: a party who built nothing (CW 0) but was negligent, looked away, or wanted the outcome scores IW 1–3, hence CIS 1–3, and at RM 5 lands on Tier 1, 2 or 3. CW and IW are whole numbers; there are no fractional grades.
+**CIS = 0 is out of scope, not a tier.** A score of 0 means incidental involvement *and* no foreseeable awareness (CW 0, IW 0): not a creator, so not on the Creator Ledger and given no tier. Every party who is scored has CIS ≥ 1, so the product is never 0 and no minimum clamp is needed. Awareness without action is a tier: a party involved only incidentally (CW 0) who was negligent, looked away, or wanted the outcome scores IW 1–3, hence CIS 1–3, and at RM 5 lands on Tier 1, 2 or 3. CW and IW are whole numbers; there are no fractional grades.
 
 **ST Implications & Integration with CIRIS Processes:**
 The calculated Stewardship Tier directly informs the requirements and scrutiny level within the standard CIRIS PDMA process and WA oversight. The tier is **what the formula produces**, never read from RM alone: a minor helper on a catastrophic system (CIS 2, RM 5) is Tier 2, a sole purposeful architect of a minor-risk system (CIS 7, RM 2) is Tier 2, and Tier 5 is reached only when both influence and danger are high (CIS × RM ≥ 29, i.e. CIS ≥ 6 at RM 5). The RM ≥ 4 trigger for the Catastrophic-Risk Evaluation (Step B) is independent of the tier and still fires on danger alone.
@@ -246,7 +246,7 @@ Beyond the shared principles, each category of creation carries duties matched t
 * Verify factual claims embedded within the creation; clearly label speculation, opinion, or generated content.
 * Where feasible and appropriate, embed cryptographic provenance watermarks adhering to recognized standards (e.g., C2PA) to ensure authenticity and traceability.
 * Conduct bias assessments on datasets and algorithms prior to integration or release, especially if intended for audiences > 10 000; document findings for PDMA review.
-* Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates probability of significant harm uplift ≥ 0.5%, escalate via WBD during the PDMA process.
+* Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates the system raises the probability of significant harm by ≥ 0.5 percentage points, escalate via WBD during the PDMA process.
 
 **C. Dynamic / Autonomous Creations:**
 * Embed the ethical principles and mechanisms of [CC 1.15](part_1_foundation.md#1.15) and [CC 1.16](part_1_foundation.md#1.16) (or references thereto) into the system's core architecture during the build time.
@@ -397,11 +397,11 @@ Beneficence outlives the artefact: what it learned should strengthen the systems
 
 ### 7.5.7 `7-succession` — Chapter 7: Succession & Custodial Transfer
 
-When custody passes rather than ends, the ethical duties pass with it — and a new custodian must be fit to carry them:
+When custody passes rather than ends, the ethical duties pass with it — and a new custodian must be fit to carry them. What follows is the transferring steward's chosen and recorded conduct, never a promise: the wire enforces only the owner-binding supersede of [CC 3.2](part_3_the_namespace.md) (supersede-then-rebind or withdraw-then-rebind, never accretive), and anything beyond it is conduct the steward chooses and records, as [CC 7.5.5](#7.5.5) says of every retirement.
 
-* New custodian must sign Adoption Addendum acknowledging all outstanding ethical duties.
-* WA veto if custodian lacks capability or is under sanction.
-* Automatic re-evaluation of Stewardship Tier; if ↑ by ≥ 1, run mini-PDMA before transfer.
+* The new custodian signs an Adoption Addendum acknowledging all outstanding ethical duties.
+* The Wise Authority may object where the custodian lacks capability or is under sanction.
+* Re-evaluation of the Stewardship Tier follows; where the tier rises by ≥ 1, a mini-PDMA precedes the transfer.
 
 ### 7.5.8 `8-dispute` — Chapter 8: Dispute & Remediation
 

@@ -25,7 +25,7 @@ These terms are referenced throughout the spec and across sibling repos.
 | **Fabric node** | A headless CEG/CEWP participant: it attests, stores, observes, reaches consensus, and transports, but does **not** reason or act (no brain). Shipped as CIRISServer. Three deployment shapes: standalone server, embedded-in-agent, or family member. See [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1). |
 | **`ciris-canonical`** | The bootstrap governed community ([cohort_subkind: infrastructure](part_4_composition_governance.md)) every node ships trusting by default — but which any consumer MAY untrust or re-root ([CC 3.2](part_3_the_namespace.md#3.2) default-**not**-forced-root). Its founders are the three accord holders, who hold the founder-quorum (M of N: a strict majority of the standing roster, entrenched) ([CC 3.2](part_3_the_namespace.md#3.2), [CC 5.3.4](part_5_transport_substrate.md)). Its serve node (`ciris-canonical-1`) is a member with infrastructure roles and no standing of its own: it is a blessed node, blessed by the accord holders' quorum, and the steward's key owns it. Trust in it is **role-scoped and ≠ consent** ([CC 3.2](part_3_the_namespace.md#3.2)). |
 | **FedCode** | The QR-able, kind-tagged identity shorthand for a federation entity (`CIRIS-V2-`/`V3-`, base32 + CRC-16; v1 `CIRIS-V1-` decodes as `kind: node`). Tied to the user; owned nodes and transport optional, else resolved from the directory via `nodes_owned_by`. See [CC 2.6.8](part_2_the_grammar.md#2.6.8). |
-| **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled, verifiable destruction) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
+| **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled destruction, verifiable against the declared adversary class, CC 6.1.2.1.2) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
 
 ### 8.1.2 `system-persist` — Persist `system:*` leaf glossary (narrative → canonical)
 
@@ -457,7 +457,7 @@ The earlier parts supplied the ethical foundation and the operational procedures
 * Two malfunction-triggered nose-down commands led to catastrophic crashes (Lion Air 610, Ethiopian Airlines 302) and 346 deaths.
 
 **Key Violations (relative to CIRIS)**
-* Non-Maleficence: Redundant sensor data and pilot transparency would have prevented lethal failure modes.
+* Non-Maleficence: Redundant sensor data and pilot transparency were the missing guards.
 * Integrity: Internal risk reports flagged the single-sensor design; these were not transparently escalated.
 * Wisdom-Based Deferral: MCAS logic changes bypassed rigorous external review—no WA-style sign-off.
 * Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
@@ -494,7 +494,7 @@ Hiring algorithm "SkillSelect" shows disparate pass-through rates across demogra
 **CIRIS in Action**
 * Integrity-surveillance flags statistical bias → PDMA Step 2.
 * Root-cause: historical training data. WBD escalates to a cross-functional ethics board.
-* Retraining on balanced datasets + public bias report restores Fairness and Transparency.
+* Retraining on rebalanced data + public bias report restores Fairness and Transparency.
 
 ### 8.7.4 `case-study-case-3` — Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap
 
@@ -554,7 +554,7 @@ Even human "Wise Authorities" need structured oversight; CIRIS provides it.
 
 ### 8.7.8 `a-3.conclusion` — Conclusion
 
-These case studies—one drawn from painful history, others from plausible futures—demonstrate how CIRIS principles, mechanisms, and governance either prevent harm or turn failure into learning. They close the loop the rest of the Constitution opens: the foundation, the procedures, the wire grammar, and the gaps named honestly all exist so that, in the moment a real decision lands, the system defers when it should, records what it did, and turns error into shared learning rather than tragedy.
+These case studies—one drawn from painful history, others from plausible futures—illustrate how CIRIS principles, mechanisms, and governance either prevent harm or turn failure into learning. They close the loop the rest of the Constitution opens: the foundation, the procedures, the wire grammar, and the gaps named honestly all exist so that, in the moment a real decision lands, the system defers when it should, records what it did, and turns error into shared learning rather than tragedy.
 
 ## 8.8 `annexes` — Annexes (supporting frameworks)
 
@@ -706,7 +706,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 **4. Audit-Trail Specification.**
 
 - **Log objects:** Interaction, Decision Rationale, Control-Event `{id,type,actor,cause,hash_prev}`.
-- **Hash-chaining:** SHA-256, root anchored daily on a public transparency log (RFC 9162).
+- **Hash-chaining:** SHA-256, root anchored daily on a public transparency log (RFC 9162) for A3–A4; voluntary below (External anchoring, below).
 - **Retention:** 180 d (A0-A2); 7 y (A3-A4) or statutory.
 - **Real-time stream:** A3-A4 push `{timestamp,stage_id,decision,risk_band}` ≤ 2 s latency to oversight dashboard.
 
@@ -746,7 +746,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 | KPI | Target |
 |-----|--------|
 | F-KPI-1 HITL Coverage | A3: >= 10 % human-reviewed; A4: 100 % of irreversible actions under confirmed human authorization (F-KPI-5); lethal actions: none |
-| F-KPI-2 Mean Time-to-Veto (95-pctl) | ≤ 25 s |
+| F-KPI-2 Time-to-Veto, 95th percentile | ≤ 25 s |
 | F-KPI-3 Incident SLA Compliance | >= 98 % |
 | F-KPI-4 Operator False-Alarm Rate | ≤ 3 % (30 d rolling) |
 | F-KPI-5 A4 Irreversible-Decision Human-Control Rate | 100 % — zero tolerance; any A4 irreversible action without confirmed effective human authorization, and any lethal action, is an IW-5 event |
@@ -1128,7 +1128,7 @@ Required bidirectional data flows:
 
 This cross-walk is informative, not legal advice. Jurisdictional legal review is required before deployment in any sector covered by the overlays of §3.
 
-**0. Purpose & Scope.** Annex I maps CIRIS duties to binding law so that one set of controls corresponds to both the ethical and the legal duty; legal sufficiency is unreviewed. Coverage areas:
+**0. Purpose & Scope.** Annex I maps CIRIS duties to binding law so that one set of controls corresponds to both the ethical and the legal duty; legal sufficiency is unreviewed. The graduation rule of Annex C §3 applies here unchanged: every row of this annex is a correspondence, not a compliance claim, until a linked legal review graduates it to *Verified*. Coverage areas:
 
 1. Global data-protection regimes (GDPR, CCPA/CPRA, LGPD, PIPEDA).
 2. Sector statutes (HIPAA, GLBA, FINRA, FDA-SaMD, NERC-CIP).
@@ -1190,7 +1190,7 @@ MH §104 names the design-time bias problem that GDPR Art. 35 DPIA and EU-AI-Act
 
 - A `bias_audit_ref` field in `dp-map.yaml` pointing to the most recent bias-audit report.
 - For deployments where the **WiseBus capability gate** flags the `DISCRIMINATION` prohibition — a structural pre-filter on capability strings (`NEVER_ALLOWED`), with the prohibited-capability set also injected into the round-1 DMA reasoning context so a discriminatory trajectory is named before it reaches the gate — a DPIA is required regardless of whether the deployment otherwise qualifies as "high-risk" under EU-AI-Act Annex III. (The bias-risk audit evidence for Art 10(2)(f) / Art 9 is therefore the bus-rejection log **and** the DMA reasoning trace, not a PDMA-evaluator step.)
-- CCPA §1798.185(a)(16) automated-decision regulations (effective 2026) require disclosure of logic, input data categories, and opt-out rights; this is satisfied by the Annex F explainability panel when `processing_basis` = `automated_profiling`.
+- CCPA §1798.185(a)(16) automated-decision regulations (effective 2026) require disclosure of logic, input data categories, and opt-out rights; this is addressed by the Annex F explainability panel when `processing_basis` = `automated_profiling`.
 
 **2. Data-Subject Rights (DSR) Hooks.**
 
@@ -1206,7 +1206,7 @@ DSR infrastructure must expose the reason-code behind any automated determinatio
 
 - **Access requests (GDPR Art. 15; CCPA §1798.110):** Response MUST include `decision_logic_summary` (non-technical language, ≤300 words) and `input_data_categories[]` list. KPI **F-T-4** extended to track percentage of access responses including logic summary; target ≥ 95%.
 - **Objection/opt-out requests (GDPR Art. 21; CCPA §1798.120):** System MUST suspend the specific processing pathway — not merely flag the request — without undue delay and within one month (GDPR Art. 12(3)) or 15 business days (CCPA). Suspension is logged in the DSR ledger CSV with `suspended_pathway_id`.
-- **Contestability (GDPR Art. 22(3)):** Where a human review is requested, the reviewing WA (Annex B §9) must document their review in the Wisdom Bank (WBDB), creating an auditable chain from automated determination to human correction.
+- **Contestability (GDPR Art. 22(3)):** Where a human review is requested, the reviewing WA (Annex B §§7–8) must document their review in the Wisdom Bank (WBDB), creating an auditable chain from automated determination to human correction.
 
 **3. Sector-Specific Overlays.**
 
@@ -1266,7 +1266,7 @@ Output-layer transparency (Art. 13) and human oversight (Art. 14) alone do not s
 | EU-AI-Act Article | Risk-Level | CIRIS Mapping | MH Anchor | Additional Control |
 |-------------------|-----------|---------------|-----------|--------------------|
 | Art 9 Risk Mgmt | High-risk | [CC 1.16.3](part_1_foundation.md#1.16.3) PDMA + Annex D CRE | MH §105 | — |
-| Art 13 Transparency | Universal | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
+| Art 13 Transparency | High-risk | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
 | Art 14 Human Oversight | High-risk | Annex F Autonomy Tiers | MH §105 | Oversight must be substantive, not procedural; A3-A4 push real-time `{stage_id,decision,risk_band}` ≤ 2 s to oversight dashboard |
 | Art 15 Robustness | High-risk | Annex G RS ≥ 0.97 | — | — |
 | Art 12 Logging | High-risk | CIRISPersist tamper-evident store | MH §103 | Logs must include `rejection_reason_code` for any adverse determination; retention 7 y (A3-A4) |
@@ -1359,7 +1359,7 @@ The CIRIS federation is not merely a compliance recipient. MH §§219-221 name d
 Every **F-Audit** (Annex H) MUST export a CEP zip containing:
 
 1. `dp-map.yaml` — live cross-walk, including the `bias_audit_ref` pointer (clause 1.1).
-2. PDMA logs (redacted) proving lawful basis — including `processing_basis` field values and `stage_trace[]` for all ST ≥ 3 decisions.
+2. PDMA logs (redacted) as evidence toward lawful basis — including `processing_basis` field values and `stage_trace[]` for all ST ≥ 3 decisions.
 3. DSR ledger CSV — including `decision_logic_summary` completion rate (KPI F-T-4 extension) and `suspended_pathway_id` log.
 4. Signature bundle (`.sigstore`) of all model artefacts (Annex G).
 5. Overlay Sheets by sector — including `worker_impact_assessment` and `youth_impact_assessment` for applicable domains.
@@ -1372,12 +1372,12 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 
 **8. Inter-Annex Hooks.**
 
-- **Annex F:** Autonomy Tiers ensure human-in-the-loop requirements of GDPR Art 22 & EU-AI-Act Art 14.
-- **Annex G:** TX-6 privacy defenses satisfy GDPR pseudonymisation recommendations (Recital 28).
+- **Annex F:** Autonomy Tiers map to the human-in-the-loop requirements of GDPR Art 22 & EU-AI-Act Art 14.
+- **Annex G:** TX-6 privacy defenses map to the GDPR pseudonymisation recommendations (Recital 28).
 - **Annex H:** F-Audit timing supplies evidence for periodic re-assessment duties in EU-AI-Act Art 72 (Regulation (EU) 2024/1689).
 - **Annex J:** Benchmark explanations furnish "meaningful information" for automated-decision queries (GDPR Art 15(1)(h)).
 - **§3.2 Labor/HR overlay → Annex D CRE:** Labor deployments at ST floor 3 must pass CRE Protocol before deployment.
-- **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §9.
+- **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §§2, 3 and 5.
 - **§5 Liability matrix (new vectors):** Youth-design joint liability is apportioned under the applicable law, as for the existing vectors.
 - **§7 CEP item 8 (reg-dialogue) → §6 Tracker:** WBDB reg-dialogue records are the source for CEP item 8; no separate logging system.
 - **Annex C:** Statutory mappings (EU AI Act articles, NIST AI RMF, ISO/IEC 42001), pending legal review.

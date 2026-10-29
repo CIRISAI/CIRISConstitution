@@ -80,6 +80,8 @@ envelope = {
   ? delegation_purpose: tstr,  ; OPTIONAL on delegates_to; default absent
   ? delegation_valid_from: rfc3339-ms,  ; OPTIONAL on delegates_to; default the edge's asserted_at
   ? delegation_valid_until: rfc3339-ms,  ; REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL; default absent (open-ended)
+  ? trust_classes: [* tstr],  ; OPTIONAL on a delegates_to bearing trust:accepts:v1; default absent (every class the authority's charter declares); array kind: set
+  ? trust_depth: uint,  ; OPTIONAL on a delegates_to bearing trust:accepts:v1; default absent (0)
   ? consent_basis: [* consent-basis],  ; OPTIONAL (capacity:*, observation:access_assumption:v1); default absent; array kind: sequence
   ? n_eff_pr: number,  ; OPTIONAL (carried on capacity:*; validated at the capacity:* gate); default absent
   ? n_eff_h: number,  ; OPTIONAL (carried on capacity:*; validated at the capacity:* gate); default absent

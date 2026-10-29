@@ -9,7 +9,8 @@ Source of truth: constitution/digest/promise_status.tsv  (surface, key, status, 
 Marker form: " *[status]*" or " *[status; note]*", appended to the line; an existing marker is
 replaced, so the run is idempotent. A legend line is kept under each surface's title.
 Vocabulary: works today = evidence in the register at a pinned commit; being built = a named
-ticket; a rule, no code yet = normative only; modelled = a formal witness, no code test.
+ticket; a rule, no code yet = normative only; modelled = a formal witness, no code test;
+staged, with its ticket = register row exists, wire does not yet keep it; in code; no register row yet = shipped, no row to pin to.
 Run: python3 tools/build_promise_status.py
 """
 import csv, os, re, sys
@@ -21,7 +22,8 @@ FILES = {"plain": "constitution/digest/00_guarantees_plain.md",
 MARK = re.compile(r"\s*\*\[[^\]]*\]\*\s*$")
 LEGEND = ("*Status markers:* **works today** = evidence in the register at a pinned commit; "
           "**being built** = a named ticket; **a rule, no code yet** = normative only; "
-          "**modelled** = a formal witness, no code test. The markers are stamped from *The Evidence Register*.")
+          "**modelled** = a formal witness, no code test; **staged**, with its ticket = the register row exists and the wire does not yet keep it, the ticket names the work; "
+          "**in code; no register row yet** = shipped, with no register row to pin it to. The markers are stamped from *The Evidence Register*.")
 
 def marker(status, note):
     return f" *[{status}; {note}]*" if note else f" *[{status}]*"

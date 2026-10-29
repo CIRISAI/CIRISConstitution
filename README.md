@@ -2,7 +2,7 @@
 
 The rulebook for a network that people, organizations and AI systems share. It runs on the phones and computers people already own, with no company in the middle. One document says what the system owes the people it touches and exactly what bytes it must send to show it. The ethics and the wire grammar cannot drift apart, because they are the same text.
 
-**This tree:** 1.0-rc14, open. **Latest release:** 1.0-rc13, 2026-10-29, tag `v1.0-rc13`. The register holds 371 established rows, 30 normative and 116 staged. Sixteen machine-checked models. **Stewarded by** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Release history: [`CHANGELOG.md`](CHANGELOG.md).
+**Latest release:** 1.0-rc14, 2026-10-29, tag `v1.0-rc14`. The register holds 372 established rows, 31 normative and 115 staged. Sixteen machine-checked models. **Stewarded by** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Release history: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What it protects
 

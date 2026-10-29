@@ -185,9 +185,14 @@ def table(header, rows):
     heights = sorted(max(math.ceil(len(c) * text / w) for c, w in zip(r, ws)) * line for r in rows) or [0]
     page = 16.2 if wide else 24.9
     if heights[-1] > TALL * page or heights[len(heights) // 2] > TYPICAL * page:
-        out = [r'{\footnotesize']
+        # no field of an entry leaves one line alone at a page top or foot (the maker-power
+        # entry once left "not yet defined" alone at the top of a page)
+        out = [r'{\footnotesize\widowpenalty=10000\clubpenalty=10000']
         for r in rows:
-            out.append(r'\par\medskip\noindent{\normalsize\textbf{%s}}\par' % cell_tex(r[0]))
+            # an entry asks for room first and its head never ends a page (the maker-power entry
+            # once broke leaving one field alone at a page top)
+            out.append(r'\Needspace*{6\baselineskip}')
+            out.append(r'\par\medskip\noindent{\normalsize\textbf{%s}}\par\nopagebreak' % cell_tex(r[0]))
             for h, c in zip(header[1:], r[1:]):
                 if c.strip():
                     out.append(r'\textit{%s:} %s\par' % (inline(h), cell_tex(c)))
@@ -207,7 +212,8 @@ def table(header, rows):
 
 
 HEAD = {1:r'\section*{%s}',2:r'\subsection*{%s}',3:r'\subsubsection*{%s}',
-        4:r'\paragraph{%s}\mbox{}\\',5:r'\subparagraph{%s}\mbox{}\\',6:r'\subparagraph{%s}\mbox{}\\'}
+        4:r'\paragraph{%s}',5:r'\subparagraph{%s}',6:r'\subparagraph{%s}'}
+KEEP = r'\Needspace*{4\baselineskip}'   # a heading asks for itself and three lines of what it heads
 
 def block_start(ln):
     """True when a line opens a block of its own (heading, fence, table row, quote, list item,
@@ -277,7 +283,7 @@ def convert(md):
         m = re.match(r'^(#{1,6})\s+(.*)$', line)
         if m:
             lvl = len(m.group(1)); txt = inline(m.group(2))
-            out.append(HEAD[lvl] % txt); out.append(''); i += 1; continue
+            out.append(KEEP); out.append(HEAD[lvl] % txt); out.append(''); i += 1; continue
         # table: header row '|...|' followed by separator '|---|'
         if line.strip().startswith('|') and i+1 < n and re.match(r'^\s*\|[\s:|-]+\|\s*$', lines[i+1]):
             header = split_row(line)
@@ -381,7 +387,16 @@ def convert(md):
         buf = [line]; i += 1
         while i < n and lines[i].strip() and not block_start(lines[i]):
             buf.append(lines[i].strip()); i += 1
-        out.append(inline(' '.join(buf))); out.append('')
+        txt = inline(' '.join(buf))
+        j = i
+        while j < n and not lines[j].strip():
+            j += 1
+        if len(txt) < 160 and re.fullmatch(r'\\textbf\{[^{}]*\}[.:]?', txt) and j < n and not block_start(lines[j]):
+            # a bold-only lead line is a run-in label for the paragraph after it: it asks for
+            # room and never ends a page
+            out.append(r'\Needspace*{3\baselineskip}')
+            txt += r'\par\nopagebreak'
+        out.append(txt); out.append('')
     return '\n'.join(out)
 
 # ---------------------------------------------------------------- preamble
@@ -396,7 +411,7 @@ NUC = {
  '│':'|','…':r'\ldots{}','≡':r'$\equiv$','±':r'$\pm$','─':'-','𝒞':r'$\mathcal{C}$',
  '−':'-','⊇':r'$\supseteq$','⊆':r'$\subseteq$','≔':r'$:=$','∩':r'$\cap$','┐':'+','┘':'+','✓':r'\checkmark{}','á':r"\'a",
  '⚠':r'[!]','️':'','∃':r'$\exists$','ρ':r'$\rho$','⌈':r'$\lceil$','⌉':r'$\rceil$',
- '∪':r'$\cup$','≫':r'$\gg$','≈':r'$\approx$','🔴':r'[\textbullet]','⇒':r'$\Rightarrow$',
+ '∪':r'$\cup$','∨':r'$\vee$','≫':r'$\gg$','≈':r'$\approx$','🔴':r'[\textbullet]','⇒':r'$\Rightarrow$',
  '⟹':r'$\Longrightarrow$','∞':r'$\infty$','µ':r'$\mu$','ε':r'$\varepsilon$',
  'Θ':r'$\Theta$','Σ':r'$\Sigma$','Δ':r'$\Delta$','λ':r'$\lambda$','σ':r'$\sigma$','κ':r'$\kappa$',
  '₀':r'\textsubscript{0}','₁':r'\textsubscript{1}','₂':r'\textsubscript{2}','₃':r'\textsubscript{3}',
