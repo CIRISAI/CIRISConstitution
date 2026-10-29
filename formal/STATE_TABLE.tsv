@@ -115,11 +115,11 @@ content	blob	blob.delivery	chunked	2.6.1.3 5.3.3 5.3.3.6	above the cap: fountain
 authority	delegation link	delegation.link	live	2.4.1.2 4.4.3.2.8	delegates_to admitted at the door (term within ceiling)	principal	authority_tree.authority_tree.py:links	delegation.chain	modelled
 authority	delegation link	delegation.link	withdrawn	4.4.3.4.3	withdraws by the principal; cascade	principal	authority_tree.authority_tree.py:withdraw	delegation.link.withdrawn	modelled
 authority	delegation link	delegation.link	expired	4.4.3.2.8	delegation_valid_until passed (a withdrawal)	principal	authority_tree.authority_tree.py:I10	delegation.link.expired	modelled
-authority	licence	licence.state	held	2.4.1.2.1	licensure:{authority_id} row	the authority	authority_tree.authority_tree.py:licensees	authority.licensing	modelled
-authority	licence	licence.state	revoked	2.4.1.2.1 4.4.3.2.8	revocation:* by the authority	the authority	—	—	text-only
+authority	licence	licence.state	held	2.4.1.2.1	licensure:{authority_id} row	the authority	authority_tree.authority_tree.py:licensees	authority.licensing licence.issued	modelled
+authority	licence	licence.state	revoked	2.4.1.2.1 4.4.3.2.8	revocation:* by the authority	the authority	—	licence.status.revoked	text-only
 authority	licence	licence.state	contested	4.5.5	reconsideration:{grounds} by the subject	subject	—	—	text-only
 authority	grant	grant.state	held	3.3.2	key_grant:{axis}:v1 one row per recipient	owner / steward	authority_tree.authority_tree.py:grantees	grant.state.held	modelled
-authority	grant	grant.state	rotated	3.3.2	supersedes in rotation_chain	owner / steward	—	—	text-only
+authority	grant	grant.state	rotated	3.3.2	supersedes in rotation_chain	owner / steward	—	grant.ended_by_rotation	text-only
 authority	grant	grant.state	expired	3.3.2 5.1	grant term or epoch ended	owner / steward	—	—	text-only
 authority	guardian	guardian.bond	none	3.4.13	—	—	guarantees.Guarantees.tla:bond	guardian.bond.none	modelled-partial
 authority	guardian	guardian.bond	bound	3.4.13	guardian bond row over a child member	guardian	guarantees.Guarantees.tla:bond	guardian.bound	modelled-partial
@@ -188,3 +188,36 @@ governance	census base	census.base	frozen	6.1.9	a fall of more than a third read
 governance	secret poll	poll.state	closed	6.1.9	no poll open; every member's cell still emitted at the fixed size	—	census_ballot.CensusBallot.tla:open	—	model-only
 governance	secret poll	poll.state	open	6.1.9	a poll fills the padded field of each member's cell; invisible to an outsider	—	census_ballot.CensusBallot.tla:open	—	model-only
 governance	secret poll	poll.state	decided	6.1.9	the tally met or missed the governance threshold against the base of its period	the share-index-0 tally member (hybrid)	census_ballot.CensusBallot.tla:decision	—	model-only
+governance	affiliation	affiliation.charter	declared	4.4.3.2.8	the community record with declared_cohort: affiliations and its config members, at creation	founding key / officers under consensus_protocol	—	affiliation.charter.declared	text-only
+governance	affiliation	affiliation.charter	superseded	4.4.3.2.8	supersedes of the affiliation config record	officers under consensus_protocol	—	affiliation.charter.superseded	text-only
+authority	licence	licence.state	suspended	2.4.1.2.1	bounded revocation:* by the authority	the authority	—	licence.status.suspended	text-only
+authority	licence	licence.reader	honoured	4.4.3.8 2.4.1.2.1	reader's own trust walk reaches the issuer for the class and the charter declares it	reader (local verdict, unsigned)	—	licence.honoured	text-only
+authority	licence	licence.reader	not_trusted	4.4.3.8 4.4.3.2.8	no entry reaches the issuer for the class, or the class is outside the charter (licence_class_not_trusted)	reader (local verdict, unsigned)	—	licence.not_trusted	text-only
+node	trust set	recognition.state	outbound	4.4.3.8 4.4.3.2.8	this reader's delegates_to(reader → authority) bearing trust:accepts:v1 with trust_classes / trust_depth	reader	—	recognition.outbound	text-only
+node	trust set	recognition.state	inbound	4.4.3.8 4.4.3.2.8	another reader's delegates_to(reader → this authority) bearing trust:accepts:v1	the other reader	—	recognition.inbound	text-only
+authority	delegation link	delegation.scope	license	4.4.3.4.3.1 2.4.1.2.1	delegates_to with scope license admitted; delegator holds licence authority for the authority_id	principal	—	delegation.scope.license	text-only
+authority	delegation link	delegation.scope	grant	4.4.3.4.3.1 2.4.1.2.1	delegates_to with scope grant admitted; delegator owns, stewards or holds a grant-scoped delegation over the asset	principal	—	delegation.scope.grant	text-only
+authority	delegation link	delegation.link	refused	4.4.3.4.3.1 2.4.1.2.1	enforced admission: delegator lacks the underlying authority; refused, not unweighted	substrate at the door	—	delegation.refused	text-only
+authority	grant	grant.axis	content	5.1 2.4.1.2.1	key_grant:{axis}:v1 keyed on (content_sha256, recipient_key_id)	owner / steward / grant-scoped delegate	—	grant.axis.content	text-only
+authority	grant	grant.state	onward_refused	2.4.1.2.1 4.4.3.4.3.1	key_grant whose issuer holds the DEK but neither the asset nor a grant-scoped delegation; refused at admission	substrate at the door	—	grant.onward_refused	text-only
+self	key record	key.succession	committed	3.2 3.3.6.3	pre-rotation commitment SHA-256(JCS([...])) over the successor keys' public key material	key holder	—	key.successor_committed	text-only
+self	key record	key.succession	rotated	3.3.6.3 5.1	the committed successor key joins the roster and signs; the old key stops	key holder (old and successor)	—	key.rotated	text-only
+self	key record	key.escrow	escrowed	4.4.3.2.8 3.3.6.3	archive_custody custodian holds the per-epoch archive key apart from the live roster	affiliation officers / custodian	—	key.escrowed	text-only
+node	trust set	trust.entry	licensor	4.4.3.8	delegates_to(reader → authority) bearing trust:accepts:v1, trust_classes absent	reader	—	trust.entry.licensor	text-only
+node	trust set	trust.entry	root_removed	4.4.3.8	the reader withdraws the shipped root's acceptance edge	reader	—	trust.entry.root_removed	text-only
+goal	goal	goal.state	staged	3.1.9.7	the canonical holds the locked goal tree as stamped, unsigned rows	canonical (unsigned)	—	goal.staged	text-only
+goal	goal	goal.state	proposed	3.1.9.7 2.4	at least one founder scrubbed the staged rows, below quorum	founder(s)	—	goal.proposed	text-only
+goal	goal	goal.state	declared	3.1.9.7 2.4	the founder quorum cosigns the proposed rows; admitted under the community as signed scores rows on goal:{scale}	founder quorum under consensus_protocol	—	goal.declared	text-only
+goal	goal	goal.state	superseded	3.1.9.7	declarer's supersedes	declarer	—	goal.superseded	text-only
+goal	goal	goal.state	withdrawn	3.1.9.7	declarer's withdraws	declarer	—	goal.withdrawn	text-only
+goal	goal	goal.state	recanted	3.1.9.7 2.4.1.3	declarer's recants	declarer	—	goal.recanted	text-only
+goal	approach	approach.state	declared	3.1.9.7	signed approach:{goal_id} row	declarer	—	approach.declared	text-only
+goal	method	method.state	declared	3.1.9.7	signed method:{approach_id}:{substrate_rung} row	declarer	—	method.declared	text-only
+goal	progress measure	progress_measure.state	declared	3.1.9.7	signed progress_measure:{method_id} row with tracks[], computation, validity_window, goodhart_resistance	declarer	—	progress_measure.declared	text-only
+evidence	evidence	evidence.state	offered	3.1.5.5	an evidence row whose references_attestation_id names a declared goal, approach or method	infra:attest delegate of the root	—	evidence.offered	text-only
+evidence	evidence	evidence.state	counted	3.1.9.3	a declared progress_measure cites the evidence in evidence_refs	declarer of the progress_measure	—	evidence.counted	text-only
+evidence	evidence	evidence.state	reference_unresolved	3.1.5.5	no holder serves the blob the row's evidence_refs names	reader (local verdict, unsigned)	—	evidence.reference_unresolved	text-only
+evidence	evidence	evidence.state	admitted	3.1.5.5	row admitted at federation scope; blob digest matches {prefix}	infra:attest delegate of the root	—	evidence.admitted	text-only
+evidence	evidence	evidence.state	superseded	3.1.5.5	re-post of the same capture or interpret as supersedes	infra:attest delegate of the root	—	evidence.superseded	text-only
+evidence	evidence	evidence.standing	blessed	3.1.5.5	emitter sits on a live infra:attest delegation from a root the reader trusts	reader (local verdict, unsigned)	—	evidence.standing.blessed	text-only
+evidence	evidence	evidence.standing	unblessed	3.1.5.5	no infra:attest delegation from a trusted root reaches the emitter	reader (local verdict, unsigned)	—	evidence.standing.unblessed	text-only

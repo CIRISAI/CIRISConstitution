@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "30a6c2df594a88a1139b1d754da7339c88dc5fe5bde68c9fd78824f09aff19be",
+    "source_sha256": "974a8c50cec2b1b9bee84153f2d2c2240a258bbd63f02d85ac02e679c4de8dc7",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "ee30310f",
@@ -53,7 +53,7 @@
     "counts": {
       "signed:envelope": 40,
       "signed:row": 7,
-      "signed:envelope-extra": 49,
+      "signed:envelope-extra": 51,
       "beside": 27,
       "local": 4,
       "beside:signature": 10,
@@ -85,7 +85,7 @@
         "default": "-",
         "cc_ref": "2.6.1.7",
         "impl": "src/federation/envelope.rs#RowMirror",
-        "note": "The row's identity, minted by the stamper before the bytes exist (UUID v4); the composers' references_attestation_id points at it."
+        "note": "The row's identity, minted by the stamper before the bytes exist (a UUID; this edition pins no version); the composers' references_attestation_id points at it."
       },
       {
         "member": "row.attesting_key_id",
@@ -770,6 +770,30 @@
         "cc_ref": "2.4.1 4.4.3.2.8",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "At most 365 days after delegation_valid_from; refused delegation_term_required."
+      },
+      {
+        "member": "trust_classes",
+        "placement": "signed:envelope-extra",
+        "cc_name": "-",
+        "type": "[* tstr]",
+        "array_kind": "set",
+        "presence": "OPTIONAL on a delegates_to bearing trust:accepts:v1",
+        "default": "absent (every class the authority's charter declares)",
+        "cc_ref": "4.4.3.8",
+        "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
+        "note": "The licence classes the reader trusts this authority for; present non-empty; [] refused trust_accepts_classes_malformed."
+      },
+      {
+        "member": "trust_depth",
+        "placement": "signed:envelope-extra",
+        "cc_name": "-",
+        "type": "uint",
+        "array_kind": "-",
+        "presence": "OPTIONAL on a delegates_to bearing trust:accepts:v1",
+        "default": "absent (0)",
+        "cc_ref": "4.4.3.8 4.1.1",
+        "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
+        "note": "Further hops honoured past this authority, 0..5; out of range refused trust_accepts_depth_out_of_range."
       },
       {
         "member": "*",

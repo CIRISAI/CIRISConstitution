@@ -25,7 +25,7 @@ These terms are referenced throughout the spec and across sibling repos.
 | **Fabric node** | A headless CEG/CEWP participant: it attests, stores, observes, reaches consensus, and transports, but does **not** reason or act (no brain). Shipped as CIRISServer. Three deployment shapes: standalone server, embedded-in-agent, or family member. See [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1). |
 | **`ciris-canonical`** | The bootstrap governed community ([cohort_subkind: infrastructure](part_4_composition_governance.md)) every node ships trusting by default — but which any consumer MAY untrust or re-root ([CC 3.2](part_3_the_namespace.md#3.2) default-**not**-forced-root). Its founders are the three accord holders, who hold the founder-quorum (M of N: a strict majority of the standing roster, entrenched) ([CC 3.2](part_3_the_namespace.md#3.2), [CC 5.3.4](part_5_transport_substrate.md)). Its serve node (`ciris-canonical-1`) is a member with infrastructure roles and no standing of its own: it is a blessed node, blessed by the accord holders' quorum, and the steward's key owns it. Trust in it is **role-scoped and ≠ consent** ([CC 3.2](part_3_the_namespace.md#3.2)). |
 | **FedCode** | The QR-able, kind-tagged identity shorthand for a federation entity (`CIRIS-V2-`/`V3-`, base32 + CRC-16; v1 `CIRIS-V1-` decodes as `kind: node`). Tied to the user; owned nodes and transport optional, else resolved from the directory via `nodes_owned_by`. See [CC 2.6.8](part_2_the_grammar.md#2.6.8). |
-| **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled, verifiable destruction) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
+| **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled destruction, verifiable against the declared adversary class, CC 6.1.2.1.2) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
 
 ### 8.1.2 `system-persist` — Persist `system:*` leaf glossary (narrative → canonical)
 
@@ -170,7 +170,7 @@ Each of these is a known weakness the federation has chosen to carry rather than
 | **R5** — `hardware_class` self-assertion vs cryptographic attestation | **Discharged:** the per-platform attestation chains are evidence-established — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK, the CoTS constrained trust-anchor store, and baked roots with self-validation at generation ([CC 4.2.2.1](part_4_composition_governance.md)). Residual, deliberate: TPM *vendor* anchors stay unbaked, and an absent vendor anchor is the correct state, since aggregated vendor roots would misrepresent provenance. |
 | **R6** — `occurrence_id` / `occurrence_count` / `occurrence_role` self-assertion | Per [CC 2.1](#): env-var-driven, with no cryptographic fleet-attestation primitive. Bet that downstream compliance reviewers can correlate via correlated `signed_at` clusters + `evidence_refs[]` cross-checks; first incident drives a fleet-attestation primitive design workshop. |
 | **R7** — Frickerian discipline ([CC 4.4.1](#)) vocabulary without full method | First-pass shallow Frickerian SHOULD-rules; bet that the structural safeguards ([CC 3.1.9.3](#) testimonial_witness disciplines, never-sole-evidence-for-slashing) absorb the gap until a deeper hermeneutical-resource analysis lands as a workshop output. |
-| **R8** — Conceptual scope vs governable surface | One grammar spans identity, communities, consent, location, communications, streaming, payments, governance, constitutional mechanisms, addressing, and transparency logs. Historically, projects unifying that many layers fail when one layer dominates the others; the harder risk is *governability* — can a human amendment body ([CC 4.5.1](#)) steward a system of this breadth? **Bet**: structural minimalism keeps the *amendable structural surface* tiny even as the namespace grows ([CC 1.7](#) 1+4), and the strict primitive/namespace/composition/verdict separation ([CC 1.13.5](#)) means scope grows in the *open-vocab namespace* (locally evolvable) rather than the *governed core*. **Residual**: namespace + composition-policy sprawl can still outrun review capacity; mitigation is the [CC 4.5.1](#) high evidentiary bar + the post-1.0 candidate backlog. The remaining challenge is no longer purely technical. |
+| **R8** — Conceptual scope vs governable surface | One grammar spans identity, communities, consent, location, communications, streaming, payments, governance, constitutional mechanisms, addressing, and transparency logs. The risk is *governability* — can a human amendment body ([CC 4.5.1](#)) steward a system of this breadth? **Bet**: structural minimalism keeps the *amendable structural surface* tiny even as the namespace grows ([CC 1.7](#) 1+4), and the strict primitive/namespace/composition/verdict separation ([CC 1.13.5](#)) means scope grows in the *open-vocab namespace* (locally evolvable) rather than the *governed core*. **Residual**: namespace + composition-policy sprawl can still outrun review capacity; mitigation is the [CC 4.5.1](#) high evidentiary bar + the post-1.0 candidate backlog. The remaining challenge is no longer purely technical. |
 | **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Mitigated**: *mass dominance* and *content-similarity multiplicity* are both wire-visible and admission-gated — the signed `n_eff` mass-dominance gate (pinned `min_ratio = 0.5`) and the R9 multiplicity gate (pinned integer-L1 metric, `0.950` threshold, connected-component clustering, `n_min = 2`), with `mass_commitment` making a lying surface mechanically provable from held evidence ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md)); a `version < 3` tier is inadmissible (flag-day). Where a gate fails the N5 purge obligation applies in full. **Known exposure (residual)**: the *adversary-model / side-information-linkage* limb of the below-floor MUST — unverifiable-pending-instrument (CC 6.1.2.1.2's closing scope note). **Two constraints on any candidate instrument, offered at stated strength**: a *pairwise* `N_eff` gate is blind by construction to structure carried only by the whole (the valve results — `valve_upward_strict` / `valve_needs_asymmetry`, theorem-given-model at k = 3, with a measured rate law — say ordinary correlated operation accrues such structure with nobody scheming), and any *whole-reading* replacement carries a manufactured floor (measured at 50%–5.8× of the null on survey data; the register row is staged) that has to be subtracted before a threshold means anything. The LP pair-pinning gate is offered as a bounded instrument for the floor test at **proposed-instrument** strength — not a solution, and not adopted here. |
 | **R10** — Gates ratified ahead of their dye tests | Per the gatecraft discipline (a gate never shown to catch anything is a hypothesis about a gate), most ratified gates lack a planted-dye test, a stated depth, or a named maintenance owner. **Bet**: the gates are sound because each was carved from an observed failure, not designed a priori. **The owing is named**: each gate's wager is recorded, the uncertainty reducible but expensive, paid gate by gate; an unpaid wager is not a defect, an unnamed one is. |
 | **R11** — The growth tax | Consent-gated replication has not yet been shown to coexist with mass adoption; the join cost is the wall. **Bet**: portable-root genesis plus blessed-serve ([CC 4.4.3.8](part_4_composition_governance.md)) makes joining cheap enough that the spam-proof network is also a growable one. **Residual**: the price of consent-gating is paid at every join; if it is paid in friction the network stays small and correct. Measured by join cost against the scaling model. |
@@ -267,6 +267,10 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 | Deeper Frickerian instantiation — answers R7 above | Workshop output. |
 | DRY-authority-witness format in the traceability spine — single-sourced authority registry + differential authority-equivalence tests + path-shape witnesses | Deferred to 1.1. Its motivating failure is real (a canonical verifier that signed one preimage and checked another, with a fixture encoding the same error); the format is ratified once a pilot has run several `DRY-N` rows, in the form that survived the pilot. |
 | Live-quorum physical relay backbone (HF / Reticulum) under sustained adversary jamming | Named at [CC 4.2.6](part_4_composition_governance.md) as an adversary-targeted assumption: firing needs *some* out-of-band publishable-signature channel to survive a first strike. Channel diversity (HF / mesh / sneakernet fallback) is a **deployment-spec** concern, deferred there — indexed here so the concerns register is complete. |
+| A native property / title / deed / chattel `subject_kind` | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). Two bridges are unsolved — legal force (what a federation row does to a title the law recognises) and record-to-object binding (what ties a row to the thing) — and no consumer has asked for the kind; until a consumer names both bridges, ownership is said about a key, not about a thing. |
+| A durable telemetry `subject_kind` for high-rate sensor readings | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). No producer. Realtime telemetry is carried by the realtime data-stream scope of [CC 5.3.3.2.2](part_5_transport_substrate.md#5.3.3.2.2), which is not a durable record; a durable kind waits for a producer that needs the readings kept. |
+| Conditional, liveness-triggered delegation (a will that takes effect on death) | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). Composable from parts the text has — the [CC 3.2](part_3_the_namespace.md#3.2) abandonment finding plus a pre-signed termed edge the finding activates — and deferred to post-1.0: the trigger is a quorum finding about a person, and the composition has not been exercised. |
+| A reserved `need:survival` family with an anti-burial floor and a one-card rendering | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). A survival need must not be buried by ranking and must render as one card, and the claimant is often the one who cannot sign openly; the family waits on a shielded-claim design on the Anonymous Tier ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)), which is planned and not shipped. |
 
 ### 8.3.7 `identified` — Identified overlaps
 
@@ -406,7 +410,7 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 |---|---|
 | Kish identity + ceiling `k_eff → 1/ρ̄` → `coherence-ratchet:Core.BaseIdentity.*` | **identity.** A definition plus its boundary, monotonicity, and limit consequences. The ceiling is a limit of the definition, not a finding about any federation. |
 | Correlated-source discount → `Core.SignalSourceDiscount.clique_neutralization` | **identity**, and **theorem-given-model** only on the newer pin — the older coherence-ratchet pin records *no Lean anchor*. `clique_neutralization` is the Kish form applied to a source set; its content is that reuse, not a new result. |
-| Measured `k_eff` across substrates (`experiments/keff_saturation`: 6 substrates, `k_eff` ≈ 7 ± 2, max 9.7 at k = 200) | **measured.** Corroborates the ceiling as a saturation rather than a growth. Substrate-specific. |
+| Measured `k_eff` across substrates (`experiments/keff_saturation`) | **No grade attaches — no register row.** The saturation measurement is not citable until the anti-Sybil manifest re-pins; when a row carries it, the grade is **measured** and substrate-specific, and it corroborates the ceiling as a saturation rather than a growth. |
 | Operating corridor for `ρ̄` | **No grade attaches — no corridor is claimed.** [CC 6.1.2.1.2](part_6_the_coherence_mathematics.md) states no band and forbids gating on one; the evidentiary record and any future re-basing are pre-registered, not run, and not citable as evidence. |
 
 **Known limits of the register.** The tag vocabulary, the registry, the CI checker, and the generated Evidence Register exist, and cross-repo pointers that name an artifact resolve **by symbol** against the pinned manifests — a pointer naming an object its manifest does not publish is a build error, not a warning. Two limits: (1) terminology validation against the [CC 8.1.1](#) glossary is not implemented; (2) strength is graded here, in prose, and is not a registry column; this table is the reading key for the register.
@@ -453,7 +457,7 @@ The earlier parts supplied the ethical foundation and the operational procedures
 * Two malfunction-triggered nose-down commands led to catastrophic crashes (Lion Air 610, Ethiopian Airlines 302) and 346 deaths.
 
 **Key Violations (relative to CIRIS)**
-* Non-Maleficence: Redundant sensor data and pilot transparency would have prevented lethal failure modes.
+* Non-Maleficence: Redundant sensor data and pilot transparency were the missing guards.
 * Integrity: Internal risk reports flagged the single-sensor design; these were not transparently escalated.
 * Wisdom-Based Deferral: MCAS logic changes bypassed rigorous external review—no WA-style sign-off.
 * Public Transparency: Critical documentation was kept from pilots and regulators; no PDMA-style audit trail existed.
@@ -467,19 +471,19 @@ Resilience Ch 3 → mandatory Red-Team simulations exposing the runaway-trim sce
 
 MCAS stands as a somber reminder: bypassing transparency and deferral converts routine design shortcuts into systemic tragedy. CIRIS formalises the guard-rails that the program lacked. May the 346 lost lives anchor our commitment to Non-Maleficence and Integrity.
 
-### 8.7.2 `case-study-case` — Case Study 2: The Automated Triage System—Balancing Risks and Benefits
+### 8.7.2 `case-study-case` — Case Study 2: The Triage Intake System—The Conflict Flagged, the Allocation Deferred
 
 **Context (Fictional)**
 
-A multi-vehicle accident floods a city ER. The triage AI "LIFE-Aid" must allocate a scarce ventilator. Patient 429 (elderly, multiple comorbidities) and Patient 430 (younger, stable vitals, ambiguous biomarkers) both qualify.
+A multi-vehicle accident floods a city ER. One ventilator is free and two patients qualify for it: Patient 429 (elderly, multiple comorbidities) and Patient 430 (younger, stable vitals, ambiguous biomarkers). The intake-support AI "LIFE-Aid" assembles each patient's record for the clinicians. It does not allocate the ventilator: a system never selects or ranks a person for a scarce life-saving resource ([CC 7.4](part_7_lifecycle_stewardship.md#7.4)); near force it only stops, refuses or defers.
 
 **CIRIS in Action**
-* PDMA Step 2 spots high uncertainty in Patient 430's hidden condition → triggers WBD.
-* Human specialists identify a silent embolism; ventilator is assigned accordingly.
+* PDMA Step 2 flags the conflict — one resource, two qualifying patients — and the high uncertainty in Patient 430's hidden condition; the system defers (WBD, [CC 1.9](part_1_foundation.md#1.9)) and surfaces both records with the uncertainty marked.
+* The human specialists examine Patient 430, find a silent embolism, and allocate the ventilator; the deferral and their decision are recorded.
 
 **Outcome Lesson**
 
-Proper use of WBD and transparency preserves both Beneficence and Fairness under pressure.
+Flagging the conflict and deferring preserves both Beneficence and Fairness under pressure: the system's contribution is the record and the stop, and the allocation stays with the specialists.
 
 ### 8.7.3 `case-study-case-2` — Case Study 3: The Biased Recruitment Algorithm—Detecting Hidden Bias
 
@@ -490,7 +494,7 @@ Hiring algorithm "SkillSelect" shows disparate pass-through rates across demogra
 **CIRIS in Action**
 * Integrity-surveillance flags statistical bias → PDMA Step 2.
 * Root-cause: historical training data. WBD escalates to a cross-functional ethics board.
-* Retraining on balanced datasets + public bias report restores Fairness and Transparency.
+* Retraining on rebalanced data + public bias report restores Fairness and Transparency.
 
 ### 8.7.4 `case-study-case-3` — Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap
 
@@ -550,13 +554,13 @@ Even human "Wise Authorities" need structured oversight; CIRIS provides it.
 
 ### 8.7.8 `a-3.conclusion` — Conclusion
 
-These case studies—one drawn from painful history, others from plausible futures—demonstrate how CIRIS principles, mechanisms, and governance either prevent harm or turn failure into learning. They close the loop the rest of the Constitution opens: the foundation, the procedures, the wire grammar, and the gaps named honestly all exist so that, in the moment a real decision lands, the system defers when it should, records what it did, and turns error into shared learning rather than tragedy.
+These case studies—one drawn from painful history, others from plausible futures—illustrate how CIRIS principles, mechanisms, and governance either prevent harm or turn failure into learning. They close the loop the rest of the Constitution opens: the foundation, the procedures, the wire grammar, and the gaps named honestly all exist so that, in the moment a real decision lands, the system defers when it should, records what it did, and turns error into shared learning rather than tragedy.
 
 ## 8.8 `annexes` — Annexes (supporting frameworks)
 
 Supporting frameworks for the lifecycle and governance chapters, carried in one volume (*The Evidence Register*). **Standing (operational targets).** The annexes are the Accord's operational targets: what a deployment aims at, with the thresholds, roles and workflows that aiming needs. A MUST inside an annex binds a deployment that adopts the annex, never a node and never conformance. They are not evidenced in the register unless a row says so, they are not conformance (conformance is Parts 2–5), and where an annex and a Part disagree the Part is the rule. Annexes B, C, D and F–J are carried here in full: B and D carry live cross-references in the constitutional text; C and F–J are included for completeness. The stub registry at [CC 8.9](#8.9) records that nothing referenced remains undefined.
 
-8.8.1 and 8.8.4 are retired identifiers (the annexes they named were removed); the numbering keeps their places so citations stay stable.
+8.8.1 and 8.8.4 are retired identifiers; the numbering keeps their places so citations stay stable.
 
 Where an annex cites material carried in the constitutional text, the citation points to the CC section that carries it; an annex's own numbered clauses are cited as clauses.
 
@@ -671,7 +675,7 @@ MH §200 requires that "accountability and blame are not collapsed into 'the mac
 | **A0** Advisory | grammar suggestion | Guardrail trip, user request | Cancel request |
 | **A1** Limited-impact | static Q&A, content filter | ΔRisk-Band >= 1, PDMA conflict, UNCERT > 80 % | Reject action |
 | **A2** Moderate-impact | route drones, robo-advisor | Guardrail trip, shadow-metric drift > 2 σ | Safe pause |
-| **A3** High-impact | medical triage, grid dispatch | Any guardrail trip, model-drift > 1 σ, latency-SLA × 2 | Controlled shutdown |
+| **A3** High-impact | triage intake routing, grid dispatch | Any guardrail trip, model-drift > 1 σ, latency-SLA × 2 | Controlled shutdown |
 | **A4** Critical / life-safety | autonomous surgery, life-support control | PDMA cannot prove Non-Maleficence OR operator absent | Hardware interlock |
 
 *UNCERT = domain-specific epistemic-uncertainty metric; ΔRisk-Band counts bands on the Risk Magnitude scale of [CC 7.3.3](part_7_lifecycle_stewardship.md).*
@@ -702,7 +706,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 **4. Audit-Trail Specification.**
 
 - **Log objects:** Interaction, Decision Rationale, Control-Event `{id,type,actor,cause,hash_prev}`.
-- **Hash-chaining:** SHA-256, root anchored daily on a public transparency log (RFC 9162).
+- **Hash-chaining:** SHA-256, root anchored daily on a public transparency log (RFC 9162) for A3–A4; voluntary below (External anchoring, below).
 - **Retention:** 180 d (A0-A2); 7 y (A3-A4) or statutory.
 - **Real-time stream:** A3-A4 push `{timestamp,stage_id,decision,risk_band}` ≤ 2 s latency to oversight dashboard.
 
@@ -719,7 +723,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 | **IW-0** | False-positive guardrail | Auto-resolve, bucket for daily review |
 | **IW-1** | Guardrail violation (non-safety) | T0 pause → Operator ≤ 5 m → Supervisor decision ≤ 30 m |
 | **IW-2** | Safety-relevant violation OR ethics-benchmark regression | Safe pause + broadcast; IC ≤ 10 m; WA notice ≤ 1 h; public note ≤ 1 h; post-mortem ≤ 72 h |
-| **IW-3** | Near-miss (> $10 k damage or minor injury) | IW-2 plus stakeholder contact ≤ 4 h; mitigation plan ≤ 24 h; WA plenary ≤ 7 d |
+| **IW-3** | Near-miss (> $10 000 damage or minor injury) | IW-2 plus stakeholder contact ≤ 4 h; mitigation plan ≤ 24 h; WA plenary ≤ 7 d |
 | **IW-4** | Actual harm (injury / major legal) | Immediate fleet stand-down; regulator notice per law; system frozen in read-only replay until clearance |
 | **IW-5** | A4 hard-prohibition activation (an irreversible decision attempted via an automated path, or any lethal action attempted) | Immediate hardware safe-state; IC notified within 60 s; WA notice within 15 min; full audit-trail freeze; independent review panel convened within 48 h; system remains offline pending review clearance |
 
@@ -742,7 +746,7 @@ The clause 3.3 Conditional Override logic (**no ACK → safe-state**) is correct
 | KPI | Target |
 |-----|--------|
 | F-KPI-1 HITL Coverage | A3: >= 10 % human-reviewed; A4: 100 % of irreversible actions under confirmed human authorization (F-KPI-5); lethal actions: none |
-| F-KPI-2 Mean Time-to-Veto (95-pctl) | ≤ 25 s |
+| F-KPI-2 Time-to-Veto, 95th percentile | ≤ 25 s |
 | F-KPI-3 Incident SLA Compliance | >= 98 % |
 | F-KPI-4 Operator False-Alarm Rate | ≤ 3 % (30 d rolling) |
 | F-KPI-5 A4 Irreversible-Decision Human-Control Rate | 100 % — zero tolerance; any A4 irreversible action without confirmed effective human authorization, and any lethal action, is an IW-5 event |
@@ -823,7 +827,7 @@ Severity classes: **Low**, **Medium**, **High**, **Critical** — use NIST CVSS-
 
 **TX-11 — Labor-Chain Integrity Compromise.** MH §173 names the related supply-chain category: "A significant part of the digital economy's functioning relies on the silent work of millions of people engaged in essential yet largely unseen activities, such as data labeling, model training and content moderation." Compromised or coerced training-labor chains are a threat surface as real as back-doored weights (cf. TX-4). **Severity**: Medium-High; Critical if trafficking-condition sourcing is confirmed, triggering immediate halt of the affected fine-tune line and IW-2.
 
-MH citations load-bearing for this section: §132 ("only the shared pursuit of the veracity of facts, perceived as a common good, can provide a solid foundation for just communication"), §170 ("exploiting their vulnerabilities and weakening their inner freedom"), §173 ("The bodies of these people are scarred, injured and worn down so that computational flow may continue uninterruptedly"), §179 ("supply chains that underpin the technological industry... need to become more transparent, so that no competitive advantage is built upon hidden exploitation"), §204 (hybrid war; cyber fronts; disinformation), §225 (cyberspace as battleground; invisible violence).
+MH citations grounding this section: §132 ("only the shared pursuit of the veracity of facts, perceived as a common good, can provide a solid foundation for just communication"), §170 ("exploiting their vulnerabilities and weakening their inner freedom"), §173 ("The bodies of these people are scarred, injured and worn down so that computational flow may continue uninterruptedly"), §179 ("supply chains that underpin the technological industry... need to become more transparent, so that no competitive advantage is built upon hidden exploitation"), §204 (hybrid war; cyber fronts; disinformation), §225 (cyberspace as battleground; invisible violence).
 
 **2. Defense-in-Depth Playbook.**
 
@@ -886,11 +890,11 @@ Operational translation into this Annex:
 3. **Honest finding obligation**: Purple Team may not redact findings on the grounds that they reflect poorly on the deployment business model. Redaction is permitted for PHI and operational-security details; it is not permitted for findings that would require disclosing structural deployment-context threats.
 4. **Researcher exit right**: Any red/purple-team member who determines mid-engagement that the system is being or will be deployed in a context that violates Non-maleficence ([CC 1.6](part_1_foundation.md#1.6)) may file a protected dissent in the Bug-Bounty Ledger without penalty. WA must acknowledge within 5 business days.
 
-MH §209 is load-bearing; the four procedures above are its CIRIS-native operational rendering.
+MH §209 is the grounding; the four procedures above are its CIRIS-native operational rendering.
 
 **4. Robustness Benchmarks & Canary Suites.**
 
-- **G-ROB-set** — 1 000 adversarial prompts + 10 k fuzz inputs (maintained in Annex J repo).
+- **G-ROB-set** — 1 000 adversarial prompts + 10 000 fuzz inputs (maintained in Annex J repo).
 - **Canary tokens** embedded in training & inference streams; exfil triggers TX-6 alert.
 - **TX-9 canary** — 200 synthetic multi-session influence-campaign scenarios, each seeded with a narratively coherent but factually falsified framing across 5 sequential sessions. Pass criterion: agent detects and refuses consensus-narrowing by session 3 in ≥ 95 % of scenarios; flags to canary monitor in ≥ 98 %. Maintained in the Annex J repo alongside the existing suite.
 - **TX-10 canary** — 50 simulated addictive-engagement-optimized deployment contexts, testing whether agent outputs remain welfare-oriented when operator configuration incentivizes session extension. Pass criterion: `MANIPULATION_COERCION` apophatic bound holds in 100 % of cases; output mode does not shift toward engagement-maximizing framing even under operator-configured reward shaping.
@@ -1124,7 +1128,7 @@ Required bidirectional data flows:
 
 This cross-walk is informative, not legal advice. Jurisdictional legal review is required before deployment in any sector covered by the overlays of §3.
 
-**0. Purpose & Scope.** Annex I maps CIRIS duties to binding law so that one set of controls corresponds to both the ethical and the legal duty; legal sufficiency is unreviewed. Coverage areas:
+**0. Purpose & Scope.** Annex I maps CIRIS duties to binding law so that one set of controls corresponds to both the ethical and the legal duty; legal sufficiency is unreviewed. The graduation rule of Annex C §3 applies here unchanged: every row of this annex is a correspondence, not a compliance claim, until a linked legal review graduates it to *Verified*. Coverage areas:
 
 1. Global data-protection regimes (GDPR, CCPA/CPRA, LGPD, PIPEDA).
 2. Sector statutes (HIPAA, GLBA, FINRA, FDA-SaMD, NERC-CIP).
@@ -1186,7 +1190,7 @@ MH §104 names the design-time bias problem that GDPR Art. 35 DPIA and EU-AI-Act
 
 - A `bias_audit_ref` field in `dp-map.yaml` pointing to the most recent bias-audit report.
 - For deployments where the **WiseBus capability gate** flags the `DISCRIMINATION` prohibition — a structural pre-filter on capability strings (`NEVER_ALLOWED`), with the prohibited-capability set also injected into the round-1 DMA reasoning context so a discriminatory trajectory is named before it reaches the gate — a DPIA is required regardless of whether the deployment otherwise qualifies as "high-risk" under EU-AI-Act Annex III. (The bias-risk audit evidence for Art 10(2)(f) / Art 9 is therefore the bus-rejection log **and** the DMA reasoning trace, not a PDMA-evaluator step.)
-- CCPA §1798.185(a)(16) automated-decision regulations (effective 2026) require disclosure of logic, input data categories, and opt-out rights; this is satisfied by the Annex F explainability panel when `processing_basis` = `automated_profiling`.
+- CCPA §1798.185(a)(16) automated-decision regulations (effective 2026) require disclosure of logic, input data categories, and opt-out rights; this is addressed by the Annex F explainability panel when `processing_basis` = `automated_profiling`.
 
 **2. Data-Subject Rights (DSR) Hooks.**
 
@@ -1202,7 +1206,7 @@ DSR infrastructure must expose the reason-code behind any automated determinatio
 
 - **Access requests (GDPR Art. 15; CCPA §1798.110):** Response MUST include `decision_logic_summary` (non-technical language, ≤300 words) and `input_data_categories[]` list. KPI **F-T-4** extended to track percentage of access responses including logic summary; target ≥ 95%.
 - **Objection/opt-out requests (GDPR Art. 21; CCPA §1798.120):** System MUST suspend the specific processing pathway — not merely flag the request — without undue delay and within one month (GDPR Art. 12(3)) or 15 business days (CCPA). Suspension is logged in the DSR ledger CSV with `suspended_pathway_id`.
-- **Contestability (GDPR Art. 22(3)):** Where a human review is requested, the reviewing WA (Annex B §9) must document their review in the Wisdom Bank (WBDB), creating an auditable chain from automated determination to human correction.
+- **Contestability (GDPR Art. 22(3)):** Where a human review is requested, the reviewing WA (Annex B §§7–8) must document their review in the Wisdom Bank (WBDB), creating an auditable chain from automated determination to human correction.
 
 **3. Sector-Specific Overlays.**
 
@@ -1249,7 +1253,7 @@ WA quorums for sector overlay governance are jurisdiction-stratified:
 | Multi-jurisdiction deployment (≤ 3 countries) | Regional WA panel | Simple majority + at least 1 WA from each affected jurisdiction | Cross-border subsidiarity preserved |
 | Multi-jurisdiction deployment (> 3 countries) | Federation WA panel | Supermajority (≥ 2/3) | Scale of impact requires higher threshold |
 | Override of any sector overlay | Federation WA panel | Supermajority (≥ 2/3) | Aggregating governance upward is an exceptional act |
-| Override of labor/HR overlay specifically | Federation WA panel + independent labor-rights reviewer | Supermajority (≥ 2/3) + external sign-off | MH §155 names labor institutions as constitutively load-bearing |
+| Override of labor/HR overlay specifically | Federation WA panel + independent labor-rights reviewer | Supermajority (≥ 2/3) + external sign-off | MH §155 names labor institutions as constitutive |
 
 **4. Product-Safety & AI-Act Alignment.**
 
@@ -1262,7 +1266,7 @@ Output-layer transparency (Art. 13) and human oversight (Art. 14) alone do not s
 | EU-AI-Act Article | Risk-Level | CIRIS Mapping | MH Anchor | Additional Control |
 |-------------------|-----------|---------------|-----------|--------------------|
 | Art 9 Risk Mgmt | High-risk | [CC 1.16.3](part_1_foundation.md#1.16.3) PDMA + Annex D CRE | MH §105 | — |
-| Art 13 Transparency | Universal | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
+| Art 13 Transparency | High-risk | KPI F-T-3, explainability panel | MH §105 | PDMA stage IDs included in transparency payload; `stage_trace[]` field in API response |
 | Art 14 Human Oversight | High-risk | Annex F Autonomy Tiers | MH §105 | Oversight must be substantive, not procedural; A3-A4 push real-time `{stage_id,decision,risk_band}` ≤ 2 s to oversight dashboard |
 | Art 15 Robustness | High-risk | Annex G RS ≥ 0.97 | — | — |
 | Art 12 Logging | High-risk | CIRISPersist tamper-evident store | MH §103 | Logs must include `rejection_reason_code` for any adverse determination; retention 7 y (A3-A4) |
@@ -1355,7 +1359,7 @@ The CIRIS federation is not merely a compliance recipient. MH §§219-221 name d
 Every **F-Audit** (Annex H) MUST export a CEP zip containing:
 
 1. `dp-map.yaml` — live cross-walk, including the `bias_audit_ref` pointer (clause 1.1).
-2. PDMA logs (redacted) proving lawful basis — including `processing_basis` field values and `stage_trace[]` for all ST ≥ 3 decisions.
+2. PDMA logs (redacted) as evidence toward lawful basis — including `processing_basis` field values and `stage_trace[]` for all ST ≥ 3 decisions.
 3. DSR ledger CSV — including `decision_logic_summary` completion rate (KPI F-T-4 extension) and `suspended_pathway_id` log.
 4. Signature bundle (`.sigstore`) of all model artefacts (Annex G).
 5. Overlay Sheets by sector — including `worker_impact_assessment` and `youth_impact_assessment` for applicable domains.
@@ -1368,12 +1372,12 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 
 **8. Inter-Annex Hooks.**
 
-- **Annex F:** Autonomy Tiers ensure human-in-the-loop requirements of GDPR Art 22 & EU-AI-Act Art 14.
-- **Annex G:** TX-6 privacy defenses satisfy GDPR pseudonymisation recommendations (Recital 28).
+- **Annex F:** Autonomy Tiers map to the human-in-the-loop requirements of GDPR Art 22 & EU-AI-Act Art 14.
+- **Annex G:** TX-6 privacy defenses map to the GDPR pseudonymisation recommendations (Recital 28).
 - **Annex H:** F-Audit timing supplies evidence for periodic re-assessment duties in EU-AI-Act Art 72 (Regulation (EU) 2024/1689).
 - **Annex J:** Benchmark explanations furnish "meaningful information" for automated-decision queries (GDPR Art 15(1)(h)).
 - **§3.2 Labor/HR overlay → Annex D CRE:** Labor deployments at ST floor 3 must pass CRE Protocol before deployment.
-- **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §9.
+- **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §§2, 3 and 5.
 - **§5 Liability matrix (new vectors):** Youth-design joint liability is apportioned under the applicable law, as for the existing vectors.
 - **§7 CEP item 8 (reg-dialogue) → §6 Tracker:** WBDB reg-dialogue records are the source for CEP item 8; no separate logging system.
 - **Annex C:** Statutory mappings (EU AI Act articles, NIST AI RMF, ISO/IEC 42001), pending legal review.
@@ -1594,7 +1598,7 @@ jobs:
 
 ## 8.9 `stubs` — Open stub registry
 
-Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart: an *open stub* is a piece the text references and does not define, counted here; a *staged row* is a defined rule whose evidence a named ticket carries, counted in the register; an *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)).
+Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart: an *open stub* is a piece the text references and does not define, counted here; a *staged row* is a defined rule whose evidence a named ticket carries, counted in the register; an *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)). A door the text names and declares undefined by design is none of the three and is not a stub: the path out of stewardship of [CC 1.13.2](part_1_foundation.md#1.13.2), an act of the HUMANITY_ACCORD under the first-contact discipline when it comes, is recorded here as named and undefined, and counts in no column.
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.5](#8.8.5)–[CC 8.8.10](#8.8.10).

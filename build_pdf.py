@@ -66,9 +66,18 @@ def evidence_appendix_md():
            "dual-ID spine, and normative coverage) is machine-checked by `tools/check_claims.py` as a CI gate.\n",
            f"**{len(rows)} claims** — established {st['established']} · staged {st['staged']} · "
            f"normative {st['normative']} · open {st['open']}. "
-           "Cross-repo pointers resolve against the pinned sibling spec-map manifests.\n",
-           "| CC | Claim | Evidence | Status |",
-           "|---|---|---|---|"]
+           "Cross-repo pointers resolve against the pinned sibling spec-map manifests; the commits "
+           "this register was checked at are the pins below (`constitution/evidence_pins.tsv`).\n"]
+    pins_path = DOC / "evidence_pins.tsv"
+    if pins_path.exists():
+        pins = list(csv.DictReader(open(pins_path), delimiter="\t"))
+        out += ["| Repository | Commit | Manifest | Backed when |",
+                "|---|---|---|---|"]
+        for p in pins:
+            out.append(f"| {p['repo']} | `{p['commit']}` | `{p['manifest_path']}` | {p['backed_when']} |")
+        out.append("")
+    out += ["| CC | Claim | Evidence | Status |",
+            "|---|---|---|---|"]
     for r in rows:
         summ = provenance_stripped(r["summary"]).replace("|", "/")
         ev = r["evidence"].replace("|", "/")
@@ -121,13 +130,26 @@ def preamble(title="The CIRIS Constitution", subtitle=None):
 \usepackage{xcolor}
 \definecolor{accent}{HTML}{2a4d69}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\usepackage{accsupp}
 \usepackage{titlesec}
+% an unbreakable identifier (a code span up to 45 characters stays whole) needs the line
+% before it to end early: the emergency pass makes that break feasible instead of letting
+% the token run into the margin
+\tolerance=2000 \emergencystretch=3em \hbadness=10000
 \titleformat{\section}{\LARGE\bfseries\color{accent}}{}{0pt}{}[\vspace{2pt}\hrule]
-\titleformat{\subsection}{\large\bfseries\color{accent!85}}{}{0pt}{}
-\titleformat{\subsubsection}{\normalsize\bfseries}{}{0pt}{}
+% a heading never hyphenates its own title (subjec-/t-set) and never fills the measure
+\titleformat{\subsection}{\large\bfseries\color{accent!85}\raggedright\hyphenpenalty=10000}{}{0pt}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\raggedright\hyphenpenalty=10000}{}{0pt}{}
+% the four- and five-dot ids are block headings (hang, not run-in): the title keeps its own
+% line and titlesec forbids a page break between it and the first line of the text
+\titleformat{\paragraph}[hang]{\normalsize\bfseries\raggedright\hyphenpenalty=10000}{}{0pt}{}
+\titleformat{\subparagraph}[hang]{\normalsize\bfseries\raggedright\hyphenpenalty=10000}{}{0pt}{}
 \titlespacing*{\section}{0pt}{16pt}{8pt}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{2pt}
+\titlespacing*{\subparagraph}{0pt}{3.25ex plus 1ex minus .2ex}{2pt}
 \lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible,
-        keepspaces=true,upquote=true,literate={~}{{$\sim$}}1,
+        keepspaces=true,upquote=true,literate={~}{{$\sim$}}1,escapeinside={(*@}{@*)},
         frame=leftline,framerule=1pt,rulecolor=\color{accent!40},
         backgroundcolor=\color{accent!4},xleftmargin=8pt,aboveskip=6pt,belowskip=6pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
@@ -298,19 +320,21 @@ def volume_pieces(vol):
     return R, [p for p in pieces.values() if vol in R.split_list(p["volume"])]
 
 
+def volumes_of(dec, R, pieces):
+    """The sorted volumes that print section dec (from volumes.tsv include/exclude)."""
+    vols = set()
+    for p in pieces.values():
+        inc, exc = R.split_list(p["include"]), R.split_list(p["exclude"])
+        if any(R.under(dec, x) for x in inc) and not any(R.under(dec, x) for x in exc):
+            vols.update(R.split_list(p["volume"]))
+    return sorted(vols)
+
+
 def section_volumes():
     """decimal -> sorted list of volumes that print it (from pieces.tsv include/exclude)."""
     R, pieces = _pieces()
     rows = list(csv.DictReader(open(DOC / "toc.tsv", encoding="utf-8"), delimiter="\t"))
-    out = {}
-    for r in rows:
-        dec = r["decimal_id"]; vols = set()
-        for p in pieces.values():
-            inc, exc = R.split_list(p["include"]), R.split_list(p["exclude"])
-            if any(R.under(dec, x) for x in inc) and not any(R.under(dec, x) for x in exc):
-                vols.update(R.split_list(p["volume"]))
-        out[dec] = sorted(vols)
-    return out
+    return {r["decimal_id"]: volumes_of(r["decimal_id"], R, pieces) for r in rows}
 
 
 def write_toc_volumes():
@@ -347,11 +371,20 @@ def volume_md(vol):
             parts_md.append(f.read_text(encoding="utf-8"))
         return parts_md
     R, pieces = volume_pieces(vol)
+    all_pieces = R.load_pieces()
     chunks = {}
     for p in pieces:
         cs, _missing = R.slice_sections(R.split_list(p["include"]), R.split_list(p["exclude"]))
         for dec, hdr, text in cs:
             chunks.setdefault(dec, text)
+
+    def elsewhere(m):
+        """The omission marker names the volume(s) that print the section it stands for."""
+        child = m.group(1)
+        names = [VOLUME_TITLE[v] for v in volumes_of(child, R, all_pieces) if v != vol]
+        where = ", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else (names[0] if names else "another volume")
+        return f"*[{child} is printed in {where}]*"
+
     # splice a child printed in this volume back into the parent's omission marker
     for dec in list(chunks):
         def splice(m):
@@ -359,10 +392,14 @@ def volume_md(vol):
             if child in chunks and child != dec:
                 txt = chunks.pop(child)
                 return txt
-            return f"*[{m.group(1)} printed in another volume]*"
+            return elsewhere(m)
         chunks[dec] = OMIT.sub(splice, chunks[dec])
     for dec in list(chunks):
-        chunks[dec] = OMIT.sub(lambda m: f"*[{m.group(1)} printed in another volume]*", chunks[dec])
+        chunks[dec] = OMIT.sub(elsewhere, chunks[dec])
+    # 1.14 (the parable) has no numbered prose heading: it is the Foreword. A volume that prints
+    # its neighbour 1.15 marks the gap the way the other omission markers do.
+    if "1.14" not in chunks and any(d == "1.15" or d.startswith("1.15.") for d in chunks):
+        chunks["1.14"] = "*[1.14 is the Foreword]*" if vol == "charter" else "*[1.14 is the Foreword of The Charter]*"
     order = sorted(chunks, key=lambda d: [int(x) for x in d.split(".")])
     cur, group = None, []
     for dec in order:
@@ -385,7 +422,7 @@ def volume_md(vol):
 def build_volume(vol):
     # the volume named for the whole is not "The CIRIS Constitution: The Constitution"
     title = "The CIRIS Constitution" if vol == "constitution" else f"The CIRIS Constitution: {VOLUME_TITLE[vol]}"
-    body = [preamble(title, f"{VOLUME_TITLE[vol]}, a volume of edition {VERSION}")]
+    body = [preamble(title, f"{VOLUME_TITLE[vol]}, a volume of edition {VERSION}, released as guidance")]
     for md in volume_md(vol):
         body.append(B.convert(prefilter(md)))
         body.append(r"\clearpage")

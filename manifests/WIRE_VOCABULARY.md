@@ -1,11 +1,11 @@
 # CIRIS Federation Wire Vocabulary
 
-**Constitution:** CC (CIRIS Accord) 0.7 — wire vocabulary as a hash-pinned constitutional artifact
-**Artifact steward:** CIRISRegistry (`manifests/WIRE_VOCABULARY.md`)
+**Constitution:** CC (CIRIS Accord) 1.0-rc14 — wire vocabulary as a hash-pinned constitutional artifact
+**Artifact steward:** CIRISConstitution (`manifests/WIRE_VOCABULARY.md`, CC 2.6.4)
 **Vocabulary version:** v1.0.1 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator)
 **Vocabulary hash:** `sha256(` canonical bytes of this document `)` — computed at build time, pinned by every ratifying repo (§4)
 **Implements:** CIRISRegistry#130
-**Status:** DRAFT for the coordinated v8.0.0 substrate cut
+**Status:** pinned artifact (CC 2.6.4)
 
 ---
 

@@ -1,6 +1,6 @@
 # The Reader's Policies
 
-**What this is.** How a consumer decides whom to trust: the anti-patterns that a composition must not fall into (4.1), and the composition and delegation policies of 4.4, Policies A to M and the aggregation rules, with the delegation graph's depth cap, cycle rejection and weight cap.
+**What this is.** How a consumer decides whom to trust: the anti-patterns of 4.1, with the depth cap and cycle rejection a consumer MUST apply and the weight cap it SHOULD; and the composition and delegation policies of 4.4, Policies A to M and the aggregation rules.
 
 **Whom it binds.** Every CEG-Conforming Consumer that composes rows into a verdict, and every reader who wants to know what a score about them will be turned into. A consumer may add policies of its own; it may not skip the ones marked normative.
 
@@ -8,4 +8,4 @@
 
 **What it leaves out.** The rows themselves, which are *The Wire* and *The Dictionary*; the authorities whose rows a reader chooses to trust, which is *The Constitution*; and the mathematics of coherence under which the aggregation is analysed, which is *The Mathematics*.
 
-**Where the rest lives.** Each policy's section states its inputs and its output in prose.
+**Where the rest lives.** Each normative policy's section states its inputs and output; Policies B, C and D are named sketches, RECOMMENDED, with no reference function.

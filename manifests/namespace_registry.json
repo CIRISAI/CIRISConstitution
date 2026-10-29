@@ -93,6 +93,7 @@
         "stream_id": "value",
         "subject": "value",
         "substrate_rung": "vocab",
+        "suite": "vocab",
         "target": "value",
         "target_kind": "vocab",
         "tier": "vocab",
@@ -215,7 +216,7 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc13",
+    "cc_version": "1.0-rc14",
     "components_outside_normative": [
       "cirisbench"
     ],
@@ -292,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "f007a247a65c9e330ad2ba7152a4023fa7db64bda88de633446ccfd9a6ec2e54",
+    "registry_sha256": "df79a1dde30a380380da83f0d776737e580705b6305741f037a5a78c2bef9898",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "fe7ab1d9088d1fdefc9f2d69eed207bdc37701c8fd2e83debf4e33b2feb1bdef"
+    "source_sha256": "7af252ad3275d9e56aaa2a6c2e64504d90b2e3b0cbeadd09a79218390518c850"
   },
   "families": [
     {
@@ -2638,11 +2639,11 @@
     },
     {
       "cc_section": "3.1.5.5",
-      "description": "One row per safety-battery blob; the blob is a Commons blob named in evidence_refs by its SHA-256, and {prefix} is that digest's first 16 lowercase hex characters.",
+      "description": "One row per evidence blob of a registered suite; the blob is a Commons blob named in evidence_refs by its SHA-256, and {prefix} is that digest's first 16 lowercase hex characters.",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
-      "polarity": "positive-only",
-      "prefix": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "polarity": "signed",
+      "prefix": "evidence:{suite}:{kind}:{cell}:{prefix}",
       "reserved": false,
       "segments": [
         {
@@ -2650,12 +2651,16 @@
           "segment": "evidence"
         },
         {
-          "class": "literal",
-          "segment": "safety_battery"
+          "class": "vocab",
+          "open": false,
+          "segment": "{suite}",
+          "values": [
+            "safety_battery"
+          ]
         },
         {
           "class": "vocab",
-          "open": true,
+          "open": false,
           "segment": "{kind}",
           "values": [
             "capture",
@@ -3817,7 +3822,7 @@
     },
     {
       "cc_section": "3.1.5",
-      "description": "The signed request handed to the operator with the retirement record (CC 7.5.5): retirement_id, manifest digest, preserve_until and its inputs (shutdown + 5 y as the best practice; a law or contract period with its citation; active legal_ho",
+      "description": "The signed request handed to the operator with the retirement record (CC 7.5.5): retirement_id, manifest digest, preserve_until and its inputs (shutdown + 5 y as the default; a law or contract period with its citation; active legal_hold ids",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "+1.0 only",

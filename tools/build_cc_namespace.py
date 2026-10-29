@@ -284,7 +284,7 @@ PLACEHOLDER_CLASS = {
         "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
-        "scope", "stage", "stance", "state", "substrate_rung", "target_kind", "tier", "version",
+        "scope", "stage", "stance", "state", "substrate_rung", "suite", "target_kind", "tier", "version",
     },
     "external": {"currency", "lang_code", "rating", "unit"},
     "value": {
@@ -857,6 +857,7 @@ def main():
         "age_self_declared:{band}:{version}",  # -> age_self_declared:band:{band}:{version} (the wire arity)
         "custody:{state}",                     # -> custody:{kind} = ack
         "holds_bytes:sha256:{prefix}",         # -> custody:ack:v1 at the content's scope
+        "evidence:safety_battery:{kind}:{cell}:{prefix}",   # -> evidence:{suite}:{kind}:{cell}:{prefix}; the suite is a closed vocab segment
         # Families once declared with a literal :v1 inside the prefix, which made the matcher
         # demand a second version segment and refuse every row written as the prose says.
         # Renamed, not retired.

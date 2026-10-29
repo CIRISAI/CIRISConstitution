@@ -131,6 +131,13 @@ envelope = {
   ; REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL;
   ; default absent (open-ended)
   ? delegation_valid_until: rfc3339-ms,
+  ; OPTIONAL on a delegates_to bearing trust:accepts:v1; default
+  ; absent (every class the authority's charter declares); array
+  ; kind: set
+  ? trust_classes: [* tstr],
+  ; OPTIONAL on a delegates_to bearing trust:accepts:v1; default
+  ; absent (0)
+  ? trust_depth: uint,
   ; OPTIONAL (capacity:*, observation:access_assumption:v1); default
   ; absent; array kind: sequence
   ? consent_basis: [* consent-basis],
