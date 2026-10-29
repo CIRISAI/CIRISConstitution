@@ -4,8 +4,8 @@
 
 Supply Chain Integrity, Transparency, and Trust                 E. Moore
 Internet-Draft                                                 CIRIS L3C
-Intended status: Informational                           21 October 2026
-Expires: 24 April 2027
+Intended status: Informational                           29 October 2026
+Expires: 2 May 2027
 
 
     Signed Attestation Rows of the CIRIS Epistemic Grammar and Their
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Moore                     Expires 24 April 2027                 [Page 1]
+Moore                      Expires 2 May 2027                   [Page 1]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -68,7 +68,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 April 2027.
+   This Internet-Draft will expire on 2 May 2027.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Moore                     Expires 24 April 2027                 [Page 2]
+Moore                      Expires 2 May 2027                   [Page 2]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -136,9 +136,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      15.1.  Normative References . . . . . . . . . . . . . . . . . .  22
      15.2.  Informative References . . . . . . . . . . . . . . . . .  23
    Appendix A.  CDDL . . . . . . . . . . . . . . . . . . . . . . . .  25
-   Appendix B.  Test Vectors . . . . . . . . . . . . . . . . . . . .  29
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  30
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  30
+   Appendix B.  Test Vectors . . . . . . . . . . . . . . . . . . . .  31
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  33
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  33
 
 1.  Introduction
 
@@ -165,7 +165,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 3]
+Moore                      Expires 2 May 2027                   [Page 3]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -221,7 +221,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 4]
+Moore                      Expires 2 May 2027                   [Page 4]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -277,7 +277,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 5]
+Moore                      Expires 2 May 2027                   [Page 5]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -333,7 +333,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 6]
+Moore                      Expires 2 May 2027                   [Page 6]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -389,7 +389,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 7]
+Moore                      Expires 2 May 2027                   [Page 7]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -445,7 +445,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 8]
+Moore                      Expires 2 May 2027                   [Page 8]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -501,7 +501,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                 [Page 9]
+Moore                      Expires 2 May 2027                   [Page 9]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -557,7 +557,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 10]
+Moore                      Expires 2 May 2027                  [Page 10]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -613,7 +613,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 11]
+Moore                      Expires 2 May 2027                  [Page 11]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -669,7 +669,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 12]
+Moore                      Expires 2 May 2027                  [Page 12]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -725,7 +725,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 13]
+Moore                      Expires 2 May 2027                  [Page 13]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -781,7 +781,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 14]
+Moore                      Expires 2 May 2027                  [Page 14]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -837,7 +837,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 15]
+Moore                      Expires 2 May 2027                  [Page 15]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -893,7 +893,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 16]
+Moore                      Expires 2 May 2027                  [Page 16]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -949,7 +949,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 17]
+Moore                      Expires 2 May 2027                  [Page 17]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1005,7 +1005,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 18]
+Moore                      Expires 2 May 2027                  [Page 18]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1061,7 +1061,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 19]
+Moore                      Expires 2 May 2027                  [Page 19]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1117,7 +1117,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 20]
+Moore                      Expires 2 May 2027                  [Page 20]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1173,7 +1173,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 21]
+Moore                      Expires 2 May 2027                  [Page 21]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1229,7 +1229,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 22]
+Moore                      Expires 2 May 2027                  [Page 22]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1285,7 +1285,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 23]
+Moore                      Expires 2 May 2027                  [Page 23]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1341,7 +1341,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                     Expires 24 April 2027                [Page 24]
+Moore                      Expires 2 May 2027                  [Page 24]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1362,7 +1362,7 @@ Appendix A.  CDDL
    ; tools/build_cc_signed_object.py from
    ; constitution/signed_object.tsv; do not edit. RFC 8610 CDDL, JSON
    ; profile (Appendix E).
-   ; Typed from CIRISPersist 32512f52 src/federation/envelope.rs.
+   ; Typed from CIRISPersist ee30310f src/federation/envelope.rs.
    ; The signing input is JCS(attestation-row.attestation_envelope), RFC
    ; 8785, and nothing else.
 
@@ -1376,7 +1376,7 @@ Appendix A.  CDDL
      ? expires_at: rfc3339,  ; OPTIONAL; default absent
      ; OPTIONAL (absent when empty); default absent; array kind: set
      ? subject_key_ids: [* subject-id],
-     cohort_scope: cohort-scope,  ; REQUIRED; default federation
+     cohort_scope: cohort-scope,  ; REQUIRED
      attestation_envelope: envelope,  ; REQUIRED
      original_content_hash: hex64,  ; REQUIRED
      ; OPTIONAL (absent when empty); default absent; array kind:
@@ -1397,7 +1397,7 @@ Appendix A.  CDDL
 
 
 
-Moore                     Expires 24 April 2027                [Page 25]
+Moore                      Expires 2 May 2027                  [Page 25]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
@@ -1427,7 +1427,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ? consent_supersedes: uuid,
      ? delivery_mode: "pull" / "push",  ; OPTIONAL; default pull
      ? deletion_window: tstr,  ; OPTIONAL; default absent
-     ? listed: "public",  ; OPTIONAL; default absent (private roster)
      ? media: { * tstr => any },  ; OPTIONAL; default absent
      ; REQUIRED on a widening supersedes, absent otherwise; default
      ; absent
@@ -1450,15 +1449,15 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; sequence
      ? evidence_refs: [* tstr],
      ? valid_until: rfc3339-ms,  ; OPTIONAL; default absent
+     ; OPTIONAL; default direct
 
 
 
-Moore                     Expires 24 April 2027                [Page 26]
+Moore                      Expires 2 May 2027                  [Page 26]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
-     ; OPTIONAL; default direct
      ? epistemic_mode: "direct" / "crypto" / "hearsay" / "derivative"
        / "appeal",
      ; OPTIONAL; default external
@@ -1506,23 +1505,144 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; OPTIONAL on delegates_to; default the edge's asserted_at
      ? delegation_valid_from: rfc3339-ms,
      ; REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL;
+     ; default absent (open-ended)
 
 
 
-Moore                     Expires 24 April 2027                [Page 27]
+Moore                      Expires 2 May 2027                  [Page 27]
 
 Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
-     ; default absent (open-ended)
      ? delegation_valid_until: rfc3339-ms,
+     ; OPTIONAL (capacity:*, observation:access_assumption:v1); default
+     ; absent; array kind: sequence
+     ? consent_basis: [* consent-basis],
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? n_eff_pr: number,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? n_eff_h: number,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? sample_size: uint,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? feature_dim: uint,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? sample_size_gate: uint,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? target_n_eff: number,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? min_feature_dim: uint,
+     ; OPTIONAL (carried on capacity:*; validated at the capacity:*
+     ; gate); default absent
+     ? n_eff_floor: number,
+     ; OPTIONAL (capacity:*, observation:access_assumption:v1); default
+     ; absent
+     ? window: uint,
+     ; REQUIRED on observation:access_assumption:v1; default absent
+     ? trace_level: "generic" / "detailed" / "full_traces",
+     ; REQUIRED on observation:access_assumption:v1; default absent;
+     ; array kind: set
+     ? occurrence_key_ids: [* key-id],
+     ; REQUIRED on observation:access_assumption:v1; default absent
+     ? window_from: rfc3339-ms,
+     ; REQUIRED on observation:access_assumption:v1; default absent
+     ? window_to: rfc3339-ms,
+     ; REQUIRED on observation:access_assumption:v1; default absent;
+     ; array kind: set
+     ? channel_classes: [* tstr],
+     ; REQUIRED on identity_amendment:v1; default absent
+     ? amendment_digest: hex64,
+     ; REQUIRED on identity_amendment:v1; default absent
+     ? authorized_by: uuid,
+     ; REQUIRED on census:share:{class}:v1, census:member:share:v1;
+
+
+
+Moore                      Expires 2 May 2027                  [Page 28]
+
+Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+
+
+     ; default absent
+     ? for_key_id: key-id,
+     ; REQUIRED on census:share:{class}:v1, census:member:share:v1,
+     ; census:partial:{class}:v1, census:member:partial:v1,
+     ; census:composite:{class}:v1, ballot:tally:{poll_id}:v1,
+     ; census:expected_active:v1; default absent
+     ? period: uint,
+     ; REQUIRED on census:share:{class}:v1, census:member:share:v1;
+     ; default absent
+     ? return_token: hex64,
+     ; REQUIRED on census:share:{class}:v1, census:member:share:v1,
+     ; census:partial:{class}:v1, census:member:partial:v1; default
+     ; absent
+     ? share_index: uint,
+     ; REQUIRED on census:partial:{class}:v1, census:member:partial:v1;
+     ; default absent
+     ? share_count: uint,
+     ; REQUIRED on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? source_count: uint,
+     ; REQUIRED on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? n_eff: uint,
+     ; REQUIRED on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? max_source_multiplicity: uint,
+     ; REQUIRED on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? mass_commitment_hex: hex64,
+     ; REQUIRED on census:partial:{class}:v1, census:member:partial:v1,
+     ; census:composite:{class}:v1, ballot:tally:{poll_id}:v1,
+     ; census:expected_active:v1; default absent
+     ? member_commitment_hex: hex64,
+     ; REQUIRED on census:partial:{class}:v1, census:member:partial:v1,
+     ; census:composite:{class}:v1, ballot:tally:{poll_id}:v1; default
+     ; absent
+     ? mass_total: tstr,
+     ; REQUIRED on census:partial:{class}:v1, census:member:partial:v1,
+     ; census:composite:{class}:v1, ballot:tally:{poll_id}:v1; default
+     ; absent
+     ? aggregation_algorithm_id: tstr,
+     ; OPTIONAL on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? noise_floor_descriptor: tstr,
+     ; REQUIRED on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? version: uint,
+     ; REQUIRED on census:composite:{class}:v1,
+
+
+
+Moore                      Expires 2 May 2027                  [Page 29]
+
+Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+
+
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? partial_a: uuid,
+     ; REQUIRED on census:composite:{class}:v1,
+     ; ballot:tally:{poll_id}:v1; default absent
+     ? partial_b: uuid,
+     ; REQUIRED on census:expected_active:v1; default absent
+     ? window_periods: uint,
+     ; REQUIRED on census:expected_active:v1; default absent
+     ? active_count: uint,
+     ; REQUIRED on census:expected_active:v1; default absent
+     ? floor_applied: bool,
      ; family payload members (CC 3.3) and anything a consumer has not
      ; learned yet
      * tstr => any,
    }
 
-   ; Closed: exactly these seven members (CIRISPersist#643).
-   ; deny_unknown_fields.
+   ; Closed: exactly these seven members. deny_unknown_fields.
    row-mirror = {
      attestation_id: uuid,  ; REQUIRED
      attesting_key_id: key-id,  ; REQUIRED
@@ -1530,7 +1650,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      attested_key_id: key-id,  ; REQUIRED; default the attester
      ; REQUIRED (may be empty); default []; array kind: set
      subject_key_ids: [* subject-id],
-     cohort_scope: cohort-scope,  ; REQUIRED; default federation
+     cohort_scope: cohort-scope,  ; REQUIRED
      ? weight: number,  ; OPTIONAL; default absent
    }
 
@@ -1554,6 +1674,14 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      original_content_hash: hex64,  ; REQUIRED
      scrub_signature_classical: base64,  ; REQUIRED
      ? scrub_signature_pqc: base64,  ; REQUIRED once hybrid-complete
+
+
+
+Moore                      Expires 2 May 2027                  [Page 30]
+
+Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+
+
      scrub_key_id: key-id,  ; REQUIRED
      scrub_timestamp: rfc3339,  ; REQUIRED
      ? pqc_completed_at: rfc3339,  ; OPTIONAL
@@ -1562,17 +1690,13 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; OPTIONAL; default absent
      ? attestation_evidence: { * tstr => any },
      ; OPTIONAL (absent when empty); default absent; array kind:
-
-
-
-Moore                     Expires 24 April 2027                [Page 28]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
-
      ; sequence
      ? additional_scrubs: [* scrub-sig],
    }
+
+   ; CC 2.1 consent_basis entry.
+   consent-basis = { principal: key-id, paths: [* ("subject"
+     / "occurrence_of" / "delegates_to")], attestation_id: uuid }
 
    row-type = "scores" / "delegates_to" / "supersedes" / "withdraws"
      / "recants"
@@ -1606,6 +1730,14 @@ Appendix B.  Test Vectors
    The smallest vector is reproduced here.  The attester's Ed25519 seed
    is
 
+
+
+
+Moore                      Expires 2 May 2027                  [Page 31]
+
+Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+
+
    3e072ddf64847215af6d77de9efa0d95af5e2829abba3ff252cad647c8151593
 
    and its public key is
@@ -1613,18 +1745,6 @@ Appendix B.  Test Vectors
    69e98359bc7c5c783ee95150f2e9343e4f04775853bae63790bdc4aa3501c18e
 
    which gives the key_id alice-ctffz2edis.  The signed object is
-
-
-
-
-
-
-
-
-Moore                     Expires 24 April 2027                [Page 29]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
 
    {
      "row": {
@@ -1663,6 +1783,17 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    (line break added for display).  The ML-DSA-65 key and one valid
    signature are in [CC-VECTORS].
 
+
+
+
+
+
+
+Moore                      Expires 2 May 2027                  [Page 32]
+
+Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+
+
 Acknowledgments
 
    The canonical-form rules in this document were found and fixed in
@@ -1677,4 +1808,41 @@ Author's Address
 
 
 
-Moore                     Expires 24 April 2027                [Page 30]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Moore                      Expires 2 May 2027                  [Page 33]
