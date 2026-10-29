@@ -2,6 +2,10 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc14 (open)
+
+- Opened 2026-10-29 after the rc13 tag.
+
 ## 1.0-rc13 (released 2026-10-29, tag v1.0-rc13)
 
 - Who I trust (4.4.3.8): the reader's pinned trust set is its own acceptance edges, each naming the licence classes it admits and the depth of further hops it allows; admission refuses shape only, the charter is read at read, and a licence confers no trust. The trust-set model proves the clause.
