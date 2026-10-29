@@ -2,6 +2,20 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc13 (released 2026-10-29, tag v1.0-rc13)
+
+- Who I trust (4.4.3.8): the reader's pinned trust set is its own acceptance edges, each naming the licence classes it admits and the depth of further hops it allows; admission refuses shape only, the charter is read at read, and a licence confers no trust. The trust-set model proves the clause.
+- The affiliation tier is split in two (4.4.3.2.8): the data regime attaches to the record at any size, so a sole practitioner is an affiliation, and the floors bind power over members: appointment is two consents, a one-voice body acts against a member only with a countersign from outside the deciding seat, and two or more seats decide as a community. The affiliation model maps every rule to its promise.
+- The affiliation record declares its cohort kind in one member; the charter names licence classes, a role-term ceiling and a successor seat or a dissolution date; an affiliation's existence, key, officers and declared classes are Commons-visible; dissolution is the record's withdrawal, under which issued licences stand and read lapsed and a dissolved authority relays no trust.
+- Admin presets are published as data; `affiliations` sits beside `community` in the scope order.
+- `wa_adjudication:{state}` admits `petition`, the petitioner's own row that opens the ownership-reclaim ceremony (3.1.9.4, 3.2); the three findings stay the quorum's.
+- Safety-battery evidence is on the record (3.1.5.5): one row per capture or interpretation blob, the blob's digest in the dimension so a re-post supersedes, emitted under the root's `infra:attest` delegation.
+- No outward member listing: the `listed` envelope member is retired, a roster is never enumerable outside its cohort, a public room's discovery row names no roster, and the public-broadcast exemption keys on open admission (2.1, 3.2, 5.3.3).
+- A row at a targeted scope names its own producer in `attested_key_id` (2.1, 3.1.3.2); the signed-object vector that placed a third party there is re-minted.
+- The Digest no longer carries the dated comparison of named vendors' practices; the promises stand on their own.
+- The repository presents its finished state: the review notes and the migration validation are gone from the head, the change log is a release history, and no document attributes a rule to the person who decided it.
+- Register at the cut: 371 established, 30 normative, 116 staged; fourteen formal models in the chain, 167 properties over 189 states, and two models beside it, the trust set and the affiliation tier.
+
 ## 1.0-rc12 (released 2026-10-27, tag v1.0-rc12)
 
 - The ethics cascade is mechanised in Lean: ten of the eleven promises are theorems of the four basis sentences, and the one rule outside them is the principles as constraints.

@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "0af940f8726b3848ddf75ed389e76d54cedbdd9f038a87e86afe2b06c6924b14",
+  "policy_sha256": "418c1aa616170b612c2cc7999ae362b69d3931e20d5b8afb85a865e175ee1837",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -278,6 +278,31 @@
    ],
    "status": "normative",
    "note": "the operator and the WA name the successor by one cosigned row; the old key's custody rows stay valid to that instant"
+  },
+  {
+   "family": "affiliation_member_action",
+   "cc_ref": "4.4.3.2.8 4.5.13",
+   "kind": "cosigned",
+   "standing_set": "the deciding seat + one key outside it (the designated official, or a review-holder of the overseeing body)",
+   "base": "standing",
+   "enact": {
+    "num": 2,
+    "den": 2
+   },
+   "cancel": null,
+   "floor": null,
+   "cancel_over": "—",
+   "at_window": "—",
+   "window_secs": 0,
+   "window_class": "none",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "cosign",
+   "model": [
+    "formal/affiliation"
+   ],
+   "status": "normative",
+   "note": "a one-voice affiliation acts against a member only with an outside countersign; two or more seats decide under their own protocol"
   }
  ],
  "base_law": {

@@ -215,16 +215,16 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc12",
+    "cc_version": "1.0-rc13",
     "components_outside_normative": [
       "cirisbench"
     ],
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 188,
+    "n_families": 189,
     "per_component": {
-      "accord-agent": 35,
+      "accord-agent": 36,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
@@ -292,7 +292,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "d587156605dd8de7c0c56e271625293eb05b3f9b5debd44cf8bc822d4e701c5b",
+    "registry_sha256": "f007a247a65c9e330ad2ba7152a4023fa7db64bda88de633446ccfd9a6ec2e54",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -307,7 +307,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "17fb549762970de09efb9adf00dec81e11a9dc8ce8fd8fa4884ee5db8d39ac41"
+    "source_sha256": "fe7ab1d9088d1fdefc9f2d69eed207bdc37701c8fd2e83debf4e33b2feb1bdef"
   },
   "families": [
     {
@@ -2637,6 +2637,42 @@
       ]
     },
     {
+      "cc_section": "3.1.5.5",
+      "description": "One row per safety-battery blob; the blob is a Commons blob named in evidence_refs by its SHA-256, and {prefix} is that digest's first 16 lowercase hex characters.",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "evidence:safety_battery:{kind}:{cell}:{prefix}",
+      "reserved": false,
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "evidence"
+        },
+        {
+          "class": "literal",
+          "segment": "safety_battery"
+        },
+        {
+          "class": "vocab",
+          "open": true,
+          "segment": "{kind}",
+          "values": [
+            "capture",
+            "interpret"
+          ]
+        },
+        {
+          "class": "value",
+          "segment": "{cell}"
+        },
+        {
+          "class": "hex",
+          "segment": "{prefix}"
+        }
+      ]
+    },
+    {
       "cc_section": "3.1.9.6",
       "description": "Expertise standing (P3).",
       "owning_component": "node",
@@ -4781,7 +4817,8 @@
           "values": [
             "abandonment",
             "seizure",
-            "successor"
+            "successor",
+            "petition"
           ]
         }
       ]

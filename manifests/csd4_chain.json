@@ -6,7 +6,7 @@
    "invariants_sha256": "fc32f0511041e8d934e2277f46b74037cc5caf7e3fadf09b9ea3a99fed12ba11",
    "vocabulary_sha256": "4190bb17ead8028a918365486c2407edb54c70bffb98895f434987b88b1b3eac",
    "vocabulary_catalogue_version": 5,
-   "claims_sha256": "940e26859a94fdde7fbc613744cb99caee692c73cf008059f591e90ad34bd9ef",
+   "claims_sha256": "b8dc4ca0e3c0e32c5d32d4ca827858eede69814ef44f083889373346fbc95181",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,16 +30,16 @@
    "atoms": 120,
    "states": 189,
    "invariants": 167,
-   "claims": 512,
+   "claims": 517,
    "entries": 20,
-   "refusal_tokens": 87
+   "refusal_tokens": 92
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "dd6309abd1e8feed9cc1a929c444ecfb1247fb638f7bf7764c6126e44f463787"
+  "chain_sha256": "58d143eaf22df2f1d35ba2ce1a8b6bcf3ce99370f7f426b5f78b126f38d7ad1d"
  },
  "chain": [
   {
@@ -34423,6 +34423,42 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-affiliation-one-voice-countersign",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-public-face",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -41309,6 +41345,12 @@
   "legal_hold": {
    "4.4.3.2": "bold"
   },
+  "licence_class_not_trusted": {
+   "4.4.3.8": "after_refusal"
+  },
+  "licence_issuer_not_trusted": {
+   "4.4.3.8": "after_refusal"
+  },
   "licensure_delegator_not_authority": {
    "2.4.1.2.1": "bold"
   },
@@ -41424,6 +41466,15 @@
   },
   "transport_rebind_without_holder_quorum": {
    "3.1.3": "after_refusal"
+  },
+  "trust_accepts_classes_malformed": {
+   "4.4.3.8": "after_refusal"
+  },
+  "trust_accepts_depth_out_of_range": {
+   "4.4.3.8": "after_refusal"
+  },
+  "trust_depth": {
+   "4.4.3.8": "after_refusal"
   },
   "trust_root_head_stale": {
    "3.2": "after_refusal"
