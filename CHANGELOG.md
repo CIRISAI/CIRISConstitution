@@ -9,7 +9,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The affiliation record declares its cohort kind in one member; the charter names licence classes, a role-term ceiling and a successor seat or a dissolution date; an affiliation's existence, key, officers and declared classes are Commons-visible; dissolution is the record's withdrawal, under which issued licences stand and read lapsed and a dissolved authority relays no trust.
 - Admin presets are published as data; `affiliations` sits beside `community` in the scope order.
 - `wa_adjudication:{state}` admits `petition`, the petitioner's own row that opens the ownership-reclaim ceremony (3.1.9.4, 3.2); the three findings stay the quorum's.
-- A member's public listing is stated as the per-membership opt-in it already was (2.1 `listed`): the member's own signature on their own membership row, ending with the membership, and the only roster view a non-member is served; the roster-listing model shows the two readings that break it.
+- No outward member listing: the `listed` envelope member is retired, a roster is never enumerable outside its cohort, a public room's discovery row names no roster, and the public-broadcast exemption keys on open admission (2.1, 3.2, 5.3.3).
 - A row at a targeted scope names its own producer in `attested_key_id` (2.1, 3.1.3.2); the signed-object vector that placed a third party there is re-minted.
 - The Digest no longer carries the dated comparison of named vendors' practices; the promises stand on their own.
 - The repository presents its finished state: the review notes and the migration validation are gone from the head, the change log is a release history, and no document attributes a rule to the person who decided it.

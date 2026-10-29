@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "ccd1f05b911a20153060c2b03779df2a094033f7eda01e33b3a651786bbf3715",
+    "source_sha256": "30a6c2df594a88a1139b1d754da7339c88dc5fe5bde68c9fd78824f09aff19be",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "ee30310f",
@@ -51,7 +51,7 @@
       "not-on-wire"
     ],
     "counts": {
-      "signed:envelope": 41,
+      "signed:envelope": 40,
       "signed:row": 7,
       "signed:envelope-extra": 49,
       "beside": 27,
@@ -302,18 +302,6 @@
         "cc_ref": "3.3.1",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
         "note": "Deadline by which a consented payload must be deleted."
-      },
-      {
-        "member": "listed",
-        "placement": "signed:envelope",
-        "cc_name": "-",
-        "type": "\"public\"",
-        "array_kind": "-",
-        "presence": "OPTIONAL",
-        "default": "absent (private roster)",
-        "cc_ref": "2.1 3.2",
-        "impl": "src/federation/envelope.rs#EnvelopeCore",
-        "note": "One admissible value; admitted only on a community membership signed by its own subject."
       },
       {
         "member": "media",

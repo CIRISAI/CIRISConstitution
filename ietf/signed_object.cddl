@@ -59,7 +59,6 @@ envelope = {
   ? consent_supersedes: uuid,
   ? delivery_mode: "pull" / "push",  ; OPTIONAL; default pull
   ? deletion_window: tstr,  ; OPTIONAL; default absent
-  ? listed: "public",  ; OPTIONAL; default absent (private roster)
   ? media: { * tstr => any },  ; OPTIONAL; default absent
   ; REQUIRED on a widening supersedes, absent otherwise; default
   ; absent

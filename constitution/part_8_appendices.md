@@ -239,7 +239,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 |---|---|
 | endpoint response schemas | **PARTIALLY CLOSED** in [CC 5.3.6](#) common-shape + error-envelope; full OpenAPI committed. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](#) + R6 above. |
-| Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](#) + [CC 2.1](#) (`delivery_mode`/`listed`/`history_on_join`) + [CC 3.4.6](#) + [CC 4.4.3.2.6](#). Streaming-half items tracked in CC 8.3.3. |
+| Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](#) + [CC 2.1](#) (`delivery_mode`/`history_on_join`) + [CC 3.4.6](#) + [CC 4.4.3.2.6](#). Streaming-half items tracked in CC 8.3.3. |
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
 
