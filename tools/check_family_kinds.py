@@ -38,12 +38,17 @@ def main():
         for v in verbs:
             if v not in PROFILE[k]: errs.append(f"{r['family']}: verb {v} outside the {k} profile")
         if (k in THING) != (s == "thing"): errs.append(f"{r['family']}: side {s} is not the side of kind {k}")
-        ck = r.get("carries_kind", "—")
-        if "carries" in verbs and ck == "—": errs.append(f"{r['family']}: carries but names no carried kind")
-        if ck != "—" and KIND.get(ck) == "identity": errs.append(f"{r['family']}: carries Identity, the firewalled cell")
-        if ck != "—" and "carries" not in verbs: errs.append(f"{r['family']}: names a carried kind without the verb")
+        rf = r.get("reference", "—")
+        mode, ck = (rf.split(":", 1) + [""])[:2] if rf != "—" else ("", "")
+        if rf != "—" and mode not in ("pre", "carry"): errs.append(f"{r['family']}: reference mode {mode} unknown")
+        if mode == "carry" and "carries" not in verbs: errs.append(f"{r['family']}: carries a kind without the verb")
+        if mode == "carry" and KIND.get(ck) == "identity": errs.append(f"{r['family']}: carries Identity, the firewalled cell")
+        if "carries" in verbs and mode != "carry": errs.append(f"{r['family']}: the verb carries names no carried kind")
+        if ck and ck != "any" and ck not in KIND: errs.append(f"{r['family']}: reference kind {ck} unknown")
         mr = r.get("maintains_record", "no") == "yes"
-        ref = f"some .{KIND[ck]}" if ck != "—" else "none"
+        if rf == "—": ref = "none"
+        elif ck == "any": ref = "some ⟨.pre, none⟩"
+        else: ref = f"some ⟨.{mode}, some .{KIND[ck]}⟩"
         name = r["family"].replace("\\", "\\\\").replace('"', '\\"')
         lean.append(f'  ⟨"{name}", ⟨.{k}, [{", ".join("."+v for v in verbs)}], {ref}⟩, ⟨{"true" if mr else "false"}, '
                     f'{".legalHold" if mr else ".dsar"}, {".byteEqual" if mr else ".none"}⟩⟩')

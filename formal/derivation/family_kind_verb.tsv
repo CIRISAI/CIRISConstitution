@@ -1,4 +1,4 @@
-family	source	kind	side	verbs	confidence	note	maintains_record	carries_kind
+family	source	kind	side	verbs	confidence	note	maintains_record	reference
 accord:*	registry	Rules	THING	attest,withdraw	M	umbrella: accord-holder-only authority over what agents may do	no	—
 accord:human_dignity	registry	Rules	THING	attest,withdraw,recant	M	provisional verdict on conduct against the dignity rule	no	—
 accord:invoke:constitutional:{halt_id}	registry	Structure	THING	attest	H	kill-switch: the machine stops; +1 only, lifted by lifecycle:active not withdraw	no	—
@@ -25,13 +25,13 @@ beneficence:{aspect}	accord-agent	Priorities	ACCOUNT	attest,withdraw,recant	M	ax
 blog:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a blog post	no	—
 bond_posted:{currency}	registry	Facts	ACCOUNT	attest,withdraw	M	a stake exists; forfeited on revocation	no	—
 build:registered:{target}	registry	Identity	THING	attest,replace,withdraw	M	binds a manifest hash to a build target: what it is called	no	—
-capacity:composite	lens	Confidence	ACCOUNT	attest,withdraw,recant,carries	H	min over five factors; carries the factors as one score	no	Confidence
-capacity:core_identity	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	a capacity factor (C), not a naming	no	—
-capacity:incompleteness_awareness	lens	Confidence	ACCOUNT	attest,withdraw,recant	H	epistemic humility is literally how-sure	no	—
-capacity:integrity	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor I_int	no	—
-capacity:relay_delivery	transport-delivery	Facts	ACCOUNT	attest,replace,withdraw	M	measured fulfilment ratio of claimed throughput	no	—
-capacity:resilience	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor R	no	—
-capacity:sustained_coherence	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor S	no	—
+capacity:composite	lens	Confidence	ACCOUNT	attest,withdraw,recant	H	min over five factors; carries the factors as one score (derived: equals the rebuild of its projection)	no	pre:Rules
+capacity:core_identity	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	a capacity factor (C), not a naming	no	pre:Rules
+capacity:incompleteness_awareness	lens	Confidence	ACCOUNT	attest,withdraw,recant	H	epistemic humility is literally how-sure	no	pre:Rules
+capacity:integrity	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor I_int	no	pre:Rules
+capacity:relay_delivery	transport-delivery	Facts	ACCOUNT	attest,replace,withdraw	M	measured fulfilment ratio of claimed throughput	no	pre:Rules
+capacity:resilience	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor R	no	pre:Rules
+capacity:sustained_coherence	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor S	no	pre:Rules
 capacity_assurance:reversible_excluded:{domain}:{version}	attestation	Facts	ACCOUNT	attest,replace,withdraw	M	assessor attests reversible causes ruled out: clinical fact	no	—
 capacity_assurance:reversible_pending:{domain}:{version}	attestation	Process	THING	attest,replace,withdraw	M	exclusion in progress; must lapse or resolve	no	—
 capacity_assurance:{level}:{domain}:{band}:{version}	attestation	Facts	ACCOUNT	attest,replace,withdraw	M	assessor's finding of a person's decision-capacity band	no	—
@@ -40,32 +40,32 @@ chat:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about 
 coherence_standing:{cohort}	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	lens standing score within a cohort	no	—
 collection:{kind}	persist	Identity	THING	attest,replace,withdraw	M	mints a collection as an object in its own right	no	—
 commitment_fulfillment:{prior_contribution_id}	node	Facts	ACCOUNT	attest,withdraw,recant	M	track-record of follow-through is a factual claim	no	—
-community:listing	registry	Identity	THING	attest,replace,withdraw	M	names and describes the room; one live row	no	—
+community:listing	registry	Identity	THING	attest,replace,withdraw	M	names and describes the room; one live row	no	pre:Rules
 config:{scope}	node	Circumstances	THING	attest,replace,withdraw	M	declared operating configuration; context, re-declared	no	—
 conscience:coherence	accord-agent	Structure	THING	attest,withdraw,recant	H	conscience verdict: did it pass the gate	no	—
 conscience:entropy	accord-agent	Structure	THING	attest,withdraw,recant	H	conscience verdict	no	—
 conscience:epistemic_humility	accord-agent	Structure	THING	attest,withdraw,recant	H	conscience verdict (the faculty, not a confidence score)	no	—
 conscience:optimization_veto	accord-agent	Structure	THING	attest,withdraw,recant	H	the veto is the machine refusing passage	no	—
-consent:community_trust	accord-agent	Rules	THING	attest,withdraw	H	standing grant: trace capture allowed	no	—
-consent:decay:{stage}	accord-agent	Process	THING	attest,replace	H	a stage of the decay protocol	no	—
-consent:deletion_complete	accord-agent	Facts	ACCOUNT	attest	M	attests the past was evicted; affects provability (kind Facts about the record; maintains the Record relation)	yes	—
-consent:deletion_sla:{days}	accord-agent	Rules	THING	attest,replace,withdraw	M	producer's commitment: a binding obligation	no	—
-consent:partnership_accept	accord-agent	Rules	THING	attest,withdraw	H	producer side of a grant	no	—
-consent:partnership_grant	accord-agent	Rules	THING	attest,withdraw	H	subject side of a grant	no	—
-consent:replication:{version}	accord-agent	Rules	THING	attest,replace,withdraw	H	directed replication grant	no	—
-consent:scope:{kind}	accord-agent	Rules	THING	attest,carries	M	descriptive scope; the real scope arrives via state:granted	no	Rules
-consent:state:{stance}	accord-agent	Rules	THING	attest,replace,withdraw	H	subject's stance on a Contribution: allowed or not	no	—
-consent:stream:{kind}	accord-agent	Rules	THING	attest,replace,withdraw	M	pre-packaged bundle of grants	no	—
-consent:{kind}	accord-agent	Rules	THING	attest,replace,withdraw,carries	H	umbrella: subject consent authority	no	Rules
+consent:community_trust	accord-agent	Rules	THING	attest,withdraw	H	standing grant: trace capture allowed	no	pre:Identity
+consent:decay:{stage}	accord-agent	Process	THING	attest,replace	H	a stage of the decay protocol	no	pre:Identity
+consent:deletion_complete	accord-agent	Facts	ACCOUNT	attest	M	attests the past was evicted; affects provability (kind Facts about the record; maintains the Record relation)	yes	pre:Identity
+consent:deletion_sla:{days}	accord-agent	Rules	THING	attest,replace,withdraw	M	producer's commitment: a binding obligation	no	pre:Identity
+consent:partnership_accept	accord-agent	Rules	THING	attest,withdraw	H	producer side of a grant	no	pre:Identity
+consent:partnership_grant	accord-agent	Rules	THING	attest,withdraw	H	subject side of a grant	no	pre:Identity
+consent:replication:{version}	accord-agent	Rules	THING	attest,replace,withdraw	H	directed replication grant	no	pre:Identity
+consent:scope:{kind}	accord-agent	Rules	THING	attest	M	descriptive scope; the real scope arrives via state:granted	no	pre:Identity
+consent:state:{stance}	accord-agent	Rules	THING	attest,replace,withdraw	H	subject's stance on a Contribution: allowed or not	no	pre:Identity
+consent:stream:{kind}	accord-agent	Rules	THING	attest,replace,withdraw	M	pre-packaged bundle of grants	no	pre:Identity
+consent:{kind}	accord-agent	Rules	THING	attest,replace,withdraw	H	umbrella: subject consent authority	no	pre:Identity
 content_class:{class}	node	Identity	THING	attest,withdraw	M	classifies content: what it is called	no	—
 content_rating:{scheme}:{rating}	node	Rules	THING	attest,replace,withdraw	M	scheme rating gates audiences; borderline Model (scheme)	no	—
 corpus_health:n_eff_measurable	persist	Confidence	ACCOUNT	attest,withdraw	M	whether effective sample is measurable: how sure	no	—
 credits:{domain}:{language}:substrate_building	node	Priorities	ACCOUNT	attest,withdraw	M	commons credit confers standing/weight	no	—
 credits:{domain}:{language}:{subject}	node	Priorities	ACCOUNT	attest,withdraw	M	commons credit confers standing/weight	no	—
-custody:{kind}	persist	Facts	ACCOUNT	attest,withdraw	H	holder's receipt that bytes are held (kind Facts about the record; maintains the Record relation)	yes	—
+custody:{kind}	persist	Facts	ACCOUNT	attest,withdraw	H	holder's receipt that bytes are held (kind Facts; purgeable with what it receipts)	no	—
 cw_class:{class}	node	Manner	ACCOUNT	attest,withdraw	M	content warning shapes how it is presented	no	—
 delivery:{class}	transport-delivery	Facts	ACCOUNT	attest,withdraw	M	substrate self-report of delivery outcome	no	—
-delivery_receipt:{stream_id}	transport-delivery	Facts	ACCOUNT	attest	H	subscriber receipt: delivery stays provable (kind Facts about the record; maintains the Record relation)	yes	—
+delivery_receipt:{stream_id}	transport-delivery	Facts	ACCOUNT	attest	H	subscriber receipt: delivery stays provable (kind Facts; purgeable with what it receipts)	no	—
 detection:conscience_override_rate	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading of override rate	no	—
 detection:correlated_action:{axis}	lens	Facts	ACCOUNT	attest,withdraw,recant	M	population-scale detector reading	no	—
 detection:cross_agent_divergence	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading	no	—
@@ -78,7 +78,7 @@ dma:csdma:*	accord-agent	Model	ACCOUNT	attest,withdraw,recant	H	which decision-m
 dma:dsdma:{domain}:*	accord-agent	Model	ACCOUNT	attest,withdraw,recant	H	domain DMA verdict	no	—
 dma:idma:*	accord-agent	Model	ACCOUNT	attest,withdraw,recant	H	identity DMA verdict	no	—
 dma:pdma:*	accord-agent	Model	ACCOUNT	attest,withdraw,recant	H	principled DMA verdict	no	—
-duty:{kind}	registry	Rules	THING	attest,replace,withdraw	H	obligation attached to a permission	no	—
+duty:{kind}	registry	Rules	THING	attest,replace,withdraw	H	obligation attached to a permission	no	pre:any
 encyclopedia:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about an entry	no	—
 event:attendance	node	Facts	ACCOUNT	attest,withdraw,recant	H	post-event attendance is a fact claim	no	—
 event:lifecycle:{state}	node	Process	THING	attest,replace	H	event state machine	no	—
@@ -91,7 +91,7 @@ file:{version}	persist	Identity	THING	attest,replace,withdraw	M	mints a file obj
 film:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a film	no	—
 goal:{scale}	node	Premises	ACCOUNT	attest,replace,withdraw	M	goals are what plans are built on	no	—
 group:roster	persist	Rules	THING	attest,replace,withdraw	M	who is a member; cosigned roster version	no	—
-hard_case:{kind}	node	Circumstances	THING	attest,withdraw	M	marks a case as hard: situational flag, open vocab	no	—
+hard_case:{kind}	node	Circumstances	THING	attest,withdraw	M	marks a case as hard: situational flag, open vocab	yes	—
 hardware_custody:{platform}	attestation	Circumstances	THING	attest,replace,withdraw	M	where the seed lives: platform context	no	—
 health:liveness:{version}	node	Circumstances	THING	attest,replace,withdraw	H	service health now	no	—
 identity:canonical_binding:{canonical_hash}	attestation	Identity	THING	attest,withdraw	H	key K is the identity behind hash H	no	—
@@ -102,17 +102,17 @@ integrity:{aspect}	accord-agent	Structure	THING	attest,withdraw,recant	M	transpa
 judge_model:verdict:{model_id}	node	Model	ACCOUNT	attest,withdraw,recant	H	which judge model, and its verdict	no	—
 justice:{aspect}	accord-agent	Priorities	ACCOUNT	attest,withdraw,recant	M	equitable distribution: who goes first	no	—
 key:record	persist	Identity	THING	attest,replace	H	a key's claim of itself; proof of possession	no	—
-key:revocation	persist	Identity	THING	attest,replace	H	-1 only, never withdrawn; revoked_after only lowers across versions	no	—
+key:revocation	persist	Identity	THING	attest,replace	H	-1 only, never withdrawn; revoked_after only lowers across versions	yes	—
 key_boundary:{scope}	transport-delivery	Rules	THING	attest,withdraw	L	where keys may travel; thin prose, Edge glossary	no	—
 key_grant:{axis}	persist	Rules	THING	attest	H	wrap of a DEK to a recipient; never withdrawn	no	—
 ledger:checkpoint:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	co-witnessed snapshot superseding detail; proves the fold (kind Facts about the record; maintains the Record relation)	yes	—
 ledger:head:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	the ledger head: what can be proven forward (kind Facts about the record; maintains the Record relation)	yes	—
 ledger:promotion:{version}	persist	Facts	ACCOUNT	attest,replace	M	carries the compliance proof to cohort visibility (kind Facts about the record; maintains the Record relation)	yes	—
-licensure:{authority_id}	registry	Rules	THING	attest,replace,withdraw	H	licence status under an authority	no	—
+licensure:{authority_id}	registry	Rules	THING	attest,replace,withdraw	H	licence status under an authority	no	pre:Rules
 lineage_witness:{stage}	persist	Rules	THING	attest	M	ceremony whose effect is a witness role; per-stage rows	no	—
 locality:decision:{scale}	node	Circumstances	THING	attest	M	the scale at which a decision happens to be made	no	—
 manifold_conformity:{cohort}	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	lens conformity score	no	—
-membership:{stage}	persist	Rules	THING	attest,replace,withdraw	M	ceremony whose effect is membership; removal cosigned	no	—
+membership:{stage}	persist	Rules	THING	attest,replace,withdraw	M	ceremony whose effect is membership; removal cosigned	no	pre:Rules
 mesh_config:{key}	node	Rules	THING	authorize,replace,withdraw	H	delegation-plane, relieve-never-expand: what is allowed	no	—
 method:{approach_id}:{substrate_rung}	node	Process	THING	attest,replace,withdraw	M	concrete operational practice: what order	no	—
 model_3d:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a 3D model	no	—
@@ -122,9 +122,9 @@ multilateral_participation:{forum}:{kind}	registry	Facts	ACCOUNT	attest,replace,
 need:{domain}:{kind}	node	Facts	ACCOUNT	attest,replace,withdraw	M	broadcast that a need exists; borderline Priorities	no	—
 news:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about news	no	—
 non_maleficence:{aspect}	accord-agent	Rules	THING	attest,withdraw	H	apophatic failures are -1 only: what is not allowed	no	—
-objection:{state}	node	Structure	THING	attest,replace,withdraw	M	objection blocks a commons act from going through	no	—
+objection:{state}	node	Structure	THING	attest,replace,withdraw	M	objection blocks a commons act from going through	no	pre:Structure
 observation:reachability	node	Circumstances	THING	attest,replace	H	from here, now, the target answered or not	no	—
-ownership:{relation}:{target_kind}:{version}	registry	Identity	THING	attest,replace,withdraw	M	binds a key to its responsible steward; mirrors delegates_to	no	—
+ownership:{relation}:{target_kind}:{version}	registry	Identity	THING	authorize,replace,withdraw	M	binds a key to its responsible steward; mirrors delegates_to (an owner binding is a delegates_to)	no	pre:Rules
 partner_role:{role}	registry	Rules	THING	attest,replace,withdraw	M	partner status confers permissions	no	—
 peer_reachability:{network}	transport-delivery	Circumstances	THING	attest,replace,withdraw	H	reachability now	no	—
 progress_measure:{method_id}	node	Facts	ACCOUNT	attest,replace,withdraw	M	evidence of progress	no	—
@@ -133,14 +133,14 @@ provenance:build_manifest:{target}	attestation	Facts	ACCOUNT	attest,withdraw	H	p
 provenance:build_manifest:{target}:locale:{lang_code}	attestation	Facts	ACCOUNT	attest,withdraw	H	provenance per locale	no	—
 provenance:skill_import:{source}	attestation	Facts	ACCOUNT	attest,withdraw	H	import provenance	no	—
 provenance:slsa:{level}	attestation	Facts	ACCOUNT	attest,withdraw	H	SLSA level provenance	no	—
-quarantine:{state}	node	Structure	THING	attest,replace,withdraw	M	quarantine removes a subject from the machine	no	—
+quarantine:{state}	node	Structure	THING	attest,replace,withdraw	M	quarantine removes a subject from the machine	no	pre:Structure
 ratchet:flag:coordinated_voting_cluster	anti-sybil	Facts	ACCOUNT	attest,withdraw,recant	M	advisory anomaly reading	no	—
 ratchet:flag:counter_rii:{layer}	anti-sybil	Facts	ACCOUNT	attest,withdraw,recant	M	advisory only; never sole evidence	no	—
 ratchet:flag:density_anomaly	anti-sybil	Facts	ACCOUNT	attest,withdraw,recant	M	advisory anomaly reading	no	—
 ratchet:flag:expertise_attestation_anomaly	anti-sybil	Facts	ACCOUNT	attest,withdraw,recant	M	advisory anomaly reading	no	—
 ratchet:flag:harassment_pattern	anti-sybil	Facts	ACCOUNT	attest,withdraw,recant	M	advisory pattern reading	no	—
 ratchet:flag:out_of_distribution_voting	anti-sybil	Facts	ACCOUNT	attest,withdraw,recant	M	advisory anomaly reading	no	—
-reconsideration:{grounds}	node	Process	THING	attest,withdraw	M	reopens a decision on stated grounds	no	—
+reconsideration:{grounds}	node	Process	THING	attest,withdraw	M	reopens a decision on stated grounds	no	pre:any
 regime:{artifact}:{version}	node	Rules	THING	attest,replace	M	declares which composition/gate regime is in force; borderline Model	no	—
 revocation:{entity_type}:{reason}	registry	Rules	THING	attest,withdraw	M	-1 only; strips an entity's standing	no	—
 rollback_detected:{revision_field}	attestation	Facts	ACCOUNT	attest	M	-1 only; revision decreased, past tampered (kind Facts about the record; maintains the Record relation)	yes	—
@@ -154,8 +154,8 @@ system:*	persist	Circumstances	THING	attest,replace,withdraw	M	substrate self-re
 takedown_notice:{basis}:v1	registry	Rules	THING	attest,withdraw	H	-1 only notice on a legal basis; a tombstone cites it	no	—
 testimonial_witness:{kind}	node	Facts	ACCOUNT	attest,withdraw,recant	M	singular narrative of an affected party	no	—
 topical_relation:{kind}	node	Identity	THING	attest,withdraw	L	names how one content relates to another; open vocab	no	—
-trace:{form}:{version}	accord-agent	Facts	ACCOUNT	attest,withdraw,carries	M	reasoning trace kept provable; carries Model/Process as record (kind Facts about the record; maintains the Record relation)	yes	Model
-trace_summary:{kind}	accord-agent	Facts	ACCOUNT	attest,withdraw,carries	M	scrubbed digest of a trace; carries the trace (kind Facts about the record; maintains the Record relation)	yes	Facts
+trace:{form}:{version}	accord-agent	Facts	ACCOUNT	attest,withdraw	M	reasoning trace kept provable; carries Model/Process as record (kind Facts; purgeable with what it receipts)	no	—
+trace_summary:{kind}	accord-agent	Facts	ACCOUNT	attest,withdraw	M	scrubbed digest of a trace; carries the trace (kind Facts; purgeable with what it receipts)	no	—
 transparency_log:consistency	attestation	Facts	ACCOUNT	attest,withdraw	H	RFC 6962 consistency proof (kind Facts about the record; maintains the Record relation)	yes	—
 transparency_log:cosigned:{tree_size}	attestation	Facts	ACCOUNT	attest	H	witness cosignature on an STH (kind Facts about the record; maintains the Record relation)	yes	—
 transparency_log:inclusion	attestation	Facts	ACCOUNT	attest,withdraw	H	inclusion proof for an audit leaf (kind Facts about the record; maintains the Record relation)	yes	—
@@ -166,5 +166,25 @@ video:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about
 vote:{contribution_id}	node	Priorities	ACCOUNT	attest,withdraw,recant	M	a signed score weighs a Contribution	no	—
 wa_adjudication:{state}	node	Rules	THING	attest,replace,withdraw	M	quorum finding on abandonment/seizure/successor	no	—
 watchlist:{id}	node	Rules	THING	attest,replace,withdraw	M	per-group content-watchlist policy	no	—
-weighted_aggregate:{contribution_id}	node	Confidence	ACCOUNT	attest,replace,carries	M	rolling tally; carries votes as one sureness	no	Confidence
+weighted_aggregate:{contribution_id}	node	Confidence	ACCOUNT	attest,replace	M	rolling tally; carries votes as one sureness (derived: equals the rebuild of its projection)	no	—
 witness_diversity:{contribution_id}	node	Confidence	ACCOUNT	attest,withdraw	M	whether the witness set meets the bars	no	—
+archive_release:{basis}	registry	Rules	THING	attest	L	a release under a named lawful basis: what is allowed with the archive; held shut today	no	pre:Rules
+ballot:tally:{poll_id}	registry	Facts	ACCOUNT	attest,withdraw	L	the tally of a secret poll against its period's base: a count claimed true	no	pre:Facts
+census:composite:{class}	registry	Facts	ACCOUNT	attest,replace,withdraw	L	partial_a + partial_b published above the floor: a fact about the population	no	pre:Facts
+census:expected_active	registry	Facts	ACCOUNT	attest,replace,withdraw	L	the base law's expected-active count per period	no	—
+census:member:partial	registry	Facts	ACCOUNT	attest,withdraw	L	one member's share as an aggregator holds it	no	—
+census:member:share	registry	Facts	ACCOUNT	attest,withdraw	L	one member's secret-shared one-hot report, addressed to an aggregator	no	—
+census:partial:{class}	registry	Facts	ACCOUNT	attest,replace,withdraw	L	an aggregator's partial over a cell	no	—
+census:share:{class}	registry	Facts	ACCOUNT	attest,withdraw	L	a share addressed to the other aggregator	no	—
+deferral:request	registry	Process	THING	attest,withdraw	L	the agent stops to ask: a step in its order	no	—
+deferral:response:{outcome}	registry	Rules	THING	attest	L	a seated authority's answer: what the agent may do	no	pre:Process
+evidence:{suite}:{kind}:{cell}:{prefix}	registry	Facts	ACCOUNT	attest,replace,withdraw	L	evidence of work against a declared goal: a measured pass ratio claimed true	no	pre:Premises
+identity:occurrence_revocation	registry	Identity	THING	attest	L	the carrier that revokes an occurrence: what the thing is called no longer	no	pre:Identity
+identity_amendment	registry	Identity	THING	attest	L	an agent's identity amended, citing an approved deferral	no	pre:Rules
+lawful_order:release	registry	Rules	THING	attest	L	a release under a lawful order; held shut today	no	—
+observation:access_assumption	registry	Premises	ACCOUNT	attest,withdraw	L	an observed assumption about access: what the plan was built on	no	—
+preserve_request	registry	Process	THING	attest,withdraw	L	a retirement-ladder request to preserve; held shut today	no	pre:Process
+preserve_response	registry	Process	THING	attest	L	the custodian's answer on preservation; held shut today	no	pre:Process
+rendezvous:route	registry	Circumstances	THING	attest,replace	L	an anonymous receiver's hourly route: what differs this period	no	—
+retirement:{state}	registry	Process	THING	attest	L	the seven-step retirement ladder, forward only; held shut today	no	pre:Process
+transport:canonical_rebind	registry	Identity	THING	attest,replace	L	a holder quorum rebinds the canonical's transport destination	no	—

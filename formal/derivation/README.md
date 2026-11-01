@@ -11,7 +11,7 @@ Review artefacts, not normative. Produced against the plain rules
 |---|---|---|
 | `csd_promise_map.tsv` | one row per CSD: id, title, stage, mission, families named, the plain-rule ids that require the surface, necessity (FORCED / SUPPORTS / OPS / NONE), note | one reviewer pass over every CSD against the plain rules |
 | `csd_promise_notes.md` | the sub-rules no CSD serves; the operations-only CSDs that still touch a family | same pass |
-| `family_kind_verb.tsv` | one row per family: kind of change (the CIRISOntology eleven), thing / account, plausible CEG verbs (5+1), confidence, note, whether the family maintains the Record relation (the +1), and the kind it carries where its verbs include carries | one reviewer pass over the registry and Part 3 |
+| `family_kind_verb.tsv` | one row per family: kind of change (the CIRISOntology eleven), thing / account, plausible CEG verbs (5+1), confidence, note, whether the family maintains the Record relation (the +1), and the row it names (`reference`: a precondition `pre:` or a carry `carry:` with the kind named) | one reviewer pass over the registry and Part 3 |
 | `family_kind_grid.md` | the kinds × verbs occupancy grid and a reading of each empty cell (principled or gap) | same pass |
 | `reach.py` | computes which families each promise reaches through the Constitution sections its guarantee rows cite (P00 §0b → G rows → decimals → section text), and which families the CSDs name | mechanical; run from the repo root with an output path |
 
