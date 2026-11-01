@@ -81,12 +81,8 @@ A row at a bounded scope may name only keys within its audience: members by the 
 ### A mute
 A member may mute another member: a private filter in their own reader. It changes nothing in the room, not a row, not the roster, not the other's standing; the muted member is not told. The one thing a mute never hides is a row that names the muter, because a statement about a person is always visible to that person. The muter lifts it. *Proved by `mesh_life` (contact plane: a mute changes no row and no roster).*
 
-### An objection, and a moderation outcome
-A vote on a pending act is a **proposal** (the proposer's own row, which counts as its approval), an **assent**, or an objection **raised**. A moderation case ends as **hard_removal**, **consent_gated** or **kept_visible**: by a moderator's or steward's signature within two days, else by a live majority. *Proved by `membership` (the cosigned acts) and `mesh_life` (content family): a flag is decided by the moderator, and a hard removal withdraws the row as a duty-holder's record.*
-
----
-
-## Step 6 — members write
+### A moderation action, and the reverse quorum
+Any member raises a moderation action on a row and names what they ask; their row is the **proposal** and counts as its approval. A window opens and the members respond, an **assent** or an objection **raised**. A moderator rules at any time, and the moderator may be a CIRIS agent held by a steward: moderation is designed to scale by that delegation, and there is no central team, by design. If nobody has ruled when the window closes, the majority of the respondents decides: the action asked, or the row stays visible. The outcome is **hard_removal**, **consent_gated** or **kept_visible**, a duty-holder's record the author contests and never withdraws. The halt stops the agent moderator's ruling; it does not stop the members' vote. *Proved by `mesh_life` (moderation plane): an action lands by a ruling or by the majority and never otherwise; the majority lands only what was asked; the halt leaves the members their vote.*
 
 ### A row
 A row is one signed statement. It is written at the **local** tier, signature deferred, and promoted to the **federation** tier under a hybrid signature. Once admitted it is **admitted** until its producer **supersedes** it, **recants** it, the right hand **withdraws** it under the five rules, or a cosigned takedown **tombstones** it by digest. It carries a scope from **self** to **federation** and never a wider one than its cohort. A withdrawn row never comes back; an adverse record about a person is never withdrawn by that person. *Proved by `withdraws_admission`; carried by `mesh_life`.*
@@ -180,7 +176,7 @@ The things people do on a social network, each mapped to the story and the rule 
 | edit, delete | supersede, withdraw, purge; a withdrawn row never comes back | step 6; CC 2.4.1.1 |
 | post something that disappears | a row with an expiry, purged after it | step 6; CC 3.3.5 |
 | mute someone | the reader's private filter; never hides a row about you from you | step 5; CC 4.4 |
-| report someone, appeal | a flag to the named moderator; the outcome; reconsideration by the person named | steps 5, 6; CC 4.5.4, 4.5.5; `standing`, `mesh_life` |
+| report someone, appeal | a moderation action any member raises; the moderator, who may be an agent held by a steward, rules at any time, else the majority of respondents at the window; reconsideration by the person named | steps 5, 6; CC 4.5.4, 4.5.5, 4.5.13; `standing`, `mesh_life` |
 | warn others about someone | said as speech, retractable by the person named; filed with the moderator, a duty-holder's record | CC 4.5.5; `standing` |
 | rate a business, review a place | a score about an affiliation, which never retracts it and contests by reconsideration | CC 4.4.3.2.8; `affiliation` |
 | see who said what about you | the read over every row that names you | CC 3.4.5 |

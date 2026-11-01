@@ -157,9 +157,9 @@ governance	event	event.state	open	3.3.8	event:lifecycle row / withdraws / supers
 governance	event	event.state	cancelled	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	mesh_life.MeshLife.tla:EventCloses	—	modelled
 governance	event	event.state	completed	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	mesh_life.MeshLife.tla:EventCloses	—	modelled
 governance	event	event.state	superseded	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
-governance	objection	objection.state	proposal	3.1.9.2 3.3.6.3	the proposer's own row; counts as its approval	any voter of the standing set	self_roster.SelfRoster.tla:pending.by; two_path.TwoPath.tla:pending.by	—	modelled-elsewhere
-governance	objection	objection.state	assent	3.1.9.2 3.3.6.3	a +1 on an open proposal	any voter of the standing set	self_roster.SelfRoster.tla:approvers; two_path.TwoPath.tla:approvers	—	modelled-elsewhere
-governance	objection	objection.state	raised	3.1.9.2 3.3.6.3	a −1 on an open proposal or a pending act	any voter of the standing set	self_roster.SelfRoster.tla:objectors; two_path.TwoPath.tla:objectors	—	modelled-elsewhere
+governance	objection	objection.state	proposal	3.1.9.2 3.3.6.3	the proposer's own row; counts as its approval	any voter of the standing set	mesh_life.MeshLife.tla:RaiseFlag	—	modelled
+governance	objection	objection.state	assent	3.1.9.2 3.3.6.3	a +1 on an open proposal	any voter of the standing set	mesh_life.MeshLife.tla:Respond	—	modelled
+governance	objection	objection.state	raised	3.1.9.2 3.3.6.3	a −1 on an open proposal or a pending act	any voter of the standing set	mesh_life.MeshLife.tla:Respond	—	modelled
 governance	quarantine	quarantine.state	withhold	3.1.9.4	quarantine:{state}; withhold beats release at a tie	slash-duty holder	mesh_life.MeshLife.tla:Withhold	—	modelled
 governance	quarantine	quarantine.state	release	3.1.9.4	quarantine:{state}	slash-duty holder	mesh_life.MeshLife.tla:Release	—	modelled
 governance	capacity binding	capacity.band	capacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	mesh_life.MeshLife.tla:CapacityFound	—	modelled
@@ -171,9 +171,9 @@ governance	ledger	ledger.state	head	3.3.10.1	ledger:head row (fork = evidence)	o
 governance	ledger	ledger.state	checkpoint	3.3.10.1	ledger:checkpoint row (fork = evidence)	owner	mesh_life.MeshLife.tla:LedgerCheckpoints	—	modelled
 governance	ledger	ledger.state	promotion	3.3.10.1	ledger:promotion row (fork = evidence)	owner	—	—	text-only
 governance	ledger	ledger.state	fork	3.3.10.1	ledger:fork row (fork = evidence)	owner	mesh_life.MeshLife.tla:LedgerForks	—	modelled
-governance	moderation outcome	moderation.outcome	hard_removal	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	mesh_life.MeshLife.tla:Inv_HardRemovalWithdraws	—	modelled
-governance	moderation outcome	moderation.outcome	consent_gated	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	mesh_life.MeshLife.tla:DecideFlag	—	modelled
-governance	moderation outcome	moderation.outcome	kept_visible	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	mesh_life.MeshLife.tla:DecideFlag	—	modelled
+governance	moderation outcome	moderation.outcome	hard_removal	4.5.4	a moderator's ruling at any time (a person, or the agent held by a steward), else the majority of the respondents when the window closes	moderator / steward / majority	mesh_life.MeshLife.tla:Land	—	modelled
+governance	moderation outcome	moderation.outcome	consent_gated	4.5.4	a moderator's ruling at any time (a person, or the agent held by a steward), else the majority of the respondents when the window closes	moderator / steward / majority	mesh_life.MeshLife.tla:Land	—	modelled
+governance	moderation outcome	moderation.outcome	kept_visible	4.5.4	a moderator's ruling at any time (a person, or the agent held by a steward), else the majority of the respondents when the window closes	moderator / steward / majority	mesh_life.MeshLife.tla:Land	—	modelled
 governance	wa_adjudication	wa_adjudication.state	abandonment	3.1.9.4 4.3	a quorum finds a seat abandoned	WA quorum (full seated roster)	mesh_life.MeshLife.tla:WaFound	—	modelled
 governance	wa_adjudication	wa_adjudication.state	seizure	3.1.9.4 4.3	a quorum finds a seat seized	WA quorum (full seated roster)	mesh_life.MeshLife.tla:WaFound	—	modelled
 governance	wa_adjudication	wa_adjudication.state	successor	3.1.9.4 4.3	a quorum names a successor to a seat	WA quorum (full seated roster)	mesh_life.MeshLife.tla:WaSuccessor	—	modelled

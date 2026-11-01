@@ -14,6 +14,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - Every lifecycle in the state table is carried by a model (77 of 77 variables, gated by `tools/check_lifecycle_coverage.py`): the spine grows five object families (identity, content, agent governance, goal and evidence, room governance), each closing on the core; the mesh and the contact gain table rows; `formal/STORIES.md` tells each thing's story and names what the table does not yet hold.
 - README: the mesh is live and the app is on Google Play and the App Store, said first; shorter.
 - Who may write (3.1.3.2): a room's record may name who may publish, the right riding the role of the membership proposal; the others read, hold standing, vote and leave like any member; a row written elsewhere may name a row of the room but does not enter it; no author forbids another member's row where that member may write. The channel configuration of the mesh-life model proves it.
+- Moderation in the mesh-life model as the text has it: any member raises an action, members respond, a moderator rules at any time and may be an agent held by a steward, else the majority of the respondents decides at the window; the halt stops the agent moderator's ruling and leaves the members their vote.
 
 ## 1.0-rc14 (released 2026-10-29, tag v1.0-rc14)
 

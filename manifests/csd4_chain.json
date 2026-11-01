@@ -2,8 +2,8 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "82b44c494c7765443e72fb7c858d0e8d5c2e72091fbae3250b96a75325711a3d",
-   "invariants_sha256": "6fd74692c6f694f0fdabb2103d0ab580578c61590c573c0556d409dd40a1cb4a",
+   "state_table_sha256": "81419139ae7c449901ce15bda782caf78b55876f07136e09370210bc447be49c",
+   "invariants_sha256": "65044d1b7e0124899a2c2c94f61986e92b522a760b03bd491ec46eb1deecb8a2",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
    "claims_sha256": "4485a04e91fd06534d0085b017c39aa0fec9ecfb05c499bff828a714af32482b",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 238,
-   "invariants": 201,
+   "invariants": 206,
    "claims": 525,
    "entries": 20,
    "refusal_tokens": 98
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "eebc507a4b700fc3e101cbdb1a0d3558d097233de3ee89f4caa8847ba255a7ba"
+  "chain_sha256": "517652d58b401ac6c5001bb662726ece07ebf405ae8c4c5f21af425dccd223fa"
  },
  "chain": [
   {
@@ -4147,6 +4147,24 @@
      "kind": "safety",
      "claim_id": "CLM-halt-authority",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -4757,6 +4775,24 @@
      "kind": "safety",
      "claim_id": "CLM-halt-authority",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -5212,6 +5248,24 @@
      "symbol": "Inv_HaltIsMajority",
      "kind": "safety",
      "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
     }
    ],
@@ -17814,6 +17868,33 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -20401,6 +20482,15 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -20957,6 +21047,15 @@
      "model": "mesh_life",
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
@@ -31185,6 +31284,33 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -31268,6 +31394,33 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -31349,6 +31502,33 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_ModeratorIsMember",
      "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
     }
@@ -37516,6 +37696,15 @@
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -38072,6 +38261,15 @@
      "model": "mesh_life",
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
      "kind": "safety",
      "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
