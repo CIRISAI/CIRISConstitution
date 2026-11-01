@@ -385,6 +385,28 @@ jobs:
         working-directory: formal/onion_layers
         run: lean OnionLayersCount.lean
 
+  mesh_life:
+    name: TLC — the life of a mesh, one model that closes (formal/mesh_life)
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: curl -sSL -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar
+      - name: The story closes; the mesh winds down to its end; each twin fails its rule
+        working-directory: formal/mesh_life
+        run: |
+          set +e
+          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/ml-st" -deadlock -config MeshLife.cfg MeshLife.tla || exit 1
+          java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/ml-lv" -deadlock -config MeshLife_live.cfg MeshLife.tla || exit 1
+          for t in lone_halt gone_with_device gone_stewarding; do
+            java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/ml-$t" -deadlock -config MeshLife_$t.cfg MeshLife.tla | tee $t.log
+            grep -q "is violated" $t.log || exit 1
+          done
+
   census_ballot:
     name: TLC + Lean — the census, the secret ballot and the base law (formal/census_ballot)
     runs-on: ubuntu-latest
