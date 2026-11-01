@@ -2,8 +2,9 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
-## 1.0-rc15 (open)
+## 1.0-rc15 (released 2026-11-01, tag v1.0-rc15)
 
+- Cut 2026-11-01. The register holds 372 established rows, 39 normative and 117 staged. Pins unchanged from rc14. Nineteen machine-checked models: the fifteen of the invariants table, the life of a mesh new among them, and the four Lean models beside them (the reader's trust set, the affiliation tier, standing over a row that names a person, what a forwarder learns at first contact). This edition carries the standing rules, first contact through a forwarder, who may write in a room, ignore, block and mute, the two acts of moderation and the 48 hours, and the life of a mesh told as one story whose model closes with every lifecycle of the state table carried by a model. Persist builds its v61 door to it; edge and server follow through the tickets named on CIRISPersist#1165 and #1161.
 - Opened 2026-11-01 after the rc14 tag.
 - Whom a row at a bounded scope may name (2.1): only keys within its audience, members by the roster fold at the row's instant or the key the family delivers it to; a row naming a key outside its audience is refused, since standing without reach is no standing; a delegation's `attested_key_id` is the delegate.
 - Retraction (2.4.1.1): a person retracts peer speech about themself, the retraction a visible signed act with the speaker attributed, and only contests a duty-holder's record on the accountability trail, an act of a body under a legal-weight class, or a cosigned act; an affiliation never withdraws a statement about itself (4.4.3.2.8).
