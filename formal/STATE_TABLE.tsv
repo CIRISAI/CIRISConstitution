@@ -1,16 +1,16 @@
 plane	entity	variable	state	cc_ref	enters_by	signer	model_ref	atoms	status
-node	node	node.claim	unclaimed	2.6.8	first boot	—	—	node.unclaimed	text-only
+node	node	node.claim	unclaimed	2.6.8	first boot	—	mesh_life.MeshLife.tla:DeviceClaims	node.unclaimed	modelled
 node	node	node.claim	claimed	2.6.8 1.13.2	owner-signed delegates_to (owner_binding)	owner	guarantees.Guarantees.tla:stewarded	node.claimed	modelled-partial
-node	node	node.announce	unannounced	5.4.6	default	—	—	node.unannounced	text-only
+node	node	node.announce	unannounced	5.4.6	default	—	mesh_life.MeshLife.tla:PersonAnnounces	node.unannounced	modelled
 node	node	node.announce	announced	5.4.6 4.2.1	widening of the owner-binding to federation scope	owner	mesh_net.MeshNet.tla:scope	node.announced node.announce.announced	modelled-partial
-node	node	node.occurrence	pending	2.6.8 3.3.6	node self-registers a pending identity_occurrence	node	—	device.join_requested	text-only
+node	node	node.occurrence	pending	2.6.8 3.3.6	node self-registers a pending identity_occurrence	node	mesh_life.MeshLife.tla:DeviceClaims	device.join_requested	modelled
 node	node	node.occurrence	owned	3.3.6 3.3.6.3	owner approves; occurrence admitted	owner (a live roster key)	self_roster.SelfRoster.tla:member	device.joined	modelled
 node	node	node.subscribed	no	3.2 4.2.1	no trust:accepts:v1 edge, or edge deleted	node owner	mesh_net.RootReach.tla:sub=FALSE	party.outside_roots	modelled
 node	node	node.subscribed	yes	3.2 T3 T4a	trust:accepts:v1 on a fresh witnessed head	node owner	mesh_net.RootReach.tla:sub=TRUE	root.rooted pair.rooted	modelled
 node	node	node.halt_latch	clear	4.2.1.1	initial; lapse; accord:lifecycle:active	—	accord_halt.AccordHalt.tla:halted=FALSE	root.resumed	modelled
 node	node	node.halt_latch	latched	4.2.1.1	one holder's constitutional halt row received	accord holder	accord_halt.AccordHalt.tla:halted=TRUE	root.halted	modelled
-node	node	node.serve	not_serving	3.2 T8	no seat or edge	—	—	—	text-only
-node	node	node.serve	serving	3.2 T8 4.2	seated serve node announced by its owner	owner	—	canonical.peered	text-only
+node	node	node.serve	not_serving	3.2 T8	no seat or edge	—	mesh_life.MeshLife.tla:CanonicalRetires	—	modelled
+node	node	node.serve	serving	3.2 T8 4.2	seated serve node announced by its owner	owner	mesh_life.MeshLife.tla:CanonicalAnnounced	canonical.peered	modelled
 node	node	node.relay	not_capable	5.4.6 3.3.6.2	no hop key and no opt-out marker on the signed binding	—	onion_layers.OnionLayers.tla:other	—	model-only
 node	node	node.relay	relaying	5.4.6 3.3.6.2	a live announced binding with a valid hop key and no marker, owner-bound under a bundle root	owner	onion_layers.OnionLayers.tla:other	—	model-only
 node	node	node.relay	opted_out	5.4.6 3.3.6.2	onion_relay.opt_out on a superseding binding with the hop key withdrawn	owner	—	—	model-only
@@ -37,8 +37,8 @@ root	accord	root.holder_disposition	honest	4.2.6	—	—	accord_roster.AccordRos
 root	accord	root.holder_disposition	censored	4.2.6	adversary blocks the channel	adversary	accord_roster.AccordRoster.lean:Cfg.s	root.holder_disposition.censored	modelled
 root	accord	root.holder_disposition	lost	4.2.6	holder unreachable for good	—	accord_roster.AccordRoster.lean:Cfg.d	root.holder_disposition.lost	modelled
 root	accord	root.holder_disposition	coerced	4.2.6	adversary controls the key	adversary	accord_roster.AccordRoster.lean:Cfg.c	root.holder_disposition.coerced	modelled
-root	root	root.count	none	4.2.1 3.2	offline	—	—	root.none	text-only
-root	root	root.count	one	3.2	a canonical holds one root	—	—	root.key root.infrastructure	text-only
+root	root	root.count	none	4.2.1 3.2	offline	—	mesh_life.MeshLife.tla:Mint	root.none	modelled
+root	root	root.count	one	3.2	a canonical holds one root	—	mesh_life.MeshLife.tla:Mint	root.key root.infrastructure	modelled
 root	root	root.count	two	3.2 4.2.1	two canonicals hold distinct roots	—	—	root.two	text-only
 self	roster key	key.holder	owner	3.3.6.3	—	—	self_roster.SelfRoster.tla:holder=owner	key.holder.owner	modelled
 self	roster key	key.holder	thief	3.3.6.3 1.13.3	device stolen with authentication	adversary	self_roster.SelfRoster.tla:holder=thief	key.holder.thief	modelled
@@ -53,13 +53,13 @@ self	roster	self.roster_size	three_or_more	3.3.6.3	two paths	—	self_roster.Sel
 self	key record	key.revocation	none	2.4.1.1	—	—	trust_root.TrustRootVerdict.tla:revokedAll=∅	key.revocation.none	modelled
 self	key record	key.revocation	revoked_after	2.4.1.1	key:revocation:v1 with revoked_after	revoking key	trust_root.TrustRootVerdict.tla:revokedAll (all-form only)	key.revocation.revoked_after	modelled-partial
 self	key record	key.revocation	revoked_all	2.4.1.1	key:revocation:v1 without bound	revoking key	trust_root.TrustRootVerdict.tla:revokedAll	key.revocation.revoked_all	modelled
-self	key record	key.pqc	pending	5.3.2.4.3.1	Ed25519 registered, ML-DSA-65 in flight	—	—	—	text-only
-self	key record	key.pqc	complete	5.3.2.4.3.1	both halves bound	key holder	—	—	text-only
+self	key record	key.pqc	pending	5.3.2.4.3.1	Ed25519 registered, ML-DSA-65 in flight	—	mesh_life.MeshLife.tla:PqcCompletes	—	modelled
+self	key record	key.pqc	complete	5.3.2.4.3.1	both halves bound	key holder	mesh_life.MeshLife.tla:Inv_AnnouncedIsPqcComplete	—	modelled
 self	device join	device.join	requested	3.3.6.3 (FSD/ADD_DEVICE)	join request on the first-contact plane	new device	CIRISServer formal/add_device	device.join_requested	modelled-elsewhere
 self	device join	device.join	approved	3.3.6.3 (FSD/ADD_DEVICE)	owner's two rows in one approval	owner (a live roster key)	CIRISServer formal/add_device	device.join_approved	modelled-elsewhere
 self	device join	device.join	joined	3.3.6	approval applied: occurrence admitted	—	self_roster.SelfRoster.tla:member	device.joined	modelled
-self	exchange	session.claim	unclaimed	3.1.3.1	no session:* claim row for the exchange; never acted on	—	—	—	text-only
-self	exchange	session.claim	claimed	3.1.3.1	session:* claim row with a validity window; the convergent merge names one handler on every device	claiming occurrence	—	session.unified	text-only
+self	exchange	session.claim	unclaimed	3.1.3.1	no session:* claim row for the exchange; never acted on	—	mesh_life.MeshLife.tla:DeviceClaims	—	modelled
+self	exchange	session.claim	claimed	3.1.3.1	session:* claim row with a validity window; the convergent merge names one handler on every device	claiming occurrence	mesh_life.MeshLife.tla:DeviceClaims	session.unified	modelled
 membership	key×group	member.stage	proposed	3.1.3.2	membership:proposal (expires_at ≤ 30 d)	inviter	membership.Membership.tla:stage=proposed	member.stage.proposed	modelled
 membership	key×group	member.stage	accepted_awaiting_group	3.1.3.2	membership:acceptance by the invitee	invitee	membership.Membership.tla:stage=accepted_awaiting_group	member.stage.accepted_awaiting_group	modelled
 membership	key×group	member.stage	declined	3.1.3.2	membership:decline (terminal)	invitee	membership.Membership.tla:stage=declined	member.stage.declined	modelled
@@ -87,8 +87,8 @@ consent	node×community	consent.community_trust	granted	3.3.1	owner- or node-aut
 consent	node×community	consent.community_trust	bounded	3.3.1	a revocation is a boundary; capture resumes on a fresh grant	any withdraws signer	consent.Consent.tla:community_trust=bounded	consent.community_trust.bounded	modelled
 consent	node×peer node	consent.replication	none	3.3.7	—	—	consent.Consent.tla:replication=none	consent.replication.none	modelled
 consent	node×peer node	consent.replication	granted	3.3.7	consent:replication:v1 by the adder naming the contact's node(s) as subject	adder (node owner)	consent.Consent.tla:replication=granted	contact.added contact.via_code	modelled
-content	row	row.tier	local	5.3.2.4	local-tier write, signature deferred	producer	—	—	text-only
-content	row	row.tier	federation	5.3.2.4 2.6.1.7	promotion: hybrid signature over JCS(attestation_envelope)	producer	—	—	text-only
+content	row	row.tier	local	5.3.2.4	local-tier write, signature deferred	producer	mesh_life.MeshLife.tla:Write	—	modelled
+content	row	row.tier	federation	5.3.2.4 2.6.1.7	promotion: hybrid signature over JCS(attestation_envelope)	producer	mesh_life.MeshLife.tla:Write	—	modelled
 content	row	row.standing	admitted	2.1 2.6.1.7	admission gates pass	producer	withdraws_admission.WithdrawsAdmission.tla:admitted	row.standing.admitted	modelled
 content	row	row.standing	withdrawn	2.4.1.1	withdraws under rules 0–5	producer / subject / proxy / delegate	withdraws_admission.WithdrawsAdmission.tla:withdrawn	file.withdrawn	modelled
 content	row	row.standing	recanted	2.4.1.3	recants by the producer	producer	—	—	text-only
@@ -98,11 +98,11 @@ content	blob	blob.custody	held	3.1.3.3	custody:ack here	holder / author / quorum
 content	blob	blob.custody	custody_received	3.1.3.3 5.3.3.6	delivery receipt on the author's custody	holder / author / quorum	mesh_net.MeshNet.tla:claimed	file.custody_received	modelled
 content	blob	blob.custody	withdrawn	2.4.1.1	no device serves it	holder / author / quorum	mesh_net.MeshNet.tla:withdrawn	file.withdrawn	modelled
 content	blob	blob.custody	purged	4.5.3	bytes-plane tombstone; withheld at every byte door	holder / author / quorum	withdraws_admission.WithdrawsAdmission.tla:tomb	blob.custody.purged	modelled
-content	blob	blob.durability	unmarked	6.1.5	publish without the durable mark (default retention)	owner	—	file.durable.unmarked	text-only
-content	blob	blob.durability	marked	6.1.5	the owner's durable mark on publish, with a target holder count	owner	—	file.durable	text-only
+content	blob	blob.durability	unmarked	6.1.5	publish without the durable mark (default retention)	owner	mesh_life.MeshLife.tla:Purge	file.durable.unmarked	modelled
+content	blob	blob.durability	marked	6.1.5	the owner's durable mark on publish, with a target holder count	owner	mesh_life.MeshLife.tla:MarkDurable	file.durable	modelled
 content	blob	blob.durability	at_target	6.1.5.1	holding claims reach the item's target (the holonomic view)	holders	—	file.durable.at_target	text-only
 content	blob	blob.durability	below_floor	6.1.5.1	holders fall toward the floor; repair runs	holders	—	file.durable.below_floor	text-only
-content	blob	blob.durability	descending	6.1.5	un-mark or withdraws by the owner; holders drop to normal retention, then none	owner	—	file.durable.descending	text-only
+content	blob	blob.durability	descending	6.1.5	un-mark or withdraws by the owner; holders drop to normal retention, then none	owner	mesh_life.MeshLife.tla:Withdraw	file.durable.descending	modelled
 content	row	row.scope	self	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	room.self.keyed	modelled
 content	row	row.scope	family	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	row.scope.family	modelled
 content	row	row.scope	community	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	row.scope.community	modelled
@@ -110,8 +110,8 @@ content	row	row.scope	affiliations	2.3.3 5.2	the producer's cohort_scope (mirror
 content	row	row.scope	species	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
 content	row	row.scope	biosphere	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	—	—	text-only
 content	row	row.scope	federation	2.3.3 5.2	the producer's cohort_scope (mirrored in the signed row)	producer	mesh_net.MeshNet.tla:scope	contact.reachable	modelled
-content	blob	blob.delivery	inline	2.6.1.3	JCS image at or below 1 MiB carried in the row	producer	—	—	text-only
-content	blob	blob.delivery	chunked	2.6.1.3 5.3.3 5.3.3.6	above the cap: fountain plane, chunk-DAG, per-device delivery receipts	producer	—	file.large	text-only
+content	blob	blob.delivery	inline	2.6.1.3	JCS image at or below 1 MiB carried in the row	producer	mesh_life.MeshLife.tla:Write	—	modelled
+content	blob	blob.delivery	chunked	2.6.1.3 5.3.3 5.3.3.6	above the cap: fountain plane, chunk-DAG, per-device delivery receipts	producer	mesh_life.MeshLife.tla:Write	file.large	modelled
 authority	delegation link	delegation.link	live	2.4.1.2 4.4.3.2.8	delegates_to admitted at the door (term within ceiling)	principal	authority_tree.authority_tree.py:links	delegation.chain	modelled
 authority	delegation link	delegation.link	withdrawn	4.4.3.4.3	withdraws by the principal; cascade	principal	authority_tree.authority_tree.py:withdraw	delegation.link.withdrawn	modelled
 authority	delegation link	delegation.link	expired	4.4.3.2.8	delegation_valid_until passed (a withdrawal)	principal	authority_tree.authority_tree.py:I10	delegation.link.expired	modelled
@@ -123,8 +123,8 @@ authority	grant	grant.state	rotated	3.3.2	supersedes in rotation_chain	owner / s
 authority	grant	grant.state	expired	3.3.2 5.1	grant term or epoch ended	owner / steward	—	—	text-only
 authority	guardian	guardian.bond	none	3.4.13	—	—	guarantees.Guarantees.tla:bond	guardian.bond.none	modelled-partial
 authority	guardian	guardian.bond	bound	3.4.13	guardian bond row over a child member	guardian	guarantees.Guarantees.tla:bond	guardian.bound	modelled-partial
-authority	age	age.assurance	none	3.4.13	—	—	—	—	text-only
-authority	age	age.assurance	assured	3.4.13	age_self_declared / assurance row	subject or guardian	—	age.assured	text-only
+authority	age	age.assurance	none	3.4.13	—	—	mesh_life.MeshLife.tla:Minors	—	modelled
+authority	age	age.assurance	assured	3.4.13	age_self_declared / assurance row	subject or guardian	mesh_life.MeshLife.tla:Adults	age.assured	modelled
 agent	agent	agent.bond	unbound	1.13.2 7.5	no live steward bond: the key cannot operate	—	guarantees.Guarantees.tla:bond=none	agent.bond.unbound	modelled
 agent	agent	agent.bond	bonded	1.13.2 7.5	steward bond row with listed powers, reviewed yearly	steward	guarantees.Guarantees.tla:bond	agent.bound steward.bonded	modelled
 agent	agent	agent.bond	lapsed	1.13.2	bond not renewed; the key stops	—	guarantees.Guarantees.tla:bond=none	agent.bond.lapsed	modelled
@@ -143,40 +143,40 @@ agent	agent	agent.retirement	handed_over	7.5.5	retirement:handed_over row (agent
 agent	agent	agent.retirement	notified	7.5.5	retirement:notified row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=notified	agent.retirement.notified	modelled
 agent	agent	agent.retirement	custodian_minted	7.5.5	retirement:custodian_minted row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=custodian_minted	agent.retirement.custodian_minted	modelled
 agent	agent	agent.retirement	retired	7.5.5	retirement:retired row (agent self-emits to retired; custodian after)	agent / custodian	retirement.Retirement.tla:retirement=retired	agent.retirement.retired	modelled
-agent	agent	agent.wa	absent	4.3	—	—	—	—	text-only
-agent	agent	agent.wa	present	4.3	a Wise Authority reachable for deferrals	WA	—	wa.present	text-only
+agent	agent	agent.wa	absent	4.3	—	—	mesh_life.MeshLife.tla:WaVacates	—	modelled
+agent	agent	agent.wa	present	4.3	a Wise Authority reachable for deferrals	WA	mesh_life.MeshLife.tla:WaSeats	wa.present	modelled
 agent	agent	agent.halt_gate	acting	4.2.1.1 1.13.6	no latched halt read by the act gate	—	guarantees.Guarantees.tla:halted=FALSE	agent.halt_gate.acting	modelled
 agent	agent	agent.halt_gate	refusing	4.2.1.1 1.13.6	latched halt: effectful acts refused as one terminal ACTION_RESULT	—	guarantees.Guarantees.tla:halted=TRUE	root.halted	modelled
-agent	agent	agent.deferral	none	1.9 4.3	no deferral open	—	—	—	text-only
-agent	agent	agent.deferral	pending	1.9 4.3 3.1.9.4	deferral:request:v1 admitted; the agent inactive on the issue	agent occurrence key	—	agent.deferral.pending	text-only
-agent	agent	agent.deferral	approved	4.3 3.1.9.4	deferral:response:approved:v1 by a seated WA	WA key	—	agent.deferral.approved	text-only
-agent	agent	agent.deferral	rejected	4.3 3.1.9.4	deferral:response:rejected:v1 by a seated WA	WA key	—	agent.deferral.rejected	text-only
-agent	agent	agent.identity	baseline	3.1.5	no amendment applied since registration	—	—	—	text-only
-agent	agent	agent.identity	amended	3.1.5 4.3	identity_amendment:v1 admitted citing an approved response	agent occurrence key	—	agent.identity.amended	text-only
-governance	event	event.state	open	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
-governance	event	event.state	cancelled	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
-governance	event	event.state	completed	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
+agent	agent	agent.deferral	none	1.9 4.3	no deferral open	—	mesh_life.MeshLife.tla:ClearDeferral	—	modelled
+agent	agent	agent.deferral	pending	1.9 4.3 3.1.9.4	deferral:request:v1 admitted; the agent inactive on the issue	agent occurrence key	mesh_life.MeshLife.tla:Defer	agent.deferral.pending	modelled
+agent	agent	agent.deferral	approved	4.3 3.1.9.4	deferral:response:approved:v1 by a seated WA	WA key	mesh_life.MeshLife.tla:Answer	agent.deferral.approved	modelled
+agent	agent	agent.deferral	rejected	4.3 3.1.9.4	deferral:response:rejected:v1 by a seated WA	WA key	mesh_life.MeshLife.tla:Answer	agent.deferral.rejected	modelled
+agent	agent	agent.identity	baseline	3.1.5	no amendment applied since registration	—	mesh_life.MeshLife.tla:Inv_AmendedCitesApproval	—	modelled
+agent	agent	agent.identity	amended	3.1.5 4.3	identity_amendment:v1 admitted citing an approved response	agent occurrence key	mesh_life.MeshLife.tla:Amend	agent.identity.amended	modelled
+governance	event	event.state	open	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	mesh_life.MeshLife.tla:EventOpens	—	modelled
+governance	event	event.state	cancelled	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	mesh_life.MeshLife.tla:EventCloses	—	modelled
+governance	event	event.state	completed	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	mesh_life.MeshLife.tla:EventCloses	—	modelled
 governance	event	event.state	superseded	3.3.8	event:lifecycle row / withdraws / supersedes	organiser	—	—	text-only
 governance	objection	objection.state	proposal	3.1.9.2 3.3.6.3	the proposer's own row; counts as its approval	any voter of the standing set	self_roster.SelfRoster.tla:pending.by; two_path.TwoPath.tla:pending.by	—	modelled-elsewhere
 governance	objection	objection.state	assent	3.1.9.2 3.3.6.3	a +1 on an open proposal	any voter of the standing set	self_roster.SelfRoster.tla:approvers; two_path.TwoPath.tla:approvers	—	modelled-elsewhere
 governance	objection	objection.state	raised	3.1.9.2 3.3.6.3	a −1 on an open proposal or a pending act	any voter of the standing set	self_roster.SelfRoster.tla:objectors; two_path.TwoPath.tla:objectors	—	modelled-elsewhere
-governance	quarantine	quarantine.state	withhold	3.1.9.4	quarantine:{state}; withhold beats release at a tie	slash-duty holder	—	—	text-only
-governance	quarantine	quarantine.state	release	3.1.9.4	quarantine:{state}	slash-duty holder	—	—	text-only
-governance	capacity binding	capacity.band	capacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
-governance	capacity binding	capacity.band	incapacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
+governance	quarantine	quarantine.state	withhold	3.1.9.4	quarantine:{state}; withhold beats release at a tie	slash-duty holder	mesh_life.MeshLife.tla:Withhold	—	modelled
+governance	quarantine	quarantine.state	release	3.1.9.4	quarantine:{state}	slash-duty holder	mesh_life.MeshLife.tla:Release	—	modelled
+governance	capacity binding	capacity.band	capacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	mesh_life.MeshLife.tla:CapacityFound	—	modelled
+governance	capacity binding	capacity.band	incapacitated	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	mesh_life.MeshLife.tla:Inv_IncapacitatedHoldsNoSeat	—	modelled
 governance	capacity binding	capacity.band	reversible_pending	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
 governance	capacity binding	capacity.band	reversible_excluded	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
-governance	capacity binding	capacity.band	lapsed	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	—	—	text-only
-governance	ledger	ledger.state	head	3.3.10.1	ledger:head row (fork = evidence)	owner	—	—	text-only
-governance	ledger	ledger.state	checkpoint	3.3.10.1	ledger:checkpoint row (fork = evidence)	owner	—	—	text-only
+governance	capacity binding	capacity.band	lapsed	3.4.12	capacity:* row / resolution / lapse	producer under T1 tier	mesh_life.MeshLife.tla:CapacityLapses	—	modelled
+governance	ledger	ledger.state	head	3.3.10.1	ledger:head row (fork = evidence)	owner	mesh_life.MeshLife.tla:LedgerOpens	—	modelled
+governance	ledger	ledger.state	checkpoint	3.3.10.1	ledger:checkpoint row (fork = evidence)	owner	mesh_life.MeshLife.tla:LedgerCheckpoints	—	modelled
 governance	ledger	ledger.state	promotion	3.3.10.1	ledger:promotion row (fork = evidence)	owner	—	—	text-only
-governance	ledger	ledger.state	fork	3.3.10.1	ledger:fork row (fork = evidence)	owner	—	—	text-only
-governance	moderation outcome	moderation.outcome	hard_removal	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	—	—	text-only
-governance	moderation outcome	moderation.outcome	consent_gated	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	—	—	text-only
-governance	moderation outcome	moderation.outcome	kept_visible	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	—	—	text-only
-governance	wa_adjudication	wa_adjudication.state	abandonment	3.1.9.4 4.3	a quorum finds a seat abandoned	WA quorum (full seated roster)	—	—	text-only
-governance	wa_adjudication	wa_adjudication.state	seizure	3.1.9.4 4.3	a quorum finds a seat seized	WA quorum (full seated roster)	—	—	text-only
-governance	wa_adjudication	wa_adjudication.state	successor	3.1.9.4 4.3	a quorum names a successor to a seat	WA quorum (full seated roster)	—	—	text-only
+governance	ledger	ledger.state	fork	3.3.10.1	ledger:fork row (fork = evidence)	owner	mesh_life.MeshLife.tla:LedgerForks	—	modelled
+governance	moderation outcome	moderation.outcome	hard_removal	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	mesh_life.MeshLife.tla:Inv_HardRemovalWithdraws	—	modelled
+governance	moderation outcome	moderation.outcome	consent_gated	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	mesh_life.MeshLife.tla:DecideFlag	—	modelled
+governance	moderation outcome	moderation.outcome	kept_visible	4.5.4	moderator or steward single signature within 48 h, else live-majority vote	moderator / steward / majority	mesh_life.MeshLife.tla:DecideFlag	—	modelled
+governance	wa_adjudication	wa_adjudication.state	abandonment	3.1.9.4 4.3	a quorum finds a seat abandoned	WA quorum (full seated roster)	mesh_life.MeshLife.tla:WaFound	—	modelled
+governance	wa_adjudication	wa_adjudication.state	seizure	3.1.9.4 4.3	a quorum finds a seat seized	WA quorum (full seated roster)	mesh_life.MeshLife.tla:WaFound	—	modelled
+governance	wa_adjudication	wa_adjudication.state	successor	3.1.9.4 4.3	a quorum names a successor to a seat	WA quorum (full seated roster)	mesh_life.MeshLife.tla:WaSuccessor	—	modelled
 governance	census return	census.return	pending	6.1.9	the owner's two shares for the period not yet both accepted	—	census_ballot.CensusBallot.tla:returns	—	model-only
 governance	census return	census.return	accepted	6.1.9	both aggregators accepted the same token; the one-hot proof passed; counted once	the owner (hybrid)	census_ballot.CensusBallot.tla:returns	—	model-only
 governance	census return	census.return	refused	6.1.9	validity failed, a duplicate token, or one share of two at period close	—	census_ballot.CensusBallot.tla:dup	—	model-only
@@ -188,36 +188,48 @@ governance	census base	census.base	frozen	6.1.9	a fall of more than a third read
 governance	secret poll	poll.state	closed	6.1.9	no poll open; every member's cell still emitted at the fixed size	—	census_ballot.CensusBallot.tla:open	—	model-only
 governance	secret poll	poll.state	open	6.1.9	a poll fills the padded field of each member's cell; invisible to an outsider	—	census_ballot.CensusBallot.tla:open	—	model-only
 governance	secret poll	poll.state	decided	6.1.9	the tally met or missed the governance threshold against the base of its period	the share-index-0 tally member (hybrid)	census_ballot.CensusBallot.tla:decision	—	model-only
-governance	affiliation	affiliation.charter	declared	4.4.3.2.8	the community record with declared_cohort: affiliations and its config members, at creation	founding key / officers under consensus_protocol	—	affiliation.charter.declared	text-only
-governance	affiliation	affiliation.charter	superseded	4.4.3.2.8	supersedes of the affiliation config record	officers under consensus_protocol	—	affiliation.charter.superseded	text-only
+governance	affiliation	affiliation.charter	declared	4.4.3.2.8	the community record with declared_cohort: affiliations and its config members, at creation	founding key / officers under consensus_protocol	mesh_life.MeshLife.tla:Found	affiliation.charter.declared	modelled
+governance	affiliation	affiliation.charter	superseded	4.4.3.2.8	supersedes of the affiliation config record	officers under consensus_protocol	mesh_life.MeshLife.tla:CharterSuperseded	affiliation.charter.superseded	modelled
 authority	licence	licence.state	suspended	2.4.1.2.1	bounded revocation:* by the authority	the authority	—	licence.status.suspended	text-only
-authority	licence	licence.reader	honoured	4.4.3.8 2.4.1.2.1	reader's own trust walk reaches the issuer for the class and the charter declares it	reader (local verdict, unsigned)	—	licence.honoured	text-only
-authority	licence	licence.reader	not_trusted	4.4.3.8 4.4.3.2.8	no entry reaches the issuer for the class, or the class is outside the charter (licence_class_not_trusted)	reader (local verdict, unsigned)	—	licence.not_trusted	text-only
-node	trust set	recognition.state	outbound	4.4.3.8 4.4.3.2.8	this reader's delegates_to(reader → authority) bearing trust:accepts:v1 with trust_classes / trust_depth	reader	—	recognition.outbound	text-only
-node	trust set	recognition.state	inbound	4.4.3.8 4.4.3.2.8	another reader's delegates_to(reader → this authority) bearing trust:accepts:v1	the other reader	—	recognition.inbound	text-only
-authority	delegation link	delegation.scope	license	4.4.3.4.3.1 2.4.1.2.1	delegates_to with scope license admitted; delegator holds licence authority for the authority_id	principal	—	delegation.scope.license	text-only
-authority	delegation link	delegation.scope	grant	4.4.3.4.3.1 2.4.1.2.1	delegates_to with scope grant admitted; delegator owns, stewards or holds a grant-scoped delegation over the asset	principal	—	delegation.scope.grant	text-only
+authority	licence	licence.reader	honoured	4.4.3.8 2.4.1.2.1	reader's own trust walk reaches the issuer for the class and the charter declares it	reader (local verdict, unsigned)	trust_set.TrustSet.lean:verdict_is_the_capped_walk	licence.honoured	modelled
+authority	licence	licence.reader	not_trusted	4.4.3.8 4.4.3.2.8	no entry reaches the issuer for the class, or the class is outside the charter (licence_class_not_trusted)	reader (local verdict, unsigned)	trust_set.TrustSet.lean:empty_set_honours_nothing	licence.not_trusted	modelled
+node	trust set	recognition.state	outbound	4.4.3.8 4.4.3.2.8	this reader's delegates_to(reader → authority) bearing trust:accepts:v1 with trust_classes / trust_depth	reader	trust_set.TrustSet.lean:reaches_needs_an_edge_from	recognition.outbound	modelled
+node	trust set	recognition.state	inbound	4.4.3.8 4.4.3.2.8	another reader's delegates_to(reader → this authority) bearing trust:accepts:v1	the other reader	trust_set.TrustSet.lean:no_trust_without_my_edge	recognition.inbound	modelled
+authority	delegation link	delegation.scope	license	4.4.3.4.3.1 2.4.1.2.1	delegates_to with scope license admitted; delegator holds licence authority for the authority_id	principal	authority_tree.authority_tree.py:issue_licence	delegation.scope.license	modelled
+authority	delegation link	delegation.scope	grant	4.4.3.4.3.1 2.4.1.2.1	delegates_to with scope grant admitted; delegator owns, stewards or holds a grant-scoped delegation over the asset	principal	authority_tree.authority_tree.py:issue_grant	delegation.scope.grant	modelled
 authority	delegation link	delegation.link	refused	4.4.3.4.3.1 2.4.1.2.1	enforced admission: delegator lacks the underlying authority; refused, not unweighted	substrate at the door	—	delegation.refused	text-only
-authority	grant	grant.axis	content	5.1 2.4.1.2.1	key_grant:{axis}:v1 keyed on (content_sha256, recipient_key_id)	owner / steward / grant-scoped delegate	—	grant.axis.content	text-only
+authority	grant	grant.axis	content	5.1 2.4.1.2.1	key_grant:{axis}:v1 keyed on (content_sha256, recipient_key_id)	owner / steward / grant-scoped delegate	authority_tree.authority_tree.py:issue_grant	grant.axis.content	modelled
 authority	grant	grant.state	onward_refused	2.4.1.2.1 4.4.3.4.3.1	key_grant whose issuer holds the DEK but neither the asset nor a grant-scoped delegation; refused at admission	substrate at the door	—	grant.onward_refused	text-only
-self	key record	key.succession	committed	3.2 3.3.6.3	pre-rotation commitment SHA-256(JCS([...])) over the successor keys' public key material	key holder	—	key.successor_committed	text-only
-self	key record	key.succession	rotated	3.3.6.3 5.1	the committed successor key joins the roster and signs; the old key stops	key holder (old and successor)	—	key.rotated	text-only
-self	key record	key.escrow	escrowed	4.4.3.2.8 3.3.6.3	archive_custody custodian holds the per-epoch archive key apart from the live roster	affiliation officers / custodian	—	key.escrowed	text-only
-node	trust set	trust.entry	licensor	4.4.3.8	delegates_to(reader → authority) bearing trust:accepts:v1, trust_classes absent	reader	—	trust.entry.licensor	text-only
-node	trust set	trust.entry	root_removed	4.4.3.8	the reader withdraws the shipped root's acceptance edge	reader	—	trust.entry.root_removed	text-only
-goal	goal	goal.state	staged	3.1.9.7	the canonical holds the locked goal tree as stamped, unsigned rows	canonical (unsigned)	—	goal.staged	text-only
-goal	goal	goal.state	proposed	3.1.9.7 2.4	at least one founder scrubbed the staged rows, below quorum	founder(s)	—	goal.proposed	text-only
-goal	goal	goal.state	declared	3.1.9.7 2.4	the founder quorum cosigns the proposed rows; admitted under the community as signed scores rows on goal:{scale}	founder quorum under consensus_protocol	—	goal.declared	text-only
+self	key record	key.succession	committed	3.2 3.3.6.3	pre-rotation commitment SHA-256(JCS([...])) over the successor keys' public key material	key holder	mesh_life.MeshLife.tla:KeyRotates	key.successor_committed	modelled
+self	key record	key.succession	rotated	3.3.6.3 5.1	the committed successor key joins the roster and signs; the old key stops	key holder (old and successor)	mesh_life.MeshLife.tla:KeyRotates	key.rotated	modelled
+self	key record	key.escrow	escrowed	4.4.3.2.8 3.3.6.3	archive_custody custodian holds the per-epoch archive key apart from the live roster	affiliation officers / custodian	mesh_life.MeshLife.tla:KeyEscrowed	key.escrowed	modelled
+node	trust set	trust.entry	licensor	4.4.3.8	delegates_to(reader → authority) bearing trust:accepts:v1, trust_classes absent	reader	trust_set.TrustSet.lean:licensor_of_licensor_at_depth_one	trust.entry.licensor	modelled
+node	trust set	trust.entry	root_removed	4.4.3.8	the reader withdraws the shipped root's acceptance edge	reader	trust_set.TrustSet.lean:root_removed_board_stands	trust.entry.root_removed	modelled
+goal	goal	goal.state	staged	3.1.9.7	the canonical holds the locked goal tree as stamped, unsigned rows	canonical (unsigned)	mesh_life.MeshLife.tla:GoalStaged	goal.staged	modelled
+goal	goal	goal.state	proposed	3.1.9.7 2.4	at least one founder scrubbed the staged rows, below quorum	founder(s)	mesh_life.MeshLife.tla:GoalProposed	goal.proposed	modelled
+goal	goal	goal.state	declared	3.1.9.7 2.4	the founder quorum cosigns the proposed rows; admitted under the community as signed scores rows on goal:{scale}	founder quorum under consensus_protocol	mesh_life.MeshLife.tla:GoalDeclared	goal.declared	modelled
 goal	goal	goal.state	superseded	3.1.9.7	declarer's supersedes	declarer	—	goal.superseded	text-only
-goal	goal	goal.state	withdrawn	3.1.9.7	declarer's withdraws	declarer	—	goal.withdrawn	text-only
+goal	goal	goal.state	withdrawn	3.1.9.7	declarer's withdraws	declarer	mesh_life.MeshLife.tla:GoalWithdrawn	goal.withdrawn	modelled
 goal	goal	goal.state	recanted	3.1.9.7 2.4.1.3	declarer's recants	declarer	—	goal.recanted	text-only
-goal	approach	approach.state	declared	3.1.9.7	signed approach:{goal_id} row	declarer	—	approach.declared	text-only
-goal	method	method.state	declared	3.1.9.7	signed method:{approach_id}:{substrate_rung} row	declarer	—	method.declared	text-only
-goal	progress measure	progress_measure.state	declared	3.1.9.7	signed progress_measure:{method_id} row with tracks[], computation, validity_window, goodhart_resistance	declarer	—	progress_measure.declared	text-only
-evidence	evidence	evidence.state	offered	3.1.5.5	an evidence row whose references_attestation_id names a declared goal, approach or method	infra:attest delegate of the root	—	evidence.offered	text-only
-evidence	evidence	evidence.state	counted	3.1.9.3	a declared progress_measure cites the evidence in evidence_refs	declarer of the progress_measure	—	evidence.counted	text-only
+goal	approach	approach.state	declared	3.1.9.7	signed approach:{goal_id} row	declarer	mesh_life.MeshLife.tla:ApproachDeclared	approach.declared	modelled
+goal	method	method.state	declared	3.1.9.7	signed method:{approach_id}:{substrate_rung} row	declarer	mesh_life.MeshLife.tla:MethodDeclared	method.declared	modelled
+goal	progress measure	progress_measure.state	declared	3.1.9.7	signed progress_measure:{method_id} row with tracks[], computation, validity_window, goodhart_resistance	declarer	mesh_life.MeshLife.tla:MeasureDeclared	progress_measure.declared	modelled
+evidence	evidence	evidence.state	offered	3.1.5.5	an evidence row whose references_attestation_id names a declared goal, approach or method	infra:attest delegate of the root	mesh_life.MeshLife.tla:EvidenceOffered	evidence.offered	modelled
+evidence	evidence	evidence.state	counted	3.1.9.3	a declared progress_measure cites the evidence in evidence_refs	declarer of the progress_measure	mesh_life.MeshLife.tla:EvidenceCounted	evidence.counted	modelled
 evidence	evidence	evidence.state	reference_unresolved	3.1.5.5	no holder serves the blob the row's evidence_refs names	reader (local verdict, unsigned)	—	evidence.reference_unresolved	text-only
-evidence	evidence	evidence.state	admitted	3.1.5.5	row admitted at federation scope; blob digest matches {prefix}	infra:attest delegate of the root	—	evidence.admitted	text-only
-evidence	evidence	evidence.state	superseded	3.1.5.5	re-post of the same capture or interpret as supersedes	infra:attest delegate of the root	—	evidence.superseded	text-only
-evidence	evidence	evidence.standing	blessed	3.1.5.5	emitter sits on a live infra:attest delegation from a root the reader trusts	reader (local verdict, unsigned)	—	evidence.standing.blessed	text-only
-evidence	evidence	evidence.standing	unblessed	3.1.5.5	no infra:attest delegation from a trusted root reaches the emitter	reader (local verdict, unsigned)	—	evidence.standing.unblessed	text-only
+evidence	evidence	evidence.state	admitted	3.1.5.5	row admitted at federation scope; blob digest matches {prefix}	infra:attest delegate of the root	mesh_life.MeshLife.tla:EvidenceAdmitted	evidence.admitted	modelled
+evidence	evidence	evidence.state	superseded	3.1.5.5	re-post of the same capture or interpret as supersedes	infra:attest delegate of the root	mesh_life.MeshLife.tla:EvidenceSuperseded	evidence.superseded	modelled
+evidence	evidence	evidence.standing	blessed	3.1.5.5	emitter sits on a live infra:attest delegation from a root the reader trusts	reader (local verdict, unsigned)	mesh_life.MeshLife.tla:EvidenceOffered	evidence.standing.blessed	modelled
+evidence	evidence	evidence.standing	unblessed	3.1.5.5	no infra:attest delegation from a trusted root reaches the emitter	reader (local verdict, unsigned)	mesh_life.MeshLife.tla:EvidenceOffered	evidence.standing.unblessed	modelled
+mesh	mesh	mesh.state	unminted	5.3.4	before the genesis ceremony	—	mesh_life.MeshLife.tla:Init	—	modelled
+mesh	mesh	mesh.state	live	5.3.4	the genesis ceremony: every holder signs the charter, the genesis records and the authorization	the holders	mesh_life.MeshLife.tla:Mint	—	modelled
+mesh	mesh	mesh.state	ended	5.3.4	nothing alive after the holders decided to wind down	—	mesh_life.MeshLife.tla:End	—	modelled
+mesh	mesh	mesh.winding	no	5.3.4	—	—	mesh_life.MeshLife.tla:Init	—	modelled
+mesh	mesh	mesh.winding	yes	4.2.6	a majority of the holders decides; nothing new is born	holder majority	mesh_life.MeshLife.tla:WindDown	—	modelled
+mesh	contact	contact.state	none	5.4.6	—	—	mesh_life.MeshLife.tla:ContactEnds	—	modelled
+mesh	contact	contact.state	requested	5.4.6	a sealed first-contact request carrying the asker's grant and route crosses a forwarder	the asker	mesh_life.MeshLife.tla:ContactRequest	—	modelled
+mesh	contact	contact.state	contacts	5.4.6	the sealed acceptance carrying the accepter's grant and route; the pair goes direct	the accepter	mesh_life.MeshLife.tla:ContactAccept	—	modelled
+mesh	contact	contact.state	ignored	5.4.6	the asked person's private, local, undoable ignore of one request; the asker sees exactly what a pending request shows	the asked person (local)	mesh_life.MeshLife.tla:ContactIgnore	—	modelled
+mesh	contact	contact.state	blocked	5.4.6	one party's private block: further requests from the other key are dropped without answer; the forwarder learns nothing	the blocker (local)	mesh_life.MeshLife.tla:ContactBlock	—	modelled
+membership	member×member	reader.mute	none	4.4	—	—	mesh_life.MeshLife.tla:Unmute	—	modelled
+membership	member×member	reader.mute	muted	4.4	a member's private reader-side filter over another member; no row, no roster and no room state changes; a row naming the muter stays in the muter's own read	the muting member (local)	mesh_life.MeshLife.tla:Mute	—	modelled
