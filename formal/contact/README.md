@@ -23,6 +23,8 @@
 - `owner_handed_two_announced`, `owner_handed_one_anonymous`: the exact relay contents under `ownerHanded` are the two unavoidable facts.
 - `both_complete_two_announced`, `both_complete_one_anonymous`, `no_consent_no_route`: both designs complete the contact, the announced pair goes direct, the anonymous pair never does, and without the acceptance no address moves.
 
+**The rule.** The owner-handed design is the rule of [CC 5.4.6](../../constitution/part_5_transport_substrate.md#5.4.6), first contact through a forwarder, with item 9 of the Anonymous Tier for the anonymous peer.
+
 **What it does not model.** Store-and-forward for a sleeping peer (the relay then keeps sealed bytes until pickup, which is custody of ciphertext, not a pair record); route rotation after contact (a superseding route is handed the same way the first was); the facilitator's knowledge of each dialled-in peer's own reflexive address, which every transport node has for the life of a link; traffic analysis on the relay's link facts, which [CC 1.13.3.1](../../constitution/part_1_foundation.md#1.13.3.1) concedes.
 
 **Run.** `lean Contact.lean` (exit 0, no `sorry`). CI compiles it in the `reciprocity` job of `.github/workflows/formal.yml`.

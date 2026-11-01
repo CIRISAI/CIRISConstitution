@@ -6,7 +6,7 @@
    "invariants_sha256": "fc32f0511041e8d934e2277f46b74037cc5caf7e3fadf09b9ea3a99fed12ba11",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "da2d46728abcdbf4cf8e661f726591e1f796605981f3e9f142d0cc0a5b434482",
+   "claims_sha256": "fa7d9845a039b4a019eb8ac5b8a85c2c0ac712f485936e8318d697153cbb0b6e",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 222,
    "invariants": 167,
-   "claims": 521,
+   "claims": 524,
    "entries": 20,
    "refusal_tokens": 98
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "7e23ff6359756b512f6a3141f9c05c9700faa172f44432873d7555799ea297dc"
+  "chain_sha256": "bac4bd7e548af8de895d3124a24e3f4bb17661cfd1ca173fa649762f06e25c2b"
  },
  "chain": [
   {
@@ -5724,6 +5724,40 @@
        "ticket": "CIRISEdge#897"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -5908,6 +5942,40 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -9426,6 +9494,40 @@
        "ticket": "CIRISEdge#897"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -11059,6 +11161,40 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -20146,6 +20282,40 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
