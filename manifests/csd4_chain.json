@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "81419139ae7c449901ce15bda782caf78b55876f07136e09370210bc447be49c",
-   "invariants_sha256": "65044d1b7e0124899a2c2c94f61986e92b522a760b03bd491ec46eb1deecb8a2",
+   "invariants_sha256": "1cd6306364f92fccc4faa8e2bec3d2017b2dd9791a0b8e6c29c81e9763f1f4ad",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "4485a04e91fd06534d0085b017c39aa0fec9ecfb05c499bff828a714af32482b",
+   "claims_sha256": "f3919e03209e0952c0892dff23d9cfe0206001f9c01e7c0c6a99c316a0dad153",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 238,
    "invariants": 206,
-   "claims": 525,
+   "claims": 527,
    "entries": 20,
    "refusal_tokens": 98
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "517652d58b401ac6c5001bb662726ece07ebf405ae8c4c5f21af425dccd223fa"
+  "chain_sha256": "49cc9817b973023fb3fce077430015e95d546d6846a05465ad56556d79b37c54"
  },
  "chain": [
   {
@@ -6276,6 +6276,17 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -6599,6 +6610,17 @@
     },
     {
      "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
@@ -10187,6 +10209,17 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -11856,6 +11889,17 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -12588,7 +12632,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -12597,7 +12641,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -12769,6 +12813,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -13577,7 +13632,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -13753,6 +13808,17 @@
     {
      "claim_id": "CLM-good-faith-warning",
      "cc_ref": "4.5.5",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
      "status": "normative",
      "join": "by_invariant",
      "evidence": [
@@ -15593,7 +15659,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -15602,7 +15668,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -15774,6 +15840,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -16157,7 +16234,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -16166,7 +16243,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -16338,6 +16415,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -17632,7 +17720,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -17641,7 +17729,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -17813,6 +17901,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -21781,6 +21880,17 @@
     },
     {
      "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
@@ -29217,7 +29327,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -29226,7 +29336,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -29398,6 +29508,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -29675,7 +29796,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -29684,7 +29805,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -29856,6 +29977,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -30133,7 +30265,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -30142,7 +30274,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -30314,6 +30446,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -30591,7 +30734,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -30600,7 +30743,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -30772,6 +30915,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -31049,7 +31203,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Inv_MuteIsBetweenMembers",
      "kind": "safety",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -31058,7 +31212,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -31230,6 +31384,17 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -34544,7 +34709,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -34688,6 +34853,17 @@
     {
      "claim_id": "CLM-good-faith-warning",
      "cc_ref": "4.5.5",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
      "status": "normative",
      "join": "by_invariant",
      "evidence": [
@@ -34947,7 +35123,7 @@
      "source": "formal/mesh_life/MeshLife.tla",
      "symbol": "Act_MuteChangesNoRow",
      "kind": "safety-temporal",
-     "claim_id": "CLM-mesh-life (proposed)",
+     "claim_id": "CLM-mute-reader-side",
      "verdict": "closes"
     },
     {
@@ -35091,6 +35267,17 @@
     {
      "claim_id": "CLM-good-faith-warning",
      "cc_ref": "4.5.5",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
      "status": "normative",
      "join": "by_invariant",
      "evidence": [
