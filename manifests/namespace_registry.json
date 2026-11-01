@@ -216,7 +216,7 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc14",
+    "cc_version": "1.0-rc15",
     "components_outside_normative": [
       "cirisbench"
     ],
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "7af252ad3275d9e56aaa2a6c2e64504d90b2e3b0cbeadd09a79218390518c850"
+    "source_sha256": "a930a011bd6dc0767f21a5589bb5181f6a189158b247a9d374868293af33999b"
   },
   "families": [
     {

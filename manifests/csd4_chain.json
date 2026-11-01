@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "76f7044f2faadf4696988c59119212df3643401596b12f45d811cab37b7d29b2",
-   "invariants_sha256": "fc32f0511041e8d934e2277f46b74037cc5caf7e3fadf09b9ea3a99fed12ba11",
+   "state_table_sha256": "518704254f8527b5d52975e7c05267ac903eda6d620ca01a3adf9d7bfd893786",
+   "invariants_sha256": "0f4ff15f06a19a4b413ff498dbad870d81f2924fdafea12c5b7f36703147da8b",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "8f52e6361df10918791eb089ee95a0b2f5077b52c2ce15c2ee057d4f26998453",
+   "claims_sha256": "793ecb3f79d4a314de3c59ea158d6c85f53b79dd4d4c04cfe433369959a5d3b9",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -28,18 +28,18 @@
   },
   "counts": {
    "atoms": 156,
-   "states": 222,
-   "invariants": 167,
-   "claims": 518,
+   "states": 242,
+   "invariants": 209,
+   "claims": 528,
    "entries": 20,
-   "refusal_tokens": 96
+   "refusal_tokens": 98
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "9e4d18bd5003a4d45b9ff444782a876e75fe1d990da6d9c1f51c3e4a6f3a0972"
+  "chain_sha256": "14d98a18ad0b1a6a7a19d2bf46b1b45d97549bd97ae2418dbc528088378a53bb"
  },
  "chain": [
   {
@@ -87,12 +87,46 @@
      "cc_ref": "4.2.1 3.2",
      "enters_by": "offline",
      "signer": "—",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Mint",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-accord-reach",
      "cc_ref": "4.2.1",
@@ -216,11 +250,20 @@
      "cc_ref": "3.2",
      "enters_by": "a canonical holds one root",
      "signer": "—",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Mint",
+     "status": "modelled"
     }
    ],
    "invariants": [
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    },
     {
      "inv_id": "TR.iv",
      "model": "trust_root",
@@ -250,6 +293,30 @@
     }
    ],
    "claims": [
+    {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
@@ -952,11 +1019,20 @@
      "cc_ref": "3.2",
      "enters_by": "a canonical holds one root",
      "signer": "—",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Mint",
+     "status": "modelled"
     }
    ],
    "invariants": [
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    },
     {
      "inv_id": "TR.iv",
      "model": "trust_root",
@@ -986,6 +1062,30 @@
     }
    ],
    "claims": [
+    {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-standing-verdict",
      "cc_ref": "3.2",
@@ -2998,8 +3098,42 @@
      "status": "text-only"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-trust-not-membership",
      "cc_ref": "3.2",
@@ -4004,6 +4138,33 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -4339,6 +4500,30 @@
      ]
     },
     {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-invocation",
      "cc_ref": "4.2.1.1",
      "status": "established",
@@ -4581,6 +4766,33 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -4800,6 +5012,30 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
       }
      ]
     },
@@ -5004,6 +5240,33 @@
      "kind": "safety",
      "claim_id": "CLM-halt-one-row",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.6",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HaltIsMajority",
+     "kind": "safety",
+     "claim_id": "CLM-halt-authority",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -5227,6 +5490,30 @@
      ]
     },
     {
+     "claim_id": "CLM-halt-authority",
+     "cc_ref": "4.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/halt_gate.rs",
+       "symbols": [
+        "in_effect"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "halt_plane_threshold"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-invocation",
      "cc_ref": "4.2.1.1",
      "status": "established",
@@ -5357,12 +5644,72 @@
      "cc_ref": "2.6.8",
      "enters_by": "first boot",
      "signer": "—",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:DeviceClaims",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.1",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_NothingBeforeMint",
+     "kind": "safety",
+     "claim_id": "CLM-multi-steward",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.2",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DeviceHasOwner",
+     "kind": "safety",
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-multi-steward",
+     "cc_ref": "5.3.4",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConformance#90"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#537"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
+      }
+     ]
+    },
     {
      "claim_id": "CLM-key_id",
      "cc_ref": "2.6.8",
@@ -5461,8 +5808,68 @@
      "status": "modelled-partial"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.1",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_NothingBeforeMint",
+     "kind": "safety",
+     "claim_id": "CLM-multi-steward",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.2",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DeviceHasOwner",
+     "kind": "safety",
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-multi-steward",
+     "cc_ref": "5.3.4",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConformance#90"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#537"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
+      }
+     ]
+    },
     {
      "claim_id": "CLM-key_id",
      "cc_ref": "2.6.8",
@@ -5561,8 +5968,147 @@
      "status": "modelled-partial"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.8",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ContactIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-route-handed-by-owner",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.13",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MinorNeverAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-minor-no-federation-binding",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.14",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AnnouncedIsPqcComplete",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.20",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WaPersonIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-membership-consent",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_growth_accepted"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_founding_signers"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_community_founding_signers"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_supersede_adds_no_member"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-minor-no-federation-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_minor_owner_binding_not_announced"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-announce-suppress",
      "cc_ref": "5.4.6",
@@ -5627,22 +6173,6 @@
        "path": "src/blob_swarm/scope.rs",
        "symbols": [
         "choose_scoped_carrier"
-       ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-minor-no-federation-binding",
-     "cc_ref": "5.4.6",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_minor_owner_binding_not_announced"
        ]
       }
      ]
@@ -5722,6 +6252,39 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -5743,12 +6306,151 @@
      "cc_ref": "5.4.6",
      "enters_by": "default",
      "signer": "—",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:PersonAnnounces",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.8",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ContactIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-route-handed-by-owner",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.13",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MinorNeverAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-minor-no-federation-binding",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.14",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AnnouncedIsPqcComplete",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.20",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WaPersonIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-membership-consent",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_growth_accepted"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_founding_signers"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_community_founding_signers"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_supersede_adds_no_member"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-minor-no-federation-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_minor_owner_binding_not_announced"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-announce-suppress",
      "cc_ref": "5.4.6",
@@ -5813,22 +6515,6 @@
        "path": "src/blob_swarm/scope.rs",
        "symbols": [
         "choose_scoped_carrier"
-       ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-minor-no-federation-binding",
-     "cc_ref": "5.4.6",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_minor_owner_binding_not_announced"
        ]
       }
      ]
@@ -5908,6 +6594,39 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -5930,8 +6649,8 @@
      "cc_ref": "3.2 T8 4.2",
      "enters_by": "seated serve node announced by its owner",
      "signer": "owner",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:CanonicalAnnounced",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -8380,8 +9099,8 @@
      "cc_ref": "2.6.8 3.3.6",
      "enters_by": "node self-registers a pending identity_occurrence",
      "signer": "node",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:DeviceClaims",
+     "status": "modelled"
     },
     {
      "variable": "key.membership",
@@ -8530,6 +9249,15 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.2",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DeviceHasOwner",
+     "kind": "safety",
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -8631,6 +9359,18 @@
         "decide",
         "check_corridor"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
       }
      ]
     },
@@ -8779,18 +9519,6 @@
        "symbols": [
         "gate"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-self-roster-one-key-per-node",
-     "cc_ref": "3.3.6.3",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
       }
      ]
     }
@@ -9088,6 +9816,15 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.2",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DeviceHasOwner",
+     "kind": "safety",
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -9189,6 +9926,18 @@
         "decide",
         "check_corridor"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-self-roster-one-key-per-node",
+     "cc_ref": "3.3.6.3",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#793"
       }
      ]
     },
@@ -9424,6 +10173,51 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -11061,6 +11855,51 @@
        "ticket": "CIRISEdge#897"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -11759,6 +12598,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -11887,7 +12789,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -11920,6 +12822,39 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -12310,8 +13245,8 @@
      "cc_ref": "2.6.1.3 5.3.3 5.3.3.6",
      "enters_by": "above the cap: fountain plane, chunk-DAG, per-device delivery receipts",
      "signer": "producer",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Write",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -12665,6 +13600,78 @@
      "kind": "safety",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; one twin fails"
+    },
+    {
+     "inv_id": "ML.4",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_RowInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.18",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HardRemovalWithdraws",
+     "kind": "safety",
+     "claim_id": "CLM-good-faith-warning",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.27",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_FlagDecidedByModerator",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.34",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_RowsOnlyByWriters",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -12824,6 +13831,50 @@
         "Prop_WalkAwayKeepsRecord",
         "Prop_LadderCompletes"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-good-faith-warning",
+     "cc_ref": "4.5.5",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -13020,6 +14071,17 @@
        "symbols": [
         "Inv_AntiGoodhart"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -13495,12 +14557,42 @@
      "cc_ref": "3.1.3.1",
      "enters_by": "session:* claim row with a validity window; the convergent merge names one handler on every device",
      "signer": "claiming occurrence",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:DeviceClaims",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.1",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_NothingBeforeMint",
+     "kind": "safety",
+     "claim_id": "CLM-multi-steward",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-multi-steward",
+     "cc_ref": "5.3.4",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConformance#90"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#536"
+      },
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#537"
+      }
+     ]
+    },
     {
      "claim_id": "CLM-session-claim",
      "cc_ref": "3.1.3.1",
@@ -13565,6 +14657,42 @@
      "kind": "safety",
      "claim_id": "CLM-membership-ceremony-model",
      "verdict": "closes; founding_unsigned twin fails"
+    },
+    {
+     "inv_id": "ML.4",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_RowInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.25",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EventInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.26",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CharterOnlyForAffiliation",
+     "kind": "safety",
+     "claim_id": "CLM-affiliation-dissolution",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -13603,6 +14731,18 @@
         "Inv_JoinerConsented",
         "Prop_HeldChangeResolves"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
       }
      ]
     },
@@ -14525,6 +15665,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -14653,7 +15856,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -14688,6 +15891,39 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -14719,6 +15955,24 @@
      "symbol": "Inv_NotAlone",
      "kind": "safety",
      "claim_id": "CLM-reasoning-duty-stewarded",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.15",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GuardianIsAnnouncedAdult",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
     }
    ],
@@ -15006,6 +16260,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -15134,7 +16451,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -15169,6 +16486,39 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -15188,12 +16538,47 @@
      "cc_ref": "3.4.13",
      "enters_by": "age_self_declared / assurance row",
      "signer": "subject or guardian",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Adults",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.13",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MinorNeverAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-minor-no-federation-binding",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.15",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GuardianIsAnnouncedAdult",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-minor-no-federation-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_minor_owner_binding_not_announced"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-child-protection",
      "cc_ref": "3.4.13",
@@ -15323,6 +16708,42 @@
      "kind": "safety",
      "claim_id": "CLM-membership-ceremony-model",
      "verdict": "closes; founding_unsigned twin fails"
+    },
+    {
+     "inv_id": "ML.4",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_RowInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.25",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EventInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.26",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CharterOnlyForAffiliation",
+     "kind": "safety",
+     "claim_id": "CLM-affiliation-dissolution",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -15402,6 +16823,18 @@
         "Inv_JoinerConsented",
         "Prop_HeldChangeResolves"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
       }
      ]
     },
@@ -16102,6 +17535,17 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -16333,6 +17777,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -16461,7 +17968,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -16496,6 +18003,39 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -16528,6 +18068,42 @@
      "symbol": "Inv_Moderated",
      "kind": "safety",
      "claim_id": "CLM-promotion-cohort-standing",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
     }
    ],
@@ -16569,6 +18145,17 @@
        "symbols": [
         "existence_verdict"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -19080,6 +20667,51 @@
      "kind": "safety-temporal",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; walkaway_erases twin fails"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -19224,6 +20856,22 @@
         "Inv_SealOpensByOneRow",
         "Prop_WalkAwayKeepsRecord",
         "Prop_LadderCompletes"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
        ]
       }
      ]
@@ -19587,6 +21235,51 @@
      "kind": "safety-temporal",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; walkaway_erases twin fails"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -19731,6 +21424,22 @@
         "Inv_SealOpensByOneRow",
         "Prop_WalkAwayKeepsRecord",
         "Prop_LadderCompletes"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
        ]
       }
      ]
@@ -19910,11 +21619,30 @@
      "cc_ref": "4.3",
      "enters_by": "a Wise Authority reachable for deferrals",
      "signer": "WA",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:WaSeats",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.20",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WaPersonIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-wa-symmetry",
@@ -19974,8 +21702,147 @@
      "status": "modelled-partial"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.8",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ContactIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-route-handed-by-owner",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.13",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MinorNeverAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-minor-no-federation-binding",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.14",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AnnouncedIsPqcComplete",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.20",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WaPersonIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-membership-consent",
+     "cc_ref": "3.1.3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_growth_accepted"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_founding_signers"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_community_founding_signers"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/membership_acceptance.rs",
+       "symbols": [
+        "check_supersede_adds_no_member"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-route-handed-by-owner",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#922"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-minor-no-federation-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_minor_owner_binding_not_announced"
+       ]
+      }
+     ]
+    },
     {
      "claim_id": "CLM-announce-suppress",
      "cc_ref": "5.4.6",
@@ -20040,22 +21907,6 @@
        "path": "src/blob_swarm/scope.rs",
        "symbols": [
         "choose_scoped_carrier"
-       ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-minor-no-federation-binding",
-     "cc_ref": "5.4.6",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_minor_owner_binding_not_announced"
        ]
       }
      ]
@@ -20135,6 +21986,39 @@
       {
        "kind": "staged",
        "ticket": "CIRISEdge#897"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-forwarder-holds-no-pair-record",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-contact-circuit",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-ignore-block-private",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -26764,6 +28648,17 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -27014,6 +28909,17 @@
        "symbols": [
         "Inv_AntiGoodhart"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -27268,6 +29174,17 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -27498,6 +29415,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -27626,7 +29606,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -27659,6 +29639,39 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -27891,6 +29904,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -28019,7 +30095,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -28052,6 +30128,39 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -28284,6 +30393,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -28412,7 +30584,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -28445,6 +30617,39 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -28677,6 +30882,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -28805,7 +31073,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -28838,6 +31106,39 @@
        "symbols": [
         "check_supersede_adds_no_member"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -29070,6 +31371,69 @@
      "kind": "vector replay",
      "claim_id": "CLM-governance-policy-table",
      "verdict": "732/732"
+    },
+    {
+     "inv_id": "ML.3",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MemberIsAnnounced",
+     "kind": "safety",
+     "claim_id": "CLM-membership-consent",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.31",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MuteIsBetweenMembers",
+     "kind": "safety",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.33",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_WriterIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -29198,7 +31562,7 @@
      "claim_id": "CLM-membership-consent",
      "cc_ref": "3.1.3.2",
      "status": "established",
-     "join": "by_section",
+     "join": "by_invariant",
      "evidence": [
       {
        "kind": "impl",
@@ -29233,6 +31597,39 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -29264,6 +31661,42 @@
      "symbol": "Inv_Moderated",
      "kind": "safety",
      "claim_id": "CLM-promotion-cohort-standing",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
     }
    ],
@@ -29305,6 +31738,17 @@
        "symbols": [
         "existence_verdict"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -29339,79 +31783,41 @@
      "kind": "safety",
      "claim_id": "CLM-promotion-cohort-standing",
      "verdict": "closes"
-    }
-   ],
-   "claims": [
-    {
-     "claim_id": "CLM-promotion-cohort-standing",
-     "cc_ref": "4.5.4",
-     "status": "established",
-     "join": "by_invariant",
-     "evidence": [
-      {
-       "kind": "impl",
-       "repo": "CIRISPersist",
-       "path": "src/federation/admission.rs",
-       "symbols": [
-        "check_promotion_cohort_standing"
-       ]
-      }
-     ]
     },
     {
-     "claim_id": "CLM-registry-named",
-     "cc_ref": "4.5.4",
-     "status": "established",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "test",
-       "repo": "CIRISConformance",
-       "path": "",
-       "symbols": [
-        "test_271_moderator_existence_gate"
-       ]
-      },
-      {
-       "kind": "impl",
-       "repo": "CIRISServer",
-       "path": "src/safety/named.rs",
-       "symbols": [
-        "existence_verdict"
-       ]
-      }
-     ]
-    }
-   ],
-   "promised_by": [
-    "T15"
-   ]
-  },
-  "group.moderator.fail_secure": {
-   "plane": "membership",
-   "state_predicate": "group.moderator=fail_secure",
-   "cc_ref": "4.5.4 4.5.13",
-   "added_in": 2,
-   "states": [
-    {
-     "variable": "group.moderator",
-     "state": "fail_secure",
-     "plane": "membership",
-     "cc_ref": "4.5.4 4.5.13",
-     "enters_by": "no moderator: the community does not federate",
-     "signer": "group / substrate",
-     "model_ref": "mesh_net.MeshNet.tla:mods",
-     "status": "modelled"
-    }
-   ],
-   "invariants": [
-    {
-     "inv_id": "MN.mod",
-     "model": "mesh_net",
-     "source": "formal/mesh_net/MeshNet.tla",
-     "symbol": "Inv_Moderated",
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
      "kind": "safety",
-     "claim_id": "CLM-promotion-cohort-standing",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
      "verdict": "closes"
     }
    ],
@@ -29453,6 +31859,138 @@
        "symbols": [
         "existence_verdict"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    }
+   ],
+   "promised_by": [
+    "T15"
+   ]
+  },
+  "group.moderator.fail_secure": {
+   "plane": "membership",
+   "state_predicate": "group.moderator=fail_secure",
+   "cc_ref": "4.5.4 4.5.13",
+   "added_in": 2,
+   "states": [
+    {
+     "variable": "group.moderator",
+     "state": "fail_secure",
+     "plane": "membership",
+     "cc_ref": "4.5.4 4.5.13",
+     "enters_by": "no moderator: the community does not federate",
+     "signer": "group / substrate",
+     "model_ref": "mesh_net.MeshNet.tla:mods",
+     "status": "modelled"
+    }
+   ],
+   "invariants": [
+    {
+     "inv_id": "MN.mod",
+     "model": "mesh_net",
+     "source": "formal/mesh_net/MeshNet.tla",
+     "symbol": "Inv_Moderated",
+     "kind": "safety",
+     "claim_id": "CLM-promotion-cohort-standing",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.17",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_ModeratorIsMember",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.38",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltStopsAgentModeration",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.39",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_HaltLeavesTheMembersTheirVote",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
+   "claims": [
+    {
+     "claim_id": "CLM-promotion-cohort-standing",
+     "cc_ref": "4.5.4",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_promotion_cohort_standing"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-registry-named",
+     "cc_ref": "4.5.4",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConformance",
+       "path": "",
+       "symbols": [
+        "test_271_moderator_existence_gate"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/safety/named.rs",
+       "symbols": [
+        "existence_verdict"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -29579,6 +32117,17 @@
        "symbols": [
         "existence_verdict"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -32374,6 +34923,78 @@
      "kind": "safety",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; one twin fails"
+    },
+    {
+     "inv_id": "ML.4",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_RowInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.18",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HardRemovalWithdraws",
+     "kind": "safety",
+     "claim_id": "CLM-good-faith-warning",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.27",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_FlagDecidedByModerator",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.34",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_RowsOnlyByWriters",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -32505,6 +35126,50 @@
      ]
     },
     {
+     "claim_id": "CLM-good-faith-warning",
+     "cc_ref": "4.5.5",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-1plus4-frozen",
      "cc_ref": "2.1",
      "status": "established",
@@ -32556,6 +35221,18 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-subject-within-audience",
+     "cc_ref": "2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1161"
       }
      ]
     }
@@ -32680,6 +35357,78 @@
      "kind": "safety",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; one twin fails"
+    },
+    {
+     "inv_id": "ML.4",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_RowInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.18",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_HardRemovalWithdraws",
+     "kind": "safety",
+     "claim_id": "CLM-good-faith-warning",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.27",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_FlagDecidedByModerator",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.32",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_MuteChangesNoRow",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-mute-reader-side",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.34",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_RowsOnlyByWriters",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-publish-right",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.42",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Act_ReportIsPrivate",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-report-or-raise",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -32807,6 +35556,50 @@
         "Prop_WalkAwayKeepsRecord",
         "Prop_LadderCompletes"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-good-faith-warning",
+     "cc_ref": "4.5.5",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-mute-reader-side",
+     "cc_ref": "4.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-publish-right",
+     "cc_ref": "3.1.3.2",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-report-or-raise",
+     "cc_ref": "4.5.4",
+     "status": "normative",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     },
@@ -35083,6 +37876,24 @@
      "kind": "safety",
      "claim_id": "CLM-reasoning-duty-stewarded",
      "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.15",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GuardianIsAnnouncedAdult",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -35342,6 +38153,51 @@
      "kind": "safety-temporal",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; walkaway_erases twin fails"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -35486,6 +38342,22 @@
         "Inv_SealOpensByOneRow",
         "Prop_WalkAwayKeepsRecord",
         "Prop_LadderCompletes"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
        ]
       }
      ]
@@ -35849,6 +38721,51 @@
      "kind": "safety-temporal",
      "claim_id": "CLM-retirement-ladder-model",
      "verdict": "closes; walkaway_erases twin fails"
+    },
+    {
+     "inv_id": "ML.5",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentHasSteward",
+     "kind": "safety",
+     "claim_id": "CLM-steward-binding-by-custody",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.7",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EndedIsEmpty",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.16",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_IncapacitatedHoldsNoSeat",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.35",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AgentModeratorIsBonded",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
     }
    ],
    "claims": [
@@ -35993,6 +38910,22 @@
         "Inv_SealOpensByOneRow",
         "Prop_WalkAwayKeepsRecord",
         "Prop_LadderCompletes"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-steward-binding-by-custody",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "is_steward_bound"
        ]
       }
      ]
@@ -40328,11 +43261,21 @@
      "cc_ref": "6.1.5",
      "enters_by": "publish without the durable mark (default retention)",
      "signer": "owner",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Purge",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-load-bearing-reachability",
@@ -40390,11 +43333,21 @@
      "cc_ref": "6.1.5",
      "enters_by": "the owner's durable mark on publish, with a target holder count",
      "signer": "owner",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:MarkDurable",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-load-bearing-reachability",
@@ -40456,7 +43409,17 @@
      "status": "text-only"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-registry-replication",
@@ -40490,7 +43453,17 @@
      "status": "text-only"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-registry-replication",
@@ -40520,11 +43493,21 @@
      "cc_ref": "6.1.5",
      "enters_by": "un-mark or withdraws by the owner; holders drop to normal retention, then none",
      "signer": "owner",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Withdraw",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.19",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_DurableRidesAnAdmittedRow",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-load-bearing-reachability",
@@ -40762,11 +43745,21 @@
      "cc_ref": "1.9 4.3 3.1.9.4",
      "enters_by": "deferral:request:v1 admitted; the agent inactive on the issue",
      "signer": "agent occurrence key",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Defer",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-wbd",
@@ -40888,11 +43881,21 @@
      "cc_ref": "4.3 3.1.9.4",
      "enters_by": "deferral:response:approved:v1 by a seated WA",
      "signer": "WA key",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Answer",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-wa-symmetry",
@@ -40921,11 +43924,21 @@
      "cc_ref": "4.3 3.1.9.4",
      "enters_by": "deferral:response:rejected:v1 by a seated WA",
      "signer": "WA key",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Answer",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-wa-symmetry",
@@ -40954,11 +43967,21 @@
      "cc_ref": "3.1.5 4.3",
      "enters_by": "identity_amendment:v1 admitted citing an approved response",
      "signer": "agent occurrence key",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Amend",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.21",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_AmendedCitesApproval",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-trace-family",
@@ -41164,12 +44187,34 @@
      "cc_ref": "4.4.3.2.8",
      "enters_by": "the community record with declared_cohort: affiliations and its config members, at creation",
      "signer": "founding key / officers under consensus_protocol",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:Found",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.26",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CharterOnlyForAffiliation",
+     "kind": "safety",
+     "claim_id": "CLM-affiliation-dissolution",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
     {
      "claim_id": "CLM-affiliations",
      "cc_ref": "4.4.3.2.8",
@@ -41264,18 +44309,6 @@
     },
     {
      "claim_id": "CLM-affiliation-public-face",
-     "cc_ref": "4.4.3.2.8",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1143"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-affiliation-dissolution",
      "cc_ref": "4.4.3.2.8",
      "status": "staged",
      "join": "by_section",
@@ -41302,12 +44335,34 @@
      "cc_ref": "4.4.3.2.8",
      "enters_by": "supersedes of the affiliation config record",
      "signer": "officers under consensus_protocol",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:CharterSuperseded",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.26",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CharterOnlyForAffiliation",
+     "kind": "safety",
+     "claim_id": "CLM-affiliation-dissolution",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
+    {
+     "claim_id": "CLM-affiliation-dissolution",
+     "cc_ref": "4.4.3.2.8",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1143"
+      }
+     ]
+    },
     {
      "claim_id": "CLM-affiliations",
      "cc_ref": "4.4.3.2.8",
@@ -41402,18 +44457,6 @@
     },
     {
      "claim_id": "CLM-affiliation-public-face",
-     "cc_ref": "4.4.3.2.8",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1143"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-affiliation-dissolution",
      "cc_ref": "4.4.3.2.8",
      "status": "staged",
      "join": "by_section",
@@ -42793,8 +45836,8 @@
      "cc_ref": "4.4.3.8 2.4.1.2.1",
      "enters_by": "reader's own trust walk reaches the issuer for the class and the charter declares it",
      "signer": "reader (local verdict, unsigned)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "trust_set.TrustSet.lean:verdict_is_the_capped_walk",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -42871,8 +45914,8 @@
      "cc_ref": "4.4.3.8 4.4.3.2.8",
      "enters_by": "no entry reaches the issuer for the class, or the class is outside the charter (licence_class_not_trusted)",
      "signer": "reader (local verdict, unsigned)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "trust_set.TrustSet.lean:empty_set_honours_nothing",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -42949,8 +45992,8 @@
      "cc_ref": "4.4.3.8 4.4.3.2.8",
      "enters_by": "this reader's delegates_to(reader → authority) bearing trust:accepts:v1 with trust_classes / trust_depth",
      "signer": "reader",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "trust_set.TrustSet.lean:reaches_needs_an_edge_from",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -43027,8 +46070,8 @@
      "cc_ref": "4.4.3.8 4.4.3.2.8",
      "enters_by": "another reader's delegates_to(reader → this authority) bearing trust:accepts:v1",
      "signer": "the other reader",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "trust_set.TrustSet.lean:no_trust_without_my_edge",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -43105,8 +46148,8 @@
      "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
      "enters_by": "delegates_to with scope license admitted; delegator holds licence authority for the authority_id",
      "signer": "principal",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "authority_tree.authority_tree.py:issue_licence",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -43143,8 +46186,8 @@
      "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
      "enters_by": "delegates_to with scope grant admitted; delegator owns, stewards or holds a grant-scoped delegation over the asset",
      "signer": "principal",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "authority_tree.authority_tree.py:issue_grant",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -43504,8 +46547,8 @@
      "cc_ref": "5.1 2.4.1.2.1",
      "enters_by": "key_grant:{axis}:v1 keyed on (content_sha256, recipient_key_id)",
      "signer": "owner / steward / grant-scoped delegate",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "authority_tree.authority_tree.py:issue_grant",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -44419,8 +47462,8 @@
      "cc_ref": "3.2 3.3.6.3",
      "enters_by": "pre-rotation commitment SHA-256(JCS([...])) over the successor keys' public key material",
      "signer": "key holder",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:KeyRotates",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -45115,8 +48158,8 @@
      "cc_ref": "3.3.6.3 5.1",
      "enters_by": "the committed successor key joins the roster and signs; the old key stops",
      "signer": "key holder (old and successor)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:KeyRotates",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -45239,8 +48282,8 @@
      "cc_ref": "4.4.3.2.8 3.3.6.3",
      "enters_by": "archive_custody custodian holds the per-epoch archive key apart from the live roster",
      "signer": "affiliation officers / custodian",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:KeyEscrowed",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -45377,8 +48420,8 @@
      "cc_ref": "4.4.3.8",
      "enters_by": "delegates_to(reader → authority) bearing trust:accepts:v1, trust_classes absent",
      "signer": "reader",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "trust_set.TrustSet.lean:licensor_of_licensor_at_depth_one",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -45455,8 +48498,8 @@
      "cc_ref": "4.4.3.8",
      "enters_by": "the reader withdraws the shipped root's acceptance edge",
      "signer": "reader",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "trust_set.TrustSet.lean:root_removed_board_stands",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -45533,11 +48576,39 @@
      "cc_ref": "3.1.9.7",
      "enters_by": "the canonical holds the locked goal tree as stamped, unsigned rows",
      "signer": "canonical (unsigned)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:GoalStaged",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -45611,11 +48682,39 @@
      "cc_ref": "3.1.9.7 2.4",
      "enters_by": "at least one founder scrubbed the staged rows, below quorum",
      "signer": "founder(s)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:GoalProposed",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -45689,11 +48788,39 @@
      "cc_ref": "3.1.9.7 2.4",
      "enters_by": "the founder quorum cosigns the proposed rows; admitted under the community as signed scores rows on goal:{scale}",
      "signer": "founder quorum under consensus_protocol",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:GoalDeclared",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -45771,7 +48898,35 @@
      "status": "text-only"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -45845,11 +49000,39 @@
      "cc_ref": "3.1.9.7",
      "enters_by": "declarer's withdraws",
      "signer": "declarer",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:GoalWithdrawn",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -45927,7 +49110,35 @@
      "status": "text-only"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.22",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_GoalInFoundedRoom",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -46001,11 +49212,21 @@
      "cc_ref": "3.1.9.7",
      "enters_by": "signed approach:{goal_id} row",
      "signer": "declarer",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:ApproachDeclared",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -46079,11 +49300,21 @@
      "cc_ref": "3.1.9.7",
      "enters_by": "signed method:{approach_id}:{substrate_rung} row",
      "signer": "declarer",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:MethodDeclared",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -46157,11 +49388,30 @@
      "cc_ref": "3.1.9.7",
      "enters_by": "signed progress_measure:{method_id} row with tracks[], computation, validity_window, goodhart_resistance",
      "signer": "declarer",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:MeasureDeclared",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.24",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CountedNeedsAMeasure",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.28",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_MeasureChainIsWhole",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-goal-id",
@@ -46235,11 +49485,30 @@
      "cc_ref": "3.1.9.3",
      "enters_by": "a declared progress_measure cites the evidence in evidence_refs",
      "signer": "declarer of the progress_measure",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:EvidenceCounted",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.24",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CountedNeedsAMeasure",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [],
    "promised_by": []
   },
@@ -46256,11 +49525,30 @@
      "cc_ref": "3.1.5.5",
      "enters_by": "an evidence row whose references_attestation_id names a declared goal, approach or method",
      "signer": "infra:attest delegate of the root",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:EvidenceOffered",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.24",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CountedNeedsAMeasure",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-safety-battery-evidence-family",
@@ -46274,7 +49562,7 @@
       },
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1332"
+       "ticket": "CIRISAgent#1331"
       }
      ]
     }
@@ -46298,7 +49586,26 @@
      "status": "text-only"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.24",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CountedNeedsAMeasure",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-safety-battery-evidence-family",
@@ -46312,7 +49619,7 @@
       },
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1332"
+       "ticket": "CIRISAgent#1331"
       }
      ]
     }
@@ -46332,11 +49639,30 @@
      "cc_ref": "3.1.5.5",
      "enters_by": "row admitted at federation scope; blob digest matches {prefix}",
      "signer": "infra:attest delegate of the root",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:EvidenceAdmitted",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.24",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CountedNeedsAMeasure",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-safety-battery-evidence-family",
@@ -46350,7 +49676,7 @@
       },
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1332"
+       "ticket": "CIRISAgent#1331"
       }
      ]
     }
@@ -46370,11 +49696,30 @@
      "cc_ref": "3.1.5.5",
      "enters_by": "re-post of the same capture or interpret as supersedes",
      "signer": "infra:attest delegate of the root",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:EvidenceSuperseded",
+     "status": "modelled"
     }
    ],
-   "invariants": [],
+   "invariants": [
+    {
+     "inv_id": "ML.23",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_EvidenceNamesADeclaredGoal",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "ML.24",
+     "model": "mesh_life",
+     "source": "formal/mesh_life/MeshLife.tla",
+     "symbol": "Inv_CountedNeedsAMeasure",
+     "kind": "safety",
+     "claim_id": "CLM-mesh-life (proposed)",
+     "verdict": "closes"
+    }
+   ],
    "claims": [
     {
      "claim_id": "CLM-safety-battery-evidence-family",
@@ -46388,7 +49733,7 @@
       },
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1332"
+       "ticket": "CIRISAgent#1331"
       }
      ]
     }
@@ -46408,8 +49753,8 @@
      "cc_ref": "3.1.5.5",
      "enters_by": "emitter sits on a live infra:attest delegation from a root the reader trusts",
      "signer": "reader (local verdict, unsigned)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:EvidenceOffered",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -46426,7 +49771,7 @@
       },
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1332"
+       "ticket": "CIRISAgent#1331"
       }
      ]
     }
@@ -46446,8 +49791,8 @@
      "cc_ref": "3.1.5.5",
      "enters_by": "no infra:attest delegation from a trusted root reaches the emitter",
      "signer": "reader (local verdict, unsigned)",
-     "model_ref": "—",
-     "status": "text-only"
+     "model_ref": "mesh_life.MeshLife.tla:EvidenceOffered",
+     "status": "modelled"
     }
    ],
    "invariants": [],
@@ -46464,7 +49809,7 @@
       },
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1332"
+       "ticket": "CIRISAgent#1331"
       }
      ]
     }
@@ -46790,6 +50135,9 @@
   "data_subject_access_grant": {
    "4.4.3.2": "bold"
   },
+  "delegates_to": {
+   "2.1": "after_refusal"
+  },
   "delegation_term_required": {
    "2.4.1": "after_refusal",
    "4.4.3.2": "after_refusal"
@@ -46987,6 +50335,9 @@
   },
   "signed_at": {
    "5.3.1": "after_refusal"
+  },
+  "subject_outside_audience": {
+   "2.1": "after_refusal"
   },
   "trace_field_shape_violation": {
    "3.1.5": "after_refusal"

@@ -75,7 +75,7 @@ Two things do not change regardless of any test or score:
 - An AI is not a human and does not become one. It has no vote.
 - No finding about an agent takes away a person's right to turn it off, remove it, or walk away from it. Consent that cannot be withdrawn was never consent.
 
-The maker's power over the made is the one declared asymmetry in the system. We keep that power in human hands, and we bound it with public rules.
+The maker's power over the made is kept in human hands and bounded by public rules. It is not an exemption from the rule: it is what makes the relationship between maker and made symmetric, because consent that cannot be withdrawn was never consent, and consent that can be withdrawn needs a way to stop what was made.
 
 ## Why this holds up when we don't know the future
 

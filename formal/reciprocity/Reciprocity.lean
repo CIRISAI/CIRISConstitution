@@ -69,10 +69,11 @@ structure RoleRule where
   occupies : Kind → Role → Bool
   humanHolds : occupies .human .holder = true
   agentHeld  : occupies .agent .held = true
-  /-- the one asymmetry: an agent does not hold a root for itself -/
+  /-- the structural premise: an agent does not hold a root for itself (CC 1.13.2 reads the halt
+      this premise carries as the condition of symmetry, not an asymmetry) -/
   agentNeverHolder : occupies .agent .holder = false
 
-/-- a witness: the role reading is satisfiable together with the asymmetry -/
+/-- a witness: the role reading is satisfiable together with that premise -/
 def roleWitness : RoleRule where
   duty := fun _ => true
   bothBound := ⟨rfl, rfl⟩
