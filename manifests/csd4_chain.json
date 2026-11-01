@@ -6,7 +6,7 @@
    "invariants_sha256": "fc32f0511041e8d934e2277f46b74037cc5caf7e3fadf09b9ea3a99fed12ba11",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "9469dd9907d8eeb6e34dd1e1c15322583e7086e3bfd2a52e4fd1bba527ebf536",
+   "claims_sha256": "da2d46728abcdbf4cf8e661f726591e1f796605981f3e9f142d0cc0a5b434482",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,16 +30,16 @@
    "atoms": 156,
    "states": 222,
    "invariants": 167,
-   "claims": 518,
+   "claims": 521,
    "entries": 20,
-   "refusal_tokens": 96
+   "refusal_tokens": 98
   },
   "not_here": {
    "trace_step_refusals": "the per-step refused map of each T0–T19 trace is CIRISServer's harness output (packaging/csd4/traces.json vendored in CIRISClient); CC indexes the tokens it names by section under refusal_tokens",
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "94f333b50c6fd363abc6955aa6d8bbfa5f66f451e8f20638217bf2ecacfcd9e7"
+  "chain_sha256": "7e23ff6359756b512f6a3141f9c05c9700faa172f44432873d7555799ea297dc"
  },
  "chain": [
   {
@@ -13020,6 +13020,17 @@
        "symbols": [
         "Inv_AntiGoodhart"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -26764,6 +26775,17 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -27016,6 +27038,17 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -27266,6 +27299,17 @@
        "symbols": [
         "Inv_AntiGoodhart"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-retraction-unless",
+     "cc_ref": "2.4.1.1",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -32556,6 +32600,18 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-subject-within-audience",
+     "cc_ref": "2.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1161"
       }
      ]
     }
@@ -46790,6 +46846,9 @@
   "data_subject_access_grant": {
    "4.4.3.2": "bold"
   },
+  "delegates_to": {
+   "2.1": "after_refusal"
+  },
   "delegation_term_required": {
    "2.4.1": "after_refusal",
    "4.4.3.2": "after_refusal"
@@ -46987,6 +47046,9 @@
   },
   "signed_at": {
    "5.3.1": "after_refusal"
+  },
+  "subject_outside_audience": {
+   "2.1": "after_refusal"
   },
   "trace_field_shape_violation": {
    "3.1.5": "after_refusal"

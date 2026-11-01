@@ -5,6 +5,10 @@ The CIRIS Constitution is one document with one version line. Each release below
 ## 1.0-rc15 (open)
 
 - Opened 2026-11-01 after the rc14 tag.
+- Whom a row at a bounded scope may name (2.1): only keys within its audience, members by the roster fold at the row's instant or the key the family delivers it to; a row naming a key outside its audience is refused, since standing without reach is no standing; a delegation's `attested_key_id` is the delegate.
+- Retraction (2.4.1.1): a person retracts peer speech about themself, the retraction a visible signed act with the speaker attributed, and only contests a duty-holder's record on the accountability trail, an act of a body under a legal-weight class, or a cosigned act; an affiliation never withdraws a statement about itself (4.4.3.2.8).
+- What the person named sees (3.4.5): always that the record exists, its kind, its consequence and who answers for it; a duty-holder's record may shield its reporter.
+- The good-faith warning (4.5.5): said as peer speech it is the named person's to retract; filed with the room's named moderator it is a duty-holder's record the person cannot close, contests, and sees in existence and effect, the action under the floor that no single vote excludes. The standing model proves the four scenarios: a conviction, a review of a business, gossip, a warning.
 
 ## 1.0-rc14 (released 2026-10-29, tag v1.0-rc14)
 
