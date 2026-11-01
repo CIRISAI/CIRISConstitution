@@ -1,5 +1,5 @@
 ### GRID
-Counts are families whose verb list includes that verb (a family counts in several columns). Last column is families per kind. Totals: 169 families, THING 78, ACCOUNT 76, RECORD 15.
+Counts are families whose verb list includes that verb (a family counts in several columns). Last column is families per kind. Totals: 169 families, THING 78, ACCOUNT 91; 15 families maintain the Record relation (the +1 is a relation, not a kind: those rows are Facts about the record, with erasure none or legal hold and a byte-equal projection).
 
 | kind | attest | authorize | replace | withdraw | recant | carries | families |
 |---|---|---|---|---|---|---|---|
@@ -8,13 +8,14 @@ Counts are families whose verb list includes that verb (a family counts in sever
 | Manner | 3 | 0 | 1 | 3 | 1 | 0 | 3 |
 | Identity | 14 | 2 | 9 | 12 | 0 | 0 | 16 |
 | Confidence | 15 | 0 | 2 | 14 | 10 | 2 | 15 |
-| Facts | 46 | 0 | 20 | 44 | 26 | 0 | 46 |
+| Facts | 61 | 0 | 23 | 52 | 27 | 2 | 61 |
 | Circumstances | 12 | 0 | 10 | 8 | 0 | 0 | 12 |
 | Process | 9 | 0 | 5 | 3 | 0 | 0 | 9 |
 | Model | 5 | 0 | 0 | 5 | 5 | 0 | 5 |
 | Structure | 8 | 0 | 2 | 7 | 5 | 0 | 8 |
 | Premises | 2 | 0 | 2 | 2 | 1 | 0 | 2 |
-| Record | 15 | 0 | 3 | 8 | 1 | 2 | 15 |
+
+The profile each kind admits, and the carries firewall, are checked as a machine in [`../family_model/`](../family_model/): every row above must fit its kind's profile, and the registry's own occupancy is the evidence the profiles rest on (authorize only under Rules and Identity; thing-or-account a function of kind).
 
 ### EMPTY
 - (Priorities, authorize): principled. A weighting is scored, never delegated; delegating who-goes-first would itself be a Rules grant.

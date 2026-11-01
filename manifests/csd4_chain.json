@@ -3,7 +3,7 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "518704254f8527b5d52975e7c05267ac903eda6d620ca01a3adf9d7bfd893786",
-   "invariants_sha256": "0f4ff15f06a19a4b413ff498dbad870d81f2924fdafea12c5b7f36703147da8b",
+   "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
    "claims_sha256": "793ecb3f79d4a314de3c59ea158d6c85f53b79dd4d4c04cfe433369959a5d3b9",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 209,
+   "invariants": 216,
    "claims": 528,
    "entries": 20,
    "refusal_tokens": 98
