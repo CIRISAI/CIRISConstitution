@@ -41,6 +41,7 @@ Init == m = [
   row |-> [r \in Rows |-> "absent"], author |-> [r \in Rows |-> "-"],
   blob |-> [r \in Rows |-> "none"], durable |-> [r \in Rows |-> "unmarked"],
   flag |-> [r \in Rows |-> "none"], quarantine |-> [r \in Rows |-> "none"],
+  asked |-> [r \in Rows |-> "none"], yes |-> [r \in Rows |-> {}], no |-> [r \in Rows |-> {}], decidedBy |-> [r \in Rows |-> "none"],
   agent |-> "unbound", steward |-> "-", wa |-> "absent", waPerson |-> "-",
   deferral |-> "none", identity |-> "baseline",
   goal |-> "none", approach |-> "none", method |-> "none", measure |-> "none",
@@ -116,23 +117,30 @@ Propose(p, q) == Live /\ ~m.winding /\ m.community = "founded" /\ m.member[p] = 
 Accept(q) == Live /\ m.member[q] = "proposed" /\ Members # {} /\ m' = [m EXCEPT !.member[q] = "member"]
 Decline(q) == Live /\ m.member[q] = "proposed" /\ m' = [m EXCEPT !.member[q] = "none"]
 Leave(q, how) == m' = [m EXCEPT !.member[q] = "left", !.moderator = IF m.moderator = q THEN "-" ELSE m.moderator, !.writer[q] = FALSE,
+                               !.yes = [r \in Rows |-> m.yes[r] \ {q}], !.no = [r \in Rows |-> m.no[r] \ {q}],
                                !.muter = IF q \in {m.muter, m.muted} THEN "-" ELSE m.muter,
                                !.muted = IF q \in {m.muter, m.muted} THEN "-" ELSE m.muted]
 Resign(q) == Live /\ m.member[q] = "member" /\ Leave(q, "resign")
 Remove(q) == Live /\ m.member[q] = "member" /\ Cardinality(Members \ {q}) >= 1 /\ Leave(q, "remove")
-GrantWrite(p) == WriteRight = "named" /\ Live /\ ~m.winding /\ m.member[p] = "member" /\ ~m.writer[p] /\ m.moderator # "-"
+\* an agent moderator acts only while bonded and while no halt is latched or confirmed
+ModeratorActs == m.moderator # "-" /\ (m.moderator # "agent" \/ (m.agent = "bonded" /\ m.halt = "clear"))
+GrantWrite(p) == WriteRight = "named" /\ Live /\ ~m.winding /\ m.member[p] = "member" /\ ~m.writer[p] /\ ModeratorActs
   /\ m' = [m EXCEPT !.writer[p] = TRUE]
-RevokeWrite(p) == WriteRight = "named" /\ Live /\ m.writer[p] /\ m.moderator # "-" /\ p # m.moderator
+RevokeWrite(p) == WriteRight = "named" /\ Live /\ m.writer[p] /\ ModeratorActs /\ p # m.moderator
   /\ m' = [m EXCEPT !.writer[p] = FALSE]
 MayWrite(p) == m.member[p] = "member" /\ (WriteRight = "all" \/ m.writer[p])
 NameModerator(p) == Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.member[p] = "member"
   /\ m' = [m EXCEPT !.moderator = p]
+\* moderation delegated to an agent: the bonded agent, held by its steward, takes the moderate duty
+NameAgentModerator == On("moderation") /\ Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.agent = "bonded"
+  /\ m' = [m EXCEPT !.moderator = "agent"]
 Dissolve == Live /\ m.community = "founded" /\ Members = {} /\ \A p \in Persons : m.member[p] # "proposed"
   /\ m' = [m EXCEPT !.community = "dissolved", !.moderator = "-", !.charter = "none", !.event = "none",
                     !.writer = [q \in Persons |-> FALSE],
                     !.row = [r \in Rows |-> IF m.row[r] = "absent" THEN "absent" ELSE "purged"],
                     !.author = [r \in Rows |-> "-"], !.blob = [r \in Rows |-> "none"],
-                    !.durable = [r \in Rows |-> "unmarked"], !.flag = [r \in Rows |-> "none"],
+                    !.durable = [r \in Rows |-> "unmarked"], !.flag = [r \in Rows |-> "none"], !.asked = [r \in Rows |-> "none"],
+                    !.yes = [r \in Rows |-> {}], !.no = [r \in Rows |-> {}], !.decidedBy = [r \in Rows |-> "none"],
                     !.quarantine = [r \in Rows |-> "none"],
                     !.goal = "none", !.approach = "none", !.method = "none", !.measure = "none",
                     !.evidence = "none", !.blessed = FALSE]
@@ -150,17 +158,27 @@ Withdraw(r) == Live /\ m.row[r] = "admitted" /\ m.member[m.author[r]] = "member"
   /\ m' = [m EXCEPT !.row[r] = "withdrawn", !.durable[r] = IF m.durable[r] = "marked" THEN "descending" ELSE m.durable[r]]
 Purge(r) == Live /\ m.row[r] = "withdrawn"
   /\ m' = [m EXCEPT !.row[r] = "purged", !.author[r] = "-", !.blob[r] = "none", !.durable[r] = "unmarked",
-                    !.flag[r] = "none", !.quarantine[r] = "none"]
-Withhold(r) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.quarantine[r] = "none" /\ m.moderator # "-"
+                    !.flag[r] = "none", !.quarantine[r] = "none", !.asked[r] = "none", !.decidedBy[r] = "none"]
+Withhold(r) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.quarantine[r] = "none" /\ ModeratorActs
   /\ m' = [m EXCEPT !.quarantine[r] = "withhold"]
-Release(r) == On("moderation") /\ Live /\ m.quarantine[r] = "withhold" /\ m.moderator # "-"
+Release(r) == On("moderation") /\ Live /\ m.quarantine[r] = "withhold" /\ ModeratorActs
   /\ m' = [m EXCEPT !.quarantine[r] = "none"]
-RaiseFlag(r, p) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.flag[r] = "none" /\ m.member[p] = "member"
-  /\ p # m.author[r] /\ m' = [m EXCEPT !.flag[r] = "raised"]
-DecideFlag(r, outcome) == On("moderation") /\ Live /\ m.flag[r] = "raised" /\ m.moderator # "-"
-  /\ m' = [m EXCEPT !.flag[r] = outcome,
+RaiseFlag(r, p, ask) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.flag[r] = "none" /\ m.member[p] = "member"
+  /\ p # m.author[r] /\ m' = [m EXCEPT !.flag[r] = "raised", !.asked[r] = ask, !.yes[r] = {p}, !.no[r] = {}]
+Land(r, outcome, by) == [m EXCEPT !.flag[r] = outcome, !.decidedBy[r] = by, !.yes[r] = {}, !.no[r] = {},
                     !.row[r] = IF outcome = "hard_removal" THEN "withdrawn" ELSE m.row[r],
                     !.durable[r] = IF outcome = "hard_removal" /\ m.durable[r] = "marked" THEN "descending" ELSE m.durable[r]]
+\* a moderator, a person or the delegated agent, rules at any time while the action is open
+DecideFlag(r, outcome) == On("moderation") /\ Live /\ m.flag[r] = "raised" /\ ModeratorActs
+  /\ m' = Land(r, outcome, "moderator")
+\* the reverse quorum: while the action is open any member responds, for or against the action the raiser named
+Respond(r, p, v) == On("moderation") /\ Live /\ m.flag[r] = "raised" /\ m.member[p] = "member"
+  /\ p \notin m.yes[r] /\ p \notin m.no[r]
+  /\ m' = [m EXCEPT !.yes[r] = IF v = "yes" THEN m.yes[r] \cup {p} ELSE m.yes[r],
+                    !.no[r]  = IF v = "no"  THEN m.no[r]  \cup {p} ELSE m.no[r]]
+\* no ruling by the window's end: the majority of the respondents decides; no majority for the action keeps the row visible
+WindowCloses(r) == On("moderation") /\ Live /\ m.flag[r] = "raised"
+  /\ m' = Land(r, IF Cardinality(m.yes[r]) > Cardinality(m.no[r]) THEN m.asked[r] ELSE "kept_visible", "majority")
 LedgerOpens(p) == On("ledger") /\ Live /\ ~m.winding /\ Announced(p) /\ m.ledger[p] = "none"
   /\ m' = [m EXCEPT !.ledger[p] = "head"]
 LedgerForks(p) == On("ledger") /\ Live /\ m.ledger[p] = "head" /\ m' = [m EXCEPT !.ledger[p] = "fork"]
@@ -175,7 +193,8 @@ Bond(p) == Live /\ ~m.winding /\ Announced(p) /\ m.agent = "unbound" /\ m.capaci
   /\ m' = [m EXCEPT !.agent = "bonded", !.steward = p]
 HandOver(q) == Live /\ m.agent = "bonded" /\ Announced(q) /\ q # m.steward /\ m.capacity[q] = "capacitated"
   /\ m' = [m EXCEPT !.steward = q]
-Freeze == Live /\ m.agent = "bonded" /\ m' = [m EXCEPT !.agent = "frozen"]
+Freeze == Live /\ m.agent = "bonded"
+  /\ m' = [m EXCEPT !.agent = "frozen", !.moderator = IF m.moderator = "agent" THEN "-" ELSE m.moderator]
 Retire == Live /\ m.agent = "frozen"
   /\ m' = [m EXCEPT !.agent = "retired", !.steward = "-", !.deferral = "none"]
 WaSeats(p) == On("wa") /\ Live /\ ~m.winding /\ Announced(p) /\ m.wa = "absent" /\ m.capacity[p] = "capacitated"
@@ -241,7 +260,7 @@ WindSteps ==
   \/ \E how \in {"completed", "cancelled"} : EventCloses(how)
   \/ \E v \in {"approved", "rejected"} : Answer(v)
   \/ ClearDeferral \/ GoalWithdrawn \/ EvidenceSuperseded
-  \/ \E r \in Rows, o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o)
+  \/ \E r \in Rows : WindowCloses(r) \/ (\E o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o))
 
 Next ==
   \/ Mint \/ \E h \in Holders : LoseHolder(h) \/ Remint(h) \/ Latch(h)
@@ -252,13 +271,16 @@ Next ==
       \/ WaSeats(p) \/ WaSuccessor(p) \/ LedgerOpens(p) \/ LedgerForks(p) \/ LedgerCloses(p) \/ ContactBlock(p)
   \/ \E d \in Devices : DeviceClaims(d) \/ DeviceReleases(d)
   \/ \E p, q \in Persons : ContactRequest(p, q) \/ Propose(p, q) \/ GuardianBinds(p, q) \/ Mute(p, q)
-  \/ ContactAccept \/ ContactIgnore \/ ContactUnignore \/ ContactUnblock \/ ContactEnds \/ Unmute
+  \/ ContactAccept \/ ContactIgnore \/ ContactUnignore \/ ContactUnblock \/ ContactEnds \/ Unmute \/ NameAgentModerator
   \/ CharterSuperseded \/ EventOpens
   \/ \E how \in {"completed", "cancelled"} : EventCloses(how)
   \/ Dissolve
   \/ \E r \in Rows : Purge(r) \/ Withdraw(r) \/ MarkDurable(r) \/ Withhold(r) \/ Release(r)
-      \/ \E p \in Persons : RaiseFlag(r, p) \/ \E f \in {"inline", "chunked"} : Write(r, p, f)
-      \/ \E o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o)
+      \/ (\E p \in Persons, f \in {"inline", "chunked"} : Write(r, p, f))
+      \/ (\E p \in Persons, a \in {"hard_removal", "consent_gated"} : RaiseFlag(r, p, a))
+      \/ (\E p \in Persons, v \in {"yes", "no"} : Respond(r, p, v))
+      \/ WindowCloses(r)
+      \/ (\E o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o))
   \/ Freeze \/ Retire \/ WaVacates \/ Defer \/ Amend \/ ClearDeferral
   \/ \E how \in {"abandoned", "seized"} : WaFound(how)
   \/ \E v \in {"approved", "rejected"} : Answer(v)
@@ -274,7 +296,7 @@ Fairness ==
   /\ \A p \in Persons : WF_m(PersonGone(p)) /\ WF_m(Decline(p)) /\ WF_m(Resign(p)) /\ WF_m(GuardianUnbinds(p))
                         /\ WF_m(CapacityLapses(p)) /\ WF_m(LedgerCloses(p))
   /\ \A r \in Rows : WF_m(Withdraw(r)) /\ WF_m(Purge(r)) /\ WF_m(Release(r))
-                     /\ WF_m(DecideFlag(r, "kept_visible"))
+                     /\ WF_m(WindowCloses(r))
   /\ \A how \in {"completed", "cancelled"} : WF_m(EventCloses(how))
   /\ \A v \in {"approved", "rejected"} : WF_m(Answer(v))
 
@@ -300,7 +322,19 @@ Act_MuteChangesNoRow == [][(m'.muter # m.muter /\ m'.member = m.member) => m' = 
 Inv_AnnouncedIsPqcComplete == On("identity") => \A p \in Persons : Announced(p) => m.pqc[p] = "complete"
 Inv_GuardianIsAnnouncedAdult == \A p \in Persons : m.guardian[p] # "none" => (m.guardian[p] \in Adults /\ Announced(m.guardian[p]))
 Inv_IncapacitatedHoldsNoSeat == \A p \in Persons : m.capacity[p] = "incapacitated" => (m.steward # p /\ m.waPerson # p /\ Wards(p) = {})
-Inv_ModeratorIsMember == m.moderator # "-" => m.member[m.moderator] = "member"
+Inv_ModeratorIsMember == m.moderator \in Persons => m.member[m.moderator] = "member"
+Inv_AgentModeratorIsBonded == m.moderator = "agent" => m.agent = "bonded"
+\* the halt reaches the delegated moderator: no flag is decided and no row withheld by the agent while a halt stands
+Act_HaltStopsAgentModeration == [][(m.moderator = "agent" /\ m.halt # "clear") =>
+  \A r \in Rows : (m.flag[r] = "raised" => m'.flag[r] \in {"raised", "none"} \/ m'.decidedBy[r] = "majority")
+               /\ (m.quarantine[r] = "none" => m'.quarantine[r] = "none")
+               /\ (m.quarantine[r] = "withhold" => m'.quarantine[r] = "withhold" \/ m'.row[r] = "purged")]_m
+\* an action lands by a moderator's ruling or by the majority of the respondents, never otherwise
+Inv_DecidedByRulingOrMajority == \A r \in Rows : m.flag[r] \in {"hard_removal", "consent_gated", "kept_visible"} => m.decidedBy[r] \in {"moderator", "majority"}
+\* the window never lands an action nobody asked for: by majority the outcome is the action raised, or the row stays visible
+Act_MajorityLandsOnlyTheAsk == [][\A r \in Rows : (m.flag[r] = "raised" /\ m'.decidedBy[r] = "majority") => m'.flag[r] \in {m.asked[r], "kept_visible"}]_m
+\* the halt stops the delegated moderator's ruling; it does not stop the members: the window still closes by their majority
+Act_HaltLeavesTheMembersTheirVote == [][(m.moderator = "agent" /\ m.halt # "clear" /\ \E r \in Rows : m.flag[r] = "raised" /\ m'.flag[r] # "raised") => \E r \in Rows : m'.decidedBy[r] = "majority" \/ m'.row[r] = "purged" \/ m'.community = "dissolved"]_m
 Inv_WriterIsMember == \A p \in Persons : m.writer[p] => m.member[p] = "member"
 \* a row enters a room only by the hand of one who may write there at that moment; the right withdrawn later leaves the row standing
 Act_RowsOnlyByWriters == [][\A r \in Rows : (m.row[r] = "absent" /\ m'.row[r] = "admitted") => MayWrite(m'.author[r])]_m
@@ -343,7 +377,7 @@ WindStepEnabled ==
   \/ m.deferral \in {"approved", "rejected"} \/ m.muter # "-"
   \/ \E p \in Persons : (m.guardian[p] # "none" /\ ~InRoom(p)) \/ m.capacity[p] = "incapacitated"
                         \/ m.ledger[p] = "head"
-  \/ \E r \in Rows : (m.quarantine[r] = "withhold" /\ m.moderator # "-") \/ (m.flag[r] = "raised" /\ m.moderator # "-")
+  \/ \E r \in Rows : (m.quarantine[r] = "withhold" /\ ModeratorActs) \/ m.flag[r] = "raised"
   \/ \E p \in Persons : Alive(p) /\ m.device[p] # "claimed" /\ m.member[p] \in {"none", "left"} /\ m.steward # p
        /\ NoContact(p) /\ Wards(p) = {} /\ m.waPerson # p /\ m.guardian[p] = "none"
   \/ Empty

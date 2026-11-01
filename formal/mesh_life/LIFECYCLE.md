@@ -30,7 +30,7 @@ A holder can be **lost** (hardware gone, person gone, person coerced). **A major
 
 ## 6. Members write
 
-**A member writes a row** in the room, inline or chunked. **The author marks it durable**; a withdrawn durable row descends. **The author withdraws it**; a withdrawn row is then **purged**. A row never comes back once withdrawn. **The moderator withholds a row** in quarantine and **releases it**. **Another member flags a row**, and **the moderator decides**: kept visible, consent-gated, or a hard removal, which withdraws the row as a duty-holder's record the author cannot undo. **An announced person opens their ledger**, **checkpoints it**, **continues it**, **closes it**; **a fork** is evidence against them.
+**A member writes a row** in the room, inline or chunked. **The author marks it durable**; a withdrawn durable row descends. **The author withdraws it**; a withdrawn row is then **purged**. A row never comes back once withdrawn. **The moderator withholds a row** in quarantine and **releases it**. **Any member raises a moderation action** on a row, naming what they ask, and a window opens; **members respond**, for or against; **a moderator rules at any time**, and the moderator may be an agent held by a steward, whose ruling the halt stops; **if nobody has ruled when the window closes, the majority of the respondents decides**, landing the action asked or keeping the row visible. A hard removal withdraws the row as a duty-holder's record the author cannot undo. **An announced person opens their ledger**, **checkpoints it**, **continues it**, **closes it**; **a fork** is evidence against them.
 
 ## 7. A person consents, and revokes
 
