@@ -4,7 +4,7 @@ The rulebook for a network that people, organizations and AI systems share, runn
 
 **The mesh is live.** The CIRIS app is on Google Play and the App Store, and runs on Android, iOS, the web, Linux, macOS and Windows, in 29 languages. It implements this document: every row it sends is one of the five kinds below, under the key of the person who sent it. Five open-source implementations carry the rows and a conformance suite checks them against each other.
 
-**This tree:** 1.0-rc15, open. **Latest release:** 1.0-rc14, 2026-10-29, tag `v1.0-rc14`. The register ties every rule to the code, test or proof behind it or says plainly that nothing does yet: 372 established rows, 35 normative, 117 staged. Nineteen machine-checked models, and the life of a mesh told as one story whose model closes ([`formal/`](formal/)). **Steward:** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Releases: [`CHANGELOG.md`](CHANGELOG.md).
+**This tree:** 1.0-rc15. **Latest release:** 1.0-rc15, 2026-11-01, tag `v1.0-rc15`. The register ties every rule to the code, test or proof behind it or says plainly that nothing does yet: 372 established rows, 39 normative, 117 staged. Nineteen machine-checked models, and the life of a mesh told as one story whose model closes ([`formal/`](formal/)). **Steward:** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Releases: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What it protects
 
