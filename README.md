@@ -4,6 +4,8 @@ The rulebook for a network that people, organizations and AI systems share, runn
 
 **The mesh is live.** The CIRIS app is on Google Play and the App Store, and runs on Android, iOS, the web, Linux, macOS and Windows, in 29 languages. It implements this document: every row it sends is one of the five kinds below, under the key of the person who sent it. Five open-source implementations carry the rows and a conformance suite checks them against each other.
 
+**What it is for.** Messages, groups, posts, photos and files, calls, events, reviews of the businesses around you, and AI agents that work for you: a social network and a personal store in one, with no operator. Your things live on your own devices and copy between them, in five circles from just you outward: you, your family, your neighbours, the communities and businesses you join, everyone. Nothing leaves a circle unless you move it, and a stranger reaches you only if you chose to be found. Ignore, block and mute are yours and private. Each thing people do on a social network, and the rule that carries it, is listed in [`formal/STORIES.md`](formal/STORIES.md).
+
 **This tree:** 1.0-rc15. **Latest release:** 1.0-rc15, 2026-11-01, tag `v1.0-rc15`. The register ties every rule to the code, test or proof behind it or says plainly that nothing does yet: 372 established rows, 39 normative, 117 staged. Nineteen machine-checked models, and the life of a mesh told as one story whose model closes ([`formal/`](formal/)). **Steward:** Eric Moore ([`constitution/STEWARDSHIP.md`](constitution/STEWARDSHIP.md)). Releases: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What it protects
