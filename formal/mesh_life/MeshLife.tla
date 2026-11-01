@@ -42,6 +42,7 @@ Init == m = [
   blob |-> [r \in Rows |-> "none"], durable |-> [r \in Rows |-> "unmarked"],
   flag |-> [r \in Rows |-> "none"], quarantine |-> [r \in Rows |-> "none"],
   asked |-> [r \in Rows |-> "none"], yes |-> [r \in Rows |-> {}], no |-> [r \in Rows |-> {}], decidedBy |-> [r \in Rows |-> "none"],
+  report |-> [r \in Rows |-> "none"],
   agent |-> "unbound", steward |-> "-", wa |-> "absent", waPerson |-> "-",
   deferral |-> "none", identity |-> "baseline",
   goal |-> "none", approach |-> "none", method |-> "none", measure |-> "none",
@@ -141,6 +142,7 @@ Dissolve == Live /\ m.community = "founded" /\ Members = {} /\ \A p \in Persons 
                     !.author = [r \in Rows |-> "-"], !.blob = [r \in Rows |-> "none"],
                     !.durable = [r \in Rows |-> "unmarked"], !.flag = [r \in Rows |-> "none"], !.asked = [r \in Rows |-> "none"],
                     !.yes = [r \in Rows |-> {}], !.no = [r \in Rows |-> {}], !.decidedBy = [r \in Rows |-> "none"],
+                    !.report = [r \in Rows |-> "none"],
                     !.quarantine = [r \in Rows |-> "none"],
                     !.goal = "none", !.approach = "none", !.method = "none", !.measure = "none",
                     !.evidence = "none", !.blessed = FALSE]
@@ -158,19 +160,26 @@ Withdraw(r) == Live /\ m.row[r] = "admitted" /\ m.member[m.author[r]] = "member"
   /\ m' = [m EXCEPT !.row[r] = "withdrawn", !.durable[r] = IF m.durable[r] = "marked" THEN "descending" ELSE m.durable[r]]
 Purge(r) == Live /\ m.row[r] = "withdrawn"
   /\ m' = [m EXCEPT !.row[r] = "purged", !.author[r] = "-", !.blob[r] = "none", !.durable[r] = "unmarked",
-                    !.flag[r] = "none", !.quarantine[r] = "none", !.asked[r] = "none", !.decidedBy[r] = "none"]
+                    !.flag[r] = "none", !.quarantine[r] = "none", !.asked[r] = "none", !.decidedBy[r] = "none", !.report[r] = "none"]
 Withhold(r) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.quarantine[r] = "none" /\ ModeratorActs
   /\ m' = [m EXCEPT !.quarantine[r] = "withhold"]
 Release(r) == On("moderation") /\ Live /\ m.quarantine[r] = "withhold" /\ ModeratorActs
   /\ m' = [m EXCEPT !.quarantine[r] = "none"]
 RaiseFlag(r, p, ask) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.flag[r] = "none" /\ m.member[p] = "member"
   /\ p # m.author[r] /\ m' = [m EXCEPT !.flag[r] = "raised", !.asked[r] = ask, !.yes[r] = {p}, !.no[r] = {}]
+\* the other act: a report filed privately with the duty holder; it opens no window and nobody but the duty holder sees it
+PrivateReport(r, p) == On("moderation") /\ Live /\ ~m.winding /\ m.row[r] = "admitted" /\ m.report[r] = "none" /\ m.member[p] = "member"
+  /\ p # m.author[r] /\ m' = [m EXCEPT !.report[r] = "filed"]
+\* the duty holder may let a report rest: it closes with no action and no window
+ReportRests(r) == On("moderation") /\ Live /\ m.report[r] = "filed" /\ m.flag[r] = "none" /\ ModeratorActs
+  /\ m' = [m EXCEPT !.report[r] = "rested"]
 Land(r, outcome, by) == [m EXCEPT !.flag[r] = outcome, !.decidedBy[r] = by, !.yes[r] = {}, !.no[r] = {},
+                    !.report[r] = IF m.report[r] = "filed" THEN "ruled" ELSE m.report[r],
                     !.row[r] = IF outcome = "hard_removal" THEN "withdrawn" ELSE m.row[r],
                     !.durable[r] = IF outcome = "hard_removal" /\ m.durable[r] = "marked" THEN "descending" ELSE m.durable[r]]
 \* a moderator, a person or the delegated agent, rules at any time while the action is open
-DecideFlag(r, outcome) == On("moderation") /\ Live /\ m.flag[r] = "raised" /\ ModeratorActs
-  /\ m' = Land(r, outcome, "moderator")
+DecideFlag(r, outcome) == On("moderation") /\ Live /\ (m.flag[r] = "raised" \/ (m.flag[r] = "none" /\ m.report[r] = "filed")) /\ ModeratorActs
+  /\ m.row[r] = "admitted" /\ m' = Land(r, outcome, "moderator")
 \* the reverse quorum: while the action is open any member responds, for or against the action the raiser named
 Respond(r, p, v) == On("moderation") /\ Live /\ m.flag[r] = "raised" /\ m.member[p] = "member"
   /\ p \notin m.yes[r] /\ p \notin m.no[r]
@@ -260,7 +269,7 @@ WindSteps ==
   \/ \E how \in {"completed", "cancelled"} : EventCloses(how)
   \/ \E v \in {"approved", "rejected"} : Answer(v)
   \/ ClearDeferral \/ GoalWithdrawn \/ EvidenceSuperseded
-  \/ \E r \in Rows : WindowCloses(r) \/ (\E o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o))
+  \/ \E r \in Rows : WindowCloses(r) \/ ReportRests(r) \/ (\E o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o))
 
 Next ==
   \/ Mint \/ \E h \in Holders : LoseHolder(h) \/ Remint(h) \/ Latch(h)
@@ -278,6 +287,7 @@ Next ==
   \/ \E r \in Rows : Purge(r) \/ Withdraw(r) \/ MarkDurable(r) \/ Withhold(r) \/ Release(r)
       \/ (\E p \in Persons, f \in {"inline", "chunked"} : Write(r, p, f))
       \/ (\E p \in Persons, a \in {"hard_removal", "consent_gated"} : RaiseFlag(r, p, a))
+      \/ (\E p \in Persons : PrivateReport(r, p)) \/ ReportRests(r)
       \/ (\E p \in Persons, v \in {"yes", "no"} : Respond(r, p, v))
       \/ WindowCloses(r)
       \/ (\E o \in {"hard_removal", "consent_gated", "kept_visible"} : DecideFlag(r, o))
@@ -296,7 +306,7 @@ Fairness ==
   /\ \A p \in Persons : WF_m(PersonGone(p)) /\ WF_m(Decline(p)) /\ WF_m(Resign(p)) /\ WF_m(GuardianUnbinds(p))
                         /\ WF_m(CapacityLapses(p)) /\ WF_m(LedgerCloses(p))
   /\ \A r \in Rows : WF_m(Withdraw(r)) /\ WF_m(Purge(r)) /\ WF_m(Release(r))
-                     /\ WF_m(WindowCloses(r))
+                     /\ WF_m(WindowCloses(r)) /\ WF_m(ReportRests(r))
   /\ \A how \in {"completed", "cancelled"} : WF_m(EventCloses(how))
   /\ \A v \in {"approved", "rejected"} : WF_m(Answer(v))
 
@@ -330,6 +340,11 @@ Act_HaltStopsAgentModeration == [][(m.moderator = "agent" /\ m.halt # "clear") =
                /\ (m.quarantine[r] = "none" => m'.quarantine[r] = "none")
                /\ (m.quarantine[r] = "withhold" => m'.quarantine[r] = "withhold" \/ m'.row[r] = "purged")]_m
 \* an action lands by a moderator's ruling or by the majority of the respondents, never otherwise
+\* a private report opens no window: while only a report stands, no member responds and nothing lands by majority
+Inv_ReportOpensNoWindow == \A r \in Rows : (m.report[r] = "filed" /\ m.flag[r] = "none") => (m.yes[r] = {} /\ m.no[r] = {})
+Act_ReportLandsOnlyByRuling == [][\A r \in Rows : (m.flag[r] = "none" /\ m.report[r] = "filed" /\ m'.flag[r] \in {"hard_removal", "consent_gated", "kept_visible"}) => m'.decidedBy[r] = "moderator"]_m
+\* filing a report changes nothing a member can see: no flag, no row, no quarantine, no roster
+Act_ReportIsPrivate == [][\A r \in Rows : (m.report[r] = "none" /\ m'.report[r] = "filed") => (m'.flag = m.flag /\ m'.row = m.row /\ m'.quarantine = m.quarantine /\ m'.member = m.member)]_m
 Inv_DecidedByRulingOrMajority == \A r \in Rows : m.flag[r] \in {"hard_removal", "consent_gated", "kept_visible"} => m.decidedBy[r] \in {"moderator", "majority"}
 \* the window never lands an action nobody asked for: by majority the outcome is the action raised, or the row stays visible
 Act_MajorityLandsOnlyTheAsk == [][\A r \in Rows : (m.flag[r] = "raised" /\ m'.decidedBy[r] = "majority") => m'.flag[r] \in {m.asked[r], "kept_visible"}]_m
@@ -362,6 +377,7 @@ Rank ==
   + Cardinality({p \in Persons : m.guardian[p] # "none"}) + Cardinality({p \in Persons : m.capacity[p] = "incapacitated"})
   + Cardinality({p \in Persons : m.ledger[p] = "head"})
   + Cardinality({r \in Rows : m.flag[r] = "raised"}) + Cardinality({r \in Rows : m.quarantine[r] = "withhold"})
+  + Cardinality({r \in Rows : m.report[r] = "filed"})
   + (IF m.wa = "absent" THEN 0 ELSE 1) + W(m.deferral, "pending", "approved") + (IF m.deferral = "rejected" THEN 1 ELSE 0)
   + (IF m.event = "open" THEN 1 ELSE 0)
   + (IF m.goal \in {"staged", "proposed", "declared"} THEN 1 ELSE 0)
@@ -377,7 +393,7 @@ WindStepEnabled ==
   \/ m.deferral \in {"approved", "rejected"} \/ m.muter # "-"
   \/ \E p \in Persons : (m.guardian[p] # "none" /\ ~InRoom(p)) \/ m.capacity[p] = "incapacitated"
                         \/ m.ledger[p] = "head"
-  \/ \E r \in Rows : (m.quarantine[r] = "withhold" /\ ModeratorActs) \/ m.flag[r] = "raised"
+  \/ \E r \in Rows : (m.quarantine[r] = "withhold" /\ ModeratorActs) \/ m.flag[r] = "raised" \/ (m.report[r] = "filed" /\ ModeratorActs)
   \/ \E p \in Persons : Alive(p) /\ m.device[p] # "claimed" /\ m.member[p] \in {"none", "left"} /\ m.steward # p
        /\ NoContact(p) /\ Wards(p) = {} /\ m.waPerson # p /\ m.guardian[p] = "none"
   \/ Empty

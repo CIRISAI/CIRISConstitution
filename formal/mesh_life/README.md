@@ -13,7 +13,7 @@
 | contact | the request, acceptance, private ignore and un-ignore, private block and unblock, the end; a member's mute | in `MeshLife.cfg`; alone in `MeshLife_contact.cfg` |
 | identity | the post-quantum half, key rotation and escrow, the minor and the guardian bond, the capacity finding | `MeshLife_identity.cfg` (p2 a minor) |
 | content | inline or chunked blobs, the durable mark and its descent | `MeshLife_content.cfg` |
-| moderation | quarantine; a moderation action any member raises, the respondents, the ruling by a moderator or by the delegated agent at any time, else the majority of respondents at the window; a hard removal as a duty-holder's record; the halt over the agent moderator | `MeshLife_moderation.cfg`, `MeshLife_moderation_halt.cfg` |
+| moderation | quarantine; a private report to the duty holder (no window) as a separate act from a moderation action any member raises, the respondents, the ruling by a moderator or by the delegated agent at any time, else the majority of respondents at the window; a hard removal as a duty-holder's record; the halt over the agent moderator | `MeshLife_moderation.cfg`, `MeshLife_moderation_halt.cfg` |
 | wa | the Wise Authority seat, its abandonment, seizure and successor | `MeshLife_wa.cfg` |
 | deferral | the agent's deferral, the answer, the identity amendment | `MeshLife_deferral.cfg` |
 | goal | the goal tree staged, proposed, declared, withdrawn; approach, method, measure | `MeshLife_goal.cfg` |
@@ -33,8 +33,8 @@ Planes touch each other only through the spine, so every invariant mentions the 
 | `MeshLife_channel.cfg` | the bare spine with a room that names its writers (`WriteRight = "named"`) | closes: 81,130 states, 3 s |
 | `MeshLife_identity.cfg` | identity (p2 a minor) | closes: 1,296,397 states, 21 s |
 | `MeshLife_content.cfg` | content | closes: 347,638 states, 9 s |
-| `MeshLife_moderation.cfg` (one row) | moderation: any member raises an action, members respond, a moderator or the delegated agent rules at any time, else the majority of respondents decides at the window | closes: 185,537 states, 7 s |
-| `MeshLife_moderation_halt.cfg` (one row) | moderation with the halt: the halt stops the agent moderator's ruling and leaves the members their vote | closes: 244,158 states |
+| `MeshLife_moderation.cfg` (one row) | moderation: any member raises an action, members respond, a moderator or the delegated agent rules at any time, else the majority of respondents decides at the window | closes: 999,146 states, 21 s |
+| `MeshLife_moderation_halt.cfg` (one row) | moderation with the halt: the halt stops the agent moderator's ruling and leaves the members their vote | closes: 11,989,741 states, 5 min 40 s |
 | `MeshLife_wa.cfg` | the Wise Authority seat | closes: 275,530 states, 9 s |
 | `MeshLife_deferral.cfg` | the deferral | closes: 250,903 states, 7 s |
 | `MeshLife_goal.cfg` | the goal tree | closes: 253,274 states, 7 s |

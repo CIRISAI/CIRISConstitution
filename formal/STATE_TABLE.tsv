@@ -237,3 +237,7 @@ membership	group	group.write_right	all	3.1.3.2	the room's record names no publis
 membership	group	group.write_right	named	3.1.3.2	the room's record names who may publish; the others read (a channel)	founding key / officers under consensus_protocol	mesh_life.MeshLife.tla:Found	—	modelled
 membership	key×group	member.publish	none	3.1.3.2	a member of a room that names its writers, without the right: reads, holds standing, votes, leaves	—	mesh_life.MeshLife.tla:RevokeWrite	—	modelled
 membership	key×group	member.publish	held	3.1.3.2	the publish right offered as the role of a membership proposal and restated by the acceptance, or granted under the room's protocol	the room's protocol	mesh_life.MeshLife.tla:GrantWrite	—	modelled
+governance	private report	report.state	none	4.5.4	—	—	mesh_life.MeshLife.tla:Init	—	modelled
+governance	private report	report.state	filed	4.5.4	a member's report filed privately with the duty holder: no window, nobody else sees it, the reporter shielded	the reporter, to the duty holder	mesh_life.MeshLife.tla:PrivateReport	—	modelled
+governance	private report	report.state	ruled	4.5.4	the duty holder's ruling on the report, at any time	moderator / steward / the agent held by a steward	mesh_life.MeshLife.tla:Land	—	modelled
+governance	private report	report.state	rested	4.5.4	the duty holder lets the report rest: no action, no window	moderator / steward	mesh_life.MeshLife.tla:ReportRests	—	modelled
