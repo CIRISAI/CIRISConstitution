@@ -1,6 +1,6 @@
 # The Digest
 
-**What this is.** The short versions: the executive summary, the plain-language rules for a person who uses an agent, the operator digest for a person who runs a node or answers for an agent, and the guarantees table with its status markers.
+**What this is.** The short versions: the executive summary, the plain-language rules for a person who uses an agent, the user's guide to the mesh for a person with a phone, the operator digest for a person who runs a node or answers for an agent, and the guarantees table with its status markers.
 
 **Whom it binds.** Nobody. A digest is a derivative: each rule names the register row or the binding section it summarises, and each promise the register rows that keep it, and when a digest and a section disagree, the section is right and the digest is a defect.
 

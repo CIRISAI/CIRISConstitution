@@ -48,7 +48,7 @@ One edition, printed nine ways for nine readers. The section is always the autho
 | **The Mathematics** | a reviewer of the substrate: the census, replication, the witness, the noise floor | [`maths`](volumes/ciris_constitution-maths.pdf) |
 | **The Evidence Register** | an auditor: every claim, its status, and the pinned pointer behind it | [`register`](volumes/ciris_constitution-register.pdf) |
 | **The Threat Model** | a security reviewer or red team: the adversaries, what is addressed and what is not | [`threats`](volumes/ciris_constitution-threats.pdf) |
-| **The Digest** | everyone: the executive summary, the plain-language rules and the operator's digest | [`digest`](volumes/ciris_constitution-digest.pdf) |
+| **The Digest** | everyone: the executive summary, the plain-language rules, the user's guide to the mesh and the operator's digest | [`digest`](volumes/ciris_constitution-digest.pdf) |
 
 The whole edition in one file: [`ciris_constitution.pdf`](ciris_constitution.pdf), or [`CIRISConstitution-latest.pdf`](CIRISConstitution-latest.pdf) for the newest release on `main`. The ethics it descends from, in one page: [`formal/reciprocity`](formal/reciprocity/) states the basis in four sentences and proves which steps from it to the rules are theorems.
 
@@ -60,7 +60,7 @@ The whole edition in one file: [`ciris_constitution.pdf`](ciris_constitution.pdf
 | [`constitution/EXECUTIVE_SUMMARY.md`](constitution/EXECUTIVE_SUMMARY.md), [`constitution/FOREWORD.md`](constitution/FOREWORD.md), [`constitution/SCOPE_AND_DISCLAIMERS.md`](constitution/SCOPE_AND_DISCLAIMERS.md) | The summary, the foreword, the scope and the claim-and-limit |
 | [`constitution/claims.tsv`](constitution/claims.tsv), [`constitution/evidence_pins.tsv`](constitution/evidence_pins.tsv) | The evidence register and the pinned manifests it resolves against |
 | [`constitution/toc.tsv`](constitution/toc.tsv), [`constitution/codebook.json`](constitution/codebook.json), [`constitution/volumes.tsv`](constitution/volumes.tsv) | The table of contents, the id codebook, and the map of sections to volumes |
-| [`constitution/digest/`](constitution/digest/), [`constitution/covers/`](constitution/covers/) | The plain-language rules and the operator's digest; the cover of each volume |
+| [`constitution/digest/`](constitution/digest/), [`constitution/covers/`](constitution/covers/) | The plain-language rules, the user's guide to the mesh and the operator's digest; the cover of each volume |
 | [`formal/`](formal/) | The life of a mesh as one story and one model that closes, the chapter models in TLA+ and Lean, the state table, the invariants and the stories |
 | [`manifests/`](manifests/) | Generated data an implementer interoperates against: the namespace registry, the signed object (CDDL and vectors), the governance policy table |
 | [`ietf/`](ietf/) | The Internet-Draft that describes the signed object |
@@ -69,6 +69,8 @@ The whole edition in one file: [`ciris_constitution.pdf`](ciris_constitution.pdf
 **Citing.** Every section has a decimal id (`4.2.6`) and a semantic id (`live-quorum`); both are stable and the codebook maps them one to one. Cite as "CC 4.2.6".
 
 **Versioning.** One document, one version line. The wire surface is frozen at 1.0-rc: an rc is an edition of the same surface, and a change that would move a signed byte is a new major. The text is amended through its own governance (CC 4.5.1); until the mesh reaches the scale gate of 100,000 production agents active in a day, the steward exercises that authority over the text.
+
+**The layer a person meets.** Every screen of the app is described by a card held to four things at once: the plain rule it exists for, the wire fields it shows, the trust topology that must exist for its states to be reachable, and the states it is tested in. The topologies are a closed catalogue of twenty, typed from the root down, that drives the harness building those meshes on real nodes, the client's checker, and the constants of the formal models ([`formal/cewp_node/`](formal/cewp_node/)). A card passes six stages, envisioned to shipped, and the checker tells "not yet", "stalled" and "the answer is no" apart. That contract, CSD/4, is the application layer of the mesh.
 
 **Where it is consumed.** [CIRISServer](https://github.com/CIRISAI/CIRISServer), [CIRISPersist](https://github.com/CIRISAI/CIRISPersist), [CIRISEdge](https://github.com/CIRISAI/CIRISEdge), [CIRISVerify](https://github.com/CIRISAI/CIRISVerify) and [CIRISAgent](https://github.com/CIRISAI/CIRISAgent) implement it; [CIRISConformance](https://github.com/CIRISAI/CIRISConformance) checks them against it; [CEWP](https://github.com/CIRISAI/CEWP) is the platform it governs. Part of [CIRIS](https://ciris.ai).
 
