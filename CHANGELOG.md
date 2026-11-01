@@ -2,6 +2,10 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc15 (open)
+
+- Opened 2026-11-01 after the rc14 tag.
+
 ## 1.0-rc14 (released 2026-10-29, tag v1.0-rc14)
 
 - Opened 2026-10-29 after the rc13 tag.
