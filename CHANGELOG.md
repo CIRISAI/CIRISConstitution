@@ -13,6 +13,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The life of a mesh as one story and one model that closes (`formal/mesh_life`): ten steps from the genesis ceremony to the end, one action per sentence, eight invariants and two progress facts closing at 3.2 million states, the wind-down proved to end, three twins failing their rule; `formal/README.md` restructured around the story, every chapter model placed at its step.
 - Every lifecycle in the state table is carried by a model (77 of 77 variables, gated by `tools/check_lifecycle_coverage.py`): the spine grows five object families (identity, content, agent governance, goal and evidence, room governance), each closing on the core; the mesh and the contact gain table rows; `formal/STORIES.md` tells each thing's story and names what the table does not yet hold.
 - README: the mesh is live and the app is on Google Play and the App Store, said first; shorter.
+- Who may write (3.1.3.2): a room's record may name who may publish, the right riding the role of the membership proposal; the others read, hold standing, vote and leave like any member; a row written elsewhere may name a row of the room but does not enter it; no author forbids another member's row where that member may write. The channel configuration of the mesh-life model proves it.
 
 ## 1.0-rc14 (released 2026-10-29, tag v1.0-rc14)
 

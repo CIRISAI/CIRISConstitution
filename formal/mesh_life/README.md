@@ -30,6 +30,7 @@ Planes touch each other only through the spine, so every invariant mentions the 
 | `MeshLife_spine.cfg` | none (the bare spine) | closes: 46,858 distinct states, 2 s |
 | `MeshLife.cfg` | halt, consent, contact | closes: 13,001,125 distinct states, 15 min on 16 workers |
 | `MeshLife_contact.cfg` | contact (request, accept, ignore, block, mute) | closes: 274,578 states, 12 s |
+| `MeshLife_channel.cfg` | the bare spine with a room that names its writers (`WriteRight = "named"`) | closes: 81,130 states, 3 s |
 | `MeshLife_identity.cfg` | identity (p2 a minor) | closes: 1,296,397 states, 21 s |
 | `MeshLife_content.cfg` | content | closes: 347,638 states, 9 s |
 | `MeshLife_moderation.cfg` | moderation | closes: 1,379,518 states, 43 s |

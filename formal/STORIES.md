@@ -66,6 +66,9 @@ An anonymous peer has no announcement. Each hour it publishes a rendezvous route
 ### A room
 A room, a family or community or affiliation, is **formed** when its founding record seats its first member. It names a **moderator**; a moderator may **lapse**, be **merit_promoted**, or be replaced through a **recovery_48h** window and a **candidacy_24h**, and when none of that produces one the room is **fail_secure**. A change to its quorum is **held** until the protocol applies it. It is **federating** or not by its own declaration. A room whose last member leaves is dissolved and what it held is purged. *Proved by `membership` (the ceremony), `mesh_net` (who may hold its content, that a private room is invisible), `affiliation` (the two regimes of an affiliation).*
 
+### A channel, and who may write
+A room's record may name who may publish in it. The right rides the role a proposal offers and an acceptance restates, under the room's protocol; a member without it reads, holds standing over any row that names them, votes where the protocol says, and leaves like any member. A row they write elsewhere may name a row of the room, but it does not enter the room. Where the record names no right, every member writes, and no author forbids another member's row there. *Proved by `mesh_life` (the channel configuration: a publish right is held only by a member; a row enters a room only by the hand of one who may write there at that moment). One rule, three rooms: held by one it is an announcement channel, held by the organiser it is an event channel, granted and withdrawn by the moderator it is a moderated chat.*
+
 ### A member
 A person is **proposed** by a member, is **accepted_awaiting_group** once they say yes, and is a **member** when the group's protocol admits them; or they are **declined**, which is terminal for that proposal. A member is **removed** by the others under the protocol, never by one hand alone, or **resigned** by their own. A departed member is re-seated only by a new proposal. *Proved by `membership`.*
 
@@ -171,6 +174,7 @@ The things people do on a social network, each mapped to the story and the rule 
 | join a group, be invited, leave, be removed | the membership ceremony: proposal, acceptance, decline, resignation, removal by the others | step 5; CC 3.1.3.2; `membership` |
 | follow a public page or channel | a public community: founded by anyone, open admission, discoverable by its listing row, plaintext at the Commons tier | step 5; CC 3.1.3.2 (public rooms) |
 | post, reply, react, thread | rows in a room; a reply is a row that names the row it answers; a reaction is a score on a row | step 6; CC 3.1.9, 2.1 |
+| turn replies off, run a channel, an event channel, a moderated chat | a room whose record names who may publish; the others read; the moderator grants and withdraws the right; a reply elsewhere never enters it | step 5; CC 3.1.3.2 |
 | share media, go live | blobs inline or chunked; streams and calls under the A/V seal | step 6; CC 2.6.1.3, 5.3.3 |
 | repost to a wider audience | not possible by reference: a row cannot be carried beyond its cohort; the author posts again at the wider scope | CC 5.2 (scope follows the cohort) |
 | edit, delete | supersede, withdraw, purge; a withdrawn row never comes back | step 6; CC 2.4.1.1 |

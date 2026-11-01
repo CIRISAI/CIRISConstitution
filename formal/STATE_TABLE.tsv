@@ -233,3 +233,7 @@ mesh	contact	contact.state	ignored	5.4.6	the asked person's private, local, undo
 mesh	contact	contact.state	blocked	5.4.6	one party's private block: further requests from the other key are dropped without answer; the forwarder learns nothing	the blocker (local)	mesh_life.MeshLife.tla:ContactBlock	—	modelled
 membership	member×member	reader.mute	none	4.4	—	—	mesh_life.MeshLife.tla:Unmute	—	modelled
 membership	member×member	reader.mute	muted	4.4	a member's private reader-side filter over another member; no row, no roster and no room state changes; a row naming the muter stays in the muter's own read	the muting member (local)	mesh_life.MeshLife.tla:Mute	—	modelled
+membership	group	group.write_right	all	3.1.3.2	the room's record names no publish right: every member writes	founding key	mesh_life.MeshLife.tla:MayWrite	—	modelled
+membership	group	group.write_right	named	3.1.3.2	the room's record names who may publish; the others read (a channel)	founding key / officers under consensus_protocol	mesh_life.MeshLife.tla:Found	—	modelled
+membership	key×group	member.publish	none	3.1.3.2	a member of a room that names its writers, without the right: reads, holds standing, votes, leaves	—	mesh_life.MeshLife.tla:RevokeWrite	—	modelled
+membership	key×group	member.publish	held	3.1.3.2	the publish right offered as the role of a membership proposal and restated by the acceptance, or granted under the room's protocol	the room's protocol	mesh_life.MeshLife.tla:GrantWrite	—	modelled

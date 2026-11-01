@@ -6,10 +6,11 @@
    so a fact that mentions the spine and one plane holds in the whole. *)
 EXTENDS Naturals, FiniteSets, TLC
 
-CONSTANTS Holders, Persons, Rows, Minors, Families, Loose, RoomKind
+CONSTANTS Holders, Persons, Rows, Minors, Families, Loose, RoomKind, WriteRight
 \* Minors \subseteq Persons. Families \subseteq {"halt", "consent", "contact", "identity", "content", "moderation",
 \*   "wa", "deferral", "goal", "evidence", "event", "ledger"}.
 \* Loose in {"none", "lone_halt", "gone_with_device", "gone_stewarding"}. RoomKind in {"community", "affiliation"}.
+\* WriteRight in {"all", "named"}: whether the room's record names who may publish (a channel) or every member writes.
 Devices == Persons
 On(f) == f \in Families
 Adults == Persons \ Minors
@@ -36,7 +37,7 @@ Init == m = [
   consent |-> [p \in Persons |-> "none"], device |-> [p \in Persons |-> "none"],
   contact |-> "none", parties |-> {}, blocker |-> "-", muter |-> "-", muted |-> "-",
   community |-> "none", charter |-> "none", member |-> [p \in Persons |-> "none"],
-  moderator |-> "-", event |-> "none",
+  moderator |-> "-", event |-> "none", writer |-> [p \in Persons |-> FALSE],
   row |-> [r \in Rows |-> "absent"], author |-> [r \in Rows |-> "-"],
   blob |-> [r \in Rows |-> "none"], durable |-> [r \in Rows |-> "unmarked"],
   flag |-> [r \in Rows |-> "none"], quarantine |-> [r \in Rows |-> "none"],
@@ -105,6 +106,7 @@ Unmute == On("contact") /\ Live /\ m.muter # "-" /\ m' = [m EXCEPT !.muter = "-"
 (* ---------- Step 5. A room is founded ---------- *)
 Found(p) == Live /\ ~m.winding /\ Announced(p) /\ m.community = "none"
   /\ m' = [m EXCEPT !.community = "founded", !.member[p] = "member", !.moderator = p,
+                    !.writer[p] = (WriteRight = "named"),
                     !.charter = IF RoomKind = "affiliation" THEN "declared" ELSE "none"]
 CharterSuperseded == On("event") /\ Live /\ m.charter = "declared" /\ Members # {}
   /\ m' = [m EXCEPT !.charter = "superseded"]
@@ -113,15 +115,21 @@ Propose(p, q) == Live /\ ~m.winding /\ m.community = "founded" /\ m.member[p] = 
   /\ m' = [m EXCEPT !.member[q] = "proposed"]
 Accept(q) == Live /\ m.member[q] = "proposed" /\ Members # {} /\ m' = [m EXCEPT !.member[q] = "member"]
 Decline(q) == Live /\ m.member[q] = "proposed" /\ m' = [m EXCEPT !.member[q] = "none"]
-Leave(q, how) == m' = [m EXCEPT !.member[q] = "left", !.moderator = IF m.moderator = q THEN "-" ELSE m.moderator,
+Leave(q, how) == m' = [m EXCEPT !.member[q] = "left", !.moderator = IF m.moderator = q THEN "-" ELSE m.moderator, !.writer[q] = FALSE,
                                !.muter = IF q \in {m.muter, m.muted} THEN "-" ELSE m.muter,
                                !.muted = IF q \in {m.muter, m.muted} THEN "-" ELSE m.muted]
 Resign(q) == Live /\ m.member[q] = "member" /\ Leave(q, "resign")
 Remove(q) == Live /\ m.member[q] = "member" /\ Cardinality(Members \ {q}) >= 1 /\ Leave(q, "remove")
+GrantWrite(p) == WriteRight = "named" /\ Live /\ ~m.winding /\ m.member[p] = "member" /\ ~m.writer[p] /\ m.moderator # "-"
+  /\ m' = [m EXCEPT !.writer[p] = TRUE]
+RevokeWrite(p) == WriteRight = "named" /\ Live /\ m.writer[p] /\ m.moderator # "-" /\ p # m.moderator
+  /\ m' = [m EXCEPT !.writer[p] = FALSE]
+MayWrite(p) == m.member[p] = "member" /\ (WriteRight = "all" \/ m.writer[p])
 NameModerator(p) == Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.member[p] = "member"
   /\ m' = [m EXCEPT !.moderator = p]
 Dissolve == Live /\ m.community = "founded" /\ Members = {} /\ \A p \in Persons : m.member[p] # "proposed"
   /\ m' = [m EXCEPT !.community = "dissolved", !.moderator = "-", !.charter = "none", !.event = "none",
+                    !.writer = [q \in Persons |-> FALSE],
                     !.row = [r \in Rows |-> IF m.row[r] = "absent" THEN "absent" ELSE "purged"],
                     !.author = [r \in Rows |-> "-"], !.blob = [r \in Rows |-> "none"],
                     !.durable = [r \in Rows |-> "unmarked"], !.flag = [r \in Rows |-> "none"],
@@ -133,7 +141,7 @@ EventOpens == On("event") /\ Live /\ ~m.winding /\ m.community = "founded" /\ Me
 EventCloses(how) == On("event") /\ Live /\ m.event = "open" /\ m' = [m EXCEPT !.event = how]
 
 (* ---------- Step 6. Members write ---------- *)
-Write(r, p, form) == Live /\ ~m.winding /\ m.community = "founded" /\ m.member[p] = "member" /\ m.row[r] = "absent"
+Write(r, p, form) == Live /\ ~m.winding /\ m.community = "founded" /\ MayWrite(p) /\ m.row[r] = "absent"
   /\ (On("content") \/ form = "inline")
   /\ m' = [m EXCEPT !.row[r] = "admitted", !.author[r] = p, !.blob[r] = form]
 MarkDurable(r) == On("content") /\ Live /\ m.row[r] = "admitted" /\ m.durable[r] = "unmarked"
@@ -239,7 +247,7 @@ Next ==
   \/ Mint \/ \E h \in Holders : LoseHolder(h) \/ Remint(h) \/ Latch(h)
   \/ CanonicalAnnounced \/ CanonicalRetires
   \/ \E p \in Persons : PersonKeys(p) \/ PqcCompletes(p) \/ PersonAnnounces(p) \/ KeyRotates(p) \/ KeyEscrowed(p) \/ PersonGone(p)
-      \/ GuardianUnbinds(p) \/ CapacityFound(p) \/ CapacityLapses(p) \/ Found(p) \/ NameModerator(p)
+      \/ GuardianUnbinds(p) \/ CapacityFound(p) \/ CapacityLapses(p) \/ Found(p) \/ NameModerator(p) \/ GrantWrite(p) \/ RevokeWrite(p)
       \/ Grant(p) \/ Revoke(p) \/ Bond(p) \/ HandOver(p) \/ Accept(p) \/ Decline(p) \/ Resign(p) \/ Remove(p)
       \/ WaSeats(p) \/ WaSuccessor(p) \/ LedgerOpens(p) \/ LedgerForks(p) \/ LedgerCloses(p) \/ ContactBlock(p)
   \/ \E d \in Devices : DeviceClaims(d) \/ DeviceReleases(d)
@@ -293,6 +301,9 @@ Inv_AnnouncedIsPqcComplete == On("identity") => \A p \in Persons : Announced(p) 
 Inv_GuardianIsAnnouncedAdult == \A p \in Persons : m.guardian[p] # "none" => (m.guardian[p] \in Adults /\ Announced(m.guardian[p]))
 Inv_IncapacitatedHoldsNoSeat == \A p \in Persons : m.capacity[p] = "incapacitated" => (m.steward # p /\ m.waPerson # p /\ Wards(p) = {})
 Inv_ModeratorIsMember == m.moderator # "-" => m.member[m.moderator] = "member"
+Inv_WriterIsMember == \A p \in Persons : m.writer[p] => m.member[p] = "member"
+\* a row enters a room only by the hand of one who may write there at that moment; the right withdrawn later leaves the row standing
+Act_RowsOnlyByWriters == [][\A r \in Rows : (m.row[r] = "absent" /\ m'.row[r] = "admitted") => MayWrite(m'.author[r])]_m
 Inv_FlagDecidedByModerator == \A r \in Rows : m.flag[r] \in {"hard_removal", "consent_gated", "kept_visible"} => m.row[r] # "absent"
 Inv_HardRemovalWithdraws == \A r \in Rows : m.flag[r] = "hard_removal" => m.row[r] \in {"withdrawn", "purged"}
 Inv_DurableRidesAnAdmittedRow == \A r \in Rows : m.durable[r] = "marked" => m.row[r] = "admitted"

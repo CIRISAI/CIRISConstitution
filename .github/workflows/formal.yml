@@ -401,7 +401,7 @@ jobs:
         run: |
           set +e
           java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/ml-st" -deadlock -config MeshLife.cfg MeshLife.tla || exit 1
-          for f in spine contact identity content moderation wa deferral goal evidence event ledger; do
+          for f in spine channel contact identity content moderation wa deferral goal evidence event ledger; do
             java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/ml-$f" -deadlock -config MeshLife_$f.cfg MeshLife.tla || exit 1
           done
           java -XX:+UseParallelGC -Xmx6g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/ml-lv" -deadlock -config MeshLife_live_contact.cfg MeshLife.tla || exit 1
