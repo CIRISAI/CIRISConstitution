@@ -1,0 +1,19 @@
+# `formal/standing` — standing over a row that names another person
+
+CC 2.1 makes a key listed in `subject_key_ids` a consent holder over the row: it may withdraw the row and emit consent about it. CC 3.4.5 gives the subject of any row standing to file reconsideration and promises it a read over the rows it is party to. A bounded cohort's rows reach its members and nobody else (CC 5.2, 6.1.5.3). CC 2.4.1.1 closes the withdrawal path on an adverse record about oneself (contest only) and undoes a cosigned row only cosigned (Rule 0). The open question was whom a row at a bounded scope may name; this file compares three answers on one world.
+
+**The model** (`Standing.lean`, core Lean). A cohort is its roster fold, who is a member at an instant. A row has a producer, a cohort, an instant, a kind (scores, delegation, cosigned), its subjects, the key its family delivers it to, and whether it is an adverse record. The row's audience is everyone at federation scope, or the cohort's members at the row's instant plus the delivered key. Three admission policies: loose (any subject), strict (only the producer at a bounded scope), and the audience rule (every subject within the audience).
+
+| Theorem | What it says | CC |
+|---|---|---|
+| `standing_reaches` | under the audience rule, every subject of an admitted row can see it: standing never comes without reach, in every world | 3.4.5 |
+| `loose_gives_standing_without_reach` | the loose reading admits a row whose subject can never see it | the defect |
+| `strict_refuses_a_score_about_a_member` | the strict reading forbids a community from scoring its own members | the other defect |
+| `audience_admits_a_score_about_a_member`, `invitee_is_reached` | the audience rule admits a member's row about a fellow member and a proposal to an invitee the family delivers the row to | 2.1, 3.1.3.2 |
+| `removed_before_the_instant_is_outside` | membership is judged by the roster fold at the row's instant | 3.1.3.2 |
+| `contest_always_open`, `adverse_is_contest_only`, `cosigned_undone_only_cosigned` | a listed subject may always contest; it withdraws an ordinary row and only contests an adverse record or a cosigned act | 2.4.1.1, 3.4.5 |
+| the worked room | a room of three loses one member at instant five; scores about members, about the removed member before and after, about an outsider, a proposal to a stranger, a hard case and the cosigned removal, each judged under the three policies | the question as a run |
+
+**What it does not model.** The roster fold itself (`formal/membership`); who may act under which duty (`formal/affiliation`, CC 4.5.5); delivery (CC 2.3.3).
+
+**Running.** `lean Standing.lean`; the CI job `reciprocity` compiles it beside the cascade, the trust set and the affiliation model.
