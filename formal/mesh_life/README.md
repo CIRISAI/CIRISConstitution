@@ -1,6 +1,6 @@
 # `formal/mesh_life` — the whole story, one model, and it closes
 
-**The story** is [`LIFECYCLE.md`](LIFECYCLE.md): ten steps from three people sitting down to the mesh having ended. **The model** is `MeshLife.tla`, with one action per sentence in bold in the story, in the story's order.
+**The story** is [`LIFECYCLE.md`](LIFECYCLE.md) (and each thing's own story is [`../STORIES.md`](../STORIES.md)): ten steps from three people sitting down to the mesh having ended. **The model** is `MeshLife.tla`, with one action per sentence in bold in the story, in the story's order.
 
 **The bound.** Three holders, two persons with one device each (a device is named by its owner), one room, two rows, one agent, one canonical. The ruled configuration uses symmetry over holders, persons and rows.
 

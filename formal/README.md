@@ -15,6 +15,8 @@ Start here. Everything in this directory is a chapter of one story, told in orde
 9. **The holders halt.** One latches, a lone latch lapses, a majority confirms and resumes.
 10. **The mesh winds down.** A majority decides; nothing new is born; everything alive runs to its own end; the mesh has ended.
 
+Every thing that appears in those steps has its own short story in the same voice, with its states, what moves it, how it ends, and which model proves it: [`STORIES.md`](STORIES.md).
+
 ## One model of the whole story
 
 [`mesh_life/MeshLife.tla`](mesh_life/) has one action per sentence above and closes: three holders, two people with a device each, one room, two rows, one agent. Every path from the ceremony reaches the end, nobody is ever left owning nothing or owned by no one, a confirmed halt was always a majority, and once the holders decide to wind down the mesh always ends. Three twins loosen one rule each and fail. The numbers are in its [README](mesh_life/README.md).
