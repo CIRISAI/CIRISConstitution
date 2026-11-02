@@ -78,6 +78,8 @@ jobs:
         run: python3 tools/check_lifecycle_coverage.py
       - name: Every registry family fits its kind profile and the carries firewall; the Lean data is current
         run: python3 tools/check_family_kinds.py --check
+      - name: The family model manifest is current against the CC table and the vendored census
+        run: python3 tools/build_family_model.py --check
       - name: Signed-object CDDL parses and admits every admit vector (generated and draft-wrapped forms)
         run: |
           sudo gem install -q cddl

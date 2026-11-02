@@ -62,7 +62,7 @@ The whole edition in one file: [`ciris_constitution.pdf`](ciris_constitution.pdf
 | [`constitution/toc.tsv`](constitution/toc.tsv), [`constitution/codebook.json`](constitution/codebook.json), [`constitution/volumes.tsv`](constitution/volumes.tsv) | The table of contents, the id codebook, and the map of sections to volumes |
 | [`constitution/digest/`](constitution/digest/), [`constitution/covers/`](constitution/covers/) | The plain-language rules, the user's guide to the mesh and the operator's digest; the cover of each volume |
 | [`formal/`](formal/) | The life of a mesh as one story and one model that closes, the chapter models in TLA+ and Lean, the state table, the invariants and the stories |
-| [`manifests/`](manifests/) | Generated data an implementer interoperates against: the namespace registry, the signed object (CDDL and vectors), the governance policy table |
+| [`manifests/`](manifests/) | Generated data an implementer interoperates against: the namespace registry, the signed object (CDDL and vectors), the governance policy table, the family model (draft) |
 | [`ietf/`](ietf/) | The Internet-Draft that describes the signed object |
 | `build_pdf.py`, `tools/` | The build and the gates (`python3 build_pdf.py --volume all` needs a TeX Live `pdflatex`) |
 

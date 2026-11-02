@@ -151,7 +151,7 @@ session:{kind}	persist	Circumstances	THING	attest,replace,withdraw	M	which occur
 settlement:*	persist	Facts	ACCOUNT	attest,withdraw	M	receipt linking an action to off-stack settlement (kind Facts about the record; maintains the Record relation)	yes	—
 slashing:{outcome}	node	Rules	THING	attest,withdraw	M	proven_rogue outcome strips standing	no	—
 system:*	persist	Circumstances	THING	attest,replace,withdraw	M	substrate self-report telemetry	no	—
-takedown_notice:{basis}:v1	registry	Rules	THING	attest,withdraw	H	-1 only notice on a legal basis; a tombstone cites it	no	—
+takedown_notice:{basis}	registry	Rules	THING	attest,withdraw	H	-1 only notice on a legal basis; a tombstone cites it	no	—
 testimonial_witness:{kind}	node	Facts	ACCOUNT	attest,withdraw,recant	M	singular narrative of an affected party	no	—
 topical_relation:{kind}	node	Identity	THING	attest,withdraw	L	names how one content relates to another; open vocab	no	—
 trace:{form}:{version}	accord-agent	Facts	ACCOUNT	attest,withdraw	M	reasoning trace kept provable; carries Model/Process as record (kind Facts; purgeable with what it receipts)	no	—

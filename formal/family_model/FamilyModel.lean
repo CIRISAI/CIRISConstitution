@@ -599,7 +599,7 @@ def f151 : FamilyRow :=
   ⟨"system:*", ⟨.circumstances, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit151 : fits f151 = true := by decide
 def f152 : FamilyRow :=
-  ⟨"takedown_notice:{basis}:v1", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"takedown_notice:{basis}", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit152 : fits f152 = true := by decide
 def f153 : FamilyRow :=
   ⟨"testimonial_witness:{kind}", ⟨.facts, [.attest, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
