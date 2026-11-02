@@ -113,7 +113,7 @@ lineage_witness:{stage}	persist	Rules	THING	attest	M	ceremony whose effect is a 
 locality:decision:{scale}	node	Circumstances	THING	attest	M	the scale at which a decision happens to be made	no	—
 manifold_conformity:{cohort}	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	lens conformity score	no	—
 membership:{stage}	persist	Rules	THING	attest,replace,withdraw	M	ceremony whose effect is membership; removal cosigned	no	pre:Rules
-mesh_config:{key}	node	Rules	THING	authorize,replace,withdraw	H	delegation-plane, relieve-never-expand: what is allowed	no	—
+mesh_config:{key}	node	Rules	THING	attest,replace,withdraw	H	delegation-plane, relieve-never-expand: what is allowed (a scores row under the root's conferral edge, not a delegates_to)	no	—
 method:{approach_id}:{substrate_rung}	node	Process	THING	attest,replace,withdraw	M	concrete operational practice: what order	no	—
 model_3d:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a 3D model	no	—
 moderation:{allegation_type}	node	Rules	THING	attest,withdraw,recant	M	allegation of a rule breach	no	—

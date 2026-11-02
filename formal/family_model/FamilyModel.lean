@@ -485,7 +485,7 @@ def f113 : FamilyRow :=
   ⟨"membership:{stage}", ⟨.rules, [.attest, .replace, .withdraw], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit113 : fits f113 = true := by decide
 def f114 : FamilyRow :=
-  ⟨"mesh_config:{key}", ⟨.rules, [.authorize, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"mesh_config:{key}", ⟨.rules, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit114 : fits f114 = true := by decide
 def f115 : FamilyRow :=
   ⟨"method:{approach_id}:{substrate_rung}", ⟨.process, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩

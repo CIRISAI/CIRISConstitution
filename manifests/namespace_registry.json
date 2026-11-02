@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "df79a1dde30a380380da83f0d776737e580705b6305741f037a5a78c2bef9898",
+    "registry_sha256": "1a50538a5f7eef1e003fe31601331f7d575ebe72b022e6dfa22e88840f9267f5",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "a930a011bd6dc0767f21a5589bb5181f6a189158b247a9d374868293af33999b"
+    "source_sha256": "608068742300cf607b5917f318b1e78d408dfbfda3db0e8906d0d8b702b11ca4"
   },
   "families": [
     {
@@ -3478,7 +3478,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted on the delegation plane; relieve-never-expand; most-restrictive-across-roots; a key naming no consumer processor is refused at admission; emergency form TTL \u2264 72 h.",
+      "description": "Mesh-configuration row (CC 4.2.1): trust-root-emitted, a scores row authored under the root's trust:confers:v1 edge on the delegation plane (a delegates_to needs a delegate; a configuration names none); relieve-never-expand; most-restrictiv",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",

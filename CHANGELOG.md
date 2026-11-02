@@ -8,6 +8,8 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The family model (`formal/family_model`): every scores family as one row over closed columns, the change half typed by the eleven kinds and the five verbs plus carries, the Record as a relation; the registry's 189 families checked against their kind profiles one theorem each; references given a mode, precondition or carry; the v62 DSL locked on the closure grammar (admission, reference, rewrite; a byte-equal projection as the closure gate; ambiguity refused at vendor time).
 - The user's guide to the mesh in the Digest (`constitution/digest/01_social_mesh_users_guide.md`): what a person can do with it and which rule stands behind each thing, with status markers.
 - README and executive summary: what the network is for, said first; the CSD/4 contract named as the application layer.
+- A mesh-config row is a scores row authored under the root's conferral edge (3.1.9), as the wire has it; the register re-graded on the gates a scores-form row bypasses (the hard-case kind discriminator re-staged, the substrate self-report split) and staged for the room doors that do not yet read the governance rows or the 48-hour moderation fallback.
+- A live stream's chunks through a forwarder (5.4.6): one member's link to another when no direct path exists, never a fan-out node of the member tree, nothing buffered past the frame, no stream binding handed over; the publisher's binding and each chunk's authentication verified by members only.
 
 ## 1.0-rc15 (released 2026-11-01, tag v1.0-rc15)
 
