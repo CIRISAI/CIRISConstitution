@@ -89,6 +89,14 @@ def arms(t):
         for x in segs:
             k, v = x.split(":", 1); d[k.strip()] = v.strip()
         return d
+    if any(re.match(r"^([a-z_]+) leaf:\s*\S", x) or x.startswith("other leaves ") for x in segs):
+        d = OrderedDict()
+        for x in segs:
+            m = re.match(r"^([a-z_]+) leaf:\s*(.+)$", x)
+            if m: d[m.group(1)] = m.group(2).strip()
+            elif x.startswith("other leaves "): d["other"] = x[len("other leaves "):].strip()
+            else: return None
+        return d
     return None
 def leaf(t):
     """One sub-value: {value, source, note, closed, alternatives, arms, s2, s3}. The tag decides the source;
@@ -128,6 +136,9 @@ def cell(col, text):
             elif cur is None: cur = keys[0]; sub[cur] = part; order.append(cur)
             else: sub[cur] = sub[cur] + " | " + part   # an alternative of the field before, not a new field
         parts = OrderedDict((k, leaf(v)) for k, v in sub.items())
+        for k, v in parts.items():   # a sub-field's value is its closed head when the reading is one value with a note
+            if isinstance(v.get("value"), str) and v.get("closed") and v["closed"] != v["value"]:
+                v["note"] = v["value"]; v["value"] = v.pop("closed")
         srcs = {v["source"] for v in parts.values()}
         return {"value": OrderedDict((k, v["value"]) for k, v in parts.items()), "source": srcs.pop() if len(srcs) == 1 else "mixed", "parts": parts}
     if col == "freshness": return freshness(t)
