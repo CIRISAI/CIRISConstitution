@@ -2,6 +2,13 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc16 (open)
+
+- Opened 2026-11-01 after the rc15 tag.
+- The family model (`formal/family_model`): every scores family as one row over closed columns, the change half typed by the eleven kinds and the five verbs plus carries, the Record as a relation; the registry's 189 families checked against their kind profiles one theorem each; references given a mode, precondition or carry; the v62 DSL locked on the closure grammar (admission, reference, rewrite; a byte-equal projection as the closure gate; ambiguity refused at vendor time).
+- The user's guide to the mesh in the Digest (`constitution/digest/01_social_mesh_users_guide.md`): what a person can do with it and which rule stands behind each thing, with status markers.
+- README and executive summary: what the network is for, said first; the CSD/4 contract named as the application layer.
+
 ## 1.0-rc15 (released 2026-11-01, tag v1.0-rc15)
 
 - Cut 2026-11-01. The register holds 372 established rows, 39 normative and 117 staged. Pins unchanged from rc14. Nineteen machine-checked models: the fifteen of the invariants table, the life of a mesh new among them, and the four Lean models beside them (the reader's trust set, the affiliation tier, standing over a row that names a person, what a forwarder learns at first contact). This edition carries the standing rules, first contact through a forwarder, who may write in a room, ignore, block and mute, the two acts of moderation and the 48 hours, and the life of a mesh told as one story whose model closes with every lifecycle of the state table carried by a model. Persist builds its v61 door to it; edge and server follow through the tickets named on CIRISPersist#1165 and #1161.
