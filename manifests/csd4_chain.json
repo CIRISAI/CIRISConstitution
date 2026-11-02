@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "cbba78bc02207777ed12f80eef3ef4a9f4e596ca3521416fafeb2d6fdbfed78a",
+   "claims_sha256": "d409ecbc9a992c63a3ec2156670a438521f0426283902b608e12706b279f2ff9",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 536,
+   "claims": 539,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "e9ea0aeddbc399b45d05182447ec3ed21008de14d393b72e966193dccdd19d39"
+  "chain_sha256": "690909edbf4b93d6370a56d662db8b0d58203fb902407541e81e7fde0bded453"
  },
  "chain": [
   {
@@ -990,6 +990,54 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -1756,6 +1804,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -3075,6 +3171,54 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -3804,6 +3948,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -7368,6 +7560,54 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -9117,6 +9357,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -11592,6 +11880,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -15501,6 +15837,54 @@
      ]
     },
     {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-family-subject",
      "cc_ref": "3.3.4",
      "status": "established",
@@ -17593,6 +17977,54 @@
      ]
     },
     {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-registry-named",
      "cc_ref": "4.5.4",
      "status": "established",
@@ -19010,6 +19442,54 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -19755,6 +20235,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -22880,6 +23408,54 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -23588,6 +24164,54 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -24293,6 +24917,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -25163,6 +25835,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
@@ -48326,6 +49046,54 @@
        "path": "src/transport/reticulum.rs",
        "symbols": [
         "ReticulumTransport::send_first_contact_pinned"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-trust-root-admitted-under-accord-quorum",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "check_trust_root_community_admission"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-entrenched-supersede",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "prepare_trust_root_supersede"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-infrastructure-quorum-m-of-n",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_infrastructure_consensus_protocol"
        ]
       }
      ]
