@@ -756,7 +756,7 @@ A claim's bytes rarely fit one packet, and the split is where privacy is most ea
 4. **Scope.** Maintenance traffic (anti-entropy, replication, witness, repair) and ordinary rows are shaped. The real-time audio and video plane ([CC 5.3.3.2](#5.3.3.2)) is never shaped.
 5. **What shaping does not hide.** Link setup stays observable: the request to open a link to a derived destination is visible, and shaping runs only inside established links. A node with any unshaped link can be told apart from a node that shapes every link. Shaping hides timing and volume inside a shaped link, not which links exist ([CC 5.4.6](#5.4.6), [CC 1.13.3.1](part_1_foundation.md)).
 
-**Fleet defaults (normative defaults; every value stays a per-node setting).** Shaping is **off** by default. When a node turns it on, it offers its budget class with these values:
+**Fleet defaults (normative defaults; every value stays a per-node setting).** Shaping is **on** by default for the `server` class and **off** by default for every other class: a person turns it on for a home node or a phone, and a node that activates the Anonymous Tier shapes its layer links regardless ([CC 5.4.6](#5.4.6)). **The choice is explained before it is made (normative).** A client that offers the setting states the give and the take in plain words at the moment of choosing: what shaping hides (the timing and size of what rides the shaped link, from an observer of that link) and what it does not (the fact of the link, and anything on an unshaped link beside it); the latency it adds (the Poisson timer's mean below: about 1.6 s on a server, 4 s at home, 8 s on a phone on Wi-Fi); and the cover traffic it costs (the byte budget below, spent whether or not anything real is sent). A default is never silent about its cost. When a node turns it on, it offers its budget class with these values:
 
 | Budget class | ρ | W | Byte budget per link |
 |---|---|---|---|
@@ -766,6 +766,8 @@ A claim's bytes rarely fit one packet, and the split is where privacy is most ea
 | `phone-cellular` | 0.5 | 3,600 s | 350 B/s |
 
 A node's shaped links together use at most eight links' worth of its class budget.
+
+**Two planes (normative).** A shaped link carries rows: statements, posts, messages, reactions, the small images that fit the budget, and the control traffic of the planes. Bulk and live media, a chunked blob above the budget's reach ([CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3)), a stream, a call, ride unshaped links of their own and make no shaping claim; a link belongs to one plane, and the shaped plane's claim is never extended to the bulk plane beside it. A peer in anonymous mode ([CC 5.4.6](#5.4.6)) is confined to the row plane: it publishes and reads rows and carries no stream and no call, since live media through the tier is neither possible at these rates nor consistent with what the tier hides, and the client says so when the mode is chosen.
 
 *Why these values (informative).* They come from a model run on the production scheduler and budget meter over a virtual clock with real row sizes. They are not measurements from a live mesh, and they are revised when live measurements exist. What the model found:
 
