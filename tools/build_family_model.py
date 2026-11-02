@@ -52,73 +52,122 @@ def tag_of(t):
     m = re.match(r"^(GAP|PROSE|GENERIC|DATA)\s*:?\s*(.*)$", t.strip(), re.S)
     return (m.group(1), m.group(2).strip()) if m else (None, t.strip())
 def head_of(t):
-    """The closed value at the front of a cell: up to the first parenthesis, semicolon or ' on release'."""
-    h = re.split(r"\s*\(|;| on release| via | @ ", t, 1)[0].strip().rstrip(".,")
+    """The closed value at the front of a cell: up to the first ' (' (a space before the parenthesis, so
+    cohort_plus_subjects(full) keeps its qualifier), ';', ' via ', ' @ ' or ' on release'."""
+    h = re.split(r"\s+\(|;| on release| via | @ ", t, 1)[0].strip().rstrip(".,")
     return h or None
+def split_top(t, sep):
+    """Split on sep outside parentheses and braces."""
+    out, depth, cur = [], 0, ""
+    for ch in t:
+        if ch in "({[": depth += 1
+        elif ch in ")}]": depth = max(0, depth - 1)
+        if ch == sep and depth == 0: out.append(cur); cur = ""
+        else: cur += ch
+    out.append(cur)
+    return [x.strip() for x in out if x.strip()]
+def slices(t):
+    """s2:/s3: segments (an unmerged slice's value) split out of a sub-value, at the top level only."""
+    out, keep = {}, []
+    for seg in split_top(t, ";"):
+        m = re.match(r"^(s[23])\s*:\s*(.+)$", seg)
+        if m: out[m.group(1)] = m.group(2).strip()
+        else: keep.append(seg)
+    return out, "; ".join(keep)
+def arms(t):
+    """A per-arm value: 'by cohort_scope: a -> x; b -> y' or 'leaf: rule; leaf2: rule2' (split at the top level)."""
+    body = re.sub(r"^by cohort_scope:\s*", "", t)
+    segs = split_top(body, ";")
+    if "->" in body:
+        d = OrderedDict()
+        for arm in segs:
+            m = re.match(r"\s*([a-z_]+)\s*->\s*(.+)$", arm)
+            if m: d[m.group(1)] = m.group(2).strip()
+        return d or None
+    if len(segs) >= 2 and all(re.match(r"^[a-z_/]+:\s*\S", x) for x in segs):
+        d = OrderedDict()
+        for x in segs:
+            k, v = x.split(":", 1); d[k.strip()] = v.strip()
+        return d
+    return None
 def leaf(t):
-    """One sub-value: {value, source, note}. The tag decides the source; a closed head after a GAP or PROSE
-    tag is kept as the value (it is the de-facto or target value, not nothing)."""
+    """One sub-value: {value, source, note, closed, alternatives, arms, s2, s3}. The tag decides the source;
+    a closed value after a GAP or PROSE tag is kept (the de-facto or target value, not nothing); nothing is
+    cut: `value` is the whole reading, `closed` its head, `alternatives` the set when the cell lists several."""
+    t = t.strip()
     tag, rest = tag_of(t)
     src = {"GAP": "gap", "PROSE": "prose", "GENERIC": "generic", "DATA": "code-v61", None: "code-v61"}[tag]
-    if t.strip().startswith("any of {"):
-        m = re.match(r"any of \{([^}]*)\}", t.strip())
-        return {"value": [x.strip() for x in m.group(1).split(",")], "source": "gap", "note": t.strip()}
+    if t.startswith("any of {"):
+        m = re.match(r"any of \{([^}]*)\}", t)
+        return {"value": [x.strip() for x in m.group(1).split(",")], "source": "gap", "note": t}
     if tag is None and re.search(r"\bGAP\b", rest): src = "mixed"
     if tag is None and re.search(r"\bPROSE\b", rest): src = "mixed" if src == "mixed" else "prose"
+    sl, rest2 = slices(rest)
     if tag == "GAP" and rest.startswith("on release"):
-        out = {"value": None, "source": "gap", "note": rest}
-        m = re.search(r"s2:\s*([a-z_]+)", rest)
-        if m: out["s2"] = m.group(1)
-        return out
-    val = head_of(rest) if rest else None
-    if src == "gap" and val and val.lower() in ("none", "no per-family constraint", "nothing"): val = None
-    out = {"value": val, "source": src}
-    if rest and rest != val: out["note"] = rest
+        out = {"value": None, "source": "gap", "note": rest}; out.update(sl); return out
+    a = arms(rest2)
+    alts = [x.strip() for x in rest2.split(" | ")] if " | " in rest2 and not a else None
+    closed = head_of(rest2) if rest2 else None
+    if src == "gap" and closed and closed.lower() in ("none", "no per-family constraint", "nothing"): closed = None
+    out = {"value": a if a else (alts if alts else (rest2 if rest2 else None)), "source": src}
+    if closed and out["value"] != closed: out["closed"] = closed
+    if a and src == "prose": out["source"] = "code-v61"   # per-leaf closed values are closed
+    if rest and rest != out["value"]: out["note"] = rest
+    out.update(sl)
     return out
 def cell(col, text):
     t = (text or "").strip()
     if not t or t in ("—", "-"): return {"value": None, "source": "gap"}
     keys = SUBKEYS.get(col)
-    if keys and " | " in t or (keys and re.match(r"^(%s):" % "|".join(keys), t)):
-        parts = [x.strip() for x in t.split(" | ")]
-        sub, order = {}, []
-        for part in parts:
+    if keys and (" | " in t or re.match(r"^(%s):" % "|".join(keys), t)):
+        sub, order, cur = OrderedDict(), [], None
+        for part in [x.strip() for x in t.split(" | ")]:
             m = re.match(r"^([a-z_]+):\s*(.*)$", part, re.S)
-            if m and m.group(1) in keys: k, v = m.group(1), m.group(2)
-            else: k, v = (keys[len(order)] if len(order) < len(keys) else f"part{len(order)}"), part
-            sub[k] = leaf(v); order.append(k)
-        srcs = {v["source"] for v in sub.values()}
-        return {"value": {k: v["value"] for k, v in sub.items()}, "source": srcs.pop() if len(srcs) == 1 else "mixed", "parts": sub}
+            if m and m.group(1) in keys: cur = m.group(1); sub[cur] = m.group(2); order.append(cur)
+            elif cur is None: cur = keys[0]; sub[cur] = part; order.append(cur)
+            else: sub[cur] = sub[cur] + " | " + part   # an alternative of the field before, not a new field
+        parts = OrderedDict((k, leaf(v)) for k, v in sub.items())
+        srcs = {v["source"] for v in parts.values()}
+        return {"value": OrderedDict((k, v["value"]) for k, v in parts.items()), "source": srcs.pop() if len(srcs) == 1 else "mixed", "parts": parts}
     if col == "freshness": return freshness(t)
     if col == "signer_rule": return signer(t)
+    if col == "evidence": return evidence(t)
     return leaf(t)
 def freshness(t):
     tag, rest = tag_of(t)
     out = leaf(t)
     if tag == "GENERIC" or "future-skew" in rest:
-        out["value"] = {"judged_at": "receipt", "W": None}; out["source"] = "generic" if tag == "GENERIC" else out["source"]
+        out["value"] = {"judged_at": "receipt", "W": None}
+        if tag == "GENERIC": out["source"] = "generic"
     elif re.search(r"\bW\b", rest):
         m = re.search(r"W\s*=\s*(\d+)\s*(h|d|s)\b", rest)
-        W = None
-        if m: W = int(m.group(1)) * {"h": 3600, "d": 86400, "s": 1}[m.group(2)]
+        W = int(m.group(1)) * {"h": 3600, "d": 86400, "s": 1}[m.group(2)] if m else None
         out["value"] = {"judged_at": "signed_instant_with_W", "W": W if W is not None else rest}
-        if tag == "PROSE" and W is None: out["source"] = "prose"
-        elif tag == "PROSE": out["source"] = "code-v61"
     return out
 def signer(t):
     tag, rest = tag_of(t)
     out = leaf(t)
-    m = re.match(r"^([^;]*?)\s+x\s+(.*?)\s+x\s+\{([^}]*)\}", rest)
+    m = re.match(r"^([^;]*?)\s+x\s+(.*?)\s+x\s+\{([^}]*)\}(.*)$", rest, re.S)
     if m:
-        out["value"] = {"who": m.group(1).strip(), "via": m.group(2).strip(), "conditions": [c.strip() for c in m.group(3).split(",") if c.strip()]}
-    elif ";" in rest and ":" in rest:
-        out["value"] = {"per_leaf": rest}; out["source"] = "prose" if out["source"] == "code-v61" else out["source"]
+        who = m.group(1).strip()
+        out["value"] = {"who": [w.strip() for w in who.split(" | ")] if " | " in who else who,
+                        "via": m.group(2).strip(), "conditions": [c.strip() for c in m.group(3).split(",") if c.strip()]}
+        q = m.group(4).strip(" ;")
+        if q: out["qualifier"] = q
+    return out
+def evidence(t):
+    out = leaf(t)
+    d = OrderedDict()
+    for m in re.finditer(r"(\d+ nsproc|door claims|door tokens|generic tokens|nsproc)\s*:\s*([^;]+)", t):
+        k = m.group(1).replace(" ", "_"); vals = [x.strip() for x in re.split(r"[,/]", m.group(2)) if x.strip()]
+        d[k] = vals
+    if d: out["value"] = d
     return out
 def reference_code(t):
     t = (t or "").strip()
     if not t or t.lower().startswith("none"): return None
     refs = []
-    for m in re.finditer(r"\{family:\s*([^,]+?),\s*standing:\s*([^,]+?),\s*same_group:\s*([^}]+?)\}(?:\s*@\s*([^;]+))?", t):
+    for m in re.finditer(r"\{family:\s*(.+?),\s*standing:\s*(.+?),\s*same_group:\s*([^}]+?)\}(?:\s*@\s*([^;]+))?", t):
         refs.append({"family": m.group(1).strip(), "standing": m.group(2).strip(), "same_group": m.group(3).strip(), "where": (m.group(4) or "").strip()})
     return refs or [{"raw": t}]
 def polarity_census(t):
