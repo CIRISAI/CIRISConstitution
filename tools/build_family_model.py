@@ -69,14 +69,14 @@ def split_top(t, sep):
 def slices(t):
     """s2:/s3: segments (an unmerged slice's value) split out of a sub-value, at the top level only."""
     out, keep = {}, []
-    for seg in split_top(t, ";"):
+    for seg in split_top(t.replace(" ;", ";"), ";"):
         m = re.match(r"^(s[23])\s*:\s*(.+)$", seg)
         if m: out[m.group(1)] = m.group(2).strip()
         else: keep.append(seg)
     return out, "; ".join(keep)
 def arms(t):
     """A per-arm value: 'by cohort_scope: a -> x; b -> y' or 'leaf: rule; leaf2: rule2' (split at the top level)."""
-    body = re.sub(r"^by cohort_scope:\s*", "", t)
+    body = re.sub(r"^by cohort_scope:\s*", "", t).replace(" ;", ";")
     segs = split_top(body, ";")
     if "->" in body:
         d = OrderedDict()
@@ -105,6 +105,7 @@ def leaf(t):
     sl, rest2 = slices(rest)
     if tag == "GAP" and rest.startswith("on release"):
         out = {"value": None, "source": "gap", "note": rest}; out.update(sl); return out
+    if re.match(r"^federation only\b", rest2): rest2 = "federation (capacity never local)"
     a = arms(rest2)
     alts = [x.strip() for x in rest2.split(" | ")] if " | " in rest2 and not a else None
     closed = head_of(rest2) if rest2 else None
@@ -159,8 +160,10 @@ def evidence(t):
     out = leaf(t)
     d = OrderedDict()
     for m in re.finditer(r"(\d+ nsproc|door claims|door tokens|generic tokens|nsproc)\s*:\s*([^;]+)", t):
-        k = m.group(1).replace(" ", "_"); vals = [x.strip() for x in re.split(r"[,/]", m.group(2)) if x.strip()]
-        d[k] = vals
+        k = m.group(1); vals = [x.strip() for x in re.split(r"[,/]", m.group(2)) if x.strip()]
+        n = re.match(r"(\d+) nsproc", k)
+        if n: d["nsproc"] = vals; d["n_nsproc"] = int(n.group(1))
+        else: d[k.replace(" ", "_")] = vals
     if d: out["value"] = d
     return out
 def reference_code(t):
