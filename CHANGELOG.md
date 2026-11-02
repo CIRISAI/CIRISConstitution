@@ -2,8 +2,9 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
-## 1.0-rc16 (open)
+## 1.0-rc16 (released 2026-11-02, tag v1.0-rc16)
 
+- Cut 2026-11-02. The register holds 378 established rows, 39 normative and 122 staged. CIRISPersist re-pinned at v61.0.0; other pins unchanged from rc15. Twenty machine-checked models: the sixteen of the invariants table, the family model new among them, and the four Lean models beside them. This edition carries the family model and its manifest draft (every scores family as one row over closed columns, the shape persist's v62 implements), the user's guide to the mesh, A/V chunk source authentication in its first submitted form, the Anonymous Tier ahead of edge's submission, shaping on by default for servers only and explained at the choice elsewhere, the invitee's acceptance as the second voice on an admission, and the quorum shapes and invariants brought to edge, persist and server as one page. Carried to rc17: edge's trailer v2 and the CALM frame, pinned from the gated commit; persist 61.0.1's evidence corrections (CIRISPersist#1187); the expected-active base, the room doors that read the governance rows and the genesis re-sign, all v62 (CIRISPersist#1121, #1173, #1178).
 - Opened 2026-11-01 after the rc15 tag.
 - The family model (`formal/family_model`): every scores family as one row over closed columns, the change half typed by the eleven kinds and the five verbs plus carries, the Record as a relation; the registry's 189 families checked against their kind profiles one theorem each; references given a mode, precondition or carry; the v62 DSL locked on the closure grammar (admission, reference, rewrite; a byte-equal projection as the closure gate; ambiguity refused at vendor time).
 - The user's guide to the mesh in the Digest (`constitution/digest/01_social_mesh_users_guide.md`): what a person can do with it and which rule stands behind each thing, with status markers.
