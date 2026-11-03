@@ -367,6 +367,7 @@ def volume_md(vol):
     parts_md = [cover]
     if vol == "digest":
         for f in (DOC / "EXECUTIVE_SUMMARY.md", DIGEST / "00_guarantees_plain.md",
+                  DIGEST / "01_social_mesh_users_guide.md",
                   DIGEST / "00_operator_digest.md", DIGEST / "00_guarantees.md"):
             parts_md.append(f.read_text(encoding="utf-8"))
         return parts_md

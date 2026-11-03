@@ -253,7 +253,8 @@ jobs:
           lean ../affiliation/Affiliation.lean
           lean ../standing/Standing.lean
           lean ../contact/Contact.lean
-          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../contact/Contact.lean
+          lean -M 6000 -T 200000 ../family_model/FamilyModel.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../contact/Contact.lean ../family_model/FamilyModel.lean
 
   retirement:
     name: TLC — the Retirement Standard as a machine (formal/retirement)

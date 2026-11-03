@@ -1,20 +1,21 @@
 ### GRID
-Counts are families whose verb list includes that verb (a family counts in several columns). Last column is families per kind. Totals: 169 families, THING 78, ACCOUNT 76, RECORD 15.
+Counts are families whose verb list includes that verb (a family counts in several columns). Last column is families per kind. Totals: 189 families, THING 89, ACCOUNT 100; 13 families maintain the Record relation (the +1 is a relation, not a kind: those rows are Facts or Rules about the record, with erasure none or legal hold and a byte-equal projection). No family carries a row of another kind at the v61 head: the six earlier `carries` labels were a derived aggregate, a body that carries content, or a precondition that reads another row, and the table now records those as `reference` with a mode (`pre:` or `carry:`) rather than as the verb.
 
 | kind | attest | authorize | replace | withdraw | recant | carries | families |
 |---|---|---|---|---|---|---|---|
 | Priorities | 5 | 0 | 0 | 5 | 3 | 0 | 5 |
-| Rules | 31 | 2 | 16 | 29 | 3 | 2 | 33 |
+| Rules | 34 | 2 | 16 | 29 | 3 | 0 | 36 |
 | Manner | 3 | 0 | 1 | 3 | 1 | 0 | 3 |
-| Identity | 14 | 2 | 9 | 12 | 0 | 0 | 16 |
-| Confidence | 15 | 0 | 2 | 14 | 10 | 2 | 15 |
-| Facts | 46 | 0 | 20 | 44 | 26 | 0 | 46 |
-| Circumstances | 12 | 0 | 10 | 8 | 0 | 0 | 12 |
-| Process | 9 | 0 | 5 | 3 | 0 | 0 | 9 |
+| Identity | 16 | 3 | 10 | 12 | 0 | 0 | 19 |
+| Confidence | 15 | 0 | 2 | 14 | 10 | 0 | 15 |
+| Facts | 69 | 0 | 27 | 60 | 27 | 0 | 69 |
+| Circumstances | 13 | 0 | 11 | 8 | 0 | 0 | 13 |
+| Process | 13 | 0 | 5 | 5 | 0 | 0 | 13 |
 | Model | 5 | 0 | 0 | 5 | 5 | 0 | 5 |
 | Structure | 8 | 0 | 2 | 7 | 5 | 0 | 8 |
-| Premises | 2 | 0 | 2 | 2 | 1 | 0 | 2 |
-| Record | 15 | 0 | 3 | 8 | 1 | 2 | 15 |
+| Premises | 3 | 0 | 2 | 3 | 1 | 0 | 3 |
+
+The profile each kind admits, and the carries firewall, are checked as a machine in [`../family_model/`](../family_model/): every row above must fit its kind's profile, and the registry's own occupancy is the evidence the profiles rest on (authorize only under Rules, Identity and Process; thing-or-account a function of kind).
 
 ### EMPTY
 - (Priorities, authorize): principled. A weighting is scored, never delegated; delegating who-goes-first would itself be a Rules grant.
