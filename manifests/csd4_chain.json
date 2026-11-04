@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "1228d3aff89e1676bf389d66297f57774c09efc932b233fd0d1520399b214e61",
+   "claims_sha256": "79cce3ca4989f9f28cdacbef60831e833f22aab632cc140ae6211533e2e63a7e",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 562,
+   "claims": 563,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "dab82d326b2f1234a9da49020a7091868546c04555e4a6404b10714cdda22fc7"
+  "chain_sha256": "b6932c0a1513f37ca267fd319c0796acebea45816b29ef8ae34b1987d6a5da52"
  },
  "chain": [
   {
@@ -34170,6 +34170,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -34540,6 +34552,18 @@
        "symbols": [
         "fold_community_trust"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -34914,6 +34938,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -35207,6 +35243,18 @@
        "symbols": [
         "fold_community_trust"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -35504,6 +35552,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -35797,6 +35857,18 @@
        "symbols": [
         "fold_community_trust"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -36101,6 +36173,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -36401,6 +36485,18 @@
        "symbols": [
         "fold_community_trust"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-duty-standing",
+     "cc_ref": "3.3.1",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }

@@ -223,9 +223,9 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 189,
+    "n_families": 190,
     "per_component": {
-      "accord-agent": 36,
+      "accord-agent": 37,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "1a50538a5f7eef1e003fe31601331f7d575ebe72b022e6dfa22e88840f9267f5",
+    "registry_sha256": "b3dba6d7fdb3bd316d7a2255e2f1ac6216a5c7a0779df287a07597e8036370e3",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "0703176c563055fcaf751137a609baaa41885f5914d7089768e66db000fbb9d9"
+    "source_sha256": "5da373c17b87f5134e580d8f9f3e93bece4353bd912854056656df026165a81a"
   },
   "families": [
     {
@@ -1764,6 +1764,29 @@
     },
     {
       "cc_section": "3.1.5",
+      "description": "Catalogue row (CC 3.1.7 R1); a member's standing willingness to hold a community duty, signed by the member alone over community_id and duty (moderate defined today), ended by the author's own withdraws; the input of CC 4.5.4 rule 2's deriv",
+      "owning_component": "accord-agent",
+      "owning_repo": "CIRISAgent",
+      "polarity": "positive-only",
+      "prefix": "consent:duty_standing",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.5",
+        "rule": "reserved (see table)"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "consent"
+        },
+        {
+          "class": "literal",
+          "segment": "duty_standing"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.5",
       "description": "Catalogue row (CC 3.1.7 R1); producer side of a bilateral grant, CC 3.3.1.",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
@@ -1931,6 +1954,7 @@
         "consent:decay:{stage}",
         "consent:deletion_complete",
         "consent:deletion_sla:{days}",
+        "consent:duty_standing",
         "consent:partnership_accept",
         "consent:partnership_grant",
         "consent:replication:{version}",

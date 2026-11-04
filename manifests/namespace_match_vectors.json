@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc17",
-    "registry_sha256": "1a50538a5f7eef1e003fe31601331f7d575ebe72b022e6dfa22e88840f9267f5",
+    "registry_sha256": "b3dba6d7fdb3bd316d7a2255e2f1ac6216a5c7a0779df287a07597e8036370e3",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -2155,6 +2155,42 @@
       "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
+      "dimension": "consent:duty_standing:v1",
+      "family": "consent:duty_standing",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "consent:duty_standing:V1",
+      "family": "consent:duty_standing",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:duty_standing:v1:v2",
+      "family": "consent:duty_standing",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:duty_standing:v1beta",
+      "family": "consent:duty_standing",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Consent:duty_standing:v1",
+      "family": "consent:duty_standing",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "consent:duty_standing",
+      "family": "consent:duty_standing",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
       "dimension": "consent:partnership_accept:v1",
       "family": "consent:partnership_accept",
       "refusal": null,
@@ -2409,6 +2445,12 @@
     {
       "dimension": "consent:deletion_sla:42:v1",
       "family": "consent:deletion_sla:{days}",
+      "refusal": null,
+      "why": "closed reserved leaf resolves to its own row"
+    },
+    {
+      "dimension": "consent:duty_standing:v1",
+      "family": "consent:duty_standing",
       "refusal": null,
       "why": "closed reserved leaf resolves to its own row"
     },
