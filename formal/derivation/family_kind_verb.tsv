@@ -188,3 +188,5 @@ preserve_response	registry	Process	THING	attest	L	the custodian's answer on pres
 rendezvous:route	registry	Circumstances	THING	attest,replace	L	an anonymous receiver's hourly route: what differs this period	no	—
 retirement:{state}	registry	Process	THING	attest	L	the seven-step retirement ladder, forward only; held shut today	no	pre:Process
 transport:canonical_rebind	registry	Identity	THING	attest,replace	L	a holder quorum rebinds the canonical's transport destination	no	—
+ballot:moderator	registry	Structure	THING	attest,withdraw	M	a member's ranked ballot in a moderator election; the fold keeps the person's latest	no	pre:Identity
+ballot:moderator_acceptance	registry	Structure	THING	attest	M	the winner's acceptance binding the ballot set it was counted over	no	pre:Structure

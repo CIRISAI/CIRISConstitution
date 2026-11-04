@@ -28,10 +28,10 @@
    "binds_segment": "placeholder → signer | subject | group | none",
    "evidence": "{claim_ids, refusal tokens}"
   },
-  "families": 189,
+  "families": 191,
   "coverage": {
    "kind": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -39,7 +39,7 @@
     "gap": 0
    },
    "side": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -47,7 +47,7 @@
     "gap": 0
    },
    "verbs": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -55,7 +55,7 @@
     "gap": 0
    },
    "maintains_record": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -63,7 +63,7 @@
     "gap": 0
    },
    "reference": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -76,7 +76,7 @@
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 173
+    "gap": 175
    },
    "signer_rule": {
     "cc-table": 0,
@@ -84,7 +84,7 @@
     "generic": 0,
     "prose": 18,
     "mixed": 6,
-    "gap": 32
+    "gap": 34
    },
    "subject_rule": {
     "cc-table": 0,
@@ -92,7 +92,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 18,
-    "gap": 4,
+    "gap": 6,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 984,
@@ -108,7 +108,7 @@
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 5
+    "gap": 7
    },
    "polarity": {
     "cc-table": 0,
@@ -116,7 +116,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
    },
    "body": {
     "cc-table": 0,
@@ -124,7 +124,7 @@
     "generic": 0,
     "prose": 34,
     "mixed": 0,
-    "gap": 155
+    "gap": 157
    },
    "freshness": {
     "cc-table": 0,
@@ -132,7 +132,7 @@
     "generic": 182,
     "prose": 7,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
    },
    "lifecycle": {
     "cc-table": 0,
@@ -140,7 +140,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0,
+    "gap": 2,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 920,
@@ -156,7 +156,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 184,
-    "gap": 0,
+    "gap": 2,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 546,
@@ -172,7 +172,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0,
+    "gap": 2,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 368,
@@ -188,7 +188,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
    },
    "governance": {
     "cc-table": 0,
@@ -196,7 +196,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
    },
    "derived": {
     "cc-table": 0,
@@ -204,7 +204,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 189
+    "gap": 191
    },
    "confers": {
     "cc-table": 0,
@@ -212,7 +212,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 189
+    "gap": 191
    },
    "binds_segment": {
     "cc-table": 0,
@@ -220,7 +220,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 189
+    "gap": 191
    },
    "evidence": {
     "cc-table": 0,
@@ -228,7 +228,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 125
+    "gap": 127
    }
   },
   "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
@@ -6193,6 +6193,219 @@
     "formal_witness": "false",
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:855; plan_put_attestation@src/federation/attestation_admit.rs:572"
+   }
+  },
+  {
+   "family": "ballot:moderator",
+   "kind": {
+    "value": "Structure",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "thing",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest",
+     "withdraw"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": "pre:Identity",
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": null,
+    "source": "gap",
+    "registry": null
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "confers": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "binds_segment": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   }
+  },
+  {
+   "family": "ballot:moderator_acceptance",
+   "kind": {
+    "value": "Structure",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "thing",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": "pre:Structure",
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": null,
+    "source": "gap",
+    "registry": null
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "confers": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "binds_segment": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
    }
   },
   {
