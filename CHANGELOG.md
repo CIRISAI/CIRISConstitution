@@ -2,6 +2,15 @@
 
 The CIRIS Constitution is one document with one version line. Each release below is the text as it stood at the cut; the Parts state the rules as they now stand, and this file records what each edition changed.
 
+## 1.0-rc17 (open)
+
+- Opened 2026-11-04 after the rc16 tag.
+- Who carries what (5.4.6): a stranger carries on a shaped link only what no one must consent to carry, key exchange, cover, the public self-authenticating rows, the sealed asks and answers by which a consent is reached, the halt and tombstones; a scoped body crosses a forwarder only one that has said yes; the two ends and a consenting carrier keep everything; `formal/transport_tiers` proves every road to a consent runs on strangers alone.
+- Shaping (5.4.3): the eight-link bound stated as a refusal, never a shaped link below its class; the `seat` class between serve seats on its own budget; per-round links opened on a schedule; the active dropper named outside the claim; the stale "off until a fleet default" sentence removed.
+- First contact (5.4.6): holding a subject's live federation-scope binding is sufficient to serve a stranger its announced testimony.
+- The clock of a window (4.5.13): measured by each node from the instant it first held the proposal, never a signed instant.
+- Moderation (4.5.4): the authority set says who may appoint; belonging to it holds no duty.
+
 ## 1.0-rc16 (released 2026-11-02, tag v1.0-rc16)
 
 - Cut 2026-11-02. The register holds 378 established rows, 39 normative and 122 staged. CIRISPersist re-pinned at v61.0.0; other pins unchanged from rc15. Twenty machine-checked models: the sixteen of the invariants table, the family model new among them, and the four Lean models beside them. This edition carries the family model and its manifest draft (every scores family as one row over closed columns, the shape persist's v62 implements), the user's guide to the mesh, A/V chunk source authentication in its first submitted form, the Anonymous Tier ahead of edge's submission, shaping on by default for servers only and explained at the choice elsewhere, the invitee's acceptance as the second voice on an admission, and the quorum shapes and invariants brought to edge, persist and server as one page. Carried to rc17: edge's trailer v2 and the CALM frame, pinned from the gated commit; persist 61.0.1's evidence corrections (CIRISPersist#1187); the expected-active base, the room doors that read the governance rows and the genesis re-sign, all v62 (CIRISPersist#1121, #1173, #1178).

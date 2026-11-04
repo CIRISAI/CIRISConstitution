@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d409ecbc9a992c63a3ec2156670a438521f0426283902b608e12706b279f2ff9",
+   "claims_sha256": "ad60548f413819562cfb59ba9202b8dfb573ea3b6cefb8693df356e6043138ea",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 539,
+   "claims": 545,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "690909edbf4b93d6370a56d662db8b0d58203fb902407541e81e7fde0bded453"
+  "chain_sha256": "cef68e019be5e401ce31e76fc4e2506b2cc054e96d9fa3afc238e2cd52bc2c2f"
  },
  "chain": [
   {
@@ -6499,6 +6499,30 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -6859,6 +6883,30 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
       }
      ]
     }
@@ -10568,6 +10616,30 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -12314,6 +12386,30 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
       }
      ]
     }
@@ -18070,6 +18166,18 @@
        "ticket": "CIRISPersist#1173"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -18692,6 +18800,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1173"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -22671,6 +22791,30 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#938"
       }
      ]
     }
@@ -32607,6 +32751,18 @@
        "ticket": "CIRISPersist#1173"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32740,6 +32896,18 @@
        "ticket": "CIRISPersist#1173"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32871,6 +33039,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1173"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -33020,6 +33200,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1173"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
