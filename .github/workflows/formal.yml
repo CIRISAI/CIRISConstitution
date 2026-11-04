@@ -17,6 +17,10 @@ on:
       - 'constitution/part_3_the_namespace.md'
       - '.github/workflows/formal.yml'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   tlc:
     name: TLC — CC 3.2 T8 standing verdict
