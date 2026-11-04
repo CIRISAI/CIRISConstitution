@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "b40900188128f3f9f97b041e4c74004c9d70adb7c38b899530454b073e4f820b",
+   "claims_sha256": "fba91769c5e20d5c8d14f87b69e7da770fce66a865238a5eacadf37a705e5eea",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 549,
+   "claims": 550,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "9550c8118276ec8fc36eda279baee6032e319500c55e96750a6c6ef7d8d3345a"
+  "chain_sha256": "931f01553003cfb7170505760ec215cc2f671b55a04057657e2a990c19e85626"
  },
  "chain": [
   {
@@ -6534,6 +6534,17 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -6923,6 +6934,17 @@
     },
     {
      "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
@@ -10673,6 +10695,17 @@
        "kind": "normative-only"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -12448,6 +12481,17 @@
     },
     {
      "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
@@ -22864,6 +22908,17 @@
     },
     {
      "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
