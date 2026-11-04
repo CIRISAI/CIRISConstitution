@@ -397,3 +397,55 @@ theorem public_room_needs_announce (w : World) (es : List Event) (n room : Nat) 
     (hpub : w.publicRooms.contains room = true) (hn : w.isAnonNode n = true) :
     Row.member n room via ∉ run w es := fun hm =>
   kind_exclusive w n hn ((inv_holds w es).public_is_announced n room via hpub hm)
+
+/-! ### No ungoverned room: a lapse is answered by the room's own appointment
+
+CC 4.5.4 rule 2: when the holder of `moderate` lapses, the member with the best standing is
+appointed by the room's own act, deterministically. Here the candidate is the member with the
+lowest key id who may hold the duty (announced, or anonymous where the world allows it) and is
+not the one who lapsed; the real rule orders by track record first, which the model abstracts. -/
+
+def mayHold (w : World) (n : Nat) : Bool :=
+  w.isAnnouncedNode n || (w.anonDuty && w.isAnonNode n)
+
+/-- The members of a room, as node ids, from the rows held. -/
+def membersOf (s : State) (room : Nat) : List Nat :=
+  s.filterMap (fun r => match r with
+    | .member n rm _ => if rm = room then some n else none
+    | _ => none)
+
+/-- The proper candidates after `lost` lapsed: members who may hold the duty, `lost` excluded. -/
+def candidates (w : World) (s : State) (room lost : Nat) : List Nat :=
+  (membersOf s room).filter (fun n => mayHold w n && n != lost)
+
+def pick (w : World) (s : State) (room lost : Nat) : Option Nat :=
+  (candidates w s room lost).min?
+
+/-- The lapse of a duty holder, answered in the same step by the room's appointment of the pick. -/
+def lapse (w : World) (s : State) (room lost : Nat) : State :=
+  let s' := s.filter (fun r => r != .duty (.node lost) room)
+  match pick w s room lost with
+  | some n => .duty (.node n) room :: s'
+  | none => s'
+
+/-- A room whose holder lapses is never left ungoverned while a proper candidate exists. -/
+theorem lapse_never_leaves_a_gap (w : World) (s : State) (room lost : Nat)
+    (h : pick w s room lost = some n) : operates (lapse w s room lost) room := by
+  refine ⟨.node n, ?_⟩
+  simp [lapse, h]
+
+/-- And the appointee is a proper candidate: a member who may hold the duty, not the one lost. -/
+theorem pick_is_candidate (w : World) (s : State) (room lost n : Nat)
+    (h : pick w s room lost = some n) : n ∈ candidates w s room lost :=
+  List.min?_mem (fun a b => by rw [Nat.min_def]; split <;> simp) h
+
+/-- Only when no proper candidate exists does the room fall to the 48 h recovery of CC 4.5.13. -/
+theorem gap_only_without_candidate (w : World) (s : State) (room lost : Nat)
+    (hno : ∀ h, Row.duty h room ∈ s → h = .node lost) (h : pick w s room lost = none) :
+    ¬ operates (lapse w s room lost) room := by
+  rintro ⟨hd, hm⟩
+  simp only [lapse, h] at hm
+  have := List.mem_filter.mp hm
+  have heq := hno hd this.1
+  subst heq
+  simp at this

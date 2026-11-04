@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "1f68c6015b9f5d01f60ba2f4a22fb19ce24bc15d4b36bf6344d678418f8eed04",
+   "claims_sha256": "40c339fc4f212917abace2295fd40b09989f16fd705d536709d05ed4768930b8",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 560,
+   "claims": 562,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "c5ea0de5a4d0d46e847ae3220f475192e0211f0cbb0b82e9cbb06a8fe77ae40e"
+  "chain_sha256": "dab82d326b2f1234a9da49020a7091868546c04555e4a6404b10714cdda22fc7"
  },
  "chain": [
   {
@@ -18482,6 +18482,30 @@
        "ticket": "CIRISPersist#1195"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-no-ungoverned-room",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -19109,6 +19133,30 @@
     },
     {
      "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-no-ungoverned-room",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
      "cc_ref": "4.5.4",
      "status": "staged",
      "join": "by_section",
@@ -33203,6 +33251,30 @@
        "ticket": "CIRISPersist#1195"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-no-ungoverned-room",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -33348,6 +33420,30 @@
        "ticket": "CIRISPersist#1195"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-no-ungoverned-room",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -33484,6 +33580,30 @@
     },
     {
      "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-no-ungoverned-room",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
      "cc_ref": "4.5.4",
      "status": "staged",
      "join": "by_section",
@@ -33645,6 +33765,30 @@
     },
     {
      "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-no-ungoverned-room",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
      "cc_ref": "4.5.4",
      "status": "staged",
      "join": "by_section",

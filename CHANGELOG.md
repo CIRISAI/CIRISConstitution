@@ -15,7 +15,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - A vote counts once per person (4.5.13): a roster seats a key, the person is its fedID, the tally is an order-free fold over held rows; a person's agreeing rows are one voice, disagreeing unwithdrawn rows are no voice until a withdrawal lands.
 - A relay's delivery measure (3.1.4) carries standing only with the relay's countersignature or a chunk commitment; the deterministic tree row re-graded to the function and its vectors, the live tree staged.
 - The clock of a window (4.5.13): measured by each node from the instant it first held the proposal, never a signed instant.
-- Moderation (4.5.4): the authority set says who may appoint; belonging to it holds no duty.
+- Moderation (4.5.4): the authority set says who may appoint; belonging to it holds no duty; an ungoverned room is not allowed, the gap after a lapse or a narrowing is closed in the same step by the room's own appointment of the proper candidate; a founder keeps the duty through a change of protocol.
 
 ## 1.0-rc16 (released 2026-11-02, tag v1.0-rc16)
 
