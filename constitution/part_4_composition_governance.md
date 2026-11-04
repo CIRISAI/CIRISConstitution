@@ -821,7 +821,7 @@ admit_family_change(F, proposed: family_record):
     emit hard_case:family_consensus_protocol_violation:{F} and reject
 ```
 
-A public room's `admission: open` ([CC 3.2](part_3_the_namespace.md)) is shorthand for `consensus_protocol: open:self_admit`, not a field of its own; under it the group's side of a widening naming one joiner is that joiner's own signature, and a removal under it runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
+A public room's `admission: open` ([CC 3.2](part_3_the_namespace.md)) is shorthand for `consensus_protocol: open:self_admit`, not a field of its own; under it the group's side of a widening naming one joiner is that joiner's own signature, admissible only from a key with a live federation-scope owner binding, since the room's rows are served to strangers and an unannounced joiner's rows could not be ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)), and a removal under it runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
 
 **Consensus-protocol amendment** (changing `consensus_protocol` itself on a non-entrenched family) rides the SAME admission rule on the proposed amendment Contribution — meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md). Entrenched families (`consensus_protocol_entrenched == true`) reject amendments at the substrate gate; replacement requires the out-of-band ceremony documented per family (for HUMANITY_ACCORD see [CC 4.2.1](part_4_composition_governance.md)).
 

@@ -61,6 +61,8 @@ structure World where
   roomsRideTheTier : Bool
   /-- whether an anonymous identity (a node, never a pseudonym) may hold a duty -/
   anonDuty : Bool
+  /-- the public rooms: open admission at the Commons tier -/
+  publicRooms : List Nat := []
   deriving Repr
 
 def World.kindOf (w : World) (n : Nat) : Option Kind :=
@@ -103,8 +105,9 @@ def ok (w : World) (s : State) : Event → Bool
   | .announce n => w.isAnnouncedNode n                     -- an anonymous node never announces
   | .fetchRoute _ n => decide (announced s n)              -- a route is served only for an announced node
   | .directContact a b => decide (announced s a) && decide (announced s b)  -- item 10
-  | .joinRoom n _ viaTier =>
-      if w.isAnonNode n then viaTier && w.roomsRideTheTier  -- rooms only once they ride the tier
+  | .joinRoom n room viaTier =>
+      if w.publicRooms.contains room then decide (announced s n)  -- a public room admits announced keys only
+      else if w.isAnonNode n then viaTier && w.roomsRideTheTier  -- rooms only once they ride the tier
       else true
   | .publishAsNode n _ _ => w.isAnnouncedNode n            -- an anonymous node publishes only via the tier
   | .publishViaTier p _ _ =>
@@ -183,6 +186,8 @@ structure Inv (w : World) (s : State) : Prop where
   seat_is_announced : ∀ n, Row.seat n ∈ s → w.isAnnouncedNode n = true
   duty_holder : ∀ n room, Row.duty (.node n) room ∈ s →
       memberOf s n room ∧ (w.isAnnouncedNode n = true ∨ (w.anonDuty = true ∧ w.isAnonNode n = true))
+  public_is_announced : ∀ n room via, w.publicRooms.contains room = true →
+      Row.member n room via ∈ s → w.isAnnouncedNode n = true
 
 theorem kind_exclusive (w : World) (n : Nat) :
     w.isAnonNode n = true → w.isAnnouncedNode n = true → False := by
@@ -196,8 +201,9 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
   · exact Inv.mk (fun _ h => nomatch h) (fun _ _ h => nomatch h) (fun _ _ h => nomatch h)
       (fun _ _ _ _ h => nomatch h) (fun _ _ h => nomatch h) (fun _ _ h => nomatch h)
       (fun _ _ h => nomatch h) (fun _ h => nomatch h) (fun _ _ h => nomatch h)
+      (fun _ _ _ _ h => nomatch h)
   · intro s e hP hok
-    obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9⟩ := hP
+    obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9, h10⟩ := hP
     -- membership only grows
     have memGrow : ∀ n room, memberOf s n room → memberOf (effect s e) n room := by
       intro n room ⟨via, hv⟩; exact ⟨via, by simp [effect, hv]⟩
@@ -210,7 +216,7 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
       · left; exact hr
     refine Inv.mk (fun m hm => ?_) (fun h n hm => ?_) (fun a b hm => ?_)
       (fun n room via hanon hm => ?_) (fun a b hm => ?_) (fun p room hm => ?_)
-      (fun p room hm => ?_) (fun n hm => ?_) (fun n room hm => ?_)
+      (fun p room hm => ?_) (fun n hm => ?_) (fun n room hm => ?_) (fun n room via hpub hm => ?_)
     all_goals rcases key _ hm with h | h
     -- old rows: the hypothesis
     all_goals first
@@ -223,6 +229,7 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
       | exact h7 _ _ h
       | exact h8 _ h
       | exact ⟨memGrow _ _ (h9 _ _ h).1, (h9 _ _ h).2⟩
+      | exact h10 _ _ _ hpub h
       | skip
     -- the new row: by the guard
     all_goals cases e <;> simp only [added] at h
@@ -236,7 +243,20 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
     all_goals first
       | (simp only [ok, decide_eq_true_eq] at hok; exact h1 _ hok)
       | (simp only [ok, Bool.and_eq_true, decide_eq_true_eq] at hok; exact ⟨h1 _ hok.1, h1 _ hok.2⟩)
-      | (simp only [ok] at hok; rw [if_pos hanon] at hok; simpa using hok)
+      | (simp only [ok] at hok
+         split at hok
+         all_goals first
+           | exact (kind_exclusive w _ hanon (h1 _ (by simpa using hok))).elim
+           | (rw [if_pos hanon] at hok; simpa using hok)
+           | (rcases hok with h' | h'
+              · rw [hanon] at h'; cases h'
+              · exact h')
+           | simpa [hanon] using hok)
+      | (simp only [ok] at hok
+         split at hok
+         all_goals first
+           | exact h1 _ (by simpa using hok)
+           | exact absurd (by simpa using hpub : room ∈ w.publicRooms) ‹_›)
       | (simp only [ok, Bool.and_eq_true, decide_eq_true_eq] at hok
          exact ⟨memGrow _ _ hok.1, by simpa [Bool.or_eq_true, Bool.and_eq_true] using hok.2⟩)
       | simp [ok] at hok
@@ -371,3 +391,9 @@ theorem anonymous_moderator_is_an_identity (w : World) (es : List Event) (room :
   cases holder with
   | pseud p => exact absurd hd ((inv_holds w es).pseud_no_duty p room)
   | node n => exact ⟨n, hd⟩
+
+/-- No unannounced identity, anonymous or merely unannounced, ever sits in a public room. -/
+theorem public_room_needs_announce (w : World) (es : List Event) (n room : Nat) (via : Bool)
+    (hpub : w.publicRooms.contains room = true) (hn : w.isAnonNode n = true) :
+    Row.member n room via ∉ run w es := fun hm =>
+  kind_exclusive w n hn ((inv_holds w es).public_is_announced n room via hpub hm)
