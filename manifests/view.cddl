@@ -1,0 +1,39 @@
+; CC 4.5.13 — the view: one object's rows and the atoms the node folded from them. Hand-written,
+; normative; RFC 8610 CDDL, JSON profile. With manifests/choice_item.cddl it is the whole of what
+; an epistemic web client renders: the view says what is true now and why, the item says what
+; waits on the person's hand. Every string is a text reference the node localizes.
+
+view = {
+  object: { family: tstr, id: tstr, scope: "self" / "family" / "community" / "affiliations" / "federation" },
+  locale: tstr,                              ; the locale the strings below were served in
+  rows: [* row-ref],                         ; the record: the signed rows this view rests on
+  atoms: [* atom],                           ; the state: what the node folds from those rows
+  ? standing: { trusted: bool, via: [* tstr] },   ; whether the person's own policies reach this object, and through which roots
+}
+
+row-ref = {
+  attestation_id: tstr,
+  family: tstr,
+  verb: "attest" / "withdraw" / "recant" / "supersede" / "authorize" / "carry",
+  signer: tstr,                              ; a key id; a pseudonym is marked as such by its record
+  scope: "self" / "family" / "community" / "affiliations" / "federation",
+  ? summary: text-ref,                       ; the row in words, never its body
+}
+
+atom = {
+  name: tstr,                                ; an atom of manifests/topology_vocabulary.json
+  value: bool / tstr / int,
+  label: text-ref,                           ; the atom in words
+  provenance: {
+    rows: [* tstr],                          ; the attestation ids the fold read
+    rule: tstr,                              ; the CC decimal of the fold
+    kind: "wire" / "by_rule" / "not_sent",  ; as a fact of the choice item
+  },
+}
+
+text-ref = {
+  id: tstr,
+  text: tstr,
+  ? params: { * tstr => tstr / int },
+  ? lang: tstr,                              ; present only when the text is not in the requested locale
+}

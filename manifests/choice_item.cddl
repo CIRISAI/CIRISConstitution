@@ -25,7 +25,7 @@ choice-item = {
   ? answer: answer,
 }
 
-text-ref = { id: tstr, text: tstr, ? params: { * tstr => tstr / int } }
+text-ref = { id: tstr, text: tstr, ? params: { * tstr => tstr / int }, ? lang: tstr }   ; lang present only when not in the requested locale
 
 fact = {
   label: text-ref,
