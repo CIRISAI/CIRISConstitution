@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "20c0c21ae94e89225e6f34c29ed51f12b57bb4452c3221a4054c9407d46bcf70",
+  "policy_sha256": "5e5c3b2f170ecb7f268506963908fffeccbe0ea466e29ab9cbc795e70dff8a92",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -303,6 +303,28 @@
    ],
    "status": "normative",
    "note": "a one-voice affiliation acts against a member only with an outside countersign; two or more seats decide under their own protocol"
+  },
+  {
+   "family": "moderator_election",
+   "cc_ref": "4.5.13 4.5.4",
+   "kind": "ranked",
+   "standing_set": "the community's roster",
+   "base": "standing",
+   "enact": "instant runoff over ranked choice of three",
+   "cancel": null,
+   "floor": "2 voices",
+   "cancel_over": "base",
+   "at_window": "reopens",
+   "window_secs": 86400,
+   "window_class": "content_24h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "formal/moderator_election"
+   ],
+   "status": "default",
+   "note": "a locked room elects its moderator: ballot = the roster in worthiness order, one ballot per person, winner accepts or the next in runoff order; a steward may appoint directly at any time"
   }
  ],
  "base_law": {

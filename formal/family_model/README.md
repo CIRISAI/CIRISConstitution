@@ -1,6 +1,6 @@
 # `formal/family_model` — one object beneath every chapter, and the DSL for v62
 
-**The point.** The chapter models of this directory were built one plane at a time. The taxonomy lets them be one object: every scores family is one row of the family model, the row's change half is the 11+1 × 5+1 grammar of CIRISOntology and RATCHET, and every plane model is a view of the one dynamics those rows generate. `FamilyModel.lean` states the grammar half and proves what the v62 manifest's vendor gate enforces; the registry's own classification (`../derivation/family_kind_verb.tsv`, 190 families) is generated into it and checked one theorem per family.
+**The point.** The chapter models of this directory were built one plane at a time. The taxonomy lets them be one object: every scores family is one row of the family model, the row's change half is the 11+1 × 5+1 grammar of CIRISOntology and RATCHET, and every plane model is a view of the one dynamics those rows generate. `FamilyModel.lean` states the grammar half and proves what the v62 manifest's vendor gate enforces; the registry's own classification (`../derivation/family_kind_verb.tsv`, 189 families) is generated into it and checked one theorem per family.
 
 **What is proved.**
 

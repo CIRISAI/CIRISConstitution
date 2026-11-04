@@ -18,6 +18,7 @@ choice-item = {
   policy: tstr,                             ; a row of constitution/governance_policy.tsv by family
                                             ; (self_choice for a first-run or consent item)
   ? options: [* option],                    ; absent on notice; exactly one on act
+  ? ranked: uint,                           ; kind = choice: the person ranks up to this many options (3 for the election)
   ? entry: entry-spec,                      ; kind = entry only
   ? default: tstr,                          ; an option value whose cost is on screen; absent = unanswered
   required: bool,
@@ -67,6 +68,7 @@ entry-spec = {
 answer = {
   state: "served" / "held" / "signed" / "deferred" / "changed",
   ? value: tstr,
+  ? ranking: [1*3 tstr],                    ; a ranked choice of up to three option values (the moderator election)
   ? at_ms: uint,
   shown_digest: tstr,                       ; sha256 of the JCS item as served
   ? rows: [* tstr],                         ; attestation ids once rows exist

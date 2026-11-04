@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "e8893c10aaa0c342d52b5d32adaf79d60a62f3b03dbc3f9cdc25c67253087cf3",
+   "claims_sha256": "2be7c3d9c53b72072384ca14fcd2928c6f553b95db6e5dec0b72c64ad34c646b",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 563,
+   "claims": 562,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "b6932c0a1513f37ca267fd319c0796acebea45816b29ef8ae34b1987d6a5da52"
+  "chain_sha256": "0fc51be43675412326dbbb1ab4a05cdf64137a3b2dce51283a80147f7971c6bd"
  },
  "chain": [
   {
@@ -18484,18 +18484,6 @@
      ]
     },
     {
-     "claim_id": "CLM-no-ungoverned-room",
-     "cc_ref": "4.5.4",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-founder-duty-survives-protocol-change",
      "cc_ref": "4.5.4",
      "status": "staged",
@@ -19133,18 +19121,6 @@
     },
     {
      "claim_id": "CLM-moderate-is-appointed",
-     "cc_ref": "4.5.4",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-no-ungoverned-room",
      "cc_ref": "4.5.4",
      "status": "staged",
      "join": "by_section",
@@ -33253,18 +33229,6 @@
      ]
     },
     {
-     "claim_id": "CLM-no-ungoverned-room",
-     "cc_ref": "4.5.4",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-founder-duty-survives-protocol-change",
      "cc_ref": "4.5.4",
      "status": "staged",
@@ -33422,18 +33386,6 @@
      ]
     },
     {
-     "claim_id": "CLM-no-ungoverned-room",
-     "cc_ref": "4.5.4",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
-    },
-    {
      "claim_id": "CLM-founder-duty-survives-protocol-change",
      "cc_ref": "4.5.4",
      "status": "staged",
@@ -33580,18 +33532,6 @@
     },
     {
      "claim_id": "CLM-moderate-is-appointed",
-     "cc_ref": "4.5.4",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-no-ungoverned-room",
      "cc_ref": "4.5.4",
      "status": "staged",
      "join": "by_section",
@@ -33765,18 +33705,6 @@
     },
     {
      "claim_id": "CLM-moderate-is-appointed",
-     "cc_ref": "4.5.4",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-no-ungoverned-room",
      "cc_ref": "4.5.4",
      "status": "staged",
      "join": "by_section",
@@ -34170,18 +34098,6 @@
        ]
       }
      ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
     }
    ],
    "promised_by": [
@@ -34552,18 +34468,6 @@
        "symbols": [
         "fold_community_trust"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -34938,18 +34842,6 @@
        ]
       }
      ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
     }
    ],
    "promised_by": [
@@ -35243,18 +35135,6 @@
        "symbols": [
         "fold_community_trust"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -35552,18 +35432,6 @@
        ]
       }
      ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
     }
    ],
    "promised_by": [
@@ -35857,18 +35725,6 @@
        "symbols": [
         "fold_community_trust"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -36173,18 +36029,6 @@
        ]
       }
      ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
-      }
-     ]
     }
    ],
    "promised_by": [
@@ -36485,18 +36329,6 @@
        "symbols": [
         "fold_community_trust"
        ]
-      }
-     ]
-    },
-    {
-     "claim_id": "CLM-consent-duty-standing",
-     "cc_ref": "3.3.1",
-     "status": "staged",
-     "join": "by_section",
-     "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISPersist#1195"
       }
      ]
     }
