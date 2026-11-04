@@ -11,8 +11,9 @@
 - `link_only_by_proof`, `forged_link_is_one_signature`: a row that links an anonymous identity to an announced one under both keys exists only by the person's own act; anyone else's claim lands signed by one key.
 - `pseud_holds_nothing`, `seat_never_anonymous`: a pseudonym holds no duty and casts no vote, and a seat is never anonymous: pseudonyms are free to mint and worth nothing to mint, so Sybil pseudonyms buy no governance and no moderation.
 - `gate_blind_to_signer`, `block_hides_pseudonym`, `tombstone_hides_item`: the admission gate, a reader's block and a moderator's tombstone act on a pseudonym's rows exactly as on anyone's.
+- `all_anonymous_room_needs_anonymous_moderator`: with the existence gate of CC 4.5.4 and no anonymous duty holders, a room whose every member is anonymous never operates, on any trace; `anonymous_room_operates`: with anonymous duty holders allowed, one anonymous founder founds and runs a room; `anonymous_moderator_is_an_identity`: whoever holds the duty is a persistent identity, never a pseudonym, so it can be blocked, contested and revoked like any holder.
 - `no_hop_sees_both_ends`: on a three-hop route no relay sees both the publisher and the store; the mailbox seat learns a count (item 8).
 
-**What it does not model.** Timing correlation between a pseudonym's activity and a person's other traffic (the tier's anonymity set, item 8, is a residual the text states). The census (an anonymous node sends returns like any node; pseudonyms have none). Whether an anonymous node may hold a duty once rooms ride the tier: the model's guard requires an announced holder, which is the conservative reading and is flagged to the steward.
+**What it does not model.** Timing correlation between a pseudonym's activity and a person's other traffic (the tier's anonymity set, item 8, is a residual the text states). The census (an anonymous node sends returns like any node; pseudonyms have none). Whether an anonymous node may hold a duty is the world's `anonDuty` switch, so both answers are modelled; the steward decides which the text takes.
 
 **Run.** `lean -M 6000 -T 200000 Anonymous.lean` (exit 0, no `sorry`).

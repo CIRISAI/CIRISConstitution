@@ -59,6 +59,8 @@ structure World where
   nodes : List Node
   pseuds : List Pseud
   roomsRideTheTier : Bool
+  /-- whether an anonymous identity (a node, never a pseudonym) may hold a duty -/
+  anonDuty : Bool
   deriving Repr
 
 def World.kindOf (w : World) (n : Nat) : Option Kind :=
@@ -114,7 +116,8 @@ def ok (w : World) (s : State) : Event → Bool
   | .appoint holder room =>
       match holder with
       | .pseud _ => false                                  -- a pseudonym has no standing
-      | .node n => w.isAnnouncedNode n && decide (memberOf s n room)  -- an accountable member
+      | .node n => decide (memberOf s n room) &&
+          (w.isAnnouncedNode n || (w.anonDuty && w.isAnonNode n))  -- a member; anonymous only if allowed
   | .castVote by_ room =>
       match by_ with
       | .pseud _ => false                                  -- a pseudonym is not a member
@@ -178,6 +181,8 @@ structure Inv (w : World) (s : State) : Prop where
   pseud_no_duty : ∀ p room, Row.duty (.pseud p) room ∈ s → False
   pseud_no_vote : ∀ p room, Row.vote (.pseud p) room ∈ s → False
   seat_is_announced : ∀ n, Row.seat n ∈ s → w.isAnnouncedNode n = true
+  duty_holder : ∀ n room, Row.duty (.node n) room ∈ s →
+      memberOf s n room ∧ (w.isAnnouncedNode n = true ∨ (w.anonDuty = true ∧ w.isAnonNode n = true))
 
 theorem kind_exclusive (w : World) (n : Nat) :
     w.isAnonNode n = true → w.isAnnouncedNode n = true → False := by
@@ -190,9 +195,12 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
   apply inv_run
   · exact Inv.mk (fun _ h => nomatch h) (fun _ _ h => nomatch h) (fun _ _ h => nomatch h)
       (fun _ _ _ _ h => nomatch h) (fun _ _ h => nomatch h) (fun _ _ h => nomatch h)
-      (fun _ _ h => nomatch h) (fun _ h => nomatch h)
+      (fun _ _ h => nomatch h) (fun _ h => nomatch h) (fun _ _ h => nomatch h)
   · intro s e hP hok
-    obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8⟩ := hP
+    obtain ⟨h1, h2, h3, h4, h5, h6, h7, h8, h9⟩ := hP
+    -- membership only grows
+    have memGrow : ∀ n room, memberOf s n room → memberOf (effect s e) n room := by
+      intro n room ⟨via, hv⟩; exact ⟨via, by simp [effect, hv]⟩
     -- the row the event writes, if any
     have key : ∀ r, r ∈ effect s e → r ∈ s ∨ added e = some r := by
       intro r hr
@@ -202,7 +210,7 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
       · left; exact hr
     refine Inv.mk (fun m hm => ?_) (fun h n hm => ?_) (fun a b hm => ?_)
       (fun n room via hanon hm => ?_) (fun a b hm => ?_) (fun p room hm => ?_)
-      (fun p room hm => ?_) (fun n hm => ?_)
+      (fun p room hm => ?_) (fun n hm => ?_) (fun n room hm => ?_)
     all_goals rcases key _ hm with h | h
     -- old rows: the hypothesis
     all_goals first
@@ -214,6 +222,7 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
       | exact h6 _ _ h
       | exact h7 _ _ h
       | exact h8 _ h
+      | exact ⟨memGrow _ _ (h9 _ _ h).1, (h9 _ _ h).2⟩
       | skip
     -- the new row: by the guard
     all_goals cases e <;> simp only [added] at h
@@ -228,6 +237,8 @@ theorem inv_holds (w : World) (es : List Event) : Inv w (run w es) := by
       | (simp only [ok, decide_eq_true_eq] at hok; exact h1 _ hok)
       | (simp only [ok, Bool.and_eq_true, decide_eq_true_eq] at hok; exact ⟨h1 _ hok.1, h1 _ hok.2⟩)
       | (simp only [ok] at hok; rw [if_pos hanon] at hok; simpa using hok)
+      | (simp only [ok, Bool.and_eq_true, decide_eq_true_eq] at hok
+         exact ⟨memGrow _ _ hok.1, by simpa [Bool.or_eq_true, Bool.and_eq_true] using hok.2⟩)
       | simp [ok] at hok
 
 /-! ### Corollaries, in the text's words -/
@@ -313,3 +324,50 @@ theorem no_hop_sees_both_ends (pub h1 h2 h3 store : Nat) :
 
 /-- The mailbox seat learns a count of packets per period for one rendezvous (item 8). -/
 def mailboxLearns (packets : List Nat) : Nat := packets.length
+
+/-! ### Can anonymous participants form a room at all?
+
+CC 4.5.4: a community operates only while at least one member holds the live `moderate` duty.
+A room whose every member is anonymous therefore operates only if an anonymous identity may hold
+the duty. -/
+
+def allAnonymous (w : World) (s : State) (room : Nat) : Prop :=
+  ∀ n via, Row.member n room via ∈ s → w.isAnonNode n = true
+
+/-- The existence gate of CC 4.5.4: some member holds the duty. -/
+def operates (s : State) (room : Nat) : Prop := ∃ h, Row.duty h room ∈ s
+
+/-- Without anonymous duty holders, a room of anonymous members never operates, on any trace:
+    its only candidates are its members, all anonymous, and a pseudonym holds nothing. -/
+theorem all_anonymous_room_needs_anonymous_moderator (w : World) (es : List Event) (room : Nat)
+    (hno : w.anonDuty = false) (hall : allAnonymous w (run w es) room) :
+    ¬ operates (run w es) room := by
+  rintro ⟨h, hd⟩
+  have inv := inv_holds w es
+  cases h with
+  | pseud p => exact inv.pseud_no_duty p room hd
+  | node n =>
+    obtain ⟨⟨via, hv⟩, hk⟩ := inv.duty_holder n room hd
+    have hanon := hall n via hv
+    rcases hk with hann | ⟨hd', _⟩
+    · exact kind_exclusive w n hanon hann
+    · rw [hno] at hd'; cases hd'
+
+/-- With anonymous duty holders allowed and rooms riding the tier, a room of one anonymous
+    member can be founded and operates: the founder appoints itself, as any founder does. -/
+def wAnon : World :=
+  { nodes := [⟨1, 10, .anonymous⟩], pseuds := [], roomsRideTheTier := true, anonDuty := true }
+
+theorem anonymous_room_operates :
+    operates (run wAnon [.joinRoom 1 7 true, .appoint (.node 1) 7]) 7 := by
+  refine ⟨.node 1, ?_⟩
+  decide
+
+/-- And the holder of that duty is a persistent anonymous identity, never a pseudonym; so it
+    can be blocked, its actions contested, its duty revoked by the room, exactly as any holder. -/
+theorem anonymous_moderator_is_an_identity (w : World) (es : List Event) (room : Nat)
+    (h : operates (run w es) room) : ∃ n, Row.duty (.node n) room ∈ run w es := by
+  obtain ⟨holder, hd⟩ := h
+  cases holder with
+  | pseud p => exact absurd hd ((inv_holds w es).pseud_no_duty p room)
+  | node n => exact ⟨n, hd⟩
