@@ -425,3 +425,57 @@ def fullKeyCopySeconds (people recordBytes : Nat) (c : Class) : Nat :=
 /-- Ten days at home rate for 200,000 people: the key plane cannot be pushed whole here. -/
 theorem key_plane_whole_takes_ten_days :
     fullKeyCopySeconds 200000 6000 .home = 857142 := by decide
+
+/-! ### Does the mesh work without referring owned nodes?
+
+A refused peer can make first contact only at a node it is referred to. Three referral rules are
+compared: refer unowned nodes only (the seats); refer owned nodes that opted in by a marker
+(default off, so none); refer every announced node that offers relay (default on for homes).
+Capacity is counted in free shaped slots a newcomer can be referred to. -/
+
+inductive ReferralRule | unownedOnly | ownedByMarker | relayOffering
+  deriving DecidableEq, Repr
+
+/-- Free slots a newcomer can be referred to, with `seats` canonicals, `homes` admitted home
+    nodes, and `optedIn` of those carrying the marker. Every admitted node spends one slot up
+    and offers `bound - 1` down. -/
+def referable (r : ReferralRule) (seats homes optedIn : Nat) : Nat :=
+  match r with
+  | .unownedOnly => seats * bound
+  | .ownedByMarker => seats * bound + optedIn * (bound - 1)
+  | .relayOffering => seats * bound + homes * (bound - 1)
+
+/-- Peers that can be seated under the rule, with `seats` canonicals and every home that gets a
+    slot admitted in turn: the fixed point of referable capacity. -/
+def seated (r : ReferralRule) (seats peers : Nat) : Nat :=
+  match r with
+  | .unownedOnly => min peers (seats * bound)
+  | .ownedByMarker => min peers (seats * bound)      -- default off: nobody carries the marker
+  | .relayOffering => peers                            -- every seated home seats seven more
+
+/-- Nine canonicals, referring only unowned nodes: the seventy-third peer has nowhere to go. -/
+theorem unowned_only_strands_the_73rd :
+    seated .unownedOnly 9 73 = 72 := by decide
+
+/-- A marker that defaults to off strands the same peer, because nobody carries it. -/
+theorem marker_default_off_strands_the_73rd :
+    seated .ownedByMarker 9 73 = 72 := by decide
+
+/-- With relay offering as the consent, every peer is seated, at any count. -/
+theorem relay_offering_seats_everyone (peers : Nat) :
+    seated .relayOffering 9 peers = peers := rfl
+
+/-- Under relay offering a seated home adds seven slots: capacity grows with the mesh. -/
+theorem each_home_adds_seven (seats homes : Nat) :
+    referable .relayOffering seats (homes + 1) 0 = referable .relayOffering seats homes 0 + 7 := by
+  simp [referable, bound]; omega
+
+/-- Under unowned-only, capacity never grows with the mesh. -/
+theorem unowned_only_never_grows (seats homes homes' : Nat) :
+    referable .unownedOnly seats homes 0 = referable .unownedOnly seats homes' 0 := rfl
+
+/-- A stranded peer cannot make first contact at all: it needs a shaped link to a stranger for
+    the consent-free set, and no stranger has a slot for it. -/
+theorem stranded_has_no_first_contact :
+    seated .unownedOnly 9 73 < 73 ∧ proposedAllows .base .stranger .contactAsk = true := by
+  decide

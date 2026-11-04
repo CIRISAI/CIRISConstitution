@@ -21,6 +21,7 @@
 - `carriage_independent_of_class`, `consent_only_same_at_every_rate`, `seat_link_may_be_consent_only`: the size of a shaped link and its carriage are two axes; a fast seat link may be first-contact-and-consent only.
 - `home_displaces_a_phone`, `phone_does_not_displace_a_phone`, `displaced_keeps_shaping`, `lower_never_displaces`, `place_keeps_bound`: a higher class takes a slot, the displaced peer moves to a shaped peer and keeps shaping, a phone never displaces a phone, the bound holds.
 - `same_device_same_rate`: with the class tied to the device class universally, a rate singles nobody out.
+- `unowned_only_strands_the_73rd`, `marker_default_off_strands_the_73rd`, `relay_offering_seats_everyone`, `each_home_adds_seven`: a refused peer can make first contact only where it is referred; referring unowned nodes only, or owned nodes by an opt-in marker, strands the seventy-third peer at nine canonicals; with relay offering as the consent every peer is seated and each seated home adds seven slots.
 - `routed_nine_canonicals`, `flooded_home_link_six_seconds`, `key_plane_whole_takes_ten_days`: reach is not capacity.
 
 **What it does not model.** The traits are assigned by hand, so the model proves what follows from them and not that they are right. It does not model routing: how a hop finds the way down a tree without retained path state, which CC 5.4.6's directed-announce paragraph bars for scoped destinations. `askBytes` is an assumption. A sealed ask's emptiness cannot be checked by a carrier; only its size can.
