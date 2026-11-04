@@ -1,0 +1,73 @@
+; CC 4.5.13 — the choice as data. Hand-written, normative; RFC 8610 CDDL, JSON profile.
+; One item serves a first-run step, a consent gate, a deferral, a room vote and a moderation
+; action; the context says which. Impact is derived from manifests/family_model.json for each
+; row an option would write; benefit and downside are human text (CC 5.4.3, the choice is
+; explained before it is made).
+
+choice-item = {
+  id: tstr,                                 ; wire-stable; a new meaning mints a new id
+  kind: "choice" / "entry" / "act" / "notice",
+  context: {
+    circle: "self" / "family" / "community" / "affiliations" / "federation",
+    role: "first_run" / "consent" / "deferral" / "vote" / "moderation",
+    ? atoms: [* tstr],                      ; the CSD/4 atoms in force when served
+    title: text-ref,
+    ? body: [* text-ref],
+  },
+  ? facts: [* fact],                        ; displayed, never chosen
+  policy: tstr,                             ; a row of constitution/governance_policy.tsv by family
+                                            ; (self_choice for a first-run or consent item)
+  ? options: [* option],                    ; absent on notice; exactly one on act
+  ? entry: entry-spec,                      ; kind = entry only
+  ? default: tstr,                          ; an option value whose cost is on screen; absent = unanswered
+  required: bool,
+  ? answer: answer,
+}
+
+text-ref = { id: tstr, text: tstr, ? params: { * tstr => tstr / int } }
+
+fact = {
+  label: text-ref,
+  value: tstr / int / bool,
+  provenance: "wire" / "by_rule" / "not_sent",
+}
+
+option = {
+  value: tstr,
+  ? tag: tstr,                              ; the CSD/4 test tag
+  benefit: text-ref,                        ; never empty
+  downside: text-ref,                       ; never empty
+  writes: [* write],                        ; the rows this option signs; empty = a local setting
+  impact: impact,                           ; derived from the family model for `writes`
+  available: bool,
+  ? unavailable: text-ref,
+}
+
+write = {
+  family: tstr,                             ; a family of the registry
+  verb: "attest" / "withdraw" / "recant" / "supersede" / "authorize" / "carry",
+  scope: "self" / "family" / "community" / "affiliations" / "federation",
+}
+
+impact = {
+  moves: text-ref,                          ; what moves
+  to: { audience: tstr, tier: "local" / "federation" },   ; where it goes
+  direction: "widens" / "narrows" / "same",
+  undo: { possible: bool, ? how: text-ref, ? later: tstr },   ; from erasure_route and lifecycle
+  ? held: tstr,                             ; replication.held of the family row
+  ? projection: tstr,                       ; projection.rebuild of the family row
+}
+
+entry-spec = {
+  source: "typed" / "ceremony",             ; ceremony: the value arrives by pairing (P10)
+  ? pattern: tstr,
+  ? max_len: uint,
+}
+
+answer = {
+  state: "served" / "held" / "signed" / "deferred" / "changed",
+  ? value: tstr,
+  ? at_ms: uint,
+  shown_digest: tstr,                       ; sha256 of the JCS item as served
+  ? rows: [* tstr],                         ; attestation ids once rows exist
+}
