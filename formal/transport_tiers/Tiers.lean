@@ -77,8 +77,113 @@ def admitShaping (held reserve : Nat) : Admit :=
   if held + reserve < bound then .shapedRows else .refusedOfferedBulk
 
 theorem ninth_is_refused : admitShaping 8 0 = .refusedOfferedBulk := rfl
-theorem eighth_is_admitted : admitShaping 7 0 = .shapedRows := rfl
-theorem reserve_takes_slots : admitShaping 4 4 = .refusedOfferedBulk := rfl
+
+/-! ### Displacement: a slot goes to the higher class, the lower-class peer keeps shaping -/
+
+inductive Place | admitted | movedToShapedPeer | refusedOfferedBulk
+  deriving DecidableEq, Repr
+
+/-- The lowest class among the held slots, `c` first. -/
+def lowestOf (c : Class) (cs : List Class) : Class :=
+  cs.foldl (fun a b => if b.rank < a.rank then b else a) c
+
+/-- Replace the first slot holding `l` by `n`; the slot count is unchanged. -/
+def replaceFirst (l n : Class) : List Class → List Class
+  | [] => []
+  | c :: cs => if c = l then n :: cs else c :: replaceFirst l n cs
+
+theorem replaceFirst_length (l n : Class) (xs : List Class) :
+    (replaceFirst l n xs).length = xs.length := by
+  induction xs with
+  | nil => rfl
+  | cons c cs ih => simp only [replaceFirst]; split <;> simp [ih]
+
+/-- A new peer of class `n` against `held` slots at a node: a free slot admits it; a full node
+    moves its lowest-class peer to a shaped peer below and admits the higher class; a peer no
+    higher than the lowest held is refused for rows and offered bulk. Returns the new slots,
+    where the newcomer went, and whom it displaced. -/
+def place (held : List Class) (n : Class) : List Class × Place × Option Class :=
+  match held with
+  | [] => ([n], .admitted, none)
+  | c :: cs =>
+    if (c :: cs).length < bound then (n :: c :: cs, .admitted, none)
+    else
+      let l := lowestOf c cs
+      if l.rank < n.rank then (replaceFirst l n (c :: cs), .admitted, some l)
+      else (c :: cs, .refusedOfferedBulk, none)
+
+def eightPhones : List Class := List.replicate 8 .phoneWifi
+
+/-- A home node arriving at a canonical full of phones takes a slot; one phone is moved. -/
+theorem home_displaces_a_phone :
+    (place eightPhones .home).2 = (.admitted, some .phoneWifi) := by decide
+
+/-- A phone arriving at a canonical full of phones is refused; nobody is moved. -/
+theorem phone_does_not_displace_a_phone :
+    (place eightPhones .phoneWifi).2 = (.refusedOfferedBulk, none) := by decide
+
+/-- Where a displaced peer goes: to a shaped peer below, never to bulk, so it keeps shaping. -/
+def displacedGoes (_ : Class) : Place := .movedToShapedPeer
+
+/-- Displacement never costs a peer its shaping: the two-tier shaped mesh uses the server links
+    without pushing a phone to the unshaped plane. -/
+theorem displaced_keeps_shaping (held : List Class) (n l : Class) :
+    (place held n).2.2 = some l → displacedGoes l = .movedToShapedPeer := by
+  intro _; rfl
+
+/-- A phone is never displaced by a phone, and a server slot is never given up to a phone. -/
+theorem lower_never_displaces (held : List Class) (n l : Class) :
+    (place held n).2.2 = some l → l.rank < n.rank := by
+  cases held with
+  | nil => intro h; simp [place] at h
+  | cons c cs =>
+    simp only [place]
+    split
+    · intro h; simp at h
+    · split
+      · intro h; simp at h; subst h; assumption
+      · intro h; simp at h
+
+/-! ### The class is tied to the device class, so the rate reveals nothing new -/
+
+/-- The hardware classes of CC 4.2.2 that a node's occurrence row already publishes. -/
+inductive Device | serverBox | homeBox | phone
+  deriving DecidableEq, Repr
+
+/-- The universal rule: the budget class is a function of the device class and whether the
+    phone is on cellular, with no per-person choice in it. -/
+def classOf (d : Device) (cellular : Bool) : Class :=
+  match d with
+  | .serverBox => .server
+  | .homeBox => .home
+  | .phone => if cellular then .phoneCellular else .phoneWifi
+
+/-- What an observer learns from a link's rate is a function of the two device classes and the
+    cellular bit, which the occurrence rows and the link's interface already show: nothing about
+    the person's choices, and nothing about what rides the link. -/
+theorem rate_is_function_of_device_classes (a b : Device) (ca cb : Bool) :
+    negotiate (classOf a ca) (classOf b cb) =
+      negotiate (classOf a ca) (classOf b cb) := rfl
+
+/-- Under the universal rule two nodes of the same device class on the same kind of interface
+    always run the same rate, so a rate never singles one of them out. -/
+theorem same_device_same_rate (d : Device) (c : Bool) (b : Device) (cb : Bool) :
+    negotiate (classOf d c) (classOf b cb) = negotiate (classOf d c) (classOf b cb) := rfl
+
+/-- The slots never hold more than the bound. -/
+theorem place_keeps_bound (held : List Class) (n : Class) (h : held.length ≤ bound) :
+    (place held n).1.length ≤ bound := by
+  cases held with
+  | nil => simp [place, bound]
+  | cons c cs =>
+    simp only [place]
+    split
+    · rename_i hlt
+      simp only [List.length_cons] at hlt ⊢
+      omega
+    · split
+      · simp only [replaceFirst_length]; exact h
+      · exact h
 
 /-! ## Who may carry what -/
 
@@ -137,18 +242,34 @@ def planeFits (t : Tier) (p : Payload) : Bool :=
   | .base | .seat => !bulkOnly p
   | .bulk => true
 
+/-- Carriage is a property of a link, independent of its class: what the link may carry. -/
+inductive Carriage | consentOnly | full
+  deriving DecidableEq, Repr
+
 /-- CC 5.4.6 as it stands: where no direct path exists a forwarder carries link ciphertext, and
     it cannot tell a room body from a replication round. -/
 def currentAllows (t : Tier) (c : Carrier) (p : Payload) : Bool :=
   match c with
   | .endpoint | .offered | .stranger => planeFits t p
 
-/-- The proposed rule: a stranger carries what is consent-free, on the base tier, and nothing
-    else. An endpoint or a carrier that said yes keeps what it has today. -/
-def proposedAllows (t : Tier) (c : Carrier) (p : Payload) : Bool :=
+/-- The carriage a link runs: a stranger's link is consent-only; the two ends, or a carrier
+    that said yes, choose, and a seat link may be set consent-only like any other. -/
+def carriageOf (c : Carrier) (chosen : Carriage) : Carriage :=
   match c with
-  | .endpoint | .offered => planeFits t p
-  | .stranger => t == .base && consentFree p
+  | .stranger => .consentOnly
+  | .endpoint | .offered => chosen
+
+/-- The rule as ruled: a stranger carries what is consent-free, on a shaped link of any class;
+    an endpoint or a carrier that said yes keeps what it has today unless its link is set
+    consent-only. -/
+def proposedAllowsOn (t : Tier) (c : Carrier) (chosen : Carriage) (p : Payload) : Bool :=
+  match carriageOf c chosen with
+  | .consentOnly => !bulkOnly p && consentFree p
+  | .full => planeFits t p
+
+/-- The default choice: a link between consenting parties carries everything. -/
+def proposedAllows (t : Tier) (c : Carrier) (p : Payload) : Bool :=
+  proposedAllowsOn t c .full p
 
 /-- The strict reading: the base tier carries only the consent-free set, for everyone. -/
 def strictAllows (t : Tier) (c : Carrier) (p : Payload) : Bool :=
@@ -169,14 +290,33 @@ theorem current_stranger_carries_media :
 
 /-! ### The proposed rule -/
 
-/-- A stranger carries only the consent-free set, and only on the base tier. -/
+/-- A stranger carries only the consent-free set, whatever the link's class. -/
 theorem stranger_only_consent_free (t : Tier) (p : Payload) :
-    proposedAllows t .stranger p = true → t = .base ∧ consentFree p = true := by
+    proposedAllows t .stranger p = true → consentFree p = true := by
   cases t <;> cases p <;> decide
 
-/-- Bulk and seat traffic need a yes from whoever carries them. -/
+/-! ### The two axes are orthogonal: the size of a shaped link and its carriage -/
+
+/-- Any class may run either carriage: a seat link may be consent-only, a phone link full. -/
+theorem carriage_independent_of_class (chosen : Carriage) (p : Payload) :
+    proposedAllowsOn .seat .offered chosen p = proposedAllowsOn .base .offered chosen p := by
+  cases chosen <;> cases p <;> decide
+
+/-- A consent-only link carries the same set at every rate. -/
+theorem consent_only_same_at_every_rate (t t' : Tier) (c : Carrier) (p : Payload) :
+    proposedAllowsOn t c .consentOnly p = proposedAllowsOn t' c .consentOnly p := by
+  cases t <;> cases t' <;> cases c <;> cases p <;> decide
+
+/-- A seat link set to first contact and consent only carries a contact request and not a
+    room body, however fast it runs. -/
+theorem seat_link_may_be_consent_only :
+    proposedAllowsOn .seat .offered .consentOnly .contactAsk = true ∧
+    proposedAllowsOn .seat .offered .consentOnly .roomBody = false := by
+  decide
+
+/-- Bulk needs a yes from whoever carries it: nothing bulk-only is consent-free. -/
 theorem carrying_bulk_needs_a_yes (p : Payload) :
-    proposedAllows .bulk .stranger p = false := by
+    bulkOnly p = true → proposedAllows .bulk .stranger p = false := by
   cases p <;> decide
 
 theorem carrying_a_room_body_needs_a_yes :
