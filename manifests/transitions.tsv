@@ -127,10 +127,10 @@ collection:{kind}	supersede	admitted	superseded	author	selfAct	false	derived	der
 commitment_fulfillment:{prior_contribution_id}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 commitment_fulfillment:{prior_contribution_id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 commitment_fulfillment:{prior_contribution_id}	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived
-community:listing	attest	none	admitted	moderate	selfAct	true	derived	derived	derived
+community:listing	attest	none	admitted	founder,moderate	selfAct	true	derived	derived	derived
 community:listing	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 community:listing	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
-config:{scope}	attest	none	admitted	self	selfAct	true	derived	derived	derived
+config:{scope}	attest	none	admitted	owner,self	selfAct	true	derived	derived	derived
 config:{scope}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 config:{scope}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 conscience:coherence	attest	none	admitted	registered	selfAct	true	derived	derived	derived
@@ -157,11 +157,11 @@ consent:partnership_accept	attest	none	admitted	registered	selfAct	true	derived	
 consent:partnership_accept	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 consent:partnership_grant	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 consent:partnership_grant	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
-consent:replication:{version}	attest	none	admitted	self	selfAct	true	derived	derived	derived
+consent:replication:{version}	attest	none	admitted	owner,self	selfAct	true	derived	derived	derived
 consent:replication:{version}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 consent:replication:{version}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 consent:scope:{kind}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
-consent:state:{stance}	attest	none	admitted	self	selfAct	true	derived	derived	derived
+consent:state:{stance}	attest	none	admitted	owner,self	selfAct	true	derived	derived	derived
 consent:state:{stance}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 consent:state:{stance}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 consent:stream:{kind}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
@@ -324,7 +324,7 @@ manifold_conformity:{cohort}	recant	admitted	recanted	author	selfAct	false	cc-ta
 membership:{stage}	attest	none	admitted	member	two_path	true	derived	code-v61	derived
 membership:{stage}	withdraw	admitted	withdrawn	member	cosigned	false	code-v61	code-v61	derived
 membership:{stage}	supersede	admitted	superseded	member	cosigned	false	code-v61	code-v61	derived
-mesh_config:{key}	attest	none	admitted		selfAct	true	gap	derived	derived
+mesh_config:{key}	attest	none	admitted	steward	selfAct	true	derived	derived	derived
 mesh_config:{key}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 mesh_config:{key}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 method:{approach_id}:{substrate_rung}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
@@ -412,7 +412,7 @@ regime:{artifact}:{version}	supersede	admitted	superseded	author	selfAct	false	d
 rendezvous:route	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 rendezvous:route	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 retirement:{state}	attest	none	admitted		selfAct	false	gap	derived	gap
-revocation:{entity_type}:{reason}	attest	none	admitted		selfAct	true	gap	derived	derived
+revocation:{entity_type}:{reason}	attest	none	admitted	self	selfAct	true	derived	derived	derived
 revocation:{entity_type}:{reason}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 rollback_detected:{revision_field}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 seed_holder_voting_alignment:{cell}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
@@ -445,14 +445,14 @@ transparency_log:consistency	withdraw	admitted	withdrawn	author,subject	selfAct	
 transparency_log:cosigned:{tree_size}	attest	none	admitted	attest	selfAct	true	derived	derived	derived
 transparency_log:inclusion	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 transparency_log:inclusion	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
-transport:canonical_rebind	attest	none	admitted		selfAct	true	gap	derived	derived
+transport:canonical_rebind	attest	none	admitted	holder	selfAct	true	derived	derived	derived
 transport:canonical_rebind	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 transport:{kind}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 transport:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 transport:{kind}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 trust:{job}:{version}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 trust:{job}:{version}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
-trust:{job}:{version}	authorize	none	admitted		selfAct	true	gap	derived	derived
+trust:{job}:{version}	authorize	none	admitted	self	selfAct	true	derived	derived	derived
 truth_grounding:{subject}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 truth_grounding:{subject}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 truth_grounding:{subject}	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived

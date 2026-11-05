@@ -21,42 +21,42 @@ SRC = ROOT / "manifests" / "family_model.json"
 OUT = ROOT / "manifests" / "transitions.json"
 OUT_TSV = ROOT / "manifests" / "transitions.tsv"
 
-ROLE_RULES = [  # (regex on the closed signer value, role tokens)
-    (r"^none \(held shut\)", []),
-    (r"^self\b", ["self"]),
-    (r"seat_role\((\w+)\)", None),           # -> the seat role
-    (r"identity_type contains (\w+)", None),  # -> identity:<token>
-    (r"roster_member", ["member"]),
-    (r"founder", ["founder"]),
-    (r"owner_of_subject", ["owner"]),
-    (r"^any_registered", ["registered"]),
+TOKEN_RULES = [  # (regex searched anywhere in the closed signer text, role tokens)
+    (r"none \(held shut\)", []),
+    (r"seat_role\((\w+)\)", "seat"),
+    (r"identity_type contains (\w+)", "identity"),
+    (r"roster_member|\bmember\b", ["member"]),
+    (r"\bfounder", ["founder"]),
+    (r"owner_of_subject|\bowner\b", ["owner"]),
+    (r"\bsteward\b", ["steward"]),
+    (r"\bholder\b", ["holder"]),
+    (r"any_registered", ["registered"]),
+    (r"\bself\b", ["self"]),
 ]
+
+def roles_from_text(s):
+    out = []
+    for pat, roles in TOKEN_RULES:
+        for m in re.finditer(pat, s):
+            if roles == "seat": out.append(m.group(1))
+            elif roles == "identity": out.append(f"identity:{m.group(1)}")
+            elif roles == []: return [], "code-v61"
+            else: out += roles
+    return (sorted(set(out)), "derived") if out else ([], "gap")
 
 def roles_from_signer(val):
     """Map the manifest's signer rule to role tokens; return (roles, source)."""
     if val is None:
         return [], "gap"
     if isinstance(val, list):
-        out = []
-        for v in val:
-            r, _ = roles_from_signer(v)
-            out += r
-        return sorted(set(out)), "derived"
+        return roles_from_text(" ".join(map(str, val)))
     if isinstance(val, dict):
-        who = val.get("who") or val.get("proposal") or ""
-        if "who" not in val and len(val) > 1:
-            # per-stage signer rule (membership): the stages are separate transitions; take the proposal here
-            return roles_from_signer(who)
-        return roles_from_signer(who)
-    s = str(val)
-    for pat, roles in ROLE_RULES:
-        m = re.search(pat, s)
-        if m:
-            if roles is None:
-                tok = m.group(1)
-                return ([tok] if pat.startswith("seat_role") else [f"identity:{tok}"]), "derived"
-            return roles, "derived"
-    return [], "gap"
+        if "who" in val:
+            return roles_from_text(str(val.get("who")))
+        # per-stage rule (membership): the first stage is the attest transition's signer
+        first = next(iter(val.values()), "")
+        return roles_from_text(str(first))
+    return roles_from_text(str(val))
 
 def withdraw_roles(lifecycle):
     v = (lifecycle or {}).get("withdraws_by") if isinstance(lifecycle, dict) else None

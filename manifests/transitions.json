@@ -26,7 +26,7 @@
   ],
   "families": 191,
   "transitions": 474,
-  "gap_cells": 26,
+  "gap_cells": 22,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
  "rows": [
@@ -3188,6 +3188,7 @@
      "to": "admitted",
      "roles": {
       "value": [
+       "founder",
        "moderate"
       ],
       "source": "derived"
@@ -3261,6 +3262,7 @@
      "to": "admitted",
      "roles": {
       "value": [
+       "owner",
        "self"
       ],
       "source": "derived"
@@ -3930,6 +3932,7 @@
      "to": "admitted",
      "roles": {
       "value": [
+       "owner",
        "self"
       ],
       "source": "derived"
@@ -4031,6 +4034,7 @@
      "to": "admitted",
      "roles": {
       "value": [
+       "owner",
        "self"
       ],
       "source": "derived"
@@ -8041,8 +8045,10 @@
      "from": "none",
      "to": "admitted",
      "roles": {
-      "value": [],
-      "source": "gap"
+      "value": [
+       "steward"
+      ],
+      "source": "derived"
      },
      "policy": {
       "value": {
@@ -10204,8 +10210,10 @@
      "from": "none",
      "to": "admitted",
      "roles": {
-      "value": [],
-      "source": "gap"
+      "value": [
+       "self"
+      ],
+      "source": "derived"
      },
      "policy": {
       "value": {
@@ -11041,8 +11049,10 @@
      "from": "none",
      "to": "admitted",
      "roles": {
-      "value": [],
-      "source": "gap"
+      "value": [
+       "holder"
+      ],
+      "source": "derived"
      },
      "policy": {
       "value": {
@@ -11207,8 +11217,10 @@
      "from": "none",
      "to": "admitted",
      "roles": {
-      "value": [],
-      "source": "gap"
+      "value": [
+       "self"
+      ],
+      "source": "derived"
      },
      "policy": {
       "value": {

@@ -1,0 +1,424 @@
+{
+ "_meta": {
+  "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
+  "transitions_sha256": "fdd4d09f27578181d0d6ba2f9993a6e47261a166e20e19cf53fd47135ce56197",
+  "policy_sha256": "5e5c3b2f170ecb7f268506963908fffeccbe0ea466e29ab9cbc795e70dff8a92",
+  "steps": 14,
+  "rows": 13,
+  "errors": []
+ },
+ "steps": [
+  {
+   "n": 1,
+   "note": "Three people sit down: a founder authorizes the trust root's charter; the other two cosign under the accord's quorum",
+   "actor": "alice",
+   "standing": [
+    "self",
+    "holder",
+    "founder"
+   ],
+   "view": {
+    "object": "root",
+    "family": "trust:{job}:{version}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_authorize_by": "alice"
+    }
+   },
+   "queue": [
+    "authorize"
+   ],
+   "chosen": "authorize",
+   "refused": false,
+   "row": {
+    "id": "row1",
+    "family": "trust:{job}:{version}",
+    "verb": "authorize",
+    "signer": "alice",
+    "object": "root"
+   }
+  },
+  {
+   "n": 2,
+   "note": "Bob makes a key: the key record is his own",
+   "actor": "bob",
+   "standing": [
+    "self"
+   ],
+   "view": {
+    "object": "key:bob",
+    "family": "key:record",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row2",
+    "family": "key:record",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "key:bob"
+   }
+  },
+  {
+   "n": 3,
+   "note": "Bob announces a device: his binding at federation scope",
+   "actor": "bob",
+   "standing": [
+    "self",
+    "registered"
+   ],
+   "view": {
+    "object": "bind:bob",
+    "family": "transport:{kind}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row3",
+    "family": "transport:{kind}",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "bind:bob"
+   }
+  },
+  {
+   "n": 4,
+   "note": "Carol asks to be a contact; her request is her own row",
+   "actor": "carol",
+   "standing": [
+    "self",
+    "registered"
+   ],
+   "view": {
+    "object": "contact:carol-bob",
+    "family": "consent:{kind}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "carol"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row4",
+    "family": "consent:{kind}",
+    "verb": "attest",
+    "signer": "carol",
+    "object": "contact:carol-bob"
+   }
+  },
+  {
+   "n": 5,
+   "note": "Bob founds a room: the roster's first version",
+   "actor": "bob",
+   "standing": [
+    "founder",
+    "member"
+   ],
+   "view": {
+    "object": "room:1",
+    "family": "group:roster",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row5",
+    "family": "group:roster",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "room:1"
+   }
+  },
+  {
+   "n": 6,
+   "note": "Bob proposes Dave; the second voice is Dave's own acceptance",
+   "actor": "bob",
+   "standing": [
+    "member",
+    "founder"
+   ],
+   "view": {
+    "object": "invite:dave",
+    "family": "membership:{stage}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row6",
+    "family": "membership:{stage}",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "invite:dave"
+   }
+  },
+  {
+   "n": 7,
+   "note": "Dave posts in the room",
+   "actor": "dave",
+   "standing": [
+    "member",
+    "registered"
+   ],
+   "view": {
+    "object": "post:1",
+    "family": "chat:*",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "dave"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row7",
+    "family": "chat:*",
+    "verb": "attest",
+    "signer": "dave",
+    "object": "post:1"
+   }
+  },
+  {
+   "n": 8,
+   "note": "A stranger tries to withdraw Dave's post: no standing, no item, refused",
+   "actor": "erin",
+   "standing": [],
+   "view": {
+    "object": "post:1",
+    "family": "chat:*",
+    "state_before": "admitted",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "dave"
+    }
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 9,
+   "note": "Dave posts again",
+   "actor": "dave",
+   "standing": [
+    "member",
+    "registered"
+   ],
+   "view": {
+    "object": "post:2",
+    "family": "chat:*",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "dave"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row8",
+    "family": "chat:*",
+    "verb": "attest",
+    "signer": "dave",
+    "object": "post:2"
+   }
+  },
+  {
+   "n": 10,
+   "note": "Frank, the room's moderator, withholds the second post: one signature, the window decides",
+   "actor": "frank",
+   "standing": [
+    "moderate",
+    "member"
+   ],
+   "view": {
+    "object": "flag:post2",
+    "family": "moderation:{allegation_type}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "frank"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row9",
+    "family": "moderation:{allegation_type}",
+    "verb": "attest",
+    "signer": "frank",
+    "object": "flag:post2"
+   }
+  },
+  {
+   "n": 11,
+   "note": "Carol objects to the withhold: a vote row under the two-path policy",
+   "actor": "carol",
+   "standing": [
+    "member",
+    "registered"
+   ],
+   "view": {
+    "object": "obj:flag",
+    "family": "objection:{state}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "carol"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row10",
+    "family": "objection:{state}",
+    "verb": "attest",
+    "signer": "carol",
+    "object": "obj:flag"
+   }
+  },
+  {
+   "n": 12,
+   "note": "Dave recants his first post: one step, no window",
+   "actor": "dave",
+   "standing": [
+    "author",
+    "member"
+   ],
+   "view": {
+    "object": "post:1",
+    "family": "chat:*",
+    "state_before": null,
+    "state_after": "recanted",
+    "atoms": {
+     "last_attest_by": "dave",
+     "last_recant_by": "dave"
+    }
+   },
+   "queue": [
+    "withdraw",
+    "recant",
+    "supersede"
+   ],
+   "chosen": "recant",
+   "refused": false,
+   "row": {
+    "id": "row11",
+    "family": "chat:*",
+    "verb": "recant",
+    "signer": "dave",
+    "object": "post:1"
+   }
+  },
+  {
+   "n": 13,
+   "note": "Bob's agent signs its own trace",
+   "actor": "agent:bob",
+   "standing": [
+    "self"
+   ],
+   "view": {
+    "object": "trace:1",
+    "family": "trace:{form}:{version}",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "agent:bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row12",
+    "family": "trace:{form}:{version}",
+    "verb": "attest",
+    "signer": "agent:bob",
+    "object": "trace:1"
+   }
+  },
+  {
+   "n": 14,
+   "note": "Carol withdraws her contact consent: her own forward-only act",
+   "actor": "carol",
+   "standing": [
+    "author"
+   ],
+   "view": {
+    "object": "contact:carol-bob",
+    "family": "consent:{kind}",
+    "state_before": null,
+    "state_after": "withdrawn",
+    "atoms": {
+     "last_attest_by": "carol",
+     "last_withdraw_by": "carol"
+    }
+   },
+   "queue": [
+    "withdraw",
+    "supersede"
+   ],
+   "chosen": "withdraw",
+   "refused": false,
+   "row": {
+    "id": "row13",
+    "family": "consent:{kind}",
+    "verb": "withdraw",
+    "signer": "carol",
+    "object": "contact:carol-bob"
+   }
+  }
+ ]
+}
