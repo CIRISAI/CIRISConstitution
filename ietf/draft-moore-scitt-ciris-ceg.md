@@ -517,9 +517,9 @@ are registered and revoked.  Verification also requires that:
   key signed before that instant still stand and rows signed after it
   do not.
 
-# The Next Edition: CBOR and COSE {#cose}
+# The v62 Edition: CBOR and COSE {#cose}
 
-The next MAJOR edition of the grammar moves the signed object from JSON with JCS to CBOR with COSE, without changing what a row says. A row becomes one COSE_Sign: the protected header carries the row type, the family and the author's key identifier, which removes the mirror of {{mirror}}; cosignatures ({{cosign}}) become the further signatures of the same structure; the canonical form is the core deterministic encoding of {{RFC8949}}; the hybrid of {{sig}} is carried as one algorithm under a private-use identifier until a standard composite identifier exists; receipts over the provenance and stream logs are COSE Receipts {{RFC9942}}. Every row of a 1.x edition verifies as itself under this document. The relationship to SCITT {{RFC9943}} described in {{scitt}} is unchanged: the rows become COSE_Sign objects a Transparency Service could register, and there is still no Transparency Service in the grammar's own architecture.
+A later release candidate of the grammar, the one that accompanies the substrate's v62, moves the signed object from JSON with JCS to CBOR with COSE, without changing what a row says. A row becomes one COSE_Sign: the protected header carries the row type, the family and the author's key identifier, which removes the mirror of {{mirror}}; cosignatures ({{cosign}}) become the further signatures of the same structure; the canonical form is the core deterministic encoding of {{RFC8949}}; the hybrid of {{sig}} is carried as one algorithm under a private-use identifier until a standard composite identifier exists; receipts over the provenance and stream logs are COSE Receipts {{RFC9942}}. Every row signed under the object of this document verifies as itself under that edition. The relationship to SCITT {{RFC9943}} described in {{scitt}} is unchanged: the rows become COSE_Sign objects a Transparency Service could register, and there is still no Transparency Service in the grammar's own architecture.
 
 # Admission as a Registration Policy {#admission}
 

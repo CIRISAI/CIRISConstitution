@@ -1,7 +1,7 @@
-; CC 2.6.1.8 — the signed object of the MAJOR edition that accompanies persist v62: CBOR and COSE.
+; CC 2.6.1.8 — the signed object of the v62 edition (a release candidate of 1.0): CBOR and COSE.
 ; PLANNED, hand-written; RFC 8610 CDDL over RFC 8949 CBOR with core deterministic encoding
 ; (RFC 8949 §4.2.1). It becomes normative in that edition; the JSON/JCS object of 2.6.1.7 stays
-; the signed object of every 1.x edition and verifies as itself for ever.
+; the signed object of every earlier candidate and verifies as itself for ever.
 
 ; A row is one COSE_Sign (RFC 9052 §4.1): one payload, one protected header, one or more
 ; signatures. The first signature is the author's; every further signature is a cosignature
@@ -22,7 +22,7 @@ row-protected = {
   ? 4: bstr,                     ; kid of the author, when not in the envelope
   -70001: tstr,                  ; attestation_type: one of the five (CC 2.4), never mirrored
   -70002: tstr,                  ; family: the dimension's family as the registry names it
-  -70003: uint,                  ; edition: the CC MAJOR this row is written to (2 for this object)
+  -70003: uint,                  ; edition: the signed-object edition this row is written to (2 for this object)
 }
 
 row-unprotected = {
