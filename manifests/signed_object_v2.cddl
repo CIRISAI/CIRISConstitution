@@ -11,7 +11,8 @@ ceg-statement = #6.18(COSE_Sign1)
 COSE_Sign1 = [
   protected: bstr .cbor statement-protected,
   unprotected: {
-    ? -70005: [+ bstr .cbor sd-disclosure],   ; disclosures of blinded members (SPICE SD-CWT form); dropped on erasure, never signed
+    ? -70005: [+ bstr .cbor sd-disclosure],   ; blinded members as PRESENTED beside the statement to one who may see them; a disclosure
+                                   ; set is held and travels as bytes under the object's consent edge (CIRISPersist#914), never in the row
     * int => any,                  ; a receipt (RFC 9942) may be added by a holder, never signed
   },
   payload: bstr .cbor attestation-envelope,
@@ -51,7 +52,8 @@ attestation-envelope = {
 ; member name "_sd" and the header label -70005 are CIRIS-scoped until the draft's labels are assigned.
 ; A blinded member is absent from the payload; its disclosure is [salt, name, value], its digest is
 ; SHA-256 over the disclosure's deterministic encoding. A family whose erasure_route is dsar or purge
-; mints every free-text member and every member another party authored blind, body.note first.
+; mints every free-text member and every member another party authored blind, body.note first; the
+; members are the family model's `blind` column, and no fold, verdict or admission reads one.
 sd-disclosure = [salt: bstr .size 16, name: tstr, value: any]
 ms-time = uint                     ; POSIX milliseconds, no tag, never a float (CC 2.6.2)
 

@@ -22,6 +22,7 @@
    "replication": "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}",
    "projection": "{table, rebuild ∈ {byte_equal, none}}",
    "erasure_route": "dsar | purge | legal_hold | none",
+   "blind": "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "derived": "projection_id | none (the row must equal the named projection's rebuild)",
    "confers": "trust | duty | standing | nothing (read by the trust-set fold, never by admission)",
@@ -185,6 +186,14 @@
    "erasure_route": {
     "cc-table": 0,
     "code-v61": 189,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 2
+   },
+   "blind": {
+    "cc-table": 0,
+    "code-v61": 0,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
@@ -486,6 +495,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -767,6 +783,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -1046,6 +1069,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -1327,6 +1357,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -1606,6 +1643,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -1887,6 +1931,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -2165,6 +2216,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -2445,6 +2503,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -2716,6 +2781,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -3001,6 +3073,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -3275,6 +3354,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -3554,6 +3640,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -3828,6 +3921,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -3975,6 +4075,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -4245,6 +4350,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -4518,6 +4630,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -4796,6 +4915,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -5069,6 +5195,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -5341,6 +5474,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -5616,6 +5756,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -5890,6 +6037,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -6163,6 +6317,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -6300,6 +6461,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
    }
   },
   {
@@ -6406,6 +6572,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
    }
   },
   {
@@ -6638,6 +6809,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -6912,6 +7090,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -7184,6 +7369,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -7459,6 +7651,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -7730,6 +7929,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8003,6 +8209,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8280,6 +8493,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8565,6 +8785,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -8848,6 +9075,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -9133,6 +9367,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -9416,6 +9657,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -9701,6 +9949,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -9984,6 +10239,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -10277,6 +10539,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -10561,6 +10830,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -10847,6 +11123,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -11110,6 +11393,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -11375,6 +11665,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -11638,6 +11935,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -11868,6 +12172,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12133,6 +12444,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -12363,6 +12681,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12635,6 +12960,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12910,6 +13242,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -13183,6 +13522,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -13453,6 +13799,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -13727,6 +14080,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -13979,6 +14339,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -14278,6 +14645,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -14558,6 +14932,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -14830,6 +15211,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -15104,6 +15492,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -15377,6 +15772,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -15621,6 +16023,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -15898,6 +16307,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -16165,6 +16581,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -16435,6 +16858,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -16707,6 +17137,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -16978,6 +17415,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -17234,6 +17678,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -17510,6 +17961,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -17775,6 +18233,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -18053,6 +18518,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -18322,6 +18794,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -18605,6 +19084,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -18880,6 +19366,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -19153,6 +19646,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -19429,6 +19929,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -19704,6 +20211,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -19970,6 +20484,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -20243,6 +20764,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -20512,6 +21040,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -20779,6 +21314,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -21049,6 +21591,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -21316,6 +21865,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -21603,6 +22159,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -21889,6 +22452,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -22174,6 +22744,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -22465,6 +23042,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -22750,6 +23334,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -23041,6 +23632,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -23327,6 +23925,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -23591,6 +24196,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -23869,6 +24481,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -24141,6 +24760,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -24415,6 +25041,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -24688,6 +25321,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -24954,6 +25594,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -25236,6 +25883,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -25509,6 +26163,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -25780,6 +26441,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -26054,6 +26722,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -26326,6 +27001,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -26603,6 +27285,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -26877,6 +27566,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -27149,6 +27845,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -27423,6 +28126,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -27692,6 +28402,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -27966,6 +28683,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -28254,6 +28978,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -28536,6 +29267,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -28820,6 +29558,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -29092,6 +29835,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -29373,6 +30123,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -29611,6 +30368,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -29873,6 +30637,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -30119,6 +30890,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -30368,6 +31146,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -30650,6 +31435,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -30924,6 +31716,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -31196,6 +31995,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -31470,6 +32276,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -31743,6 +32556,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -31986,6 +32806,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -32238,6 +33065,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -32506,6 +33338,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -32750,6 +33589,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -32902,6 +33748,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -33186,6 +34037,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -33474,6 +34332,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -33760,6 +34625,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -34049,6 +34921,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -34327,6 +35206,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -34601,6 +35487,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -34879,6 +35772,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -35123,6 +36023,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -35420,6 +36327,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -35692,6 +36606,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -35966,6 +36887,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -36253,6 +37181,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -36527,6 +37460,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -36800,6 +37738,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -37072,6 +38017,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -37347,6 +38299,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -37618,6 +38577,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -37894,6 +38860,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -38137,6 +39110,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -38372,6 +39352,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -38614,6 +39601,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -38895,6 +39889,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -39165,6 +40166,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -39314,6 +40322,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
+   },
    "verbs_code": {
     "value": [
      "none"
@@ -39458,6 +40471,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -39728,6 +40746,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -40001,6 +41026,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -40270,6 +41302,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -40538,6 +41577,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -40811,6 +41857,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -41082,6 +42135,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -41368,6 +42428,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -41648,6 +42715,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -41920,6 +42994,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -42194,6 +43275,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -42466,6 +43554,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -42740,6 +43835,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -43012,6 +44114,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -43297,6 +44406,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -43576,6 +44692,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -43845,6 +44968,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -43992,6 +45122,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -44260,6 +45395,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -44532,6 +45672,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -44803,6 +45950,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -45080,6 +46234,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "authorize",
@@ -45356,6 +46517,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "authorize",
@@ -45618,6 +46786,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -45892,6 +47067,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -46164,6 +47346,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -46440,6 +47627,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -46688,6 +47882,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -46969,6 +48170,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -47241,6 +48449,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -47503,6 +48718,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -47772,6 +48994,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48044,6 +49273,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48324,6 +49560,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -48595,6 +49838,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48871,6 +50121,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49149,6 +50406,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -49390,6 +50654,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49663,6 +50934,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49938,6 +51216,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -50210,6 +51495,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -50487,6 +51779,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -50774,6 +52073,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -51046,6 +52352,13 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
+   },
    "verbs_code": {
     "value": [
      "attest",
@@ -51317,6 +52630,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [

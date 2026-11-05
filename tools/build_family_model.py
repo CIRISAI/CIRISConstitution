@@ -32,6 +32,7 @@ COLUMNS = OrderedDict([
     ("replication", "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}"),
     ("projection", "{table, rebuild ∈ {byte_equal, none}}"),
     ("erasure_route", "dsar | purge | legal_hold | none"),
+    ("blind", "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild)"),
     ("confers", "trust | duty | standing | nothing (read by the trust-set fold, never by admission)"),
@@ -216,6 +217,14 @@ def main():
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
         for col in ("derived", "confers", "binds_segment"):
             row[col] = {"value": None, "source": "gap", "note": "new column; values come with the manifest's first ruled version"}
+        er = row["erasure_route"].get("value")
+        erh = head_of(er) if isinstance(er, str) else (head_of(er[0]) if isinstance(er, list) and er else None)
+        if erh in ("dsar", "purge"):
+            row["blind"] = {"value": ["body.note"], "source": "derived", "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"}
+        elif erh in ("none", "legal_hold"):
+            row["blind"] = {"value": [], "source": "derived", "note": "from erasure_route: sealed"}
+        else:
+            row["blind"] = {"value": None, "source": "gap", "note": "erasure_route unread"}
         if z:
             vc = [v.strip() for v in z.get("verbs_admitted", "").split(",") if v.strip()]
             row["verbs_code"] = {"value": vc, "delta_vs_cc": z.get("verbs_delta", ""), "source": "code-v61"}
