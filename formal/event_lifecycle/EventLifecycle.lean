@@ -140,6 +140,27 @@ theorem widening_is_confirmed (v : View) (s : Standing) (i : Item) (h : i ∈ qu
   obtain ⟨t, _, rfl⟩ := List.mem_map.mp h
   rfl
 
+/-! ## Preview is execution: the queue, the preview and the door are one function -/
+
+/-- The door executed: the view after a row for transition `t` is admitted, or nothing. -/
+def execute (v : View) (s : Standing) (t : Transition) : Option View :=
+  if admits v s t then some { v with state := t.to } else none
+
+/-- Preview equals execution: for every item in the queue, the view the item previews (`answer`) is
+    exactly the view the door produces when the row arrives. There is no second function to disagree. -/
+theorem preview_is_execution (v : View) (s : Standing) (i : Item) (h : i ∈ queue v s) :
+    execute v s i.writes = some (answer v i) := by
+  simp [execute, queue_sound v s i h, answer]
+
+/-- A row whose item was not offered produces nothing at the door: the preview of a refusal is a refusal. -/
+theorem refused_previews_nothing (v : View) (s : Standing) (t : Transition)
+    (hmem : t ∈ v.family.transitions) (h : toItem t ∉ queue v s) : execute v s t = none := by
+  have : admits v s t = false := by
+    cases hc : admits v s t
+    · rfl
+    · exact absurd (queue_complete v s t hmem hc) h
+  simp [execute, this]
+
 /-! ## A worked family: a room's post, from the text -/
 
 def postFamily : Family := {
