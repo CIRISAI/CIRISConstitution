@@ -1,0 +1,50 @@
+; CC 2.6.1.8 — the signed object of the MAJOR edition that accompanies persist v62: CBOR and COSE.
+; PLANNED, hand-written; RFC 8610 CDDL over RFC 8949 CBOR with core deterministic encoding
+; (RFC 8949 §4.2.1). It becomes normative in that edition; the JSON/JCS object of 2.6.1.7 stays
+; the signed object of every 1.x edition and verifies as itself for ever.
+
+; A row is one COSE_Sign (RFC 9052 §4.1): one payload, one protected header, one or more
+; signatures. The first signature is the author's; every further signature is a cosignature
+; (CC 2.4 quorum as an envelope property), each over the same Sig_structure.
+ceg-row = #6.98(COSE_Sign)
+
+COSE_Sign = [
+  protected: bstr .cbor row-protected,
+  unprotected: row-unprotected,
+  payload: bstr .cbor attestation-envelope,
+  signatures: [+ COSE_Signature],
+]
+
+; What 1.x mirrored beside the bytes now lives once, inside them.
+row-protected = {
+  1: int,                        ; alg: the hybrid (private-use id, below) for every signature of a row
+  3: tstr,                       ; cty: "application/ceg-row+cbor"
+  ? 4: bstr,                     ; kid of the author, when not in the envelope
+  -70001: tstr,                  ; attestation_type: one of the five (CC 2.4), never mirrored
+  -70002: tstr,                  ; family: the dimension's family as the registry names it
+  -70003: uint,                  ; edition: the CC MAJOR this row is written to (2 for this object)
+}
+
+row-unprotected = {
+  ? -70010: [* bstr],            ; received_at and other local notes: never signed, never replicated as truth
+}
+
+COSE_Signature = [
+  protected: bstr .cbor sig-protected,
+  unprotected: {},
+  signature: bstr,               ; the hybrid: ed25519_sig (64) || mldsa65_sig (3309) over Sig_structure, ML-DSA over (bytes || ed25519_sig), the bound form of CC 2.6.1.7
+]
+
+sig-protected = {
+  1: int,                        ; alg: -70100, "CEG-hybrid-Ed25519-MLDSA65" (private use until a standard composite id exists)
+  4: bstr,                       ; kid: the signing key id
+  ? -70004: tstr,                ; role: the role the receiver's fold names for a cosignature (CC 2.4)
+}
+
+; The envelope is the 2.6.1.7 member set less the mirror: attestation_type, family and the
+; author's kid are protected headers; every other signed:envelope and signed:envelope-extra
+; member keeps its name and type, encoded as a CBOR map with text keys, absent never null.
+attestation-envelope = { * tstr => any }
+
+; The attestation id of a row is SHA-256 over the deterministic encoding of
+; [protected, payload], so one statement has one id whatever its signatures.
