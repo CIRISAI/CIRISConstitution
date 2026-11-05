@@ -21,6 +21,10 @@ Every thing that appears in those steps has its own short story in the same voic
 
 [`mesh_life/MeshLife.tla`](mesh_life/) has one action per sentence above and closes: three holders, two people with a device each, one room, two rows, one agent. Every path from the ceremony reaches the end, nobody is ever left owning nothing or owned by no one, a confirmed halt was always a majority, and once the holders decide to wind down the mesh always ends. Three twins loosen one rule each and fail. The numbers are in its [README](mesh_life/README.md).
 
+## The kernel
+
+Every chapter below is a fold over held rows and a list of transitions, and [`event_lifecycle/`](event_lifecycle/) is the one that says so in general: a node's state is the rows it holds, every verdict is a fold over them, one step appends, and the queue a person sees, the preview of an act and the door that admits it are one function (`door_is_queue`, `preview_is_execution`, `refused_previews_nothing`). The state space is finite (five states per object, closed role and policy vocabularies) over an unbounded forward-only log, which is why the story above can be checked to its end rather than sampled, and why a node, a preview and a model checker compute the same answer. CC 4.5.13, "The state processor".
+
 ## The chapters
 
 Each chapter model takes one step of the story and proves it in detail. A chapter states what it protects, for whom, where the text says so, and what it found.
