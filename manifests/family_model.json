@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "9265c385e137e18e8ca99a5a440fa207d15365a8eea854a2e9ecea9312d84804",
+  "registry_sha256": "f400bfc393a8134c92f5927a80090d95474b5514415e282b6aacb9761cfc44a9",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -111,12 +111,12 @@
     "gap": 7
    },
    "polarity": {
-    "cc-table": 0,
+    "cc-table": 2,
     "code-v61": 189,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 2
+    "gap": 0
    },
    "body": {
     "cc-table": 0,
@@ -6282,9 +6282,9 @@
     "note": "not in the census"
    },
    "polarity": {
-    "value": null,
-    "source": "gap",
-    "registry": null
+    "value": "signed",
+    "source": "cc-table",
+    "registry": "signed"
    },
    "derived": {
     "value": null,
@@ -6388,9 +6388,9 @@
     "note": "not in the census"
    },
    "polarity": {
-    "value": null,
-    "source": "gap",
-    "registry": null
+    "value": "signed",
+    "source": "cc-table",
+    "registry": "signed"
    },
    "derived": {
     "value": null,
