@@ -10,6 +10,6 @@
 
 **Holon and CEWPOS.** A view is a unit, its rows and atoms are its bonds, the queue is the set of rewrites this holder may perform, and answering an item is the rewrite. P7 is the state, P9 an enabled rewrite, P8 an enabled rewrite that widens, P4 the row written, P3 and P11 the bonds.
 
-**What it does not model.** The fold from rows to standing and atoms (`formal/family_model` and the chapter models hold those); the policy's own machine (`formal/two_path`, `formal/moderator_election`); the transitions of every real family, which are the family model manifest's rows, from which an implementation derives `transitions`.
+**What it does not model.** The fold from rows to standing and atoms (`formal/family_model` and the chapter models hold those); the policy's own machine (`formal/two_path`, `formal/moderator_election`); the transitions of every real family: `tools/build_transitions.py` derives them from the family model manifest into `manifests/transitions.json` (draft 0: one row per family and verb, with the states of CC 2.4.1.1, roles mapped from the signer rule, the policy from the governance row, and every cell with its source), which is the table a node's queue generator reads.
 
 **Run.** `lean -M 6000 -T 200000 EventLifecycle.lean` (exit 0, no `sorry`).
