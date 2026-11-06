@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "4a6bd52cc6e6aa1682bd6aec4ac3c72e2c0fd64e1bb95adf526af37c5397ac59",
+   "claims_sha256": "de948b9aee2026427cf0b56f6178c9558260813bb98cd1a9967783140ec1e061",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -23,7 +23,7 @@
     "CIRISAgent": "ffa18162",
     "CIRISVerify": "3c16f9c6",
     "CIRISPersist": "7894b39c",
-    "CIRISEdge": "d44e1c57"
+    "CIRISEdge": "310aa7e"
    }
   },
   "counts": {
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "62a77a44a1d86cc8d2dd52f1fbe1c67fa167823ac7339df276933c71bacec201"
+  "chain_sha256": "a8e5c38a19c993b125092735eefc577b04bd2ce4e0feb767793bf4fba79fe9c1"
  },
  "chain": [
   {
@@ -6561,12 +6561,16 @@
     {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISEdge#938"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
       }
      ]
     },
@@ -6999,12 +7003,16 @@
     {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISEdge#938"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
       }
      ]
     },
@@ -10814,12 +10822,16 @@
     {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISEdge#938"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
       }
      ]
     },
@@ -12654,12 +12666,16 @@
     {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISEdge#938"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
       }
      ]
     },
@@ -23199,12 +23215,16 @@
     {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "staged",
-       "ticket": "CIRISEdge#938"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
       }
      ]
     },
