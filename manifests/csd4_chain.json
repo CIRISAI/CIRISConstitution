@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "2de52441ed7a5c2a3080f62368b28fdc8945d980281728b13f8e4bff50a6aa0c",
+   "claims_sha256": "8277fd184599e361d168f8fb7a5cb47e0cca7b9f83680eeff19944394367ba80",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 581,
+   "claims": 583,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "8da4f09dd59d9d5be5b8c5e7e6924d7ae275b3a7cdc8194e84271e8a124adc80"
+  "chain_sha256": "27d3c88cf7d783b5099682d13f371563b2061c7f23e6a803973c5a133a27482a"
  },
  "chain": [
   {
@@ -6570,6 +6570,17 @@
      ]
     },
     {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
      "status": "established",
@@ -7013,6 +7024,17 @@
     },
     {
      "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
@@ -10864,6 +10886,17 @@
      ]
     },
     {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-first-contact-live-binding",
      "cc_ref": "5.4.6",
      "status": "established",
@@ -12709,6 +12742,17 @@
     },
     {
      "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
@@ -23269,6 +23313,17 @@
     },
     {
      "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
      "cc_ref": "5.4.6",
      "status": "normative",
      "join": "by_section",
