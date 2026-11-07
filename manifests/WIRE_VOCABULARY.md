@@ -1,8 +1,8 @@
 # CIRIS Federation Wire Vocabulary
 
-**Constitution:** CC (CIRIS Accord) 1.0-rc14 — wire vocabulary as a hash-pinned constitutional artifact
+**Constitution:** CC (CIRIS Accord) 1.0-rc17 — wire vocabulary as a hash-pinned constitutional artifact
 **Artifact steward:** CIRISConstitution (`manifests/WIRE_VOCABULARY.md`, CC 2.6.4)
-**Vocabulary version:** v1.0.1 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator)
+**Vocabulary version:** v1.0.2 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator; v1.0.2 retires `GoalDeclaration` and `GoalRetirement`, which CC 3.1.9.7 makes a `goal:{scale}` scores row and its own `supersedes`/`withdraws`/`recants`, so no separate transport message exists — a correction of this manifest to the text, not a change of the wire: the two kinds have had no emitter since persist v60 and edge dropped them at that adopt)
 **Vocabulary hash:** `sha256(` canonical bytes of this document `)` — computed at build time, pinned by every ratifying repo (§4)
 **Implements:** CIRISRegistry#130
 **Status:** pinned artifact (CC 2.6.4)
@@ -94,8 +94,8 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 | Variant | Delivery | Contract |
 |---|---|---|
 | `BuildManifestPublication` | Durable (requires_ack) | Hybrid-signed build manifest → registry; SLSA-tier build-legitimacy provenance. *(Body is a `serde_json::Value` at the current cut — CIRISEdge#TODO to swap to a typed shape; the Tier-1 admission is on the primitive, the tight typed canonicalization follows.)* |
-| `GoalDeclaration` | Durable (requires_ack) | Wraps persist typed `Goal` whose `MetaGoalAlignment` is a construction-time invariant — every Goal on the wire carries an M-1 alignment payload. |
-| `GoalRetirement` | Durable (requires_ack) | Single-signer retirement of a declared Goal; the envelope hybrid signature IS the proof-of-authority. Lifecycle half of the M-1 Goal primitive. |
+
+**Retired (v1.0.2).** `GoalDeclaration` and `GoalRetirement` are no longer wire kinds. CC 3.1.9.7: the declarer's signed `scores` row on `goal:{scale}` **is** the Goal, carrying its fields and its `MetaGoalAlignment` (the M-1 invariant is an admission gate on the family); amendment is the declarer's `supersedes`, retirement `withdraws`, "this goal was never mine" `recants`; the row replicates as any row through `ContributionSubmit`, so no separate transport message exists. A decoder that meets either discriminator MUST reject it as an unknown kind.
 
 ### 2.7 Consent / trust-graph retraction
 
