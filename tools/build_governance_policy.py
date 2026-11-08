@@ -40,7 +40,7 @@ Run: python3 tools/build_governance_policy.py            # build
      python3 tools/build_governance_policy.py --self-test  # replay the vectors + the Lean examples
      python3 tools/build_governance_policy.py decide <family> --base N --approvals A --objections O --elapsed S
 """
-import csv, hashlib, json, os, sys
+import csv, re, hashlib, json, os, sys
 from collections import OrderedDict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -66,6 +66,49 @@ def frac(s):
     if "/" in s and all(p.strip().isdigit() for p in s.split("/")):
         a, b = s.split("/"); return (int(a), int(b))
     return s
+
+
+def rule_of(s):
+    """Every cell as a typed rule, so no implementer parses prose (CEWP#16, 2026-11-08). One of:
+    fraction{num,den}; one_of_n (any one member of the standing set); strict_majority (more than half of the
+    standing set); strict_majority_of_others (more than half of the set less the actor); role_at{roles,count}
+    (a named role, count holders); voices{count}; ranked_irv{choices}; none (this path does not exist)."""
+    s = s.strip()
+    if s in ("—", "-", ""):
+        return OrderedDict([("kind", "none")])
+    if s in ("1/N", "1/N fires"):
+        return OrderedDict([("kind", "one_of_n")])
+    if "/" in s and all(p.strip().isdigit() for p in s.split("/")):
+        a, b = s.split("/"); return OrderedDict([("kind", "fraction"), ("num", int(a)), ("den", int(b))])
+    if s.startswith("more than 1/2 of the others"):
+        return OrderedDict([("kind", "strict_majority_of_others")])
+    if s == "1/2 confirms":
+        return OrderedDict([("kind", "strict_majority")])
+    m = re.match(r"^role:([a-z_|]+) at (\d+)$", s)
+    if m:
+        return OrderedDict([("kind", "role_at"), ("roles", m.group(1).split("|")), ("count", int(m.group(2)))])
+    m = re.match(r"^(\d+) voices?$", s)
+    if m:
+        return OrderedDict([("kind", "voices"), ("count", int(m.group(1)))])
+    if s == "instant runoff over ranked choice of three":
+        return OrderedDict([("kind", "ranked_irv"), ("choices", 3)])
+    sys.exit(f"governance_policy: cell {s!r} is prose with no typed rule; add one to rule_of")
+
+
+def rule_votes(rule, base, strict):
+    """The count a typed rule needs at a given base; None where the rule is not a count (ranked_irv, none)."""
+    k = rule["kind"]
+    if k == "fraction":
+        return votes((rule["num"], rule["den"]), base, strict)
+    if k == "one_of_n":
+        return 1
+    if k == "strict_majority":
+        return base // 2 + 1
+    if k == "strict_majority_of_others":
+        return (base - 1) // 2 + 1
+    if k in ("role_at", "voices"):
+        return rule["count"]
+    return None
 
 
 def ceil_div(a, b):
@@ -143,6 +186,7 @@ def load():
         r["irreversible"] = r["irreversible"] == "yes"
         r["reverse_path"] = r["reverse_path"] == "yes"
         r["_enact"], r["_cancel"], r["_floor"] = frac(r["enact"]), frac(r["cancel"]), frac(r["floor"])
+        r["_rules"] = OrderedDict((k, rule_of(r[k])) for k in ("enact", "cancel", "floor"))
         if r["window_class"] not in WINDOW_CLASSES or WINDOW_CLASSES[r["window_class"]] != r["window_secs"]:
             sys.exit(f"governance_policy: {r['family']} window {r['window_secs']} does not match class {r['window_class']}")
     return rows
@@ -200,6 +244,19 @@ def vectors(rows):
     return out
 
 
+def rule_vectors(rows):
+    """One vector per family, cell and base: the count the typed rule needs, so every row of the table has a
+    machine-checked reading, not only the two-path community rows (CEWP#16)."""
+    out = []
+    for r in rows:
+        for cell in ("enact", "cancel", "floor"):
+            rule = r["_rules"][cell]
+            for base in (2, 3, 5, 9, 100):
+                out.append(OrderedDict([("family", r["family"]), ("cell", cell), ("rule", rule), ("base", base),
+                                        ("votes", rule_votes(rule, base, cell == "enact"))]))
+    return out
+
+
 def gen_cfgs(rows):
     os.makedirs(GEN, exist_ok=True)
     names = []
@@ -245,6 +302,8 @@ def build():
         for k in ("enact", "cancel", "floor"):
             v = r["_" + k]
             d[k] = {"num": v[0], "den": v[1]} if isinstance(v, tuple) and len(v) == 2 else (None if v is None else (v[0] if isinstance(v, tuple) else v))
+        for k in ("enact", "cancel", "floor"):
+            d[k + "_rule"] = r["_rules"][k]   # the typed form of the cell beside its prose (additive; CEWP#16)
         d["cancel_over"] = r["cancel_over"]; d["at_window"] = r["at_window"]   # persist v59 questions (b) and (c)
         d["window_secs"] = r["window_secs"]; d["window_class"] = r["window_class"]
         d["irreversible"] = r["irreversible"]; d["reverse_path"] = r["reverse_path"]
@@ -261,7 +320,10 @@ def build():
     doc.update(body)
     json.dump(doc, open(OUT, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(OUT, "a").write("\n")
     vec = vectors(rows)
-    json.dump(OrderedDict([("_meta", {"policy_sha256": pin, "count": len(vec)}), ("vectors", vec)]),
+    rv = rule_vectors(rows)
+    json.dump(OrderedDict([("_meta", {"policy_sha256": pin, "count": len(vec), "rule_vector_count": len(rv),
+                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "ranked_irv", "none"]}),
+                           ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)
     print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances")

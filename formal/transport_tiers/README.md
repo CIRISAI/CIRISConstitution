@@ -23,6 +23,8 @@
 - `same_device_same_rate`: with the class tied to the device class universally, a rate singles nobody out.
 - `unowned_only_strands_the_73rd`, `marker_default_off_strands_the_73rd`, `relay_offering_seats_everyone`, `each_home_adds_seven`: a refused peer can make first contact only where it is referred; referring unowned nodes only, or owned nodes by an opt-in marker, strands the seventy-third peer at nine canonicals; with relay offering as the consent every peer is seated and each seated home adds seven slots.
 - `routed_nine_canonicals`, `flooded_home_link_six_seconds`, `key_plane_whole_takes_ten_days`: reach is not capacity.
+- `unreachable_homes_add_nothing`, `each_reachable_home_adds_seven`, `zero_reach_rests_on_seats`, `reach_forty_of_a_thousand`: a home seats others only when it can be dialled directly (CC 5.4.3, a shaped link is one hop; CC 5.4.6, relay by default, a phone while charging on an unmetered network); the reachable share is a measured input, and at zero reach seating rests on the seats alone.
+- `seat_budget_is_thirty_three_thousand`, `shaped_wire_independent_of_demand`, `home_window_bytes_fixed`: the seat class rate, and the shaped wire moving the class budget per window whatever the demand, so load reaches latency and the unshaped plane only.
 
 **What it does not model.** The traits are assigned by hand, so the model proves what follows from them and not that they are right. It does not model routing: how a hop finds the way down a tree without retained path state, which CC 5.4.6's directed-announce paragraph bars for scoped destinations. `askBytes` is an assumption. A sealed ask's emptiness cannot be checked by a carrier; only its size can.
 

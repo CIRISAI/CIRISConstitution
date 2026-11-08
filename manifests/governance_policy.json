@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "5e5c3b2f170ecb7f268506963908fffeccbe0ea466e29ab9cbc795e70dff8a92",
+  "policy_sha256": "40920bcb494ab7e0984a650ba5251075210bc74403a6bc48bac83500e5fa9c41",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -22,6 +22,21 @@
     "den": 3
    },
    "floor": {
+    "num": 1,
+    "den": 3
+   },
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "floor_rule": {
+    "kind": "fraction",
     "num": 1,
     "den": 3
    },
@@ -56,6 +71,21 @@
     "num": 1,
     "den": 3
    },
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "floor_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
    "cancel_over": "base",
    "at_window": "cancelled",
    "window_secs": 259200,
@@ -84,6 +114,21 @@
     "den": 3
    },
    "floor": {
+    "num": 1,
+    "den": 3
+   },
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "floor_rule": {
+    "kind": "fraction",
     "num": 1,
     "den": 3
    },
@@ -118,6 +163,21 @@
     "num": 1,
     "den": 3
    },
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "floor_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
    "cancel_over": "base",
    "at_window": "cancelled",
    "window_secs": 259200,
@@ -144,6 +204,17 @@
    },
    "cancel": null,
    "floor": null,
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
    "cancel_over": "—",
    "at_window": "cancelled",
    "window_secs": 259200,
@@ -169,6 +240,17 @@
    },
    "cancel": "more than 1/2 of the others (strict majority)",
    "floor": "one_voter",
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "cancel_rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "floor_rule": {
+    "kind": "one_of_n"
+   },
    "cancel_over": "others",
    "at_window": "stay_open",
    "window_secs": 86400,
@@ -194,6 +276,17 @@
    },
    "cancel": "more than 1/2 of the others (strict majority)",
    "floor": "one_voter",
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "cancel_rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "floor_rule": {
+    "kind": "one_of_n"
+   },
    "cancel_over": "others",
    "at_window": "stay_open",
    "window_secs": 86400,
@@ -219,6 +312,22 @@
     "num": 1,
     "den": 2
    },
+   "enact_rule": {
+    "kind": "role_at",
+    "roles": [
+     "moderator",
+     "steward"
+    ],
+    "count": 1
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
    "cancel_over": "—",
    "at_window": "tallied",
    "window_secs": 172800,
@@ -241,6 +350,15 @@
    "enact": "1/N fires",
    "cancel": "1/2 confirms",
    "floor": null,
+   "enact_rule": {
+    "kind": "one_of_n"
+   },
+   "cancel_rule": {
+    "kind": "strict_majority"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
    "cancel_over": "base",
    "at_window": "lapsed",
    "window_secs": 86400,
@@ -266,6 +384,17 @@
    },
    "cancel": null,
    "floor": null,
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
    "cancel_over": "—",
    "at_window": "—",
    "window_secs": 0,
@@ -291,6 +420,17 @@
    },
    "cancel": null,
    "floor": null,
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
    "cancel_over": "—",
    "at_window": "—",
    "window_secs": 0,
@@ -313,6 +453,17 @@
    "enact": "instant runoff over ranked choice of three",
    "cancel": null,
    "floor": "2 voices",
+   "enact_rule": {
+    "kind": "ranked_irv",
+    "choices": 3
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices",
+    "count": 2
+   },
    "cancel_over": "base",
    "at_window": "reopens",
    "window_secs": 86400,

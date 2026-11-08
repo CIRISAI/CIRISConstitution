@@ -479,3 +479,65 @@ theorem unowned_only_never_grows (seats homes homes' : Nat) :
 theorem stranded_has_no_first_contact :
     seated .unownedOnly 9 73 < 73 ∧ proposedAllows .base .stranger .contactAsk = true := by
   decide
+
+/-! ### Reachability: a home seats others only when it can be reached
+
+CC 5.4.3: a shaped link is one direct hop, and a peer with no direct path gets no shaped link.
+CC 5.4.6: relay is offered by default on every owned node, and a phone offers relay while it is
+charging on an unmetered network. So the slots a newcomer can be referred to are the seats'
+plus those of the homes that can be reached directly, plus those of the phones that are both
+reachable and charging on an unmetered network; a home behind a NAT with no punched path and no
+IPv6 offers relay and seats nobody. The share of reachable homes is a measured input (CEWP's
+`reach_home_share`, leviculum#100), never a number this file knows. -/
+
+/-- Free slots a newcomer can be referred to: `seats` canonicals, `homes` homes of which
+    `reachable` can be dialled directly, `phones` charging on an unmetered network of which
+    `phonesReachable` can be dialled; a phone's budget is a quarter of a home's, so it seats one. -/
+def referableReach (seats homes reachable phones phonesReachable : Nat) : Nat :=
+  seats * bound + min reachable homes * (bound - 1) + min phonesReachable phones
+
+/-- A home that cannot be reached adds nothing, however many there are. -/
+theorem unreachable_homes_add_nothing (seats homes phones : Nat) :
+    referableReach seats homes 0 phones 0 = seats * bound := by
+  simp [referableReach]
+
+/-- Each reachable home adds seven slots. -/
+theorem each_reachable_home_adds_seven (seats homes r : Nat) (h : r < homes) :
+    referableReach seats homes (r + 1) 0 0 = referableReach seats homes r 0 0 + 7 := by
+  simp [referableReach, bound]; omega
+
+/-- At zero reach, seating rests on the seats alone: the same capacity as referring unowned
+    nodes only, which strands the seventy-third peer. -/
+theorem zero_reach_rests_on_seats (seats homes : Nat) :
+    referableReach seats homes 0 0 0 = referable .unownedOnly seats homes 0 := by
+  simp [referableReach, referable]
+
+/-- Reach is a share: with `homes` homes and reach `r` in hundredths, the reachable count. -/
+def reachableOf (homes r : Nat) : Nat := homes * r / 100
+
+/-- Forty in a hundred homes reachable (CEWP's default reading of the IPv6 figure), a thousand
+    homes, nine seats: 2,872 slots; at fifteen in a hundred: 1,122; at zero: 72. -/
+theorem reach_forty_of_a_thousand : referableReach 9 1000 (reachableOf 1000 40) 0 0 = 2872 := by decide
+theorem reach_fifteen_of_a_thousand : referableReach 9 1000 (reachableOf 1000 15) 0 0 = 1122 := by decide
+theorem reach_zero_of_a_thousand : referableReach 9 1000 (reachableOf 1000 0) 0 0 = 72 := by decide
+
+/-! ### The seat class, and shaped bytes under load
+
+CC 5.4.3 gives the seat class 33,000 B/s outside the eight. Shaping fixes the bytes a shaped
+link moves per budget window at the class budget whatever the real demand on it: load reaches
+latency and the unshaped plane, never the shaped wire. -/
+
+/-- The seat class budget per link (CC 5.4.3 table), outside the eight. -/
+def seatBudget : Nat := 33000
+
+theorem seat_budget_is_thirty_three_thousand : seatBudget = 33000 := rfl
+
+/-- Bytes a shaped link of class `c` moves in a window of `w` seconds, under any demand `d`. -/
+def shapedWire (c : Class) (w d : Nat) : Nat := c.budget * w
+
+/-- The shaped wire does not depend on demand: cover fills what real frames do not. -/
+theorem shaped_wire_independent_of_demand (c : Class) (w d d' : Nat) :
+    shapedWire c w d = shapedWire c w d' := rfl
+
+/-- A home link moves 1,680,000 bytes in its 600 s window, idle or saturated. -/
+theorem home_window_bytes_fixed (d : Nat) : shapedWire .home 600 d = 1680000 := rfl

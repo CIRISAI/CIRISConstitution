@@ -1,7 +1,18 @@
 {
  "_meta": {
-  "policy_sha256": "5e5c3b2f170ecb7f268506963908fffeccbe0ea466e29ab9cbc795e70dff8a92",
-  "count": 732
+  "policy_sha256": "40920bcb494ab7e0984a650ba5251075210bc74403a6bc48bac83500e5fa9c41",
+  "count": 732,
+  "rule_vector_count": 180,
+  "rule_kinds": [
+   "fraction",
+   "one_of_n",
+   "strict_majority",
+   "strict_majority_of_others",
+   "role_at",
+   "voices",
+   "ranked_irv",
+   "none"
+  ]
  },
  "vectors": [
   {
@@ -11715,6 +11726,1843 @@
    "verdict": "lands",
    "path": "forward",
    "why": "enact reached"
+  }
+ ],
+ "rule_vectors": [
+  {
+   "family": "default_content",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "default_content",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 3
+  },
+  {
+   "family": "default_content",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 4
+  },
+  {
+   "family": "default_content",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 7
+  },
+  {
+   "family": "default_content",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 67
+  },
+  {
+   "family": "default_content",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "default_content",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "default_content",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "default_content",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "default_content",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "default_content",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "default_content",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "default_content",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "default_content",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "default_content",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "default_standing",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "default_standing",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 3
+  },
+  {
+   "family": "default_standing",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 4
+  },
+  {
+   "family": "default_standing",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 7
+  },
+  {
+   "family": "default_standing",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 67
+  },
+  {
+   "family": "default_standing",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "default_standing",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "default_standing",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "default_standing",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "default_standing",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "default_standing",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "default_standing",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "default_standing",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "default_standing",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "default_standing",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 3
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 4
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 7
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 67
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "default_irreversible",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "community_invite",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "community_invite",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 3
+  },
+  {
+   "family": "community_invite",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 4
+  },
+  {
+   "family": "community_invite",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 7
+  },
+  {
+   "family": "community_invite",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 67
+  },
+  {
+   "family": "community_invite",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "community_invite",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "community_invite",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "community_invite",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "community_invite",
+   "cell": "cancel",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "community_invite",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "community_invite",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "community_invite",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "community_invite",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 3
+  },
+  {
+   "family": "community_invite",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 34
+  },
+  {
+   "family": "community_remove",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "community_remove",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 3,
+   "votes": 3
+  },
+  {
+   "family": "community_remove",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 5,
+   "votes": 4
+  },
+  {
+   "family": "community_remove",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 9,
+   "votes": 7
+  },
+  {
+   "family": "community_remove",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "base": 100,
+   "votes": 67
+  },
+  {
+   "family": "community_remove",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "community_remove",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 100,
+   "votes": 50
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 5,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 9,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_add",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 100,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority_of_others"
+   },
+   "base": 100,
+   "votes": 50
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 5,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 9,
+   "votes": 1
+  },
+  {
+   "family": "self_roster_evict",
+   "cell": "floor",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 100,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "role_at",
+    "roles": [
+     "moderator",
+     "steward"
+    ],
+    "count": 1
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "role_at",
+    "roles": [
+     "moderator",
+     "steward"
+    ],
+    "count": 1
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "role_at",
+    "roles": [
+     "moderator",
+     "steward"
+    ],
+    "count": 1
+   },
+   "base": 5,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "role_at",
+    "roles": [
+     "moderator",
+     "steward"
+    ],
+    "count": 1
+   },
+   "base": 9,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "role_at",
+    "roles": [
+     "moderator",
+     "steward"
+    ],
+    "count": 1
+   },
+   "base": 100,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "moderation_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "moderation_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "moderation_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "moderation_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "moderation_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "moderation_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "moderation_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "moderation_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "moderation_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "fraction",
+    "num": 1,
+    "den": 2
+   },
+   "base": 100,
+   "votes": 50
+  },
+  {
+   "family": "accord_halt",
+   "cell": "enact",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 2,
+   "votes": 1
+  },
+  {
+   "family": "accord_halt",
+   "cell": "enact",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 3,
+   "votes": 1
+  },
+  {
+   "family": "accord_halt",
+   "cell": "enact",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 5,
+   "votes": 1
+  },
+  {
+   "family": "accord_halt",
+   "cell": "enact",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 9,
+   "votes": 1
+  },
+  {
+   "family": "accord_halt",
+   "cell": "enact",
+   "rule": {
+    "kind": "one_of_n"
+   },
+   "base": 100,
+   "votes": 1
+  },
+  {
+   "family": "accord_halt",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "accord_halt",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "accord_halt",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "accord_halt",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "accord_halt",
+   "cell": "cancel",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "accord_halt",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "accord_halt",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "accord_halt",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "accord_halt",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "accord_halt",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 2,
+   "votes": 3
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 3,
+   "votes": 4
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 5,
+   "votes": 6
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 9,
+   "votes": 10
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 100,
+   "votes": 101
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 2,
+   "votes": 3
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 3,
+   "votes": 4
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 5,
+   "votes": 6
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 9,
+   "votes": 10
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 100,
+   "votes": 101
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "enact",
+   "rule": {
+    "kind": "ranked_irv",
+    "choices": 3
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "enact",
+   "rule": {
+    "kind": "ranked_irv",
+    "choices": 3
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "enact",
+   "rule": {
+    "kind": "ranked_irv",
+    "choices": 3
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "enact",
+   "rule": {
+    "kind": "ranked_irv",
+    "choices": 3
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "enact",
+   "rule": {
+    "kind": "ranked_irv",
+    "choices": 3
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "moderator_election",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "moderator_election",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "moderator_election",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 5,
+   "votes": 2
+  },
+  {
+   "family": "moderator_election",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 9,
+   "votes": 2
+  },
+  {
+   "family": "moderator_election",
+   "cell": "floor",
+   "rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "base": 100,
+   "votes": 2
   }
  ]
 }
