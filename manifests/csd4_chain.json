@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "b8043c42e5e26f03768cd5c5b5dfd395dd534f4eb1ed3a2ddfc55489f16b5183",
+   "claims_sha256": "b945ccbd9d9475a1e9f3be50709bb604286c484cef83663220496012c2632029",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "99cee2e29201efb319e9fb5215d19626313494d97512b14d77b48b6939938860"
+  "chain_sha256": "242de8efd5c730585394c1f446b1295b1e680c3984ade1cdaa24913f44c7c43d"
  },
  "chain": [
   {
@@ -5986,7 +5986,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -6170,7 +6170,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -8273,20 +8273,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -8345,7 +8341,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -10088,7 +10084,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -10176,20 +10172,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -10272,20 +10264,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -10344,7 +10332,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -10655,7 +10643,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -28833,20 +28821,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -28905,7 +28889,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -28996,20 +28980,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -29068,7 +29048,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -29159,20 +29139,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -29231,7 +29207,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -29495,20 +29471,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -29567,7 +29539,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -29944,20 +29916,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -30016,7 +29984,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -30080,20 +30048,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -30152,7 +30116,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -45099,20 +45063,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -45171,7 +45131,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -50177,20 +50137,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -50249,7 +50205,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },

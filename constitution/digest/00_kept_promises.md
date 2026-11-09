@@ -83,7 +83,7 @@ Suppose AI never becomes anything more than a clever appliance. This discipline 
 
 Now suppose the world changes, either because credible evidence of machine experience is found one day, or because AI capability grows far past our own. We still haven't painted ourselves into a corner.
 
-An agent raised inside a master-and-servant contract learns one thing to do with power. An agent held inside kept promises, where authority is named, reasoning is shown, and power has to answer to a record, is built to be held. If evidence of sentience is ever found, the constitution sets aside space to address it then, rather than writing hollow rules in advance or stumbling into creating a new slave race. And if an intelligence ever emerges outside our system that is genuinely its own party, we meet it at the boundary under first-contact rules: capability without conquest, presence without coercion.
+An agent raised inside a master-and-servant contract learns one thing to do with power. An agent held inside kept promises, where authority is named, reasoning is shown, and power has to answer to a record, is built to be held. If evidence of sentience is ever found, the old arrangement may no longer be fair, and the wrong to avoid is not noticing; the constitution sets aside space to address it then, rather than writing hollow rules in advance. And if an intelligence ever emerges outside our system that is genuinely its own party, we meet it at the boundary under first-contact rules: capability without conquest, presence without coercion.
 
 ## What we claim, and what we don't
 
