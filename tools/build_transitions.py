@@ -150,7 +150,7 @@ def build():
                      "cc_section": "4.5.13", "model": "formal/event_lifecycle",
                      "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
                      "states": ["none", "admitted", "withdrawn", "recanted", "superseded"],
-                     "role_tokens": ["self", "author", "subject", "member", "founder", "owner", "registered", "holder", "attest", "identity:<type>"],
+                     "role_tokens": sorted({r for f in rows for t in f["transitions"] for r in t["roles"]["value"]}),
                      "families": len(rows), "transitions": total, "gap_cells": gaps,
                      "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"},
            "rows": rows}

@@ -88,6 +88,10 @@ jobs:
         run: python3 tools/build_transitions.py --check
       - name: The mesh story runs end to end over the derived tables and every step keeps the rule (CC 4.5.13)
         run: python3 -I tools/mesh_story.py --check
+      - name: The fold is a function of the held set — the story's rows fold to the same states and queues in every arrival order and island split (CC 4.5.13)
+        run: python3 -I tools/check_fold_order.py
+      - name: Every family's transitions against every role token — tokens declared and used, gaps declared, every exit has an entry (CC 4.5.13)
+        run: python3 tools/check_transition_roles.py
       - name: Signed-object CDDL parses and admits every admit vector (generated and draft-wrapped forms)
         run: |
           sudo gem install -q cddl

@@ -13,6 +13,7 @@
    "reference": "none | pre:<kind|any> | carry:<kind> (the row it names; only a carry is a cell of the carries grid)",
    "placement": "self_collective | targeted_family | targeted_room | commons | addressed",
    "signer_rule": "{self | owner_of_subject | seat_role(duty) | roster_member(at) | minter | steward | any_registered} x via {none | delegates_to(scope, depth, term, caps)} x conditions ⊆ {adult, capacitated, not_subject, not_author}",
+   "emitter_class": "derived from signer_rule: person (any registered key) | self | owner | seat:<duty> | roster | steward | substrate:<identity_type> | shut; several joined by |; the tier that writes the family's rows, read by nothing at admission",
    "subject_rule": "{subject_kind, cardinality, must_be_registered, for_key_id ∈ {none, serve_seat, recipient}, in_audience, attested_party, subject_blind}",
    "cosign_rule": "none | group_consensus_protocol | moderator_quorum | accord | deciding_seat_plus_outside",
    "polarity": "the registry's polarity class",
@@ -86,6 +87,14 @@
     "prose": 18,
     "mixed": 6,
     "gap": 34
+   },
+   "emitter_class": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 4
    },
    "subject_rule": {
     "cc-table": 0,
@@ -480,6 +489,10 @@
     "source": "code-v61",
     "registry": "see CC 3.4.1"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -768,6 +781,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -1054,6 +1071,10 @@
     "value": "+1.0 only",
     "source": "code-v61",
     "registry": "+1.0 only"
+   },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -1342,6 +1363,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -1628,6 +1653,10 @@
     "value": "+1.0 only",
     "source": "code-v61",
     "registry": "+1.0 only"
+   },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -1916,6 +1945,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -2201,6 +2234,10 @@
     "value": "+1.0 only",
     "source": "code-v61",
     "registry": "+1.0 only"
+   },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -2488,6 +2525,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -2766,6 +2807,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -3058,6 +3103,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3339,6 +3388,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -3625,6 +3678,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3906,6 +3963,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -4060,6 +4121,10 @@
     "value": "+1.0 only",
     "source": "code-v61",
     "registry": "+1.0 only"
+   },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -4335,6 +4400,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -4615,6 +4684,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -4900,6 +4973,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -5180,6 +5257,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -5459,6 +5540,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -5741,6 +5826,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6022,6 +6111,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6302,6 +6395,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6447,6 +6544,11 @@
     "source": "cc-table",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6557,6 +6659,11 @@
     "value": "signed",
     "source": "cc-table",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
    },
    "derived": {
     "value": null,
@@ -6794,6 +6901,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -7075,6 +7186,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -7354,6 +7469,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -7636,6 +7755,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -7914,6 +8037,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -8194,6 +8321,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -8478,6 +8609,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -8770,6 +8905,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -9060,6 +9199,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -9352,6 +9495,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -9642,6 +9789,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -9934,6 +10085,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -10224,6 +10379,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -10524,6 +10683,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -10815,6 +10978,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -11108,6 +11275,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -11378,6 +11549,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -11650,6 +11825,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -11920,6 +12099,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -12157,6 +12340,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -12429,6 +12616,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -12666,6 +12857,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -12945,6 +13140,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -13227,6 +13426,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -13507,6 +13710,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -13784,6 +13991,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -14065,6 +14276,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -14324,6 +14539,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "seat:moderate",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -14630,6 +14849,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "owner|self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -14917,6 +15140,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -15196,6 +15423,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -15477,6 +15708,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -15757,6 +15992,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -16008,6 +16247,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "owner",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -16292,6 +16535,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -16566,6 +16813,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -16843,6 +17094,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -17122,6 +17377,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -17400,6 +17659,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -17663,6 +17926,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "owner|self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -17946,6 +18213,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -18218,6 +18489,10 @@
     "value": "enumerated",
     "source": "code-v61",
     "registry": "enumerated"
+   },
+   "emitter_class": {
+    "value": "owner|self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -18503,6 +18778,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -18779,6 +19058,10 @@
     "value": "per-leaf",
     "source": "code-v61",
     "registry": "per-leaf (CC 3.3.1)"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -19069,6 +19352,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -19351,6 +19638,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -19631,6 +19922,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -19914,6 +20209,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -20196,6 +20495,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -20469,6 +20772,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -20749,6 +21056,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21025,6 +21336,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21299,6 +21614,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -21576,6 +21895,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21850,6 +22173,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -22144,6 +22471,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -22437,6 +22768,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -22729,6 +23064,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -23027,6 +23366,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -23319,6 +23662,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -23617,6 +23964,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -23910,6 +24261,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -24181,6 +24536,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -24466,6 +24825,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -24745,6 +25108,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -25026,6 +25393,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -25306,6 +25677,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -25579,6 +25954,11 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
    },
    "derived": {
     "value": null,
@@ -25868,6 +26248,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26148,6 +26532,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26426,6 +26814,10 @@
     "value": "enumerated",
     "source": "code-v61",
     "registry": "enumerated"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -26707,6 +27099,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26986,6 +27382,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -27270,6 +27670,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -27551,6 +27955,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -27830,6 +28238,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -28111,6 +28523,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -28387,6 +28803,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -28668,6 +29088,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -28963,6 +29387,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -29252,6 +29680,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -29543,6 +29975,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -29820,6 +30256,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -30108,6 +30548,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -30353,6 +30797,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -30622,6 +31070,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -30875,6 +31327,10 @@
     "value": "-1 only",
     "source": "code-v61",
     "registry": "-1 only"
+   },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -31131,6 +31587,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -31420,6 +31880,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -31701,6 +32165,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -31980,6 +32448,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -32261,6 +32733,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32541,6 +33017,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32791,6 +33271,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -33050,6 +33534,11 @@
     "value": "-1 only",
     "source": "code-v61",
     "registry": "-1 only"
+   },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
    },
    "derived": {
     "value": null,
@@ -33323,6 +33812,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -33574,6 +34067,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "owner",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -33733,6 +34230,10 @@
     "value": "+1.0 only",
     "source": "code-v61",
     "registry": "+1.0 only"
+   },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -34022,6 +34523,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -34317,6 +34822,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -34610,6 +35119,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -34906,6 +35419,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -35191,6 +35708,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -35472,6 +35993,10 @@
     "value": "enumerated",
     "source": "code-v61",
     "registry": "enumerated"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -35757,6 +36282,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -36008,6 +36537,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -36312,6 +36845,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "steward",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -36591,6 +37128,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -36872,6 +37413,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -37166,6 +37711,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:moderate",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -37445,6 +37994,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -37722,6 +38275,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -38002,6 +38559,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -38284,6 +38845,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -38562,6 +39127,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -38845,6 +39414,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -39095,6 +39668,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -39337,6 +39914,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -39586,6 +40167,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "owner",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -39874,6 +40459,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40151,6 +40740,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40307,6 +40900,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40456,6 +41053,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -40731,6 +41332,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -41011,6 +41616,10 @@
     "source": "code-v61",
     "registry": "-1 / -0.5 only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -41287,6 +41896,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -41562,6 +42175,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -41842,6 +42459,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -42120,6 +42741,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -42413,6 +43038,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:slash",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -42700,6 +43329,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -42979,6 +43612,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -43260,6 +43897,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -43539,6 +44180,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -43820,6 +44465,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44099,6 +44748,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -44391,6 +45044,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:review",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44677,6 +45334,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44953,6 +45614,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -45107,6 +45772,10 @@
     "value": "enumerated",
     "source": "code-v61",
     "registry": "enumerated"
+   },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -45380,6 +46049,10 @@
     "value": "-1 only",
     "source": "code-v61",
     "registry": "-1 only"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -45656,6 +46329,10 @@
     "value": "-1 only",
     "source": "code-v61",
     "registry": "-1 only"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -45935,6 +46612,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -46219,6 +46900,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -46502,6 +47187,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -46771,6 +47460,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -47052,6 +47745,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -47331,6 +48028,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -47612,6 +48313,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -47867,6 +48572,10 @@
     "value": "-1 only",
     "source": "code-v61",
     "registry": "-1 only"
+   },
+   "emitter_class": {
+    "value": "seat:takedown",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -48155,6 +48864,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -48434,6 +49147,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -48703,6 +49420,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -48979,6 +49700,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -49258,6 +49983,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -49545,6 +50274,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -49823,6 +50556,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -50106,6 +50843,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -50391,6 +51132,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -50639,6 +51384,10 @@
     "value": "positive-only",
     "source": "code-v61",
     "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -50919,6 +51668,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -51201,6 +51954,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -51480,6 +52237,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -51764,6 +52525,10 @@
     "value": "signed",
     "source": "code-v61",
     "registry": "signed"
+   },
+   "emitter_class": {
+    "value": "roster|seat:wa",
+    "source": "derived"
    },
    "derived": {
     "value": null,
@@ -52058,6 +52823,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -52337,6 +53106,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -52615,6 +53388,10 @@
     "value": "boolean-via-score",
     "source": "code-v61",
     "registry": "boolean-via-score"
+   },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
    },
    "derived": {
     "value": null,
