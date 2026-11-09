@@ -5,7 +5,7 @@
     "source_sha256": "974a8c50cec2b1b9bee84153f2d2c2240a258bbd63f02d85ac02e679c4de8dc7",
     "typed_from": {
       "repo": "CIRISPersist",
-      "commit": "7894b39c",
+      "commit": "8a7e83e2",
       "file": "src/federation/envelope.rs",
       "structs": [
         "EnvelopeCore",

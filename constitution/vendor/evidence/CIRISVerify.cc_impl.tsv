@@ -2,9 +2,8 @@
 #
 # The spec-map the Constitution's check_claims.py resolves cross-repo
 # impl:CIRISVerify pointers against. Verify is the most-cited repo in the CC
-# evidence layer; before this file those pointers were asserted only by
-# CIRISServer's manifest, with no verify-side gate confirming the symbols still
-# resolved at the cited version.
+# evidence layer, so its own manifest gates that every cited symbol still
+# resolves.
 #
 # Validated by tools/check_evidence.py — a moved or renamed symbol fails CI.
 #
@@ -29,16 +28,16 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 5.4.1	CLM-record-id	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_record_id	ciris-crypto@v12.5.0
 5.4.2	CLM-symbol	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#derive_symbol_key	ciris-crypto@v12.5.0
 5.4.5	CLM-witness-content	CIRISVerify	src/ciris-crypto/src/scope_privacy.rs#witness_cover_leaf	ciris-crypto@v12.5.0
-6.1.2	CLM-noise-descent	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#ejection_verdict	ciris-verify-core@v12.5.0
-6.1.2.1	CLM-aggregationmetav1	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#AggregationMetaV1	ciris-verify-core@v12.5.0
-6.1.2.2	CLM-descent	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#descend_order	ciris-verify-core@v12.5.0
-6.1.2.3	CLM-noise-ejection	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#EjectionVerdict	ciris-verify-core@v12.5.0
-6.1.5	CLM-noise-N5	CIRISVerify	src/ciris-verify-core/src/holonomic/fountain.rs#retention_decision	ciris-verify-core@v12.5.0
-6.1.8	CLM-trust	CIRISVerify	src/ciris-verify-core/src/holonomic/bootstrap.rs#recursive_trust_bootstrap	ciris-verify-core@v12.5.0
-6.1.2.1.2	CLM-neff-dominance-gate	CIRISVerify	src/ciris-verify-core/src/holonomic/aggregation.rs#passes_dominance_gate	ciris-verify-core@v12.5.0
+6.1.2	CLM-noise-descent	CIRISVerify	src/ciris-verify-core/src/substrate/aggregation.rs#ejection_verdict	ciris-verify-core@v12.5.0
+6.1.2.1	CLM-aggregationmetav1	CIRISVerify	src/ciris-verify-core/src/substrate/aggregation.rs#AggregationMetaV1	ciris-verify-core@v12.5.0
+6.1.2.2	CLM-descent	CIRISVerify	src/ciris-verify-core/src/substrate/aggregation.rs#descend_order	ciris-verify-core@v12.5.0
+6.1.2.3	CLM-noise-ejection	CIRISVerify	src/ciris-verify-core/src/substrate/aggregation.rs#EjectionVerdict	ciris-verify-core@v12.5.0
+6.1.5	CLM-noise-N5	CIRISVerify	src/ciris-verify-core/src/substrate/fountain.rs#retention_decision	ciris-verify-core@v12.5.0
+6.1.8	CLM-trust	CIRISVerify	src/ciris-verify-core/src/substrate/bootstrap.rs#recursive_trust_bootstrap	ciris-verify-core@v12.5.0
+6.1.2.1.2	CLM-neff-dominance-gate	CIRISVerify	src/ciris-verify-core/src/substrate/aggregation.rs#passes_dominance_gate	ciris-verify-core@v12.5.0
 #
-# ── Known decimal, previously uncited ────────────────────────────────────────
-# CC assigns these decimals already; no manifest cited verify's implementation.
+# ── Known decimal, cited only here ───────────────────────────────────────────
+# CC assigns these decimals; this manifest is the citation of verify's implementation.
 2.3.2.1	CLM-registry-canonical	CIRISVerify	src/ciris-verify-core/src/canonical_subject.rs#canonical_subject	ciris-verify-core@v12.5.0
 2.3.2.1	CLM-registry-canonical-reject	CIRISVerify	src/ciris-verify-core/src/canonical_subject.rs#parse_canonical_subject	ciris-verify-core@v12.5.0
 #
@@ -79,3 +78,6 @@ decimal_id	claim_id	repo	path#symbol	crate@version
 3.3.6.2	CLM-transit-kex-binding	CIRISVerify	src/ciris-crypto/src/transit_kex.rs#initiate	ciris-crypto@v20.2.0
 3.3.6.2	CLM-transit-kex-binding	CIRISVerify	src/ciris-crypto/src/transit_kex.rs#respond	ciris-crypto@v20.2.0
 3.3.6.2	CLM-transit-kex-binding	CIRISVerify	src/ciris-crypto/src/transit_kex.rs#derive_transit_keys	ciris-crypto@v20.2.0
+5.3.4	CLM-multi-steward	CIRISVerify	src/ciris-verify-core/src/genesis_bundle.rs#verify_genesis_bundle	ciris-verify-core@v21.0.0
+5.3.4	CLM-multi-steward	CIRISVerify	src/ciris-verify-core/src/genesis_bundle.rs#authorization_digest	ciris-verify-core@v21.0.0
+5.3.4	CLM-multi-steward	CIRISVerify	src/ciris-verify-core/src/validation.rs#select_trust_root	ciris-verify-core@v21.0.0
