@@ -34,6 +34,8 @@ RHO = 0.5
 FRAME_HEADER_B = 8          # the shaped frame header, inside the 1,400
 AEAD_TAG_B = 16             # the frame's own seal tag
 LINK_SEAL_B = 25            # the E1 transit seal around the frame, on the wire and outside the constant
+PACKET_HEADER_B = 107       # the transport packet's header and token around each frame (edge's measurement, 2026-11-08)
+PROOF_B = 83                # the proof the receiver returns per packet
 ROWS = {"local-tier row": 500, "federation row (hybrid-signed)": 4_000, "onion packet": 15_296, "largest shaped row": 65_536}
 HANDSHAKE_STEPS = (2, 4, 7)
 TARGET_S = 30.0             # Eric's first-contact target
@@ -138,14 +140,15 @@ def section_rows():
 
 
 def section_overhead():
-    print("\n5. overhead and CPU: wire bytes per payload byte, and seals a second at eight links")
+    print("\n5. overhead and CPU: wire bytes per payload byte (frame seal, packet header and proof), and seals a second at eight links")
     rows = []
     for arm, f in ARMS.items():
-        wire = f + LINK_SEAL_B
+        wire = f + LINK_SEAL_B + PACKET_HEADER_B + PROOF_B
         eff = payload(f) / wire
         seals = [8 * lam(rate, f) for rate, _ in CLASSES.values()]
         rows.append([arm, f"{wire:,}", f"{payload(f):,}", f"{100 * (1 - eff):.1f}%"] + [fmt(s) for s in seals])
     table(["arm", "wire B", "payload B", "overhead"] + [f"{c} seals/s" for c in CLASSES], rows)
+    print("  the budget is a rate of frame bytes; at 1,400 B the wire carries about a tenth more than the budget, at the MDU about one per cent more")
     print("  an observer sees, in every arm, the link, its endpoints and a constant-size frame stream at λ; never the real share")
 
 
@@ -159,6 +162,10 @@ def check():
             errs.append(f"{cls}: λ ratio is not the frame ratio")
         ba = math.ceil(RHO * la * w) * payload(fa)
         bb = math.ceil(RHO * lb * w) * payload(fb)
+        wa = (fa + LINK_SEAL_B + PACKET_HEADER_B + PROOF_B) / fa
+        wb = (fb + LINK_SEAL_B + PACKET_HEADER_B + PROOF_B) / fb
+        if cls == "server" and not (0.10 < wb - wa < 0.16):
+            errs.append(f"wire bytes over budget at 1,400 B exceed the MDU's by {100 * (wb - wa):.1f}%, not about a tenth")
         if abs(bb / ba - 1) > 0.03:
             errs.append(f"{cls}: real bytes per window move by {100 * (bb / ba - 1):+.1f}% between arms")
         if cls != "phone-cellular" and erlang_cdf(7, lb, room) < 0.95:
@@ -175,7 +182,7 @@ def check():
     if errs:
         print("frame A/B: FAIL"); [print("  " + e) for e in errs]
         return 1
-    print("frame A/B: λ scales as the frame ratio; real bytes per window within 3% between arms; "
+    print("frame A/B: λ scales as the frame ratio; real bytes per window within 3% between arms; wire bytes about a tenth over the budget at 1,400 B; "
           "seven shaped waits at 1,400 B fit the contact target at p95 on server, home and phone-wifi and "
           "at the MDU on none but server below one in twenty; gaps 0.2 / 0.5 / 1.0 / 4.0 s as the text states; "
           "an onion packet spans twelve frames")
