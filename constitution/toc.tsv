@@ -28,7 +28,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 1.14.4	v-danger	V. The Danger of Too Much Thread	Accord 0.v-the-danger-of-too-much-thread	0.00092	307	0.11	I	accord	charter
 1.14.5	vi-vow	VI. The Vow	Accord 0.vi-the-vow	0.00092	308	0.11	I	accord	charter
 1.14.6	vii-first	VII. The First Principle	Accord 0.vii-the-first-principle	0.00092	309	0.11	I	accord	charter
-1.14.7	viii-covenant	VIII. The Covenant Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	I	accord	charter
+1.14.7	viii-covenant	VIII. The Accord Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	I	accord	charter
 1.15	chapters	Chapters	Accord 1.chapters	0.00092	320	0.11	I	accord	charter
 1.15.1	core-identity	Chapter 1: Core Identity	Accord 1.chapter-1-core-identity	0.00092	311	0.11	I	accord	charter
 1.15.2	integrity-operationalising	Chapter 2: Integrity — Operationalising Alignment	Accord 1.chapter-2-integrity-operationalising-ali	0.00092	312	0.11	I	accord	charter
