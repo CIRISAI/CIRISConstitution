@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "aea0267e53511dc19ac27bc669bd9fc243198f54bf3a2d4110595c074b7872ee",
+   "claims_sha256": "0c8a4573864ea7ce01761ec3efb3aeca39a5dbda47b2e01984524b14c3182dac",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -23,7 +23,7 @@
     "CIRISAgent": "ffa18162",
     "CIRISVerify": "3c16f9c6",
     "CIRISPersist": "7894b39c",
-    "CIRISEdge": "310aa7e"
+    "CIRISEdge": "fe84a66"
    }
   },
   "counts": {
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "cd34c3b5c49f177d72b40e089ec8355a38721bc361b17a5b035760d15c01b69c"
+  "chain_sha256": "064515331b13f4c892a383b03616da02609a7c59b173be7c08ff1740a55357ef"
  },
  "chain": [
   {
@@ -8335,11 +8335,40 @@
     {
      "claim_id": "CLM-moves-requested-required-appropriate",
      "cc_ref": "5.2",
-     "status": "normative",
+     "status": "established",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "normative-only"
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "moves_unasked"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "required_rows"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "invitations_naming"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "unasked_offer"
+       ]
       }
      ]
     }
