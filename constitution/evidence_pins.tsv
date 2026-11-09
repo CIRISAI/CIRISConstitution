@@ -6,4 +6,4 @@ RATCHET	c89356bd	evidence/cc_formal.tsv	vendor/evidence/RATCHET.cc_formal.tsv	st
 CIRISAgent	ffa18162	evidence/cc_impl.tsv	vendor/evidence/CIRISAgent.cc_impl.tsv	status==impl
 CIRISVerify	7146fa4	evidence/cc_impl.tsv	vendor/evidence/CIRISVerify.cc_impl.tsv	impl (repo!=— and crate!=open)
 CIRISPersist	8a7e83e2	evidence/cc_impl.tsv	vendor/evidence/CIRISPersist.cc_impl.tsv	impl (repo!=— and crate!=open)
-CIRISEdge	fe84a66	evidence/CIRISEdge.cc_impl.tsv	vendor/evidence/CIRISEdge.cc_impl.tsv	impl (repo!=— and crate!=open)
+CIRISEdge	e3d597c	evidence/CIRISEdge.cc_impl.tsv	vendor/evidence/CIRISEdge.cc_impl.tsv	impl (repo!=— and crate!=open)
