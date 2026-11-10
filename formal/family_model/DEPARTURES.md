@@ -151,6 +151,18 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | projection | `consent:replication:{version}`, `key_grant:{axis}` |
 
+## A revocation made before the roster door is kept where it was made
+
+**When.** The row carries a framed revocation of an occurrence that was signed outside the roster's two paths.
+
+**Why.** The old revocation still retires the occurrence's route on the node that holds it, and removes no device from a person's roster. For a person's own occurrence it becomes a row only when a majority of the roster cosigns, so one key cannot spread it. The table therefore holds entries with no row behind them and cannot be rebuilt from rows.
+
+**Text.** CC 3.1.3: "is kept as a local projection that still revokes but has no attestation row"
+
+| column | families |
+|---|---|
+| projection | `identity:occurrence_revocation` |
+
 ## An accord's row names the accord it belongs to
 
 **When.** The row is an accord's act: its standing, a halt, a notice or a drill.
@@ -552,7 +564,6 @@ Cells that leave the default with no reason yet, each with the question that wou
 | family | column | question |
 |---|---|---|
 | `trace:{form}:{version}` | projection | The trace tables hold the originator's envelope before scrubbing and columns added on receipt, which no row carries. Which words say what a node keeps of a trace beyond its row? |
-| `identity:occurrence_revocation` | projection | The legacy table holds revocations of a person's own occurrences made by one key, with no row behind them, where the text lands such a removal by the roster's majority or its window. Does any gate read those entries? |
 | `ownership:{relation}:{target_kind}:{version}` | placement | The cell says an affiliation named on a binding must admit the owner. The text says such a binding is cosigned under the affiliation's protocol. Is that one rule, and is it a rule of placement or of cosigning? |
 | `consent:state:{stance}` | subject_rule | The text says a consent row also carries the recipient field, and that a row with a recipient is held by two nodes and no other. Is a consent row addressed in that sense, or does it only name the node it is for? |
 | `consent:replication:{version}` | subject_rule | The text names the peer as the row's subject and gives the grant no recipient field. What does the recipient on a replication grant name? |

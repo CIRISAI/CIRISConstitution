@@ -125,7 +125,7 @@ identity:occurrence_revocation	placement	key	"commons (cohort_scope federation, 
 identity:occurrence_revocation	cosign_rule	quorum	"roster cosignatures in additional_scrubs"
 identity:occurrence_revocation	lifecycle	revocation_stands	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{}"}
 identity:occurrence_revocation	replication	key	{"audience": "key-plane reach", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
-identity:occurrence_revocation	projection	open	{"rebuild": "none", "table": "legacy framed projection"}
+identity:occurrence_revocation	projection	legacy_revocation_local	{"rebuild": "none", "table": "legacy framed projection"}
 identity_amendment	subject_rule	identity_change_applied	"attested = the agent; amendment_digest hex64"
 key:record	placement	key	"minted by the key plane"
 key:record	subject_rule	key_by_possession	{"kind": ["key", "attested == attester == the key", "key_id fingerprint checked"]}

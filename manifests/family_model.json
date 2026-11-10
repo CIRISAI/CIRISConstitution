@@ -418,6 +418,16 @@
      "cells": 2
     },
     {
+     "id": "legacy_revocation_local",
+     "title": "A revocation made before the roster door is kept where it was made",
+     "when": "The row carries a framed revocation of an occurrence that was signed outside the roster's two paths.",
+     "why": "The old revocation still retires the occurrence's route on the node that holds it, and removes no device from a person's roster. For a person's own occurrence it becomes a row only when a majority of the roster cosigns, so one key cannot spread it. The table therefore holds entries with no row behind them and cannot be rebuilt from rows.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3",
+     "quote": "is kept as a local projection that still revokes but has no attestation row",
+     "cells": 1
+    },
+    {
      "id": "accord_named",
      "title": "An accord's row names the accord it belongs to",
      "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
@@ -731,11 +741,6 @@
      "family": "trace:{form}:{version}",
      "column": "projection",
      "question": "The trace tables hold the originator's envelope before scrubbing and columns added on receipt, which no row carries. Which words say what a node keeps of a trace beyond its row?"
-    },
-    {
-     "family": "identity:occurrence_revocation",
-     "column": "projection",
-     "question": "The legacy table holds revocations of a person's own occurrences made by one key, with no row behind them, where the text lands such a removal by the roster's majority or its window. Does any gate read those entries?"
     },
     {
      "family": "ownership:{relation}:{target_kind}:{version}",
@@ -30734,7 +30739,9 @@
     "replication": [
      "key"
     ],
-    "projection": "open"
+    "projection": [
+     "legacy_revocation_local"
+    ]
    }
   },
   {
