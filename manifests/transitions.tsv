@@ -177,6 +177,8 @@ content_rating:{scheme}:{rating}	withdraw	admitted	withdrawn	author,subject	self
 content_rating:{scheme}:{rating}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 corpus_health:n_eff_measurable	attest	none	admitted	identity:substrate_persist	selfAct	true	derived	derived	derived
 corpus_health:n_eff_measurable	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
+cosign:{state}	attest	none	admitted		selfAct	false	gap	derived	gap
+cosign:{state}	withdraw	admitted	withdrawn		none	false	gap	gap	derived
 credits:{domain}:{language}:substrate_building	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 credits:{domain}:{language}:substrate_building	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 credits:{domain}:{language}:{subject}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
