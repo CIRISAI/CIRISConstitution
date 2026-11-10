@@ -13,8 +13,8 @@
    pair <<k, gen>>. A roster change is a cosigned row held in a per-target slot: one primary
    signer, cosigners added one at a time, judged on the roster as it stood at the row's instant
    (the primary's signing). A held change lands when the protocol is met, or expires after
-   HoldWindow ticks (CC 3.3.4: "hold the proposal in a pending state until additional member
-   signatures arrive (per a configurable window - operator policy)").
+   HoldWindow ticks (CC 3.3.4: the event is held as a cosign:pending row and its members'
+   cosign:signature rows are collected, for a hold window the group sets).
 
    Time is per object: a proposal ages to Window (its expires_at) and then expires; a held change
    ages to HoldWindow. Each object carries its own age and there is no clock variable; one Tick
