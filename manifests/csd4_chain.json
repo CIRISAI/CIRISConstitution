@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "5147e53b805d55f0ae3c904d5631dffcec66c9ba4491663997a959ca1047f155",
+   "claims_sha256": "5e7d13102ffdec1f9b937272a5051f484ec77a83e916f790ccac3228ce26b511",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 587,
+   "claims": 589,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "242de8efd5c730585394c1f446b1295b1e680c3984ade1cdaa24913f44c7c43d"
+  "chain_sha256": "6426e0ed0ca559b23a413c41d8b66557182287d8a7d6c6266effd39735fb0b18"
  },
  "chain": [
   {
@@ -13068,6 +13068,18 @@
      ]
     },
     {
+     "claim_id": "CLM-consent-grant-shape",
+     "cc_ref": "3.3.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#326"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-nsproc-attestation-prefixes-scores",
      "cc_ref": "3.3.7",
      "status": "established",
@@ -13206,6 +13218,18 @@
        "symbols": [
         "check_key_id_fingerprint"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-grant-shape",
+     "cc_ref": "3.3.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#326"
       }
      ]
     },
@@ -36650,6 +36674,18 @@
        "symbols": [
         "emit_replication_consent"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-grant-shape",
+     "cc_ref": "3.3.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#326"
       }
      ]
     },
