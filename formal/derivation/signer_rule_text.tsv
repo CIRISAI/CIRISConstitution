@@ -1,6 +1,61 @@
-# The signer rule the Constitution text gives a family whose census cell is a gap (nothing in the code enforces a rule yet).
-# Applied by tools/build_family_model.py over a gap cell only: the cell takes this rule with source cc-table and keeps the census reading as `code`.
+# The signer rule the Constitution text gives a family where the code enforces none: the census cell is a gap, or the family is held shut.
+# Applied by tools/build_family_model.py over such a cell only: the cell takes this rule with source cc-table and keeps the census reading as `code`.
 # A family whose census cell is closed is never overridden; a row here for one is refused, so the file empties as the code closes.
-family	signer_rule	cc_ref
-deferral:request	self x none x {}	CC 3.1.9.4
-deferral:response:{outcome}	seat_role(wa) x delegates_to(resolve_deferral, depth-capped, revocable per link) x {}	CC 4.3
+# stage: empty for a rule over the whole family; a stage or leaf name where the text gives the family one signer per stage, one row each.
+# A term after the closing brace and a semicolon is the text's own qualifier, kept beside the rule and read by nothing.
+family	signer_rule	cc_ref	stage
+archive_release:{basis}	seat_role(wa) x none x {} ; refused from any other key	CC 3.1.5	
+ballot:moderator	roster_member(at) x none x {} ; the signer's membership is live at evaluation	CC 3.1.3	
+ballot:moderator_acceptance	roster_member(at) x none x {} ; the count's winner over the bound ballot set	CC 3.1.3	
+ballot:tally:{poll_id}	roster_member(at) x none x {} ; the period's share-index-0 tally member	CC 3.1.3	
+census:composite:{class}	seat_role(serve) x none x {} ; a serve seat of the period	CC 3.1.3	
+census:expected_active	roster_member(at) x none x {} ; the period's share-index-0 tally member	CC 3.1.3	
+census:member:partial	roster_member(at) x none x {} ; one of the period's two tally members, drawn from the roster	CC 3.1.3	
+census:member:share	roster_member(at) x none x {} ; a member of the room	CC 3.1.3	
+census:partial:{class}	seat_role(serve) x none x {} ; a serve seat of the period	CC 3.1.3	
+census:share:{class}	self x none x {} ; the returning node's key	CC 3.1.3	
+collection:{kind}	self x none x {} ; the collection's creator	CC 3.1.3.4	
+consent:decay:{stage}	self x none x {} ; the party running the decay protocol, a self-report	CC 3.4.5	
+consent:deletion_complete	self x none x {} ; the producer	CC 3.4.5	
+consent:deletion_sla:{days}	self x none x {} ; the producer	CC 3.4.5	
+consent:partnership_accept	self x none x {} ; the producer side of the pair	CC 3.4.5	
+consent:partnership_grant	self x delegates_to(chain rooted at a subject) x {} ; a subject of the target, or a chain rooted at one	CC 3.4.5	
+consent:scope:{kind}	self x delegates_to(chain rooted at a subject) x {} ; a subject of the target, or a chain rooted at one	CC 3.4.5	
+consent:stream:{kind}	self x delegates_to(chain rooted at a subject) x {} ; a subject of the target, or a chain rooted at one	CC 3.4.5	
+consent:{kind}	owner_of_subject x none x {}	CC 3.3.1	community_trust
+consent:{kind}	self x none x {}	CC 3.3.1	decay
+consent:{kind}	self x none x {}	CC 3.3.1	deletion_complete
+consent:{kind}	self x none x {}	CC 3.3.1	deletion_sla
+consent:{kind}	self x none x {}	CC 3.3.1	partnership_accept
+consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	partnership_grant
+consent:{kind}	self | owner_of_subject(for_key_id) x none x {}	CC 3.3.1	replication
+consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	scope
+consent:{kind}	self | owner_of_subject(for_key_id) x none x {}	CC 3.3.1	state
+consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	stream
+cosign:{state}	roster_member(at) x none x {} ; the event's primary signer, an active member of the group	CC 3.1.3	pending
+cosign:{state}	roster_member(at) x none x {} ; the member whose signature the row carries	CC 3.1.3	signature
+deferral:request	self x none x {}	CC 3.1.9.4	
+deferral:response:{outcome}	seat_role(wa) | steward x delegates_to(resolve_deferral, depth-capped, revocable per link) x {} ; the conferrer, or a key on a live chain from the conferrer	CC 4.3	
+delivery:{class}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+delivery_receipt:{stream_id}	roster_member(at) x none x {} ; a current member of the community or stream the receipt names	CC 3.4.6	
+device:label	owner_of_subject x none x {} ; about an occurrence the signer owns	CC 3.1.1	
+file:{version}	self x none x {} ; the file's author, or a device that author acts through	CC 3.1.3.4	
+key_boundary:{scope}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+lawful_order:release	steward x none x {} ; the steward of the retired agent	CC 3.1.5	
+lineage_witness:{stage}	founder x none x {} ; an active founder of the lineage named	CC 3.1.3	proposal
+lineage_witness:{stage}	owner_of_subject x none x {} ; the owner of the node named, never the node and never a founder	CC 3.1.3	acceptance
+lineage_witness:{stage}	owner_of_subject x none x {} ; the owner of the node named, never the node and never a founder	CC 3.1.3	decline
+observation:access_assumption	self x none x {} ; a first-person observation	CC 3.1.9.4	
+observation:reachability	self x none x {} ; a first-person observation	CC 3.1.9.4	
+peer_reachability:{network}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+preserve_request	self x none x {} ; the agent	CC 3.1.5	until_retired
+preserve_request	seat_role(custodian) x none x {} ; the custodian the retired row lists	CC 3.1.5	after_retired
+preserve_response	seat_role(operator) x none x {} ; the key the request names	CC 3.1.5	
+provenance:build_manifest:{target}	any_registered x none x {} ; the pipeline that built it, whose standing the reader judges	CC 3.1.2.1	
+provenance:build_manifest:{target}:locale:{lang_code}	any_registered x none x {} ; the pipeline that built it, whose standing the reader judges	CC 3.1.2.1	
+rendezvous:route	self x none x {} ; attester and subject are the period's rendezvous key	CC 3.1.4	
+retirement:{state}	self x none x {} ; the agent key	CC 3.1.5	until_retired
+retirement:{state}	seat_role(custodian) x none x {} ; the custodian the retired row lists	CC 3.1.5	after_retired
+retirement:{state}	seat_role(operator) | seat_role(wa) x none x {} ; one row cosigned by the operator holding the record and the Wise Authority	CC 7.5.5	custodian_replace
+trace_summary:{kind}	self x none x {} ; the attester is among the subjects	CC 3.4.5	
+transport:{kind}	identity_type contains substrate_edge x none x {}	CC 3.4.3	

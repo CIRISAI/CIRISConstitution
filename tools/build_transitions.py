@@ -4,11 +4,14 @@ manifests/family_model.json (CC 4.5.13 "How the view makes the queue"; formal/ev
 
 One transition per (family, verb): the state it leaves and reaches, the roles that may sign it,
 the governance policy it runs under, and whether it widens. Every field carries a `source`:
-  cc-table  the registry / CC table (verbs, kind, polarity)
+  cc-table  the registry / CC table (verbs, kind, polarity), and a cell the text states
+            (formal/derivation/transition_text.tsv), which then carries its reference as cc_ref
   code-v61  persist's census at the v61 head (signer rule, withdraws_by, governance)
   derived   this tool's rule from those (role token mapping, states, widens)
   gap       nothing in the manifest says; the queue generator must treat the transition as closed
 A node derives a person's queue by filtering these by the person's standing in the object's state.
+Where the text gives a family one signer per stage, the roles cell carries the union as its value and
+the answer of each stage under `stages`; a signer rule's conditions ride the roles cell as `conditions`.
 
   python3 tools/build_transitions.py            # writes manifests/transitions.json (+ .tsv)
   python3 tools/build_transitions.py --check    # exit 1 if the committed manifest is stale
@@ -20,6 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "manifests" / "family_model.json"
 OUT = ROOT / "manifests" / "transitions.json"
 OUT_TSV = ROOT / "manifests" / "transitions.tsv"
+TEXT = ROOT / "formal" / "derivation" / "transition_text.tsv"
+POLICY_ROWS = {f["family"]: f["kind"] for f in json.loads((ROOT / "manifests" / "governance_policy.json").read_text())["families"]}
 
 TOKEN_RULES = [  # (regex searched anywhere in the closed signer text, role tokens)
     (r"none \(held shut\)", []),
@@ -27,7 +32,8 @@ TOKEN_RULES = [  # (regex searched anywhere in the closed signer text, role toke
     (r"identity_type contains (\w+)", "identity"),
     (r"roster_member|\bmember\b", ["member"]),
     (r"\bfounder", ["founder"]),
-    (r"owner_of_subject|\bowner\b", ["owner"]),
+    (r"owner_of_subject|owner_of\(|\bowner\b", ["owner"]),
+    (r"\bminter\b", ["member"]),   # the minter of an epoch is an active member occurrence (CC 3.3.2)
     (r"\bsteward\b", ["steward"]),
     (r"\bholder\b", ["holder"]),
     (r"any_registered", ["registered"]),
@@ -44,19 +50,24 @@ def roles_from_text(s):
             else: out += roles
     return (sorted(set(out)), "derived") if out else ([], "gap")
 
-def roles_from_signer(val):
-    """Map the manifest's signer rule to role tokens; return (roles, source)."""
+def roles_from_signer(val, per_stage=False):
+    """Map the manifest's signer rule to role tokens; return (roles, source, stages or None)."""
     if val is None:
-        return [], "gap"
+        return [], "gap", None
     if isinstance(val, list):
-        return roles_from_text(" ".join(map(str, val)))
+        return roles_from_text(" ".join(map(str, val))) + (None,)
     if isinstance(val, dict):
         if "who" in val:
-            return roles_from_text(str(val.get("who")))
-        # per-stage rule (membership): the first stage is the attest transition's signer
+            who = val.get("who")
+            return roles_from_text(" ".join(map(str, who)) if isinstance(who, list) else str(who)) + (None,)
+        if per_stage:
+            # one signer per stage, from the text: the value is the union, the stages ride beside it
+            stages = {stage: roles_from_text(str(rule).split(" x ")[0])[0] for stage, rule in val.items()}
+            return sorted({r for rs in stages.values() for r in rs}), "derived", stages
+        # per-stage rule of the census (membership): the first stage is the attest transition's signer
         first = next(iter(val.values()), "")
-        return roles_from_text(str(first))
-    return roles_from_text(str(val))
+        return roles_from_text(str(first)) + (None,)
+    return roles_from_text(str(val)) + (None,)
 
 def withdraw_roles(lifecycle):
     v = (lifecycle or {}).get("withdraws_by") if isinstance(lifecycle, dict) else None
@@ -96,8 +107,61 @@ def widens(replication, scope_hint):
 def val(cell):
     return cell.get("value") if isinstance(cell, dict) else cell
 
+def text_cells():
+    """The cells the text states: {(family, verb): {cell: [(stage, value, cc_ref)]}}."""
+    out = {}
+    lines = [l for l in TEXT.read_text().split("\n") if l and not l.startswith("#")]
+    head = lines[0].split("\t")
+    for l in lines[1:]:
+        r = dict(zip(head, l.split("\t") + [""] * len(head)))
+        out.setdefault((r["family"], r["verb"]), {}).setdefault(r["cell"], []).append((r["stage"].strip(), r["value"].strip(), r["cc_ref"].strip()))
+    return out
+
+def apply_text(fam, t, cells):
+    """Lay the text's cells over one derived transition; a cell the census closes is refused."""
+    for cell, rows in cells.items():
+        cur = t[cell]
+        if cur["source"] == "code-v61":
+            raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} {cell} is closed by the census; remove the row")
+        stages = [r[0] for r in rows]
+        if (len(rows) > 1 and "" in stages) or len(set(stages)) != len(stages):
+            raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} {cell} mixes a whole cell with stages, or repeats a stage")
+        refs = sorted({r[2] for r in rows})
+        new = {"source": "cc-table", "cc_ref": refs[0] if len(refs) == 1 else refs}
+        if cell == "roles":
+            toks = {stg: sorted(x.strip() for x in v.split(",") if x.strip()) for stg, v, _ in rows}
+            if stages == [""]:
+                new["value"] = toks[""]
+            else:
+                new["value"] = sorted({r for rs in toks.values() for r in rs}); new["stages"] = toks
+            if not new["value"]:
+                raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} roles names no one; a transition nobody signs is not a transition")
+            for k in ("conditions",):
+                if k in cur: new[k] = cur[k]
+        elif cell == "policy":
+            def pol_of(v):
+                kind, _, prow = v.partition(":")
+                if prow and POLICY_ROWS.get(prow) != kind:
+                    raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} policy {v} is not a row of the governance policy table")
+                return {"policy": kind, "rows": [prow] if prow else []}
+            if stages == [""]:
+                new["value"] = pol_of(rows[0][1])
+            else:  # the transition's own policy stands; the stage's rides beside it
+                new = dict(cur); new["cc_ref"] = refs[0] if len(refs) == 1 else refs
+                new["stages"] = {stg: pol_of(v) for stg, v, _ in rows}
+        elif stages != [""]:
+            raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} {cell} takes no stage")
+        elif cell == "widens":
+            if rows[0][1] not in ("true", "false"):
+                raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} widens is true or false")
+            new["value"] = rows[0][1] == "true"
+        else:
+            raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} names the unknown cell {cell}")
+        t[cell] = new
+
 def build():
     fm = json.loads(SRC.read_text())
+    text = text_cells()
     rows = []
     for r in fm["rows"]:
         fam = r["family"]
@@ -108,13 +172,21 @@ def build():
         lifecycle = val(r.get("lifecycle"))
         gov = val(r.get("governance"))
         rep = val(r.get("replication"))
-        roles, rsrc = roles_from_signer(signer_closed or signer)
+        cell = r.get("signer_rule") if isinstance(r.get("signer_rule"), dict) else {}
+        per_stage = bool(cell.get("per_stage"))
+        roles, rsrc, stages = roles_from_signer(signer if per_stage else (signer_closed or signer), per_stage)
+        conds = signer.get("conditions") if isinstance(signer, dict) and "who" in signer else None
+        def entry_roles():
+            c = {"value": roles, "source": rsrc}
+            if stages: c["stages"] = stages
+            if conds: c["conditions"] = conds
+            return c
         pol, psrc = policy_from_governance(gov)
         wd, wsrc = widens(rep, None)
         trans = []
         if "attest" in verbs and roles is not None:
             trans.append({"verb": "attest", "from": "none", "to": "admitted",
-                          "roles": {"value": roles, "source": rsrc},
+                          "roles": entry_roles(),
                           "policy": {"value": pol, "source": psrc},
                           "widens": {"value": wd, "source": wsrc}})
         if "withdraw" in verbs:
@@ -138,10 +210,15 @@ def build():
                 break
         if "authorize" in verbs:
             trans.append({"verb": "authorize", "from": "none", "to": "admitted",
-                          "roles": {"value": roles, "source": rsrc},
+                          "roles": entry_roles(),
                           "policy": {"value": pol, "source": psrc},
                           "widens": {"value": True, "source": "derived"}})
+        for t in trans:
+            cells = text.pop((fam, t["verb"]), None)
+            if cells: apply_text(fam, t, cells)
         rows.append({"family": fam, "kind": kind, "transitions": trans})
+    if text:
+        raise SystemExit("transition_text.tsv names transitions outside the manifest: " + ", ".join(f"{f} {v}" for f, v in sorted(text)))
     # gaps summary
     gaps = sum(1 for f in rows for t in f["transitions"] for k in ("roles", "policy", "widens") if t[k]["source"] == "gap")
     total = sum(len(f["transitions"]) for f in rows)
@@ -151,6 +228,9 @@ def build():
                      "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
                      "states": ["none", "admitted", "withdrawn", "recanted", "superseded"],
                      "role_tokens": sorted({r for f in rows for t in f["transitions"] for r in t["roles"]["value"]}),
+                     "sources": {"cc-table": "the registry and CC table, or a cell the text states (it carries cc_ref)", "code-v61": "the census of the code", "derived": "this tool's rule over those", "gap": "nothing says; closed"},
+                     "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
+                     "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
                      "families": len(rows), "transitions": total, "gap_cells": gaps,
                      "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"},
            "rows": rows}

@@ -50,6 +50,7 @@ SUBKEYS = {"replication": ["tier", "audience", "non_recipient", "held"],
            "projection": ["table", "rebuild"],
            "subject_rule": ["kind", "cardinality", "must_be_registered", "for_key_id", "in_audience", "attested_party", "subject_blind"]}
 TAGS = ("GAP", "PROSE", "GENERIC", "DATA")
+HELD_SHUT = "none (held shut)"   # the census value of a family the code never stores
 def tag_of(t):
     """The census writes a source tag as the first token: GAP:, PROSE:, GENERIC:, DATA:. Returns (tag, rest)."""
     m = re.match(r"^(GAP|PROSE|GENERIC|DATA)\s*:?\s*(.*)$", t.strip(), re.S)
@@ -228,8 +229,9 @@ def main():
     pol = {}
     for f in reg.get("families", []):
         if isinstance(f, dict) and "prefix" in f: pol[f["prefix"]] = f.get("polarity")
-    signer_text = {r["family"]: r for r in csv.DictReader(
-        [l for l in open(SIGNER_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t")}
+    signer_text = OrderedDict()   # family -> rows; one row for a whole-family rule, one per stage where the text gives stages
+    for r in csv.DictReader([l for l in open(SIGNER_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
+        signer_text.setdefault(r["family"], []).append(r)
     rows = []
     for fam in sorted(set(cc) | set(census)):
         c, z = cc.get(fam), census.get(fam)
@@ -245,14 +247,30 @@ def main():
         for col, zc in CENSUS_MAP.items():
             row[col] = cell(col, z[zc]) if z else {"value": None, "source": "gap", "note": "not in the census"}
         if fam in signer_text:
-            st = signer_text.pop(fam); cur = row["signer_rule"]
-            if cur.get("source") != "gap":
+            sts = signer_text.pop(fam); cur = row["signer_rule"]
+            if cur.get("source") != "gap" and cur.get("value") != HELD_SHUT:
                 print(f"signer_rule_text.tsv: {fam} has a closed census cell ({cur.get('source')}); remove the row"); return 1
-            txt = signer(st["signer_rule"])
-            if not isinstance(txt.get("value"), dict):
-                print(f"signer_rule_text.tsv: {fam} is not `who x via x {{conditions}}`"); return 1
-            row["signer_rule"] = {"value": txt["value"], "source": "cc-table", "cc_ref": st["cc_ref"],
-                                  "code": {"value": cur.get("value"), "source": "gap"}}
+            parsed = []
+            for st in sts:
+                txt = signer(st["signer_rule"])
+                if not isinstance(txt.get("value"), dict):
+                    print(f"signer_rule_text.tsv: {fam} is not `who x via x {{conditions}}`"); return 1
+                parsed.append(((st.get("stage") or "").strip(), txt, st))
+            stages = [p[0] for p in parsed]
+            if (len(parsed) > 1 and "" in stages) or len(set(stages)) != len(stages):
+                print(f"signer_rule_text.tsv: {fam} mixes a whole-family rule with stages, or repeats a stage"); return 1
+            code = {"value": cur.get("value"), "source": cur.get("source")}
+            if stages == [""]:
+                _, txt, st = parsed[0]
+                row["signer_rule"] = {"value": txt["value"], "source": "cc-table", "cc_ref": st["cc_ref"], "code": code}
+                if txt.get("qualifier"): row["signer_rule"]["qualifier"] = txt["qualifier"]
+            else:
+                def text_of(v): return (" | ".join(v["who"]) if isinstance(v["who"], list) else v["who"]) + " x " + v["via"] + " x {" + ", ".join(v["conditions"]) + "}"
+                row["signer_rule"] = {"value": OrderedDict((stg, text_of(txt["value"])) for stg, txt, _ in parsed), "source": "cc-table",
+                                      "per_stage": True, "closed": "; ".join(f"{stg}: {text_of(txt['value'])}" for stg, txt, _ in parsed),
+                                      "cc_ref": OrderedDict((stg, st["cc_ref"]) for stg, _, st in parsed), "code": code}
+                q = OrderedDict((stg, txt["qualifier"]) for stg, txt, _ in parsed if txt.get("qualifier"))
+                if q: row["signer_rule"]["qualifier"] = q
         pv = polarity_census(z["6_polarity"]) if z else None
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
         row["emitter_class"] = emitter_class(row["signer_rule"])
@@ -291,7 +309,7 @@ def main():
         ("version", "0-draft"), ("taxonomy_version", "11+1 v1"),
         ("registry_sha256", reg_sha), ("census", "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341"),
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
-        ("reading", "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none is cc-table, with the census reading kept beside it as code. Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."),
+        ("reading", "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none, or holds the family shut, is cc-table, with the census reading kept beside it as code; where the text gives one signer per stage the value is keyed by stage (per_stage). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."),
     ])
     out = json.dumps(OrderedDict([("_meta", meta), ("rows", rows)]), indent=1, ensure_ascii=False) + "\n"
     if "--check" in sys.argv:

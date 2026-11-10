@@ -1,0 +1,26 @@
+# Transition cells the Constitution text states where the family model gives the generator nothing to derive them from.
+# Applied by tools/build_transitions.py: the cell takes this value with source cc-table and the reference as cc_ref.
+# A cell the census closes (source code-v61) is never overridden; a row here for one is refused.
+# cell: roles (role tokens, comma separated; empty closes the stage to everyone) | policy (kind, or kind:policy_row) | widens (true | false).
+# stage: empty for the whole transition; a stage name where the text gives the stage its own answer (roles and policy only).
+# A policy row with a stage leaves the transition's own policy as it is and adds the stage's beside it.
+family	verb	cell	stage	value	cc_ref
+ballot:moderator	attest	policy		ranked:moderator_election	CC 4.5.13
+ballot:moderator	attest	widens		true	CC 3.1.3
+ballot:moderator	withdraw	policy		selfAct	CC 4.5.13
+ballot:moderator	withdraw	roles		author	CC 4.5.13
+ballot:moderator_acceptance	attest	roles		winner	CC 3.1.3
+ballot:moderator_acceptance	attest	widens		true	CC 3.1.3
+ballot:tally:{poll_id}	attest	roles		tally	CC 3.1.3
+census:expected_active	attest	roles		tally	CC 3.1.3
+census:member:partial	attest	roles		tally	CC 3.1.3
+cosign:{state}	attest	widens		true	CC 3.1.3
+cosign:{state}	withdraw	policy		selfAct	CC 3.1.3
+cosign:{state}	withdraw	roles	pending	author	CC 3.1.3
+cosign:{state}	withdraw	roles	signature		CC 3.1.3
+key:revocation	attest	roles		self	CC 2.4.1.1
+preserve_request	attest	widens		true	CC 3.1.5
+preserve_request	withdraw	policy		selfAct	CC 2.4.1.1
+preserve_request	withdraw	roles		author	CC 2.4.1.1
+preserve_response	attest	widens		true	CC 3.1.5
+retirement:{state}	attest	policy	custodian_replace	cosigned:custodian_replace	CC 7.5.5
