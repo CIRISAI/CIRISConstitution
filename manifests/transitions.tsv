@@ -251,7 +251,7 @@ group:roster	attest	none	admitted	member	selfAct	true	derived	derived	derived
 group:roster	withdraw	admitted	withdrawn	member	cosigned	false	code-v61	code-v61	derived
 group:roster	supersede	admitted	superseded	member	cosigned	false	code-v61	code-v61	derived
 hard_case:{kind}	attest	none	admitted	identity:substrate_persist	selfAct	true	derived	derived	derived
-hard_case:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
+hard_case:{kind}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 hardware_custody:{platform}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 hardware_custody:{platform}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 hardware_custody:{platform}	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
@@ -316,7 +316,7 @@ model_3d:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	cod
 model_3d:*	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived
 model_3d:*	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 moderation:{allegation_type}	attest	none	admitted	moderate	mirror	true	derived	code-v61	derived
-moderation:{allegation_type}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
+moderation:{allegation_type}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 moderation:{allegation_type}	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived
 moderation_track_record:{community_key_id}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 moderation_track_record:{community_key_id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
@@ -406,12 +406,12 @@ session:{kind}	supersede	admitted	superseded	author	selfAct	false	derived	derive
 settlement:*	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 settlement:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 slashing:{outcome}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
-slashing:{outcome}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
+slashing:{outcome}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 system:*	attest	none	admitted	identity:substrate_persist	selfAct	true	derived	derived	derived
 system:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 system:*	supersede	admitted	superseded	author	selfAct	false	derived	derived	derived
 takedown_notice:{basis}	attest	none	admitted	takedown	selfAct	true	derived	derived	derived
-takedown_notice:{basis}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
+takedown_notice:{basis}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 testimonial_witness:{kind}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 testimonial_witness:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 testimonial_witness:{kind}	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived

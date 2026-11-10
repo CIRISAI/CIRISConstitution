@@ -301,8 +301,8 @@
    "families_by_departures": {
     "0": 106,
     "1": 33,
-    "2": 12,
-    "3": 16,
+    "2": 11,
+    "3": 17,
     "4": 2,
     "5": 4,
     "6": 7,
@@ -310,6 +310,477 @@
     "9": 3
    },
    "reading": "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone"
+  },
+  "departure_reasons": {
+   "reasons": [
+    {
+     "id": "unbuilt",
+     "title": "The family is not built",
+     "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
+     "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
+     "basis": "census",
+     "cells": 57
+    },
+    {
+     "id": "key",
+     "title": "The family is a key",
+     "when": "The family's rows are a key, a device standing under an identity, or the revocation of either.",
+     "why": "Every other row is checked against these. They are minted on the key plane and travel as far as any row they verify, they are read from their own tables, and a purge of an author's rows leaves the key held, so what it signed can still be checked.",
+     "basis": "text",
+     "cc_ref": "CC 2.4",
+     "quote": "a row is admitted only once its signer's key-claim row is held",
+     "cells": 13
+    },
+    {
+     "id": "quorum",
+     "title": "The act is a body's, not one signer's",
+     "when": "The row changes what a body is or binds its members, so the family names the protocol its cosigners must meet.",
+     "why": "One signer cannot carry a quorum's act, and neither one signer nor one subject may undo one: a cosigned row is withdrawn only by a withdrawal cosigned under the same protocol.",
+     "basis": "text",
+     "cc_ref": "CC 2.4",
+     "quote": "A single-signer row cannot carry a quorum's act",
+     "cells": 16
+    },
+    {
+     "id": "adverse",
+     "title": "The party named must not be able to remove it",
+     "when": "The row is another party's measurement, licence, revocation, takedown notice or accountability record about its subject.",
+     "why": "A subject that could withdraw adverse evidence about itself would launder its own record. Its signer may withdraw it; the subject's path is reconsideration, on which it holds standing.",
+     "basis": "text",
+     "cc_ref": "CC 2.4.1.1",
+     "quote": "Selective erasure of adverse evidence is reputation laundering",
+     "cells": 14
+    },
+    {
+     "id": "accountability",
+     "title": "The record is nobody's to purge",
+     "when": "The row is on the accountability trail: a revocation, a moderation act or a moderator's track record, a slashing verdict, a hard case.",
+     "why": "The trust root moderates and does not edit history. An adverse record about a root would otherwise be removable only by that root, which is its subject.",
+     "basis": "text",
+     "cc_ref": "CC 2.4.1.1",
+     "quote": "trust-root moderation is not trust-root history-editing",
+     "cells": 11
+    },
+    {
+     "id": "revocation_stands",
+     "title": "A revocation is never taken back",
+     "when": "The row revokes a key or a device's standing under an identity.",
+     "why": "Revocation does not roll back. Its bound on what the revoked key signed may be lowered and never raised, so no later row restores the key.",
+     "basis": "text",
+     "cc_ref": "CC 2.4.1.1",
+     "quote": "revocation is non-rollbackable",
+     "cells": 2
+    },
+    {
+     "id": "standing_at_signing",
+     "title": "The row is an act of standing, judged at the moment it was signed",
+     "when": "The row is an owner's, a roster's or a consenting party's act, whose authority is the signer's standing when it signed.",
+     "why": "The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.",
+     "basis": "text",
+     "cc_ref": "CC 3.3.6.3",
+     "quote": "so an evicted key cannot sign an owner act into the window in which it was still live",
+     "cells": 6
+    },
+    {
+     "id": "verdict_not_yours",
+     "title": "A verdict about a party is never that party's own",
+     "when": "The row is one party's measurement or assurance of another.",
+     "why": "The signer must not be the party measured, so a score never returns to its subject as the subject's own word.",
+     "basis": "text",
+     "cc_ref": "CC 3.4.5",
+     "quote": "a verdict about you must not be yours",
+     "cells": 7
+    },
+    {
+     "id": "typed_view",
+     "title": "The family is read through a table of its own",
+     "when": "A fold reads the family's rows through a typed table beside the common one, and the table rebuilds byte for byte from the rows.",
+     "why": "The table is derived state: it is rebuilt from the rows and is never an authority over them.",
+     "basis": "build",
+     "cells": 14
+    },
+    {
+     "id": "accord_named",
+     "title": "An accord's row names the accord it belongs to",
+     "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
+     "why": "A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.",
+     "basis": "text",
+     "cc_ref": "CC 2.6.1.7",
+     "quote": "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold",
+     "cells": 7
+    },
+    {
+     "id": "census_addressed",
+     "title": "A census share goes to one counter and no further",
+     "when": "The row is one member's sealed share of a count, sent to one of the two parties that add the shares up.",
+     "why": "One share alone tells its holder nothing. A share that travelled further could be joined with its twin and the member's answer read, so only the sender's node and the recipient's node hold it.",
+     "basis": "text",
+     "cc_ref": "CC 6.1.9",
+     "quote": "a row whose signed `for_key_id` names one recipient is held by the author's node and the recipient's node and by no other",
+     "cells": 4
+    },
+    {
+     "id": "census_published",
+     "title": "A federation count is published to everyone",
+     "when": "The row is a counter's partial sum for a federation class, or the total made from the two partial sums.",
+     "why": "Any reader must be able to add the two partial sums and check the total. The rows carry sums and never one member's answer.",
+     "basis": "text",
+     "cc_ref": "CC 6.1.9",
+     "quote": "The partial is `census:partial:{class}:v1` and the composite `census:composite:{class}:v1`, both federation-scope rows",
+     "cells": 2
+    },
+    {
+     "id": "community_count",
+     "title": "A community's own count stays in the community",
+     "when": "The row is a partial sum of one community's members, or the count of its active members made from the two partial sums.",
+     "why": "The count is the members' figure: every member recomputes it and refuses a row that differs. It is placed in the room, where the members are.",
+     "basis": "text",
+     "cc_ref": "CC 6.1.9",
+     "quote": "The two publish `census:member:partial:v1` into the room, and `census:expected_active:v1` is the count of owners whose recent bit is set, recomputed by every member from the two partials",
+     "cells": 2
+    },
+    {
+     "id": "poll_result",
+     "title": "A secret poll's result belongs to the community that held it",
+     "when": "The row is the tally of a community's secret poll.",
+     "why": "Every member recomputes the tally, so it is placed where every member holds it. Outside the room even the fact that a poll took place stays unseen.",
+     "basis": "text",
+     "cc_ref": "CC 6.1.9",
+     "quote": "the result is `ballot:tally:{poll_id}:v1`, recomputed by every member",
+     "cells": 1
+    },
+    {
+     "id": "device_name",
+     "title": "A device's name is its owner's private note",
+     "when": "The row is the name a person gives one of their own devices.",
+     "why": "The name is display text. It confers nothing and no gate reads it, so no other party needs it and it stays among the owner's own devices.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.1",
+     "quote": "it never leaves the owner's self cohort",
+     "cells": 1
+    },
+    {
+     "id": "observation_names_observed",
+     "title": "An observation names the party observed, where that party has a key",
+     "when": "The row reports what its signer saw from its own vantage.",
+     "why": "A network path holds no key, so a report on reaching one names no subject and the signer's key marks the vantage. A report on a party that holds keys must name that party, and is never that party's own.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.9.4",
+     "quote": "Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**",
+     "cells": 2
+    },
+    {
+     "id": "listing_public",
+     "title": "A public community's listing is published to everyone",
+     "when": "The row is the notice by which a public community is found.",
+     "why": "A listing only members could read would find no new member. It is placed in the commons and travels as every commons row does.",
+     "basis": "text",
+     "cc_ref": "CC 3.2",
+     "quote": "replicated like any Commons row",
+     "cells": 2
+    },
+    {
+     "id": "listing_one_row",
+     "title": "A community has one listing, and it is the community's own",
+     "when": "The row lists a community.",
+     "why": "Two live listings for one community could disagree about its name, its rules or its moderator. A listing names exactly one community whose record the reader holds, and a newer listing replaces the older.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.1",
+     "quote": "signed by the founder (or a current `moderate`-holder) of the community it names; one live row per community",
+     "cells": 2
+    },
+    {
+     "id": "own_record",
+     "title": "A party's own record is never another party's to write",
+     "when": "The row is a party's own record: its reasoning, its claim on a session, its consent to share its traces, or the ownership of a node.",
+     "why": "The row must be about its signer, or about a node its signer owns. A trace written by another party is a claim and not a trace, and a third party naming a node's owner is a seizure.",
+     "basis": "text",
+     "cc_ref": "CC 3.4.5",
+     "quote": "a record of your own reasoning, consent, ownership or configuration must not be anyone else's",
+     "cells": 4
+    },
+    {
+     "id": "key_by_possession",
+     "title": "A key is claimed by proof of holding it",
+     "when": "The row is a key's claim of itself.",
+     "why": "No earlier row can vouch for a key no reader has seen. The row is signed by the key it names, and it is admitted on proof that its signer holds that key.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3",
+     "quote": "`attesting_key_id` = `attested_key_id` = the key",
+     "cells": 1
+    },
+    {
+     "id": "custody_scope",
+     "title": "A custody report sits at the scope of the content it is about",
+     "when": "The row reports whether a device holds a piece of content.",
+     "why": "A report placed wider than its content would tell outsiders what a group holds. The signer does not choose the scope, and a report at any other scope is refused.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3.3",
+     "quote": "the substrate refuses a report whose scope is not its content's",
+     "cells": 1
+    },
+    {
+     "id": "custody_own_report",
+     "title": "Only the device that holds the content reports holding it",
+     "when": "The row reports custody of one piece of content.",
+     "why": "Where the bytes are is a fact only the holding device can state. The signer is the device the report is about, and the report names exactly one piece of content.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3.3",
+     "quote": "nobody reports custody for another device",
+     "cells": 1
+    },
+    {
+     "id": "custody_own_withdrawal",
+     "title": "Only the device ends its own custody report",
+     "when": "A custody report is withdrawn.",
+     "why": "A report says where bytes are and not that they may stay, so removing content never needs a holder's report withdrawn. Content is removed by a takedown, and each device ends its own report.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3.3",
+     "quote": "A device ends its own report by re-acknowledging `none` or by `withdraws`; nobody withdraws another device's report",
+     "cells": 1
+    },
+    {
+     "id": "earliest_claim",
+     "title": "The earliest claim on a session holds it",
+     "when": "Two devices of one identity claim the same session.",
+     "why": "No device can lock a session across a mesh, so two claims are expected. Every reader must pick the same holder with no further message: the earliest claim stands, and a tie goes to the lowest key.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3.1",
+     "quote": "MUST settle on **earliest `claimed_at`, ties broken on the lowest occurrence `key_id`**",
+     "cells": 1
+    },
+    {
+     "id": "key_wrap",
+     "title": "A key wrap sits with the content and names its one recipient",
+     "when": "The row carries a content key wrapped for one device.",
+     "why": "The key must reach the device it is for and deliver nothing else. The row is placed at the content's scope and names that one device, and it reaches the device's node because it names it.",
+     "basis": "text",
+     "cc_ref": "CC 3.3.2",
+     "quote": "the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it",
+     "cells": 2
+    },
+    {
+     "id": "shared_stays_shared",
+     "title": "A key once shared stays shared",
+     "when": "The row is a content key wrapped for a device.",
+     "why": "A withdrawal cannot make a device forget a key it holds, so a withdrawal of a wrap is refused. Access ends by changing the key for what is written afterwards.",
+     "basis": "text",
+     "cc_ref": "CC 3.3.2",
+     "quote": "a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation",
+     "cells": 1
+    },
+    {
+     "id": "two_consents",
+     "title": "Joining takes two consents: the group's and the joiner's",
+     "when": "The row is a step in joining a group: an invitation, an answer to one, or a change to the roster.",
+     "why": "No group enrols a party that has not agreed, and no party joins a group that has not invited it. Each row is placed at the group; an invitation names exactly one invitee and lapses within thirty days, and the answer is the invitee's alone.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.3.2",
+     "quote": "A **proposal** is an invitation to one key K, targeted at the group",
+     "cells": 2
+    },
+    {
+     "id": "roster_in_group",
+     "title": "A roster is never listed outside its group",
+     "when": "The row is a version of a family's or a community's roster.",
+     "why": "The members of a group are the members' to know. The roster is placed at the group, so no reader outside it can list the members, and that holds for a public room too.",
+     "basis": "text",
+     "cc_ref": "CC 3.2",
+     "quote": "a roster is never enumerable outside its cohort, a public room's included",
+     "cells": 1
+    },
+    {
+     "id": "own_devices_policy",
+     "title": "A person's own devices are added and removed under a stated policy",
+     "when": "The row adds a device to a person's identity, proposes to remove one, or answers such a proposal.",
+     "why": "One device able to evict the others at once is a prize a thief wins in two steps. The change waits a window, and the person's other devices decide whether it stands.",
+     "basis": "text",
+     "cc_ref": "CC 3.3.6.3",
+     "quote": "The policy is two rows of the governance table",
+     "cells": 2
+    },
+    {
+     "id": "renewal_replaces",
+     "title": "A renewed self-report replaces the one before it",
+     "when": "A node renews the report of its own configuration to keep it current.",
+     "why": "A renewal that left the older row standing would split the node's weight across two rows, and renewing would weaken the claim. One live row per subject keeps a renewed claim as strong as a fresh one.",
+     "basis": "text",
+     "cc_ref": "CC 3.4.5.1",
+     "quote": "A self-report that renews to stay current MUST carry `supersedes`",
+     "cells": 1
+    },
+    {
+     "id": "verdict_never_local",
+     "title": "A verdict about another party is never kept local",
+     "when": "The row is a capacity score: one party's measurement of another.",
+     "why": "A row held unsigned on its signer's own node must be the signer's statement about itself. A measurement is never its subject's own, so it cannot be such a row and is always written for the federation.",
+     "basis": "text",
+     "cc_ref": "CC 5.3.2.4.1",
+     "quote": "`witness_relation` MUST be `self` for any local-tier write",
+     "cells": 3
+    },
+    {
+     "id": "minor_not_announced",
+     "title": "A minor's node is never announced to the federation",
+     "when": "The owner of the node is a minor.",
+     "why": "A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.",
+     "basis": "text",
+     "cc_ref": "CC 5.4.6",
+     "quote": "a node whose owner resolves to the `minor` band MUST NOT carry a federation-scope owner-binding",
+     "cells": 1
+    },
+    {
+     "id": "identity_change_applied",
+     "title": "An agent records a change to its own identity",
+     "when": "The row records an authorised change to an agent's identity record, as applied.",
+     "why": "The row is the agent's own record that the change took effect, signed by the running agent about its identity. It is admitted only with the approval it cites, so a change applied with no approval shows as a gap in the record.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.5",
+     "quote": "Attester = the agent's occurrence key, subject = the agent's identity key",
+     "cells": 1
+    },
+    {
+     "id": "one_ledger",
+     "title": "One ledger per holder, unit and standard",
+     "when": "The row is a ledger's head, a checkpoint or a promotion.",
+     "why": "Two ledgers over one holder and one unit would be two sets of books. The ledger's name is derived from the holder, the unit and the standard, so a second ledger for the same three is refused.",
+     "basis": "text",
+     "cc_ref": "CC 3.3.10.1",
+     "quote": "One ledger per `(steward-bound identity, unit, standard_version)`; `ledger_id` derives deterministically from the triple.",
+     "cells": 3
+    },
+    {
+     "id": "signer_erases_adverse",
+     "title": "An adverse finding is erased by the party that made it",
+     "when": "The subject of a detection asks for the row to be erased.",
+     "why": "The subject cannot withdraw an adverse row, or it would launder its own record. The signer withdraws its own row on the request or refuses with a reason, and the subject's path stays reconsideration.",
+     "basis": "text",
+     "cc_ref": "CC 4.5.3",
+     "quote": "the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row",
+     "cells": 5
+    },
+    {
+     "id": "outside_name",
+     "title": "A claim to an outside name carries that name in its family",
+     "when": "A key claims to be the party behind a hash that stands for an account outside the federation.",
+     "why": "The hash holds no key, so the row cannot name it as a keyed party. The hash rides in the family's name, and the row stays its signer's own claim for readers to weigh.",
+     "basis": "text",
+     "cc_ref": "CC 3.3.14",
+     "quote": "naming the canonical hash `H` as the bound subject",
+     "cells": 1
+    },
+    {
+     "id": "notice_shape",
+     "title": "A takedown notice names the content and the legal basis it rests on",
+     "when": "The row asks holders to remove content.",
+     "why": "A holder must know exactly which content to remove and on what basis, and the party affected must be able to contest it. The row carries the whole notice, so both are fixed by the notice's shape.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.1",
+     "quote": "the `scores` row whose envelope is the `takedown_notice` payload",
+     "cells": 1
+    },
+    {
+     "id": "read_note",
+     "title": "The cell is the default, with a note on how it is read",
+     "when": "The census recorded, beside the default value, how the store applies it to this family.",
+     "why": "The rule is the default: the row is judged when it arrives, replaced by its own signer, and a withdrawal ends the withdrawn row and no other. The note is kept so the reading is not lost.",
+     "basis": "build",
+     "cells": 4
+    }
+   ],
+   "open": [
+    {
+     "family": "consent:replication:{version}",
+     "column": "projection",
+     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
+    },
+    {
+     "family": "key_grant:{axis}",
+     "column": "projection",
+     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
+    },
+    {
+     "family": "slashing:{outcome}",
+     "column": "projection",
+     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
+    },
+    {
+     "family": "trace:{form}:{version}",
+     "column": "projection",
+     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
+    },
+    {
+     "family": "identity:occurrence_revocation",
+     "column": "projection",
+     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
+    },
+    {
+     "family": "group:roster",
+     "column": "replication",
+     "question": "The cell sends a public group's roster to everyone. The text says a roster is never listed outside its group, a public room's included. Which holds?"
+    },
+    {
+     "family": "membership:{stage}",
+     "column": "replication",
+     "question": "The cell sends a public group's membership rows to everyone. The text says nothing is pushed to a node whose owner has not joined. Which holds?"
+    },
+    {
+     "family": "membership:{stage}",
+     "column": "governance",
+     "question": "The policy table holds a row for inviting a member and a row for removing one, and the cell says they are not read. Is membership bound by those rows?"
+    },
+    {
+     "family": "moderation:{allegation_type}",
+     "column": "governance",
+     "question": "The policy table holds a row for a moderation act, and the cell says it is not read. Is a moderation act bound by that row?"
+    },
+    {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "column": "placement",
+     "question": "The cell says an affiliation named on a binding must admit the owner. The text says such a binding is cosigned under the affiliation's protocol. Is that one rule, and is it a rule of placement or of cosigning?"
+    },
+    {
+     "family": "consent:state:{stance}",
+     "column": "subject_rule",
+     "question": "The text says a consent row also carries the recipient field, and that a row with a recipient is held by two nodes and no other. Is a consent row addressed in that sense, or does it only name the node it is for?"
+    },
+    {
+     "family": "consent:replication:{version}",
+     "column": "subject_rule",
+     "question": "The text names the peer as the row's subject and gives the grant no recipient field. What does the recipient on a replication grant name?"
+    },
+    {
+     "family": "consent:replication:{version}",
+     "column": "replication",
+     "question": "The cell sends a grant to the parties it names and no further. The text calls the grant a public record at federation scope and bars it from the local tier. Which holds?"
+    },
+    {
+     "family": "key_grant:{axis}",
+     "column": "replication",
+     "question": "The text sends a wrap to its recipient by the common audience rule. Which words bar it from the local tier, and why is a wrap whose key is not yet held refused when other rows wait?"
+    },
+    {
+     "family": "quarantine:{state}",
+     "column": "lifecycle",
+     "question": "The text gives one rule: at the same instant a withholding beats a release. Does the read apply that tie rule, and is a later release replacing a withholding the default order or a rule of this family?"
+    },
+    {
+     "family": "trust:{job}:{version}",
+     "column": "subject_rule",
+     "question": "The term and the cycle check are rules on every delegation, and the text takes an acceptance edge out of the cycle check. Which part of the cell is the trust family's own rule about the party a row names?"
+    },
+    {
+     "family": "duty:{kind}",
+     "column": "placement",
+     "question": "No words found say a duty may sit no wider than the permission it attaches to. Does the text state that bound?"
+    },
+    {
+     "family": "trace:{form}:{version}",
+     "column": "erasure_route",
+     "question": "The text says traces captured under a live grant stand when the grant ends. On what request is a trace removed, and is that the common rule for a row about a subject or a route of its own?"
+    }
+   ],
+   "reading": "every departing cell names in because the reasons that move it, or open; a departure with no reason fails the build, and so does a reason whose cell sits on the default"
   },
   "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none, or holds the family shut, is cc-table, with the census reading kept beside it as code; where the text gives one signer per stage the value is keyed by stage (per_stage). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
  },
@@ -610,7 +1081,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ]
+   }
   },
   {
    "family": "accord:human_dignity",
@@ -905,7 +1381,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ]
+   }
   },
   {
    "family": "accord:invoke:constitutional:{halt_id}",
@@ -1200,7 +1681,15 @@
    "departs": [
     "subject_rule",
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "accord:invoke:drill:{drill_id}",
@@ -1495,7 +1984,15 @@
    "departs": [
     "subject_rule",
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "accord:invoke:notify:{notify_id}",
@@ -1790,7 +2287,15 @@
    "departs": [
     "subject_rule",
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "accord:lifecycle",
@@ -2084,7 +2589,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ]
+   }
   },
   {
    "family": "accord:lifecycle:{kind}",
@@ -2377,7 +2887,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "accord_named"
+    ]
+   }
   },
   {
    "family": "activity_tier:{period}",
@@ -2661,7 +3176,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:547; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "age_assurance:{level}:{band}:{version}",
@@ -2959,7 +3475,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ]
+   }
   },
   {
    "family": "age_self_declared:band:{band}:{version}",
@@ -3246,7 +3767,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:610; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "agent_files:{kind}:{platform_or_target}",
@@ -3536,7 +4058,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:645; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "approach:{goal_id}",
@@ -3822,7 +4345,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:668; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "archive_release:{basis}",
@@ -3993,7 +4517,27 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "attestation:agent_integrity",
@@ -4278,7 +4822,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:715; is_deprecated_attestation_ladder_prefix@src/federation/admission.rs:1832; check@src/federation/admission.rs:1515"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "attestation:hardware_rooted",
@@ -4563,7 +5108,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:734; is_deprecated_attestation_ladder_prefix@src/federation/admission.rs:1832; check@src/federation/admission.rs:1515"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "attestation:license_validity",
@@ -4852,7 +5398,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:753; is_deprecated_attestation_ladder_prefix@src/federation/admission.rs:1832; check@src/federation/admission.rs:1515"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "attestation:registry_consensus",
@@ -5137,7 +5684,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:772; is_deprecated_attestation_ladder_prefix@src/federation/admission.rs:1832; check@src/federation/admission.rs:1515"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "attestation:self_verify",
@@ -5422,7 +5970,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:791; is_deprecated_attestation_ladder_prefix@src/federation/admission.rs:1832; check@src/federation/admission.rs:1515"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "audio:*",
@@ -5708,7 +6257,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:812; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "audit_chain:hash_continuity",
@@ -5994,7 +6544,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:832; default_reserved_prefix_rules@src/federation/admission.rs:432; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "autonomy:{aspect}",
@@ -6279,7 +6830,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:855; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "ballot:moderator",
@@ -6415,7 +6967,36 @@
     "projection",
     "erasure_route",
     "governance"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "cosign_rule": [
+     "unbuilt"
+    ],
+    "freshness": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ],
+    "governance": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "ballot:moderator_acceptance",
@@ -6550,7 +7131,36 @@
     "projection",
     "erasure_route",
     "governance"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "cosign_rule": [
+     "unbuilt"
+    ],
+    "freshness": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ],
+    "governance": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "ballot:tally:{poll_id}",
@@ -6836,7 +7446,12 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "poll_result"
+    ]
+   }
   },
   {
    "family": "benchmark:he300:{category}:{version}",
@@ -7121,7 +7736,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:901; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "beneficence:{aspect}",
@@ -7406,7 +8022,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:934; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "blog:*",
@@ -7692,7 +8309,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:955; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "bond_posted:{currency}",
@@ -7976,7 +8594,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:975; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "build:registered:{target}",
@@ -8261,7 +8880,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:996; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "capacity:composite",
@@ -8561,7 +9181,18 @@
     "subject_rule",
     "lifecycle",
     "replication"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ],
+    "lifecycle": [
+     "adverse"
+    ],
+    "replication": [
+     "verdict_never_local"
+    ]
+   }
   },
   {
    "family": "capacity:relay_delivery",
@@ -8861,7 +9492,18 @@
     "subject_rule",
     "lifecycle",
     "replication"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ],
+    "lifecycle": [
+     "adverse"
+    ],
+    "replication": [
+     "verdict_never_local"
+    ]
+   }
   },
   {
    "family": "capacity:{factor}",
@@ -9161,7 +9803,18 @@
     "subject_rule",
     "lifecycle",
     "replication"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ],
+    "lifecycle": [
+     "adverse"
+    ],
+    "replication": [
+     "verdict_never_local"
+    ]
+   }
   },
   {
    "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
@@ -9460,7 +10113,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ]
+   }
   },
   {
    "family": "capacity_assurance:reversible_pending:{domain}:{version}",
@@ -9759,7 +10417,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ]
+   }
   },
   {
    "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
@@ -10058,7 +10721,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "verdict_not_yours"
+    ]
+   }
   },
   {
    "family": "census:composite:{class}",
@@ -10345,7 +11013,12 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "census_published"
+    ]
+   }
   },
   {
    "family": "census:expected_active",
@@ -10632,7 +11305,12 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "community_count"
+    ]
+   }
   },
   {
    "family": "census:member:partial",
@@ -10918,7 +11596,12 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "community_count"
+    ]
+   }
   },
   {
    "family": "census:member:share",
@@ -11173,7 +11856,15 @@
    "departs": [
     "placement",
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "census_addressed"
+    ],
+    "subject_rule": [
+     "census_addressed"
+    ]
+   }
   },
   {
    "family": "census:partial:{class}",
@@ -11460,7 +12151,12 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "census_published"
+    ]
+   }
   },
   {
    "family": "census:share:{class}",
@@ -11715,7 +12411,15 @@
    "departs": [
     "placement",
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "census_addressed"
+    ],
+    "subject_rule": [
+     "census_addressed"
+    ]
+   }
   },
   {
    "family": "cert_validity:{authority}",
@@ -11999,7 +12703,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1446; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "chat:*",
@@ -12285,7 +12990,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1467; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "coherence_standing:{cohort}",
@@ -12570,7 +13276,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1487; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "collection:{kind}",
@@ -12864,7 +13571,12 @@
    },
    "departs": [
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "commitment_fulfillment:{prior_contribution_id}",
@@ -13149,7 +13861,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1529; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "community:listing",
@@ -13426,7 +14139,21 @@
     "subject_rule",
     "lifecycle",
     "replication"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "listing_public"
+    ],
+    "subject_rule": [
+     "listing_one_row"
+    ],
+    "lifecycle": [
+     "listing_one_row"
+    ],
+    "replication": [
+     "listing_public"
+    ]
+   }
   },
   {
    "family": "config:{scope}",
@@ -13738,7 +14465,12 @@
    },
    "departs": [
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "renewal_replaces"
+    ]
+   }
   },
   {
    "family": "conscience:coherence",
@@ -14023,7 +14755,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1594; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "conscience:entropy",
@@ -14308,7 +15041,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1613; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "conscience:epistemic_humility",
@@ -14593,7 +15327,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1632; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "conscience:optimization_veto",
@@ -14878,7 +15613,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1651; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:community_trust",
@@ -15145,7 +15881,15 @@
    "departs": [
     "subject_rule",
     "freshness"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "own_record"
+    ],
+    "freshness": [
+     "standing_at_signing"
+    ]
+   }
   },
   {
    "family": "consent:decay:{stage}",
@@ -15435,7 +16179,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1693; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:deletion_complete",
@@ -15724,7 +16469,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1720; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:deletion_sla:{days}",
@@ -16015,7 +16761,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1743; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:partnership_accept",
@@ -16307,7 +17054,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1771; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:partnership_grant",
@@ -16599,7 +17347,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1794; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:replication:{version}",
@@ -16880,7 +17629,15 @@
     "freshness",
     "replication",
     "projection"
-   ]
+   ],
+   "because": {
+    "subject_rule": "open",
+    "freshness": [
+     "standing_at_signing"
+    ],
+    "replication": "open",
+    "projection": "open"
+   }
   },
   {
    "family": "consent:scope:{kind}",
@@ -17169,7 +17926,8 @@
     "carries_kind_census": "Rules",
     "sources": "src/federation/namespace/namespace_registry.json:1844; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:state:{stance}",
@@ -17457,7 +18215,13 @@
    "departs": [
     "subject_rule",
     "freshness"
-   ]
+   ],
+   "because": {
+    "subject_rule": "open",
+    "freshness": [
+     "standing_at_signing"
+    ]
+   }
   },
   {
    "family": "consent:stream:{kind}",
@@ -17748,7 +18512,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1905; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "consent:{kind}",
@@ -18058,7 +18823,8 @@
     "carries_kind_census": "Rules",
     "sources": "src/federation/namespace/namespace_registry.json:1945; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "content_class:{class}",
@@ -18354,7 +19120,12 @@
    },
    "departs": [
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "read_note"
+    ]
+   }
   },
   {
    "family": "content_rating:{scheme}:{rating}",
@@ -18641,7 +19412,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:1987; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "corpus_health:n_eff_measurable",
@@ -18927,7 +19699,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2011; default_reserved_prefix_rules@src/federation/admission.rs:432; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "cosign:{state}",
@@ -19070,7 +19843,36 @@
     "projection",
     "erasure_route",
     "governance"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "cosign_rule": [
+     "unbuilt"
+    ],
+    "freshness": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ],
+    "governance": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "credits:{domain}:{language}:{subject}",
@@ -19359,7 +20161,12 @@
    },
    "departs": [
     "projection"
-   ]
+   ],
+   "because": {
+    "projection": [
+     "typed_view"
+    ]
+   }
   },
   {
    "family": "custody:{kind}",
@@ -19642,7 +20449,18 @@
     "placement",
     "subject_rule",
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "custody_scope"
+    ],
+    "subject_rule": [
+     "custody_own_report"
+    ],
+    "lifecycle": [
+     "custody_own_withdrawal"
+    ]
+   }
   },
   {
    "family": "cw_class:{class}",
@@ -19926,7 +20744,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2115; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "deferral:request",
@@ -20215,7 +21034,8 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:2134; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "deferral:response:{outcome}",
@@ -20507,7 +21327,8 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:2157; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "delivery:{class}",
@@ -20796,7 +21617,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2189; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "delivery_receipt:{stream_id}",
@@ -21085,7 +21907,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2212; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "detection:correlated_action:{axis}",
@@ -21387,7 +22210,18 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse"
+    ],
+    "projection": [
+     "typed_view"
+    ],
+    "erasure_route": [
+     "signer_erases_adverse"
+    ]
+   }
   },
   {
    "family": "detection:distributive:access:{resource_type}",
@@ -21693,7 +22527,18 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse"
+    ],
+    "projection": [
+     "typed_view"
+    ],
+    "erasure_route": [
+     "signer_erases_adverse"
+    ]
+   }
   },
   {
    "family": "detection:hash_chain_integrity",
@@ -21995,7 +22840,18 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse"
+    ],
+    "projection": [
+     "typed_view"
+    ],
+    "erasure_route": [
+     "signer_erases_adverse"
+    ]
+   }
   },
   {
    "family": "detection:intra_agent_consistency",
@@ -22301,7 +23157,18 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse"
+    ],
+    "projection": [
+     "typed_view"
+    ],
+    "erasure_route": [
+     "signer_erases_adverse"
+    ]
+   }
   },
   {
    "family": "detection:{detector}",
@@ -22603,7 +23470,18 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse"
+    ],
+    "projection": [
+     "typed_view"
+    ],
+    "erasure_route": [
+     "signer_erases_adverse"
+    ]
+   }
   },
   {
    "family": "device:label",
@@ -22891,7 +23769,12 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "device_name"
+    ]
+   }
   },
   {
    "family": "dma:csdma:*",
@@ -23180,7 +24063,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2438; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "dma:dsdma:{domain}:*",
@@ -23465,7 +24349,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2464; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "dma:idma:*",
@@ -23750,7 +24635,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2494; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "dma:pdma:*",
@@ -24035,7 +24921,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2520; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "duty:{kind}",
@@ -24324,7 +25211,10 @@
    },
    "departs": [
     "placement"
-   ]
+   ],
+   "because": {
+    "placement": "open"
+   }
   },
   {
    "family": "encyclopedia:*",
@@ -24610,7 +25500,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2565; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "event:attendance",
@@ -24895,7 +25786,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2585; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "event:lifecycle:{state}",
@@ -25179,7 +26071,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2604; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "event:rsvp_count",
@@ -25464,7 +26357,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2627; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
@@ -25749,7 +26643,8 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:2646; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "expertise:{domain}:{language}",
@@ -26039,7 +26934,12 @@
    },
    "departs": [
     "projection"
-   ]
+   ],
+   "because": {
+    "projection": [
+     "typed_view"
+    ]
+   }
   },
   {
    "family": "federation_directory:replication_lag",
@@ -26325,7 +27225,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2709; default_reserved_prefix_rules@src/federation/admission.rs:432; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "fidelity:explainability_sla:{tier}",
@@ -26610,7 +27511,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2732; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "fidelity:{aspect}",
@@ -26895,7 +27797,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2762; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "file:{version}",
@@ -27186,7 +28089,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2781; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "film:*",
@@ -27472,7 +28376,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2806; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "goal:{scale}",
@@ -27781,7 +28686,15 @@
    "departs": [
     "lifecycle",
     "projection"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "read_note"
+    ],
+    "projection": [
+     "typed_view"
+    ]
+   }
   },
   {
    "family": "group:roster",
@@ -28075,7 +28988,22 @@
     "lifecycle",
     "replication",
     "projection"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "roster_in_group"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ],
+    "lifecycle": [
+     "quorum"
+    ],
+    "replication": "open",
+    "projection": [
+     "typed_view"
+    ]
+   }
   },
   {
    "family": "hard_case:{kind}",
@@ -28182,7 +29110,7 @@
    },
    "lifecycle": {
     "value": {
-     "withdraws_by": "{attester, subject}",
+     "withdraws_by": "{attester}",
      "retraction_class": "duty_record",
      "supersedes": "same_attester",
      "expires": "expires_at honoured",
@@ -28191,9 +29119,9 @@
     "source": "code-v61",
     "parts": {
      "withdraws_by": {
-      "value": "{attester, subject}",
+      "value": "{attester}",
       "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
+      "note": "{attester} (+ producer's owner; subject refused, SUBJECT_WITHDRAWS_CARVE_OUT)"
      },
      "retraction_class": {
       "value": "duty_record",
@@ -28372,7 +29300,19 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse",
+     "accountability"
+    ],
+    "projection": [
+     "typed_view"
+    ],
+    "erasure_route": [
+     "accountability"
+    ]
+   }
   },
   {
    "family": "hardware_custody:{platform}",
@@ -28657,7 +29597,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2891; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "health:liveness:{version}",
@@ -28949,7 +29890,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2926; enforce_admission_invariants@src/federation/invariant.rs:235; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "identity:canonical_binding:{canonical_hash}",
@@ -29202,7 +30144,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "outside_name"
+    ]
+   }
   },
   {
    "family": "identity:occurrence",
@@ -29482,7 +30429,28 @@
     "projection",
     "erasure_route",
     "governance"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "key"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ],
+    "replication": [
+     "key"
+    ],
+    "projection": [
+     "key",
+     "typed_view"
+    ],
+    "erasure_route": [
+     "key"
+    ],
+    "governance": [
+     "own_devices_policy"
+    ]
+   }
   },
   {
    "family": "identity:occurrence_revocation",
@@ -29745,7 +30713,22 @@
     "lifecycle",
     "replication",
     "projection"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "key"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ],
+    "lifecycle": [
+     "revocation_stands"
+    ],
+    "replication": [
+     "key"
+    ],
+    "projection": "open"
+   }
   },
   {
    "family": "identity_amendment",
@@ -30017,7 +31000,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "identity_change_applied"
+    ]
+   }
   },
   {
    "family": "identity_continuity:relational_anchor",
@@ -30303,7 +31291,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3038; default_reserved_prefix_rules@src/federation/admission.rs:432; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "image:*",
@@ -30589,7 +31578,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3063; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "integrity:{aspect}",
@@ -30874,7 +31864,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3083; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "judge_model:verdict:{model_id}",
@@ -31159,7 +32150,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3102; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "justice:{aspect}",
@@ -31444,7 +32436,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3125; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "key:record",
@@ -31706,7 +32699,25 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "key"
+    ],
+    "subject_rule": [
+     "key_by_possession"
+    ],
+    "replication": [
+     "key"
+    ],
+    "projection": [
+     "key",
+     "typed_view"
+    ],
+    "erasure_route": [
+     "key"
+    ]
+   }
   },
   {
    "family": "key:revocation",
@@ -31973,7 +32984,25 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "key"
+    ],
+    "lifecycle": [
+     "revocation_stands"
+    ],
+    "replication": [
+     "key"
+    ],
+    "projection": [
+     "key",
+     "typed_view"
+    ],
+    "erasure_route": [
+     "accountability"
+    ]
+   }
   },
   {
    "family": "key_boundary:{scope}",
@@ -32262,7 +33291,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3190; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "key_grant:{axis}",
@@ -32530,7 +33560,23 @@
     "lifecycle",
     "replication",
     "projection"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "key_wrap"
+    ],
+    "subject_rule": [
+     "key_wrap"
+    ],
+    "freshness": [
+     "standing_at_signing"
+    ],
+    "lifecycle": [
+     "shared_stays_shared"
+    ],
+    "replication": "open",
+    "projection": "open"
+   }
   },
   {
    "family": "lawful_order:release",
@@ -32701,7 +33747,27 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "ledger:checkpoint:{unit}:{version}",
@@ -33002,7 +34068,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "one_ledger"
+    ]
+   }
   },
   {
    "family": "ledger:head:{unit}:{version}",
@@ -33303,7 +34374,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "one_ledger"
+    ]
+   }
   },
   {
    "family": "ledger:promotion:{version}",
@@ -33604,7 +34680,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "one_ledger"
+    ]
+   }
   },
   {
    "family": "licensure:{authority_id}",
@@ -33913,7 +34994,12 @@
    },
    "departs": [
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse"
+    ]
+   }
   },
   {
    "family": "lineage_witness:{stage}",
@@ -34217,7 +35303,12 @@
    },
    "departs": [
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "locality:decision:{scale}",
@@ -34504,7 +35595,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3404; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "manifold_conformity:{cohort}",
@@ -34793,7 +35885,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3434; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "membership:{stage}",
@@ -35071,7 +36164,26 @@
     "replication",
     "projection",
     "governance"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "two_consents"
+    ],
+    "subject_rule": [
+     "two_consents"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ],
+    "lifecycle": [
+     "quorum"
+    ],
+    "replication": "open",
+    "projection": [
+     "typed_view"
+    ],
+    "governance": "open"
+   }
   },
   {
    "family": "mesh_config:{key}",
@@ -35368,7 +36480,12 @@
    },
    "departs": [
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "read_note"
+    ]
+   }
   },
   {
    "family": "method:{approach_id}:{substrate_rung}",
@@ -35653,7 +36770,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3504; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "model_3d:*",
@@ -35939,7 +37057,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3529; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "moderation:{allegation_type}",
@@ -36048,7 +37167,7 @@
    },
    "lifecycle": {
     "value": {
-     "withdraws_by": "{attester, subject}",
+     "withdraws_by": "{attester}",
      "retraction_class": "duty_record",
      "supersedes": "same_attester",
      "expires": "expires_at honoured",
@@ -36057,9 +37176,9 @@
     "source": "code-v61",
     "parts": {
      "withdraws_by": {
-      "value": "{attester, subject}",
+      "value": "{attester}",
       "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
+      "note": "{attester} (+ producer's owner; subject refused, SUBJECT_WITHDRAWS_CARVE_OUT)"
      },
      "retraction_class": {
       "value": "duty_record",
@@ -36239,7 +37358,17 @@
     "lifecycle",
     "erasure_route",
     "governance"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse",
+     "accountability"
+    ],
+    "erasure_route": [
+     "accountability"
+    ],
+    "governance": "open"
+   }
   },
   {
    "family": "moderation_track_record:{community_key_id}",
@@ -36526,7 +37655,15 @@
    "departs": [
     "lifecycle",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "accountability"
+    ],
+    "erasure_route": [
+     "accountability"
+    ]
+   }
   },
   {
    "family": "multilateral_participation:{forum}:{kind}",
@@ -36811,7 +37948,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3591; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "need:{domain}:{kind}",
@@ -37096,7 +38234,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3621; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "news:*",
@@ -37382,7 +38521,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3646; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "non_maleficence:{aspect}",
@@ -37666,7 +38806,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3666; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "objection:{state}",
@@ -37963,7 +39104,15 @@
    "departs": [
     "cosign_rule",
     "governance"
-   ]
+   ],
+   "because": {
+    "cosign_rule": [
+     "quorum"
+    ],
+    "governance": [
+     "own_devices_policy"
+    ]
+   }
   },
   {
    "family": "observation:access_assumption",
@@ -38222,7 +39371,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "observation_names_observed"
+    ]
+   }
   },
   {
    "family": "observation:reachability",
@@ -38481,7 +39635,12 @@
    },
    "departs": [
     "subject_rule"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "observation_names_observed"
+    ]
+   }
   },
   {
    "family": "ownership:{relation}:{target_kind}:{version}",
@@ -38746,7 +39905,17 @@
     "placement",
     "subject_rule",
     "freshness"
-   ]
+   ],
+   "because": {
+    "placement": "open",
+    "subject_rule": [
+     "own_record",
+     "minor_not_announced"
+    ],
+    "freshness": [
+     "standing_at_signing"
+    ]
+   }
   },
   {
    "family": "partner_role:{role}",
@@ -39031,7 +40200,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3787; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "peer_reachability:{network}",
@@ -39321,7 +40491,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3806; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "preserve_request",
@@ -39500,7 +40671,27 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "preserve_response",
@@ -39671,7 +40862,27 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "progress_measure:{method_id}",
@@ -39956,7 +41167,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3867; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "prohibited:{category}",
@@ -40240,7 +41452,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3886; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "provenance:build_manifest:{target}",
@@ -40530,7 +41743,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3930; class_for@src/federation/namespace/registry.rs:300"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "provenance:build_manifest:{target}:locale:{lang_code}",
@@ -40820,7 +42034,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3953; class_for@src/federation/namespace/registry.rs:300"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "provenance:skill_import:{source}",
@@ -41104,7 +42319,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3986; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "provenance:slsa:{level}",
@@ -41388,7 +42604,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4010; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "quarantine:{state}",
@@ -41694,7 +42911,10 @@
    },
    "departs": [
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "lifecycle": "open"
+   }
   },
   {
    "family": "ratchet:flag:coordinated_voting_cluster",
@@ -41979,7 +43199,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4052; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "ratchet:flag:counter_rii:{layer}",
@@ -42264,7 +43485,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4075; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "ratchet:flag:density_anomaly",
@@ -42549,7 +43771,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4102; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "ratchet:flag:expertise_attestation_anomaly",
@@ -42834,7 +44057,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4125; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "ratchet:flag:harassment_pattern",
@@ -43119,7 +44343,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4148; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "ratchet:flag:out_of_distribution_voting",
@@ -43404,7 +44629,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4171; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "reconsideration:{grounds}",
@@ -43707,7 +44933,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4194; check_reconsideration_admission@src/federation/admission.rs:17091"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "regime:{artifact}:{version}",
@@ -43991,7 +45218,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4213; regime@src/federation/regime.rs:1"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "rendezvous:route",
@@ -44281,7 +45509,8 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:4240; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "retirement:{state}",
@@ -44462,7 +45691,27 @@
     "replication",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "placement": [
+     "unbuilt"
+    ],
+    "subject_rule": [
+     "unbuilt"
+    ],
+    "lifecycle": [
+     "unbuilt"
+    ],
+    "replication": [
+     "unbuilt"
+    ],
+    "projection": [
+     "unbuilt"
+    ],
+    "erasure_route": [
+     "unbuilt"
+    ]
+   }
   },
   {
    "family": "revocation:{entity_type}:{reason}",
@@ -44747,7 +45996,19 @@
     "freshness",
     "lifecycle",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "freshness": [
+     "read_note"
+    ],
+    "lifecycle": [
+     "adverse",
+     "accountability"
+    ],
+    "erasure_route": [
+     "accountability"
+    ]
+   }
   },
   {
    "family": "rollback_detected:{revision_field}",
@@ -45030,7 +46291,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4309; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "seed_holder_voting_alignment:{cell}",
@@ -45314,7 +46576,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4328; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "self:delegates_to",
@@ -45602,7 +46865,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4347; names_no_trust_job@src/federation/trust_root.rs:238"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "self:delegates_to:agent_occurrence",
@@ -45890,7 +47154,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4370; names_no_trust_job@src/federation/trust_root.rs:238"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "session:{kind}",
@@ -46168,7 +47433,15 @@
    "departs": [
     "subject_rule",
     "lifecycle"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "own_record"
+    ],
+    "lifecycle": [
+     "earliest_claim"
+    ]
+   }
   },
   {
    "family": "settlement:*",
@@ -46453,7 +47726,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4422; check_settlement_admission@src/federation/admission.rs:1237"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "slashing:{outcome}",
@@ -46557,7 +47831,7 @@
    },
    "lifecycle": {
     "value": {
-     "withdraws_by": "{attester, subject}",
+     "withdraws_by": "{attester}",
      "retraction_class": "duty_record",
      "supersedes": "same_attester",
      "expires": "expires_at honoured",
@@ -46566,9 +47840,9 @@
     "source": "code-v61",
     "parts": {
      "withdraws_by": {
-      "value": "{attester, subject}",
+      "value": "{attester}",
       "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
+      "note": "{attester} (+ producer's owner; subject refused, SUBJECT_WITHDRAWS_CARVE_OUT)"
      },
      "retraction_class": {
       "value": "duty_record",
@@ -46740,7 +48014,17 @@
     "lifecycle",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "lifecycle": [
+     "adverse",
+     "accountability"
+    ],
+    "projection": "open",
+    "erasure_route": [
+     "accountability"
+    ]
+   }
   },
   {
    "family": "system:*",
@@ -47027,7 +48311,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4463; default_reserved_prefix_rules@src/federation/admission.rs:432; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "takedown_notice:{basis}",
@@ -47100,7 +48385,7 @@
    },
    "lifecycle": {
     "value": {
-     "withdraws_by": "{attester, subject}",
+     "withdraws_by": "{attester}",
      "retraction_class": "peer",
      "supersedes": "same_attester",
      "expires": "expires_at honoured",
@@ -47109,9 +48394,9 @@
     "source": "code-v61",
     "parts": {
      "withdraws_by": {
-      "value": "{attester, subject}",
+      "value": "{attester}",
       "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
+      "note": "{attester} (+ producer's owner; subject refused, SUBJECT_WITHDRAWS_CARVE_OUT)"
      },
      "retraction_class": {
       "value": "peer",
@@ -47297,8 +48582,20 @@
    },
    "departs": [
     "subject_rule",
-    "cosign_rule"
-   ]
+    "cosign_rule",
+    "lifecycle"
+   ],
+   "because": {
+    "subject_rule": [
+     "notice_shape"
+    ],
+    "cosign_rule": [
+     "quorum"
+    ],
+    "lifecycle": [
+     "adverse"
+    ]
+   }
   },
   {
    "family": "testimonial_witness:{kind}",
@@ -47583,7 +48880,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4524; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "topical_relation:{kind}",
@@ -47867,7 +49165,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4543; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "trace:{form}:{version}",
@@ -48146,7 +49445,14 @@
     "subject_rule",
     "projection",
     "erasure_route"
-   ]
+   ],
+   "because": {
+    "subject_rule": [
+     "own_record"
+    ],
+    "projection": "open",
+    "erasure_route": "open"
+   }
   },
   {
    "family": "trace_summary:{kind}",
@@ -48436,7 +49742,8 @@
     "carries_kind_census": "Facts",
     "sources": "src/federation/namespace/namespace_registry.json:4589; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "transparency_log:consistency",
@@ -48720,7 +50027,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4612; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "transparency_log:cosigned:{tree_size}",
@@ -49011,7 +50319,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4631; default_reserved_prefix_rules@src/federation/admission.rs:432"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "transparency_log:inclusion",
@@ -49295,7 +50604,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4659; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "transport:canonical_rebind",
@@ -49592,7 +50902,12 @@
    },
    "departs": [
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "transport:{kind}",
@@ -49882,7 +51197,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4701; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "trust:{job}:{version}",
@@ -50140,7 +51456,16 @@
     "subject_rule",
     "cosign_rule",
     "freshness"
-   ]
+   ],
+   "because": {
+    "subject_rule": "open",
+    "cosign_rule": [
+     "quorum"
+    ],
+    "freshness": [
+     "standing_at_signing"
+    ]
+   }
   },
   {
    "family": "truth_grounding:{subject}",
@@ -50425,7 +51750,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4751; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "video:*",
@@ -50711,7 +52037,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4772; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "vote:{contribution_id}",
@@ -51003,7 +52330,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4792; rows@src/cirisnode/rows.rs:1"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "wa_adjudication:{state}",
@@ -51294,7 +52622,12 @@
    },
    "departs": [
     "cosign_rule"
-   ]
+   ],
+   "because": {
+    "cosign_rule": [
+     "quorum"
+    ]
+   }
   },
   {
    "family": "watchlist:{id}",
@@ -51585,7 +52918,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4837; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "weighted_aggregate:{contribution_id}",
@@ -51869,7 +53203,8 @@
     "carries_kind_census": "Confidence",
     "sources": "src/federation/namespace/namespace_registry.json:4856; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   },
   {
    "family": "witness_diversity:{contribution_id}",
@@ -52153,7 +53488,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4875; scores@src/federation/scores.rs:1"
    },
-   "departs": []
+   "departs": [],
+   "because": {}
   }
  ]
 }

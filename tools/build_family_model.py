@@ -8,7 +8,7 @@ prose (bespoke code outside the closed vocabulary), or gap (nothing enforces). T
 later version refuses a gap; this draft counts them. Writes manifests/family_model.json; --check
 only compares.
 """
-import csv, hashlib, json, os, re, sys
+import csv, glob, hashlib, json, os, re, sys
 from collections import Counter, OrderedDict
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
@@ -18,6 +18,9 @@ REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
 DEFAULT = os.path.join(ROOT, "formal/derivation/family_default_row.json")
 DEPARTS = os.path.join(ROOT, "manifests/family_departures.tsv")
+REASONS = os.path.join(ROOT, "formal/derivation/departure_reasons.json")
+REASONS_MD = os.path.join(ROOT, "formal/family_model/DEPARTURES.md")
+BASES = ("text", "census", "build")
 COLUMNS = OrderedDict([
     ("kind", "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises"),
     ("side", "thing | account (a function of kind)"),
@@ -223,6 +226,125 @@ def polarity_census(t):
     tag, rest = tag_of(t or "")
     return head_of(rest) if rest else None
 
+def section_span(ref):
+    """The text of a Constitution section with its subsections, by its number; None when no heading carries it."""
+    m = re.fullmatch(r"CC (\d+(?:\.\d+)*)", ref or "")
+    if not m: return None
+    num = m.group(1)
+    for path in sorted(glob.glob(os.path.join(ROOT, "constitution", f"part_{num.split('.')[0]}_*.md"))):
+        lines = open(path, encoding="utf-8").read().split("\n")
+        start = None
+        for i, l in enumerate(lines):
+            h = re.match(r"#{1,6} (\d+(?:\.\d+)*)(?= |$)", l)
+            if not h: continue
+            if start is None:
+                if h.group(1) == num: start = i
+            elif not h.group(1).startswith(num + "."):
+                return "\n".join(lines[start:i])
+        if start is not None: return "\n".join(lines[start:])
+    return None
+
+
+def fam_match(fam, pat):
+    """A pattern is a family's name, or a stem ending in a colon that takes every family under it."""
+    return fam == pat or (pat.endswith(":") and fam.startswith(pat))
+
+
+def departure_reasons(rows, default):
+    """Give every departing cell its reason, or refuse.
+
+    A reason says when a family leaves the default row and why, and names the cells it moves. Three bases:
+    text (a section of the Constitution and words that stand in it), census (the family is not built, so
+    its cells are unread), build (a fact of the store that no rule turns on). The check runs both ways:
+    a departing cell with no reason fails unless it is listed open with its question, and a cell a reason
+    names that sits on the default fails too, so a reason cannot outlive what it explained.
+    """
+    spec = json.load(open(REASONS, encoding="utf-8"), object_pairs_hook=OrderedDict)
+    errs, claims, seen = [], OrderedDict(), set()
+    unbuilt = {r["family"] for r in rows if r["placement"].get("value") is None or str(r["placement"]["value"]).startswith("none (held shut")}
+    for rs in spec["reasons"]:
+        rid = rs.get("id", "?")
+        if rid in seen: errs.append(f"{rid}: named twice")
+        seen.add(rid)
+        for k in ("when", "why", "basis"):
+            if not rs.get(k): errs.append(f"{rid}: no {k}")
+        if rs.get("basis") not in BASES: errs.append(f"{rid}: basis is one of {', '.join(BASES)}")
+        if "enforced" in rs and (rs["enforced"] is not False or rs.get("basis") != "text"):
+            errs.append(f"{rid}: enforced is stated only as false, and only where the text gives the rule")
+        if rs.get("basis") == "text":
+            span = section_span(rs.get("cc_ref"))
+            if span is None: errs.append(f"{rid}: {rs.get('cc_ref')} is not a section of the Constitution")
+            elif not rs.get("quote") or rs["quote"] not in span: errs.append(f"{rid}: the quoted words do not stand in {rs.get('cc_ref')}")
+        moves = rs.get("moves") or OrderedDict()
+        if rs.get("premise") == "unbuilt":
+            moves = OrderedDict((col, sorted(f for f in unbuilt if col in next(r for r in rows if r["family"] == f)["departs"])) for col in default)
+        elif rs.get("premise") == "typed_view":   # every built family whose table rebuilds from its rows
+            moves = OrderedDict([("projection", sorted(r["family"] for r in rows if r["family"] not in unbuilt and "projection" in r["departs"]
+                                                       and isinstance(r["projection"].get("value"), dict) and r["projection"]["value"].get("rebuild") == "byte_equal"))])
+        elif rs.get("premise"):
+            errs.append(f"{rid}: unknown premise {rs['premise']}")
+        if not any(moves.values()): errs.append(f"{rid}: moves nothing")
+        for col, pats in moves.items():
+            if col not in default: errs.append(f"{rid}: {col} is not a column of the default row"); continue
+            for pat in pats:
+                hit = [r for r in rows if fam_match(r["family"], pat)]
+                if not hit: errs.append(f"{rid}: {pat} names no family")
+                for r in hit:
+                    if r["family"] in unbuilt and rs.get("premise") != "unbuilt":
+                        errs.append(f"{rid}: {r['family']} is not built; its cells are unread and take no other reason")
+                    elif col not in r["departs"]:
+                        errs.append(f"{rid}: {r['family']} is said to leave the default in {col} and sits on it")
+                    else:
+                        claims.setdefault((r["family"], col), []).append(rid)
+        for path, want in (rs.get("value") or {}).items():   # the reason fixes the cell's value, not only that it moves
+            col, _, sub = path.partition(".")
+            for pat in moves.get(col, []):
+                for r in rows:
+                    if not fam_match(r["family"], pat): continue
+                    v = r[col].get("value")
+                    got = v.get(sub) if sub and isinstance(v, dict) else v
+                    if got != want: errs.append(f"{rid}: {r['family']} {path} is {got!r}, and the reason gives {want!r}")
+    opens = OrderedDict()
+    for o in spec.get("open", []):
+        k = (o.get("family"), o.get("column"))
+        if not o.get("question"): errs.append(f"open {k[0]} {k[1]}: no question")
+        if k in opens: errs.append(f"open {k[0]} {k[1]}: listed twice")
+        opens[k] = o.get("question")
+    departing = {(r["family"], col) for r in rows for col in r["departs"]}
+    for k in sorted(departing):
+        if k in claims and k in opens: errs.append(f"{k[0]} {k[1]}: has a reason and is listed open; remove one")
+        if k not in claims and k not in opens: errs.append(f"{k[0]} {k[1]}: leaves the default with no reason; give one or list it open with its question")
+    for k in opens:
+        if k not in departing: errs.append(f"open {k[0]} {k[1]}: no longer leaves the default; remove the line")
+    return spec, claims, opens, errs
+
+
+def reasons_md(spec, claims, opens, rows, default):
+    cells = Counter(rid for v in claims.values() for rid in v)
+    fams = {}
+    for (f, c), v in claims.items():
+        for rid in v: fams.setdefault(rid, OrderedDict()).setdefault(c, []).append(f)
+    out = ["# Why and when a family leaves the default row", "",
+           "Generated by `tools/build_family_model.py` from `formal/derivation/departure_reasons.json`; do not edit.", "",
+           spec["reading"], ""]
+    for rs in spec["reasons"]:
+        rid = rs["id"]
+        out += [f"## {rs['title']}", "", f"**When.** {rs['when']}", "", f"**Why.** {rs['why']}", ""]
+        if rs["basis"] == "text":
+            out += [f"**Text.** {rs['cc_ref']}: \"{rs['quote']}\"", ""]
+            if rs.get("enforced") is False: out += ["**Build.** The text states this and the pinned build does not enforce it; the cell records the text.", ""]
+        else: out += [f"**Basis.** {'The family is not built; the census read nothing.' if rs['basis'] == 'census' else 'A fact of the store; no rule turns on it.'}", ""]
+        out += ["| column | families |", "|---|---|"]
+        out += [f"| {c} | {', '.join('`' + f + '`' for f in fs)} |" for c, fs in fams.get(rid, {}).items()]
+        out += [""]
+    if opens:
+        out += ["## Open", "", "Cells that leave the default with no reason yet, each with the question that would give it one.", "",
+                "| family | column | question |", "|---|---|---|"]
+        out += [f"| `{f}` | {c} | {q} |" for (f, c), q in opens.items()]
+        out += [""]
+    return "\n".join(out)
+
+
 def main():
     cc = {r["family"]: r for r in csv.DictReader(open(CC, encoding="utf-8"), delimiter="\t")}
     census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
@@ -310,11 +432,19 @@ def main():
     departures = []
     for r in rows:
         r["departs"] = [col for col, dv in default.items() if canon(r[col].get("value")) != canon(dv)]
-        departures += [(r["family"], col, canon(r[col].get("value"))) for col in r["departs"]]
+    # Every departure carries its reason: when a family leaves the default and why, or the open question.
+    spec, claims, opens, errs = departure_reasons(rows, default)
+    if errs:
+        print("departure_reasons.json: FAIL"); [print("  " + e) for e in errs]; return 1
+    for r in rows:
+        r["because"] = OrderedDict((col, claims.get((r["family"], col)) or "open") for col in r["departs"])
+        departures += [(r["family"], col, "; ".join(claims.get((r["family"], col)) or ["open"]), canon(r[col].get("value"))) for col in r["departs"]]
+    md_out = reasons_md(spec, claims, opens, rows, default) + "\n"
     by_count = Counter(len(r["departs"]) for r in rows)
     dep_out = ("# Every family against the default row (formal/derivation/family_default_row.json): one line per column in which a family departs.\n"
                "# A family with no line here is the default row in all of these columns. Generated by tools/build_family_model.py.\n"
-               "family\tcolumn\tvalue\n" + "".join(f"{f}\t{c}\t{v}\n" for f, c, v in departures))
+               "# reason: the reasons of formal/derivation/departure_reasons.json that move the cell, or open; formal/family_model/DEPARTURES.md states each.\n"
+               "family\tcolumn\treason\tvalue\n" + "".join(f"{f}\t{c}\t{w}\t{v}\n" for f, c, w, v in departures))
     cov = OrderedDict()
     SRC = ("cc-table", "code-v61", "generic", "prose", "mixed", "gap")
     for col in COLUMNS:
@@ -332,6 +462,12 @@ def main():
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),
+        ("departure_reasons", OrderedDict([
+            ("reasons", [OrderedDict([("id", rs["id"]), ("title", rs["title"]), ("when", rs["when"]), ("why", rs["why"]), ("basis", rs["basis"])] +
+                                     ([("cc_ref", rs["cc_ref"]), ("quote", rs["quote"])] if rs["basis"] == "text" else []) +
+                                     [("cells", sum(1 for v in claims.values() if rs["id"] in v))]) for rs in spec["reasons"]]),
+            ("open", [OrderedDict([("family", f), ("column", c), ("question", q)]) for (f, c), q in opens.items()]),
+            ("reading", "every departing cell names in because the reasons that move it, or open; a departure with no reason fails the build, and so does a reason whose cell sits on the default")])),
         ("reading", "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none, or holds the family shut, is cc-table, with the census reading kept beside it as code; where the text gives one signer per stage the value is keyed by stage (per_stage). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."),
     ])
     out = json.dumps(OrderedDict([("_meta", meta), ("rows", rows)]), indent=1, ensure_ascii=False) + "\n"
@@ -340,9 +476,13 @@ def main():
         if cur != out: print("family_model.json is stale (run tools/build_family_model.py)"); return 1
         cur = open(DEPARTS, encoding="utf-8").read() if os.path.exists(DEPARTS) else ""
         if cur != dep_out: print("family_departures.tsv is stale (run tools/build_family_model.py)"); return 1
+        cur = open(REASONS_MD, encoding="utf-8").read() if os.path.exists(REASONS_MD) else ""
+        if cur != md_out: print("DEPARTURES.md is stale (run tools/build_family_model.py)"); return 1
     else:
         open(OUT, "w", encoding="utf-8").write(out)
         open(DEPARTS, "w", encoding="utf-8").write(dep_out)
+        open(REASONS_MD, "w", encoding="utf-8").write(md_out)
+    print(f"departure reasons: {len(spec['reasons'])} reasons move {len(claims)} cells; {len(opens)} open")
     print(f"default row: {by_count.get(0, 0)} of {len(rows)} families are on it in all {len(default)} columns, {by_count.get(1, 0)} depart in one; {len(departures)} departures in all")
     print(f"family_model: {len(rows)} families; coverage per column (cc-table/code-v61/generic/prose/mixed/gap): " +
           "; ".join(f"{k} {v['cc-table']}/{v['code-v61']}/{v['generic']}/{v['prose']}/{v['mixed']}/{v['gap']}" for k, v in cov.items()))
