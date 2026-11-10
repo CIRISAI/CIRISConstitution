@@ -625,7 +625,7 @@ Where an annex cites material carried in the constitutional text, the citation p
 | EU HLEG Trustworthy AI (2019) | 7 Requirements | Operational cross-walk, all 27 dimensions | Evidence-bearing |
 | IEEE EAD 1st ed. (2019) | 8 General Principles | Operational cross-walk, all 27 dimensions | Evidence-bearing |
 | ASEAN AI Governance Guide (2024) | 7 Principles; HITL/HOTL/HOOTL | Operational cross-walk; Annex F autonomy tiers | Evidence-bearing |
-| *Magnifica Humanitas* (2026) | 245 ¶¶ (paragraph-grain mapping) | Operational cross-walk, all 27 dimensions | Evidence-bearing |
+| *Magnifica Humanitas* (2026) | 245 ¶¶ (paragraph-grain mapping) | Operational cross-walk, 23 of the 27 dimensions | Evidence-bearing |
 
 **3. Graduation rule.** A row's status is one of four. *Informative*: the correspondence is stated and nothing more is claimed. *Evidence-bearing*: the mapped layer carries artefacts a legal reviewer can examine (dimension documents, attestation surfaces, register rows), with legal sufficiency unreviewed. *Partial*: the mapped artefact covers part of the cited provision. *Verified*: qualified legal review has confirmed the correspondence for a named jurisdiction and the review artifact is linked from this table. A row reaches *Verified* only by that review. Until then, rows in this annex support engineering alignment and gap analysis, not compliance claims; compliance claims are void where prohibited by applicable law.
 

@@ -53,12 +53,39 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,246 statements (Part 3 1,525, Part 4 956, Part 5 640, Part 2 600, Part 6 225,
-Part 1 153, Part 7 147); by scope family 1,864, kernel 1,244, mechanism 727, foundation 211,
-stewardship 200; by role states 3,277, restates 822, applies 83, exception 64. 206 cut-candidate
+Headline numbers: 4,248 statements (Part 3 1,525, Part 4 956, Part 5 640, Part 2 601, Part 6 226,
+Part 1 153, Part 7 147); by scope family 1,864, kernel 1,246, mechanism 727, foundation 211,
+stewardship 200; by role states 3,277, restates 823, applies 83, exception 65. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
 keys; the `role` column is the reader's judgement of where a rule's home is. Of the 607 lines
 that carry MUST, SHALL or REQUIRED, 72 have no row on that exact line, most of them table rows
 whose statement is recorded on a neighbouring line. Sweep those before a statement is moved.
+
+## Compliance wire forms
+
+Four published works are mapped to the signed-row vocabulary under 27 dimension ids: *Magnifica
+Humanitas*, the EU Ethics Guidelines for Trustworthy AI, IEEE Ethically Aligned Design and the
+ASEAN Guide on AI Governance and Ethics. The mapping lives outside this repository
+(`ciris-response-magnifica-humanitas`, read at commit 5465f48). Two tables carry what it leans on:
+
+| File | Rows | What a row is |
+|---|---|---|
+| `compliance_dimensions.tsv` | 27 | a dimension id, its stem and tier, which works attest it, the registry families that carry the stem, the Part 3 sections that define them |
+| `compliance_wire_forms.tsv` | 1,059 | one wire form a work's mapping cites, the number of mapped lines citing it, the registry family it resolves to, and the answer: `resolves`, `open` (open vocabulary no row claims) or the refusal token |
+
+`python3 tools/check_compliance_wire_forms.py` re-resolves every form against the generated
+registry and fails when a dimension loses its family or anchor, a cited section is no longer a
+Part 3 heading, a resolving form stops resolving, or any answer changes. `--write` records a
+changed answer once it has been read; `--extract <dir>` rebuilds both tables from a checkout of
+the mapping.
+
+Readings: 26 of the 27 stems have registered families; the 27th (`accountability`) is structural
+and its evidence is the audit chain. Of 1,344 mapped lines 1,027 resolve (*Magnifica Humanitas*
+295, EU 208, IEEE 348, ASEAN 176). The 317 that do not are forms the mapping wrote to an earlier
+arity or case: a `method:` form without its rung or version segment, a `transparency_log:` or
+`attestation:` leaf beyond the registered ones, an upper-case segment, a `consent:` or
+`prohibited:` leaf the closed vocabularies do not carry. Those are for the mapping to relabel;
+the check holds them at their present answer so a change in either direction is seen.
+
