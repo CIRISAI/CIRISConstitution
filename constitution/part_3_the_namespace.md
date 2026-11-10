@@ -124,6 +124,25 @@ Locale ordering: lexicographic by ISO 639-1 / BCP 47 byte representation; `"poly
 
 Producers MUST emit v2. The closed-vocabulary [CC 4.2.1.1](part_4_composition_governance.md) accord-invocation encoding is intentionally distinct: its preimage is a discriminator + nonce + enum fields with no attacker-controlled free text, so the injection surface this JCS form closes is not reachable there, and genesis-critical bytes stay stable.
 
+#### Agent text manifest statement (v1 — normative)
+
+An agent ships the texts it reasons from, the accord text in every language it carries and its guides, beside a manifest that names each file by SHA-256. A steward vouches for that manifest by signing a statement of it and never the file's own bytes, so a key held on a hardware token signs 32 bytes whatever the manifest's length:
+
+```
+canonical_bytes = sha256( JCS( {
+  "domain": "ciris.accord_manifest.v1", // domain separation; pinned literal
+  "manifest_sha256": sha256_hex_lowercase, // of the manifest's exact bytes; per CC 2.6.3
+  "manifest_size": byte_length, // JSON integer; the size CC 5.3.2.5 binds beside a digest
+  "signer_identity": signer_key_id // the key id of the signer's key record
+}))
+```
+
+Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_bytes || ed25519_signature_bytes` (bound payload, [CC 5.3.2.4.3.1](part_5_transport_substrate.md#5.3.2.4.3.1)). The Ed25519 half is the pure algorithm of RFC 8032; a pre-hashed or context variant is another algorithm and does not verify.
+
+**The signer.** The signer is a human-held steward key of the canonical attester ([CC 3.1.9.1](#3.1.9.1)), resolved to its hybrid key record; an agent pins the set of signers it accepts, and for the shipped root the signer is an accord holder, whose act [CC 4.2.1](part_4_composition_governance.md#4.2.1) names. `signer_identity` is inside the signed bytes, so one holder's signature cannot be presented as another's.
+
+**The check.** An agent rebuilds the statement from the manifest bytes it holds, size before digest ([CC 5.3.2.5](part_5_transport_substrate.md#5.3.2.5)), and never takes it from a copy carried beside the signature. It verifies both halves against the signer's key record before it makes any decision. A missing signature, a signer outside the pinned set, a key record with no ML-DSA-65 half, or a failure of either half stops the agent: it does not run on text nobody vouched for. The signature covers the manifest and the manifest covers each file by its digest, so a changed text fails at the file and a changed manifest fails at the signature.
+
 ### 3.1.3 `persist` — CIRISPersist — substrate health
 
 **Steward**: CIRISPersist. These dimensions are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own health by a third party.
