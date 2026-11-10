@@ -29,7 +29,8 @@ tables are inputs to a decision, not findings of fact.
 ## Rule inventory
 
 `rule_inventory.tsv` lists every rule statement in Parts 1 to 7, one row per statement, with line
-numbers at commit 30fddf6. `rule_cut_candidates.tsv` lists the blocks of those Parts that state no
+numbers at commit 30fddf6; a statement added since is noted as such and sits on the line of the
+paragraph it joined. `rule_cut_candidates.tsv` lists the blocks of those Parts that state no
 rule of their own. Both are review artefacts, not normative.
 
 A rule statement is a sentence, clause or table cell that constrains what a conforming node,
@@ -52,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,240 statements (Part 3 1,525, Part 4 955, Part 5 640, Part 2 596, Part 6 224,
-Part 1 153, Part 7 147); by scope family 1,863, kernel 1,239, mechanism 727, foundation 211,
-stewardship 200; by role states 3,273, restates 820, applies 83, exception 64. 206 cut-candidate
+Headline numbers: 4,246 statements (Part 3 1,525, Part 4 956, Part 5 640, Part 2 600, Part 6 225,
+Part 1 153, Part 7 147); by scope family 1,864, kernel 1,244, mechanism 727, foundation 211,
+stewardship 200; by role states 3,277, restates 822, applies 83, exception 64. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two

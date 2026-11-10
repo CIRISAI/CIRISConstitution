@@ -22,6 +22,11 @@
   affiliation never retracts a statement about itself. The good-faith warning has a channel the
   accused cannot close: filed with the room's named moderator it is a duty-holder's record.
 
+  The third question: once the person named has taken peer speech back, who still reads it? Three
+  answers are compared: nobody, the room with the retraction beside it, and the speaker alone. The
+  speaker alone is the one under which the retraction removes something and the speaker keeps
+  their own words, which they may still file with a duty-holder (CC 2.4.1.1, 6.1.5).
+
   Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 -/
 
@@ -193,6 +198,52 @@ theorem cosigned_undone_only_cosigned (r : Row) (k : Key) (hc : r.kind = .cosign
     (hk : k ≠ r.producer) : mayWithdraw r k = false := by
   unfold mayWithdraw; simp [hc, hk]
 
+/-! ## What stays after a retraction (CC 2.4.1.1, 6.1.5)
+
+  A retraction by the person named is a signed row beside the one it retires. Three answers to who
+  reads the retired row's content afterwards: nobody, everyone the row reached, or the speaker. -/
+
+inductive Keep | nobody | room | speaker
+  deriving DecidableEq, Repr
+
+/-- who reads the content of `r`: before a retraction, whoever the row reaches; after it, nobody,
+    whoever it reached (the retraction shown beside it), or the speaker alone at self scope -/
+def readsContent (p : Keep) (w : World) (r : Row) (retracted : Bool) (k : Key) : Bool :=
+  if retracted then
+    match p with
+    | .nobody => false
+    | .room => reaches w r k
+    | .speaker => k == r.producer
+  else reaches w r k
+
+/-- shown to the room beside its retraction, the row is read by exactly those who read it before:
+    the retraction removes nothing and is a label -/
+theorem shown_retraction_removes_nothing (w : World) (r : Row) (k : Key) :
+    readsContent .room w r true k = readsContent .room w r false k := by
+  simp [readsContent]
+
+/-- kept by nobody, the retraction takes the speaker's own words from the speaker -/
+theorem kept_by_nobody_takes_the_speakers_words (w : World) (r : Row) :
+    readsContent .nobody w r true r.producer = false := by
+  simp [readsContent]
+
+/-- kept by the speaker, the content leaves everyone else the row reached, the person named
+    included -/
+theorem retraction_clears_the_audience (w : World) (r : Row) (k : Key) (hk : k ≠ r.producer) :
+    readsContent .speaker w r true k = false := by
+  simp [readsContent, hk]
+
+/-- and the speaker keeps their own words -/
+theorem speaker_keeps_own_words (w : World) (r : Row) :
+    readsContent .speaker w r true r.producer = true := by
+  simp [readsContent]
+
+/-- the kept copy can still be filed: the report made from it is a duty-holder's record the
+    person who retracted the speech cannot close -/
+theorem kept_copy_is_fileable (w : World) (r : Row) (m k : Key) (shield : Bool) (hk : k ≠ m) :
+    readsContent .speaker w r true r.producer = true ∧ mayWithdraw (asReport r m shield) k = false :=
+  ⟨speaker_keeps_own_words w r, warning_channel_not_closable r m k shield hk⟩
+
 /-! ## The worked world
 
   Everyone = keys 1..9. Cohort 1 is a community whose roster is {1, 2, 3} until instant 5, when 3
@@ -265,5 +316,16 @@ theorem warning_peer_retractable_report_not :
     mayWithdraw reportAbout2 2 = false ∧ mayContest reportAbout2 2 = true ∧
     seesExistence w reportAbout2 2 = true ∧ seesContent w reportAbout2 2 = false ∧
     admitAudience w reportAbout2 = true := by decide
+
+/-- 5. member 2 retracts member 1's warning. Kept by the speaker: 1 still holds it, 2 no longer
+    reads it, and 1 may file it with the moderator, where 2 cannot close it. Shown to the room, 2
+    would still read it. Kept by nobody, 1 would hold nothing to file. -/
+theorem retracted_warning_is_kept_and_fileable :
+    mayWithdraw warningAbout2 2 = true ∧
+    readsContent .speaker w warningAbout2 true 1 = true ∧
+    readsContent .speaker w warningAbout2 true 2 = false ∧
+    mayWithdraw reportAbout2 2 = false ∧
+    readsContent .room w warningAbout2 true 2 = true ∧
+    readsContent .nobody w warningAbout2 true 1 = false := by decide
 
 end Standing
