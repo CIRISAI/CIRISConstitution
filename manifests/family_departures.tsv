@@ -10,8 +10,7 @@ accord:invoke:drill:{drill_id}	cosign_rule	"CC accord (M-of-N); the row carries 
 accord:invoke:notify:{notify_id}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 accord:invoke:notify:{notify_id}	cosign_rule	"CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)"
 accord:lifecycle	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-accord:lifecycle:active	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-accord:lifecycle:confirmed	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
+accord:lifecycle:{kind}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 age_assurance:{level}:{band}:{version}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 archive_release:{basis}	placement	"none (held shut: never stored)"
 archive_release:{basis}	subject_rule	"none (held shut)"
@@ -41,24 +40,12 @@ ballot:tally:{poll_id}	placement	"CC targeted_room"
 capacity:composite	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 capacity:composite	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 capacity:composite	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
-capacity:core_identity	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-capacity:core_identity	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-capacity:core_identity	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
-capacity:incompleteness_awareness	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-capacity:incompleteness_awareness	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-capacity:incompleteness_awareness	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
-capacity:integrity	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-capacity:integrity	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-capacity:integrity	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 capacity:relay_delivery	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 capacity:relay_delivery	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 capacity:relay_delivery	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
-capacity:resilience	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-capacity:resilience	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-capacity:resilience	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
-capacity:sustained_coherence	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
-capacity:sustained_coherence	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-capacity:sustained_coherence	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
+capacity:{factor}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
+capacity:{factor}	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
+capacity:{factor}	replication	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 capacity_assurance:reversible_excluded:{domain}:{version}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 capacity_assurance:reversible_pending:{domain}:{version}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 capacity_assurance:{level}:{domain}:{band}:{version}	subject_rule	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
@@ -94,20 +81,13 @@ cosign:{state}	replication	null
 cosign:{state}	projection	null
 cosign:{state}	erasure_route	null
 cosign:{state}	governance	null
-credits:{domain}:{language}:substrate_building	projection	{"rebuild": "byte_equal", "table": "credits_ledger"}
 credits:{domain}:{language}:{subject}	projection	{"rebuild": "byte_equal", "table": "credits_ledger"}
 custody:{kind}	placement	"the blob's held claim scope (holding_claim::check_holding_claim_scope)"
 custody:{kind}	subject_rule	{"for_key_id": "none", "kind": ["the device", "attested == attester", "evidence_refs exactly 1 blob digest"]}
 custody:{kind}	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-detection:conscience_override_rate	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-detection:conscience_override_rate	projection	{"rebuild": "byte_equal", "table": "detection_events"}
-detection:conscience_override_rate	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
 detection:correlated_action:{axis}	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 detection:correlated_action:{axis}	projection	{"rebuild": "byte_equal", "table": "detection_events"}
 detection:correlated_action:{axis}	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
-detection:cross_agent_divergence	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-detection:cross_agent_divergence	projection	{"rebuild": "byte_equal", "table": "detection_events"}
-detection:cross_agent_divergence	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
 detection:distributive:access:{resource_type}	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 detection:distributive:access:{resource_type}	projection	{"rebuild": "byte_equal", "table": "detection_events"}
 detection:distributive:access:{resource_type}	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
@@ -117,9 +97,9 @@ detection:hash_chain_integrity	erasure_route	["dsar (producer withdraws + tombst
 detection:intra_agent_consistency	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 detection:intra_agent_consistency	projection	{"rebuild": "byte_equal", "table": "detection_events"}
 detection:intra_agent_consistency	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
-detection:temporal_drift	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-detection:temporal_drift	projection	{"rebuild": "byte_equal", "table": "detection_events"}
-detection:temporal_drift	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
+detection:{detector}	lifecycle	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
+detection:{detector}	projection	{"rebuild": "byte_equal", "table": "detection_events"}
+detection:{detector}	erasure_route	["dsar (producer withdraws + tombstone)", "purge"]
 device:label	placement	"CC self_collective; not enforced"
 duty:{kind}	placement	"never wider than the referenced permission's projection"
 expertise:{domain}:{language}	projection	{"rebuild": "byte_equal", "table": "expertise_ledger"}

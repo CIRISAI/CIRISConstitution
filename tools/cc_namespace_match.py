@@ -509,6 +509,13 @@ def generate_vectors(manifest):
                 add(":".join(parts), prefix, rules.tokens["case_malformed"],
                     "a vocab segment carrying uppercase is malformed, never folded (R3)")
                 break
+        # every listed value of a closed enumeration resolves to the row, not the first alone
+        for i, seg in enumerate(fam["segments"]):
+            if seg["class"] == "vocab" and seg.get("values") and not seg.get("open", False) and not seg.get("multi"):
+                for value in seg["values"][1:]:
+                    parts = instantiate(fam, with_version=not exempt).split(":")
+                    parts[i] = value
+                    add(":".join(parts), prefix, None, "a listed value of a closed enumeration resolves to its row")
         for i, seg in enumerate(fam["segments"]):
             if seg["class"] == "vocab" and seg.get("values") and not seg.get("open", False):
                 parts = instantiate(fam, with_version=not exempt).split(":")

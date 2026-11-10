@@ -50,9 +50,11 @@
         "contribution_id": "value",
         "currency": "external",
         "days": "value",
+        "detector": "vocab",
         "domain": "vocab",
         "drill_id": "value",
         "entity_type": "vocab",
+        "factor": "vocab",
         "form": "vocab",
         "forum": "value",
         "goal_id": "value",
@@ -223,16 +225,16 @@
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 192,
+    "n_families": 184,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
       "attestation": 21,
       "cirisbench": 1,
-      "lens": 15,
-      "node": 51,
+      "lens": 9,
+      "node": 50,
       "persist": 34,
-      "registry": 21,
+      "registry": 20,
       "transport-delivery": 7
     },
     "polarity_classes": {
@@ -293,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "babceea6cdb2bbd85e44a57ba6dfb309eb640e5367f24bb0eabb54a18724ec69",
+    "registry_sha256": "099f638d02d9b43701e2181a32ebfb69bef1e81618cc4843f02c7b06373b14cb",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "aad526bad0e7114f653d982efcffa2db50bc9564ded54604f60808fc92e3b581"
+    "source_sha256": "f45fc0ded8db9c04aa21242f6aa3ee80ecd97edda1695907e638a9da68fbf244"
   },
   "families": [
     {
@@ -320,8 +322,7 @@
         "accord:invoke:drill:{drill_id}",
         "accord:invoke:notify:{notify_id}",
         "accord:lifecycle",
-        "accord:lifecycle:active",
-        "accord:lifecycle:confirmed"
+        "accord:lifecycle:{kind}"
       ],
       "leaves_closed": true,
       "owning_component": "registry",
@@ -486,11 +487,11 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Catalogue row (CC 3.1.7 R1); resumption from a constitutional halt, CC 4.2.1.3.",
+      "description": "Catalogue row (CC 3.1.7 R1); the two lifecycle rows that answer a constitutional halt: {kind} \u2208 active | confirmed \u2014 closed.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "+1.0 only",
-      "prefix": "accord:lifecycle:active",
+      "prefix": "accord:lifecycle:{kind}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.1",
@@ -506,35 +507,13 @@
           "segment": "lifecycle"
         },
         {
-          "class": "literal",
-          "segment": "active"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.1",
-      "description": "Catalogue row (CC 3.1.7 R1); a strict majority's confirmation of a one-holder constitutional halt within its fuse, CC 4.2.1.1 / CC 4.2.1.3.",
-      "owning_component": "registry",
-      "owning_repo": "CIRISRegistry",
-      "polarity": "+1.0 only",
-      "prefix": "accord:lifecycle:confirmed",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.1",
-        "rule": "accord_holder-only"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "accord"
-        },
-        {
-          "class": "literal",
-          "segment": "lifecycle"
-        },
-        {
-          "class": "literal",
-          "segment": "confirmed"
+          "class": "vocab",
+          "open": false,
+          "segment": "{kind}",
+          "values": [
+            "active",
+            "confirmed"
+          ]
         }
       ]
     },
@@ -1080,75 +1059,6 @@
       ]
     },
     {
-      "cc_section": "3.1.8.1",
-      "description": "C",
-      "owning_component": "lens",
-      "owning_repo": "CIRISLensCore",
-      "polarity": "signed",
-      "prefix": "capacity:core_identity",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.5",
-        "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "capacity"
-        },
-        {
-          "class": "literal",
-          "segment": "core_identity"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.8.1",
-      "description": "I_inc",
-      "owning_component": "lens",
-      "owning_repo": "CIRISLensCore",
-      "polarity": "signed",
-      "prefix": "capacity:incompleteness_awareness",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.5",
-        "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "capacity"
-        },
-        {
-          "class": "literal",
-          "segment": "incompleteness_awareness"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.8.1",
-      "description": "I_int",
-      "owning_component": "lens",
-      "owning_repo": "CIRISLensCore",
-      "polarity": "signed",
-      "prefix": "capacity:integrity",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.5",
-        "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "capacity"
-        },
-        {
-          "class": "literal",
-          "segment": "integrity"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.4",
       "description": "A consuming node's measurement of a relay's delivered-versus-claimed A/V throughput over a window, keyed to the relay's own SignedRelayCapacity claim (advertiser_key_id, stream_id, epoch): the envelope score is the fulfilment ratio, never a",
       "owning_component": "transport-delivery",
@@ -1173,11 +1083,11 @@
     },
     {
       "cc_section": "3.1.8.1",
-      "description": "R",
+      "description": "The five factors, one wire prefix each: {factor} \u2208 core_identity | integrity | resilience | incompleteness_awareness | sustained_coherence \u2014 closed.",
       "owning_component": "lens",
       "owning_repo": "CIRISLensCore",
       "polarity": "signed",
-      "prefix": "capacity:resilience",
+      "prefix": "capacity:{factor}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.5",
@@ -1189,31 +1099,16 @@
           "segment": "capacity"
         },
         {
-          "class": "literal",
-          "segment": "resilience"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.8.1",
-      "description": "S",
-      "owning_component": "lens",
-      "owning_repo": "CIRISLensCore",
-      "polarity": "signed",
-      "prefix": "capacity:sustained_coherence",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.5",
-        "rule": "no-self-emit (attesting_key_id != attested_key_id)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "capacity"
-        },
-        {
-          "class": "literal",
-          "segment": "sustained_coherence"
+          "class": "vocab",
+          "open": false,
+          "segment": "{factor}",
+          "values": [
+            "core_identity",
+            "integrity",
+            "resilience",
+            "incompleteness_awareness",
+            "sustained_coherence"
+          ]
         }
       ]
     },
@@ -2101,33 +1996,6 @@
     },
     {
       "cc_section": "3.1.9.6",
-      "description": "Sub-leaf for substrate-building labor (infrastructure maintenance, dependency contribution, documentation) not visible to the per-grounded-vote accrual loop.",
-      "owning_component": "node",
-      "owning_repo": "CIRISNodeCore",
-      "polarity": "positive-only",
-      "prefix": "credits:{domain}:{language}:substrate_building",
-      "reserved": false,
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "credits"
-        },
-        {
-          "class": "vocab",
-          "segment": "{domain}"
-        },
-        {
-          "class": "vocab",
-          "segment": "{language}"
-        },
-        {
-          "class": "literal",
-          "segment": "substrate_building"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.9.6",
       "description": "Commons Credits (P2).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
@@ -2301,29 +2169,6 @@
       ]
     },
     {
-      "cc_section": "3.1.8.2",
-      "description": "",
-      "owning_component": "lens",
-      "owning_repo": "CIRISLensCore",
-      "polarity": "signed",
-      "prefix": "detection:conscience_override_rate",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "detection"
-        },
-        {
-          "class": "literal",
-          "segment": "conscience_override_rate"
-        }
-      ]
-    },
-    {
       "cc_section": "3.1.8.4",
       "description": "Population-scale correlated-action detector.",
       "owning_component": "lens",
@@ -2348,29 +2193,6 @@
           "class": "vocab",
           "multi": true,
           "segment": "{axis}"
-        }
-      ]
-    },
-    {
-      "cc_section": "3.1.8.2",
-      "description": "",
-      "owning_component": "lens",
-      "owning_repo": "CIRISLensCore",
-      "polarity": "signed",
-      "prefix": "detection:cross_agent_divergence",
-      "reserved": true,
-      "reserved_rule": {
-        "cc_ref": "CC 3.4.8",
-        "rule": "detector-only (identity_type contains lenscore_detector)"
-      },
-      "segments": [
-        {
-          "class": "literal",
-          "segment": "detection"
-        },
-        {
-          "class": "literal",
-          "segment": "cross_agent_divergence"
         }
       ]
     },
@@ -2457,11 +2279,11 @@
     },
     {
       "cc_section": "3.1.8.2",
-      "description": "",
+      "description": "Three of the five detectors on one row: {detector} \u2208 cross_agent_divergence | temporal_drift | conscience_override_rate \u2014 closed.",
       "owning_component": "lens",
       "owning_repo": "CIRISLensCore",
       "polarity": "signed",
-      "prefix": "detection:temporal_drift",
+      "prefix": "detection:{detector}",
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.4.8",
@@ -2473,8 +2295,14 @@
           "segment": "detection"
         },
         {
-          "class": "literal",
-          "segment": "temporal_drift"
+          "class": "vocab",
+          "open": false,
+          "segment": "{detector}",
+          "values": [
+            "cross_agent_divergence",
+            "temporal_drift",
+            "conscience_override_rate"
+          ]
         }
       ]
     },

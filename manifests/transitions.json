@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "9b8bcbddf7854127a38a2f0a3be0c4761ff82df00a8f0f926f29205ec6f7a6d5",
+  "source_sha256": "c8a90beeb4a51f8370ee174d3edf2cd5dd598dc9091795afacba1aacfa2384a9",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,8 +45,8 @@
   },
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
-  "families": 192,
-  "transitions": 476,
+  "families": 184,
+  "transitions": 455,
   "gap_cells": 5,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -310,35 +310,7 @@
    ]
   },
   {
-   "family": "accord:lifecycle:active",
-   "kind": "Process",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "holder"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
-   "family": "accord:lifecycle:confirmed",
+   "family": "accord:lifecycle:{kind}",
    "kind": "Process",
    "transitions": [
     {
@@ -1835,231 +1807,6 @@
    ]
   },
   {
-   "family": "capacity:core_identity",
-   "kind": "Confidence",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived",
-      "conditions": [
-       "not_subject"
-      ]
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "recant",
-     "from": "admitted",
-     "to": "recanted",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "cc-table"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
-   "family": "capacity:incompleteness_awareness",
-   "kind": "Confidence",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived",
-      "conditions": [
-       "not_subject"
-      ]
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "recant",
-     "from": "admitted",
-     "to": "recanted",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "cc-table"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
-   "family": "capacity:integrity",
-   "kind": "Confidence",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived",
-      "conditions": [
-       "not_subject"
-      ]
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "recant",
-     "from": "admitted",
-     "to": "recanted",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "cc-table"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
    "family": "capacity:relay_delivery",
    "kind": "Facts",
    "transitions": [
@@ -2135,82 +1882,7 @@
    ]
   },
   {
-   "family": "capacity:resilience",
-   "kind": "Confidence",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived",
-      "conditions": [
-       "not_subject"
-      ]
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "recant",
-     "from": "admitted",
-     "to": "recanted",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "cc-table"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
-   "family": "capacity:sustained_coherence",
+   "family": "capacity:{factor}",
    "kind": "Confidence",
    "transitions": [
     {
@@ -4595,57 +4267,6 @@
    ]
   },
   {
-   "family": "credits:{domain}:{language}:substrate_building",
-   "kind": "Priorities",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "registered"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author",
-       "subject"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
    "family": "credits:{domain}:{language}:{subject}",
    "kind": "Priorities",
    "transitions": [
@@ -4957,151 +4578,7 @@
    ]
   },
   {
-   "family": "detection:conscience_override_rate",
-   "kind": "Facts",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "recant",
-     "from": "admitted",
-     "to": "recanted",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "cc-table"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
    "family": "detection:correlated_action:{axis}",
-   "kind": "Facts",
-   "transitions": [
-    {
-     "verb": "attest",
-     "from": "none",
-     "to": "admitted",
-     "roles": {
-      "value": [
-       "identity:lenscore_detector"
-      ],
-      "source": "derived"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
-     },
-     "widens": {
-      "value": true,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "withdraw",
-     "from": "admitted",
-     "to": "withdrawn",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "code-v61"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "code-v61"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    },
-    {
-     "verb": "recant",
-     "from": "admitted",
-     "to": "recanted",
-     "roles": {
-      "value": [
-       "author"
-      ],
-      "source": "cc-table"
-     },
-     "policy": {
-      "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "cc-table"
-     },
-     "widens": {
-      "value": false,
-      "source": "derived"
-     }
-    }
-   ]
-  },
-  {
-   "family": "detection:cross_agent_divergence",
    "kind": "Facts",
    "transitions": [
     {
@@ -5389,7 +4866,7 @@
    ]
   },
   {
-   "family": "detection:temporal_drift",
+   "family": "detection:{detector}",
    "kind": "Facts",
    "transitions": [
     {

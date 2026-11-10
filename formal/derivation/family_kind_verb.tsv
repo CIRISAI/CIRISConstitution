@@ -5,8 +5,7 @@ accord:invoke:constitutional:{halt_id}	registry	Structure	THING	attest	H	kill-sw
 accord:invoke:drill:{drill_id}	registry	Process	THING	attest	M	rehearsal of the halt order; +1 only	no	—
 accord:invoke:notify:{notify_id}	registry	Facts	ACCOUNT	attest	L	federation-wide communication of a stated matter; +1 only	no	—
 accord:lifecycle	registry	Process	THING	attest,replace	H	heartbeat row in the accord state machine	no	—
-accord:lifecycle:active	registry	Process	THING	attest	H	state transition: resumption from halt	no	—
-accord:lifecycle:confirmed	registry	Process	THING	attest	M	majority confirms a halt within its fuse; a step, not a rule	no	—
+accord:lifecycle:{kind}	registry	Process	THING	attest	M	active: state transition, resumption from halt; confirmed: majority confirms a halt within its fuse, a step, not a rule	no	—
 activity_tier:{period}	node	Circumstances	THING	attest,replace	H	active vs dormant per window just differs; re-issued per period	no	—
 age_assurance:{level}:{band}:{version}	attestation	Facts	ACCOUNT	attest,replace,withdraw	H	witness attests a fact about the subject's age band	no	—
 age_self_declared:band:{band}:{version}	attestation	Facts	ACCOUNT	attest,replace,withdraw,recant	M	subject's own claim of age band; can be recanted	no	—
@@ -26,12 +25,8 @@ blog:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about 
 bond_posted:{currency}	registry	Facts	ACCOUNT	attest,withdraw	M	a stake exists; forfeited on revocation	no	—
 build:registered:{target}	registry	Identity	THING	attest,replace,withdraw	M	binds a manifest hash to a build target: what it is called	no	—
 capacity:composite	lens	Confidence	ACCOUNT	attest,withdraw,recant	H	min over five factors; carries the factors as one score (derived: equals the rebuild of its projection)	no	pre:Rules
-capacity:core_identity	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	a capacity factor (C), not a naming	no	pre:Rules
-capacity:incompleteness_awareness	lens	Confidence	ACCOUNT	attest,withdraw,recant	H	epistemic humility is literally how-sure	no	pre:Rules
-capacity:integrity	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor I_int	no	pre:Rules
 capacity:relay_delivery	transport-delivery	Facts	ACCOUNT	attest,replace,withdraw	M	measured fulfilment ratio of claimed throughput	no	pre:Rules
-capacity:resilience	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor R	no	pre:Rules
-capacity:sustained_coherence	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	capacity factor S	no	pre:Rules
+capacity:{factor}	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	the five capacity factors: core_identity (C; a factor, not a naming), integrity (I_int), resilience (R), incompleteness_awareness (I_inc; epistemic humility is literally how-sure), sustained_coherence (S)	no	pre:Rules
 capacity_assurance:reversible_excluded:{domain}:{version}	attestation	Facts	ACCOUNT	attest,replace,withdraw	M	assessor attests reversible causes ruled out: clinical fact	no	—
 capacity_assurance:reversible_pending:{domain}:{version}	attestation	Process	THING	attest,replace,withdraw	M	exclusion in progress; must lapse or resolve	no	—
 capacity_assurance:{level}:{domain}:{band}:{version}	attestation	Facts	ACCOUNT	attest,replace,withdraw	M	assessor's finding of a person's decision-capacity band	no	—
@@ -60,19 +55,16 @@ consent:{kind}	accord-agent	Rules	THING	attest,replace,withdraw	H	umbrella: subj
 content_class:{class}	node	Identity	THING	attest,withdraw	M	classifies content: what it is called	no	—
 content_rating:{scheme}:{rating}	node	Rules	THING	attest,replace,withdraw	M	scheme rating gates audiences; borderline Model (scheme)	no	—
 corpus_health:n_eff_measurable	persist	Confidence	ACCOUNT	attest,withdraw	M	whether effective sample is measurable: how sure	no	—
-credits:{domain}:{language}:substrate_building	node	Priorities	ACCOUNT	attest,withdraw	M	commons credit confers standing/weight	no	—
 credits:{domain}:{language}:{subject}	node	Priorities	ACCOUNT	attest,withdraw	M	commons credit confers standing/weight	no	—
 custody:{kind}	persist	Facts	ACCOUNT	attest,withdraw	H	holder's receipt that bytes are held (kind Facts; purgeable with what it receipts)	no	—
 cw_class:{class}	node	Manner	ACCOUNT	attest,withdraw	M	content warning shapes how it is presented	no	—
 delivery:{class}	transport-delivery	Facts	ACCOUNT	attest,withdraw	M	substrate self-report of delivery outcome	no	—
 delivery_receipt:{stream_id}	transport-delivery	Facts	ACCOUNT	attest	H	subscriber receipt: delivery stays provable (kind Facts; purgeable with what it receipts)	no	—
-detection:conscience_override_rate	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading of override rate	no	—
 detection:correlated_action:{axis}	lens	Facts	ACCOUNT	attest,withdraw,recant	M	population-scale detector reading	no	—
-detection:cross_agent_divergence	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading	no	—
 detection:distributive:access:{resource_type}	lens	Facts	ACCOUNT	attest,withdraw,recant	M	resource-concentration reading	no	—
 detection:hash_chain_integrity	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector on whether the chain still proves the past (kind Facts about the record; maintains the Record relation)	yes	—
 detection:intra_agent_consistency	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading	no	—
-detection:temporal_drift	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading	no	—
+detection:{detector}	lens	Facts	ACCOUNT	attest,withdraw,recant	M	detector reading: cross_agent_divergence, temporal_drift, conscience_override_rate (the override rate)	no	—
 device:label	registry	Identity	THING	attest,replace,withdraw	H	the name a person gives a device	no	—
 dma:csdma:*	accord-agent	Model	ACCOUNT	attest,withdraw,recant	H	which decision-making algorithm judged the chain	no	—
 dma:dsdma:{domain}:*	accord-agent	Model	ACCOUNT	attest,withdraw,recant	H	domain DMA verdict	no	—

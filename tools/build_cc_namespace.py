@@ -284,7 +284,7 @@ LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
 PLACEHOLDER_CLASS = {
     "vocab": {
         "allegation_type", "artifact", "aspect", "axis", "band", "basis", "category", "class",
-        "domain", "entity_type", "form", "grounds", "job", "key", "kind", "language",
+        "detector", "domain", "entity_type", "factor", "form", "grounds", "job", "key", "kind", "language",
         "layer", "level", "network", "outcome", "period", "platform", "platform_or_target",
         "reason", "relation", "resource_type", "revision_field", "role", "scale", "scheme",
         "scope", "stage", "stance", "state", "substrate_rung", "suite", "target_kind", "tier", "version",
@@ -885,6 +885,19 @@ def main():
         "deferral:request:v1",                 # -> deferral:request
         "deferral:response:{outcome}:v1",      # -> deferral:response:{outcome}
         "observation:access_assumption:v1",    # -> observation:access_assumption
+        # Families that differed only in their final segment, folded into one row whose final
+        # segment is a closed vocabulary. Every wire string resolves as it did.
+        "accord:lifecycle:active",             # -> accord:lifecycle:{kind}
+        "accord:lifecycle:confirmed",          # -> accord:lifecycle:{kind}
+        "capacity:core_identity",              # -> capacity:{factor}
+        "capacity:incompleteness_awareness",   # -> capacity:{factor}
+        "capacity:integrity",                  # -> capacity:{factor}
+        "capacity:resilience",                 # -> capacity:{factor}
+        "capacity:sustained_coherence",        # -> capacity:{factor}
+        "detection:conscience_override_rate",  # -> detection:{detector}
+        "detection:cross_agent_divergence",    # -> detection:{detector}
+        "detection:temporal_drift",            # -> detection:{detector}
+        "credits:{domain}:{language}:substrate_building",   # -> credits:{domain}:{language}:{subject}; a {subject} value
     }
     if os.path.exists(OUT):
         try:
@@ -940,8 +953,8 @@ def main():
         print("reconciliation: leaf-granularity catalog = %d distinct prefixes." % n_families)
         print("  - dedup: agent_files joint claim counted once (CC 3.1.1 + CC 3.1.9.1).")
         print("  - the normative '83' predates later-added detector/observability families;")
-        print("    merging the 2 explicit sub-leaves (provenance:build_manifest:*:locale,")
-        print("    credits:*:substrate_building) would net -2 but does not reach 83.")
+        print("    merging the explicit sub-leaf (provenance:build_manifest:*:locale) would net -1")
+        print("    but does not reach 83.")
         print("  - honest count + discrepancy recorded in _meta.discrepancy.")
     print("wrote %s" % os.path.relpath(OUT, os.path.join(HERE, "..")))
 

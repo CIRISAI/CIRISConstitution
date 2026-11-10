@@ -35,8 +35,7 @@ This section catalogs every prefix family, organized by owning component, each u
 | `accord:invoke:notify:{notify_id}` | Catalogue row (CC 3.1.7 R1); federation-wide accord-holder communication, [CC 3.4.1](part_3_the_namespace.md). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
 | `accord:invoke:drill:{drill_id}` | Catalogue row (CC 3.1.7 R1); accord-holder exercise, [CC 3.4.1](part_3_the_namespace.md). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
 | `accord:lifecycle` | Catalogue row (CC 3.1.7 R1); the accord heartbeat, wire `accord:lifecycle:v1`, [CC 3.4.1](part_3_the_namespace.md). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
-| `accord:lifecycle:confirmed` | Catalogue row (CC 3.1.7 R1); a strict majority's confirmation of a one-holder `constitutional` halt within its fuse, [CC 4.2.1.1](part_4_composition_governance.md) / [CC 4.2.1.3](part_4_composition_governance.md). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
-| `accord:lifecycle:active` | Catalogue row (CC 3.1.7 R1); resumption from a `constitutional` halt, [CC 4.2.1.3](part_4_composition_governance.md). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
+| `accord:lifecycle:{kind}` | Catalogue row (CC 3.1.7 R1); the two lifecycle rows that answer a `constitutional` halt: `{kind}` ∈ `active` \| `confirmed` — closed. `active` is resumption from the halt, [CC 4.2.1.3](part_4_composition_governance.md). `confirmed` is a strict majority's confirmation of a one-holder halt within its fuse, [CC 4.2.1.1](part_4_composition_governance.md) / [CC 4.2.1.3](part_4_composition_governance.md). | +1.0 only | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
 | `accord:human_dignity` | Catalogue row (CC 3.1.7 R1); the accord-holder verdict on an agent's human-dignity conduct, [CC 3.4.1](part_3_the_namespace.md). | signed | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
 | `accord:*` | **Reserved** — only `identity_type=accord_holder` may emit. **Closed**: the rows above are its whole leaf set. One of several reserved families in this table alone (`ownership:*`, `trust:*`), and more at [CC 3.4](part_3_the_namespace.md); the generated registry is the count of record. What is distinctive is the *keying*: this is the one reservation held by a **closed roster slot** rather than by a role conferred on the delegation plane, so no root can confer it. The roster occupying the slot is an instance parameter per the [CC 1](part_1_foundation.md) reading rule. | see [CC 3.4.1](part_3_the_namespace.md) | **Yes — [CC 3.4.1](part_3_the_namespace.md)** |
 
@@ -443,11 +442,7 @@ The parameterized envelope fields beyond the base — `witness_relation`, `overs
 
 | Prefix | Factor | Polarity |
 |---|---|---|
-| `capacity:core_identity` | C | signed |
-| `capacity:integrity` | I_int | signed |
-| `capacity:resilience` | R | signed |
-| `capacity:incompleteness_awareness` | I_inc | signed |
-| `capacity:sustained_coherence` | S | signed |
+| `capacity:{factor}` | The five factors, one wire prefix each: `{factor}` ∈ `core_identity` \| `integrity` \| `resilience` \| `incompleteness_awareness` \| `sustained_coherence` — closed. `core_identity` is C, `integrity` is I_int, `resilience` is R, `incompleteness_awareness` is I_inc and `sustained_coherence` is S. | signed |
 | `capacity:composite` | 𝒞_CIRIS — the minimum over the five factors; anti-Goodhart unity-of-virtues | signed |
 
 **Composition rule (normative).** A composer MUST compute `capacity:composite` as `𝒞_CIRIS = min(C, I_int, R, I_inc, S)` over the five live factor scores, and MUST NOT compute it as their product. The product form is defective: the factors are polarity-`signed` over [−1, 1], so a product is **positive whenever an even number of factors are negative** — a negative core identity times a negative integrity yields a positive composite, inverting the very anti-Goodhart property the composite exists to serve. `min` is chosen because it is the strongest available anti-Goodhart form: no factor can be compensated by another, so the composite is exactly the weakest virtue and a collapse anywhere is visible everywhere. The two alternatives fail too — renormalising the factors to [0, 1] preserves the product's compensation (a high factor still buys down a low one) and additionally discards the negative half of the polarity, which is the half that carries the warning; a geometric mean over non-negatives is smoother but is a mean, and a mean is a compensation device by construction. Polarity and range are unchanged (`signed`, [−1, 1]); a factor with no live score makes the composite **undefined**, not zero, and it MUST NOT be emitted.
@@ -456,7 +451,11 @@ The parameterized envelope fields beyond the base — `witness_relation`, `overs
 
 #### 3.1.8.2 `coherence-ratchet` — Five Coherence-Ratchet detectors
 
-`detection:cross_agent_divergence` / `detection:intra_agent_consistency` / `detection:hash_chain_integrity` / `detection:temporal_drift` / `detection:conscience_override_rate`. Polarity: signed.
+| Prefix | Detector | Polarity |
+|---|---|---|
+| `detection:{detector}` | Three of the five detectors on one row: `{detector}` ∈ `cross_agent_divergence` \| `temporal_drift` \| `conscience_override_rate` — closed. | signed |
+
+`detection:intra_agent_consistency` / `detection:hash_chain_integrity`. Polarity: signed.
 
 #### 3.1.8.3 `cohort-conformity` — Cohort + conformity prefixes
 
@@ -571,8 +570,7 @@ Subsidiarity is an autonomy commitment: decisions belong at the smallest scale c
 
 | Prefix | Description | Polarity |
 |---|---|---|
-| `credits:{domain}:{language}:{subject}` | Commons Credits (P2). Non-transferable governance weight; accrues via truth-grounding loop. | positive-only |
-| `credits:{domain}:{language}:substrate_building` | Sub-leaf for substrate-building labor (infrastructure maintenance, dependency contribution, documentation) not visible to the per-grounded-vote accrual loop. | positive-only |
+| `credits:{domain}:{language}:{subject}` | Commons Credits (P2). Non-transferable governance weight; accrues via truth-grounding loop. The `{subject}` value `substrate_building` is substrate-building labor (infrastructure maintenance, dependency contribution, documentation) not visible to the per-grounded-vote accrual loop. | positive-only |
 | `expertise:{domain}:{language}` | Expertise standing (P3). Broader granularity than credits. | signed |
 | `activity_tier:{period}` | Active vs Below-Active per 30-day window. | boolean-via-score |
 
@@ -1808,8 +1806,7 @@ Reserved leaves:
 | `accord:invoke:notify:{notify_id}` | +1.0 only | One accord holder's signed row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); UI MUST distinguish from `constitutional` ([CC 4.2.1.2](part_4_composition_governance.md#4.2.1.2)) |
 | `accord:invoke:drill:{drill_id}` | +1.0 only | One accord holder's signed row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)) — a drill rehearses the fire path, so it needs no more signatures than the fire |
 | `accord:lifecycle` | +1.0 only | **The accord heartbeat** — wire `accord:lifecycle:v1`, frozen and genesis-signed; accord-holder self-attestation about the accord; `valid_until` refreshes on a cadence ≤ 90 days |
-| `accord:lifecycle:active` | +1.0 only | **Resumption** from a `constitutional` halt — the [CC 4.2.1.3](part_4_composition_governance.md) invocation kind, its own signed domain; a majority of the standing roster lifts ([CC 4.2.6](part_4_composition_governance.md#4.2.6)) |
-| `accord:lifecycle:confirmed` | +1.0 only | **Confirmation** of a one-holder `constitutional` halt within its fuse — a strict majority of the standing roster, one cosigned row naming the halt ([CC 4.2.1.3](part_4_composition_governance.md)); reserved as the others |
+| `accord:lifecycle:{kind}` | +1.0 only | `active` is **resumption** from a `constitutional` halt — the [CC 4.2.1.3](part_4_composition_governance.md) invocation kind, its own signed domain; a majority of the standing roster lifts ([CC 4.2.6](part_4_composition_governance.md#4.2.6)). `confirmed` is **confirmation** of a one-holder `constitutional` halt within its fuse — a strict majority of the standing roster, one cosigned row naming the halt ([CC 4.2.1.3](part_4_composition_governance.md)); reserved as the others |
 | `accord:human_dignity` | signed | The accord-holder verdict on an agent's human-dignity conduct, carried as `accord:human_dignity:v1` (`attested_key_id` = the agent scored); registered so the closed leaf set refuses nothing the substrate admits |
 
 **`accord:lifecycle` (wire `accord:lifecycle:v1`) is the accord heartbeat, not a state machine — and `accord:lifecycle:active` is the resumption kind, a different row.** The heartbeat token is frozen; its prose name is the accord **heartbeat / drill witness**. Its refresh cadence is a **freshness-windowed signal**, banded per the [CC 3.2](part_3_the_namespace.md) T4 liveness rule (0–90 green · 90–180 yellow · 180+ red) and reported on the trust surface. A lapsed refresh MUST NOT be ANDed into the validity of a root, a key, or a conferral, and a consumer MUST NOT read a stale `accord:lifecycle` heartbeat as a revocation: revocation rides the tombstone, `withdraws`/`recants`, supersession, or the halt latch, and nothing else.
