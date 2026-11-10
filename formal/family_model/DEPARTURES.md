@@ -77,6 +77,20 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 | lifecycle | `revocation:{entity_type}:{reason}`, `moderation:{allegation_type}`, `hard_case:{kind}`, `slashing:{outcome}`, `moderation_track_record:{community_key_id}` |
 | erasure_route | `revocation:{entity_type}:{reason}`, `key:revocation`, `moderation:{allegation_type}`, `moderation_track_record:{community_key_id}`, `slashing:{outcome}`, `hard_case:{kind}` |
 
+## A moderator's track record is not the moderator's to remove
+
+**When.** The row is a participant's moderation record in a community, signed by another party.
+
+**Why.** The record is a verdict about the party it names. If that party could withdraw the rows that count against it, the record would hold only what its subject let stand. Its signer may withdraw it; the subject contests it by reconsideration.
+
+**Text.** CC 2.4.1.1: "the anti-Goodhart dual admits no subject-side removal of an adverse row"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the text. The pinned build admits the subject's withdrawal: its list of barred families matches by prefix, and this family's name does not begin with a listed one.
+
+| column | families |
+|---|---|
+| lifecycle | `moderation_track_record:{community_key_id}` |
+
 ## A revocation is never taken back
 
 **When.** The row revokes a key or a device's standing under an identity.
@@ -124,6 +138,18 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 | column | families |
 |---|---|
 | projection | `key:record`, `key:revocation`, `identity:occurrence`, `credits:{domain}:{language}:{subject}`, `detection:correlated_action:{axis}`, `detection:distributive:access:{resource_type}`, `detection:hash_chain_integrity`, `detection:intra_agent_consistency`, `detection:{detector}`, `expertise:{domain}:{language}`, `goal:{scale}`, `group:roster`, `hard_case:{kind}`, `membership:{stage}` |
+
+## The family's table follows from its rows and the build cannot rebuild it
+
+**When.** A fold reads the family's rows through a table of its own, the table's contents follow from the rows, and the pinned build has no function that rebuilds it from them.
+
+**Why.** The table is derived state and no authority over the rows. With no rebuild the store cannot prove the table against the rows, so a fault in it shows only by its effects.
+
+**Basis.** A fact of the store; no rule turns on it.
+
+| column | families |
+|---|---|
+| projection | `consent:replication:{version}`, `key_grant:{axis}` |
 
 ## An accord's row names the accord it belongs to
 
@@ -358,6 +384,20 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 | placement | `membership:{stage}` |
 | subject_rule | `membership:{stage}` |
 
+## A room's door runs a row of the policy table
+
+**When.** The row proposes to add or remove a member of a room, or is a moderation act in one.
+
+**Why.** One voice must neither admit nor exclude, and an absent moderator must not stall a room. The table gives each door its numbers, so every node reaches the same answer from the same rows.
+
+**Text.** CC 4.5.13: "Every door that opens a window runs one decision shape"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the build. The pinned build admits these acts under the room's own protocol and does not read the table's rows for them. The register carries the rule as staged.
+
+| column | families |
+|---|---|
+| governance | `membership:{stage}`, `moderation:{allegation_type}` |
+
 ## A roster is never listed outside its group
 
 **When.** The row is a version of a family's or a community's roster.
@@ -369,6 +409,20 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 | column | families |
 |---|---|
 | placement | `group:roster` |
+
+## A group's roster and membership acts go to the group and no further
+
+**When.** The row is a version of a group's roster, or an act that proposes, answers or lands a change to it.
+
+**Why.** Who is in a group is the members' to know. The rows go to the members' nodes, to a live invitee and to the member an act names. The trust root is the one exception: every node that roots in it must read its roster, so that roster is public.
+
+**Text.** CC 3.2: "nothing is pushed to a node whose owner has not joined"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the build. The pinned build sends these rows to every node when the group is public. For the trust root that is the text's rule. For a room anyone may join it is not, and the register carries that rule as staged.
+
+| column | families |
+|---|---|
+| replication | `group:roster`, `membership:{stage}` |
 
 ## A person's own devices are added and removed under a stated policy
 
@@ -497,22 +551,15 @@ Cells that leave the default with no reason yet, each with the question that wou
 
 | family | column | question |
 |---|---|---|
-| `consent:replication:{version}` | projection | Does the table rebuild from the rows, or does it hold state the rows do not? |
-| `key_grant:{axis}` | projection | Does the table rebuild from the rows, or does it hold state the rows do not? |
-| `slashing:{outcome}` | projection | Does the table rebuild from the rows, or does it hold state the rows do not? |
-| `trace:{form}:{version}` | projection | Does the table rebuild from the rows, or does it hold state the rows do not? |
-| `identity:occurrence_revocation` | projection | Does the table rebuild from the rows, or does it hold state the rows do not? |
-| `group:roster` | replication | The cell sends a public group's roster to everyone. The text says a roster is never listed outside its group, a public room's included. Which holds? |
-| `membership:{stage}` | replication | The cell sends a public group's membership rows to everyone. The text says nothing is pushed to a node whose owner has not joined. Which holds? |
-| `membership:{stage}` | governance | The policy table holds a row for inviting a member and a row for removing one, and the cell says they are not read. Is membership bound by those rows? |
-| `moderation:{allegation_type}` | governance | The policy table holds a row for a moderation act, and the cell says it is not read. Is a moderation act bound by that row? |
+| `trace:{form}:{version}` | projection | The trace tables hold the originator's envelope before scrubbing and columns added on receipt, which no row carries. Which words say what a node keeps of a trace beyond its row? |
+| `identity:occurrence_revocation` | projection | The legacy table holds revocations of a person's own occurrences made by one key, with no row behind them, where the text lands such a removal by the roster's majority or its window. Does any gate read those entries? |
 | `ownership:{relation}:{target_kind}:{version}` | placement | The cell says an affiliation named on a binding must admit the owner. The text says such a binding is cosigned under the affiliation's protocol. Is that one rule, and is it a rule of placement or of cosigning? |
 | `consent:state:{stance}` | subject_rule | The text says a consent row also carries the recipient field, and that a row with a recipient is held by two nodes and no other. Is a consent row addressed in that sense, or does it only name the node it is for? |
 | `consent:replication:{version}` | subject_rule | The text names the peer as the row's subject and gives the grant no recipient field. What does the recipient on a replication grant name? |
-| `consent:replication:{version}` | replication | The cell sends a grant to the parties it names and no further. The text calls the grant a public record at federation scope and bars it from the local tier. Which holds? |
+| `consent:replication:{version}` | replication | The pinned build admits a self-scoped grant at the local tier and sends a grant to the parties it names and no further. The text calls the grant a public record at federation scope and bars it from the local tier, and a public grant that names an unannounced node would list that node. Which holds? |
 | `key_grant:{axis}` | replication | The text sends a wrap to its recipient by the common audience rule. Which words bar it from the local tier, and why is a wrap whose key is not yet held refused when other rows wait? |
 | `quarantine:{state}` | lifecycle | The text gives one rule: at the same instant a withholding beats a release. Does the read apply that tie rule, and is a later release replacing a withholding the default order or a rule of this family? |
 | `trust:{job}:{version}` | subject_rule | The term and the cycle check are rules on every delegation, and the text takes an acceptance edge out of the cycle check. Which part of the cell is the trust family's own rule about the party a row names? |
 | `duty:{kind}` | placement | No words found say a duty may sit no wider than the permission it attaches to. Does the text state that bound? |
-| `trace:{form}:{version}` | erasure_route | The text says traces captured under a live grant stand when the grant ends. On what request is a trace removed, and is that the common rule for a row about a subject or a route of its own? |
+| `trace:{form}:{version}` | erasure_route | The pinned build deletes an agent's traces on the host's request with no check of its own, and with the key included it deletes rows other parties signed about that key. The text gives erasure no node-local basis and puts the accountability record beyond anyone's purge. Which request removes a trace, and what may the deletion reach? |
 

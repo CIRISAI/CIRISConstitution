@@ -69,7 +69,7 @@ consent:community_trust	freshness	standing_at_signing	{"W": 259200, "judged_at":
 consent:replication:{version}	subject_rule	open	{"for_key_id": ["recipient (the node granted for; s2 adds a relay arm)", "subjects: the peers"]}
 consent:replication:{version}	freshness	standing_at_signing	{"W": "W on the owner's standing (check_roster_act_fresh / outside_past_freshness_window)", "judged_at": "signed_instant_with_W"}
 consent:replication:{version}	replication	open	{"audience": "cohort_plus_subjects(full) refers-to only", "held": "settle_on_key", "non_recipient": null, "tier": ["local", "federation"]}
-consent:replication:{version}	projection	open	{"rebuild": "none", "table": "consent_peer_set"}
+consent:replication:{version}	projection	derived_no_rebuild	{"rebuild": "none", "table": "consent_peer_set"}
 consent:state:{stance}	subject_rule	open	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
 consent:state:{stance}	freshness	standing_at_signing	{"W": "W on the owner's standing", "judged_at": "signed_instant_with_W"}
 content_class:{class}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "withdrawal clears only its emitter's flag (read)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
@@ -109,7 +109,7 @@ goal:{scale}	projection	typed_view	{"rebuild": "byte_equal", "table": "goals"}
 group:roster	placement	roster_in_group	["targeted_family", "targeted_room (cohort_scope family|community + group_kind)"]
 group:roster	cosign_rule	quorum	"group_consensus_protocol (count_distinct_roster_scrubs over base + additional_scrubs[])"
 group:roster	lifecycle	quorum	{"expires": "expires_at honoured", "retraction_class": "cosigned", "rotation_on_removal": "yes", "supersedes": "typed record supersede only", "withdraws_by": "{cosigned}"}
-group:roster	replication	open	{"audience": "may_receive_group_plane", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
+group:roster	replication	group_plane	{"audience": "may_receive_group_plane", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 group:roster	projection	typed_view	{"rebuild": "byte_equal", "table": ["federation_families", "federation_communities"]}
 hard_case:{kind}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 hard_case:{kind}	projection	typed_view	{"rebuild": "byte_equal", "table": "hard_case_events"}
@@ -142,7 +142,7 @@ key_grant:{axis}	subject_rule	key_wrap	{"for_key_id": "none", "kind": ["attested
 key_grant:{axis}	freshness	standing_at_signing	{"W": "W: past W the sealer must also stand at receipt (asserted_at_stale)", "judged_at": "signed_instant_with_W"}
 key_grant:{axis}	lifecycle	shared_stays_shared	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "yes", "supersedes": "same_attester", "withdraws_by": "{}"}
 key_grant:{axis}	replication	open	{"audience": "addressee", "held": "refuse", "non_recipient": null, "tier": "federation"}
-key_grant:{axis}	projection	open	{"rebuild": "none", "table": "federation_key_grant_pending"}
+key_grant:{axis}	projection	derived_no_rebuild	{"rebuild": "none", "table": "federation_key_grant_pending"}
 lawful_order:release	placement	unbuilt	"none (held shut: never stored)"
 lawful_order:release	subject_rule	unbuilt	"none (held shut)"
 lawful_order:release	lifecycle	unbuilt	"none (held shut)"
@@ -158,14 +158,14 @@ membership:{stage}	placement	two_consents	["targeted_family", "targeted_room (at
 membership:{stage}	subject_rule	two_consents	{"proposal": "cardinality exactly 1 invitee (0 for a standing offer in an open public room), expires_at <= 30 d", "reply": "attested = invitee"}
 membership:{stage}	cosign_rule	quorum	{"proposal/reply/resignation": "none", "widening/removal": "group_consensus_protocol"}
 membership:{stage}	lifecycle	quorum	{"expires": "expires_at honoured", "retraction_class": "cosigned", "rotation_on_removal": "yes", "supersedes": "typed record supersede only", "withdraws_by": "{cosigned}"}
-membership:{stage}	replication	open	{"audience": "may_receive_group_plane", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
+membership:{stage}	replication	group_plane	{"audience": "may_receive_group_plane", "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
 membership:{stage}	projection	typed_view	{"rebuild": "byte_equal", "table": "federation_{family,community}_membership_{widenings,revocations}"}
-membership:{stage}	governance	open	"none (community_invite / community_remove rows vendored, not read)"
+membership:{stage}	governance	room_door_policy	"none (community_invite / community_remove rows vendored, not read)"
 mesh_config:{key}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "read-time clamp (fold_mesh_config)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 moderation:{allegation_type}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 moderation:{allegation_type}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
-moderation:{allegation_type}	governance	open	"none (moderation_action mirror row vendored, not read)"
-moderation_track_record:{community_key_id}	lifecycle	accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+moderation:{allegation_type}	governance	room_door_policy	"none (moderation_action mirror row vendored, not read)"
+moderation_track_record:{community_key_id}	lifecycle	accountability; adverse_track_record	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 moderation_track_record:{community_key_id}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
 objection:{state}	cosign_rule	quorum	"reverse quorum (1-of-N protect, m-of-n undo) counted by count_distinct_roster_scrubs"
 objection:{state}	governance	own_devices_policy	"policy_row: self_roster_add, self_roster_evict (governance_policy.rs:407)"
@@ -199,7 +199,6 @@ revocation:{entity_type}:{reason}	erasure_route	accountability	"none (accountabi
 session:{kind}	subject_rule	own_record	{"kind": ["occurrence", "attested == attester"]}
 session:{kind}	lifecycle	earliest_claim	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "earliest claimed_at wins (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 slashing:{outcome}	lifecycle	adverse; accountability	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-slashing:{outcome}	projection	open	{"rebuild": "none", "table": "cirisnode slashing table"}
 slashing:{outcome}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
 takedown_notice:{basis}	subject_rule	notice_shape	"content_sha256 + legal_basis from the notice shape"
 takedown_notice:{basis}	cosign_rule	quorum	"legal bases: none; steward_purge: GAP (CC trust root's consensus_protocol; held shut)"

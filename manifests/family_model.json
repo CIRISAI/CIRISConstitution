@@ -301,8 +301,8 @@
    "families_by_departures": {
     "0": 106,
     "1": 33,
-    "2": 11,
-    "3": 17,
+    "2": 12,
+    "3": 16,
     "4": 2,
     "5": 4,
     "6": 7,
@@ -362,6 +362,16 @@
      "cells": 11
     },
     {
+     "id": "adverse_track_record",
+     "title": "A moderator's track record is not the moderator's to remove",
+     "when": "The row is a participant's moderation record in a community, signed by another party.",
+     "why": "The record is a verdict about the party it names. If that party could withdraw the rows that count against it, the record would hold only what its subject let stand. Its signer may withdraw it; the subject contests it by reconsideration.",
+     "basis": "text",
+     "cc_ref": "CC 2.4.1.1",
+     "quote": "the anti-Goodhart dual admits no subject-side removal of an adverse row",
+     "cells": 1
+    },
+    {
      "id": "revocation_stands",
      "title": "A revocation is never taken back",
      "when": "The row revokes a key or a device's standing under an identity.",
@@ -398,6 +408,14 @@
      "why": "The table is derived state: it is rebuilt from the rows and is never an authority over them.",
      "basis": "build",
      "cells": 14
+    },
+    {
+     "id": "derived_no_rebuild",
+     "title": "The family's table follows from its rows and the build cannot rebuild it",
+     "when": "A fold reads the family's rows through a table of its own, the table's contents follow from the rows, and the pinned build has no function that rebuilds it from them.",
+     "why": "The table is derived state and no authority over the rows. With no rebuild the store cannot prove the table against the rows, so a fault in it shows only by its effects.",
+     "basis": "build",
+     "cells": 2
     },
     {
      "id": "accord_named",
@@ -580,6 +598,16 @@
      "cells": 2
     },
     {
+     "id": "room_door_policy",
+     "title": "A room's door runs a row of the policy table",
+     "when": "The row proposes to add or remove a member of a room, or is a moderation act in one.",
+     "why": "One voice must neither admit nor exclude, and an absent moderator must not stall a room. The table gives each door its numbers, so every node reaches the same answer from the same rows.",
+     "basis": "text",
+     "cc_ref": "CC 4.5.13",
+     "quote": "Every door that opens a window runs one decision shape",
+     "cells": 2
+    },
+    {
      "id": "roster_in_group",
      "title": "A roster is never listed outside its group",
      "when": "The row is a version of a family's or a community's roster.",
@@ -588,6 +616,16 @@
      "cc_ref": "CC 3.2",
      "quote": "a roster is never enumerable outside its cohort, a public room's included",
      "cells": 1
+    },
+    {
+     "id": "group_plane",
+     "title": "A group's roster and membership acts go to the group and no further",
+     "when": "The row is a version of a group's roster, or an act that proposes, answers or lands a change to it.",
+     "why": "Who is in a group is the members' to know. The rows go to the members' nodes, to a live invitee and to the member an act names. The trust root is the one exception: every node that roots in it must read its roster, so that roster is public.",
+     "basis": "text",
+     "cc_ref": "CC 3.2",
+     "quote": "nothing is pushed to a node whose owner has not joined",
+     "cells": 2
     },
     {
      "id": "own_devices_policy",
@@ -690,49 +728,14 @@
    ],
    "open": [
     {
-     "family": "consent:replication:{version}",
-     "column": "projection",
-     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
-    },
-    {
-     "family": "key_grant:{axis}",
-     "column": "projection",
-     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
-    },
-    {
-     "family": "slashing:{outcome}",
-     "column": "projection",
-     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
-    },
-    {
      "family": "trace:{form}:{version}",
      "column": "projection",
-     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
+     "question": "The trace tables hold the originator's envelope before scrubbing and columns added on receipt, which no row carries. Which words say what a node keeps of a trace beyond its row?"
     },
     {
      "family": "identity:occurrence_revocation",
      "column": "projection",
-     "question": "Does the table rebuild from the rows, or does it hold state the rows do not?"
-    },
-    {
-     "family": "group:roster",
-     "column": "replication",
-     "question": "The cell sends a public group's roster to everyone. The text says a roster is never listed outside its group, a public room's included. Which holds?"
-    },
-    {
-     "family": "membership:{stage}",
-     "column": "replication",
-     "question": "The cell sends a public group's membership rows to everyone. The text says nothing is pushed to a node whose owner has not joined. Which holds?"
-    },
-    {
-     "family": "membership:{stage}",
-     "column": "governance",
-     "question": "The policy table holds a row for inviting a member and a row for removing one, and the cell says they are not read. Is membership bound by those rows?"
-    },
-    {
-     "family": "moderation:{allegation_type}",
-     "column": "governance",
-     "question": "The policy table holds a row for a moderation act, and the cell says it is not read. Is a moderation act bound by that row?"
+     "question": "The legacy table holds revocations of a person's own occurrences made by one key, with no row behind them, where the text lands such a removal by the roster's majority or its window. Does any gate read those entries?"
     },
     {
      "family": "ownership:{relation}:{target_kind}:{version}",
@@ -752,7 +755,7 @@
     {
      "family": "consent:replication:{version}",
      "column": "replication",
-     "question": "The cell sends a grant to the parties it names and no further. The text calls the grant a public record at federation scope and bars it from the local tier. Which holds?"
+     "question": "The pinned build admits a self-scoped grant at the local tier and sends a grant to the parties it names and no further. The text calls the grant a public record at federation scope and bars it from the local tier, and a public grant that names an unannounced node would list that node. Which holds?"
     },
     {
      "family": "key_grant:{axis}",
@@ -777,7 +780,7 @@
     {
      "family": "trace:{form}:{version}",
      "column": "erasure_route",
-     "question": "The text says traces captured under a live grant stand when the grant ends. On what request is a trace removed, and is that the common rule for a row about a subject or a route of its own?"
+     "question": "The pinned build deletes an agent's traces on the host's request with no check of its own, and with the key included it deletes rows other parties signed about that key. The text gives erasure no node-local basis and puts the accountability record beyond anyone's purge. Which request removes a trace, and what may the deletion reach?"
     }
    ],
    "reading": "every departing cell names in because the reasons that move it, or open; a departure with no reason fails the build, and so does a reason whose cell sits on the default"
@@ -17636,7 +17639,9 @@
      "standing_at_signing"
     ],
     "replication": "open",
-    "projection": "open"
+    "projection": [
+     "derived_no_rebuild"
+    ]
    }
   },
   {
@@ -28999,7 +29004,9 @@
     "lifecycle": [
      "quorum"
     ],
-    "replication": "open",
+    "replication": [
+     "group_plane"
+    ],
     "projection": [
      "typed_view"
     ]
@@ -33575,7 +33582,9 @@
      "shared_stays_shared"
     ],
     "replication": "open",
-    "projection": "open"
+    "projection": [
+     "derived_no_rebuild"
+    ]
    }
   },
   {
@@ -36178,11 +36187,15 @@
     "lifecycle": [
      "quorum"
     ],
-    "replication": "open",
+    "replication": [
+     "group_plane"
+    ],
     "projection": [
      "typed_view"
     ],
-    "governance": "open"
+    "governance": [
+     "room_door_policy"
+    ]
    }
   },
   {
@@ -37367,7 +37380,9 @@
     "erasure_route": [
      "accountability"
     ],
-    "governance": "open"
+    "governance": [
+     "room_door_policy"
+    ]
    }
   },
   {
@@ -37473,7 +37488,7 @@
    },
    "lifecycle": {
     "value": {
-     "withdraws_by": "{attester, subject}",
+     "withdraws_by": "{attester}",
      "retraction_class": "duty_record",
      "supersedes": "same_attester",
      "expires": "expires_at honoured",
@@ -37482,9 +37497,9 @@
     "source": "code-v61",
     "parts": {
      "withdraws_by": {
-      "value": "{attester, subject}",
+      "value": "{attester}",
       "source": "code-v61",
-      "note": "{attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary)"
+      "note": "{attester} (+ producer's owner; CC 2.4.1.1; not enforced: the pinned release admits the subject, its list of barred families matching by prefix)"
      },
      "retraction_class": {
       "value": "duty_record",
@@ -37658,7 +37673,8 @@
    ],
    "because": {
     "lifecycle": [
-     "accountability"
+     "accountability",
+     "adverse_track_record"
     ],
     "erasure_route": [
      "accountability"
@@ -47914,18 +47930,18 @@
    },
    "projection": {
     "value": {
-     "table": "cirisnode slashing table",
-     "rebuild": "none"
+     "table": "federation_attestations",
+     "rebuild": "n/a"
     },
     "source": "code-v61",
     "parts": {
      "table": {
-      "value": "cirisnode slashing table",
+      "value": "federation_attestations",
       "source": "code-v61",
-      "note": "cirisnode slashing table (feature cirisnode)"
+      "note": "federation_attestations (the row itself)"
      },
      "rebuild": {
-      "value": "none",
+      "value": "n/a",
       "source": "code-v61"
      }
     }
@@ -48012,7 +48028,6 @@
    },
    "departs": [
     "lifecycle",
-    "projection",
     "erasure_route"
    ],
    "because": {
@@ -48020,7 +48035,6 @@
      "adverse",
      "accountability"
     ],
-    "projection": "open",
     "erasure_route": [
      "accountability"
     ]

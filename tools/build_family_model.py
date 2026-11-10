@@ -271,6 +271,12 @@ def departure_reasons(rows, default):
         if rs.get("basis") not in BASES: errs.append(f"{rid}: basis is one of {', '.join(BASES)}")
         if "enforced" in rs and (rs["enforced"] is not False or rs.get("basis") != "text"):
             errs.append(f"{rid}: enforced is stated only as false, and only where the text gives the rule")
+        if ("cell" in rs or "build_note" in rs) and rs.get("enforced") is not False:
+            errs.append(f"{rid}: cell and build_note describe a rule the build does not enforce; state enforced false or remove them")
+        if "cell" in rs and rs["cell"] != "build":
+            errs.append(f"{rid}: cell is stated only as build, where the cell records the build and not the text")
+        if rs.get("cell") == "build" and rs.get("value"):
+            errs.append(f"{rid}: a reason whose cell records the build fixes no value")
         if rs.get("basis") == "text":
             span = section_span(rs.get("cc_ref"))
             if span is None: errs.append(f"{rid}: {rs.get('cc_ref')} is not a section of the Constitution")
@@ -332,7 +338,9 @@ def reasons_md(spec, claims, opens, rows, default):
         out += [f"## {rs['title']}", "", f"**When.** {rs['when']}", "", f"**Why.** {rs['why']}", ""]
         if rs["basis"] == "text":
             out += [f"**Text.** {rs['cc_ref']}: \"{rs['quote']}\"", ""]
-            if rs.get("enforced") is False: out += ["**Build.** The text states this and the pinned build does not enforce it; the cell records the text.", ""]
+            if rs.get("enforced") is False:
+                out += ["**Build.** The text states this and the pinned build does not enforce it; the cell records the "
+                        + ("build" if rs.get("cell") == "build" else "text") + "." + (" " + rs["build_note"] if rs.get("build_note") else ""), ""]
         else: out += [f"**Basis.** {'The family is not built; the census read nothing.' if rs['basis'] == 'census' else 'A fact of the store; no rule turns on it.'}", ""]
         out += ["| column | families |", "|---|---|"]
         out += [f"| {c} | {', '.join('`' + f + '`' for f in fs)} |" for c, fs in fams.get(rid, {}).items()]

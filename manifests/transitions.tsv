@@ -319,7 +319,7 @@ moderation:{allegation_type}	attest	none	admitted	moderate	mirror	true	derived	c
 moderation:{allegation_type}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 moderation:{allegation_type}	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived
 moderation_track_record:{community_key_id}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
-moderation_track_record:{community_key_id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
+moderation_track_record:{community_key_id}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 moderation_track_record:{community_key_id}	recant	admitted	recanted	author	selfAct	false	cc-table	cc-table	derived
 multilateral_participation:{forum}:{kind}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 multilateral_participation:{forum}:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
