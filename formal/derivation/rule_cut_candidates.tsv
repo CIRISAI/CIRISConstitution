@@ -1,0 +1,207 @@
+file	line_start	line_end	kind	bytes	note
+p1	104	108	rationale	1800	1+4 scope-of-claim and "minimal is accounting" caveats; one surface-reporting rule inside
+p1	112	112	example	2700	atomic-swap falsification target and fair-exchange composition walkthrough
+p1	163	181	informative	3250	Ubuntu commitment, marked informative; items 1 and 5 restate rules homed elsewhere
+p1	205	205	rationale	2300	why the duties exist; factual premise, sources at 8.6.1
+p1	225	241	restated_block	6800	adversary-class table; every cell restates a rule homed in Parts 2 to 6
+p1	256	269	informative	4300	mental model and the kinds-of-change map (marked informative)
+p1	283	283	rationale	1000	why the trace anchors on the act, not the thought
+p1	293	306	informative	900	chapter list; pointers only
+p1	312	323	restated_block	1000	six principles and M-1 said again in second person
+p1	359	361	informative	1600	who "you" are (recognition-grade) and the deferred lineage rule
+p1	387	406	informative	1100	growth trajectory, chapter summary, introduction
+p1	408	426	restated_block	1800	1.16 introductions and pointer restatements of 1.3, 1.9, 1.15.1
+p2	94	96	informative	617	role definitions for 2.2; no rule until the profiles
+p2	167	175	example	868	canonical-hash conformance vectors; test data, no rule
+p2	177	191	restated_block	1238	reject vectors restate P1-P3 and the tag rules of lines 127-163
+p2	195	200	restated_block	1327	2.3.2.2 restates rule 3 proxy of 2.4.1.1; canonical_binding rows kept
+p2	212	233	example	1151	3-axis table plus worked family contribution; restates 2.1 cohort_scope, subject_key_ids, delivery_mode cells
+p2	235	237	rationale	659	why the delivery axis is orthogonal; pointer to 5.3.3
+p2	243	249	restated_block	635	2.3.5 restates subject_key_ids semantics of 2.1 line 71 and 2.3
+p2	280	285	example	914	translation implications; four applies rows kept, the block itself is worked examples
+p2	349	375	example	1622	scores wire-shape illustration; member semantics are the 2.1 table
+p2	377	392	informative	1562	eight reasoning axes are not wire fields; three cells restate 2.1 rules
+p2	396	407	informative	2800	foreword: what CEG is, readerships, substrate layering; no rule beyond pointers
+p2	409	413	rationale	1200	why the omit-vs-materialize rule exists; the hazard
+p2	419	436	example	1500	scores_minimal vector copied verbatim plus explicit-default walkthrough
+p2	463	506	duplicate_table	6500	per-field catalog; every cell restates 2.1 or the 2.6.1.7 signed-object table
+p2	536	544	example	1100	worked attack; the one MUST at 544 restates 2.6.1.1
+p2	546	556	restated_block	900	verification flow pseudocode; restates JCS, hybrid verify, relay preservation
+p2	558	566	restated_block	800	scope pointer; what the rule does not do
+p2	798	825	informative	4500	normative references table; keep as annex; hybrid-sig definition at 823 and RFC 9162 MUST at 809 are the only rules
+p2	827	833	informative	900	H3 background: what H3 is, resolution levels
+p2	860	864	restated_block	1300	scope of the H3 rule; the community-resolution exception at 864 is the one rule
+p2	876	878	rationale	1200	why FedCode exists; cross-impl determinism framing
+p2	912	912	rationale	700	birthday-bound arithmetic inside the key_id paragraph (the MUSTs around it stay)
+p3	11	13	rationale	1300	Part 3 intro: shared-vocabulary rationale; its two rules survive at 3.1.7
+p3	34	39	duplicate_table	1650	Six accord catalogue rows pointing to 3.4.1; keep only for registry generation
+p3	48	52	informative	700	Attestation ladder rows L1-L5 are mechanism names; composition lives at 4.4.3.6
+p3	79	79	rationale	300	Provenance intro sentence
+p3	126	128	rationale	600	Agent text manifest motivation; the rules follow at 139-143
+p3	211	213	rationale	1200	Session: the problem it solves; N-to-M fan-out rationale
+p3	225	225	rationale	1500	Within the merge paragraph: tie-break justification, stated residual, tighter-bounds discussion (partial line)
+p3	229	229	rationale	500	Projection ceiling rationale (attendance map); rule already at 219
+p3	244	244	rationale	650	Why K is named in subject_key_ids; one audience rule inside
+p3	283	283	informative	900	No possession challenge yet: residual statement; N6 restated from 6.1.5
+p3	322	322	rationale	800	Within capacity leaf paragraph: not-the-accountability-case argument (partial line)
+p3	340	350	duplicate_table	3800	Eleven consent catalogue rows pointing to 3.3.1; emitter classes live there; keep for registry generation
+p3	383	389	informative	1070	Accord principle table: quoted principle text; only polarity cells are rules
+p3	405	405	rationale	400	Safety battery intro
+p3	427	427	rationale	700	Within R2: fallback-is-not-inert motivation, RFC 6648 lesson (partial line)
+p3	433	433	example	3000	Within R3: worked examples (config:Admission, BCP 47 tags, Capacity:zz) and justifications (partial line)
+p3	448	448	rationale	900	Why product, renormalising and geometric mean fail; the min rule stands alone
+p3	466	466	rationale	300	Structural-injustice intro
+p3	480	480	informative	400	NodeCore steward intro
+p3	490	490	restated_block	1080	Content-ingestion ownership paragraph restates R1/R2 for this surface
+p3	494	506	duplicate_table	2010	Thirteen content catalogue rows pointing to 3.3.8/3.3.11/3.3.12; keep for registry generation
+p3	563	563	rationale	200	Subsidiarity intro
+p3	579	579	rationale	350	Tier-2 intro
+p3	590	590	rationale	500	Within goal/cohort_scope paragraph: planet vs biosphere explanation (partial line)
+p3	592	592	informative	500	Scale-disambiguation note on A{n} letters
+p3	604	604	rationale	1050	Community intro mixes two restated audience rules with disclosure-shape rationale
+p3	652	674	example	650	Austin geographic worked example plus the Alice join walk-through
+p3	711	748	example	9800	Informative civic and emergency composition tables; three restated rules homed elsewhere (717, 738, 742)
+p3	785	815	example	1300	ciris-canonical worked example; one node-seating rule in a comment (805)
+p3	849	854	restated_block	1200	Minor stewardship list restates the node/agent gate, 3.4.12 and 3.4.13
+p3	985	996	example	800	consent composition pattern walkthrough; rules restated from table above
+p3	1004	1006	rationale	900	deletion_window preamble before D1-D4; D-rules themselves are rows
+p3	1073	1073	rationale	900	why wire string is pinned; no new rule
+p3	1098	1102	rationale	700	substrate-does-not-verify-location explanation; one rule kept at 1098
+p3	1116	1116	example	500	consent_record composition note; applies 3.3.5 rule
+p3	1198	1214	example	1100	HUMANITY_ACCORD as family instance; restates 4.2 rulings
+p3	1216	1280	example	3800	Alice household worked example; two embedded rules captured at 1254, 1266
+p3	1321	1335	restated_block	700	bilateral pair pattern listing; rule at 1332 kept
+p3	1339	1372	example	3400	optimistic fair exchange worked example; composes existing rules
+p3	1375	1377	rationale	900	why identity_occurrence exists; one rule each kept
+p3	1440	1440	rationale	700	why encryption keys must be registered; rule kept
+p3	1449	1449	rationale	1200	forward-secrecy gap discussion around the operator MUST
+p3	1455	1455	restated_block	400	1+4 preserved closer (repeats 958)
+p3	1460	1462	rationale	1100	no-DNS motivation for transport_destination
+p3	1487	1489	rationale	400	two-stage hash warning; algorithm block is the rule
+p3	1519	1521	restated_block	900	pinned-source attribution plus 1+4 closer
+p3	1533	1533	informative	1000	what the self-roster model checks; evidence not rule
+p3	1539	1539	rationale	900	problem consent:replication solves
+p3	1545	1559	duplicate_table	900	consent:replication envelope sketch; restated normatively at 1565
+p3	1571	1571	restated_block	600	1+4 preserved closer for consent:replication
+p3	1592	1592	history	800	retired organization/org_membership/partner_record field lists
+p3	1607	1609	rationale	1200	why settlement is in CEG lane
+p3	1637	1637	restated_block	500	1+4 preserved closer for settlement
+p3	1641	1641	rationale	1500	ledger stance preamble; the nine clauses hold the rules
+p3	1655	1655	restated_block	700	1+4 composition closer for ledger
+p3	1659	1659	informative	900	one kernel bounded siblings reflection
+p3	1673	1673	example	500	thread composition note
+p3	1722	1722	rationale	900	decoder-vulnerability motivation for media type set
+p3	1726	1726	rationale	800	why not multicodec/CID; rule kept at 1726
+p3	1729	1729	rationale	600	C2PA interop discussion around the vocabulary rule
+p3	1787	1787	rationale	700	authorization-is-consumer-policy honesty; two rules kept
+p3	1797	1797	rationale	955	why accord:* keying differs from other reservations; rule content restated at 3.2 T2
+p3	1799	1799	rationale	495	instance-parameter reading of the accord roster; T3 lever restated
+p3	1812	1812	restated_block	742	heartbeat banding repeats 3.2 T4; two MUST NOTs are the only rule content
+p3	1842	1842	restated_block	400	verbatim repeat of 1818 hard_case event-kind note
+p3	1864	1866	restated_block	700	repeats 1852 removal shape and 1832 rejection sentence
+p3	1885	1885	rationale	2075	four reasons why no read rule exists; one rule sentence survives
+p3	1895	1895	rationale	1421	per-family reasons the verify families are not consent-gated; one exception row
+p3	1897	1897	rationale	447	emitter-standing model rejected; principle only
+p3	1909	1909	informative	286	plane carriage is an implementation gap
+p3	1953	1959	rationale	2164	fabric-node discipline; restates 4.4.3.2.4.1 founder quorum and 3.4.8 non-adjudication
+p3	2002	2002	rationale	505	why infrastructure is the right enforcer
+p3	2006	2006	informative	903	multi-tenant hosting deferred; one MUST NOT survives
+p3	2014	2014	example	961	LensCore-fold worked example; restates 3.4.5 self-emission rule
+p3	2048	2067	duplicate_table	676	age dimension shapes already registered at 3.1.2 and 3.3.12
+p3	2087	2089	rationale	1862	no-slavery framing of the incapacity aperture; rules restated at 2124 and 2203
+p3	2157	2157	restated_block	427	prose repeat of the admit_adult_incapacity_binding predicate
+p3	2159	2161	rationale	2379	prior-will and Ulysses discussion; rules mixed with legal rationale
+p3	2192	2192	rationale	1529	end-of-life framing; decision-standard ordering is the rule
+p3	2194	2201	duplicate_table	1841	adversary table restates 2115-2190 rules
+p3	2203	2203	restated_block	1771	1+4 summary restating the whole subsection
+p3	2207	2207	informative	493	seven rules ride existing primitives; framing
+p3	2237	2237	informative	506	vocabulary note guardian versus steward; restates 3.2
+p3	2298	2300	rationale	1103	why attestation is marking; definitions for R1-R4
+p3	2316	2327	duplicate_table	1321	eight relations table repeats 2.5 and 2.4.1
+p4	5	9	informative	700	Part intro: substrate carries edges, consumers compose verdicts
+p4	26	30	rationale	900	Discipline pattern: why self-declaration primitives are resisted
+p4	51	62	informative	2600	Rejected stress-test reaches table; rejections with reasons, few rules
+p4	118	120	rationale	600	Why the notify/constitutional UI distinction is load-bearing
+p4	154	156	rationale	400	Operational-relief framing paragraph; restates that the four rules bind the delegation plane
+p4	167	167	rationale	900	Why config:load and mesh_config shapes differ and both expire
+p4	211	211	rationale	2300	Correlated-failure geometry paragraph; rules restated from 4.2.1/4.5.1 plus the diversification obligation
+p4	237	241	rationale	2200	Why the accord is not a Golden-Rule violation; swap test; restates reach rule
+p4	247	247	rationale	1100	The deadlock the live-quorum rule removes; design target narrative
+p4	263	263	rationale	900	Why no second roster: attack arithmetic under live, present and standing majorities
+p4	269	273	rationale	4200	Minimize-the-missed-fire, severity dial, entrenchment proof; narrative with restated rules
+p4	303	303	informative	700	Physical assumption: HF radio relay, deployment not constitution
+p4	362	376	informative	700	Reference-policy index by letter; pointer table
+p4	552	552	rationale	500	Three resolutions and their trust roots summary; restates reachability-is-not-trust
+p4	555	595	example	2700	Geographic-community admission worked example (Alice)
+p4	646	652	example	1400	Composition with consent and self-collectives; two of three bullets restate rules
+p4	718	735	example	2600	Affiliation instantiation table, committee vs IGO, plus the regulated-middle note
+p4	737	737	rationale	1300	Why affiliations are still 1+4; recap of which existing machinery each limb rides
+p4	763	767	restated_block	900	Policy L intro restates the cascade rule stated in 4.4.3.4.1
+p4	846	846	rationale	700	why absolute-M; weighted: alternative
+p4	913	913	example	900	worked login flow; restates 856-870
+p4	1000	1000	example	700	Acme Household DEK wrapping example
+p4	1009	1015	restated_block	400	pseudo-code restating 1004-1007
+p4	1017	1019	rationale	600	consistency pointer and Why paragraph
+p4	1038	1038	example	500	Alice self-collective example
+p4	1127	1130	example	900	three concrete multi-subject cases; 1130 restates 1125
+p4	1134	1134	restated_block	1200	no-distinct-evict-path note restates 1123 and 2.4.1.1
+p4	1187	1189	rationale	900	ladder-vs-mechanism framing
+p4	1201	1215	example	500	reference ladder_verdict implementation
+p4	1219	1219	rationale	700	why mechanism-only matters
+p4	1253	1256	restated_block	300	1+4 preserved note
+p4	1342	1345	restated_block	2400	declared-asymmetry register table; cells restate 8.8.2, 1.9, 4.3, 4.2.6, 4.2.1 and 1.13.2
+p4	1347	1347	rationale	1000	why listed items are defaults not privileges; names nothing new
+p4	1349	1349	rationale	1100	two kinds of entry; justification stated once; repeats 1340 and 1345
+p4	1425	1441	informative	3800	vertical compliance table marked informational; its rule cells restate 2.4.1.1, 4.5.3, 3.4.14
+p4	1443	1455	restated_block	1200	documents-what-3 list; pointers to 4.5.2.1, 4.4.3.5.x
+p4	1555	1557	restated_block	1100	coup property and 1+4 preserved; restates 4.5.3 line 1481 and 4.2.1
+p4	1613	1624	restated_block	1200	documents-what-6 list; restates 4.5.8.1 and 3.4.7.1; encoding sentence is the one rule
+p4	1655	1659	restated_block	600	what the wire promises; restates 4.5.9.1 and 4.5.9.2
+p4	1661	1674	restated_block	1300	documents-what-5 list; pointers only except H3-only and geographic_constraint sentences
+p4	1676	1699	informative	2000	hash-database landscape, operator default path, future coalition slot
+p4	1701	1706	restated_block	850	documents-what-2; the feed-registration MUST is the one rule
+p4	1708	1712	example	850	bootstrap-content pattern and multi-source list
+p4	1748	1760	restated_block	1000	documents-what-4 list; restates 5.2, 4.2.3, 4.4.3.4.5
+p4	1766	1766	restated_block	1300	general pattern restates 4.2.6 and the mechanism below
+p4	1775	1775	rationale	900	first half: fallback-not-check and why 48 h; second half (two acts) is rules
+p4	1787	1793	duplicate_table	1100	outcome ladder restates 1781-1785
+p4	1797	1797	rationale	1100	M-1 framing; structure not behavior
+p4	1803	1805	restated_block	1600	symmetry with accord and 1+4 note; restates 1766 and 4.2.6
+p5	9	9	informative	885	Part preamble; its fail-secure principle is restated at 1.13 and by every mechanism below
+p5	67	71	restated_block	516	Structural-property bullets restate the line-63 rule and 1.13.3.1 scope
+p5	75	100	restated_block	1466	Enforcement pseudo-code restates lines 63, 102, 104, 106, 108 in full
+p5	110	110	rationale	430	Locality dividend: cost argument, no rule
+p5	217	217	rationale	379	Rationale for the subject-revocation promotion rule
+p5	223	225	restated_block	1790	Consent tail and overdue emission restate lines 215 and 219 from the two gates
+p5	248	248	restated_block	643	5.3.2.4.1 restates 5.3.2.2 eligibility and carve-out; only witness_relation=self is new
+p5	284	290	informative	1222	Holistic cost model, marked informative; promotion-cost sentence restates 5.3.2.4.2
+p5	350	361	restated_block	1494	Composition map: worked compositions; rules it carries live at 4.4.3.2.x, 3.1.3.2, 5.3.3.4
+p5	371	375	rationale	1291	Realtime profile rationale and breadth confirmation; PQC sentence restates 5.1
+p5	395	395	informative	770	MDC-primacy design intent, marked informative
+p5	478	483	duplicate_table	1443	Edge-decision table restates 5.3.3.2 profiles, 5.3.3.4 fan-out and E1 stated in full below it
+p5	541	543	restated_block	510	Scope pointer restates 2.4, 5.3.3.3 and 5.3.3.5 E2
+p5	556	572	example	800	Illustrative JSON of the trust-root bundle response; fields restated in prose at 574-578
+p5	615	625	example	250	Illustrative JSON of the error envelope; fields are named in the MUST at 613
+p5	709	723	example	900	Three record_id conformance vectors; normative but published with CIRISVerify (725)
+p5	784	790	rationale	2600	'Why these values' model-run findings for rho, W, frame size; marked informative
+p5	794	794	restated_block	1330	Fragment unit paragraph restates 729 (chunks whole, A/V no symbols) and 5.4.2 framing
+p5	870	872	informative	1930	Two 'normative framing' paragraphs stating what observers see; claim boundaries already at 1.13.3.1
+p5	876	876	restated_block	2150	Directed-announce paragraph argues the 843 prohibition and 874 fail-secure rule again; one new bar sentence
+p5	891	891	informative	1380	'What it does not yet buy': residual analysis of the tier; one default (cover on) restates 884
+p5	895	895	informative	2300	Position paragraph: trilemma corner, lightnet/darknet, determinism; rotation sentence restates 890
+p6	9	11	informative	1400	substrate overview; restates 6.1.5 and 5.3.3.2
+p6	43	45	rationale	1100	memory pyramid storage-cost discussion around the two operators
+p6	192	194	informative	540	reliability figure and no-wire-change note
+p6	290	292	restated_block	780	fail-secure summary of N1 to N8, RB-1, WW-2
+p6	318	318	restated_block	1250	what anyone holding the rows can check; restates 6.1.9 and 6.1.2.1.1
+p7	1	9	informative	850	part header and arc overview
+p7	11	17	informative	650	introduction to 7.1 and the three-sphere list repeated by 7.1.1-7.1.3
+p7	70	72	informative	450	conclusion of 7.1
+p7	74	76	informative	400	introduction to 7.2
+p7	144	146	informative	200	conclusion of 7.2
+p7	148	152	rationale	1300	genesis of responsibility introduction
+p7	283	285	restated_block	700	conclusion restating 7.3.3 and 7.3.5
+p7	295	297	rationale	500	why death deserves doctrine
+p7	330	332	rationale	850	why tiers sit in the sunset chapter and their SAE/DoD lineage
+p7	342	344	informative	950	EU AI Act anchor and A-scale disambiguation note
+p7	380	380	rationale	2000	sentience-candidate paragraph: citations and the 5 percent caveat; keep its four rule sentences
