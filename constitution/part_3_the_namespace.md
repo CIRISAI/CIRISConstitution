@@ -1178,6 +1178,8 @@ Canonical `ConsensusProtocol` kinds:
 
 4. On admission of a REMOVE: per [CC 4.4.3.4.5](part_4_composition_governance.md) the removed member retains existing key_grants (cannot retroactively un-share); the substrate stops wrapping new key_grants to them on subsequent family-scoped Contributions.
 
+**A roster event's signed instant is bounded (normative).** A widening or removal is judged at its signed instant, which its signers choose, so a signer who has since left could date an event inside the time they still had standing. A signature by someone who is no longer an active member when the event reaches a node therefore counts toward the protocol only while the event's signed instant is inside the freshness window W ([CC 2.6.7](part_2_the_grammar.md)); past it that signature does not count, and an event left short of its protocol is refused `asserted_at_stale`. A signature by a member still standing counts at any age, which is the form [CC 3.3.6.3](#3.3.6.3) gives the same bound. **A node does not rebuild a group's past from old signatures.** The state of a roster is known when a node is admitted to it: a node new to the group, or one away for longer than W, takes the group's past from a current member, who vouches for it under their own signature. That member is one the node already knows, the member whose proposal a newcomer accepted or, for a person's further device, a device of theirs already in the group. Events inside a vouched past are held on that vouch; anything else signed by someone who has left is bound as above.
+
 **Consensus-protocol amendment**:
 
 ```
