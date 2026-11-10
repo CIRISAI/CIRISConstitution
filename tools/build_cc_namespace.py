@@ -225,12 +225,12 @@ def _reserved_rules():
          "first-person observation (attesting_key_id == attested_key_id; witness_relation self; subject_key_ids empty)", "CC 3.1.9.4"),
         # CC 3.1.9.4 / 4.3: a WA's answer to one deferral is signed by the WA's own key.
         (lambda p, c: p.startswith("deferral:response"),
-         "a Wise Authority's key that held a seat in the live set at asserted_at; subject = the agent; references the deferral:request", "CC 3.1.9.4"),
+         "a key seated over the deferring party's deferrals in the live set at asserted_at (CC 4.3): the conferrer, the person seated, or an agent handed the answering; subject = the deferring party; references the deferral:request", "CC 3.1.9.4"),
         (lambda p, c: p.startswith("deferral:request"),
-         "the deferring agent's occurrence key; audience = the agent's cell", "CC 3.1.9.4"),
+         "the deferring party's own key (an agent's occurrence key, or a person's key); audience = the party's cell", "CC 3.1.9.4"),
         # CC 3.1.5 / promise 5: an identity amendment is the agent's own row about its identity key, admitted only against an approved deferral response.
         (lambda p, c: p.startswith("identity_amendment"),
-         "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
+         "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by the conferrer of the agent's seat or the person holding its unscoped seat (identity_amendment_unauthorized otherwise)", "CC 3.1.5"),
         # CC 6.1.9 / 3.1.3: the mesh census and the secret poll — node-, seat- and member-emitted, never a substrate self-report.
         (lambda p, c: p.startswith("census:share:"),
          "the returning node's key (rooted owner binding); addressed: for_key_id = one of the period's two serve seats; reach is that seat only", "CC 6.1.9"),

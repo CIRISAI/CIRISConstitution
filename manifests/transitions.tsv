@@ -187,9 +187,9 @@ custody:{kind}	attest	none	admitted	self	selfAct	true	derived	derived	derived
 custody:{kind}	withdraw	admitted	withdrawn	author	selfAct	false	code-v61	code-v61	derived
 cw_class:{class}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 cw_class:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
-deferral:request	attest	none	admitted	registered	selfAct	true	derived	derived	derived
+deferral:request	attest	none	admitted	self	selfAct	true	derived	derived	derived
 deferral:request	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
-deferral:response:{outcome}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
+deferral:response:{outcome}	attest	none	admitted	wa	selfAct	true	derived	derived	derived
 delivery:{class}	attest	none	admitted	registered	selfAct	true	derived	derived	derived
 delivery:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	code-v61	code-v61	derived
 delivery_receipt:{stream_id}	attest	none	admitted	registered	selfAct	true	derived	derived	derived

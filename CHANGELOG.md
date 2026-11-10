@@ -5,6 +5,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 ## 1.0-rc19 (open)
 
 - Opened 2026-11-10 from the rc18 tag. This edition re-cuts the decimals on the state processor's spine: the kernel stated once, the family model as data, then mechanism and stewardship. The long-term-support text stays 1.0-rc18 on the decimals it has, takes its own point editions, and each of those is carried into this edition by the map from the old decimals to the new.
+- A Wise Authority's seat over one party's deferrals is conferred by that party in a signed row (4.3): a person for themselves, an agent's steward for the agent and never the agent's own key, to a person, for every domain or for one. The seated person may hand the answering to an agent, a domain seat may require a licence, an approval of an identity amendment is not handed on, and the rows from deferral to ruling to act read as one chain. One register row, staged. The transitions table now takes a family's signer rule from the text where the code enforces none, so a deferral response opens to a seated key and a deferral request to its own signer; the other families with no enforced signer rule remain listed as gaps.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
 

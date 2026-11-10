@@ -1,0 +1,6 @@
+# The signer rule the Constitution text gives a family whose census cell is a gap (nothing in the code enforces a rule yet).
+# Applied by tools/build_family_model.py over a gap cell only: the cell takes this rule with source cc-table and keeps the census reading as `code`.
+# A family whose census cell is closed is never overridden; a row here for one is refused, so the file empties as the code closes.
+family	signer_rule	cc_ref
+deferral:request	self x none x {}	CC 3.1.9.4
+deferral:response:{outcome}	seat_role(wa) x delegates_to(resolve_deferral, depth-capped, revocable per link) x {}	CC 4.3

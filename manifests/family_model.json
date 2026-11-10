@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "b1afe35f977857a1025d1fafac49baf58383f11d07f084183bdc966d456fd937",
+  "registry_sha256": "597418adb1ad8a4fb192b83ead8206fa6396270820feae7eca214dcca45b13d1",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -81,12 +81,12 @@
     "gap": 176
    },
    "signer_rule": {
-    "cc-table": 0,
+    "cc-table": 2,
     "code-v61": 133,
     "generic": 0,
     "prose": 18,
     "mixed": 6,
-    "gap": 35
+    "gap": 33
    },
    "emitter_class": {
     "cc-table": 0,
@@ -249,7 +249,7 @@
     "gap": 128
    }
   },
-  "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
+  "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none is cc-table, with the census reading kept beside it as code. Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
  },
  "rows": [
   {
@@ -21268,9 +21268,17 @@
     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
    },
    "signer_rule": {
-    "value": "any_registered (family gate not built)",
-    "source": "gap",
-    "closed": "any_registered"
+    "value": {
+     "who": "self",
+     "via": "none",
+     "conditions": []
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.4",
+    "code": {
+     "value": "any_registered (family gate not built)",
+     "source": "gap"
+    }
    },
    "subject_rule": {
     "value": {
@@ -21454,7 +21462,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "self",
     "source": "derived"
    },
    "derived": {
@@ -21547,9 +21555,17 @@
     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
    },
    "signer_rule": {
-    "value": "any_registered (family gate not built)",
-    "source": "gap",
-    "closed": "any_registered"
+    "value": {
+     "who": "seat_role(wa)",
+     "via": "delegates_to(resolve_deferral, depth-capped, revocable per link)",
+     "conditions": []
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 4.3",
+    "code": {
+     "value": "any_registered (family gate not built)",
+     "source": "gap"
+    }
    },
    "subject_rule": {
     "value": {
@@ -21733,7 +21749,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "person",
+    "value": "seat:wa",
     "source": "derived"
    },
    "derived": {

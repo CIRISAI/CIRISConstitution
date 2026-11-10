@@ -13,6 +13,7 @@ from collections import Counter, OrderedDict
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
+SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
 COLUMNS = OrderedDict([
@@ -227,6 +228,8 @@ def main():
     pol = {}
     for f in reg.get("families", []):
         if isinstance(f, dict) and "prefix" in f: pol[f["prefix"]] = f.get("polarity")
+    signer_text = {r["family"]: r for r in csv.DictReader(
+        [l for l in open(SIGNER_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t")}
     rows = []
     for fam in sorted(set(cc) | set(census)):
         c, z = cc.get(fam), census.get(fam)
@@ -241,6 +244,15 @@ def main():
             for k in ("kind", "side", "verbs", "maintains_record", "reference"): row[k] = {"value": None, "source": "gap", "note": "not in the CC table"}
         for col, zc in CENSUS_MAP.items():
             row[col] = cell(col, z[zc]) if z else {"value": None, "source": "gap", "note": "not in the census"}
+        if fam in signer_text:
+            st = signer_text.pop(fam); cur = row["signer_rule"]
+            if cur.get("source") != "gap":
+                print(f"signer_rule_text.tsv: {fam} has a closed census cell ({cur.get('source')}); remove the row"); return 1
+            txt = signer(st["signer_rule"])
+            if not isinstance(txt.get("value"), dict):
+                print(f"signer_rule_text.tsv: {fam} is not `who x via x {{conditions}}`"); return 1
+            row["signer_rule"] = {"value": txt["value"], "source": "cc-table", "cc_ref": st["cc_ref"],
+                                  "code": {"value": cur.get("value"), "source": "gap"}}
         pv = polarity_census(z["6_polarity"]) if z else None
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
         row["emitter_class"] = emitter_class(row["signer_rule"])
@@ -263,6 +275,8 @@ def main():
             row["code_v61"] = {"door": z.get("door", ""), "witness": z.get("witness", ""), "formal_witness": z.get("formal_witness", ""),
                                 "carries_kind_census": z.get("carries_kind", ""), "sources": z.get("sources", "")}
         rows.append(row)
+    if signer_text:
+        print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
     cov = OrderedDict()
     SRC = ("cc-table", "code-v61", "generic", "prose", "mixed", "gap")
     for col in COLUMNS:
@@ -277,7 +291,7 @@ def main():
         ("version", "0-draft"), ("taxonomy_version", "11+1 v1"),
         ("registry_sha256", reg_sha), ("census", "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341"),
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
-        ("reading", "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."),
+        ("reading", "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none is cc-table, with the census reading kept beside it as code. Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."),
     ])
     out = json.dumps(OrderedDict([("_meta", meta), ("rows", rows)]), indent=1, ensure_ascii=False) + "\n"
     if "--check" in sys.argv:

@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "3ba2096fd5f60c22131cb6743c0acb5cbb892fc739e6cedc15c4e68011f763a6",
+    "registry_sha256": "babceea6cdb2bbd85e44a57ba6dfb309eb640e5367f24bb0eabb54a18724ec69",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "d7f9e69118afcdf510d2f572914fac00faa1b3fe7476ad7eb0523c32b4ab9f0b"
+    "source_sha256": "aad526bad0e7114f653d982efcffa2db50bc9564ded54604f60808fc92e3b581"
   },
   "families": [
     {
@@ -2201,7 +2201,7 @@
     },
     {
       "cc_section": "3.1.9.3",
-      "description": "An agent's deferral: one ask routed to a Wise Authority within the agent's cell (CC 1.9, CC 4.3).",
+      "description": "A deferral: one ask routed to a Wise Authority within the deferring party's cell (CC 1.9, CC 4.3).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
@@ -2209,7 +2209,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.9.4",
-        "rule": "the deferring agent's occurrence key; audience = the agent's cell"
+        "rule": "the deferring party's own key (an agent's occurrence key, or a person's key); audience = the party's cell"
       },
       "segments": [
         {
@@ -2232,7 +2232,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.9.4",
-        "rule": "a Wise Authority's key that held a seat in the live set at asserted_at; subject = the agent; references the deferral:request"
+        "rule": "a key seated over the deferring party's deferrals in the live set at asserted_at (CC 4.3): the conferrer, the person seated, or an agent handed the answering; subject = the deferring party; references the deferral:request"
       },
       "segments": [
         {
@@ -3094,7 +3094,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.1.5",
-        "rule": "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by a seated WA (identity_amendment_unauthorized otherwise)"
+        "rule": "the agent's occurrence key about its identity key; admitted only citing an admitted deferral:response:approved by the conferrer of the agent's seat or the person holding its unscoped seat (identity_amendment_unauthorized otherwise)"
       },
       "segments": [
         {
