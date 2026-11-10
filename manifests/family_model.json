@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "393edc58244d411d652eccfe5891c9fa69869eaafd1f0713c899d98f74c0ade2",
+  "registry_sha256": "1a7e46969409219d11bf02ccef5a1b7eb682c2020a48ff007d634f8c5665da59",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -348,7 +348,7 @@
      "why": "A subject that could withdraw adverse evidence about itself would launder its own record. Its signer may withdraw it; the subject's path is reconsideration, on which it holds standing.",
      "basis": "text",
      "cc_ref": "CC 2.4.1.1",
-     "quote": "Selective erasure of adverse evidence is reputation laundering",
+     "quote": "A party that could retire the adverse rows about itself and keep the rest would launder its reputation",
      "cells": 14
     },
     {

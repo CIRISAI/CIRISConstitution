@@ -58,7 +58,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A subject that could withdraw adverse evidence about itself would launder its own record. Its signer may withdraw it; the subject's path is reconsideration, on which it holds standing.
 
-**Text.** CC 2.4.1.1: "Selective erasure of adverse evidence is reputation laundering"
+**Text.** CC 2.4.1.1: "A party that could retire the adverse rows about itself and keep the rest would launder its reputation"
 
 | column | families |
 |---|---|

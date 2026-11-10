@@ -64,7 +64,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 2.3.6	absent	Empty/absent = status-quo	§4.2.5	0.00092	279	0.11	II	ceg	wire
 2.4	primitive	The primitive set — 1+4	§3	0.00878	18	1.05	II	ceg	wire
 2.4.1	structure	The four structural composers	§3.2	0.00618	30	0.74	II	ceg	wire
-2.4.1.1	withdraws	`withdraws` admission rule (semantic, not structural)	§3.2.3	0.00756	23	0.91	II	ceg	wire
+2.4.1.1	withdraws	Who may take a row back	§3.2.3	0.00756	23	0.91	II	ceg	wire
 2.4.1.2	delegates_to	Authority-source claims via `delegates_to`	§3.2.1	0.00402	59	0.48	II	ceg	wire
 2.4.1.2.1	authority-triad	Licensure, grant, delegation — three concepts, three wire discriminators (normative)	(spine-reconciled)	0.00050	438	0.35	II	ceg	wire
 2.4.1.3	recants	The `recants` distinction matters	§3.2.2	0.00172	143	0.21	II	ceg	wire

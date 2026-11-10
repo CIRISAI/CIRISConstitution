@@ -63,6 +63,16 @@ keys; the `role` column is the reader's judgement of where a rule's home is. Of 
 that carry MUST, SHALL or REQUIRED, 72 have no row on that exact line, most of them table rows
 whose statement is recorded on a neighbouring line. Sweep those before a statement is moved.
 
+## Rule entries
+
+A rule lands in the rulebook register one at a time: its home section becomes one entry, a table
+of who may act and short paragraphs that each state one thing with its reason in its own sentence.
+`rule_entries.tsv` lists, for each rule landed, every inventory statement whose home is that
+section and the phrase of the entry that carries it. `python3 tools/check_rule_entries.py` fails
+when a statement has no row, a phrase has left the section, or an entry sentence runs past forty
+words. Landed: `withdraw` at CC 2.4.1.1 (24 statements). The statements of that rule made in
+other sections stay where they are until each is read against the entry and cut to a citation.
+
 ## Compliance wire forms
 
 Four published works are mapped to the signed-row vocabulary under 27 dimension ids: *Magnifica
