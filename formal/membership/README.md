@@ -21,7 +21,7 @@ rows of CC 3.1.3.2 are actions:
 - `membership:resignation` by the leaving member alone.
 
 A held change lands when the protocol is met. Otherwise it expires after its hold window, which is
-the "configurable window — operator policy" of CC 3.3.4. Protocols are `founder_only` (any active
+the window the group sets on its own signed record, never under the standing class (CC 3.3.4). Protocols are `founder_only` (any active
 founder), `unanimous`, `majority` (more than half the roster, the target counted) and `quorum:M/N`
 (M absolute, CC 4.4.3.4.2.1). An adversary holds one key from the start and signs anything that key
 may sign. Honest keys sign a removal only of that key, so any removal of an honest member is the
@@ -94,8 +94,8 @@ on the acceptance that preceded a resignation).
    `stale_founder` twin). CC 3.3.4 says "Original founders are the sole admission authority". Read as
    the founding record, a founder who resigned can propose to itself, accept, and widen alone under
    `founder_only`.
-4. **A held change needs a hold window** (the `no_hold_expiry` twin). CC 3.3.4 leaves the window to
-   operator policy. Without one, a change below the protocol, such as the coerced key's removal of an
+4. **A held change needs a hold window** (the `no_hold_expiry` twin). CC 3.3.4 has the group set the
+   window, with the standing class as its default and its least. Without one, a change below the protocol, such as the coerced key's removal of an
    honest member, stays held for ever.
 5. **The landing step must be identified by the landing action.** An earlier version detected a
    landing from the slot clearing, and reported a false violation when a held removal of a key that
@@ -125,7 +125,7 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 - *The widening's signed instant.* Admission rule (4) says "the widening's own signed instant ≤ P's
   `expires_at`". A cosigned row has one `asserted_at`, the primary's, and the cosigners sign the same
   bytes. The model reads the instant as the primary's, so cosignatures may arrive after
-  `expires_at`. Only the operator hold window of CC 3.3.4 bounds how long after the proposal's window
+  `expires_at`. Only the hold window of CC 3.3.4 bounds how long after the proposal's window
   a widening can land.
 - *Leaving.* CC 3.1.3.2's registry row names a `membership:resignation` stage. Its *Decline,
   withdrawal, expiry* paragraph and CC 5's invite/join/leave row say "leave = forward-only

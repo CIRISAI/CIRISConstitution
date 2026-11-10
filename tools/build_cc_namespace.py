@@ -250,6 +250,9 @@ def _reserved_rules():
         (lambda p, c: p.startswith("lineage_witness:"),
          "per-leaf: proposal = an active founder of the lineage named; acceptance/decline = the owner of the node named in subject_key_ids[0] (or a key acting for the owner)", "CC 3.2"),
         # CC 3.1.3.2: the membership ceremony — per-leaf emitter, not a substrate self-report.
+        # CC 3.1.3 cosignature collection: member-signed, never a substrate self-report.
+        (lambda p, c: p.startswith("cosign:"),
+         "per-leaf: pending = the event's primary signer, an active member of the group at the event's signed instant; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn", "CC 3.1.3"),
         (lambda p, c: p.startswith("membership:"),
          "per-leaf: proposal = an inviter (founder_only: an active founder; else any active member); acceptance/decline = the invitee only (signer_acts_for to subject_key_ids[0]); widening/removal = cosigned under the group's consensus_protocol; resignation = the leaving member", "CC 3.1.3.2"),
         # CC 3.4.6: a SUBSCRIBER's signed acknowledgement, membership-gated — the row says

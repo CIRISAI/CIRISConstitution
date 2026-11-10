@@ -816,8 +816,10 @@ admit_family_change(F, proposed: family_record):
   if admit:
     emit hard_case:family_membership_change:{F}
     trigger the CC 4.4.3.4.1 key_grant cascade
+  else if not group_ok and every other check passed:
+    // short by signatures alone: held, never refused (CC 3.3.4)
+    hold as cosign:pending and collect cosign:signature rows for the group's hold window
   else:
-    hold in pending state (per operator-policy window) OR
     emit hard_case:family_consensus_protocol_violation:{F} and reject
 ```
 

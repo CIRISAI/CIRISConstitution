@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "758bd152768727a62a2ede2b251cb6ee5e5e67b7b14c9454a9bd93f8be3bfd6c",
+  "source_sha256": "9e046d50cb9d753a2ed8b666439a1c980f38b34986e2deb12d912d485803e62b",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -31,9 +31,9 @@
    "takedown",
    "wa"
   ],
-  "families": 191,
-  "transitions": 474,
-  "gap_cells": 22,
+  "families": 192,
+  "transitions": 476,
+  "gap_cells": 26,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
  "rows": [
@@ -4418,6 +4418,52 @@
        "rows": []
       },
       "source": "code-v61"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     }
+    }
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "kind": "Process",
+   "transitions": [
+    {
+     "verb": "attest",
+     "from": "none",
+     "to": "admitted",
+     "roles": {
+      "value": [],
+      "source": "gap"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "derived"
+     },
+     "widens": {
+      "value": false,
+      "source": "gap"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "value": [],
+      "source": "gap"
+     },
+     "policy": {
+      "value": {
+       "policy": "none",
+       "rows": []
+      },
+      "source": "gap"
      },
      "widens": {
       "value": false,

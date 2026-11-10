@@ -1,6 +1,6 @@
 # `formal/family_model` — one object beneath every chapter, and the DSL for v62
 
-**The point.** The chapter models of this directory were built one plane at a time. The taxonomy lets them be one object: every scores family is one row of the family model, the row's change half is the 11+1 × 5+1 grammar of CIRISOntology and RATCHET, and every plane model is a view of the one dynamics those rows generate. `FamilyModel.lean` states the grammar half and proves what the v62 manifest's vendor gate enforces; the registry's own classification (`../derivation/family_kind_verb.tsv`, 191 families) is generated into it and checked one theorem per family.
+**The point.** The chapter models of this directory were built one plane at a time. The taxonomy lets them be one object: every scores family is one row of the family model, the row's change half is the 11+1 × 5+1 grammar of CIRISOntology and RATCHET, and every plane model is a view of the one dynamics those rows generate. `FamilyModel.lean` states the grammar half and proves what the v62 manifest's vendor gate enforces; the registry's own classification (`../derivation/family_kind_verb.tsv`, 192 families) is generated into it and checked one theorem per family.
 
 **What is proved.**
 
@@ -12,7 +12,7 @@
 | `identity_never_carried` | nothing carries into Identity: a change smuggled in as a renaming is kind-laundering, the firewalled cell |
 | `record_fixes_reach` | a family that maintains the Record keeps erasure at none or legal hold and a byte-equal projection |
 | `side_of_kind` | thing or account is a function of kind, with no exception in the registry |
-| `fit0` … `fit188`, `registry_fits` | every family of the registry fits its kind profile, the carries firewall and the Record rule |
+| `fit0` … `fit191`, `registry_fits` | every family of the registry fits its kind profile, the carries firewall and the Record rule |
 
 **The data.** `tools/check_family_kinds.py` reads the derivation table, writes the DATA section of the Lean file, and checks the same rules in Python; CI runs it with `--check` so the two cannot drift. Run: `lean -M 6000 -T 200000 FamilyModel.lean` (1.4 s, 216 MB; the first version was one `decide` over the whole list and is the reason for the cap).
 

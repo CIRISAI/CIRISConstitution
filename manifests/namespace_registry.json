@@ -216,14 +216,14 @@
         "note": "A family ending in `*` covers every dimension sharing its stem segments with at least one further segment: `accord:*` covers `accord:invoke:notify:{notify_id}`. A consumer that requires len(segments) == len(parts) for a wildcard family has misread the registry. The segments below the wildcard are classed by the leaf's own row where one exists, else `vocab` unless the leaf row says otherwise."
       }
     },
-    "cc_version": "1.0-rc17",
+    "cc_version": "1.0-rc18",
     "components_outside_normative": [
       "cirisbench"
     ],
     "generator": "tools/build_cc_namespace.py",
     "n_components": 9,
     "n_components_normative": 8,
-    "n_families": 191,
+    "n_families": 192,
     "per_component": {
       "accord-agent": 36,
       "anti-sybil": 6,
@@ -231,7 +231,7 @@
       "cirisbench": 1,
       "lens": 15,
       "node": 51,
-      "persist": 33,
+      "persist": 34,
       "registry": 21,
       "transport-delivery": 7
     },
@@ -293,7 +293,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "8e1661d3c87404b9b5413a0bc7383133a364264945868726317019a762cd6c13",
+    "registry_sha256": "3ba2096fd5f60c22131cb6743c0acb5cbb892fc739e6cedc15c4e68011f763a6",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -308,7 +308,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "54b2e792570b1222640d92ee960684a2ea9a919e75208bcb9708571a292aecd5"
+    "source_sha256": "d7f9e69118afcdf510d2f572914fac00faa1b3fe7476ad7eb0523c32b4ab9f0b"
   },
   "families": [
     {
@@ -2068,6 +2068,34 @@
         {
           "class": "literal",
           "segment": "n_eff_measurable"
+        }
+      ]
+    },
+    {
+      "cc_section": "3.1.3",
+      "description": "The collection of cosignatures for an event its protocol has not yet admitted (registered under CC 3.1.7 R2(a); the hold of CC 3.3.4, general to any cosigned row of CC 2.4): {state} \u2208 pending | signature \u2014 closed; wire cosign:pending:v1, co",
+      "owning_component": "persist",
+      "owning_repo": "CIRISPersist",
+      "polarity": "positive-only",
+      "prefix": "cosign:{state}",
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.1.3",
+        "rule": "per-leaf: pending = the event's primary signer, an active member of the group at the event's signed instant; signature = the member whose signature it carries; served to the group's active members only; only the proposer withdraws a pending row; a signature row is never withdrawn"
+      },
+      "segments": [
+        {
+          "class": "literal",
+          "segment": "cosign"
+        },
+        {
+          "class": "vocab",
+          "open": false,
+          "segment": "{state}",
+          "values": [
+            "pending",
+            "signature"
+          ]
         }
       ]
     },

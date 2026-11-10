@@ -1,6 +1,6 @@
 # CIRIS Federation Wire Vocabulary
 
-**Constitution:** CC (CIRIS Accord) 1.0-rc17 — wire vocabulary as a hash-pinned constitutional artifact
+**Constitution:** CC (CIRIS Accord) 1.0-rc18 — wire vocabulary as a hash-pinned constitutional artifact
 **Artifact steward:** CIRISConstitution (`manifests/WIRE_VOCABULARY.md`, CC 2.6.4)
 **Vocabulary version:** v1.0.3 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator; v1.0.2 retires `GoalDeclaration` and `GoalRetirement`, which CC 3.1.9.7 makes a `goal:{scale}` scores row and its own `supersedes`/`withdraws`/`recants`, so no separate transport message exists — a correction of this manifest to the text, not a change of the wire: the two kinds have had no emitter since persist v60 and edge dropped them at that adopt; v1.0.3 retires `FountainHoldingClaim`, which nothing emits in production: edge's hosts never install the swarm runtime that alone constructs it, the server's shipped wheel is codec-free and its only use is an in-process benchmark that never reaches the wire, so this too is a correction of the manifest to the wire as it is, not a change of it)
 **Vocabulary hash:** `sha256(` canonical bytes of this document `)` — computed at build time, pinned by every ratifying repo (§4)

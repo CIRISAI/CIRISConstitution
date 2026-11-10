@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "c5ed076667271cb4554fdb23b36a683cebe821b0e11c8fc030752f696be05d54",
+  "registry_sha256": "32f060a6fa431d3d6f6b00d0dc238451fc8cb50ddeea34b7cd73ebfe35200fa3",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -30,10 +30,10 @@
    "binds_segment": "placeholder → signer | subject | group | none",
    "evidence": "{claim_ids, refusal tokens}"
   },
-  "families": 191,
+  "families": 192,
   "coverage": {
    "kind": {
-    "cc-table": 191,
+    "cc-table": 192,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -41,7 +41,7 @@
     "gap": 0
    },
    "side": {
-    "cc-table": 191,
+    "cc-table": 192,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -49,7 +49,7 @@
     "gap": 0
    },
    "verbs": {
-    "cc-table": 191,
+    "cc-table": 192,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -57,7 +57,7 @@
     "gap": 0
    },
    "maintains_record": {
-    "cc-table": 191,
+    "cc-table": 192,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -65,7 +65,7 @@
     "gap": 0
    },
    "reference": {
-    "cc-table": 191,
+    "cc-table": 192,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -78,7 +78,7 @@
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 175
+    "gap": 176
    },
    "signer_rule": {
     "cc-table": 0,
@@ -86,7 +86,7 @@
     "generic": 0,
     "prose": 18,
     "mixed": 6,
-    "gap": 34
+    "gap": 35
    },
    "emitter_class": {
     "cc-table": 0,
@@ -94,7 +94,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 4
+    "gap": 5
    },
    "subject_rule": {
     "cc-table": 0,
@@ -102,7 +102,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 18,
-    "gap": 6,
+    "gap": 7,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 984,
@@ -118,10 +118,10 @@
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 7
+    "gap": 8
    },
    "polarity": {
-    "cc-table": 2,
+    "cc-table": 3,
     "code-v61": 189,
     "generic": 0,
     "prose": 0,
@@ -134,7 +134,7 @@
     "generic": 0,
     "prose": 34,
     "mixed": 0,
-    "gap": 157
+    "gap": 158
    },
    "freshness": {
     "cc-table": 0,
@@ -142,7 +142,7 @@
     "generic": 182,
     "prose": 7,
     "mixed": 0,
-    "gap": 2
+    "gap": 3
    },
    "lifecycle": {
     "cc-table": 0,
@@ -150,7 +150,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 2,
+    "gap": 3,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 920,
@@ -166,7 +166,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 184,
-    "gap": 2,
+    "gap": 3,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 546,
@@ -182,7 +182,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 2,
+    "gap": 3,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 368,
@@ -198,7 +198,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 2
+    "gap": 3
    },
    "blind": {
     "cc-table": 0,
@@ -206,7 +206,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 2
+    "gap": 3
    },
    "governance": {
     "cc-table": 0,
@@ -214,7 +214,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 2
+    "gap": 3
    },
    "derived": {
     "cc-table": 0,
@@ -222,7 +222,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 191
+    "gap": 192
    },
    "confers": {
     "cc-table": 0,
@@ -230,7 +230,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 191
+    "gap": 192
    },
    "binds_segment": {
     "cc-table": 0,
@@ -238,7 +238,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 191
+    "gap": 192
    },
    "evidence": {
     "cc-table": 0,
@@ -246,7 +246,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 127
+    "gap": 128
    }
   },
   "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
@@ -19979,6 +19979,123 @@
     "formal_witness": "false",
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:2011; default_reserved_prefix_rules@src/federation/admission.rs:432; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328"
+   }
+  },
+  {
+   "family": "cosign:{state}",
+   "kind": {
+    "value": "Process",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "thing",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest",
+     "withdraw"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": "pre:any",
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": "positive-only",
+    "source": "cc-table",
+    "registry": "positive-only"
+   },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "confers": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "binds_segment": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
    }
   },
   {
