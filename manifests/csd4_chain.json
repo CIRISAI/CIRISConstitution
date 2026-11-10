@@ -17,7 +17,7 @@
    },
    "evidence_pins": {
     "CIRISServer": "7af5d4eb",
-    "CIRISConformance": "6b43bf3",
+    "CIRISConformance": "674bf1c",
     "coherence-ratchet": "0c4edfb",
     "RATCHET": "c89356bd",
     "CIRISAgent": "ffa18162",
