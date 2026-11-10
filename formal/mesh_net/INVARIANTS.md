@@ -26,7 +26,7 @@ against the text and the shipped code. "Holds under the text" means it holds und
 | I12 | **One voice counts once.** Copies of one voice buy no trust (N_eff). | constitutional-mesh page P5 and the "manufactured humans" negation; CC 6.2 | not modelled here: a statistical property of the scoring layer, with its own evidence rows (`coherence-ratchet`) | Measured, not proved |
 
 **What the model does not cover, stated.** Signature forgery; the roster fold's internal rules
-(T6/T7, in `formal/trust_root`); fountain symbols and target replication counts (CC 6.1.5, a
+(T6/T7, in `formal/trust_root`); sealed chunks and target replication counts (CC 6.1.5, a
 counting problem); the tripwire's own accuracy; coercion of individuals (I10's bound is the only
 statement made). Three persons, three nodes, two blobs is enough to exhibit every violation above
 and to exhaust the closing configuration's state space; it is not a proof for all sizes.

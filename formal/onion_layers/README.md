@@ -1,3 +1,5 @@
+> **Superseded rule (2026-11-05).** CC 5.4.6 item 4 no longer runs the steward-capped layer deal this model checks: the bound is per sender (a sticky guard from the sender's own contacts, then the fold). The model stays as the record of the retired rule and is to be redone for the per-sender bound (CIRISConstitution#202).
+
 # `formal/onion_layers` — the onion layer deal, model-checked and counted
 
 **What this is.** CC 5.4.6 item 4 states that the three onion layers are dealt once per rendezvous

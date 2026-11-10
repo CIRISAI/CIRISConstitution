@@ -1,8 +1,8 @@
 # CIRIS Federation Wire Vocabulary
 
-**Constitution:** CC (CIRIS Accord) 1.0-rc14 — wire vocabulary as a hash-pinned constitutional artifact
+**Constitution:** CC (CIRIS Accord) 1.0-rc17 — wire vocabulary as a hash-pinned constitutional artifact
 **Artifact steward:** CIRISConstitution (`manifests/WIRE_VOCABULARY.md`, CC 2.6.4)
-**Vocabulary version:** v1.0.1 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator)
+**Vocabulary version:** v1.0.3 (ratified baseline; v1.0.1 adds the §3.3 migration-semantics clarification — schema+canonicalization move to the range steward, not just the wire discriminator; v1.0.2 retires `GoalDeclaration` and `GoalRetirement`, which CC 3.1.9.7 makes a `goal:{scale}` scores row and its own `supersedes`/`withdraws`/`recants`, so no separate transport message exists — a correction of this manifest to the text, not a change of the wire: the two kinds have had no emitter since persist v60 and edge dropped them at that adopt; v1.0.3 retires `FountainHoldingClaim`, which nothing emits in production: edge's hosts never install the swarm runtime that alone constructs it, the server's shipped wheel is codec-free and its only use is an in-process benchmark that never reaches the wire, so this too is a correction of the manifest to the wire as it is, not a change of it)
 **Vocabulary hash:** `sha256(` canonical bytes of this document `)` — computed at build time, pinned by every ratifying repo (§4)
 **Implements:** CIRISRegistry#130
 **Status:** pinned artifact (CC 2.6.4)
@@ -47,7 +47,7 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 
 ## 2. Tier 1 — constitutional `MessageType` variants (closed; CC §4.5.1 / Standards Action)
 
-26 variants. Each row: **delivery class** · one-line contract. Body structs live in the named consumer crates; edge stays domain-agnostic.
+25 variants. Each row: **delivery class** · one-line contract. Body structs live in the named consumer crates; edge stays domain-agnostic.
 
 ### 2.1 Attestations (signed standing claims)
 
@@ -57,7 +57,6 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 | `DeliveryAttestation` | Durable (fire-and-forget) | Per-peer proof a `FederationAnnouncement`/`StewardDirective` reached the app layer; `canonical_bytes` domain-separated + LOCKED cross-repo (FSD §3.2.1). The attestation IS the governance audit observable. |
 | `DeliveryRefusalAttestation` | Durable (fire-and-forget) | Signed refusal when the AccordCarrier 2-of-3 multi-sig fails; `RefusalReason` distinguishes suppression of legitimate accords from suppression of forged ones. |
 | `ExpertiseAttestationPublish` | Durable (requires_ack) | Expertise attestation (NodeCore SCHEMA §7); signed standing claim underpinning trust-weighting. |
-| `FountainHoldingClaim` | Ephemeral (fire-and-forget) | Signed federation holding claim over the LOCKED v1 `HOLDING_CLAIM_DOMAIN` canonical bytes. Fire-and-forget delivery, but the domain-separated bytes are the trust primitive. |
 
 ### 2.2 Ballots, moderation & due process
 
@@ -94,8 +93,10 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 | Variant | Delivery | Contract |
 |---|---|---|
 | `BuildManifestPublication` | Durable (requires_ack) | Hybrid-signed build manifest → registry; SLSA-tier build-legitimacy provenance. *(Body is a `serde_json::Value` at the current cut — CIRISEdge#TODO to swap to a typed shape; the Tier-1 admission is on the primitive, the tight typed canonicalization follows.)* |
-| `GoalDeclaration` | Durable (requires_ack) | Wraps persist typed `Goal` whose `MetaGoalAlignment` is a construction-time invariant — every Goal on the wire carries an M-1 alignment payload. |
-| `GoalRetirement` | Durable (requires_ack) | Single-signer retirement of a declared Goal; the envelope hybrid signature IS the proof-of-authority. Lifecycle half of the M-1 Goal primitive. |
+
+**Retired (v1.0.2).** `GoalDeclaration` and `GoalRetirement` are no longer wire kinds. CC 3.1.9.7: the declarer's signed `scores` row on `goal:{scale}` **is** the Goal, carrying its fields and its `MetaGoalAlignment` (the M-1 invariant is an admission gate on the family); amendment is the declarer's `supersedes`, retirement `withdraws`, "this goal was never mine" `recants`; the row replicates as any row through `ContributionSubmit`, so no separate transport message exists. A decoder that meets either discriminator MUST reject it as an unknown kind.
+
+**Retired (v1.0.3).** `FountainHoldingClaim` is no longer a wire kind. Holding on the chunk plane is a sealed-chunk custody fact ([CC 5.3.3.2.4], [CC 6.1.5.1]) carried as rows and acknowledgements, not a fire-and-forget claim; no production host installs the runtime that constructed the kind and no shipped build emits it. A decoder that meets the discriminator MUST reject it as an unknown kind; a receiver that previously folded it drops it by name.
 
 ### 2.7 Consent / trust-graph retraction
 

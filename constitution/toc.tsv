@@ -28,7 +28,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 1.14.4	v-danger	V. The Danger of Too Much Thread	Accord 0.v-the-danger-of-too-much-thread	0.00092	307	0.11	I	accord	charter
 1.14.5	vi-vow	VI. The Vow	Accord 0.vi-the-vow	0.00092	308	0.11	I	accord	charter
 1.14.6	vii-first	VII. The First Principle	Accord 0.vii-the-first-principle	0.00092	309	0.11	I	accord	charter
-1.14.7	viii-covenant	VIII. The Covenant Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	I	accord	charter
+1.14.7	viii-covenant	VIII. The Accord Begins	Accord 0.viii-the-covenant-begins	0.00092	310	0.11	I	accord	charter
 1.15	chapters	Chapters	Accord 1.chapters	0.00092	320	0.11	I	accord	charter
 1.15.1	core-identity	Chapter 1: Core Identity	Accord 1.chapter-1-core-identity	0.00092	311	0.11	I	accord	charter
 1.15.2	integrity-operationalising	Chapter 2: Integrity — Operationalising Alignment	Accord 1.chapter-2-integrity-operationalising-ali	0.00092	312	0.11	I	accord	charter
@@ -80,6 +80,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 2.6.1.5	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg	wire
 2.6.1.6	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	II	ceg	wire
 2.6.1.7	signed-object	The signed object — member set, placement and types (normative)	(spine-reconciled)	0.00050	444	0.4	II	ceg	wire
+2.6.1.8	signed-object-cose	The signed object of the v62 edition: CBOR and COSE (planned)	—	0.00050	444	0.3	II	ceg	wire
 2.6.2	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	II	ceg	wire
 2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	II	ceg	wire
 2.6.4	policy-versioning	Versioning policy	§0.3	0.00214	111	0.26	II	ceg	wire

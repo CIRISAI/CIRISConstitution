@@ -3,11 +3,14 @@
 
 Source of truth: constitution/digest/promise_status.tsv  (surface, key, status, note)
   surface plain    -> constitution/digest/00_guarantees_plain.md, line starting "<key>. "
-  surface exec     -> constitution/EXECUTIVE_SUMMARY.md, promise paragraph "<key>. **"
+  surface exec     -> constitution/EXECUTIVE_SUMMARY.md, promise paragraph "<key>. **" (status only),
+                      and the Status cell of the closing table row "| <key> " (the note, which
+                      carries the detail and the tickets; the status where there is no note)
   surface operator -> constitution/digest/00_operator_digest.md, bullet under "## <section>" whose text
                       starts with "**<lead>" or "<lead>" (key = "<section>|<lead>")
 Marker form: " *[status]*" or " *[status; note]*", appended to the line; an existing marker is
-replaced, so the run is idempotent. A legend line is kept under each surface's title.
+replaced, so the run is idempotent. A legend line is kept under each surface's title; the
+executive summary keeps it where it stands, under the closing table.
 Vocabulary: works today = evidence in the register at a pinned commit; being built = a named
 ticket; a rule, no code yet = normative only; modelled = a formal witness, no code test;
 staged, with its ticket = register row exists, wire does not yet keep it; in code; no register row yet = shipped, no row to pin to.
@@ -58,7 +61,13 @@ def main():
             for r in rs:
                 hit = [i for i, l in enumerate(lines) if re.match(re.escape(r["key"]) + r"\. \*\*", l)]
                 if len(hit) != 1: missing.append((surf, r["key"], len(hit))); continue
-                stamp(lines, hit[0], r["status"], r["note"])
+                stamp(lines, hit[0], r["status"], "")
+                row = [i for i, l in enumerate(lines) if l.startswith(f"| {r['key']} ")]
+                if len(row) != 1: missing.append((surf, "table " + r["key"], len(row))); continue
+                cells = lines[row[0]].strip().strip("|").split("|")
+                if len(cells) != 4: missing.append((surf, "table cells " + r["key"], len(cells))); continue
+                cells[3] = " " + (r["note"] or r["status"]) + " "
+                lines[row[0]] = "|" + "|".join(cells) + "|"
         else:
             ensure_legend(lines, lambda l: l.startswith("# "))
             for r in rs:

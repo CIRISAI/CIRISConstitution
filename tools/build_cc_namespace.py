@@ -855,6 +855,7 @@ def main():
 
     RETIRED_FAMILIES = {
         "age_self_declared:{band}:{version}",  # -> age_self_declared:band:{band}:{version} (the wire arity)
+        "consent:duty_standing",               # catalogued and withdrawn within rc17 (the moderator election replaced it); never shipped
         "custody:{state}",                     # -> custody:{kind} = ack
         "holds_bytes:sha256:{prefix}",         # -> custody:ack:v1 at the content's scope
         "evidence:safety_battery:{kind}:{cell}:{prefix}",   # -> evidence:{suite}:{kind}:{cell}:{prefix}; the suite is a closed vocab segment

@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "8e35bfad16393fc6ae8bea2c6b88597db8b9af3fa9e541f819a64dd5b807a939",
+  "registry_sha256": "c5ed076667271cb4554fdb23b36a683cebe821b0e11c8fc030752f696be05d54",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -13,6 +13,7 @@
    "reference": "none | pre:<kind|any> | carry:<kind> (the row it names; only a carry is a cell of the carries grid)",
    "placement": "self_collective | targeted_family | targeted_room | commons | addressed",
    "signer_rule": "{self | owner_of_subject | seat_role(duty) | roster_member(at) | minter | steward | any_registered} x via {none | delegates_to(scope, depth, term, caps)} x conditions ⊆ {adult, capacitated, not_subject, not_author}",
+   "emitter_class": "derived from signer_rule: person (any registered key) | self | owner | seat:<duty> | roster | steward | substrate:<identity_type> | shut; several joined by |; the tier that writes the family's rows, read by nothing at admission",
    "subject_rule": "{subject_kind, cardinality, must_be_registered, for_key_id ∈ {none, serve_seat, recipient}, in_audience, attested_party, subject_blind}",
    "cosign_rule": "none | group_consensus_protocol | moderator_quorum | accord | deciding_seat_plus_outside",
    "polarity": "the registry's polarity class",
@@ -22,16 +23,17 @@
    "replication": "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}",
    "projection": "{table, rebuild ∈ {byte_equal, none}}",
    "erasure_route": "dsar | purge | legal_hold | none",
+   "blind": "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "derived": "projection_id | none (the row must equal the named projection's rebuild)",
    "confers": "trust | duty | standing | nothing (read by the trust-set fold, never by admission)",
    "binds_segment": "placeholder → signer | subject | group | none",
    "evidence": "{claim_ids, refusal tokens}"
   },
-  "families": 189,
+  "families": 191,
   "coverage": {
    "kind": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -39,7 +41,7 @@
     "gap": 0
    },
    "side": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -47,7 +49,7 @@
     "gap": 0
    },
    "verbs": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -55,7 +57,7 @@
     "gap": 0
    },
    "maintains_record": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -63,7 +65,7 @@
     "gap": 0
    },
    "reference": {
-    "cc-table": 189,
+    "cc-table": 191,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
@@ -76,7 +78,7 @@
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 173
+    "gap": 175
    },
    "signer_rule": {
     "cc-table": 0,
@@ -84,7 +86,15 @@
     "generic": 0,
     "prose": 18,
     "mixed": 6,
-    "gap": 32
+    "gap": 34
+   },
+   "emitter_class": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 4
    },
    "subject_rule": {
     "cc-table": 0,
@@ -92,7 +102,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 18,
-    "gap": 4,
+    "gap": 6,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 984,
@@ -108,10 +118,10 @@
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 5
+    "gap": 7
    },
    "polarity": {
-    "cc-table": 0,
+    "cc-table": 2,
     "code-v61": 189,
     "generic": 0,
     "prose": 0,
@@ -124,7 +134,7 @@
     "generic": 0,
     "prose": 34,
     "mixed": 0,
-    "gap": 155
+    "gap": 157
    },
    "freshness": {
     "cc-table": 0,
@@ -132,7 +142,7 @@
     "generic": 182,
     "prose": 7,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
    },
    "lifecycle": {
     "cc-table": 0,
@@ -140,7 +150,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0,
+    "gap": 2,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 920,
@@ -156,7 +166,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 184,
-    "gap": 0,
+    "gap": 2,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 546,
@@ -172,7 +182,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0,
+    "gap": 2,
     "sub_cells": {
      "cc-table": 0,
      "code-v61": 368,
@@ -188,7 +198,15 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
+   },
+   "blind": {
+    "cc-table": 0,
+    "code-v61": 0,
+    "generic": 0,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 2
    },
    "governance": {
     "cc-table": 0,
@@ -196,7 +214,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 0
+    "gap": 2
    },
    "derived": {
     "cc-table": 0,
@@ -204,7 +222,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 189
+    "gap": 191
    },
    "confers": {
     "cc-table": 0,
@@ -212,7 +230,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 189
+    "gap": 191
    },
    "binds_segment": {
     "cc-table": 0,
@@ -220,7 +238,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 189
+    "gap": 191
    },
    "evidence": {
     "cc-table": 0,
@@ -228,7 +246,7 @@
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 125
+    "gap": 127
    }
   },
   "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
@@ -471,6 +489,10 @@
     "source": "code-v61",
     "registry": "see CC 3.4.1"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -485,6 +507,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -752,6 +781,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -766,6 +799,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -1032,6 +1072,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -1046,6 +1090,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -1312,6 +1363,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -1326,6 +1381,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -1592,6 +1654,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -1606,6 +1672,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -1872,6 +1945,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -1886,6 +1963,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -2151,6 +2235,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -2165,6 +2253,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -2430,6 +2525,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "seat:holder",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -2444,6 +2543,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -2702,6 +2808,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -2716,6 +2826,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -2986,6 +3103,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3000,6 +3121,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -3261,6 +3389,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3275,6 +3407,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -3539,6 +3678,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3553,6 +3696,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -3813,6 +3963,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3827,6 +3981,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -3961,6 +4122,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -3975,6 +4140,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -4231,6 +4401,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -4245,6 +4419,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -4504,6 +4685,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -4518,6 +4703,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -4781,6 +4973,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -4795,6 +4991,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -5054,6 +5257,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -5068,6 +5275,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -5327,6 +5541,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -5341,6 +5559,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -5601,6 +5826,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -5615,6 +5844,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -5875,6 +6111,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -5889,6 +6129,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -6148,6 +6395,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6162,6 +6413,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -6193,6 +6451,239 @@
     "formal_witness": "false",
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:855; plan_put_attestation@src/federation/attestation_admit.rs:572"
+   }
+  },
+  {
+   "family": "ballot:moderator",
+   "kind": {
+    "value": "Structure",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "thing",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest",
+     "withdraw"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": "pre:Identity",
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": "signed",
+    "source": "cc-table",
+    "registry": "signed"
+   },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "confers": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "binds_segment": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
+   }
+  },
+  {
+   "family": "ballot:moderator_acceptance",
+   "kind": {
+    "value": "Structure",
+    "source": "cc-table",
+    "confidence": "M"
+   },
+   "side": {
+    "value": "thing",
+    "source": "cc-table"
+   },
+   "verbs": {
+    "value": [
+     "attest"
+    ],
+    "source": "cc-table"
+   },
+   "maintains_record": {
+    "value": false,
+    "source": "cc-table"
+   },
+   "reference": {
+    "value": "pre:Structure",
+    "source": "cc-table"
+   },
+   "placement": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "signer_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "subject_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "cosign_rule": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "body": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "freshness": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "lifecycle": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "replication": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "projection": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "erasure_route": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "governance": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "evidence": {
+    "value": null,
+    "source": "gap",
+    "note": "not in the census"
+   },
+   "polarity": {
+    "value": "signed",
+    "source": "cc-table",
+    "registry": "signed"
+   },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
+   },
+   "derived": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "confers": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "binds_segment": {
+    "value": null,
+    "source": "gap",
+    "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": null,
+    "source": "gap",
+    "note": "erasure_route unread"
    }
   },
   {
@@ -6411,6 +6902,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6425,6 +6920,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -6684,6 +7186,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6698,6 +7204,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -6957,6 +7470,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -6971,6 +7488,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -7231,6 +7755,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -7245,6 +7773,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -7503,6 +8038,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -7517,6 +8056,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -7776,6 +8322,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -7790,6 +8340,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8053,6 +8610,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -8067,6 +8628,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8337,6 +8905,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -8351,6 +8923,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8621,6 +9200,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -8635,6 +9218,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -8905,6 +9495,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -8919,6 +9513,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -9189,6 +9790,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -9203,6 +9808,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -9473,6 +10085,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -9487,6 +10103,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -9757,6 +10380,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -9771,6 +10398,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -10049,6 +10683,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -10063,6 +10701,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -10334,6 +10979,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -10348,6 +10997,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -10619,6 +11275,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -10633,6 +11293,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -10883,6 +11550,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -10897,6 +11568,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -11147,6 +11825,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -11161,6 +11843,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -11410,6 +12099,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -11424,6 +12117,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -11641,6 +12341,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -11655,6 +12359,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -11905,6 +12616,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -11919,6 +12634,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12136,6 +12858,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -12150,6 +12876,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12408,6 +13141,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -12422,6 +13159,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12682,6 +13426,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -12696,6 +13444,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -12955,6 +13710,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -12969,6 +13728,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -13226,6 +13992,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -13240,6 +14010,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -13499,6 +14276,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -13513,6 +14294,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -13752,6 +14540,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "seat:moderate",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -13766,6 +14558,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -14050,6 +14849,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "owner|self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -14064,6 +14867,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -14330,6 +15140,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -14344,6 +15158,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -14603,6 +15424,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -14617,6 +15442,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -14876,6 +15708,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -14890,6 +15726,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -15149,6 +15992,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -15163,6 +16010,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -15394,6 +16248,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "owner",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -15408,6 +16266,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -15670,6 +16535,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -15684,6 +16553,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -15938,6 +16814,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -15952,6 +16832,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -16208,6 +17095,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -16222,6 +17113,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -16479,6 +17377,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -16493,6 +17395,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -16750,6 +17659,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -16764,6 +17677,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -17007,6 +17927,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "owner|self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -17021,6 +17945,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -17282,6 +18213,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -17296,6 +18231,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -17548,6 +18490,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "owner|self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -17562,6 +18508,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -17825,6 +18778,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -17839,6 +18796,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -18095,6 +19059,10 @@
     "source": "code-v61",
     "registry": "per-leaf (CC 3.3.1)"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -18109,6 +19077,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -18377,6 +19352,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -18391,6 +19370,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -18652,6 +19638,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -18666,6 +19656,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -18926,6 +19923,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -18940,6 +19941,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -19201,6 +20209,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -19215,6 +20227,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -19476,6 +20495,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -19490,6 +20513,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -19743,6 +20773,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -19757,6 +20791,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -20015,6 +21056,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -20029,6 +21074,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -20284,6 +21336,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -20298,6 +21354,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -20552,6 +21615,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -20566,6 +21633,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -20821,6 +21895,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -20835,6 +21913,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -21089,6 +22174,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21103,6 +22192,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -21375,6 +22471,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21389,6 +22489,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -21661,6 +22768,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21675,6 +22786,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -21947,6 +23065,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -21961,6 +23083,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -22237,6 +23366,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -22251,6 +23384,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -22523,6 +23663,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -22537,6 +23681,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -22813,6 +23964,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -22827,6 +23982,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -23099,6 +24261,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:lenscore_detector",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -23113,6 +24279,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -23364,6 +24537,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -23378,6 +24555,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -23641,6 +24825,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -23655,6 +24843,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -23914,6 +25109,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -23928,6 +25127,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -24187,6 +25393,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -24201,6 +25411,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -24460,6 +25677,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -24474,6 +25695,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -24727,6 +25955,11 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -24741,6 +25974,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -25008,6 +26248,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -25022,6 +26266,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -25281,6 +26532,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -25295,6 +26550,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -25553,6 +26815,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -25567,6 +26833,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -25826,6 +27099,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -25840,6 +27117,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -26099,6 +27383,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26113,6 +27401,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -26375,6 +27670,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26389,6 +27688,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -26649,6 +27955,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26663,6 +27973,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -26922,6 +28239,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -26936,6 +28257,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -27195,6 +28523,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -27209,6 +28541,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -27465,6 +28804,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -27479,6 +28822,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -27739,6 +29089,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -27753,6 +29107,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -28026,6 +29387,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -28040,6 +29405,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -28309,6 +29681,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -28323,6 +29699,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -28592,6 +29975,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -28606,6 +29993,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -28865,6 +30257,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -28879,6 +30275,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -29145,6 +30548,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -29159,6 +30566,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -29384,6 +30798,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -29398,6 +30816,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -29645,6 +31070,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -29659,6 +31088,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -29892,6 +31328,10 @@
     "source": "code-v61",
     "registry": "-1 only"
    },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -29906,6 +31346,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -30141,6 +31588,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -30155,6 +31606,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -30422,6 +31880,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -30436,6 +31898,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -30696,6 +32165,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -30710,6 +32183,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -30969,6 +32449,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -30983,6 +32467,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -31242,6 +32733,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -31256,6 +32751,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -31515,6 +33017,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -31529,6 +33035,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -31759,6 +33272,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -31773,6 +33290,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -32011,6 +33535,11 @@
     "source": "code-v61",
     "registry": "-1 only"
    },
+   "emitter_class": {
+    "value": null,
+    "source": "gap",
+    "note": "signer rule names no emitter"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32025,6 +33554,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -32278,6 +33812,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32292,6 +33830,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -32522,6 +34067,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "owner",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32536,6 +34085,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -32675,6 +34231,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32689,6 +34249,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -32959,6 +34524,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -32973,6 +34542,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -33246,6 +34822,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -33260,6 +34840,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -33533,6 +35120,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -33547,6 +35138,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -33821,6 +35419,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -33835,6 +35437,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -34099,6 +35708,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -34113,6 +35726,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -34374,6 +35994,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -34388,6 +36012,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -34651,6 +36282,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -34665,6 +36300,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -34896,6 +36538,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -34910,6 +36556,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -35192,6 +36845,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "steward",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -35206,6 +36863,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -35465,6 +37129,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -35479,6 +37147,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -35739,6 +37414,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -35753,6 +37432,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -36025,6 +37711,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:moderate",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -36039,6 +37729,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -36299,6 +37994,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -36313,6 +38012,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -36572,6 +38276,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -36586,6 +38294,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -36845,6 +38560,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -36859,6 +38578,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -37119,6 +38845,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -37133,6 +38863,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -37391,6 +39128,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -37405,6 +39146,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -37666,6 +39414,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -37680,6 +39432,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -37909,6 +39668,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -37923,6 +39686,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -38145,6 +39915,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -38159,6 +39933,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -38387,6 +40168,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "owner",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -38401,6 +40186,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -38667,6 +40459,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -38681,6 +40477,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -38937,6 +40740,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -38951,6 +40758,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -39086,6 +40900,10 @@
     "source": "code-v61",
     "registry": "+1.0 only"
    },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -39100,6 +40918,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -39231,6 +41054,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -39245,6 +41072,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -39501,6 +41333,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -39515,6 +41351,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -39773,6 +41616,10 @@
     "source": "code-v61",
     "registry": "-1 / -0.5 only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -39787,6 +41634,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -40042,6 +41896,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40056,6 +41914,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -40311,6 +42176,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40325,6 +42194,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -40583,6 +42459,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40597,6 +42477,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -40855,6 +42742,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -40869,6 +42760,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -41140,6 +43038,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:slash",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -41154,6 +43056,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -41420,6 +43329,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -41434,6 +43347,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -41693,6 +43613,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -41707,6 +43631,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -41966,6 +43897,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -41980,6 +43915,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -42239,6 +44181,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -42253,6 +44199,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -42512,6 +44465,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -42526,6 +44483,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -42785,6 +44749,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -42799,6 +44767,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -43069,6 +45044,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:review",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -43083,6 +45062,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -43348,6 +45334,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -43362,6 +45352,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -43617,6 +45614,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -43631,6 +45632,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -43765,6 +45773,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "shut",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -43779,6 +45791,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -44033,6 +46050,10 @@
     "source": "code-v61",
     "registry": "-1 only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44047,6 +46068,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -44304,6 +46330,10 @@
     "source": "code-v61",
     "registry": "-1 only"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44318,6 +46348,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -44576,6 +46613,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44590,6 +46631,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -44852,6 +46900,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -44866,6 +46918,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -45128,6 +47187,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -45142,6 +47205,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -45391,6 +47461,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -45405,6 +47479,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -45664,6 +47745,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -45678,6 +47763,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -45937,6 +48029,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -45951,6 +48047,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [],
+    "source": "derived",
+    "note": "from erasure_route: sealed"
    },
    "verbs_code": {
     "value": [
@@ -46212,6 +48313,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "substrate:substrate_persist",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -46226,6 +48331,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -46461,6 +48573,10 @@
     "source": "code-v61",
     "registry": "-1 only"
    },
+   "emitter_class": {
+    "value": "seat:takedown",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -46475,6 +48591,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -46741,6 +48864,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -46755,6 +48882,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -47013,6 +49147,10 @@
     "source": "code-v61",
     "registry": "enumerated"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -47027,6 +49165,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -47276,6 +49421,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -47290,6 +49439,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -47545,6 +49701,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -47559,6 +49719,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -47817,6 +49984,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -47831,6 +50002,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48096,6 +50274,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "seat:attest",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -48110,6 +50292,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48368,6 +50557,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -48382,6 +50575,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48644,6 +50844,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "roster",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -48658,6 +50862,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -48921,6 +51132,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -48935,6 +51150,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49163,6 +51385,10 @@
     "source": "code-v61",
     "registry": "positive-only"
    },
+   "emitter_class": {
+    "value": "self",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -49177,6 +51403,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49436,6 +51669,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -49450,6 +51687,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49710,6 +51954,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -49724,6 +51972,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -49983,6 +52238,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -49997,6 +52256,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -50260,6 +52526,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "roster|seat:wa",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -50274,6 +52544,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -50546,6 +52823,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -50560,6 +52841,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -50818,6 +53106,10 @@
     "source": "code-v61",
     "registry": "signed"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -50832,6 +53124,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [
@@ -51090,6 +53389,10 @@
     "source": "code-v61",
     "registry": "boolean-via-score"
    },
+   "emitter_class": {
+    "value": "person",
+    "source": "derived"
+   },
    "derived": {
     "value": null,
     "source": "gap",
@@ -51104,6 +53407,13 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "blind": {
+    "value": [
+     "body.note"
+    ],
+    "source": "derived",
+    "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"
    },
    "verbs_code": {
     "value": [

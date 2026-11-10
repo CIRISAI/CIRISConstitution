@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "cc_version": "1.0-rc16",
-    "registry_sha256": "1a50538a5f7eef1e003fe31601331f7d575ebe72b022e6dfa22e88840f9267f5",
+    "cc_version": "1.0-rc17",
+    "registry_sha256": "8e1661d3c87404b9b5413a0bc7383133a364264945868726317019a762cd6c13",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },
@@ -743,6 +743,78 @@
       "family": "autonomy:{aspect}",
       "refusal": "namespace_dimension_case_malformed",
       "why": "a vocab segment carrying uppercase is malformed, never folded (R3)"
+    },
+    {
+      "dimension": "ballot:moderator:v1",
+      "family": "ballot:moderator",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "ballot:moderator:V1",
+      "family": "ballot:moderator",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:moderator:v1:v2",
+      "family": "ballot:moderator",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:moderator:v1beta",
+      "family": "ballot:moderator",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ballot:moderator:v1",
+      "family": "ballot:moderator",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:moderator",
+      "family": "ballot:moderator",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
+    },
+    {
+      "dimension": "ballot:moderator_acceptance:v1",
+      "family": "ballot:moderator_acceptance",
+      "refusal": null,
+      "why": "instantiated sample resolves to its row"
+    },
+    {
+      "dimension": "ballot:moderator_acceptance:V1",
+      "family": "ballot:moderator_acceptance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "an uppercase version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:moderator_acceptance:v1:v2",
+      "family": "ballot:moderator_acceptance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a duplicated version tail is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:moderator_acceptance:v1beta",
+      "family": "ballot:moderator_acceptance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a version-shaped tail that fails the version pattern is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "Ballot:moderator_acceptance:v1",
+      "family": "ballot:moderator_acceptance",
+      "refusal": "namespace_dimension_case_malformed",
+      "why": "a case-mutated registered stem is malformed, not open vocabulary"
+    },
+    {
+      "dimension": "ballot:moderator_acceptance",
+      "family": "ballot:moderator_acceptance",
+      "refusal": "missing_version_segment",
+      "why": "the trailing version segment is mandatory (R3 version_segment)"
     },
     {
       "dimension": "ballot:tally:id1:v1",

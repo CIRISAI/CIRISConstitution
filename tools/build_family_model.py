@@ -23,6 +23,7 @@ COLUMNS = OrderedDict([
     ("reference", "none | pre:<kind|any> | carry:<kind> (the row it names; only a carry is a cell of the carries grid)"),
     ("placement", "self_collective | targeted_family | targeted_room | commons | addressed"),
     ("signer_rule", "{self | owner_of_subject | seat_role(duty) | roster_member(at) | minter | steward | any_registered} x via {none | delegates_to(scope, depth, term, caps)} x conditions ⊆ {adult, capacitated, not_subject, not_author}"),
+    ("emitter_class", "derived from signer_rule: person (any registered key) | self | owner | seat:<duty> | roster | steward | substrate:<identity_type> | shut; several joined by |; the tier that writes the family's rows, read by nothing at admission"),
     ("subject_rule", "{subject_kind, cardinality, must_be_registered, for_key_id ∈ {none, serve_seat, recipient}, in_audience, attested_party, subject_blind}"),
     ("cosign_rule", "none | group_consensus_protocol | moderator_quorum | accord | deciding_seat_plus_outside"),
     ("polarity", "the registry's polarity class"),
@@ -32,6 +33,7 @@ COLUMNS = OrderedDict([
     ("replication", "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}"),
     ("projection", "{table, rebuild ∈ {byte_equal, none}}"),
     ("erasure_route", "dsar | purge | legal_hold | none"),
+    ("blind", "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild)"),
     ("confers", "trust | duty | standing | nothing (read by the trust-set fold, never by admission)"),
@@ -156,6 +158,33 @@ def freshness(t):
         W = int(m.group(1)) * {"h": 3600, "d": 86400, "s": 1}[m.group(2)] if m else None
         out["value"] = {"judged_at": "signed_instant_with_W", "W": W if W is not None else rest}
     return out
+EMITTER_RULES = [  # (regex over the signer text, class); the same vocabulary build_transitions.py maps to role tokens
+    (r"none \(held shut\)", "shut"),
+    (r"seat_role\((\w+)\)", "seat:{}"),
+    (r"identity_type contains (\w+)", "substrate:{}"),
+    (r"roster_member|\bcosign|holder quorum|\bquorum\b", "roster"),
+    (r"\bsteward\b", "steward"),
+    (r"owner_of_subject|owner_of\(|\bminter\b|\bowner\b", "owner"),
+    (r"any_registered", "person"),
+    (r"\bself\b", "self"),
+]
+def emitter_class(cell):
+    """Who writes the family's rows, as a class the tier table can be read off (CC#203): derived from the
+    signer rule's closed text; None with source gap where the rule itself is a gap."""
+    v = cell.get("value") if isinstance(cell, dict) else cell
+    if isinstance(v, dict): v = v.get("who")
+    raw = " | ".join(map(str, v)) if isinstance(v, list) else (str(v) if v is not None else "")
+    closed = cell.get("closed") if isinstance(cell, dict) else None
+    classes = set()
+    for text in (closed, raw):  # the closed head first; the raw cell only where the head names no emitter
+        for pat, cls in EMITTER_RULES:
+            for m in re.finditer(pat, text or ""):
+                classes.add(cls.format(m.group(1)) if "{}" in cls else cls)
+        if classes:
+            break
+    if not classes:
+        return {"value": None, "source": "gap", "note": "signer rule names no emitter"}
+    return {"value": "|".join(sorted(classes)), "source": "derived"}
 def signer(t):
     tag, rest = tag_of(t)
     out = leaf(t)
@@ -214,8 +243,17 @@ def main():
             row[col] = cell(col, z[zc]) if z else {"value": None, "source": "gap", "note": "not in the census"}
         pv = polarity_census(z["6_polarity"]) if z else None
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
+        row["emitter_class"] = emitter_class(row["signer_rule"])
         for col in ("derived", "confers", "binds_segment"):
             row[col] = {"value": None, "source": "gap", "note": "new column; values come with the manifest's first ruled version"}
+        er = row["erasure_route"].get("value")
+        erh = head_of(er) if isinstance(er, str) else (head_of(er[0]) if isinstance(er, list) and er else None)
+        if erh in ("dsar", "purge"):
+            row["blind"] = {"value": ["body.note"], "source": "derived", "note": "from erasure_route; further free-text and other-authored members are named with the family's ruled row"}
+        elif erh in ("none", "legal_hold"):
+            row["blind"] = {"value": [], "source": "derived", "note": "from erasure_route: sealed"}
+        else:
+            row["blind"] = {"value": None, "source": "gap", "note": "erasure_route unread"}
         if z:
             vc = [v.strip() for v in z.get("verbs_admitted", "").split(",") if v.strip()]
             row["verbs_code"] = {"value": vc, "delta_vs_cc": z.get("verbs_delta", ""), "source": "code-v61"}

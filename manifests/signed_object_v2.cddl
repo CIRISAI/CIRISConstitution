@@ -1,0 +1,77 @@
+; CC 2.6.1.8 — the signed object of the v62 edition (a release candidate of 1.0): CBOR and COSE,
+; aligned with SCITT (RFC 9943). PLANNED, hand-written; RFC 8610 CDDL over CBOR with CBOR
+; Deterministic Encoding (draft-ietf-cbor-cde, updating RFC 8949). The JSON/JCS object of 2.6.1.7
+; stays the signed object of every earlier candidate and verifies as itself for ever.
+
+; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
+; A quorum is several statements over the same payload bytes, one per signer, each with its own
+; statement id, found by the quorum key: the digest of the payload alone (below).
+ceg-statement = #6.18(COSE_Sign1)
+
+COSE_Sign1 = [
+  protected: bstr .cbor statement-protected,
+  unprotected: {
+    ? -70005: [+ bstr .cbor sd-disclosure],   ; blinded members as PRESENTED beside the statement to one who may see them; a disclosure
+                                   ; set is held and travels as bytes under the object's consent edge (CIRISPersist#914), never in the row
+    * int => any,                  ; a receipt (RFC 9942) may be added by a holder, never signed
+  },
+  payload: bstr .cbor attestation-envelope,
+  signature: bstr,                 ; the composite ML-DSA-65-Ed25519 signature of draft-ietf-jose-pq-composite-sigs
+]
+
+statement-protected = {
+  1: int,                          ; alg: the composite ML-DSA-65-Ed25519; private-use id -70100 until IANA assigns, the construction exactly the draft's
+  3: tstr,                         ; cty: "application/vnd.ciris.row+cbor;type=<one of the five>;family=<registry family>"
+  4: bstr,                         ; kid: the RFC 9679 thumbprint of the signer's AKP composite key (below)
+  15: cwt-claims,                  ; RFC 9597: iss and sub as RFC 9943 requires
+  16: tstr,                        ; typ (RFC 9596): "ceg-row/2", the domain separator of this object kind
+}
+
+cwt-claims = {
+  1: tstr,                         ; iss: the signer's stable identity reference (its genesis key's thumbprint URI), never the rotating kid
+  2: tstr,                         ; sub: what the row is about (the attested key or object reference)
+  6: uint,                         ; iat: floor(asserted_at / 1000), seconds, derived; a verifier refuses disagreement
+  ? 5: uint,                       ; nbf: floor(valid_from / 1000) where the row has one
+  ? 4: uint,                       ; exp: floor(valid_until / 1000) where the row has one
+  -70003: uint,                    ; edition: 2 for this object
+}
+
+; The envelope: the 2.6.1.7 member set less what the header now carries (type, family, author key),
+; every text and byte member bounded, no free text: `context` becomes a bounded `note` in the body.
+attestation-envelope = {
+  * tstr => any,                   ; typed members as 2.6.1.7 names them, absent never null
+  ? "asserted_at": ms-time, ? "valid_from": ms-time, ? "valid_until": ms-time,
+  ? "expires_at": ms-time,
+  ? "reason": uint,                ; a code from a closed registry, 0 = unspecified
+  ? "salt": bstr .size 16,        ; required where the content is low-entropy (a ballot, a census cell); bound by every signer
+  ? "_sd": [+ bstr .size 32],      ; digests of the blinded members, in mint order: present iff the row was minted erasable
+  ? "body": { ? "note": tstr .size (0..2048), * tstr => any },
+}
+
+; Erasability (CC 2.6.1.1, 2.6.1.8): the selective disclosure of draft-ietf-spice-sd-cwt, exactly; the
+; member name "_sd" and the header label -70005 are CIRIS-scoped until the draft's labels are assigned.
+; A blinded member is absent from the payload; its disclosure is [salt, name, value], its digest is
+; SHA-256 over the disclosure's deterministic encoding. A family whose erasure_route is dsar or purge
+; mints every free-text member and every member another party authored blind, body.note first; the
+; members are the family model's `blind` column, and no fold, verdict or admission reads one.
+sd-disclosure = [salt: bstr .size 16, name: tstr, value: any]
+ms-time = uint                     ; POSIX milliseconds, no tag, never a float (CC 2.6.2)
+
+; The statement id: SHA-256 over the deterministic encoding of this labelled structure, so one
+; statement has one id whatever its signatures, and no Sig_structure can be confused with it.
+statement-id-input = ["CEG-statement-id/2", protected: bstr, payload: bstr]
+statement-id = [ -16, bstr .size 32 ]   ; [COSE hash alg id (SHA-256), digest]: hash-agile
+
+; The quorum key: SHA-256 over the payload bstr's content alone, in the same hash-agile form, so the
+; statements of one quorum share one key whatever their signers; a fold counts them by person.
+quorum-key-input = ["CEG-quorum-key/2", payload: bstr]
+quorum-key = [ -16, bstr .size 32 ]
+
+; Keys: one AKP COSE_Key (RFC 9964 kty 7) whose alg is the composite and whose pub is the composite
+; public key encoding of the LAMPS draft; the kid is its RFC 9679 thumbprint, computed under the
+; private-use alg and fixed for the key's life (ids are CIRIS-scoped until the codepoint lands).
+ceg-key = { 1: 7, 3: int, -1: bstr }
+
+; Receipts over the provenance log and each stream's log are COSE Receipts (RFC 9942) with
+; vds = 1 (RFC9162_SHA256); each witness issues its own receipt over the same root, with its
+; instant in the protected header; a receipt is issued per batch of a stream, never per chunk.

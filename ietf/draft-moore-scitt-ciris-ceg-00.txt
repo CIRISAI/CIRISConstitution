@@ -4,8 +4,8 @@
 
 Supply Chain Integrity, Transparency, and Trust                 E. Moore
 Internet-Draft                                                 CIRIS L3C
-Intended status: Informational                           29 October 2026
-Expires: 2 May 2027
+Intended status: Informational                           4 November 2026
+Expires: 8 May 2027
 
 
     Signed Attestation Rows of the CIRIS Epistemic Grammar and Their
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Moore                      Expires 2 May 2027                   [Page 1]
+Moore                      Expires 8 May 2027                   [Page 1]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    Internet-Drafts are working documents of the Internet Engineering
@@ -68,7 +68,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 May 2027.
+   This Internet-Draft will expire on 8 May 2027.
 
 Copyright Notice
 
@@ -109,34 +109,35 @@ Table of Contents
 
 
 
-Moore                      Expires 2 May 2027                   [Page 2]
+Moore                      Expires 8 May 2027                   [Page 2]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
      5.3.  Keys  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
-   6.  Admission as a Registration Policy  . . . . . . . . . . . . .  13
-     6.1.  Who May Withdraw a Row  . . . . . . . . . . . . . . . . .  14
-   7.  The Safety Model the Rows Carry . . . . . . . . . . . . . . .  15
-     7.1.  Two Planes  . . . . . . . . . . . . . . . . . . . . . . .  15
-     7.2.  Consent-Bounded Flow  . . . . . . . . . . . . . . . . . .  16
-     7.3.  Accountable Key Relationships . . . . . . . . . . . . . .  16
-     7.4.  A Bounded Human Halt  . . . . . . . . . . . . . . . . . .  17
-     7.5.  What Is Not Claimed . . . . . . . . . . . . . . . . . . .  17
-   8.  Relationship to SCITT . . . . . . . . . . . . . . . . . . . .  17
-     8.1.  Roles . . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     8.2.  Differences . . . . . . . . . . . . . . . . . . . . . . .  18
-   9.  Lifecycle of an Agent Decision  . . . . . . . . . . . . . . .  19
-   10. Open Issues . . . . . . . . . . . . . . . . . . . . . . . . .  19
-   11. Implementation Status . . . . . . . . . . . . . . . . . . . .  20
-   12. Security Considerations . . . . . . . . . . . . . . . . . . .  20
-   13. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  21
-   14. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
-   15. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
-     15.1.  Normative References . . . . . . . . . . . . . . . . . .  22
-     15.2.  Informative References . . . . . . . . . . . . . . . . .  23
+   6.  The v62 Edition: CBOR and COSE  . . . . . . . . . . . . . . .  13
+   7.  Admission as a Registration Policy  . . . . . . . . . . . . .  13
+     7.1.  Who May Withdraw a Row  . . . . . . . . . . . . . . . . .  14
+   8.  The Safety Model the Rows Carry . . . . . . . . . . . . . . .  15
+     8.1.  Two Planes  . . . . . . . . . . . . . . . . . . . . . . .  15
+     8.2.  Consent-Bounded Flow  . . . . . . . . . . . . . . . . . .  16
+     8.3.  Accountable Key Relationships . . . . . . . . . . . . . .  16
+     8.4.  A Bounded Human Halt  . . . . . . . . . . . . . . . . . .  17
+     8.5.  What Is Not Claimed . . . . . . . . . . . . . . . . . . .  17
+   9.  Relationship to SCITT . . . . . . . . . . . . . . . . . . . .  17
+     9.1.  Roles . . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     9.2.  Differences . . . . . . . . . . . . . . . . . . . . . . .  18
+   10. Lifecycle of an Agent Decision  . . . . . . . . . . . . . . .  19
+   11. Open Issues . . . . . . . . . . . . . . . . . . . . . . . . .  19
+   12. Implementation Status . . . . . . . . . . . . . . . . . . . .  20
+   13. Security Considerations . . . . . . . . . . . . . . . . . . .  20
+   14. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  21
+   15. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
+   16. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     16.1.  Normative References . . . . . . . . . . . . . . . . . .  22
+     16.2.  Informative References . . . . . . . . . . . . . . . . .  23
    Appendix A.  CDDL . . . . . . . . . . . . . . . . . . . . . . . .  25
-   Appendix B.  Test Vectors . . . . . . . . . . . . . . . . . . . .  31
+   Appendix B.  Test Vectors . . . . . . . . . . . . . . . . . . . .  32
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  33
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  33
 
@@ -164,10 +165,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-
-Moore                      Expires 2 May 2027                   [Page 3]
+Moore                      Expires 8 May 2027                   [Page 3]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    *  The set of row types is closed, so that every row is subject to
@@ -178,8 +178,8 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    statements with a Transparency Service and returning receipts that
    prove registration.  CEG rows play a similar role in their own
    system, but the two were designed separately and differ in encoding
-   and in how proofs are delivered.  Section 8 describes the
-   relationship.  A COSE encoding of CEG rows is out of scope; Section 8
+   and in how proofs are delivered.  Section 9 describes the
+   relationship.  A COSE encoding of CEG rows is out of scope; Section 9
    says what one would need to cover.
 
 1.1.  Scope
@@ -196,15 +196,15 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    *  the hybrid signature and cosignatures (Section 5);
 
    *  the admission checks, written as a SCITT Registration Policy
-      (Section 6).
+      (Section 7).
 
    Informative only:
 
-   *  the safety properties the rows carry (Section 7);
+   *  the safety properties the rows carry (Section 8);
 
-   *  the relationship to SCITT roles (Section 8);
+   *  the relationship to SCITT roles (Section 9);
 
-   *  the lifecycle of an agent's decision record (Section 9).
+   *  the lifecycle of an agent's decision record (Section 10).
 
    Out of scope: the transport between nodes, the storage schema, the
    meaning of individual claim families (the "dimension" namespace), and
@@ -221,9 +221,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                   [Page 4]
+Moore                      Expires 8 May 2027                   [Page 4]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 1.3.  Terminology
@@ -277,9 +277,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                   [Page 5]
+Moore                      Expires 8 May 2027                   [Page 5]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 2.  The Signed Object
@@ -333,9 +333,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                   [Page 6]
+Moore                      Expires 8 May 2027                   [Page 6]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
      +---------------------------+-----------+-----------------------+
@@ -389,9 +389,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                   [Page 7]
+Moore                      Expires 8 May 2027                   [Page 7]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    subject_key_ids is always present in the mirror; an empty array means
@@ -445,14 +445,14 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                   [Page 8]
+Moore                      Expires 8 May 2027                   [Page 8]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    withdraws:  The attester retracts an earlier row, named by
       references_attestation_id, without saying the row was false.
-      Section 6.1 says who may withdraw a row.
+      Section 7.1 says who may withdraw a row.
 
    recants:  The attester says one of its own earlier rows was false
       when it was made.  Only the original attester can recant a row.
@@ -460,7 +460,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    A withdrawal and a recantation are different statements.  A
    withdrawal says "I no longer assert this"; a recantation says "this
    was wrong".  Consumers can weigh them differently, and the subject of
-   a row has authority over the first but not the second (Section 6.1).
+   a row has authority over the first but not the second (Section 7.1).
 
    A new kind of record is expressed as a new dimension on one of the
    five types, never as a sixth type.
@@ -501,9 +501,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                   [Page 9]
+Moore                      Expires 8 May 2027                   [Page 9]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    *  A set MUST be sorted in ascending order of the JCS serialisation
@@ -557,9 +557,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 10]
+Moore                      Expires 8 May 2027                  [Page 10]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
 4.6.  Size
@@ -613,9 +613,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 11]
+Moore                      Expires 8 May 2027                  [Page 11]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    [I-D.ietf-jose-pq-composite-sigs], in which both components sign the
@@ -669,9 +669,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 12]
+Moore                      Expires 8 May 2027                  [Page 12]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    *  the fingerprint in the key_id MUST match the SHA-256 digest of the
@@ -682,7 +682,31 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       key signed before that instant still stand and rows signed after
       it do not.
 
-6.  Admission as a Registration Policy
+6.  The v62 Edition: CBOR and COSE
+
+   A later release candidate of the grammar, the one that accompanies
+   the substrate's v62, moves the signed object from JSON with JCS to
+   CBOR with COSE, without changing what a row says.  A row becomes one
+   COSE_Sign1, a SCITT Signed Statement as [RFC9943] defines it: the row
+   type and family in the content type, the signer's key identifier in
+   kid, the issuer and subject in the CWT Claims header, which removes
+   the mirror of Section 2.2; a quorum (Section 5.2) becomes one Signed
+   Statement per signer over the same payload, found by a statement
+   identifier that excludes the signatures; the canonical form is the
+   deterministic encoding of [RFC8949] as the CBOR working group's
+   deterministic-encoding profile fixes it; the hybrid of Section 5
+   becomes the composite ML-DSA-65 with Ed25519 construction of the JOSE
+   and COSE working group, carried under a private-use algorithm
+   identifier until one is assigned; keys are composite COSE keys
+   identified by their thumbprints; receipts over the provenance and
+   stream logs are COSE Receipts [RFC9942] over the tree of RFC 9162.
+   Every row signed under the object of this document verifies as itself
+   under that edition.  The relationship to SCITT described in Section 9
+   is unchanged in one respect: there is still no Transparency Service
+   in the grammar's own architecture, and the rows are statements any
+   Transparency Service could register.
+
+7.  Admission as a Registration Policy
 
    [RFC9943] lets each Transparency Service define a Registration
    Policy: the checks a Signed Statement must pass before it is
@@ -701,33 +725,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Moore                      Expires 2 May 2027                  [Page 13]
+Moore                      Expires 8 May 2027                  [Page 13]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
     +=============================+===================================+
@@ -760,7 +760,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
     | 365 days                    |                                   |
     +-----------------------------+-----------------------------------+
     | Withdrawal meets            | federation_withdraws_not_admitted |
-    | Section 6.1                 |                                   |
+    | Section 7.1                 |                                   |
     +-----------------------------+-----------------------------------+
     | dimension resolves          | see [CC]                          |
     +-----------------------------+-----------------------------------+
@@ -773,7 +773,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    their tokens, are defined in [CC] and are outside the scope of this
    document.
 
-6.1.  Who May Withdraw a Row
+7.1.  Who May Withdraw a Row
 
    A withdraws row against a target row T is admitted when its attester
    meets any one of these rules:
@@ -781,9 +781,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 14]
+Moore                      Expires 8 May 2027                  [Page 14]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    1.  It is T's attester.
@@ -812,7 +812,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    Recantation is not covered by these rules.  Only T's attester can
    recant T.
 
-7.  The Safety Model the Rows Carry
+8.  The Safety Model the Rows Carry
 
    This section is informative.  [CC] is normative for every rule it
    summarises, and the section numbers given are those of [CC].
@@ -823,7 +823,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    says which member or check carries each property, and what is not
    claimed.
 
-7.1.  Two Planes
+8.1.  Two Planes
 
    The network has a public plane and a private plane.  The CIRIS
    documents call them the lightnet and the darknet.
@@ -837,9 +837,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 15]
+Moore                      Expires 8 May 2027                  [Page 15]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    The identity plane (lightnet) is public.  Key records, announced
@@ -860,7 +860,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    that it holds content scoped to a family or community outside that
    group.  Members relay for members.
 
-7.2.  Consent-Bounded Flow
+8.2.  Consent-Bounded Flow
 
    The rows apply the idea of contextual integrity: information flows
    appropriately when the flow matches the norms of the context it came
@@ -875,11 +875,11 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    (CC 4.4.3.8).  A row defaults to the smallest scope that fits its
    purpose; federation scope, the public commons, is an explicit choice
    (CC 1.13.3.4).  Consent is itself a row, and a subject can withdraw a
-   row about itself (Section 6.1).  Content in a private scope is never
+   row about itself (Section 7.1).  Content in a private scope is never
    scanned.  Known abuse images are checked for only when content is
    moved to federation scope or posted to a public room (CC 1.13.3.4).
 
-7.3.  Accountable Key Relationships
+8.3.  Accountable Key Relationships
 
    Some parties cannot accept obligations for themselves.  The rows give
    each of them a named human:
@@ -893,9 +893,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 16]
+Moore                      Expires 8 May 2027                  [Page 16]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    *  A minor has a guardian bound by a signed row (CC 3.4.13).
@@ -904,7 +904,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       lapses, the most trusted member is promoted in the same step (CC
       4.5.4).
 
-7.4.  A Bounded Human Halt
+8.4.  A Bounded Human Halt
 
    A trust root names a small set of human holders.  Any one holder can
    pause the agents that accepted that root with a single signed row.  A
@@ -915,7 +915,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    that never accepted the root is not affected, and any node can leave
    a root by withdrawing one row (CC 4.2.1, CC 4.2.6).
 
-7.5.  What Is Not Claimed
+8.5.  What Is Not Claimed
 
    Where [CC] speaks of anonymity, it means anonymity toward outsiders:
    a group's existence, and what its members do in it, are hidden from
@@ -936,7 +936,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    *  Nothing is detected inside private groups.  The design declines
       client-side scanning.
 
-8.  Relationship to SCITT
+9.  Relationship to SCITT
 
    This section is informative.
 
@@ -949,12 +949,12 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 17]
+Moore                      Expires 8 May 2027                  [Page 17]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
-8.1.  Roles
+9.1.  Roles
 
              +==================+===========================+
              | SCITT role ()    | CEG counterpart           |
@@ -965,20 +965,20 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
              |                  | and the hybrid signature. |
              +------------------+---------------------------+
              | Registration     | The admission checks of   |
-             | Policy           | Section 6.                |
+             | Policy           | Section 7.                |
              +------------------+---------------------------+
              | Transparency     | A Substrate with its RFC  |
              | Service          | 6962 logs [RFC6962].      |
              +------------------+---------------------------+
              | Receipt          | No direct counterpart;    |
-             |                  | see Section 8.2.          |
+             |                  | see Section 9.2.          |
              +------------------+---------------------------+
              | Relying Party    | A Consumer.               |
              +------------------+---------------------------+
 
              Table 3: SCITT roles and their CEG counterparts
 
-8.2.  Differences
+9.2.  Differences
 
    Encoding.  [RFC9943] requires Signed Statements to be COSE_Sign1
       [RFC9052] messages with an Issuer and a subject in the protected
@@ -1005,9 +1005,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 18]
+Moore                      Expires 8 May 2027                  [Page 18]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
       current or a named tree size, but it does not issue a receipt when
@@ -1028,7 +1028,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       name a registered dimension, so a Consumer can interpret any
       admitted row without out-of-band agreement.
 
-9.  Lifecycle of an Agent Decision
+10.  Lifecycle of an Agent Decision
 
    This section is informative.
 
@@ -1043,7 +1043,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    way.  Authority to act, and any transfer of it, is a delegates_to
    row.
 
-10.  Open Issues
+11.  Open Issues
 
    Note to the RFC Editor: please remove this section before
    publication.
@@ -1052,21 +1052,21 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       subject_key_ids set at admission, and does not yet emit the
       reasons content_hash_mismatch, envelope_row_member_unknown and
       subject_key_id_malformed, which [CC] named on 2026-10-21
-      (Section 11).
+      (Section 12).
 
-   *  No COSE encoding of a row is defined (Section 8.2).
+   *  No COSE encoding of a row is defined (Section 9.2).
 
-   *  No second implementation exists (Section 11).
-
-
+   *  No second implementation exists (Section 12).
 
 
-Moore                      Expires 2 May 2027                  [Page 19]
+
+
+Moore                      Expires 8 May 2027                  [Page 19]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
-11.  Implementation Status
+12.  Implementation Status
 
    Note to the RFC Editor: please remove this section before
    publication, together with the reference to [RFC7942].
@@ -1095,7 +1095,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    No second, independent implementation of the full signing and
    admission path exists yet.
 
-12.  Security Considerations
+13.  Security Considerations
 
    This section follows the guidance of [RFC3552].
 
@@ -1117,9 +1117,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 20]
+Moore                      Expires 8 May 2027                  [Page 20]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
       over the signing input and an ML-DSA-65 signature over the signing
@@ -1139,21 +1139,21 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       the key's digest matches the fingerprint, as Section 5 requires.
 
    Withdrawal.  The withdrawal rules let parties other than the attester
-      retract a row.  The precedence rules in Section 6.1 stop a subject
+      retract a row.  The precedence rules in Section 7.1 stop a subject
       from removing adverse findings about itself, and stop any single
       key from undoing a quorum's act.
 
    Single-signer logs.  Until witness cosignature is on, a Substrate's
       log head is signed by one key, and a Substrate can show different
       histories to different peers until the heads are compared
-      (Section 8.2).
+      (Section 9.2).
 
    Size.  The 1 MiB limit applies after parsing.  An implementation that
       reads an unbounded input in order to find out whether it fits is
       open to memory exhaustion; each intake path needs its own read
       limit.
 
-13.  Privacy Considerations
+14.  Privacy Considerations
 
    This section follows the guidance of [RFC6973].
 
@@ -1173,9 +1173,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 21]
+Moore                      Expires 8 May 2027                  [Page 21]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
       signed, through the mirror, so a relay cannot widen it.  It does
@@ -1186,13 +1186,13 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
       standing.  It does not remove the original row from nodes that
       already hold it.  [CC] defines a separate removal procedure.
 
-14.  IANA Considerations
+15.  IANA Considerations
 
    This document has no IANA actions.
 
-15.  References
+16.  References
 
-15.1.  Normative References
+16.1.  Normative References
 
    [FIPS204]  National Institute of Standards and Technology, "Module-
               Lattice-Based Digital Signature Standard", FIPS 204,
@@ -1229,9 +1229,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 22]
+Moore                      Expires 8 May 2027                  [Page 22]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
@@ -1245,6 +1245,11 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
               DOI 10.17487/RFC8785, June 2020,
               <https://www.rfc-editor.org/rfc/rfc8785>.
 
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8949>.
+
    [RFC9562]  Davis, K., Peabody, B., and P. Leach, "Universally Unique
               IDentifiers (UUIDs)", RFC 9562, DOI 10.17487/RFC9562, May
               2024, <https://www.rfc-editor.org/rfc/rfc9562>.
@@ -1255,7 +1260,7 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
               DOI 10.17487/RFC9943, June 2026,
               <https://www.rfc-editor.org/rfc/rfc9943>.
 
-15.2.  Informative References
+16.2.  Informative References
 
    [CC]       CIRIS L3C, "CIRIS Constitution 1.0-rc9", 21 October 2026,
               <https://github.com/CIRISAI/CIRISConstitution/tree/
@@ -1280,14 +1285,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-
-
-
-
-
-Moore                      Expires 2 May 2027                  [Page 23]
+Moore                      Expires 8 May 2027                  [Page 23]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    [I-D.ietf-lamps-pq-composite-sigs]
@@ -1341,9 +1341,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 24]
+Moore                      Expires 8 May 2027                  [Page 24]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    [RFC9964]  Prorock, M. and O. Steele, "ML-DSA for JSON Object Signing
@@ -1362,7 +1362,7 @@ Appendix A.  CDDL
    ; tools/build_cc_signed_object.py from
    ; constitution/signed_object.tsv; do not edit. RFC 8610 CDDL, JSON
    ; profile (Appendix E).
-   ; Typed from CIRISPersist ee30310f src/federation/envelope.rs.
+   ; Typed from CIRISPersist 7894b39c src/federation/envelope.rs.
    ; The signing input is JCS(attestation-row.attestation_envelope), RFC
    ; 8785, and nothing else.
 
@@ -1397,9 +1397,9 @@ Appendix A.  CDDL
 
 
 
-Moore                      Expires 2 May 2027                  [Page 25]
+Moore                      Expires 8 May 2027                  [Page 25]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
    ; signed (CC 2.6.1.1):
@@ -1453,9 +1453,9 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 26]
+Moore                      Expires 8 May 2027                  [Page 26]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
      ? epistemic_mode: "direct" / "crypto" / "hearsay" / "derivative"
@@ -1509,12 +1509,19 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
 
 
-Moore                      Expires 2 May 2027                  [Page 27]
+Moore                      Expires 8 May 2027                  [Page 27]
 
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
 
 
      ? delegation_valid_until: rfc3339-ms,
+     ; OPTIONAL on a delegates_to bearing trust:accepts:v1; default
+     ; absent (every class the authority's charter declares); array
+     ; kind: set
+     ? trust_classes: [* tstr],
+     ; OPTIONAL on a delegates_to bearing trust:accepts:v1; default
+     ; absent (0)
+     ? trust_depth: uint,
      ; OPTIONAL (capacity:*, observation:access_assumption:v1); default
      ; absent; array kind: sequence
      ? consent_basis: [* consent-basis],
@@ -1555,6 +1562,14 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; REQUIRED on observation:access_assumption:v1; default absent
      ? window_to: rfc3339-ms,
      ; REQUIRED on observation:access_assumption:v1; default absent;
+
+
+
+Moore                      Expires 8 May 2027                  [Page 28]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
      ; array kind: set
      ? channel_classes: [* tstr],
      ; REQUIRED on identity_amendment:v1; default absent
@@ -1562,14 +1577,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; REQUIRED on identity_amendment:v1; default absent
      ? authorized_by: uuid,
      ; REQUIRED on census:share:{class}:v1, census:member:share:v1;
-
-
-
-Moore                      Expires 2 May 2027                  [Page 28]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
-
      ; default absent
      ? for_key_id: key-id,
      ; REQUIRED on census:share:{class}:v1, census:member:share:v1,
@@ -1611,6 +1618,14 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; census:composite:{class}:v1, ballot:tally:{poll_id}:v1; default
      ; absent
      ? aggregation_algorithm_id: tstr,
+
+
+
+Moore                      Expires 8 May 2027                  [Page 29]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
      ; OPTIONAL on census:composite:{class}:v1,
      ; ballot:tally:{poll_id}:v1; default absent
      ? noise_floor_descriptor: tstr,
@@ -1618,14 +1633,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ; ballot:tally:{poll_id}:v1; default absent
      ? version: uint,
      ; REQUIRED on census:composite:{class}:v1,
-
-
-
-Moore                      Expires 2 May 2027                  [Page 29]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
-
      ; ballot:tally:{poll_id}:v1; default absent
      ? partial_a: uuid,
      ; REQUIRED on census:composite:{class}:v1,
@@ -1667,6 +1674,14 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      ? pubkey_ml_dsa_65_base64: base64,  ; REQUIRED for algorithm hybrid
      algorithm: tstr,  ; REQUIRED
      identity_type: tstr,  ; REQUIRED
+
+
+
+Moore                      Expires 8 May 2027                  [Page 30]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
      identity_ref: tstr,  ; REQUIRED
      valid_from: rfc3339,  ; REQUIRED
      ? valid_until: rfc3339,  ; OPTIONAL; default absent
@@ -1674,14 +1689,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
      original_content_hash: hex64,  ; REQUIRED
      scrub_signature_classical: base64,  ; REQUIRED
      ? scrub_signature_pqc: base64,  ; REQUIRED once hybrid-complete
-
-
-
-Moore                      Expires 2 May 2027                  [Page 30]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
-
      scrub_key_id: key-id,  ; REQUIRED
      scrub_timestamp: rfc3339,  ; REQUIRED
      ? pqc_completed_at: rfc3339,  ; OPTIONAL
@@ -1719,6 +1726,18 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
    ; is rfc3339-ms
    rfc3339 = tstr
 
+
+
+
+
+
+
+
+Moore                      Expires 8 May 2027                  [Page 31]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
 Appendix B.  Test Vectors
 
    [CC-VECTORS] holds two test identities and thirteen vectors: five
@@ -1729,14 +1748,6 @@ Appendix B.  Test Vectors
 
    The smallest vector is reproduced here.  The attester's Ed25519 seed
    is
-
-
-
-
-Moore                      Expires 2 May 2027                  [Page 31]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
 
    3e072ddf64847215af6d77de9efa0d95af5e2829abba3ff252cad647c8151593
 
@@ -1775,6 +1786,14 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
    f61e3b8bc13fbe4e09897fcf366c84264b69d16dc59d4f6c606cc86a7803fbed
 
+
+
+
+Moore                      Expires 8 May 2027                  [Page 32]
+
+Internet-Draft       CEG Attestation Rows and SCITT        November 2026
+
+
    and the Ed25519 signature, in base64, is
 
    ahk5YzITuIqtXaBl7fIChZ9x1sMkeuypdtuG/6O4Hm1iubzc/OJ0C/rG6QyJjPZt
@@ -1782,17 +1801,6 @@ Internet-Draft       CEG Attestation Rows and SCITT         October 2026
 
    (line break added for display).  The ML-DSA-65 key and one valid
    signature are in [CC-VECTORS].
-
-
-
-
-
-
-
-Moore                      Expires 2 May 2027                  [Page 32]
-
-Internet-Draft       CEG Attestation Rows and SCITT         October 2026
-
 
 Acknowledgments
 
@@ -1837,12 +1845,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-Moore                      Expires 2 May 2027                  [Page 33]
+Moore                      Expires 8 May 2027                  [Page 33]

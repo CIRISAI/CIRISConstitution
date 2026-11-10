@@ -30,6 +30,7 @@ normative:
   RFC8174:
   RFC8259:
   RFC8785:
+  RFC8949:
   RFC8032:
   RFC4648:
   RFC3339:
@@ -515,6 +516,10 @@ are registered and revoked.  Verification also requires that:
 - a revoked key MAY carry an instant `revoked_after`, so that rows the
   key signed before that instant still stand and rows signed after it
   do not.
+
+# The v62 Edition: CBOR and COSE {#cose}
+
+A later release candidate of the grammar, the one that accompanies the substrate's v62, moves the signed object from JSON with JCS to CBOR with COSE, without changing what a row says. A row becomes one COSE_Sign1, a SCITT Signed Statement as {{RFC9943}} defines it: the row type and family in the content type, the signer's key identifier in kid, the issuer and subject in the CWT Claims header, which removes the mirror of {{mirror}}; a quorum ({{cosign}}) becomes one Signed Statement per signer over the same payload, found by a statement identifier that excludes the signatures; the canonical form is the deterministic encoding of {{RFC8949}} as the CBOR working group's deterministic-encoding profile fixes it; the hybrid of {{sig}} becomes the composite ML-DSA-65 with Ed25519 construction of the JOSE and COSE working group, carried under a private-use algorithm identifier until one is assigned; keys are composite COSE keys identified by their thumbprints; receipts over the provenance and stream logs are COSE Receipts {{RFC9942}} over the tree of RFC 9162. Every row signed under the object of this document verifies as itself under that edition. The relationship to SCITT described in {{scitt}} is unchanged in one respect: there is still no Transparency Service in the grammar's own architecture, and the rows are statements any Transparency Service could register.
 
 # Admission as a Registration Policy {#admission}
 

@@ -2,11 +2,11 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "518704254f8527b5d52975e7c05267ac903eda6d620ca01a3adf9d7bfd893786",
+   "state_table_sha256": "b4f9dc9c9b02b1e42f3565f294c5bdcc184fe23fa789d4f48f5c5f9eb019cb2b",
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d409ecbc9a992c63a3ec2156670a438521f0426283902b608e12706b279f2ff9",
+   "claims_sha256": "f59d540314731eb1849d053e6b90f0989750cd473cef54a3973f7fe3e73b90d8",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -16,21 +16,21 @@
     "tag": "v0.5.232"
    },
    "evidence_pins": {
-    "CIRISServer": "8c1dec21",
-    "CIRISConformance": "6b43bf3",
+    "CIRISServer": "7af5d4eb",
+    "CIRISConformance": "674bf1c",
     "coherence-ratchet": "0c4edfb",
     "RATCHET": "c89356bd",
-    "CIRISAgent": "ffa18162",
-    "CIRISVerify": "3c16f9c6",
-    "CIRISPersist": "f5098295",
-    "CIRISEdge": "d44e1c57"
+    "CIRISAgent": "f0a07995",
+    "CIRISVerify": "7146fa4",
+    "CIRISPersist": "712575df",
+    "CIRISEdge": "e3d597c"
    }
   },
   "counts": {
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 539,
+   "claims": 592,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "690909edbf4b93d6370a56d662db8b0d58203fb902407541e81e7fde0bded453"
+  "chain_sha256": "0c9604a18b4a1e04971c2930b5310ba0eed3f29c53da4390a387d8a180562178"
  },
  "chain": [
   {
@@ -526,7 +526,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -1035,6 +1035,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -1343,7 +1359,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -1852,6 +1868,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -2707,7 +2739,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -3219,6 +3251,22 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -3465,7 +3513,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -3996,6 +4044,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -5877,6 +5941,30 @@
      "join": "by_invariant",
      "evidence": [
       {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/genesis_bundle.rs",
+       "symbols": [
+        "verify_genesis_bundle"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/genesis_bundle.rs",
+       "symbols": [
+        "authorization_digest"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/validation.rs",
+       "symbols": [
+        "select_trust_root"
+       ]
+      },
+      {
        "kind": "staged",
        "ticket": "CIRISConformance#90"
       },
@@ -5898,7 +5986,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -6037,6 +6125,30 @@
      "join": "by_invariant",
      "evidence": [
       {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/genesis_bundle.rs",
+       "symbols": [
+        "verify_genesis_bundle"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/genesis_bundle.rs",
+       "symbols": [
+        "authorization_digest"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/validation.rs",
+       "symbols": [
+        "select_trust_root"
+       ]
+      },
+      {
        "kind": "staged",
        "ticket": "CIRISConformance#90"
       },
@@ -6058,7 +6170,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -6281,7 +6393,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -6428,30 +6540,12 @@
     {
      "claim_id": "CLM-onion-layer-model",
      "cc_ref": "5.4.6",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_DealDeterministic",
-        "Inv_HostileShareBound",
-        "Inv_NeverWorse",
-        "Prop_FloorHonest"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
-        "hostile_share_bound",
-        "size_le",
-        "floor_needs_three_seats",
-        "dealt_le"
-       ]
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     },
@@ -6497,6 +6591,139 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#940"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#953"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-occurrence-addressed",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1140"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-costs",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#856"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-tier-carries-rooms",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-e2e-cover",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     }
@@ -6643,7 +6870,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -6790,30 +7017,12 @@
     {
      "claim_id": "CLM-onion-layer-model",
      "cc_ref": "5.4.6",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_DealDeterministic",
-        "Inv_HostileShareBound",
-        "Inv_NeverWorse",
-        "Prop_FloorHonest"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
-        "hostile_share_bound",
-        "size_le",
-        "floor_needs_three_seats",
-        "dealt_le"
-       ]
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     },
@@ -6859,6 +7068,139 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#940"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#953"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-occurrence-addressed",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1140"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-costs",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#856"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-tier-carries-rooms",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-e2e-cover",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     }
@@ -7074,7 +7416,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -7608,6 +7950,22 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -7939,20 +8297,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -8011,7 +8365,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -8043,6 +8397,58 @@
        "symbols": [
         "test_570_structural_invisibility"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moves-requested-required-appropriate",
+     "cc_ref": "5.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "moves_unasked"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "required_rows"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "invitations_naming"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "unasked_offer"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-bootstrap-round-bounded",
+     "cc_ref": "5.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
       }
      ]
     }
@@ -8896,7 +9302,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -9408,6 +9814,22 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -9698,7 +10120,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -9786,20 +10208,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -9882,20 +10300,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -9954,7 +10368,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -10265,7 +10679,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
@@ -10485,30 +10899,12 @@
     {
      "claim_id": "CLM-onion-layer-model",
      "cc_ref": "5.4.6",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_DealDeterministic",
-        "Inv_HostileShareBound",
-        "Inv_NeverWorse",
-        "Prop_FloorHonest"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
-        "hostile_share_bound",
-        "size_le",
-        "floor_needs_three_seats",
-        "dealt_le"
-       ]
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     },
@@ -10532,7 +10928,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -10566,6 +10962,139 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#940"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#953"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-occurrence-addressed",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1140"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-costs",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#856"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-tier-carries-rooms",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-e2e-cover",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     }
@@ -11419,7 +11948,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -11931,6 +12460,22 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -12233,30 +12778,12 @@
     {
      "claim_id": "CLM-onion-layer-model",
      "cc_ref": "5.4.6",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_DealDeterministic",
-        "Inv_HostileShareBound",
-        "Inv_NeverWorse",
-        "Prop_FloorHonest"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
-        "hostile_share_bound",
-        "size_le",
-        "floor_needs_three_seats",
-        "dealt_le"
-       ]
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     },
@@ -12280,7 +12807,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -12314,6 +12841,139 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#940"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#953"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-occurrence-addressed",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1140"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-costs",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#856"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-tier-carries-rooms",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-e2e-cover",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     }
@@ -12468,6 +13128,18 @@
      ]
     },
     {
+     "claim_id": "CLM-consent-grant-shape",
+     "cc_ref": "3.3.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#326"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-nsproc-attestation-prefixes-scores",
      "cc_ref": "3.3.7",
      "status": "established",
@@ -12606,6 +13278,18 @@
        "symbols": [
         "check_key_id_fingerprint"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-grant-shape",
+     "cc_ref": "3.3.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#326"
       }
      ]
     },
@@ -13659,7 +14343,7 @@
      "state": "chunked",
      "plane": "content",
      "cc_ref": "2.6.1.3 5.3.3 5.3.3.6",
-     "enters_by": "above the cap: fountain plane, chunk-DAG, per-device delivery receipts",
+     "enters_by": "above the cap: chunk plane, chunk-DAG, per-device delivery receipts",
      "signer": "producer",
      "model_ref": "mesh_life.MeshLife.tla:Write",
      "status": "modelled"
@@ -14996,6 +15680,30 @@
      "join": "by_invariant",
      "evidence": [
       {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/genesis_bundle.rs",
+       "symbols": [
+        "verify_genesis_bundle"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/genesis_bundle.rs",
+       "symbols": [
+        "authorization_digest"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISVerify",
+       "path": "src/ciris-verify-core/src/validation.rs",
+       "symbols": [
+        "select_trust_root"
+       ]
+      },
+      {
        "kind": "staged",
        "ticket": "CIRISConformance#90"
       },
@@ -15349,7 +16057,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -15880,6 +16588,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -17489,7 +18213,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -18025,6 +18749,22 @@
      ]
     },
     {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
+       ]
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-registry-named",
      "cc_ref": "4.5.4",
      "status": "established",
@@ -18068,6 +18808,30 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1173"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -18694,6 +19458,30 @@
        "ticket": "CIRISPersist#1173"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -18956,7 +19744,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -19487,6 +20275,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -19752,7 +20556,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -20283,6 +21087,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -22455,7 +23275,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -22602,30 +23422,12 @@
     {
      "claim_id": "CLM-onion-layer-model",
      "cc_ref": "5.4.6",
-     "status": "established",
+     "status": "staged",
      "join": "by_section",
      "evidence": [
       {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayers.tla",
-       "symbols": [
-        "Inv_DealDeterministic",
-        "Inv_HostileShareBound",
-        "Inv_NeverWorse",
-        "Prop_FloorHonest"
-       ]
-      },
-      {
-       "kind": "test",
-       "repo": "CIRISConstitution",
-       "path": "formal/onion_layers/OnionLayersCount.lean",
-       "symbols": [
-        "hostile_share_bound",
-        "size_le",
-        "floor_needs_three_seats",
-        "dealt_le"
-       ]
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     },
@@ -22671,6 +23473,139 @@
      "evidence": [
       {
        "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-stranger-carries-consent-free",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#940"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-relay-offered-by-default",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-referred-peer-is-proxy",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#953"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-first-contact-live-binding",
+     "cc_ref": "5.4.6",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISEdge",
+       "path": "src/replication/bridge.rs",
+       "symbols": [
+        "attestation_is_relayed_announce"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-occurrence-addressed",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1140"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-mode-dedicated-identity",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-moderator",
+     "cc_ref": "5.4.6",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-unannounced-costs",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#856"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-tier-carries-rooms",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-anonymous-e2e-cover",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISConstitution#202"
       }
      ]
     }
@@ -22944,7 +23879,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -23453,6 +24388,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -23702,7 +24653,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -24209,6 +25160,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -24458,7 +25425,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -24965,6 +25932,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -25374,7 +26357,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -25883,6 +26866,22 @@
        "path": "src/federation/admission.rs",
        "symbols": [
         "check_infrastructure_consensus_protocol"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
        ]
       }
      ]
@@ -27918,20 +28917,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -27990,7 +28985,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -28081,20 +29076,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -28153,7 +29144,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -28244,20 +29235,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -28316,7 +29303,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -28580,20 +29567,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -28652,7 +29635,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -29029,20 +30012,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -29101,7 +30080,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -29165,20 +30144,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -29237,7 +30212,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -32607,6 +33582,30 @@
        "ticket": "CIRISPersist#1173"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32740,6 +33739,30 @@
        "ticket": "CIRISPersist#1173"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -32871,6 +33894,30 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1173"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -33020,6 +34067,30 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#1173"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-moderate-is-appointed",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-founder-duty-survives-protocol-change",
+     "cc_ref": "4.5.4",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1195"
       }
      ]
     }
@@ -35679,6 +36750,18 @@
      ]
     },
     {
+     "claim_id": "CLM-consent-grant-shape",
+     "cc_ref": "3.3.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISServer#326"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-nsproc-attestation-prefixes-scores",
      "cc_ref": "3.3.7",
      "status": "established",
@@ -36786,6 +37869,17 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-takedown-chat-binding",
+     "cc_ref": "4.5.3",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -37279,6 +38373,17 @@
        "symbols": [
         "takedown_reversal"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-takedown-chat-binding",
+     "cc_ref": "4.5.3",
+     "status": "normative",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "normative-only"
       }
      ]
     }
@@ -44066,20 +45171,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -44138,7 +45239,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     }
@@ -45067,7 +46168,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISAgent#1316"
+       "ticket": "CIRISAgent#1347"
       }
      ]
     }
@@ -48563,7 +49664,7 @@
        "repo": "CIRISAgent",
        "path": "ciris_engine/logic/adapters/api/routes/emergency.py",
        "symbols": [
-        "is_authorized_key"
+        "_seated_wa"
        ]
       }
      ]
@@ -49097,6 +50198,22 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-pinned-trust-resolves",
+     "cc_ref": "3.2",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/canonical_community.rs",
+       "symbols": [
+        "resolve_community"
+       ]
+      }
+     ]
     }
    ],
    "promised_by": []
@@ -49128,20 +50245,16 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
     {
      "claim_id": "CLM-self-roster-authority",
      "cc_ref": "3.3.6.3",
-     "status": "staged",
+     "status": "established",
      "join": "by_section",
      "evidence": [
-      {
-       "kind": "staged",
-       "ticket": "CIRISServer#793"
-      },
       {
        "kind": "impl",
        "repo": "CIRISPersist",
@@ -49200,7 +50313,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISServer#793"
+       "ticket": "CIRISServer#869"
       }
      ]
     },
