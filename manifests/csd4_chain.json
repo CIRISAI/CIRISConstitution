@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "6289ab26763fbc44768271ee852e74cf164f36f1d556cd3f548cea0ab869cf04",
+   "claims_sha256": "efd93cf46e1e956af679022fee3d5b0f976cba0f32de9a7677d9801ede76b3cb",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 595,
+   "claims": 596,
    "entries": 20,
    "refusal_tokens": 105
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "bbfdef22cd6f5073942489abd713aaaea900cafa36bcfbf31b5855c55734d8e2"
+  "chain_sha256": "239dca1f00b9899d5668291cd5deeed3b7731f960af4fe92452700f2478c6e3d"
  },
  "chain": [
   {
@@ -50798,6 +50798,18 @@
        "ticket": "CIRISPersist#991"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
+      }
+     ]
     }
    ],
    "promised_by": []
@@ -50902,6 +50914,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#991"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
       }
      ]
     }
@@ -51010,6 +51034,18 @@
        "ticket": "CIRISPersist#991"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
+      }
+     ]
     }
    ],
    "promised_by": []
@@ -51114,6 +51150,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#991"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
       }
      ]
     }
@@ -51222,6 +51270,18 @@
        "ticket": "CIRISPersist#991"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
+      }
+     ]
     }
    ],
    "promised_by": []
@@ -51328,6 +51388,18 @@
        "ticket": "CIRISPersist#991"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
+      }
+     ]
     }
    ],
    "promised_by": []
@@ -51416,6 +51488,18 @@
        "ticket": "CIRISPersist#991"
       }
      ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
+      }
+     ]
     }
    ],
    "promised_by": []
@@ -51502,6 +51586,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#991"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
       }
      ]
     }
@@ -51599,6 +51695,18 @@
       {
        "kind": "staged",
        "ticket": "CIRISPersist#991"
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-goal-group-vote",
+     "cc_ref": "3.1.9.7",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1256"
       }
      ]
     }
