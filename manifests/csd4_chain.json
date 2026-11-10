@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "3e27c6eb48465435fed894771e799183de7dc2c4b715ae2f86d5a85311c2947c",
+   "claims_sha256": "f2ac823f81a86c4014609c4990416294a2ae9b5aa717b83094fd998abeca94ae",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "6426e0ed0ca559b23a413c41d8b66557182287d8a7d6c6266effd39735fb0b18"
+  "chain_sha256": "5d51ddbca67ee28f94baf6b94c2c007f5d0d2e0de163541e00d64093a8081116"
  },
  "chain": [
   {
@@ -6393,7 +6393,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -6858,7 +6858,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -10892,7 +10892,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -12759,7 +12759,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
@@ -23215,7 +23215,7 @@
      "evidence": [
       {
        "kind": "staged",
-       "ticket": "CIRISEdge#922"
+       "ticket": "CIRISEdge#972"
       }
      ]
     },
