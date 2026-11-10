@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "ea6c7eb7bfc9a6c0b76becd725993bca4cf8179cb9974d020ad907be1de1bf4f",
+   "claims_sha256": "9e168a5ce5b238286b280f460e8c8275ad09db2279d281f12f5ced230cda625b",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 591,
+   "claims": 592,
    "entries": 20,
    "refusal_tokens": 103
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "7b0b1dc540d26c1747149470a81f0575f50c32611fff2daff88c888240aed9dd"
+  "chain_sha256": "72e91b0ec8b5145e6963537ae500cf2cf79c99d43b4bf9342b6814449895ba43"
  },
  "chain": [
   {
@@ -6646,6 +6646,18 @@
      ]
     },
     {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-unannounced-occurrence-addressed",
      "cc_ref": "5.4.6",
      "status": "staged",
@@ -7107,6 +7119,18 @@
        "symbols": [
         "attestation_is_relayed_announce"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
       }
      ]
     },
@@ -10993,6 +11017,18 @@
      ]
     },
     {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-unannounced-occurrence-addressed",
      "cc_ref": "5.4.6",
      "status": "staged",
@@ -12856,6 +12892,18 @@
        "symbols": [
         "attestation_is_relayed_announce"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
       }
      ]
     },
@@ -23476,6 +23524,18 @@
        "symbols": [
         "attestation_is_relayed_announce"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-discovery-directory-cached",
+     "cc_ref": "5.4.6",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISEdge#973"
       }
      ]
     },
