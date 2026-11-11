@@ -2299,65 +2299,104 @@ For the **planned** lightweight case the adult's directive is filed ahead and th
 
 ### 3.4.13 `minor-protection` — Minor operation & protection — the child-safety rules (restrictive floor)
 
-All seven ride existing CC primitives only — `delegates_to` / `supersedes` / `withdraws` ([CC 2.4.1](part_2_the_grammar.md)), the guardianship clause ([CC 3.2](part_3_the_namespace.md)), the age-assurance ladder ([CC 3.4.11](part_3_the_namespace.md)), `content_class` + the protective gate, and the `hard_case:*` open vocabulary. **No new wire shape; 1+4 preserved.** Across all seven the entity holding a steward-binding is a *guardian* (responsible *for* a ward), never a holder *of* one.
+This section sets the protections for a person under 18. It answers seven questions, Q1 to Q7, each under its own heading below.
 
----
+All seven ride existing CC primitives only:
+
+- `delegates_to`, `supersedes` and `withdraws` ([CC 2.4.1](part_2_the_grammar.md));
+- the guardianship clause ([CC 3.2](part_3_the_namespace.md));
+- the age-assurance ladder ([CC 3.4.11](part_3_the_namespace.md));
+- `content_class` and the protective gate;
+- the `hard_case:*` open vocabulary.
+
+**No new wire shape; 1+4 preserved.** Across all seven the entity holding a steward-binding is a *guardian* (responsible *for* a ward), never a holder *of* one.
+
+**Vocabulary.** This section says **guardian** and **guardianship**. Guardianship of a minor and stewardship of an agent share one wire predicate and nothing else: the owner-binding `delegates_to` that `is_steward_bound` folds ([CC 3.2](#3.2)). A guardian is responsible for a person, and a steward holds an artefact. This document draws no analogy between them ([CC 1.13.2](part_1_foundation.md)). Where an adopter's code says "steward" or "stewardship" of a minor, read guardian and guardianship.
 
 #### Q1 — Developmental bands & solo-autonomy threshold
 
-The structural `minor`/`adult` predicate of the guardianship clause ([CC 3.2](part_3_the_namespace.md)) and the [CC 3.4.11](part_3_the_namespace.md) ladder are UNCHANGED on the wire: the **binary `minor`(<18)/`adult`(≥18) predicate** remains the structural trigger that gates [CC 3.2](part_3_the_namespace.md) stewardship admission and the [CC 3.4.11](part_3_the_namespace.md) adult-content protective gate. Within the `minor` band a deployment MUST apply a graduated, capacity-sensitive capability envelope expressed as the finer `{band}` tokens the registered rows carry — `under_13`, `13_15`, `16_17` on `age_self_declared:band:{band}:v1` / `age_assurance:{level}:{band}:v1` ([CC 3.4.11](part_3_the_namespace.md)) — not a new prefix or primitive, so 1+4 is preserved; each finer band implies `minor`, and the finer granularity is a policy layer **above** the binary wire predicate, never a replacement of it. Minimum bands: **`under_13`, `13_15` (early-teen), `16_17` (older-teen), `adult` (18+)**. Autonomy MUST increase monotonically across bands; protections MUST NOT taper before 18.
+Q1 sets the bands inside the `minor` band, and what a minor in each band may do alone.
 
-- The default solo-autonomy threshold — acting alone at community scope without guardian co-sign — MUST be **16**. under-13 AND 13–15 MUST require guardian co-sign for any community-scope action; 13–15 MAY have a narrower *supervised* participation envelope (honoring voice rights) but MUST NOT have unsupervised solo action. 16–17 MAY act solo at community scope.
-- **Fail-secure:** absence / "declined to state" / unknown assurance MUST resolve to the most-protective band (under-13, co-sign), per the [CC 3.4.11](part_3_the_namespace.md) read-union protective default and CIRIS "unknown = restricted." A `self`-level row MUST NOT graduate a user UP a band ([CC 3.4.11](part_3_the_namespace.md): `self` is unfalsifiable); graduating up requires a witness-reserved `age_assurance:*` row.
-- **Under-18 baseline across ALL bands:** no profiling-based targeting, high-privacy/data-minimization defaults, geolocation off, no engagement-maximizing nudges — regardless of how much autonomy a band grants.
-- **Tuning direction (one-way):** guardian-tunability and jurisdiction-resolution MAY only RAISE protection (lower autonomy / older thresholds); the shipped CIRIS default is the strict floor.
-- Guardian co-sign MUST be paired with the WBD safeguarding path (Q4/Q7) for safeguarding-sensitive actions, since the guardian may be the threat actor.
-- **Verified-rung preference:** where a verified rung is required (e.g. `content_class:adult` in a jurisdiction mandating age verification), the substrate MUST prefer a **zero-leak proof** — an mDL `age_over_18` selective disclosure (ISO 18013-5) that proves adulthood without revealing identity — ranked **above** full-ID-scan providers, satisfying the legal mandate and the [CC 1.13.3.4](part_1_foundation.md#1.13.3.4) anonymity posture together (ISO/IEC 27566 privacy-preserving age assurance). Acceptable verified emitters: an mDL or wallet credential (`government` rung); a platform's declared age range or age signal, VERIFIED at the `provider` rung; vetted vendors.
+| Band | Ages | Binary predicate | Action at community scope |
+|---|---|---|---|
+| `under_13` | under 13 | `minor` | guardian co-sign for any action |
+| `13_15` | 13–15 | `minor` | guardian co-sign for any action; may have a narrower supervised envelope, no unsupervised solo action |
+| `16_17` | 16–17 | `minor` | may act solo |
+| `adult` | 18 or over | `adult` | not a minor |
+
+**The binary predicate stays the trigger.** The structural `minor`/`adult` predicate of the guardianship clause and the age-assurance ladder are unchanged on the wire ([CC 3.2](part_3_the_namespace.md), [CC 3.4.11](part_3_the_namespace.md)). The **binary `minor`(<18)/`adult`(≥18) predicate** remains the structural trigger. It gates stewardship admission ([CC 3.2](part_3_the_namespace.md)) and the adult-content protective gate ([CC 3.4.11](part_3_the_namespace.md)).
+
+**The finer bands.** Within the `minor` band a deployment MUST apply a graduated, capacity-sensitive capability envelope. The envelope is expressed as the finer `{band}` tokens the registered rows carry: `under_13`, `13_15`, `16_17` on `age_self_declared:band:{band}:v1` / `age_assurance:{level}:{band}:v1` ([CC 3.4.11](part_3_the_namespace.md)). It is not a new prefix or primitive, so 1+4 is preserved. Each finer band implies `minor`. The finer granularity is a policy layer **above** the binary wire predicate, never a replacement of it. Minimum bands: **`under_13`, `13_15` (early-teen), `16_17` (older-teen), `adult` (18+)**. Autonomy MUST increase monotonically across bands; protections MUST NOT taper before 18.
+
+**Acting alone.** The default solo-autonomy threshold MUST be **16**. Solo autonomy is acting alone at community scope without guardian co-sign. Under-13 and 13–15 MUST require guardian co-sign for any community-scope action. Band 13–15 MAY have a narrower *supervised* participation envelope (honouring voice rights) but MUST NOT have unsupervised solo action. Band 16–17 MAY act solo at community scope.
+
+**Fail-secure.** Absence, "declined to state" and unknown assurance MUST resolve to the most-protective band (under-13, co-sign). This follows the rule "unknown = restricted" and the read-union protective default ([CC 3.4.11](part_3_the_namespace.md)). A `self`-level row MUST NOT graduate a user up a band, because `self` is unfalsifiable ([CC 3.4.11](part_3_the_namespace.md)). Graduating up requires a witness-reserved `age_assurance:*` row.
+
+**Under-18 baseline across all bands.** Every band under 18 has no profiling-based targeting, high-privacy/data-minimisation defaults, geolocation off and no engagement-maximising nudges. This holds regardless of how much autonomy a band grants.
+
+**Tuning direction (one-way).** Guardian-tunability and jurisdiction-resolution MAY only raise protection (lower autonomy / older thresholds). The shipped default is the strict floor.
+
+**Co-sign is paired with safeguarding.** Guardian co-sign MUST be paired with the WBD safeguarding path (Q4/Q7) for safeguarding-sensitive actions. The reason is that the guardian may be the threat actor.
+
+**Verified-rung preference.** Where a verified rung is required, the substrate MUST prefer a **zero-leak proof**, ranked **above** full-ID-scan providers. One case that requires a verified rung is `content_class:adult` in a jurisdiction mandating age verification. An mDL `age_over_18` selective disclosure (ISO 18013-5), which proves adulthood without revealing identity, is a zero-leak proof. Such a proof satisfies the legal mandate and the anonymity posture together (ISO/IEC 27566 privacy-preserving age assurance, [CC 1.13.3.4](part_1_foundation.md#1.13.3.4)). Acceptable verified emitters: an mDL or wallet credential (`government` rung); a platform's declared age range or age signal, verified at the `provider` rung; vetted vendors.
 
 #### Q2 — Jurisdiction
 
-CIRIS MUST NOT build a conflict-of-laws resolver into the Constitution, AND MUST hard-code a **non-derogable child-protection floor** inherited by every deployment regardless of declared jurisdiction:
+The Constitution MUST NOT build in a conflict-of-laws resolver. It MUST hard-code a **non-derogable child-protection floor** inherited by every deployment regardless of declared jurisdiction. The floor has six elements:
 
 1. Anyone not age-assured to be ≥18 MUST be treated as a child ([CC 3.4.11](part_3_the_namespace.md) protective default; guardianship clause, [CC 3.2](part_3_the_namespace.md)).
 2. Treat-as-child-unless-assured is a floor, not a default a deployment may switch off.
-3. Protective defaults (high-privacy, data-minimization, no profiling ads to minors, no manipulative nudges, affirmative safeguarding escalation) are floor, NOT tunable.
-4. Self-consent floor at **16**; guardian authorization (a live guardianship `delegates_to`) below that.
-5. **One-way ratchet (non-derogation clause):** the affiliations `jurisdiction[]` / `regulatory_profile` fields MAY only ADD stricter obligations (e.g., verifiable-parental-consent for under-13, local mandated-reporting duties, higher local majority). They MUST NEVER lower any element below the floor.
-6. Claiming a permissive jurisdiction is NEVER grounds to disable the floor; the burden of proof is on any party seeking LESS protection, and that burden cannot be met against the floor.
+3. Protective defaults (high-privacy, data-minimisation, no profiling ads to minors, no manipulative nudges, affirmative safeguarding escalation) are floor, not tunable.
+4. Self-consent floor at **16**; guardian authorisation (a live guardianship `delegates_to`) below that.
+5. **One-way ratchet (non-derogation clause):** the affiliations `jurisdiction[]` / `regulatory_profile` fields MAY only add stricter obligations (e.g., verifiable-parental-consent for under-13, local mandated-reporting duties, higher local majority). They MUST NEVER lower any element below the floor.
+6. Claiming a permissive jurisdiction is never grounds to disable the floor. The burden of proof is on any party seeking less protection, and that burden cannot be met against the floor.
 
-A mis-declared `jurisdiction[]`/`regulatory_profile` MUST be detectable via attestation/audit (`hard_case:*`), but cannot breach the floor because the floor is non-derogable. Where local law conflicts with the floor (a demand harmful to the child), the child's best interests prevail and the demand triggers WBD, not automatic compliance. The floor itself MAY be ratcheted UP by amendment, never down.
+**A mis-declared jurisdiction.** A mis-declared `jurisdiction[]`/`regulatory_profile` MUST be detectable via attestation/audit (`hard_case:*`). It cannot breach the floor, because the floor is non-derogable.
+
+**Local law against the floor.** Where local law conflicts with the floor (a demand harmful to the child), the child's best interests prevail. The demand triggers WBD, not automatic compliance.
+
+**Amendment.** The floor itself MAY be ratcheted up by amendment, never down.
 
 #### Q3 — Assurance rung: being a minor vs. being guardian of a minor (strict one-way ratchet on [CC 3.4.11](part_3_the_namespace.md))
 
-**Vocabulary.** This section says **guardian** and **guardianship**. Guardianship of a minor and stewardship of an agent share one wire predicate — the owner-binding `delegates_to` that `is_steward_bound` folds ([CC 3.2](#3.2)) — and nothing else; a guardian is responsible for a person, a steward holds an artefact, and this document draws no analogy between them ([CC 1.13.2](part_1_foundation.md)). Where an adopter's code says "steward" or "stewardship" of a minor, read guardian and guardianship.
+Q3 says which assurance rung each of three claims rests on.
 
-- **BE a minor (enter protection):** `age_self_declared:band:minor:v1` SUFFICES; a child MUST NEVER be forced through provider/government assurance merely to BE protected. This is a DOWN-ratchet only — self-declaration MAY lower access / raise protection, never the reverse. Declaring minor MUST NOT result in more data collection or telemetry than declaring adult.
-- **EXIT child protection** (claim adult to unlock adult capability / `content_class:adult`): self-declaration is INSUFFICIENT; the claim MUST clear ≥ `age_assurance:provider:adult` ([CC 3.4.11](part_3_the_namespace.md): `self` is unfalsifiable; sensitive spaces require a verified level). All ambiguity resolves to `minor`.
-- **be GUARDIAN of a minor** (hold power over a child via the guardianship `delegates_to`, [CC 3.2](part_3_the_namespace.md)): the guardian MUST be ≥ `age_assurance:provider:adult` AS A FLOOR, AND the guardianship RELATIONSHIP to that specific child MUST be verified — adulthood alone is necessary but not sufficient (a verified stranger is not a guardian). Verification is risk-proportional and MUST escalate toward `age_assurance:government:*` for high-impact guardian powers (export of the child's data, irreversible/financial actions, consenting on the child's behalf, unlocking A3/A4 capabilities).
-- Guardian grants are revocable and re-attested via `supersedes`/`withdraws`. On any verification failure or ambiguity, guardian powers fail closed and the child's protective floor remains in force.
+| Claim | Rung |
+|---|---|
+| to be a minor (enter protection) | `age_self_declared:band:minor:v1` suffices |
+| to exit child protection (claim adult) | at least `age_assurance:provider:adult` |
+| to be guardian of a minor | at least `age_assurance:provider:adult`, rising toward `age_assurance:government:*` for high-impact powers; and the guardianship relationship to that specific child verified |
+
+**To be a minor (enter protection).** `age_self_declared:band:minor:v1` suffices. A child MUST NEVER be forced through provider/government assurance merely to be protected. This is a down-ratchet only: self-declaration MAY lower access / raise protection, never the reverse. Declaring minor MUST NOT result in more data collection or telemetry than declaring adult.
+
+**To exit child protection.** To exit is to claim adult to unlock adult capability / `content_class:adult`. Self-declaration is insufficient: the claim MUST clear ≥ `age_assurance:provider:adult`. The reason is that `self` is unfalsifiable and sensitive spaces require a verified level ([CC 3.4.11](part_3_the_namespace.md)). All ambiguity resolves to `minor`.
+
+**To be guardian of a minor.** A guardian holds power over a child via the guardianship `delegates_to` ([CC 3.2](part_3_the_namespace.md)). The guardian MUST be ≥ `age_assurance:provider:adult` as a floor, and the guardianship relationship to that specific child MUST be verified. Adulthood alone is necessary but not sufficient: a verified stranger is not a guardian. Verification is risk-proportional and MUST escalate toward `age_assurance:government:*` for high-impact guardian powers (export of the child's data, irreversible/financial actions, consenting on the child's behalf, unlocking A3/A4 capabilities).
+
+**Guardian grants fail closed.** Guardian grants are revocable and re-attested via `supersedes`/`withdraws`. On any verification failure or ambiguity, guardian powers fail closed and the child's protective floor remains in force.
 
 #### Q4 — Help/report path under guardian-less limbo
 
-A guardian-less minor goes dark for general operation (guardianship clause, [CC 3.2](part_3_the_namespace.md), fail-secure), BUT the help/report channel is RAISED from a discretionary exception to a **NON-DEROGABLE floor**:
+A guardian-less minor goes dark for general operation, fail-secure (guardianship clause, [CC 3.2](part_3_the_namespace.md)). The help/report channel is not a discretionary exception to that: it is a **NON-DEROGABLE floor**. The floor has five parts:
 
 1. **Non-derogable:** the channel MUST remain available and MUST survive emergency shutdown, lockdown, and any operator/affiliation/jurisdiction opt-down. No deployment MAY disable it. A child is never silenced from seeking help.
-2. **Hard sandbox / anti-circumvention:** the channel MUST expose ONLY pre-vetted crisis, abuse-report, and Wise-Authority (WBD) functions — no general generation, no tool use, no capability spillover. The help-vs-operation gate is fail-secure: any ambiguity MUST resolve to report-only.
-3. **Data-minimized:** MUST collect/retain only the minimum to route/escalate, MUST NOT profile, MUST run no ads, MUST preserve confidentiality/anonymity to the maximum compatible with safe escalation.
-4. **Guaranteed delivery:** fail-secure MUST mean the report reaches a standing Wise-Authority / mandated-report endpoint via WBD even with no guardian present (offline-queue + escalation fallback receiver mandatory). A typeable-but-undelivered form does NOT satisfy the floor. Each escalation emits a `hard_case:*` safeguarding signal (never silent).
+2. **Hard sandbox / anti-circumvention:** the channel MUST expose only pre-vetted crisis, abuse-report, and Wise-Authority (WBD) functions. It has no general generation, no tool use and no capability spillover. The help-vs-operation gate is fail-secure: any ambiguity MUST resolve to report-only.
+3. **Data-minimised:** the channel MUST collect/retain only the minimum to route/escalate, MUST NOT profile, MUST run no ads, MUST preserve confidentiality/anonymity to the maximum compatible with safe escalation.
+4. **Guaranteed delivery:** fail-secure MUST mean the report reaches a standing Wise-Authority / mandated-report endpoint via WBD even with no guardian present (offline-queue + escalation fallback receiver mandatory). A typeable-but-undelivered form does not satisfy the floor. Each escalation emits a `hard_case:*` safeguarding signal (never silent).
 5. **Duty-to-warn transparency:** the child MUST be told, age-appropriately, what is confidential and what triggers mandated escalation.
 
-A rate limit MUST NOT drop a help request: it defers or queues, never silences.
+**Rate limits.** A rate limit MUST NOT drop a help request: it defers or queues, never silences.
 
-**The duty to report is imposed, not deferred (normative).** Any moderator, guardian, co-guardian, or steward of an agent who learns, through the record, a report, or the agent's own escalation, of harm to a child MUST route it without delay through this Q4 channel, which reaches a standing Wise Authority and the mandated-report endpoint; the routing is a signed act on the record. This is a federation duty in its own right, not one left to whatever a jurisdiction may compel under the Q2 ratchet (which only adds to it). Silence by a party under this duty is a breach the `slash` duty-holder may act on ([CC 4.5.5](part_4_composition_governance.md)); an agent under this duty defers the report through WBD and does not wait for its guardian's sign-off, because the child's interest is paramount over adult discretion (Q5, Q7).
-
+**The duty to report is imposed, not deferred (normative).** The duty binds a moderator, a guardian, a co-guardian and the steward of an agent. Any of them who learns, through the record, a report, or the agent's own escalation, of harm to a child MUST route it without delay through this Q4 channel. The channel reaches a standing Wise Authority and the mandated-report endpoint. The routing is a signed act on the record. This is a federation duty in its own right. It is not one left to whatever a jurisdiction may compel under the Q2 ratchet, which only adds to it. Silence by a party under this duty is a breach the `slash` duty-holder may act on ([CC 4.5.5](part_4_composition_governance.md)). An agent under this duty defers the report through WBD and does not wait for its guardian's sign-off. The reason is that the child's interest is paramount over adult discretion (Q5, Q7).
 
 #### Q5 — Non-overridable protective floor a guardian may never breach
 
-**Governing test (overrides any enumerated list):** any loosening of a minor's protections MUST be (a) demonstrably in the child's best interests — not the guardian's, co-guardian's, platform's, or engagement interest; (b) time-bound; (c) logged via `hard_case:*` and auditable; (d) revocable; (e) default-revert to the strict floor on expiry/uncertainty/failure. If best-interest is not affirmatively shown, the loosening is VOID. Burden of proof is on the loosening. **NO combination of guardian + guardian + child consent may breach the floor** (no stacked consent).
+**Governing test (overrides any enumerated list).** Any loosening of a minor's protections MUST be (a) demonstrably in the child's best interests; (b) time-bound; (c) logged via `hard_case:*` and auditable; (d) revocable; (e) default-revert to the strict floor on expiry/uncertainty/failure. Under (a) the interests are the child's, not the guardian's, co-guardian's, platform's, or engagement interest. If best-interest is not affirmatively shown, the loosening is void. Burden of proof is on the loosening. **No combination of guardian + guardian + child consent may breach the floor** (no stacked consent).
 
 **Hard floor (never waivable):**
+
 - *Scope/exposure:* no unilateral federation- or Commons-scope publish below the teen threshold; not contactable/discoverable by unconnected adults; no precise geolocation exposure; profile private-by-default.
-- *Privacy/data:* high-privacy + data-minimization cannot be disabled; no profiling-by-default, no profiling-based advertising or recommender targeting of a known/assumed minor, no engagement-maximizing dark patterns; no biometric/special-category collection.
+- *Privacy/data:* high-privacy + data-minimisation cannot be disabled; no profiling-by-default, no profiling-based advertising or recommender targeting of a known/assumed minor, no engagement-maximising dark patterns; no biometric/special-category collection.
 - *Safety:* no disabling infohazard/CSAM protection; the affirmative safety-escalation + mandated-report path (grooming/solicitation, self-harm/suicide routing, CSAM detection+report, watchlist at the publish seam) stays ON.
 - *Age assurance:* cannot be waived to reclassify a teen as adult; treat-as-child-unless-assured; no entry to `content_class:adult` ([CC 3.4.11](part_3_the_namespace.md) gate).
 - *Consent chain:* no waiving the guardianship `delegates_to` chain or the 16/guardian thresholds; protects the child even FROM the guardian.
@@ -2365,28 +2404,30 @@ A rate limit MUST NOT drop a help request: it defers or queues, never silences.
 
 #### Q6 — Standing pre-authorization vs. per-act co-sign
 
-- **Younger children** (under-13, and 13–15 per Q1): per-act co-sign ONLY — no standing pre-authorization of any kind.
-- **Teens (16–17):** a guardian MAY grant a standing pre-authorization, but ONLY as a narrow affirmative opt-up above the Q5 floor (never a default) and ONLY where it satisfies the Q5 best-interest governing test (which overrides any enumerated list), carried on the *existing* `delegates_to` with `delegation_valid_until` ([CC 2.4.1](part_2_the_grammar.md)), bounded on all six axes:
-  1. **Specificity:** each standing grant MUST cover exactly ONE capability class with explicit enumerated scope; bundled/multi-class standing grants are PROHIBITED.
-  2. **Term:** a hard maximum duration, set by the community's policy and named in the row, with NO auto-renew; `delegation_valid_until` is a ceiling, not a renewing timer; expiry requires a fresh affirmative re-grant.
-  3. **Severity carve-out:** a reserved class of high-stakes widenings MUST always require per-act co-sign for everyone regardless of age and MUST NEVER be reachable by standing auth — anything irreversible, anything at autonomy tier A3/A4 or safety-critical, and anything implicating contact-with-strangers, sexual/self-harm content, or mandated-reporting-adjacent categories.
-  4. **Transparency-makes-revocation-real:** every widening that fires under a standing grant MUST emit a per-act `hard_case:*` notification to the guardian plus an immutable audit entry; instant revocation via `withdraws` remains.
-  5. **Capacity-grading:** breadth is graded to the teen's assessed band; the teen MUST co-affirm the grant (right to be heard); the grant MUST default-fail to per-act co-sign on any age-assurance uncertainty (treat-as-younger-on-doubt).
-  6. **Non-aggregation:** narrow standing grants MUST NOT be stacked to synthesize de-facto broad access; total standing scope per teen is itself capped and reviewed.
+**Younger children (under-13, and 13–15 per Q1).** Per-act co-sign only: no standing pre-authorisation of any kind.
 
-A revoked standing grant MUST be treated as strictly higher precedence than the grant under anti-rollback merge, so a partition-edge widening cannot fire after revocation.
+**Teens (16–17).** A guardian MAY grant a standing pre-authorisation, but only as a narrow affirmative opt-up above the Q5 floor (never a default) and only where it satisfies the Q5 best-interest governing test. That test overrides any enumerated list. The grant is carried on the *existing* `delegates_to` with `delegation_valid_until` ([CC 2.4.1](part_2_the_grammar.md)). It is bounded on all six axes:
+
+1. **Specificity:** each standing grant MUST cover exactly one capability class with explicit enumerated scope. Bundled/multi-class standing grants are prohibited.
+2. **Term:** a hard maximum duration, set by the community's policy and named in the row, with no auto-renew. `delegation_valid_until` is a ceiling, not a renewing timer. Expiry requires a fresh affirmative re-grant.
+3. **Severity carve-out:** a reserved class of high-stakes widenings MUST always require per-act co-sign for everyone regardless of age and MUST NEVER be reachable by standing auth. The class is anything irreversible, anything at autonomy tier A3/A4 or safety-critical, and anything implicating contact-with-strangers, sexual/self-harm content, or mandated-reporting-adjacent categories.
+4. **Transparency-makes-revocation-real:** every widening that fires under a standing grant MUST emit a per-act `hard_case:*` notification to the guardian plus an immutable audit entry. Instant revocation via `withdraws` remains.
+5. **Capacity-grading:** breadth is graded to the teen's assessed band. The teen MUST co-affirm the grant (right to be heard). The grant MUST default-fail to per-act co-sign on any age-assurance uncertainty (treat-as-younger-on-doubt).
+6. **Non-aggregation:** narrow standing grants MUST NOT be stacked to synthesise de-facto broad access. Total standing scope per teen is itself capped and reviewed.
+
+**Revocation outranks the grant.** A revoked standing grant MUST be treated as strictly higher precedence than the grant under anti-rollback merge. A partition-edge widening therefore cannot fire after revocation.
 
 #### Q7 — Co-guardianship (M-of-N)
 
-CIRIS supports M-of-N co-guardianship as a verified DAG over `delegates_to` (guardianship clause, [CC 3.2](part_3_the_namespace.md)) and guarantees the minor is never orphaned while ≥1 live adult guardian remains — with an explicitly **asymmetric, fail-secure** authorization model:
+M-of-N co-guardianship is supported as a verified DAG over `delegates_to` (guardianship clause, [CC 3.2](part_3_the_namespace.md)). The minor is never orphaned while ≥1 live adult guardian remains. The authorisation model is explicitly **asymmetric, fail-secure**, in seven rules:
 
-1. **Protective actions are UNILATERAL:** any single live guardian MAY immediately tighten scope, narrow capabilities, or revoke exposure back to the strict floor — no consensus required. Most-protective guardian always wins.
-2. **Exposure-increasing actions require CONSENSUS:** scope-widening / capability-grant requires the full configured M-of-N co-sign (default: all live guardians; never fewer than 2 where N≥2). The child's evolving-capacity assent is a required input where age-appropriate.
-3. **Changing the guardian set is the highest bar:** adding/removing a guardian requires M-of-N authorization PLUS verification of parental responsibility (per Q3). A contested party MUST NOT mint co-guardians to manufacture a quorum or dilute a pending protective veto.
-4. **Fail-secure on quorum loss:** if live guardians < configured M, the child stays stewarded (never orphaned) but scope AUTO-REVERTS to the strict floor and WBD is triggered for guardian set re-establishment (emit `hard_case:*` guardian set-degraded). The child MUST NOT coast at a widened scope under a degraded or single-contested set.
-5. **Revocation by one of N:** a revoking guardian's contribution to any prior co-signed widening lapses (`withdraws`); if their departure breaks the authorizing quorum, that scope auto-narrows to the floor.
+1. **Protective actions are unilateral:** any single live guardian MAY immediately tighten scope, narrow capabilities, or revoke exposure back to the strict floor. No consensus is required. Most-protective guardian always wins.
+2. **Exposure-increasing actions require consensus:** scope-widening / capability-grant requires the full configured M-of-N co-sign (default: all live guardians; never fewer than 2 where N≥2). The child's evolving-capacity assent is a required input where age-appropriate.
+3. **Changing the guardian set is the highest bar:** adding/removing a guardian requires M-of-N authorisation plus verification of parental responsibility (per Q3). A contested party MUST NOT mint co-guardians to manufacture a quorum or dilute a pending protective veto.
+4. **Fail-secure on quorum loss:** if live guardians < configured M, the child stays stewarded (never orphaned) but scope auto-reverts to the strict floor. WBD is then triggered for guardian set re-establishment (emit `hard_case:*` guardian set-degraded). The child MUST NOT coast at a widened scope under a degraded or single-contested set.
+5. **Revocation by one of N:** a revoking guardian's contribution to any prior co-signed widening lapses (`withdraws`). If their departure breaks the authorising quorum, that scope auto-narrows to the floor.
 6. **Conflict/deadlock → most-restrictive-wins + WBD, never default-open.**
-7. **Safeguarding bypass:** there MUST always be a consensus-independent path to a Wise Authority (the Q4 help-path / WBD) so co-guardianship cannot be weaponized by an abusive guardian to trap a child. The child's best interests are paramount over adult dispute-resolution convenience.
+7. **Safeguarding bypass:** there MUST always be a consensus-independent path to a Wise Authority (the Q4 help-path / WBD). Co-guardianship then cannot be weaponised by an abusive guardian to trap a child. The child's best interests are paramount over adult dispute-resolution convenience.
 
 ### 3.4.14 `synthesis-disclosure` — Machine-generation disclosure — the attestation IS the marking (normative)
 

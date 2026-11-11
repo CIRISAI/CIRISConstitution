@@ -18,6 +18,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - Delegation is one entry (4.4.3.4.3): what a `delegates_to` row carries at login, the scopes it names, the admission test with its refusal beside it, the `infra:*` tokens as a list, and how the authority ends. No rule changes. The retirement of a scope token cites the versioning policy (2.6.4), where the coordinated cut is stated.
 - The key plane is one entry (5.1): how the keys that seal content are derived, wrapped, granted and rotated, with the algorithm table, the rotation rule for a removed member and the three windows that are never conflated. No rule changes.
 - Joining a family or community is one entry (3.1.3.2): two consents and never one, the five admission conditions as a list, founding, what a node gives in place of an acceptance, and the refusals by name. No rule changes.
+- The protections for a person under 18 are one entry (3.4.13): the bands and what each may do alone as a table, the rung each claim rests on as a table, the help channel, the floor no guardian may breach, standing grants for 16–17 and co-guardianship, each rule under its own lead. No rule changes.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
 
