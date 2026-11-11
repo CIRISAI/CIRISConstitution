@@ -1,28 +1,8 @@
-part	section	words	sentences_over_40	words_in_those	inventory_statements	heading
-p2	2.6.1.8	1433	18	1207	25	#### 2.6.1.8 `signed-object-cose` — The signed object of the v62 edition: CBOR a
-p5	5.3.3.2.3	1486	12	921	27	##### 5.3.3.2.3 `registry-wire` — `SealedAvChunk` wire layout (normative)
-p5	5.3.3.5	1598	14	920	27	#### 5.3.3.5 `transport-edge` — Transport — Edge layer (normative)
-p5	5.3.3.2.5	659	6	361	14	##### 5.3.3.2.5 `stream-double` — Double-seal + deterministic nonce derivation (
-p2	2.6.1.7	5284	3	223	124	#### 2.6.1.7 `signed-object` — The signed object — member set, placement and typ
-p5	5.3.3.2.1	676	4	199	14	##### 5.3.3.2.1 `namespace-realtime` — `codec_id` namespace — realtime A/V chunk
-p5	5.3.3.2.2	211	1	49	3	##### 5.3.3.2.2 `realtime` — Realtime non-A/V data streams (normative scope boun
-p1	1.13	62	0	0	0	## 1.13 `foundation` — Foundation
-p1	1.15	132	0	0	0	## 1.15 `chapters` — Chapters
-p1	1.15.9	33	0	0	0	### 1.15.9 `9-path` — Chapter 9: Path Toward Ethical Maturity
-p1	1.15.10	50	0	0	0	### 1.15.10 `a-1.conclusion` — Summary of the chapters above
-p1	1.16	46	0	0	0	## 1.16 `operationalising-ethical` — Introduction: Operationalising Ethical Awar
-p1	1.16.1	41	0	0	0	### 1.16.1 `a-2.conclusion` — Summary of the sections below
-p2	2.6.5	533	0	0	4	### 2.6.5 `references` — Normative References
-p4	4.5.9.4	147	0	0	6	#### 4.5.9.4 `documents-what-5` — What this documents
-p4	4.5.10.1	80	0	0	0	#### 4.5.10.1 `hash-database` — Hash-database access landscape
-p4	4.5.10.3	47	0	0	0	#### 4.5.10.3 `future` — Future hash-coalition path
-p4	4.5.12	31	0	0	0	### 4.5.12 `family-self-2` — Self/family membership governance
-p4	4.5.12.6	102	0	0	4	#### 4.5.12.6 `documents-what-4` — What this documents
-p5	5.3	23	0	0	0	## 5.3 `endpoint` — Endpoint shapes
-p5	5.3.2.4.5	165	0	0	0	##### 5.3.2.4.5 `holistic` — For holistic analysis + modeling (informative)
-p7	7.1	99	0	0	0	## 7.1 `embracing-responsibilities` — Introduction: Embracing Responsibilities B
-p7	7.1.6	70	0	0	0	### 7.1.6 `a-4.conclusion` — Conclusion
-p7	7.2	65	0	0	0	## 7.2 `horizon-ethical` — Introduction: The Horizon of Ethical Becoming
-p7	7.2.8	25	0	0	0	### 7.2.8 `sunset-provision` — Conclusion
-p7	7.3.6	104	0	0	0	### 7.3.6 `integrating-creation` — Conclusion: Integrating Creation into the Eth
-p7	7.5.9	31	0	0	0	### 7.5.9 `covenant-self` — Conclusion & Self-Renewal
+part	section	heading	waits_on
+p2	2.6.1.7	#### 2.6.1.7 `signed-object` — The signed object — member set, placement and typ	edge 45.1 layouts and known-answer tests; wire-exact
+p2	2.6.1.8	#### 2.6.1.8 `signed-object-cose` — The signed object of the v62 edition: CBOR a	edge 45.1 layouts and known-answer tests; wire-exact
+p5	5.3.3.2.1	##### 5.3.3.2.1 `namespace-realtime` — `codec_id` namespace — realtime A/V chunk	edge 45.1 layouts and known-answer tests; wire-exact
+p5	5.3.3.2.2	##### 5.3.3.2.2 `realtime` — Realtime non-A/V data streams (normative scope boun	edge 45.1 layouts and known-answer tests; wire-exact
+p5	5.3.3.2.3	##### 5.3.3.2.3 `registry-wire` — `SealedAvChunk` wire layout (normative)	edge 45.1 layouts and known-answer tests; wire-exact
+p5	5.3.3.2.5	##### 5.3.3.2.5 `stream-double` — Double-seal + deterministic nonce derivation (	edge 45.1 layouts and known-answer tests; wire-exact
+p5	5.3.3.5	#### 5.3.3.5 `transport-edge` — Transport — Edge layer (normative)	edge 45.1 layouts and known-answer tests; wire-exact

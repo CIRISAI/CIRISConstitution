@@ -56,21 +56,12 @@ MAX_WORDS = 40
 # restatement that is not listed and on a listed one that now cites.
 UNCITED_RESTATES = {
     ('1.15.1', 'p1', '323'),
-    ('1.15.7', 'p1', '373'),
     ('1.16.6', 'p1', '438'),
     ('2.4', 'p2', '267'),
-    ('2.6.6.3', 'p2', '862'),
     ('3.1.3', 'p3', '147'),
-    ('3.3.5', 'p3', '1335'),
-    ('3.3.6.2', 'p3', '1464'),
-    ('4.2.6', 'p4', '247'),
-    ('4.4.3.4.6', 'p4', '1036'),
-    ('4.4.3.5', 'p4', '1053'),
-    ('4.5.2.3', 'p4', '1454'),
-    ('6.1.5.3', 'p6', '277'),
-    ('7.2.3', 'p7', '107'),
-    ('7.3.4', 'p7', '253'),
-    ('7.5.8', 'p7', '410'),
+    ('4.5.12.6', 'p4', '1757'),
+    ('7.3.6', 'p7', 'x'),
+    ('7.5.9', 'p7', 'x'),
 }
 # Sentences kept whole by name: their shape is their argument, or their wording is a standard's.
 # Each is read out of its paragraph before the count (link markup already removed).

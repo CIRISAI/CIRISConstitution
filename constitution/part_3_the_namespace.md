@@ -157,7 +157,7 @@ Hybrid signature: Ed25519 over `canonical_bytes`; ML-DSA-65 over `canonical_byte
 
 ### 3.1.3 `persist` — CIRISPersist — substrate health
 
-**Steward**: CIRISPersist. These dimensions are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own health by a third party.
+**Steward**: CIRISPersist. The `system:*` dimensions here are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own health by a third party.
 
 `system:*` is one family, reserved to the substrate component ([CC 3.4.3](part_3_the_namespace.md)) and registered once, here: CIRISPersist emits on it with `identity_type="substrate_persist"` and CIRISEdge ([CC 3.1.4](part_3_the_namespace.md)) with `identity_type="substrate_edge"`.
 
@@ -558,9 +558,9 @@ A case-mutated **reserved stem** (`Capacity:zz:v1`) is refused the same way even
 
 *Inside a multi-segment value every component is verbatim.* `provenance:skill_import:registry:v1:v1` binds `{source}` = `registry:v1`. That is because, once the real trailing version is stripped, a duplicated tail and a version-shaped value are the same bytes and a value class resolves that as a value (folding only to detect, never to admit). So `Capacity:composite:v1` and `age_assurance:provider:adult:V1` are refused, not routed to the default authority.
 
-*A stem this Part reserves as a whole* ([CC 3.4](part_3_the_namespace.md): `accord:`, `detection:`, `capacity:`, `age_assurance:`, `capacity_assurance:`, `transparency_log:cosigned:`) is carried as `_meta.case_rule.reserved_stems`. So is a stem that carries an emitter rule without a reservation (`age_self_declared:`, [CC 3.4.11](part_3_the_namespace.md), marked `kind: gated`). A dimension under such a stem that no row claims is `namespace_family_unregistered`, never open vocabulary. The reservation or rule covers the leaves nobody has minted yet, which is the point of reserving a stem.
+*A stem this Part reserves as a whole* ([CC 3.4](part_3_the_namespace.md): `accord:`, `detection:`, `capacity:`, `age_assurance:`, `capacity_assurance:`, `transparency_log:cosigned:`) is carried as `_meta.case_rule.reserved_stems`. So is a stem marked `kind: gated`: one that carries an emitter rule without a reservation (`age_self_declared:`, [CC 3.4.11](part_3_the_namespace.md)), or one closed to the leaves its rows name (`self:`, `device:`, `community:`, `observation:`, `takedown_notice:`). A dimension under such a stem that no row claims is `namespace_family_unregistered`, never open vocabulary. The reservation or rule covers the leaves nobody has minted yet, which is the point of reserving a stem.
 
-*Exempt from the version segment.* Two families carry none, and the manifest says which (`_meta.case_rule.version_segment.exempt`). They are the mechanism-named attestation ladder ([CC 3.1.2](part_3_the_namespace.md): the version lives in the attesting binary) and the canonical-binding claim ([CC 3.3.14](part_3_the_namespace.md): the suffix is the hash).
+*Exempt from the version segment.* Two families need none, and a tail on one is tolerated, never required; the manifest says which (`_meta.case_rule.version_segment.exempt`). They are the mechanism-named attestation ladder ([CC 3.1.2](part_3_the_namespace.md): the version lives in the attesting binary) and the canonical-binding claim ([CC 3.3.14](part_3_the_namespace.md): the suffix is the hash).
 
 *Enumerations and closed leaves are data.* Where this Part enumerates a `vocab` placeholder's canonical values in its row, the registry carries them (`segments[].values`). An enumeration is **closed only where the row says so**. Every other enumeration is the canonical subset of an open vocabulary ([CC 4.5.1.1](part_4_composition_governance.md)), and closing one is done per row, by writing the word. A value outside a **closed** enumeration is refused with **`namespace_vocab_value_unregistered`**. A reserved wildcard family publishes the leaves this Part names beneath it (`leaves`) and is **closed** (`leaves_closed`). Any other leaf under it is `namespace_family_unregistered` ([CC 3.1.7](part_3_the_namespace.md) R2(b)), so a reservation can never be used as a namespace for rows nobody ratified.
 
@@ -1538,7 +1538,7 @@ Canonical `ConsensusProtocol` kinds:
    - **Withdrawal.** The proposer may withdraw the pending row. A member that has signed cannot recall its signature.
    - **One act.** Two nodes that collect different sufficient sets of signatures land the same act: it is named by its quorum key, which covers no signature, and cosignatures are counted by signer. A second sufficient set for an act already admitted settles as held, and a retraction of the act takes effect on every node that holds it.
 
-3. On admission of an ADD: substrate emits retroactive `key_grant`s wrapping all `cohort_scope: family` content DEKs to the new member's `subject_key_ids`.
+3. On admission of an ADD: substrate emits retroactive `key_grant`s wrapping all `cohort_scope: family` content DEKs to the new member's live occurrence encryption keys, one `key_grant:content:v1` row per recipient ([CC 3.3.2](part_3_the_namespace.md)).
 
 4. On admission of a REMOVE: per [CC 4.4.3.4.5](part_4_composition_governance.md) the removed member retains existing key_grants (cannot retroactively un-share); the substrate stops wrapping new key_grants to them on subsequent family-scoped Contributions.
 
@@ -2605,7 +2605,7 @@ The `self` rung of the ladder materializes on the non-reserved `age_self_declare
 **The protective gate (normative).** A viewer below `adult` assurance is **BLOCKED** from `adult` `content_class` ([CC 3.3.12](#3.3.12)). The default is protective, not permissive:
 
 - `general`-class content is visible to everyone (protective ≠ prudish).
-- `adult`-class content is visible ONLY to a viewer whose band is `adult`.
+- `adult`-class content is visible ONLY to a viewer whose band is `adult`. The band opens this gate only at a verified level, `provider` or `government` ([CC 3.4.13](#3.4.13) Q3).
 - A `minor` band, a "declined to state", and an "unknown"/absent assurance ALL resolve to the protective `minor` default and are BLOCKED. A "declined to state" and an "unknown"/absent assurance are further read as `under_13` ([CC 3.4.13](#3.4.13)).
 
 The gate decides visibility only; it MUST NOT fire `slashing:*` on a mismatch.
