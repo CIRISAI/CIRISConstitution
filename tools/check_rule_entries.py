@@ -25,11 +25,14 @@ PARTS = {"p1": "part_1_foundation.md", "p2": "part_2_the_grammar.md", "p3": "par
 HOME_PART = {"2": "p2", "3": "p3", "4": "p4", "5": "p5", "6": "p6", "7": "p7", "1": "p1"}
 # Paragraphs inside a home section that belong to a rule not yet landed, by their bold lead.
 NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its subject", "**A purge is a tombstone",
-                          "**What the signer keeps")}
+                          "**What the signer keeps"),
+              "4.4.3.8": ("**Cold-start bootstrap", "**Capability gate", "**Two conferral planes",
+                          "**Charter recovery lives", "**Genesis is tamper-evident")}
 MAX_WORDS = 40
 # Names a landed rule is not called by: the entry's own words are the rule's only name.
 OTHER_NAMES = {"withdraw": ("broadened `withdraws` admission", "broadened admission", "withdraws-isn't-retroactive",
-                            "retraction carve-out", "2.4.1.1 carve-out", "third-party path")}
+                            "retraction carve-out", "2.4.1.1 carve-out", "third-party path"),
+               "trust_fold": ("trust list", "trusted set", "pin set", "trust store")}
 
 
 def section(part, number):

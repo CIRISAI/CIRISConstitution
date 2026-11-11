@@ -74,6 +74,10 @@ words, or a Part calls a landed rule by a name its entry does not use. Landed: `
 CC 2.4.1.1 (24 statements). The 110 statements of that rule made in other sections are read
 against the entry: a statement for one family stays with its family, and a sentence that said the
 rule again in other words cites the entry.
+`trust_fold` at CC 4.4.3.8 (18 statements): who a reader trusts, as a base, the entries the reader
+signs, the walk from them and what removing one removes. Two neighbouring rules keep their own
+homes and are cited from the entry: the standing of a root (CC 3.2, T1 to T8) and how trusted
+statements are aggregated and weighted (CC 4.4.1, 4.4.2).
 
 ## Compliance wire forms
 

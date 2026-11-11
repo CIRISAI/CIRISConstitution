@@ -8,9 +8,9 @@
 
 | Theorem | What it says | CC |
 |---|---|---|
-| `no_trust_without_my_edge`, `empty_set_honours_nothing` | nothing is honoured without an edge that leaves the reader; a reader with no edge honours nothing, whatever the rest of the graph says | 4.4.3.8 (1), (3) |
+| `no_trust_without_my_edge`, `empty_set_honours_nothing` | nothing is honoured without an edge that leaves the reader; a reader with no edge honours nothing, whatever the rest of the graph says | 4.4.3.8 (the base, an entry) |
 | `licence_confers_no_trust` | the licences in the world move no reach: holding a licence from an authority makes nobody a licensor the reader trusts | 2.4.1.2.1; `authority_tree` I4 |
-| `reaches_mono`, `removal_only_removes` | more edges, more reach, never less; removing an edge (the shipped root's included) removes only what reached through it | 4.4.3.8 (3), (4) |
+| `reaches_mono`, `removal_only_removes` | more edges, more reach, never less; removing an edge (the shipped root's included) removes only what reached through it | 4.4.3.8 (an entry, removing an entry) |
 | `class_edge_admits_listed`, `class_edge_refuses_unlisted`, `undeclared_class_never_honoured` | an edge that lists classes admits exactly those; the authority's charter is the second gate | 2.4.1.2.1 (scope per licence class) |
 | `reaches_mono_budget`, `verdict_is_the_capped_walk` | more budget never reaches less; an edge's depth lowers the walk past it and the cap is the outer bound | 4.1.1 |
 | `reaches_same_edges` | the verdict reads the edges as a set: order never matters | 4.4.3.4.3 (determinism) |

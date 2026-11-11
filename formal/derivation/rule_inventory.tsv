@@ -1481,7 +1481,7 @@ p3	891	3.2	kernel	accord	none	accord	is	restates	4.2.1,4.5.1,4.5.1.2	The accord'
 p3	891	3.2	family	moderation	governance	community	is	restates	4.5.4	A public room is moderated by its named holder or fails secure without one	
 p3	891	3.2	kernel	settlement	none	slashing,quarantine	is	restates	3.1.9.2	Founders' and moderators' keys are subject to slash and the key-scoped quarantine marker	
 p3	891	3.2	kernel	audience	replication	mesh_config	is	restates	4.2.1	A trust root may restrict what its subscribers carry by mesh_config, relieve-never-expand; every owner chooses what their nodes hold	
-p3	897	3.2	kernel	trust_fold	none	attestation	MUST	states		First run writes a plain attestation user to user; the user is their own root and the node inherits it through the owner-binding	
+p3	897	3.2	kernel	trust_fold	none	attestation	is	restates	4.4.3.8	The base is the reader's own attestation user to user, written at first run; a node inherits it through the owner-binding	
 p3	897	3.2	kernel	delegation	none		MUST_NOT	states	3.3.1,5.2	There is no infra:observe scope and none may be added; observation is governed by the subject's consent	
 p3	897	3.2	kernel	conformance	none		MUST	states		With no live external trust root a substrate disables federated agent capabilities and manifest validation, fail-closed; attaching a root resumes, detaching returns to the floor	
 p3	899	3.2	kernel	delegation	none		is	states		A conferral travels on exactly one of two named planes, ceremony or delegation, and the plane is never inferred	
@@ -2806,7 +2806,7 @@ p4	1231	4.4.3.7	kernel	trust_fold	formula	agent_files	MAY	states		Consumer polic
 p4	1233	4.4.3.7	kernel	trust_fold	evidence_screen	agent_files	MUST	states		The Layer 1 rule applies at the install endpoint regardless of attester or vote accumulation; third-party files only via the explicit Browse alternatives path	
 p4	1233	4.4.3.7	kernel	trust_fold	none	agent_files	is	restates	4.4.3.8	The default trust set is one entry in the newcomer's own trust set, which they may add to or remove like any other	
 p4	1237	4.4.3.8	kernel	trust_fold	none	attestation	is	states		A consumer trusts an attestation if attesting_key_id is in its pinned trust set	
-p4	1239	4.4.3.8	kernel	trust_fold	formula	attestation	is	restates	4.4.2	Aggregate per (dimension, attested_key_id) over trusted attesters by polarity: mean of score x confidence for signed, min for boolean, max for positive-only, median for detector	
+p4	1239	4.4.3.8	kernel	trust_fold	formula	attestation	is	restates	4.4.2	Aggregate per (dimension, attested_key_id) over trusted attesters by the polarity defaults of 4.4.2; the reader's threshold determines the verdict	
 p4	1241	4.4.3.8	kernel	trust_fold	none	attestation	SHOULD	states	3.2	Recommended default pins ciris-canonical and humanity-accord, resolved live to the three accord holders, never a serving install's key	
 p4	1241	4.4.3.8	mechanism	steward	none		is	restates	5.3.4,3.2	Cold start fetches /v1/trust-root/bundle, re-derives its quorum against out-of-band pins, holds a witnessed lineage head inside attach_window, persists anchors locally	
 p4	1241	4.4.3.8	mechanism	endpoint	none		is	states		/v1/accord-holders is a projection to cross-check, not a second root	
@@ -2818,7 +2818,7 @@ p4	1246	4.4.3.8	stewardship	steward	body	delegates_to	MUST	states		Root validity
 p4	1247	4.4.3.8	kernel	trust_fold	none	delegates_to	is	restates	3.2	A consumer trusts a root by delegates_to(user to root) bearing trust:accepts:v1, added and removed freely with the base untouched	
 p4	1247	4.4.3.8	kernel	trust_fold	none	delegates_to	is	states		Two nodes under one shared root cross-attest and vouch; two nodes with no shared root compose nothing	
 p4	1247	4.4.3.8	stewardship	steward	none	delegates_to	is	states	4.2.1	The sanctioned bootstrap and re-root artifact is a portable trust root: a charter plus at least one blessed infra:serve node, minted by the conferral ceremony	
-p4	1248	4.4.3.8	kernel	withdraw	lifecycle	delegates_to	is	states	4.2.1	Deleting the user-to-root edge revokes at once that root's conferred roles, score validity, vouching and kill-switch authority for this consumer	
+p4	1248	4.4.3.8	kernel	trust_fold	lifecycle	delegates_to	is	states	3.2,4.2.1	Deleting the reader's edge to a root is the un-trust lever: it revokes at once that root's conferred roles, score validity, vouching and kill-switch authority for this reader	
 p4	1248	4.4.3.8	kernel	trust_fold	none		is	states		After un-trust the self-root survives and the installation runs un-federated; attaching a new root resumes federation	
 p4	1249	4.4.3.8	kernel	conformance	none		MUST	states	4.1.2	With no valid external trust root, federated agent capabilities and manifest validation must be disabled at the server tier; the self-root is never sufficient	
 p4	1250	4.4.3.8	stewardship	accord	none		is	states	4.2.1	Ceremony confers root identity by m-of-n co-scrub; delegation confers operational capability by delegates_to(root to key, scope)	
@@ -2852,7 +2852,7 @@ p4	1288	4.4.3.10	kernel	minor_floor	formula	age_assurance,content_rating	is	stat
 p4	1294	4.4.3.10	kernel	minor_floor	formula	age_assurance	is	states		age_assurance levels order self < provider:{verifier_key}:adult < government:{credential_class}:adult	
 p4	1294	4.4.3.10	kernel	minor_floor	none	age_assurance	SHOULD	states		A consumer should accept the strongest assurance the user has provided	
 p4	1294	4.4.3.10	kernel	settlement	none	slashing,age_assurance	MUST_NOT	states	3.1.9.2	The substrate must not issue slashing on age-assurance misdeclaration alone; moderation:age_assurance_misdeclaration is the adjudication path	
-p4	1296	4.4.3.10	kernel	trust_fold	evidence_screen	external_content	MUST	states	4.4.3.7	The distributor Layer 1 rule applies regardless of vote accumulation; only the operator-set trust list admits a distributor; the default root cannot exempt its own content	
+p4	1296	4.4.3.10	kernel	trust_fold	evidence_screen	external_content	MUST	states	4.4.3.7	The distributor Layer 1 rule applies regardless of vote accumulation; only the operator's own trust set admits a distributor; the default root cannot exempt its own content	
 p4	1300	4.4.3.11	kernel	trust_fold	formula	cert_validity,transparency_log,attestation	is	states	4.4.3.6	Trust-Fresh is cert_validity plus transparency_log:inclusion plus registry_consensus or license_validity: fresh, logged, verified at L3 or above	
 p4	1304	4.4.3.11	kernel	conformance	none		SHOULD	states		Consumer libraries should expose Trust-Fresh as a named one-call helper; it is not a wire primitive	
 p4	1308	4.4.3.12	kernel	trust_fold	none	attestation	is	states		Under one-hop transitive trust a consumer trusts an attestation whose attesting_key_id has been vouched for by its pinned trust set	
