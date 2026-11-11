@@ -335,3 +335,11 @@ same step and `CLM-promotion-cohort-standing` (established, persist) still claim
 change the model's lapse to lock and elect with the invariant "no unmoderated room is
 writable", and ask persist whether `check_promotion_cohort_standing` orders a ballot or appoints.
 
+Persist issue opened at Eric's word, 2026-11-11: CIRISPersist#1259 (halt latch instant in the
+store; split of `may_relay_accord_object` into signer-seated and local-edge; a door for
+`accord_decision` objects and for the holders' key records and seating roster version; whether
+`check_promotion_cohort_standing` seats or only checks standing). Server's facts are on it as
+a comment: the server judges a halt at receipt, records `latched_at` and `received_at` in a
+latch file of its own, and tests no acceptance edge. So "holds a live edge at that instant" is
+checked by nothing in the build today; `CLM-accord-reach` stays staged.
+
