@@ -98,6 +98,8 @@ sentences that had sat inside table cells (whom a targeted row may name, what a 
 do, the oversight-mode shift, cosignatures beside the row) are short titled paragraphs under the
 tables, and the rules they belong to cite them there.
 
+A section with no sentence over forty words is registered as it stands, without a rewrite: `handoff/register.py` proposes, for each inventory statement of the section, the sentence or table cell closest to its gist, and every proposal scoring under 0.6 is read by hand before the rows are appended. 174 sections were registered this way; three were held back because the inventory places a statement in them that their text does not carry (CC 2.6.5, 4.5.9.4, 4.5.12.6).
+
 ## Compliance wire forms
 
 Four published works are mapped to the signed-row vocabulary under 27 dimension ids: *Magnifica

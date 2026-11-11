@@ -59,8 +59,15 @@ def section(part, number):
     lines = (ROOT / "constitution" / PARTS[part]).read_text().split("\n")
     start = next(i for i, l in enumerate(lines) if re.match(rf"#+ {re.escape(number)} ", l))
     depth = len(lines[start]) - len(lines[start].lstrip("#"))
+    # A line inside a fenced block is never a heading, whatever it begins with.
+    fenced, inside = set(), False
+    for i in range(start + 1, len(lines)):
+        if lines[i].lstrip().startswith("```"):
+            inside = not inside
+        elif inside:
+            fenced.add(i)
     # An unnumbered heading at the section's own depth is a block of the section, not its end.
-    end = next((i for i in range(start + 1, len(lines)) if re.match(r"#+ ", lines[i])
+    end = next((i for i in range(start + 1, len(lines)) if i not in fenced and re.match(r"#+ ", lines[i])
                 and (len(lines[i]) - len(lines[i].lstrip("#")) < depth
                      or (len(lines[i]) - len(lines[i].lstrip("#")) == depth and re.match(r"#+ \d", lines[i]))
                      or re.match(rf"#+ {re.escape(number)}\.\d", lines[i]))), len(lines))

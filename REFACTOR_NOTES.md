@@ -1,6 +1,6 @@
 # Refactor notes for rc19 (working file)
 
-Written 2026-11-11 at `beb888e` for the session that picks the refactor up from a fresh clone.
+Written 2026-11-11 at `beb888e`, updated the same day after the register pass, for the session that picks the refactor up from a fresh clone.
 This file and `handoff/` are working material. **Delete both before the rc19 cut**: the
 repository carries no working notes or history language in a release.
 
@@ -24,7 +24,7 @@ tracking issue CIRISConstitution#203.
   Eric set. Measured so far: length falls from rewriting home sections, not from cutting repeats
   (the repeat sweep saved about 320 words).
 
-## 2. State at `beb888e`
+## 2. State
 
 Data side (done, all gated):
 - Default row of the family model: `formal/derivation/family_default_row.json`; departures in
@@ -41,19 +41,22 @@ Data side (done, all gated):
 Text side (in progress):
 - Inventory: `formal/derivation/rule_inventory.tsv` (4,248 statements; line numbers are those of
   commit `30fddf6` and are stale, match by `gist`).
-- **73 sections are landed as entries** (`formal/derivation/rule_entries.tsv`, 3,497 rows; gate
-  `tools/check_rule_entries.py`).
-- **287 numbered sections are not landed.** `handoff/remaining.tsv` lists them, ranked by the
-  words sitting in sentences over 40 words. 190 of them have no over-cap sentence and need only
-  registering (rows in `rule_entries.tsv`, no rewrite). 97 need a rewrite.
+- **247 sections are held by the entry check** (`formal/derivation/rule_entries.tsv`, 4,373 rows;
+  gate `tools/check_rule_entries.py`): 73 rewritten as entries, 174 registered as they stand.
+- **113 numbered sections are not landed.** `handoff/remaining.tsv` lists them, ranked by the
+  words sitting in sentences over 40 words. 96 need a rewrite. Of the other 17, fourteen have no
+  inventory statement (1.15, 1.15.9, 1.15.10, 1.16, 1.16.1, 4.5.10.1, 4.5.10.3, 4.5.12, 5.3,
+  7.1, 7.1.6, 7.2, 7.2.8, 7.5.9) and three have an inventory statement their text does not carry
+  (2.6.5, 4.5.9.4, 4.5.12.6).
 
 ## 3. Next steps, in order
 
-1. **Register the 190 sections with no over-cap sentence.** For each: one `rule_entries.tsv` row
-   per inventory statement whose section is that home, `entry_phrase` a verbatim substring of the
-   section. No Part edit, so no regeneration. Do them in a few large commits. A section with no
-   inventory statement still needs reading for statements the inventory missed (72 of the 607
-   MUST/SHALL/REQUIRED lines had no row on their exact line, mostly table rows).
+1. **Registering is done** for every section that needed no rewrite (`handoff/register.py`).
+   Left from it: read the fourteen sections with no inventory statement for statements the
+   inventory missed, and correct the inventory rows of CC 2.6.5, 4.5.9.4 and 4.5.12.6 (each has
+   a row whose statement stands in another section) before registering them. The registered
+   phrases were matched by score and only those under 0.6 were read by hand, so a phrase may
+   sit in the right paragraph on the wrong sentence; the check still holds it to the section.
 2. **Rewrite the remaining sections that are free to rewrite**, by the ranking in
    `handoff/remaining.tsv`, in batches of ten to eighteen writers (recipe in section 4).
 3. **Held sections: do not rewrite without the stated word.**
