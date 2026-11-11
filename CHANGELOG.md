@@ -42,6 +42,11 @@ The CIRIS Constitution is one document with one version line. Each release below
 - Who may sign a row about whom is one entry (3.4.5): the table of reserved families, the four reasons the read boundary is drawn where it is, consent before scoring, the composition-context rule, enforcement by trace audit, the conditions on calling a redaction a boundary, and the disposition of the verification families. No rule changes.
 - The affiliation is one entry (4.4.3.2.8): the assumption each tier carries, the single member, the countersign on acts against a member, the record and its charter defaults, the public face, succession and dissolution, who may license, the four field groups, minors' records, lifecycle and regulatory anchoring. No rule changes.
 - Trust-root discovery is one entry (5.3.4): the bundle and the out-of-band anchor, what a consumer pins, the lineage head and the charter defaults, the bundle as the seed for transit pairs with its two forms of re-mint, the overlap rule and rotation, what crosses before a peer is rooted, and the holder routes. No rule changes.
+- Witness cosigning is one entry (5.3.1): the two cosign routes with their bodies and signed bytes unchanged, then what a witness verifies before signing, what the Registry rejects, and the fork-attempt, equivocation and silence cases each under its own lead. No rule changed.
+- The provenance byte contracts are one entry (3.1.2.1): the build-manifest reading is five short paragraphs with the two standing planes as a list; the three preimages, both signature lines and the agent text manifest check are unchanged. No rule changed.
+- The canonical-hash subject is one entry (2.3.2.1): eleven long sentences split, the fingerprint-check scope in its own paragraph; every production, vector and reject row unchanged. No rule changed.
+- The actor and substrate separation is one entry (3.4.7.3): Clauses A to F keep their leads and words, the four things a node verifies before executing are a list, and what is open stays open. No rule changed.
+- The entry check reads a nested list item as a list item.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
 

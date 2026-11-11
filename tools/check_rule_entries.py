@@ -105,7 +105,8 @@ def main():
                 errs.append(f"{key} {home}: the entry no longer carries {e['file']}:{e['line']}: {e['entry_phrase'][:70]}")
         longest = 0
         for para in sec[1:]:
-            if not para.strip() or para.startswith(("|", "- ")) or para.startswith(NEIGHBOURS.get(home, ())):
+            if (not para.strip() or para.lstrip().startswith(("|", "- "))  # a nested list item is a list item
+                    or para.startswith(NEIGHBOURS.get(home, ()))):
                 continue
             plain = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", para)
             for s in re.split(r"(?<=[.])\s+(?=[A-Z*`])", plain):

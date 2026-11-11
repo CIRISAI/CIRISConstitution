@@ -184,11 +184,11 @@ This section specifies the endpoint shapes below for the discovery + cosigning s
 
 ### 5.3.1 `witness` — STH cosigning + witness directory
 
-The witness directory is where transparency becomes accountable: independent witnesses cosign the log's tree heads so a producer cannot show one history to one party and a different one to another. Consumers verify cosignatures and the witness quorum; CEG's emission half:
+The witness directory is where transparency becomes accountable. Independent witnesses cosign the log's tree heads so a producer cannot show one history to one party and a different one to another. Consumers verify cosignatures and the witness quorum; CEG's emission half:
 
 ### `POST /v1/transparency/sth/cosign` (public)
 
-Witness posts cosignature on `(tree_size, root_hash, signed_at)`. Registry verifies hybrid Ed25519 + ML-DSA-65 against witness pubkey in directory; persists on success.
+A witness posts its cosignature on `(tree_size, root_hash, signed_at)`. The Registry verifies hybrid Ed25519 + ML-DSA-65 against the witness pubkey in the directory, and persists on success.
 
 Request body:
 
@@ -221,7 +221,9 @@ Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig` (bound paylo
 
 ### `POST /v1/transparency/lineage-head/cosign` (public) — trust-root lineage heads
 
-The same directory witnesses **trust-root lineage heads** ([CC 3.2](part_3_the_namespace.md) T6): the lineage's signed roster record at a version, which T6 makes the head — named by the SHA-256 of its signed bytes. A witness posts its cosignature; the Registry verifies hybrid Ed25519 + ML-DSA-65 against the witness's key record in the **charter's** witness directory for that lineage (never a directory of its own), refuses a witness that is not independent of the lineage under T6 at the cosignature's `signed_at`, rejects a `signed_at` more than 5 minutes from its own clock at receipt (the [CC 2.6.7](part_2_the_grammar.md) bound the STH route already applies, so a witness can neither pre-date nor post-date a re-commitment), and persists on success.
+The same directory witnesses **trust-root lineage heads** ([CC 3.2](part_3_the_namespace.md) T6). Such a head is the lineage's signed roster record at a version, which T6 makes the head, named by the SHA-256 of its signed bytes.
+
+A witness posts its cosignature. The Registry verifies hybrid Ed25519 + ML-DSA-65 against the witness's key record in the **charter's** witness directory for that lineage (never a directory of its own). It refuses a witness that is not independent of the lineage under T6 at the cosignature's `signed_at`. It rejects a `signed_at` more than 5 minutes from its own clock at receipt (the [CC 2.6.7](part_2_the_grammar.md) bound the STH route already applies, so a witness can neither pre-date nor post-date a re-commitment). It persists the cosignature on success.
 
 Request body:
 
@@ -249,9 +251,17 @@ canonical = sha256(
 )
 ```
 
-Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig`. The domain label is distinct from `ciris.sth_cosign.v1`, and the byte layouts differ, so a head cosignature can never be replayed as a tree-head cosignature, nor a cosignature as a head, nor the reverse.
+Ed25519 over `canonical`; ML-DSA-65 over `canonical || ed25519_sig`. The domain label is distinct from `ciris.sth_cosign.v1`, and the byte layouts differ. So a head cosignature can never be replayed as a tree-head cosignature, nor a cosignature as a head, nor the reverse.
 
-**Descent, re-commitment, and the two evidence tiers (normative).** A witness MUST verify, before signing, that the head **descends from, or equals,** the prior head it cosigned for that lineage (equality is the T6 cadence re-commitment — the witnesses' duty, not the founders' — and MUST be accepted; descent is the `prev_head_digest` chain, each intermediate head's quorum checked against its parent's fold and its cosignatures against its parent's directory; on a witness's first cosignature the prior is the lineage's genesis head from the bundle). The Registry MUST reject a cosignature that names a prior it did not record for that witness, or a head that neither equals nor descends from it → `LINEAGE_HEAD_INCONSISTENT` ([CC 5.3.6.1](#5.3.6.1)); that is the malformed case. Two other cases are evidence, not errors. A head carrying a signature valid under the lineage's quorum at that head's instant that does not descend from the lineage's *witnessed* head is a **fork attempt**: the Registry MUST record it once per `(lineage_key_id, fork point)` — the nearest ancestor on the witnessed chain — MUST NOT cosign it, counts and does not store further attempts off the same point, and raises `hard_case:lineage_fork_attempt` ([CC 3.4.2](part_3_the_namespace.md)) — it never freezes anything. Two heads that each reach the charter's `witness_quorum` are **equivocation**, `hard_case:lineage_equivocation`, and freeze head adoption under T6; because the quorum is a strict majority of the directory, at least one witness signed both, and the two cosignatures name it. A lineage whose newest counted cosignature is older than its charter's `witness_cadence_secs` is *silent*: reported on the trust surface as a liveness signal under [CC 3.2](part_3_the_namespace.md) T4, never a validity leg — its effect is on *attaching* (T4a), where a silent lineage becomes unattachable once `attach_window_secs` lapses — the charter's attach window ([CC 3.2](part_3_the_namespace.md) T4a), distinct from `witness_cadence_secs`, which is the witnesses' duty and the liveness signal — and attachable again on the next re-commitment.
+**Descent, re-commitment, and the two evidence tiers (normative).** A witness MUST verify, before signing, that the head **descends from, or equals,** the prior head it cosigned for that lineage. Equality is the T6 cadence re-commitment — the witnesses' duty, not the founders' — and MUST be accepted. Descent is the `prev_head_digest` chain, each intermediate head's quorum checked against its parent's fold and its cosignatures against its parent's directory. On a witness's first cosignature the prior is the lineage's genesis head from the bundle.
+
+*At the Registry.* The Registry MUST reject a cosignature that names a prior it did not record for that witness, or a head that neither equals nor descends from it → `LINEAGE_HEAD_INCONSISTENT` ([CC 5.3.6.1](#5.3.6.1)). That is the malformed case. Two other cases are evidence, not errors.
+
+*Fork attempt.* A head carrying a signature valid under the lineage's quorum at that head's instant that does not descend from the lineage's *witnessed* head is a **fork attempt**. The Registry MUST record it once per `(lineage_key_id, fork point)` — the nearest ancestor on the witnessed chain — and MUST NOT cosign it, and raises `hard_case:lineage_fork_attempt` ([CC 3.4.2](part_3_the_namespace.md)). The Registry counts and does not store further attempts off the same point. A fork attempt never freezes anything.
+
+*Equivocation.* Two heads that each reach the charter's `witness_quorum` are **equivocation**, `hard_case:lineage_equivocation`, and freeze head adoption under T6. Because the quorum is a strict majority of the directory, at least one witness signed both, and the two cosignatures name it.
+
+*Silence.* A lineage whose newest counted cosignature is older than its charter's `witness_cadence_secs` is *silent*. It is reported on the trust surface as a liveness signal under [CC 3.2](part_3_the_namespace.md) T4, never a validity leg. Its effect is on *attaching* (T4a), where a silent lineage becomes unattachable once `attach_window_secs` lapses and attachable again on the next re-commitment. `attach_window_secs` is the charter's attach window ([CC 3.2](part_3_the_namespace.md) T4a), distinct from `witness_cadence_secs`, which is the witnesses' duty and the liveness signal.
 
 #### 5.3.1.1 `consistency-proof` — Consistency-proof requirement (normative)
 
