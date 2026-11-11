@@ -16,6 +16,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The clock rule is one entry (2.6.7): which clock a stated instant refers to, the skew bound, and a table of the window by case, with the admission freshness window `W` and its reason after it. No rule changes. Two members of 2.1 cite the date-time form at 2.6.2, where it is stated.
 - How the rule layer is changed is one entry (4.5.1): the five steps, the sign-off of step 5, the scale gate, the swap test and the register of what fails that test. No rule changes. A numbered subsection is its own home in the entry check.
 - Delegation is one entry (4.4.3.4.3): what a `delegates_to` row carries at login, the scopes it names, the admission test with its refusal beside it, the `infra:*` tokens as a list, and how the authority ends. No rule changes. The retirement of a scope token cites the versioning policy (2.6.4), where the coordinated cut is stated.
+- The key plane is one entry (5.1): how the keys that seal content are derived, wrapped, granted and rotated, with the algorithm table, the rotation rule for a removed member and the three windows that are never conflated. No rule changes.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
 

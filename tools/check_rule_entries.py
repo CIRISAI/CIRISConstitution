@@ -68,8 +68,11 @@ def block(sec, title):
 
 
 def main():
-    entries = list(csv.DictReader((ROOT / "formal/derivation/rule_entries.tsv").open(), delimiter="\t"))
-    inv = list(csv.DictReader((ROOT / "formal/derivation/rule_inventory.tsv").open(), delimiter="\t"))
+    # Both tables are plain tab-separated text: a quotation mark is part of the words it stands in.
+    entries = list(csv.DictReader((ROOT / "formal/derivation/rule_entries.tsv").open(), delimiter="\t",
+                                  quoting=csv.QUOTE_NONE))
+    inv = list(csv.DictReader((ROOT / "formal/derivation/rule_inventory.tsv").open(), delimiter="\t",
+                              quoting=csv.QUOTE_NONE))
     errs = []
     landed = sorted({(e["rule_key"], e["home"]) for e in entries})
     for key, home in landed:
