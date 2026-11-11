@@ -320,3 +320,18 @@ Server's `accord.rs` pointers were written against the `asserted_at` wording). S
 the same section: no rule for a halt row past `valid_until`; no rule for a duplicate
 `invocation_id` on `lifecycle:confirmed`.
 
+Accord carriage at the build, from edge's trace of release/45.0.0 (2026-11-11): no accord row
+is in `required_rows`; the accord family moves unasked by prefix only where a peer's walk
+reaches; a first-contact peer is offered no accord row, the halt included; the relay gate is
+off unless a host sets it; `accord_decision` does not replicate on edge's plane; the quorum
+evidence plane is served to anyone who asks (conforming). So a v45 halt reaches consented,
+Rooted peers and serve seats, not every node holding an edge. Tracked as CIRISEdge#981;
+`CLM-stranger-carries-consent-free` is staged on it and `CLM-moves-requested-required-appropriate`
+is narrowed to what edge's pointers do. Open at edge: a flood bound on the stranger path, and
+how `accord_decision` objects travel (needs a persist door). For Eric: when #981 is scheduled.
+
+The election against the old promotion rule: `formal/mesh_net` `ModLapse` still promotes in the
+same step and `CLM-promotion-cohort-standing` (established, persist) still claims it. To do:
+change the model's lapse to lock and elect with the invariant "no unmoderated room is
+writable", and ask persist whether `check_promotion_cohort_standing` orders a ballot or appoints.
+
