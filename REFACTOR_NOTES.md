@@ -311,3 +311,12 @@ CSD/5 and the formal work (answered to the client session 2026-11-11; my reading
   what was signed" (not A13); the screen model as a refinement from a card's `issue` to the
   door's `execute`, per-card in TLA+, the general statement in Lean. The client would export
   each card's writes as (family, verb, scope, confirm, sends, shows) with guards and bindings.
+
+Halt reach, ruled by Eric 2026-11-11: it takes effect the moment the halt is active, captured
+at the store. Landed per node (the store admits the row, latches, records the instant); model
+`formal/accord_halt/AccordHaltReach.tla`. Owed: tell persist and server (CLM-accord-reach is
+staged on CIRISPersist#803; the store must record the latch instant and judge the edge then;
+Server's `accord.rs` pointers were written against the `asserted_at` wording). Still open in
+the same section: no rule for a halt row past `valid_until`; no rule for a duplicate
+`invocation_id` on `lifecycle:confirmed`.
+

@@ -101,6 +101,11 @@ jobs:
           grep -q 'Invariant Inv_NoWindow is violated' w.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h4" -deadlock -config AccordHalt_proposal_stuck.cfg AccordHalt.tla | tee s.log
           grep -q 'Invariant NotStuck is violated' s.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/h5" -deadlock -config AccordHaltReach_active.cfg AccordHaltReach.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h6" -deadlock -config AccordHaltReach_signed_missed.cfg AccordHaltReach.tla | tee m.log
+          grep -q 'Invariant Inv_EdgeAtReceiptIsBound is violated' m.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h7" -deadlock -config AccordHaltReach_signed_bound.cfg AccordHaltReach.tla | tee b.log
+          grep -q 'Invariant Inv_LatchedHeldEdge is violated' b.log || exit 1
 
   authority:
     name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)

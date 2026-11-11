@@ -3,10 +3,10 @@
   "source": "tools/build_csd4_chain.py",
   "pins": {
    "state_table_sha256": "b4f9dc9c9b02b1e42f3565f294c5bdcc184fe23fa789d4f48f5c5f9eb019cb2b",
-   "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
+   "invariants_sha256": "2ccd977d0c6d1f2941831d8c0c4879a4c7ac78241915e9070ebe6285d53567a2",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "e6714ac97da5e065345725b3ba0e9506eaa7ec915723e49138610cd5801b6fa7",
+   "claims_sha256": "07bb978cc443286961ba2c9bd7dd2c95ea239bf06859923cf8ca16a62f12b9ae",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -29,7 +29,7 @@
   "counts": {
    "atoms": 156,
    "states": 242,
-   "invariants": 216,
+   "invariants": 221,
    "claims": 597,
    "entries": 20,
    "refusal_tokens": 105
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "515480d7ef72c488188a58a55cde414ea9ad6a13e39ceb1e756f809ed1429289"
+  "chain_sha256": "5a49fbfe3fdf6acd2ae3275b527c8b790ba7f8d5b7c858eb307f74e7aafc604c"
  },
  "chain": [
   {
@@ -1974,6 +1974,42 @@
      "verdict": "closes (row mode)"
     },
     {
+     "inv_id": "AR.held",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_LatchedHeldEdge",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.bound",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_EdgeAtReceiptIsBound",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.free",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_CutBeforeIsFree",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.exit",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_CutReleasesNothing",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "RR.subs",
      "model": "mesh_net",
      "source": "formal/mesh_net/RootReach.tla",
@@ -2408,6 +2444,34 @@
        "path": "tests/ciris_engine/logic/accord/test_accord_halt_ingress.py",
        "symbols": [
         "test_nothing_on_the_accord_path_can_end_the_process"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-reach",
+     "cc_ref": "4.2.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#803"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "replicate_and_maybe_halt"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "ingest_message"
        ]
       }
      ]
@@ -4318,6 +4382,51 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "AR.held",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_LatchedHeldEdge",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.bound",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_EdgeAtReceiptIsBound",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.free",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_CutBeforeIsFree",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.exit",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_CutReleasesNothing",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.instant",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_InstantFixed",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "RR.subs",
      "model": "mesh_net",
      "source": "formal/mesh_net/RootReach.tla",
@@ -4799,6 +4908,34 @@
        "path": "tests/ciris_engine/logic/accord/test_accord_halt_ingress.py",
        "symbols": [
         "test_nothing_on_the_accord_path_can_end_the_process"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-reach",
+     "cc_ref": "4.2.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#803"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "replicate_and_maybe_halt"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "ingest_message"
        ]
       }
      ]
@@ -5411,6 +5548,51 @@
      "verdict": "closes"
     },
     {
+     "inv_id": "AR.held",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_LatchedHeldEdge",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.bound",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_EdgeAtReceiptIsBound",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.free",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_CutBeforeIsFree",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.exit",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_CutReleasesNothing",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.instant",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_InstantFixed",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "RR.subs",
      "model": "mesh_net",
      "source": "formal/mesh_net/RootReach.tla",
@@ -5778,6 +5960,34 @@
        "path": "tests/ciris_engine/logic/accord/test_accord_halt_ingress.py",
        "symbols": [
         "test_nothing_on_the_accord_path_can_end_the_process"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-reach",
+     "cc_ref": "4.2.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#803"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "replicate_and_maybe_halt"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "ingest_message"
        ]
       }
      ]
@@ -8573,6 +8783,42 @@
      "verdict": "closes (row mode)"
     },
     {
+     "inv_id": "AR.held",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_LatchedHeldEdge",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.bound",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_EdgeAtReceiptIsBound",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.free",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_CutBeforeIsFree",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.exit",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_CutReleasesNothing",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "RR.subs",
      "model": "mesh_net",
      "source": "formal/mesh_net/RootReach.tla",
@@ -9007,6 +9253,34 @@
        "path": "tests/ciris_engine/logic/accord/test_accord_halt_ingress.py",
        "symbols": [
         "test_nothing_on_the_accord_path_can_end_the_process"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-reach",
+     "cc_ref": "4.2.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#803"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "replicate_and_maybe_halt"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "ingest_message"
        ]
       }
      ]
@@ -11231,6 +11505,42 @@
      "verdict": "closes (row mode)"
     },
     {
+     "inv_id": "AR.held",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_LatchedHeldEdge",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.bound",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_EdgeAtReceiptIsBound",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.free",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Inv_CutBeforeIsFree",
+     "kind": "safety",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
+     "inv_id": "AR.exit",
+     "model": "accord_halt",
+     "source": "formal/accord_halt/AccordHaltReach.tla",
+     "symbol": "Prop_CutReleasesNothing",
+     "kind": "safety-temporal",
+     "claim_id": "CLM-accord-reach",
+     "verdict": "closes"
+    },
+    {
      "inv_id": "RR.subs",
      "model": "mesh_net",
      "source": "formal/mesh_net/RootReach.tla",
@@ -11665,6 +11975,34 @@
        "path": "tests/ciris_engine/logic/accord/test_accord_halt_ingress.py",
        "symbols": [
         "test_nothing_on_the_accord_path_can_end_the_process"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-accord-reach",
+     "cc_ref": "4.2.1",
+     "status": "staged",
+     "join": "by_invariant",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#803"
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "replicate_and_maybe_halt"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISServer",
+       "path": "src/accord.rs",
+       "symbols": [
+        "ingest_message"
        ]
       }
      ]
