@@ -35,6 +35,8 @@ def overcap(sec, home):
     for para in sec[1:]:
         if not para.strip() or para.lstrip().startswith(("|", "- ")) or para.startswith(c.NEIGHBOURS.get(home, ())): continue
         plain = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", para)
+        for kept in c.EXEMPT: plain = plain.replace(kept, "")
+        plain = re.sub(r"\.\*\*(\s)", r".\1", plain)
         if any(len(s.split()) > c.MAX_WORDS for s in re.split(r"(?<=[.])\s+(?=[A-Z*`])", plain)): return True
     return False
 def main():

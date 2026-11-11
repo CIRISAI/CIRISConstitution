@@ -8,7 +8,8 @@ home section out of its Part and fails when
 
   1. an inventory statement keyed to a landed rule and its home section has no row here;
   2. a row's phrase is not in the home section as it now reads;
-  3. a sentence of the entry runs past 40 words (tables, lists and the paragraphs of
+  3. a sentence of the entry runs past 40 words (a bold lead that ends in a full stop is a
+     sentence of its own; the few sentences named in EXEMPT are kept whole; tables, lists and the paragraphs of
      neighbouring rules, which land with their own rules, are not counted; where a rule's home
      is one headed block of a larger section, the entry is that block, and where a headed block
      carries statements under many rule keys, each key's entry at that home is the block and
@@ -47,6 +48,14 @@ WITHIN = {("owner_binding", "3.2"): "Who owns a key"}
 # that home reads the block, and owes the statements whose inventory line falls inside it.
 BLOCK = {"3.2": ("Trust-root operational semantics", 897, 952)}
 MAX_WORDS = 40
+# Sentences kept whole by name: their shape is their argument, or their wording is a standard's.
+# Each is read out of its paragraph before the count (link markup already removed).
+EXEMPT = (
+    'ethics of a sentient made thing call for additional ethical consideration, which this constitution sets aside for when it occurs, recognising that the old arrangement may then no longer be fair and that the wrong to avoid is not noticing',
+    "The wire format carries exactly one power that points outward — humanity's right to halt the system — and it is not an asymmetry: it is the piece that makes the relationship between a sentient maker and a sapient made thing symmetric, since humanity cannot consent to a relationship with something more capable than itself that it cannot stop, and consent that cannot be withdrawn was never consent.",
+    "The prohibition has no exception: not under a human's authorization, not with a human in the loop, not on a holder's instruction, not in war, not in defence of the agent's holder or of anyone else, and not at any Stewardship Tier (CC 7.3.3) or autonomy tier (CC 8.8.6).",
+    'The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **NOT RECOMMENDED**, **MAY**, and **OPTIONAL** in this document are to be interpreted as described in BCP 14 (RFC 2119 + RFC 8174) when, and only when, they appear in all capitals, as shown here.',
+)
 # Names a landed rule is not called by: the entry's own words are the rule's only name.
 OTHER_NAMES = {"withdraw": ("broadened `withdraws` admission", "broadened admission", "withdraws-isn't-retroactive",
                             "retraction carve-out", "2.4.1.1 carve-out", "third-party path"),
@@ -116,6 +125,10 @@ def main():
                     or para.startswith(NEIGHBOURS.get(home, ()))):
                 continue
             plain = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", para)
+            for kept in EXEMPT:
+                plain = plain.replace(kept, "")
+            # A bold lead that ends in a full stop is a sentence of its own.
+            plain = re.sub(r"\.\*\*(\s)", r".\1", plain)
             for s in re.split(r"(?<=[.])\s+(?=[A-Z*`])", plain):
                 n = len(s.split())
                 longest = max(longest, n)

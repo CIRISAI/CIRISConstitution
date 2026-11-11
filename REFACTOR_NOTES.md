@@ -41,32 +41,36 @@ Data side (done, all gated):
 Text side (in progress):
 - Inventory: `formal/derivation/rule_inventory.tsv` (4,248 statements; line numbers are those of
   commit `30fddf6` and are stale, match by `gist`).
-- **309 sections are held by the entry check** (`formal/derivation/rule_entries.tsv`, 4,968 rows;
-  gate `tools/check_rule_entries.py`): 73 rewritten as entries, 174 registered as they stand,
-  62 registered after their over-long sentences were split.
-- **51 numbered sections are not landed** (`handoff/remaining.tsv`), and every one is waiting on
-  something other than writing time:
-  - 33 have sentences over 40 words and are held: the Part 1 and Part 7 stance text and
-    CC 4.2 and 4.2.5 (Eric's voice); CC 5.3.3.2.1, 5.3.3.2.2, 5.3.3.2.3, 5.3.3.2.5, 5.3.3.5 and
-    2.6.1.8 (edge 45.1); CC 2.6.1.7 (wire-exact, generated in part); CC 2.6.9 (the BCP 14
-    key-words sentence, 48 words, standard wording that should not be split: give the check
-    an exemption for it and register the section).
-  - 15 have no inventory statement (1.15, 1.15.9, 1.15.10, 1.16, 1.16.1, 4.5.10.1, 4.5.10.3,
-    4.5.12, 5.3, 5.3.2.4.5, 7.1, 7.1.6, 7.2, 7.2.8, 7.5.9): read each for statements the
-    inventory missed, or record that it states no rule.
-  - 3 have an inventory statement their text does not carry (2.6.5, 4.5.9.4, 4.5.12.6): correct
+- **333 sections are held by the entry check** (`formal/derivation/rule_entries.tsv`): 73
+  rewritten as entries, 174 registered as they stand, 86 registered after their over-long
+  sentences were split (Eric, 2026-11-11: knock the mechanicals out so the rest can be
+  analysed; the stance text was split with every word of substance kept). Four sentences are
+  kept whole by name (`EXEMPT` in the check). A bold lead ending in a full stop counts as its
+  own sentence.
+- **27 numbered sections are not landed** (`handoff/remaining.tsv`):
+  - 7 wire sections with sentences over 40 words, held for edge 45.1 and for being wire-exact:
+    CC 2.6.1.7, 2.6.1.8, 5.3.3.2.1, 5.3.3.2.2, 5.3.3.2.3, 5.3.3.2.5, 5.3.3.5 (about 60
+    sentences, several past 100 words; byte layouts written as prose that want tables, not
+    splits).
+  - 17 with no inventory statement (1.13, 1.15, 1.15.9, 1.15.10, 1.16, 1.16.1, 4.5.10.1,
+    4.5.10.3, 4.5.12, 5.3, 5.3.2.4.5, 7.1, 7.1.6, 7.2, 7.2.8, 7.3.6, 7.5.9): read each for
+    statements the inventory missed, or record that it states no rule.
+  - 3 with an inventory statement their text does not carry (2.6.5, 4.5.9.4, 4.5.12.6): correct
     the inventory row's section first.
+- What the check does and does not show: every inventory statement is pinned to a phrase of
+  its section, so text can be moved without losing a rule. It does not show that a rule is
+  stated once. The document is no shorter. The consolidation is the work that follows.
 
 ## 3. Next steps, in order
 
-1. **Registering and the free rewrites are done.** The registered phrases were matched by
-   score (`handoff/register.py`) and only the low scores were read by hand, so a phrase may sit
-   in the right paragraph on the wrong sentence; the check still holds it to the section.
-   The sentence splits were each read by a second reader. Left over: the 18 sections with no
-   over-long sentence listed in section 2.
-2. **Ask Eric about the held stance text** (Parts 1 and 7, CC 4.2, 4.2.5): 22 sections, about
-   75 sentences over the bound. Either he rewrites, or he says a split that keeps his words is
-   welcome, or the check exempts stance sections.
+1. **The mechanical pass is done** apart from the 27 sections of section 2. The registered
+   phrases were matched by score (`handoff/register.py`) and only the low scores were read by
+   hand, so a phrase may sit in the right paragraph on the wrong sentence.
+2. **The analysis the mechanical pass was for.** In this order: (a) the paragraphs that are hard
+   for structure, not length: CC 1.13.2 (one paragraph makes about ten claims), CC 7.5.5 (wire
+   mechanism for the retirement record sits in Part 7 beside the stance), CC 1.15.5; (b) the
+   text-against-text conflicts of section 6; (c) the duplication: pivot `rule_entries.tsv` by
+   `rule_key` to list every rule stated in more than one home, and decide each rule's one home.
 3. **Held sections: do not rewrite without the stated word.**
    - CC 5.3.3.2.3, 5.3.3.5, 2.6.1.8, and by extension 5.3.3.2.1 and 5.3.3.2.5: the edge 45.1
      work is changing these wire sections. Wait for edge's built layouts and passing
@@ -209,6 +213,15 @@ Plainly stale, fixable in a consistency pass (a sample; confirm each against the
   and `federation_addressed_not_recipient` of Part 2.
 - CC 4.2.2 carries `hardware_class` "as a JSON property on a signed key record … and inside
   `attestation_evidence`"; CC 4.2.2.1 says it "is not a directory column".
+- CC 1.7 credits the impossibility of fair exchange without a trusted third party to
+  Even–Goldreich–Lempel; a reader recalls it as Even–Yacobi (1980) or Pagnia–Gärtner (1999).
+  Not looked up. Check against CC 8.6.1 before the cut.
+- CC 1.16.4 paraphrases CC 1.9 more broadly than 1.9 states it ("the agent halts" for "halt the
+  action in question"; "a defined threshold" for "deployment-defined thresholds").
+- CC 7.5.3.1 "five-level scale modeled on SAE J3016 (L0–L5)": six levels cited, five used.
+- CC 7.5.5: "the consciousness indicators below" points at no list; "take none of it" is loose
+  between the window and the postponement. CC 1.13.2 cites CC 6.1.2.1.2 twice in two clauses
+  and cites itself "above".
 - CC 5.3.2.2 cites the subject's withdrawal authority as "rule 2" in one sentence and "rule 2 or
   3" in the next; CC 5.3.3.1 says "binding and nonce pinned here" and pins no nonce there.
 - Stale cites: CC 3.1.7 to "CC 2.6.7 `{platform}` discipline" (it is CC 2.3.2.1, also in
@@ -259,3 +272,16 @@ giving the commit or tag to pin, the sha256 of `manifests/namespace_registry.jso
 `manifests/transitions.json` and `manifests/ui_primitives.json` there, the family rows renamed
 or folded since v1.0-rc6 (the client's pin, 158 families), and the old-to-new decimal map. The
 client's guide was told not to print a CC section number for CSD/5 until the laws are in a Part.
+
+CSD/5 and the formal work (answered to the client session 2026-11-11; my readings, not Eric's):
+- `formal/event_lifecycle` carries L6 whole, L5 (offered iff admitted) and the first half of L7
+  (the previewed view is the door's). It does not carry "sent only while the preview is held",
+  nor L12: `answer.shown_digest` binds an answer to the item as served, and no text says who
+  checks it. That is a gap to close before L12 is an obligation in a Part.
+- `manifests/choice_item.cddl` `write.verb` lists six verbs (it has `carry`);
+  `manifests/ui_primitives.json` `write_verbs` lists five. Reconcile.
+- Offered to the client and not built: a generated list of theorem names (file, line) to pin as
+  data; a new ADEQUACY row for "what was offered is what the door admits, and what was shown is
+  what was signed" (not A13); the screen model as a refinement from a card's `issue` to the
+  door's `execute`, per-card in TLA+, the general statement in Lean. The client would export
+  each card's writes as (family, verb, scope, confirm, sends, shows) with guards and bindings.

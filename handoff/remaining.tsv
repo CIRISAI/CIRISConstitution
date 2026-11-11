@@ -1,37 +1,12 @@
 part	section	words	sentences_over_40	words_in_those	inventory_statements	heading
-p2	2.6.1.8	1433	18	1231	25	#### 2.6.1.8 `signed-object-cose` — The signed object of the v62 edition: CBOR a
-p7	7.5.5	1392	15	1075	23	### 7.5.5 `5-sentience` — Chapter 5: The Retirement Standard, and what is set as
-p1	1.13.2	2029	12	996	35	### 1.13.2 `structure-recursive` — The Recursive Golden Rule (structural, not ex
-p5	5.3.3.5	1598	15	987	27	#### 5.3.3.5 `transport-edge` — Transport — Edge layer (normative)
-p5	5.3.3.2.3	1486	13	967	27	##### 5.3.3.2.3 `registry-wire` — `SealedAvChunk` wire layout (normative)
-p5	5.3.3.2.5	659	6	365	14	##### 5.3.3.2.5 `stream-double` — Double-seal + deterministic nonce derivation (
-p1	1.13.4	551	5	354	2	### 1.13.4 `mental` — Mental model — federated structured-claim emission
-p1	1.7	677	6	340	4	## 1.7 `minimal-and-adequate` — The 1+4 minimal-and-adequate claim
-p2	2.6.1.7	5284	3	229	124	#### 2.6.1.7 `signed-object` — The signed object — member set, placement and typ
-p5	5.3.3.2.1	676	4	208	14	##### 5.3.3.2.1 `namespace-realtime` — `codec_id` namespace — realtime A/V chunk
-p1	1.3	589	4	202	6	## 1.3 `pdma` — PDMA — principled decision algorithm
-p7	7.3.5	468	3	192	8	### 7.3.5 `5-governance-governance` — Chapter 5: Governance and Accountability
-p4	4.2.5	290	3	174	3	### 4.2.5 `isn` — Why this isn't a Golden-Rule violation
-p4	4.2	243	3	165	3	## 4.2 `accord` — The HUMANITY_ACCORD constitutional layer
-p7	7.5.4	339	3	162	8	### 7.5.4 `4-de` — Chapter 4: De-commissioning Protocol (DCP)
-p7	7.5.3.1	366	3	146	4	#### 7.5.3.1 `autonomy-tiers` — Operational autonomy tiers (A0–A4)
-p1	1.15.5	286	2	141	2	### 1.15.5 `5-sustained` — Chapter 5: Sustained Coherence — The Long View
-p7	7.4	323	3	140	4	## 7.4 `threshold-force` — The Threshold of Force
-p7	7.3.3	914	2	108	13	### 7.3.3 `3-stewardship` — Chapter 3: Stewardship Tier (ST) System: Quantifying
-p1	1.13.3.3	1194	2	101	26	#### 1.13.3.3 `adversary-classes` — Adversary classes (and where each is / is no
-p1	1.1	494	2	96	8	## 1.1 `meta-goal` — Meta-Goal M-1 — sustainable adaptive coherence
-p1	1.16.4	72	1	63	1	### 1.16.4 `iii-wisdom` — Wisdom-Based Deferral: Safeguarded Ethical Collaborati
-p7	7.3.4	477	1	61	16	### 7.3.4 `4-bucket` — Chapter 4: Bucket-Specific Duties of Creation
-p7	7.3.2	244	1	59	3	### 7.3.2 `scope-what` — Chapter 2: Scope: What Constitutes "Creation" under thi
-p5	5.3.3.2.2	211	1	55	3	##### 5.3.3.2.2 `realtime` — Realtime non-A/V data streams (normative scope boun
-p1	1.13.5	121	1	53	2	### 1.13.5 `operational-language` — Operational-language gate — the safety-vs-ce
-p1	1.13	60	1	48	0	## 1.13 `foundation` — Foundation
-p2	2.6.9	54	1	48	1	### 2.6.9 `conformance-language` — Conformance language
-p7	7.5.1	146	1	48	2	### 7.5.1 `foundational-sunset` — Chapter 1: Foundational Sunset Principles
-p7	7.3	214	1	47	1	## 7.3 `genesis-responsibility` — Introduction: The Genesis of Responsibility
-p7	7.3.6	100	1	47	0	### 7.3.6 `integrating-creation` — Conclusion: Integrating Creation into the Eth
-p7	7.5.7	124	1	44	4	### 7.5.7 `7-succession` — Chapter 7: Succession & Custodial Transfer
-p1	1.13.1	449	1	41	2	### 1.13.1 `ubuntu` — The Ubuntu commitment — relational-anthropology substrate 
+p2	2.6.1.8	1433	18	1207	25	#### 2.6.1.8 `signed-object-cose` — The signed object of the v62 edition: CBOR a
+p5	5.3.3.2.3	1486	12	921	27	##### 5.3.3.2.3 `registry-wire` — `SealedAvChunk` wire layout (normative)
+p5	5.3.3.5	1598	14	920	27	#### 5.3.3.5 `transport-edge` — Transport — Edge layer (normative)
+p5	5.3.3.2.5	659	6	361	14	##### 5.3.3.2.5 `stream-double` — Double-seal + deterministic nonce derivation (
+p2	2.6.1.7	5284	3	223	124	#### 2.6.1.7 `signed-object` — The signed object — member set, placement and typ
+p5	5.3.3.2.1	676	4	199	14	##### 5.3.3.2.1 `namespace-realtime` — `codec_id` namespace — realtime A/V chunk
+p5	5.3.3.2.2	211	1	49	3	##### 5.3.3.2.2 `realtime` — Realtime non-A/V data streams (normative scope boun
+p1	1.13	62	0	0	0	## 1.13 `foundation` — Foundation
 p1	1.15	132	0	0	0	## 1.15 `chapters` — Chapters
 p1	1.15.9	33	0	0	0	### 1.15.9 `9-path` — Chapter 9: Path Toward Ethical Maturity
 p1	1.15.10	50	0	0	0	### 1.15.10 `a-1.conclusion` — Summary of the chapters above
@@ -49,4 +24,5 @@ p7	7.1	99	0	0	0	## 7.1 `embracing-responsibilities` — Introduction: Embracing 
 p7	7.1.6	70	0	0	0	### 7.1.6 `a-4.conclusion` — Conclusion
 p7	7.2	65	0	0	0	## 7.2 `horizon-ethical` — Introduction: The Horizon of Ethical Becoming
 p7	7.2.8	25	0	0	0	### 7.2.8 `sunset-provision` — Conclusion
+p7	7.3.6	104	0	0	0	### 7.3.6 `integrating-creation` — Conclusion: Integrating Creation into the Eth
 p7	7.5.9	31	0	0	0	### 7.5.9 `covenant-self` — Conclusion & Self-Renewal
