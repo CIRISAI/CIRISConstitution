@@ -72,7 +72,7 @@ Both ladders are attestation ladders in the sense of this section: a registered 
 | `age_self_declared:band:{band}:{version}` | Subject's own age-band declaration — `{band}` ∈ `minor` \| `adult` \| `under_13` \| `13_15` \| `16_17` (closed — the [CC 3.4.13](part_3_the_namespace.md) Q1 finer bands spelled as the substrate's `AgeBandFine`; `unknown` is a consumer's fail-secure *resolution*, never a wire token), canonical `{version}` = `v1`. Carries **no** `{level}` token: its level is `self` by construction, and a level token on this prefix is malformed. The literal `band` segment marks the rung (`age_self_declared:band:adult:v1`); the two-segment `age_self_declared:{band}:{version}` is not a registered shape. Non-reserved but not open-sender: admitted only where the signer acts for the subject, per [CC 3.4.11](part_3_the_namespace.md). | signed | No |
 | `capacity_assurance:{level}:{domain}:{band}:{version}` | Witness rung of the adult decision-capacity ladder ([CC 3.4.12](part_3_the_namespace.md)): a registered qualified assessor attests a per-domain band; the subject cannot self-emit it and the proposed steward cannot be the attester. `{level}` ∈ `provider` \| `panel` \| `government` (closed — the two reversible-cause companions below are their own rows, never a `{level}`); `{band}` ∈ `capacitated` \| `incapacitated` (closed); `{domain}` is the open per-domain vocabulary. Aggregation across domains is forbidden — capacity is a vector, never collapsed to a scalar. | signed | **Yes — [CC 3.4.12](part_3_the_namespace.md)** |
 | `capacity_assurance:reversible_excluded:{domain}:{version}` | Reversible-cause exclusion companion ([CC 3.4.12](part_3_the_namespace.md)): the assessor attests that delirium, infection-confusion, depression and polypharmacy are ruled out for the domain. A mandatory predicate on any continuing `incapacitated` rung; witness-reserved like its parent. | signed | **Yes — [CC 3.4.12](part_3_the_namespace.md)** |
-| `capacity_assurance:reversible_pending:{domain}:{version}` | Acute-window companion ([CC 3.4.12](part_3_the_namespace.md)): exclusion in progress, not skipped; admissible for the T1 emergency-necessity tier only, and the binding MUST lapse unless it resolves to `reversible_excluded` within its `valid_until`. Witness-reserved. | signed | **Yes — [CC 3.4.12](part_3_the_namespace.md)** |
+| `capacity_assurance:reversible_pending:{domain}:{version}` | Acute-window companion ([CC 3.4.12](part_3_the_namespace.md)): exclusion in progress, not skipped; admissible for the T1 provisional tier only, and the binding MUST lapse unless it resolves to `reversible_excluded` within its `valid_until`. Witness-reserved. | signed | **Yes — [CC 3.4.12](part_3_the_namespace.md)** |
 
 #### 3.1.2.1 `provenance` — Canonical-bytes contracts for provenance primitives
 
@@ -297,7 +297,7 @@ This entry says which signed rows seat a key on the roster of a `family` or `com
 - terminal `membership_founding_member_unsigned`;
 - terminal `membership_supersede_cannot_add`.
 
-**Decline, withdrawal, expiry.** `expires_at` is REQUIRED on a proposal, after its `asserted_at` and at most 30 days later. A decline is terminal for its proposal. The second, opposite reply by the same K to the same proposal is refused. Asking again is a **new** proposal. The inviter withdraws a proposal with the ordinary `withdraws`. A growth already admitted is never re-judged. Leaving stays the member's own forward-only `withdraws`.
+**Decline, withdrawal, expiry.** `expires_at` is REQUIRED on a proposal, after its `asserted_at` and at most 30 days later. A decline is terminal for its proposal. The second, opposite reply by the same K to the same proposal is refused. Asking again is a **new** proposal. The inviter withdraws a proposal with the ordinary `withdraws`. A growth already admitted is never re-judged. Leaving is the member's own `membership:resignation`, which reaches forward only.
 
 **Why K is named in `subject_key_ids`.** The invitee cannot be named in `attested_key_id` under the producer rule of [CC 2.1](part_2_the_grammar.md). `subject_key_ids` is the member that already carries consent authority over a Contribution ([CC 2.3](part_2_the_grammar.md)) and is the key the substrate delivers on — a proposal is readable by, and applied on, any node whose self-collective contains that entry, without that node holding the group's roster.
 
@@ -1367,7 +1367,7 @@ takedown_notice {
 
 | `LegalBasis` (variant) | wire string (normative) | Source regime | Discipline |
 |---|---|---|---|
-| `Dmca512` | `dmca512` | US 17 USC §512 | Expeditious-with-counter-notice (10-14 business day window) |
+| `Dmca512` | `dmca512` | US 17 USC §512 | Expeditious-with-counter-notice (10-day withhold window, [CC 4.5.3](part_4_composition_governance.md)) |
 | `DsaArticle16` | `dsa_article16` | EU Digital Services Act Article 16 | Expeditious-with-counter-notice (Article 17 statement of reasons; Articles 20–21 redress) |
 | `TvecTerrorist` | `tvec_terrorist` | EU Terrorist Content Regulation 2021/784 | **Immediate** (1-hour removal obligation) |
 | `NcmecCsam` | `ncmec_csam` | US 18 USC §2258A (NCMEC) | Immediate removal as this Part's discipline; the reporting law itself requires report and preservation |
@@ -1479,9 +1479,9 @@ location_proof {
 
 This entry says what a `family` is on the wire, how a member is added or removed and how the family's `consensus_protocol` is amended. It also says how a change short of signatures is held, how a roster event's signed instant is bounded, where a node takes a group's past from and what the substrate emits on a family event. The accord-holder family and a household are given as instances.
 
-A `family` is a **group of trusted nodes** — each node being a distinct identity (which itself may have multiple `identity_occurrence`s per CC 3.3.6). Families are the wire-format primitive for `cohort_scope: family` visibility scoping. The integrity guarantee they encode is intimacy. Content scoped to a family is admitted into substrate, wrapped under the family DEK, and delivered to all current members — but never emits a holding claim to non-members ([CC 5.2](part_5_transport_substrate.md)), so the federation cannot even discover the content exists.
+A `family` is a **group of trusted nodes** — each node being a distinct identity (which itself may have multiple `identity_occurrence`s per CC 3.3.6). Families are the wire-format primitive for `cohort_scope: family` visibility scoping. The integrity guarantee they encode is intimacy. Content scoped to a family is admitted into substrate, sealed under a fresh per-write DEK wrapped to the family's members ([CC 4.4.3.4.1](part_4_composition_governance.md)), and delivered to all current members. It never emits a holding claim to non-members ([CC 5.2](part_5_transport_substrate.md)), so the federation cannot even discover the content exists.
 
-**More than one family.** One identity MAY belong to multiple families. Each family has its own DEK and its own membership roster.
+**More than one family.** One identity MAY belong to multiple families. Each family has its own membership roster, and its content DEKs are wrapped to that roster.
 
 ```
 family {
@@ -1696,7 +1696,7 @@ It rides the same admission gate as a bare `scores` on `consent:state:*`; the `c
    stance: granted, bilateral_pair_id: <same-uuid>) +
    scores on consent:partnership_accept:v1
 3. topical_relation:bilateral_pair links the two Contributions
-4. Consumer policy treats the partnership as ratified iff both halves present
+4. Consumer policy treats the partnership as ratified iff both halves present and live
    under the same bilateral_pair_id with stance: granted
 ```
 
@@ -1715,7 +1715,7 @@ This worked example states the [CC 1.7](part_1_foundation.md) in-grammar claim a
      + scores on consent:partnership_grant:v1
    B emits consent_record(target_key_id: A, stance: granted, bilateral_pair_id: X)
      + scores on consent:partnership_accept:v1
-   topical_relation:bilateral_pair links the halves; ratified iff both present.
+   topical_relation:bilateral_pair links the halves; ratified iff both present and live.
 
 2. DIGITAL LEG — steward-bound escrow custodian (the CC 4.4.3.2 archive_custody
    precedent: a custodian holding per-epoch keys decoupled from the live roster):
@@ -1993,7 +1993,7 @@ This entry says how a node records its consent to replicate a class of its own a
 
 **The problem it solves.** Cross-node propagation is governed by [CC 4.4.3.2.1 / CC 5.2](part_5_transport_substrate.md) `cohort_scope`. A node **inside** a community (e.g. the [CC 3.2](#3.2) / [CC 8.1](part_8_appendices.md) `ciris-canonical` infrastructure community) shares with co-members by community-cohort membership. No per-peer object is needed. A node **outside** that group has no membership edge to ride. So an out-of-group peering needs an **explicit, auditable, revocable** consent object. Concrete case: an in-group lens node (CIRISServer) replicating `capacity:*` to an out-of-group monitoring node (CIRISStatus), which replicates its [`observation:reachability:v1`](part_8_appendices.md#8.1.3) rows back. `consent:replication` is that object.
 
-**Shape.** The grant is a bare `scores` Contribution on the dimension **`consent:replication:{version}`** (canonical `consent:replication:v1`). It carries `attesting_key_id = G` (the granting node), and the recipient peer is named in `subject_key_ids[] = [P]`. It is standing (not bound to a target Contribution). It is hybrid-signed and admitted **federation-tier** (it authorizes cross-node flow — not local-tier-eligible, [CC 5.3.2.2](part_5_transport_substrate.md) discipline). It carries `cohort_scope: federation` (the grant itself is a public governance record).
+**Shape.** The grant is a bare `scores` Contribution on the dimension **`consent:replication:{version}`** (canonical `consent:replication:v1`). It carries `attesting_key_id = G` (the granting node), and the recipient peer is named in `subject_key_ids[] = [P]`. It is standing (not bound to a target Contribution). It is hybrid-signed and admitted **federation-tier** (it authorizes cross-node flow — not local-tier-eligible, [CC 5.3.2.2](part_5_transport_substrate.md) discipline). It carries `cohort_scope: federation` (the grant itself is a public governance record). A grant that an unannounced node signs or is named in is never placed at `federation` ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)); it is held by the two nodes and no other.
 
 ```
 scores {
@@ -2638,8 +2638,8 @@ capacity-assurance construction (sibling of CC 3.4.11; the CC 3.1.7 R3 trailing 
   reversible-cause exclusion (mandatory predicate on any incapacitated attestation):
     capacity_assurance:reversible_excluded:{domain}:v1   // delirium/UTI/depression/polypharmacy ruled out
     capacity_assurance:reversible_pending:{domain}:v1    // ACUTE-WINDOW ONLY: exclusion in progress,
-                                                         //   NOT skipped; admissible solely for T1
-                                                         //   emergency necessity; MUST resolve to
+                                                         //   NOT skipped; admissible solely for the T1
+                                                         //   provisional tier; MUST resolve to
                                                          //   reversible_excluded or the binding LAPSES
 
   misattestation adjudication dimension:
@@ -2648,7 +2648,7 @@ capacity-assurance construction (sibling of CC 3.4.11; the CC 3.1.7 R3 trailing 
 
 - **`capacity_assurance:` is witness-RESERVED.** The emitter rule is `witness ∈ attesting_key.identity_type`, identical to the age-assurance rule ([CC 3.4.7.1](part_3_the_namespace.md), [CC 3.4.11](part_3_the_namespace.md)). A registered qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT emit it, and the proposed steward MUST NOT be the attester**. A CCS rejects a non-witness or conflicted emitter at admission, a CCC re-checks, a CCP MUST NOT emit. No one can self-mint an adult's incapacity. No one can mint the incapacity of a person they propose to steward.
 - **Confidence scales with scope.** A single-assessor `provider` rung is admissible **only** for the shortest provisional tier (below). Even there it **never confers asset-preservation or any continuing power on its own**. By itself it authorises only T0-class life-preserving necessity until the adjudicated binding exists. Any continuing or high-scope domain (`financial`, `medical`, `digital_identity`) requires the **`panel` rung**. That rung is the court's own process of independent assessment: an M-of-N quorum of *independent* assessors, each attesting that they were neither selected nor compensated by the petitioner/steward. The rung names the court's process, never a federation panel. A captured single signature (the pattern of a widely known person's captured conservatorship) cannot carry continuing stewardship, nor on its own any asset-bearing provisional power, by construction: T1 asset-preservation needs the court's order.
-- **Reversible-mimic exclusion is mandatory.** No `incapacitated` attestation is admissible for a *continuing* binding until its `reversible_excluded` companion is present for that domain. Delirium, infection-confusion, depression and polypharmacy are the genuine restoration path and the most-abused mis-attribution. Ruling them out is a precondition, not a courtesy. In the acute emergency window where exclusion is physically impossible mid-crisis, a `reversible_pending` companion is admissible **for the T1 emergency-necessity tier only**. The binding **MUST lapse** if `reversible_pending` is not resolved to `reversible_excluded` within the (short) `valid_until`. Pending is never a permanent state.
+- **Reversible-mimic exclusion is mandatory.** No `incapacitated` attestation is admissible for a *continuing* binding until its `reversible_excluded` companion is present for that domain. Delirium, infection-confusion, depression and polypharmacy are the genuine restoration path and the most-abused mis-attribution. Ruling them out is a precondition, not a courtesy. In the acute emergency window where exclusion is physically impossible mid-crisis, a `reversible_pending` companion is admissible **for the T1 provisional tier only**. The binding **MUST lapse** if `reversible_pending` is not resolved to `reversible_excluded` within the (short) `valid_until`. Pending is never a permanent state.
 
 **The two load-bearing inversions of the minor rule (normative).** The minor machinery is calibrated for a *binary, global, protective-default* status. An adult needs its mirror image.
 
@@ -2876,9 +2876,9 @@ M-of-N co-guardianship is supported as a verified DAG over `delegates_to` (guard
 
 1. **Protective actions are unilateral:** any single live guardian MAY immediately tighten scope, narrow capabilities, or revoke exposure back to the strict floor. No consensus is required. Most-protective guardian always wins.
 2. **Exposure-increasing actions require consensus:** scope-widening / capability-grant requires the full configured M-of-N co-sign (default: all live guardians; never fewer than 2 where N≥2). The child's evolving-capacity assent is a required input where age-appropriate.
-3. **Changing the guardian set is the highest bar:** adding/removing a guardian requires M-of-N authorisation plus verification of parental responsibility (per Q3). A contested party MUST NOT mint co-guardians to manufacture a quorum or dilute a pending protective veto.
+3. **Changing the guardian set is the highest bar:** adding a guardian, or removing one who has not withdrawn, requires M-of-N authorisation plus verification of parental responsibility (per Q3). A guardian's own exit is rule 5. A contested party MUST NOT mint co-guardians to manufacture a quorum or dilute a pending protective veto.
 4. **Fail-secure on quorum loss:** if live guardians < configured M, the child stays under guardianship (never orphaned) but scope auto-reverts to the strict floor. WBD is then triggered for guardian set re-establishment (emit `hard_case:*` guardian set-degraded). The child MUST NOT coast at a widened scope under a degraded or single-contested set.
-5. **Revocation by one of N:** a revoking guardian's contribution to any prior co-signed widening lapses (`withdraws`). If their departure breaks the authorising quorum, that scope auto-narrows to the floor.
+5. **Revocation by one of N:** when a guardian withdraws their own binding (`withdraws`), their signature no longer counts toward any prior co-signed widening. If their departure breaks the authorising quorum, that scope auto-narrows to the floor.
 6. **Conflict/deadlock → most-restrictive-wins + WBD, never default-open.**
 7. **Safeguarding bypass:** there MUST always be a consensus-independent path to a Wise Authority (the Q4 help-path / WBD). Co-guardianship then cannot be weaponised by an abusive guardian to trap a child. The child's best interests are paramount over adult dispute-resolution convenience.
 

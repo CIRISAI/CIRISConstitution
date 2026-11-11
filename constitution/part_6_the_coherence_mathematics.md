@@ -54,7 +54,7 @@ This entry says how a retained item is retired: the one descent it follows, the 
 
 **Pressure-driven (normative).** The descent rate and the pyramid's level transitions are driven by **pressure** (disk pressure, age, or an explicit force), never a fixed schedule. Pressure sources, slowest→fastest: natural aging < scheduled retirement < capacity (disk) eviction < **revocation (immediate forced descent below the floor)**. Capacity pressure is **arbitrated per owner** by the [CC 6.1.5.2](#6.1.5.2) storage-contention axis: cache and over-budget corpus descend before pinned corpus. Revocation still overrides pin state ([CC 6.1.5](#6.1.5) N5).
 
-**Forgetting and erasure converge ([CC 6.1.5](#6.1.5) N5).** The N5 erasure guarantee is exactly "not individually recoverable at or below the noise floor". A sufficiently-aggregated composite **may be** already-erased by degradation, **but only when no single source dominates it**. The naive "a picture of a thousand pictures contains `< 1/N` of any source" holds for **independent, non-dominated** sources and **fails for outliers**. A unique color, a rare position, or a near-duplicate cluster can dominate a composite, so the blur *is* that subject.
+**Forgetting and erasure converge ([CC 6.1.5](#6.1.5) N5).** The N5 erasure guarantee is exactly the state below the noise floor: not individually recoverable. A sufficiently-aggregated composite **may be** already-erased by degradation, **but only when no single source dominates it**. The naive "a picture of a thousand pictures contains `< 1/N` of any source" holds for **independent, non-dominated** sources and **fails for outliers**. A unique color, a rare position, or a near-duplicate cluster can dominate a composite, so the blur *is* that subject.
 
 **The source-diversity gate.** The already-erased shortcut is therefore **conditional on a source-diversity gate**. The id-based `member_commitment` ([CC 6.1.2.1.1](#6.1.2.1.1)) counts *which* members and never *dominance* or *content* multiplicity. So `AggregationMetaV1` carries the two signed members that make the gate checkable on the wire. They are `mass_commitment` (mass dominance, provable from held evidence) and `max_source_multiplicity` (content-similarity multiplicity, the R9 residual of [CC 8.3.1](part_8_appendices.md) that a mass-only surface cannot see). Both are carried in the [CC 6.1.2.1](#6.1.2.1) preimage and enforced at admission by the [CC 6.1.2.1.2](#6.1.2.1.2) gates. Where the gate fails, revocation's purge obligation applies in full (R9). No purge is needed **only** where the shortcut's diversity precondition holds.
 
@@ -62,13 +62,14 @@ This entry says how a retained item is retired: the one descent it follows, the 
 
 **Infrastructure is self-sufficient for memory (sharpens [CC 3.4.7.3](part_3_the_namespace.md)).** Both degradation operators are **mechanical** (symbol arithmetic + resampling). They require **no reasoning and no agency**, so a pure fabric node performs the entire retention function. A brain MAY enrich a degraded tier with a richer semantic gist, but is **never required**. Infrastructure remembers without agency. The mechanism is mechanical degradation; the brain is optional enrichment. The degradation operators act on the witnessed corpus a fold holds in the clear; the blob layer of [CC 6.1.5](#6.1.5) holds sealed chunks and never opens them — two objects, and the fabric node's retention function is the first.
 
-**Disposition mapping.** The [CC 6.1.5](#6.1.5) `EjectionVerdict` values are points on this one axis:
+**Disposition mapping.** The [CC 6.1.2.3](#6.1.2.3) `EjectionVerdict` values are points on this one axis:
 
 | Value or step | Point on the axis |
 |---|---|
 | `Keep` | above-floor, no pressure |
 | `EjectToTier` | a downward step (still recoverable at lower fidelity — by **dropping whole layers**, never by keeping part of a layer's chunks) |
 | aggregation | N→1 downward step |
+| `EjectAggregatedTierOnly` | a downward step that sheds one composite tier and leaves the finer and coarser tiers ([CC 6.1.2.3](#6.1.2.3)) |
 | `EjectHardDelete` | forced descent below the floor + purge-still-recoverable-tiers |
 
 They are not distinct mechanisms. They are stops on the single pressure-driven descent.
@@ -225,7 +226,7 @@ Durability is a **per-item choice the owner makes on publish**. An item marked *
 
 #### 6.1.5.1 `registry-replication` — Replication-target policy — normative floor and recommended defaults
 
-**Per-item policy (normative).** The target holder count is the **owner's choice per item**, set on publish and bounded by the cohort. A target MUST NOT exceed the item's audience ([CC 6.1.5.3](#6.1.5.3)). The substrate MUST NOT raise a target an owner did not set. Two floors sit under every target, each counted in **holders per item**. One is a **minimum holders** floor, at which repair runs. The other is a **minimum viable** floor, below which the item is no longer served and descends to EnvelopeOnly ([CC 6.1.2](#6.1.2)) — the signed envelope survives, never zero. A conformant substrate (a node of the CEWP, [CC 8.1.1](part_8_appendices.md#8.1.1)):
+**Per-item policy (normative).** The target holder count is the **owner's choice per item**, set on publish and bounded by the cohort. The effective target MUST NOT exceed the item's audience: a larger one is read as the audience and is never refused ([CC 6.1.5.3](#6.1.5.3)). The substrate MUST NOT raise a target an owner did not set. Two floors sit under every target, each counted in **holders per item**. One is a **minimum holders** floor, at which repair runs. The other is a **minimum viable** floor, below which the item is no longer served and descends to EnvelopeOnly ([CC 6.1.2](#6.1.2)) — the signed envelope survives, never zero. A conformant substrate (a node of the CEWP, [CC 8.1.1](part_8_appendices.md#8.1.1)):
 - MUST set minimum viable `>= 1` — the EnvelopeOnly tier is locked at the substrate, never an unbounded floor of 0.
 - MUST be able to hold items at **any** target a cohort it joins publishes — a node MUST NOT hard-code one target and refuse others.
 - MUST read the gap to target from the inventory ([CC 6.1](#6.1)) and nothing else: holders per item are counted from live, possession-weighted holding claims (N6), and an absent or lapsed claim is *unknown*, never a deficit of one.

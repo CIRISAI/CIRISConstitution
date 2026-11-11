@@ -86,7 +86,7 @@ Announcements of any other priority signed by accord-holder keys are rejected at
 
 **Wire-isolated AND scope-isolated.** Federation-side authority cannot sign `AccordCarrier`. Humanity-accord authority signs nothing outside this enumeration.
 
-**Root conferral is in scope.** The enumeration admits an M-of-N accord co-scrub over a `canonical,node` registration envelope bearing `roles: ["infra:serve"]`, the ceremony that mints a **portable trust root** ([CC 4.4.3.8](#4.4.3.8)). Read without it, the clause forbids the accord from blessing the very primitive that creates a root.
+**Root conferral is in scope.** The enumeration admits an accord co-scrub by a strict majority of the standing accord roster over a `canonical,node` registration envelope bearing `roles: ["infra:serve"]`, the ceremony that mints a **portable trust root** ([CC 4.4.3.8](#4.4.3.8)). Read without it, the clause forbids the accord from blessing the very primitive that creates a root.
 
 **Scope isolation still does its real work.** Accord authority cannot reach the consent or licensure planes. Scope isolation does **not** isolate the amendment plane: [CC 4.5.1](#4.5.1) step 5, the steward's authority before the scale gate, and the [CC 4.5.1.2](#4.5.1.2) entrenched ratification all name accord-holders. That reach is stated here rather than denied. Per the [CC 1](part_1_foundation.md) reading rule it is a **default** of this instance (escaped by naming your own occupants), not a privilege requiring declaration.
 
@@ -172,7 +172,7 @@ A CEG-Conforming Consumer (CCC) presenting accord invocations to humans MUST vis
 
 ```
 canonical = sha256(
-  "ciris.accord_lifecycle.v1\n" ||                       // distinct domain — NOT accord_invoke.v1
+  "ciris.accord_lifecycle.v1\n" ||                       // distinct domain — NOT accord_invoke.v2
   "invocation_kind=lifecycle:active\n" ||
   "invocation_id=" || resumption_id || "\n" ||
   "resumes_halt_id=" || prior_constitutional_invocation_id || "\n" ||
@@ -239,19 +239,19 @@ The `hardware_class` string is self-asserted by the holder; `hardware_class` is 
 
 This entry says who holds the accord seats, what kind of key a holder holds, how a seat changes and how far a compromise of those keys reaches.
 
-**What CC specifies is the slot: three human key holders, hardware-attested, with no automatic decay. Any one of them may fire the halt. A strict majority of them confirm or resume it, and a strict majority of them change the roster. Each majority is counted over the standing roster.**
+**What CC specifies is the slot: human key holders, three at the seed, hardware-attested, with no automatic decay. Any one of them may fire the halt. A strict majority of them confirm or resume it, and a strict majority of them change the roster. Each majority is counted over the standing roster.**
 
 **The roster is this instance's.** The table below is **not** a constitutional grant ([CC 4.2](#4.2)). It is **the CIRIS instance's current roster**, an instance parameter under the [CC 1](part_1_foundation.md) reading rule. Another instantiation of this form names its own three. The clauses in CC 4.2 are read against the slot, never against these names.
 
-| Position | Holder (CIRIS instance, current) | Fire / resume / roster |
+| Position | Holder (CIRIS instance, current) | Fire / confirm or resume / roster |
 |---|---|---|
 | 1 | Eric Moore | 1 / strict majority / strict majority |
 | 2 | Eric Kudzin | 1 / strict majority / strict majority |
 | 3 | Haley Bradley | 1 / strict majority / strict majority |
 
-**Whose key a holder's key is.** Each holder is a person. `A1`, `B1` and `C1` name the three holders' hybrid keys (Ed25519 + ML-DSA-65), one per person. A holder's key is that person's own: it has no owner, and it accepts and un-trusts a root as that person ([CC 3.2](part_3_the_namespace.md) T3).
+**Whose key a holder's key is.** Each holder is a person. `A1`, `B1` and `C1` name the three holders' hybrid keys (Ed25519 + ML-DSA-65), one per person. Each is a `federation_keys` row whose `identity_type` contains `accord_holder` ([CC 3.4.7.1](part_3_the_namespace.md)). A holder's key is that person's own: it has no owner, and it accepts and un-trusts a root as that person ([CC 3.2](part_3_the_namespace.md) T3).
 
-**How a seat changes.** A seat is added or vacated only by roster change on the public record under the standing-majority rule. The slot stays as specified; the count is an instance parameter. "Permanent" means *no automatic decay*, not *unchangeable*. Replacement runs the out-of-band CIRIS L3C replacement process. That process is likewise **this instance's** replacement process and not a constitutional requirement. Another instantiation supplies its own, and CC constrains only that some out-of-band route exist. This triple is the **seed** of a growable M-of-N roster ([CC 4.2.6](#4.2.6)). How the quorum is computed — and how the kill-switch stays operable — as holders are added, lost to decimation, and regained is specified in [CC 4.2.6](#4.2.6).
+**How a seat changes.** A seat is added or vacated only by roster change on the public record under the standing-majority rule. The slot stays as specified; the count is an instance parameter. "Permanent" means *no automatic decay*, not *unchangeable*. Finding and vetting a replacement holder runs the out-of-band CIRIS L3C replacement process; seating one is the roster change above. That process is likewise **this instance's** replacement process and not a constitutional requirement. Another instantiation supplies its own, and CC constrains only that some out-of-band route exist. This triple is the **seed** of a growable M-of-N roster ([CC 4.2.6](#4.2.6)). How the quorum is computed — and how the kill-switch stays operable — as holders are added, lost to decimation, and regained is specified in [CC 4.2.6](#4.2.6).
 
 **Correlated-failure geometry:** a majority that can be reached from one place is a correlated-compromise surface, and one that entrenchment makes harder to correct later. The authority at stake is the **constitutional pause of every subscribed agent** (`EmergencyShutdown CONSTITUTIONAL` — a pause of agent action with state preserved and zero data disruption, [CC 4.2.1.1](#4.2.1.1); a lone holder's pause lapses after the fuse). So the exposure is real and is bounded rather than softened.
 
@@ -302,7 +302,7 @@ This section settles one question, at any size of the accord family: **how the q
 | **Fire** (`constitutional` kill, [CC 4.2.1.1](#4.2.1.1)) | **one holder's signed row** — pre-signable; no live set, no vote | **none** — fires on receipt, latches |
 | **Confirm** (`accord:lifecycle:confirmed`, [CC 4.2.1.3](#4.2.1.3)) | **strict majority of the standing roster**, one cosigned row | within `halt_fuse_secs` of the halt, or the lone halt lapses |
 | **Resume** (`accord:lifecycle:active`, [CC 4.2.1.3](#4.2.1.3)) | **strict majority of the standing roster**, one cosigned row | normal cadence |
-| **Roster change** (add / remove / swap) | **strict majority of the standing roster** in yes-votes (`2·yes > N_standing`), cast as participations within `W` — absence neither blocks nor helps, it is simply not a yes | `W` = 72 h baseline (extensible to 7 d under a declared severe-degradation state) |
+| **Roster change** (add / remove / swap) | **strict majority of the standing roster** in yes-votes (`2·yes > N_standing`), cast as participations within `W` — absence neither blocks nor helps, it is simply not a yes | `W` = 72 h ([CC 2.6.7](part_2_the_grammar.md#2.6.7)); under a declared severe-degradation state the proposal's `window_until` MAY reach 7 d, and the admission freshness window stays `W` |
 | **Standing acts** (non-emergency) | strict majority of the standing roster (unchanged) | normal cadence |
 
 **The deadlock it removes.** A quorum taken over the **standing roster** (M-of-N of every enrolled holder) **deadlocks under catastrophic loss**. If most holders are dead, incapacitated, or censored, the standing quorum is unreachable: the switch goes inoperable exactly when it is needed. The design target is the worst case: an agent that moves against its own halt first, reducing the reachable, key-capable holders of a grown roster (e.g. 21) to one or two, with communications censored as the *expected* condition. **The firing decision must never deadlock; a roster decision may.** Firing is what the switch is for, so it needs one live holder and no count: any one holder's row fires. Changing the roster is the capture vector and is not needed to fire, so it is taken over the standing roster, and stalls rather than yields when too many holders are gone.
@@ -970,7 +970,8 @@ admit_family_change(F, proposed: family_record):
                  // the joiner's own signature is the group's side; a removal under
                  // this protocol runs under the CC 4.5.13 floor, never one vote
     "unanimous":
-      group_ok = every m.key_id in current has signed
+      group_ok = every m.key_id in current has signed            // an addition
+              // a removal: every member but the target signed, and they are a strict majority (CC 3.1.3.2)
     "majority":
       group_ok = count(sig from m in current) > len(current) / 2
     "quorum:M/N":
@@ -1506,7 +1507,7 @@ Consumer trusts an attestation if `attesting_key_id` has been vouched for by the
 
 #### 4.4.3.13 `policy-weighted` — Policy C — weighted graph
 
-Consumer applies transitive-trust propagation across the full attestation graph, weighted by canonical-bootstrap distance with confidence decay per hop. Requires more compute; less common in practice; needed for federated reputation across many partner orgs.
+Consumer applies transitive-trust propagation across the full attestation graph, weighted by canonical-bootstrap distance with confidence decay per hop, within the five-hop cap of [CC 4.1.1](#4.1.1). Requires more compute; less common in practice; needed for federated reputation across many partner orgs.
 
 ### 4.4.4 `sovereign-registered` — Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)
 
@@ -1607,7 +1608,7 @@ A processor MUST resolve `references_attestation_id` under the emitting operatio
 
 #### 4.5.1.2 `meta-amendment` — Meta-amendment + entrenchment
 
-The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md) T1–T4 prefix-admission gate, and the [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD constitutional layer are **entrenched**. Changes to these three surfaces require a MAJOR version bump per [CC 2.6.4](part_2_the_grammar.md) AND the signatures of a strict majority of the standing HUMANITY_ACCORD roster, M of N. The majority is counted as every accord threshold is ([CC 4.2.6](#4.2.6)), never a fixed 2-of-3, because the roster is meant to grow. These signatures are a separate, dedicated accord ratification, not the CC 4.5.1 step 5 sign-off on an ordinary amendment. Without this entrenchment, a single quorum could rewrite the gate admitting the next quorum. This entrenched ratification is the mechanism **after the scale gate**; before the scale gate it is exercised by the steward under the scale gate in [CC 4.5.1](#4.5.1).
+The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md) T1–T4 prefix-admission gate, and the [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD constitutional layer are **entrenched**. Changes to these three surfaces require a MAJOR version bump per [CC 2.6.4](part_2_the_grammar.md) AND the signatures of a strict majority of the standing HUMANITY_ACCORD roster, M of N. The majority is counted as every accord threshold is ([CC 4.2.6](#4.2.6)), never a fixed 2-of-3, because the roster is meant to grow. These signatures are a separate, dedicated accord ratification, not the CC 4.5.1 step 5 sign-off on an ordinary amendment. An entrenched change still passes steps 1 to 5 of CC 4.5.1, and this ratification is added to them. Without this entrenchment, a single quorum could rewrite the gate admitting the next quorum. This entrenched ratification is the mechanism **after the scale gate**; before the scale gate it is exercised by the steward under the scale gate in [CC 4.5.1](#4.5.1).
 
 #### 4.5.1.3 `open-vocabulary` — Open-vocabulary collision rule
 
@@ -1700,7 +1701,7 @@ A fast-path coordination protocol carves this out:
 - **After the window** the bytes are gone from every holder that followed the window. The reversal voids the notice and lifts the tombstone, so the rows regain their standing. Any holder that still has the bytes, or the publisher re-publishing the same content hash, may serve them again. No holder is obliged to have kept a copy.
 - **Under an immediate-removal basis** (for example a misclassification reversed under `reconsideration:procedural_error`, item 4) the reversal lifts the tombstone and restores the rows' standing. It cannot restore destroyed bytes, and the publisher may re-publish.
 
-**Erasure at the subject's request (normative).** An ordinary row *about* a subject is erased on the subject's request by the subject's own `withdraws`. Where the subject holds a federation key, this is [CC 2.4.1.1](part_2_the_grammar.md) rule 2. Where the subject proved identity out of band, it is rule 3 through a `delegates_to` proxy chain with `scope ⊇ {consent_revocation}`, the node acting as that proxy. An **adverse** row about the subject, any row on the kept list of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), is reached by no subject-authority path. The kept list stands. Every other reading lets a subject, or a node fronting one, launder its own record. So the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row, or refused with reason under Article 17(3) ([CC 4.4](#4.4) `erasure_policy`). The subject's contest path stays `reconsideration:{grounds}` ([CC 4.5.5](#4.5.5)). The replicated fact is the ordinary tombstone by digest per plane (the one tombstone row above). There is no node-local purge basis for erasure. A node's purge-ledger entry recording the execution is informational, never a notice. A hard case recording an erasure MUST NOT name the subject. This is the GDPR Article 17 route of the [CC 4.4](#4.4) compliance table, stated where the tombstone lives.
+**Erasure at the subject's request (normative).** An ordinary row *about* a subject is erased on the subject's request by the subject's own `withdraws`. Where the subject holds a federation key, this is [CC 2.4.1.1](part_2_the_grammar.md) rule 2. Where the subject proved identity out of band, it is rule 3 through a `delegates_to` proxy chain with `scope ⊇ {consent_revocation}`, the node acting as that proxy. An **adverse** row about the subject, any row on the kept list of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), is reached by no subject-authority path. The kept list stands. Every other reading lets a subject, or a node fronting one, launder its own record. So the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row, or refused with reason under Article 17(3) ([CC 4.4](#4.4) `erasure_policy`). The subject's contest path stays `reconsideration:{grounds}` ([CC 4.5.5](#4.5.5)). The replicated fact is the ordinary tombstone by digest per plane (the one tombstone row above). There is no node-local purge basis for erasure. An agent's trace goes the same way: by its signer's `withdraws` under rule 1, or a named party's under rule 2 or 3. A delete by key never reaches the kept list. A node's purge-ledger entry recording the execution is informational, never a notice. A hard case recording an erasure MUST NOT name the subject. This is the GDPR Article 17 route of the [CC 4.4](#4.4) compliance table, stated where the tombstone lives.
 
 **The takedown-isn't-a-coup property.** Fast-path takedowns happen via this protocol and nowhere else. A `takedown_notice` targets content under a community's duty-holders ([CC 4.5.5](#4.5.5)), and `federation_keys` is not such a target. A notice demanding the removal of key records for whole categories of participants is refused at the enforced-admission gate like any other unauthorised action. The halt is no escalation path for this case ([CC 4.2.1.1](#4.2.1.1)). It pauses agents' acts and touches no data door ([CC 4.2.1.1](#4.2.1.1)).
 
@@ -1725,7 +1726,7 @@ Three normative rules:
 
    Merit orders the ballot; the members' own signed votes are the appointment.
 
-3. **Fail-secure.** If no eligible member can be named (none with sufficient track record, none consenting, none whose appointment roots in an accountable root — `accountable_root`, [CC 3.2](part_3_the_namespace.md)), the community **fails-secure** — it MUST NOT federate / operate at moderated capability. **Better no group than an unmoderated one.** (Degrade, never escalate — the fail-secure default.)
+3. **Fail-secure.** If no eligible member can be named (none consenting, none whose appointment roots in an accountable root — `accountable_root`, [CC 3.2](part_3_the_namespace.md)), the community **fails-secure** — it MUST NOT federate / operate at moderated capability. **Better no group than an unmoderated one.** (Degrade, never escalate — the fail-secure default.)
 
 **Named-moderator binding — the substrate-resolvable shape.** "K is a named-moderator over community C" is an **appointment**: a `delegates_to(authority → K, scope ⊇ {moderate|takedown|review}, community_id: C)` whose root `authority`:
 
@@ -1994,7 +1995,7 @@ When a member leaves a family, or an occurrence is withdrawn from a self-collect
 
 #### 4.5.12.2 `envelope-multi` — Multi-family membership — envelope `family_id`
 
-One identity MAY belong to multiple families. Each family has its own DEK and its own membership roster; a `cohort_scope: family` Contribution MUST carry `family_id` ([CC 2.1](part_2_the_grammar.md) envelope field) naming which family's DEK and visibility apply. Substrate rejects family-scoped Contributions missing `family_id`.
+One identity MAY belong to multiple families. Each family has its own membership roster, and its content DEKs are wrapped to that roster; a `cohort_scope: family` Contribution MUST carry `family_id` ([CC 2.1](part_2_the_grammar.md) envelope field) naming which family's roster and visibility apply. Substrate rejects family-scoped Contributions missing `family_id`.
 
 **Rationale**: avoids cross-family DEK confusion when one identity is in N families; gives the substrate an unambiguous routing key for the `key_grant` cascade per [CC 4.4.3.4.1](part_4_composition_governance.md).
 

@@ -46,7 +46,7 @@ option = {
 
 write = {
   family: tstr,                             ; a family of the registry
-  verb: "attest" / "withdraw" / "recant" / "supersede" / "authorize" / "carry",
+  verb: "attest" / "withdraw" / "recant" / "supersede" / "authorize",    ; the verbs of manifests/transitions.json, no other
   scope: "self" / "family" / "community" / "affiliations" / "federation",
 }
 

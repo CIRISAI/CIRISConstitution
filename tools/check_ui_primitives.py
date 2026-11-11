@@ -48,6 +48,9 @@ def main():
             cell.setdefault((r["family"], t["verb"]), set()).add(t["confirm"]["value"])
     if sorted(verbs) != sorted(ui["write_verbs"]):
         errs.append(f"write_verbs {sorted(ui['write_verbs'])} is not the transitions' verbs {sorted(verbs)}")
+    item_verbs = enum_after(item, "verb")
+    if sorted(item_verbs) != sorted(verbs):
+        errs.append(f"choice_item.cddl write.verb {sorted(item_verbs)} is not the transitions' verbs {sorted(verbs)}")
     for pair, vals in sorted(cell.items()):
         if len(vals) != 1:
             errs.append(f"confirm is not one value for {pair[0]} {pair[1]}")

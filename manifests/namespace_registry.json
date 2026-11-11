@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "099f638d02d9b43701e2181a32ebfb69bef1e81618cc4843f02c7b06373b14cb",
+    "registry_sha256": "37695036ca69b4bf4f0838fc99473208a6296d170a0e8537fca46d66784bf9a2",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "4873eba36635ed872c1d24fb19d09cf97c55f39641290397c071110e6fa29403"
+    "source_sha256": "4338825a0c2173301be8709b875383a94e88c134710dfb9bc457831203228902"
   },
   "families": [
     {
@@ -1145,7 +1145,7 @@
     },
     {
       "cc_section": "3.1.2",
-      "description": "Acute-window companion (CC 3.4.12): exclusion in progress, not skipped; admissible for the T1 emergency-necessity tier only, and the binding MUST lapse unless it resolves to reversible_excluded within its valid_until.",
+      "description": "Acute-window companion (CC 3.4.12): exclusion in progress, not skipped; admissible for the T1 provisional tier only, and the binding MUST lapse unless it resolves to reversible_excluded within its valid_until.",
       "owning_component": "attestation",
       "owning_repo": "CIRISVerify",
       "polarity": "signed",
