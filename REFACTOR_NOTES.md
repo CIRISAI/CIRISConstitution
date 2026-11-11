@@ -353,3 +353,11 @@ the 2026 verdicts and settlements. Owed: `CLM-child-protection` rests on persist
 ask whether it reads an absent assurance as under 13 and whether the assurance is resolved per
 identity across the roster.
 
+Incapacity, 2026-11-11. Eric confirmed the no-estimation rule for age. On CC 3.4.12 he said
+telling a ward's community could violate the ward's rights and asked for the ward to have a
+choice. Landed: standing to petition is the court's law; the row names the petitioner; who is
+told is the ward's choice, private by default. Mine and not his: the private default, and that
+a removal during a live binding needs the champion's confirmation. Owed: the petitioner member
+and the told-list are the implementer's to shape (add to CIRISPersist#1259 or its own ticket);
+the fenced predicate of 3.4.12 has no `require` for the petitioner or the champion.
+

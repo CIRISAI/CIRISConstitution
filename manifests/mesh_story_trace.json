@@ -1,7 +1,7 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "ed766395c01f298e2e4bc04f3b735e00f61ab1e1aa575988f75e4e4f14d2caf3",
+  "transitions_sha256": "abeb08d8070d8030ab28b721e488017f5293a9939832f503c746dc4c0b9d7752",
   "policy_sha256": "40920bcb494ab7e0984a650ba5251075210bc74403a6bc48bac83500e5fa9c41",
   "steps": 96,
   "rows": 68,
