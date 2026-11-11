@@ -2598,13 +2598,13 @@ misdeclaration adjudication dimension:
 
 The `self` rung of the ladder materializes on the non-reserved `age_self_declared:` prefix; the `provider`/`government` rungs materialize on the witness-reserved `age_assurance:` prefix carrying the `{level}` token. Parsers MUST tolerate the trailing `:vN` version segment. **`self` is not a value of `{level}`** and a producer MUST NOT emit `age_assurance:self:*`; a consumer MUST reject it as malformed rather than reading it as a self-declaration. These two arities — `age_assurance:{level}:{band}:{version}` and `age_self_declared:band:{band}:{version}` — are the only shapes this Part registers, and the [CC 3.1.2](part_3_the_namespace.md) rows and the [CC 3.3.12](#3.3.12) entry state them identically (provider/government rungs MAY further qualify `{level}` with a `{verifier_key}` / `{credential_class}`).
 
-**Read-union — witness outranks subject (normative).** A consumer resolving an identity's age-assurance MUST union both prefixes and take the **highest** level on record. A witness-emitted `age_assurance:*` (provider/government) **OUTRANKS** a subject `age_self_declared:*`. Absence of any row resolves to **None**, which MUST be treated protectively — see the gate.
+**Read-union — witness outranks subject (normative).** A consumer resolving an identity's age-assurance MUST union both prefixes and take the **highest** level on record. A witness-emitted `age_assurance:*` (provider/government) **OUTRANKS** a subject `age_self_declared:*`. Absence of any row resolves to **None**, which MUST be treated as the most-protective band, `under_13` ([CC 3.4.13](#3.4.13) fail-secure) — see the gate.
 
 **The protective gate (normative).** A viewer below `adult` assurance is **BLOCKED** from `adult` `content_class` ([CC 3.3.12](#3.3.12)). The default is protective, not permissive:
 
 - `general`-class content is visible to everyone (protective ≠ prudish).
 - `adult`-class content is visible ONLY to a viewer whose band is `adult`.
-- A `minor` band, a "declined to state", and an "unknown"/absent assurance ALL resolve to the protective `minor` default and are BLOCKED.
+- A `minor` band, a "declined to state", and an "unknown"/absent assurance ALL resolve to the protective `minor` default and are BLOCKED. A "declined to state" and an "unknown"/absent assurance are further read as `under_13` ([CC 3.4.13](#3.4.13)).
 
 The gate decides visibility only; it MUST NOT fire `slashing:*` on a mismatch.
 
@@ -2771,7 +2771,13 @@ Q1 sets the bands inside the `minor` band, and what a minor in each band may do 
 
 **Acting alone.** The default solo-autonomy threshold MUST be **16**. Solo autonomy is acting alone at community scope without guardian co-sign. Under-13 and 13–15 MUST require guardian co-sign for any community-scope action. Band 13–15 MAY have a narrower *supervised* participation envelope (honouring voice rights) but MUST NOT have unsupervised solo action. Band 16–17 MAY act solo at community scope.
 
-**Fail-secure.** Absence, "declined to state" and unknown assurance MUST resolve to the most-protective band (under-13, co-sign). This follows the rule "unknown = restricted" and the read-union protective default ([CC 3.4.11](part_3_the_namespace.md)). A `self`-level row MUST NOT graduate a user up a band, because `self` is unfalsifiable ([CC 3.4.11](part_3_the_namespace.md)). Graduating up requires a witness-reserved `age_assurance:*` row.
+**Fail-secure.** Absence, "declined to state" and unknown assurance MUST resolve to the most-protective band (under-13, co-sign). This follows the rule "unknown = restricted" and the read-union protective default ([CC 3.4.11](part_3_the_namespace.md)). A `self`-level row MUST NOT graduate a user up a band, because `self` is unfalsifiable ([CC 3.4.11](part_3_the_namespace.md)). Graduating up requires a witness-reserved `age_assurance:*` row. So a person with no assurance on record uses their own and their family's scopes freely, and acts at community scope only with a guardian's co-sign or once a `provider`-rung row is on record.
+
+**Assurance is the person's (normative).** An age-assurance row names the identity, never a device. A `provider`-rung signal obtained on any one device of a self roster assures the identity, and every key of that roster reads it ([CC 3.3.6.3](#3.3.6.3)). So a person whose desktop has no platform signal adds a phone to their roster, and the phone's platform age signal lifts the whole self. The signal speaks for the account on that device, so the rule rests on the roster being one person's devices.
+
+**No estimation by the fabric (normative).** A node MUST NOT estimate a person's age from what they read, write or do. Estimation of that kind is profiling, which the under-18 baseline below forbids, and it needs data this section refuses to collect. A platform or a vendor that estimates attests its result at the `provider` rung and answers for it. A suspected misdeclaration is reported and adjudicated ([CC 3.4.11](#3.4.11)), never inferred.
+
+**Why the default is the strictest (informative).** The default follows the law a deployment will meet. Verifiable parental consent is required below 13 (the Children's Online Privacy Protection Act, 15 U.S.C. 6501–6506, and 16 CFR Part 312). Consent-based processing of a child's data needs a parent's authorisation below a national age set between 13 and 16 (Regulation (EU) 2016/679, Article 8). A service that has not established a user's age with a certainty appropriate to the risk applies its protections for children to every user (the United Kingdom's Age Appropriate Design Code, standard 3). A provider owes minors a high level of privacy, safety and security and serves them no advertising based on profiling. It is not obliged to process additional personal data to assess whether a user is a minor (Regulation (EU) 2022/2065, Article 28). A child's best interests are a primary consideration and a child has the right to be heard (the United Nations Convention on the Rights of the Child, Articles 3 and 12, and General Comment No. 25). ISO/IEC 27566-1 frames age assurance by the confidence a use requires. Treating the unassured as the youngest, taking a platform's signal at the `provider` rung and estimating nothing is the reading of these that collects least.
 
 **Under-18 baseline across all bands.** Every band under 18 has no profiling-based targeting, high-privacy/data-minimisation defaults, geolocation off and no engagement-maximising nudges. This holds regardless of how much autonomy a band grants.
 
@@ -2785,7 +2791,7 @@ Q1 sets the bands inside the `minor` band, and what a minor in each band may do 
 
 The Constitution MUST NOT build in a conflict-of-laws resolver. It MUST hard-code a **non-derogable child-protection floor** inherited by every deployment regardless of declared jurisdiction. The floor has six elements:
 
-1. Anyone not age-assured to be ≥18 MUST be treated as a child ([CC 3.4.11](part_3_the_namespace.md) protective default; guardianship clause, [CC 3.2](part_3_the_namespace.md)).
+1. Anyone not age-assured to be ≥18 MUST be treated as a child, and with no assurance at all as under 13 ([CC 3.4.11](part_3_the_namespace.md) protective default; the fail-secure rule above; guardianship clause, [CC 3.2](part_3_the_namespace.md)).
 2. Treat-as-child-unless-assured is a floor, not a default a deployment may switch off.
 3. Protective defaults (high-privacy, data-minimisation, no profiling ads to minors, no manipulative nudges, affirmative safeguarding escalation) are floor, not tunable.
 4. Self-consent floor at **16**; guardian authorisation (a live guardianship `delegates_to`) below that.
@@ -2810,7 +2816,7 @@ Q3 says which assurance rung each of three claims rests on.
 
 **To be a minor (enter protection).** `age_self_declared:band:minor:v1` suffices. A child MUST NEVER be forced through provider/government assurance merely to be protected. This is a down-ratchet only: self-declaration MAY lower access / raise protection, never the reverse. Declaring minor MUST NOT result in more data collection or telemetry than declaring adult.
 
-**To exit child protection.** To exit is to claim adult to unlock adult capability / `content_class:adult`. Self-declaration is insufficient: the claim MUST clear ≥ `age_assurance:provider:adult`. The reason is that `self` is unfalsifiable and sensitive spaces require a verified level ([CC 3.4.11](part_3_the_namespace.md)). All ambiguity resolves to `minor` ([CC 3.4.11](#3.4.11)).
+**To exit child protection.** To exit is to claim adult to unlock adult capability / `content_class:adult`. Self-declaration is insufficient: the claim MUST clear ≥ `age_assurance:provider:adult`. The reason is that `self` is unfalsifiable and sensitive spaces require a verified level ([CC 3.4.11](part_3_the_namespace.md)). All ambiguity resolves to the most-protective band (the fail-secure rule above; [CC 3.4.11](#3.4.11)).
 
 **To be guardian of a minor.** A guardian holds power over a child via the guardianship `delegates_to` ([CC 3.2](part_3_the_namespace.md)). The guardian MUST be ≥ `age_assurance:provider:adult` as a floor, and the guardianship relationship to that specific child MUST be verified. Adulthood alone is necessary but not sufficient: a verified stranger is not a guardian. Verification is risk-proportional and MUST escalate toward `age_assurance:government:*` for high-impact guardian powers (export of the child's data, irreversible/financial actions, consenting on the child's behalf, unlocking A3/A4 capabilities).
 

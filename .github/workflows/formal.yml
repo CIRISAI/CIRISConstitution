@@ -261,6 +261,7 @@ jobs:
           lean ../trust_set/TrustSet.lean
           lean ../affiliation/Affiliation.lean
           lean ../standing/Standing.lean
+          lean ../age_assurance/AgeBand.lean
           lean ../contact/Contact.lean
           lean -M 6000 -T 200000 ../transport_tiers/Tiers.lean
           lean -M 6000 -T 200000 ../anonymous/Anonymous.lean

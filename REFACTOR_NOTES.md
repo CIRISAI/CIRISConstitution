@@ -343,3 +343,13 @@ a comment: the server judges a halt at receipt, records `latched_at` and `receiv
 latch file of its own, and tests no acceptance edge. So "holds a live edge at that instant" is
 checked by nothing in the build today; `CLM-accord-reach` stays staged.
 
+Age default, ruled by Eric 2026-11-11: no assurance reads as under 13 with co-sign; a phone
+added to a desktop user's self produces the platform signal and it applies to the whole self
+roster; ground it in law. Landed in CC 3.4.13 and 3.4.11 with `formal/age_assurance/AgeBand.lean`.
+The no-estimation rule (a node never estimates age from behaviour; a platform that does attests
+at the provider rung) was my addition to the recommendation he accepted: confirm it stands.
+His context: platforms now run AI to catch children posing as teens and teens as adults, after
+the 2026 verdicts and settlements. Owed: `CLM-child-protection` rests on persist's `is_minor`;
+ask whether it reads an absent assurance as under 13 and whether the assurance is resolved per
+identity across the roster.
+
