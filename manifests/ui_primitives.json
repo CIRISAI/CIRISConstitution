@@ -1,0 +1,593 @@
+{
+ "_meta": {
+  "standard": "CSD/5",
+  "draft": 1,
+  "status": "draft. Hand-written, and the standard's one copy: a client vendors this file at a pinned commit of this repository and checks its screens against it.",
+  "says": "A screen is a function of the node's answers, the person's input and the context it is opened in. This file names the parts a screen is built from, the states a part bound to a read may be in, and the laws every screen keeps.",
+  "builds_on": {
+   "view": "manifests/view.cddl (what is true now and why)",
+   "queue": "manifests/choice_item.cddl and manifests/transitions.json (what waits on the person's hand; the `confirm` cell and the verbs of `write_verbs` are that manifest's)",
+   "kernel": "formal/event_lifecycle (view, queue, row, view)",
+   "topology": "manifests/topology_vocabulary.json (the atoms at one instant)"
+  },
+  "reference_client_columns": "`status`, `ships`, `kotlin`, `legacy_prefixes` and `basis` record where the reference client stands against each entry. They carry no meaning of the standard, and a second client ignores them.",
+  "checked_by": "tools/check_ui_primitives.py",
+  "bump_rule": "a new primitive, prefix, slot, state or law, or a changed meaning, bumps `draft`; a new note does not"
+ },
+ "grammar": {
+  "tag": "prefix '_' surface '_' instance [ '__' slot ] [ '.' key ]",
+  "shell_tag": "shell_prefix '_' name",
+  "prefix": "^[a-z]+$, one word, owned by exactly one primitive",
+  "surface": "the card's `surface:` id with '-' written '_'; for a card with no surface, the `flow:` id its csd:view declares. No id is another id followed by '_', so the split is unique.",
+  "instance": "^[a-z0-9]+(_[a-z0-9]+)*$, declared in the card's csd:view or csd:acts",
+  "slot": "a fixed part of the primitive, from its closed `slots` list; `@states` stands for the state names",
+  "key": "which one of several of the same kind (a row id, an option, a step); everything after the first '.'. A Choice is keyed by its options. Any instance drawn once per element of a collection declares `per:` and takes that element's id as its key, so two rows never share a tag.",
+  "key_pattern": "^[A-Za-z0-9:_\\-]+$",
+  "derived": "A tag is written by nobody. It is derived from (primitive, surface, instance, slot, key); in Kotlin only ui/primitives builds one."
+ },
+ "shell_prefixes": {
+  "circle": "a circle in the shell",
+  "tab": "a tab of a circle",
+  "nav": "a row under a tab",
+  "screen": "a screen root"
+ },
+ "context": {
+  "circle": [
+   "self",
+   "family",
+   "community",
+   "affiliations",
+   "federation"
+  ],
+  "window": [
+   "compact",
+   "wide"
+  ],
+  "mode": [
+   "node",
+   "agent"
+  ]
+ },
+ "read_outcomes": {
+  "idle": "not asked",
+  "pending": "asked, no answer yet",
+  "failed": "no answer arrived, or it could not be parsed",
+  "ok": "the node answered; a refusal and a non-2xx status that carries a body are answers"
+ },
+ "local_types": {
+  "bool": [
+   "false",
+   "true"
+  ],
+  "text": [
+   "blank",
+   "filled"
+  ],
+  "enum": "the listed values"
+ },
+ "write_verbs": [
+  "attest",
+  "authorize",
+  "recant",
+  "supersede",
+  "withdraw"
+ ],
+ "states": {
+  "idle": {
+   "outcome": "idle",
+   "ships": false,
+   "meaning": "Nothing was asked yet. Only a read the person starts by hand can rest here."
+  },
+  "loading": {
+   "outcome": "pending",
+   "ships": true,
+   "meaning": "Asked, no answer yet."
+  },
+  "loading_known": {
+   "outcome": "pending",
+   "ships": false,
+   "meaning": "Asked, no answer yet, and the length is known."
+  },
+  "error": {
+   "outcome": "failed",
+   "ships": true,
+   "meaning": "No answer arrived, or it could not be read. Never drawn as empty or zero."
+  },
+  "populated": {
+   "outcome": "ok",
+   "ships": true,
+   "meaning": "The node answered and there is something to draw."
+  },
+  "empty": {
+   "outcome": "ok",
+   "ships": true,
+   "meaning": "The node answered and there is nothing. This is a fact the node stated."
+  },
+  "refused": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "The node answered and declined, with its reason token."
+  },
+  "gone": {
+   "outcome": "ok",
+   "ships": true,
+   "meaning": "The thing existed and was withdrawn or purged."
+  },
+  "hidden_by_rules": {
+   "outcome": "ok",
+   "ships": true,
+   "meaning": "The reader's own rules hide it; the count hidden is stated."
+  },
+  "unreviewed": {
+   "outcome": "ok",
+   "ships": true,
+   "meaning": "Held, and nobody the reader trusts has reviewed it."
+  },
+  "waiting": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "The node answered; the thing waits on someone else's hand."
+  },
+  "unknown": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "The node answered that it could not read its own state."
+  },
+  "not_on_this_node": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "The node answered that it does not hold this."
+  }
+ },
+ "laws": {
+  "L1": "One owner. Every tag prefix has exactly one owning primitive, and every derived tag names exactly one instance.",
+  "L2": "Exactly one state. A StateBlock that is present is in exactly one of its declared states, in every reachable state of the card.",
+  "L3": "An honest zero. A StateBlock's state belongs to the outcome of the read it is bound to: `error` only when the read failed, `loading` only while it is pending, and never `empty` or `populated` unless the node answered. Anything else drawn from a read is present only when that read was answered, and anything drawn from a preview only while the preview is held.",
+  "L4": "An honest number. A Metric shows a value only when its read was answered and the value was sent.",
+  "L5": "A reasoned refusal. An Action that is present and disabled names the reason it shows. An act that is not the reader's to know is absent. A card writes `reason: null` for a disabled Action that draws no reason today; each is counted in the baseline and the count may only fall.",
+  "L6": "Confirmed when it widens or has no way back, and only then. A write is `confirm: true` when CIRISConstitution manifests/transitions.json says so for its family and verb: the row widens, or the table offers no way back (CC 4.5.13). Such a write is sent only from the confirm of a ConfirmSheet. Every other write takes one step: an Action sends it and no sheet stands in front of it, so withdrawing a consent or leaving a membership is never slowed by a confirm. Every write says which it is. (CC formal/event_lifecycle: confirm_is_lookup, exit_is_one_step.)",
+  "L7": "The preview is the execution. A write that has a preview is sent only while that preview is held, and sends only values the preview covered (CC formal/event_lifecycle preview_is_execution).",
+  "L8": "A function of its inputs. What is drawn is decided by the card's context, local state and read outcomes and by nothing else; a guard names only what the card declares.",
+  "L9": "Nothing declared is unreachable. Every instance is present in some reachable state and every declared state of a StateBlock is reached.",
+  "L10": "Media is never drawn bare. A Media instance has alt text and an AI-disclosure value or it is not drawn.",
+  "L11": "An answer is about its question. A read's answer, and a preview, are held only while every input they were taken over still has the value it had when they were asked. Changing an input drops them; an answer that arrives for an older question is not drawn.",
+  "L12": "Shown is sent. A write is sent only from something the person answered, the confirm of a ConfirmSheet or an Action, and at that moment every value it sends is drawn: by a Field or Choice that is present and bound to the value, or by the sheet or Action itself, which lists it under `shows:`. (CC manifests/choice_item.cddl: an answer's `shown_digest` covers what was shown.)"
+ },
+ "primitives": {
+  "CardShell": {
+   "basis": "B01",
+   "prefixes": [
+    "card"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/CardShell.kt",
+   "legacy_prefixes": [
+    "section",
+    "block"
+   ],
+   "slots": [
+    "title"
+   ],
+   "keyed": false
+  },
+  "FieldRow": {
+   "basis": "B02",
+   "prefixes": [
+    "txt"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/FieldRow.kt",
+   "legacy_prefixes": [
+    "text",
+    "field"
+   ],
+   "slots": [
+    "wire",
+    "gloss"
+   ],
+   "keyed": false,
+   "note": "One label and one value the node sent. A value the node did not send is drawn as 'This node did not send this', never as blank."
+  },
+  "ItemRow": {
+   "basis": "B03",
+   "prefixes": [
+    "row"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/ItemRow.kt",
+   "legacy_prefixes": [
+    "item",
+    "list"
+   ],
+   "slots": [
+    "flag",
+    "act"
+   ],
+   "keyed": true
+  },
+  "ScopePill": {
+   "basis": "B04",
+   "prefixes": [
+    "scope"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/ScopePill.kt",
+   "slots": [
+    "group"
+   ],
+   "keyed": false,
+   "note": "One pill; the group name is a slot, present when the circle has more than one group."
+  },
+  "Chip": {
+   "basis": "B05",
+   "prefixes": [
+    "chip"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/Chip.kt",
+   "slots": [],
+   "keyed": false,
+   "note": "One status token; its value is the token the node sent. A set of chips the person picks from is a Choice (`opt`), not chips."
+  },
+  "Action": {
+   "basis": "B06",
+   "prefixes": [
+    "btn",
+    "mi"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/Controls.kt",
+   "legacy_prefixes": [
+    "menu",
+    "fab"
+   ],
+   "slots": [
+    "reason"
+   ],
+   "keyed": false,
+   "laws": [
+    "L5",
+    "L6",
+    "L12"
+   ],
+   "note": "`btn` is a control on the surface, `mi` the same act inside a menu. Present and disabled means the reason is drawn."
+  },
+  "ReceiptSheet": {
+   "basis": "B07",
+   "prefixes": [
+    "receipt"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/ReceiptSheet.kt",
+   "slots": [
+    "open",
+    "fact_1",
+    "fact_2",
+    "fact_3",
+    "fact_4",
+    "fact_5",
+    "holders",
+    "notes",
+    "acts"
+   ],
+   "keyed": true,
+   "note": "`__open` is the button that opens it; it replaces `btn_receipt_<id>`, which gave a second primitive a share of `btn`."
+  },
+  "StateBlock": {
+   "basis": "B08",
+   "prefixes": [
+    "state"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/StateBlock.kt",
+   "legacy_prefixes": [
+    "spinner",
+    "banner",
+    "progress",
+    "empty",
+    "failure"
+   ],
+   "slots": [
+    "@states",
+    "freshness"
+   ],
+   "keyed": false,
+   "binds": "read",
+   "laws": [
+    "L2",
+    "L3",
+    "L9"
+   ],
+   "note": "The root tag is always present and its value is the state's name. `__<state>` is the body drawn in that state. One block per read, so one surface may hold several."
+  },
+  "Metric": {
+   "basis": "B09",
+   "prefixes": [
+    "stat"
+   ],
+   "status": "proposed",
+   "slots": [
+    "unit",
+    "source"
+   ],
+   "keyed": false,
+   "binds": "read",
+   "laws": [
+    "L4"
+   ],
+   "note": "A number with its unit and where it came from. Not sent or not read is drawn as an em dash, never as zero."
+  },
+  "ConfirmSheet": {
+   "basis": "B10",
+   "prefixes": [
+    "sheet"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/ConfirmSheet.kt",
+   "legacy_prefixes": [
+    "dialog",
+    "dlg"
+   ],
+   "slots": [
+    "fact_1",
+    "fact_2",
+    "fact_3",
+    "note",
+    "confirm",
+    "cancel"
+   ],
+   "keyed": false,
+   "laws": [
+    "L6",
+    "L7",
+    "L12"
+   ],
+   "note": "`__confirm` and `__cancel` are Actions that belong to the sheet; they replace `btn_<x>_confirm` and `btn_<x>_cancel`."
+  },
+  "Choice": {
+   "basis": "B11",
+   "prefixes": [
+    "opt"
+   ],
+   "status": "proposed",
+   "legacy_prefixes": [
+    "switch",
+    "toggle",
+    "seg",
+    "segment",
+    "radio",
+    "dropdown",
+    "dd",
+    "chk",
+    "checkbox"
+   ],
+   "slots": [
+    "cost",
+    "tally"
+   ],
+   "keyed": true,
+   "note": "One question; each option is a key. Nothing is preselected unless the card names the default and its cost.",
+   "laws": [
+    "L12"
+   ]
+  },
+  "DestinationPicker": {
+   "basis": "B12",
+   "prefixes": [
+    "pick"
+   ],
+   "status": "proposed",
+   "slots": [
+    "group"
+   ],
+   "keyed": true
+  },
+  "Field": {
+   "basis": "B13",
+   "prefixes": [
+    "input"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/Controls.kt",
+   "slots": [
+    "ceiling",
+    "error"
+   ],
+   "keyed": false,
+   "note": "Field and Composer are one primitive; the composer shows its byte ceiling before the node refuses.",
+   "laws": [
+    "L12"
+   ]
+  },
+  "StepFlow": {
+   "basis": "B14",
+   "prefixes": [
+    "step"
+   ],
+   "status": "proposed",
+   "slots": [
+    "next",
+    "back"
+   ],
+   "keyed": true,
+   "note": "Each step is a key. A skipped step is absent, not greyed."
+  },
+  "Ceremony": {
+   "basis": "B15",
+   "prefixes": [
+    "ceremony"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/CeremonyBlock.kt",
+   "slots": [
+    "act_price",
+    "undo_price",
+    "window",
+    "threshold",
+    "signer"
+   ],
+   "keyed": true,
+   "note": "Numbers come from the node's answer or manifests/governance_policy.json; a card states none. `__signer.<who>` replaces `<id>_signer_<who>`."
+  },
+  "LineageChain": {
+   "basis": "B16",
+   "prefixes": [
+    "chain"
+   ],
+   "status": "planned",
+   "slots": [
+    "link",
+    "cascade"
+   ],
+   "keyed": true
+  },
+  "CodeCompare": {
+   "basis": "B17",
+   "prefixes": [
+    "code"
+   ],
+   "status": "proposed",
+   "slots": [
+    "words",
+    "digits",
+    "verdict"
+   ],
+   "keyed": false
+  },
+  "QrCode": {
+   "basis": "B18",
+   "prefixes": [
+    "qr",
+    "scan"
+   ],
+   "status": "ships",
+   "kotlin": "client/shared/src/commonMain/kotlin/ai/ciris/mobile/shared/ui/primitives/QrCode.kt",
+   "slots": [
+    "paste"
+   ],
+   "keyed": false,
+   "note": "`qr` shows a code, `scan` reads one. A scan fills a Field and never submits. `scan` replaces `btn_scan_<what>`."
+  },
+  "Transcript": {
+   "basis": "B19",
+   "prefixes": [
+    "msg",
+    "note"
+   ],
+   "status": "proposed",
+   "legacy_prefixes": [
+    "chat"
+   ],
+   "slots": [
+    "receipt",
+    "fetch"
+   ],
+   "keyed": true
+  },
+  "ConscienceStep": {
+   "basis": "B20",
+   "prefixes": [
+    "conscience"
+   ],
+   "status": "planned",
+   "slots": [
+    "cost",
+    "faculty"
+   ],
+   "keyed": true,
+   "note": "The client has four faculties as CEG dimensions (CC 3.1.5.3) and no per-faculty result on the wire today (CSD-010)."
+  },
+  "PolicyLens": {
+   "basis": "B21",
+   "prefixes": [
+    "lens"
+   ],
+   "status": "planned",
+   "slots": [
+    "hidden_count",
+    "helpers",
+    "depth"
+   ],
+   "keyed": false
+  },
+  "GraphView": {
+   "basis": "B22",
+   "prefixes": [
+    "canvas"
+   ],
+   "status": "proposed",
+   "legacy_prefixes": [
+    "viz",
+    "graph"
+   ],
+   "slots": [
+    "twin"
+   ],
+   "keyed": false,
+   "note": "The list twin is ItemRow instances (`row`); the canvas owns only `canvas`."
+  },
+  "Document": {
+   "basis": "B23",
+   "prefixes": [
+    "doc"
+   ],
+   "status": "proposed-new",
+   "slots": [
+    "claim",
+    "recant",
+    "revision",
+    "cite"
+   ],
+   "keyed": true,
+   "note": "Raised by CIRISNodeCore external_content. A recanted claim is struck with its reason beside it, never removed."
+  },
+  "Media": {
+   "basis": "B24",
+   "prefixes": [
+    "media"
+   ],
+   "status": "proposed-new",
+   "legacy_prefixes": [
+    "call",
+    "img",
+    "tile",
+    "attachment"
+   ],
+   "slots": [
+    "alt",
+    "ai_disclosure",
+    "blur",
+    "class"
+   ],
+   "keyed": true,
+   "laws": [
+    "L10"
+   ],
+   "note": "Raised by CIRISNodeCore media and by Calls (CSD-134). Cannot be drawn without alt text and an AI-disclosure value."
+  }
+ },
+ "model": {
+  "state": "context (fixed for a run), the card's local values, each read's outcome and what its answer carries, each preview (none or taken), which ConfirmSheet is open, and for each read and preview the inputs it was taken over",
+  "text": "A text value is `blank` or `filled`. A guard may only ask whether it is blank. Against each answer taken over it the model also keeps whether the text still equals what was asked (`same`), differs (`diff`), or the asked value was blank (`blank`), which is exactly what two distinct non-blank values would show.",
+  "lives_while": "A local value, a preview or an open sheet may declare the guard under which it lives; when the guard is false it returns to its initial value. This is how a value held by a part of the screen that is not drawn is written down.",
+  "transitions": "the person edits a Field, picks a Choice option, or presses an Action that is present and enabled; a pending read fails or is answered with any value combination the card's `where:` allows; a write that is issued is done (`on_ok`), is refused by the node (`on_refused`, when the card declares it) or gets no answer (`on_fail`); a preview that is called is taken (`on_ok`), is refused (`on_refused`, when declared) or gets no answer (`on_fail`), and in every case the one held before is let go. While a ConfirmSheet is open only its confirm and cancel act.",
+  "not_modelled": [
+   "how long anything takes",
+   "what a write's answer says beyond done, refused or unanswered",
+   "more than one element of a collection (`per:` instances are checked for one)",
+   "layout, colour and wording",
+   "the Kotlin itself: the model is tied to it only through the tags it shares"
+  ],
+  "effects": {
+   "set": "give a bool or enum local a value, or blank a text",
+   "toggle": "flip a bool",
+   "ask": "start a read: the old answer is dropped first",
+   "call": "ask the node for a preview; branches on_ok / on_refused / on_fail",
+   "drop": "let go of a read, a preview or a local value",
+   "open": "open a ConfirmSheet",
+   "issue": "send a write; from a ConfirmSheet's confirm or an Action's effect and from nothing else (L12), from a confirm exactly when the write is `confirm: true` (L6); branches on_ok / on_refused / on_fail",
+   "leave": "leave the screen"
+  },
+  "writes": "A write declares `sends:` (and `adds:`) the local values it carries, `confirm:` true or false, and `row:` the family and verb of the row it lands, or null when it lands none. The family is a family of manifests/namespace_registry.json; `confirm` is the cell of manifests/transitions.json for that family and verb, which is one value for each pair, so a card's copy is checked by lookup."
+ }
+}
