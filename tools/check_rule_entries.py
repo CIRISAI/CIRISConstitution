@@ -16,7 +16,10 @@ home section out of its Part and fails when
      the statements owed are the ones the inventory read inside it; a numbered subsection
      is its own home and is not read as part of its parent's entry);
   4. a Part calls a landed rule by a name its entry does not use, so a second wording of the
-     rule cannot grow beside the entry.
+     rule cannot grow beside the entry;
+  5. a statement marked as restating a rule sits in a paragraph that cites no section (a code
+     line and a table row are not asked to cite; the few that cite nothing today are listed and
+     the list only shrinks).
 
   python3 tools/check_rule_entries.py
 """
@@ -48,6 +51,27 @@ WITHIN = {("owner_binding", "3.2"): "Who owns a key"}
 # that home reads the block, and owes the statements whose inventory line falls inside it.
 BLOCK = {"3.2": ("Trust-root operational semantics", 897, 952)}
 MAX_WORDS = 40
+# A statement that says a rule again cites the section that states it. These restatements cite
+# nothing yet (home, file, inventory line). The list only shrinks: the check fails on an uncited
+# restatement that is not listed and on a listed one that now cites.
+UNCITED_RESTATES = {
+    ('1.15.1', 'p1', '323'),
+    ('1.15.7', 'p1', '373'),
+    ('1.16.6', 'p1', '438'),
+    ('2.4', 'p2', '267'),
+    ('2.6.6.3', 'p2', '862'),
+    ('3.1.3', 'p3', '147'),
+    ('3.3.5', 'p3', '1335'),
+    ('3.3.6.2', 'p3', '1464'),
+    ('4.2.6', 'p4', '247'),
+    ('4.4.3.4.6', 'p4', '1036'),
+    ('4.4.3.5', 'p4', '1053'),
+    ('4.5.2.3', 'p4', '1454'),
+    ('6.1.5.3', 'p6', '277'),
+    ('7.2.3', 'p7', '107'),
+    ('7.3.4', 'p7', '253'),
+    ('7.5.8', 'p7', '410'),
+}
 # Sentences kept whole by name: their shape is their argument, or their wording is a standard's.
 # Each is read out of its paragraph before the count (link markup already removed).
 EXEMPT = (
@@ -140,6 +164,33 @@ def main():
                     if other in line:
                         errs.append(f"{key} {home}: {part}:{i} calls the rule \"{other}\"; cite the entry instead")
         print(f"rule entries: {key} at CC {home}: {len(mine)} statements carried, longest sentence {longest} words")
+    # 5. a restatement in prose cites a section (its paragraph carries a "CC x.y")
+    secs = {}
+    def cites(e):
+        h = e["home"]
+        if h not in secs:
+            secs[h] = section(HOME_PART[h[0]], h)
+        sec = secs[h]
+        idx = next((i for i, l in enumerate(sec) if e["entry_phrase"] in l), None)
+        if idx is None:
+            return True
+        line = sec[idx]
+        fenced = sum(1 for l in sec[:idx] if l.lstrip().startswith("```")) % 2 == 1
+        if fenced or line.startswith("    ") or line.lstrip().startswith("|"):
+            return True          # a code line or a table row is not asked to cite
+        return bool(re.search(r"CC \d", line))
+    seen = set()
+    for e in entries:
+        if e["role"] != "restates":
+            continue
+        pin = (e["home"], e["file"], e["line"])
+        if cites(e):
+            continue
+        seen.add(pin)
+        if pin not in UNCITED_RESTATES:
+            errs.append(f"{e['rule_key']} {e['home']}: a restatement cites no section: {e['entry_phrase'][:70]}")
+    for pin in sorted(UNCITED_RESTATES - seen):
+        errs.append(f"{pin[0]}: listed in UNCITED_RESTATES but it now cites, or is gone ({pin[1]}:{pin[2]}); remove it from the list")
     if errs:
         print("rule entries: FAIL"); [print("  " + e) for e in errs]
         return 1
