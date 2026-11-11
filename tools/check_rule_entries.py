@@ -33,7 +33,10 @@ NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its sub
               "5.2": ("> **Scope (normative)", "**Substrate enforcement", "**Two layers, not one", "**Composition with the at-rest",
                       "**Recipient encryption-key resolution", "**Exclusion MUST NOT be silent", "**Locality dividend",
                       "**Boundary cases"),
-              "3.2": ("**Adding a device",)}
+              "3.2": ("**Adding a device",),
+              "4.4.3.4.3": ("**The Self (membership)", "**The pair is a data-management record",
+                            "**Membership is standing", "**Conformance:", "**Transport (network presence)",
+                            "**Worked login flow")}
 # A rule whose home is one headed block of a larger section: the entry is that block alone.
 WITHIN = {("owner_binding", "3.2"): "Who owns a key"}
 MAX_WORDS = 40
