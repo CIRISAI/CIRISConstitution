@@ -3114,7 +3114,7 @@ p4	1772	4.5.13	family	roster_fold	cosign_rule	community	is	states		A founder han
 p4	1772	4.5.13	family	moderation	governance	community	is	restates		A room left with no founder locks and elects	
 p4	1773	4.5.13	family	moderation	governance	moderation	is	states	4.2.6	If no moderator or steward acts within 48 h the proposal is tallied by live-majority vote over the community's live members	
 p4	1773	4.5.13	family	census	governance	moderation	is	states		Presence asserts by a fresh proof-of-presence plus vote over the proposal nonce; a silent member is not in the denominator	
-p4	1775	4.5.13	family	moderation	governance	moderation	is	states		The community fallback fires only on genuine moderator and steward absence; it is never a check on them	
+p4	1775	4.5.13	family	moderation	governance	moderation	is	states		The moderation reverse-quorum is a fallback for moderator or steward absence, firing only on genuine absence; the members' check on an act a moderator took is the separate lift	
 p4	1775	4.5.13	family	moderation	window	moderation	is	states		The 48 h window governs only the fallback; a moderator rules at any time and a withhold is immediate	
 p4	1775	4.5.13	family	moderation	none	moderation	is	states	4.5.5	A report filed privately with the duty holder opens no window, is seen by nobody else, and becomes the duty holder's record, the reporter shielded	
 p4	1775	4.5.13	family	moderation	window	moderation	is	states		A moderation action raised in the room is public, names what is asked, and starts the 48 h window at once	

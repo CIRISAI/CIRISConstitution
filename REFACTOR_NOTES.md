@@ -361,3 +361,17 @@ a removal during a live binding needs the champion's confirmation. Owed: the pet
 and the told-list are the implementer's to shape (add to CIRISPersist#1259 or its own ticket);
 the fenced predicate of 3.4.12 has no `require` for the petitioner or the champion.
 
+Members' check on moderators, 2026-11-11. Eric confirmed the amendment (relayed first by the
+server session, aimed at Server 0.6) and agreed the shape I proposed: the accord's pattern at
+room scope. Landed in CC 4.5.13 with policy rows `moderation_overturn` (strict majority of the
+roster at the act's instant, 48 h, floor two voices) and `moderator_recall` (more than 2/3
+of the standing roster, cosigned, 72 h; elected moderators only). Restored items return
+consent-gated; immediate-removal bases and private-report rulings are not objectable; no
+second bite. Open by his agreement: the founder's seat (held at zero hops, not recallable),
+stated as a declared default; whether it ever becomes the room's is a decision of its own,
+and CC 4.5.1's register does not carry it yet. Owed: a register row staged on the server's
+ticket (none named yet); a model (the lift as a mirror row beside `accord_halt`; the fixed
+electorate; no second bite); persist facts from the server: a cohort declares reverse quorum
+only through `consensus_protocol`, and the `moderation_action` 48 h absence fallback is not
+built. Recusal at room scope is defined in CC 4.5.4 (derived).
+

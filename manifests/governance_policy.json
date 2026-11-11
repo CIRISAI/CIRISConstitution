@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "40920bcb494ab7e0984a650ba5251075210bc74403a6bc48bac83500e5fa9c41",
+  "policy_sha256": "259806ee2154b4752a2d316fc3340b018847c028096797ee898fe2f6dedd4878",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -340,6 +340,75 @@
    ],
    "status": "normative",
    "note": "a moderator or steward acts alone in the window; on their absence a live majority at the window"
+  },
+  {
+   "family": "moderation_overturn",
+   "cc_ref": "4.5.13",
+   "kind": "mirror",
+   "standing_set": "the community's roster as it stood at the instant of the moderator's act",
+   "base": "standing",
+   "enact": "more than 1/2",
+   "cancel": null,
+   "floor": "2 voices",
+   "enact_rule": {
+    "kind": "strict_majority"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "cancel_over": "base",
+   "at_window": "lapsed",
+   "window_secs": 172800,
+   "window_class": "ruled_48h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "normative",
+   "note": "the members' check: a strict majority of those seated before the act lift a moderator's or steward's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
+  },
+  {
+   "family": "moderator_recall",
+   "cc_ref": "4.5.13 4.5.4",
+   "kind": "cosigned",
+   "standing_set": "the community's roster",
+   "base": "standing",
+   "enact": {
+    "num": 2,
+    "den": 3
+   },
+   "cancel": null,
+   "floor": "2 voices",
+   "enact_rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 3
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voices",
+    "count": 2
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "community",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "normative",
+   "note": "a room recalls a moderator it elected: more than two thirds of the standing roster cosign one row in the standing window; the room then locks and elects; an appointed moderator answers to the appointer and a founder's seat is not recalled"
   },
   {
    "family": "accord_halt",
