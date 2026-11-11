@@ -10,7 +10,9 @@ home section out of its Part and fails when
   2. a row's phrase is not in the home section as it now reads;
   3. a sentence of the entry runs past 40 words (tables, lists and the paragraphs of
      neighbouring rules, which land with their own rules, are not counted; where a rule's home
-     is one headed block of a larger section, the entry is that block; a numbered subsection
+     is one headed block of a larger section, the entry is that block, and where a headed block
+     carries statements under many rule keys, each key's entry at that home is the block and
+     the statements owed are the ones the inventory read inside it; a numbered subsection
      is its own home and is not read as part of its parent's entry);
   4. a Part calls a landed rule by a name its entry does not use, so a second wording of the
      rule cannot grow beside the entry.
@@ -41,6 +43,9 @@ NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its sub
                             "**Worked login flow")}
 # A rule whose home is one headed block of a larger section: the entry is that block alone.
 WITHIN = {("owner_binding", "3.2"): "Who owns a key"}
+# A headed block of a larger section that is one entry under many rule keys: every other key at
+# that home reads the block, and owes the statements whose inventory line falls inside it.
+BLOCK = {"3.2": ("Trust-root operational semantics", 897, 952)}
 MAX_WORDS = 40
 # Names a landed rule is not called by: the entry's own words are the rule's only name.
 OTHER_NAMES = {"withdraw": ("broadened `withdraws` admission", "broadened admission", "withdraws-isn't-retroactive",
@@ -79,13 +84,19 @@ def main():
     landed = sorted({(e["rule_key"], e["home"]) for e in entries})
     for key, home in landed:
         sec = section(HOME_PART[home[0]], home)
+        owed = lambda r: True
         if (key, home) in WITHIN:
             sec = block(sec, WITHIN[(key, home)])
+        elif home in BLOCK:
+            title, first, last = BLOCK[home]
+            sec = block(sec, title)
+            owed = lambda r, first=first, last=last: first <= int(r["line"]) <= last
         text = "\n".join(sec)
         mine = [e for e in entries if (e["rule_key"], e["home"]) == (key, home)]
         have = {(e["file"], e["line"], e["gist"]) for e in mine}
         for r in inv:
-            if r["rule_key"] == key and r["section"] == home and (r["file"], r["line"], r["gist"]) not in have:
+            if (r["rule_key"] == key and r["section"] == home and owed(r)
+                    and (r["file"], r["line"], r["gist"]) not in have):
                 errs.append(f"{key} {home}: no entry row for {r['file']}:{r['line']} {r['gist'][:70]}")
         for e in mine:
             if e["entry_phrase"] not in text:

@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "db624c0d431100b6a6dbd56e46f727450371ec63b31e1ac0c28d9add83f15ee7",
+  "registry_sha256": "4f80e52ab4faf7c0533b3c8d00989fa72b66fed5c4f4429dd09892bdbd7cb74a",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
