@@ -316,7 +316,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A report placed wider than its content would tell outsiders what a group holds. The signer does not choose the scope, and a report at any other scope is refused.
 
-**Text.** CC 3.1.3.3: "the substrate refuses a report whose scope is not its content's"
+**Text.** CC 3.1.3.3: "The substrate refuses a report whose scope is not its content's"
 
 | column | families |
 |---|---|

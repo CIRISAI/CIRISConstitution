@@ -52,6 +52,11 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The named-moderator invariant is one entry (4.5.4): the election's causes and ballot order are lists inside rule 2, the authority set has its own paragraph, and the two enforcement points are a list. No rule changed.
 - The dominance and multiplicity gates are one entry (6.1.2.1.2): long sentences split around formulas and constants that are unchanged. No rule changed.
 - Durability at every tier is one entry (6.1.5.3): the three constraints on an owner's choice and the five replication axes are lists. No rule changed.
+- The smallest-scope default is one entry (1.13.3.4): its 175-word sentence is four short paragraphs, the first sentence unchanged. No rule changed.
+- The primitive set is one entry (2.4): what cosigned rows bring onto the base is a list, and the cosigned-row rules stand in six short blocks under their one lead. No rule changed.
+- The session claim, the custody report, the encryption-key binding, the organisation as affiliation, the self-report route and machine-generation disclosure are six entries (3.1.3.1, 3.1.3.3, 3.3.6.1, 3.3.9, 3.4.5.1, 3.4.14): long sentences split at their own joints, every table row and labelled rule unchanged. No rule changed.
+- Resumption bytes, the Wise Authority seat, the community crypto tiers and absolute-M quorum are four entries (4.2.1.3, 4.3, 4.4.3.2.1, 4.4.3.4.2.1): the cascade steps, what the seal does not cover and the two inspectability cases are lists. No rule changed.
+- The replication-target policy is one entry (6.1.5.1): the two floors and the mesh-config keys each have their own sentence. No rule changed.
 - The entry check reads a nested list item as a list item.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
