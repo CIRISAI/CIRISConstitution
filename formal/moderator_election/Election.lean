@@ -85,7 +85,7 @@ theorem decliner_never_seated (order : List Nat) (accepts : Nat → Bool) (d : N
     (hd : accepts d = false) : seat order accepts ≠ some d := by
   intro h; have := seated_accepted order accepts d h; rw [hd] at this; cases this
 
-/-- No ballots, no winner: the room stays locked and the ballot reopens. -/
+/-- No ballots, no winner: the room stays locked and the ballot stays open until a seating lands. -/
 theorem no_ballots_no_winner (roster : List Nat) : winner roster [] = none := by
   simp [winner, dedupe]
 

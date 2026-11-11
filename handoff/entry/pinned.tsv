@@ -29,7 +29,7 @@ p3	nothing is pushed to a node whose owner has not joined
 p3	replicated like any Commons row
 p2	revocation is non-rollbackable
 p3	signed by the founder (or a current `moderate`-holder) of the community it names; one live row per community
-p3	so an evicted key cannot sign an owner act into the window in which it was still live
+p3	so an evicted key can backdate an owner act into its old live window by at most W, and no further
 p3	the `scores` row whose envelope is the `takedown_notice` payload
 p2	the anti-Goodhart dual admits no subject-side removal of an adverse row
 p4	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row

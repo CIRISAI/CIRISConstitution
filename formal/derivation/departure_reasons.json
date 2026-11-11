@@ -170,7 +170,7 @@
    "why": "The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.",
    "basis": "text",
    "cc_ref": "CC 3.3.6.3",
-   "quote": "so an evicted key cannot sign an owner act into the window in which it was still live",
+   "quote": "so an evicted key can backdate an owner act into its old live window by at most W, and no further",
    "moves": {
     "freshness": [
      "consent:community_trust",

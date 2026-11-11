@@ -1938,7 +1938,7 @@ This entry sets out the key roster of a self: one fedID, its keys, who may act a
 
 **Naming a roster key.** A roster key other than the genesis key is named `<fedID>-<fingerprint>`. The whole fedID string is the [CC 2.6.8](part_2_the_grammar.md) label. The fingerprint is the first ten lowercase base32 characters of SHA-256 over the key's *own* raw Ed25519 public key. The name is the 2.6.8 form exactly, verifiable against its own key. It carries no device name (the node key carries that). It cannot be read as another person, because the genesis fingerprint is inside it. Two spellings are refused: a device-derived id (`device-<hex>-<fp>`), and `<label>-<own fingerprint>` with the bare label, which reads as a second fedID. The 2.6.8 rule that a consumer verifies a `key_id`'s fingerprint against the public key it obtains holds for the genesis key for the fedID itself and for each roster key for its own id. A consumer MUST NOT treat a roster key id as a different identity.
 
-**Authority of a roster key.** Any live roster key signs *as the fedID* for every owner act: consent, an owner-binding and its widening, root acceptance, the self room, contacts, and approving the next device. Nothing is reserved to the genesis key. A special genesis key would be a single point of loss, which contradicts the invariant below. A gate that asks whether the author is the owner or steward MUST accept a live roster key of the same fedID at the row's signed `asserted_at`, not only the key named on the binding. That `asserted_at` is bounded by the past-freshness window W of the admitting substrate (`asserted_at_stale`), so an evicted key cannot sign an owner act into the window in which it was still live. That bound is the same one the consent fold puts on a backdated grant ([CC 3.3.1](#3.3.1)).
+**Authority of a roster key.** Any live roster key signs *as the fedID* for every owner act: consent, an owner-binding and its widening, root acceptance, the self room, contacts, and approving the next device. Nothing is reserved to the genesis key. A special genesis key would be a single point of loss, which contradicts the invariant below. A gate that asks whether the author is the owner or steward MUST accept a live roster key of the same fedID at the row's signed `asserted_at`, not only the key named on the binding. That `asserted_at` is bounded by the past-freshness window W of the admitting substrate (`asserted_at_stale`), so an evicted key can backdate an owner act into its old live window by at most W, and no further. That bound is the same one the consent fold puts on a backdated grant ([CC 3.3.1](#3.3.1)).
 
 **The bound applies only to a key that has lost standing:** W is checked when the author key is not a live roster key of the self *at receipt* — evicted, revoked, or never seated. A row signed by a key that is still live admits at any age, so a new device syncing a self's history admits its legitimate old rows. That is because the backdating threat exists only for a key that has lost standing.
 
@@ -1981,7 +1981,9 @@ Residuals named rather than closed:
 
 - an owner absent for a whole window looks lost;
 - one stolen and one lost of three is a tie;
-- two stolen of four is a stalemate.
+- two stolen of four is a stalemate;
+
+- a stolen key not yet evicted dates its rows at any instant, because W binds only a key that has lost standing.
 
 ### 3.3.7 `consent-directed` — `consent:replication` — directed federation-peer replication consent
 

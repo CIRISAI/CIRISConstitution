@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "44f72cd4a50e0cdf169cfed760bd61386a73e90412ac37e8e21328fe0a6a6625",
+  "registry_sha256": "52de85b76fead867f4d95d649335b691a5bdad2181af49b79adcacb4c3122ad8",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -388,7 +388,7 @@
      "why": "The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.",
      "basis": "text",
      "cc_ref": "CC 3.3.6.3",
-     "quote": "so an evicted key cannot sign an owner act into the window in which it was still live",
+     "quote": "so an evicted key can backdate an owner act into its old live window by at most W, and no further",
      "cells": 6
     },
     {

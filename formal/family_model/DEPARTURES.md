@@ -109,7 +109,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.
 
-**Text.** CC 3.3.6.3: "so an evicted key cannot sign an owner act into the window in which it was still live"
+**Text.** CC 3.3.6.3: "so an evicted key can backdate an owner act into its old live window by at most W, and no further"
 
 | column | families |
 |---|---|
