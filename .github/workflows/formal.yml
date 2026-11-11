@@ -106,6 +106,13 @@ jobs:
           grep -q 'Invariant Inv_EdgeAtReceiptIsBound is violated' m.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/h7" -deadlock -config AccordHaltReach_signed_bound.cfg AccordHaltReach.tla | tee b.log
           grep -q 'Invariant Inv_LatchedHeldEdge is violated' b.log || exit 1
+      - name: The members' lift of a moderator's act closes; a count over later joiners is shown to fail
+        working-directory: formal/moderation_lift
+        run: |
+          set +e
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/l1" -deadlock -config ModerationLift_at_act.cfg ModerationLift.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l2" -deadlock -config ModerationLift_live_brigade.cfg ModerationLift.tla | tee g.log
+          grep -q 'Invariant Inv_SeatedMajority is violated' g.log || exit 1
 
   authority:
     name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)
