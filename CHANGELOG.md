@@ -31,6 +31,7 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The moderation duties are one entry (4.5.5): the scope kinds as a table, what anyone may do on their own account, the good-faith warning, what the person named sees, the admission test, who holds the duty over each target, and deputization. No rule changes.
 - Link shaping and fragmentation are one entry (5.4.3): the fixed frame and why it is small, what a client states before shaping is chosen, the budget classes, the one-hop rule, the bound of eight and displacement, what a refusal carries, the two planes, and the symbol envelope. No rule changes.
 - How a group decides is one entry (4.5.13): who may act alone and when a count carries, the two acts of moderation, the moderator election, the harm-report default and the consent gate, the four duty-view practices, the five policy numbers as a table with the floor of two voices, the processor's step, the choice as data, one vote per person, and what a person is shown before signing. No rule changes.
+- What the network is told about a destination, a device and a publisher is one entry (5.4.6): no announce below federation scope and the derived address, which devices are listed and that a minor's node never is, the scoped body on the identity-plane link and what a forwarder holds, who carries what, first contact and who is handed a route, ignore and block, and the Anonymous Tier's eight items. No rule changes.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
 
