@@ -9,7 +9,8 @@ home section out of its Part and fails when
   1. an inventory statement keyed to a landed rule and its home section has no row here;
   2. a row's phrase is not in the home section as it now reads;
   3. a sentence of the entry runs past 40 words (tables, lists and the paragraphs of
-     neighbouring rules, which land with their own rules, are not counted);
+     neighbouring rules, which land with their own rules, are not counted; where a rule's home
+     is one headed block of a larger section, the entry is that block);
   4. a Part calls a landed rule by a name its entry does not use, so a second wording of the
      rule cannot grow beside the entry.
 
@@ -30,13 +31,17 @@ NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its sub
                           "**Charter recovery lives", "**Genesis is tamper-evident"),
               "5.2": ("> **Scope (normative)", "**Substrate enforcement", "**Two layers, not one", "**Composition with the at-rest",
                       "**Recipient encryption-key resolution", "**Exclusion MUST NOT be silent", "**Locality dividend",
-                      "**Boundary cases")}
+                      "**Boundary cases"),
+              "3.2": ("**Adding a device",)}
+# A rule whose home is one headed block of a larger section: the entry is that block alone.
+WITHIN = {("owner_binding", "3.2"): "Who owns a key"}
 MAX_WORDS = 40
 # Names a landed rule is not called by: the entry's own words are the rule's only name.
 OTHER_NAMES = {"withdraw": ("broadened `withdraws` admission", "broadened admission", "withdraws-isn't-retroactive",
                             "retraction carve-out", "2.4.1.1 carve-out", "third-party path"),
                "trust_fold": ("trust list", "trusted set", "pin set", "trust store"),
-               "audience": ("target-membership", "recipient predicate", "one audience rule", "existence-invisible")}
+               "audience": ("target-membership", "recipient predicate", "one audience rule", "existence-invisible"),
+               "owner_binding": ("owner binding", "steward binding", "ownership edge", "responsible steward")}
 
 
 def section(part, number):
@@ -48,6 +53,15 @@ def section(part, number):
     return lines[start:end]
 
 
+def block(sec, title):
+    """The lines of one unnumbered heading inside a section, up to the next heading at its depth or above."""
+    start = next(i for i, l in enumerate(sec) if re.match(rf"#+ {re.escape(title)}", l))
+    depth = len(sec[start]) - len(sec[start].lstrip("#"))
+    end = next((i for i in range(start + 1, len(sec)) if re.match(r"#+ ", sec[i])
+                and len(sec[i]) - len(sec[i].lstrip("#")) <= depth), len(sec))
+    return sec[start:end]
+
+
 def main():
     entries = list(csv.DictReader((ROOT / "formal/derivation/rule_entries.tsv").open(), delimiter="\t"))
     inv = list(csv.DictReader((ROOT / "formal/derivation/rule_inventory.tsv").open(), delimiter="\t"))
@@ -55,6 +69,8 @@ def main():
     landed = sorted({(e["rule_key"], e["home"]) for e in entries})
     for key, home in landed:
         sec = section(HOME_PART[home[0]], home)
+        if (key, home) in WITHIN:
+            sec = block(sec, WITHIN[(key, home)])
         text = "\n".join(sec)
         mine = [e for e in entries if (e["rule_key"], e["home"]) == (key, home)]
         have = {(e["file"], e["line"], e["gist"]) for e in mine}

@@ -84,6 +84,12 @@ may be served, not that it is sent, so the Commons is readable by every node and
 default. Which of a member's nodes a cohort reaches stays with the owner's per-node choice
 (CC 6.1.5.3) and is cited from the entry, as is who may carry a sealed frame (CC 5.4.6). The
 paragraphs of CC 5.2 on sealing at rest keep their own rule and are not counted in the entry.
+`owner_binding` at CC 3.2, under the heading *Who owns a key* (22 statements): the one signed row by
+which a person answers for a device or agent key, the three readings every other rule takes from
+it, one owner at a time, the first binding, what the binding opens, and the recovery path. CC 3.2
+is a long section, so this entry is one headed block of it and the check reads that block alone.
+Pairing a new device keeps its own paragraph beside the entry. Stewardship of an adult who has
+lost capacity (CC 3.4.12, 35 statements) reuses the same row and lands as its own entry.
 
 ## Compliance wire forms
 

@@ -89,7 +89,7 @@ p1	231	1.13.3.3	mechanism	transparency_log	none		is	restates	5.3.3.3,5.3.1.1	An 
 p1	232	1.13.3.3	stewardship	steward	none	hard_case	is	restates	3.2,5.3.1	Two witnessed heads for one trust-root lineage are a hard_case:lineage_equivocation row, never a silent first-seen fork; exposure bounded by the charter's witness_cadence	table
 p1	232	1.13.3.3	stewardship	steward	none		MUST_NOT	restates	3.2	A stale lineage prefix cannot be attached to	table
 p1	233	1.13.3.3	kernel	trust_fold	none		is	restates	2.3.2,4.4.3.8	A key is an identifier; standing comes only from attestations others make about it under policies the consumer chose	table
-p1	233	1.13.3.3	kernel	owner_binding	subject_rule	identity_occurrence	MUST	restates	3.2	An agent or node key must have a bound human steward, a user identity it is an admitted identity_occurrence of, to hold non-infrastructure membership	table
+p1	233	1.13.3.3	kernel	owner_binding	subject_rule	identity_occurrence	MUST	restates	3.2	An agent or node key must have a bound human steward, the user identity holding its one live owner-binding, to hold non-infrastructure membership	table
 p1	233	1.13.3.3	kernel	announce	none		MUST_NOT	restates	5.3.3.4	Liveness is never a durable claim: reachability is an ephemeral node-local fact, never an attestation and never logged; directory presence never reads as live	table
 p1	233	1.13.3.3	family	registration	evidence_screen	identity_occurrence	is	restates	3.1.1	A self-attested identity_occurrence is self-assertion until cross-attested	table
 p1	234	1.13.3.3	kernel	trust_fold	none		is	restates	4.4.3.8	The conformance-floor policy composes only attesters in the consumer's pinned trust set; a fresh key has no weight until a trusted party confers it	table
