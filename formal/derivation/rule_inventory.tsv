@@ -799,7 +799,7 @@ p3	32	3.1.1	family	withdraw	lifecycle	community	is	states		Closing a community i
 p3	32	3.1.1	family	reserved_prefix	none	community	is	states		The community: stem is closed to the listing leaf.	table
 p3	32	3.1.1	family	signer	signer_rule	community	is	states		community:listing is signed by the founder or a current moderate-holder of the community it names.	table
 p3	33	3.1.1	family	delegation	body	trust	is	states	3.2	trust:{job} edges are dimension values carried on delegates_to rows; the wire type is unchanged.	table
-p3	33	3.1.1	family	delegation	body	trust	is	states		Three trust jobs named apart (charter root self-declaration, confers root-to-subject grant, accepts node-to-root acceptance); a reader never infers one from another.	table
+p3	33	3.1.1	family	delegation	body	trust	is	states		Three trust jobs named apart (charter root self-declaration, confers root-to-subject grant, accepts owner-to-root acceptance, a person's row every node and agent they own reads); a reader never infers one from another.	table
 p3	33	3.1.1	family	withdraw	lifecycle	trust	is	states		A trust edge is retracted by withdraws or recants, never by a negative score.	table
 p3	33	3.1.1	family	reserved_prefix	none	trust	is	restates	3.2	trust:* is reserved per 3.2.	table
 p3	34	3.1.1	family	halt	none	accord	is	restates	3.4.1,4.2.1.1	accord:invoke:constitutional is the kill-switch invocation; semantics and bytes at 3.4.1/4.2.1.1; lowercase.	table
@@ -1492,11 +1492,11 @@ p3	906	3.2	kernel	trust_fold	none		is	states		A portable root enters via delegat
 p3	908	3.2	kernel	supersede	lifecycle	delegates_to	is	states		A superseded grant keeps lineage: a claim asserted before the successor keeps its standing; a reader walks the supersedes chain	
 p3	908	3.2	kernel	withdraw	lifecycle	delegates_to	is	states	2.6	A withdrawn or tombstoned grant has no lineage: standing is gone for every later use, and back to revoked_after where the key is revoked as compromised	
 p3	908	3.2	kernel	withdraw	lifecycle	delegates_to	is	restates	2.4.1.1	A delegation ending by supersedes, expiry or withdraws leaves acts already taken standing, because a withdrawal reaches forward only	
-p3	910	3.2	kernel	trust_fold	none	trust,delegates_to	MUST	states		Every candidate root must pass the evaluating node's own chain: a live trust:accepts delegates_to edge node to root, and the root's trust:charter with a recovery commitment over successor keys	
+p3	910	3.2	kernel	trust_fold	none	trust,delegates_to	MUST	states		Every candidate root must pass the evaluating node's own chain, which is its owner's: a live trust:accepts delegates_to edge owner to root, and the root's trust:charter with a recovery commitment over successor keys	
 p3	910	3.2	kernel	halt	none		is	restates	4.2.1.1	A latched constitutional halt is not a leg of the trust chain; it pauses agents' effectful acts and moves no trust state	
 p3	910	3.2	kernel	halt	none		MUST_NOT	restates	4.2.1.1	Serving the halt latch as a signal is expected; conditioning any data door, conferral walk or transit decision on it is forbidden	
 p3	910	3.2	kernel	trust_fold	none		is	states		Un-trust is one deletion of the acceptance edge; every downstream gate fails closed emergently; the base self-root survives	
-p3	910	3.2	kernel	trust_fold	none		MUST_NOT	states		A substrate admits no mechanism that confers capability on a node which has not accepted the conferring root	
+p3	910	3.2	kernel	trust_fold	none		MUST_NOT	states		A substrate admits no mechanism that confers capability on a node whose owner has not accepted the conferring root	
 p3	912	3.2	mechanism	wire	formula	trust,key_record	MUST	states		A recovery commitment is SHA-256 of JCS of the committed key records (key_id, Ed25519 and ML-DSA-65 public keys) sorted by key_id, lowercase hex; an id-only commitment is non-conformant	
 p3	912	3.2	mechanism	wire	formula	trust,accord	is	applies	4.2.6	The T3 successor commitment is over the root's successor keys; the 4.2.6 per-holder commitment is over a one-element array	
 p3	912	3.2	mechanism	wire	evidence_screen	key_record	MUST	states		At use the door recomputes the element from the presenting key record's public keys and checks it; a record matching the id but not the key material is refused	
@@ -1562,7 +1562,7 @@ p3	938	3.2	family	standing	governance	community	is	applies	4.2.6	For ciris-canon
 p3	940	3.2	family	policy_row	governance	community	MUST	restates		A collective in scope is founded with N at least M+1 active human founders; N equal to M is non-conformant	
 p3	940	3.2	family	admission_order	governance	community	MUST_NOT	restates		A charter or admission floor raising effective M is refused at the founding row and never applied at read time; the charter leg reads the declared protocol	
 p3	942	3.2	kernel	freshness	none		MUST	states	2.6.7,3.3.9	The standing verdict V(rows,t) uses a signer-stamped instant, never the evaluating clock; the skew rule gates only T4a's attach refusal	
-p3	944	3.2	kernel	trust_fold	formula	trust	is	states		Rooted: a live chain from self-root via the node's trust:accepts edge to a root with recovery commitment and serve plus attest scope, current T6 head, live T7 founder set	
+p3	944	3.2	kernel	trust_fold	formula	trust	is	states		Rooted: a live chain from the inherited self-root via the owner's trust:accepts edge to a root with recovery commitment and serve plus attest scope, current T6 head, live T7 founder set	
 p3	944	3.2	kernel	trust_fold	none		is	exception	4.2.2.1	Holder custody is an admission gate at the seating row, never a leg of V	
 p3	944	3.2	kernel	trust_fold	formula	trust	is	states		NotRooted: no edge; edge, charter or community row withdrawn, recanted, tombstoned or past revoked_after; missing commitment or scope; head de-witnessed; at attach only, stale head or frozen lineage	
 p3	946	3.2	kernel	trust_fold	formula		is	states	4.2.1	V's inputs are rows only: heads and cosignatures, roster fold, withdraws, recants, tombstones, revoked_after, identity_type at seating, charter, the node's edge and digest, the halt latch, and t	
@@ -2020,7 +2020,7 @@ p3	1879	3.4.5	family	signer	signer_rule	trust	MUST	states		trust:charter:v1 MUST
 p3	1879	3.4.5	family	cosign	cosign_rule	trust	is	states	3.2	A keyless family root's charter is a delegates_to(member to family_id) row bearing trust:charter:v1 scrubbed by its roster reaching consensus_protocol; the family derives from verified signers, never a field	table
 p3	1879	3.4.5	family	signer	signer_rule	trust	MUST	states		trust:confers:v1 MUST carry the conferring root as attesting_key_id	table
 p3	1879	3.4.5	family	cosign	cosign_rule	trust	is	states	3.2	A keyless family root confers by a delegates_to(member to subject) row bearing trust:confers:v1 scrubbed by its roster reaching consensus_protocol; a row signed by one member alone is no grant	table
-p3	1879	3.4.5	family	signer	signer_rule	trust	MUST	states		trust:accepts:v1 MUST carry the accepting node as attesting_key_id; a root MUST NOT emit an acceptance edge naming itself as attested_key_id	table
+p3	1879	3.4.5	family	signer	signer_rule	trust	MUST	states		trust:accepts:v1 MUST carry the accepting party as attesting_key_id (the person by a live roster key, a key with no owner for itself, or an authority's set); a root MUST NOT emit an acceptance edge naming itself as attested_key_id	table
 p3	1879	3.4.5	family	admission_order	none	trust	is	states		A trust:* row failing its job's rule is rejected at admission, not scored down	table
 p3	1881	3.4.5	kernel	reserved_prefix	none	capacity,trace,consent,ownership,config,trust	is	restates	3.4.7,3.4.7.1	Every self-emission-polarity rule is evaluated by the 3.4.7 enforcement discipline (substrate admission, consumer re-check, producer obligation) and by identity_type set membership where a role is named	
 p3	1885	3.4.5	family	audience	replication	capacity	is	states	3.1.8.1,2.3.2,5.3.2.4.4,2.6,3.2,1.13.2	There is no substrate read rule letting an agent read rows filed about it but not composed outputs; capacity rows are served to any party the scope gate admits	

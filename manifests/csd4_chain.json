@@ -6,7 +6,7 @@
    "invariants_sha256": "b49b57478d67c1b692e1b6c6821c251ad0cdc2b62331b4d14f3a94edced33695",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
-   "claims_sha256": "d17979ea8f8ea5ae3d841cf06e72a50c911c4d09ce18bdf0dece4b10e4c67df0",
+   "claims_sha256": "31a583ba6192d2382050ed373068f52415669ae92bec1c28890f954be4cf6c70",
    "catalogue": {
     "repo": "CIRISServer",
     "branch": "main",
@@ -30,7 +30,7 @@
    "atoms": 156,
    "states": 242,
    "invariants": 216,
-   "claims": 596,
+   "claims": 597,
    "entries": 20,
    "refusal_tokens": 104
   },
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "4537bca66961d59159ff15b6873e23c577bc42c7e66a906575bf2577c88a9307"
+  "chain_sha256": "fae686f5a4603cfa3ed57b7106e1eec5df05d4def6124576e706dd87496168e8"
  },
  "chain": [
   {
@@ -1054,6 +1054,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -1885,6 +1897,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -3267,6 +3291,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -4061,6 +4097,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -7966,6 +8014,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -9828,6 +9888,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -12474,6 +12546,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -16609,6 +16693,18 @@
      ]
     },
     {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-family-subject",
      "cc_ref": "3.3.4",
      "status": "established",
@@ -18789,6 +18885,18 @@
      ]
     },
     {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
+    },
+    {
      "claim_id": "CLM-registry-named",
      "cc_ref": "4.5.4",
      "status": "established",
@@ -20318,6 +20426,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -21128,6 +21248,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -24443,6 +24575,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -25215,6 +25359,18 @@
        ]
       }
      ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
+      }
+     ]
     }
    ],
    "promised_by": [
@@ -25985,6 +26141,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -26919,6 +27087,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
@@ -50272,6 +50452,18 @@
        "symbols": [
         "resolve_community"
        ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-acceptance-is-owners",
+     "cc_ref": "3.2",
+     "status": "staged",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "staged",
+       "ticket": "CIRISPersist#1257"
       }
      ]
     }
