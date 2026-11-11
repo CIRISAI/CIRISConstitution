@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "4d08eedaa617c77ae8deb112e7bff72130e249dcab4b405a5f82a0f24f1397e6"
+  "chain_sha256": "00c4f951e43e088835b752c24f693eb1ead91165ef748da95006377231f673cf"
  },
  "chain": [
   {
@@ -52605,7 +52605,8 @@
    "5.3.1": "after_refusal"
   },
   "subject_outside_audience": {
-   "2.1": "after_refusal"
+   "2.1": "after_refusal",
+   "5.2": "after_refusal"
   },
   "trace_field_shape_violation": {
    "3.1.5": "after_refusal"

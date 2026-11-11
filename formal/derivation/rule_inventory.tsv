@@ -519,7 +519,7 @@ p2	525	2.6.1.3	kernel	wire	none	*	MUST	states	2.6.1.1.1	A producer coerces every
 p2	525	2.6.1.3	kernel	conformance	none	*	MUST	states		The JCS vector set includes a non-representable-number case asserted to reject under default and arbitrary-precision parsers	
 p2	527	2.6.1.3	kernel	wire	none	*	MUST_NOT	states	5.3.6.1	An envelope's JCS bytes never exceed 1 MiB; a producer does not emit above it; a substrate rejects at every write path with ENVELOPE_TOO_LARGE (413)	
 p2	527	2.6.1.3	mechanism	wire	none	*	is	states	6.1.5	Above the cap the payload moves to the blob plane as encrypted chunks replicated to the owner's chosen holder count, and the envelope names it by content hash in evidence_refs	
-p2	527	2.6.1.3	kernel	audience	replication	custody	is	restates	3.1.3.3,5.3.2,5.2,6.1.5.3	A content hash resolves via custody:ack here rows plus ContentFetch in Commons scope; in a bounded cohort the holding claim never leaves the cohort and resolves only to admitted members	
+p2	527	2.6.1.3	kernel	audience	replication	custody	is	restates	3.1.3.3,5.3.2,5.2	A content hash resolves via custody:ack here rows plus ContentFetch in Commons scope; in a bounded cohort the holding claim never leaves the cohort and resolves only to admitted members	
 p2	527	2.6.1.3	kernel	row_shape	none	*	is	restates	1.7	The blob-plane relocation adds no envelope field and no primitive; the 1+4 surface is untouched	
 p2	527	2.6.1.3	kernel	conformance	none	*	MUST	states		The freeze-gate vector set includes an at-cap envelope that admits and a cap-plus-one envelope that rejects ENVELOPE_TOO_LARGE	
 p2	531	2.6.1.3	kernel	wire	none	*	MUST	restates		The contract bound |JCS(envelope)| <= 1 MiB is decided after parse; producer never emits above, substrate rejects above with ENVELOPE_TOO_LARGE	
@@ -1319,7 +1319,7 @@ p3	588	3.1.9.7	family	row_shape	projection	goal,approach	MUST_NOT	states		goal_i
 p3	590	3.1.9.7	family	row_shape	none	goal	MUST_NOT	states	2.3.3	goal:{scale} (belonging) and cohort_scope (privacy/routing) are different axes and MUST NOT be reconciled into one vocabulary; neither is authoritative for the other.	
 p3	590	3.1.9.7	family	row_shape	body	goal	MUST_NOT	states		planet is not biosphere, and federation is a cohort_scope value that MUST NOT be added to goal scale; the scale vocabulary has seven tokens.	
 p3	600	3.1.10	family	row_shape	body	benchmark	is	states	3.1.7	benchmark:he300 category is commonsense, commonsense_hard, deontology, justice, virtue; version is closed to v1.0, v1.1, v1.2 (dotted version admitted by R3); positive-only.	table
-p3	604	3.2	family	audience	replication	community	is	restates	6.1.5.3	Community-scoped content replicates within the cohort to members' claimed nodes under the one audience rule	
+p3	604	3.2	family	audience	replication	community	is	restates	5.2	Community-scoped content replicates within the cohort to members' claimed nodes under the audience rule	
 p3	604	3.2	family	audience	replication	community,custody	is	restates	5.2	Community holding claims stay inside the roster; no non-member holds community bytes	
 p3	604	3.2	family	key_plane	body	community	is	states		Community content is encrypted at rest under a per-community DEK	
 p3	604	3.2	family	audience	replication	family	is	restates		A family hides even the existence of its content from outsiders	
@@ -1464,7 +1464,7 @@ p3	879	3.2	kernel	trust_fold	none		MAY	states		A consumer may hold any combinati
 p3	883	3.2	family	signer	signer_rule	community	is	restates	3.1.3.2	A public community is founded by anyone; a founding record seats a listed member iff that member signed it; no owner gate	
 p3	883	3.2	family	moderation	governance	community	is	restates	4.5.4	A public room is moderated like every community: a named steward-bound moderate holder from creation, merit auto-promotion, fail-secure	
 p3	883	3.2	family	key_plane	body	community	is	exception	4.4.3.2.1	Public room content at community scope is plaintext with no DEK	
-p3	883	3.2	family	audience	replication	community	is	states	6.1.5.3	Public room audience is the roster's claimed nodes: replicated on join, readable by anyone on request from a member; nothing pushed to a non-joined node; canonicals hold only the listing	
+p3	883	3.2	family	audience	replication	community	is	states	5.2	Public room audience is the roster's claimed nodes: replicated on join, readable by anyone on request from a member; nothing pushed to a non-joined node; canonicals hold only the listing	
 p3	883	3.2	family	audience	placement	custody	is	restates	3.1.3.3	Public room holding claims are at federation scope	
 p3	883	3.2	family	policy_row	governance	community	is	restates	4.5.13	Public room admission follows its consensus_protocol under the floor: by invitation no single vote admits; open no single vote excludes	
 p3	883	3.2	family	moderation	governance	community	is	restates	1.2,4.5.7,3.3.12,4.5.3	A founder sets room moderation from existing grammar: hash-pinned rule set, per-room watchlist never global, content_class/cw_class/content_rating, CommunityStandards takedowns with counter-notice; no new rule object	
@@ -2493,7 +2493,7 @@ p4	401	4.4.3.1.1	family	moderation	body	hard_case,locality	MUST	states		Sub-quor
 p4	402	4.4.3.1.1	family	moderation	body	hard_case,locality	MUST	states		Sub-quorum escalate: emit hard_case:locality_underpopulated and route the decision to the federation-scale cell	
 p4	403	4.4.3.1.1	family	moderation	body	hard_case,locality	MUST	states		Sub-quorum liveness-defer: emit hard_case:locality_quorum_unreachable and defer until the pool grows; the deferred state is itself reviewable by reconsideration	
 p4	405	4.4.3.1.1	stewardship	amendment	none	locality	is	states	4.5.1,4.2	The amendment process routes through locality:decision:federation by default; the federation pool is sized so min_pool(federation) holds at genesis; below it only the constitutional halt resolves the crisis	
-p4	411	4.4.3.2	family	audience	replication	community	is	restates		Community content is encrypted under a per-community DEK and its holding claims reach members only; byte-confidential and existence-invisible to non-members	
+p4	411	4.4.3.2	family	audience	replication	community	is	restates	5.2	Community content is encrypted under a per-community DEK and its audience is its members; a non-member learns neither the bytes nor that they exist	
 p4	415	4.4.3.2.1	kernel	key_plane	none	*	is	states		Content with a bounded membership roster is encrypted; content without one is plaintext	
 p4	419	4.4.3.2.1	family	audience	replication	*	is	states	5.2	Self and family scope: encrypted per-write DEK, no wire discovery outside the cohort, readers are the occurrences or family members	table
 p4	420	4.4.3.2.1	family	audience	replication	custody	is	states	3.1.3.3	Community and affiliations scope: encrypted under the community DEK; no discovery outside the roster, custody:ack within the cohort; readers are members via the DEK cascade	table
@@ -3386,7 +3386,7 @@ p5	264	5.3.2.4.3	kernel	audience	replication	*	is	states		A local-tier row is re
 p5	265	5.3.2.4.3	kernel	signature	none	*	is	states	2.1,5.2	A federation-tier row carries the hybrid Ed25519 + ML-DSA-65 signature, is federation-visible per cohort_scope and the 5.2 rule, written by direct signed write or promotion	table
 p5	267	5.3.2.4.3	kernel	signature	none	*	MUST	states		The substrate MUST enforce tier = federation implies hybrid signature present; nothing crosses to federation-visible unsigned	
 p5	267	5.3.2.4.3	kernel	audience	replication	*	MUST_NOT	states		A local row is labelled local and MUST NOT be served as federation-authoritative	
-p5	267	5.3.2.4.3	kernel	audience	replication	*	is	states	5.2	The read-gate (local implies caller is the producing occurrence) is an additional filter orthogonal to cohort_scope, composing with the 5.2 membership predicate	
+p5	267	5.3.2.4.3	kernel	audience	replication	*	is	states	5.2	The read-gate (local implies caller is the producing occurrence) is an additional filter orthogonal to cohort_scope, composing with the audience rule of 5.2	
 p5	271	5.3.2.4.3.1	kernel	signature	none	*	MUST	states	3.1.2.1	Every federation-tier admission gate MUST verify both halves, Ed25519 over JCS(envelope) and ML-DSA-65 over JCS(envelope) || ed25519_sig, and MUST reject a Contribution carrying only the classical half	
 p5	271	5.3.2.4.3.1	kernel	signature	none	key_grant,consent,org_membership,licensure,transport_destination	MUST	applies	3.3.6.2,3.2,4.4.3.2.8	The hybrid-at-admission rule binds all operational-authority gates: operational_admit (key_grant, partner, org-membership, license), the transport_destination binding, and founder-quorum gates	
 p5	273	5.3.2.4.3.1	kernel	signature	none	*	MUST	states		The hybrid-required check is immediate and always-on: no opportunistic window, no fleet-floor trigger, no require_hybrid false posture, never an operator toggle	
@@ -3398,7 +3398,7 @@ p5	279	5.3.2.4.4	mechanism	endpoint	none		is	states		The uniform read filters on
 p5	280	5.3.2.4.4	mechanism	endpoint	none		is	states	4.5.1.1	dimensions[] is an open-vocabulary set of prefix strings matched by hierarchical prefix, not a closed enum; an exact string matches exactly	
 p5	281	5.3.2.4.4	mechanism	endpoint	none		is	states		The bounded query surface is the closed set of five predicates with no caller-composed SQL or projections; open data, closed operators	
 p5	282	5.3.2.4.4	mechanism	freshness	formula	*	is	states		valid_at filters asserted_at <= valid_at < COALESCE(expires_at, infinity); confidence_floor filters weight >= floor	
-p5	282	5.3.2.4.4	kernel	audience	replication	*	is	states	5.2,5.3.2.4.3	The scope predicate applies both the 5.2 target-membership gate and the tier read-gate; reads are gated by scope, not by dimension authority	
+p5	282	5.3.2.4.4	kernel	audience	replication	*	is	states	5.2,5.3.2.4.3	The scope predicate applies both the audience rule of 5.2 and the tier read-gate; reads are gated by scope, not by dimension authority	
 p5	282	5.3.2.4.4	kernel	reserved_prefix	signer_rule	*	is	restates	3.4.7.1	Write-side reserved-prefix emitter gates are unaffected by the query surface	
 p5	294	5.3.2.5	mechanism	content_ingestion	none		MUST	states	3.1.3.3	A conforming consumer MUST verify the full SHA-256 of received bytes against evidence_refs before handing them to any consumer, regardless of how it found the holder	
 p5	294	5.3.2.5	mechanism	content_ingestion	none		MUST	states		Bytes that fail the full-SHA check MUST be discarded and the holder reported per consumer policy (a negative score)	
@@ -3988,7 +3988,7 @@ p6	170	6.1.5	mechanism	media	none		MUST_NOT	restates	5.4.2	Nodes and relays neve
 p6	170	6.1.5	kernel	consent_fold	none		MUST_NOT	states		Durability is subordinate to consent and never overrides a withdrawal	
 p6	172	6.1.5	mechanism	transport	none		is	states	6.1.2.1	Every anti-entropy round carries what a node holds and lacks per plane; the aggregation producer runs over those rounds	
 p6	174	6.1.5	family	row_shape	placement	custody	MUST_NOT	states	3.1.3.3	A holding claim is the chunk-level companion of custody:ack, placed at the content's scope with the same liveness window and ContentMiss feedback; it never creates a second who-holds-what directory	
-p6	174	6.1.5	kernel	audience	replication		MUST_NOT	states	6.1.5.3	No holding claim leaves a bounded cohort: for self, family, community or affiliations content it is emitted to, admitted by and relayed among that cohort's nodes only, never federated	
+p6	174	6.1.5	kernel	audience	replication		is	applies	5.2	A chunk-level holding claim follows the audience rule as the whole-blob report does: for self, family, community or affiliations content it is emitted to, admitted by and relayed among that cohort's nodes only, never federated	
 p6	175	6.1.5	kernel	erasure	lifecycle	consent	MUST_NOT	states	2.4.1.1,6.1.2	N5: retention never keeps content whose consent is withdrawn or revoked alive above the noise floor; a withdrawn content_id is descent-eligible regardless of rarity	
 p6	175	6.1.5	kernel	erasure	tie_break	consent	is	states	6.1.2	An active withdraws or consent:state:revoked overrides the max-rarity keep signal and forces immediate descent below the floor; unknown consent state defaults to not retained as rare	
 p6	175	6.1.5	kernel	erasure	none		is	states	4.4.3.5.2,4.4.3.5.1	The deletion SLA and decay stages take precedence over swarm coverage at all times	
@@ -4037,9 +4037,9 @@ p6	245	6.1.5.2	family	placement	placement	corpus_want	MUST_NOT	states		A CorpusW
 p6	247	6.1.5.2	mechanism	conformance	none	storage_budget,corpus_want	is	restates		PIN line: StorageBudgetV1 and CorpusWantV1 preimages are pin-normative with all lists sorted over UTF-8 bytes and deduplicated before signing; consumption accounting is edge-internal	
 p6	249	6.1.5.2	mechanism	settlement	none		is	states	3.3.9	The economic who-pays dimension is off-wire (billing) and not part of the storage shapes	
 p6	254	6.1.5.3	kernel	audience	replication		is	states	6.1.5.1,5.4.2	The per-item target and chunk replication are available at every tier; anti-entropy is the standard carrier at every tier	
-p6	256	6.1.5.3	kernel	audience	replication		MUST_NOT	states	5.4.6	Every row and blob a node is audience for arrives by pull anti-entropy on the one carrier, never push, never waiting on a user; rounds run inside the cohort	
+p6	256	6.1.5.3	kernel	audience	replication		MUST_NOT	states	5.4.6,5.2	Every row and blob of a cohort a node serves arrives by pull anti-entropy on the one carrier, never push, never waiting on a user; at federation scope rounds run among serve seats and a person's node takes from the commons what 5.2 says moves	
 p6	256	6.1.5.3	kernel	audience	replication		is	exception		No tier is exempt from anti-entropy except the opt-in anonymous tier, which may truly disappear	
-p6	258	6.1.5.3	family	placement	replication	custody	MUST_NOT	states	6.1.5,3.1.3.3	A holding claim and a custody:ack exist at every tier at the content's scope; in a bounded cohort they stay among members' nodes; at the Commons they are the directory	
+p6	258	6.1.5.3	family	placement	replication	custody	MUST_NOT	states	6.1.5,3.1.3.3,5.2	A holding claim and a custody:ack exist at every tier at the content's scope and reach the audience 5.2 gives that scope and no one else	
 p6	258	6.1.5.3	kernel	audience	evidence_screen	custody	is	applies		N6 possession-challengeability applies within the cohort exactly as outside it	
 p6	260	6.1.5.3	kernel	owner_binding	none		MUST	states	3.2	Every CIRIS node is claimed (carries a live owner-binding to a person) before it operates on the mesh in normal operation	
 p6	260	6.1.5.3	kernel	audience	replication		is	states		A node's audience is its owner's cohorts: a claimed node is in a cohort's audience only through its owner's membership; an unclaimed node is in none	

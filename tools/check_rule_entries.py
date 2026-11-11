@@ -27,12 +27,16 @@ HOME_PART = {"2": "p2", "3": "p3", "4": "p4", "5": "p5", "6": "p6", "7": "p7", "
 NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its subject", "**A purge is a tombstone",
                           "**What the signer keeps"),
               "4.4.3.8": ("**Cold-start bootstrap", "**Capability gate", "**Two conferral planes",
-                          "**Charter recovery lives", "**Genesis is tamper-evident")}
+                          "**Charter recovery lives", "**Genesis is tamper-evident"),
+              "5.2": ("> **Scope (normative)", "**Substrate enforcement", "**Two layers, not one", "**Composition with the at-rest",
+                      "**Recipient encryption-key resolution", "**Exclusion MUST NOT be silent", "**Locality dividend",
+                      "**Boundary cases")}
 MAX_WORDS = 40
 # Names a landed rule is not called by: the entry's own words are the rule's only name.
 OTHER_NAMES = {"withdraw": ("broadened `withdraws` admission", "broadened admission", "withdraws-isn't-retroactive",
                             "retraction carve-out", "2.4.1.1 carve-out", "third-party path"),
-               "trust_fold": ("trust list", "trusted set", "pin set", "trust store")}
+               "trust_fold": ("trust list", "trusted set", "pin set", "trust store"),
+               "audience": ("target-membership", "recipient predicate", "one audience rule", "existence-invisible")}
 
 
 def section(part, number):

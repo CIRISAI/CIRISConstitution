@@ -78,6 +78,12 @@ rule again in other words cites the entry.
 signs, the walk from them and what removing one removes. Two neighbouring rules keep their own
 homes and are cited from the entry: the standing of a root (CC 3.2, T1 to T8) and how trusted
 statements are aggregated and weighted (CC 4.4.1, 4.4.2).
+`audience` at CC 5.2 (17 statements): which nodes a row may reach at each scope, what a node
+outside that audience learns, and what moves to a peer unasked. Being in an audience means a row
+may be served, not that it is sent, so the Commons is readable by every node and copied to none by
+default. Which of a member's nodes a cohort reaches stays with the owner's per-node choice
+(CC 6.1.5.3) and is cited from the entry, as is who may carry a sealed frame (CC 5.4.6). The
+paragraphs of CC 5.2 on sealing at rest keep their own rule and are not counted in the entry.
 
 ## Compliance wire forms
 

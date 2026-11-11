@@ -408,7 +408,7 @@ Recursion safety: the [CC 4.5.1](part_4_composition_governance.md) amendment pro
 
 Per [CC 3.2](part_3_the_namespace.md) `community` + [CC 3.3.3](part_3_the_namespace.md) `location_proof`. Composition pattern for resolving the **current membership set** of a community, gating cohort-filtered visibility for `cohort_scope: community` content.
 
-Sibling to [CC 4.4.3.4 Policy L](#4.4.3.4) (self/family) but with different defaults — community content is encrypted under a per-community DEK and its holding claims reach members only; the privacy property is byte-confidential-to-members and existence-invisible-to-non-members as well.
+Sibling to [CC 4.4.3.4 Policy L](#4.4.3.4) (self/family) but with different defaults — community content is encrypted under a per-community DEK, and its audience is its members ([CC 5.2](part_5_transport_substrate.md#5.2)): a non-member learns neither the bytes nor that they exist.
 
 ##### 4.4.3.2.1 `community-three` — The three crypto tiers + the Community DEK cascade (normative)
 

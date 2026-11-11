@@ -60,17 +60,41 @@ One label serves both the exporter call and the `info` tag; `epoch_be8` is the `
 
 ## 5.2 `family` — Structural invisibility — no holding claim leaves a bounded cohort
 
-The strongest privacy guarantee in the system is the one the operator cannot switch off: self and family content never emits the attestation that would tell the rest of the network it exists, because the wire format cannot carry it. When a Contribution carries `cohort_scope: self` OR `cohort_scope: family`, the substrate MUST NOT emit any holding claim observable outside the cohort — the `custody:ack:v1` report is placed at the content's scope and replicated to members only ([CC 3.1.3.3](part_3_the_namespace.md)); the content's bytes are delivered to admitted members of the relevant self-collective ([CC 3.3.6](part_3_the_namespace.md) `identity_occurrence`) or family ([CC 3.3.4](part_3_the_namespace.md)) via the at-rest encryption flow, NOT via the public holder-discovery directory.
+Every row has an **audience**: the nodes it may reach. A row is served to a node in its audience and to no other, and a node holds a row only when it is in that audience. This is one rule at every tier, and only the roster changes size: `self` and `family` are not a special case but the audience rule applied to the smallest rosters.
 
-**What moves to a peer (normative).** A row moves to a peer when it is requested, or required, and appropriate, and never because it is federation-tier: the federation tier means that a row can be shared and may be public, not that it is copied to everyone. Requested is the peer's own pull for a subject or a dimension ([CC 5.3.2.4.4](#5.3.2.4.4)); an automatic diff is not a request. Required is what the peer must hold to seal, address and take part: the consent-free set of [CC 5.4.6](#5.4.6) and the rows of the cohorts it belongs to. Appropriate is that the row's audience names the peer, a row addressed to or about it or placed in a cohort it is in, the family's replication tier and audience deciding ([CC 3.1](part_3_the_namespace.md#3.1), the family model). A `consent:replication` grant ([CC 3.3.7](part_3_the_namespace.md#3.3.7)) names the class it moves and moves that class and nothing else; it does not make a peer a mirror of the grantor's corpus. Anti-entropy over the commons is what serve seats do among themselves; a seat offers a person's node only what is required or appropriate for it, and the rest waits on a pull. A node with no owner is offered no more than that: it holds what it must to seal to and address the peers it dials, and what it was asked to hold, which is what a peer referred to it asks of it ([CC 5.4.6](#5.4.6)); it is never a copy of the mesh. What is required moves before any walk, so a fresh grant or a contact's own row never waits behind history; what is offered unasked is the live state, and a superseded row moves on request.
+| `cohort_scope` of the row | Its audience | What a node outside the audience learns |
+|---|---|---|
+| `self` | the owner's own nodes | nothing, not even that the content exists |
+| `family` | the nodes of the family's current members | nothing, not even that the content exists |
+| `community`, `affiliations` | the claimed nodes of the roster's members | nothing of the content, of the roster or of who holds it |
+| `community`, in a public room ([CC 3.2](part_3_the_namespace.md#3.2)) | the claimed nodes of the roster's members | the listing, the holding claims and, by asking a member's node, the content; never the roster |
+| `species`, `biosphere`, `federation` (the Commons) | every node | everything: the holding claims here are the holder directory ([CC 3.1.3.3](part_3_the_namespace.md)) |
 
-**The privacy property is structural, not policy**:
+Within every cohort, holding claims, custody reports, target replication and anti-entropy run exactly as at every other tier ([CC 6.1.5.3](part_6_the_coherence_mathematics.md)). Carrying a sealed frame for someone else is not being in its audience; who may carry is the rule of [CC 5.4.6](#5.4.6).
+
+**Which of a member's nodes.** A node is in a cohort's audience only through its owner's membership, and the owner chooses per node which of their cohorts it serves ([CC 6.1.5.3](part_6_the_coherence_mathematics.md)). A node with no owner is in no cohort's audience.
+
+**A row about a party reaches that party.** A row that names a node, or a grant issued for it, is always served to that node ([CC 6.1.5.3](part_6_the_coherence_mathematics.md)). A row placed at `family`, `community` or `affiliations` may name only keys within its audience, and one that names a key outside it is refused `subject_outside_audience` ([CC 2.1](part_2_the_grammar.md#2.1)). So at those scopes the person a row is about is always in its audience. What a duty-holder's record shows the person it names is the rule of [CC 4.5.5](part_4_composition_governance.md#4.5.5). The one row about a person that does not reach them is the author's own `self` note, the last boundary case below.
+
+**No holding claim leaves a bounded cohort (normative).** When a Contribution carries `cohort_scope: self` or `cohort_scope: family`, the substrate MUST NOT emit any holding claim observable outside the cohort. The `custody:ack:v1` report is placed at the content's scope and replicated to members only ([CC 3.1.3.3](part_3_the_namespace.md)). The bytes are delivered to admitted members of the self-collective ([CC 3.3.6](part_3_the_namespace.md) `identity_occurrence`) or the family ([CC 3.3.4](part_3_the_namespace.md)) through the at-rest encryption flow, never through the public holder-discovery directory. The holding claims of `community` and `affiliations` content reach the roster's members only, in the same way. The Commons' holding claims are at federation scope and are the holder directory.
+
+**What an outsider cannot do.** The privacy property is structural, not policy:
 
 - A non-member peer cannot issue `ContentFetch` for the bytes because no holding claim it can observe names a holder.
-- A non-member peer cannot even *discover* the bytes exist via the substrate — the only attestations referencing them are scoped to the self-collective / family and never federate beyond it.
-- This is **structural invisibility** at the wire-format level: privacy emerges from format constraints, not from operator policy or legal undertaking.
+- A non-member peer cannot discover that the bytes exist through the substrate: the only attestations that refer to them are scoped to the cohort and never federate beyond it.
+- This is **structural invisibility**: the privacy comes from what the wire format can carry, not from operator policy or a legal undertaking, so no operator can switch it off.
 
 > **Scope (normative):** structural invisibility buys **content-holding confidentiality only** — it is NOT relationship-existence, metadata, traffic-analysis, or unobservability privacy. The bounding non-goals are stated canonically at [CC 1.13.3.1](part_1_foundation.md); do not represent CEG as providing the stronger properties.
+
+**What moves to a peer (normative).** Being in a row's audience means the row may be served to a node, not that it is sent. A row moves to a peer when it is requested or required, and appropriate. It never moves because it is federation-tier: that tier means a row can be shared and may be public, not that it is copied to everyone.
+
+| A row is | when |
+|---|---|
+| requested | the peer itself pulls for a subject or a dimension ([CC 5.3.2.4.4](#5.3.2.4.4)); an automatic diff is not a request |
+| required | the peer must hold it to seal, address and take part: the consent-free set of [CC 5.4.6](#5.4.6) and the rows of the cohorts it belongs to |
+| appropriate | its audience names the peer: it is addressed to the peer, is about it, or is placed in a cohort it is in, the family's replication tier and audience deciding ([CC 3.1](part_3_the_namespace.md#3.1), the family model) |
+
+A `consent:replication` grant ([CC 3.3.7](part_3_the_namespace.md#3.3.7)) names the class it moves and moves that class and nothing else; it does not make a peer a mirror of the grantor's corpus. Anti-entropy over the commons is what serve seats do among themselves. A seat offers a person's node only what is required or appropriate for it, and the rest waits on a pull. A node with no owner is offered no more than that. It holds what it must to seal to and address the peers it dials, and what it was asked to hold, which is what a peer referred to it asks of it ([CC 5.4.6](#5.4.6)). It is never a copy of the mesh. What is required moves before any walk, so a fresh grant or a contact's own row never waits behind history. What is offered unasked is the live state, and a superseded row moves on request.
 
 **Substrate enforcement**:
 
@@ -111,7 +135,6 @@ On admission of a Contribution C with cohort_scope ∈ {self, family}:
 
 **Boundary cases**:
 
-- One rule at every tier ([CC 6.1.5.3](part_6_the_coherence_mathematics.md)): `cohort_scope: community | affiliations` content's holding claims reach the community's members only; `federation` (Commons) content's holding claims are at federation scope and are the holder directory. Self/family is not a special case but the audience rule applied to the smallest roster. Within every cohort, holding claims, custody reports, target replication and anti-entropy run exactly as at every other tier.
 - A `cohort_scope: self` Contribution that is later promoted via `supersedes` to `cohort_scope: community` emits its holding claims at the new scope, on the NEW Contribution, at promotion time. The original `cohort_scope: self` Contribution's bytes remain structurally-invisible at federation; only the promoted scope's bytes propagate.
 - `cohort_scope: self` content with `subject_key_ids` containing a non-self party (e.g., a private note Alice writes ABOUT Bob) is admitted and stays in Alice's self-collective; Bob does NOT receive a key_grant unless Bob is also in Alice's self (not the case for two distinct identities). Bob's [CC 2.3](part_2_the_grammar.md) subject-side revocation authority over the note still composes, but the bytes never reach Bob without Alice's explicit re-emit at a higher cohort_scope including Bob.
 
@@ -264,7 +287,7 @@ Promotion computes the hybrid signature and flips the row federation-visible. It
 | `local` | MAY be absent (deferred per CC 5.3.2.2) | **No** | **only the producing occurrence** (self-read); every other caller — even an authorized family/community peer — sees nothing | local-tier write |
 | `federation` | hybrid Ed25519 + ML-DSA-65 **present** | Yes | per [CC 2.1](part_2_the_grammar.md) `cohort_scope` + the CC 5.2 invisibility rule | direct signed write OR `local → federation` promotion |
 
-**Invariant (substrate MUST enforce):** `tier = federation ⟹ hybrid signature present`. Nothing crosses to federation-visible unsigned. A `local` row is **labelled** local and MUST NOT be served as federation-authoritative (fail-honest). The read-gate is **orthogonal** to `cohort_scope`: it is an additional filter (`local ⟹ caller is the producing occurrence`), composing with the CC 5.2 target-membership predicate. The three failures this closes: a local row leaked to a non-self caller, an unsigned local row served as authoritative, the two gates de-synced.
+**Invariant (substrate MUST enforce):** `tier = federation ⟹ hybrid signature present`. Nothing crosses to federation-visible unsigned. A `local` row is **labelled** local and MUST NOT be served as federation-authoritative (fail-honest). The read-gate is **orthogonal** to `cohort_scope`: it is an additional filter (`local ⟹ caller is the producing occurrence`), composing with the audience rule of [CC 5.2](#5.2). The three failures this closes: a local row leaked to a non-self caller, an unsigned local row served as authoritative, the two gates de-synced.
 
 ###### 5.3.2.4.3.1 `admission-pqc` — The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)
 
@@ -279,7 +302,7 @@ The CC 5.3.2.4.3 invariant `tier = federation ⟹ hybrid signature present` is *
 The uniform read filters on `(dimensions[], valid_at, confidence_floor, subject_key_id?, scope)`.
 - **`dimensions[]` is an OPEN-vocabulary set of prefix strings, matched by hierarchical prefix — NOT a closed enum.** Per [CC 4.5.1.1](part_4_composition_governance.md) axis-vocabulary discipline, dimension prefixes are open vocab (new families — `consent:*`, `detection:community:*`, `settlement:*` — ship continuously). A closed enum would force a substrate redeploy per CEG namespace addition and break forward-compat. A query for `detection:*` matches `detection:correlated_action:bribery` etc.; an exact string matches exactly.
 - **The bounded surface is the *operator set*, not the *vocabulary*.** The apophatic discipline (a fixed, named surface — not an OLAP/graph engine) is preserved by the **closed set of five predicates** above + no caller-composed SQL/projections — NOT by closing the dimension vocabulary. *Open data, closed operators.*
-- `valid_at` filters `asserted_at ≤ valid_at < COALESCE(expires_at, ∞)`; `confidence_floor` filters `weight ≥ floor`; `scope` applies BOTH the CC 5.2 target-membership gate AND the CC 5.3.2.4.3 tier gate. Write-side reserved-prefix emitter gates ([CC 3.4.7.1](part_3_the_namespace.md)) are unaffected — read is gated by scope, not by dimension authority.
+- `valid_at` filters `asserted_at ≤ valid_at < COALESCE(expires_at, ∞)`; `confidence_floor` filters `weight ≥ floor`; `scope` applies BOTH the audience rule of [CC 5.2](#5.2) AND the CC 5.3.2.4.3 tier gate. Write-side reserved-prefix emitter gates ([CC 3.4.7.1](part_3_the_namespace.md)) are unaffected — read is gated by scope, not by dimension authority.
 
 ##### 5.3.2.4.5 `holistic` — For holistic analysis + modeling (informative)
 
