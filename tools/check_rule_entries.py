@@ -9,7 +9,9 @@ home section out of its Part and fails when
   1. an inventory statement keyed to a landed rule and its home section has no row here;
   2. a row's phrase is not in the home section as it now reads;
   3. a sentence of the entry runs past 40 words (tables, lists and the paragraphs of
-     neighbouring rules, which land with their own rules, are not counted).
+     neighbouring rules, which land with their own rules, are not counted);
+  4. a Part calls a landed rule by a name its entry does not use, so a second wording of the
+     rule cannot grow beside the entry.
 
   python3 tools/check_rule_entries.py
 """
@@ -25,6 +27,9 @@ HOME_PART = {"2": "p2", "3": "p3", "4": "p4", "5": "p5", "6": "p6", "7": "p7", "
 NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its subject", "**A purge is a tombstone",
                           "**What the signer keeps")}
 MAX_WORDS = 40
+# Names a landed rule is not called by: the entry's own words are the rule's only name.
+OTHER_NAMES = {"withdraw": ("broadened `withdraws` admission", "broadened admission", "withdraws-isn't-retroactive",
+                            "retraction carve-out", "2.4.1.1 carve-out", "third-party path")}
 
 
 def section(part, number):
@@ -62,6 +67,11 @@ def main():
                 longest = max(longest, n)
                 if n > MAX_WORDS:
                     errs.append(f"{key} {home}: a sentence of {n} words: {s[:70]}")
+        for part, name in PARTS.items():
+            for i, line in enumerate((ROOT / "constitution" / name).read_text().split("\n"), 1):
+                for other in OTHER_NAMES.get(key, ()):
+                    if other in line:
+                        errs.append(f"{key} {home}: {part}:{i} calls the rule \"{other}\"; cite the entry instead")
         print(f"rule entries: {key} at CC {home}: {len(mine)} statements carried, longest sentence {longest} words")
     if errs:
         print("rule entries: FAIL"); [print("  " + e) for e in errs]

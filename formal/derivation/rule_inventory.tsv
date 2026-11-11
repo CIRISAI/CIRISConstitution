@@ -245,7 +245,7 @@ p2	69	2.1	family	agent_identity	evidence_screen	identity_amendment,deferral	MUST
 p2	70	2.1	family	row_shape	body	observation	MUST	states		channel_classes is required on observation:access_assumption:v1: the set of channel classes the witness saw the subject through	table
 p2	71	2.1	kernel	row_shape	body	*	is	states		subject_key_ids is always present in the mirror, [] when empty; the column beside the row is absent when empty	table
 p2	71	2.1	kernel	subject	subject_rule	*	MAY	states		each subject_key_ids entry MAY be a federation key id or a canonical-hash identifier	table
-p2	71	2.1	kernel	withdraw	lifecycle	*	is	states		each listed subject key may issue withdraws against the row and emit consent:* about it; [] means producer-only authority	table
+p2	71	2.1	kernel	withdraw	lifecycle	*	is	states		each listed subject key may issue withdraws against the row, under the rules and the kept list of the withdrawal entry, and emit consent:* about it; [] means producer-only authority	table
 p2	71	2.1	kernel	wire	none	*	MUST_NOT	restates	2.6.1.1.1	an explicit null subject_key_ids is refused	table
 p2	72	2.1	kernel	row_shape	body	*	is	states		delivery_mode is optional, pull or push; absent reads as pull	table
 p2	72	2.1	kernel	transport	replication	*	is	restates	3.1.3.3,5.3.2	pull delivery: subscribers discover via custody:ack here rows at the content's scope and fetch by ContentFetch	table
@@ -349,7 +349,7 @@ p2	267	2.4	kernel	cosign	cosign_rule	*	is	states	2.4.1.2.1	the family declares i
 p2	267	2.4	kernel	cosign	freshness	*	is	states		a cosigned row is admitted when its cosigners satisfy the protocol, judged on the receiver's own fold at the row's signed instant	
 p2	267	2.4	kernel	cosign	cosign_rule	cosign	is	states	3.1.3,3.3.4	a row short of its protocol is held, not refused; cosignatures are collected as cosign:pending and cosign:signature rows, served to the group's active members only, for the hold window	
 p2	267	2.4	kernel	cosign	none	*	is	states		a cosigned act is named by its quorum key, the digest of what its signers signed with no signature in it, so every node holds the same act	
-p2	267	2.4	kernel	withdraw	lifecycle	*	is	states		retraction of a cosigned row is by the same quorum, a cosigned withdraws; rules 1 and 2 do not apply, so no single signer or subject retires a group record	
+p2	267	2.4	kernel	withdraw	lifecycle	*	is	states		retraction of a cosigned row is by the same quorum, a cosigned withdraws; rules 1 to 4 do not reach it, so no single signer or subject retires a group record	
 p2	267	2.4	family	row_shape	body	group,membership	is	restates	3.1.3	roster versions are group:roster:v1 with prev_head_digest and charter_digest; widening, removal and resignation are cosigned beside single-signer proposal, acceptance and decline	
 p2	267	2.4	family	registration	signer_rule	key	is	exception		key:record:v1 is attested by the key itself and admitted by proof of possession against the keys it carries, the one exception to resolve-the-attester	
 p2	267	2.4	family	supersede	lifecycle	key	is	states		key rotation is a supersedes of the key record; an anchor scrub or accord co-scrub is a cosignature	
@@ -418,11 +418,11 @@ p2	308	2.4.1.1	stewardship	erasure	none	*	is	states		every purged id is appended
 p2	310	2.4.1.1	kernel	withdraw	none	*	SHOULD	states		the substrate SHOULD record which admission rule (0 to 4) admitted each withdraws in row metadata	
 p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	MUST_NOT	states		subject authority does not extend to recants; only the original attester recants their own claim	
 p2	312	2.4.1.1	kernel	withdraw	none	*	is	states		a subject who holds a producer's claim factually wrong rebuts by scores with negative polarity on a contradicting dimension, not by revocation	
-p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	MAY	states	4.5.5,4.4.3.2.8,6.1.5	The signer of a row a named party withdrew may keep the row and its withdrawal together at self scope	added after 30fddf6
-p2	312	2.4.1.1	kernel	withdraw	replication	*	MUST_NOT	states		A node must not serve the signer's kept copy of a withdrawn row to anyone, the former audience included; it counts toward no score, standing or grant	added after 30fddf6
-p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	MAY	states	4.5.5,4.4.3.2.8	The signer may hand a withdrawn row and its withdrawal to a party with a duty to judge it: a named moderator, or a body under a declared legal-weight class	added after 30fddf6
-p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	is	states		Saying a withdrawn statement again to the audience is a new row the named party may withdraw in turn	added after 30fddf6
-p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	is	exception	3.3.1,4.4.3.2.8,4.4.3.5.1	The signer's keep gives way to every duty to delete: a committed deletion window, an affiliation's retention and erasure limbs, a decay protocol the signer runs	added after 30fddf6
+p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	MAY	states	4.5.5,4.4.3.2.8,6.1.5	The signer of a row a named party withdrew may keep the row and its withdrawal together at self scope	
+p2	312	2.4.1.1	kernel	withdraw	replication	*	MUST_NOT	states		A node must not serve the signer's kept copy of a withdrawn row to anyone, the former audience included; it counts toward no score, standing or grant	
+p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	MAY	states	4.5.5,4.4.3.2.8	The signer may hand a withdrawn row and its withdrawal to a party with a duty to judge it: a named moderator, or a body under a declared legal-weight class	
+p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	is	states		Saying a withdrawn statement again to the audience is a new row the named party may withdraw in turn	
+p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	is	exception	3.3.1,4.4.3.2.8,4.4.3.5.1	The signer's keep gives way to every duty to delete: a committed deletion window, an affiliation's retention and erasure limbs, a decay protocol the signer runs	
 p2	316	2.4.1.2	kernel	delegation	none		MAY	states	1.13.1,1.2	a framework claim names its source of authority by delegates_to against a framework key with scope naming the principle, not by a grounding prefix	
 p2	318	2.4.1.2	kernel	owner_binding	cosign_rule		MUST	states	3.2	a delegates_to with delegation_purpose owner_binding defines the self cohort; at most one is live per owned key and the substrate rejects a second distinct-owner binding at bind time	
 p2	318	2.4.1.2	kernel	delegation	none		is	states	4.5.13	owner_binding is the one single-valued delegation_purpose; act-on-behalf, hierarchy and authority-source delegations are multi-parent DAGs	
@@ -1490,8 +1490,8 @@ p3	904	3.2	kernel	delegation	none	delegates_to	is	states		Operational capability
 p3	906	3.2	kernel	reserved_prefix	signer_rule	detection,content_rating	is	states	3.4.8	detection and content_rating roles are capabilities conferred by delegation, not ceremony	
 p3	906	3.2	kernel	trust_fold	none		is	states		A portable root enters via delegation, the shipped default via ceremony; neither plane is privileged and neither bypasses T3	
 p3	908	3.2	kernel	supersede	lifecycle	delegates_to	is	states		A superseded grant keeps lineage: a claim asserted before the successor keeps its standing; a reader walks the supersedes chain	
-p3	908	3.2	kernel	withdraw	lifecycle	delegates_to	is	states	2.6	A withdrawn or tombstoned grant has no lineage: standing is gone for every later use, and back to revoked_after where it names a compromised key	
-p3	908	3.2	kernel	withdraw	lifecycle	delegates_to	is	restates	2.4.1.1	A delegation ending by supersedes, expiry or ordinary withdraws leaves acts already taken standing; only a compromised-key withdraws reaches back to its revoked_after	
+p3	908	3.2	kernel	withdraw	lifecycle	delegates_to	is	states	2.6	A withdrawn or tombstoned grant has no lineage: standing is gone for every later use, and back to revoked_after where the key is revoked as compromised	
+p3	908	3.2	kernel	withdraw	lifecycle	delegates_to	is	restates	2.4.1.1	A delegation ending by supersedes, expiry or withdraws leaves acts already taken standing, because a withdrawal reaches forward only	
 p3	910	3.2	kernel	trust_fold	none	trust,delegates_to	MUST	states		Every candidate root must pass the evaluating node's own chain: a live trust:accepts delegates_to edge node to root, and the root's trust:charter with a recovery commitment over successor keys	
 p3	910	3.2	kernel	halt	none		is	restates	4.2.1.1	A latched constitutional halt is not a leg of the trust chain; it pauses agents' effectful acts and moves no trust state	
 p3	910	3.2	kernel	halt	none		MUST_NOT	restates	4.2.1.1	Serving the halt latch as a signal is expected; conditioning any data door, conferral walk or transit decision on it is forbidden	
@@ -1628,7 +1628,7 @@ p3	983	3.3.1	family	consent_fold	lifecycle	consent	is	states		A decay protocol b
 p3	983	3.3.1	family	withdraw	lifecycle	consent	MUST	states		The node's owner MUST always be able to revoke consent:community_trust	table
 p3	983	3.3.1	family	subject	subject_rule	consent	MUST	states	3.2	A node-emitted consent:community_trust grant MUST list in subject_key_ids[] the owner key at the grant's asserted_at, resolved over owner-binding rows, never the receiver's current view	table
 p3	983	3.3.1	family	admission_order	none	consent	is	applies		A grant whose owner-binding rows have not yet arrived is held, as every owner-gated row is	table
-p3	983	3.3.1	family	withdraw	lifecycle	consent	is	applies	2.4.1.1	The listed owner key's withdraws on consent:community_trust is admitted on the third-party path whatever ownership later becomes	table
+p3	983	3.3.1	family	withdraw	lifecycle	consent	is	applies	2.4.1.1	The listed owner key's withdraws on consent:community_trust is admitted under rule 2 whatever ownership later becomes	table
 p3	983	3.3.1	family	admission_order	subject_rule	consent	is	states		A node-emitted consent:community_trust grant lacking the owner-at-asserted_at member is not admissible	table
 p3	983	3.3.1	family	consent_fold	signer_rule	consent	MUST_NOT	states		A consent:community_trust grant or revocation from a key that was neither the node nor its owner at the row's asserted_at MUST NOT be folded as the node's consent	table
 p3	998	3.3.1	family	row_shape	none	consent	is	restates		The consent composition pattern introduces no new attestation_type	
@@ -1933,7 +1933,7 @@ p3	1767	3.3.13	family	content_ingestion	body	external_content,content_class	MUST
 p3	1771	3.3.14	kernel	subject	subject_rule	*	MAY	restates	2.3.2	A subject_key_ids[] entry MAY be a canonical-hash identifier of an external-party id rather than a federation_keys row	
 p3	1773	3.3.14	family	row_shape	body	identity	is	states	5.3.2.2	identity:canonical_binding:{H} is a bare scores with attesting_key_id the claiming key K, witness_relation self, positive score; hybrid-signed; federation-tier, not local-tier-eligible	
 p3	1785	3.3.14	family	withdraw	evidence_screen	identity	is	states	2.4.1.1,4.5.3	An admitted identity:canonical_binding is a claim consumers weigh; it admits nothing by itself and does not admit a withdraws from K against a target naming H	
-p3	1785	3.3.14	kernel	withdraw	signer_rule	detection,capacity,licensure,revocation,hard_case	is	restates	2.4.1.1,4.5.3	The rule-3 proxy withdrawal attaches only after out-of-band identity establishment, reaches only ordinary rows about the subject (never detection, capacity, licensure, revocation, hard_case), and is suspended while two bindings compete	
+p3	1785	3.3.14	kernel	withdraw	signer_rule	detection,capacity,licensure,revocation,hard_case	is	restates	2.4.1.1,4.5.3	The rule-3 proxy withdrawal attaches only after out-of-band identity establishment, reaches no row on the kept list, and is suspended while two bindings compete	
 p3	1787	3.3.14	family	trust_fold	none	identity	is	states	3.3.6.2	A canonical binding is a self-assertion; the consumer composes the trust that K is H by whatever proof-of-control it trusts; the substrate admits and records it	
 p3	1787	3.3.14	family	admission_order	none	identity	is	states		A second key claiming the same canonical hash H is admitted too; competing claims surface to consumer policy, not a substrate verdict	
 p3	1791	3.4	kernel	reserved_prefix	none	*	MUST	states	2.2	A reserved prefix may be emitted only by its named identity types; enforcement is normative at the substrate verify-pipeline and at every CEG-conforming consumer	
@@ -2990,7 +2990,7 @@ p4	1505	4.5.5	family	withdraw	lifecycle	scores	is	restates	2.4.1.1	A warning sai
 p4	1505	4.5.5	family	withdraw	lifecycle	moderation	is	states	4.5.13,2.4.1.1	A harm report filed with the named moderator is a duty-holder's record: the named person cannot withdraw it, contests it by reconsideration, sees it exists, its kind and consequence; never purgeable	
 p4	1505	4.5.5	family	audience	replication	moderation	MAY	states		The moderator's process MAY shield the reporter of a harm report; action on it runs under the floor, no single vote excluding; filing changes the duty, never the audience	
 p4	1505	4.5.5	family	moderation	none	moderation,moderation_track_record	is	states	3.1.9.2	A false report is contested like any other and the reporter answers for it on the record via moderation_track_record	
-p4	1505	4.5.5	family	withdraw	lifecycle	scores,moderation	MAY	restates	2.4.1.1	The speaker of a retracted warning keeps their own words at self scope, served to no one, and may still file them with the moderator	added after 30fddf6
+p4	1505	4.5.5	family	withdraw	lifecycle	scores,moderation	MAY	restates	2.4.1.1	What the speaker of a retracted warning keeps, and their path to the moderator, are as the withdrawal entry states	
 p4	1509	4.5.5	family	signer	signer_rule	scores	MAY	states	4.4	Anyone MAY file a scores row against anything they see; it is an opinion visible to any reader who chooses; consumers compose filters over the score graph as consumer policy	
 p4	1509	4.5.5	kernel	audience	none		MAY	states	4.5.5	A member MAY mute another: a reader-side filter changing no row, roster or standing, untold to the muted, never hiding a row that names the muter	
 p4	1509	4.5.5	kernel	audience	none		is	states		A statement about a person is always visible to that person	
@@ -3016,7 +3016,7 @@ p4	1532	4.5.5	kernel	delegation	none	delegates_to	MAY	states	4.4.3.4.3.1	A deleg
 p4	1532	4.5.5	kernel	delegation	none	delegates_to	is	states		Every sub-delegation attenuates, never expands: child scope is a subset of parent scope and constraints may be added but never removed	
 p4	1532	4.5.5	kernel	delegation	none	delegates_to	is	restates	4.1.1	A delegation chain is depth-capped at 5	
 p4	1532	4.5.5	kernel	withdraw	lifecycle	delegates_to	is	states	2.4.1.2.1	A withdraws against any delegates_to invalidates everything downstream for acts not yet taken; authority is judged at the act's signed instant	
-p4	1532	4.5.5	kernel	withdraw	lifecycle	delegates_to,licensure	is	states	3.2	A withdrawal reaches forward: acts already taken stand; only a withdraws for a compromised key reaches back, to its revoked_after bound	
+p4	1532	4.5.5	kernel	withdraw	lifecycle	delegates_to,licensure	is	states	3.2	A withdrawal reaches forward only: acts already taken under the duty stand	
 p4	1534	4.5.5	kernel	delegation	none	delegates_to,infra	MAY	states		A scope token MAY be sub-scoped to a dimension family (infra:attest:licensure:{authority}) under the attenuation rule; it adds no member to the closed infra set	
 p4	1536	4.5.5	kernel	delegation	none	delegates_to	MUST_NOT	states	3.4.7.3	Sub-scope matching is directional: a parent satisfies a check for its child, a child MUST NOT satisfy its parent; no prefix test	
 p4	1536	4.5.5	kernel	delegation	none	delegates_to	MUST_NOT	states		A verifier MUST match the full scope token with parent/child semantics and MUST NOT widen an unrecognized sub-scope to its parent; unknown caveats fail closed	
@@ -3994,8 +3994,8 @@ p6	175	6.1.5	kernel	erasure	tie_break	consent	is	states	6.1.2	An active withdraw
 p6	175	6.1.5	kernel	erasure	none		is	states	4.4.3.5.2,4.4.3.5.1	The deletion SLA and decay stages take precedence over swarm coverage at all times	
 p6	175	6.1.5	family	legal_hold	none	withdraws,legal_hold	is	exception	4.4.3.2.8,4.5.5	A withdraws under an affiliation class flagged erasure_exempt or under a legal_hold is admitted and recorded, and the descent it would force is refused with reason under that declared gate	
 p6	175	6.1.5	kernel	erasure	none		MUST	restates	6.1.2	Revocation does not require destroying the collective gist, only that the item be not individually recoverable at any retained tier; it purges any tier where it still is	
-p6	175	6.1.5	kernel	erasure	erasure_route	*	MAY	restates	2.4.1.1	The signer of a row a named party withdrew may keep the row and its withdrawal at self scope, served to no one; a second declared gate before forced descent	added after 30fddf6
-p6	175	6.1.5	kernel	erasure	erasure_route	*	is	restates	2.4.1.1	The kept-copy gate never stands in front of a deletion window, an affiliation's erasure limb or a decay stage the signer owes	added after 30fddf6
+p6	175	6.1.5	kernel	erasure	erasure_route	*	MAY	restates	2.4.1.1	The signer of a row a named party withdrew may keep the row and its withdrawal at self scope, served to no one; a second declared gate before forced descent	
+p6	175	6.1.5	kernel	erasure	erasure_route	*	is	restates	2.4.1.1	The kept-copy gate never stands in front of a deletion window, an affiliation's erasure limb or a decay stage the signer owes	
 p6	176	6.1.5	family	row_shape	evidence_screen	custody	MUST	states		N6: a holding claim counted toward holders or rarity is possession-challengeable (answers a chunk request or carries a proof of possession)	
 p6	176	6.1.5	kernel	audience	evidence_screen	custody	MUST_NOT	states		Unverified holding claims never lower another node's retention priority	
 p6	176	6.1.5	kernel	audience	formula	custody	is	states		Weight rule where no challenger runs: a possession-verified claim counts 2, a signed-only claim 1, an unverified claim 0	

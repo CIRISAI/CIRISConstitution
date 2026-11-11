@@ -69,9 +69,11 @@ A rule lands in the rulebook register one at a time: its home section becomes on
 of who may act and short paragraphs that each state one thing with its reason in its own sentence.
 `rule_entries.tsv` lists, for each rule landed, every inventory statement whose home is that
 section and the phrase of the entry that carries it. `python3 tools/check_rule_entries.py` fails
-when a statement has no row, a phrase has left the section, or an entry sentence runs past forty
-words. Landed: `withdraw` at CC 2.4.1.1 (24 statements). The statements of that rule made in
-other sections stay where they are until each is read against the entry and cut to a citation.
+when a statement has no row, a phrase has left the section, an entry sentence runs past forty
+words, or a Part calls a landed rule by a name its entry does not use. Landed: `withdraw` at
+CC 2.4.1.1 (24 statements). The 110 statements of that rule made in other sections are read
+against the entry: a statement for one family stays with its family, and a sentence that said the
+rule again in other words cites the entry.
 
 ## Compliance wire forms
 
