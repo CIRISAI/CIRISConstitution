@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "272b091eaa9eece02807082314a5a47e778de557a72c436d266263c8f58af59f",
+  "source_sha256": "ce4b2bf4ac7b0bb8b11ef94899c08572d2a38c19daffbd31a3aff969eec4838c",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",

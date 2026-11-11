@@ -135,5 +135,5 @@ leaves a rule unstated: `shape` is one of citation, count, parameter, authority,
 audience, term, force, shape_of_data, editorial; `for_eric` marks a row whose resolution changes
 who is protected, who decides or what is promised; `still_there` says whether a grep found the
 wording in the Parts when the table was made; `carrier` names the model, manifest or check
-that could hold the settled rule and `witness` what would be added to it. Both are review
+that could hold the settled rule and `witness` what would be added to it; `resolution` is filled when a row is settled, and says whether the settlement was derived from the text or ruled. Both are review
 artefacts, one reader's classification, and inputs to decisions, not findings of fact.
