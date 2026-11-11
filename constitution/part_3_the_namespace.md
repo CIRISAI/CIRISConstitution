@@ -1469,7 +1469,7 @@ location_proof {
 
 **Lifecycle**:
 
-- `asserted_at` + optional `valid_until` per envelope
+- `asserted_at` + optional `valid_until` per envelope ([CC 2.1](part_2_the_grammar.md#2.1))
 - `withdraws` against a `location_proof` evicts forward visibility (consumer policy treats the subject as "no current location proof" for community admission purposes from withdrawal-time forward)
 - A withdrawn `location_proof` leaves a tombstone in the audit chain, never the cell ([CC 4.5.9](part_4_composition_governance.md#4.5.9)); a withdrawal reaches forward only ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), so leaving doesn't undo a disclosure already made
 

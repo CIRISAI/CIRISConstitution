@@ -488,7 +488,7 @@ Both readerships should read [CC 1.13](part_1_foundation.md#1.13) first.
 
 This rule closes the canonical-bytes ambiguity that arises whenever an envelope carries optional fields with documented defaults — `epistemic_mode`/`witness_relation`/`occurrence_*`/`stake`, `oversight_mode`, `subject_key_ids`, `family_id`, `community_id`. Without it, two honest peers can disagree on the bytes and a valid signature fails to verify.
 
-**The hazard is structural.** Suppose Producer A omits an optional field (relying on the [CC 2.1](#2.1) documented default) and Relay R re-serializes the attestation with the default materialized into the byte stream. The canonical bytes then diverge and the Ed25519 + ML-DSA-65 signatures no longer verify. The rule below makes the discipline explicit and normative: every party — producer, substrate, relay, consumer — must make the same choice, and that choice is "preserve what the producer signed, exactly."
+**The hazard is structural.** Suppose Producer A omits an optional field (relying on the [CC 2.1](#2.1) documented default) and Relay R re-serializes the attestation with the default materialized into the byte stream. The canonical bytes then diverge and the Ed25519 + ML-DSA-65 signatures no longer verify. The rule below makes the discipline explicit and normative: every party — producer, substrate, relay, consumer — must make the same choice, and that choice is "preserve what the producer signed, exactly." ([CC 2.6.1.1](#2.6.1.1))
 
 #### 2.6.1.1 `round-trip` — The round-trip rule — defaults are interpretation-time, not encoding-time (normative)
 
@@ -648,10 +648,10 @@ On signature verify:
 Scope pointer: the JCS canonicalization rules above (JCS-as-encoding, omit-vs-materialize + relay-preservation, per-field catalog, worked attack).
 
 What this rule does NOT do:
-- Introduce a new encoding format — JCS is the only encoding
+- Introduce a new encoding format — JCS is the only encoding ([CC 2.6.1.3](#2.6.1.3))
 - Change any semantic interpretation — defaults still apply at interpretation time per [CC 2.1](#2.1)
 - Modify the datetime / hex / time / H3 sub-rules — those are domain-specific and compose under JCS
-- Wire-break prior emissions — emissions that omitted optional fields remain valid; emissions that explicitly emitted defaults likewise remain valid; what the rule normatively prohibits is RELAY-TIME mutation of presence/absence
+- Wire-break prior emissions — emissions that omitted optional fields remain valid; emissions that explicitly emitted defaults likewise remain valid; what the rule normatively prohibits is RELAY-TIME mutation of presence/absence ([CC 2.6.1.1](#2.6.1.1))
 
 #### 2.6.1.7 `signed-object` — The signed object — member set, placement and types (normative)
 

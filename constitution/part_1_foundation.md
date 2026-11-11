@@ -267,7 +267,7 @@ Every Attestation answers four questions in machine-readable form:
 
 1. **WHO emits** — issuer key_id, signature, witness_relation, optional accord/steward sign-off
 2. **WHAT KIND of claim** — a prefix from the canonical namespace ([CC 3.1](part_3_the_namespace.md#3.1))
-3. **HOW STRONG** — polarity (+/−), score magnitude, cohort scope
+3. **HOW STRONG** — polarity (+/−), score magnitude, cohort scope ([CC 2.1](part_2_the_grammar.md#2.1))
 4. **WHAT IT'S BASED ON** — evidence_refs, schema_ref (calibration version), validity window
 
 Consumers walk attestation graphs and compose verdicts. The substrate stores; the wire transports; CEG describes the shape of the claim. None of the three prescribes outcomes; consumer policy does.

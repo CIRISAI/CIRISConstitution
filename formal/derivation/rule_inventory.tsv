@@ -2288,7 +2288,7 @@ p4	24	4.1.1	kernel	trust_fold	formula		SHOULD	states		Consumer policy caps the t
 p4	30	4.1.2	foundation	principle	none	*	SHOULD	states		The wire resists primitives that let a single key announce its own state without external composition; standing is constituted by attestation by others	
 p4	30	4.1.2	stewardship	amendment	none	*	is	states		Richer narrative belongs in context, evidence_refs and downstream witness attestations, not in new envelope enum members or new self-attestation prefix families	
 p4	37	4.1.3	family	licensure	projection	attestation	is	restates	4.4.3.6	Attestation prefixes carry the bare mechanism; the consumer composes the L1-L5 ladder via Policy I, never a ladder position on the wire	table
-p4	38	4.1.3	kernel	trust_fold	none	licensure,capacity,provenance	is	restates		Trustworthiness is composed downstream from licensure, capacity and provenance attestations, never carried as its own prefix	table
+p4	38	4.1.3	kernel	trust_fold	none	licensure,capacity,provenance	is	states		Trustworthiness is composed downstream from licensure, capacity and provenance attestations, never carried as its own prefix	table
 p4	39	4.1.3	family	moderation	none	provenance,coherence_standing	is	restates	4.5.1	Bad-actor concerns surface as low-confidence scores on provenance and coherence_standing and are adjudicated by WA quorum, never as a pejorative prefix	table
 p4	41	4.1.3	kernel	consent_fold	none		is	states	4.4.3.8	No observer capability exists; what may be observed is governed by the subject's consent (cohort_scope, key_grant, observer-share), never by a capability the observer holds	table
 p4	48	4.1.4	kernel	trust_fold	none		MUST	states	2.4.1.3	Consumer policy tracks each attester's withdraws-to-recants ratio over a rolling window	table
@@ -2307,7 +2307,7 @@ p4	71	4.2.1	family	other:relief-never-expand	formula	mesh_config	is	states		Unde
 p4	71	4.2.1	family	admission_order	body	mesh_config	MUST	states		A mesh_config key naming no consumer processor is refused at admission (closed key registry)	
 p4	71	4.2.1	family	expiry	window	mesh_config	is	states		Emergency mesh_config relief is threshold-1 on the announce carrier with TTL at most 72 h and is not renewable back-to-back by the same holder	
 p4	71	4.2.1	family	cosign	cosign_rule	mesh_config	MAY	states		A durable mesh_config setting is earned only by the root's quorum, either established directly or by ratifying a held emergency's payload_sha256; never by having been exercised	
-p4	71	4.2.1	family	expiry	lifecycle	accord	is	restates	4.2.1.1	Unilateral relief expires; a confirmed halt carries no TTL because its exit is the named resumption, and a lone halt lapses at its fuse	
+p4	71	4.2.1	family	expiry	lifecycle	accord	is	states	4.2.1.1	Unilateral relief expires; a confirmed halt carries no TTL because its exit is the named resumption, and a lone halt lapses at its fuse	
 p4	71	4.2.1	family	signer	signer_rule	accord	MUST_NOT	states		Federation-side authority cannot sign AccordCarrier, and humanity-accord authority signs nothing outside the enumeration (wire-isolated and scope-isolated)	
 p4	73	4.2.1	stewardship	steward	cosign_rule	canonical,accord	is	states	4.4.3.8	The accord's enumeration admits an M-of-N accord co-scrub over a canonical,node registration envelope bearing roles infra:serve, the ceremony that mints a portable trust root	
 p4	73	4.2.1	family	accord	none	accord	MUST_NOT	states		Accord authority cannot reach the consent or licensure planes	
@@ -2343,10 +2343,10 @@ p4	99	4.2.1.1	family	cosign	cosign_rule	accord	is	states	4.2.1.3	A one-holder ha
 p4	99	4.2.1.1	family	halt	cosign_rule	accord	is	states		A confirmed halt stands until a strict majority resumes it; a strict majority may resume an unconfirmed halt at any time	
 p4	99	4.2.1.1	family	accord	cosign_rule	accord	is	states		Every accord threshold is M of N over the standing roster, never a fixed 2-of-3; three holders is the seed not the rule	
 p4	99	4.2.1.1	family	accord	none	accord	is	restates	4.2.6	A holder who fires repeatedly without confirmation is answered on the public record by the roster-change rule	
-p4	105	4.2.1.1	family	cosign	cosign_rule	accord	is	restates		A constitutional halt needs one holder's signature	table
+p4	105	4.2.1.1	family	cosign	cosign_rule	accord	is	states		A constitutional halt needs one holder's signature	table
 p4	106	4.2.1.1	family	cosign	cosign_rule	accord	is	states		A drill needs one holder's signature	table
 p4	107	4.2.1.1	family	cosign	cosign_rule	accord	is	states	4.2.1.2	A notify needs one holder's signature; the visual distinction, not a count, keeps it from being mistaken for a halt	table
-p4	108	4.2.1.1	family	cosign	cosign_rule	accord	is	restates		lifecycle:confirmed needs a strict majority of the standing roster, cosigned, within halt_fuse_secs of the halt	table
+p4	108	4.2.1.1	family	cosign	cosign_rule	accord	is	states		lifecycle:confirmed needs a strict majority of the standing roster, cosigned, within halt_fuse_secs of the halt	table
 p4	109	4.2.1.1	family	cosign	cosign_rule	accord	is	states	4.2.1.3	lifecycle:active needs a strict majority of the standing roster, cosigned	table
 p4	111	4.2.1.1	family	admission_order	freshness	accord	MUST	states		The substrate refuses duplicate invocation_id values within the valid_until window, unique per kind	
 p4	113	4.2.1.1	mechanism	wire	body	accord	is	states	3.1.7	invocation_kind takes exactly constitutional, notify or drill in lowercase; a verifier compares the bytes exactly and never case-folds	
@@ -2373,7 +2373,7 @@ p4	146	4.2.1.3	family	halt	none	accord	MAY	states		A resumption proof verifies o
 p4	146	4.2.1.3	family	expiry	lifecycle	accord	is	restates	4.2.1.1	A confirmed halt carries no TTL; its one exit is the named resumption; a one-holder halt lapses after the fuse unless confirmed	
 p4	148	4.2.1.3	family	cosign	cosign_rule	accord	is	restates	4.2.6,4.2.1.1	lifecycle:active admits at no less than the roster-change threshold, a strict majority of the standing roster cosigned, never a lone signature; hybrid-signed and tallied as invocations are	
 p4	150	4.2.1.3	family	halt	none	accord	MUST_NOT	states	3.4.1	No operator, oversight, incident-command or administrative tier may resume a constitutional halt; Annex F tiers govern operator-level incidents only and no time-to-act target applies to a constitutional halt	
-p4	150	4.2.1.3	family	halt	none	accord	is	restates		A constitutional halt is resumable exclusively by accord:lifecycle:active at the strict-majority threshold	
+p4	150	4.2.1.3	family	halt	none	accord	is	states		A constitutional halt is resumable exclusively by accord:lifecycle:active at the strict-majority threshold	
 p4	160	4.2.1.4	family	signer	signer_rule	config	is	states	3.1,3.4.5	config:load is authored by the node itself on infra:attest with witness_relation self, about itself only	table
 p4	161	4.2.1.4	family	signer	signer_rule	mesh_config	is	restates	4.2.1,3.2	mesh_config:{key} is authored by the trust root on the delegation plane, about the nodes under it	table
 p4	161	4.2.1.4	family	admission_order	body	mesh_config	is	states	3.2	The live mesh_config keys are the four operational keys, the two redundancy keys (refused at admission where no durability processor exists) and the shaping and onion keys, each relieve-never-expand	table
@@ -2391,11 +2391,11 @@ p4	181	4.2.2	family	trust_fold	formula	accord	MUST	states		Consumer policy rejec
 p4	183	4.2.2	family	trust_fold	formula	accord	SHOULD	states		Per-class trust multipliers: HSM 1.0, Apple SE 0.95, YubiKey FIPS 0.95, TPM 0.9, placeholder 0.0, software dev 0.0	
 p4	183	4.2.2	family	trust_fold	formula	accord	is	states		A hardware class the table does not list carries multiplier 0.0	
 p4	185	4.2.2	family	row_shape	body	accord,hardware_custody	is	states	3.1.7,3.1.2	hardware_class is a JSON property on a key record and in attestation_evidence, not a dimension, so R3 does not bind it; hardware_custody is the closed custody vocabulary	
-p4	185	4.2.2	family	trust_fold	formula	accord	is	restates		Classes in use beyond the table (YubiKey_5, Nitrokey, Passkey_Synced, Android variants, Apple_AppAttest, SoftwareOnly_TEST) are unlisted and carry 0.0 until a row rates them	
+p4	185	4.2.2	family	trust_fold	formula	accord	is	states		Classes in use beyond the table (YubiKey_5, Nitrokey, Passkey_Synced, Android variants, Apple_AppAttest, SoftwareOnly_TEST) are unlisted and carry 0.0 until a row rates them	
 p4	187	4.2.2	family	row_shape	body	accord,hardware_custody	is	states		hardware_class maps to the hardware_custody platform it runs on: HSM to cloud or yubi hsm, Apple SE to enclaves, YubiKey to external_secure_element, TPM to discrete or firmware, dev to software_only	table
 p4	197	4.2.2.1	family	trust_fold	evidence_screen	accord,hardware_custody	is	states	8.3.1	hardware_class is self-asserted in attestation_evidence; a verifier admits a class only when that mechanism's attestation chain verifies and the attested key is the record's own; a lifted attestation is refused	
 p4	197	4.2.2.1	family	trust_fold	formula	accord,hardware_custody	is	states		Consumer policy keys on the verified custody mechanism and reads hardware_class as the holder's claim over it; where no chain verifies the class is unattested and the multiplier is 0.0	
-p4	201	4.2.3	family	accord	cosign_rule	accord	is	restates	1	The accord slot is three human hardware-attested holders with no automatic decay; any one fires the halt, a strict majority confirms, resumes or changes the roster, over the standing roster	
+p4	201	4.2.3	family	accord	cosign_rule	accord	is	states	1	The accord slot is three human hardware-attested holders with no automatic decay; any one fires the halt, a strict majority confirms, resumes or changes the roster, over the standing roster	
 p4	201	4.2.3	family	roster_fold	lifecycle	accord	is	states		An accord seat is added or vacated only by roster change on the public record under the standing-majority rule	
 p4	201	4.2.3	stewardship	accord	none	accord	is	restates	1	The current holder table is an instance parameter, not a constitutional grant; another instantiation names its own three	
 p4	205	4.2.3	stewardship	accord	none	accord	is	states		Current CIRIS instance accord roster: Eric Moore, Eric Kudzin, Haley Bradley; each 1 to fire, strict majority to resume or change roster	table
@@ -2417,7 +2417,7 @@ p4	247	4.2.6	family	halt	cosign_rule	accord	is	restates		The firing decision nev
 p4	249	4.2.6	family	halt	none	accord	is	restates	4.2.1.1	A fire is one holder's self-contained signed row fired on receipt with no window; there is no separate recovery protocol	
 p4	249	4.2.6	family	cosign	window	accord	is	states		A roster change opens a bounded participation window W; a holder participates by signing a proof-of-life bundled with a vote over the proposer-minted nonce, never a server's	
 p4	249	4.2.6	family	cosign	formula	accord	is	states		When W closes the live set L is the holders who proved life, a subset of the standing roster; yes-votes count against the standing roster	
-p4	251	4.2.6	family	cosign	formula	accord	is	restates		Proof-of-life records a vote, not a veto; a resurfacing holder rejoins and is counted, and the proposal still carries on a strict majority of the standing roster	
+p4	251	4.2.6	family	cosign	formula	accord	is	states		Proof-of-life records a vote, not a veto; a resurfacing holder rejoins and is counted, and the proposal still carries on a strict majority of the standing roster	
 p4	251	4.2.6	family	signature	body	accord	is	states		The proposer's nonce in the signed bytes stops a replayed signature from manufacturing a phantom participant	
 p4	257	4.2.6	family	cosign	cosign_rule	accord	is	restates	4.2.1.1	Fire: one holder's signed row, pre-signable, no live set, no vote, no window; fires on receipt and latches	table
 p4	258	4.2.6	family	cosign	cosign_rule	accord	is	restates	4.2.1.3	Confirm: strict majority of the standing roster, one cosigned row, within halt_fuse_secs of the halt or the lone halt lapses	table
@@ -2477,7 +2477,7 @@ p4	337	4.4.1	family	trust_fold	none	testimonial_witness	SHOULD	applies		Consumer
 p4	338	4.4.1	family	trust_fold	none	non_maleficence,partner_role	SHOULD	applies		Consumers do not downweight non_maleficence claims about a partner because of the partner's long partner_role track record	
 p4	339	4.4.1	kernel	trust_fold	tie_break		SHOULD	restates	4.4.3.9	Consumers apply lexical-vulnerability priority in tie-breaks involving small cohorts	
 p4	341	4.4.1	family	settlement	evidence_screen	testimonial_witness,slashing	is	restates	3.1.9.3	testimonial_witness is never sole evidence for slashing	
-p4	341	4.4.1	kernel	trust_fold	none		MUST	restates	3.4.7	The consumer weights witness_relation self claims against the attester's other-emission track record; the Frickerian rule applies after these structural safeguards	
+p4	341	4.4.1	kernel	trust_fold	none		MUST	states	3.4.7	The consumer weights witness_relation self claims against the attester's other-emission track record; the Frickerian rule applies after these structural safeguards	
 p4	347	4.4.2	kernel	trust_fold	formula		is	states	3.1	Default aggregation for signed polarity: mean of score times confidence across attesters	table
 p4	348	4.4.2	kernel	trust_fold	formula	prohibited	is	states		Default aggregation for boolean-via-score polarity: min, any negative trumps positive (fail-secure for hard constraints)	table
 p4	349	4.4.2	kernel	trust_fold	formula		is	states		Default aggregation for positive-only polarity: max across attesters, any positive conclusive	table
@@ -2525,7 +2525,7 @@ p4	505	4.4.3.2.4	family	roster_fold	projection	community	is	states	4.4.3.2.3	The
 p4	520	4.4.3.2.4	family	roster_fold	projection	community,family	is	restates	4.4.3.4.4	resolve_community has the same shape as resolve_family; each member key_id is an identity	
 p4	524	4.4.3.2.4.1	kernel	conformance	none	community	MUST	states		Every implementation resolves community membership identically; member resolution is a chain of signed bindings replacing DNS and IP	
 p4	527	4.4.3.2.4.1	family	freshness	freshness	community	is	states		Membership is evaluated as of the resolving consumer's own clock: a member is included iff joined at or before now and not removed at or before now; no global clock	
-p4	528	4.4.3.2.4.1	family	supersede	tie_break	community	is	restates	3.2	The head is the one held version; a new version is admitted only if prev_head_digest names the held head, else refused; with witness_quorum the head is the witnessed head	
+p4	528	4.4.3.2.4.1	family	supersede	tie_break	community	is	states	3.2	The head is the one held version; a new version is admitted only if prev_head_digest names the held head, else refused; with witness_quorum the head is the witnessed head	
 p4	529	4.4.3.2.4.1	family	roster_fold	projection	community	is	states		The resolved member set is canonically ordered by key_id in lowercase-hex byte order	
 p4	530	4.4.3.2.4.1	family	cosign	governance	community	is	exception	3.2	For cohort_subkind infrastructure, admission evaluates consensus_protocol over the founder members only, not all members	
 p4	534	4.4.3.2.4.1	mechanism	transport	projection	community,identity_occurrence	is	states	3.3.6,3.3.6.2	A member resolves to a transport address only through the current identity_occurrence with transport_destination present, valid at now and hybrid-signature verified; with none the member is skipped fail-secure	
@@ -2612,7 +2612,7 @@ p4	771	4.4.3.4.1	kernel	key_plane	lifecycle	key_grant	is	states		At every sealed
 p4	771	4.4.3.4.1	family	key_plane	lifecycle	key_grant,identity_occurrence,family	is	states		A self or family newcomer is caught up by a re-key walk: every per-write DEK of every at-rest blob the cohort holds grants on is wrapped to the newcomer's occurrences	
 p4	771	4.4.3.4.1	family	key_plane	evidence_screen	key_grant,hard_case	is	states		A newcomer without usable content-KEM keys is excluded fail-secure with hard_case:recipient_excluded, never granted	
 p4	771	4.4.3.4.1	family	key_plane	lifecycle	identity_occurrence,family	is	states		The re-key walk is triggered by admission: at login for a new self occurrence (late devices caught by receive doors), by the admitting host for a family member	
-p4	771	4.4.3.4.1	family	key_plane	lifecycle	community,affiliations,key_grant	is	restates	4.4.3.2.6	At community and affiliations there is no walk: a new member gets the current epoch's key at the minter's next sealed write only	
+p4	771	4.4.3.4.1	family	key_plane	lifecycle	community,affiliations,key_grant	is	states	4.4.3.2.6	At community and affiliations there is no walk: a new member gets the current epoch's key at the minter's next sealed write only	
 p4	771	4.4.3.4.1	kernel	key_plane	lifecycle	key_grant	is	restates	4.4.3.4.5	Removal rotates the epoch, admission does not; removal is never retroactive at any scope: past grants stay and a removed member receives nothing new	
 p4	773	4.4.3.4.1	family	key_plane	body	key_grant	is	states		A key_grant for a newcomer covers every still-admitted self or family Contribution of the scope target, names its recipient and axis content, and carries no scope	
 p4	789	4.4.3.4.1	family	key_plane	body	key_grant	MUST	states	3.3.2,5.1	A self or family at-rest DEK is wrapped with wrap_algorithm v2 (x25519_mlkem768_aes256_gcm_hkdf_sha256), never v1; the wrap signature is hybrid Ed25519 plus ML-DSA-65	
@@ -2633,7 +2633,7 @@ p4	828	4.4.3.4.2	family	moderation	projection	family,hard_case	is	states	4.4.3.4
 p4	831	4.4.3.4.2	kernel	cosign	cosign_rule	family,cosign	is	restates	3.3.4	A change short only by signatures is held as cosign:pending collecting cosign:signature rows for the hold window, never refused	
 p4	834	4.4.3.4.2	family	admission_order	none	family,hard_case	is	states		A membership change failing any other check is rejected and hard_case:family_consensus_protocol_violation emitted	
 p4	838	4.4.3.4.2	family	roster_fold	governance	community	is	states	3.2	A public room's admission: open is shorthand for consensus_protocol open:self_admit, not a field of its own	
-p4	838	4.4.3.4.2	family	roster_fold	subject_rule	community	is	restates		Under open admission the group side of a widening naming one joiner is the joiner's own signature	
+p4	838	4.4.3.4.2	family	roster_fold	subject_rule	community	is	states		Under open admission the group side of a widening naming one joiner is the joiner's own signature	
 p4	838	4.4.3.4.2	family	owner_binding	signer_rule	community	is	states	5.4.6	A self-admission to a public room is admissible only from a key with a live federation-scope owner binding	
 p4	838	4.4.3.4.2	family	roster_fold	governance	community	is	restates	4.5.13	A removal under open admission runs under the 4.5.13 floor; no single vote excludes	
 p4	840	4.4.3.4.2	family	policy_row	governance	family	is	states	4.5.1.2	Changing consensus_protocol on a non-entrenched family rides the same membership admission rule on the amendment	
@@ -2793,7 +2793,7 @@ p4	1183	4.4.3.5.6	kernel	consent_fold	none	consent	MAY	states		Other agent imple
 p4	1187	4.4.3.6	kernel	trust_fold	none	attestation	is	states	3.1.2	The L1-L5 ladder is consumer-side composition over mechanism prefixes, not a wire taxonomy	
 p4	1189	4.4.3.6	mechanism	wire	body	attestation	MUST	states	1.2	The wire carries the mechanism prefix, never the ladder position	
 p4	1195	4.4.3.6	kernel	trust_fold	formula	attestation	is	states		Consumers map self_verify, hardware_rooted, registry_consensus, license_validity, agent_integrity to L1 through L5 in that order	table
-p4	1204	4.4.3.6	kernel	trust_fold	formula	attestation	is	restates		The ladder verdict is the maximum position among prefixes with a positive attestation	
+p4	1204	4.4.3.6	kernel	trust_fold	formula	attestation	is	states		The ladder verdict is the maximum position among prefixes with a positive attestation	
 p4	1217	4.4.3.6	kernel	trust_fold	none	attestation	MAY	states		Consumers may render the ladder as L1 to L5 for UI; the rendering is composition output, not wire emission	
 p4	1219	4.4.3.6	kernel	trust_fold	none	attestation	MAY	states		Different consumers may weight rungs differently or require more than one	
 p4	1221	4.4.3.6	kernel	admission_order	body	attestation	is	states	1.2	Emissions use the attestation:{mechanism} form; the attestation:l{N} form is rejected at admission	
@@ -2826,7 +2826,7 @@ p4	1250	4.4.3.8	kernel	reserved_prefix	signer_rule	content_rating,detection	is	s
 p4	1251	4.4.3.8	stewardship	steward	body	delegates_to	MUST	states		A charter must carry a pre-rotation commitment and an m-of-n recovery ceremony, and the m-of-n must be audited for holder independence	
 p4	1252	4.4.3.8	stewardship	steward	none		MUST	states		Out-of-band fingerprint comparison is a first-class attach step for a portable root bundle, not optional hardening	
 p4	1254	4.4.3.8	kernel	trust_fold	none	delegates_to	is	states	3.2	The pinned trust set is the reader's own rows only: each entry a delegates_to(reader to authority) bearing trust:accepts:v1 the reader signs, adds and removes freely	
-p4	1254	4.4.3.8	kernel	trust_fold	none	delegates_to	is	restates		The shipped root is one such entry written at first run, removable like any other	
+p4	1254	4.4.3.8	kernel	trust_fold	none	delegates_to	is	states		The shipped root is one such entry written at first run, removable like any other	
 p4	1254	4.4.3.8	kernel	trust_fold	body	delegates_to	is	states	2.4.1.2.1,4.1.1	An entry names what it trusts for: every class the charter declares, or listed licence classes, and a depth 0 to n within the five-hop cap	
 p4	1254	4.4.3.8	kernel	licensure	evidence_screen	licensure	is	states		A reader honours a licensure row iff its own walk reaches the issuing authority for the row's class and that authority's charter declares the class	
 p4	1254	4.4.3.8	kernel	licensure	none	licensure	is	states		A licence confers no trust: holding one makes nobody a trusted licensor	
@@ -2882,7 +2882,7 @@ p4	1345	4.5.1	stewardship	halt	none		is	restates	4.2.1	A pause keeps state and r
 p4	1347	4.5.1	stewardship	amendment	none		is	states	4.2.3,4.5.1.2,3.4.1,4.2.1,4.4.3.7	Accord permanence, roster sign-off, entrenched ratification, steward authority, accord reservation, genesis minting and the default trust set are defaults, not register entries	
 p4	1347	4.5.1	stewardship	halt	none		is	states	4.2.5,1.13.2	The halt is not a privilege as to the operator who granted and can ungrant it; as to the agent it is carried on the register as the condition of symmetry	
 p4	1349	4.5.1	stewardship	amendment	none		is	states		A declared privilege is carried only when all four cells hold; one with a missing cell is a defect carried as such until repaired or ratified	
-p4	1349	4.5.1	stewardship	amendment	none		is	restates	4.2,4.5.1.2	Entrenched structure is listed for visibility, already entrenched, bounded by the first-contact act; the steward may move the scale gate before it	
+p4	1349	4.5.1	stewardship	amendment	none		is	states	4.2,4.5.1.2	Entrenched structure is listed for visibility, already entrenched, bounded by the first-contact act; the steward may move the scale gate before it	
 p4	1351	4.5.1	stewardship	amendment	none		SHOULD	states	4.5.1.2	If the register grows past a handful or a bound passes unmet, surviving privileges are re-read as permanent structure needing entrenched ratification	
 p4	1351	4.5.1	stewardship	amendment	none		MUST	states		A revision condition MUST name its mechanical evaluator: the check that fails when it trips and where it runs	
 p4	1355	4.5.1.1	kernel	licensure	evidence	detection,hard_case,testimonial_witness	MUST	states		Every axis value under an open-vocabulary prefix MUST carry an operational definition from its calibration package, or a documented convention where none exists	
@@ -2967,7 +2967,7 @@ p4	1481	4.5.3	kernel	moderation	none	takedown_notice	is	states	4.5.5	Fast-path t
 p4	1481	4.5.3	kernel	moderation	subject_rule	takedown_notice	is	states		federation_keys is not a takedown target; a notice demanding removal of key records for categories of participants is refused at the enforced-admission gate	
 p4	1481	4.5.3	kernel	halt	none		is	restates	4.2.1	The halt is no escalation path for takedown; it pauses agents' acts and touches no data door	
 p4	1485	4.5.4	family	standing	none	community	is	states	3.2,4.5.5	A community operates and federates only while it has at least one active holder of its moderate duty	
-p4	1489	4.5.4	family	standing	none	community	is	restates		A community is admitted and continues to federate only while one member holds the live moderate duty; the creator names one at creation; without one it is non-conformant	
+p4	1489	4.5.4	family	standing	none	community	is	states		A community is admitted and continues to federate only while one member holds the live moderate duty; the creator names one at creation; without one it is non-conformant	
 p4	1490	4.5.4	family	policy_row	governance	community	is	states	4.5.13	When a community has no live moderate holder (lapse, inactivity past freshness, authority set narrowed, holder left) it locks read-only and elects by a 24 h ranked-choice vote over its roster	
 p4	1490	4.5.4	family	policy_row	tie_break	community	is	states	3.1.9.2,3.2	The election ballot orders the roster by highest moderation_track_record, then earliest membership by roster-lineage admission order, then lexicographic key_id; the members' votes appoint	
 p4	1491	4.5.4	family	standing	none	community	MUST_NOT	states	3.2	If no eligible member can be named (track record, consent, accountable root) the community fails secure and MUST NOT federate or operate at moderated capability	
@@ -3024,7 +3024,7 @@ p4	1540	4.5.5	family	signer	signer_rule	takedown_notice	is	states		The duty-hold
 p4	1541	4.5.5	family	signer	signer_rule	moderation	is	states		The duty-holders of a moderation action against a subject are the named moderate holders of the relevant community	
 p4	1542	4.5.5	family	signer	signer_rule	reconsideration	is	states		The duty-holders of a reconsideration against a prior action are the target's subject plus named review holders of that community; the ruling stays with review holders	
 p4	1543	4.5.5	family	signer	signer_rule	reconsideration,licensure	is	states	2.4.1.2.1	A reconsideration against a licensure row is decided by the issuing authority set plus any review-scoped chain from it	
-p4	1545	4.5.5	family	signer	signer_rule	takedown_notice,moderation,reconsideration	is	restates	3.2,4.5.4	As-self holds iff attesting_key_id is in the target's duty-holders; delegated holds iff the chain root is and is an accountable root; all resolvable from existing rows	
+p4	1545	4.5.5	family	signer	signer_rule	takedown_notice,moderation,reconsideration	is	states	3.2,4.5.4	As-self holds iff attesting_key_id is in the target's duty-holders; delegated holds iff the chain root is and is an accountable root; all resolvable from existing rows	
 p4	1547	4.5.5	family	subject	evidence_screen	takedown_notice,moderation	MUST	states	2.3	The subject claim of a takedown or moderation action MUST be verified against the content's establishing attestation, not the action payload	
 p4	1549	4.5.5	family	subject	projection	scores	is	states	2.3,2.1	subject_of(content_sha256) is the signed subject_key_ids of the establishing scores attestation the hash binds; resolved by the usual content-hash lookup	
 p4	1550	4.5.5	family	subject	subject_rule	takedown_notice,moderation	MUST_NOT	states		Admit-(a) subject-self means attesting_key_id is in the signed subject set; the payload's subject_key_ids MAY route or queue but MUST NOT be the admit set	
@@ -3056,7 +3056,7 @@ p4	1623	4.5.8.4	kernel	registration	none	federation_keys	is	restates	4.5.8.1	No 
 p4	1630	4.5.9	family	consent_fold	none	location_proof,community	is	states	3.2,3.3.3,2.6.6,4.4.3.2	Joining a geographic community is a one-way disclosure enforced at the wire, not by policy	
 p4	1634	4.5.9.1	family	signer	signer_rule	location_proof	is	states		A location_proof is emitted only by its subject (attesting equals subject) or by a delegates_to chain with scope consent_revocation; the substrate cannot mint one	
 p4	1636	4.5.9.1	family	roster_fold	none	community,location_proof	is	states		A community cannot require a location_proof from non-members; it may only gate admission on whether a member produced one	
-p4	1636	4.5.9.1	family	admission_order	signer_rule	location_proof	is	restates		A location_proof without the subject's own signature is rejected by the substrate	
+p4	1636	4.5.9.1	family	admission_order	signer_rule	location_proof	is	states		A location_proof without the subject's own signature is rejected by the substrate	
 p4	1638	4.5.9.1	family	admission_order	signer_rule	location_proof	is	restates	4.2.1,4.5.3,4.5.5	A demand for location_proofs of non-consenting subjects is refused at the door; the halt touches no data door; content disputes route through takedown under the duty-holder gate	
 p4	1642	4.5.9.2	family	row_shape	body	location_proof	is	restates	2.6.6.1	location_proof.cell_resolution is at most 7; finer resolution is rejected at the substrate gate	
 p4	1646	4.5.9.2	family	trace	none	hard_case,location_proof	is	states	3.4.2	The substrate emits hard_case:location_proof_resolution_violation on rejection; observability, not a slashing trigger	
@@ -3093,10 +3093,10 @@ p4	1751	4.5.12.6	family	audience	replication	custody	is	restates	5.2	No holding 
 p4	1754	4.5.12.6	family	accord	governance	family,accord	is	restates	4.2.3	HUMANITY_ACCORD is the canonical entrenched family instance	
 p4	1757	4.5.12.6	family	roster_fold	governance	family	is	restates		The consensus_protocol vocabulary is open; canonical kinds are named for coordination	
 p4	1758	4.5.12.6	family	key_plane	lifecycle	family	is	restates	4.4.3.4.5	A removal never re-encrypts history; it is never retroactive	
-p4	1764	4.5.13	kernel	roster_fold	governance	community,family	is	restates	3.1.3.2	Reverse quorum never admits anyone to a family or community and confers no consent; joining is proposal and acceptance	
+p4	1764	4.5.13	kernel	roster_fold	governance	community,family	is	states	3.1.3.2	Reverse quorum never admits anyone to a family or community and confers no consent; joining is proposal and acceptance	
 p4	1766	4.5.13	kernel	policy_row	governance	*	is	states	4.2.6	A decision opens a bounded window; one present accountable actor may act alone; on absence a count carries over the policy's named set; the absent never block	
 p4	1766	4.5.13	family	halt	governance	humanity_accord	is	restates	4.2.6	In the accord one present holder fires, and a roster change counts its yes-votes against the standing roster	
-p4	1766	4.5.13	family	moderation	governance	moderation	is	restates		In community moderation a present moderator acts; on the moderators' absence the live community governs its own content	
+p4	1766	4.5.13	family	moderation	governance	moderation	is	states		In community moderation a present moderator acts; on the moderators' absence the live community governs its own content	
 p4	1768	4.5.13	family	standing	none	community	MUST	states	4.5.4	A community is required to have a named moderator, the moderate-duty holder; it is the only required role	
 p4	1768	4.5.13	family	standing	none	community	MAY	states	3.2	A community may name one or more stewards, steward-bound, who appoint and oversee moderators; a steward may add further stewards	
 p4	1768	4.5.13	family	standing	none	community	MUST_NOT	restates	3.4.13	A contested party must not mint co-stewards to manufacture a quorum or dilute a pending protective veto	
@@ -3114,8 +3114,8 @@ p4	1772	4.5.13	family	roster_fold	cosign_rule	community	is	states		A founder han
 p4	1772	4.5.13	family	moderation	governance	community	is	restates		A room left with no founder locks and elects	
 p4	1773	4.5.13	family	moderation	governance	moderation	is	states	4.2.6	If no moderator or steward acts within 48 h the proposal is tallied by live-majority vote over the community's live members	
 p4	1773	4.5.13	family	census	governance	moderation	is	states		Presence asserts by a fresh proof-of-presence plus vote over the proposal nonce; a silent member is not in the denominator	
-p4	1775	4.5.13	family	moderation	governance	moderation	is	restates		The community fallback fires only on genuine moderator and steward absence; it is never a check on them	
-p4	1775	4.5.13	family	moderation	window	moderation	is	restates		The 48 h window governs only the fallback; a moderator rules at any time and a withhold is immediate	
+p4	1775	4.5.13	family	moderation	governance	moderation	is	states		The community fallback fires only on genuine moderator and steward absence; it is never a check on them	
+p4	1775	4.5.13	family	moderation	window	moderation	is	states		The 48 h window governs only the fallback; a moderator rules at any time and a withhold is immediate	
 p4	1775	4.5.13	family	moderation	none	moderation	is	states	4.5.5	A report filed privately with the duty holder opens no window, is seen by nobody else, and becomes the duty holder's record, the reporter shielded	
 p4	1775	4.5.13	family	moderation	window	moderation	is	states		A moderation action raised in the room is public, names what is asked, and starts the 48 h window at once	
 p4	1775	4.5.13	mechanism	conformance	none	moderation	MUST	states		The client offers both the private report and the public action and never folds one into the other	
@@ -3147,21 +3147,21 @@ p4	1785	4.5.13	family	moderation	governance	content_class	is	states		Content the
 p4	1785	4.5.13	family	consent_fold	signer_rule	consent	is	states	3.3.1	Clicking the interstitial publishes a viewer-side consent:state:granted with a consent:scope:view qualifier; every viewing is a signed act	
 p4	1785	4.5.13	family	content_ingestion	body	content_class	is	states	3.3.12,4.5.5	The infohazard gate rides the content_class:infohazard or content_class:reported flag composed with the consent primitive; no new wire shape	
 p4	1791	4.5.13	family	moderation	governance	takedown_notice,moderation	is	restates	4.5.3,4.5.5	Hard removal on the CSAM perceptual-hash tripwire, a takedown, or an undefended report; the removal action is on record and the content does not survive	table
-p4	1792	4.5.13	family	moderation	governance	consent	is	restates		Consent-gated retention after a live-majority flag puts each viewer on record by their interstitial consent row	table
-p4	1793	4.5.13	family	moderation	governance	moderation	is	restates		Kept-visible content puts the approving moderator or steward, or the keep-voting majority, on record	table
+p4	1792	4.5.13	family	moderation	governance	consent	is	states		Consent-gated retention after a live-majority flag puts each viewer on record by their interstitial consent row	table
+p4	1793	4.5.13	family	moderation	governance	moderation	is	states		Kept-visible content puts the approving moderator or steward, or the keep-voting majority, on record	table
 p4	1795	4.5.13	family	moderation	none	community	MUST	states		A community with only one moderator and no steward must be warned to add a second moderator or a steward	
 p4	1795	4.5.13	family	standing	freshness	community	is	states		A moderator's or steward's silence past the community's freshness window lapses the duty	
 p4	1795	4.5.13	family	standing	governance	community	is	states		Authority is reconstituted by merit auto-promotion: the highest moderation_track_record live member is auto-granted the moderate duty	contradiction with 1777: there no node can appoint and nobody holds a duty they never signed for; seat is by election and acceptance
-p4	1797	4.5.13	family	moderation	governance	moderation	is	restates	4.2	The protocol guarantees default-remove, attributable-keep, attributable-view; every transition is an attributable act by a named identity	
+p4	1797	4.5.13	family	moderation	governance	moderation	is	states	4.2	The protocol guarantees default-remove, attributable-keep, attributable-view; every transition is an attributable act by a named identity	
 p4	1799	4.5.13	family	moderation	body	moderation	is	states		A duty holder's look at reported material, or a reporter's prior exposure, is a moderation row naming duty, purpose, outcome and exposure, not a keep or view	
 p4	1799	4.5.13	family	moderation	none	moderation	MUST	states		Minimise: a known perceptual-hash match is removed and reported with no human eyes, ever; classifiers triage before a person is asked to look	
 p4	1799	4.5.13	family	moderation	none	moderation	MUST	states		Restrict: a person looks only under a named duty for a named purpose with the operator's viewer protections	
 p4	1799	4.5.13	family	moderation	body	moderation	MUST	states		Record: the look is signed as duty with its purpose and what followed; the mandated report rests on it	
 p4	1799	4.5.13	family	moderation	none	moderation	MUST	states		Report: an inadvertent exposure is reported promptly through the same channel	
 p4	1799	4.5.13	family	moderation	none	moderation	is	states	3.2	Where the duty holder acts for an organisation, the organisation is on the bond and the duty holder is its agent for provider protection	
-p4	1799	4.5.13	family	moderation	governance	moderation	is	restates		A keep or view that is not an act of a duty stays on the ladder, attributable and named	
+p4	1799	4.5.13	family	moderation	governance	moderation	is	states		A keep or view that is not an act of a duty stays on the ladder, attributable and named	
 p4	1801	4.5.13	kernel	moderation	none	detection	MUST_NOT	restates	4.5.7,5.2	CEG refuses client-side scanning: detection runs only at enabled groups' publish or share seam, never over self or family private content	
-p4	1803	4.5.13	kernel	policy_row	governance	*	is	restates	4.2.6	Presence is authority, absence forfeits it, a timer decides, at every scope; only the count set differs, which the policy table names	
+p4	1803	4.5.13	kernel	policy_row	governance	*	is	states	4.2.6	Presence is authority, absence forfeits it, a timer decides, at every scope; only the count set differs, which the policy table names	
 p4	1803	4.5.13	family	standing	governance	community	is	restates		A lapsed steward's silence triggers merit re-auto-promotion	see 1795 note
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		Every window door runs one decision shape of five numbers over a named standing set, published as a table	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		enact: approvals that land the change at once; a fraction of the base, strictly more; never below a strict majority; default two-thirds	
@@ -3169,8 +3169,8 @@ p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		cancel: objections that
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		floor: approvals the change must carry before silence may land it at the window; at least the fraction; default one-third	
 p4	1807	4.5.13	kernel	policy_row	governance	community	is	states		In a community the floor is never fewer than two voices, so one voice never decides who is in a room	
 p4	1807	4.5.13	kernel	roster_fold	subject_rule	community	is	restates	3.1.3.2	Under invitation no single vote admits; the second voice is the invitee's own acceptance; a room of one grows by founder's proposal and newcomer's yes	
-p4	1807	4.5.13	kernel	roster_fold	governance	community	is	restates		Under open admission no single vote excludes; the two-voice guarantee attaches to removal	
-p4	1807	4.5.13	family	policy_row	governance	family,community	is	restates	4.4.3.2.3	founder_only is a protocol for a family, a subscriber list and a room's own listing; a community naming it is refused federation_community_consensus_protocol_violation, recorded as hard_case:community_consensus_protocol_violation	
+p4	1807	4.5.13	kernel	roster_fold	governance	community	is	states		Under open admission no single vote excludes; the two-voice guarantee attaches to removal	
+p4	1807	4.5.13	family	policy_row	governance	family,community	is	states	4.4.3.2.3	founder_only is a protocol for a family, a subscriber list and a room's own listing; a community naming it is refused federation_community_consensus_protocol_violation, recorded as hard_case:community_consensus_protocol_violation	
 p4	1807	4.5.13	kernel	policy_row	window	*	is	states		window by sensitivity: 86400 s reversible content, 259200 s roster and standing, 604800 s irreversible	
 p4	1807	4.5.13	kernel	policy_row	window	*	is	states		irreversible: no instant landing; the change waits its whole window even at full approval	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		The floor is a reverse-path predicate only: nothing lands before the window closes except at enact	
@@ -3188,7 +3188,7 @@ p4	1807	4.5.13	kernel	row_shape	body	objection	is	states	3.1.9.2	Votes travel on
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		cancel_over is the cancel denominator: the base with the proposer counted for a community; the other keys for a self roster	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		at_window: cancelled for every community row; stay_open for the self roster, cleared by the proposer's withdrawal or the target's act; the halt lapses; a moderation proposal is tallied	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	states		A node's state is the set of rows it holds, each with the instant it first held it, and nothing else	
-p4	1809	4.5.13	kernel	freshness	window	*	is	restates		The first-held instant is the node's own receipt, outside the signed row and never replicated; every window runs from it	
+p4	1809	4.5.13	kernel	freshness	window	*	is	states		The first-held instant is the node's own receipt, outside the signed row and never replicated; every window runs from it	
 p4	1809	4.5.13	kernel	admission_order	projection	*	is	states		An object's state, a person's standing toward it and a room's seated roles are folds over the held set, never stored verdicts	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	states		The step takes the held set, one row and the instant; answers enabled for the signer's standing or refused by name; an admitted row is appended, nothing rewritten	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	states		Queue, preview and door are one function run over enabled transitions, a row before signing, or an arriving row; the preview is exact because it is the door	
@@ -3230,8 +3230,8 @@ p4	1811	4.5.13	kernel	standing	projection	*	is	states		For an object the person 
 p4	1811	4.5.13	kernel	row_shape	lifecycle	*	is	states		A family's lifecycle is its transitions in the family model, each a verb with states, roles that may sign, governance row and whether it widens	
 p4	1811	4.5.13	kernel	admission_order	none	*	is	states		The queue is exactly the transitions enabled for this person in this state, one item each; the door is the same predicate, so queue and door never disagree	
 p4	1811	4.5.13	kernel	audience	none	*	is	states		A stranger to an object sees no item on it; an item that moved the object is gone from the next view	
-p4	1811	4.5.13	mechanism	other:choice-item	none	*	is	restates		A widening item is confirmed before it is signed and a narrowing one takes one step	
-p4	1811	4.5.13	kernel	admission_order	none	*	is	restates		A node derives the queue from the same held rows and policy it admits by, never from a separate list	
+p4	1811	4.5.13	mechanism	other:choice-item	none	*	is	states		A widening item is confirmed before it is signed and a narrowing one takes one step	
+p4	1811	4.5.13	kernel	admission_order	none	*	is	states		A node derives the queue from the same held rows and policy it admits by, never from a separate list	
 p4	1811	4.5.13	kernel	audience	replication	*	is	states		An item never crosses between nodes; only the rows an answer signs travel; other devices learn by the row; each node keeps its own queue and none is synchronised	
 p4	1811	4.5.13	mechanism	transport	none	*	is	states		The queue never blocks: transport carries signed rows and cosignatures and reports a decision row landed; the host decides from the rows which items present	
 p5	9	5	foundation	principle	none	*	is	states		A missing key, unreachable peer or evicted chunk resolves to less access and an honest miss, never silent plaintext downgrade or fabricated success	
