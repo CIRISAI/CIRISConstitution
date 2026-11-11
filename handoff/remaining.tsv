@@ -11,90 +11,27 @@ p2	2.6.1.7	5284	3	229	124	#### 2.6.1.7 `signed-object` — The signed object —
 p5	5.3.3.2.1	676	4	208	14	##### 5.3.3.2.1 `namespace-realtime` — `codec_id` namespace — realtime A/V chunk
 p1	1.3	589	4	202	6	## 1.3 `pdma` — PDMA — principled decision algorithm
 p7	7.3.5	468	3	192	8	### 7.3.5 `5-governance-governance` — Chapter 5: Governance and Accountability
-p6	6.1	480	4	180	7	## 6.1 `substrate` — The substrate — the census, replication, the witness, trust
-p5	5.4.2	679	2	175	13	### 5.4.2 `symbol` — Uniform symbol AEAD framing for scope-privacy symbols (norm
 p4	4.2.5	290	3	174	3	### 4.2.5 `isn` — Why this isn't a Golden-Rule violation
-p3	3.1.5	1605	2	168	43	### 3.1.5 `accord-agent` — CIRISAgent — Accord principles + DMA + conscience + a
 p4	4.2	243	3	165	3	## 4.2 `accord` — The HUMANITY_ACCORD constitutional layer
 p7	7.5.4	339	3	162	8	### 7.5.4 `4-de` — Chapter 4: De-commissioning Protocol (DCP)
-p5	5.3.3.4	377	2	158	9	#### 5.3.3.4 `liveness` — Liveness invariant — entitled vs reachable (normative)
 p7	7.5.3.1	366	3	146	4	#### 7.5.3.1 `autonomy-tiers` — Operational autonomy tiers (A0–A4)
 p1	1.15.5	286	2	141	2	### 1.15.5 `5-sustained` — Chapter 5: Sustained Coherence — The Long View
 p7	7.4	323	3	140	4	## 7.4 `threshold-force` — The Threshold of Force
-p5	5.3.2.5	382	2	131	7	#### 5.3.2.5 `full-sha` — Full-SHA verification before consumption (normative)
-p4	4.5.1.2	133	2	126	2	#### 4.5.1.2 `meta-amendment` — Meta-amendment + entrenchment
-p4	4.4.3.5.4	328	2	123	8	##### 4.4.3.5.4 `multi-subject` — Multi-subject revocation (any-subject-binding)
-p3	3.1.8.1	335	2	110	7	#### 3.1.8.1 `capacity-score-capacity` — Capacity-Score factor prefixes (`𝒞_CIRI
 p7	7.3.3	914	2	108	13	### 7.3.3 `3-stewardship` — Chapter 3: Stewardship Tier (ST) System: Quantifying
-p3	3.3.6	841	2	105	16	### 3.3.6 `identity` — `identity_occurrence` subject_kind
-p5	5.3.2.2	614	2	105	12	#### 5.3.2.2 `consent-revocations` — Consent revocations are NOT local-tier-elig
-p3	3.4.1	581	2	104	20	### 3.4.1 `accord-reservation` — The `accord:*` reservation
-p3	3.3.14	367	2	103	6	### 3.3.14 `identity-claiming` — `identity:canonical_binding` — claiming a canon
-p6	6.1.2.1.1	150	2	103	2	##### 6.1.2.1.1 `member_commitment` — `member_commitment` (descent integrity)
-p6	6.1.2.3	297	2	103	6	#### 6.1.2.3 `ejectionverdict` — `EjectionVerdict` — the tier-aware retirement s
 p1	1.13.3.3	1194	2	101	26	#### 1.13.3.3 `adversary-classes` — Adversary classes (and where each is / is no
-p5	5.3.2.6	637	2	101	17	#### 5.3.2.6 `render-tier` — The render tier is receiver policy, computed from v
-p3	3.4.7	446	2	97	7	### 3.4.7 `enforcement` — The enforcement rule (normative)
 p1	1.1	494	2	96	8	## 1.1 `meta-goal` — Meta-Goal M-1 — sustainable adaptive coherence
-p3	3.3.10	505	2	95	8	### 3.3.10 `settlement` — CEG↔value-transfer linkage
-p5	5.3.3.1	590	2	94	11	#### 5.3.3.1 `stream` — Chunk seal + STREAM nonce (normative)
-p4	4.5.7	347	2	93	7	### 4.5.7 `registry-watchlist` — Watchlist auto-detection — opt-in, per-group, s
-p6	6.1.5	790	1	92	22	### 6.1.5 `storage` — Durable storage: per-item replication and swarm rarity
-p3	3.5.1	246	2	91	6	### 3.5.1 `concurrent-write` — Concurrent-write precedence
-p3	3.4.7.1	799	2	89	11	#### 3.4.7.1 `identity-set` — `identity_type` is a set — single-key role cohabit
-p5	5.3.3.6	537	2	88	13	#### 5.3.3.6 `delivery` — Delivery receipts (normative)
-p4	4.5.12.3	143	1	87	4	#### 4.5.12.3 `admission-self` — Self-occurrence admission — single-vouch
-p3	3.1.9.4	1080	2	85	28	#### 3.1.9.4 `transparency` — Hard-case + transparency + judge-model prefixes
-p6	6.1.7	108	1	81	1	### 6.1.7 `fail-secure-fail` — Fail-secure summary (normative)
-p5	5.3.3.2	564	1	76	14	#### 5.3.3.2 `composition` — Realtime group communication — composition
-p3	3.1.9	565	1	69	6	### 3.1.9 `node` — CIRISNodeCore — Credits, Expertise, Decision Hierarchy, Conse
 p1	1.16.4	72	1	63	1	### 1.16.4 `iii-wisdom` — Wisdom-Based Deferral: Safeguarded Ethical Collaborati
-p4	4.2.2.1	133	1	62	2	#### 4.2.2.1 `hardware-class-hardware` — Hardware-class claim, and the attestati
-p4	4.2.2	330	1	61	8	### 4.2.2 `hardware-class` — Hardware-class taxonomy
 p7	7.3.4	477	1	61	16	### 7.3.4 `4-bucket` — Chapter 4: Bucket-Specific Duties of Creation
-p4	4.5.1.3	139	1	60	3	#### 4.5.1.3 `open-vocabulary` — Open-vocabulary collision rule
-p5	5.3.2.4.1	102	1	59	3	##### 5.3.2.4.1 `authority-local` — Local-tier eligibility — the discriminator i
 p7	7.3.2	244	1	59	3	### 7.3.2 `scope-what` — Chapter 2: Scope: What Constitutes "Creation" under thi
-p3	3.1.5.5	354	1	57	9	#### 3.1.5.5 `safety-battery` — Safety-battery evidence (registry rows)
-p4	4.5.12.1	111	1	57	1	#### 4.5.12.1 `forward` — Forward secrecy on member departure
-p3	3.3	133	1	56	1	## 3.3 `content-ingestion` — Content-ingestion prefixes
-p5	5.3.1.1	184	1	55	4	#### 5.3.1.1 `consistency-proof` — Consistency-proof requirement (normative)
 p5	5.3.3.2.2	211	1	55	3	##### 5.3.3.2.2 `realtime` — Realtime non-A/V data streams (normative scope boun
-p5	5.4.4	342	1	54	8	### 5.4.4 `welcome-wrap` — MLS Welcome HPKE wrap under invitee static X-Wing key
 p1	1.13.5	121	1	53	2	### 1.13.5 `operational-language` — Operational-language gate — the safety-vs-ce
-p4	4.4.3.2.3	409	1	53	11	##### 4.4.3.2.3 `community-admission` — Community admission per `consensus_proto
-p3	3.3.1	2050	1	51	62	### 3.3.1 `consent` — Consent namespace family
-p4	4.4.3.2.4.1	511	1	51	10	###### 4.4.3.2.4.1 `deterministic` — Deterministic resolution + member→address r
-p5	5.3.3.8	60	1	51	1	#### 5.3.3.8 `documents-what` — What the streaming surface documents
-p4	4.5.10.2	125	1	50	1	#### 4.5.10.2 `registry-operator` — Operator path (default)
-p5	5.3.2.1	191	1	49	5	#### 5.3.2.1 `holder` — Holder directory TTL + ContentMiss feedback
-p5	5.3.2.3	439	1	49	12	#### 5.3.2.3 `merge` — Cross-region merge intents — CEG-declared per subject_kin
-p6	6.1.3	443	1	49	8	### 6.1.3 `canonicalization-boundary` — Canonicalization boundary + the 1+4 line
 p1	1.13	60	1	48	0	## 1.13 `foundation` — Foundation
 p2	2.6.9	54	1	48	1	### 2.6.9 `conformance-language` — Conformance language
-p5	5.3.6.1	443	1	48	19	#### 5.3.6.1 `envelope-error` — Error envelope
 p7	7.5.1	146	1	48	2	### 7.5.1 `foundational-sunset` — Chapter 1: Foundational Sunset Principles
-p3	3.1	172	1	47	3	## 3.1 `namespace` — The dimension namespace
-p4	4.4.3.7	212	1	47	8	#### 4.4.3.7 `contributions-policy` — Policy F — `agent_files` trust composition
 p7	7.3	214	1	47	1	## 7.3 `genesis-responsibility` — Introduction: The Genesis of Responsibility
 p7	7.3.6	100	1	47	0	### 7.3.6 `integrating-creation` — Conclusion: Integrating Creation into the Eth
-p4	4.2.4	88	1	46	2	### 4.2.4 `policy-concern` — Concern split — key material vs role-recognition po
-p4	4.4.3.2.2	77	1	46	1	##### 4.4.3.2.2 `community-forward` — Forward secrecy on community member remova
-p2	2.3.2.3	137	1	45	3	#### 2.3.2.3 `subject_kind-payload` — `subject_kind` is a payload-level discrimi
-p2	2.6.1	129	1	45	1	### 2.6.1 `envelope-canonicalization` — Envelope canonicalization — JCS + the om
-p4	4.4.3.6	286	1	44	7	#### 4.4.3.6 `policy-attestation` — Policy I — Attestation-Ladder Composition
 p7	7.5.7	124	1	44	4	### 7.5.7 `7-succession` — Chapter 7: Succession & Custodial Transfer
-p4	4.5.9.3	220	1	43	6	#### 4.5.9.3 `leaving` — Leaving is forward-only — the audit chain keeps the tom
-p5	5.3.2.4.2	263	1	43	6	##### 5.3.2.4.2 `local` — Promotion — `local → federation` (the deferred-signatu
-p5	5.4.1	639	1	43	14	### 5.4.1 `record-id` — Deterministic `record_id` (CBOR profile, normative)
-p6	6.1.6	313	1	43	6	### 6.1.6 `deterministic-alm` — Deterministic ALM topology
-p3	3.1.5.4	171	1	42	3	#### 3.1.5.4 `apophatic` — Apophatic / prohibited-capability prefix
-p3	3.3.5.1	355	1	42	5	#### 3.3.5.1 `fair-exchange` — Optimistic fair exchange (worked example, no new 
-p3	3.4.7.2	240	1	42	6	#### 3.4.7.2 `consent-counter` — `consent_role` — the Counter-RII consent gate
 p1	1.13.1	449	1	41	2	### 1.13.1 `ubuntu` — The Ubuntu commitment — relational-anthropology substrate 
-p3	3.1.2	1011	1	41	31	### 3.1.2 `attestation` — CIRISVerify — attestation ladder, provenance, transpar
-p3	3.3.5	518	1	41	12	### 3.3.5 `consent-subject` — `consent_record` subject_kind
-p5	5.3.2.4.5	165	1	41	0	##### 5.3.2.4.5 `holistic` — For holistic analysis + modeling (informative)
 p1	1.15	132	0	0	0	## 1.15 `chapters` — Chapters
 p1	1.15.9	33	0	0	0	### 1.15.9 `9-path` — Chapter 9: Path Toward Ethical Maturity
 p1	1.15.10	50	0	0	0	### 1.15.10 `a-1.conclusion` — Summary of the chapters above
@@ -107,6 +44,7 @@ p4	4.5.10.3	47	0	0	0	#### 4.5.10.3 `future` — Future hash-coalition path
 p4	4.5.12	31	0	0	0	### 4.5.12 `family-self-2` — Self/family membership governance
 p4	4.5.12.6	102	0	0	4	#### 4.5.12.6 `documents-what-4` — What this documents
 p5	5.3	23	0	0	0	## 5.3 `endpoint` — Endpoint shapes
+p5	5.3.2.4.5	165	0	0	0	##### 5.3.2.4.5 `holistic` — For holistic analysis + modeling (informative)
 p7	7.1	99	0	0	0	## 7.1 `embracing-responsibilities` — Introduction: Embracing Responsibilities B
 p7	7.1.6	70	0	0	0	### 7.1.6 `a-4.conclusion` — Conclusion
 p7	7.2	65	0	0	0	## 7.2 `horizon-ethical` — Introduction: The Horizon of Ethical Becoming

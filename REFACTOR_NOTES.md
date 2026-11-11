@@ -41,24 +41,32 @@ Data side (done, all gated):
 Text side (in progress):
 - Inventory: `formal/derivation/rule_inventory.tsv` (4,248 statements; line numbers are those of
   commit `30fddf6` and are stale, match by `gist`).
-- **247 sections are held by the entry check** (`formal/derivation/rule_entries.tsv`, 4,373 rows;
-  gate `tools/check_rule_entries.py`): 73 rewritten as entries, 174 registered as they stand.
-- **113 numbered sections are not landed.** `handoff/remaining.tsv` lists them, ranked by the
-  words sitting in sentences over 40 words. 96 need a rewrite. Of the other 17, fourteen have no
-  inventory statement (1.15, 1.15.9, 1.15.10, 1.16, 1.16.1, 4.5.10.1, 4.5.10.3, 4.5.12, 5.3,
-  7.1, 7.1.6, 7.2, 7.2.8, 7.5.9) and three have an inventory statement their text does not carry
-  (2.6.5, 4.5.9.4, 4.5.12.6).
+- **309 sections are held by the entry check** (`formal/derivation/rule_entries.tsv`, 4,968 rows;
+  gate `tools/check_rule_entries.py`): 73 rewritten as entries, 174 registered as they stand,
+  62 registered after their over-long sentences were split.
+- **51 numbered sections are not landed** (`handoff/remaining.tsv`), and every one is waiting on
+  something other than writing time:
+  - 33 have sentences over 40 words and are held: the Part 1 and Part 7 stance text and
+    CC 4.2 and 4.2.5 (Eric's voice); CC 5.3.3.2.1, 5.3.3.2.2, 5.3.3.2.3, 5.3.3.2.5, 5.3.3.5 and
+    2.6.1.8 (edge 45.1); CC 2.6.1.7 (wire-exact, generated in part); CC 2.6.9 (the BCP 14
+    key-words sentence, 48 words, standard wording that should not be split: give the check
+    an exemption for it and register the section).
+  - 15 have no inventory statement (1.15, 1.15.9, 1.15.10, 1.16, 1.16.1, 4.5.10.1, 4.5.10.3,
+    4.5.12, 5.3, 5.3.2.4.5, 7.1, 7.1.6, 7.2, 7.2.8, 7.5.9): read each for statements the
+    inventory missed, or record that it states no rule.
+  - 3 have an inventory statement their text does not carry (2.6.5, 4.5.9.4, 4.5.12.6): correct
+    the inventory row's section first.
 
 ## 3. Next steps, in order
 
-1. **Registering is done** for every section that needed no rewrite (`handoff/register.py`).
-   Left from it: read the fourteen sections with no inventory statement for statements the
-   inventory missed, and correct the inventory rows of CC 2.6.5, 4.5.9.4 and 4.5.12.6 (each has
-   a row whose statement stands in another section) before registering them. The registered
-   phrases were matched by score and only those under 0.6 were read by hand, so a phrase may
-   sit in the right paragraph on the wrong sentence; the check still holds it to the section.
-2. **Rewrite the remaining sections that are free to rewrite**, by the ranking in
-   `handoff/remaining.tsv`, in batches of ten to eighteen writers (recipe in section 4).
+1. **Registering and the free rewrites are done.** The registered phrases were matched by
+   score (`handoff/register.py`) and only the low scores were read by hand, so a phrase may sit
+   in the right paragraph on the wrong sentence; the check still holds it to the section.
+   The sentence splits were each read by a second reader. Left over: the 18 sections with no
+   over-long sentence listed in section 2.
+2. **Ask Eric about the held stance text** (Parts 1 and 7, CC 4.2, 4.2.5): 22 sections, about
+   75 sentences over the bound. Either he rewrites, or he says a split that keeps his words is
+   welcome, or the check exempts stance sections.
 3. **Held sections: do not rewrite without the stated word.**
    - CC 5.3.3.2.3, 5.3.3.5, 2.6.1.8, and by extension 5.3.3.2.1 and 5.3.3.2.5: the edge 45.1
      work is changing these wire sections. Wait for edge's built layouts and passing
@@ -195,6 +203,14 @@ For Eric (value choices):
 Plainly stale, fixable in a consistency pass (a sample; confirm each against the text):
 - Five immediate-removal bases in CC 4.5.3 against four in CC 6.1.2.2.
 - "CEG names the three duties" over a four-row table (CC 4.5.5).
+- CC 5.4.2: "strangers hold nothing" beside "the bytes they hold remain sealed" (residue of the
+  time community holding claims were public); "(keep/evict decision)" has lost its subject.
+- CC 5.3.6.1: the list of admission refusal tokens omits `federation_withdraws_not_admitted`
+  and `federation_addressed_not_recipient` of Part 2.
+- CC 4.2.2 carries `hardware_class` "as a JSON property on a signed key record … and inside
+  `attestation_evidence`"; CC 4.2.2.1 says it "is not a directory column".
+- CC 5.3.2.2 cites the subject's withdrawal authority as "rule 2" in one sentence and "rule 2 or
+  3" in the next; CC 5.3.3.1 says "binding and nonce pinned here" and pins no nonce there.
 - Stale cites: CC 3.1.7 to "CC 2.6.7 `{platform}` discipline" (it is CC 2.3.2.1, also in
   `tools/build_cc_namespace.py`); CC 3.3.6.3 "(CC 3.3.1)" (it is CC 2.6.7); "[CC 4.5.1.1] swap
   test" (it is CC 4.5.1); CC 3.2 cites the public-broadcast exemption as CC 5.3.3 (it is CC 5.1).
@@ -236,3 +252,10 @@ until they answer or ship): persist #1252 (cosign hold, `cosign:{state}`), #1255
 answers), #1256 (group goal vote), #1257 (acceptance is the owner's); server #814 (seat rule).
 Told and not yet answered: the other implementers and CEWP have not been told the token moves
 of the 192 to 184 family fold.
+
+Owed at the cut, asked by the client session for Eric (2026-11-11): when the namespace work is
+final (the fold, the one seat rule, the decimal re-cut), file an issue on CIRISAI/CIRISClient
+giving the commit or tag to pin, the sha256 of `manifests/namespace_registry.json`,
+`manifests/transitions.json` and `manifests/ui_primitives.json` there, the family rows renamed
+or folded since v1.0-rc6 (the client's pin, 158 families), and the old-to-new decimal map. The
+client's guide was told not to print a CC section number for CSD/5 until the laws are in a Part.

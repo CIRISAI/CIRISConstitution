@@ -220,7 +220,7 @@ The four rules above constrain **authoring on the delegation plane**. Under load
 
 Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secure_Enclave` = 0.95; `YubiKey_5_FIPS` = 0.95; `TPM_2_0` = 0.9; `placeholder_pending_provisioning` = 0.0; `software_hsm_development` = 0.0. **A class this table does not list carries multiplier 0.0** — an unlisted class is a claim nobody rated, not a claim rated by its own spelling.
 
-**Two fields, two questions (normative).** `hardware_class` is the **certified class** a holder asserts, carried as a JSON property on a signed key record (as served in the GenesisBundle's `holders` / `serve_nodes` and on `/v1/accord-holders`) and inside `attestation_evidence`; it is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary of custody mechanisms, whose tokens the register pins (CLM-hardware-custody-vocabulary). One is never a value of the other; a consumer that needs both reads both. The classes in use beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
+**Two fields, two questions (normative).** `hardware_class` is the **certified class** a holder asserts. The field is carried as a JSON property on a signed key record (as served in the GenesisBundle's `holders` / `serve_nodes` and on `/v1/accord-holders`) and inside `attestation_evidence`. The field is **not** a dimension, so [CC 3.1.7](part_3_the_namespace.md) R3 does not bind its spelling and its stored values (`YubiKey_5_FIPS` on the ceremony keys) stand. `hardware_custody:{platform}` ([CC 3.1.2](part_3_the_namespace.md)) is the **custody mechanism** the key actually runs on, a closed lowercase vocabulary of custody mechanisms, whose tokens the register pins (CLM-hardware-custody-vocabulary). One is never a value of the other; a consumer that needs both reads both. The classes in use beyond this table — `YubiKey_5`, `Nitrokey`, `ExternalToken_Generic`, `Passkey_Synced`, `Android_Software` / `Android_TEE` / `Android_StrongBox`, `Apple_AppAttest`, `SoftwareOnly_TEST` — are unlisted and therefore 0.0 until a row rates them. `custody_tier` (`portable_2fa` / `software_test`) is a third thing, the holder's operating mode, orthogonal to both. The mapping from class to mechanism:
 
 | `hardware_class` | `hardware_custody:{platform}` it runs on |
 |---|---|
@@ -233,7 +233,7 @@ Per-class recommended trust-multipliers: `HSM_FIPS_140_3_L3` = 1.0; `Apple_Secur
 
 #### 4.2.2.1 `hardware-class-hardware` — Hardware-class claim, and the attestation chain that corroborates it
 
-The `hardware_class` string is self-asserted by the holder; `hardware_class` is not a directory column — it rides inside the key's `attestation_evidence`. What corroborates it is the **evidence variant**, not the string: the per-platform attestation chains are evidence-established ([CC 8.3.1](part_8_appendices.md) **R5** — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK), and a verifier admits a class only when the chain for that mechanism verifies and the attested key is the record's own key (a lifted attestation replayed under another key is refused). Consumer policy therefore keys on the **verified mechanism** (`hardware_custody:{platform}`, the `HardwareType` the chain proves) and reads `hardware_class` as the holder's certified-class claim over it; where no chain verifies, the class is unattested and the multiplier is 0.0.
+The `hardware_class` string is self-asserted by the holder; `hardware_class` is not a directory column — it rides inside the key's `attestation_evidence`. What corroborates it is the **evidence variant**, not the string. The per-platform attestation chains are evidence-established ([CC 8.3.1](part_8_appendices.md) **R5** — Android Key Attestation, Apple App Attest, YubiKey PIV, TPM EK). A verifier admits a class only when the chain for that mechanism verifies and the attested key is the record's own key (a lifted attestation replayed under another key is refused). Consumer policy therefore keys on the **verified mechanism** (`hardware_custody:{platform}`, the `HardwareType` the chain proves) and reads `hardware_class` as the holder's certified-class claim over it; where no chain verifies, the class is unattested and the multiplier is 0.0.
 
 ### 4.2.3 `accord-holder` — The accord-holder triple
 
@@ -281,7 +281,7 @@ family {
 
 ### 4.2.4 `policy-concern` — Concern split — key material vs role-recognition policy
 
-**Key material** (Ed25519 + ML-DSA-65 pubkeys for the three holders) lives in the persistence substrate: `federation_keys` rows with `identity_type="accord_holder"`, self-signed at provisioning, and admitted as accord holders by the accord's own genesis ceremony (the GenesisBundle, [CC 5.3.4](part_5_transport_substrate.md)); each holder also carries a **pre-committed recovery key** (below).
+**Key material** (Ed25519 + ML-DSA-65 pubkeys for the three holders) lives in the persistence substrate: `federation_keys` rows with `identity_type="accord_holder"`, self-signed at provisioning, and admitted as accord holders by the accord's own genesis ceremony (the GenesisBundle, [CC 5.3.4](part_5_transport_substrate.md)). Each holder also carries a **pre-committed recovery key** (below).
 
 **Role-recognition policy + verifier logic** is the registry verifier's: the M-of-N multi-sig verification, the `EmergencyShutdown CONSTITUTIONAL` admin RPC, the audit hooks; the register's rows under CC 4.2 name the implementation.
 
@@ -533,11 +533,11 @@ The trust root cannot be an opaque blob; its entire purpose is public auditabili
 
 ##### 4.4.3.2.2 `community-forward` — Forward secrecy on community member removal
 
-With a community DEK the removed member holds the current epoch key, so the rule at [CC 4.4.3.4.5](#4.4.3.4.5) is carried by rotation here: after a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content. What they already received during membership stays with them (once shared, always shared; no post-compromise security (PCS)), and nothing is re-encrypted.
+With a community DEK the removed member holds the current epoch key, so the rule at [CC 4.4.3.4.5](#4.4.3.4.5) is carried by rotation here. After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content. What they already received during membership stays with them (once shared, always shared; no post-compromise security (PCS)), and nothing is re-encrypted.
 
 ##### 4.4.3.2.3 `community-admission` — Community admission per `consensus_protocol` + `cohort_subkind`
 
-A proposed membership change is a **new version of the roster record** ([CC 3.2](part_3_the_namespace.md) T6), admitted under the group's quorum and chained by `prev_head_digest`, covering the roster rows (widenings, revocations, resignations) that ride their own planes — never a single-signer `supersedes` Contribution, which a rule-1 or rule-2 `withdraws` could retire without the quorum. Substrate evaluates the CURRENT community's `consensus_protocol` (same six canonical kinds as family) AND any subkind-specific admission requirements:
+A proposed membership change is a **new version of the roster record** ([CC 3.2](part_3_the_namespace.md) T6), admitted under the group's quorum and chained by `prev_head_digest`. The new version covers the roster rows (widenings, revocations, resignations) that ride their own planes. A proposed membership change is never a single-signer `supersedes` Contribution, which a rule-1 or rule-2 `withdraws` could retire without the quorum. Substrate evaluates the CURRENT community's `consensus_protocol` (same six canonical kinds as family) AND any subkind-specific admission requirements:
 
 ```
 admit_community_change(C, proposed: community_record):
@@ -652,7 +652,7 @@ resolve_member_transport(C, now):
 
 The three resolutions and their trust roots: **WHO** = `resolve_community` (the roster head, admitted under the current `consensus_protocol`) · **BINDING** = `transport_destination` (federation-key-signed `identity_occurrence`, CC 3.3.6.2) · **WHERE** = Reticulum announce/path-request (mesh, no CEG). Reachability is never trust ([CC 5.3.3.4](part_5_transport_substrate.md)): a path that answers is not an authorization; only the signed binding + quorum are.
 
-**Cold-start (bootstrap).** A node that knows only `community_key_id` needs two out-of-band pins: (1) the `community_key_id` itself (trust anchor) and (2) ≥1 **seed `destination_hash`** (reachability) — and, before it attaches, a third thing that is neither: (3) a **witnessed lineage head** of that community inside its charter's `attach_window` ([CC 3.2](part_3_the_namespace.md) T4a, T6). Freshness gates attaching, never staying attached. It reaches any one seed, pulls the group record at its head, runs `resolve_member_transport`, verifies founder-quorum against the pinned `community_key_id`, then floats on the live set thereafter. A malicious seed cannot forge membership (quorum signature check) — it can only deny service (try another seed). **Bootstrap reachability ≠ bootstrap trust.** `ciris-canonical` ([CC 3.2](part_3_the_namespace.md)) is the root community whose seeds clients pin.
+**Cold-start (bootstrap).** A node that knows only `community_key_id` needs two out-of-band pins: (1) the `community_key_id` itself (trust anchor) and (2) ≥1 **seed `destination_hash`** (reachability). Before the node attaches, it needs a third thing that is neither: (3) a **witnessed lineage head** of that community inside its charter's `attach_window` ([CC 3.2](part_3_the_namespace.md) T4a, T6). Freshness gates attaching, never staying attached. It reaches any one seed, pulls the group record at its head, runs `resolve_member_transport`, verifies founder-quorum against the pinned `community_key_id`, then floats on the live set thereafter. A malicious seed cannot forge membership (quorum signature check) — it can only deny service (try another seed). **Bootstrap reachability ≠ bootstrap trust.** `ciris-canonical` ([CC 3.2](part_3_the_namespace.md)) is the root community whose seeds clients pin.
 
 ##### 4.4.3.2.5 `admission-geographic` — Geographic-community admission flow (worked example)
 
@@ -1297,7 +1297,7 @@ ratified_pair(pair_id):
 
 When `len(T.subject_key_ids) > 1`, any one named party is enough ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)): a `withdraws` admitted under rule 2 or 3 from any single subject in `T.subject_key_ids` evicts the Contribution. This is the subject-as-individual principle applied at the subject-authority layer.
 
-Where `T` is held under an affiliation class flagged `erasure_exempt` or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason under that declared gate; the subject's path is [CC 4.5.5](#4.5.5).
+Where `T` is held under an affiliation class flagged `erasure_exempt` or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason under that declared gate. The subject's path is [CC 4.5.5](#4.5.5).
 
 Concrete cases:
 - Group photo with three subjects: any one subject revokes → the photo is evicted from federation propagation.
@@ -1306,7 +1306,7 @@ Concrete cases:
 
 Producers MAY mitigate by partitioning content into per-subject Contributions (e.g., one chat-message Contribution per author, linked via `topical_relation:replies_to`) so that one subject's revocation doesn't evict another's content.
 
-> **No distinct multi-subject evict path — admission + precedence is sufficient.** Multi-subject eviction is fully expressed by two mechanisms already in the spec and needs **no new primitive, dimension, or `hard_case`**: (1) **admission** — the per-subject `withdraws` is admitted under [CC 2.4.1.1 rule 2/3](part_2_the_grammar.md) exactly as a single-subject `withdraws` is; (2) **precedence** — the latest-wins / revoke-is-terminal precedence at the consumer read path ([CC 4.4.3.5.5](#4.4.3.5.5)) applies per-subject, and any one subject's terminal `withdraws` evicts `T` for all (the any-subject-binding above). There is no quorum to compute and no "evict event" to materialize separately from the admitted `withdraws` — the withdrawal IS the evict. Substrates implement this as the OR over per-subject revocation state, not as a new code path.
+> **No distinct multi-subject evict path — admission + precedence is sufficient.** Multi-subject eviction is fully expressed by two mechanisms already in the spec and needs **no new primitive, dimension, or `hard_case`**. **(1) admission** — the per-subject `withdraws` is admitted under [CC 2.4.1.1 rule 2/3](part_2_the_grammar.md) exactly as a single-subject `withdraws` is. **(2) precedence** — the latest-wins / revoke-is-terminal precedence at the consumer read path ([CC 4.4.3.5.5](#4.4.3.5.5)) applies per-subject, and any one subject's terminal `withdraws` evicts `T` for all (the any-subject-binding above). There is no quorum to compute and no "evict event" to materialize separately from the admitted `withdraws` — the withdrawal IS the evict. Substrates implement this as the OR over per-subject revocation state, not as a new code path.
 
 ##### 4.4.3.5.5 `consent-effective` — Effective consent resolution (read path)
 
@@ -1391,7 +1391,7 @@ ladder_verdict(attestations) =
 
 Consumers MAY render the ladder as `L1` / `L2` / `L3` / `L4` / `L5` for UI / dashboards / audit trails. The rendering is composition output, not wire emission.
 
-**Why this matters**: a verifier emitting `attestation:registry_consensus +1.0` is the mechanism claim. Whether that's "L3" in any particular consumer's ladder ordering is a composition concern — different consumers may weight the rungs differently or require more than one (e.g., some safety-critical applications may require L4 *and* L5, others may treat L3 as sufficient for advisory work). The wire stays neutral; the ladder is consumer policy.
+**Why this matters**: a verifier emitting `attestation:registry_consensus +1.0` is the mechanism claim. Whether that's "L3" in any particular consumer's ladder ordering is a composition concern. Different consumers may weight the rungs differently or require more than one (e.g., some safety-critical applications may require L4 *and* L5, others may treat L3 as sufficient for advisory work). The wire stays neutral; the ladder is consumer policy.
 
 **Mechanism-only emission**: emissions use the `attestation:{mechanism}` form per the table above. The `attestation:l{N}:*` form is rejected at admission per the [CC 1.2](part_1_foundation.md) gate.
 
@@ -1399,7 +1399,7 @@ Consumers MAY render the ladder as `L1` / `L2` / `L3` / `L4` / `L5` for UI / das
 
 Three-layer consumer policy for composing trust over `agent_files:*` attestations ([CC 3.1.9.1](part_3_the_namespace.md) + [CC 3.1.1](part_3_the_namespace.md)).
 
-**Layer 1 — Default trust**: the shipped default root's conferring roster publishes the default trust set; an `agent_files:*` attestation at or above the root's published threshold from a key of that roster puts a file in the default-trust state; the shipped default root publishes `score ≥ 0.7`. A consumer that pins another root takes that root's published set ([CC 4.4.3.8](#4.4.3.8) Policy A). The default root's install endpoint resolves default files via this rule.
+**Layer 1 — Default trust**: the shipped default root's conferring roster publishes the default trust set. An `agent_files:*` attestation at or above the root's published threshold from a key of that roster puts a file in the default-trust state. The shipped default root publishes `score ≥ 0.7`. A consumer that pins another root takes that root's published set ([CC 4.4.3.8](#4.4.3.8) Policy A). The default root's install endpoint resolves default files via this rule.
 
 **Layer 2 — Open Contribution**: any federation-key holder may emit `agent_files:*` attestations. The wire format admits them; consumer policy decides whether to surface them. The "Browse alternatives" view shows third-party agent_files with explicit provenance disclosure.
 
@@ -1605,14 +1605,14 @@ A processor MUST resolve `references_attestation_id` under the emitting operatio
 
 #### 4.5.1.2 `meta-amendment` — Meta-amendment + entrenchment
 
-The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md) T1–T4 prefix-admission gate, and the [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD constitutional layer are **entrenched** — changes to these three surfaces require a MAJOR version bump per [CC 2.6.4](part_2_the_grammar.md) AND the signatures of a strict majority of the standing HUMANITY_ACCORD roster, M of N, counted as every accord threshold is ([CC 4.2.6](#4.2.6)), never a fixed 2-of-3, because the roster is meant to grow (a separate, dedicated accord ratification, not the CC 4.5.1 step 5 sign-off on an ordinary amendment). Without this entrenchment, a single quorum could rewrite the gate admitting the next quorum. (This entrenched ratification is the mechanism **after the scale gate**; before the scale gate it is exercised by the steward under the scale gate in [CC 4.5.1](#4.5.1).)
+The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md) T1–T4 prefix-admission gate, and the [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD constitutional layer are **entrenched**. Changes to these three surfaces require a MAJOR version bump per [CC 2.6.4](part_2_the_grammar.md) AND the signatures of a strict majority of the standing HUMANITY_ACCORD roster, M of N. The majority is counted as every accord threshold is ([CC 4.2.6](#4.2.6)), never a fixed 2-of-3, because the roster is meant to grow. These signatures are a separate, dedicated accord ratification, not the CC 4.5.1 step 5 sign-off on an ordinary amendment. Without this entrenchment, a single quorum could rewrite the gate admitting the next quorum. This entrenched ratification is the mechanism **after the scale gate**; before the scale gate it is exercised by the steward under the scale gate in [CC 4.5.1](#4.5.1).
 
 #### 4.5.1.3 `open-vocabulary` — Open-vocabulary collision rule
 
 When two parties independently register confusingly-similar `{kind}` / `{axis}` values within the same prefix family, the following resolution applies:
 
 1. **First-registered wins** for the canonical-attestation surface. The earlier `signed_at` holds the name; later registrations carry a `differs_in: ["semantic_disambiguation"]` clarification or pick a distinct value.
-2. **Levenshtein-distance guard**: a CEG-Conforming Substrate (CCS) SHOULD compute Levenshtein distance against existing values in the same prefix family at admission; values within distance ≤ 2 of an existing canonical value SHOULD return a `409 IDEMPOTENT_CONFLICT` with an advisory hint, NOT a hard reject — the producer may proceed if the similarity is intentional (e.g., `commonsense` vs `commonsense_hard` are intentionally close).
+2. **Levenshtein-distance guard**: a CEG-Conforming Substrate (CCS) SHOULD compute Levenshtein distance against existing values in the same prefix family at admission. Values within distance ≤ 2 of an existing canonical value SHOULD return a `409 IDEMPOTENT_CONFLICT` with an advisory hint, NOT a hard reject. The producer may proceed if the similarity is intentional (e.g., `commonsense` vs `commonsense_hard` are intentionally close).
 3. **No squatting**: a `{kind}` registered but never used (no scored attestations in 90 days) MAY be reclaimed by another producer via the [CC 4.5.1](#4.5.1) amendment process.
 
 ### 4.5.2 `compliance` — Vertical compliance + subject-bearing dimension governance
@@ -1831,7 +1831,7 @@ Every new prefix admitted to the [CC 3.1](part_3_the_namespace.md) namespace pas
 
 ### 4.5.7 `registry-watchlist` — Watchlist auto-detection — opt-in, per-group, separation-of-powers
 
-Content-watchlist auto-detection: a [CC 4.5.5](#4.5.5) `moderate`-scope holder **optionally** enables a watchlist (`watchlist:{id}`, [CC 3.1.9.4](part_3_the_namespace.md)) for a group they moderate; the fabric auto-fires the matcher at the **publish/share seam** and auto-fires the action — CSAM → `takedown_notice{PerceptualHashCsam}` ([CC 4.5.3](#4.5.3)); other → `detection:*` + a `moderation:*` ModerationEvent to the named moderator. Rides existing primitives — **no new structural primitive.**
+Content-watchlist auto-detection: a [CC 4.5.5](#4.5.5) `moderate`-scope holder **optionally** enables a watchlist (`watchlist:{id}`, [CC 3.1.9.4](part_3_the_namespace.md)) for a group they moderate. The fabric auto-fires the matcher at the **publish/share seam** and auto-fires the action: CSAM → `takedown_notice{PerceptualHashCsam}` ([CC 4.5.3](#4.5.3)); other → `detection:*` + a `moderation:*` ModerationEvent to the named moderator. Rides existing primitives — **no new structural primitive.**
 
 **Opt-in, per-group, NEVER global (normative).** A watchlist is enabled per-group by its `moderate`/`takedown` authority; a global "scan everything" config is **non-conformant** — that is the bulk-surveillance posture the framework refuses. Enable/disable is **signed by the authority and revocable** (`withdraws`).
 
@@ -1845,7 +1845,7 @@ Content-watchlist auto-detection: a [CC 4.5.5](#4.5.5) `moderate`-scope holder *
 
 **Audit — never silent (normative).** Enabling a watchlist emits `hard_case:watchlist_enabled:{group}` ([CC 3.1.9.4](part_3_the_namespace.md)) — who turned it on + which list; **every match** emits `hard_case:watchlist_match:{group}`. Enablement and matches are on the record, always.
 
-**CSAM-disable non-silent floor (normative).** Disabling a **CSAM** watchlist MUST be an audited act — a `withdraws` signed by the authority that **emits `hard_case:watchlist_enabled` (disable variant)**; **silent removal of a CSAM list is barred** (a predator-operator cannot turn off CSAM detection without leaving a trace). Ordinary (non-CSAM) lists may be freely toggled. This is the floor that keeps the opt-in honest.
+**CSAM-disable non-silent floor (normative).** Disabling a **CSAM** watchlist MUST be an audited act: a `withdraws` signed by the authority that **emits `hard_case:watchlist_enabled` (disable variant)**. **Silent removal of a CSAM list is barred** (a predator-operator cannot turn off CSAM detection without leaving a trace). Ordinary (non-CSAM) lists may be freely toggled. This is the floor that keeps the opt-in honest.
 
 **Honest scope.** Detection runs **only at the publish/share seam of enabled groups** — it **cannot** reach [CC 5.2](part_5_transport_substrate.md) self/family private content (the universal E2EE limit; not claimed solved), and CEG does **not** mandate client-side scanning. **1+4 preserved** — `watchlist:{id}` rides `scores`/config over `delegates_to`; the audit reasons ride the existing `hard_case:*` prefix; the actions ride `takedown_notice` / `detection:*` / `moderation:*`.
 
@@ -1921,7 +1921,7 @@ A withdrawal reaches forward only ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)),
 - Forward visibility evicts (consumer policy treats the subject as "no current location proof" for new admission decisions from withdrawal-time forward)
 - A withdrawn `location_proof` leaves serving like any row of the subject's own ([CC 4.5.3](#4.5.3)); the audit chain keeps the tombstone — that a proof existed and was withdrawn — and never the cell. What withdrawal and expiry govern is the present claim; the record that a claim was made is the tombstone, not the content.
 
-This is the cost the subject opts into when emitting the `location_proof`: a copy a peer took before the withdrawal reached it is not recalled by the wire, as for every row ([CC 2.4.1](part_2_the_grammar.md)), and the tombstone is what every holder converges on. What the wire format promises:
+The cost the subject opts into when emitting the `location_proof` is this. A copy a peer took before the withdrawal reached it is not recalled by the wire, as for every row ([CC 2.4.1](part_2_the_grammar.md)), and the tombstone is what every holder converges on. What the wire format promises:
 
 - **Rough-only** (CC 4.5.9.2): a claim, while it stands, is bounded to resolution ≤ 7, never finer
 - **Opt-in** (CC 4.5.9.1): the claim exists only because the subject signed and emitted it
@@ -1959,7 +1959,7 @@ Perceptual-hash matchers (PhotoDNA / PDQ / Project Arachnid / GIFCT hash-sharing
 
 For a CIRIS substrate operator running a federation node, **the default operator path is**:
 
-> **Self-hosted PDQ matcher against the reference feeds the operator can obtain** (the PDQ algorithm is open; the hash lists come from the gated feeds an operator can obtain — the Canadian Centre for Child Protection's (C3P) Project Arachnid feed, which requires a C3P partnership, and GIFCT-published lists where available). No federation-level access-governance overhead; a gated feed's own terms apply. Operator carries responsibility for index freshness.
+> **Self-hosted PDQ matcher against the reference feeds the operator can obtain.** The PDQ algorithm is open. The hash lists come from the gated feeds an operator can obtain: the Canadian Centre for Child Protection's (C3P) Project Arachnid feed, which requires a C3P partnership, and GIFCT-published lists where available. No federation-level access-governance overhead; a gated feed's own terms apply. Operator carries responsibility for index freshness.
 
 Of the three paths — (a) a self-hosted matcher, (b) clearinghouse delegation, (c) on-device OS-vended hooks — this is (a): it avoids the federation dependency at the protective layer that (b) would introduce, and the controversy around (c).
 
@@ -1986,7 +1986,7 @@ Per [CC 3.3.6](part_3_the_namespace.md) `identity_occurrence` + [CC 3.3.4](part_
 
 #### 4.5.12.1 `forward` — Forward secrecy on member departure
 
-When a member leaves a family, or an occurrence is withdrawn from a self-collective, the rule is the one at [CC 4.4.3.4.5](#4.4.3.4.5): the departed party keeps the `key_grant`s it already holds, nothing is re-encrypted, and because every self and family write seals under a fresh DEK the substrate simply stops wrapping new DEKs to the departed keys. No rotation ceremony is needed at these scopes and none is defined.
+When a member leaves a family, or an occurrence is withdrawn from a self-collective, the rule is the one at [CC 4.4.3.4.5](#4.4.3.4.5). The departed party keeps the `key_grant`s it already holds and nothing is re-encrypted. Because every self and family write seals under a fresh DEK, the substrate simply stops wrapping new DEKs to the departed keys. No rotation ceremony is needed at these scopes and none is defined.
 
 **Rationale**: consistent with a withdrawal reaching forward only ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)) + [CC 4.5.3](#4.5.3) "takedown isn't a coup" + [CC 4.4.3.5.1](part_4_composition_governance.md) consent-decay-doesn't-re-encrypt. The substrate's forward-secrecy posture is uniform across consent, takedown, and membership-departure surfaces.
 
@@ -1998,7 +1998,7 @@ One identity MAY belong to multiple families. Each family has its own DEK and it
 
 #### 4.5.12.3 `admission-self` — Self-occurrence admission — single-vouch
 
-A new `identity_occurrence` is admitted on a signature from EITHER the root `identity_key_id` (until the self evicts its genesis key) OR any currently active occurrence of that identity ("trust any device I've already onboarded"); a `node`-role signer counts only through its live owner-binding, and a `user`-role key joins the self's roster by the self-roster door of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3) (one key: the owner's own signature; two or more: a strict majority of the live roster, the proposer included, or the lone path after its window with no objection). Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
+A new `identity_occurrence` is admitted on a signature from EITHER the root `identity_key_id` (until the self evicts its genesis key) OR any currently active occurrence of that identity ("trust any device I've already onboarded"). A `node`-role signer counts only through its live owner-binding. A `user`-role key joins the self's roster by the self-roster door of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3). At one key that door is the owner's own signature. At two or more it is a strict majority of the live roster, the proposer included, or the lone path after its window with no objection. Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
 
 **Rationale**: matches user-intuition for self-membership ("my phone unlocks my laptop's trust posture for new devices"); avoids the operational overhead of multi-vouch for routine onboarding; the security gradient lives in the optional `hardware_attestation` field, not in the admission rule.
 
