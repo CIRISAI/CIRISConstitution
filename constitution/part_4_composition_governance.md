@@ -837,7 +837,7 @@ There is no merge and no split. A body that merges or splits founds the new reco
   - **The ceiling is constitutional — at most 365 days (365 × 86 400 s) after `delegation_valid_from` — and the term itself is a charter parameter** (`role_term`, integer days, 1..=365, resolved through the `community_id` the edge carries, [CC 2.1](part_2_the_grammar.md)). So a small affiliation may choose ninety days.
   - Renewal is only a fresh conferral.
   - An edge with no term or a term past the ceiling is refused `delegation_term_required`.
-  - A lapsed `moderate` edge is a moderator lapse under [CC 4.5.4](#4.5.4): auto-promotion in the same step, the [CC 4.5.13](#4.5.13) read-only recovery where nobody can be promoted, fail-secure when it elapses.
+  - A lapsed `moderate` edge is a moderator lapse under [CC 4.5.4](#4.5.4): the room locks and elects ([CC 4.5.13](#4.5.13)), read-only until a moderator is seated, fail-secure while none is.
   - This strands no one: the founders are the roster root, not an edge, so when every admin's term lapses the quorum re-confers.
   - The owner-binding is out of scope (it defines the `self` boundary; [CC 3.2](part_3_the_namespace.md) governs its lapse).
   - `hierarchy` supports **multi-parent DAG** roles (a grad student under PI + chair + registrar at once), a **configurable depth cap** (> the [CC 4.1.1](part_4_composition_governance.md) default-5 for deep secretariats), and **per-compartment/per-matter** roles (responsible attorney, conflicts counsel, PI).
@@ -1702,7 +1702,7 @@ A fast-path coordination protocol carves this out:
 
 **The takedown-isn't-a-coup property.** Fast-path takedowns happen via this protocol and nowhere else. A `takedown_notice` targets content under a community's duty-holders ([CC 4.5.5](#4.5.5)), and `federation_keys` is not such a target. A notice demanding the removal of key records for whole categories of participants is refused at the enforced-admission gate like any other unauthorised action. The halt is no escalation path for this case ([CC 4.2.1.1](#4.2.1.1)). It pauses agents' acts and touches no data door ([CC 4.2.1](#4.2.1)).
 
-### 4.5.4 `registry-named` — Named-moderator existence invariant + merit auto-promotion
+### 4.5.4 `registry-named` — Named-moderator existence invariant + the election in merit order
 
 **No unmoderated multi-party space.** A `community` ([CC 3.2](part_3_the_namespace.md)) operates / federates **only while it has ≥1 active holder of its `moderate` duty** ([CC 4.5.5](#4.5.5)) — the moderation analogue of the [CC 3.2](part_3_the_namespace.md) steward-binding gate.
 
@@ -1740,14 +1740,14 @@ A substrate resolves: **`is_named_moderator(K, C, duty)`** ≔ ∃ live `delegat
 
 **A founder keeps the duty through a change of protocol:** a founder is in the authority set under every `consensus_protocol`, so its zero-hop duty persists when the community moves from `founder_only`, and no row is written for it. What the change narrows is who else may appoint, never who holds.
 
-**Merit grants the duty, NOT fiat (anti-censorship).** The auto-promoted moderator holds the [CC 4.5.5](#4.5.5) `moderate`/`takedown`/`review` duty — but every **action** is constrained, so this is not arbitrary power:
+**Merit orders the ballot and the vote grants the duty, NOT fiat (anti-censorship).** The elected moderator holds the [CC 4.5.5](#4.5.5) `moderate`/`takedown`/`review` duty — but every **action** is constrained, so this is not arbitrary power:
 
 - (a) the [CC 4.5.6](#4.5.6) operational-language gate at admission,
 - and (b) deterministic verdicts + the [CC 4.5.5](#4.5.5) Reconsideration appeals (recused reviewers).
 
-**Merit grants the seat; the gate + appeals constrain the action.** The duty is itself revocable and re-auto-promotes on lapse — so capture is bounded.
+**The vote grants the seat; the gate + appeals constrain the action.** The duty is itself revocable and a lapse opens a new election, so capture is bounded.
 
-**1+4 preserved.** `moderation_track_record` rides `scores` ([CC 3.1.9.2](part_3_the_namespace.md)); the existence invariant + auto-promotion are admission/composition rules over the existing `delegates_to` (`moderate` scope) + the reputation corpus. **No new structural primitive.**
+**1+4 preserved.** `moderation_track_record` rides `scores` ([CC 3.1.9.2](part_3_the_namespace.md)); the existence invariant + the election are admission/composition rules over the existing `delegates_to` (`moderate` scope) + the reputation corpus. **No new structural primitive.**
 
 **Enforcement layer — substrate, at admission *and* on every federation step.** The existence gate (rule 1) is a **substrate invariant, not a governance- or consumer-policy-layer obligation.**
 
@@ -2071,7 +2071,7 @@ A harm report is not a change proposal. Its window's default is removal; the act
 | **Consent-gated** (retained, auto-hidden) | live-majority **flagged-but-retained** | **each viewer** — every interstitial click publishes a `consent:*` attestation |
 | **Kept-visible** | a moderator's or steward's **approve-to-keep** (A) **or** live-majority **vote-to-keep** (B) | **the moderator or steward** who approved, or **the majority** who voted to keep |
 
-**Single-point warning + inactive forfeiture.** A community with **only one moderator and no steward MUST be warned to add a second** moderator or a steward. A lone authority is a single point of capture and of failure. **Inactive moderators and stewards lose their standing:** silence past the community's freshness window **lapses the duty**. Merit auto-promotion + the no-moderator recovery above **reconstitute authority** — the highest-`moderation_track_record` live member is auto-granted the `moderate` duty. **No community is ever hostage to an absent moderator or steward.**
+**Single-point warning + inactive forfeiture.** A community with **only one moderator and no steward MUST be warned to add a second** moderator or a steward. A lone authority is a single point of capture and of failure. **Inactive moderators and stewards lose their standing:** silence past the community's freshness window **lapses the duty**. The moderator election above **reconstitutes authority**: the room locks and its members elect, the ballot in merit order with the highest `moderation_track_record` first. **No community is ever hostage to an absent moderator or steward.**
 
 **What the protocol guarantees — structure, not behavior (the M-1 framing).** The protocol guarantees the **structure**: **default-remove, attributable-keep, attributable-view**. It does **not** guarantee the *behavior* of a community that **affirmatively chooses harm** — a moderator or steward may sign to keep abuse, a majority may vote to keep it, and a viewer may consent to view it. What the protocol forecloses is doing any of these **silently**: every transition up the ladder — flag, keep, view — is an **affirmative, attributable act by a named identity**. Per [CC 4.2](part_4_composition_governance.md) M-1, the federation's promise here is **revocability and accountability**, not behavioral control. A community that harbors harm is on the record as having done so, and that record is what justice composes over.
 
@@ -2086,7 +2086,7 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 
 **Consistency — member-reporting, not substrate scanning.** This is **member-reporting + reverse-quorum adjudication**, *not* substrate scanning of private content. CEG **refuses client-side scanning** ([CC 4.5.7](part_4_composition_governance.md)): detection runs only at enabled groups' publish/share seam, never over [CC 5.2](part_5_transport_substrate.md) self/family private content. The principle is unchanged across the federation — **anonymity to outsiders, accountability to insiders** — applied here with teeth on harm: the structure makes silent survival, silent keeping, and silent viewing impossible, while leaving private content unscanned.
 
-**The symmetry with the accord (explicit).** This is [CC 4.2.6](part_4_composition_governance.md) read at community scope, and the two halves correspond. In the accord, a **lone survivor fires** and the roster is changed by a **majority of the standing roster**, cast within a window. In moderation, a **lone steward acts** and, when stewards vanish, the **live community reconstitutes governance**. Fire-floor-of-1 ↔ single-steward signature; a participation window with a named count set ↔ the same window with the present members as its count set; Enoch-Arden return ↔ merit re-auto-promotion on a lapsed steward's silence. **Presence is authority, absence forfeits it, a timer decides** — at every scope; what differs by scope is only the set a count is taken over, which the policy table names.
+**The symmetry with the accord (explicit).** This is [CC 4.2.6](part_4_composition_governance.md) read at community scope, and the two halves correspond. In the accord, a **lone survivor fires** and the roster is changed by a **majority of the standing roster**, cast within a window. In moderation, a **lone steward acts** and, when stewards vanish, the **live community reconstitutes governance**. Fire-floor-of-1 ↔ single-steward signature; a participation window with a named count set ↔ the same window with the present members as its count set; Enoch-Arden return ↔ a new election on a lapsed steward's silence. **Presence is authority, absence forfeits it, a timer decides** — at every scope; what differs by scope is only the set a count is taken over, which the policy table names.
 
 **1+4 preserved.** The proposal/window/tally rides the generalized [CC 4.2.6](part_4_composition_governance.md) participation shape + the [CC 4.5.5](part_4_composition_governance.md) action primitives (`moderation:*` / `takedown_notice` / `reconsideration:*`). The consent gate rides the existing [CC 3.3.1](part_3_the_namespace.md) `consent:*` family + the [CC 3.3.12](part_3_the_namespace.md) `content_class` flag. **No new structural primitive.**
 

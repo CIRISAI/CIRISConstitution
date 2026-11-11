@@ -118,7 +118,7 @@ CLM-axis	4.5.1.1	Every open-vocabulary {axis} value carries an operational defin
 CLM-subject_kind-subject-3	4.5.2.1	Subject-bearing dimension governance (normative)	staged:CIRISServer#536	staged
 CLM-compliance-vertical	4.5.2.2	Vertical compliance mapping (informational)	impl:CIRISServer/src/compliance.rs#ComplianceMap	established
 CLM-takedown	4.5.3	An immediate-removal takedown bypasses the amendment quorum and the counter-notice but never the duty-holder gate: the claimant must hold the takedown duty over the content's community, the substrate tombstones the content by digest on the bytes plane as the one replicating row it shares with steward_purge, and a reachable holder destroys the bytes on receipt.	impl:CIRISPersist/src/cirisnode/takedown_handler.rs#process_takedown_admission	established
-CLM-registry-named	4.5.4	Named-moderator existence invariant + merit auto-promotion	test:CIRISConformance#test_271_moderator_existence_gate impl:CIRISServer/src/safety/named.rs#existence_verdict	established
+CLM-registry-named	4.5.4	Named-moderator existence invariant + the election in merit order	test:CIRISConformance#test_271_moderator_existence_gate impl:CIRISServer/src/safety/named.rs#existence_verdict	established
 CLM-takedown-moderation	4.5.5	Moderation as a delegable duty — `moderate` / `takedown` / `review`	impl:CIRISServer/src/safety/moderation.rs#admit_moderation_action	established
 CLM-registry-watchlist	4.5.7	Watchlist auto-detection — opt-in, per-group, separation-of-powers	impl:CIRISServer/src/safety/watchlist.rs#enable_watchlist	established
 CLM-cohabitation	4.5.8.1	Cohabitation discipline for constitutional + substrate roles	test:CIRISConformance#test_580_role_set_cohabitation	established

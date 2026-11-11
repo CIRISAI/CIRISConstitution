@@ -233,7 +233,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.2.2	compliance-vertical	Vertical compliance mapping (informational)	§11.6.1	0.00092	247	0.11	IV	ceg	constitution
 4.5.2.3	documents-what-3	What this governance layer documents	§11.6.3	0.00092	248	0.11	IV	ceg	constitution
 4.5.3	takedown	Fast-path takedown coordination	§11.4	0.00459	46	0.55	IV	ceg	constitution
-4.5.4	registry-named	Named-moderator existence invariant + merit auto-promotion	§11.11	0.00348	72	0.42	IV	ceg	constitution
+4.5.4	registry-named	Named-moderator existence invariant + the election in merit order	§11.11	0.00348	72	0.42	IV	ceg	constitution
 4.5.5	takedown-moderation	Moderation as a delegable duty — `moderate` / `takedown` / `review`	§11.10	0.00216	109	0.26	IV	ceg	constitution
 4.5.6	admission-operational	Operational-language gate at admission	§11.1	0.00164	151	0.2	IV	ceg	constitution
 4.5.7	registry-watchlist	Watchlist auto-detection — opt-in, per-group, separation-of-powers	§11.12	0.00119	185	0.14	IV	ceg	constitution
