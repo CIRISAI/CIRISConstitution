@@ -34,6 +34,8 @@ NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its sub
                       "**Recipient encryption-key resolution", "**Exclusion MUST NOT be silent", "**Locality dividend",
                       "**Boundary cases"),
               "3.2": ("**Adding a device",),
+              "3.1.3.2": ("**Why K is named in `subject_key_ids`", "**Not a membership rule: reverse quorum",
+                          "**Who may write (normative)"),
               "4.4.3.4.3": ("**The Self (membership)", "**The pair is a data-management record",
                             "**Membership is standing", "**Conformance:", "**Transport (network presence)",
                             "**Worked login flow")}
