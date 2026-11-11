@@ -10,7 +10,8 @@ home section out of its Part and fails when
   2. a row's phrase is not in the home section as it now reads;
   3. a sentence of the entry runs past 40 words (tables, lists and the paragraphs of
      neighbouring rules, which land with their own rules, are not counted; where a rule's home
-     is one headed block of a larger section, the entry is that block);
+     is one headed block of a larger section, the entry is that block; a numbered subsection
+     is its own home and is not read as part of its parent's entry);
   4. a Part calls a landed rule by a name its entry does not use, so a second wording of the
      rule cannot grow beside the entry.
 
@@ -49,7 +50,8 @@ def section(part, number):
     start = next(i for i, l in enumerate(lines) if re.match(rf"#+ {re.escape(number)} ", l))
     depth = len(lines[start]) - len(lines[start].lstrip("#"))
     end = next((i for i in range(start + 1, len(lines)) if re.match(r"#+ ", lines[i])
-                and len(lines[i]) - len(lines[i].lstrip("#")) <= depth), len(lines))
+                and (len(lines[i]) - len(lines[i].lstrip("#")) <= depth
+                     or re.match(rf"#+ {re.escape(number)}\.\d", lines[i]))), len(lines))
     return lines[start:end]
 
 
