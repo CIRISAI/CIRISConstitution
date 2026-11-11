@@ -59,8 +59,10 @@ def section(part, number):
     lines = (ROOT / "constitution" / PARTS[part]).read_text().split("\n")
     start = next(i for i, l in enumerate(lines) if re.match(rf"#+ {re.escape(number)} ", l))
     depth = len(lines[start]) - len(lines[start].lstrip("#"))
+    # An unnumbered heading at the section's own depth is a block of the section, not its end.
     end = next((i for i in range(start + 1, len(lines)) if re.match(r"#+ ", lines[i])
-                and (len(lines[i]) - len(lines[i].lstrip("#")) <= depth
+                and (len(lines[i]) - len(lines[i].lstrip("#")) < depth
+                     or (len(lines[i]) - len(lines[i].lstrip("#")) == depth and re.match(r"#+ \d", lines[i]))
                      or re.match(rf"#+ {re.escape(number)}\.\d", lines[i]))), len(lines))
     return lines[start:end]
 
