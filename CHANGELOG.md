@@ -46,6 +46,12 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The provenance byte contracts are one entry (3.1.2.1): the build-manifest reading is five short paragraphs with the two standing planes as a list; the three preimages, both signature lines and the agent text manifest check are unchanged. No rule changed.
 - The canonical-hash subject is one entry (2.3.2.1): eleven long sentences split, the fingerprint-check scope in its own paragraph; every production, vector and reject row unchanged. No rule changed.
 - The actor and substrate separation is one entry (3.4.7.3): Clauses A to F keep their leads and words, the four things a node verifies before executing are a list, and what is open stays open. No rule changed.
+- The canonical encoding is one entry (2.6.1.3): the four constraints on a redaction scheme are a list, the size bound is three paragraphs, and the intake bound is short sentences inside its numbered item; every RFC reference, byte count and token unchanged. No rule changed.
+- Licensure, grant and delegation are one entry (2.4.1.2.1): the table unchanged, "Anyone." its own sentence, and what admits a licence, when authority is judged and where a licence may travel each in its own paragraph. No rule changed.
+- The key roster of a self is one entry (3.3.6.3): the two maintenance paths and the model's cases are tables in the section's own words. No rule changed.
+- The named-moderator invariant is one entry (4.5.4): the election's causes and ballot order are lists inside rule 2, the authority set has its own paragraph, and the two enforcement points are a list. No rule changed.
+- The dominance and multiplicity gates are one entry (6.1.2.1.2): long sentences split around formulas and constants that are unchanged. No rule changed.
+- Durability at every tier is one entry (6.1.5.3): the three constraints on an owner's choice and the five replication axes are lists. No rule changed.
 - The entry check reads a nested list item as a list item.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
