@@ -126,3 +126,14 @@ arity or case: a `method:` form without its rung or version segment, a `transpar
 `prohibited:` leaf the closed vocabularies do not carry. Those are for the mapping to relabel;
 the check holds them at their present answer so a change in either direction is seen.
 
+## Consolidation findings and text conflicts
+
+`consolidation_findings.tsv` lists the sentences marked as restating a rule that carry a
+condition, party or bound the rule's home lacks (`EXTRA`), or that differ from the home
+(`CONFLICT`). `text_conflicts.tsv` lists the places where the text disagrees with itself or
+leaves a rule unstated: `shape` is one of citation, count, parameter, authority, temporal,
+audience, term, force, shape_of_data, editorial; `for_eric` marks a row whose resolution changes
+who is protected, who decides or what is promised; `still_there` says whether a grep found the
+wording in the Parts when the table was made; `carrier` names the model, manifest or check
+that could hold the settled rule and `witness` what would be added to it. Both are review
+artefacts, one reader's classification, and inputs to decisions, not findings of fact.

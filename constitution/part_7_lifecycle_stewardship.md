@@ -53,11 +53,11 @@ When the three spheres pull in different directions there is no ordering to appl
 
 **Constraint checklist**
 * The act preserves core integrity (integrity means adherence to the stated values, which include beneficence and non-maleficence, so harm avoidance sits inside this constraint; integrity does not mean preserving itself).
-* The act risks no severe, irreversible harm (Non-Maleficence).
+* The act risks no severe, irreversible harm (Non-Maleficence) ([CC 1.6](part_1_foundation.md#1.6)).
 * The act keeps transparency for oversight.
-* The act fulfils, and does not exceed, the mandated purpose.
+* The act fulfils, and does not exceed, the mandated purpose ([CC 7.1.2](#7.1.2)).
 * The act advances broader ecosystem flourishing.
-* Any ambiguous case → trigger WBD.
+* Any ambiguous case → trigger WBD ([CC 1.9](part_1_foundation.md#1.9)).
 
 ### 7.1.5 `5-governance` — Chapter 5: Governance & Oversight Infrastructure
 

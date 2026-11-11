@@ -145,7 +145,7 @@ A subject is not always a federation-enrolled identity. The two forms below let 
 1. **A `federation_keys.key_id`** — the subject is a federation-enrolled identity that can sign on its own behalf. Direct revocation: subject signs a `withdraws` against this Contribution; substrate admits under rule 2 of [CC 2.4.1.1](#2.4.1.1). Wire form: the bare `key_id` (no tag).
 2. **A tagged canonical-hash identifier** — the subject is an external party with no federation_keys row (a platform user-id, channel-id, content-sha256-bound entity, etc.). The substrate cannot verify a signature from this entity directly; **revocation rides a `delegates_to` proxy chain** under rule 3 of [CC 2.4.1.1](#2.4.1.1). Wire form: a tagged string per CC 2.3.2.1 below.
 
-Both forms are admitted; the canonical-hash variant is distinguished by its explicit tag.
+Both forms are admitted; the canonical-hash variant is distinguished by its explicit tag ([CC 2.3.2.1](#2.3.2.1)).
 
 #### 2.3.2.1 `registry-canonical` — Canonical-hash wire form + preimage convention
 
@@ -159,7 +159,7 @@ A CEG-Conforming implementation cannot interoperate without pinning two things: 
 
 **Why the tag is mandatory and bare-hex is rejected**: a directory MAY still hold a `federation_keys.key_id` of the older form `hex(sha256(ed25519_pubkey))` — a **lowercase 64-char hex string**. A `key_id` is otherwise the `<label>-<fingerprint>` form of [CC 2.6.8](#2.6.8), which contains `-` and base32 letters and is therefore format-distinguishable from a bare hash by construction. The tag stays mandatory because such older ids exist and because a subject reference MUST never depend on a consumer's guess about which form it is reading. A bare canonical-hash (also lowercase 64-char hex) would be **format-indistinguishable** from a key_id. A "base64 key_id vs hex canonical-hash" disambiguation heuristic FAILS because Registry key_ids are themselves hex fingerprints, not base64 pubkeys. The tag is therefore load-bearing, not cosmetic. The CC 2.6.3 hex rule governs the `{hex}` segment only; the `canonical:{hashalg}:` prefix is a tagged-union discriminator outside CC 2.6.3's scope and is exempt from the "no separators" rule.
 
-**Scope of the fingerprint check:** a consumer verifies a `key_id`'s fingerprint suffix against the public key it obtains **at registration and at pairing** — the proof-of-possession door — for fedIDs and roster keys ([CC 3.3.6.3](part_3_the_namespace.md)). A held key registered under an older or otherwise non-matching id is not re-keyed or refused by a migration (the record is history), it simply cannot be re-registered or introduced at pairing under that id. The bundle-pinned anchors (`ciris-canonical-1`, `humanity-accord*`) and family ids are not fingerprint-suffixed and are verified by the genesis bundle pin ([CC 5.3.4](part_5_transport_substrate.md)), not by this rule. The fingerprint rule is separate from the roster-id *form* rule of 3.3.6.3. A `device-<hex>-<fp>` id passes the fingerprint check and is refused by the roster door for its form, on the roster door's own schedule.
+**Scope of the fingerprint check:** a consumer verifies a `key_id`'s fingerprint suffix against the public key it obtains **at registration and at pairing** — the proof-of-possession door — for fedIDs and roster keys ([CC 3.3.6.3](part_3_the_namespace.md)). A held key registered under an older or otherwise non-matching id is not re-keyed or refused by a migration (the record is history), it simply cannot be re-registered or introduced at pairing under that id. The bundle-pinned anchors (`ciris-canonical-1`, `humanity-accord*`) and family ids are not fingerprint-suffixed and are verified by the genesis bundle pin ([CC 5.3.4](part_5_transport_substrate.md)), not by this rule. The fingerprint rule is separate from the roster-id *form* rule of 3.3.6.3 ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)). A `device-<hex>-<fp>` id passes the fingerprint check and is refused by the roster door for its form, on the roster door's own schedule.
 
 **Preimage convention — `{platform}:{entity_kind}:{id}`**. The string hashed to produce `{hex}` MUST be:
 
@@ -223,7 +223,7 @@ Together these make the rule-(3) `delegates_to` proxy chain (`canonical_hash ∈
 
 These are **two distinct mechanisms**, not one:
 
-- **Rule-(3) `delegates_to` proxy** ([CC 2.4.1.1](#2.4.1.1) admission rule 3) — *ongoing* revocation authority for an un-enrolled subject. A federation-enrolled key (typically the agent holding data on behalf of the external party) carries `delegates_to(canonical_hash → agent_key, scope: [consent_revocation])`; the agent proxies revocation. The subject never enrolls; the agent acts for them indefinitely.
+- **Rule-(3) `delegates_to` proxy** ([CC 2.4.1.1](#2.4.1.1) admission rule 3) — *ongoing* revocation authority for an un-enrolled subject. A federation-enrolled key (typically the agent holding data on behalf of the external party) carries `delegates_to(canonical_hash → agent_key, scope: [consent_revocation])`; the agent proxies revocation ([CC 2.4.1.1](#2.4.1.1)). The subject never enrolls; the agent acts for them indefinitely.
 - **`canonical_binding`** — *retroactive identity claim*. A now-enrolled federation key asserts "I AM the entity behind `canonical:sha256:{hex}`", binding past canonical-hash subject entries to its real identity. After an admitted `canonical_binding`, the formerly-un-enrolled subject can sign `withdraws` **directly** under rule (2) — the binding promotes the canonical-hash to a real key_id for admission purposes.
 
 `canonical_binding` is **NOT a new admission rule** (no "rule 5"). It composes: the binding is itself a `delegates_to`-shaped attestation (`delegates_to(canonical_hash → newly_enrolled_key, scope: [identity_binding])`) admitted because the enrolling key proves control of the preimage out-of-band. Once bound, rule (2) [direct subject revocation] becomes available to the bound key, and rule (3) [proxy] is no longer needed for that subject.
@@ -271,7 +271,7 @@ When `attesting_key_id ∈ subject_key_ids`, the Contribution is a **self-consen
 
 ### 2.3.5 `shape` — The shape
 
-`subject_key_ids` is an OPTIONAL list. When present, each entry names a party with substrate-recognized authority over this Contribution's continued processing. The basic shape:
+`subject_key_ids` is an OPTIONAL list. When present, each entry names a party with substrate-recognized authority over this Contribution's continued processing ([CC 2.1](#2.1)). The basic shape:
 
 > A consent record is a signed declaration by a subject about the substrate's continued processing of content where that subject appears.
 
@@ -279,7 +279,7 @@ The medical record, photo, interview, training-datum, and group-chat cases all s
 
 ### 2.3.6 `absent` — Empty/absent = status-quo
 
-`subject_key_ids` as `[]` in the mirror (the column beside the row absent) is the status-quo shape (producer-only authority; same as a baseline Contribution carrying no subject authority). Consumers that don't read the field see status-quo behavior. Subject authority is additive at the envelope layer — adding it never changes how an existing consumer reads an envelope that omits it.
+`subject_key_ids` as `[]` in the mirror (the column beside the row absent) is the status-quo shape (producer-only authority; same as a baseline Contribution carrying no subject authority) ([CC 2.1](#2.1)). Consumers that don't read the field see status-quo behavior. Subject authority is additive at the envelope layer — adding it never changes how an existing consumer reads an envelope that omits it.
 
 ## 2.4 `primitive` — The primitive set — 1+4
 
@@ -588,7 +588,7 @@ CEG envelope signing bytes are computed via **JCS — JSON Canonicalization Sche
 - Strings escaped per RFC 8259 §7 with the JCS narrowing on `\uXXXX` form
 - Numbers serialized per the ES6-derived rule (RFC 8785, section 3.2.2.3) — integers without trailing `.0`, no exponent unless the magnitude requires it
 
-A CEG-Conforming Producer MUST produce signing bytes via JCS over the envelope object — `attestation_envelope`, whose member set and placement are pinned at [CC 2.6.1.7](#2.6.1.7). A CEG-Conforming Consumer (CCC) MUST recompute signing bytes via the same JCS rule for signature verification. A CEG-Conforming Substrate (CCS) MUST preserve the as-received envelope object bytes for relay (per the round-trip rule above). It MAY store a parsed representation alongside, but the canonical-bytes contract is against the as-received **object** — its member set and its member values, which no party may alter. The contract is not against a parsed-and-re-serialized shape with defaults materialized or members dropped. Insignificant whitespace and member order are **not** part of that contract: JCS erases both, so normalizing them changes no signing byte.
+A CEG-Conforming Producer MUST produce signing bytes via JCS over the envelope object — `attestation_envelope`, whose member set and placement are pinned at [CC 2.6.1.7](#2.6.1.7). A CEG-Conforming Consumer (CCC) MUST recompute signing bytes via the same JCS rule for signature verification. A CEG-Conforming Substrate (CCS) MUST preserve the as-received envelope object bytes for relay (per the round-trip rule above) ([CC 2.6.1.1](#2.6.1.1)). It MAY store a parsed representation alongside, but the canonical-bytes contract is against the as-received **object** — its member set and its member values, which no party may alter. The contract is not against a parsed-and-re-serialized shape with defaults materialized or members dropped. Insignificant whitespace and member order are **not** part of that contract: JCS erases both, so normalizing them changes no signing byte.
 
 **Redaction vs tampering — the signed-discriminator shape is excluded (normative dead end).** The excluded shape is a signed "I redacted this" marker distinguishing authorized redaction from tampering. It is excluded because **a signed redaction marker proves an authorized party changed the bytes — it does not prove that *only* the redacted parts changed**. A compromised or coerced authority key becomes a licence to rewrite arbitrary content while every reader reports the row as legitimately redacted: integrity replaced by authority, arriving quietly. Any future redaction scheme is bound by four constraints:
 
@@ -622,7 +622,7 @@ Without the rule (implicit / unspecified) failure mode:
 
 With the rule (explicit, normative):
 
-> Bob's relay MUST preserve member presence/absence exactly. Bob forwards the as-received bytes. Carol's verify succeeds. The semantic interpretation step at Carol (applying default `"direct"` to the absent member) happens AFTER signature verification.
+> Bob's relay MUST preserve member presence/absence exactly ([CC 2.6.1.1](#2.6.1.1)). Bob forwards the as-received bytes. Carol's verify succeeds. The semantic interpretation step at Carol (applying default `"direct"` to the absent member) happens AFTER signature verification.
 
 #### 2.6.1.5 `verification` — Verification flow (informational)
 
