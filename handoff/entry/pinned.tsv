@@ -1,0 +1,40 @@
+p3	A **proposal** is an invitation to one key K, targeted at the group
+p3	A device ends its own report by re-acknowledging `none` or by `withdraws`; nobody withdraws another device's report
+p2	A party that could retire the adverse rows about itself and keep the rest would launder its reputation
+p3	A self-report that renews to stay current MUST carry `supersedes`
+p2	A single-signer row cannot carry a quorum's act
+p3	Attester = the agent's occurrence key, subject = the agent's identity key
+p4	Every door that opens a window runs one decision shape
+p3	MUST settle on **earliest `claimed_at`, ties broken on the lowest occurrence `key_id`**
+p3	One ledger per `(steward-bound identity, unit, standard_version)`; `ledger_id` derives deterministically from the triple.
+p6	The partial is `census:partial:{class}:v1` and the composite `census:composite:{class}:v1`, both federation-scope rows
+p3	The policy is two rows of the governance table
+p6	The two publish `census:member:partial:v1` into the room, and `census:expected_active:v1` is the count of owners whose recent bit is set, recomputed by every member from the two partials
+p3	Unlike reachability, the observed party has keys, so `subject_key_ids` is **REQUIRED and non-empty**
+p2	Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold
+p3	`attesting_key_id` = `attested_key_id` = the key
+p5	`witness_relation` MUST be `self` for any local-tier write
+p3	a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation
+p5	a node whose owner resolves to the `minor` band MUST NOT carry a federation-scope owner-binding
+p3	a record of your own reasoning, consent, ownership or configuration must not be anyone else's
+p3	a roster is never enumerable outside its cohort, a public room's included
+p2	a row is admitted only once its signer's key-claim row is held
+p6	a row whose signed `for_key_id` names one recipient is held by the author's node and the recipient's node and by no other
+p3	a verdict about you must not be yours
+p3	is kept as a local projection that still revokes but has no attestation row
+p3	it never leaves the owner's self cohort
+p3	naming the canonical hash `H` as the bound subject
+p3	nobody reports custody for another device
+p3	nothing is pushed to a node whose owner has not joined
+p3	replicated like any Commons row
+p2	revocation is non-rollbackable
+p3	signed by the founder (or a current `moderate`-holder) of the community it names; one live row per community
+p3	so an evicted key cannot sign an owner act into the window in which it was still live
+p3	the `scores` row whose envelope is the `takedown_notice` payload
+p2	the anti-Goodhart dual admits no subject-side removal of an adverse row
+p4	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
+p6	the result is `ballot:tally:{poll_id}:v1`, recomputed by every member
+p3	the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it
+p3	the substrate refuses a report whose scope is not its content's
+p2	trust-root moderation is not trust-root history-editing
+p3	The substrate refuses a report whose scope is not its content's
