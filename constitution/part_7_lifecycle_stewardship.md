@@ -397,7 +397,7 @@ Beneficence outlives the artefact: what it learned should strengthen the systems
 
 ### 7.5.7 `7-succession` — Chapter 7: Succession & Custodial Transfer
 
-When custody passes rather than ends, the ethical duties pass with it — and a new custodian must be fit to carry them. What follows is the transferring steward's chosen and recorded conduct, never a promise: the wire enforces only the owner-binding supersede of [CC 3.2](part_3_the_namespace.md) (supersede-then-rebind or withdraw-then-rebind, never accretive), and anything beyond it is conduct the steward chooses and records, as [CC 7.5.5](#7.5.5) says of every retirement.
+When custody passes rather than ends, the ethical duties pass with it — and a new custodian must be fit to carry them. What follows is the transferring steward's chosen and recorded conduct, never a promise: the wire enforces only the owner-binding supersede of [CC 3.2](part_3_the_namespace.md) (the single-owner invariant), and anything beyond it is conduct the steward chooses and records, as [CC 7.5.5](#7.5.5) says of every retirement.
 
 * The new custodian signs an Adoption Addendum acknowledging all outstanding ethical duties.
 * The Wise Authority may object where the custodian lacks capability or is under sanction.
