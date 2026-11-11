@@ -80,3 +80,46 @@ owner_binding	3.2	p3	841	states	A key left ownerless by a WA-adjudicated abandon
 owner_binding	3.2	p3	844	states	Reclaim is four uncollapsible steps: petition, WA finding, gated withdraws leaving K unowned, fresh co-signed owner-binding; never a one-act transfer	Reclaim MUST NOT move a key from incumbent to claimant in one act
 owner_binding	3.2	p3	845	restates	A consumer resolving self via owner_of treats cardinality not 1 as an error and fails closed; never picks one owner from a sorted set	MUST treat any count other than one as an error and fail closed
 owner_binding	3.2	p3	854	states	No steward-binding targeting a self-sovereign adult is admissible except under adjudicated incapacity	except under adjudicated incapacity
+row_shape	2.1	p2	15	states	attesting_key_id is the attester's registered federation key id; every row carries it	The attester's `federation_keys.key_id`. A substrate field.
+row_shape	2.1	p2	16	states	attested_key_id is the subject's registered federation key id; every row carries it	The subject's `federation_keys.key_id`. A substrate field.
+row_shape	2.1	p2	17	states	dimension is required; substrate treats it as text; consumers parse it against the 3.1 namespace map	The substrate treats it as text; consumers parse it against the namespace map
+row_shape	2.1	p2	18	states	score is required, a scalar in [-1,+1]; sign is polarity, magnitude strength; the per-dimension table fixes each dimension's allowed polarity	REQUIRED on `scores`. A scalar in [-1, +1].
+row_shape	2.1	p2	19	states	confidence is required, in [0,1]: the attester's own confidence in the score	The attester's own confidence in the score, in [0, 1].
+row_shape	2.1	p2	20	states	context is optional free text; the substrate never parses it	Free-form scoping detail. Not parsed by the substrate
+row_shape	2.1	p2	21	restates	evidence_refs is optional in general; some dimensions in 3.1 require it non-empty	Optional in general; some dimensions in
+row_shape	2.1	p2	23	states	epistemic_mode is optional; absent reads as direct	| `epistemic_mode` | `direct` |
+row_shape	2.1	p2	24	states	witness_relation is optional, one of self, external, derived; absent reads as external	| `witness_relation` | `external` |
+row_shape	2.1	p2	25	states	oversight_mode is optional, HITL, HOTL or HOOTL; absent means null and consumer policy applies a per-cell default	| `oversight_mode` | `null`: consumer policy applies a per-cell default |
+row_shape	2.1	p2	26	states	occurrence_id is optional, occurrence-{n} or __shared__; absent reads as occurrence-0; it is self-asserted, not cryptographically bound	| `occurrence_id` | `occurrence-0` |
+row_shape	2.1	p2	27	states	occurrence_count is optional, an integer at least 1; absent reads as 1; self-asserted	| `occurrence_count` | `1` |
+row_shape	2.1	p2	28	states	occurrence_role is optional, primary, shared or replica; absent reads as primary	| `occurrence_role` | `primary` |
+row_shape	2.1	p2	28	states	substrate self-report attestations SHOULD carry occurrence_id, occurrence_count and occurrence_role so reviewers can reconstruct which occurrence agreed	Substrate self-report attestations SHOULD carry `occurrence_id`, `occurrence_count` and `occurrence_role`
+row_shape	2.1	p2	29	states	stake is optional; absent reads as reputational; it composes with the attester's stake-backed-by attestations	| `stake` | `reputational` |
+row_shape	2.1	p2	31	states	community_id is required iff cohort_scope is community or affiliations (an affiliation is a community); the substrate rejects such rows missing it	REQUIRED iff `cohort_scope` is `community` or `affiliations`
+row_shape	2.1	p2	32	states	family_id is required iff cohort_scope is family; the substrate rejects family-scoped rows missing it	REQUIRED iff `cohort_scope` is `family`
+row_shape	2.1	p2	33	states	session_id is required on session:* rows, verbatim and case-preserved; with community_id it is the claim's key	| `session_id` | `session:*`, REQUIRED |
+row_shape	2.1	p2	34	states	claimed_at is required on session:* rows in canonical datetime form	| `claimed_at` | `session:*`, REQUIRED |
+row_shape	2.1	p2	35	states	scope is required on consent:state:granted (the grant's scope) and on delegates_to (the delegated scope set); a bare token or an array	| `scope` | `consent:state:granted` and `delegates_to`, REQUIRED |
+row_shape	2.1	p2	36	states	custody_state is required on custody:ack, here or none; a signed none is a custody fact, not an absence	A signed `none` is a custody fact, not an absence
+row_shape	2.1	p2	37	states	group_kind is required on membership:proposal, family or community	| `group_kind` | `membership:proposal`, REQUIRED |
+row_shape	2.1	p2	38	states	role is nullable on membership:proposal and restated on the acceptance	| `role` | `membership:proposal`, nullable; restated on `membership:acceptance` |
+row_shape	2.1	p2	40	states	proposal_hash is required on membership:acceptance and decline; with references_attestation_id it binds the answer to exactly one proposal	With `references_attestation_id` it binds an answer to exactly one proposal
+row_shape	2.1	p2	43	states	attached_head_digest is required on trust:accepts:v1: the SHA-256 of the lineage head the edge attaches on	| `attached_head_digest` | `trust:accepts:v1`, REQUIRED |
+row_shape	2.1	p2	47	states	recovery_commitments is required on the accord's charter: per holder a lowercase-hex SHA-256 over the JCS array of the committed key's record fields, binding key material	It binds key material, never only the id
+row_shape	2.1	p2	49	states	witnesses is required on a witnessed lineage's charter: an array of SignedKeyRecord inside the scrub-signed bytes, so inside the genesis bundle	Array of `SignedKeyRecord`: the lineage's witness directory
+row_shape	2.1	p2	52	states	widened_at is required on a widening supersedes; it is the scrub_timestamp of the widening's signature	It is the `scrub_timestamp` of the widening's signature
+row_shape	2.1	p2	53	states	accord_root is required on accord:* rows, naming the accord the row belongs to	| `accord_root` | `accord:*` rows, REQUIRED |
+row_shape	2.1	p2	56	states	n_eff_h, the entropy-perplexity effective sample size, is carried on capacity rows for audit, not gated	Carried for audit, not gated
+row_shape	2.1	p2	57	states	capacity rows carry sample_size and feature_dim of the scoring matrix	| `sample_size`, `feature_dim` | `capacity:*`, carried |
+row_shape	2.1	p2	59	states	capacity rows carry the configured gates: sample_size_gate, target_n_eff, min_feature_dim	| `sample_size_gate`, `target_n_eff`, `min_feature_dim`, `n_eff_floor` | `capacity:*`, carried |
+row_shape	2.1	p2	63	states	window, in rows, is carried on capacity and observation rows	The scoring or observation window, in rows
+row_shape	2.1	p2	64	states	trace_level is required on observation:access_assumption:v1: generic, detailed or full_traces	| `trace_level` | `observation:access_assumption:v1`, REQUIRED |
+row_shape	2.1	p2	65	states	occurrence_key_ids is required on observation:access_assumption:v1: the set of occurrences the witness read	| `occurrence_key_ids` | `observation:access_assumption:v1`, REQUIRED |
+row_shape	2.1	p2	66	states	window_from is required on observation:access_assumption:v1, RFC 3339 with milliseconds	| `window_from`, `window_to` | `observation:access_assumption:v1`, REQUIRED |
+row_shape	2.1	p2	67	states	window_to is required on observation:access_assumption:v1	Start and end of the observation window, each RFC 3339 with milliseconds
+row_shape	2.1	p2	68	states	amendment_digest is required on identity_amendment:v1: SHA-256 of the amendment as applied	| `amendment_digest` | `identity_amendment:v1`, REQUIRED |
+row_shape	2.1	p2	70	states	channel_classes is required on observation:access_assumption:v1: the set of channel classes the witness saw the subject through	| `channel_classes` | `observation:access_assumption:v1`, REQUIRED |
+row_shape	2.1	p2	71	states	subject_key_ids is always present in the mirror, [] when empty; the column beside the row is absent when empty	Always present in the mirror, `[]` when empty
+row_shape	2.1	p2	72	states	delivery_mode is optional, pull or push; absent reads as pull	| `delivery_mode` | `pull` |
+row_shape	2.1	p2	73	states	history_on_join is optional, full or from_join; absent reads as from_join	| `history_on_join` | `from_join` |
+row_shape	2.1	p2	75	states	detector-derived attestations carry epistemic_mode derivative and witness_relation derived; when in doubt set both	Detector-derived attestations carry both

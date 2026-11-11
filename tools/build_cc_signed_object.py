@@ -9,7 +9,7 @@ EnvelopeCore / RowMirror / Attestation structs at the pinned commit
 
   signed:row             inside attestation_envelope.row — the closed seven-member mirror
   signed:envelope        inside attestation_envelope, typed by persist's EnvelopeCore
-  signed:envelope-extra  inside attestation_envelope, typed by CC 2.1, carried untyped by persist
+  signed:envelope-extra  inside attestation_envelope, typed by the table, defined in CC 2.1, carried untyped by persist
   beside                 outside the signed bytes, replicated with the row, bound to the bytes by a gate
   beside:signature       the row's own signature members
   beside:cosign          an additional_scrubs[] entry
@@ -250,7 +250,7 @@ def build_section_body(rows, meta):
     L.append("")
     L.append("**Refusals at this door (normative).** A shape refusal of the signed object is the token `federation_malformed_row` with one reason from this closed set: `envelope_member_missing` (the mirror or another required member is absent), `envelope_member_invalid` (a member is ill-typed or an instant is not in the [CC 2.6.2](#2.6.2) form), `envelope_member_null` (an optional member is `null`), `typed_diverges_from_envelope` (a column beside the row differs from its mirror), `envelope_row_member_unknown` (the `row` mirror carries a member outside its closed seven), `content_hash_mismatch` (`original_content_hash` is not the SHA-256 of the signing input) and `subject_key_id_malformed` (an element of `subject_key_ids` is neither a `key_id` nor the tagged canonical form of [CC 2.3.2.1](#2.3.2.1)). A `withdraws` that meets no rule of [CC 2.4.1.1](#2.4.1.1) is refused `federation_withdraws_not_admitted`. A set out of order or with a duplicate is `federation_set_semantics_unsorted`, a type outside the five is `attestation_type_unregistered`, a failed signature half is `SIGNATURE_VERIFICATION_FAILED`, and an envelope over the cap is `ENVELOPE_TOO_LARGE`.")
     L.append("")
-    L.append("**Placement vocabulary.** `signed:row` — inside `attestation_envelope.row`. `signed:envelope` — inside `attestation_envelope`, typed by persist. `signed:envelope-extra` — inside `attestation_envelope`, typed by [CC 2.1](#2.1), carried untyped by persist and validated at the family's gate. `beside` — outside the bytes, replicated, bound to the bytes by a gate. `beside:signature` — the row's own signature members. `beside:cosign` — an `additional_scrubs[]` entry. `local` — persist-internal, not a wire contract. `not-on-wire` — named by this text, not carried on the wire. An array's kind is `set` (sorted by JCS string before signing) or `sequence` (as authored), per [CC 2.6.1.1.1](#2.6.1.1.1).")
+    L.append("**Placement vocabulary.** `signed:row` — inside `attestation_envelope.row`. `signed:envelope` — inside `attestation_envelope`, typed by persist. `signed:envelope-extra` — inside `attestation_envelope`, typed by this table and defined in [CC 2.1](#2.1), carried untyped by persist and validated at the family's gate. `beside` — outside the bytes, replicated, bound to the bytes by a gate. `beside:signature` — the row's own signature members. `beside:cosign` — an `additional_scrubs[]` entry. `local` — persist-internal, not a wire contract. `not-on-wire` — named by this text, not carried on the wire. An array's kind is `set` (sorted by JCS string before signing) or `sequence` (as authored), per [CC 2.6.1.1.1](#2.6.1.1.1).")
     L.append("")
 
     def table(title, subset):

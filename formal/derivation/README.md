@@ -90,6 +90,13 @@ it, one owner at a time, the first binding, what the binding opens, and the reco
 is a long section, so this entry is one headed block of it and the check reads that block alone.
 Pairing a new device keeps its own paragraph beside the entry. Stewardship of an adult who has
 lost capacity (CC 3.4.12, 35 statements) reuses the same row and lands as its own entry.
+`row_shape` at CC 2.1 (43 statements): the members a signed row carries, in three tables: those
+every row carries, those any row may carry with the reading when one is absent, and those one
+family requires. Each member's type, placement and presence rule stay in the generated table of
+CC 2.6.1.7, so the entry says what a member means and the table says how it is written. The
+sentences that had sat inside table cells (whom a targeted row may name, what a subject key may
+do, the oversight-mode shift, cosignatures beside the row) are short titled paragraphs under the
+tables, and the rules they belong to cite them there.
 
 ## Compliance wire forms
 
