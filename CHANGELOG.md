@@ -25,6 +25,11 @@ The CIRIS Constitution is one document with one version line. Each release below
 - The bytes a halt invocation signs and what a `constitutional` halt is are one entry (4.2.1.1): one holder's signature, where the halt fires, what it pauses and what it leaves running, the fuse and its confirmation, and the signatures each kind takes, around the unchanged byte layout and table. No rule changes.
 - Who holds the accord seats is one entry (4.2.3): the slot and this instance's roster, whose key a holder's key is, how a seat changes, and how far a compromise of those keys reaches. No rule changes.
 - How a retained item is retired is one entry (6.1.2): the one descent, the noise floor and its two duties, the adversary the floor is stated against, the source-diversity gate, what revocation purges, and the dispositions as a table. No rule changes.
+- The scope of the accord's authority is one entry (4.2.1): what an accord signature is valid on, what the authority cannot reach, root conferral and pipeline blessing, which nodes a halt binds and how a node leaves that reach, and who authors mesh configuration. No rule changes.
+- How the accord family changes is one entry (4.2.6): the live set and the window, the thresholds as a table, that firing is never gated and removal cannot silence a firer, the recovery keys, and the wire objects of a roster change. No rule changes.
+- Takedown and erasure are one entry (4.5.3): the five steps of the fast path, the one tombstone row, the purge dwell, the withhold windows, the reversal, erasure at the subject's request, and what a takedown cannot reach. No rule changes.
+- The moderation duties are one entry (4.5.5): the scope kinds as a table, what anyone may do on their own account, the good-faith warning, what the person named sees, the admission test, who holds the duty over each target, and deputization. No rule changes.
+- Link shaping and fragmentation are one entry (5.4.3): the fixed frame and why it is small, what a client states before shaping is chosen, the budget classes, the one-hop rule, the bound of eight and displacement, what a refusal carries, the two planes, and the symbol envelope. No rule changes.
 
 ## 1.0-rc18 (released 2026-11-10, tag v1.0-rc18)
 
