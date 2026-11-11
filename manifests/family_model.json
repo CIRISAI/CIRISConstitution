@@ -113,12 +113,12 @@
     }
    },
    "cosign_rule": {
-    "cc-table": 0,
+    "cc-table": 3,
     "code-v61": 169,
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 8
+    "gap": 5
    },
    "polarity": {
     "cc-table": 3,
@@ -300,8 +300,8 @@
    "families_on_it": 106,
    "families_by_departures": {
     "0": 106,
-    "1": 33,
-    "2": 12,
+    "1": 36,
+    "2": 9,
     "3": 16,
     "4": 2,
     "5": 4,
@@ -339,7 +339,7 @@
      "basis": "text",
      "cc_ref": "CC 2.4",
      "quote": "A single-signer row cannot carry a quorum's act",
-     "cells": 16
+     "cells": 13
     },
     {
      "id": "adverse",
@@ -1486,9 +1486,13 @@
     }
    },
    "cosign_rule": {
-    "value": "CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)",
-    "source": "gap",
-    "closed": "CC accord"
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 4.2.1.1",
+    "code": {
+     "value": "CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)",
+     "source": "gap"
+    }
    },
    "body": {
     "value": "none (no family body; SchemaResolver no-op by default)",
@@ -1687,15 +1691,11 @@
     "sources": "src/federation/namespace/namespace_registry.json:377; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328; check_accord_root_binding@src/federation/trust_root.rs:2749"
    },
    "departs": [
-    "subject_rule",
-    "cosign_rule"
+    "subject_rule"
    ],
    "because": {
     "subject_rule": [
      "accord_named"
-    ],
-    "cosign_rule": [
-     "quorum"
     ]
    }
   },
@@ -1789,9 +1789,13 @@
     }
    },
    "cosign_rule": {
-    "value": "CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)",
-    "source": "gap",
-    "closed": "CC accord"
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 4.2.1.1",
+    "code": {
+     "value": "CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)",
+     "source": "gap"
+    }
    },
    "body": {
     "value": "none (no family body; SchemaResolver no-op by default)",
@@ -1990,15 +1994,11 @@
     "sources": "src/federation/namespace/namespace_registry.json:408; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328; check_accord_root_binding@src/federation/trust_root.rs:2749"
    },
    "departs": [
-    "subject_rule",
-    "cosign_rule"
+    "subject_rule"
    ],
    "because": {
     "subject_rule": [
      "accord_named"
-    ],
-    "cosign_rule": [
-     "quorum"
     ]
    }
   },
@@ -2092,9 +2092,13 @@
     }
    },
    "cosign_rule": {
-    "value": "CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)",
-    "source": "gap",
-    "closed": "CC accord"
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 4.2.1.1",
+    "code": {
+     "value": "CC accord (M-of-N); the row carries none (AccordQuorumEvidence is a typed kind)",
+     "source": "gap"
+    }
    },
    "body": {
     "value": "none (no family body; SchemaResolver no-op by default)",
@@ -2293,15 +2297,11 @@
     "sources": "src/federation/namespace/namespace_registry.json:439; check@src/federation/admission.rs:1515; check_reserved_prefix_admission@src/federation/admission.rs:18328; check_accord_root_binding@src/federation/trust_root.rs:2749"
    },
    "departs": [
-    "subject_rule",
-    "cosign_rule"
+    "subject_rule"
    ],
    "because": {
     "subject_rule": [
      "accord_named"
-    ],
-    "cosign_rule": [
-     "quorum"
     ]
    }
   },

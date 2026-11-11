@@ -405,3 +405,31 @@ built. Recusal at room scope is defined in CC 4.5.4 (derived).
   `shape_of_data` rows as CDDL members or vectors, then prose into the family model one
   column at a time (signer rules first), then the one seat rule, then the decimal re-cut.
 
+## Lanes, 2026-11-11 evening (rc19 at 9eda7e0 and after)
+
+Eric: "this refactor is our critical path now, I theorize if we can get all our prose into data
+the kernel can do 60%+ of our cycles." All lanes were launched in parallel; edits go through
+one gate. Briefs and the outputs that are design input are in `handoff/lanes/`.
+
+- Done: every conflict has an outcome; 341 sections held, 12 state no rule, 7 wire sections
+  wait on edge; consolidation findings settled; the uncited-restatement gate (7 pinned).
+- Prose into data. The engine is `formal/derivation/cell_text.tsv` (see the derivation README).
+  Each column lane writes a TSV of (statement, family) verdicts: AGREE (prose is a copy),
+  FILLS (becomes a `cell_text.tsv` row), DISAGREE, RICHER (the column's vocabulary cannot say
+  it: a request for a token or a column), NOT_A_CELL (a general rule: stated once).
+  First column back, cosign and governance (`handoff/lanes/out_f_cosign.*`): of 208 pairs,
+  36 agree, 26 fill, 66 are not cells, 7 disagree, 73 are richer than the vocabulary. The
+  three missing concepts: who is counted (the count set), which protocols a group kind may
+  name and how a protocol binds to the policy table's five numbers, and whose protocol
+  applies. Next for this column: land the 26 FILLS as rows; design the three tokens.
+  Columns still out when this was written: lifecycle; replication, placement, subject;
+  projection, erasure, evidence. Held: signer (after the seat rule), body, freshness.
+- The one seat rule: `handoff/lanes/out_e1.md`. Nine gates replaced, the accord's kept; 25 of
+  88 reserved families read wholly by the rule and one arm of 9 more; 46 keep a relation
+  rule; eight flips; eight decisions for Eric (D1 to D8 in section 6 of that file). Nothing
+  lands until he answers them.
+- The hard paragraphs: `handoff/lanes/out_h.md`, a proposed order for CC 1.13.2, 7.5.5 and
+  1.15.5 with no rewording, and 25 contradictions found in them. Needs Eric's approval.
+- `handoff/fix_entries.py` repairs register phrases after any text edit; run it before the
+  entry check.
+

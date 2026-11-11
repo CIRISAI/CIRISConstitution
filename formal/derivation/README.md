@@ -137,3 +137,13 @@ who is protected, who decides or what is promised; `still_there` says whether a 
 wording in the Parts when the table was made; `carrier` names the model, manifest or check
 that could hold the settled rule and `witness` what would be added to it; `resolution` is filled when a row is settled, and says whether the settlement was derived from the text or ruled. Both are review
 artefacts, one reader's classification, and inputs to decisions, not findings of fact.
+
+## Cells sourced from the text
+
+`cell_text.tsv` fills a cell of the family model that the text states and the census leaves
+open (source `gap` or `generic`): `family`, `column`, `value` in the column's own vocabulary,
+`cc_ref`, and a `quote` that must stand verbatim in that section. `tools/build_family_model.py`
+applies a row only over an open cell and keeps the census reading as `code`. A cell the census
+closes is never overridden here: where text and build differ, that is a departure and takes a
+reason in `departure_reasons.json`. `signer_rule_text.tsv` does the same for the signer column,
+with its own grammar.

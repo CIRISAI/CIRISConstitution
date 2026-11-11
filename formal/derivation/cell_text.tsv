@@ -1,0 +1,8 @@
+# A cell of the family model that the Constitution text states and the census leaves open (source gap or generic).
+# Applied by tools/build_family_model.py over such a cell only: the cell takes this value, written in the column's own vocabulary,
+# with source cc-table, its cc_ref, and the census reading kept as `code`. The quote must stand verbatim in the cited section.
+# A cell the census closes is never overridden here: where text and build differ, that is a departure with a reason.
+family	column	value	cc_ref	quote
+accord:invoke:constitutional:{halt_id}	cosign_rule	none	CC 4.2.1.1	A `constitutional` halt is one holder's signature
+accord:invoke:drill:{drill_id}	cosign_rule	none	CC 4.2.1.1	| `drill` | **one** holder |
+accord:invoke:notify:{notify_id}	cosign_rule	none	CC 4.2.1.1	| `notify` | **one** holder |

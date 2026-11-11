@@ -14,6 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
 SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
+CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
 REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
 DEFAULT = os.path.join(ROOT, "formal/derivation/family_default_row.json")
@@ -364,6 +365,12 @@ def main():
     signer_text = OrderedDict()   # family -> rows; one row for a whole-family rule, one per stage where the text gives stages
     for r in csv.DictReader([l for l in open(SIGNER_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
         signer_text.setdefault(r["family"], []).append(r)
+    # A cell the text states and the census leaves open (formal/derivation/cell_text.tsv): the cell
+    # takes the text's value, written in the column's own vocabulary, with the words it rests on.
+    cell_text = OrderedDict()
+    if os.path.exists(CELL_TEXT):
+        for r in csv.DictReader([l for l in open(CELL_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
+            cell_text.setdefault(r["family"], []).append(r)
     rows = []
     for fam in sorted(set(cc) | set(census)):
         c, z = cc.get(fam), census.get(fam)
@@ -403,6 +410,20 @@ def main():
                                       "cc_ref": OrderedDict((stg, st["cc_ref"]) for stg, _, st in parsed), "code": code}
                 q = OrderedDict((stg, txt["qualifier"]) for stg, txt, _ in parsed if txt.get("qualifier"))
                 if q: row["signer_rule"]["qualifier"] = q
+        for ct in cell_text.pop(fam, []):
+            col = ct["column"]
+            if col not in CENSUS_MAP or col == "signer_rule":
+                print(f"cell_text.tsv: {fam} names the column {col}, which is not one this table fills"); return 1
+            cur = row[col]
+            if cur.get("source") not in ("gap", "generic"):
+                print(f"cell_text.tsv: {fam} {col} is closed by the census ({cur.get('source')}); a difference from the text is a departure with a reason, not a row here"); return 1
+            span = section_span(ct["cc_ref"])
+            if span is None or ct["quote"] not in span:
+                print(f"cell_text.tsv: {fam} {col}: the quoted words do not stand in {ct['cc_ref']}"); return 1
+            new = cell(col, ct["value"])
+            new["source"] = "cc-table"; new["cc_ref"] = ct["cc_ref"]
+            new["code"] = {"value": cur.get("value"), "source": cur.get("source")}
+            row[col] = new
         pv = polarity_census(z["6_polarity"]) if z else None
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
         row["emitter_class"] = emitter_class(row["signer_rule"])
@@ -427,6 +448,8 @@ def main():
         rows.append(row)
     if signer_text:
         print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
+    if cell_text:
+        print("cell_text.tsv names families outside the model: " + ", ".join(sorted(cell_text))); return 1
     # The default row: the value a family takes in each of these columns unless it states its own.
     # Pinned as data, and held to be the commonest value of its column, so a change of default is a
     # deliberate edit and never a drift. Each row lists the columns in which it departs.

@@ -49,7 +49,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| cosign_rule | `accord:invoke:constitutional:{halt_id}`, `accord:invoke:drill:{drill_id}`, `accord:invoke:notify:{notify_id}`, `collection:{kind}`, `group:roster`, `identity:occurrence`, `identity:occurrence_revocation`, `lineage_witness:{stage}`, `membership:{stage}`, `objection:{state}`, `takedown_notice:{basis}`, `transport:canonical_rebind`, `trust:{job}:{version}`, `wa_adjudication:{state}` |
+| cosign_rule | `collection:{kind}`, `group:roster`, `identity:occurrence`, `identity:occurrence_revocation`, `lineage_witness:{stage}`, `membership:{stage}`, `objection:{state}`, `takedown_notice:{basis}`, `transport:canonical_rebind`, `trust:{job}:{version}`, `wa_adjudication:{state}` |
 | lifecycle | `group:roster`, `membership:{stage}` |
 
 ## The party named must not be able to remove it

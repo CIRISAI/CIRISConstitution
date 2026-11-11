@@ -51,8 +51,7 @@
    "quote": "A single-signer row cannot carry a quorum's act",
    "moves": {
     "cosign_rule": [
-     "accord:invoke:",
-     "collection:{kind}",
+       "collection:{kind}",
      "group:roster",
      "identity:occurrence",
      "identity:occurrence_revocation",
