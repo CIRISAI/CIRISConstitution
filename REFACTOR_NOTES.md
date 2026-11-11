@@ -61,6 +61,32 @@ Text side (in progress):
   its section, so text can be moved without losing a rule. It does not show that a rule is
   stated once. The document is no shorter. The consolidation is the work that follows.
 
+## 2a. Scope of RC19, as Eric set it on 2026-11-11
+
+Eric: knock the mechanicals out so the rest can be analysed; focus on clarity, accuracy and
+consolidation; harvest the text conflicts as opportunities to add formalizations; everything
+that can be turned into data eventually is. Asked whether the decimal re-cut should wait for a
+later edition with the prose-into-data pass, he ruled that leaving the re-cut out would be
+confusing and the data pass folds into RC19: "just do it fully". So RC19 carries all of it, in
+this order, and the decimals are cut once, last:
+
+1. Mechanical pass (done apart from the wire sections edge is changing).
+2. Accuracy: the conflicts where one side is plainly stale.
+3. Consolidation: every sentence that restates a rule cites its home, or its extra condition
+   moves into the home; then a gate that refuses an uncited restatement.
+4. Formalization harvest: the conflicts table (`formal/derivation/`, shape, carrier, witness);
+   each temporal, authority and audience conflict becomes an invariant, a table cell or a
+   departure reason; each parameter conflict a row of one constants table; each data-shape
+   conflict a CDDL member or vector; counts, citations, terms and keyword force become lints.
+5. Prose into data: per-family statements (shape, signer, audience, lifecycle, erasure,
+   freshness) move from Part prose into the family model and its generated tables; the Parts
+   keep the rule once and cite the table.
+6. The one seat rule.
+7. The decimal re-cut on the spine, with the old-to-new map, once the sections are settled.
+8. Cut mechanics.
+
+CIRISClient PR #297 (branch feat/csd5-export) carries the join export with scope per write.
+
 ## 3. Next steps, in order
 
 1. **The mechanical pass is done** apart from the 27 sections of section 2. The registered

@@ -277,7 +277,7 @@ RESERVED_RULES = _reserved_rules()
 #   literal  — stem this Part fixes; lowercase by construction (gate below)
 #   vocab    — CC-defined open/closed vocabulary; MUST match VOCAB_PATTERN; refuse, never fold
 #   external — spelling fixed by an outside standard; verbatim canonical form (USD, PG-13, en-US)
-#   value    — caller-supplied identity; verbatim, case-preserved (CC 2.6.7 {id} discipline)
+#   value    — caller-supplied identity; verbatim, case-preserved (CC 2.3.2.1 {id} discipline)
 #   hex      — CC 2.6.3 digest; lowercase
 VOCAB_PATTERN = r"^[a-z0-9][a-z0-9_.-]*$"
 LITERAL_PATTERN = r"^[a-z0-9][a-z0-9_]*$"
