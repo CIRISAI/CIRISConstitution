@@ -52,7 +52,7 @@ def enabled(family, state, roles, atoms=None):
 
 def item(t, obj):
     return {"kind": "choice", "verb": t["verb"], "writes": {"family": obj["family"], "verb": t["verb"], "to": t["to"]},
-            "policy": stage_of(t["policy"], obj["atoms"]), "confirm": bool(t["widens"]["value"])}
+            "policy": stage_of(t["policy"], obj["atoms"]), "confirm": bool(t["confirm"]["value"])}
 
 class Story:
     def __init__(self):

@@ -3,11 +3,12 @@
 manifests/family_model.json (CC 4.5.13 "How the view makes the queue"; formal/event_lifecycle).
 
 One transition per (family, verb): the state it leaves and reaches, the roles that may sign it,
-the governance policy it runs under, and whether it widens. Every field carries a `source`:
+the governance policy it runs under, whether it widens, whether it has a way back, and so whether
+its item is confirmed. Every field carries a `source`:
   cc-table  the registry / CC table (verbs, kind, polarity), and a cell the text states
             (formal/derivation/transition_text.tsv), which then carries its reference as cc_ref
   code-v61  persist's census at the v61 head (signer rule, withdraws_by, governance)
-  derived   this tool's rule from those (role token mapping, states, widens)
+  derived   this tool's rule from those (role token mapping, states, widens, undo, confirm)
   gap       nothing in the manifest says; the queue generator must treat the transition as closed
 A node derives a person's queue by filtering these by the person's standing in the object's state.
 Where the text gives a family one signer per stage, the roles cell carries the union as its value and
@@ -103,6 +104,33 @@ def widens(replication, scope_hint):
     if isinstance(aud, dict) or isinstance(aud, str):
         return True, "derived"
     return False, "gap"
+
+def way_back(trans, lifecycle):
+    """The undo and confirm cells (CC 4.5.13). A row entered has a way back when this table offers a
+    withdraw or recant of it; a row taken back or replaced has one when the table offers its entry or
+    replacement again. The cell names the verb of the way back and the policy it runs under, so an
+    item says who it takes to return: selfAct is the signer alone. Where the table offers none, the
+    cell is false when the family's lifecycle closes retraction (no one withdraws, or held shut) and
+    a gap when the census of the door takes a withdrawal this table does not list. An item is
+    confirmed before it is signed when it widens or has no way back on offer; every other item takes
+    one step."""
+    by_verb = {t["verb"]: t for t in trans}
+    opened = lambda t: t is not None and bool(t["roles"]["value"])
+    closed = not isinstance(lifecycle, dict) or lifecycle.get("withdraws_by") in (None, "{}")
+    for t in trans:
+        entry = t["verb"] in ("attest", "authorize")
+        if entry:
+            back = next((by_verb[v] for v in ("withdraw", "recant") if opened(by_verb.get(v))), None)
+        elif t["verb"] == "supersede":
+            back = t if opened(t) else None
+        else:
+            back = next((by_verb[v] for v in ("attest", "authorize") if opened(by_verb.get(v))), None)
+        if back is not None:
+            cell = {"value": True, "via": back["verb"], "policy": back["policy"]["value"]["policy"], "source": "derived"}
+        else:
+            cell = {"value": False, "source": "derived" if entry and closed else "gap"}
+        t["undo"] = cell
+        t["confirm"] = {"value": bool(t["widens"]["value"]) or back is None, "source": "derived"}
 
 def val(cell):
     return cell.get("value") if isinstance(cell, dict) else cell
@@ -216,6 +244,7 @@ def build():
         for t in trans:
             cells = text.pop((fam, t["verb"]), None)
             if cells: apply_text(fam, t, cells)
+        way_back(trans, lifecycle)
         rows.append({"family": fam, "kind": kind, "transitions": trans})
     if text:
         raise SystemExit("transition_text.tsv names transitions outside the manifest: " + ", ".join(f"{f} {v}" for f, v in sorted(text)))
@@ -230,15 +259,20 @@ def build():
                      "role_tokens": sorted({r for f in rows for t in f["transitions"] for r in t["roles"]["value"]}),
                      "sources": {"cc-table": "the registry and CC table, or a cell the text states (it carries cc_ref)", "code-v61": "the census of the code", "derived": "this tool's rule over those", "gap": "nothing says; closed"},
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
+                     "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
+                     "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
                      "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
                      "families": len(rows), "transitions": total, "gap_cells": gaps,
+                     "confirmed": sum(1 for f in rows for t in f["transitions"] if t["confirm"]["value"]),
+                     "undo_gap_cells": sum(1 for f in rows for t in f["transitions"] if t["undo"]["source"] == "gap"),
                      "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"},
            "rows": rows}
-    tsv = ["family\tverb\tfrom\tto\troles\tpolicy\twidens\troles_src\tpolicy_src\twidens_src"]
+    tsv = ["family\tverb\tfrom\tto\troles\tpolicy\twidens\tundo\tundo_policy\tconfirm\troles_src\tpolicy_src\twidens_src"]
     for f in rows:
         for t in f["transitions"]:
             tsv.append("\t".join([f["family"], t["verb"], t["from"], t["to"], ",".join(t["roles"]["value"]),
                                   t["policy"]["value"]["policy"], str(t["widens"]["value"]).lower(),
+                                  t["undo"].get("via", "none"), t["undo"].get("policy", ""), str(t["confirm"]["value"]).lower(),
                                   t["roles"]["source"], t["policy"]["source"], t["widens"]["source"]]))
     return json.dumps(out, indent=1, ensure_ascii=False) + "\n", "\n".join(tsv) + "\n"
 

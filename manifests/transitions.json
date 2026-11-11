@@ -44,10 +44,14 @@
    "gap": "nothing says; closed"
   },
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
+  "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
+  "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
   "transitions": 455,
   "gap_cells": 5,
+  "confirmed": 185,
+  "undo_gap_cells": 31,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
  "rows": [
@@ -75,6 +79,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -96,6 +110,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -126,6 +150,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -149,6 +183,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -169,6 +213,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -199,6 +253,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -225,6 +287,14 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -255,6 +325,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -283,6 +361,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -303,6 +389,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -333,6 +429,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -361,6 +465,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -381,6 +493,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -414,6 +536,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -437,6 +569,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -457,6 +599,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -487,6 +639,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -508,6 +670,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -532,6 +704,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -552,6 +734,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -582,6 +774,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -605,6 +807,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -625,6 +837,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -655,6 +877,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -676,6 +908,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -700,6 +942,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -720,6 +972,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -750,6 +1012,14 @@
      "widens": {
       "value": false,
       "source": "gap"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -778,6 +1048,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -799,6 +1079,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -829,6 +1119,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -850,6 +1150,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -880,6 +1190,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -901,6 +1221,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -931,6 +1261,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -952,6 +1292,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -982,6 +1332,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1003,6 +1363,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1033,6 +1403,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1054,6 +1434,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1078,6 +1468,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1098,6 +1498,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1128,6 +1538,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1149,6 +1569,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1179,6 +1609,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1202,6 +1642,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1222,6 +1672,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1256,6 +1716,16 @@
       "source": "cc-table",
       "cc_ref": "CC 3.1.3",
       "value": true
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1278,6 +1748,16 @@
       }
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "ranked",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1310,6 +1790,14 @@
       "source": "cc-table",
       "cc_ref": "CC 3.1.3",
       "value": true
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -1339,6 +1827,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1360,6 +1858,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1390,6 +1898,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1413,6 +1931,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1433,6 +1961,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1463,6 +2001,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1486,6 +2034,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1506,6 +2064,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1536,6 +2104,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1557,6 +2135,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1581,6 +2169,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1601,6 +2199,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1631,6 +2239,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1652,6 +2270,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1682,6 +2310,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1705,6 +2343,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1725,6 +2373,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1758,6 +2416,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1780,6 +2448,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1800,6 +2478,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1833,6 +2521,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1855,6 +2553,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1875,6 +2583,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1908,6 +2626,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -1930,6 +2658,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -1950,6 +2688,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -1983,6 +2731,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2006,6 +2764,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2026,6 +2794,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2059,6 +2837,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2082,6 +2870,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2102,6 +2900,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2135,6 +2943,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2158,6 +2976,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2178,6 +3006,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2208,6 +3046,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2231,6 +3079,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2251,6 +3109,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2282,6 +3150,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2305,6 +3183,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2325,6 +3213,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2356,6 +3254,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2377,6 +3285,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2407,6 +3325,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2428,6 +3356,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2458,6 +3396,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2481,6 +3429,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2501,6 +3459,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2531,6 +3499,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2552,6 +3530,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2582,6 +3570,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2603,6 +3601,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2633,6 +3641,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2654,6 +3672,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2678,6 +3706,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2698,6 +3736,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2728,6 +3776,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2751,6 +3809,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2771,6 +3839,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2801,6 +3879,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2824,6 +3912,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2844,6 +3942,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2874,6 +3982,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2897,6 +4015,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2917,6 +4045,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -2948,6 +4086,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -2971,6 +4119,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -2991,6 +4149,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3022,6 +4190,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3045,6 +4223,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3065,6 +4253,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3095,6 +4293,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3118,6 +4326,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3138,6 +4356,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3168,6 +4396,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3191,6 +4429,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3211,6 +4459,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3241,6 +4499,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3264,6 +4532,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3284,6 +4562,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3314,6 +4602,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3337,6 +4635,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3357,6 +4665,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3387,6 +4705,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3408,6 +4736,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3438,6 +4776,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3458,6 +4804,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3488,6 +4844,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -3516,6 +4880,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3539,6 +4913,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3559,6 +4943,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3589,6 +4983,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3610,6 +5014,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3640,6 +5054,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3661,6 +5085,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3692,6 +5126,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3715,6 +5159,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3735,6 +5189,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3763,6 +5227,14 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -3794,6 +5266,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3817,6 +5299,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3837,6 +5329,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3867,6 +5369,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3890,6 +5402,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -3910,6 +5432,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -3975,6 +5507,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -3998,6 +5540,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4018,6 +5570,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4048,6 +5610,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4069,6 +5641,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4099,6 +5681,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4122,6 +5714,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4142,6 +5744,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4172,6 +5784,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4193,6 +5815,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4232,6 +5864,16 @@
       "source": "cc-table",
       "cc_ref": "CC 3.1.3",
       "value": true
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4262,6 +5904,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     }
    ]
@@ -4290,6 +5942,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4311,6 +5973,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4341,6 +6013,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4361,6 +6043,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4391,6 +6083,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4412,6 +6114,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4442,6 +6154,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4463,6 +6185,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4494,6 +6226,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -4522,6 +6262,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4543,6 +6293,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4573,6 +6333,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -4601,6 +6369,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4623,6 +6401,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4643,6 +6431,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4673,6 +6471,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4695,6 +6503,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4715,6 +6533,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4745,6 +6573,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4767,6 +6605,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4787,6 +6635,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4817,6 +6675,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4839,6 +6707,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4859,6 +6737,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4889,6 +6777,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4911,6 +6809,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -4931,6 +6839,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -4961,6 +6879,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -4984,6 +6912,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5004,6 +6942,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5034,6 +6982,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5057,6 +7015,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5077,6 +7045,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5107,6 +7085,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5130,6 +7118,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5150,6 +7148,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5180,6 +7188,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5203,6 +7221,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5223,6 +7251,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5253,6 +7291,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5276,6 +7324,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5296,6 +7354,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5324,6 +7392,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5347,6 +7425,14 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5367,6 +7453,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5397,6 +7493,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5418,6 +7524,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5442,6 +7558,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5462,6 +7588,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5492,6 +7628,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5515,6 +7661,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5535,6 +7691,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5565,6 +7731,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5585,6 +7759,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5615,6 +7799,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5638,6 +7832,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5658,6 +7862,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5688,6 +7902,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5711,6 +7935,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5731,6 +7965,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5761,6 +8005,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5784,6 +8038,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5804,6 +8068,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5834,6 +8108,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5854,6 +8136,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5884,6 +8176,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5907,6 +8209,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -5927,6 +8239,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -5957,6 +8279,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -5980,6 +8312,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6000,6 +8342,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6030,6 +8382,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6053,6 +8415,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6073,6 +8445,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6103,6 +8485,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6124,6 +8516,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6148,6 +8550,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6168,6 +8580,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6198,6 +8620,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6221,6 +8653,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6241,6 +8683,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6271,6 +8723,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "cosigned",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6293,6 +8755,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6313,6 +8785,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "cosigned",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6343,6 +8825,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6363,6 +8855,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6393,6 +8895,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6416,6 +8928,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6436,6 +8958,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6469,6 +9001,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6492,6 +9034,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6512,6 +9064,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6542,6 +9104,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6563,6 +9135,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6596,6 +9178,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6619,6 +9211,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "two_path",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6639,6 +9241,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6665,6 +9277,14 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -6695,6 +9315,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -6723,6 +9351,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6744,6 +9382,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6774,6 +9422,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6795,6 +9453,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6819,6 +9487,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6839,6 +9517,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6869,6 +9557,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6892,6 +9590,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6912,6 +9620,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -6942,6 +9660,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -6965,6 +9693,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -6985,6 +9723,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7015,6 +9763,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7038,6 +9796,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7058,6 +9826,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7088,6 +9866,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7108,6 +9894,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7139,6 +9935,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7159,6 +9963,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7189,6 +10003,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7210,6 +10034,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7241,6 +10075,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -7269,6 +10111,14 @@
      "widens": {
       "value": false,
       "source": "gap"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -7297,6 +10147,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7317,6 +10175,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7347,6 +10215,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7367,6 +10243,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7397,6 +10283,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7417,6 +10311,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7447,6 +10351,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7469,6 +10383,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7489,6 +10413,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7531,6 +10465,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -7557,6 +10499,14 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -7587,6 +10537,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7610,6 +10570,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7630,6 +10600,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7663,6 +10643,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "cosigned",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7685,6 +10675,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "two_path",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7705,6 +10705,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "cosigned",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7735,6 +10745,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7758,6 +10778,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7778,6 +10808,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7808,6 +10848,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7831,6 +10881,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7851,6 +10911,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7881,6 +10951,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -7902,6 +10982,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7926,6 +11016,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -7946,6 +11046,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -7981,6 +11091,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8003,6 +11123,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "mirror",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8023,6 +11153,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "mirror",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8053,6 +11193,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8075,6 +11225,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8095,6 +11255,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8125,6 +11295,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8148,6 +11328,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8168,6 +11358,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8198,6 +11398,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8221,6 +11431,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8241,6 +11461,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8271,6 +11501,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8292,6 +11532,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8316,6 +11566,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8336,6 +11596,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8366,6 +11636,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8387,6 +11667,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8420,6 +11710,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8443,6 +11743,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "two_path",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8463,6 +11773,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8493,6 +11813,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8514,6 +11844,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8544,6 +11884,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8564,6 +11912,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8595,6 +11953,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "authorize",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8617,6 +11985,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8637,6 +12015,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -8667,6 +12055,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8690,6 +12088,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8710,6 +12118,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8740,6 +12158,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8763,6 +12191,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8783,6 +12221,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8823,6 +12271,16 @@
       "source": "cc-table",
       "cc_ref": "CC 3.1.5",
       "value": true
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8845,6 +12303,16 @@
       }
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8876,6 +12344,14 @@
       "source": "cc-table",
       "cc_ref": "CC 3.1.5",
       "value": true
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -8904,6 +12380,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8927,6 +12413,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -8947,6 +12443,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -8977,6 +12483,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -8998,6 +12514,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9028,6 +12554,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9049,6 +12585,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9079,6 +12625,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9100,6 +12656,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9130,6 +12696,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9151,6 +12727,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9181,6 +12767,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9202,6 +12798,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9232,6 +12838,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9255,6 +12871,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9275,6 +12901,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9305,6 +12941,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9328,6 +12974,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9348,6 +13004,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9378,6 +13044,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9401,6 +13077,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9421,6 +13107,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9451,6 +13147,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9474,6 +13180,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9494,6 +13210,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9524,6 +13250,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9547,6 +13283,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9567,6 +13313,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9597,6 +13353,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9620,6 +13386,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9640,6 +13416,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9670,6 +13456,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9693,6 +13489,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -9713,6 +13519,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9743,6 +13559,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9764,6 +13590,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9794,6 +13630,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9814,6 +13658,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9844,6 +13698,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9864,6 +13726,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9918,6 +13790,14 @@
      "widens": {
       "value": false,
       "source": "gap"
+     },
+     "undo": {
+      "value": false,
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -9946,6 +13826,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -9966,6 +13856,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -9996,6 +13896,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -10024,6 +13932,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10044,6 +13960,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10074,6 +14000,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -10100,6 +14034,14 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -10130,6 +14072,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10153,6 +14105,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -10173,6 +14135,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10203,6 +14175,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10224,6 +14206,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10254,6 +14246,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10274,6 +14276,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10304,6 +14316,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10327,6 +14349,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -10347,6 +14379,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10377,6 +14419,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10397,6 +14449,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10427,6 +14489,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10450,6 +14522,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -10470,6 +14552,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10500,6 +14592,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10521,6 +14623,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10551,6 +14663,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10572,6 +14694,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10602,6 +14734,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10623,6 +14765,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10653,6 +14805,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10674,6 +14836,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10704,6 +14876,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     }
    ]
@@ -10732,6 +14912,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10753,6 +14943,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10783,6 +14983,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10803,6 +15011,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10833,6 +15051,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -10856,6 +15084,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -10876,6 +15114,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -10907,6 +15155,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "authorize",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -10929,6 +15187,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -10949,6 +15217,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": true,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": true,
       "source": "derived"
      }
@@ -10979,6 +15257,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11002,6 +15290,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -11022,6 +15320,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11052,6 +15360,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11073,6 +15391,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11097,6 +15425,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -11117,6 +15455,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11147,6 +15495,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11170,6 +15528,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -11190,6 +15558,16 @@
       "source": "cc-table"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11220,6 +15598,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11243,6 +15631,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -11263,6 +15661,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11293,6 +15701,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11316,6 +15734,16 @@
      "widens": {
       "value": false,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      }
     },
     {
@@ -11336,6 +15764,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11366,6 +15804,14 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": false,
+      "source": "gap"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11386,6 +15832,16 @@
       "source": "derived"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }
@@ -11416,6 +15872,16 @@
      "widens": {
       "value": true,
       "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived"
      }
     },
     {
@@ -11437,6 +15903,16 @@
       "source": "code-v61"
      },
      "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
       "value": false,
       "source": "derived"
      }

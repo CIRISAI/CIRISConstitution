@@ -22,6 +22,7 @@ generator serves from:
 
 An open cell is a roles, policy or widens cell whose source is gap: the queue generator treats the
 transition as closed (roles, policy) or as not widening (widens) until the text says otherwise.
+A transition with an open widens cell is still confirmed where it has no way back (the confirm cell).
 
 Prints the grid summary: per role token, how many transitions and families it opens. Exit 1 on
 any breach.
