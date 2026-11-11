@@ -375,3 +375,33 @@ electorate; no second bite); persist facts from the server: a cohort declares re
 only through `consensus_protocol`, and the `moderation_action` 48 h absence fallback is not
 built. Recusal at room scope is defined in CC 4.5.4 (derived).
 
+## State at the end of 2026-11-11 (rc19 at 13c448b)
+
+- Mechanical pass: done (333 of 360 sections held; 27 left as listed in section 2).
+- Consolidation: 62 restatements cite their home; 39 findings in
+  `formal/derivation/consolidation_findings.tsv` are unresolved; the gate that refuses an
+  uncited restatement is not written.
+- Conflicts (`formal/derivation/text_conflicts.tsv`, 282 rows, `resolution` column): 120
+  settled or ruled, 50 no conflict on reading, 12 already fixed, 12 proposed and not applied
+  (each says why), 7 waiting on Eric, 81 open. The open ones are the data pass: 37
+  text-against-manifest (`shape_of_data`), 31 two-values-for-one-number (`parameter`), 11
+  authority rows that wait on field shapes, and two of Eric's.
+- Method that worked for the conflicts: one read-only agent per shape with
+  `$scratch/settle/BRIEF.md` (verdicts SETTLED_A/B, BOTH, GAP, VALUE, FIXED; an exact `old`
+  line and `new`; what decides it; a witness), then my read of every repair, then a guarded
+  apply (one occurrence, never in a fence, never a Part 3 table row), then repair of the
+  register phrases the edit moved, then regen and gates. The brief is not in the repo:
+  rebuild it from this description.
+- Models added today: `formal/accord_halt/AccordHaltReach.tla`, `formal/age_assurance/AgeBand.lean`,
+  `formal/moderation_lift/ModerationLift.tla`; `formal/mesh_net` locks and elects.
+- Waiting on Eric: a halt row arriving after its `valid_until` (I recommended it still
+  fires); whether a self-asserted canonical binding opens a withdrawal rule (I recommended
+  no); six product or organisation names in rule text (replace by role words, or keep);
+  the founder's seat (open by agreement).
+- Waiting on implementers: CIRISPersist#1259 (six items), #1260 (room content bound to no
+  community), CIRISEdge#981 (accord carriage), CIRISServer#873 (members' lift).
+- Next: the data pass. Start with one constants table for the 31 `parameter` rows (each
+  number one home, generated into the text and read by the models), then the 37
+  `shape_of_data` rows as CDDL members or vectors, then prose into the family model one
+  column at a time (signer rules first), then the one seat rule, then the decimal re-cut.
+
