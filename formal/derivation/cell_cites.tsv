@@ -512,7 +512,7 @@ moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	**(a) as-self** — `att
 moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	Hiding-for-yourself needs no authority; **acting on a group's behalf** (a takedown, an authoritative ModerationEvent, an appeal ruling) requires the delegated `moderate`/`takedown`/`review` duty (below).
 moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	`moderate` | `moderation:{allegation_type}` ModerationEvent + report→`scores` + `age_assurance`/`content_class` gates | [CC 3.1.9.2](part_3_the_namespace.md) / [CC 4.4.3.10](part_4_composition_governance.md)
 moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	`moderation:{allegation_type}` against a subject | `is_named_moderator(·, C, moderate)` for the relevant community
-moderation:{allegation_type}	signer_rule	fills	CC 4.5.13	any **steward** where the community has named one, resolves the action by a **single signature**
+moderation:{allegation_type}	signer_rule	fills	CC 4.5.13	a **steward** the community has appointed to that duty, resolves the action by a **single signature**
 moderation_track_record:{community_key_id}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 moderation_track_record:{community_key_id}	fold	agree	CC 3.1.9.2	**composed** from the existing corpus
 moderation_track_record:{community_key_id}	fold	agree	CC 4.5.5	[`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) composites a moderator's action outcomes into the **relative, positional reputation** decentralized-moderation converges on. It is never a single global score.

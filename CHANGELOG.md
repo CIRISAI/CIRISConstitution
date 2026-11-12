@@ -126,6 +126,13 @@ The CIRIS Constitution is one document with one version line. Each release below
   - asked for a lethal action, the deferral is owed in every case, so that a human is told; a refusal that tells no one does not meet the rule (7.4);
   - raising a deferral is not an effectful act, so a halted agent may still raise one (4.2.1.1);
   - a halt that arrives after its `valid_until` still fires unless the node already holds a resumption naming it (4.2.1.1).
+- Standing comes only from an explicit signed act of the people governed, never from a title or a default. Six statements say so:
+  - a group's consent to a widening or a removal is counted under its declared protocol and no other fraction; the policy rows give the window, the voices and the floor, and a protocol under which fewer than two voices could admit is refused (3.1.3.2);
+  - a steward acts on content only as a moderator by appointment (4.5.13);
+  - content a live row places at a community's scope is that community's for a takedown, a widening included, and the notice reaches the copy in the room and never the author's original (4.5.5);
+  - a room's listing is the community's row, signed by its founder or a current moderator (3.2);
+  - for an undefended report no notice is signed; each node reads the removal from the closed window (4.5.13);
+  - a new guardian's signature alone displaces no one: the current guardian steps down or a court's order names the new one (3.2).
 - The store's evidence is re-pinned at its 61.3.0 release. The cosign hold (3.3.4) is established: an under-signed widening or removal is held, its signatures are collected and served to active members only, and the event lands under its quorum key. Eleven implementation pointers back it.
 - Three lapses the text states are in the typed reactions: a time-boxed guest's seat at its `valid_until` (3.3.4), an occurrence past its `valid_until` (3.3.6.2), and a `reversible_pending` companion not resolved in time (3.4.12).
 - The confirm test is one lookup (4.5.13, `formal/event_lifecycle`): an item is confirmed before it is signed when the rows it would sign widen or have no way back, and every other item takes one step. `manifests/transitions.json` carries the way back and the confirm test on each of its 455 transitions: 185 are confirmed and 270 take one step, every withdrawal among them. Eight families have no way back by their lifecycle; on 31 transitions the table lists no retraction and the cell is open. `confirm_is_lookup`, `no_way_back_is_confirmed` and `exit_is_one_step` are proved.

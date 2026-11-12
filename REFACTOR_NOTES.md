@@ -953,3 +953,8 @@ and a late halt). The "unless the node already holds a resumption that names it"
 that a halt already resumed is not re-fired by a straggling copy. Values that lag: the removal transition's roles
 have no case for an agent's key; the halt family has no typed cell for `valid_until`. C562 stays open as a finding
 against the agent.
+A landed second (six sentences). Values that lag and gaps: the enact cell of `community_invite` / `community_remove`
+(2/3; the protocol's count now decides, and re-typing the cell moves the generated table, the vectors and the
+generated TLC instances); `community:listing` supersede is typed same-author, and a moderator now replaces a
+founder's row; no row carries a court's order naming a minor's guardian (ask persist); the takedown binding of a
+widened row is the store's #1260. The seat rule (handoff/lanes/out_e1.md, D1 to D8 as recommended) is next.
