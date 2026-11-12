@@ -407,6 +407,16 @@ Separately, a community MAY hold a **secret poll or election** in the same instr
 
 Every eligible member emits its cell every period, at the fixed size, whether or not a poll is open. An open poll fills a field that is otherwise padding. So the occurrence of a poll is invisible to an outsider, and its subject (`poll_id`) lives only in the sealed body. **Ballot secrecy among members is claimed**, against two non-colluding tally members. **Coercion resistance is not claimed**: a member can prove how they voted by revealing their shares. What a community does with a tally is the community's. A tally carries no standing of its own under Part 4.
 
+**A ranked secret poll (normative).** A poll MAY ask members to rank its options, counted by the instant runoff of [CC 4.5.13](part_4_composition_governance.md#4.5.13). A member's cell is then a one-hot over one entry for each ranking of up to the declared number of options, plus *none*. So a ballot that repeats an option or ranks too many cannot be written. An entry is named by a digest of the poll and the options it ranks, never by its position. The field has one fixed size for the community, whatever the number of options, so its size says nothing about a poll.
+
+The tally of rankings is never published. With many entries most hold one ballot, and a ranking is close to a signature. Each tally member publishes its share of each round's standing totals. A round's totals are a sum over entries once the standing options are known, and the standing options are public. So no tally member holds the tally of rankings, and the two shares of a round add to its totals. Each member's rounds travel as one signed item, with a commitment to its share made before the first round.
+
+Anyone holding both items checks the count. The two name the same poll, closing period and option order. Each round's shares add to whole totals no greater than the ballots counted, and the ballots still counting never rise. Each elimination follows from its round's totals. The outcome is a winner, below the floor, incomplete or refused. It is incomplete while a round or an item has not arrived, and it becomes the winner when the rest arrives, in any order. It is refused only when the rows held contradict each other or the rule. The k floor applies to the number of ballots counted: below it the poll gives no result.
+
+Only the closing period's composite counts, the period fixed by the poll's signed close. A member's ballot is kept sealed at `self` scope, and any live device of that member emits the cell while the poll is open. A ballot counts unless no device of its owner is reachable in the closing period.
+
+**What a ranked poll claims.** The count is consistent, and auditable one tally member at a time. A member's rounds can be recomputed from its committed share, and one share alone says nothing about any ballot. That is not proof that a tally member summed honestly: one dishonest tally member can move a result, which is the trust this section already places in the two. Showing both members' shares to one auditor reveals the tally of rankings. A round's total for a weak option may be small. It is a count and never a person.
+
 **What anyone holding the rows can check.**
 
 - (1) Both partials carry the same `member_commitment_hex` and `share_count` ([CC 3.1.3](part_3_the_namespace.md#3.1.3)).

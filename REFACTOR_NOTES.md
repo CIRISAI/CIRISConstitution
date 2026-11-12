@@ -1084,3 +1084,9 @@ share of them and no joint computation is needed; `formal/ranked_choice` R11 che
 the number of ballots. That a weak option's small total is visible is a privacy judgement put to the steward.
 Only the closing period's composite counts, devices re-emitting while a poll is open. Text for CC 6.1.9 waits on
 the store's layout.
+CC 6.1.9 carries the ranked secret poll, written to the store's stable layout (its KERNEL_SEAMS §13.8 and §13.8a at
+ca0cf7a2): one entry per ranking, rounds published as shares in one signed item per tally member with a share
+commitment, the four outcomes, the closing period, and a paragraph of what is claimed and what is not. Staged on
+the store; it is the first use of a set item in the text, described as "one signed item" without a family of its
+own yet. The steward has not answered whether a weak option's small round total is acceptable; the text says it
+is a count and never a person.
