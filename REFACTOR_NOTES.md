@@ -893,3 +893,12 @@ immediate removal (C312) is run both ways and each reading must fail exactly the
 answers, delete the other reading. Not in INVARIANTS.tsv (as `formal/alm` is not), so the published counts stand.
 Next in this family: the deletion deadline (CC 3.3.1 D1): a producer is in breach exactly when the window has
 passed with the row still present and none of the producer's own composers against it.
+
+### Models after the readings analysis (2026-11-12)
+
+`formal/deletion`: the deletion deadline as a fold; the reaction grammar names the actor of an event
+(`withdrawn(target,producer)`), and the model holds the manifest's rule to the text over 2,905 cases (C525 closed
+in the data). `formal/owner_binding`: the bind-time refusal under five readings over every order of arrival. One
+reading holds together (refused binding offered again; node's cosign on every binding onto an unowned key). The
+text of CC 3.2 is not changed: the door is the store's, so C557 is a question for persist, and it is added to
+the unposted draft. A node key that cosigns for two owners is the one case no reading settles.

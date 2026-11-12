@@ -36,6 +36,7 @@ run python3 tools/check_transition_roles.py
 run python3 tools/check_signer_gate.py
 run python3 formal/takedown/takedown_model.py --check
 run python3 formal/deletion/deletion_model.py --check
+run python3 formal/owner_binding/owner_binding_model.py --check
 run python3 -I formal/transport_tiers/frame_ab.py --check
 run python3 tools/check_compliance_wire_forms.py
 run python3 tools/check_rule_entries.py

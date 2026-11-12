@@ -258,3 +258,17 @@ emit nothing. Seven such emits are written in the text as the store's or the aut
 (`manifests/reactions.json`, `_meta.one_emitter.not_yet_by_origin_door`). Does the store today emit
 `consent:state:expired`, `hard_case:deletion_window_breach` and `hard_case:recipient_excluded` on every
 node that sees the condition, or on one?
+
+## Added 2026-11-12: the owner-binding door and the order rows arrive in (C557)
+
+CC 3.2 has a node refuse, at bind time, a second owner-binding naming a different owner. `formal/owner_binding`
+runs that rule over every order of arrival. Two questions about what the store does:
+
+1. A new owner's binding can arrive ahead of the old owner's withdrawal. Is the refused binding kept and offered
+   again when the withdrawal lands, or dropped? If dropped, two nodes holding the same rows read different owners.
+2. After a withdrawal the key is unowned. Does the next binding need the node key's cosign, as the first one
+   does? If not, the released key is open to whoever signs first.
+
+The model's one consistent reading is "offered again" and "cosign on every binding onto an unowned key". The
+text will say whichever the store does.
+
