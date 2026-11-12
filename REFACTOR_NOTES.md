@@ -1106,3 +1106,11 @@ Open with the store: `owner_of` counts every live owner-binding today and not on
 in. Answers given: the node's part is its key in `additional_scrubs` or a named device-join request; held bindings
 are cured in place by a `cosign:signature` row and bridged by a cut-over on the signed instant, never failed closed;
 the rule is read at the fold, never at admission. The bridge is flagged to the steward.
+
+Steward, 2026-11-12: "Locking down this kernel should force us to make the remainder of the logic consistent and
+checkable, and make the residuals easy to spot". `tools/kernel_closure.py` (gates and CI) makes the residual a
+number per cell: of 5,423 cells a kernel output draws from, 1,839 are ruled by the text, 1,738 record what the
+shipped store does, 1,030 take a general default nobody checked for that family, 816 are open. Whole columns are as
+built: lifecycle, projection, replication, erasure route, governance, subject rule. `derived` and `confers` are
+open for all 184 families. This is the work list for making the tables the kernel's rules: a cell moves from "as
+built" to "ruled" when a sentence is found or written for it and the differential against the store agrees.
