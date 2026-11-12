@@ -1042,3 +1042,20 @@ The store's seat door is built (its branch w614-keyplane); the 150-row emission 
 sqlite once the per-row refold went. Its first question, whether a removal before any mint makes a rotation due,
 showed "where a rotation is due" was used in CC 4.4.3.4.1 without being defined: now defined, and K10 added.
 Due is computed from who holds the current key, not latched.
+
+Steward, 2026-11-12, on four open questions (a set object; a group key for self and family; signer batching;
+whether `weighted:` and `custom:` were dropped): "You know set theory is considered the deep end for a reason. You
+tell me. The goal is to be able to 1) fold the rows and end up with the same conclusion 2) do so efficiently and
+without any halting edges". Decided by me from those two goals, and told to him:
+- `custom:` removed and `weighted:` made exact (landed): an operator's predicate is code outside the tables.
+- A set object is admitted only as an ENCODING of rows: flat (no set holds a set), enumerated (never "all who…"),
+  one signer, one signed instant, one family, each leaf's verdict independent of its siblings, and the fold over
+  the set equal to the fold over its leaves taken as rows. Signer batching is that same object, not a new family.
+  Not landed: to be modelled first (the world model checks the equality), then typed with the store's shape.
+- A group key for self and family files, rotating on removal and device revocation, with a history key for a
+  newcomer: decided yes; to be modelled in formal/key_plane before the text of CC 4.4.3.4.1 moves.
+Halting edges found by a pass over the tables: no cycle between families in what a row makes a node sign or in
+what an admission waits for; nine self-loops inside one family (granted to expired, proposal to acceptance to
+widening, the decay stages, the census steps, key grants), each of which descends by leaf and is not yet checked
+at that grain; the longest chain of emissions is three. To add: that check at leaf grain, and a lapse for every
+inert row, so nothing waits without a deadline.

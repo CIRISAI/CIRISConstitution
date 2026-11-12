@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "4128287cf97526a2d34fd16d54b5e88d5c6c80179b9e294b17662adf99eb38d4",
+  "policy_sha256": "de0ff092516cadef9f46daba3e5454e06fcc050b18e5b4cc82a33985bf8fc501",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -1150,29 +1150,6 @@
     "one_voice_admits": false
    },
    {
-    "kind": "custom:{family_specific_id}",
-    "count_set": "unstated",
-    "rule": "predicate:{family_specific_id}",
-    "removal_set": "unstated",
-    "removal_rule": "predicate:{family_specific_id}",
-    "cc_ref": "CC 3.3.4",
-    "votes": {
-     "1": null,
-     "2": null,
-     "3": null,
-     "5": null,
-     "9": null
-    },
-    "removal_votes": {
-     "2": null,
-     "3": null,
-     "5": null,
-     "9": null
-    },
-    "evaluable": false,
-    "one_voice_admits": false
-   },
-   {
     "kind": "open:self_admit",
     "count_set": "joiner",
     "rule": "joiner",
@@ -1201,8 +1178,7 @@
    "open:self_admit"
   ],
   "not_evaluable": [
-   "weighted:{rubric}",
-   "custom:{family_specific_id}"
+   "weighted:{rubric}"
   ],
   "admissibility_source": "constitution/protocol_admissibility.tsv",
   "admissibility": [

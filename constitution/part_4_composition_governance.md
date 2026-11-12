@@ -608,7 +608,7 @@ evaluate_subkind_admission(subkind, current, proposed):
       return true // unknown subkinds admit on consensus_protocol alone
 ```
 
-Operator vocabularies extending `cohort_subkind` provide their own `evaluate_subkind_admission` predicates per the `custom:{id}` consensus_protocol hook pattern from [CC 4.4.3.4.2](#4.4.3.4.2).
+A `cohort_subkind` outside this list brings no predicate of its own. Admission is decided by the group's declared protocol and by the predicates this section states, so every node reaches the same answer from the same rows.
 
 ##### 4.4.3.2.4 `community-membership` — Community membership resolution
 
@@ -985,9 +985,7 @@ admit_family_change(F, proposed: family_record):
     "quorum:M/N":
       group_ok = count(sig from m in current) >= M // M is ABSOLUTE — see CC 4.4.3.4.2.1
     "weighted:{rubric}":
-      group_ok = sum(weight(m, rubric) for m in current who signed) >= threshold
-    "custom:{family_id}":
-      group_ok = operator-defined predicate evaluates to true
+      group_ok = sum(weight(m) for m in current who signed) >= threshold  // whole numbers on the signed record
   admit = group_ok
 
   // CC 3.1.3.2: a protocol arm above admits the GROUP's side only;
@@ -1014,7 +1012,7 @@ A public room's `admission: open` ([CC 3.2](part_3_the_namespace.md)) is shortha
 
 The `M` in `quorum:M/N` is an **absolute signature count**, NOT a fraction that rebases with roster size. A `quorum:2/3` collective that grows to 5 members still admits at **2** signatures; the `N` is documentary (records the roster size at protocol-adoption time) and is NOT recomputed against the live roster. The ceremony gate requires a deterministic, operator-independent reading, so absolute-`M` is pinned.
 
-**Rationale**: absolute-`M` is the simpler invariant (the gate is a pure `count >= M` with no live-roster division). Proportional/rebasing quorum is still expressible for operators who want it via `weighted:{rubric}` (assign each member weight 1, set threshold = `ceil(roster_size / 2)` recomputed by the rubric resolver). Collectives that want "M grows with the roster" therefore use `weighted:`, not `quorum:` — keeping `quorum:M/N` unambiguous.
+**Rationale**: absolute-`M` is the simpler invariant (the gate is a pure `count >= M` with no live-roster division). A quorum that grows with the roster is `majority`, which counts against the live roster. Collectives that want that therefore declare `majority`, not `quorum:` — keeping `quorum:M/N` unambiguous.
 
 This rule applies identically to `community` admission ([CC 4.4.3.2.3](#4.4.3.2.3)) — the `quorum:M/N` arm there is the same absolute-`M` reading.
 
@@ -2026,7 +2024,7 @@ The membership-event kinds of [CC 3.4.4](part_3_the_namespace.md#3.4.4) are sign
 
 #### 4.5.12.5 `family-admission` — Family admission — consensus_protocol (normative)
 
-Unlike a self of one key ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)), family membership changes are **NOT single-vouch by default**. The family's `consensus_protocol` field governs admission. Six canonical protocols (`founder_only` / `unanimous` / `majority` / `quorum:M/N` / `weighted:{rubric}` / `custom:{family_id}`); operator vocabulary extends, and `open:self_admit` is the open protocol of a public group ([CC 4.4.3.2](#4.4.3.2)). `founder_only` is conformant for a family and for a publisher-gated subscription, refused for a community ([CC 4.5.13](#4.5.13)), and admissible for an affiliation only under the one-voice countersign rule of [CC 4.4.3.2.8](#4.4.3.2.8).
+Unlike a self of one key ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)), family membership changes are **NOT single-vouch by default**. The family's `consensus_protocol` field governs admission. Five canonical protocols (`founder_only` / `unanimous` / `majority` / `quorum:M/N` / `weighted:{rubric}`), a closed list, and `open:self_admit` is the open protocol of a public group ([CC 4.4.3.2](#4.4.3.2)). `founder_only` is conformant for a family and for a publisher-gated subscription, refused for a community ([CC 4.5.13](#4.5.13)), and admissible for an affiliation only under the one-voice countersign rule of [CC 4.4.3.2.8](#4.4.3.2.8).
 
 The consensus_protocol field is itself subject to amendment via the SAME protocol's rules (meta-amendment shape parallel to [CC 4.5.1.2](#4.5.1.2)) UNLESS the family is `consensus_protocol_entrenched: true`. Entrenched families reject amendments at the substrate gate; replacement requires the family's documented out-of-band ceremony.
 

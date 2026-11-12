@@ -1700,7 +1700,6 @@ p3	1158	3.3.4	family	cosign	cosign_rule	family	is	states	3.1.3.2	Under unanimous
 p3	1159	3.3.4	family	cosign	cosign_rule	family	is	states	4.2,4.2.6	Under majority more than 50% of current members sign; the accord-holder family decides by a strict majority of its standing roster with entrenched true	table
 p3	1160	3.3.4	family	cosign	cosign_rule	family	is	states	4.4.3.4.2.1,3.2	Under quorum:{m}/{n} any m members sign, m an absolute count; n is documentary (roster size at adoption) never recomputed; the infrastructure community signs under quorum:2/3 entrenched	table
 p3	1161	3.3.4	family	cosign	cosign_rule	family	is	states		Under weighted:{rubric} the sum of member weights per a named operator rubric must exceed a threshold	table
-p3	1162	3.3.4	family	cosign	cosign_rule	family	is	states		custom:{id} is an operator-defined consensus protocol	table
 p3	1166	3.3.4	family	roster_fold	lifecycle	family,membership	is	states	3.1.3.2	A family addition rides the widening plane: an active member emits membership:proposal to the joiner, the joiner answers membership:acceptance, a membership:widening cosigned under the current protocol seats the joiner	
 p3	1166	3.3.4	family	expiry	lifecycle	membership	is	states		A time-boxed guest is a membership:widening with valid_until; the seat lapses at that instant	
 p3	1166	3.3.4	family	supersede	lifecycle	family	is	states		A family Contribution superseding the current one may change metadata or drop members and never adds one	
@@ -2515,7 +2514,7 @@ p4	470	4.4.3.2.3	kernel	admission_order	none	hard_case	is	states	4.5.13	On refus
 p4	473	4.4.3.2.3	family	admission_order	evidence_screen	community,location_proof	is	states	3.2	A geographic community admits a new member only with a latest valid location_proof on file whose cell_id is contained in the community's geographic_constraint and whose valid_until has not passed	
 p4	473	4.4.3.2.3	family	admission_order	subject_rule	community,membership	is	states	3.2,3.1.3.2	A public room under open:self_admit admits a new member only with their own membership:acceptance naming the standing founder proposal; the widening still passes consensus_protocol	
 p4	473	4.4.3.2.3	family	admission_order	governance	community	is	states		An unknown cohort_subkind admits on consensus_protocol alone	
-p4	499	4.4.3.2.3	family	admission_order	governance	community	MAY	states	4.4.3.4.2	Operator vocabularies extending cohort_subkind provide their own subkind-admission predicates per the custom:{id} consensus_protocol hook	
+p4	499	4.4.3.2.3	family	admission_order	governance	community	MAY	states	4.4.3.4.2	A cohort_subkind outside the list brings no predicate of its own; admission is decided by the declared protocol and the predicates the section states	
 p4	505	4.4.3.2.4	family	supersede	tie_break	community	is	states	3.2	One held version per group id: a new version is admitted only if its signed prev_head_digest names the held head; a later instant not naming it is refused, not preferred	
 p4	505	4.4.3.2.4	family	roster_fold	projection	community	is	states	4.4.3.2.3	The community roster is the head (or witnessed head where the charter declares witness_quorum) folded with membership rows effective at now, each admitted per the current consensus_protocol	
 p4	520	4.4.3.2.4	family	roster_fold	projection	community,family	is	restates	4.4.3.4.4	resolve_community has the same shape as resolve_family; each member key_id is an identity	
@@ -2623,7 +2622,6 @@ p4	810	4.4.3.4.2	family	cosign	cosign_rule	family	is	states		Under unanimous eve
 p4	812	4.4.3.4.2	family	cosign	cosign_rule	family	is	states		Under majority the change carries when signatures from current members exceed half the roster	
 p4	814	4.4.3.4.2	family	cosign	cosign_rule	family	is	restates	4.4.3.4.2.1	Under quorum:M/N the change carries at M signatures from current members, M absolute	
 p4	816	4.4.3.4.2	family	cosign	cosign_rule	family	is	states		Under weighted:{rubric} the change carries when the rubric-weighted sum of signing members meets the threshold	
-p4	818	4.4.3.4.2	family	cosign	cosign_rule	family	is	states		Under custom:{family_id} the change carries when the operator-defined predicate is true	
 p4	822	4.4.3.4.2	kernel	roster_fold	subject_rule	family	is	restates	3.1.3.2	A protocol arm admits only the group side; a supersede never adds; every new member needs their own acceptance row	
 p4	828	4.4.3.4.2	family	moderation	projection	family,hard_case	is	states	4.4.3.4.1	On an admitted membership change the node emits hard_case:family_membership_change and runs the key_grant cascade	
 p4	831	4.4.3.4.2	kernel	cosign	cosign_rule	family,cosign	is	restates	3.3.4	A change short only by signatures is held as cosign:pending collecting cosign:signature rows for the hold window, never refused	
