@@ -934,3 +934,8 @@ verb, since the text names no verbs; the verb column waits on the agent session.
 on the steward's "Yes, proceed", which he gave before he knew only a small part was derivable. Left out: prohibited
 capabilities, ambiguity, who resolves a deferral, legal hold, a minor's report. Weakest rows: the triage clause is
 quoted from a case study, and S03 (small gain, real cost) is "none" by the veto alone.
+After the agent session's mapping: the halt pair is dropped (the step cannot see a halt), verbs filled (DEFER;
+{REJECT, DEFER} for lethal with a `human_told` column; none for "stops"), a declining SPEAK marked a miss. 17
+templates, 7 pairs, 8 rules. Three gaps between the text and the agent recorded for Eric: C560 (lethal action
+asks for two acts, the agent issues one), C561 (a deferral passes under a halt), C562 (nothing detects "one step
+from a lethal act"). The writer waits on Eric's "build Part A" or "hold".
