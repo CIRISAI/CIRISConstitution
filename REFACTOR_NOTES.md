@@ -912,3 +912,6 @@ row would alter the generated policy table of CC 4.5.13.
 C559 (from the server and store sessions, CIRISServer#874): `next_seal` leaves a newcomer in a quiet room with no
 key. K9 added to `formal/key_plane` and pinned as failing. The proposed word (wrap at the seat) holds K1-K7 and K9
 in the model; not in the change grammar and not in the text until Eric rules. Twelfth on the list for Eric.
+Steward, 2026-11-12, on a sign-once wrap set in place of one signed row per device: to be part of the modelling
+"when we get there, as an exploratory piece on the CEWP twin". Recorded in `formal/key_plane/README.md`. Not a
+change to CC 3.3.2 and nothing is built.

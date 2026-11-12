@@ -48,4 +48,13 @@ removal row is under the old key, which is the exposure window of CC 5.1. Stream
 (CC 5.1, CC 5.3.3.2.5), where a late joiner and a change of `history_on_join` mid-stream are open. Who may sign a
 grant (the signer gate, `tools/check_signer_gate.py`). Whether a holder of a key is served the bytes.
 
+**To explore, with the wire work of the next edition.** A rotation today is one signed row for each recipient
+device (CC 3.3.2): 150 rows and about 1.15 MB from one writer in a room of fifty members with three devices each,
+some 59% of it signature. An alternative signs once over a digest of the set of wraps and delivers each device its
+own wrap with a short proof of inclusion: one signature for a rotation and about 60% fewer bytes. Three things it
+would have to answer, and a model should show before anyone chooses: a wrap is then admissible only once its
+header is held, so two nodes holding different parts must still converge; a header is a set object, a kind the
+row slot was closed against; and a header may disclose how many devices a room has. This is to be modelled as an
+exploratory piece on the wire-protocol twin (`formal/cewp_node`), against K1 to K9 here, when that work is reached.
+
 Run: `python3 formal/key_plane/key_plane_model.py --check`
