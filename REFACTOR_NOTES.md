@@ -469,3 +469,18 @@ canonical binding opens a withdrawal rule; six product names in rule text; the e
 list of CC 4.2.1 and three wordings in CC 4.5.1; the hard-paragraph order (`out_h.md`);
 the founder's seat.
 
+Eric, 2026-11-11 night. (1) Who emits a row a clock or a fold causes: "agreed" to the
+recommendation: the door the causing row first entered emits, peers re-derive; landed in
+CC 4.5.13 and 3.3.1. Consequence stated to him: a deletion breach is then recorded by the
+breaching producer's own node or not at all, and what holds the producer to account is that
+every holder reads the breach itself. (2) and (3): he asked for plain explanations of the
+roster-widening question and of the seat rule's decisions D1 to D8, was given both with a
+recommendation each, and answered "proceed". I am taking that as yes to the recommendations:
+a group's declared protocol decides a widening and is refused where it would let fewer voices
+admit than the corridor's floor; D1 split the assurance duty; D2 a root the reader trusts
+confers age and capacity assurance; D3 a node's self-report needs its owner's `infra:attest`
+and the steward-triple words go; D4 one token; D5 as (1); D6 content ratings are open and the
+reader filters; D7 only the unscoped seat or its conferrer opens a retired agent's seal; D8
+either. None of these is landed. Confirm the reading with him before the seat rule lands.
+The guard designer's second pass was cut off by a usage limit and restarted.
+
