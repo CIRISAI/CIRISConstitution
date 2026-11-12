@@ -4,11 +4,11 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 135,
+  "entries": 143,
   "kinds": {
-   "expiry": 25,
-   "clock": 34,
-   "react": 76
+   "expiry": 28,
+   "clock": 36,
+   "react": 79
   },
   "emits": 37,
   "new_event_words": {
@@ -241,6 +241,17 @@
     }
    ],
    "cc_ref": "CC 4.4.3.5.5"
+  },
+  {
+   "family": "consent:stream:{kind}",
+   "leaves": [
+    "temporary"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "default": "consent_temporary_ttl_secs",
+   "cc_ref": "CC 3.3.1"
   },
   {
    "family": "consent:deletion_sla:{days}",
@@ -1037,6 +1048,76 @@
     }
    ],
    "cc_ref": "CC 4.2.6"
+  },
+  {
+   "family": "group:roster",
+   "kind": "clock",
+   "name": "W",
+   "dur": "admission_freshness_window_secs",
+   "max": "accord_roster_window_max_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.2.6"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "W"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "policy_met"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.6"
+  },
+  {
+   "family": "group:roster",
+   "kind": "clock",
+   "name": "W",
+   "dur": "admission_freshness_window_secs",
+   "max": "accord_roster_window_max_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.4.3.4.2.1"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "W"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "policy_met"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.2.1"
   },
   {
    "family": "moderation:{allegation_type}",
@@ -1930,6 +2011,18 @@
    "cc_ref": "CC 4.4.3.2.8"
   },
   {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "default": "consent_temporary_ttl_secs",
+   "from": "asserted_at",
+   "cc_ref": "CC 4.4.3.5.6"
+  },
+  {
    "family": "consent:deletion_sla:{days}",
    "kind": "clock",
    "name": "sla",
@@ -2242,6 +2335,33 @@
    "from": "first_held",
    "by": "receipt",
    "cc_ref": "CC 7.5.5"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "accord_heartbeat_max_secs",
+   "cc_ref": "CC 3.4.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "stale",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.4.1"
   },
   {
    "family": "accord:invoke:constitutional:{halt_id}",

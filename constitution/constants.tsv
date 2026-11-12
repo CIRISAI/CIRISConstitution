@@ -38,3 +38,7 @@ session_claim_max_secs	86,400 s: `valid_until − claimed_at` never exceeds it	3
 withhold_window_dsa16	14 days, counted on each holder from the instant it executes the tombstone	4.5.3		
 withhold_window_osa	14 days, counted on each holder from the instant it executes the tombstone	4.5.3		
 withhold_window_community_standards	30 days, counted on each holder from the instant it executes the tombstone	4.5.3		
+accord_heartbeat_max_secs	at most 90 days between refreshes of the heartbeat's `valid_until`	3.4.1	manifests/reactions.json	
+accord_roster_window_max_secs	604,800 s (7 d): the most an accord roster change's `window_until` reaches, under a declared severe-degradation state	4.2.6	manifests/reactions.json	
+consent_temporary_ttl_secs	14 days from `asserted_at` for a temporary grant that states no `valid_until`	4.4.3.5.6	manifests/reactions.json	
+epoch_key_retention_secs	30 days: the rotate-forward window after which holders delete past-epoch keys (the default mode)	3.2	manifests/reactions.json	
