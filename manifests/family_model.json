@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "e5ee42b030d74db64a58a6d8681107bb6ddc9bcad9cdb2c7822e1722da7bb1a1",
+  "registry_sha256": "b5c57eee88576e152173fe8fb5a3829c88e174c428d2e78a2b349b44cbf0952d",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -227,12 +227,12 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 12,
+    "cc-table": 13,
     "code-v61": 0,
     "generic": 166,
     "prose": 0,
     "mixed": 0,
-    "gap": 6
+    "gap": 5
    },
    "derived": {
     "cc-table": 0,
@@ -55847,10 +55847,20 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": null,
-    "source": "gap",
-    "note": "the cosign cell is not none and no arm is typed",
-    "cosign_rule": "legal bases: none; steward_purge: GAP (CC trust root's consensus_protocol; held shut)"
+    "value": "leaf=steward_purge => cosigned_act@trust_root ; none",
+    "arms": [
+     {
+      "when": "leaf=steward_purge",
+      "doors": "cosigned_act@trust_root",
+      "cc_ref": "CC 2.4.1.1"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 4.5.3"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [

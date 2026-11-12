@@ -35,6 +35,25 @@ The CIRIS Constitution is one document with one version line. Each release below
 - Seven sentences that said a rule again in looser words are cut or shortened, each leaving the citation of its home: the fuse (4.2.1.3), the recovery widening's bound (4.4.3.4.2.1), the two paths and the key effect of an eviction (3.3.6, 3.3.6.3), the election (4.5.4) and what a departure does to keys (4.5.12.1). No rule changes.
 - A clause of the reactions manifest that several sections state is one entry carrying all its sections. The manifest is 83 distinct clauses (17 expiry rules, 17 clocks, 49 reactions); the counts given above included the repeats. `tools/family_card.py` prints everything the data holds about one family as one block.
 - The family cards are an annex the build writes (8.10): for each of 118 families, who signs each transition and under which policy, whether a row widens and is confirmed, how the act is counted, what must be held, what a changing row may do, how the rows fold, what follows in time and the members of the body, each line with the sections that state it. Where a card states a value the card is this document's statement of it; Part 3's description gives the purpose and the reasons. The cards travel in the Namespace volume.
+- A second reading of the general rules, rule by rule, found 59 major conflicts the first reading had missed; a verifier judged each. Twenty sentences that had fallen out of line with the home of their rule are brought back to it:
+  - a key grant wraps to each recipient occurrence, less a node whose allow list does not name the cohort (5.2, 4.4.3.4.4);
+  - the proxy edge for a minor's records runs from the subject's hash to the key that revokes for it (4.5.2.2);
+  - a first-held instant clocks the windows of the policy table, and another section's window runs from the instant that section names (4.5.13);
+  - a node key that also names an agent or a user is refused at the wire (4.5.8.4);
+  - holding a reserved role is necessary and never sufficient: the role is conferred by delegation (3.4.7.1);
+  - a key grant and a roster version are the two registered rows that name another party in the attested slot (2.1), and the admitting store resolves a dimension through the namespace and refuses on the result (2.1);
+  - a widening by replacement is a placement and the narrower row stays live (4.4.3.3.1);
+  - the rule-3 proxy acts on the conditions of 3.3.14 (2.4.1.1);
+  - what a sealed link carries before rooting is the five things of 5.3.4 (3.3.6.2);
+  - a deletion deadline is breached while the row is still present, whatever the producer reports (4.4.3.5.2, 3.3.1);
+  - a risk magnitude of four or more is the one trigger of the catastrophic-risk evaluation (8.8.3);
+  - a fingerprint is ten characters at every deployment size (2.6.8);
+  - the lone path of the self roster lands unless a strict majority of the other keys objects (3.2, 4.5.12.3);
+  - an age-assurance rung carries no further qualifier in the dimension (3.4.11, 3.3.12);
+  - the hash tripwire fires at a promotion into the Commons and at a post into a public room (3.1.3.4, 1.13.3.4);
+  - a court's order to destroy sealed material is a duty-holder's notice reaching the bytes plane (7.5.5, 3.1.5);
+  - an agent's occurrence under a person's identity signs no item of the person's queue and runs no path of the roster door (4.4.3.4.3).
+  A steward purge notice is counted as a cosigned act of the trust root in the data, where it had been one signature.
 - The confirm test is one lookup (4.5.13, `formal/event_lifecycle`): an item is confirmed before it is signed when the rows it would sign widen or have no way back, and every other item takes one step. `manifests/transitions.json` carries the way back and the confirm test on each of its 455 transitions: 185 are confirmed and 270 take one step, every withdrawal among them. Eight families have no way back by their lifecycle; on 31 transitions the table lists no retraction and the cell is open. `confirm_is_lookup`, `no_way_back_is_confirmed` and `exit_is_one_step` are proved.
 - Five rules are said once and cited elsewhere: who may take a signed row back (2.4.1.1), what a signed row carries (2.1), who owns a key (3.2), which statements a reader believes (4.4.3.8) and which nodes a row reaches (5.2). Thirty-four sentences in Parts 1 to 7 that repeated one of them are cut to a citation, and each sentence that carries something its rule's entry lacks is left whole. Three citations are added where an entry read wider than a rule stated elsewhere: a minor's node is never announced and a `serve` seat needs an announced owner (3.2, both by 5.4.6), and un-trust does not lift a halt already latched (4.4.3.8, by 4.2.1). No rule changes.
 - The clock rule is one entry (2.6.7): which clock a stated instant refers to, the skew bound, and a table of the window by case, with the admission freshness window `W` and its reason after it. No rule changes. Two members of 2.1 cite the date-time form at 2.6.2, where it is stated.

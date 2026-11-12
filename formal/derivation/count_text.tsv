@@ -23,3 +23,5 @@ moderation:{allegation_type}	*	moderation_action@subject_group	CC 4.5.13	On thei
 objection:{state}	*	none	CC 3.1.9.2	a signed, roster-pinned vote on a pending act
 cosign:{state}	*	none	CC 3.1.3	**Neither row is the event.**
 lineage_witness:{stage}	*	none	CC 3.4.10	Its cosignature is the `ciris.lineage_head_cosign.v1` object
+takedown_notice:{basis}	leaf=steward_purge	cosigned_act@trust_root	CC 2.4.1.1	authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`
+takedown_notice:{basis}	*	none	CC 4.5.3	A duty-holder's notice is admitted by the [CC 4.5.5](#4.5.5) enforced-admission rule and reaches the bytes plane only.

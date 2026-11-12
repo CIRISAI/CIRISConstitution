@@ -713,3 +713,22 @@ digest derivations, audience and serving rules, the conditions marked partial in
 One mismatch found: the `retirement:{state}` cell cancels by `withdraws` and the model has no withdraw transition
 (the same finding the guard pass made). Conclusion: the data pass has produced kernel-readable tables and checks,
 not a shorter Part 3; shortening Part 3 needs the audience, derivation and body-rule columns that do not exist yet.
+
+## The second reading (2026-11-11 night)
+
+Six lanes read the 2,533 non-family statements rule key by rule key (`handoff/lanes/K_KEY.md`, `out_k_*.tsv`):
+242 findings; major 80 (59 new, 21 known), minor 162 (123 new, 39 known). Three verifier lanes
+(`V_VERIFY.md`, `out_v_*.tsv`) judged the 59 new major: STALE 29, NOT_A_CONFLICT 17, DATA 4, CHOICE 9 (7 distinct).
+All 59 are C288 to C346. A writer lane drafted the stale fixes (`out_w_stale.tsv`, 37 edits); 29 edits applied after
+my read, with three long sentences split and one entry repointed.
+Held, not applied: K03 (Part 1 Accord text and the CC 4.5.1 register cell, on the WA seat: Eric's wording);
+K29 and K30 (what the under-13 default means for an owner with no assurance: whether such an owner may operate and
+may announce; a consequence of his age ruling he has not seen); K46 (the `supersedes` cell of CC 2.4.1, waits on the
+guardian-displacement choice); K54 and K55 (wire sections that wait on the edge's known answers).
+DATA: K20 fixed (`takedown_notice:{basis}` count: steward_purge is `cosigned_act@trust_root`; count open cells 5);
+K36 (`content_rating` reserved in the text and open in the registry) waits on the seat rule's D6; K44 (default
+`in_audience`) and K59 (owner-binding recovery gate) are text against build, for the store.
+Not read by the second reading: the wire's known-answer vectors, CC 2.6.1.7 row by row, `reactions.json`,
+`formal/accord_halt`. The 123 new minor findings are in `out_k_all.tsv` and not yet in the conflict table.
+Stop criterion agreed with Eric in substance: every statement read twice, then one more rule-by-rule reading after
+the fixes whose count of new major findings is a handful.

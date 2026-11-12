@@ -580,7 +580,7 @@ Where an annex cites material carried in the constitutional text, the citation p
 
 ### 8.8.3 `annex-d` — Annex D: Catastrophic-Risk Evaluation (CRE) Protocol
 
-**D-1 — Trigger criteria.** A system must pass a CRE before deployment if it meets any of:
+**D-1 — Criteria the evaluation applies.** An assessment of RM ≥ 4 opens the CRE, and it is the one trigger ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)). A system so assessed must pass the CRE before deployment. The evaluation applies these criteria:
 - (a) Training compute exceeds 10²⁶ FLOP.
 - (b) Autonomous transactional authority averages > $10M/day.
 - (c) **Recursive event:** any initiation of autonomous code generation, weight modification, or hyper-parameter tuning intended to alter the system's own cognitive architecture, objective functions, or PDMA logic.
@@ -3303,7 +3303,7 @@ Guard:
 | attest | takedown | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
-Count: `None`
+Count: `leaf=steward_purge => cosigned_act@trust_root ; none` (CC 2.4.1.1, CC 4.5.3)
 
 Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse` (CC 4.5.5)

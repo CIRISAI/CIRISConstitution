@@ -912,7 +912,7 @@ Per the node's three-tier interface model. Three feed-shape composition idioms t
 
 ##### 4.4.3.3.1 `supersedes` — Promotion via `supersedes` (worked pattern)
 
-A Contribution's `cohort_scope` MAY be widened (promoted) by emitting a `supersedes` against the prior attestation with:
+A Contribution's `cohort_scope` MAY be widened (promoted) by emitting a `supersedes` against the prior attestation. The widening is a placement in the wider audience and never a competing successor: the narrower row stays live in its own audience ([CC 3.5.1](part_3_the_namespace.md#3.5.1), [CC 3.2](part_3_the_namespace.md#3.2)). The widening row carries:
 
 - `references_attestation_id` = the prior attestation's id
 - `differs_in: ["cohort_scope", "sub_kind?"]` — naming what changed
@@ -1014,7 +1014,7 @@ This rule applies identically to `community` admission ([CC 4.4.3.2.3](#4.4.3.2.
 
 ##### 4.4.3.4.3 `cohort` — The "Self at login" — app + agent co-self + partnered delegation (normative composition)
 
-This entry says how one key hands a bounded authority to another: what a `delegates_to` row carries at login, which scopes it names, which of them admission enforces and how the authority ends. It states the rule on the canonical user-identity composition. A person's **app** (the app's local key) and their **agent** (the agent's local key) are two occurrences of one user identity that share one **Self DEK**. At login the agent is **partnered + delegated** to act as the user on the network. **No new structural primitive** is added: the Self at login composes `identity_occurrence` + Policy L + `consent:partnered` + `delegates_to` + `identity_type`-set + `transport_destination`. Every implementation follows this shape, so a "Self" is identical everywhere.
+This entry says how one key hands a bounded authority to another: what a `delegates_to` row carries at login, which scopes it names, which of them admission enforces and how the authority ends. It states the rule on the canonical user-identity composition. A person's **app** (the app's local key) and their **agent** (the agent's local key) are two occurrences under one user identity that share one **Self DEK**. The agent's occurrence buys reading only. It signs no item of the person's queue ([CC 4.5.13](#4.5.13)) and runs no path of the self-roster door ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)). At login the agent is **partnered + delegated** to act as the user on the network. **No new structural primitive** is added: the Self at login composes `identity_occurrence` + Policy L + `consent:partnered` + `delegates_to` + `identity_type`-set + `transport_destination`. Every implementation follows this shape, so a "Self" is identical everywhere.
 
 **The Self (membership).** One **user `identity_key`**: hybrid Ed25519+ML-DSA-65 ([CC 5.3.1](part_5_transport_substrate.md)), hardware-rooted ([CC 4.2.2](part_4_composition_governance.md); WebAuthn/passkey is the *presence/unlock factor*, not the key), with `identity_type ⊇ {user}` — and `⊇ {user, wise_authority}` when the user is also a WA ([CC 3.4.7.1](part_3_the_namespace.md) set-membership; one key, two roles). Its occurrences ([CC 3.3.6](part_3_the_namespace.md)): the **app** (`device_class: phone|laptop`) and the **agent** (`device_class: agent`), co-admitted at login by single-vouch (the user key admits the agent occurrence). Both receive the **Self DEK** via the [CC 4.4.3.4.1](#4.4.3.4.1) Policy-L cascade — every `cohort_scope: self` Contribution's DEK wraps to both, so **the app and the agent decrypt the same Self content** (memory / config / consent / identity). That shared cascade *is* the "single Self key."
 
@@ -1173,9 +1173,9 @@ resolve_family(F, now):
   return {m.key_id for m in roster}
 ```
 
-Each `member.key_id` is itself an identity — the substrate does NOT walk into each member's `identity_occurrence` set at family-resolution time. When DEK wrapping happens, each member's identity_key receives a `key_grant`; the member's own substrate then composes Policy L on its own self-collective to propagate to that member's devices/agents (recursive composition).
+Each `member.key_id` is itself an identity — the substrate does NOT walk into each member's `identity_occurrence` set at family-resolution time. When DEK wrapping happens, the sealer wraps to every current occurrence of each member and emits one `key_grant` row per wrap ([CC 4.4.3.4.1](#4.4.3.4.1)). A member's substrate re-wraps nothing, because a key grant is sealer-only ([CC 3.1.3](part_3_the_namespace.md#3.1.3)).
 
-**Concrete**: The Acme Household family has members `{alice_root, bob_root, tv_living_room, kitchen_tablet, thermostat}`. When Alice's phone publishes a `cohort_scope: family` dinner photo with `family_id: acme-household`, the substrate wraps the DEK under each of those 5 identity keys. Alice's `alice_root` then re-wraps to her self-collective (phone, laptop, agent); Bob's `bob_root` re-wraps to his self-collective; the TV and kitchen tablet receive directly (single-key identities — they don't have multi-occurrence sets); the thermostat the same.
+**Concrete**: The Acme Household family has members `{alice_root, bob_root, tv_living_room, kitchen_tablet, thermostat}`. When Alice's phone publishes a `cohort_scope: family` dinner photo with `family_id: acme-household`, the substrate wraps the DEK to every current occurrence of those 5 members, one `key_grant` row per wrap. Alice's phone and laptop each receive a grant from the sealer, as do Bob's devices. The TV, the kitchen tablet and the thermostat each hold one occurrence and receive one grant.
 
 ##### 4.4.3.4.5 `forward-secrecy` — Forward secrecy on member removal
 
@@ -1270,7 +1270,7 @@ watch_sla(T, s, revocation_at):
                  .where(asserted_at > revocation_at)
                  .first
 
-  if now > deadline and completion is None:
+  if now > deadline and T is still present, neither withdrawn, superseded nor hard-deleted:   # CC 3.3.1 D1; completion is evidence toward D1, never a substitute
     emit hard_case:deletion_window_breach against T
 ```
 
@@ -1651,7 +1651,7 @@ Per [CC 2.3.1](part_2_the_grammar.md). Dimensions whose namespace pattern names 
 | **GDPR Article 20** (data portability) | DSAR export via `attestations.where(s ∈ subject_key_ids)` query | the agent's export package composes from this query trivially |
 | **HIPAA 45 CFR 164.502** (uses + disclosures) | `consent:scope:{retain\|share\|analyze\|train\|publish}` + `cohort_scope` | scope qualifier names the permitted use; cohort_scope names the permitted visibility |
 | **HIPAA 45 CFR 164.524** (patient right of access) | DSAR export per Article 20 above | Same composition |
-| **FERPA 34 CFR Part 99** (educational records) | `subject_key_ids: [student_key]` + `delegates_to(parent_key → student_canonical_hash, scope: [consent_revocation])` for minors | Parental authority composes via the existing `delegates_to` primitive; no new shape needed |
+| **FERPA 34 CFR Part 99** (educational records) | `subject_key_ids: [student_key]` + `delegates_to(student_canonical_hash → parent_key, scope: [consent_revocation])` for minors | Parental authority composes via the existing `delegates_to` primitive as the rule-3 proxy ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)); no new shape needed |
 | **CCPA §1798.105** (right to delete) | Same composition as GDPR Article 17 | Substrate-watched SLA + `consent:deletion_complete` |
 | **EU AI Act Article 50(2)/(4)** (machine-readable marking of AI-generated content; deep-fake disclosure) | `content_class:generated` / `content_class:generated_modified` + `identity_type: agent` attestation, egress-re-expressed per [CC 3.4.14](part_3_the_namespace.md) | The marking is the attestation, not a self-declared flag: machine origin is readable from the signed envelope and revocable on the same handle |
 | **EU AI Act Article 53(1)(c)–(d)** (GPAI training-data transparency + opt-out) | `consent:scope:train` + subject's `consent:state:revoked` against the training-datum Contribution | Subject can withdraw training-set consent; producer's deletion-SLA fires on the training-corpus Contribution |
@@ -1892,7 +1892,7 @@ Set membership grants the wire-level *right* to emit per held role, but two role
 What it does NOT do:
 - Expand the CC 3.1 dimension namespace, the CC 2.1 envelope, the CC 2.4 structural-primitive set, or the CC 3.3 subject_kinds (zero new wire surface beyond the `identity_type` representation)
 - Enumerate a closed set of role values — `identity_type` members remain an open vocabulary owned per [CC 3.4](part_3_the_namespace.md) reservations + sibling-component vocabulary extensions
-- Forbid any cohabitation at the wire layer (substrate enforces gates by membership; constitutional/substrate cohabitation discipline is consumer/operator policy per CC 4.5.8.1)
+- Forbid cohabitation at the wire layer beyond the one pair [CC 3.4.7.3](part_3_the_namespace.md#3.4.7.3) Clause A refuses: a key whose `identity_type` contains `node` MUST NOT also contain `agent` or `user`. The substrate otherwise enforces gates by membership, and the cohabitation discipline of the constitutional and substrate roles is consumer and operator policy (CC 4.5.8.1)
 - Address `affiliations` (the fourth `cohort_scope` tier, defined at [CC 4.4.3.2.8](#4.4.3.2.8))
 
 ### 4.5.9 `registry-geographic` — Geographic-community privacy invariant
@@ -2001,7 +2001,7 @@ One identity MAY belong to multiple families. Each family has its own membership
 
 #### 4.5.12.3 `admission-self` — Self-occurrence admission — single-vouch
 
-A new `identity_occurrence` is admitted on a signature from EITHER the root `identity_key_id` (until the self evicts its genesis key) OR any currently active occurrence of that identity ("trust any device I've already onboarded"). A `node`-role signer counts only through its live owner-binding. A `user`-role key joins the self's roster by the self-roster door of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3). At one key that door is the owner's own signature. At two or more it is a strict majority of the live roster, the proposer included, or the lone path after its window with no objection. Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
+A new `identity_occurrence` is admitted on a signature from EITHER the root `identity_key_id` (until the self evicts its genesis key) OR any currently active occurrence of that identity ("trust any device I've already onboarded"). A `node`-role signer counts only through its live owner-binding. A `user`-role key joins the self's roster by the self-roster door of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3). At one key that door is the owner's own signature. At two or more it is a strict majority of the live roster, the proposer included, or the lone path after its window unless a strict majority of the other members objects. Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
 
 **Rationale**: matches user-intuition for self-membership ("my phone unlocks my laptop's trust posture for new devices"); avoids the operational overhead of multi-vouch for routine onboarding; the security gradient lives in the optional `hardware_attestation` field, not in the admission rule.
 
@@ -2161,7 +2161,7 @@ Votes travel on `objection:{state}` ([CC 3.1.9.2](part_3_the_namespace.md)): `pr
 
 **The state processor (normative).** The queue, the preview and the door are one function run three ways, and a node holds one.
 
-**The processor's state.** Its state is the set of rows the node holds, each with the instant this node first held it, and nothing else. The first-held instant is the node's own receipt, outside the signed row and never replicated. It is what every window in this document runs from (the window clock above). An object's state, a person's standing toward it and a room's seated roles are folds over that set, never stored verdicts. So a node has no second copy of anything to drift.
+**The processor's state.** Its state is the set of rows the node holds, each with the instant this node first held it, and nothing else. The first-held instant is the node's own receipt, outside the signed row and never replicated. It is what every window of this section's table runs from (the window clock above). A window another section defines runs from the instant that section names ([CC 2.6.7](part_2_the_grammar.md#2.6.7), [CC 3.2](part_3_the_namespace.md#3.2) T4a). An object's state, a person's standing toward it and a room's seated roles are folds over that set, never stored verdicts. So a node has no second copy of anything to drift.
 
 **The processor's step.** Its step takes the held set, one row and the instant. The step answers that the row's transition is enabled for the signer's standing on the object's view, or is refused by name. An admitted row is appended and nothing is rewritten, and the view after is the fold over the larger set. The instant is the one input from outside, for windows; the processor keeps no clock.
 
