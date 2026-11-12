@@ -1002,3 +1002,13 @@ is the shipped store's gate, so it cannot say `infra:detect` while the store tes
 are STAGED under C564; the four text-sourced transport families and the story trace moved to `infra:attest`; the
 `seat_role(...)` regex of both builders takes a colon. The reactions' `by identity:substrate_persist` stay with
 their families. Still to align: the hard-coded rule strings of `build_cc_namespace.py`.
+
+### The conflict table reconciled (2026-11-12)
+
+Seven reader lanes checked 340 rows against the repository (204 marked "to fix", 136 marked "settled"); 99 rows
+that recorded no conflict were closed without a lane. Of the 340: 222 fixed and closed, 82 still stand, 36 partly
+fixed (twelve of them downgraded by me from "fixed" where a lane noted a residue). The standing rows are mostly a
+typed cell that describes the shipped store where the text is stricter: that list is the store's worklist. The
+steward's goal, stated the same day: a single kernel that takes the unsorted set of rows a node holds and gives the
+views and the queue, replacing the store's decisions; the store is writing FSD/KERNEL_SEAMS.md, and he asks that
+the kernel approach the floor for Rust and WASM and be shown to make the store faster.
