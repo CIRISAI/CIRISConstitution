@@ -598,3 +598,10 @@ pairs in nine columns, the per-family statements only. The whole rule text is fi
 not per-family: general rules, wire layouts, transport, mathematics, stewardship. Largest uncovered homes in
 Part 3: CC 3.2 (257), 3.4.12 (122), 3.4.13 (111), 3.1.7 (90), 3.4.5 (80). The measure is of sentences a value
 rests on, not of sentences cut; nothing is cut yet. `--list-uncovered pN` lists the homes to work next.
+
+Held rows worked: five placements landed with reasons (48 reasons now); `lineage_witness:{stage}` cosign and count
+are none from CC 3.4.10 and the family leaves the `quorum` reason (count open cells 6); the five reader defaults by
+polarity are `fold_reader_defaults.tsv`. Four held rows (three guard, one change) quote a gist and not the text;
+their rules are carried by other rows or stay prose. Four reader lanes launched for the unmeasured per-family
+columns: body (two lanes, 436 statements), signer (286), and freshness/window/formula/tie_break/monotone_field/
+projection/placement (about 240); outputs to scratch `lanes/out_f_{body_a,body_b,signer,small}.tsv`.

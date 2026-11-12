@@ -75,12 +75,12 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 7,
+    "cc-table": 12,
     "code-v61": 9,
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 161
+    "gap": 156
    },
    "signer_rule": {
     "cc-table": 40,
@@ -115,12 +115,12 @@
     }
    },
    "cosign_rule": {
-    "cc-table": 5,
+    "cc-table": 6,
     "code-v61": 169,
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 3
+    "gap": 2
    },
    "polarity": {
     "cc-table": 3,
@@ -227,12 +227,12 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 11,
+    "cc-table": 12,
     "code-v61": 0,
     "generic": 166,
     "prose": 0,
     "mixed": 0,
-    "gap": 7
+    "gap": 6
    },
    "derived": {
     "cc-table": 0,
@@ -351,6 +351,33 @@
      ]
     }
    ],
+   "reader_defaults": [
+    {
+     "polarity": "signed",
+     "fold": "combine=mean(score*confidence); by=reader",
+     "cc_ref": "CC 4.4.2"
+    },
+    {
+     "polarity": "boolean-via-score",
+     "fold": "combine=min(score); by=reader",
+     "cc_ref": "CC 4.4.2"
+    },
+    {
+     "polarity": "positive-only",
+     "fold": "combine=max(score); by=reader",
+     "cc_ref": "CC 4.4.2"
+    },
+    {
+     "polarity": "-1.0-only",
+     "fold": "combine=min(score); by=reader",
+     "cc_ref": "CC 4.4.2"
+    },
+    {
+     "polarity": "enumerated",
+     "fold": "pick=max(signed_at); by=reader",
+     "cc_ref": "CC 4.4.2"
+    }
+   ],
    "typed_families": 76,
    "statements": 160,
    "marks": {
@@ -424,10 +451,10 @@
     "erasure_route": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "governance": "none"
    },
-   "families_on_it": 106,
+   "families_on_it": 102,
    "families_by_departures": {
-    "0": 106,
-    "1": 36,
+    "0": 102,
+    "1": 40,
     "2": 9,
     "3": 16,
     "4": 2,
@@ -467,7 +494,7 @@
      "basis": "text",
      "cc_ref": "CC 2.4",
      "quote": "A single-signer row cannot carry a quorum's act",
-     "cells": 13
+     "cells": 12
     },
     {
      "id": "adverse",
@@ -862,6 +889,56 @@
      "why": "The rule is the default: the row is judged when it arrives, replaced by its own signer, and a withdrawal ends the withdrawn row and no other. The note is kept so the reading is not lost.",
      "basis": "build",
      "cells": 4
+    },
+    {
+     "id": "build_manifest_public",
+     "title": "A build manifest is public",
+     "when": "The row states which build a released target was made from.",
+     "why": "Anyone checking a release must be able to read the manifest, whoever they are, so the row is signed at federation scope and goes to every node.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.2.1",
+     "quote": "Its `cohort_scope` is `federation`.",
+     "cells": 1
+    },
+    {
+     "id": "testimony_private",
+     "title": "A testimony stays with its witness",
+     "when": "The row is a person's own account of what they saw.",
+     "why": "A testimony is kept at the witness's own scope, is never added up and never grounds a penalty alone, so it travels no further than the witness's own nodes.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.9.3",
+     "quote": "the four load-bearing wire-level disciplines (`witness_relation: self`, `cohort_scope: self`, never aggregated, never sole evidence for `slashing:*`)",
+     "cells": 1
+    },
+    {
+     "id": "need_open_call",
+     "title": "A need is an open call",
+     "when": "The row asks the whole mesh for help of a named kind.",
+     "why": "A call that only the caller's own circle could read would reach nobody able to answer it, so the row is signed at federation scope.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.9.3",
+     "quote": "Federation-scope open-call surface",
+     "cells": 1
+    },
+    {
+     "id": "watchlist_per_group",
+     "title": "A watchlist belongs to one group",
+     "when": "The row turns on a matching list for the content of one group.",
+     "why": "A list that applied everywhere would let one authority screen every room. Each group's own moderating authority enables its list, and the row goes to that group and no further.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.9.4",
+     "quote": "**Per-group, NEVER global**",
+     "cells": 1
+    },
+    {
+     "id": "registry_consensus_public",
+     "title": "A registry-consensus attestation is world-readable",
+     "when": "The row reports that independent registry sources agree about a key.",
+     "why": "A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.",
+     "basis": "text",
+     "cc_ref": "CC 4.4.3.2.1",
+     "quote": "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)",
+     "cells": 1
     }
    ],
    "open": [
@@ -5852,14 +5929,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 4.4.3.2.1",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -6131,8 +6212,14 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:772; is_deprecated_attestation_ladder_prefix@src/federation/admission.rs:1832; check@src/federation/admission.rs:1515"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "registry_consensus_public"
+    ]
+   }
   },
   {
    "family": "attestation:self_verify",
@@ -37793,8 +37880,13 @@
     }
    },
    "cosign_rule": {
-    "value": "lineage_witness.rs gates the cosign object, not this row",
-    "source": "gap"
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.10",
+    "code": {
+     "value": "lineage_witness.rs gates the cosign object, not this row",
+     "source": "gap"
+    }
    },
    "body": {
     "value": "none (no family body; SchemaResolver no-op by default)",
@@ -37963,10 +38055,15 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": null,
-    "source": "gap",
-    "note": "the cosign cell is not none and no arm is typed",
-    "cosign_rule": "lineage_witness.rs gates the cosign object, not this row"
+    "value": "none",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.4.10"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -38006,14 +38103,8 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3375; admit_lineage_head_cosign@src/federation/lineage_witness.rs:161"
    },
-   "departs": [
-    "cosign_rule"
-   ],
-   "because": {
-    "cosign_rule": [
-     "quorum"
-    ]
-   }
+   "departs": [],
+   "because": {}
   },
   {
    "family": "locality:decision:{scale}",
@@ -40976,14 +41067,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -41247,8 +41342,14 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3621; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "need_open_call"
+    ]
+   }
   },
   {
    "family": "news:*",
@@ -44663,14 +44764,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.2.1",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -44946,8 +45051,14 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:3930; class_for@src/federation/namespace/registry.rs:300"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "build_manifest_public"
+    ]
+   }
   },
   {
    "family": "provenance:build_manifest:{target}:locale:{lang_code}",
@@ -52294,14 +52405,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "self_collective",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -52565,8 +52680,14 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4524; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "testimony_private"
+    ]
+   }
   },
   {
    "family": "topical_relation:{kind}",
@@ -56527,14 +56648,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "targeted_room",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.9.4",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -56804,8 +56929,14 @@
     "carries_kind_census": "—",
     "sources": "src/federation/namespace/namespace_registry.json:4837; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "watchlist_per_group"
+    ]
+   }
   },
   {
    "family": "weighted_aggregate:{contribution_id}",

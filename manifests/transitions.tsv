@@ -297,7 +297,7 @@ ledger:promotion:{version}	supersede	admitted	superseded	author	selfAct	false	su
 licensure:{authority_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 licensure:{authority_id}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 licensure:{authority_id}	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
-lineage_witness:{stage}	attest	none	admitted	founder,owner	selfAct	true	none		true	derived	derived	derived
+lineage_witness:{stage}	attest	none	admitted	founder,owner	selfAct	true	none		true	derived	cc-table	derived
 locality:decision:{scale}	attest	none	admitted	registered	selfAct	true	none		true	derived	derived	derived
 manifold_conformity:{cohort}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 manifold_conformity:{cohort}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived

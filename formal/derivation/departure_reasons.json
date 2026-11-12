@@ -51,11 +51,10 @@
    "quote": "A single-signer row cannot carry a quorum's act",
    "moves": {
     "cosign_rule": [
-       "collection:{kind}",
+     "collection:{kind}",
      "group:roster",
      "identity:occurrence",
      "identity:occurrence_revocation",
-     "lineage_witness:{stage}",
      "membership:{stage}",
      "objection:{state}",
      "takedown_notice:{basis}",
@@ -718,6 +717,76 @@
      "goal:{scale}",
      "content_class:{class}",
      "mesh_config:{key}"
+    ]
+   }
+  },
+  {
+   "id": "build_manifest_public",
+   "title": "A build manifest is public",
+   "when": "The row states which build a released target was made from.",
+   "why": "Anyone checking a release must be able to read the manifest, whoever they are, so the row is signed at federation scope and goes to every node.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.2.1",
+   "quote": "Its `cohort_scope` is `federation`.",
+   "moves": {
+    "placement": [
+     "provenance:build_manifest:{target}"
+    ]
+   }
+  },
+  {
+   "id": "testimony_private",
+   "title": "A testimony stays with its witness",
+   "when": "The row is a person's own account of what they saw.",
+   "why": "A testimony is kept at the witness's own scope, is never added up and never grounds a penalty alone, so it travels no further than the witness's own nodes.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.3",
+   "quote": "the four load-bearing wire-level disciplines (`witness_relation: self`, `cohort_scope: self`, never aggregated, never sole evidence for `slashing:*`)",
+   "moves": {
+    "placement": [
+     "testimonial_witness:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "need_open_call",
+   "title": "A need is an open call",
+   "when": "The row asks the whole mesh for help of a named kind.",
+   "why": "A call that only the caller's own circle could read would reach nobody able to answer it, so the row is signed at federation scope.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.3",
+   "quote": "Federation-scope open-call surface",
+   "moves": {
+    "placement": [
+     "need:{domain}:{kind}"
+    ]
+   }
+  },
+  {
+   "id": "watchlist_per_group",
+   "title": "A watchlist belongs to one group",
+   "when": "The row turns on a matching list for the content of one group.",
+   "why": "A list that applied everywhere would let one authority screen every room. Each group's own moderating authority enables its list, and the row goes to that group and no further.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.4",
+   "quote": "**Per-group, NEVER global**",
+   "moves": {
+    "placement": [
+     "watchlist:{id}"
+    ]
+   }
+  },
+  {
+   "id": "registry_consensus_public",
+   "title": "A registry-consensus attestation is world-readable",
+   "when": "The row reports that independent registry sources agree about a key.",
+   "why": "A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.",
+   "basis": "text",
+   "cc_ref": "CC 4.4.3.2.1",
+   "quote": "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)",
+   "moves": {
+    "placement": [
+     "attestation:registry_consensus"
     ]
    }
   }

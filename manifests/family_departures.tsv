@@ -16,6 +16,7 @@ archive_release:{basis}	lifecycle	unbuilt	"none (held shut)"
 archive_release:{basis}	replication	unbuilt	"none (held shut)"
 archive_release:{basis}	projection	unbuilt	"none (never stored)"
 archive_release:{basis}	erasure_route	unbuilt	"none (never stored)"
+attestation:registry_consensus	placement	registry_consensus_public	"commons"
 ballot:moderator	placement	unbuilt	null
 ballot:moderator	subject_rule	unbuilt	null
 ballot:moderator	freshness	unbuilt	null
@@ -148,7 +149,6 @@ ledger:checkpoint:{unit}:{version}	subject_rule	one_ledger	{"attested_party": ["
 ledger:head:{unit}:{version}	subject_rule	one_ledger	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: ledger_id == derive_ledger_id(attested, unit, standard_version)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 ledger:promotion:{version}	subject_rule	one_ledger	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: ledger_id == derive_ledger_id(attested, unit, standard_version)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 licensure:{authority_id}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
-lineage_witness:{stage}	cosign_rule	quorum	"lineage_witness.rs gates the cosign object, not this row"
 membership:{stage}	placement	two_consents	["targeted_family", "targeted_room (at the group)"]
 membership:{stage}	subject_rule	two_consents	{"proposal": "cardinality exactly 1 invitee (0 for a standing offer in an open public room), expires_at <= 30 d", "reply": "attested = invitee"}
 membership:{stage}	cosign_rule	quorum	{"proposal/reply/resignation": "none", "widening/removal": "group_consensus_protocol"}
@@ -162,6 +162,7 @@ moderation:{allegation_type}	erasure_route	accountability	"none (accountability 
 moderation:{allegation_type}	governance	room_door_policy	"none (moderation_action mirror row vendored, not read)"
 moderation_track_record:{community_key_id}	lifecycle	accountability; adverse_track_record	{"expires": "expires_at honoured", "retraction_class": "duty_record", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 moderation_track_record:{community_key_id}	erasure_route	accountability	"none (accountability record, unpurgeable: migration.rs:606)"
+need:{domain}:{kind}	placement	need_open_call	"commons"
 objection:{state}	cosign_rule	quorum	"reverse quorum (1-of-N protect, m-of-n undo) counted by count_distinct_roster_scrubs"
 objection:{state}	governance	own_devices_policy	"policy_row: self_roster_add, self_roster_evict (governance_policy.rs:407)"
 observation:access_assumption	subject_rule	observation_names_observed	"CC cardinality >= 1, never the attester; not enforced"
@@ -181,6 +182,7 @@ preserve_response	lifecycle	unbuilt	"none (held shut)"
 preserve_response	replication	unbuilt	"none (held shut)"
 preserve_response	projection	unbuilt	"none (never stored)"
 preserve_response	erasure_route	unbuilt	"none (never stored)"
+provenance:build_manifest:{target}	placement	build_manifest_public	"commons"
 quarantine:{state}	lifecycle	open	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "released supersedes withheld (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 retirement:{state}	placement	unbuilt	"none (held shut: never stored)"
 retirement:{state}	subject_rule	unbuilt	"none (held shut)"
@@ -198,6 +200,7 @@ slashing:{outcome}	erasure_route	accountability	"none (accountability record, un
 takedown_notice:{basis}	subject_rule	notice_shape	"content_sha256 + legal_basis from the notice shape"
 takedown_notice:{basis}	cosign_rule	quorum	"legal bases: none; steward_purge: GAP (CC trust root's consensus_protocol; held shut)"
 takedown_notice:{basis}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
+testimonial_witness:{kind}	placement	testimony_private	"self_collective"
 trace:{form}:{version}	subject_rule	own_record	{"kind": "cardinality >= 1, subject_key_ids contains the attester", "must_be_registered": "attested yes"}
 trace:{form}:{version}	projection	open	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
 trace:{form}:{version}	erasure_route	open	["dsar (trace corpus hard delete)", "purge"]
@@ -206,3 +209,4 @@ trust:{job}:{version}	subject_rule	open	"delegation term required, no cycle, nod
 trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_charter_witness_quorum)"
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}
 wa_adjudication:{state}	cosign_rule	quorum	"WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"
+watchlist:{id}	placement	watchlist_per_group	"targeted_room"

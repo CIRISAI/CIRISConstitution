@@ -22,7 +22,7 @@ FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
 COUNT_SOURCES = ("subject_group", "signer_group", "dimension_authority", "accord", "trust_root", "self", "conferrer")
 COUNT_KEYS = ("leaf", "verb", "identity", "group", "seats")
-COUNT_OPEN_MAX = 7   # families with a cosign cell that is not none and no typed count; the number only falls
+COUNT_OPEN_MAX = 6   # families with a cosign cell that is not none and no typed count; the number only falls
 REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
 DEFAULT = os.path.join(ROOT, "formal/derivation/family_default_row.json")
@@ -551,6 +551,16 @@ def main():
             cites.append(OrderedDict([("cc_ref", ct["cc_ref"]), ("reading", ct["reading"])])); cited += 1
         elif ct["reading"] == "fills":
             entry["reading"] = "fills"
+    reader_defaults = []
+    for rd in csv.DictReader([l for l in open(os.path.join(ROOT, "formal/derivation/fold_reader_defaults.tsv"), encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
+        try:
+            fg.parse(rd["fold"])
+        except fg.FoldError as e:
+            print(f"fold_reader_defaults.tsv: {rd['polarity']}: {e}"); return 1
+        span = section_span(rd["cc_ref"])
+        if span is None or rd["quote"] not in span:
+            print(f"fold_reader_defaults.tsv: {rd['polarity']}: the quoted words do not stand in {rd['cc_ref']}"); return 1
+        reader_defaults.append(OrderedDict([("polarity", rd["polarity"]), ("fold", rd["fold"]), ("cc_ref", rd["cc_ref"])]))
     if "*" in fold_text:
         fold_every = fold_cell("*", fold_text.pop("*"))
         if fold_every is None: return 1
@@ -605,7 +615,7 @@ def main():
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
         ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
                                ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),
-        ("fold", OrderedDict([("default", fg.DEFAULT), ("every_family", fold_every),
+        ("fold", OrderedDict([("default", fg.DEFAULT), ("every_family", fold_every), ("reader_defaults", reader_defaults),
                               ("typed_families", sum(1 for r in rows if r["fold"]["value"])),
                               ("statements", sum(len(r["fold"]["value"]) for r in rows)),
                               ("marks", OrderedDict(sorted(fold_marks.items()))), ("marks_total", sum(fold_marks.values()))])),

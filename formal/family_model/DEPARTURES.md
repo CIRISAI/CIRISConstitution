@@ -49,7 +49,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 | column | families |
 |---|---|
-| cosign_rule | `collection:{kind}`, `group:roster`, `identity:occurrence`, `identity:occurrence_revocation`, `lineage_witness:{stage}`, `membership:{stage}`, `objection:{state}`, `takedown_notice:{basis}`, `transport:canonical_rebind`, `trust:{job}:{version}`, `wa_adjudication:{state}` |
+| cosign_rule | `collection:{kind}`, `group:roster`, `identity:occurrence`, `identity:occurrence_revocation`, `membership:{stage}`, `objection:{state}`, `takedown_notice:{basis}`, `transport:canonical_rebind`, `trust:{job}:{version}`, `wa_adjudication:{state}` |
 | lifecycle | `group:roster`, `membership:{stage}` |
 
 ## The party named must not be able to remove it
@@ -556,6 +556,66 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | freshness | `revocation:{entity_type}:{reason}` |
 | lifecycle | `goal:{scale}`, `content_class:{class}`, `mesh_config:{key}` |
+
+## A build manifest is public
+
+**When.** The row states which build a released target was made from.
+
+**Why.** Anyone checking a release must be able to read the manifest, whoever they are, so the row is signed at federation scope and goes to every node.
+
+**Text.** CC 3.1.2.1: "Its `cohort_scope` is `federation`."
+
+| column | families |
+|---|---|
+| placement | `provenance:build_manifest:{target}` |
+
+## A testimony stays with its witness
+
+**When.** The row is a person's own account of what they saw.
+
+**Why.** A testimony is kept at the witness's own scope, is never added up and never grounds a penalty alone, so it travels no further than the witness's own nodes.
+
+**Text.** CC 3.1.9.3: "the four load-bearing wire-level disciplines (`witness_relation: self`, `cohort_scope: self`, never aggregated, never sole evidence for `slashing:*`)"
+
+| column | families |
+|---|---|
+| placement | `testimonial_witness:{kind}` |
+
+## A need is an open call
+
+**When.** The row asks the whole mesh for help of a named kind.
+
+**Why.** A call that only the caller's own circle could read would reach nobody able to answer it, so the row is signed at federation scope.
+
+**Text.** CC 3.1.9.3: "Federation-scope open-call surface"
+
+| column | families |
+|---|---|
+| placement | `need:{domain}:{kind}` |
+
+## A watchlist belongs to one group
+
+**When.** The row turns on a matching list for the content of one group.
+
+**Why.** A list that applied everywhere would let one authority screen every room. Each group's own moderating authority enables its list, and the row goes to that group and no further.
+
+**Text.** CC 3.1.9.4: "**Per-group, NEVER global**"
+
+| column | families |
+|---|---|
+| placement | `watchlist:{id}` |
+
+## A registry-consensus attestation is world-readable
+
+**When.** The row reports that independent registry sources agree about a key.
+
+**Why.** A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.
+
+**Text.** CC 4.4.3.2.1: "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)"
+
+| column | families |
+|---|---|
+| placement | `attestation:registry_consensus` |
 
 ## Open
 
