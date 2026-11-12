@@ -4,11 +4,11 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 116,
+  "entries": 135,
   "kinds": {
-   "expiry": 13,
+   "expiry": 25,
    "clock": 34,
-   "react": 69
+   "react": 76
   },
   "emits": 37,
   "new_event_words": {
@@ -48,6 +48,41 @@
     }
    ],
    "cc_ref": "CC 3.1.1"
+  },
+  {
+   "family": "session:{kind}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "session_claim_max_secs",
+   "from": "claimed_at",
+   "by": "origin_door",
+   "cc_ref": "CC 3.1.3.1"
+  },
+  {
+   "family": "session:{kind}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3.1"
   },
   {
    "family": "rendezvous:route",
@@ -419,6 +454,17 @@
    "kind": "expiry",
    "mode": "required",
    "member": "valid_until",
+   "cc_ref": "CC 4.2.1.4"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "leaves": [
+    "emergency"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "mesh_config_emergency_ttl_secs",
    "cc_ref": "CC 4.2.1.4"
   },
   {
@@ -1211,6 +1257,41 @@
    "cc_ref": "CC 3.3.4"
   },
   {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "max": "membership_proposal_max_secs",
+   "from": "asserted_at",
+   "by": "signed",
+   "cc_ref": "CC 4.4.3.2.3"
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.3"
+  },
+  {
    "family": "consent:{kind}",
    "kind": "react",
    "on": [
@@ -1630,6 +1711,223 @@
     }
    ],
    "cc_ref": "CC 6.1.2.2"
+  },
+  {
+   "family": "custody:{kind}",
+   "leaves": [
+    "ack"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "eq": "custody_report_ttl_secs",
+   "from": "asserted_at",
+   "cc_ref": "CC 3.1.3.3"
+  },
+  {
+   "family": "custody:{kind}",
+   "leaves": [
+    "ack"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "unknown",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3.3"
+  },
+  {
+   "family": "custody:{kind}",
+   "leaves": [
+    "ack"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "eq": "custody_report_ttl_secs",
+   "from": "asserted_at",
+   "cc_ref": "CC 5.3.2.1"
+  },
+  {
+   "family": "custody:{kind}",
+   "leaves": [
+    "ack"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "unknown",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 5.3.2.1"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "leaves": [
+    "emergency"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "mesh_config_emergency_ttl_secs",
+   "cc_ref": "CC 4.2.1"
+  },
+  {
+   "family": "mesh_config:{key}",
+   "leaves": [
+    "emergency"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "mesh_config_emergency_ttl_secs",
+   "cc_ref": "CC 3.1.9.2"
+  },
+  {
+   "family": "session:{kind}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "max": "session_claim_max_secs",
+   "from": "claimed_at",
+   "by": "origin_door",
+   "cc_ref": "CC 3.1.3.1"
+  },
+  {
+   "family": "session:{kind}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3.1"
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "max": "membership_proposal_max_secs",
+   "from": "asserted_at",
+   "by": "signed",
+   "cc_ref": "CC 3.1.3.2"
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3.2"
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "expires_at",
+   "max": "membership_proposal_max_secs",
+   "from": "asserted_at",
+   "by": "signed",
+   "cc_ref": "CC 3.1.3.2"
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3.2"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "scope": "affiliations",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "delegation_valid_until",
+   "default": "delegation_term_max_secs",
+   "max": "charter.role_term",
+   "from": "delegation_valid_from",
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "scope": "affiliations",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "delegation_valid_until",
+   "default": "delegation_term_max_secs",
+   "max": "charter.role_term",
+   "from": "delegation_valid_from",
+   "cc_ref": "CC 4.4.3.2.8"
   },
   {
    "family": "consent:deletion_sla:{days}",

@@ -566,3 +566,9 @@ written `by identity:substrate_persist` or `by author`, not `by origin_door`; th
 role and which node, so the list is pinned and may only shrink.
 All five column designs now have a grammar, a text table, a generator and a closure check. Left for each: the
 held rows, member names against the CDDL, the properties the designs named, and cutting the per-family prose.
+
+Eight durations added to `constitution/constants.tsv`, each read in its section first; the reactions manifest is now
+135 entries from 77 statements, 29 held. Still unnamed: census_period_end, incapacity_t1_window_secs,
+consent_temporary_ttl_secs, accord_roster_window_max_secs (today inside the note of admission_freshness_window_secs),
+consent_revocation_promotion_window_secs, accord_heartbeat_max_secs, wa_freshness_window_secs, trace_orphan_age_secs,
+epoch_key_retention_secs, delegation_term for `trust`, and purge dwell (which is W itself and wants no second name).
