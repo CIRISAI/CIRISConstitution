@@ -16,7 +16,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D = os.path.join(ROOT, "formal", "derivation")
 TABLES = [("cell_text", "cc_ref", "quote"), ("cell_cites", "cc_ref", "quote"), ("policy_text", "cc_ref", "quote"),
           ("count_text", "cc_ref", "quote"), ("guard_text", "cc_ref", "quote"), ("change_text", "cc_ref", "quote"),
-          ("fold_text", "cc_ref", "quote"), ("reaction_text", "cc_ref", "quote")]
+          ("fold_text", "cc_ref", "quote"), ("reaction_text", "cc_ref", "quote"), ("body_text", "cc_ref", "quote")]
 EXTRA = [(os.path.join(ROOT, "constitution", "consensus_protocols.tsv"), "protocols"),
          (os.path.join(ROOT, "constitution", "protocol_admissibility.tsv"), "admissibility")]
 

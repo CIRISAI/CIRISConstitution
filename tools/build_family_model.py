@@ -556,12 +556,25 @@ def main():
                     e = OrderedDict([("member", so["member"]), ("type", so["type"]), ("presence", mode.lower())])
                     if leaf: e["leaf"] = leaf
                     if e not in body_members.setdefault(fam, []): body_members[fam].append(e)
+    body_text_n = Counter()
+    for bt in csv.DictReader([l for l in open(os.path.join(ROOT, "formal/derivation/body_text.tsv"), encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"body_text.tsv: {bt['family']} {bt['member']} ({bt['cc_ref']})"
+        if bt["family"] not in by_fam_names or bt["presence"] not in ("required", "optional", "forbidden", "unstated") or bt["in_cddl"] not in ("yes", "no"):
+            print(f"{where}: no such family, or a presence or in_cddl value outside its words"); return 1
+        span = section_span(bt["cc_ref"])
+        if span is None or bt["quote"] not in span:
+            print(f"{where}: the quoted words do not stand in {bt['cc_ref']}"); return 1
+        lst = body_members.setdefault(bt["family"], [])
+        if not any(e["member"] == bt["member"] for e in lst):
+            lst.append(OrderedDict([("member", bt["member"]), ("type", bt["type"]), ("presence", bt["presence"]),
+                                    ("in_cddl", bt["in_cddl"] == "yes"), ("cc_ref", bt["cc_ref"])]))
+            body_text_n[bt["in_cddl"]] += 1
     for r in rows:
         mem = body_members.get(r["family"])
         if mem and r["body"].get("source") == "gap":
             r["body"] = {"value": OrderedDict([("members", mem)]), "source": "cc-table", "cc_ref": "CC 2.6.1.7",
                          "code": {"value": r["body"].get("value"), "source": "gap"},
-                         "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"}
+                         "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0
@@ -646,7 +659,8 @@ def main():
         ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
                                ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),
         ("body", OrderedDict([("source", "constitution/signed_object.tsv"), ("families_with_members", sum(1 for r in rows if isinstance(r["body"].get("value"), dict) and "members" in r["body"]["value"])),
-                              ("presence_in_words", sorted(set(body_unread)))])),
+                              ("presence_in_words", sorted(set(body_unread))),
+                              ("members_from_text", OrderedDict([("in_cddl", body_text_n["yes"]), ("named_by_the_text_alone", body_text_n["no"])]))])),
         ("fold", OrderedDict([("default", fg.DEFAULT), ("every_family", fold_every), ("reader_defaults", reader_defaults),
                               ("typed_families", sum(1 for r in rows if r["fold"]["value"])),
                               ("statements", sum(len(r["fold"]["value"]) for r in rows)),

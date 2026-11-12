@@ -131,12 +131,12 @@
     "gap": 0
    },
    "body": {
-    "cc-table": 11,
+    "cc-table": 49,
     "code-v61": 0,
     "generic": 0,
     "prose": 32,
     "mixed": 0,
-    "gap": 141
+    "gap": 103
    },
    "freshness": {
     "cc-table": 0,
@@ -275,7 +275,7 @@
   },
   "body": {
    "source": "constitution/signed_object.tsv",
-   "families_with_members": 11,
+   "families_with_members": 49,
    "presence_in_words": [
     "accord_root: accord:* rows",
     "confidence: scores",
@@ -305,7 +305,11 @@
     "witness_cadence_secs: a witnessed lineage's charter",
     "witness_quorum: a witnessed lineage's charter",
     "witnesses: a witnessed lineage's charter"
-   ]
+   ],
+   "members_from_text": {
+    "in_cddl": 100,
+    "named_by_the_text_alone": 146
+   }
   },
   "fold": {
    "default": "reads=own&live; key=references_attestation_id,attesting_key_id; pick=rank(recants>withdraws>supersedes),max(asserted_at),min(attestation_id); bound=narrow_only(cohort_scope); cut=named,forward; over=standing/person; absent=none; result=scalar; by=node",
@@ -1143,8 +1147,24 @@
     ]
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -1501,8 +1521,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -1824,8 +1860,24 @@
     }
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -2159,8 +2211,24 @@
     }
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -2482,8 +2550,24 @@
     }
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -2801,8 +2885,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -3137,8 +3237,52 @@
     ]
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "accord_root",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "confirms_halt_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.2.1.3"
+      },
+      {
+       "member": "invocation_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.2.1.3"
+      },
+      {
+       "member": "invocation_kind",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.2.1.3"
+      },
+      {
+       "member": "resumes_halt_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.2.1.3"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -5049,8 +5193,38 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "purpose",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "retirement_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "scope",
+       "type": "\"whole\" / subject-scoped",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.5"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -6915,8 +7089,31 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "duration",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      },
+      {
+       "member": "transcript",
+       "type": "unstated",
+       "presence": "optional",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -7794,9 +7991,31 @@
     ]
    },
    "body": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": {
+     "members": [
+      {
+       "member": "ranking",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.5.13"
+      },
+      {
+       "member": "salt",
+       "type": "bstr .size 16",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.8"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": null,
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": null,
@@ -8324,6 +8543,13 @@
        "member": "partial_b",
        "type": "uuid",
        "presence": "required"
+      },
+      {
+       "member": "salt",
+       "type": "bstr .size 16",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -8333,7 +8559,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -10157,8 +10383,87 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "consent_basis",
+       "type": "[* consent-basis]",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "feature_dim",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "min_feature_dim",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_floor",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_h",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_pr",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "sample_size",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "sample_size_gate",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "target_n_eff",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "window",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -10547,8 +10852,108 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "advertiser_key_id",
+       "type": "key-id",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.4"
+      },
+      {
+       "member": "consent_basis",
+       "type": "[* consent-basis]",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "epoch",
+       "type": "uint",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.4"
+      },
+      {
+       "member": "feature_dim",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "min_feature_dim",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_floor",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_h",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_pr",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "sample_size",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "sample_size_gate",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "stream_id",
+       "type": "tstr",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.4"
+      },
+      {
+       "member": "target_n_eff",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "window",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -10916,8 +11321,87 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "consent_basis",
+       "type": "[* consent-basis]",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "feature_dim",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "min_feature_dim",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_floor",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_h",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "n_eff_pr",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "sample_size",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "sample_size_gate",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "target_n_eff",
+       "type": "number",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      },
+      {
+       "member": "window",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -12347,7 +12831,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -12728,7 +13212,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -13111,7 +13595,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -13428,6 +13912,13 @@
        "member": "share_index",
        "type": "uint",
        "presence": "required"
+      },
+      {
+       "member": "salt",
+       "type": "bstr .size 16",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -13437,7 +13928,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -13827,7 +14318,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -14146,6 +14637,13 @@
        "member": "share_index",
        "type": "uint",
        "presence": "required"
+      },
+      {
+       "member": "salt",
+       "type": "bstr .size 16",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -14155,7 +14653,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.6.1.7",
@@ -16009,8 +16507,45 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "cohort_subkind",
+       "type": "tstr",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.1"
+      },
+      {
+       "member": "community_key_id",
+       "type": "key-id",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.1"
+      },
+      {
+       "member": "description",
+       "type": "tstr",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.1"
+      },
+      {
+       "member": "name",
+       "type": "tstr",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -19187,10 +19722,73 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none on release-61",
-    "source": "gap",
-    "note": "none on release-61; s3: PROSE must be a consent_record (subject_kind, stance, bilateral_pair_id), else partnership_shape_retired (self_at_login::check_partnership_shape)",
-    "s3": "PROSE must be a consent_record (subject_kind, stance, bilateral_pair_id), else partnership_shape_retired (self_at_login::check_partnership_shape)"
+    "value": {
+     "members": [
+      {
+       "member": "asserted_at",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "attestation_type",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "attesting_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "bilateral_pair_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "dimension",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "stance",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "subject_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "subject_kind",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none on release-61",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -19540,10 +20138,73 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none on release-61",
-    "source": "gap",
-    "note": "none on release-61; s3: PROSE must be a consent_record (subject_kind, stance, bilateral_pair_id), else partnership_shape_retired (self_at_login::check_partnership_shape)",
-    "s3": "PROSE must be a consent_record (subject_kind, stance, bilateral_pair_id), else partnership_shape_retired (self_at_login::check_partnership_shape)"
+    "value": {
+     "members": [
+      {
+       "member": "asserted_at",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "attestation_type",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "attesting_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "bilateral_pair_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "dimension",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "stance",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "subject_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "subject_kind",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none on release-61",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -23714,8 +24375,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "domain",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.3"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -24681,8 +25358,52 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "K",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 5.3.3.6"
+      },
+      {
+       "member": "chunk_root",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 5.3.3.6"
+      },
+      {
+       "member": "epoch",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.4.6"
+      },
+      {
+       "member": "stream_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 5.3.3.6"
+      },
+      {
+       "member": "subscriber_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 5.3.3.6"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -26779,8 +27500,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "label",
+       "type": "tstr",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -30729,8 +31466,38 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "achieved_tier",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5.2"
+      },
+      {
+       "member": "committed_tier",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5.2"
+      },
+      {
+       "member": "fallback_reason",
+       "type": "unstated",
+       "presence": "optional",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5.2"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -33111,8 +33878,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "hardware_class",
+       "type": "tstr",
+       "presence": "optional",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.2"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -33694,8 +34477,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "witness_relation",
+       "type": "\"self\"",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.14"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -35326,8 +36125,31 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "alt_text",
+       "type": "unstated",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      },
+      {
+       "member": "format",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -37514,8 +38336,108 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "at_rest_sha256",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "attested_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.1"
+      },
+      {
+       "member": "axis",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "community_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "content_sha256",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.1"
+      },
+      {
+       "member": "epoch",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "minter_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "owner_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "recipient_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.1"
+      },
+      {
+       "member": "scope",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.1"
+      },
+      {
+       "member": "stream_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "wrap_algorithm",
+       "type": "\"v2\"",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.3"
+      },
+      {
+       "member": "wrapped_dek",
+       "type": "tstr",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.3"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -37877,8 +38799,31 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "reference",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "scope",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.5"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -38463,8 +39408,31 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "sequence",
+       "type": "uint",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3"
+      },
+      {
+       "member": "unit",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.3"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -40518,6 +41486,13 @@
        "type": "hex64",
        "presence": "required",
        "leaf": "membership:decline"
+      },
+      {
+       "member": "expires_at",
+       "type": "rfc3339-ms presence=required leaf=membership:proposal",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.2"
       }
      ]
     },
@@ -40527,7 +41502,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.1",
@@ -41650,8 +42625,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "description",
+       "type": "unstated",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -43878,8 +44869,45 @@
     "closed": "reverse quorum"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "cohort",
+       "type": "\"self\"",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.6.3"
+      },
+      {
+       "member": "cohort_key_id",
+       "type": "key-id",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.9.2"
+      },
+      {
+       "member": "grounds",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.6.3"
+      },
+      {
+       "member": "objects_to_attestation_id",
+       "type": "uuid",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.9.2"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -44217,6 +45245,27 @@
        "member": "channel_classes",
        "type": "[* tstr]",
        "presence": "required"
+      },
+      {
+       "member": "consent_basis",
+       "type": "[* consent-basis]",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "evidence_refs",
+       "type": "[+ tstr]",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.9.4"
+      },
+      {
+       "member": "window",
+       "type": "uint",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 2.1"
       }
      ]
     },
@@ -44226,7 +45275,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.1",
@@ -44515,8 +45564,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "witness_relation",
+       "type": "\"self\"",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.4.10"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -45928,8 +46993,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "statement",
+       "type": "tstr",
+       "presence": "optional",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.5"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -46163,8 +47244,45 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "computation",
+       "type": "unstated",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.9.7"
+      },
+      {
+       "member": "goodhart_resistance",
+       "type": "unstated",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.9.7"
+      },
+      {
+       "member": "tracks",
+       "type": "[* any]",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.9.7"
+      },
+      {
+       "member": "validity_window",
+       "type": "unstated",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.9.7"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -46787,8 +47905,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "evidence_refs",
+       "type": "[+ tstr]",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -47106,8 +48240,24 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "evidence_refs",
+       "type": "[+ tstr]",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.2.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -47413,8 +48563,45 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "capability_declaration",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.2"
+      },
+      {
+       "member": "import_timestamp",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.2"
+      },
+      {
+       "member": "signer_identity",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.2"
+      },
+      {
+       "member": "skill_manifest_sha256",
+       "type": "hex64",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.2"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -51139,8 +52326,52 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "decided_by",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "kind",
+       "type": "\"planned\" / \"emergency\"",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "preserve_until",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "reason",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.5"
+      },
+      {
+       "member": "retirement_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.5"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -52634,8 +53865,59 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "attested_key_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "delegation_purpose",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3"
+      },
+      {
+       "member": "delegation_valid_from",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      },
+      {
+       "member": "delegation_valid_until",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3"
+      },
+      {
+       "member": "scope",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.4.3.4.3"
+      },
+      {
+       "member": "signed_at",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 4.4.3.4.3.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -52956,6 +54238,13 @@
        "member": "claimed_at",
        "type": "rfc3339-ms",
        "presence": "required"
+      },
+      {
+       "member": "community_id",
+       "type": "key-id",
+       "presence": "required",
+       "in_cddl": true,
+       "cc_ref": "CC 3.1.3.1"
       }
      ]
     },
@@ -52965,7 +54254,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.1",
@@ -54303,8 +55592,108 @@
     "closed": "legal bases: none"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "asserted_at",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "claim_text",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "claimant_key_id",
+       "type": "key-id",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "content_holder_key_ids",
+       "type": "[* key-id]",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "content_sha256",
+       "type": "hex64",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "counter_notice_channel",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "evidence_refs",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "expires_at",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "good_faith_statement",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "jurisdiction",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "legal_basis",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "perceptual_hash",
+       "type": "unstated",
+       "presence": "optional",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.2"
+      },
+      {
+       "member": "subject_kind",
+       "type": "\"takedown_notice\"",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.1.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -57400,6 +58789,20 @@
        "type": "hex64",
        "presence": "required",
        "leaf": "trust:accepts"
+      },
+      {
+       "member": "pre_rotation_commitment",
+       "type": "hex64 presence=optional leaf=trust:charter",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 2.6.1.7"
+      },
+      {
+       "member": "recovery_commitments",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": true,
+       "cc_ref": "CC 4.2.6"
       }
      ]
     },
@@ -57409,7 +58812,7 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
       "cc_ref": "CC 2.1",
@@ -58075,8 +59478,52 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "captions",
+       "type": "unstated",
+       "presence": "required",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      },
+      {
+       "member": "derived_from",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 5.1"
+      },
+      {
+       "member": "duration",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      },
+      {
+       "member": "resolution",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 3.3.13"
+      },
+      {
+       "member": "stream_id",
+       "type": "unstated",
+       "presence": "unstated",
+       "in_cddl": false,
+       "cc_ref": "CC 5.1"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"
    },
    "freshness": {
     "value": {

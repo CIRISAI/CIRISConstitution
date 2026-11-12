@@ -652,3 +652,12 @@ could not find in either CDDL. Small-lane findings still to work: two disagreeme
 against `expiry none` in the reactions table; the deletion watcher and `consent:deletion_complete`, CC 4.4.3.5.2
 against CC 3.3.1), thirteen unnamed durations, and needs for a recurring clock, a clock on a seat-holder's silence,
 a placement selector and the hardware-class weight table. 21 rows concern objects with no family row.
+
+Body fills landed: `formal/derivation/body_text.tsv` (322 rows; 246 distinct family members applied, 100 in the
+CDDL and 146 named by the text alone) joins the members read from the signed-object table; 49 families have a typed
+body. The `in_cddl` test is a word match and can be fooled by a short name. Freeform proposals of the Parts 4 to 6
+lane were reduced to their member names with type and presence `unstated`.
+A finding from answering the CIRISHolon session: the `confirm` and `widens` cells of `manifests/transitions.json`
+are nearly functions of the verb (every attest and authorize confirms; one withdraw of 146 does), because `widens`
+is derived from the replication tier with a default and the way back is "offered by this table". The confirm test
+of CC 4.5.13 is therefore not yet informative as data; it needs `widens` per family from the text.
