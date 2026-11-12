@@ -4,7 +4,7 @@ CC — the signer gate, closed over the data: every row the tables have someone 
 from them, and every row a guard waits for is a row someone may sign.
 
 The readings of the text found that who may sign a row is the kind of rule that drifts most (CC 4.5.5, CC 3.4.7.1).
-This check reads the three manifests and holds four properties. It reads no prose.
+This check reads the three manifests and holds six properties. It reads no prose.
 
   1. reserved    a family the registry reserves is not open to any registered key: its entry transition names a
                  role or a condition on the signer, or is a pinned open cell.
@@ -16,6 +16,8 @@ This check reads the three manifests and holds four properties. It reads no pros
                  never opened by nobody.
   5. duty        an enforced action is admitted from exactly its duty-holder set (CC 4.5.5, as role tokens in
                  formal/derivation/duty_holders.tsv).
+  6. seat        a reserved family's entry transition admits exactly the duty CC 3.4.7 names for it (as role
+                 tokens in formal/derivation/seat_duties.tsv).
 
 A failure that is known and waits on a decision is listed in KNOWN with its conflict id; the list only shrinks.
 
@@ -31,7 +33,16 @@ J = lambda p: json.load(open(os.path.join(ROOT, "manifests", p), encoding="utf-8
 ENTRY = ("attest", "authorize")
 SUBSTRATE = ("identity:substrate_persist", "identity:substrate_edge", "identity:lenscore_detector")
 # (property, family or `family <- emitter`) -> the conflict that records it
+# Families whose signer cell is the shipped store's and still reads a declared type or the undivided assurance duty.
+# They move to the duty of CC 3.4.7 when the store's gates do (C564); the list only shrinks.
+STAGED = ("system:*", "audit_chain:hash_continuity", "corpus_health:n_eff_measurable", "federation_directory:replication_lag",
+          "identity_continuity:relational_anchor", "hard_case:{kind}", "detection:correlated_action:{axis}",
+          "detection:distributive:access:{resource_type}", "detection:hash_chain_integrity", "detection:intra_agent_consistency",
+          "detection:{detector}", "transparency_log:cosigned:{tree_size}", "age_assurance:{level}:{band}:{version}",
+          "capacity_assurance:reversible_excluded:{domain}:{version}", "capacity_assurance:reversible_pending:{domain}:{version}",
+          "capacity_assurance:{level}:{domain}:{band}:{version}")
 KNOWN = {
+    **{("seat", f): "C564: the signer cell is the shipped store's gate; CC 3.4.7 names a duty the store does not yet check" for f in STAGED},
     ("emitter", "consent:state:{stance} <- identity:substrate_persist"): "C450: the text gives the expired stance to the store alone; the signer cell (the shipped store) admits the subject and the owner only",
     ("duty", "takedown_notice:{basis}"): "C536: the signer cell (the shipped store) admits a takedown holder; CC 4.5.5 also admits the content's subject and, on a hash match, the detecting node's owner",
     ("duty", "slashing:{outcome}"): "C447, C458: the signer cell (the shipped store) admits any registered key; CC 4.5.5 admits a slash duty-holder",
@@ -114,6 +125,15 @@ def main():
         want = sorted(h.strip() for h in holders.split("|"))
         if roles[fam] != want and fam not in open_cell:
             fails.append(("duty", fam, f"CC 4.5.5 gives {want}; the entry transition admits {roles[fam]}"))
+
+    # 6. seat
+    for l in [x for x in open(os.path.join(ROOT, "formal", "derivation", "seat_duties.tsv"), encoding="utf-8").read().split("\n") if x and not x.startswith("#")][1:]:
+        fam, token, ref, quote = l.split("\t")
+        span = section_span(ref)
+        if fam not in rows or span is None or quote not in span:
+            fails.append(("seat", fam, f"seat_duties.tsv: no such family, or the quoted words do not stand in {ref}")); continue
+        if roles[fam] != [token] and fam not in open_cell:
+            fails.append(("seat", fam, f"CC 3.4.7 names the duty {token}; the entry transition admits {roles[fam]}"))
 
     seen, new, known = set(), [], []
     for prop, key, why in fails:

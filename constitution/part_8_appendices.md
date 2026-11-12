@@ -3350,7 +3350,7 @@ Change:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | identity:substrate_edge | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | infra:attest | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 

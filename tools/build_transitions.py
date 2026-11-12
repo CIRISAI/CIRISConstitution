@@ -34,7 +34,7 @@ POLICY_ROWS = {f["family"]: f["kind"] for f in json.loads((ROOT / "manifests" / 
 
 TOKEN_RULES = [  # (regex searched anywhere in the closed signer text, role tokens)
     (r"none \(held shut\)", []),
-    (r"seat_role\((\w+)\)", "seat"),
+    (r"seat_role\(([\w:]+)\)", "seat"),
     (r"identity_type contains (\w+)", "identity"),
     (r"roster_member|\bmember\b", ["member"]),
     (r"\bfounder", ["founder"]),

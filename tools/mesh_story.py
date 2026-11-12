@@ -115,10 +115,10 @@ def more(s):
         return s.step(who, roles, oid, verb, note)
     # 8. what a device's edge says of itself is the edge's to say
     one("link:bob", "transport:{kind}", "bob", ["self", "registered"], "Bob tries to sign a transport report for his own device: refused, the report is the edge's own")
-    one("link:bob", "transport:{kind}", "edge:bob", ["identity:substrate_edge"], "The edge on Bob's device reports its own link, under its own identity type")
-    one("deliver:bob", "delivery:{class}", "edge:bob", ["identity:substrate_edge"], "The edge reports what it delivered")
-    one("reach:bob", "peer_reachability:{network}", "edge:bob", ["identity:substrate_edge"], "The edge reports which peers it can reach")
-    one("boundary:bob", "key_boundary:{scope}", "edge:bob", ["identity:substrate_edge"], "The edge reports where its keys stop")
+    one("link:bob", "transport:{kind}", "edge:bob", ["infra:attest"], "The edge on Bob's device reports its own link, under the duty its owner conferred")
+    one("deliver:bob", "delivery:{class}", "edge:bob", ["infra:attest"], "The edge reports what it delivered")
+    one("reach:bob", "peer_reachability:{network}", "edge:bob", ["infra:attest"], "The edge reports which peers it can reach")
+    one("boundary:bob", "key_boundary:{scope}", "edge:bob", ["infra:attest"], "The edge reports where its keys stop")
     one("label:bob", "device:label", "dave", ["member", "registered"], "Dave tries to name Bob's phone: refused, a device's name is its owner's")
     one("label:bob", "device:label", "bob", ["owner"], "Bob names his phone: the owner's row, and it stays in his own circle")
     # 9. a person's own rows: a file, a folder, a route, an observation, a receipt

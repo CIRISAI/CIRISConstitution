@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "e0ff6fb2f52ee7eaf3a179b5d7e4e238cad9747e218e5a81820ebe583cd83531",
+  "source_sha256": "4d6293f854a2037bcca95b9acd524a76bda27db6c9d7ef4ff8b8e731797233ba",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -19,8 +19,8 @@
    "founder",
    "holder",
    "identity:lenscore_detector",
-   "identity:substrate_edge",
    "identity:substrate_persist",
+   "infra:attest",
    "member",
    "moderate",
    "operator",
@@ -8102,7 +8102,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "identity:substrate_edge"
+       "infra:attest"
       ],
       "source": "derived"
      },
@@ -13086,7 +13086,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "identity:substrate_edge"
+       "infra:attest"
       ],
       "source": "derived"
      },
@@ -16142,7 +16142,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "identity:substrate_edge"
+       "infra:attest"
       ],
       "source": "derived"
      },
@@ -20031,7 +20031,7 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "identity:substrate_edge"
+       "infra:attest"
       ],
       "source": "derived"
      },

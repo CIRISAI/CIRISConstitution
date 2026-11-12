@@ -1,7 +1,7 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "e29c57045635a36e680e71904f3947563501f0549c641e09306a130183c036bf",
+  "transitions_sha256": "525bfaf808ad5aad51720758d9e82f0625056a1acf6f9640d311e0b2f9399b2f",
   "policy_sha256": "4128287cf97526a2d34fd16d54b5e88d5c6c80179b9e294b17662adf99eb38d4",
   "steps": 96,
   "rows": 68,
@@ -442,10 +442,10 @@
   },
   {
    "n": 16,
-   "note": "The edge on Bob's device reports its own link, under its own identity type",
+   "note": "The edge on Bob's device reports its own link, under the duty its owner conferred",
    "actor": "edge:bob",
    "standing": [
-    "identity:substrate_edge"
+    "infra:attest"
    ],
    "view": {
     "object": "link:bob",
@@ -474,7 +474,7 @@
    "note": "The edge reports what it delivered",
    "actor": "edge:bob",
    "standing": [
-    "identity:substrate_edge"
+    "infra:attest"
    ],
    "view": {
     "object": "deliver:bob",
@@ -503,7 +503,7 @@
    "note": "The edge reports which peers it can reach",
    "actor": "edge:bob",
    "standing": [
-    "identity:substrate_edge"
+    "infra:attest"
    ],
    "view": {
     "object": "reach:bob",
@@ -532,7 +532,7 @@
    "note": "The edge reports where its keys stop",
    "actor": "edge:bob",
    "standing": [
-    "identity:substrate_edge"
+    "infra:attest"
    ],
    "view": {
     "object": "boundary:bob",

@@ -996,3 +996,9 @@ cut. NOT DONE, the data side: the role tokens `identity:substrate_persist`, `ide
 (SUBSTRATE and two KNOWN keys) and `mesh_story.py`; the hard-coded rule strings of `build_cc_namespace.py:175-180`;
 the `agree` readings on the two assurance ladders, whose cells still say `infra:attest_assurance`. Residue in the
 text: CC 3.4.7.3 Clause E "the closed `infra:*` set"; Part 5 "reserved-prefix emitter gates"; follow-up F1.
+The data side, as far as it can go before the store moves: `seat_duties.tsv` (22 families) and property `seat` of
+`check_signer_gate.py`. The plan to rename the role tokens was wrong in one respect: a census-sourced signer cell
+is the shipped store's gate, so it cannot say `infra:detect` while the store tests a declared type. Those sixteen
+are STAGED under C564; the four text-sourced transport families and the story trace moved to `infra:attest`; the
+`seat_role(...)` regex of both builders takes a colon. The reactions' `by identity:substrate_persist` stay with
+their families. Still to align: the hard-coded rule strings of `build_cc_namespace.py`.

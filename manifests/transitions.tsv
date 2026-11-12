@@ -175,7 +175,7 @@ cw_class:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest
 deferral:request	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 deferral:request	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 deferral:response:{outcome}	attest	none	admitted	steward,wa	selfAct	true	none		true	derived	derived	derived
-delivery:{class}	attest	none	admitted	identity:substrate_edge	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+delivery:{class}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 delivery:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 delivery_receipt:{stream_id}	attest	none	admitted	member	selfAct	true	none		true	derived	derived	derived
 detection:correlated_action:{axis}	attest	none	admitted	identity:lenscore_detector	selfAct	true	withdraw	selfAct	true	derived	derived	derived
@@ -285,7 +285,7 @@ key:record	attest	none	admitted	self	selfAct	true	none		true	derived	derived	der
 key:record	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 key:revocation	attest	none	admitted	self	selfAct	true	none		true	cc-table	derived	derived
 key:revocation	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
-key_boundary:{scope}	attest	none	admitted	identity:substrate_edge	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+key_boundary:{scope}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 key_boundary:{scope}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 key_grant:{axis}	attest	none	admitted	member,owner	selfAct	true	none		true	derived	derived	derived
 lawful_order:release	attest	none	admitted	steward	selfAct	false	none		true	derived	derived	gap
@@ -349,7 +349,7 @@ ownership:{relation}:{target_kind}:{version}	authorize	none	admitted	owner	selfA
 partner_role:{role}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 partner_role:{role}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 partner_role:{role}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-peer_reachability:{network}	attest	none	admitted	identity:substrate_edge	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+peer_reachability:{network}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 peer_reachability:{network}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 peer_reachability:{network}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 preserve_request	attest	none	admitted	custodian,self	selfAct	true	withdraw	selfAct	true	derived	derived	cc-table
@@ -432,7 +432,7 @@ transparency_log:inclusion	attest	none	admitted	registered	selfAct	true	withdraw
 transparency_log:inclusion	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 transport:canonical_rebind	attest	none	admitted	holder	cosigned	true	none		true	derived	cc-table	derived
 transport:canonical_rebind	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-transport:{kind}	attest	none	admitted	identity:substrate_edge	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+transport:{kind}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 transport:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 transport:{kind}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 trust:{job}:{version}	withdraw	admitted	withdrawn	author,subject	selfAct	false	authorize	selfAct	false	code-v61	code-v61	derived

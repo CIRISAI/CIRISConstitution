@@ -36,18 +36,18 @@ cosign:{state}	roster_member(at) x none x {} ; the event's primary signer, an ac
 cosign:{state}	roster_member(at) x none x {} ; the member whose signature the row carries	CC 3.1.3	signature
 deferral:request	self x none x {}	CC 3.1.9.4	
 deferral:response:{outcome}	seat_role(wa) | steward x delegates_to(resolve_deferral, depth-capped, revocable per link) x {} ; the conferrer, or a key on a live chain from the conferrer	CC 4.3	
-delivery:{class}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+delivery:{class}	seat_role(infra:attest) x none x {}	CC 3.4.3	
 delivery_receipt:{stream_id}	roster_member(at) x none x {} ; a current member of the community or stream the receipt names	CC 3.4.6	
 device:label	owner_of_subject x none x {} ; about an occurrence the signer owns	CC 3.1.1	
 file:{version}	self x none x {} ; the file's author, or a device that author acts through	CC 3.1.3.4	
-key_boundary:{scope}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+key_boundary:{scope}	seat_role(infra:attest) x none x {}	CC 3.4.3	
 lawful_order:release	steward x none x {} ; the steward of the retired agent	CC 3.1.5	
 lineage_witness:{stage}	founder x none x {} ; an active founder of the lineage named	CC 3.1.3	proposal
 lineage_witness:{stage}	owner_of_subject x none x {} ; the owner of the node named, never the node and never a founder	CC 3.1.3	acceptance
 lineage_witness:{stage}	owner_of_subject x none x {} ; the owner of the node named, never the node and never a founder	CC 3.1.3	decline
 observation:access_assumption	self x none x {} ; a first-person observation	CC 3.1.9.4	
 observation:reachability	self x none x {} ; a first-person observation	CC 3.1.9.4	
-peer_reachability:{network}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+peer_reachability:{network}	seat_role(infra:attest) x none x {}	CC 3.4.3	
 preserve_request	self x none x {} ; the agent	CC 3.1.5	until_retired
 preserve_request	seat_role(custodian) x none x {} ; the custodian the retired row lists	CC 3.1.5	after_retired
 preserve_response	seat_role(operator) x none x {} ; the key the request names	CC 3.1.5	
@@ -58,4 +58,4 @@ retirement:{state}	self x none x {} ; the agent key	CC 3.1.5	until_retired
 retirement:{state}	seat_role(custodian) x none x {} ; the custodian the retired row lists	CC 3.1.5	after_retired
 retirement:{state}	seat_role(operator) | seat_role(wa) x none x {} ; one row cosigned by the operator holding the record and the Wise Authority	CC 7.5.5	custodian_replace
 trace_summary:{kind}	self x none x {} ; the attester is among the subjects	CC 3.4.5	
-transport:{kind}	identity_type contains substrate_edge x none x {}	CC 3.4.3	
+transport:{kind}	seat_role(infra:attest) x none x {}	CC 3.4.3	

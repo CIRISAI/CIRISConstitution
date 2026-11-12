@@ -24901,7 +24901,7 @@
    },
    "signer_rule": {
     "value": {
-     "who": "identity_type contains substrate_edge",
+     "who": "seat_role(infra:attest)",
      "via": "none",
      "conditions": []
     },
@@ -25100,7 +25100,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "substrate:substrate_edge",
+    "value": "seat:infra:attest",
     "source": "derived"
    },
    "derived": {
@@ -37884,7 +37884,7 @@
    },
    "signer_rule": {
     "value": {
-     "who": "identity_type contains substrate_edge",
+     "who": "seat_role(infra:attest)",
      "via": "none",
      "conditions": []
     },
@@ -38083,7 +38083,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "substrate:substrate_edge",
+    "value": "seat:infra:attest",
     "source": "derived"
    },
    "derived": {
@@ -46349,7 +46349,7 @@
    },
    "signer_rule": {
     "value": {
-     "who": "identity_type contains substrate_edge",
+     "who": "seat_role(infra:attest)",
      "via": "none",
      "conditions": []
     },
@@ -46548,7 +46548,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "substrate:substrate_edge",
+    "value": "seat:infra:attest",
     "source": "derived"
    },
    "derived": {
@@ -58392,7 +58392,7 @@
    },
    "signer_rule": {
     "value": {
-     "who": "identity_type contains substrate_edge",
+     "who": "seat_role(infra:attest)",
      "via": "none",
      "conditions": []
     },
@@ -58591,7 +58591,7 @@
     "registry": "signed"
    },
    "emitter_class": {
-    "value": "substrate:substrate_edge",
+    "value": "seat:infra:attest",
     "source": "derived"
    },
    "derived": {

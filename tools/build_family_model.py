@@ -179,7 +179,7 @@ def freshness(t):
     return out
 EMITTER_RULES = [  # (regex over the signer text, class); the same vocabulary build_transitions.py maps to role tokens
     (r"none \(held shut\)", "shut"),
-    (r"seat_role\((\w+)\)", "seat:{}"),
+    (r"seat_role\(([\w:]+)\)", "seat:{}"),
     (r"identity_type contains (\w+)", "substrate:{}"),
     (r"roster_member|\bcosign|holder quorum|\bquorum\b", "roster"),
     (r"\bsteward\b", "steward"),
