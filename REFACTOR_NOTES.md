@@ -879,3 +879,9 @@ not by a role); 2 are real and listed in KNOWN: C450 (the expired stance) and C5
 Next for this model: the duty-holder table of CC 4.5.5 as data, so that "a moderation row only from a named
 moderator" and "a takedown notice from the subject, a holder or the detecting node's owner" are checked; then the
 conferral leg (a role held is necessary and not sufficient).
+
+Signer gate, second slice: `formal/derivation/duty_holders.tsv` (five families from CC 4.5.5, quotes checked) and
+property 5 (the entry transition admits exactly the duty-holder set). Two failures, both the shipped store's signer
+cell: takedown_notice (C536) and slashing (C447, C458); listed in KNOWN. Four KNOWN in all. Still to build: the
+conferral leg (a held role needs a live delegation under a root the reader trusts), which is a model over rows and
+wants TLA or Lean, not a table check.
