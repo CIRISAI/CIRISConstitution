@@ -763,3 +763,22 @@ hand-on needs `sub_delegation`: touches the seat ruling, low confidence), 35 and
 whose stale side is the generated CC 2.6.1.7 table (fix in `constitution/signed_object.tsv`: key_record
 scrub_key_id, expires_at, source_count). Eighteen data rows quoted changed sentences: seven citations dropped,
 eleven moved to the corrected sentence; the licensure fold now reads the quorum-weighted merge.
+
+## Eric's rulings, 2026-11-11 late night (to land when the fourth reading's lanes have finished)
+
+His words, on the six choices no principle decided:
+(1) An owner with no age assurance on record may announce: "yes, or else desktop users would be unable to
+participate - add a note that as privacy respecting age signals become available, we adopt and may tighten, but
+this is a side effect of the state of the tech available (best effort)". So CC 5.4.6's refusal of a minor's
+announcement does not reach the unassured owner; CC 4.5.13 "announcing starts on" stands; add the note. (K30, C317.)
+(3) A hash match on known abuse imagery: "removed with the signature of the person who owned the node where the
+detection occured, or if the signing materials are unavailable removed with a request to approve in retrospect and
+a hard case registered (we err on the side of the law)". (R49, C395.)
+(4) Legal hold against immediate removal: "legal hold wins right?" Asked as a question; my answer to him: yes for
+destruction, and the item is withheld from everyone at once, destroyed when the hold lifts, both recorded. To land
+only if he confirms that reading. (K25, C312.)
+(2) guardian displacement, (5) the founder's seat, (6) roster widening: "what?" Each to be put to him again as a
+plain story.
+Also from him: "a lot of those are obvious, you can not retract a decision regarding something deleted". Twelve of
+the eighteen are settled from the architecture as derived readings (listed to him; table in the session), to land
+with these.
