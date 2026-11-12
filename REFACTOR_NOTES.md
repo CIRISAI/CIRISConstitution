@@ -484,3 +484,16 @@ reader filters; D7 only the unscoped seat or its conferrer opens a retired agent
 either. None of these is landed. Confirm the reading with him before the seat rule lands.
 The guard designer's second pass was cut off by a usage limit and restarted.
 
+
+## Data pass, step 1a: who a policy row counts (2026-11-11)
+
+`formal/derivation/policy_text.tsv` types six cells per policy row (count_set, voice, counted_at, voices,
+target_silent, changes_set), each with a quote checked verbatim by `tools/build_governance_policy.py`; they are
+emitted as `counted` on each row of `manifests/governance_policy.json`. Ten cells are `unstated` (listed in the
+manifest under `counted_columns.unstated_cells`); the generator refuses a rise. Two checks run: a row that removes
+from its own count set fixes the set before the act; only a self roster counts keys.
+The text gaps this found: no section says at what instant the generic two-path rows and the halt's confirmation
+take their set; `custodian_replace` and `affiliation_member_action` say nothing of person against key.
+Next (1b): the protocol sheet and the twelve rows the count design adds, after C-1 to C-4 of
+`handoff/lanes/out_g_count.md` are in `text_conflicts.tsv`; then the `count` cell of the family model (1c).
+The client is owed notice that the policy pin moved.

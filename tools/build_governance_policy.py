@@ -48,6 +48,15 @@ TSV = os.path.join(ROOT, "constitution", "governance_policy.tsv")
 OUT = os.path.join(ROOT, "manifests", "governance_policy.json")
 VEC = os.path.join(ROOT, "manifests", "governance_policy_vectors.json")
 GEN = os.path.join(ROOT, "formal", "two_path", "generated")
+TEXT = os.path.join(ROOT, "formal", "derivation", "policy_text.tsv")
+ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
+# Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.2.8, which no role token names.
+COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "decision", "act", "founding")),
+                       ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no"))])
+COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no"}
+SET_ROLES = set(ROLES) | {"deciding", "outside"}
+SET_EXCL = ("target", "proposer", "node")
+UNSTATED_MAX = 10   # cells the text leaves unstated; the number only falls
 
 BASE_LAW = OrderedDict([("kind", "standing_then_expected_active"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
@@ -192,6 +201,52 @@ def load():
     return rows
 
 
+def counted_ok(col, v):
+    if col == "count_set":
+        m = re.fullmatch(r"([a-z_:]+(?:\+[a-z_:]+)*)(?:-([a-z]+))?", v)
+        return bool(m) and all(x in SET_ROLES for x in m.group(1).split("+")) and (m.group(2) is None or m.group(2) in SET_EXCL)
+    if col == "voices":
+        return all(x in COUNTED[col] for x in v.split("|"))
+    return v in COUNTED[col]
+
+
+def load_counted(rows):
+    """Give each row its `counted` cells from formal/derivation/policy_text.tsv, each value typed and its quote verbatim
+    in the cited section. A cell with no row is `unstated` (or its stated default) and is counted."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_family_model import section_span
+    by = {r["family"]: r for r in rows}
+    for r in rows:
+        r["_counted"] = OrderedDict((c, OrderedDict([("value", COUNTED_DEFAULT.get(c, "unstated"))])) for c in COUNTED)
+    seen = set()
+    for t in csv.DictReader((l for l in open(TEXT, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
+        key = (t["row"], t["column"])
+        where = f"policy_text.tsv: {t['row']} {t['column']}"
+        if t["row"] not in by or t["column"] not in COUNTED:
+            sys.exit(f"{where}: no such row or column")
+        if key in seen:
+            sys.exit(f"{where}: stated twice")
+        seen.add(key)
+        if not counted_ok(t["column"], t["value"]):
+            sys.exit(f"{where}: {t['value']!r} is not a value of the column")
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span:
+            sys.exit(f"{where}: the quoted words do not stand in {t['cc_ref']}")
+        by[t["row"]]["_counted"][t["column"]] = OrderedDict([("value", t["value"]), ("cc_ref", t["cc_ref"])])
+    unstated = [f"{r['family']}.{c}" for r in rows for c, v in r["_counted"].items() if v["value"] == "unstated"]
+    if len(unstated) > UNSTATED_MAX:
+        sys.exit(f"governance_policy: {len(unstated)} counted cells are unstated, more than {UNSTATED_MAX}: " + ", ".join(unstated))
+    # The set that is counted cannot be chosen by the counted: a door that removes from its own count set counts
+    # the set as signed or as at the act, or leaves the target out, or lands only on the target's silence.
+    for r in rows:
+        c = {k: v["value"] for k, v in r["_counted"].items()}
+        if c["changes_set"] == "removes" and not (c["counted_at"] in ("signed", "act") or c["count_set"].endswith("-target") or c["target_silent"] == "yes"):
+            sys.exit(f"governance_policy: {r['family']} removes from the set it counts and nothing fixes that set before the act")
+        if c["voice"] == "key" and r["corridor"] != "self":
+            sys.exit(f"governance_policy: {r['family']} counts keys and is not a self roster (CC 4.5.13, one vote per person)")
+    return unstated
+
+
 def machine_rows(rows):
     """rows the generic machine decides: numeric fractions, community corridor"""
     return [r for r in rows if r["kind"] == "two_path" and r["corridor"] == "community"]
@@ -294,6 +349,7 @@ def build():
     lean_examples_agree()
     rows = load()
     check_corridor(rows)
+    unstated = load_counted(rows)
     fams = []
     for r in rows:
         d = OrderedDict()
@@ -304,12 +360,21 @@ def build():
             d[k] = {"num": v[0], "den": v[1]} if isinstance(v, tuple) and len(v) == 2 else (None if v is None else (v[0] if isinstance(v, tuple) else v))
         for k in ("enact", "cancel", "floor"):
             d[k + "_rule"] = r["_rules"][k]   # the typed form of the cell beside its prose (additive; CEWP#16)
+        d["counted"] = r["_counted"]   # who the door counts, typed, each with the section that states it
         d["cancel_over"] = r["cancel_over"]; d["at_window"] = r["at_window"]   # persist v59 questions (b) and (c)
         d["window_secs"] = r["window_secs"]; d["window_class"] = r["window_class"]
         d["irreversible"] = r["irreversible"]; d["reverse_path"] = r["reverse_path"]
         d["corridor"] = r["corridor"]; d["model"] = r["model"].split(); d["status"] = r["status"]; d["note"] = r["note"]
         fams.append(d)
     body = OrderedDict([("families", fams), ("base_law", BASE_LAW), ("min_count", MIN_COUNT), ("window_classes", WINDOW_CLASSES),
+                        ("counted_columns", OrderedDict([
+                            ("count_set", "the role tokens whose keys the fold seats, joined by + (one voice each), less -target, -proposer or -node"),
+                            ("voice", "person: signatures fold to one voice per fedID; key: each key is a voice (a self roster only)"),
+                            ("counted_at", "signed: the set at the row's signed instant; decision: the set when the fold is evaluated; act: the set at the first-held instant of the act the count answers; founding: the set the record lists"),
+                            ("voices", "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)"),
+                            ("target_silent", "yes: the reverse path lands only if no row signed by the target was first held inside the window"),
+                            ("changes_set", "whether the act adds to or removes from the set it counts"),
+                            ("unstated", "the text does not state the cell"), ("unstated_cells", unstated)])),
                         ("decider", [l.strip() for l in __doc__.split("The one decision function")[1].split("The floor is")[0].strip().splitlines() if l.strip()][1:]),
                         ("verdicts", ["lands", "pending", "cancelled"]), ("paths", ["forward", "reverse", "none"]),
                         ("floor_is_reverse_only", "the floor is consulted only when the window has closed; before that only enact lands (Prop_FloorNeverLandsEarly)"), ("votes_family", "objection:{state} — proposal (counts as the proposer's approval), assent (+1), raised (−1); CC 3.1.9.2")])
@@ -326,7 +391,7 @@ def build():
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)
-    print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances")
+    print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances; counted cells unstated {len(unstated)}")
 
 
 def self_test():
