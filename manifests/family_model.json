@@ -269,8 +269,8 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 98,
-   "citations": 144,
+   "cells_cited": 213,
+   "citations": 349,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "body": {
@@ -1075,7 +1075,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -1413,7 +1423,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -1727,7 +1747,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -2052,7 +2082,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -2365,7 +2405,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -2679,7 +2729,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -2987,7 +3047,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]"
+    "qualifier": "[code: identity_type == accord_holder, hard-coded arm admission.rs:1571]",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -3630,7 +3700,25 @@
     },
     "source": "code-v61",
     "closed": "seat_role(attest) x delegates_to(infra:attest_assurance) x {not_subject}",
-    "qualifier": "+ identity_type contains witness"
+    "qualifier": "+ identity_type contains witness",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.12",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.10",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.11",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -3947,7 +4035,21 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.12",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.4.11",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -4250,7 +4352,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.7",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -4863,7 +4971,17 @@
      "value": "none (held shut)",
      "source": "code-v61"
     },
-    "qualifier": "refused from any other key"
+    "qualifier": "refused from any other key",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 7.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "none (held shut)",
@@ -5064,7 +5182,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -5671,7 +5795,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -6297,7 +6427,17 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -6602,7 +6742,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -6899,7 +7045,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains substrate_persist",
-    "qualifier": "CC self-report attester == subject: GAP"
+    "qualifier": "CC self-report attester == subject: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -7491,7 +7643,13 @@
      "value": null,
      "source": "gap"
     },
-    "qualifier": "the signer's membership is live at evaluation"
+    "qualifier": "the signer's membership is live at evaluation",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": null,
@@ -7721,7 +7879,17 @@
      "value": null,
      "source": "gap"
     },
-    "qualifier": "the count's winner over the bound ballot set"
+    "qualifier": "the count's winner over the bound ballot set",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": null,
@@ -8872,7 +9040,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -9761,7 +9935,25 @@
       "not_subject"
      ]
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.8.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -10107,7 +10299,29 @@
       "not_subject"
      ]
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.8.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.8.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -10452,7 +10666,25 @@
       "not_subject"
      ]
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.8.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -10787,7 +11019,21 @@
     },
     "source": "mixed",
     "closed": "seat_role(attest) x delegates_to(infra:attest_assurance, root this node trusts) x {not_subject}",
-    "qualifier": "+ identity_type contains witness (no vocabulary value); attester != steward: GAP"
+    "qualifier": "+ identity_type contains witness (no vocabulary value); attester != steward: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.10",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.12",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -11101,7 +11347,21 @@
     },
     "source": "mixed",
     "closed": "seat_role(attest) x delegates_to(infra:attest_assurance, root this node trusts) x {not_subject}",
-    "qualifier": "+ identity_type contains witness (no vocabulary value); attester != steward: GAP"
+    "qualifier": "+ identity_type contains witness (no vocabulary value); attester != steward: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.10",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.12",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -11415,7 +11675,17 @@
     },
     "source": "mixed",
     "closed": "seat_role(attest) x delegates_to(infra:attest_assurance, root this node trusts) x {not_subject}",
-    "qualifier": "+ identity_type contains witness (no vocabulary value); attester != steward: GAP"
+    "qualifier": "+ identity_type contains witness (no vocabulary value); attester != steward: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.10",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.12",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -11752,7 +12022,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "a serve seat of the period"
+    "qualifier": "a serve seat of the period",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -12512,7 +12788,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "one of the period's two tally members, drawn from the roster"
+    "qualifier": "one of the period's two tally members, drawn from the roster",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -12869,7 +13151,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "a member of the room"
+    "qualifier": "a member of the room",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "CC for_key_id = recipient (tally member); not enforced",
@@ -13200,7 +13488,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "a serve seat of the period"
+    "qualifier": "a serve seat of the period",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -13553,7 +13847,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "the returning node's key"
+    "qualifier": "the returning node's key",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "CC for_key_id = serve_seat; not enforced",
@@ -14179,7 +14479,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -14783,7 +15089,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "the collection's creator"
+    "qualifier": "the collection's creator",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -15395,7 +15707,13 @@
     },
     "source": "code-v61",
     "closed": "seat_role(moderate) | founder",
-    "note": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}"
+    "note": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -15721,7 +16039,17 @@
     },
     "source": "code-v61",
     "closed": "self | owner_of_subject x none x {}",
-    "note": "self | owner_of_subject x none x {}"
+    "note": "self | owner_of_subject x none x {}",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.2.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -17233,7 +17561,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "closed": "owner_of_subject"
+    "closed": "owner_of_subject",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": "attested = the node; an owner binding in force",
@@ -17553,7 +17891,21 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "the party running the decay protocol, a self-report"
+    "qualifier": "the party running the decay protocol, a self-report",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -17853,7 +18205,17 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "the producer"
+    "qualifier": "the producer",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -18155,7 +18517,17 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "the producer"
+    "qualifier": "the producer",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -18456,7 +18828,25 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "the producer side of the pair"
+    "qualifier": "the producer side of the pair",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -18785,7 +19175,25 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "a subject of the target, or a chain rooted at one"
+    "qualifier": "a subject of the target, or a chain rooted at one",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -19124,7 +19532,21 @@
     "source": "code-v61",
     "closed": "self | owner_of_subject(for_key_id) x none x {}",
     "note": "self | owner_of_subject(for_key_id) x none x {}; W on the owner's standing",
-    "qualifier": "W on the owner's standing"
+    "qualifier": "W on the owner's standing",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.7",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -19457,7 +19879,17 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "a subject of the target, or a chain rooted at one"
+    "qualifier": "a subject of the target, or a chain rooted at one",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -19765,7 +20197,25 @@
     "source": "code-v61",
     "closed": "self | owner_of_subject(for_key_id) x none x {}",
     "note": "self | owner_of_subject(for_key_id) x none x {}; W on the owner's standing",
-    "qualifier": "W on the owner's standing"
+    "qualifier": "W on the owner's standing",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.5",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -20129,7 +20579,17 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "a subject of the target, or a chain rooted at one"
+    "qualifier": "a subject of the target, or a chain rooted at one",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -21366,7 +21826,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains substrate_persist",
-    "qualifier": "CC self-report attester == subject: GAP"
+    "qualifier": "CC self-report attester == subject: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -21669,7 +22135,13 @@
     "qualifier": {
      "pending": "the event's primary signer, an active member of the group",
      "signature": "the member whose signature the row carries"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": null,
@@ -22182,7 +22654,13 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(the reporting device)"
+    "qualifier": "(the reporting device)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -22829,7 +23307,13 @@
     "code": {
      "value": "any_registered (family gate not built)",
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -23138,7 +23622,21 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "the conferrer, or a key on a live chain from the conferrer"
+    "qualifier": "the conferrer, or a key on a live chain from the conferrer",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -23456,7 +23954,13 @@
     "code": {
      "value": "any_registered (CC self-report of another substrate; persist does not gate)",
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -23756,7 +24260,21 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "a current member of the community or stream the receipt names"
+    "qualifier": "a current member of the community or stream the receipt names",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.6",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.3.3.6",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -24054,7 +24572,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains lenscore_detector x delegates_to(infra:detect) x {}",
-    "qualifier": "(detect: duty outside vocabulary)"
+    "qualifier": "(detect: duty outside vocabulary)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -24395,7 +24919,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains lenscore_detector x delegates_to(infra:detect) x {}",
-    "qualifier": "(detect: duty outside vocabulary)"
+    "qualifier": "(detect: duty outside vocabulary)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -24740,7 +25270,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains lenscore_detector x delegates_to(infra:detect) x {}",
-    "qualifier": "(detect: duty outside vocabulary)"
+    "qualifier": "(detect: duty outside vocabulary)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -25075,7 +25611,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains lenscore_detector x delegates_to(infra:detect) x {}",
-    "qualifier": "(detect: duty outside vocabulary)"
+    "qualifier": "(detect: duty outside vocabulary)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -25414,7 +25956,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains lenscore_detector x delegates_to(infra:detect) x {}",
-    "qualifier": "(detect: duty outside vocabulary)"
+    "qualifier": "(detect: duty outside vocabulary)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -25764,7 +26312,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "about an occurrence the signer owns"
+    "qualifier": "about an occurrence the signer owns",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -27563,7 +28117,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -27859,7 +28419,17 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -28154,7 +28724,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -28456,7 +29032,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -28752,7 +29334,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5.5",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -29366,7 +29954,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains substrate_persist",
-    "qualifier": "CC self-report attester == subject: GAP"
+    "qualifier": "CC self-report attester == subject: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -30260,7 +30854,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "the file's author, or a device that author acts through"
+    "qualifier": "the file's author, or a device that author acts through",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -30557,7 +31157,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -31640,7 +32246,21 @@
     },
     "source": "prose",
     "closed": "identity_type contains substrate_persist x delegates_to(infra:record_hard_case) when about another party x {}",
-    "qualifier": "legacy attestation_type spelling only (scores-dimension form ungated, BELIEVED)"
+    "qualifier": "legacy attestation_type spelling only (scores-dimension form ungated, BELIEVED)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.12.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -32276,7 +32896,13 @@
     },
     "source": "code-v61",
     "closed": "any_registered x none x {not_subject}",
-    "qualifier": "(legacy attestation_type spelling only; scores-dimension form ungated, BELIEVED)"
+    "qualifier": "(legacy attestation_type spelling only; scores-dimension form ungated, BELIEVED)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -32839,7 +33465,37 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(identity or a live occurrence); user-role roster change goes to the cosign rule"
+    "qualifier": "(identity or a live occurrence); user-role roster change goes to the cosign rule",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.6",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.6.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.6.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.6",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -33520,7 +34176,13 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(an occurrence of the agent; subject the agent)"
+    "qualifier": "(an occurrence of the agent; subject the agent)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "attested = the agent; amendment_digest hex64",
@@ -33808,7 +34470,13 @@
     },
     "source": "prose",
     "closed": "identity_type contains substrate_persist",
-    "qualifier": "CC self-report attester == subject: GAP"
+    "qualifier": "CC self-report attester == subject: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -34105,7 +34773,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -35284,7 +35958,21 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(proof of possession; pre-rc8 anchor-scrubbed base admitted)"
+    "qualifier": "(proof of possession; pre-rc8 anchor-scrubbed base admitted)",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.2.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.4.6",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -35578,7 +36266,17 @@
    },
    "signer_rule": {
     "value": "revoker-signed, judged without the subject's record",
-    "source": "prose"
+    "source": "prose",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -35941,7 +36639,13 @@
     "code": {
      "value": "any_registered (CC self-report of another substrate; persist does not gate)",
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -36242,7 +36946,21 @@
     "source": "code-v61",
     "closed": "minter | owner_of(content or stream) x none x {}",
     "note": "minter | owner_of(content or stream) x none x {} (owner of the content, not of the subject)",
-    "qualifier": "(owner of the content, not of the subject)"
+    "qualifier": "(owner of the content, not of the subject)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.4.1.2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -36603,7 +37321,13 @@
      "value": "none (held shut)",
      "source": "code-v61"
     },
-    "qualifier": "the steward of the retired agent"
+    "qualifier": "the steward of the retired agent",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "none (held shut)",
@@ -36806,7 +37530,17 @@
     },
     "source": "mixed",
     "closed": "self",
-    "qualifier": "CC delegate arm: GAP"
+    "qualifier": "CC delegate arm: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.10.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -37129,7 +37863,17 @@
     },
     "source": "mixed",
     "closed": "self",
-    "qualifier": "CC delegate arm: GAP"
+    "qualifier": "CC delegate arm: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.10.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -37445,7 +38189,17 @@
     },
     "source": "mixed",
     "closed": "self",
-    "qualifier": "CC delegate arm: GAP"
+    "qualifier": "CC delegate arm: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.3.10.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -37762,7 +38516,29 @@
     },
     "source": "code-v61",
     "closed": "any_registered x delegates_to(license",
-    "qualifier": "(license: outside vocabulary)"
+    "qualifier": "(license: outside vocabulary)",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.9",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.8",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -38181,7 +38957,13 @@
      "proposal": "an active founder of the lineage named",
      "acceptance": "the owner of the node named, never the node and never a founder",
      "decline": "the owner of the node named, never the node and never a founder"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -39103,7 +39885,13 @@
     },
     "source": "code-v61",
     "closed": "proposal: roster_member(at)",
-    "note": "proposal: roster_member(at) (founder_only: founder; s2: refused above family); acceptance/decline: self (acts for the invitee); widening/removal: roster_member(at) cosigned; resignation: self"
+    "note": "proposal: roster_member(at) (founder_only: founder; s2: refused above family); acceptance/decline: self (acts for the invitee); widening/removal: roster_member(at) cosigned; resignation: self",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.2",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -39549,7 +40337,17 @@
      "conditions": []
     },
     "source": "code-v61",
-    "closed": "steward"
+    "closed": "steward",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.2.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -40169,7 +40967,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -40468,7 +41272,21 @@
      ]
     },
     "source": "code-v61",
-    "closed": "seat_role(moderate) x delegates_to(moderate)"
+    "closed": "seat_role(moderate) x delegates_to(moderate)",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -41766,7 +42584,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -43003,7 +43827,13 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "a first-person observation"
+    "qualifier": "a first-person observation",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "CC cardinality 0; not enforced",
@@ -43271,7 +44101,13 @@
    "signer_rule": {
     "value": "the granter becomes owner_of_subject; one live owner per node; incumbent W check",
     "source": "prose",
-    "closed": "the granter becomes owner_of_subject"
+    "closed": "the granter becomes owner_of_subject",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "attested = the node; a minor's binding never announced at federation",
@@ -43882,7 +44718,13 @@
     "code": {
      "value": "any_registered (CC self-report of another substrate; persist does not gate)",
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -44185,7 +45027,13 @@
     "qualifier": {
      "until_retired": "the agent",
      "after_retired": "the custodian the retired row lists"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "none (held shut)",
@@ -44386,7 +45234,13 @@
      "value": "none (held shut)",
      "source": "code-v61"
     },
-    "qualifier": "the key the request names"
+    "qualifier": "the key the request names",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "none (held shut)",
@@ -45194,7 +46048,13 @@
      "value": "any_registered (authority_for answers AccordCoScrub; no write gate)",
      "source": "gap"
     },
-    "qualifier": "the pipeline that built it, whose standing the reader judges"
+    "qualifier": "the pipeline that built it, whose standing the reader judges",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -46423,7 +47283,17 @@
      "via": "delegates_to(slash)",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -48566,7 +49436,21 @@
     },
     "source": "code-v61",
     "closed": "filing: subject of the target | seat_role(review)",
-    "note": "filing: subject of the target | seat_role(review); ruling: seat_role(review) x delegates_to(review) x {}"
+    "note": "filing: subject of the target | seat_role(review); ruling: seat_role(review) x delegates_to(review) x {}",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -49180,7 +50064,17 @@
      "value": "any_registered (family gate not built)",
      "source": "gap"
     },
-    "qualifier": "attester and subject are the period's rendezvous key"
+    "qualifier": "attester and subject are the period's rendezvous key",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.4.6",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -49491,7 +50385,13 @@
      "until_retired": "the agent key",
      "after_retired": "the custodian the retired row lists",
      "custodian_replace": "one row cosigned by the operator holding the record and the Wise Authority"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "none (held shut)",
@@ -50624,7 +51524,13 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(owner's own delegates_to; confers nothing)"
+    "qualifier": "(owner's own delegates_to; confers nothing)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -50929,7 +51835,13 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(owner's own delegates_to; confers nothing)"
+    "qualifier": "(owner's own delegates_to; confers nothing)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -51246,7 +52158,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -51928,7 +52846,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -52248,7 +53172,21 @@
     },
     "source": "prose",
     "closed": "identity_type contains substrate_persist",
-    "qualifier": "CC self-report attester == subject: GAP"
+    "qualifier": "CC self-report attester == subject: GAP",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.8.1",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -52545,7 +53483,25 @@
     },
     "source": "code-v61",
     "closed": "seat_role(takedown) x delegates_to(takedown) x {}",
-    "qualifier": "(takedown: outside vocabulary); steward_purge leaf: none (held shut)"
+    "qualifier": "(takedown: outside vocabulary); steward_purge leaf: none (held shut)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "content_sha256 + legal_basis from the notice shape",
@@ -52842,7 +53798,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.10",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -53149,7 +54111,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -53452,7 +54420,21 @@
     },
     "source": "code-v61",
     "closed": "self x none x {}",
-    "qualifier": "(attester in subject_key_ids)"
+    "qualifier": "(attester in subject_key_ids)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.8.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -53752,7 +54734,17 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "the attester is among the subjects"
+    "qualifier": "the attester is among the subjects",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -54343,7 +55335,13 @@
     },
     "source": "code-v61",
     "closed": "seat_role(attest) x delegates_to(infra:attest_assurance) x {}",
-    "qualifier": "+ identity_type contains witness"
+    "qualifier": "+ identity_type contains witness",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -54935,7 +55933,13 @@
    },
    "signer_rule": {
     "value": "holder quorum over the carried transport destination",
-    "source": "prose"
+    "source": "prose",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -55258,7 +56262,13 @@
     "code": {
      "value": "any_registered (CC self-report of another substrate; persist does not gate)",
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -55551,7 +56561,13 @@
    "signer_rule": {
     "value": "charter: self; confers: steward (root) x delegates_to(scope, depth, term); accepts: self (node -> root)",
     "source": "code-v61",
-    "closed": "charter: self"
+    "closed": "charter: self",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.5",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": "delegation term required, no cycle, node agency scopes infra-only",
@@ -55881,7 +56897,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.8",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -56178,7 +57200,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -56785,7 +57813,13 @@
    },
    "signer_rule": {
     "value": "seat_role(wa) quorum, re-derived from this node's state",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -57106,7 +58140,17 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.7",
+      "reading": "fills"
+     }
+    ]
    },
    "subject_rule": {
     "value": {
@@ -57720,7 +58764,13 @@
      "via": "none",
      "conditions": []
     },
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.10",
+      "reading": "agree"
+     }
+    ]
    },
    "subject_rule": {
     "value": {

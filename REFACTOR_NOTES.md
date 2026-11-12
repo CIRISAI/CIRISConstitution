@@ -623,3 +623,16 @@ of it lands as a wire member. Objects with members in prose and no family row or
 wholeness_witness, StorageBudgetV1, CorpusWantV1, the three accord roster-change objects. CC 4.4.3.2.8 says the
 family model manifest carries the affiliation config schema; it carries none.
 The first prose cut's gate failed once, as designed: four `cell_cites` rows quoted the cut bullets and were dropped.
+
+Signer lane (`handoff/lanes/out_f_signer.*`): 286 statements, 387 rows: AGREE 263, FILLS 26, RICHER 32, DISAGREE 9,
+NOT_A_CELL 57. The signer prose is mostly a copy of the data. 265 citations added to `cell_cites.tsv`; the coverage
+measure is 793 of 5,175 (15%). Nine disagreements to fix in the model, each where the text is clear:
+`system:*` omits `substrate_edge` (CC 3.1.3, 3.1.4, 3.4.3); `consent:{kind}` stage `community_trust` should admit
+the owner or the node it owns, stage `state` should carry the delegation chain and give `expired` to the store
+alone (CC 3.3.1, 3.4.5); the attest transitions of `membership:{stage}` and `reconsideration:{grounds}` carry one
+role where the family cell and the text give the invitee and the subject (a derivation fault in
+`tools/build_transitions.py`: per-stage roles are lost when the cell is not marked per_stage);
+`provenance:build_manifest:{target}`: CC 3.1.2 says the per-primitive steward signs, CC 3.1.2.1 says the pipeline
+that built it (text against itself, for `text_conflicts.tsv`). RICHER needs: a role no token names (8), a
+condition (7), a delegation shape (4), per-leaf signers (3), a family with no row (3), a group as signer (2).
+Ten statements are marked seat-rule and wait.
