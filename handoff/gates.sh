@@ -42,10 +42,14 @@ run python3 formal/guardianship/guardianship_model.py --check
 run python3 formal/ranked_choice/ranked_choice_model.py --check
 run python3 formal/set_item/set_item_model.py --check
 run python3 -I formal/kernel_lib/kernel_lib_check.py --check
+run python3 -I formal/causal_kernel/check.py --bound 5
+run python3 -I formal/causal_kernel/check_cut.py
+run python3 -I formal/roster_fork/fork_check.py --check
 run python3 tools/ui_closure.py --check
 run python3 tools/check_termination.py
 run python3 tools/kernel_closure.py --check
 run python3 tools/kernel_requirements.py --check
+run python3 tools/family_need.py --check
 run python3 -I formal/transport_tiers/frame_ab.py --check
 run python3 tools/check_compliance_wire_forms.py
 run python3 tools/check_rule_entries.py

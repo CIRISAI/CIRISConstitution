@@ -104,6 +104,8 @@ jobs:
         run: python3 tools/kernel_closure.py --check
       - name: Kernel requirements against supply
         run: python3 tools/kernel_requirements.py --check
+      - name: What each row family is needed for
+        run: python3 tools/family_need.py --check
       - name: Every family's transitions against every role token — tokens declared and used, gaps declared, every exit has an entry (CC 4.5.13)
         run: python3 tools/check_transition_roles.py
       - name: Signed-object CDDL parses and admits every admit vector (generated and draft-wrapped forms)
