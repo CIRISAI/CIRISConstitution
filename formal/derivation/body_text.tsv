@@ -321,3 +321,8 @@ video:*	derived_from	unstated	unstated	no	CC 5.1	The recording is the after-the-
 video:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
 video:*	resolution	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, resolution, mandatory `captions` reference, AI-generation disclosure, license info.
 video:*	stream_id	unstated	unstated	no	CC 5.1	The recording is the after-the-fact `video` blob with `derived_from: stream_id`
+detection:{detector}	list_source	text	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	list_version_digest	hex64	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	content_sha256	hex64	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	match_algorithm	text	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.
+detection:{detector}	match_distance	uint	unstated	no	CC 4.5.7	That row carries the list's registered source and a digest of the list version, the content's digest, the matching algorithm and the match distance as a whole number.

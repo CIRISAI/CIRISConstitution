@@ -1097,3 +1097,12 @@ admitted" and "taken takes effect". The receipt-clock screen fails "offered is a
 for the kernel's interface: the queue item (present, enabled, reason) is a kernel output; a client never recomputes
 whether an act is open. Not modelled: L6 confirm and L12 shown-is-sent (held by formal/event_lifecycle and the
 confirm lookup), L7 and L11 (previews and stale answers), more than one act, more than one family.
+
+C536(b), agreed with the store: the detecting node signs a `detection:*` row and never the notice; the owner signs the
+notice naming it; "in retrospect" is the owner signing later, with no new row and no cosign hold; the detection row
+carries no list entry (a gated feed's terms) and a whole-number distance; no registry of hash lists. C536(a): the
+store has admitted the subject since v55, so the known failure is the signer cell here, typed from the census.
+Open with the store: `owner_of` counts every live owner-binding today and not only those the node's key took part
+in. Answers given: the node's part is its key in `additional_scrubs` or a named device-join request; held bindings
+are cured in place by a `cosign:signature` row and bridged by a cut-over on the signed instant, never failed closed;
+the rule is read at the fold, never at admission. The bridge is flagged to the steward.

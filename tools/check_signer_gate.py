@@ -44,7 +44,7 @@ STAGED = ("system:*", "audit_chain:hash_continuity", "corpus_health:n_eff_measur
 KNOWN = {
     **{("seat", f): "C564: the signer cell is the shipped store's gate; CC 3.4.7 names a duty the store does not yet check" for f in STAGED},
     ("emitter", "consent:state:{stance} <- identity:substrate_persist"): "C450: the text gives the expired stance to the store alone; the signer cell (the shipped store) admits the subject and the owner only",
-    ("duty", "takedown_notice:{basis}"): "C536: the signer cell (the shipped store) admits a takedown holder; CC 4.5.5 also admits the content's subject and, on a hash match, the detecting node's owner",
+    ("duty", "takedown_notice:{basis}"): "C536: the signer cell is typed as a takedown holder alone. The store has admitted the content's subject since its v55, so that part is this table's to correct; the detecting node's owner on a hash match is staged on the store (the node signs a detection row, the owner the notice naming it)",
     ("duty", "slashing:{outcome}"): "C447, C458: the signer cell (the shipped store) admits any registered key; CC 4.5.5 admits a slash duty-holder",
     ("emitter", "key_grant:{axis} <- identity:substrate_persist"): "C556: CC 3.3.4 has the store emit the catch-up grants and CC 3.1.3 makes a key grant sealer-only; the emitter token names a role and not whose store",
 }
