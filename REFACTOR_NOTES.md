@@ -688,3 +688,12 @@ families, count typed 12, guard 27, change 16, fold 76, in time 31, body 49, any
 merged, it is 83 distinct clauses, not 143. The card is the artifact for the larger cut: Part 3's registry rows
 hold about 6,300 words of per-family description in single cells (cosign:{state} alone 641 words), and the card
 for a family is what a generated statement of the same values would look like.
+
+Eric, 2026-11-11 late. (1) His earlier "proceed" was NOT a ruling on roster widening or on the seat rule's D1 to D8:
+he has not reviewed them. Every note above that reads it as a yes is withdrawn; C283 and C284 say so. The membership
+count cell stands on the sentence of CC 3.1.3.2 it quotes and on the build, not on a ruling. The seat rule stays
+undrafted. (2) He asked whether a persist session is needed: none is live among the peer sessions (edge, client,
+server, agent, bridge, holon and ratchet are); the draft for #1259 is unposted. (3) "Annex is fine ... we need to
+cash this in": the family cards are CC 8.10, written by `tools/family_card.py --write` (118 cards, 9,861 words),
+checked in the gates and CI, carried in volume P03. Next: trim each Part 3 description cell to purpose and reasons,
+the values now being the card's.

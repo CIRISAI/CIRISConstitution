@@ -1605,3 +1605,1849 @@ Every piece of the constitution that is *referenced but not yet defined*, in one
 - **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).
 - **Sentience-probability heuristic** → [CC 7.5.5](part_7_lifecycle_stewardship.md) (Butlin/Long markers + Birch sentience-candidate stance).
+
+## 8.10 `family-cards` — The family cards (generated from the data)
+
+The build writes this section from the family model, the transitions table and the reactions manifest. A card states, for one family, who signs each transition and under which policy, whether a row widens and is confirmed, how the act is counted, what must be held for a row to be admitted, what a changing row may do, how the rows fold to a value, what follows in time, and the members of the body. Each line names the sections that state it. The expressions are in the grammars of the tools that build the manifests, and [CC 4.5.13](part_4_composition_governance.md#4.5.13) says what each kind of line means.
+
+**Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
+
+A family with no card states none of these beyond the default row. Cards: 118 of 184 families.
+
+**`accord:*`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `weight=rate(hardware_class); by=reader` (CC 4.2.2)
+- `reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_class); by=reader` (CC 4.2.2.1)
+- `key=attested_key_id; pick=max(version); absent=from(trust:{job}:{version})` (CC 4.2.6)
+
+Body: `accord_root`
+
+**`accord:human_dignity`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Body: `accord_root`
+
+**`accord:invoke:constitutional:{halt_id}`** — Structure, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | mirror `accord_halt` | true (by_scope) | true (always) | none |
+
+Count: `accord_halt@accord` (CC 4.2.1.1)
+
+In time:
+- expiry none (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
+- clock `fuse` = `charter.halt_fuse_secs` (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
+- on close(fuse) unless admitted(accord:lifecycle:confirmed): read lapsed (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
+
+Body: `accord_root`
+
+**`accord:invoke:drill:{drill_id}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Body: `accord_root`
+
+**`accord:invoke:notify:{notify_id}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Body: `accord_root`
+
+**`accord:lifecycle`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `accord_root`
+
+**`accord:lifecycle:{kind}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | mirror `accord_halt`, `accord_majority` | true (by_scope) | true (always) | none |
+
+Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord` (CC 4.2.1.1, CC 4.2.1.3)
+
+Guard:
+- attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else refuse` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
+
+Fold:
+- `over=standing@decision/person` (CC 4.2.6)
+
+In time:
+- [confirmed] clock `fuse` = `charter.halt_fuse_secs` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
+- [confirmed] on close(fuse): read closed (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
+- expiry required `valid_until` max `accord_heartbeat_max_secs` (CC 3.4.1)
+- on close(expiry): read stale (CC 3.4.1)
+
+Body: `accord_root`, `confirms_halt_id` (text only), `invocation_id` (text only), `invocation_kind` (text only), `resumes_halt_id` (text only)
+
+**`age_assurance:{level}:{band}:{version}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | attest | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `reads=own+age_self_declared:band:{band}:{version}&live; key=attested_key_id; pick=rank(government>provider>self); absent=protective; by=reader` (CC 3.1.2, CC 3.4.11)
+
+**`age_self_declared:band:{band}:{version}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `feeds=age_assurance:{level}:{band}:{version}` (CC 3.1.2)
+
+**`agent_files:{kind}:{platform_or_target}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader` (CC 4.4.3.7)
+
+In time:
+- on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
+
+**`archive_release:{basis}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | wa | selfAct | false | true (always) | none |
+
+Count: `none`
+
+Body: `purpose` (text only), `retirement_id` (text only), `scope`
+
+**`attestation:agent_integrity`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3, CC 4.4.3.6)
+
+**`attestation:hardware_rooted`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3)
+
+**`attestation:license_validity`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3)
+
+**`attestation:registry_consensus`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `absent=restricted; by=reader` (CC 3.1.2)
+- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3)
+
+**`attestation:self_verify`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3)
+
+**`audio:*`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `duration` (text only), `transcript` (text only)
+
+**`ballot:moderator`** — Structure, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | ranked `moderator_election` | true | true (always) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `moderator_election@subject_group` (CC 4.5.13)
+
+Guard:
+- attest: `each(val:ranks) member(key,object) else refuse` (CC 3.1.3)
+
+Fold:
+- `key=election_id,person; pick=agree; over=live@count/person` (CC 3.1.3)
+- `order=max(moderation_track_record),min(admission_order),min(key_id)` (CC 4.5.4)
+- `combine=policy(moderator_election)` (CC 4.5.13)
+- `over=live@count/person` (CC 4.5.13)
+- `test=voices>=min(2,n) ?seated:open` (CC 4.5.13)
+
+In time:
+- clock `window` = `moderator_election.window_secs` (CC 4.5.13)
+
+Body: `ranking` (text only), `salt`
+
+**`ballot:moderator_acceptance`** — Structure, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | winner | ranked `moderator_election` | true | true (always) | none |
+
+Count: `moderator_election@subject_group!result` (CC 4.5.13)
+
+Guard:
+- attest: `set(ref:*) ballot:moderator@admitted[object=object] else refuse & winner(signer,object) else refuse & after(moderator_election) else refuse` (CC 3.1.3)
+- attest: `set(ref:*) ballot:moderator@admitted[object=object] else refuse` (CC 4.5.13)
+
+Fold:
+- `key=community_id,election_id; pick=max(ballot_count),min(ballot_set_digest); by=node` (CC 3.1.3, CC 4.5.13)
+
+**`ballot:tally:{poll_id}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | tally | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`, `salt`
+
+**`bond_posted:{currency}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+In time:
+- on admitted(revocation:{entity_type}:{reason}): read forfeited (CC 3.1.1)
+
+**`capacity:composite`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (always) | true (always) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+- `absent=refuse` (CC 3.4.5)
+- `reads=capacity:{factor}&live; key=attested_key_id; combine=min(C,I_int,R,I_inc,S); absent=undefined; by=reader` (CC 3.1.4, CC 3.1.8.1)
+
+Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h`, `n_eff_pr`, `sample_size`, `sample_size_gate`, `target_n_eff`, `window`
+
+**`capacity:relay_delivery`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (always) | true (always) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none`
+
+Guard:
+- attest: `one consent:state:granted@admitted[signer=attested,subject=signer,val:scope=analyze] else refuse` (CC 3.1.4)
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+- `reads=own&has(relay_countersignature|chunk_commitment); by=reader` (CC 3.1.4)
+
+Body: `advertiser_key_id` (text only), `consent_basis`, `epoch` (text only), `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h`, `n_eff_pr`, `sample_size`, `sample_size_gate`, `stream_id` (text only), `target_n_eff`, `window`
+
+**`capacity:{factor}`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (always) | true (always) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+
+Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h`, `n_eff_pr`, `sample_size`, `sample_size_gate`, `target_n_eff`, `window`
+
+**`capacity_assurance:{level}:{domain}:{band}:{version}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | attest | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Guard:
+- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else refuse` (CC 3.1.2)
+- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else refuse` (CC 3.4.12)
+
+Fold:
+- `key=attested_key_id,domain; result=vector(domain)` (CC 3.1.2)
+- `key=attested_key_id,domain; absent=full` (CC 3.4.12)
+
+**`census:composite:{class}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | serve | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Guard:
+- attest: `no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else refuse(census_composite_duplicate_period)` (CC 3.1.3)
+
+Fold:
+- `key=class,period; pick=once(census_composite_duplicate_period)` (CC 3.1.3)
+- `combine=median(bucket); by=reader` (CC 6.1.9)
+- `absent=refuse` (CC 6.1.2.1.2)
+
+Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`
+
+**`census:expected_active`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | tally | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `reads=census:member:partial&last(4); over=active/owner; combine=count(owner)` (CC 3.1.3)
+- `over=active/owner` (CC 6.1.9)
+- `combine=max(count(owner),(prev*9+9) div 10,floor)` (CC 4.5.13, CC 6.1.9)
+- `test=count*3>=prev*2 ?open:frozen` (CC 6.1.9)
+
+Body: `period`, `member_commitment_hex`, `window_periods`, `active_count`, `floor_applied`
+
+**`census:member:partial`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | tally | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `feeds=census:expected_active` (CC 6.1.9)
+
+Body: `period`, `share_index`, `share_count`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`
+
+**`census:member:share`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `no census:member:share@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse` (CC 3.1.3)
+
+Fold:
+- `key=period,token; pick=once(ballot_share_duplicate_token)` (CC 3.1.3)
+
+Body: `for_key_id`, `period`, `return_token`, `share_index`, `salt`
+
+**`census:partial:{class}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | serve | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `feeds=census:composite:{class}` (CC 6.1.9)
+- `reads=census:share:{class}; key=period,token; test=count=2 !census_share_pair_incomplete` (CC 3.1.3)
+
+Body: `period`, `share_index`, `share_count`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`
+
+**`census:share:{class}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `no census:share:{class}@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse(census_share_duplicate_token)` (CC 3.1.3)
+
+Fold:
+- `key=period,token; pick=once(census_share_duplicate_token)` (CC 3.1.3)
+
+Body: `for_key_id`, `period`, `return_token`, `share_index`, `salt`
+
+**`cert_validity:{authority}`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id; combine=all(present); by=reader` (CC 4.4.3.11)
+
+**`coherence_standing:{cohort}`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+
+**`collection:{kind}`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `None`
+
+Change:
+- supersede: `replace: cascade=file:{version}/under:stand` (CC 3.1.3.4)
+
+**`community:listing`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | founder, moderate | selfAct | true (always) | true (always) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none`
+
+Body: `cohort_subkind` (text only), `community_key_id` (text only), `description` (text only), `name`
+
+**`config:{scope}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | owner, self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- expiry required `valid_until` (CC 4.2.1.4)
+
+**`consent:community_trust`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | owner | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `when(type(signer,node)) owner(subject,attested) at asserted_at else refuse` (CC 3.3.1)
+
+Change:
+- withdraw: `withdraw: cascade=trace:{form}:{version}/under:stand` (CC 3.3.1)
+
+Fold:
+- `cut=boundary(asserted_at)` (CC 3.3.1)
+- `reads=own&signer:owner` (CC 3.3.1)
+- `key=attested_key_id` (CC 3.3.1)
+- `reads=own&signer:owner; key=attested_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node` (CC 3.3.1)
+
+**`consent:decay:{stage}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- on admitted(consent:state:revoked) or withdrawn(consent:partnership_grant): emit `consent:decay:identity_severed` by author (CC 4.4.3.5.1)
+- clock `anonymise` = `decay_protocol.patterns_anonymized_secs` (CC 4.4.3.5.1)
+- on close(anonymise): emit `consent:decay:patterns_anonymized` by author (CC 4.4.3.5.1)
+- clock `complete` = `decay_protocol.complete_secs` (CC 4.4.3.5.1)
+- on close(complete): emit `consent:decay:complete` by author (CC 4.4.3.5.1)
+
+**`consent:deletion_sla:{days}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- on withdrawn(self) or superseded(self) or purged(self): do cancel_watch (CC 3.3.1)
+- clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
+- on close(sla) unless withdrawn(target) or superseded(target) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
+
+**`consent:partnership_accept`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `key=bilateral_pair_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
+- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5, CC 4.4.3.5.3)
+
+In time:
+- expiry forbidden `valid_until` (CC 4.4.3.4.3.1)
+
+Body: `asserted_at`, `attestation_type`, `attesting_key_id`, `bilateral_pair_id` (text only), `dimension`, `stance` (text only), `subject_key_id` (text only), `subject_kind` (text only)
+
+**`consent:partnership_grant`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `key=bilateral_pair_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
+- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id; pick=pair(consent:partnership_accept),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5)
+
+In time:
+- expiry forbidden `valid_until` (CC 4.4.3.4.3.1)
+
+Body: `asserted_at`, `attestation_type`, `attesting_key_id`, `bilateral_pair_id` (text only), `dimension`, `stance` (text only), `subject_key_id` (text only), `subject_kind` (text only)
+
+**`consent:replication:{version}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | owner, self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Change:
+- supersede: `replace: field=attestation_prefixes:any` (CC 3.3.7)
+- withdraw: `withdraw: reach=whole` (CC 3.3.7)
+
+Fold:
+- `cut=whole` (CC 3.3.7)
+- `key=attesting_key_id,attested_key_id; pick=pair(consent:replication:{version}); result=bool` (CC 3.3.7)
+
+In time:
+- on withdrawn(self) or recanted(self): do cease_replication, do deregister_peer (CC 3.3.7)
+
+**`consent:state:{stance}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | owner, self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Change:
+- attest: `expired: by=substrate, reach=other_attester, link=ranked:consent_supersedes` (CC 3.3.1)
+
+Fold:
+- `pick=rank(revoked>granted)` (CC 3.3.1)
+- `@stance=revoked: cut=boundary(asserted_at)` (CC 3.3.1)
+- `@stance=revoked: cut=boundary(asserted_at),terminal` (CC 4.4.3.5.5)
+- `@stance=revoked: cut=terminal` (CC 4.4.3.5.5)
+- `pick=max(asserted_at); by=reader` (CC 4.4.3.5)
+- `reads=own&signer:subject|proxy` (CC 4.4.3.5.5)
+- `absent=unspecified` (CC 4.4.3.5.5)
+- `pick=max(asserted_at)` (CC 4.4.3.5.5)
+- `result=state(granted|revoked|expired|unspecified)` (CC 4.4.3.5.5)
+
+In time:
+- [granted] expiry optional `valid_until` (CC 3.3.1, CC 4.4.3.5.5)
+- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by identity:substrate_persist (CC 3.3.1, CC 4.4.3.5.5)
+- [granted] expiry optional `valid_until` default `consent_temporary_ttl_secs` (CC 4.4.3.5.6)
+
+**`consent:stream:{kind}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- [temporary] expiry required `valid_until` default `consent_temporary_ttl_secs` (CC 3.3.1)
+
+**`consent:{kind}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | owner, self (community_trust: owner; decay: self; deletion_complete: self; deletion_sla: self; partnership_accept: self; partnership_grant: self; replication: owner, self; scope: self; state: owner, self; stream: self) | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
+
+**`cosign:{state}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member (pending: member; signature: member) | selfAct | true | true (always) | withdraw |
+| withdraw | author (pending: author; signature: ) | selfAct | false | false | attest |
+
+Count: `none` (CC 3.1.3)
+
+Guard:
+- attest: `when(leaf=pending) (one *@admitted[id=ref:*] as E else refuse & owner(E.signer,signer) else refuse)` (CC 3.1.3)
+
+Fold:
+- `key=quorum_key,attesting_key_id; pick=union` (CC 3.1.3)
+- `key=quorum_key,attesting_key_id; pick=union; by=node` (CC 3.3.4)
+
+In time:
+- [pending] clock `hold` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
+- [pending] on close(hold): do drop_held (CC 3.1.3, CC 3.3.4)
+- [pending] clock `age` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
+- [pending] on close(age): read closed (CC 3.1.3, CC 3.3.4)
+
+**`custody:{kind}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `one *@admitted[id=ref:*,val:cohort_scope=val:cohort_scope] else refuse` (CC 3.1.3.3)
+
+In time:
+- [ack] expiry required `expires_at` eq `custody_report_ttl_secs` (CC 3.1.3.3, CC 5.3.2.1)
+- [ack] on close(expiry): read unknown (CC 3.1.3.3, CC 5.3.2.1)
+
+**`deferral:request`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Body: `domain`
+
+**`deferral:response:{outcome}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | steward, wa | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Guard:
+- attest: `one licensure:{authority_id}@admitted[attested=signer] at asserted_at else refuse(deferral_response_unlicensed)` (CC 4.3)
+
+Fold:
+- `over=seated@decision/person` (CC 4.3)
+- `over=seated@prior/person` (CC 4.3)
+- `over=present@decision/person` (CC 4.3)
+
+**`delivery_receipt:{stream_id}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Guard:
+- attest: `one transparency_log:cosigned:{tree_size}@admitted[val:log_id=leaf:stream_id,val:root_hash=val:chunk_root,leaf:tree_size>=val:K] else refuse` (CC 5.3.3.6)
+- attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.6)
+
+Body: `K` (text only), `chunk_root` (text only), `epoch` (text only), `stream_id` (text only), `subscriber_key_id` (text only)
+
+**`detection:correlated_action:{axis}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+- `combine=median(score); by=reader` (CC 4.4.2)
+
+**`detection:distributive:access:{resource_type}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+- `combine=median(score); by=reader` (CC 4.4.2)
+
+**`detection:hash_chain_integrity`** — Facts, account; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+
+**`detection:intra_agent_consistency`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+
+**`detection:{detector}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | identity:lenscore_detector | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+- `combine=median(score); by=reader` (CC 1.13.3.3)
+
+**`device:label`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | owner | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `label`
+
+**`encyclopedia:*`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- expiry none (CC 3.3.13)
+
+**`event:lifecycle:{state}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `pick=max(asserted_at); by=reader` (CC 3.3.8)
+
+**`evidence:{suite}:{kind}:{cell}:{prefix}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Guard:
+- attest: `when(has=references_attestation_id) one goal:{scale}|approach:{goal_id}|method:{approach_id}:{substrate_rung}@admitted[id=ref:references_attestation_id] else refuse(evidence_reference_unresolved)` (CC 3.1.5.5)
+
+Fold:
+- `feeds=progress_measure:{method_id}` (CC 3.1.5.5)
+
+**`fidelity:explainability_sla:{tier}`** — Manner, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `achieved_tier` (text only), `committed_tier` (text only), `fallback_reason` (text only)
+
+**`group:roster`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member | selfAct | true (always) | true (always) | withdraw |
+| withdraw | member | cosigned | false | false | attest |
+| supersede | member | cosigned | false | false | supersede |
+
+Count: `None`
+
+Guard:
+- attest: `each(subject) when(type(key,node)) not founder(key,object) else refuse+community_consensus_protocol_violation` (CC 3.2)
+- attest: `each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation` (CC 3.1.3.2)
+- attest: `when(leaf=recovery) one trust:charter@admitted[object=object,val:recovery_commitments commits signer] else refuse` (CC 3.1.3, CC 4.2.6)
+- supersede: `each(subject) when(verb=replace,not member(key,object)) signs(key) else refuse(membership_supersede_cannot_add)+community_consensus_protocol_violation` (CC 3.1.3.2)
+- supersede: `when(verb=replace) one group:roster@admitted[object=object,id=ref:prev_head_digest] else refuse` (CC 4.4.3.4.4)
+
+Change:
+- attest: `attest: field=members:grow_signed` (CC 3.1.3.2)
+- supersede: `replace: by=cosigned, field=consensus_protocol:any` (CC 3.3.4, CC 4.4.3.4.2, CC 4.5.12.5)
+- supersede: `replace: field=members:shrink` (CC 3.1.3.2, CC 3.3.4)
+- supersede: `replace: link=chained:prev_head_digest` (CC 4.4.3.4.4)
+- supersede: `replace[entrenched]: field=consensus_protocol:frozen` (CC 3.3.4, CC 4.4.3.4.2, CC 4.5.12.5)
+- supersede: `replace[grade:trust_root]: field=members:grow_signed` (CC 3.1.3.2)
+- supersede: `replace[recovery]: by=committed_key` (CC 3.1.3)
+- supersede: `replace[subkind:infrastructure]: field=consensus_protocol:no_weaker, field=admission_quorum_basis:frozen` (CC 3.2)
+- withdraw: `withdraw: cascade=custody:{kind}/under:stand` (CC 4.4.3.2.8)
+- withdraw: `withdraw: cascade=licensure:{authority_id}/by:lapsed` (CC 4.4.3.2.8)
+- withdraw: `withdraw: cascade=membership:{stage}/under:lapsed, cascade=trust:{job}:{version}/under:lapsed, cascade=key_grant:{axis}/under:stop, key=none` (CC 4.4.3.2.8)
+- withdraw: `withdraw: cascade=trust:{job}:{version}/by:lapsed` (CC 4.4.3.2.8)
+
+Fold:
+- `bound=drop_only(members)` (CC 3.1.3.2, CC 3.3.4)
+- `bound=narrow_only(consensus_protocol),fixed(admission_quorum_basis)` (CC 3.2)
+- `pick=chain(prev_head_digest)` (CC 4.4.3.4.4, CC 4.4.3.2.4)
+- `reads=head+membership:{stage}&seat:human` (CC 3.2)
+- `order=min(key_id)` (CC 4.4.3.2.4.1)
+- `feeds=replication.audience` (CC 4.4.3.2.6)
+- `reads=head` (CC 4.4.3.4.4)
+- `@cohort_subkind=infrastructure: over=listed@seating/person` (CC 3.1.3.2)
+- `@cohort_subkind=infrastructure: over=founders@decision/person` (CC 3.2)
+- `reads=head+membership:{stage}&at(now)&seat:human` (CC 3.2)
+- `@cohort_subkind=infrastructure: over=founders@now/person; test=count>m ?live:stalled` (CC 3.2)
+- `reads=head; pick=chain(prev_head_digest)` (CC 4.4.3.2.4.1)
+- `pick=chain(prev_head_digest),first_seen` (CC 3.2)
+
+In time:
+- @affiliations on fold(no_live_deciding_seat): read withdrawn (CC 4.4.3.2.8)
+- expiry optional `dissolves_at` (CC 4.4.3.2.8)
+- on close(expiry): read withdrawn (CC 4.4.3.2.8)
+- [ephemeral] expiry required `valid_until` (CC 5.3.3.2)
+- [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
+- clock `W` = `admission_freshness_window_secs` (CC 4.2.6, CC 4.4.3.4.2.1)
+- on close(W) unless fold(policy_met): read lapsed (CC 4.2.6, CC 4.4.3.4.2.1)
+- on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.2.3)
+- clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
+- on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
+- on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
+- on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
+
+**`hardware_custody:{platform}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `feeds=accord:*` (CC 4.2.2.1)
+
+Body: `hardware_class` (text only)
+
+**`identity:canonical_binding:{canonical_hash}`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Body: `witness_relation`
+
+**`identity:occurrence`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | two_path `self_roster_add` | true (always) | true (always) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.3)
+
+Change:
+- supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.4.6)
+- supersede: `replace[seat:serve]: after=transport:canonical_rebind, refuse=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
+- supersede: `replace[seat:serve]: after=transport:canonical_rebind` (CC 3.3.6.2)
+
+Fold:
+- `reads=own&at(now); key=identity_key_id; result=set; by=node` (CC 4.4.3.4.6)
+- `over=live@decision/key` (CC 3.3.6.3)
+
+In time:
+- on withdrawn(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `hard_case:community_membership_change` by identity:substrate_persist (CC 3.4.4)
+- clock `window` = `self_roster_add.window_secs` (CC 3.3.6.3)
+- on admitted(self): emit `hard_case:identity_occurrence_added` by identity:substrate_persist (CC 3.3.6)
+
+**`identity:occurrence_revocation`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | open cell | selfAct | true (always) | true (always) | none |
+
+Count: `identity=node|agent => none ; identity=user => self_roster_evict@self` (CC 3.1.3)
+
+Change:
+- attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.4.5)
+
+**`identity_amendment`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Guard:
+- attest: `one deferral:response:approved@admitted[id=ref:authorized_by,subject=subject] as R else refuse(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else refuse(identity_amendment_unauthorized)` (CC 3.1.5)
+
+**`image:*`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `alt_text` (text only), `format` (text only)
+
+**`key:record`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (always) | true (always) | none |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none`
+
+Change:
+- supersede: `replace[recovery]: by=committed_key` (CC 2.1)
+
+In time:
+- on admitted(key:revocation) or withdrawn(trust:accepts): read lapsed (CC 4.2.1)
+
+**`key:revocation`** — Identity, thing; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (always) | true (always) | none |
+| supersede | author | selfAct | false | false | supersede |
+
+Count: `none`
+
+Change:
+- attest: `attest: cascade=*/by:void_after:revoked_after` (CC 2.4.1.1)
+- supersede: `replace: field=revoked_after:lower` (CC 2.4, CC 2.4.1.1)
+
+Fold:
+- `key=revoked_key_sha256_ed25519_raw; bound=lower_only(revoked_after)` (CC 2.4, CC 3.1.3)
+- `key=revoked_key_sha256_ed25519_raw` (CC 2.4.1.1)
+- `key=revoked_key_sha256_ed25519_raw; bound=lower_only(revoked_after); combine=min(revoked_after)` (CC 2.4.1.1)
+- `key=revoked_key_sha256_ed25519_raw; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+- `cut=boundary(revoked_after)` (CC 3.2)
+
+**`key_grant:{axis}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | member, owner | selfAct | true (always) | true (always) | none |
+
+Count: `none`
+
+Guard:
+- attest: `each(subject) one identity:occurrence@admitted[attested=key] else exclude+recipient_excluded` (CC 3.3.6.1)
+- attest: `when(one retirement:{state}@admitted[attested=object]) one archive_release:{basis}@admitted[id=ref:*] else refuse` (CC 3.1.5)
+
+Fold:
+- `key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node` (CC 3.3.2, CC 3.1.3)
+- `@axis=epoch|stream: key=stream_id; bound=raise_only(epoch)` (CC 5.1)
+
+In time:
+- @family on admitted(membership:widening): emit `key_grant:content` by identity:substrate_persist (CC 3.3.4, CC 4.4.3.4.1)
+- @community on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1)
+- @self on admitted(identity:occurrence): emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.1)
+- @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
+- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.4.1)
+
+Body: `at_rest_sha256` (text only), `attested_key_id`, `axis` (text only), `community_key_id` (text only), `content_sha256` (text only), `epoch` (text only), `minter_key_id` (text only), `owner_key_id` (text only), `recipient_key_id` (text only), `scope`, `stream_id` (text only), `wrap_algorithm` (text only), `wrapped_dek` (text only)
+
+**`lawful_order:release`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | steward | selfAct | false | true (always) | none |
+
+Count: `none`
+
+Body: `reference`, `scope`
+
+**`ledger:checkpoint:{unit}:{version}`** — Facts, account; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Change:
+- attest: `attest: reach=below_seq` (CC 3.1.3)
+
+Fold:
+- `key=unit,account; cut=boundary(seq)` (CC 3.1.3, CC 3.3.10.1)
+
+**`ledger:head:{unit}:{version}`** — Facts, account; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `sequence`, `unit` (text only)
+
+**`licensure:{authority_id}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `reads=own&signer:authority` (CC 2.4.1.2.1)
+- `@status=revoked: cut=terminal` (CC 3.1.1)
+- `result=set` (CC 3.1.1)
+- `reads=own&declared(licence_class); by=reader` (CC 4.4.3.2.8)
+- `key=license_id; bound=raise_only(revision)` (CC 3.3.9, CC 5.3.2.3)
+- `key=license_id; pick=max(asserted_at),min(attestation_id)` (CC 3.3.9)
+- `key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+- `pick=rank(revoked>suspended>active)` (CC 5.3.2.3)
+- `weight=min(confidence,count(attesting_key_id)/2); by=reader` (CC 3.4.9)
+
+In time:
+- on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
+
+**`lineage_witness:{stage}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | founder, owner (proposal: founder; acceptance: owner; decline: owner) | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none` (CC 3.4.10)
+
+**`locality:decision:{scale}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Fold:
+- `absent=refuse` (CC 4.4.3.1.1)
+
+**`manifold_conformity:{cohort}`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.8)
+
+**`membership:{stage}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | founder, member, self (proposal: founder, member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
+| withdraw | member | cosigned | false | false | attest |
+| supersede | member | cosigned | false | false | supersede |
+
+Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.2.8)
+
+Guard:
+- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else refuse+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.2.3)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else refuse(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.2.3, CC 4.4.3.2.5, CC 4.4.3.4.2)
+- attest: `each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else refuse` (CC 3.1.3.2)
+- attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else refuse(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
+- attest: `when(leaf=widening) (one trust:confers@landed[attested=signer,val:scope=object] else refuse & type(signer,user) else refuse & not type(signer,node) else refuse)` (CC 3.1.3.2, CC 3.2)
+
+Change:
+- attest: `removal[axis:stream]: key=rotate_epoch` (CC 4.4.3.2.6)
+- attest: `removal[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.2.8)
+- attest: `removal[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.2.6, CC 3.2, CC 4.4.3.2.2, CC 4.4.3.4.5)
+- attest: `removal[scope:self|family]: key=stop_wrap` (CC 4.4.3.4.2, CC 3.3.4, CC 4.4.3.4.5)
+- attest: `resignation[ephemeral&last:member]: cascade=group:roster/over:withdrawn` (CC 5.3.3.2)
+- attest: `resignation[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.2.8)
+- attest: `resignation[scope:self|family]: key=stop_wrap` (CC 3.3.4)
+- attest: `widening[scope:community|affiliations]: key=next_seal` (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1, CC 2.1, CC 4.4.3.2.6)
+- attest: `widening[scope:self|family]: key=rekey_walk` (CC 3.3.4, CC 4.4.3.4.1, CC 4.4.3.4.2)
+- attest: `widening[stalled&recovery]: field=members:grow_signed, field=M:frozen, field=consensus_protocol:frozen, field=admission_quorum_basis:frozen, field=cohort_subkind:frozen` (CC 3.2)
+- attest: `widening[stalled&recovery]: field=members:grow_signed` (CC 3.1.3.2)
+
+Fold:
+- `@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once` (CC 3.1.3.2)
+- `@stage=resignation: cut=forward; feeds=group:roster` (CC 3.1.3.2)
+- `feeds=group:roster` (CC 4.4.3.2.4, CC 4.4.3.4.4)
+- `@stage=removal: over=others@decision/person` (CC 3.1.3.2, CC 4.5.13)
+- `@cohort_subkind=infrastructure: over=founders@decision/person` (CC 3.2, CC 4.4.3.2.4.1)
+- `@cohort_subkind=infrastructure: over=founders@decision/person; reads=own&direct` (CC 3.2)
+- `reads=own&direct` (CC 3.3.9, CC 6.1.8)
+- `@group_kind=affiliation: over=deciding_seats@decision/person` (CC 4.4.3.2.8)
+- `@stage=removal: bound=raise_only(revision); pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+
+In time:
+- clock `W` = `admission_freshness_window_secs` (CC 2.6.7)
+- on close(W) unless fold(signer_seated): read stale (CC 2.6.7)
+- [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.2.3, CC 3.1.3.2)
+- [proposal] on close(expiry): read closed (CC 4.4.3.2.3, CC 3.1.3.2)
+- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.2)
+
+Body: `group_kind`, `role`, `proposal_hash`, `expires_at`
+
+**`mesh_config:{key}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | steward | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `bound=narrow_only(value)` (CC 3.1.9.2)
+
+In time:
+- [emergency] expiry required `valid_until` max `mesh_config_emergency_ttl_secs` (CC 4.2.1.4, CC 4.2.1, CC 3.1.9.2)
+
+**`model_3d:*`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `description` (text only)
+
+**`moderation:{allegation_type}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | moderate | mirror `moderation_action` | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `moderation_action@subject_group` (CC 4.5.13)
+
+Guard:
+- attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse` (CC 4.5.5)
+
+Fold:
+- `over=present@count/person` (CC 4.5.13)
+
+In time:
+- [harm_report] clock `window` = `moderation_fallback_window_secs` (CC 4.5.13)
+- [harm_report] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
+- clock `window` = `moderation_action.window_secs` (CC 4.5.13)
+
+**`moderation_track_record:{community_key_id}`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `feeds=ballot:moderator` (CC 3.1.9.2)
+- `reads=truth_grounding:{subject}+witness_diversity:{contribution_id}+commitment_fulfillment:{prior_contribution_id}+hard_case:{kind}; key=community_key_id,attested_key_id; by=reader` (CC 3.1.9.2)
+- `key=community_key_id,attested_key_id; result=vector(community_key_id); by=reader` (CC 4.5.5)
+
+**`objection:{state}`** — Structure, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none` (CC 3.1.9.2)
+
+Fold:
+- `@state=proposal|assent: weight=1` (CC 3.1.9.2)
+- `@state=raised: weight=-1` (CC 3.1.9.2)
+
+Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only), `objects_to_attestation_id` (text only)
+
+**`observation:access_assumption`** — Premises, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `all consent:state:granted@admitted[id=ref:consent_basis] at asserted_at else refuse` (CC 3.1.9.4)
+
+Body: `trace_level`, `occurrence_key_ids`, `window_from`, `window_to`, `channel_classes`, `consent_basis`, `evidence_refs`, `window`
+
+**`observation:reachability`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `key=attested_key_id; pick=set; by=reader` (CC 3.1.9.4)
+
+Body: `witness_relation`
+
+**`ownership:{relation}:{target_kind}:{version}`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| withdraw | author, subject | selfAct | false | false | authorize |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+| authorize | owner | selfAct | true (by_scope) | true (if_widens) | withdraw |
+
+Count: `none`
+
+Guard:
+- withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@admitted[id=ref:wa_adjudication_ref] else refuse` (CC 3.4.5)
+
+Fold:
+- `reads=own&live&signer:owner; key=attested_key_id; test=count=1 ?steward_bound:steward_less; by=node` (CC 3.2)
+- `key=attested_key_id; test=count=1 ?steward_bound:steward_less` (CC 3.2)
+- `reads=own` (CC 3.2)
+
+**`preserve_response`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | operator | selfAct | true | true (always) | none |
+
+Count: `none`
+
+Body: `statement`
+
+**`progress_measure:{method_id}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `reads=own&cites(evidence:{suite}:{kind}:{cell}:{prefix})` (CC 3.1.5.5)
+
+Body: `computation` (text only), `goodhart_resistance` (text only), `tracks` (text only), `validity_window` (text only)
+
+**`provenance:build_manifest:{target}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=own&cap(infra:attest); by=reader` (CC 3.1.2.1)
+
+Body: `evidence_refs`
+
+**`provenance:build_manifest:{target}:locale:{lang_code}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=own&cap(infra:attest); by=reader` (CC 3.1.2.1)
+
+Body: `evidence_refs`
+
+**`provenance:skill_import:{source}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=own&cap(infra:attest); by=reader` (CC 3.1.2.1)
+
+Body: `capability_declaration` (text only), `import_timestamp` (text only), `signer_identity` (text only), `skill_manifest_sha256` (text only)
+
+**`provenance:slsa:{level}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `reads=own&cap(infra:attest); by=reader` (CC 3.1.2.1)
+
+**`quarantine:{state}`** — Structure, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | slash | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `key=attested_key_id; pick=max(asserted_at),rank(withhold>release)` (CC 3.1.9.2)
+
+**`ratchet:flag:coordinated_voting_cluster`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.6)
+- `combine=median(score); by=reader` (CC 4.4.2)
+
+**`ratchet:flag:counter_rii:{layer}`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.6)
+
+**`ratchet:flag:density_anomaly`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.6)
+
+**`ratchet:flag:expertise_attestation_anomaly`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.6)
+
+**`ratchet:flag:harassment_pattern`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.6)
+
+**`ratchet:flag:out_of_distribution_voting`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `by=advisory` (CC 3.1.6)
+
+**`reconsideration:{grounds}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | review, subject (filing: review, subject; ruling: review) | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `one takedown_notice:{basis}@admitted[id=ref:*] else refuse` (CC 3.1.1)
+
+**`rendezvous:route`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Guard:
+- attest: `serve(val:rendezvous_node_key_id,federation) else refuse` (CC 3.1.4)
+
+In time:
+- expiry required `valid_until` (CC 3.1.4)
+- on close(expiry): read purgeable (CC 3.1.4)
+
+**`retirement:{state}`** — Process, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | custodian, operator, self, wa (until_retired: self; after_retired: custodian; custodian_replace: operator, wa) | selfAct | false | true (always) | none |
+
+Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)
+
+Change:
+- attest: `custodian_minted: by=cosigned, reach=other_attester, cascade=custody:{kind}/by:stop` (CC 7.5.5)
+
+In time:
+- [decided] clock `objection` = `default_standing.window_secs` (CC 7.5.5)
+
+Body: `decided_by` (text only), `kind`, `preserve_until` (text only), `reason`, `retirement_id` (text only)
+
+**`revocation:{entity_type}:{reason}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered, self (peer_admission: self; other: registered) | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Change:
+- attest: `attest: cascade=bond_posted:{currency}/about:forfeited` (CC 3.1.1)
+
+Fold:
+- `bound=raise_only(revision); pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+
+**`self:delegates_to`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| authorize | self | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Fold:
+- `by=none` (CC 3.1.3)
+
+**`self:delegates_to:agent_occurrence`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| authorize | self | selfAct | true (by_scope) | true (always) | none |
+
+Count: `none`
+
+Fold:
+- `by=none` (CC 3.1.3)
+
+Body: `attested_key_id`, `delegation_purpose`, `delegation_valid_from`, `delegation_valid_until`, `scope`, `signed_at` (text only)
+
+**`session:{kind}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Change:
+- supersede: `replace: by=same_attester, field=valid_until:as_attest, refuse=session_claim_out_of_window` (CC 3.1.3.1)
+- supersede: `replace: by=same_attester` (CC 3.1.3.1)
+
+Fold:
+- `key=community_id,session_id; result=one` (CC 3.1.3.1)
+- `reads=own&signer:self` (CC 3.1.3.1)
+- `reads=own&has(community_id)&has(session_id)&has(claimed_at)` (CC 3.1.3.1)
+- `absent=none` (CC 3.1.3.1)
+- `reads=own&signer:self; key=community_id,session_id; pick=min(claimed_at),min(attesting_key_id); absent=none; result=one; by=node` (CC 2.1, CC 3.1.3.1)
+
+In time:
+- expiry required `valid_until` max `session_claim_max_secs` (CC 3.1.3.1)
+- on close(expiry) unless superseded(self): read lapsed (CC 3.1.3.1)
+
+Body: `session_id`, `claimed_at`, `community_id`
+
+**`settlement:*`** — Facts, account; keeps the Record
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `key=transfer_id; pick=pair(settlement:*); combine=sum(amount); test=sum=0 ?matched:flagged; by=reader` (CC 3.3.10.1)
+
+**`slashing:{outcome}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Guard:
+- attest: `one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.2, CC 3.4.11)
+- attest: `one other(ratchet:flag:*)@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.6)
+- attest: `one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.6)
+- attest: `one other(ratchet:flag:counter_rii:{layer})@admitted[id=ref:evidence_refs] else refuse` (CC 3.4.7.2)
+- attest: `one other(seed_holder_voting_alignment:{cell})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.4)
+- attest: `one other(testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.3, CC 4.4.1)
+
+**`takedown_notice:{basis}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | takedown | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author | selfAct | false | false | attest |
+
+Count: `None`
+
+Guard:
+- attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse` (CC 4.5.5)
+
+In time:
+- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by identity:substrate_persist (CC 6.1.2.2)
+- [Dmca512] on admitted(self): do stop_serving (CC 4.5.3)
+- [Dmca512] clock `withhold` = `withhold_window_dmca512` (CC 4.5.3)
+- [Dmca512] on close(withhold): do destroy_bytes (CC 4.5.3)
+- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes (CC 4.5.13)
+
+Body: `asserted_at`, `claim_text` (text only), `claimant_key_id` (text only), `content_holder_key_ids` (text only), `content_sha256` (text only), `counter_notice_channel` (text only), `evidence_refs`, `expires_at`, `good_faith_statement` (text only), `jurisdiction` (text only), `legal_basis` (text only), `perceptual_hash` (text only), `subject_kind` (text only)
+
+**`topical_relation:{kind}`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `feeds=consent:partnership_grant,consent:partnership_accept` (CC 3.3.5)
+
+**`transport:canonical_rebind`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | holder | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `None`
+
+Change:
+- attest: `attest: by=cosigned, reach=other_attester, refuse=transport_rebind_without_holder_quorum` (CC 3.1.3)
+- attest: `attest: by=cosigned, reach=other_attester` (CC 3.1.3)
+
+**`transport:{kind}`** — Circumstances, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | identity:substrate_edge | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Guard:
+- supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else refuse(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
+
+**`trust:{job}:{version}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| withdraw | author, subject | selfAct | false | false | authorize |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+| authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
+
+Count: `None`
+
+Guard:
+- authorize: `when(leaf=charter) each(val:witnesses) (not founder(key,object) else refuse & not member(key,object) else refuse)` (CC 2.1)
+
+Change:
+- supersede: `replace: by=cosigned_prior` (CC 2.1)
+
+Fold:
+- `@job=charter: reads=head; pick=chain(prev_head_digest)` (CC 3.2)
+- `@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node` (CC 3.2)
+- `@job=accepts: absent=refuse` (CC 3.2)
+
+In time:
+- [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
+- [moderate] on close(expiry): read locked, open moderator_election (CC 4.4.3.2.8)
+- @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.2.8)
+- [accepts] clock `attach` = `charter.attach_window_secs` (CC 3.2)
+- [accepts] on close(attach): read closed (CC 3.2)
+
+Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`
+
+**`video:*`** — Facts, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Body: `captions` (text only), `derived_from` (text only), `duration` (text only), `resolution` (text only), `stream_id` (text only)
+
+**`vote:{contribution_id}`** — Priorities, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| recant | author | selfAct | false | false | attest |
+
+Count: `none`
+
+Fold:
+- `weight=credits*expertise_multiplier` (CC 3.1.9.3)
+- `key=contribution_id,person; pick=agree; by=node` (CC 4.5.13)
+
+**`wa_adjudication:{state}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | wa | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `None`
+
+Fold:
+- `over=seated@decision/person` (CC 3.1.9.4)
+
+**`watchlist:{id}`** — Rules, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+In time:
+- [csam] on withdrawn(self): emit `hard_case:watchlist_enabled` by identity:substrate_persist (CC 4.5.7)
+- on admitted(self): emit `hard_case:watchlist_enabled` by identity:substrate_persist (CC 3.1.9.4)
+- on matched(self): emit `hard_case:watchlist_match` by identity:substrate_persist (CC 3.1.9.4)
+
+**`weighted_aggregate:{contribution_id}`** — Confidence, account
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | selfAct | true (by_scope) | true (always) | none |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+
+Count: `none`
+
+Fold:
+- `reads=vote:{contribution_id}&live; key=contribution_id; combine=sum(weight); by=node` (CC 3.1.9.3)

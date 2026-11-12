@@ -85,7 +85,7 @@ jobs:
       - name: The family model manifest is current against the CC table and the vendored census
         run: python3 tools/build_family_model.py --check
       - name: The transitions table is derived from the family model (CC 4.5.13; no drift)
-        run: python3 tools/guard_grammar.py && python3 tools/change_grammar.py && python3 tools/fold_grammar.py && python3 tools/build_transitions.py --check && python3 tools/build_reactions.py --check
+        run: python3 tools/guard_grammar.py && python3 tools/change_grammar.py && python3 tools/fold_grammar.py && python3 tools/build_transitions.py --check && python3 tools/build_reactions.py --check && python3 tools/family_card.py --check
       - name: The mesh story runs end to end over the derived tables and every step keeps the rule (CC 4.5.13)
         run: python3 -I tools/mesh_story.py --check
       - name: The fold is a function of the held set — the story's rows fold to the same states and queues in every arrival order and island split (CC 4.5.13)

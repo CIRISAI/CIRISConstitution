@@ -418,3 +418,4 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.8.9	annex-i	Annex I: Legal & Regulatory Alignment	Accord Annex I	0.00050	427	0.1	APP	accord	register
 8.8.10	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register
 8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg	register
+8.10	family-cards	The family cards (generated from the data)	(spine-reconciled)	0.00050	430	20.0	APP	ceg	dictionary
