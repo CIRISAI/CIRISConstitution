@@ -113,6 +113,16 @@ jobs:
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/l1" -deadlock -config ModerationLift_at_act.cfg ModerationLift.tla || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/l2" -deadlock -config ModerationLift_live_brigade.cfg ModerationLift.tla | tee g.log
           grep -q 'Invariant Inv_SeatedMajority is violated' g.log || exit 1
+      - name: The kernel in a world whose schedule is the adversary's; every screen state is reached, and the same rows are shown to differ in standing
+        working-directory: formal/kernel_world
+        run: |
+          set +e
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k1" -deadlock -config KernelWorld.cfg KernelWorld.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k2" -deadlock -config KernelWorld_hold.cfg KernelWorld.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k3" -deadlock -config KernelWorld_reach.cfg KernelWorld.tla | tee r.log
+          grep -q 'Invariant NotAllSeen is violated' r.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k4" -deadlock -config KernelWorld_standing.cfg KernelWorld.tla | tee s.log
+          grep -q 'Invariant Inv_SameRowsSameStanding is violated' s.log || exit 1
 
   authority:
     name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)

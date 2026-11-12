@@ -17,7 +17,7 @@ destruction at the window's close.
 
 | | Property |
 |---|---|
-| P1 | a windowed notice withholds from the instant it is held and never before |
+| P1 | a windowed notice withholds from the instant it is held and never before, unless a reversal or a lift is already held |
 | P2 | a windowed notice destroys at the close of its window unless a reversal or a lift was held inside it |
 | P3 | an immediate basis destroys at the instant it is held; under a live legal hold it withholds at once and destroys when the hold lifts |
 | P4 | destruction is final: no row held later brings the blob back |

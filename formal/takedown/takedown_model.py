@@ -17,7 +17,8 @@ the model fails if the manifest and the constants table do not give every window
 destruction at its close.
 
 Properties, checked over every set of rows and every arrival order up to the bound:
-  P1  a windowed notice withholds from the instant it is held and never before
+  P1  a windowed notice withholds from the instant it is held and never before, unless a reversal or a
+      lift is already held, which may reach a node ahead of the notice it answers
   P2  a windowed notice destroys at the close of its window unless a reversal or a lift was held inside it
   P3  an immediate basis destroys at the instant it is held; under a live legal hold it withholds at once
       and destroys at the instant the hold lifts
@@ -77,7 +78,7 @@ def fold(held, now, immediate, windowed, hold_wins):
             at = t
         else:
             close = t + W
-            undone = any(k2 in ("reversal", "lift") and t <= t2 < close for k2, _, t2 in held)
+            undone = any(k2 in ("reversal", "lift") and t2 < close for k2, _, t2 in held)
             at = None if undone or close > now else close
         if at is None: continue
         if hold_wins and under_hold(at):
@@ -89,7 +90,7 @@ def fold(held, now, immediate, windowed, hold_wins):
     for k, b, t in held:
         if k == "notice":
             close = t + W
-            undone = b not in immediate and any(k2 in ("reversal", "lift") and t <= t2 < close for k2, _, t2 in held)
+            undone = b not in immediate and any(k2 in ("reversal", "lift") and t2 < close for k2, _, t2 in held)
             if not undone: live_notice = True
     return "withheld" if live_notice else "served"
 
@@ -131,10 +132,10 @@ def check(hold_wins, immediate, windowed):
                         if t > 0 and states[t - 1] == "withheld" and not any(k2 == "notice" and t2 < t for k2, _, t2 in held):
                             fails["P1"] = fails["P1"] or (sorted(held), states)
                         if states[t] == "served":
-                            undone_now = any(k2 in ("reversal", "lift") and t2 == t for k2, _, t2 in held)
+                            undone_now = any(k2 in ("reversal", "lift") and t2 <= t for k2, _, t2 in held)   # a reversal or lift already held
                             if not undone_now: fails["P1"] = fails["P1"] or (sorted(held), states)
                         close = t + W
-                        undone = any(k2 in ("reversal", "lift") and t <= t2 < close for k2, _, t2 in held)
+                        undone = any(k2 in ("reversal", "lift") and t2 < close for k2, _, t2 in held)
                         other_destroys = any(k2 == "notice" and b2 in immediate for k2, b2, _ in held)
                         under_close = bool(hold) and hold[0] <= close and (not lifted or close < lifted[0])
                         if close <= HORIZON and not other_destroys:

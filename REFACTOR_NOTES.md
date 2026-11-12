@@ -1012,3 +1012,11 @@ typed cell that describes the shipped store where the text is stricter: that lis
 steward's goal, stated the same day: a single kernel that takes the unsorted set of rows a node holds and gives the
 views and the queue, replacing the store's decisions; the store is writing FSD/KERNEL_SEAMS.md, and he asks that
 the kernel approach the floor for Rust and WASM and be shown to make the store faster.
+
+Steward, 2026-11-12: "that was the UX question - we should be approaching a point where we can test the kernel in
+a world model of the mesh designed to test all the states adversarially - side step the halting problem with TLA+ -
+screen states are where we drive from, and yeah withheld is under a cover right? the model should be driving the
+screen states and vice versa by now". Done in answer: CSD/5 draft 2 (withheld under a cover, lapsed, closed, locked;
+the three beyond `withheld` are mine); `verdict_state.tsv` and the two-way check; `formal/kernel_world` in TLA+.
+`forfeited` has no state yet. The world model covers one family; the pattern is to be generated from the manifests
+for the rest. C565 is the first thing the world found that no reading and no single-node model had.

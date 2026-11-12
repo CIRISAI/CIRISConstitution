@@ -10,8 +10,10 @@ primitive what it draws from, how much of that is typed, and what is missing. It
   read side    the states a StateBlock may be in against the verdicts the folds and reactions actually give
   primitives   each primitive with the cells it binds and whether they close
 
-A verdict the data gives with no state to draw it in is listed by name. The map from verdict to state is BINDS
-below and is this tool's reading; a verdict mapped to None is one the standard has no state for.
+The map from verdict to state is formal/derivation/verdict_state.tsv, and it is held in both directions: every
+verdict a reaction gives is listed there, mapped to a state the standard has, marked as not drawn, or left open;
+and every state that is not a read's own is drawn by some verdict. So a verdict added to the rules without a
+state fails here, and so does a state added to the screens that no rule can produce.
 
 Run: python3 tools/ui_closure.py            (--check fails if a measure falls below its floor)
 """
@@ -20,12 +22,15 @@ import collections, json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 J = lambda p: json.load(open(os.path.join(ROOT, "manifests", p), encoding="utf-8"))
 
-# verdict or act the data gives -> the StateBlock state that draws it (None: the standard has none)
-VERDICT_STATE = {
-    "withdrawn": "gone", "destroy_bytes": "gone", "unknown": "unknown",
-    "lapsed": None, "closed": None, "stale": None, "forfeited": None, "purgeable": None, "locked": None,
-    "lagging": None, "stop_serving": None,
-}
+def verdict_state():
+    """verdict or act -> the StateBlock state that draws it; '-' is deliberately not drawn; '' is no state yet"""
+    rows = [l.split("\t") for l in open(os.path.join(ROOT, "formal", "derivation", "verdict_state.tsv"), encoding="utf-8").read().split("\n") if l and not l.startswith("#")][1:]
+    return {r[0]: r[2] for r in rows}
+
+
+# states a read gives by itself, with no verdict behind them
+READ_STATES = ("idle", "loading", "loading_known", "error", "populated", "empty", "refused", "hidden_by_rules", "unreviewed", "not_on_this_node")
+
 # primitive -> (the cells it draws from, in the names of MEASURES; empty: it draws what the card gives it)
 BINDS = {
     "CardShell": (), "FieldRow": ("body",), "ItemRow": ("roles",), "ScopePill": ("scope",), "Chip": ("verdicts",),
@@ -66,17 +71,24 @@ def measures():
     circles = ui["context"]["circle"]
     m["scope"] = (len([s for s in scopes if s in circles]), len(scopes), "scopes a row may be signed at that the screen context names; not named: " + ", ".join(s for s in scopes if s not in circles))
     verd = collections.Counter(x["verdict"] for e in rx if e["kind"] == "react" for x in e["effects"] if x["effect"] == "read")
-    verd.update(x["act"] for e in rx if e["kind"] == "react" for x in e["effects"] if x["effect"] == "do" and x["act"] in VERDICT_STATE)
+    VS = verdict_state()
+    verd.update(x["act"] for e in rx if e["kind"] == "react" for x in e["effects"] if x["effect"] == "do" and x["act"] in VS)
     fold_states = sorted({s for r in fm["rows"] for it in (r["fold"].get("value") or []) for mm in re.finditer(r"\?([a-z_]+):([a-z_]+)", it["fold"]) for s in mm.groups()})
     states = set(ui["states"])
-    unmapped = sorted(v for v in verd if VERDICT_STATE.get(v) not in states)
-    m["verdicts"] = (len(verd) - len(unmapped), len(verd), "verdicts the reactions give that a StateBlock state draws; none for: " + ", ".join(unmapped) +
-                     "; and the folds give %d states of their own (%s), none of them a StateBlock state" % (len(fold_states), ", ".join(fold_states)))
+    unlisted = sorted(v for v in verd if v not in VS)
+    wrong = sorted(v for v in verd if VS.get(v) not in ("", "-", None) and VS[v] not in states)
+    unmapped = sorted(v for v in verd if VS.get(v, "") == "")
+    drawn = {VS[v] for v in verd if VS.get(v) in states}
+    orphan = sorted(s2 for s2 in states if s2 not in drawn and s2 not in READ_STATES)
+    m["_faults"] = (unlisted, wrong, orphan)
+    m["verdicts"] = (len(verd) - len(unmapped), len(verd), "verdicts the reactions give that a state draws or that are deliberately not drawn; no state for: " + (", ".join(unmapped) or "none") +
+                     "; the folds give %d values of their own (%s), drawn as the token of a Chip" % (len(fold_states), ", ".join(fold_states)))
     return m, ui
 
 
 def main():
     m, ui = measures()
+    unlisted, wrong, orphan = m.pop("_faults")
     print("The cells a screen draws from, and how much of each is typed:\n")
     for k, (a, b, note) in m.items():
         print(f"  {k:9} {a:4} of {b:4}  {100 * a // b:3}%   {note}")
@@ -91,6 +103,14 @@ def main():
             else: closed += 1; verdict = "closed over " + ", ".join(cells)
         print(f"  {p['basis']} {name:18} {p['status']:12} {verdict}")
     print(f"\nui closure: {len(ui['primitives'])} primitives: {closed} closed over the tables, {partly} open on a cell, {free} bound to no rule cell")
+    world = re.search(r"ScreenStates == \{([^}]*)\}", open(os.path.join(ROOT, "formal", "kernel_world", "KernelWorld.tla"), encoding="utf-8").read())
+    alien = sorted(set(re.findall(r'"([a-z_]+)"', world.group(1))) - set(ui["states"])) if world else ["no ScreenStates in KernelWorld.tla"]
+    for s2 in alien: print(f"FAIL formal/kernel_world shows `{s2}`, which is not a state of the screen standard")
+    if "--check" in sys.argv and alien: return 1
+    for v in unlisted: print(f"FAIL the reactions give the verdict `{v}` and verdict_state.tsv does not list it")
+    for v in wrong: print(f"FAIL verdict_state.tsv maps `{v}` to a state the screen standard does not have")
+    for s2 in orphan: print(f"FAIL the screen state `{s2}` is drawn by no verdict and is not a state a read gives by itself")
+    if "--check" in sys.argv and (unlisted or wrong or orphan): return 1
     if "--check" in sys.argv:
         low = [k for k, f in FLOORS.items() if m[k][0] < f]
         if low: print("FAIL a measure fell: " + ", ".join(low)); return 1

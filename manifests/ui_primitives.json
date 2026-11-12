@@ -1,7 +1,7 @@
 {
  "_meta": {
   "standard": "CSD/5",
-  "draft": 1,
+  "draft": 2,
   "status": "draft. Hand-written, and the standard's one copy: a client vendors this file at a pinned commit of this repository and checks its screens against it.",
   "says": "A screen is a function of the node's answers, the person's input and the context it is opened in. This file names the parts a screen is built from, the states a part bound to a read may be in, and the laws every screen keeps.",
   "builds_on": {
@@ -112,6 +112,26 @@
    "outcome": "ok",
    "ships": true,
    "meaning": "The thing existed and was withdrawn or purged."
+  },
+  "withheld": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "Held, and drawn under a cover: an act has stopped it being shown while a window runs. The cover says on what ground, who acted and when the window closes. It may still come back."
+  },
+  "lapsed": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "It ran out: a grant, a seat, a session or a claim passed its end and nobody took it back."
+  },
+  "closed": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "The question is no longer open: its window ended or it was answered."
+  },
+  "locked": {
+   "outcome": "ok",
+   "ships": false,
+   "meaning": "The group is locked while it seats someone it needs; nothing new is admitted to it until it does."
   },
   "hidden_by_rules": {
    "outcome": "ok",
