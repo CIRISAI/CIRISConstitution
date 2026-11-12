@@ -1077,3 +1077,10 @@ to pass this law in its own family before it is typed.
 `formal/key_plane` runs the proposed group key for self and family files as a third table (not the rule): all
 properties hold with K5 in place of K4; mutations bite (no rotation on revocation K8, on removal K2, no history key
 K5). The text of CC 4.4.3.4.1 moves when the store has a shape for the history key and the wrap-once row.
+A secret ranked poll (the store's layout, its KERNEL_SEAMS §13.8): one cell per ranking, cells by stable id, a
+fixed field per community. My answer on its open point: publish each round's standing totals, never the tally of
+rankings. A round's totals are a sum over cells once the standing set is known, so each tally member publishes its
+share of them and no joint computation is needed; `formal/ranked_choice` R11 checks the sum. The floor applies to
+the number of ballots. That a weak option's small total is visible is a privacy judgement put to the steward.
+Only the closing period's composite counts, devices re-emitting while a poll is open. Text for CC 6.1.9 waits on
+the store's layout.

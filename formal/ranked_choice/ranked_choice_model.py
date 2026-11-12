@@ -30,6 +30,9 @@ Properties, over every profile of ballots up to the bound:
   R8  one ballot per person: repeating a ballot changes nothing, and a person with two different ballots counts for none
   R9  a secret count gives the same winner: the sum of one cell per ranking is the summary
   R10 the runoff is run: where no option has more than half, the weakest goes and its ballots pass on
+  R11 a round's totals are a sum over cells, so two holders of additive shares of the summary each publish a
+      share of the totals and the two add to the true totals, for every set of standing options: a secret
+      ranked poll publishes its rounds and never the tally of rankings
 
 Not claimed, because instant runoff does not have it: that ranking an option higher can never hurt it.
 
@@ -77,6 +80,25 @@ def finish(s, options, floor=FLOOR):
         standing.remove(weakest); rounds += 1
 
 
+P = (1 << 61) - 1   # a prime field for additive shares
+
+
+def round_totals(s, standing):
+    """Each standing option's total: the ballots whose first standing choice it is. Linear in the summary."""
+    t = {o: 0 for o in standing}
+    for ranking, n in s.items():
+        top = next((o for o in ranking if o in standing), None)
+        if top is not None: t[top] = (t[top] + n) % P
+    return t
+
+
+def shares(s, cells):
+    """Two additive shares of a summary over every cell: neither alone says anything about a ballot."""
+    a = {c: (7919 * (i + 1) * (i + 3) + 104729) % P for i, c in enumerate(cells)}
+    b = {c: (s.get(c, 0) - a[c]) % P for c in cells}
+    return a, b
+
+
 def winner(rows, options):
     return finish(summary(dedupe(rows)), options)[0]
 
@@ -114,6 +136,12 @@ def check(n_options=3, r=3, max_ballots=5):
             if size >= 1:
                 other = next(x for x in R if x != profile[0])
                 if winner(rows + [(0, other)], options) != finish(summary(profile[1:]), options)[0]: note("R8", profile, "disagree")
+            # R11: each round's totals from two additive shares equal the totals from the summary, for every standing set
+            a_sh, b_sh = shares(s, R)
+            for k in range(1, len(options) + 1):
+                for standing in itertools.combinations(options, k):
+                    ta, tb, t = round_totals(a_sh, standing), round_totals(b_sh, standing), round_totals(s, standing)
+                    if any((ta[o] + tb[o]) % P != t[o] for o in standing): note("R11", profile, standing)
             # R9: one cell per ranking, summed across members
             cells = {x: 0 for x in R}
             for p in profile: cells[p] += 1
@@ -130,7 +158,7 @@ def check(n_options=3, r=3, max_ballots=5):
 def main():
     n, fail = check()
     for p, w in sorted(fail.items()): print(f"  FAIL {p}: {w}")
-    print(f"ranked_choice: {n} profiles of up to five ballots over three options, ten properties " + ("hold" if not fail else f"fail {sorted(fail)}"))
+    print(f"ranked_choice: {n} profiles of up to five ballots over three options, eleven properties " + ("hold" if not fail else f"fail {sorted(fail)}"))
     return 1 if fail else 0
 
 

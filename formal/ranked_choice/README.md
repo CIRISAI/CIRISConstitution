@@ -30,8 +30,11 @@ disagree has none.
 | R8 | repeating a ballot changes nothing, and a person with two different ballots counts for none |
 | R9 | a secret count gives the same winner: one cell per ranking, summed across members, is the summary |
 | R10 | the runoff is run: a known profile in which the leader on first choices loses |
+| R11 | a round's totals are a sum over cells: two holders of additive shares of the summary each publish a share of the totals, and the two add to the true totals for every set of standing options |
 
 Each fails when its line of the count is changed.
+
+**A secret ranked poll publishes its rounds.** Because each round's totals are a sum over cells once the standing options are known, and the standing options are public, the two tally members never need the tally of rankings. Each applies the round's sum to its own share and publishes the result; the two add; everyone reads the elimination from the published totals. The tally of rankings, in which most cells hold one ballot and a ranking is close to a signature, is never published. R11 checks the sum.
 
 **Not claimed.** That ranking an option higher can never hurt it. Instant runoff does not have that property, and
 no rule of this document rests on it.
