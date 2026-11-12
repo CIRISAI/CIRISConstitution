@@ -867,3 +867,15 @@ of a witness band and a self-declared band.
 Analysis launched at Eric's word (2026-11-12, "do your planned analysis for what each pass found, what type of
 change they were per the RATCHET taxonomy, and use that to inform what models should be built"): five lanes classify
 C001 to C555 by kind, record, class, mechanism, model and property (`handoff/lanes/T_TAXONOMY.md`, `out_t_*.tsv`).
+
+Analysis of the readings: `handoff/READINGS_ANALYSIS.md` and `handoff/lanes/out_t_all.tsv` (555 findings by kind,
+record, class, mechanism, model, property). Surface kinds (Manner, Facts) went in the first reading; Identity
+(who may sign) is the kind that does not fall; 77% to 87% of the later findings are a model's to catch; guards and
+signers are a third of all findings. Model order: signer gate, takedown and erasure, key plane, guardianship,
+owner binding; extend consent, membership, authority_tree, trust_root.
+First slice of the signer gate built: `tools/check_signer_gate.py` (four properties over the three manifests, in
+the gates and CI). First run: 5 failures; 3 were the check's own (a family reserved by a condition on the signer,
+not by a role); 2 are real and listed in KNOWN: C450 (the expired stance) and C556 (the store emitting key grants).
+Next for this model: the duty-holder table of CC 4.5.5 as data, so that "a moderation row only from a named
+moderator" and "a takedown notice from the subject, a holder or the detecting node's owner" are checked; then the
+conferral leg (a role held is necessary and not sufficient).
