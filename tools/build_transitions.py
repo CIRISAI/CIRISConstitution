@@ -94,6 +94,35 @@ def policy_from_governance(gov):
         return {"policy": "two_path", "rows": ["community_invite", "community_remove"]}, "code-v61"
     return {"policy": "selfAct", "rows": []}, "derived"
 
+def policy_from_count(cell, role_stages=None):
+    """A family's typed `count` cell as its entry transitions' policy: the arm for every row is the value, an arm
+    keyed by leaf alone is a stage, and an arm keyed by anything else is a case the view cannot key on a stage."""
+    def pol(door):
+        row = re.match(r"[a-z_]+", door).group(0)
+        return {"policy": "selfAct", "rows": []} if row == "none" else {"policy": POLICY_ROWS[row], "rows": [row]}
+    arms = cell["arms"]
+    leaf_of = lambda a: re.fullmatch(r"leaf=([a-z_|]+)", a["when"])
+    whole = [a for a in arms if not leaf_of(a)] or arms       # the arms no stage keys
+    named = [a for a in whole if a["when"] == "*" and pol(a["doors"])["rows"]] or [a for a in whole if pol(a["doors"])["rows"]]
+    value = pol(named[0]["doors"]) if named else {"policy": "selfAct", "rows": []}
+    if not [a for a in arms if a["when"] == "*"] and len(named) > 1:
+        value = {"policy": value["policy"], "rows": sorted({r for a in named for r in pol(a["doors"])["rows"]})}
+    out = {"value": value, "source": "cc-table", "cc_ref": sorted({a["cc_ref"] for a in arms}), "count": cell["value"]}
+    stages, cases = {}, []
+    for a in arms:
+        if a["when"] == "*":
+            continue
+        m = leaf_of(a)
+        if m and set(m.group(1).split("|")) <= set(role_stages or ()):
+            for leaf in m.group(1).split("|"):
+                if pol(a["doors"]) != value: stages[leaf] = pol(a["doors"])
+        else:
+            cases.append({"when": a["when"], **pol(a["doors"])})
+    if stages: out["stages"] = stages
+    if cases: out["cases"] = cases
+    return out
+
+
 def widens(replication, scope_hint):
     rep = replication or {}
     tier = rep.get("tier") if isinstance(rep, dict) else None
@@ -210,12 +239,13 @@ def build():
             if conds: c["conditions"] = conds
             return c
         pol, psrc = policy_from_governance(gov)
+        counted = r.get("count") if isinstance(r.get("count"), dict) and r["count"].get("source") == "cc-table" and roles else None
         wd, wsrc = widens(rep, None)
         trans = []
         if "attest" in verbs and roles is not None:
             trans.append({"verb": "attest", "from": "none", "to": "admitted",
                           "roles": entry_roles(),
-                          "policy": {"value": pol, "source": psrc},
+                          "policy": policy_from_count(counted, stages) if counted else {"value": pol, "source": psrc},
                           "widens": {"value": wd, "source": wsrc}})
         if "withdraw" in verbs:
             wr, wpol, wsrc2 = withdraw_roles(lifecycle)
@@ -239,7 +269,7 @@ def build():
         if "authorize" in verbs:
             trans.append({"verb": "authorize", "from": "none", "to": "admitted",
                           "roles": entry_roles(),
-                          "policy": {"value": pol, "source": psrc},
+                          "policy": policy_from_count(counted, stages) if counted else {"value": pol, "source": psrc},
                           "widens": {"value": True, "source": "derived"}})
         for t in trans:
             cells = text.pop((fam, t["verb"]), None)
@@ -258,6 +288,7 @@ def build():
                      "states": ["none", "admitted", "withdrawn", "recanted", "superseded"],
                      "role_tokens": sorted({r for f in rows for t in f["transitions"] for r in t["roles"]["value"]}),
                      "sources": {"cc-table": "the registry and CC table, or a cell the text states (it carries cc_ref)", "code-v61": "the census of the code", "derived": "this tool's rule over those", "gap": "nothing says; closed"},
+                     "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
                      "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
                      "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",

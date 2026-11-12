@@ -516,3 +516,9 @@ transport:canonical_rebind, trust:{job}:{version}, wa_adjudication:{state}). Pol
 (tools/build_transitions.py still reads the governance cell); the count design's rows with no stated numbers
 (harm report keep, moderator and WA quorums, capacity panel). `membership:{stage}` widening points at
 `cosigned_act`, which is the reading C283 waits on Eric to confirm; `community_invite` is pointed at by no family.
+
+Step 1d: `tools/build_transitions.py` derives the entry transitions' policy from a typed `count` cell (value, `stages`
+where the roles cell keys the same leaves, `cases` otherwise). A family whose roles are an open cell keeps its old
+policy (identity:occurrence_revocation). Withdraw and supersede policies still come from the lifecycle cell.
+Found: `membership:{stage}` has no per-leaf roles, though its Part 3 row gives a per-leaf emitter, so its leaf arms
+are cases and not stages; that is a signer-column fill.

@@ -43,6 +43,7 @@
    "derived": "this tool's rule over those",
    "gap": "nothing says; closed"
   },
+  "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
   "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
@@ -245,10 +246,16 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "mirror",
+       "rows": [
+        "accord_halt"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.2.1.1"
+      ],
+      "count": "accord_halt@accord"
      },
      "widens": {
       "value": true,
@@ -421,10 +428,34 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "mirror",
+       "rows": [
+        "accord_halt",
+        "accord_majority"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.2.1.1",
+       "CC 4.2.1.3"
+      ],
+      "count": "leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord",
+      "cases": [
+       {
+        "when": "leaf=confirmed",
+        "policy": "mirror",
+        "rows": [
+         "accord_halt"
+        ]
+       },
+       {
+        "when": "leaf=active",
+        "policy": "cosigned",
+        "rows": [
+         "accord_majority"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -1781,10 +1812,16 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "ranked",
+       "rows": [
+        "moderator_election"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.5.13"
+      ],
+      "count": "moderator_election@subject_group!result"
      },
      "widens": {
       "source": "cc-table",
@@ -5858,7 +5895,11 @@
        "policy": "selfAct",
        "rows": []
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3"
+      ],
+      "count": "none"
      },
      "widens": {
       "source": "cc-table",
@@ -9169,11 +9210,23 @@
       "value": {
        "policy": "two_path",
        "rows": [
-        "self_roster_add",
-        "self_roster_evict"
+        "self_roster_add"
        ]
       },
-      "source": "code-v61"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.3.6.3"
+      ],
+      "count": "identity=user => self_roster_add@self ; none",
+      "cases": [
+       {
+        "when": "identity=user",
+        "policy": "two_path",
+        "rows": [
+         "self_roster_add"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -10632,13 +10685,36 @@
      },
      "policy": {
       "value": {
-       "policy": "two_path",
+       "policy": "cosigned",
        "rows": [
-        "community_invite",
-        "community_remove"
+        "cosigned_act"
        ]
       },
-      "source": "code-v61"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3.2",
+       "CC 4.4.3.2.8"
+      ],
+      "count": "leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group",
+      "cases": [
+       {
+        "when": "leaf=proposal|acceptance|decline",
+        "policy": "selfAct",
+        "rows": []
+       },
+       {
+        "when": "leaf=resignation",
+        "policy": "selfAct",
+        "rows": []
+       },
+       {
+        "when": "leaf=removal & group=affiliations & seats=one",
+        "policy": "cosigned",
+        "rows": [
+         "affiliation_member_action"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -10679,7 +10755,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "two_path",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {
@@ -11086,7 +11162,11 @@
         "moderation_action"
        ]
       },
-      "source": "code-v61"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.5.13"
+      ],
+      "count": "moderation_action@subject_group"
      },
      "widens": {
       "value": true,
@@ -11699,13 +11779,14 @@
      },
      "policy": {
       "value": {
-       "policy": "two_path",
-       "rows": [
-        "self_roster_add",
-        "self_roster_evict"
-       ]
+       "policy": "selfAct",
+       "rows": []
       },
-      "source": "code-v61"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ],
+      "count": "none"
      },
      "widens": {
       "value": true,
@@ -11747,7 +11828,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "two_path",
+      "policy": "selfAct",
       "source": "derived"
      },
      "confirm": {
@@ -13776,8 +13857,18 @@
        "policy": "selfAct",
        "rows": []
       },
-      "source": "derived",
+      "source": "cc-table",
       "cc_ref": "CC 7.5.5",
+      "count": "leaf=custodian_minted => custodian_replace ; none",
+      "cases": [
+       {
+        "when": "leaf=custodian_minted",
+        "policy": "cosigned",
+        "rows": [
+         "custodian_replace"
+        ]
+       }
+      ],
       "stages": {
        "custodian_replace": {
         "policy": "cosigned",
