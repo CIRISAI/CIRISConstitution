@@ -50,6 +50,7 @@ VEC = os.path.join(ROOT, "manifests", "governance_policy_vectors.json")
 GEN = os.path.join(ROOT, "formal", "two_path", "generated")
 TEXT = os.path.join(ROOT, "formal", "derivation", "policy_text.tsv")
 PROTO = os.path.join(ROOT, "constitution", "consensus_protocols.tsv")
+ADMIT = os.path.join(ROOT, "constitution", "protocol_admissibility.tsv")
 ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
 # Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.2.8, which no role token names.
 COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "decision", "act", "founding")),
@@ -292,6 +293,43 @@ def load_protocols():
     return out
 
 
+def load_admissibility(protocols):
+    """Which group kind may declare which protocol kind. Checked: every kind is a row of the protocol sheet, no pair is
+    both allowed and refused, a condition hangs on a pair that is allowed or required, and a kind under which one
+    voice admits is allowed only where a row says so (those rows are listed as `one_voice_doors`)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_family_model import section_span
+    kinds = {p["kind"]: p for p in protocols}
+    cond_re = re.compile(r"entrenched=true|count_set=[a-z]+|m_min=\d+|founding_margin=\d+")
+    out, verdict = [], {}
+    for t in csv.DictReader((l for l in open(ADMIT, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"protocol_admissibility.tsv: {t['group']} {t['kind']}"
+        if t["kind"] not in kinds or not re.fullmatch(r"family|publication|accord|community(/[a-z_]+)?", t["group"]):
+            sys.exit(f"{where}: no such kind or group")
+        if t["verdict"] not in ("allowed", "required", "refused", "condition"):
+            sys.exit(f"{where}: verdict {t['verdict']!r}")
+        if (t["verdict"] == "condition") != bool(cond_re.fullmatch(t["condition"])) or (t["verdict"] == "refused") != (t["refusal"] != "—"):
+            sys.exit(f"{where}: a condition row carries a typed condition and only a refused row carries a refusal token")
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span:
+            sys.exit(f"{where}: the quoted words do not stand in {t['cc_ref']}")
+        pair = (t["group"], t["kind"])
+        if t["verdict"] != "condition":
+            if pair in verdict:
+                sys.exit(f"{where}: two verdicts")
+            verdict[pair] = t["verdict"]
+        out.append(OrderedDict((k, t[k]) for k in ("group", "kind", "verdict", "condition", "refusal", "cc_ref")))
+    for r in out:
+        if r["verdict"] == "condition" and verdict.get((r["group"], r["kind"])) not in ("allowed", "required"):
+            sys.exit(f"protocol_admissibility.tsv: {r['group']} {r['kind']}: a condition on a pair that is not allowed")
+    # a general refusal for `community` is not overridden silently by a subkind
+    for (g, k), v in verdict.items():
+        if "/" in g and v in ("allowed", "required") and verdict.get((g.split("/")[0], k)) == "refused":
+            sys.exit(f"protocol_admissibility.tsv: {g} allows {k}, which {g.split('/')[0]} refuses")
+    doors = [f"{g} {k}" for (g, k), v in sorted(verdict.items()) if v in ("allowed", "required") and kinds[k]["one_voice_admits"]]
+    return out, doors
+
+
 def machine_rows(rows):
     """rows the generic machine decides: numeric fractions, community corridor"""
     return [r for r in rows if r["kind"] == "two_path" and r["corridor"] == "community"]
@@ -396,6 +434,7 @@ def build():
     check_corridor(rows)
     unstated = load_counted(rows)
     protocols = load_protocols()
+    admit, one_voice_doors = load_admissibility(protocols)
     fams = []
     for r in rows:
         d = OrderedDict()
@@ -426,7 +465,10 @@ def build():
                             ("reading", "a kind is a count set and a typed rule; votes gives the voices the rule needs by set size, at m = 2 for a quorum kind, null where the table alone cannot evaluate it"),
                             ("kinds", protocols),
                             ("one_voice_admits", [p["kind"] for p in protocols if p["one_voice_admits"]]),
-                            ("not_evaluable", [p["kind"] for p in protocols if not p["evaluable"]])])),
+                            ("not_evaluable", [p["kind"] for p in protocols if not p["evaluable"]]),
+                            ("admissibility_source", "constitution/protocol_admissibility.tsv"),
+                            ("admissibility", admit),
+                            ("one_voice_doors", one_voice_doors)])),
                         ("decider", [l.strip() for l in __doc__.split("The one decision function")[1].split("The floor is")[0].strip().splitlines() if l.strip()][1:]),
                         ("verdicts", ["lands", "pending", "cancelled"]), ("paths", ["forward", "reverse", "none"]),
                         ("floor_is_reverse_only", "the floor is consulted only when the window has closed; before that only enact lands (Prop_FloorNeverLandsEarly)"), ("votes_family", "objection:{state} — proposal (counts as the proposer's approval), assent (+1), raised (−1); CC 3.1.9.2")])

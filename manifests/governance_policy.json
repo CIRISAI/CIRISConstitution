@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "12646e21ea558a3ebea3e392505e5191d4bff77f053d079a4a4dfe2c9ce3634e",
+  "policy_sha256": "2a92b5781b806c5eafd1bd498ddf2ef619f3a679e50834c27f690070e44ec046",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -1093,6 +1093,126 @@
   "not_evaluable": [
    "weighted:{rubric}",
    "custom:{family_specific_id}"
+  ],
+  "admissibility_source": "constitution/protocol_admissibility.tsv",
+  "admissibility": [
+   {
+    "group": "family",
+    "kind": "founder_only",
+    "verdict": "allowed",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 4.5.13"
+   },
+   {
+    "group": "publication",
+    "kind": "founder_only",
+    "verdict": "allowed",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 4.5.13"
+   },
+   {
+    "group": "community",
+    "kind": "founder_only",
+    "verdict": "refused",
+    "condition": "—",
+    "refusal": "federation_community_consensus_protocol_violation",
+    "cc_ref": "CC 4.5.13"
+   },
+   {
+    "group": "community/public",
+    "kind": "open:self_admit",
+    "verdict": "allowed",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "required",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "unanimous",
+    "verdict": "refused",
+    "condition": "—",
+    "refusal": "federation_community_consensus_protocol_violation",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "majority",
+    "verdict": "refused",
+    "condition": "—",
+    "refusal": "federation_community_consensus_protocol_violation",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "entrenched=true",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "count_set=founder",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "m_min=2",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "community/infrastructure",
+    "kind": "quorum:{m}/{n}",
+    "verdict": "condition",
+    "condition": "founding_margin=1",
+    "refusal": "—",
+    "cc_ref": "CC 3.2"
+   },
+   {
+    "group": "accord",
+    "kind": "majority",
+    "verdict": "required",
+    "condition": "—",
+    "refusal": "—",
+    "cc_ref": "CC 3.3.4"
+   },
+   {
+    "group": "accord",
+    "kind": "majority",
+    "verdict": "condition",
+    "condition": "entrenched=true",
+    "refusal": "—",
+    "cc_ref": "CC 3.3.4"
+   },
+   {
+    "group": "accord",
+    "kind": "majority",
+    "verdict": "condition",
+    "condition": "count_set=holder",
+    "refusal": "—",
+    "cc_ref": "CC 4.2.3"
+   }
+  ],
+  "one_voice_doors": [
+   "community/public open:self_admit",
+   "family founder_only",
+   "publication founder_only"
   ]
  },
  "decider": [

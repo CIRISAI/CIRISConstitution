@@ -503,3 +503,7 @@ emitted as `protocols` in the policy manifest with votes by roster size. Found: 
 `founder_only` or `open:self_admit` (the latter cites the floor of CC 4.5.13), and no count set for `custom`.
 C283 to C286 in `text_conflicts.tsv` are the count design's C-1 to C-4; C283 and C284 wait on Eric's confirmation.
 Still to do in 1b: the sheet of which group kind may name which protocol; the twelve policy rows the design adds.
+
+The admissibility sheet is `constitution/protocol_admissibility.tsv` (14 rows, quotes checked). It holds only pairs
+the text states: the count design's rows for `geographic`, `affiliations` and `family/conferring` are not in it,
+since no sentence gives them. Next: the policy rows a cosigned act runs (`enact = protocol`), then the `count` cell.
