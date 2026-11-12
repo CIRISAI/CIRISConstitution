@@ -1070,3 +1070,7 @@ CC 6.1.9 (one cell per ranking; for the store), and `ranked` as a kind a group m
 longest chain two, and all 17 families that wait have a deadline. The nine self-loops seen at family grain were an
 artefact of that grain: the decay stages run from the revocation's clock and not from each other, and a key grant
 is caused by a sealed write, which is the node's own act and not a row.
+`formal/set_item`: the admission law for a set object, with one finding the store needs: a leaf is first held at
+the later of its own and its header's first-held instants; either other reading lets an item count a leaf whose
+row would be stale. No set family is in the Parts yet; each proposed item (set claim, wrap set, signer batch) has
+to pass this law in its own family before it is typed.
