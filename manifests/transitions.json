@@ -43,6 +43,18 @@
    "derived": "this tool's rule over those",
    "gap": "nothing says; closed"
   },
+  "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
+  "guards": {
+   "statements": 63,
+   "guarded_transitions": 28,
+   "marks": {
+    "refuse": 32,
+    "ref:*": 10,
+    "landed": 3,
+    "signs": 2,
+    "commits": 1
+   }
+  },
   "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
   "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
@@ -90,6 +102,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -123,6 +139,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -161,6 +181,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -194,6 +218,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -226,6 +254,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -268,6 +300,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -304,6 +340,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -340,6 +380,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -376,6 +420,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -408,6 +456,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -468,6 +520,20 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else refuse",
+        "cc_ref": [
+         "CC 3.4.1",
+         "CC 4.2.1.1",
+         "CC 4.2.6"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -504,6 +570,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -536,6 +606,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -577,6 +651,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -610,6 +688,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -642,6 +724,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -680,6 +766,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -713,6 +803,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -745,6 +839,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -777,6 +875,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -815,6 +917,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -848,6 +954,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -880,6 +990,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -918,6 +1032,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -951,6 +1069,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -983,6 +1105,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1015,6 +1141,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1051,6 +1181,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1089,6 +1223,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1122,6 +1260,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1160,6 +1302,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1193,6 +1339,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1231,6 +1381,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1264,6 +1418,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1302,6 +1460,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1335,6 +1497,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1373,6 +1539,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1406,6 +1576,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1444,6 +1618,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1477,6 +1655,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1509,6 +1691,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1541,6 +1727,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1579,6 +1769,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1612,6 +1806,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1650,6 +1848,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1683,6 +1885,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1715,6 +1921,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1757,6 +1967,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "each(val:ranks) member(key,object) else refuse",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -1791,6 +2013,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1835,6 +2061,25 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "set(ref:*) ballot:moderator@admitted[object=object] else refuse & winner(signer,object) else refuse & after(moderator_election) else refuse",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "set(ref:*) ballot:moderator@admitted[object=object] else refuse",
+        "cc_ref": [
+         "CC 4.5.13"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -1874,6 +2119,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1907,6 +2156,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -1945,6 +2198,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1978,6 +2235,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2010,6 +2271,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2048,6 +2313,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2081,6 +2350,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2113,6 +2386,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2151,6 +2428,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2184,6 +2465,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2216,6 +2501,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2248,6 +2537,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2286,6 +2579,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2319,6 +2616,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2357,6 +2658,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2390,6 +2695,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2422,6 +2731,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2463,6 +2776,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2495,6 +2812,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2527,6 +2848,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2568,6 +2893,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one consent:state:granted@admitted[signer=attested,subject=signer,val:scope=analyze] else refuse",
+        "cc_ref": [
+         "CC 3.1.4"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -2600,6 +2937,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2632,6 +2973,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2673,6 +3018,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2705,6 +3054,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2737,6 +3090,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2778,6 +3135,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2811,6 +3172,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2843,6 +3208,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2884,6 +3253,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2917,6 +3290,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2949,6 +3326,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2990,6 +3371,25 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else refuse",
+        "cc_ref": [
+         "CC 3.1.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else refuse",
+        "cc_ref": [
+         "CC 3.4.12"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -3023,6 +3423,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3055,6 +3459,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3093,6 +3501,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else refuse(census_composite_duplicate_period)",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -3126,6 +3546,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3158,6 +3582,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3197,6 +3625,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3230,6 +3662,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3262,6 +3698,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3301,6 +3741,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3334,6 +3778,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3372,6 +3820,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "no census:member:share@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -3405,6 +3865,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3443,6 +3907,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3476,6 +3944,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3508,6 +3980,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3546,6 +4022,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "no census:share:{class}@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse(census_share_duplicate_token)",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -3579,6 +4067,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3617,6 +4109,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3650,6 +4146,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3688,6 +4188,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3721,6 +4225,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3753,6 +4261,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3785,6 +4297,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3823,6 +4339,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3856,6 +4376,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3888,6 +4412,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -3926,6 +4454,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3959,6 +4491,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3991,6 +4527,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4029,6 +4569,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4062,6 +4606,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4094,6 +4642,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4133,6 +4685,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4166,6 +4722,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4198,6 +4758,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4237,6 +4801,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4270,6 +4838,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4302,6 +4874,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4340,6 +4916,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4373,6 +4953,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4405,6 +4989,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4443,6 +5031,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4476,6 +5068,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4508,6 +5104,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4546,6 +5146,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4579,6 +5183,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4611,6 +5219,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4649,6 +5261,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4682,6 +5298,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4714,6 +5334,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4752,6 +5376,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(type(signer,node)) owner(subject,attested) at asserted_at else refuse",
+        "cc_ref": [
+         "CC 3.3.1"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -4785,6 +5421,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4821,6 +5461,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4853,6 +5497,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4889,6 +5537,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -4927,6 +5579,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4960,6 +5616,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4992,6 +5652,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5030,6 +5694,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5063,6 +5731,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5101,6 +5773,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5134,6 +5810,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5173,6 +5853,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5206,6 +5890,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5238,6 +5926,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5274,6 +5966,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5313,6 +6009,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5346,6 +6046,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5378,6 +6082,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5416,6 +6124,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5449,6 +6161,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5481,6 +6197,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5554,6 +6274,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5587,6 +6311,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5619,6 +6347,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5657,6 +6389,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5690,6 +6426,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5728,6 +6468,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5761,6 +6505,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5793,6 +6541,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5831,6 +6583,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5864,6 +6620,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5915,6 +6675,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(leaf=pending) (one *@admitted[id=ref:*] as E else refuse & owner(E.signer,signer) else refuse)",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -5955,6 +6727,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -5993,6 +6769,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6026,6 +6806,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6064,6 +6848,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one *@admitted[id=ref:*,val:cohort_scope=val:cohort_scope] else refuse",
+        "cc_ref": [
+         "CC 3.1.3.3"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -6096,6 +6892,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6134,6 +6934,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6167,6 +6971,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6205,6 +7013,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6238,6 +7050,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6275,6 +7091,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one licensure:{authority_id}@admitted[attested=signer] at asserted_at else refuse(deferral_response_unlicensed)",
+        "cc_ref": [
+         "CC 4.3"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -6313,6 +7141,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6346,6 +7178,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6382,6 +7218,25 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one transparency_log:cosigned:{tree_size}@admitted[val:log_id=leaf:stream_id,val:root_hash=val:chunk_root,leaf:tree_size>=val:K] else refuse",
+        "cc_ref": [
+         "CC 5.3.3.6"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise",
+        "cc_ref": [
+         "CC 5.3.3.6"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -6420,6 +7275,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6452,6 +7311,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6484,6 +7347,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6522,6 +7389,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6554,6 +7425,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6586,6 +7461,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6624,6 +7503,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6656,6 +7539,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6688,6 +7575,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6726,6 +7617,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6758,6 +7653,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6790,6 +7689,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6828,6 +7731,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6860,6 +7767,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6892,6 +7803,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6930,6 +7845,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6963,6 +7882,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6995,6 +7918,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7033,6 +7960,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7066,6 +7997,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7098,6 +8033,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7136,6 +8075,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7169,6 +8112,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7201,6 +8148,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7239,6 +8190,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7272,6 +8227,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7304,6 +8263,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7342,6 +8305,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7375,6 +8342,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7407,6 +8378,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7443,6 +8418,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7474,6 +8453,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7506,6 +8489,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7544,6 +8531,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7577,6 +8568,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7609,6 +8604,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7641,6 +8640,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7679,6 +8682,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7712,6 +8719,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7744,6 +8755,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7780,6 +8795,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7812,6 +8831,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7850,6 +8873,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7883,6 +8910,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7915,6 +8946,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7953,6 +8988,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(has=references_attestation_id) one goal:{scale}|approach:{goal_id}|method:{approach_id}:{substrate_rung}@admitted[id=ref:references_attestation_id] else refuse(evidence_reference_unresolved)",
+        "cc_ref": [
+         "CC 3.1.5.5"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -7986,6 +9033,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8018,6 +9069,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8056,6 +9111,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8089,6 +9148,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8121,6 +9184,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8157,6 +9224,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8189,6 +9260,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8227,6 +9302,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8260,6 +9339,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8292,6 +9375,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8330,6 +9417,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8363,6 +9454,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8395,6 +9490,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8433,6 +9532,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8466,6 +9569,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8498,6 +9605,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8536,6 +9647,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8569,6 +9684,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8601,6 +9720,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8633,6 +9756,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8671,6 +9798,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8704,6 +9835,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8736,6 +9871,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8774,6 +9913,33 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "each(subject) when(type(key,node)) not founder(key,object) else refuse+community_consensus_protocol_violation",
+        "cc_ref": [
+         "CC 3.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "when(leaf=recovery) one trust:charter@admitted[object=object,val:recovery_commitments commits signer] else refuse",
+        "cc_ref": [
+         "CC 3.1.3",
+         "CC 4.2.6"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -8806,6 +9972,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8838,6 +10008,25 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "each(subject) when(verb=replace,not member(key,object)) signs(key) else refuse(membership_supersede_cannot_add)+community_consensus_protocol_violation",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "partial"
+       },
+       {
+        "guard": "when(verb=replace) one group:roster@admitted[object=object,id=ref:prev_head_digest] else refuse",
+        "cc_ref": [
+         "CC 4.4.3.4.4"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -8876,6 +10065,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8908,6 +10101,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -8946,6 +10143,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8979,6 +10180,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9011,6 +10216,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9052,6 +10261,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9085,6 +10298,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9117,6 +10334,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9155,6 +10376,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9188,6 +10413,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9241,6 +10470,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9274,6 +10507,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9306,6 +10543,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9340,6 +10581,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9376,6 +10621,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one deferral:response:approved@admitted[id=ref:authorized_by,subject=subject] as R else refuse(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else refuse(identity_amendment_unauthorized)",
+        "cc_ref": [
+         "CC 3.1.5"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -9414,6 +10671,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9447,6 +10708,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9485,6 +10750,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9518,6 +10787,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9550,6 +10823,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9582,6 +10859,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9620,6 +10901,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9653,6 +10938,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9685,6 +10974,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9723,6 +11016,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9756,6 +11053,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9788,6 +11089,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9826,6 +11131,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9859,6 +11168,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9891,6 +11204,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9927,6 +11244,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9959,6 +11280,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -9996,6 +11321,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10028,6 +11357,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10066,6 +11399,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10099,6 +11436,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10136,6 +11477,25 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(one retirement:{state}@admitted[attested=object]) one archive_release:{basis}@admitted[id=ref:*] else refuse",
+        "cc_ref": [
+         "CC 3.1.5"
+        ],
+        "reach": "partial"
+       },
+       {
+        "guard": "each(subject) one identity:occurrence@admitted[attested=key] else exclude+recipient_excluded",
+        "cc_ref": [
+         "CC 3.3.6.1"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -10172,6 +11532,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10208,6 +11572,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10240,6 +11608,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10276,6 +11648,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10308,6 +11684,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10344,6 +11724,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10376,6 +11760,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10414,6 +11802,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10446,6 +11838,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10478,6 +11874,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10526,6 +11926,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10562,6 +11966,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10600,6 +12008,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10633,6 +12045,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10665,6 +12081,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10729,6 +12149,65 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else refuse(membership_acceptance_mismatch)+community_consensus_protocol_violation",
+        "cc_ref": [
+         "CC 3.1.3.2",
+         "CC 4.4.3.2.3",
+         "CC 4.4.3.2.5",
+         "CC 4.4.3.4.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else refuse+community_consensus_protocol_violation)",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)",
+        "cc_ref": [
+         "CC 4.4.3.2.3"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else refuse",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "partial"
+       },
+       {
+        "guard": "when(leaf=widening) (one trust:confers@landed[attested=signer,val:scope=object] else refuse & type(signer,user) else refuse & not type(signer,node) else refuse)",
+        "cc_ref": [
+         "CC 3.1.3.2",
+         "CC 3.2",
+         "CC 4.4.3.4.2.1"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else refuse(membership_reply_conflict)+community_consensus_protocol_violation",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -10761,6 +12240,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10793,6 +12276,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10831,6 +12318,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10864,6 +12355,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10896,6 +12391,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10934,6 +12433,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10967,6 +12470,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10999,6 +12506,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11037,6 +12548,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11070,6 +12585,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11102,6 +12621,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11134,6 +12657,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11181,6 +12708,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse",
+        "cc_ref": [
+         "CC 4.5.5"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -11213,6 +12752,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11245,6 +12788,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11283,6 +12830,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11315,6 +12866,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11347,6 +12902,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11385,6 +12944,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11418,6 +12981,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11450,6 +13017,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11488,6 +13059,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11521,6 +13096,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11553,6 +13132,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11591,6 +13174,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11624,6 +13211,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11656,6 +13247,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11688,6 +13283,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11726,6 +13325,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11759,6 +13362,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11801,6 +13408,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11834,6 +13445,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11866,6 +13481,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11904,6 +13523,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "all consent:state:granted@admitted[id=ref:consent_basis] at asserted_at else refuse",
+        "cc_ref": [
+         "CC 3.1.9.4"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -11937,6 +13568,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11973,6 +13608,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12005,6 +13644,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12044,6 +13687,18 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@admitted[id=ref:wa_adjudication_ref] else refuse",
+        "cc_ref": [
+         "CC 3.4.5"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -12076,6 +13731,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12108,6 +13767,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12146,6 +13809,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12179,6 +13846,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12211,6 +13882,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12249,6 +13924,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12282,6 +13961,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12314,6 +13997,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12362,6 +14049,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12396,6 +14087,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12433,6 +14128,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12471,6 +14170,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12504,6 +14207,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12536,6 +14243,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12574,6 +14285,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12607,6 +14322,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12645,6 +14364,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12678,6 +14401,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12716,6 +14443,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12749,6 +14480,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12787,6 +14522,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12820,6 +14559,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12858,6 +14601,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12891,6 +14638,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -12929,6 +14680,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12962,6 +14717,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12994,6 +14753,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13032,6 +14795,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13065,6 +14832,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13097,6 +14868,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13135,6 +14910,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13168,6 +14947,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13200,6 +14983,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13238,6 +15025,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13271,6 +15062,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13303,6 +15098,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13341,6 +15140,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13374,6 +15177,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13406,6 +15213,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13444,6 +15255,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13477,6 +15292,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13509,6 +15328,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13547,6 +15370,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13580,6 +15407,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13612,6 +15443,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13650,6 +15485,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one takedown_notice:{basis}@admitted[id=ref:*] else refuse",
+        "cc_ref": [
+         "CC 3.1.1"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -13683,6 +15530,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13719,6 +15570,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13751,6 +15606,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13787,6 +15646,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "serve(val:rendezvous_node_key_id,federation) else refuse",
+        "cc_ref": [
+         "CC 3.1.4"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -13819,6 +15690,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13889,6 +15764,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13927,6 +15806,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13959,6 +15842,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -13995,6 +15882,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14031,6 +15922,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14063,6 +15958,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14099,6 +15998,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14135,6 +16038,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14173,6 +16080,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14206,6 +16117,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14238,6 +16153,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14276,6 +16195,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14309,6 +16232,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14347,6 +16274,55 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "one other(ratchet:flag:*)@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.1.6"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.1.6"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.1.9.2",
+         "CC 3.4.11"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one other(testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.1.9.3",
+         "CC 4.4.1"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one other(seed_holder_voting_alignment:{cell})@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.1.9.4"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one other(ratchet:flag:counter_rii:{layer})@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.4.7.2"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -14379,6 +16355,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14417,6 +16397,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14450,6 +16434,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14482,6 +16470,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14520,6 +16512,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse",
+        "cc_ref": [
+         "CC 4.5.5"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -14552,6 +16556,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14590,6 +16598,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14623,6 +16635,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14655,6 +16671,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14693,6 +16713,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14726,6 +16750,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14764,6 +16792,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14797,6 +16829,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14835,6 +16871,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14868,6 +16908,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14906,6 +16950,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14939,6 +16987,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -14975,6 +17027,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15013,6 +17069,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15046,6 +17106,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15082,6 +17146,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15114,6 +17182,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15152,6 +17224,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15185,6 +17261,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15217,6 +17297,18 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else refuse(serve_transit_pair_rotation_before_rebind)",
+        "cc_ref": [
+         "CC 3.1.3"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -15256,6 +17348,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15288,6 +17384,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15320,6 +17420,18 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(leaf=charter) each(val:witnesses) (not founder(key,object) else refuse & not member(key,object) else refuse)",
+        "cc_ref": [
+         "CC 2.1"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -15358,6 +17470,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15391,6 +17507,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15423,6 +17543,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15461,6 +17585,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15494,6 +17622,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15526,6 +17658,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15558,6 +17694,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15596,6 +17736,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15629,6 +17773,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15661,6 +17809,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15699,6 +17851,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15732,6 +17888,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15764,6 +17924,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15802,6 +17966,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15835,6 +18003,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15867,6 +18039,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15903,6 +18079,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15935,6 +18115,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15973,6 +18157,10 @@
      "confirm": {
       "value": true,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16006,6 +18194,10 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]

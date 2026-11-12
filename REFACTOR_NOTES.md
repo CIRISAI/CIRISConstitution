@@ -522,3 +522,13 @@ where the roles cell keys the same leaves, `cases` otherwise). A family whose ro
 policy (identity:occurrence_revocation). Withdraw and supersede policies still come from the lifecycle cell.
 Found: `membership:{stage}` has no per-leaf roles, though its Part 3 row gives a per-leaf emitter, so its leaf arms
 are cases and not stages; that is a signer-column fill.
+
+Data pass, step 2 (guard): `tools/guard_grammar.py` (parser, closure, self-test) and `formal/derivation/guard_text.tsv`
+(63 statements from `handoff/lanes/out_g_guard.tsv`); `tools/build_transitions.py` puts a `guard` cell on every
+transition (28 carry clauses) and counts the marks, each held from rising: refuse with no token 32, `ref:*` 10,
+`landed` 3, `signs` 2, `commits` 1. A refusal token must stand in backticks in a Part. Set aside: three rows whose
+quotes span table cells (identity_amendment CC 2.1, key:record CC 2.1, slashing:{outcome} CC 3.4.12) and one guard
+on a withdraw of `retirement:{state}`, a verb that family has no transition for (a lifecycle finding).
+A guard with no verb lands on attest and authorize only; whether it also binds a supersede is not decided.
+Not done: `guard_well_founded` (no guard requires a row whose own guard requires it back), the model extension in
+`formal/event_lifecycle`, the 34 statements the design could not encode, names for the bare refusals (persist).

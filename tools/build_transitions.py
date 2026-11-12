@@ -25,6 +25,8 @@ SRC = ROOT / "manifests" / "family_model.json"
 OUT = ROOT / "manifests" / "transitions.json"
 OUT_TSV = ROOT / "manifests" / "transitions.tsv"
 TEXT = ROOT / "formal" / "derivation" / "transition_text.tsv"
+GUARDS = ROOT / "formal" / "derivation" / "guard_text.tsv"
+GUARD_MARKS_MAX = {"refuse": 32, "ref:*": 10, "landed": 3, "signs": 2, "commits": 1}   # each number only falls
 POLICY_ROWS = {f["family"]: f["kind"] for f in json.loads((ROOT / "manifests" / "governance_policy.json").read_text())["families"]}
 
 TOKEN_RULES = [  # (regex searched anywhere in the closed signer text, role tokens)
@@ -216,6 +218,67 @@ def apply_text(fam, t, cells):
             raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} names the unknown cell {cell}")
         t[cell] = new
 
+def apply_guards(rows):
+    """Give each transition its guard from formal/derivation/guard_text.tsv: every guard parses, names only what the
+    vocabularies hold, and rests on words that stand in its section. A guard lands on the verb it names, else on the
+    entry verbs. The marks (a refusal with no token, a reference to no named member, the three tokens no other
+    vocabulary has) are counted and held from rising."""
+    import csv, glob
+    sys.path.insert(0, str(ROOT / "tools"))
+    import guard_grammar as gg
+    from build_family_model import section_span
+    reg = json.loads((ROOT / "manifests" / "namespace_registry.json").read_text())
+    fams = {f["family"] for f in rows}
+    for f in reg["families"]:
+        fams.add(f["prefix"]); fams.update(f.get("leaves", []))
+    text = "\n".join(open(p, encoding="utf-8").read() for p in sorted(glob.glob(str(ROOT / "constitution" / "part_*.md"))))
+    ticks = set(re.findall(r"`([a-z_0-9:]+)`", text))
+    voc = {"families": fams, "roles": {r for f in rows for t in f["transitions"] for r in t["roles"]["value"]},
+           "policy_rows": set(POLICY_ROWS), "tokens": ticks, "hard_cases": {t.split(":", 1)[1] for t in ticks if t.startswith("hard_case:")}}
+    by = {f["family"]: f for f in rows}
+    marks, n, partial = {k: 0 for k in GUARD_MARKS_MAX}, 0, 0
+    for f in rows:
+        for t in f["transitions"]:
+            t["guard"] = {"value": [], "source": "generic"}
+    lines = [l for l in GUARDS.read_text(encoding="utf-8").split("\n") if l and not l.startswith("#")]
+    for g in csv.DictReader(lines, delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"guard_text.tsv: {g['family']} ({g['cc_ref']})"
+        if g["family"] not in by:
+            raise SystemExit(f"{where}: no such family")
+        try:
+            clauses, mk = gg.parse(g["guard"])
+        except gg.GuardError as e:
+            raise SystemExit(f"{where}: {e}")
+        bad = gg.closure(clauses, voc)
+        if bad:
+            raise SystemExit(f"{where}: outside the vocabularies: " + "; ".join(bad))
+        span = section_span(g["cc_ref"])
+        if span is None or g["quote"] not in span:
+            raise SystemExit(f"{where}: the quoted words do not stand in {g['cc_ref']}")
+        if g["reach"] not in ("whole", "partial"):
+            raise SystemExit(f"{where}: reach {g['reach']!r}")
+        verbs = gg.top_conds(clauses, "verb")
+        verbs = ["supersede" if v == "replace" else v for v in verbs] if verbs else ["attest", "authorize"]
+        hit = [t for t in by[g["family"]]["transitions"] if t["verb"] in verbs]
+        if not hit:
+            raise SystemExit(f"{where}: the family has no transition for {verbs}")
+        for t in hit:
+            if not any(x["guard"] == g["guard"] for x in t["guard"]["value"]):
+                t["guard"]["value"].append({"guard": g["guard"], "cc_ref": [g["cc_ref"]], "reach": g["reach"]})
+                for k in set(mk): marks[k] += 1
+            else:
+                x = next(x for x in t["guard"]["value"] if x["guard"] == g["guard"])
+                if g["cc_ref"] not in x["cc_ref"]: x["cc_ref"].append(g["cc_ref"])
+                if g["reach"] == "partial": x["reach"] = "partial"
+            t["guard"]["source"] = "cc-table"
+        n += 1
+    over = [f"{k} {v} > {GUARD_MARKS_MAX[k]}" for k, v in marks.items() if v > GUARD_MARKS_MAX[k]]
+    if over:
+        raise SystemExit("guard_text.tsv: marks that may only fall have risen: " + ", ".join(over))
+    guarded = sum(1 for f in rows for t in f["transitions"] if t["guard"]["value"])
+    return {"statements": n, "guarded_transitions": guarded, "marks": marks}
+
+
 def build():
     fm = json.loads(SRC.read_text())
     text = text_cells()
@@ -278,6 +341,7 @@ def build():
         rows.append({"family": fam, "kind": kind, "transitions": trans})
     if text:
         raise SystemExit("transition_text.tsv names transitions outside the manifest: " + ", ".join(f"{f} {v}" for f, v in sorted(text)))
+    guard_meta = apply_guards(rows)
     # gaps summary
     gaps = sum(1 for f in rows for t in f["transitions"] for k in ("roles", "policy", "widens") if t[k]["source"] == "gap")
     total = sum(len(f["transitions"]) for f in rows)
@@ -288,6 +352,8 @@ def build():
                      "states": ["none", "admitted", "withdrawn", "recanted", "superseded"],
                      "role_tokens": sorted({r for f in rows for t in f["transitions"] for r in t["roles"]["value"]}),
                      "sources": {"cc-table": "the registry and CC table, or a cell the text states (it carries cc_ref)", "code-v61": "the census of the code", "derived": "this tool's rule over those", "gap": "nothing says; closed"},
+                     "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
+                     "guards": guard_meta,
                      "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
                      "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
