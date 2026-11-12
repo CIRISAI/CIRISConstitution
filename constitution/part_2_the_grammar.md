@@ -352,7 +352,7 @@ A node MUST admit a `withdraws` against a target row `T` when one line of this t
 
 - a `capacity:*` or `detection:*` finding made by someone else;
 - a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`;
-- a duty-holder's record on the accountability trail: a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict ([CC 4.5.5](part_4_composition_governance.md#4.5.5));
+- a duty-holder's record on the accountability trail: a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker ([CC 4.5.5](part_4_composition_governance.md#4.5.5));
 - an act of a body under a declared legal-weight class, such as a conviction or a licence ([CC 2.4.1.2.1](#2.4.1.2.1), [CC 4.4.3.2.8](part_4_composition_governance.md#4.4.3.2.8));
 - a `takedown_notice:*`, where the path is the counter-notice its basis names ([CC 3.3.2](part_3_the_namespace.md#3.3.2)).
 

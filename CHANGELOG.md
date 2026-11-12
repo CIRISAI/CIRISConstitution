@@ -62,6 +62,25 @@ The CIRIS Constitution is one document with one version line. Each release below
   - three guards said more than the text and are removed: a reconsideration is not limited to takedown notices (4.5.5), a delivery receipt needs a witness cosign only on an accountable stream (5.3.3.6), and a licence is checked on a deferral response only where the seat names a licensing authority (4.3);
   - two folds of the expected-active count that misread the census are removed (6.1.9);
   - the registry's reserved rules say that a ledger takes no delegate's write (3.3.10.1) and that a self-declared age is signed for its subject (3.4.11).
+- Thirty-two more statements are brought back to the home of their rule, from the third reading. Among them:
+  - the read path of consent follows the boundary fold: every grant at or before the latest revocation or withdrawal is out, whichever row was named, so an older grant does not come back (4.4.3.5.5, home 3.3.1);
+  - a roster change is judged against the roster at the row's signed instant (4.4.3.4.2);
+  - a community change short of signatures is held for the group's hold window and not refused (4.4.3.2.3);
+  - a geographic community finer than any location proof admits by invitation (4.4.3.2.3, 3.2);
+  - only the subject mints a location proof, and no delegation does (4.5.9.1);
+  - community content reaches each of a member's claimed nodes whose allow list holds the community, with no re-emit (4.4.3.2.7);
+  - a partnership grant is signed by the granting user and names the partner as subject (3.4.5, 3.3.1, 3.3.5);
+  - a licence's current state follows the quorum-weighted merge (3.3.9);
+  - a revocation of a community-trust grant is counted from the node, its owner and the agent key a grant names, and from no other (3.3.1);
+  - `founder_only` is open to a family, a publication's list, a room's listing and an affiliation under the countersign rule (3.2, 4.5.13);
+  - a promotion to founder carries the promoted member's signature (3.1.3.2);
+  - a self-declared adult row satisfies no verified-level requirement and graduates nobody (3.4.11);
+  - an age adjudication is a moderator's, with no quorum this document imposes (3.4.11);
+  - a quarantine marker is on the list of rows its subject cannot withdraw (2.4.1.1);
+  - the genesis key is roster key one until evicted, with nothing reserved to it (4.4.3.4.6);
+  - a non-public affiliation carries a listing row that names its existence and no roster (3.1.1, 3.2);
+  - the party running a decay protocol emits its stages, never the store (4.4.3.5.1, 4.4.3.5.6);
+  - the base of a count is the standing roster up to the size the base law pins (4.5.13, 6.1.9).
 - The confirm test is one lookup (4.5.13, `formal/event_lifecycle`): an item is confirmed before it is signed when the rows it would sign widen or have no way back, and every other item takes one step. `manifests/transitions.json` carries the way back and the confirm test on each of its 455 transitions: 185 are confirmed and 270 take one step, every withdrawal among them. Eight families have no way back by their lifecycle; on 31 transitions the table lists no retraction and the cell is open. `confirm_is_lookup`, `no_way_back_is_confirmed` and `exit_is_one_step` are proved.
 - Five rules are said once and cited elsewhere: who may take a signed row back (2.4.1.1), what a signed row carries (2.1), who owns a key (3.2), which statements a reader believes (4.4.3.8) and which nodes a row reaches (5.2). Thirty-four sentences in Parts 1 to 7 that repeated one of them are cut to a citation, and each sentence that carries something its rule's entry lacks is left whole. Three citations are added where an entry read wider than a rule stated elsewhere: a minor's node is never announced and a `serve` seat needs an announced owner (3.2, both by 5.4.6), and un-trust does not lift a halt already latched (4.4.3.8, by 4.2.1). No rule changes.
 - The clock rule is one entry (2.6.7): which clock a stated instant refers to, the skew bound, and a table of the window by case, with the admission freshness window `W` and its reason after it. No rule changes. Two members of 2.1 cite the date-time form at 2.6.2, where it is stated.

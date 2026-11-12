@@ -19,7 +19,7 @@ membership:{stage}	@stage=acceptance|decline: key=proposal_id,attesting_key_id; 
 membership:{stage}	@stage=resignation: cut=forward; feeds=group:roster	CC 3.1.3.2	Leaving is the member's own `membership:resignation`, which reaches forward only.
 consent:state:{stance}	pick=rank(revoked>granted)	CC 3.3.1	`revoked` overrides prior `granted`
 consent:state:{stance}	@stance=revoked: cut=boundary(asserted_at)	CC 3.3.1	`consent:state:*` rows on one subject use the same boundary fold, the latest admitted revocation's `asserted_at` putting every earlier grant out; and a decay protocol that
-consent:state:{stance}	@stance=revoked: cut=boundary(asserted_at),terminal	CC 4.4.3.5.5	// names no grant revokes every grant from s asserted at or before it.
+consent:state:{stance}	@stance=revoked: cut=boundary(asserted_at),terminal	CC 4.4.3.5.5	Every grant from s asserted at or before R is out, whichever row was named.
 consent:state:{stance}	@stance=revoked: cut=terminal	CC 4.4.3.5.5	// revoked grant, and no later-dated copy of it, reopens it.
 consent:community_trust	cut=boundary(asserted_at)	CC 3.3.1	**A node owner's grant that the node's sealed reasoning traces may be captured** for the community-trust plane (lens-core's per-seal consent gate; the *capture* gate of
 consent:community_trust	cut=boundary(asserted_at)	CC 3.3.1	A revocation is therefore a **hard stop** no configuration overrides, and capture resumes only on a **fresh** grant asserted after `R` from the owner-binding chain.
@@ -45,7 +45,7 @@ capacity_assurance:{level}:{domain}:{band}:{version}	key=attested_key_id,domain;
 key_grant:{axis}	key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node	CC 3.1.3	`content` \| `epoch` \| `stream` — closed; wire `key_grant:{axis}:v1`. `attested_key_id` is the recipient occurrence; the envelope carries the key's identity on that axis and the
 self:delegates_to	by=none	CC 3.1.3	of the Self-at-login composition ([CC 4.4.3.4.3](part_4_composition_governance.md)) only so the row carried a version tail. It claims **no job**: a reader treats a row carrying it
 self:delegates_to:agent_occurrence	by=none	CC 3.1.3	of the Self-at-login composition ([CC 4.4.3.4.3](part_4_composition_governance.md)) only so the row carried a version tail. It claims **no job**: a reader treats a row carrying it
-ballot:moderator	key=election_id,person; pick=agree; over=live@count/person	CC 3.1.3	seating), `ranks` (up to three member keys in order); one ballot per person, folded as a vote is ([CC 4.5.13](part_4_composition_governance.md#4.5.13): agreeing ballots one, disagreeing unwithdrawn
+ballot:moderator	key=election_id,person; pick=agree; over=live@count/person	CC 3.1.3	one ballot per person, folded as a vote is
 session:{kind}	key=community_id,session_id; result=one	CC 3.1.3.1	delivery is therefore N-to-M and **exactly one occurrence may act**. The claim is keyed by `(community, session)`
 session:{kind}	reads=own&signer:self	CC 3.1.3.1	A row about an occurrence authored by anyone else is not that occurrence's claim and MUST NOT be folded as one
 session:{kind}	reads=own&has(community_id)&has(session_id)&has(claimed_at)	CC 3.1.3.1	A row missing any of the three is not a claim and MUST NOT be folded as one. No consumer substitutes `asserted_at`, `context` or a
@@ -148,7 +148,7 @@ consent:community_trust	reads=own&signer:owner; key=attested_key_id; pick=max(as
 key_grant:{axis}	key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node	CC 3.3.2	the identity of a wrap is `(dimension, attesting_key_id, attested_key_id, axis identity)`. The [CC 2](part_2_the_grammar.md) latest-wins / dedup key `(attester, dimension, attested)` MUST NOT be applied
 cosign:{state}	key=quorum_key,attesting_key_id; pick=union; by=node	CC 3.3.4	Two nodes that collect different sufficient sets of signatures land the same act: it is named by its quorum key, which covers no signature, and
 licensure:{authority_id}	key=license_id; bound=raise_only(revision)	CC 3.3.9	A licence carries a monotonic `revision`; admission refuses a decrease, and the check precedes the merge, so a stale `active` never overwrites a revocation.
-licensure:{authority_id}	key=license_id; pick=max(asserted_at),min(attestation_id)	CC 3.3.9	Current state is resolved by stable-id grouping — `supersedes` to amend, `withdraws` to revoke, latest `asserted_at`, tie-break smallest `attestation_id` ([CC 3.5.1](#3.5.1)) — and never requires
+licensure:{authority_id}	key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)	CC 3.3.9	`quorum_weight`, then signed timestamp, then content hash, the more restrictive state winning a conflict
 licensure:{authority_id}	key=license_id; bound=raise_only(revision)	CC 5.3.2.3	Admission anti-rollback first: a write whose `revision` decreases never enters the merge.
 licensure:{authority_id}	key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)	CC 5.3.2.3	Admission anti-rollback first: a write whose `revision` decreases never enters the merge. Then the `MergeBallot` comparator: `quorum_weight` → signed timestamp → content hash. Quorum-above-time is
 licensure:{authority_id}	pick=rank(revoked>suspended>active)	CC 5.3.2.3	More-restrictive state wins on conflict: `revoked` > `suspended` > `active`.

@@ -547,6 +547,10 @@ admit_community_change(C, proposed: community_record):
 
   signatures_ok = evaluate_consensus_protocol(protocol, current, proposed.signatures)
   if not signatures_ok:
+    // CC 3.3.4: a shortfall of signatures that is the door's only refusal is held, never refused
+    if every other check of this gate passes:
+      hold as cosign:pending for the group's hold window
+      return
     emit hard_case:community_consensus_protocol_violation:{C}
     reject
 
@@ -577,6 +581,10 @@ The `evaluate_subkind_admission` predicate dispatches per `cohort_subkind`:
 evaluate_subkind_admission(subkind, current, proposed):
   match subkind:
     "geographic":
+      # CC 2.6.6.3: a constraint finer than resolution 7 is finer than any proof,
+      # so such a community admits by invitation and the constraint does not gate
+      if current.geographic_constraint.cell_resolution > 7:
+        return true
       # Per the CC 3.2 geographic admission requirement
       for each NEW member in proposed.members (not in current):
         their_proof = latest valid location_proof from new_member.key_id
@@ -751,7 +759,7 @@ This composes with the [CC 4.4.3.4.5](#4.4.3.4.5) removal rule: removed members 
 
 Communities compose with consent and self-collectives cleanly:
 
-- A community member who also runs an agent has an `identity_occurrence` set; community content arriving at the member's identity_key is then propagated to their occurrences via Policy L's at-rest cascade (if the member's local substrate chose to re-emit the community content at `cohort_scope: self` for cross-device sync; otherwise community content stays at the cohort_scope: community visibility on each device the member uses to query)
+- A community member who also runs an agent has an `identity_occurrence` set; community content reaches each node the member has claimed whose allow list holds the community, by pull anti-entropy and with no re-emit ([CC 6.1.5.3](part_6_the_coherence_mathematics.md#6.1.5.3))
 - A community member who is also a subject in `subject_key_ids` of a community-scoped Contribution retains revocation authority per [CC 2.4.1.1](part_2_the_grammar.md) rule 2, at community scope as at family scope ([CC 2.1](part_2_the_grammar.md#2.1))
 - A geographic community whose `geographic_constraint` covers a region that overlaps a family's at-home location does NOT cross-contaminate: families are not auto-admitted to communities; communities are not auto-admitted to families. Each membership is explicit, ceremony-shaped, and independent.
 
@@ -958,7 +966,7 @@ A proposed membership change (addition OR removal) is a **new version of the ros
 
 ```
 admit_family_change(F, proposed: family_record):
-  current = resolve_family(F, now)
+  current = resolve_family(F, proposed.signed_at)   // judged at the row's signed instant (CC 3.3.4)
   protocol = current_family_record(F).consensus_protocol
   signatures = collect_signatures_on(proposed)
 
@@ -1208,10 +1216,10 @@ resolve_self(I, now):
                  .where(the occurrence's current version; a version supersedes only its own earlier one)
                  .where(NOT evicted ≤ now by a landed self-roster proposal, quorum or lone path, or by a node/agent single-signer revocation; CC 3.3.6.3)
                  .where(envelope.valid_until IS NULL OR > now)
-  return {c.envelope.occurrence_key_id for c in candidates} ∪ {I}
+  return {c.envelope.occurrence_key_id for c in candidates} ∪ ({I} unless the genesis key is evicted ≤ now; CC 3.3.6.3)
 ```
 
-The root `I` itself is implicitly a member (the identity_key is always an admissible signer for its own content). Any current occurrence (including `I` itself) may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3).
+The root `I` is roster key one and a member until it is evicted; nothing is reserved to it ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)). Any current occurrence (including `I` itself) may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3).
 
 **Concrete**: Alice has admitted `alice_phone`, `alice_laptop`, `alice_agent`. Her self-collective is `{alice_root, alice_phone, alice_laptop, alice_agent}`. When Alice's phone publishes a `cohort_scope: self` feed scroll, the substrate wraps the content DEK under all four keys; the content reaches her laptop and agent via the at-rest encryption flow with no holding claim leaving the self cohort.
 
@@ -1238,13 +1246,13 @@ For consent_records carrying `decay_protocol: "ciris-agent-90day"` (or any named
 decay_state(consent_record, now):
   elapsed = now - revocation_event(consent_record).asserted_at
 
-  walk substrate emissions on dimension `consent:decay:*` against consent_record,
+  walk the protocol runner's emissions on dimension `consent:decay:*` against consent_record,
   matching the decay_protocol's stage map. The canonical 90-day decay:
 
-    elapsed < 30d → consent:decay:identity_severed (substrate emits at elapsed=0)
-    30d ≤ elapsed < 60d → consent:decay:patterns_anonymized (substrate emits at elapsed=30d)
+    elapsed < 30d → consent:decay:identity_severed (the protocol runner emits at elapsed=0)
+    30d ≤ elapsed < 60d → consent:decay:patterns_anonymized (the protocol runner emits at elapsed=30d)
     60d ≤ elapsed < 90d → (in flight; no new stage emission)
-    elapsed ≥ 90d → consent:decay:complete (substrate emits at elapsed=90d)
+    elapsed ≥ 90d → consent:decay:complete (the protocol runner emits at elapsed=90d)
 ```
 
 Per [CC 3.3.1](part_3_the_namespace.md) `consent:decay:{stage}` is open vocab. Other decay protocols MAY name other stage sequences; the party running the protocol emits each stage per its published `decay_protocol` stage map, and the substrate emits no `consent:decay:*` row.
@@ -1322,18 +1330,18 @@ resolve_consent(T, s, now):
   if rows is empty: return unspecified      // subject named but never declared
 
   // First, an admitted `withdraws` has precedence over every state row: a
-  // withdrawn grant resolves to unspecified, and contributes no state below
+  // withdrawn grant resolves to unspecified, and its withdrawal still sets the boundary R below
   withdrawn(row) = ∃ w ∈ admitted withdraws: w.target == row.id
   rows = rows.where(NOT withdrawn(row))
   if rows is empty: return unspecified      // every declaration withdrawn
 
-  // Second, a revoke is terminal for the grant it names (its supersedes_id); a revoke that
-  // names no grant revokes every grant from s asserted at or before it. A later
+  // Second, the boundary fold of CC 3.3.1: R is the latest asserted_at among the admitted revokes
+  // and withdrawals. Every grant from s asserted at or before R is out, whichever row was named. A later
   // grant is a new grant with a new id and is resolved on its own: no replay of a
   // revoked grant, and no later-dated copy of it, reopens it.
   revokes = rows.where(dimension == "consent:state:revoked")
-  revoked(g) = ∃ r ∈ revokes: r.supersedes_id == g.id OR
-               (r.supersedes_id IS NULL AND r.asserted_at ≥ g.asserted_at)
+  R = max(asserted_at) over revokes ∪ {w ∈ admitted withdraws: w.target is a consent:state:* row from s or its proxies on T}
+  revoked(g) = R IS NOT NULL AND g.asserted_at ≤ R
   // Third, latest-wins among the grants that remain
   grants = rows.where(dimension == "consent:state:granted").where(NOT revoked(g))
                .where(NOT superseded by a later grant in its supersedes chain)
@@ -1341,9 +1349,9 @@ resolve_consent(T, s, now):
 
   g = first(grants)
   return:
-    revoked if g is null AND revokes is not empty
+    revoked if g is null AND R IS NOT NULL
     expired if g is null                      // only expired or superseded rows remain
-    expired if ∃ row "consent:state:expired" with supersedes_id == g.id OR
+    expired if ∃ row "consent:state:expired" with consent_supersedes == g.id OR
       g.valid_until passed without renewal
     granted otherwise
 ```
@@ -1356,7 +1364,7 @@ Substrate MAY cache the resolution per `(T, s)` keyed on the latest `asserted_at
 |---|---|
 | **TEMPORARY** (14d default) | `consent:state:granted` + envelope `valid_until = asserted_at + 14d` + auto-renew dimension on interaction (consumer-policy concern) |
 | **PARTNERED** | Bilateral pair per CC 4.4.3.5.3: subject `consent:partnership_grant` + producer `consent:partnership_accept` under same `bilateral_pair_id`; no `valid_until` |
-| **ANONYMOUS** | Revocation + decay-protocol per CC 4.4.3.5.1: substrate emits stage milestones; agent honors stage-appropriate processing constraints |
+| **ANONYMOUS** | Revocation + decay-protocol per CC 4.4.3.5.1: the party running the protocol emits stage milestones; agent honors stage-appropriate processing constraints |
 
 The agent-side three streams are a **named bundle** at the consumer-policy layer. Other agent implementations MAY compose other streams over the same wire primitives. CEG documents the canonical bundle for ecosystem coordination; CEG does not lock the bundle.
 
@@ -1903,7 +1911,7 @@ A load-bearing privacy invariant: **joining a geographic community is a one-way 
 
 #### 4.5.9.1 `location-joining` — Joining is opt-in — substrate does NOT solicit location
 
-A `location_proof` Contribution is emitted **only** by the subject themselves (`attesting_key_id == subject_key_id`) or by a `delegates_to` chain with `scope: [consent_revocation]` — the substrate has no path to mint a location_proof on behalf of a key without an explicit signature.
+A `location_proof` Contribution is emitted **only** by the subject themselves (`attesting_key_id == subject_key_id`). No delegation mints one: the substrate has no path to a location_proof on behalf of a key without that key's own signature.
 
 Communities cannot **require** a location_proof from non-members (they can only **gate admission** on whether a member has produced one). The substrate has no mechanism for "involuntary location disclosure" via the wire format. A bad actor cannot force-publish another key's location_proof; without the subject's signature, the substrate rejects.
 
@@ -2115,11 +2123,11 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 | **window** | by the sensitivity of the change | 86 400 s for reversible content, 259 200 s for roster and standing, 604 800 s for the irreversible |
 | **irreversible** | no instant landing | the change waits its whole window even at full approval |
 
-**The floor of two voices.** In a community the floor is never fewer than two voices, so one voice never decides who is in a room, whatever the size. Where admission is by invitation no single vote admits, and the second voice on an admission is the invitee's own acceptance ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). So a room of one grows by its founder's proposal and the newcomer's yes, which are two keys and two consents. Where admission is open — `open:self_admit`, anyone signs their own admission — no single vote excludes, and the guarantee attaches to removal instead. `founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing. A community above the family that names it is refused `federation_community_consensus_protocol_violation`, as an infrastructure community already is. `federation_community_consensus_protocol_violation` is the refusal token, whose emitted record is the `hard_case:community_consensus_protocol_violation` row of [CC 4.4.3.2.3](#4.4.3.2.3).
+**The floor of two voices.** In a community the floor is never fewer than two voices, so one voice never decides who is in a room, whatever the size. Where admission is by invitation no single vote admits, and the second voice on an admission is the invitee's own acceptance ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). So a room of one grows by its founder's proposal and the newcomer's yes, which are two keys and two consents. Where admission is open — `open:self_admit`, anyone signs their own admission — no single vote excludes, and the guarantee attaches to removal instead. `founder_only` is a protocol for a family, a publication's subscriber list and a room's own listing. A community above the family that names it is refused `federation_community_consensus_protocol_violation`, as an infrastructure community already is. An affiliation names it only under the one-voice countersign rule of [CC 4.4.3.2.8](#4.4.3.2.8). `federation_community_consensus_protocol_violation` is the refusal token, whose emitted record is the `hard_case:community_consensus_protocol_violation` row of [CC 4.4.3.2.3](#4.4.3.2.3).
 
 **The floor waits its window.** The floor is a reverse-path predicate only: nothing lands before the window closes except at enact, so a floored change still waits its time.
 
-**The base.** The expected-active count is the community's own member-only census composite ([CC 6.1.9](part_6_the_coherence_mathematics.md#6.1.9)), which falls at most a tenth per period and never below its floor. The base is the standing roster at or below the count minimum the governance policy table pins and, above it, the expected-active count — never below a stated minimum. A fraction therefore stays reachable at ten thousand members as at ten (the law's constants are provisional until measured).
+**The base.** The expected-active count is the community's own member-only census composite ([CC 6.1.9](part_6_the_coherence_mathematics.md#6.1.9)), which falls at most a tenth per period and never below its floor. The base is the standing roster at or below the size `k` the governance policy table's base law pins and, above it, the expected-active count — never below a stated minimum. A fraction therefore stays reachable at ten thousand members as at ten (the law's constants are provisional until measured).
 
 **The corridor.** A community may set its policy stricter than the defaults, up to a floor at enact, which is the reverse path switched off. It may not set it laxer than the corridor allows. A cancel or floor one voice can reach, an enact one voice can reach, a window under its class, or cancel or floor above enact, are refused as policy (the policy-corridor model; the register's row CLM-policy-corridor).
 

@@ -91,7 +91,6 @@ ballot:moderator	fold	agree	CC 4.5.13	The electorate is the live roster at the c
 ballot:moderator	fold	agree	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
 ballot:moderator	governance	fills	CC 4.5.13	The moderator election above **reconstitutes authority**: the room locks and its members elect, the ballot in merit order with the highest `moderation_track_record` first.
 ballot:moderator	governance	fills	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
-ballot:moderator	signer_rule	agree	CC 3.1.3	**A member's ballot in a moderator election** ([CC 4.5.13](part_4_composition_governance.md#4.5.13)): `community_id`, the election id (digest of community id, roster head and last seating), `ranks` (up to three member keys in order);
 ballot:moderator_acceptance	fold	agree	CC 3.1.3	among valid acceptances the larger set, then the smaller digest, seats
 ballot:moderator_acceptance	fold	agree	CC 4.5.13	**The seat is a function of the rows held and never of their arrival**
 ballot:moderator_acceptance	signer_rule	agree	CC 3.1.3	**The winner's acceptance, binding the ballot set it was seated on**: `community_id`, the election id, the digest of the ballot and withdrawal rows counted and the signer's own key; admitted
@@ -229,8 +228,6 @@ consent:partnership_grant	lifecycle	fills	CC 4.4.3.4.3	Either half may be withdr
 consent:partnership_grant	projection	agree	CC 2.3.2.4	composition of the pair into a ratified partnership is a downstream read-time computation, never an admission gate
 consent:partnership_grant	replication	fills	CC 4.4.3.4.3	so the partnering+delegation is signed + promoted at login
 consent:partnership_grant	signer_rule	agree	CC 3.1.5	Subject-side consent authority over Contributions naming the subject in `subject_key_ids`, plus the producer-side and substrate-side leaves that close its lifecycle. Leaf catalogue, per-leaf polarity and the emitter class of each
-consent:partnership_grant	signer_rule	agree	CC 3.3.1	`consent:partnership_grant` | Subject side of a bilateral grant; pairs with producer's `consent:partnership_accept` via `topical_relation:bilateral_pair`. | positive-only | subject_key_id
-consent:partnership_grant	signer_rule	agree	CC 3.4.5	`consent:state:granted` / `consent:state:revoked`, `consent:scope:*`, `consent:stream:*`, `consent:partnership_grant` MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one
 consent:partnership_grant	signer_rule	agree	CC 4.4.3.4.3.1	`attesting_key_id` | **the signer** = `granter_key_id` (grant) / `accepter_key_id` (accept)
 consent:partnership_grant	subject_rule	fills	CC 4.4.3.4.3.1	**the partner** — the OTHER party (agent occurrence for `grant`, user identity for `accept`); singular, non-empty
 consent:replication:{version}	lifecycle	fills	CC 3.3.1	revoked via `withdraws`/`recants`
@@ -244,7 +241,6 @@ consent:replication:{version}	signer_rule	fills	CC 3.3.7	only G signs with G's k
 consent:replication:{version}	subject_rule	fills	CC 3.3.1	to a specific federation **peer** named in `subject_key_ids[]`
 consent:scope:{kind}	projection	agree	CC 3.3.1	no fold reads it and it confers nothing
 consent:scope:{kind}	projection	fills	CC 3.3.1	no fold reads it and it confers nothing
-consent:scope:{kind}	signer_rule	agree	CC 3.4.5	`consent:state:granted` / `consent:state:revoked`, `consent:scope:*`, `consent:stream:*`, `consent:partnership_grant` MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one
 consent:scope:{kind}	signer_rule	agree	CC 4.4.3.4.3	`grant` | a `key_grant` ([CC 3.3.2](part_3_the_namespace.md)) or a `consent:scope:*` grant over assets the delegator **owns or stewards, or holds a `grant`-scoped delegation over**.
 consent:state:{stance}	body	agree	CC 3.1.5	`{stance}` ∈ `granted` \| `revoked` \| `expired` — closed; `expired` is the one substrate-emitted value.
 consent:state:{stance}	lifecycle	fills	CC 4.5.2.2	Subject's wire-format declaration of consent; revocable via [CC 2.4.1.1](part_2_the_grammar.md) rule 2
@@ -262,7 +258,6 @@ consent:state:{stance}	signer_rule	fills	CC 3.3.5	Substrate emission when valid_
 consent:state:{stance}	signer_rule	fills	CC 3.4.5	**`consent:state:expired`** alone by `substrate_persist`, the one substrate-emitted consent leaf
 consent:state:{stance}	signer_rule	fills	CC 3.4.5	MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one
 consent:stream:{kind}	signer_rule	agree	CC 3.3.1	`consent:stream:{kind}` | Pre-packaged stream bundle. Recommended canonical kinds: `temporary` (14d auto-expire, default), `partnered` (bilateral + persistent — the subject's data-retention and learning choice, never a veto over the subject's data
-consent:stream:{kind}	signer_rule	agree	CC 3.4.5	`consent:state:granted` / `consent:state:revoked`, `consent:scope:*`, `consent:stream:*`, `consent:partnership_grant` MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one
 consent:{kind}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
 consent:{kind}	subject_rule	fills	CC 4.5.2.1	| `consent:partnered:{user_key}` (the agent-side stance) | `consent:partnered:abc123` | `abc123` |
 corpus_health:n_eff_measurable	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own
@@ -404,7 +399,6 @@ identity:occurrence	signer_rule	agree	CC 3.3.6.1	admitted only when `attesting_k
 identity:occurrence	signer_rule	agree	CC 3.3.6.2	**The binding = a federation-key-signed `identity_occurrence` carrying `transport_destination`.** The occurrence is admitted only when `attesting_key_id == identity_key_id` (or a current occurrence of it), and it is hybrid-signed (Ed25519 + ML-DSA-65).
 identity:occurrence	signer_rule	agree	CC 4.4.3.4.3.1	signed by `identity_key_id` (or a current occurrence):
 identity:occurrence	signer_rule	agree	CC 4.4.3.4.6	Any current occurrence (including `I` itself) may sign a new occurrence's `identity_occurrence` row, which lands under the two-path policy of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3).
-identity:occurrence	signer_rule	agree	CC 4.4.3.4.6	The root `I` itself is implicitly a member (the identity_key is always an admissible signer for its own content).
 identity:occurrence_revocation	lifecycle	fills	CC 3.1.3	Wire `identity:occurrence_revocation:v1`. **Never withdrawn.**
 identity:occurrence_revocation	projection	agree	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
 identity:occurrence_revocation	projection	fills	CC 3.1.3	is kept as a local projection that still revokes but has no attestation row
@@ -463,7 +457,6 @@ licensure:{authority_id}	cosign_rule	fills	CC 2.4.1.2.1	A `licensure:{community_
 licensure:{authority_id}	cosign_rule	fills	CC 3.3.9	A licence issued by an organisation is admitted only when its signature set resolves to the affiliation's key set under its `consensus_protocol` (the paragraph below;
 licensure:{authority_id}	erasure_route	fills	CC 4.5.3	An **adverse** row about the subject, any row on the kept list of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), is reached by no subject-authority path
 licensure:{authority_id}	fold	agree	CC 3.3.9	A licence carries a monotonic `revision`; admission refuses a decrease
-licensure:{authority_id}	fold	agree	CC 3.3.9	latest `asserted_at`, tie-break smallest `attestation_id`
 licensure:{authority_id}	fold	agree	CC 3.4.9	MUST be marked as `confidence ≤ 0.5` in consumer composition until the second co-steward's attestation arrives
 licensure:{authority_id}	fold	agree	CC 5.3.2.3	Admission anti-rollback first: a write whose `revision` decreases never enters the merge.
 licensure:{authority_id}	fold	agree	CC 5.3.2.3	More-restrictive state wins on conflict: `revoked` > `suspended` > `active`.

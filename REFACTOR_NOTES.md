@@ -754,3 +754,12 @@ supersede: the kind grid gives Facts no replace); C391 (harm-report reactions); 
 C432 (an organisation-named licence is cosigned: needs a `declarer` key in the count grammar).
 Text against the shipped store, for the implementers: C365, C366, C371, C383, C384, C388, C412, C422, C423.
 A writer lane (`out_w3_stale.tsv`) is drafting the 40 stale fixes.
+
+Third-reading stale fixes (`handoff/lanes/out_w3_stale.tsv`, 53 edits): 44 applied after my read, plus two
+pseudo-code arms in CC 4.4.3.2.3 written by hand (hold on a signature shortfall; the resolution-7 exception).
+Held: edit 2 (OSA timelines, weak), 4 and 5 (who enables a watchlist: tied to the hash-matching choices), 26 (CC 4.3
+hand-on needs `sub_delegation`: touches the seat ruling, low confidence), 35 and 36 (delegation depth cap, low),
+43 (entity revocation withdrawn by nobody: low, and the store admits it). Not written by the lane: R13, R10, R04,
+whose stale side is the generated CC 2.6.1.7 table (fix in `constitution/signed_object.tsv`: key_record
+scrub_key_id, expires_at, source_count). Eighteen data rows quoted changed sentences: seven citations dropped,
+eleven moved to the corrected sentence; the licensure fold now reads the quorum-weighted merge.

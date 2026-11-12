@@ -4,20 +4,20 @@
 # voices (scrubs | objection | ballot, joined by |), target_silent (yes | no), changes_set (adds | removes | no).
 # A cell with no row here reads `unstated`: the text does not say, and the build counts those so the number only falls.
 row	column	value	cc_ref	quote
-default_content	count_set	member	CC 4.5.13	The base is the standing roster at or below the count minimum the governance policy table pins
+default_content	count_set	member	CC 4.5.13	The base is the standing roster at or below the size `k` the governance policy table's base law pins
 default_content	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 default_content	voices	objection	CC 4.5.13	Votes travel on `objection:{state}`
-default_standing	count_set	member	CC 4.5.13	The base is the standing roster at or below the count minimum the governance policy table pins
+default_standing	count_set	member	CC 4.5.13	The base is the standing roster at or below the size `k` the governance policy table's base law pins
 default_standing	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 default_standing	voices	objection	CC 4.5.13	Votes travel on `objection:{state}`
-default_irreversible	count_set	member	CC 4.5.13	The base is the standing roster at or below the count minimum the governance policy table pins
+default_irreversible	count_set	member	CC 4.5.13	The base is the standing roster at or below the size `k` the governance policy table's base law pins
 default_irreversible	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 default_irreversible	voices	objection	CC 4.5.13	Votes travel on `objection:{state}`
-community_invite	count_set	member	CC 4.5.13	The base is the standing roster at or below the count minimum the governance policy table pins
+community_invite	count_set	member	CC 4.5.13	The base is the standing roster at or below the size `k` the governance policy table's base law pins
 community_invite	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 community_invite	voices	objection	CC 4.5.13	Votes travel on `objection:{state}`
 community_invite	changes_set	adds	CC 4.5.13	the second voice on an admission is the invitee's own acceptance
-community_remove	count_set	member	CC 4.5.13	The base is the standing roster at or below the count minimum the governance policy table pins
+community_remove	count_set	member	CC 4.5.13	The base is the standing roster at or below the size `k` the governance policy table's base law pins
 community_remove	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 community_remove	voices	scrubs	CC 3.3.4	**Removal** is a `membership:removal` cosigned under the current protocol
 community_remove	counted_at	signed	CC 3.1.3	the signer is an active member at the event's signed instant

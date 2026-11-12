@@ -2763,8 +2763,7 @@ Fold:
 - `result=set` (CC 3.1.1)
 - `reads=own&declared(licence_class); by=reader` (CC 4.4.3.2.8)
 - `key=license_id; bound=raise_only(revision)` (CC 3.3.9, CC 5.3.2.3)
-- `key=license_id; pick=max(asserted_at),min(attestation_id)` (CC 3.3.9)
-- `key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+- `key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 3.3.9, CC 5.3.2.3)
 - `pick=rank(revoked>suspended>active)` (CC 5.3.2.3)
 - `weight=min(confidence,count(attesting_key_id)/2); by=reader` (CC 3.4.9)
 
