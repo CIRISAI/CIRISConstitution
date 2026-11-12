@@ -4,13 +4,13 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 96,
+  "entries": 97,
   "kinds": {
    "expiry": 20,
    "clock": 19,
-   "react": 57
+   "react": 58
   },
-  "emits": 24,
+  "emits": 25,
   "new_event_words": {
    "purged": 7,
    "matched": 1,
@@ -1972,6 +1972,28 @@
    ],
    "cc_ref": [
     "CC 3.4.12"
+   ]
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "community",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "membership:{stage}"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.4.3.4.1"
    ]
   }
  ]

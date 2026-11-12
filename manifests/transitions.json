@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "731b443719d4c7a0eba80f0c843215b9c48a39bee5b1930669ac9e9e0f2fdcf7",
+  "source_sha256": "e42a1873ce532a1e98bc23cdcf06b59a9b6a4145521268887408739b8033f1e2",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -62,7 +62,7 @@
   },
   "change": "a change cell lists what the transition's row may do to the row it changes, as items in the grammar of tools/change_grammar.py, each with the sections that state it; a transition with none takes the default under `changes`",
   "changes": {
-   "statements": 60,
+   "statements": 61,
    "changed_transitions": 20,
    "default": "replace: by=same_attester, link=ranked:references_attestation_id, reach=own_prior ; withdraw: cascade=*/ref:stand",
    "every_family": [
@@ -12166,6 +12166,12 @@
         "cc_ref": [
          "CC 4.4.3.4.5"
         ]
+       },
+       {
+        "item": "attest[scope:community|affiliations]: key=rotate_epoch",
+        "cc_ref": [
+         "CC 4.4.3.4.5"
+        ]
        }
       ],
       "source": "cc-table"
@@ -14144,7 +14150,7 @@
         ]
        },
        {
-        "item": "widening[scope:community|affiliations]: key=next_seal",
+        "item": "widening[scope:community|affiliations]: key=at_seat",
         "cc_ref": [
          "CC 4.4.3.2.1",
          "CC 4.4.3.2.5",

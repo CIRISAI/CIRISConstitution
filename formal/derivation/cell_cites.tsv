@@ -356,7 +356,7 @@ group:roster	lifecycle	fills	CC 3.1.3	withdrawn only by a cosigned `withdraws`
 group:roster	lifecycle	fills	CC 3.2	a fresh epoch DEK after a removal, history never re-encrypted
 group:roster	lifecycle	fills	CC 4.2.3	A seat is added or vacated only by roster change on the public record under the standing-majority rule.
 group:roster	lifecycle	fills	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
-group:roster	lifecycle	fills	CC 4.4.3.2.6	the epoch rotates on removal, never on admission
+group:roster	lifecycle	fills	CC 4.4.3.2.6	the epoch rotates because of a removal and never because of an admission
 group:roster	projection	agree	CC 3.2	and a consumer's roster fold MUST drop such a seat rather than count it
 group:roster	projection	agree	CC 4.4.3.2.4	roster = fold(head, membership rows effective at now)
 group:roster	projection	agree	CC 4.4.3.2.4.1	the returned set is canonically ordered by `key_id` (lowercase-hex byte order) for any downstream hashing/iteration
@@ -428,7 +428,7 @@ key_grant:{axis}	lifecycle	fills	CC 3.3.5.1	a revealed `key_grant` ([CC 3.3.2](#
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	epoch rolls on member removal (mandatory)
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	removed members retain extant `key_grant`s
-key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	the epoch rotates on removal, never on admission
+key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	the epoch rotates because of a removal and never because of an admission
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.4.3	`withdraws` the occurrence → no further grants to it; what it holds stays
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.4.5	after a removal each minter rotates its epoch DEK before its next sealed write
 key_grant:{axis}	lifecycle	fills	CC 5.1	`withdraws` on a `key_grant` is refused

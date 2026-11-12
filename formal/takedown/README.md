@@ -19,16 +19,12 @@ destruction at the window's close.
 |---|---|
 | P1 | a windowed notice withholds from the instant it is held and never before |
 | P2 | a windowed notice destroys at the close of its window unless a reversal or a lift was held inside it |
-| P3 | an immediate basis destroys at the instant it is held |
+| P3 | an immediate basis destroys at the instant it is held; under a live legal hold it withholds at once and destroys when the hold lifts |
 | P4 | destruction is final: no row held later brings the blob back |
 | P5 | the state is a function of the rows held and their first-held instants |
 | P6 | a blob under a live legal hold is not destroyed |
 
-**The one named breaker.** P3 and P6 cannot both hold for a held blob that an immediate notice reaches. The text
-does not say which gives way (conflict C312 of `formal/derivation/text_conflicts.tsv`). The model runs both
-readings and requires that each fails exactly the one property it gives up: if the hold defers destruction, P3
-fails in the held cases and nowhere else; if it does not, P6 fails and nothing else. When the text settles it,
-one reading is deleted and the check tightens to no failure.
+**Legal hold.** A live hold defers destruction and never serving: the bytes are withheld from everyone at once and destroyed when the hold lifts (CC 4.5.3). The model first ran this both ways, since the text did not say (conflict C312); the steward ruled on 2026-11-12. The reading in which a hold defers nothing is still run and must fail P6, so the two stay told apart.
 
 **What it does not model.** Who may sign each row (the signer gate, `tools/check_signer_gate.py`); what a
 restored item looks like to a viewer (the consent gate of CC 4.5.13); more than one node (each node runs its own

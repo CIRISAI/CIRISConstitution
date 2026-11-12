@@ -9,8 +9,8 @@ that may be added and revoked. The writer seals each write under a key and wraps
     epoch       `community` and `affiliations`: one key for the writer's epoch, rotated before a write when due
 
 What each membership act does to keys is not written here. It is read from `manifests/transitions.json`, where
-the change column gives every act a key effect by scope: `rekey_walk`, `next_seal`, `stop_wrap`, `rotate_epoch`.
-The model gives each of those four words its meaning and runs every sequence of acts up to the bound.
+the change column gives every act a key effect by scope: `rekey_walk`, `at_seat`, `next_seal`, `stop_wrap`, `rotate_epoch`.
+The model gives each of those words its meaning and runs every sequence of acts up to the bound.
 
 Properties:
   K1  a key is wrapped only to a live device of a current member
@@ -23,11 +23,9 @@ Properties:
   K8  no write is sealed under a key held by a revoked device of a member who stays
   K9  a member admitted to a group with content in the current epoch holds that epoch's key without a further write
 
-K8 fails at the epoch tier and the check requires exactly that: the data gives a device revocation a key effect
-at `self` scope alone, so a continuing member's revoked device holds the epoch key until the next rotation
-(conflict C558 of formal/derivation/text_conflicts.tsv). K9 fails there too: `next_seal` wraps a newcomer at the
-writer's next write, so in a room where nobody writes again the newcomer never reads what the epoch already holds
-(C559). Each expectation is removed when its rule is settled.
+All nine hold at both tiers. K8 and K9 were found failing by this model on its first runs (conflicts C558 and
+C559): a revoked device kept the epoch key, and a newcomer waited on the writer's next write. The steward ruled on
+2026-11-12 that a revocation rotates the epoch and that a member is wrapped at the seat.
 
 Run: python3 formal/key_plane/key_plane_model.py --check
 """
@@ -85,9 +83,14 @@ def explore(tab, scope, tier):
                     if d in live: grant(d, list(holders))
             elif eff("widening") == "next_seal": fresh.add(who)
             elif eff("widening") == "rotate_epoch": due = True; fresh.add(who)
-            elif eff("widening") == "current_epoch_at_seat":      # proposed, not in the grammar: the wrap is made at the seat
-                fresh.add(who)
-                if not due and ("epoch", epoch) in holders: grant(DEVICES[who][0], [("epoch", epoch)])
+            elif eff("widening") == "at_seat":       # wrapped when the writer's roster gains the member; a due rotation is made then
+                if due:
+                    if not cause: note("K6", trace)
+                    epoch += 1; due = False; cause = False
+                    holders[("epoch", epoch)] = frozenset()
+                    for d in current(): grant(d, [("epoch", epoch)])
+                elif ("epoch", epoch) in holders: grant(DEVICES[who][0], [("epoch", epoch)])
+                else: fresh.add(who)
         elif kind in ("remove", "resign"):
             members.discard(who); left |= {d for d in DEVICES[who] if any(d in v for v in holders.values()) or d in live}
             fresh.discard(who)
@@ -159,7 +162,7 @@ def explore(tab, scope, tier):
     return count[0], seen_fail
 
 
-EXPECTED = {"per-write": set(), "epoch": {"K8", "K9"}}
+EXPECTED = {"per-write": set(), "epoch": set()}
 
 
 def main():
@@ -180,8 +183,7 @@ def main():
               ("" if ok else f"  FAIL expected {sorted(EXPECTED[tier]) or 'nothing'}"))
         if "-v" in sys.argv or not ok:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
-    print("key_plane: the key effects of the transitions manifest hold K1-K7 at both tiers; a revoked device of a continuing "
-          "member keeps the epoch key until the next rotation (K8, C558), and a newcomer waits for the writer's next write (K9, C559)" if not rc else "key_plane: FAIL")
+    print("key_plane: the key effects of the transitions manifest hold K1-K9 at both tiers" if not rc else "key_plane: FAIL")
     return rc
 
 

@@ -2631,6 +2631,7 @@ In time:
 Count: `identity=node|agent => none ; identity=user => self_roster_evict@self` (CC 3.1.3)
 
 Change:
+- attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.4.5)
 - attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.4.5)
 
 **`identity_amendment`** — Identity, thing
@@ -2714,6 +2715,7 @@ In time:
 - @self on admitted(identity:occurrence): emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.1)
 - @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
 - on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.4.1)
+- @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
 
 Body: `at_rest_sha256` (text only), `attested_key_id`, `axis` (text only), `community_key_id` (text only), `content_sha256` (text only), `epoch` (text only), `minter_key_id` (text only), `owner_key_id` (text only), `recipient_key_id` (text only), `scope`, `stream_id` (text only), `wrap_algorithm` (text only), `wrapped_dek` (text only)
 
@@ -2836,7 +2838,7 @@ Change:
 - attest: `resignation[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.2.8)
 - attest: `resignation[scope:community|affiliations]: key=rotate_epoch` (CC 5.1)
 - attest: `resignation[scope:self|family]: key=stop_wrap` (CC 3.3.4)
-- attest: `widening[scope:community|affiliations]: key=next_seal` (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1, CC 2.1, CC 4.4.3.2.6)
+- attest: `widening[scope:community|affiliations]: key=at_seat` (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1, CC 2.1, CC 4.4.3.2.6)
 - attest: `widening[scope:self|family]: key=rekey_walk` (CC 3.3.4, CC 4.4.3.4.1, CC 4.4.3.4.2)
 - attest: `widening[stalled&recovery]: field=members:grow_signed, field=M:frozen, field=consensus_protocol:frozen, field=admission_quorum_basis:frozen, field=cohort_subkind:frozen` (CC 3.2)
 - attest: `widening[stalled&recovery]: field=members:grow_signed` (CC 3.1.3.2)

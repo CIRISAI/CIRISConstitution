@@ -11,8 +11,8 @@ second device that may be added and revoked. The acts are an admission, a remova
 a device revoked, a rotation falling due, and a write.
 
 The key effect of each act is not written in the model. It is read from the change column of
-`manifests/transitions.json`, which gives every membership act one of four words by scope: `rekey_walk`,
-`next_seal`, `stop_wrap`, `rotate_epoch`. The model gives the four words their meaning and refuses to run if an
+`manifests/transitions.json`, which gives every membership act one word by scope: `rekey_walk`,
+`at_seat`, `stop_wrap`, `rotate_epoch`. The model gives each word its meaning and refuses to run if an
 act has no word at a scope or if two scopes of one tier differ.
 
 **What is checked**, over every sequence of up to six acts at each tier:
@@ -29,19 +29,9 @@ act has no word at a scope or if two scopes of one tier differ.
 | K8 | no write is sealed under a key held by a revoked device of a member who stays |
 | K9 | a member admitted to a group with content in the current epoch holds that epoch's key without a further write |
 
-K1 to K7 hold at both tiers. Changing any one word of the table breaks the property that names it.
+All nine hold at both tiers. Changing any one word of the table breaks the property that names it.
 
-**Two named breakers.** K8 fails at the epoch tier. The data gives a device revocation a key effect at `self`
-scope alone, and the text says nothing of the epoch key when a continuing member's device is revoked. So a lost
-or stolen device keeps reading what the writer seals until a removal or a scheduled rotation moves the epoch. If
-a revocation rotated the epoch as a removal does, K8 would hold with nothing else changed. The check requires
-exactly this failure (conflict C558 of `formal/derivation/text_conflicts.tsv`).
-
-K9 fails at the epoch tier as well. `next_seal` wraps a newcomer at the writer's next write. In a room where
-nobody writes again, the newcomer never reads what the current epoch already holds, though the rule grants it.
-A three-node run of an implementation showed it. With the wrap made when the writer's roster gains the member,
-K9 holds and K1 to K7 still hold; where a rotation is due, the wrap still waits for the write that rotates
-(conflict C559).
+**What it found.** On its first runs K8 and K9 failed at the epoch tier. A revoked device of a member who stayed kept the epoch key until the next rotation (conflict C558). A newcomer was wrapped at the writer's next write, so in a room where nobody wrote again they never read what the epoch already held; a three-node run of an implementation showed it (C559). The steward ruled on 2026-11-12: a revocation rotates the epoch as a removal does, and a member is wrapped when the writer's roster gains them, the writer rotating then if a rotation is due. The change column carries both, and the model holds them.
 
 **What it does not model.** The instant a writer learns of a removal: a write made before the writer holds the
 removal row is under the old key, which is the exposure window of CC 5.1. Streams and their kept epochs

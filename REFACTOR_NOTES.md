@@ -974,3 +974,12 @@ Steward, 2026-11-12, on a contested guardianship: protective mode and not cut of
 `formal/guardianship` (eleven properties, 1,024 cases, mutation-checked). The band table is mine, put to him and
 not objected to: under 13 heard and not counted; 13 to 15 counted with the named guardian; 16 and 17 counted and a
 refusal blocks. C563: no family carries an order's attestation yet; CC 3.4.12 not touched.
+
+Steward, 2026-11-12, answering the list of what still waited on him: "1) seems like a duh 2) law wins 3) huh?".
+(1) keys: C558 and C559 landed as text and as data (`at_seat`, a revocation's `rotate_epoch`); both key-plane
+breakers are now required properties. (2) legal hold: I read "law wins" as both laws kept as far as each allows,
+which is the reading I had recommended (withheld at once, destroyed when the hold lifts); landed in CC 4.5.3 and
+the takedown model tightened to it. If he meant the takedown wins outright, CC 4.5.3's new three sentences come
+out and the model's `hold_wins` flips. (3) the trust-root question was not understood as put; explained again.
+A stray pointer to an agent's working copy was committed in 1bed2bd and removed in a1b5503; `.claude/` is
+excluded locally.

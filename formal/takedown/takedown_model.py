@@ -19,12 +19,13 @@ destruction at its close.
 Properties, checked over every set of rows and every arrival order up to the bound:
   P1  a windowed notice withholds from the instant it is held and never before
   P2  a windowed notice destroys at the close of its window unless a reversal or a lift was held inside it
-  P3  an immediate basis destroys at the instant it is held
+  P3  an immediate basis destroys at the instant it is held; under a live legal hold it withholds at once
+      and destroys at the instant the hold lifts
   P4  destruction is final: no row held later brings the blob back
   P5  the state is a function of the rows held and their first-held instants, never of the order they were added
   P6  a blob under a live legal hold is not destroyed
-P3 and P6 cannot both hold for a blob under a hold that an immediate notice reaches (conflict C312). The model
-takes the reading as a parameter and reports, for each reading, which property the other one costs.
+A legal hold defers destruction and never serving (CC 4.5.3, the steward's ruling of 2026-11-12 on conflict C312).
+The reading in which a hold defers nothing is still run, and must fail P6, so the two stay told apart.
 
 Run: python3 formal/takedown/takedown_model.py --check
 """
@@ -120,14 +121,12 @@ def check(hold_wins, immediate, windowed):
                     if b in immediate:
                         if states[t] != "destroyed" and not under:
                             fails["P3"] = fails["P3"] or (sorted(held), states)
-                        if states[t] != "destroyed" and under and not hold_wins:
-                            fails["P3"] = fails["P3"] or (sorted(held), states)
-                        if under and hold_wins and states[t] == "destroyed":
+                        if under and states[t] == "destroyed":
                             fails["P6"] = fails["P6"] or (sorted(held), states)
-                        if under and not hold_wins and states[t] == "destroyed":
-                            fails["P6"] = fails["P6"] or (sorted(held), states)
-                        if under and hold_wins and states[t] != "destroyed":
-                            fails["P3"] = fails["P3"] or (sorted(held), states)
+                        if under and states[t] != "withheld" and states[t] != "destroyed":
+                            fails["P3"] = fails["P3"] or (sorted(held), states)      # held bytes are withheld at once
+                        if under and lifted and lifted[0] <= HORIZON and states[lifted[0]] != "destroyed":
+                            fails["P3"] = fails["P3"] or (sorted(held), states)      # and destroyed when the hold lifts
                     else:
                         if t > 0 and states[t - 1] == "withheld" and not any(k2 == "notice" and t2 < t for k2, _, t2 in held):
                             fails["P1"] = fails["P1"] or (sorted(held), states)
@@ -149,20 +148,14 @@ def main():
     immediate, windowed, problems = bases()
     if problems or not immediate or not windowed:
         print("takedown: the reactions manifest does not close: " + "; ".join(problems or ["no immediate or no windowed basis found"])); return 1
-    out, rc = [], 0
-    for hold_wins in (True, False):
-        n, fails = check(hold_wins, immediate, windowed)
-        broken = sorted(p for p, v in fails.items() if v)
-        expect = ["P3"] if hold_wins else ["P6"]          # the one property each reading gives up (C312)
-        out.append(f"hold {'defers' if hold_wins else 'does not defer'} destruction: {n} cases, fails {broken or 'none'}")
-        if broken != expect:
-            rc = 1
-            for p in broken:
-                if p not in expect: print(f"  FAIL {p} under hold_wins={hold_wins}: {fails[p]}")
-            for p in expect:
-                if p not in broken: print(f"  FAIL expected {p} to fail under hold_wins={hold_wins} and it held")
-    print(f"takedown: {len(immediate)} immediate bases, {len(windowed)} windowed; " + "; ".join(out)
-          + "; P3 (immediate destroys on receipt) and P6 (a held blob is not destroyed) cannot both hold: C312")
+    n, fails = check(True, immediate, windowed)
+    broken = sorted(p for p, v in fails.items() if v)
+    for p in broken: print(f"  FAIL {p}: {fails[p]}")
+    _, other = check(False, immediate, windowed)          # the reading not taken must still be told apart
+    if not other["P6"]: print("  FAIL a hold that defers nothing was not caught by P6"); broken.append("P6-mutation")
+    rc = 1 if broken else 0
+    print(f"takedown: {len(immediate)} immediate bases, {len(windowed)} windowed; {n} cases, six properties "
+          + ("hold" if not broken else f"fail {broken}") + "; under a live legal hold the bytes are withheld at once and destroyed when the hold lifts")
     return rc
 
 
