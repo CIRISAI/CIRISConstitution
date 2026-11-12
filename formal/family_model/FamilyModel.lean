@@ -389,7 +389,7 @@ def f81 : FamilyRow :=
   ⟨"film:*", ⟨.facts, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit81 : fits f81 = true := by decide
 def f82 : FamilyRow :=
-  ⟨"goal:{scale}", ⟨.premises, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"goal:{scale}", ⟨.premises, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit82 : fits f82 = true := by decide
 def f83 : FamilyRow :=
   ⟨"group:roster", ⟨.rules, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
@@ -449,7 +449,7 @@ def f101 : FamilyRow :=
   ⟨"licensure:{authority_id}", ⟨.rules, [.attest, .replace, .withdraw], some ⟨.pre, some .rules⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit101 : fits f101 = true := by decide
 def f102 : FamilyRow :=
-  ⟨"lineage_witness:{stage}", ⟨.rules, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"lineage_witness:{stage}", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit102 : fits f102 = true := by decide
 def f103 : FamilyRow :=
   ⟨"locality:decision:{scale}", ⟨.circumstances, [.attest], none⟩, ⟨false, .dsar, .none⟩⟩
@@ -479,7 +479,7 @@ def f111 : FamilyRow :=
   ⟨"multilateral_participation:{forum}:{kind}", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit111 : fits f111 = true := by decide
 def f112 : FamilyRow :=
-  ⟨"need:{domain}:{kind}", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"need:{domain}:{kind}", ⟨.facts, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit112 : fits f112 = true := by decide
 def f113 : FamilyRow :=
   ⟨"news:*", ⟨.facts, [.attest, .replace, .withdraw, .recant], none⟩, ⟨false, .dsar, .none⟩⟩

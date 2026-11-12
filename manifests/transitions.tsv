@@ -246,6 +246,7 @@ film:*	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-tab
 film:*	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 goal:{scale}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 goal:{scale}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
+goal:{scale}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 goal:{scale}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 group:roster	attest	none	admitted	member	selfAct	true	withdraw	cosigned	true	derived	derived	derived
 group:roster	withdraw	admitted	withdrawn	member	cosigned	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -297,7 +298,8 @@ ledger:promotion:{version}	supersede	admitted	superseded	author	selfAct	true	sup
 licensure:{authority_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 licensure:{authority_id}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 licensure:{authority_id}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-lineage_witness:{stage}	attest	none	admitted	founder,owner	selfAct	true	none		true	derived	cc-table	derived
+lineage_witness:{stage}	attest	none	admitted	founder,owner	selfAct	true	withdraw	selfAct	true	derived	cc-table	derived
+lineage_witness:{stage}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 locality:decision:{scale}	attest	none	admitted	registered	selfAct	true	none		true	derived	derived	derived
 manifold_conformity:{cohort}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 manifold_conformity:{cohort}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -326,6 +328,7 @@ multilateral_participation:{forum}:{kind}	withdraw	admitted	withdrawn	author,sub
 multilateral_participation:{forum}:{kind}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 need:{domain}:{kind}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 need:{domain}:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
+need:{domain}:{kind}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 need:{domain}:{kind}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 news:*	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 news:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived

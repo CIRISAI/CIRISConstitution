@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "a2d7c7aca2c38a35f7cf8873851ffb9427a1b6f16ad11b96959f7d8c9f15c2af",
+  "source_sha256": "5f7f0f144a68e94e61d771225fa67ebd623fb1b4d1aeb25dc3538416bd7b89df",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,24 +45,24 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 60,
-   "guarded_transitions": 27,
+   "statements": 58,
+   "guarded_transitions": 26,
    "marks": {
-    "refuse": 31,
+    "refuse": 30,
     "ref:*": 9,
-    "landed": 3,
+    "landed": 2,
     "signs": 2,
     "commits": 1
    },
    "well_founded": {
-    "requiring": 10,
+    "requiring": 11,
     "longest_chain": 1,
     "reading": "no row's admission requires a row whose own admission requires it back"
    }
   },
   "change": "a change cell lists what the transition's row may do to the row it changes, as items in the grammar of tools/change_grammar.py, each with the sections that state it; a transition with none takes the default under `changes`",
   "changes": {
-   "statements": 59,
+   "statements": 60,
    "changed_transitions": 20,
    "default": "replace: by=same_attester, link=ranked:references_attestation_id, reach=own_prior ; withdraw: cascade=*/ref:stand",
    "every_family": [
@@ -90,10 +90,10 @@
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
-  "transitions": 456,
+  "transitions": 459,
   "gap_cells": 5,
   "confirmed": 253,
-  "undo_gap_cells": 31,
+  "undo_gap_cells": 30,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
  "rows": [
@@ -617,6 +617,13 @@
          "CC 4.2.6"
         ],
         "reach": "whole"
+       },
+       {
+        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else refuse",
+        "cc_ref": [
+         "CC 4.2.1.3"
+        ],
+        "reach": "partial"
        }
       ],
       "source": "cc-table"
@@ -11178,6 +11185,46 @@
      }
     },
     {
+     "verb": "recant",
+     "from": "admitted",
+     "to": "recanted",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "cc-table"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
      "verb": "supersede",
      "from": "admitted",
      "to": "superseded",
@@ -13667,13 +13714,56 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "derived"
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "value": [
+       "author",
+       "subject"
+      ],
+      "source": "code-v61"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "code-v61"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
      },
      "guard": {
       "value": [],
@@ -13996,14 +14086,6 @@
         "reach": "partial"
        },
        {
-        "guard": "when(leaf=widening) (one trust:confers@landed[attested=signer,val:scope=object] else refuse & type(signer,user) else refuse & not type(signer,node) else refuse)",
-        "cc_ref": [
-         "CC 3.1.3.2",
-         "CC 3.2"
-        ],
-        "reach": "whole"
-       },
-       {
         "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else refuse(membership_reply_conflict)+community_consensus_protocol_violation",
         "cc_ref": [
          "CC 3.1.3.2"
@@ -14090,6 +14172,12 @@
         "item": "removal[axis:stream]: key=rotate_epoch",
         "cc_ref": [
          "CC 4.4.3.2.6"
+        ]
+       },
+       {
+        "item": "resignation[scope:community|affiliations]: key=rotate_epoch",
+        "cc_ref": [
+         "CC 5.1"
         ]
        }
       ],
@@ -14661,16 +14749,8 @@
       "when": "if_widens"
      },
      "guard": {
-      "value": [
-       {
-        "guard": "when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse",
-        "cc_ref": [
-         "CC 4.5.5"
-        ],
-        "reach": "whole"
-       }
-      ],
-      "source": "cc-table"
+      "value": [],
+      "source": "generic"
      },
      "change": {
       "value": [],
@@ -15082,6 +15162,46 @@
        "rows": []
       },
       "source": "code-v61"
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "recant",
+     "from": "admitted",
+     "to": "recanted",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "cc-table"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "cc-table"
      },
      "widens": {
       "value": false,

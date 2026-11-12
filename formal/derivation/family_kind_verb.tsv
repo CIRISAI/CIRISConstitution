@@ -81,7 +81,7 @@ fidelity:explainability_sla:{tier}	accord-agent	Manner	ACCOUNT	attest,replace,wi
 fidelity:{aspect}	accord-agent	Manner	ACCOUNT	attest,withdraw,recant	M	honesty/comprehensibility: how it is said; borderline Facts	no	—
 file:{version}	persist	Identity	THING	attest,replace,withdraw	M	mints a file object by digest, name, format	no	—
 film:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about a film	no	—
-goal:{scale}	node	Premises	ACCOUNT	attest,replace,withdraw	M	goals are what plans are built on	no	—
+goal:{scale}	node	Premises	ACCOUNT	attest,replace,withdraw,recant	M	goals are what plans are built on	no	—
 group:roster	persist	Rules	THING	attest,replace,withdraw	M	who is a member; cosigned roster version	no	—
 hard_case:{kind}	node	Circumstances	THING	attest,withdraw	M	marks a case as hard: situational flag, open vocab	yes	—
 hardware_custody:{platform}	attestation	Circumstances	THING	attest,replace,withdraw	M	where the seed lives: platform context	no	—
@@ -101,7 +101,7 @@ ledger:checkpoint:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	co-wit
 ledger:head:{unit}:{version}	persist	Facts	ACCOUNT	attest,replace	H	the ledger head: what can be proven forward (kind Facts about the record; maintains the Record relation)	yes	—
 ledger:promotion:{version}	persist	Facts	ACCOUNT	attest,replace	M	carries the compliance proof to cohort visibility (kind Facts about the record; maintains the Record relation)	yes	—
 licensure:{authority_id}	registry	Rules	THING	attest,replace,withdraw	H	licence status under an authority	no	pre:Rules
-lineage_witness:{stage}	persist	Rules	THING	attest	M	ceremony whose effect is a witness role; per-stage rows	no	—
+lineage_witness:{stage}	persist	Rules	THING	attest,withdraw	M	ceremony whose effect is a witness role; per-stage rows	no	—
 locality:decision:{scale}	node	Circumstances	THING	attest	M	the scale at which a decision happens to be made	no	—
 manifold_conformity:{cohort}	lens	Confidence	ACCOUNT	attest,withdraw,recant	M	lens conformity score	no	—
 membership:{stage}	persist	Rules	THING	attest,replace,withdraw	M	ceremony whose effect is membership; removal cosigned	no	pre:Rules
@@ -111,7 +111,7 @@ model_3d:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims ab
 moderation:{allegation_type}	node	Rules	THING	attest,withdraw,recant	M	allegation of a rule breach	no	—
 moderation_track_record:{community_key_id}	node	Confidence	ACCOUNT	attest,withdraw,recant	M	moderation merit: how trusted	no	—
 multilateral_participation:{forum}:{kind}	registry	Facts	ACCOUNT	attest,replace,withdraw	M	depth of participation is a factual claim	no	—
-need:{domain}:{kind}	node	Facts	ACCOUNT	attest,replace,withdraw	M	broadcast that a need exists; borderline Priorities	no	—
+need:{domain}:{kind}	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	broadcast that a need exists; borderline Priorities	no	—
 news:*	node	Facts	ACCOUNT	attest,replace,withdraw,recant	M	content claims about news	no	—
 non_maleficence:{aspect}	accord-agent	Rules	THING	attest,withdraw	H	apophatic failures are -1 only: what is not allowed	no	—
 objection:{state}	node	Structure	THING	attest,replace,withdraw	M	objection blocks a commons act from going through	no	pre:Structure

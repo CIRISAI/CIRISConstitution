@@ -4,11 +4,11 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 92,
+  "entries": 89,
   "kinds": {
-   "expiry": 17,
-   "clock": 20,
-   "react": 55
+   "expiry": 16,
+   "clock": 19,
+   "react": 54
   },
   "emits": 24,
   "new_event_words": {
@@ -1387,20 +1387,6 @@
    ]
   },
   {
-   "family": "consent:state:{stance}",
-   "leaves": [
-    "granted"
-   ],
-   "kind": "expiry",
-   "mode": "optional",
-   "member": "valid_until",
-   "default": "consent_temporary_ttl_secs",
-   "from": "asserted_at",
-   "cc_ref": [
-    "CC 4.4.3.5.6"
-   ]
-  },
-  {
    "family": "takedown_notice:{basis}",
    "leaves": [
     "Dmca512"
@@ -1594,44 +1580,6 @@
     {
      "effect": "read",
      "verdict": "lagging",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": [
-    "CC 3.2"
-   ]
-  },
-  {
-   "family": "trust:{job}:{version}",
-   "leaves": [
-    "accepts"
-   ],
-   "kind": "clock",
-   "name": "attach",
-   "dur": "charter.attach_window_secs",
-   "from": "cosigned_at",
-   "by": "receipt",
-   "cc_ref": [
-    "CC 3.2"
-   ]
-  },
-  {
-   "family": "trust:{job}:{version}",
-   "leaves": [
-    "accepts"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "attach"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
      "of": null,
      "force": "must"
     }

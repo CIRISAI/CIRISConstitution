@@ -81,6 +81,13 @@ The CIRIS Constitution is one document with one version line. Each release below
   - a non-public affiliation carries a listing row that names its existence and no roster (3.1.1, 3.2);
   - the party running a decay protocol emits its stages, never the store (4.4.3.5.1, 4.4.3.5.6);
   - the base of a count is the standing roster up to the size the base law pins (4.5.13, 6.1.9).
+- A fourth reading found the text converging and the typed tables still at fault in places, corrected here:
+  - a resumption is refused unless it names the halt in force (4.2.1.3), a guard the table had lacked;
+  - a resignation from a community rotates the epoch key as a removal does (5.1);
+  - the recovery condition no longer rides every widening, and a content's subject no longer passes for a moderator, two guards that had said more than the text;
+  - a rooted node's acceptance is not closed by a lapsed attach window (3.2), and a grant has no default lapse beyond the temporary bundle's (4.4.3.5.6), two reactions removed;
+  - a goal and a need may be recanted by their signer, and a lineage witness's acceptance may be withdrawn, verbs the model had lacked (3.1.9.7, 3.1.9.3, 3.2);
+  - a ballot's member is `ranks` (3.1.3).
 - The confirm test is one lookup (4.5.13, `formal/event_lifecycle`): an item is confirmed before it is signed when the rows it would sign widen or have no way back, and every other item takes one step. `manifests/transitions.json` carries the way back and the confirm test on each of its 455 transitions: 185 are confirmed and 270 take one step, every withdrawal among them. Eight families have no way back by their lifecycle; on 31 transitions the table lists no retraction and the cell is open. `confirm_is_lookup`, `no_way_back_is_confirmed` and `exit_is_one_step` are proved.
 - Five rules are said once and cited elsewhere: who may take a signed row back (2.4.1.1), what a signed row carries (2.1), who owns a key (3.2), which statements a reader believes (4.4.3.8) and which nodes a row reaches (5.2). Thirty-four sentences in Parts 1 to 7 that repeated one of them are cut to a citation, and each sentence that carries something its rule's entry lacks is left whole. Three citations are added where an entry read wider than a rule stated elsewhere: a minor's node is never announced and a `serve` seat needs an announced owner (3.2, both by 5.4.6), and un-trust does not lift a halt already latched (4.4.3.8, by 4.2.1). No rule changes.
 - The clock rule is one entry (2.6.7): which clock a stated instant refers to, the skew bound, and a table of the window by case, with the admission freshness window `W` and its reason after it. No rule changes. Two members of 2.1 cite the date-time form at 2.6.2, where it is stated.

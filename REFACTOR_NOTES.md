@@ -782,3 +782,25 @@ plain story.
 Also from him: "a lot of those are obvious, you can not retract a decision regarding something deleted". Twelve of
 the eighteen are settled from the architecture as derived readings (listed to him; table in the session), to land
 with these.
+
+## The fourth reading (2026-11-12, early)
+
+Ten lanes, same shares, text opened for nearly every statement (`out_r4_*.tsv`): 325 findings; major 154 (77 new).
+New major text against text 26 (general keys 13, family keys 13; third reading 12 and 42), text against data 51
+(third reading 35); two-finder 2 of 71. Verified (`out_v4_*.tsv`): DATA 44 (store 24, repo 20), STALE 23,
+NOT_A_CONFLICT 7, CHOICE 3. Logged C436 to C512.
+Reading: the text is converging (text-against-text majors 51, 54, 26 across readings two to four; family keys fell
+by two thirds after one round of fixes, as the general keys did the round before). The data is not: readers now
+compare cell by cell, half the data findings are text against the shipped store, and two were regressions from my
+own fixes (removing the over-broad delivery-receipt guard left no refusing guard: C440, C510). Data findings are a
+work queue for the model and the store, not the document contradicting itself.
+The three CHOICE: C441 (chunk number per epoch or per stream: technical, for the edge); C487 (which count decides a
+removal: the same open question as roster widening); C479 (a moderator ejecting an agent alone: settled from the
+floor of two voices and universality, removal takes the same count as a person's, a moderator may block).
+Repo data faults fixed: resumption guard added; resignation at community scope rotates; guards dropped (recovery
+condition on every widening; subject as moderator); reactions dropped (attach close; default grant lapse); verbs
+added (goal and need recant; lineage_witness withdraw); ballot `ranks`. Not fixed: delivery receipt step 2 (no
+family for a published, uncosigned head: C440, C510); moderation body digest and two audience cells (census prose);
+canonical re-bind supersede policy; an accord roster-change policy row (C488); missing expiry entries (C512);
+`system:*` signer. Twenty-four store findings go to the draft for the store.
+Writer lanes running: `out_w_settled.tsv` (the two rulings and twelve derived settlements) and `out_w4_stale.tsv`.

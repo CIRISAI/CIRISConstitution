@@ -7988,7 +7988,7 @@
     "value": {
      "members": [
       {
-       "member": "ranking",
+       "member": "ranks",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
@@ -32592,7 +32592,8 @@
     "value": [
      "attest",
      "replace",
-     "withdraw"
+     "withdraw",
+     "recant"
     ],
     "source": "cc-table"
    },
@@ -40388,7 +40389,8 @@
    },
    "verbs": {
     "value": [
-     "attest"
+     "attest",
+     "withdraw"
     ],
     "source": "cc-table"
    },
@@ -43827,7 +43829,8 @@
     "value": [
      "attest",
      "replace",
-     "withdraw"
+     "withdraw",
+     "recant"
     ],
     "source": "cc-table"
    },

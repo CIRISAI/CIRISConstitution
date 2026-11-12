@@ -26,7 +26,7 @@ archive_release:{basis}	retirement_id	unstated	unstated	no	CC 3.1.5	Carries `ret
 archive_release:{basis}	scope	"whole" / subject-scoped	unstated	yes	CC 3.1.5	Carries `retirement_id`, scope (`whole` \| subject-scoped for a DSAR), requester key, purpose.
 audio:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
 audio:*	transcript	unstated	optional	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
-ballot:moderator	ranking	unstated	unstated	no	CC 4.5.13	Each person ranks **up to three**.
+ballot:moderator	ranks	unstated	unstated	no	CC 4.5.13	Each person ranks **up to three**.
 ballot:moderator	salt	bstr .size 16	required	yes	CC 2.6.1.8	carries a random salt as a payload member, bound by every signer, so neither its id nor its quorum key confirms a guess.
 ballot:tally:{poll_id}	salt	bstr .size 16	required	yes	CC 2.6.1.8	carries a random salt as a payload member, bound by every signer, so neither its id nor its quorum key confirms a guess.
 capacity:composite	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.7	The grants a witness relied on.

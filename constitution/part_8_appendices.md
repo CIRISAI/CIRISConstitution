@@ -1701,6 +1701,7 @@ Body: `accord_root`
 Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord` (CC 4.2.1.1, CC 4.2.1.3)
 
 Guard:
+- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else refuse` (CC 4.2.1.3)
 - attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else refuse` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
 
 Fold:
@@ -1861,7 +1862,7 @@ Fold:
 In time:
 - clock `window` = `moderator_election.window_secs` (CC 4.5.13)
 
-Body: `ranking` (text only), `salt`
+Body: `ranks` (text only), `salt`
 
 **`ballot:moderator_acceptance`** — Structure, thing
 
@@ -2269,7 +2270,6 @@ Fold:
 In time:
 - [granted] expiry optional `valid_until` (CC 3.3.1, CC 4.4.3.5.5)
 - [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by identity:substrate_persist (CC 3.3.1, CC 4.4.3.5.5)
-- [granted] expiry optional `valid_until` default `consent_temporary_ttl_secs` (CC 4.4.3.5.6)
 
 **`consent:stream:{kind}`** — Rules, thing
 
@@ -2774,7 +2774,8 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | founder, owner (proposal: founder; acceptance: owner; decline: owner) | selfAct | true (by_scope) | true (always) | none |
+| attest | founder, owner (proposal: founder; acceptance: owner; decline: owner) | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
 
 Count: `none` (CC 3.4.10)
 
@@ -2819,7 +2820,6 @@ Guard:
 - attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else refuse(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.2.3, CC 4.4.3.2.5, CC 4.4.3.4.2)
 - attest: `each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else refuse` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else refuse(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
-- attest: `when(leaf=widening) (one trust:confers@landed[attested=signer,val:scope=object] else refuse & type(signer,user) else refuse & not type(signer,node) else refuse)` (CC 3.1.3.2, CC 3.2)
 
 Change:
 - attest: `removal[axis:stream]: key=rotate_epoch` (CC 4.4.3.2.6)
@@ -2828,6 +2828,7 @@ Change:
 - attest: `removal[scope:self|family]: key=stop_wrap` (CC 4.4.3.4.2, CC 3.3.4, CC 4.4.3.4.5)
 - attest: `resignation[ephemeral&last:member]: cascade=group:roster/over:withdrawn` (CC 5.3.3.2)
 - attest: `resignation[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.2.8)
+- attest: `resignation[scope:community|affiliations]: key=rotate_epoch` (CC 5.1)
 - attest: `resignation[scope:self|family]: key=stop_wrap` (CC 3.3.4)
 - attest: `widening[scope:community|affiliations]: key=next_seal` (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1, CC 2.1, CC 4.4.3.2.6)
 - attest: `widening[scope:self|family]: key=rekey_walk` (CC 3.3.4, CC 4.4.3.4.1, CC 4.4.3.4.2)
@@ -2892,9 +2893,6 @@ Body: `description` (text only)
 | recant | author | selfAct | false | false | attest |
 
 Count: `moderation_action@subject_group` (CC 4.5.13)
-
-Guard:
-- attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse` (CC 4.5.5)
 
 Fold:
 - `over=present@count/person` (CC 4.5.13)
@@ -3376,8 +3374,6 @@ In time:
 - [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
 - [moderate] on close(expiry): read locked, open moderator_election (CC 4.4.3.2.8)
 - @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.2.8)
-- [accepts] clock `attach` = `charter.attach_window_secs` (CC 3.2)
-- [accepts] on close(attach): read closed (CC 3.2)
 
 Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`
 

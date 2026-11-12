@@ -61,3 +61,4 @@ membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 3.
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.4.5	after a removal each minter rotates its epoch DEK before its next sealed write
 membership:{stage}	removal[axis:stream]: key=rotate_epoch	CC 4.4.3.2.6	epoch rolls on member removal (mandatory)
+membership:{stage}	resignation[scope:community|affiliations]: key=rotate_epoch	CC 5.1	Once a member leaves, subsequent content is sealed under a key that member cannot derive.
