@@ -86,13 +86,13 @@
   "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
   "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
-  "widens_when": "a widens cell that is true says the row MAY widen; `when` says when it does: always, or by_scope (a row signed at self scope does not widen, a row at any wider scope does). Where `when` is by_scope the confirm cell is an upper bound: the item is confirmed when the row's own scope widens or the row has no way back. A replacing row that promotes its scope (CC 4.4.3.3.1) widens too; this table does not yet mark it",
+  "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.3.1). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
   "transitions": 455,
   "gap_cells": 5,
-  "confirmed": 185,
+  "confirmed": 254,
   "undo_gap_cells": 31,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -131,7 +131,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -219,7 +220,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -351,7 +353,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -396,7 +399,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -441,7 +445,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -486,7 +491,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -515,8 +521,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -525,8 +533,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -595,7 +604,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -650,7 +660,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -679,8 +690,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -689,8 +702,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -740,7 +754,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -810,8 +825,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -820,8 +837,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -868,7 +886,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -978,8 +997,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -988,8 +1009,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1036,7 +1058,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1106,8 +1129,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -1116,8 +1141,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1164,7 +1190,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1274,8 +1301,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -1284,8 +1313,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1329,7 +1359,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -1376,7 +1407,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1464,7 +1496,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1552,7 +1585,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1640,7 +1674,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1728,7 +1763,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1816,7 +1852,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1926,8 +1963,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -1936,8 +1975,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -1984,7 +2024,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2072,7 +2113,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2203,7 +2245,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -2305,7 +2348,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -2368,7 +2412,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2456,7 +2501,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2526,8 +2572,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -2536,8 +2584,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2584,7 +2633,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2712,7 +2762,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2822,8 +2873,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -2832,8 +2885,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2880,7 +2934,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -2968,7 +3023,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3038,8 +3094,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -3048,8 +3106,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3099,7 +3158,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -3229,7 +3289,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -3367,7 +3428,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -3497,7 +3559,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3567,8 +3630,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -3577,8 +3642,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3628,7 +3694,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3698,8 +3765,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -3708,8 +3777,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3759,7 +3829,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -3844,8 +3915,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -3854,8 +3927,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -3902,7 +3976,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -3980,8 +4055,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -3990,8 +4067,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4039,7 +4117,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4109,8 +4188,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -4119,8 +4200,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4168,7 +4250,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4256,7 +4339,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -4352,7 +4436,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4422,8 +4507,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -4432,8 +4519,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4480,7 +4568,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -4576,7 +4665,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4664,7 +4754,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4774,8 +4865,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -4784,8 +4877,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4832,7 +4926,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -4960,7 +5055,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5030,8 +5126,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -5040,8 +5138,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5095,7 +5194,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5224,7 +5324,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -5353,7 +5454,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5423,8 +5525,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -5433,8 +5537,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5481,7 +5586,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5609,7 +5715,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5737,7 +5844,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5865,7 +5973,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -5993,7 +6102,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -6094,7 +6204,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -6123,8 +6234,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -6133,8 +6246,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6179,7 +6293,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -6226,7 +6341,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6296,8 +6412,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -6306,8 +6424,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6354,7 +6473,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6442,7 +6562,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6531,7 +6652,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6608,8 +6730,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -6618,8 +6742,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6671,7 +6796,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -6719,7 +6845,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6796,8 +6923,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -6806,8 +6935,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6854,7 +6984,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6924,8 +7055,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -6934,8 +7067,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7017,7 +7151,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7087,8 +7222,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -7097,8 +7234,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7145,7 +7283,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7233,7 +7372,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7303,8 +7443,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -7313,8 +7455,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7361,7 +7504,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7461,7 +7605,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -7564,7 +7709,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7652,7 +7798,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -7747,7 +7894,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7835,7 +7983,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -7922,7 +8071,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -7977,7 +8127,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8063,7 +8214,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -8125,7 +8277,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8252,7 +8405,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8379,7 +8533,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8506,7 +8661,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8633,7 +8789,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8760,7 +8917,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8830,8 +8988,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -8840,8 +9000,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8888,7 +9049,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9016,7 +9178,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9144,7 +9307,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9272,7 +9436,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9398,7 +9563,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9437,7 +9603,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -9466,8 +9633,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -9476,8 +9645,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9524,7 +9694,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9634,8 +9805,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -9644,8 +9817,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9692,7 +9866,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9818,7 +9993,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -9847,8 +10023,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -9857,8 +10035,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9905,7 +10084,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -9975,8 +10155,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -9985,8 +10167,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10033,7 +10216,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -10111,8 +10295,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -10121,8 +10307,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10169,7 +10356,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10295,7 +10483,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -10324,8 +10513,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -10334,8 +10525,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10382,7 +10574,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10452,8 +10645,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -10462,8 +10657,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10510,7 +10706,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10638,7 +10835,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10708,8 +10906,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -10718,8 +10918,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10766,7 +10967,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10876,8 +11078,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -10886,8 +11090,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10934,7 +11139,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11004,8 +11210,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -11014,8 +11222,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11062,7 +11271,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -11307,7 +11517,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11394,7 +11605,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11464,8 +11676,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -11474,8 +11688,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11525,7 +11740,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11595,8 +11811,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -11605,8 +11823,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11653,7 +11872,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -11756,7 +11976,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -11899,7 +12120,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -11952,7 +12174,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -12007,7 +12230,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12095,7 +12319,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12205,8 +12430,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -12215,8 +12442,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12263,7 +12491,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12391,7 +12620,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12519,7 +12749,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12645,7 +12876,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -12738,7 +12970,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -12840,7 +13073,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12927,7 +13161,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -12986,7 +13221,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -13031,7 +13267,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -13067,8 +13304,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -13077,8 +13316,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13123,7 +13363,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -13152,8 +13393,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -13162,8 +13405,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13208,7 +13452,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -13237,8 +13482,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -13247,8 +13494,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13295,7 +13543,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13364,8 +13613,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -13374,8 +13625,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13436,7 +13688,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -13481,7 +13734,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -13528,7 +13782,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13713,7 +13968,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -13975,7 +14231,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14045,8 +14302,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -14055,8 +14314,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14103,7 +14363,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14173,8 +14434,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -14183,8 +14446,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14231,7 +14495,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14341,8 +14606,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -14351,8 +14618,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14408,7 +14676,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -14543,7 +14812,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14670,7 +14940,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14740,8 +15011,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -14750,8 +15023,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14798,7 +15072,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14868,8 +15143,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -14878,8 +15155,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -14926,7 +15204,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15036,8 +15315,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -15046,8 +15327,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15094,7 +15376,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15186,7 +15469,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15256,8 +15540,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -15266,8 +15552,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15314,7 +15601,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -15408,7 +15696,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -15437,8 +15726,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -15447,8 +15738,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15532,8 +15824,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -15542,8 +15836,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15584,7 +15879,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15631,7 +15927,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15701,8 +15998,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -15711,8 +16010,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15759,7 +16059,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15829,8 +16130,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -15839,8 +16142,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15896,7 +16200,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -15983,7 +16288,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -16030,7 +16336,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16100,8 +16407,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -16110,8 +16419,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16158,7 +16468,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16246,7 +16557,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16334,7 +16646,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16422,7 +16735,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16510,7 +16824,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16598,7 +16913,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16668,8 +16984,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -16678,8 +16996,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16726,7 +17045,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16854,7 +17174,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -16982,7 +17303,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17110,7 +17432,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17238,7 +17561,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17366,7 +17690,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17504,7 +17829,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -17598,7 +17924,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -17627,8 +17954,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -17637,8 +17966,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17683,7 +18013,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [
@@ -17720,8 +18051,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -17730,8 +18063,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17809,7 +18143,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -17872,7 +18207,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -17964,7 +18300,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -18009,7 +18346,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -18038,8 +18376,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -18048,8 +18388,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18094,7 +18435,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -18139,7 +18481,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -18186,7 +18529,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18256,8 +18600,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -18266,8 +18612,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18327,7 +18674,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18415,7 +18763,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -18547,7 +18896,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18617,8 +18967,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -18627,8 +18979,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18675,7 +19028,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -18770,7 +19124,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18898,7 +19253,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18986,7 +19342,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19074,7 +19431,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19162,7 +19520,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19248,7 +19607,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -19295,7 +19655,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19381,7 +19742,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -19423,8 +19785,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -19433,8 +19797,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19481,7 +19846,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19551,8 +19917,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -19561,8 +19929,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -19646,8 +20015,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -19656,8 +20027,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19705,7 +20077,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -19760,7 +20133,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19888,7 +20262,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -19998,8 +20373,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -20008,8 +20385,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20056,7 +20434,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20184,7 +20563,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20254,8 +20634,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -20264,8 +20646,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20312,7 +20695,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20382,8 +20766,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -20392,8 +20778,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20438,7 +20825,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "guard": {
       "value": [],
@@ -20467,8 +20855,10 @@
       "source": "derived"
      },
      "widens": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
      },
      "undo": {
       "value": true,
@@ -20477,8 +20867,9 @@
       "source": "derived"
      },
      "confirm": {
-      "value": false,
-      "source": "derived"
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20525,7 +20916,8 @@
      },
      "confirm": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],

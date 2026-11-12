@@ -668,3 +668,8 @@ consumer reading only `value` and `confirm` behaves as before. Not done: a repla
 client confirms, so it goes to the client thread first. `handoff/items/` holds outcome-bearing items (56 guard
 cases, 732 policy cases, 96 story steps; facts and truth files) made for the CIRISHolon instrument; Eric's go-ahead
 for that hour came relayed by that session.
+
+Widens and confirm, agreed with the client session (a derived reading, not Eric's ruling): the boolean is an upper
+bound, `when` narrows it. Supersede on a by_scope family: widens true, when by_scope_change (69 transitions).
+confirm.when: always 49, if_widens 205. The client will state CSD/5 L6 as: confirmed when the row widens at the
+scope it is signed at, or has no way back. "Way back" still means this table offers a withdraw or recant.

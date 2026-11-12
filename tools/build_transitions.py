@@ -176,6 +176,9 @@ def way_back(trans, lifecycle):
             cell = {"value": False, "source": "derived" if entry and closed else "gap"}
         t["undo"] = cell
         t["confirm"] = {"value": bool(t["widens"]["value"]) or back is None, "source": "derived"}
+        if t["confirm"]["value"]:
+            narrowed = back is not None and t["widens"].get("when") in ("by_scope", "by_scope_change")
+            t["confirm"]["when"] = "if_widens" if narrowed else "always"
 
 def val(cell):
     return cell.get("value") if isinstance(cell, dict) else cell
@@ -453,6 +456,9 @@ def build():
         for t in trans:
             if t["verb"] in ("attest", "authorize") and t["widens"]["value"] is True and t["widens"]["source"] == "derived" and ww:
                 t["widens"]["when"] = ww
+            # a replacing row that promotes its scope widens (CC 4.4.3.3.1); a family already at the federation cannot
+            if t["verb"] == "supersede" and ww == "by_scope" and t["widens"]["source"] == "derived" and t["widens"]["value"] is False:
+                t["widens"] = {"value": True, "when": "by_scope_change", "source": "derived", "cc_ref": "CC 4.4.3.3.1"}
         for t in trans:
             cells = text.pop((fam, t["verb"]), None)
             if cells: apply_text(fam, t, cells)
@@ -479,7 +485,7 @@ def build():
                      "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
                      "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
-                     "widens_when": "a widens cell that is true says the row MAY widen; `when` says when it does: always, or by_scope (a row signed at self scope does not widen, a row at any wider scope does). Where `when` is by_scope the confirm cell is an upper bound: the item is confirmed when the row's own scope widens or the row has no way back. A replacing row that promotes its scope (CC 4.4.3.3.1) widens too; this table does not yet mark it",
+                     "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.3.1). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
                      "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
                      "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
                      "families": len(rows), "transitions": total, "gap_cells": gaps,
