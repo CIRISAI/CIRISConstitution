@@ -1,0 +1,91 @@
+id	kind	record	class	mechanism	model	would_catch	property
+C381	Circumstances	yes	interaction	audience	mesh_net	yes	A self-scope row whose key is wrapped to a node is in that node's default served set, and a node with no wrap receives none of it.
+C382	Rules	no	drift	audience	affiliation	partly	A non-public affiliation has one federation-scope listing row carrying exactly its four listed fields, and the listing door admits it.
+C383	Circumstances	yes	data-store	audience	census_ballot	yes	An addressed census share is held by its author's node and its recipient's node and by no other.
+C384	Rules	yes	data-store	audience	standing	yes	A privately filed report's reporter and content are served to the duty holder only, never to the person named, unless the duty holder releases them.
+C385	Priorities	no	drift	fold	new:merge_policy	yes	For a licence the more restrictive state stands after merge, whatever the asserted instants or ids of the rows.
+C386	Rules	no	data-repo	lifecycle	family_model	yes	Every verb the text gives a family is in that family's verb set and has a transition.
+C387	Identity	no	drift	signer	family_model	yes	A key holding takedown without moderate cannot enable a watchlist for a group.
+C388	Identity	no	data-store	signer	family_model	yes	A watchlist row is admitted only when signed by the group's moderating authority, never by any registered key.
+C389	Facts	no	drift	clock	new:takedown	yes	The CommunityStandards withhold window is 30 days and no operator setting changes it.
+C390	Rules	yes	interaction	erasure	new:report_window	yes	Content with a removal majority and no keep-decision at window close is in exactly one state, removed or held behind consent, and that state is fixed by rule.
+C391	Process	no	data-repo	clock	new:report_window	yes	A report filed privately with the duty holder never starts a removal window.
+C392	Structure	no	data-repo	count	two_path	yes	A moderation action carries on a strict majority of the members who voted, not on a fraction of the active roster.
+C393	Structure	no	drift	count	moderation_lift	yes	A moderator's act, an age-band adjudication included, takes effect on one signature unless the community set itself a quorum.
+C394	Rules	yes	data-repo	guard	standing	yes	A reconsideration is admitted against any prior action or licence its filer has standing over, not only against a takedown notice.
+C395	Identity	no	interaction	signer	new:takedown	yes	Every takedown notice is signed by a key holding the takedown duty, and a node key holds no judgment duty.
+C396	Rules	no	drift	signer	authority_tree	yes	A delegate hands a duty on only where its own grant permits deputising, a Wise Authority seat included.
+C397	Facts	no	drift	guard	authority_tree	yes	A chain is admitted exactly when its depth is within the cap in force, which is five by default and may be configured.
+C398	Circumstances	no	data-repo	guard	authority_tree	yes	A deferral response is refused as unlicensed only where the seat row names a licensing authority.
+C399	Identity	no	interaction	signer	age_assurance	yes	A key whose only reserved role is log witness cannot raise a person's age band.
+C400	Identity	no	none	signer	family_model	no	
+C401	Structure	no	drift	signer	trust_root	yes	A substrate-family emitter is admitted on a live delegation under any root the reader trusts, with no fixed three cosigners required.
+C402	Model	no	drift	wire	moderator_election	yes	The election id is unchanged by a member joining or leaving during the lock.
+C403	Rules	no	drift	guard	membership	yes	A publication's subscriber list and a room's own listing are admitted under founder_only although they sit above the family.
+C404	Rules	yes	interaction	audience	new:key_epoch	yes	A joiner holds no key for an epoch before its admission unless the publisher signed a re-share.
+C405	Circumstances	no	drift	clock	new:key_epoch	yes	A new member's grant of the current epoch key is emitted at the minter's next sealed write, not at admission.
+C406	Rules	no	none	erasure	new:key_epoch	no	
+C407	Model	yes	interaction	wire	new:key_epoch	partly	The archive mode in force for a room is derivable from rows every member holds.
+C408	Identity	no	drift	fold	self_roster	yes	An evicted genesis key is not an admissible signer for the self and is never added back by resolution.
+C409	Rules	no	drift	guard	membership	yes	In a community that admits by invitation, a joiner with no contained location proof is still admitted.
+C410	Rules	no	drift	guard	affiliation	yes	A one-member affiliation admits under one voice with countersign and is not refused as founder_only above the family.
+C411	Rules	no	drift	guard	membership	yes	A member is seated founder only by a row that carries that member's own signature.
+C412	Structure	no	data-store	count	self_roster	yes	No single occurrence evicts another at once with no window.
+C413	Model	yes	drift	fold	consent	yes	After an admitted revocation no grant asserted earlier folds as granted, whether or not the revocation names it.
+C414	Process	no	drift	signer	consent	yes	Every consent decay row is signed by the party running the protocol and never by the substrate.
+C415	Circumstances	no	drift	clock	consent	yes	A grant lapses exactly when its valid_until passes without renewal, and no other member or scope token is read as its clock.
+C416	Identity	yes	drift	wire	new:partnership_pair	partly	In each partnership half subject_key_id names the other party, and ratification pairs the two halves on that member.
+C417	Rules	no	drift	guard	membership	yes	A change short only of signatures is held pending for the hold window and is never refused as a protocol violation.
+C418	Rules	no	drift	guard	membership	yes	A community whose geographic constraint admits nobody by containment still admits an invited joiner.
+C419	Identity	no	interaction	signer	moderator_election	yes	Whether a room with a live founder and no appointed moderator is locked for an election has one answer in every state.
+C420	Priorities	no	drift	fold	new:merge_policy	yes	A stale active licence row never overwrites a revocation after merge.
+C421	Confidence	no	drift	fold	age_assurance	yes	A self-level row never raises the band a person is read at.
+C422	Identity	no	data-store	signer	age_assurance	yes	A self-declared age row is admitted only when its signer acts for the subject.
+C423	Identity	no	data-store	signer	age_assurance	yes	An age assurance row is admitted on the same emitter test in the text and in the store, with no scope the text does not name.
+C424	Circumstances	no	none	guard	new:pqc_admission	no	
+C425	Circumstances	no	none	wire	new:pqc_admission	no	
+C426	Confidence	no	none	fold	trust_set	no	
+C427	Model	yes	drift	fold	consent	yes	Revoking the newest grant never makes an older grant read as granted.
+C428	Identity	yes	drift	fold	consent	yes	A withdrawal by the agent key named as a subject of the community trust row folds as a boundary, as the owner's does.
+C429	Rules	yes	drift	change	family_model	yes	An entity revocation is withdrawn by nobody.
+C430	Rules	no	data-repo	lifecycle	retirement	yes	A decided retirement can be withdrawn while no frozen row exists for it, and not after.
+C431	Circumstances	no	drift	clock	membership	yes	A signer who was a member at the row's signed instant counts toward the change although it has left since.
+C432	Structure	no	data-store	count	authority_tree	yes	An organisation-named licence is admitted and retracted only by the quorum of the authority it names.
+C433	Circumstances	no	data-repo	guard	new:stream_chunks	yes	A receipt on a best-effort stream is admitted against a producer-signed root with no witness cosignature.
+C434	Circumstances	no	drift	clock	consent	yes	A grant lapses on valid_until alone, independent of expires_at.
+C435	Rules	no	data-repo	clock	accord_halt	yes	A confirmed halt never expires.
+C436	Rules	no	drift	wire	family_model	yes	A session row without valid_until is refused at the door built from the member table.
+C437	Structure	no	drift	count	membership	yes	A resignation is admitted on the leaving member's signature alone.
+C438	Model	no	drift	wire	new:signed_object	yes	Every signed row carries its row mirror, and no signer member sits at the top level of a partnership half.
+C439	Rules	no	data-repo	wire	family_model	yes	A moderation row with no subject digest is admitted, and one with a malformed digest is refused.
+C440	Facts	no	data-repo	wire	family_model	partly	Every member a family's guard reads is a member of that family's body under the same name.
+C441	Model	no	interaction	wire	new:stream_chunks	yes	A sealed chunk has one name for the life of its stream, and an append that collides with it is refused across an epoch roll.
+C442	Model	no	drift	wire	new:signed_object	yes	Every row signature, an accord invocation's included, verifies over the JCS of the envelope and no other preimage.
+C443	Model	no	drift	wire	new:signed_object	yes	A derived row id is a well-formed attestation_id under the signed object's type, by a stated fold from the digest.
+C444	Rules	no	data-repo	guard	new:stream_chunks	yes	A receipt over a root that was never published is refused, not merely advised against.
+C445	Identity	no	data-store	signer	family_model	yes	A regime row is admitted only from the substrate steward's key.
+C446	Identity	no	data-store	signer	family_model	yes	An evidence row is admitted only from a key holding infra:attest.
+C447	Identity	no	data-store	signer	family_model	yes	A slashing row is admitted only from a holder of the slash duty.
+C448	Identity	no	data-store	signer	family_model	yes	A log cosignature is admitted on the witness identity type under a trusted root, with no further scope required.
+C449	Identity	yes	data-store	signer	consent	yes	A consent state row is admitted from a subject of the target row or a chain rooted at one, and by no owner arm.
+C450	Identity	no	data-store	signer	consent	yes	An expired stance is admitted only from the substrate and never from a subject or an owner.
+C451	Confidence	no	none	guard	age_assurance	no	
+C452	Structure	no	drift	fold	new:owner_binding	yes	A node with one owner and two live owner-signed rows reads steward-bound exactly as it does with one row.
+C453	Rules	yes	data-store	erasure	affiliation	yes	Under a legal hold a withdrawal is admitted and recorded and the descent it would force does not run.
+C454	Circumstances	no	drift	audience	contact	yes	An owned node's route reaches a peer only from its owner's hand or by a referral, never from an announce or the directory.
+C455	Rules	no	drift	change	anonymous	yes	No rendezvous row of one period replaces or names the row of another, so the periods are unlinkable.
+C456	Rules	yes	drift	clock	new:deletion_window	yes	A producer is in breach exactly when the window has passed with the row still present, whatever it had begun.
+C457	Structure	no	data-store	count	accord_halt	yes	A confirmed halt is never admitted on a lone signature.
+C458	Identity	no	data-store	signer	family_model	yes	No slashing verdict is admitted from a key that holds neither the slash duty nor a seat on the adjudicating body.
+C459	Circumstances	no	none	audience	mesh_net	no	
+C460	Circumstances	no	none	audience	mesh_net	no	
+C461	Circumstances	no	none	audience	family_model	no	
+C462	Circumstances	no	none	audience	family_model	no	
+C463	Circumstances	yes	data-repo	audience	mesh_net	yes	A room's membership rows are never served to a node outside its cohort, a public room's included.
+C464	Circumstances	no	data-repo	audience	anonymous	yes	An unannounced identity's occurrence row is offered to no peer that would not also be relayed its attester key.
+C465	Circumstances	yes	data-store	audience	census_ballot	yes	An addressed member share reaches the named tally member only.
+C466	Rules	no	drift	change	anonymous	yes	A replacing row is admitted only from the attester of the row it replaces, so a fresh-key rendezvous row replaces nothing.
+C467	Rules	no	data-repo	lifecycle	family_model	yes	A Goal's declarer can recant it, and the family has a recant transition.
+C468	Rules	no	data-repo	lifecycle	family_model	yes	A need row's signer can recant it, and the family has a recant transition.
+C469	Structure	no	data-store	count	family_model	yes	A group's Goal is replaced, withdrawn or recanted only by a row cosigned under the group's protocol.
+C470	Rules	no	data-store	lifecycle	census_ballot	yes	There is one composite per class and period and one partial per seat, and no row replaces either.

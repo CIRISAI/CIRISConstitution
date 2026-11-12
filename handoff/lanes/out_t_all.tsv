@@ -1,0 +1,556 @@
+id	kind	record	class	mechanism	model	would_catch	property
+C001	Facts	no	drift	fold	age_assurance	yes	With no assurance row on record the band reads under 13 with co-sign, at every place that reads it.
+C002	Structure	no	drift	count	new:guardianship	yes	A minor may hold a set of live guardians, and a per-act co-sign counts M of that set.
+C003	Rules	no	drift	guard	new:guardianship	yes	A community-scope act by an identity read at 13 to 15 is admitted only with a guardian's co-sign, whatever envelope is set.
+C004	Rules	no	interaction	change	new:guardianship	yes	A guardian's own exit takes one signature; adding or removing another guardian is never a lone act.
+C005	Circumstances	no	none	audience	new:guardianship	no	
+C006	Facts	no	gap	guard	age_assurance	partly	The teen threshold is the solo-autonomy threshold of 16.
+C007	Identity	no	drift	signer	mesh_life	partly	An agent bears no reporting duty of its own; it defers the report and its steward bears the duty.
+C008	Rules	no	none	guard	new:guardianship	no	
+C009	Manner	no	drift	other	none	no	
+C010	Structure	no	interaction	change	new:guardianship	yes	Any one guardian narrows a widening the set co-signed; widening again takes the set.
+C011	Rules	no	drift	guard	new:incapacity_binding	yes	No incapacity binding is plenary, whatever a policy sets.
+C012	Rules	no	drift	guard	new:incapacity_binding	yes	The capacity assessor is neither the steward nor the petitioner.
+C013	Rules	no	drift	guard	new:incapacity_binding	yes	A binding with no champion distinct from steward, assessor and petitioner, or with a minor as steward, is refused.
+C014	Facts	no	drift	guard	new:incapacity_binding	partly	The emergency doctrine is tier T0 and gives no steward standing; reversible_pending is admissible from T1.
+C015	Model	no	none	clock	new:incapacity_binding	no	
+C016	Manner	no	drift	other	new:incapacity_binding	partly	With no capacity row on record the person reads as having capacity.
+C017	Identity	no	gap	signer	new:incapacity_binding	partly	A binding row that names no petitioner is refused.
+C018	Manner	no	drift	other	none	no	
+C019	Rules	no	drift	guard	new:incapacity_binding	yes	A binding whose valid_until outruns the review cadence, or whose attester is the steward or the petitioner, is refused.
+C020	Facts	no	none	clock	new:incapacity_binding	no	
+C021	Rules	no	drift	guard	trust_root	yes	A lineage witness is admitted by being listed, whatever its identity_type.
+C022	Circumstances	no	none	fold	trust_root	no	
+C023	Manner	no	drift	other	trust_root	no	
+C024	Premises	no	none	count	two_path	no	
+C025	Model	no	gap	guard	trust_root	yes	A new edge naming a head other than the one it must name is refused in every mode.
+C026	Manner	no	drift	other	none	no	
+C027	Structure	no	none	change	trust_root	no	
+C028	Facts	no	drift	wire	none	no	
+C029	Manner	no	gap	other	trust_root	no	
+C030	Manner	no	none	other	none	no	
+C031	Manner	no	none	other	none	no	
+C032	Manner	no	none	other	none	no	
+C033	Circumstances	no	drift	clock	accord_halt	yes	A halt's reach is judged at each node's latch instant and never at the signer's asserted_at.
+C034	Manner	no	drift	other	cewp_node	no	
+C035	Structure	no	none	guard	cewp_node	no	
+C036	Circumstances	no	gap	clock	accord_halt	yes	A halt row reaching a node after its valid_until has one stated effect (it fires or it does not), the same at every node.
+C037	Facts	no	drift	wire	accord_halt	no	
+C038	Process	no	none	fold	accord_halt	no	
+C039	Circumstances	no	drift	clock	accord_halt	yes	The fuse counts from each node's own receipt, so a confirmation late at one node confirms nothing there.
+C040	Structure	no	drift	count	accord_roster	yes	Every accord threshold is counted over the standing roster and never over a fixed three.
+C041	Process	no	interaction	change	accord_roster	yes	A holder is seated only by a recorded strict majority of the standing roster.
+C042	Manner	no	drift	other	none	no	
+C043	Manner	no	none	other	none	no	
+C044	Manner	no	drift	count	accord_roster	partly	Confirm and resume take the same strict majority of the standing roster.
+C045	Process	no	gap	count	two_path	yes	An entrenched change takes the accord ratification in addition to the five amendment steps, never in place of them.
+C046	Facts	yes	drift	erasure	new:descent_floor	yes	An item exactly at the threshold reads below the floor; the predicate has two values.
+C047	Rules	yes	drift	erasure	new:descent_floor	yes	Revocation forces an item below the floor unless it is erasure-exempt, under legal hold, or the signer's kept copy at self scope.
+C048	Manner	yes	none	other	none	no	
+C049	Facts	yes	drift	erasure	new:descent_floor	yes	Every EjectionVerdict value has a disposition.
+C050	Structure	no	drift	count	accord_roster	yes	Root conferral takes a strict majority of the standing accord roster, as pipeline blessing does.
+C051	Rules	no	interaction	signer	accord_roster	yes	Every object an accord holder signs is in the accord's enumeration.
+C052	Priorities	no	none	guard	transport_tiers	no	
+C053	Manner	no	none	other	none	no	
+C054	Manner	no	drift	other	none	no	
+C055	Premises	no	drift	wire	accord_roster	partly	The holder key records the bundle serves are exactly those the roster counts, and no backstop key exists.
+C056	Structure	no	drift	count	accord_roster	yes	Below a strict majority the survivors can fire a halt and can neither confirm nor resume one.
+C057	Circumstances	no	none	clock	accord_roster	no	
+C058	Manner	no	drift	other	none	no	
+C059	Manner	no	drift	other	none	no	
+C060	Confidence	yes	drift	erasure	new:takedown	yes	No holder serves the bytes while an admitted notice stands.
+C061	Facts	yes	drift	erasure	new:takedown	yes	Every basis marked Immediate is destroyed on receipt at every holder, on the storage side as on the serving side.
+C062	Manner	yes	drift	erasure	new:takedown	partly	An immediate-removal notice destroys on receipt; a steward_purge dwells W before hard deletion.
+C063	Circumstances	yes	none	clock	new:takedown	no	
+C064	Facts	yes	drift	clock	new:takedown	partly	A duty-holder's takedown and a steward_purge differ in admission, reach and timing.
+C065	Manner	yes	drift	other	none	no	
+C066	Identity	yes	none	signer	withdraws_admission	no	
+C067	Facts	no	drift	lifecycle	authority_tree	no	
+C068	Rules	no	drift	guard	authority_tree	yes	A slash act is admitted only under the enforced admission test, as every other duty act is.
+C069	Manner	no	drift	other	authority_tree	no	
+C070	Manner	no	drift	other	none	no	
+C071	Rules	no	drift	guard	authority_tree	yes	A duty act is admitted only if every edge is scoped and the chain reaches an accountable root; an absent field never admits.
+C072	Rules	yes	drift	audience	standing	yes	The person named in any record, a good-faith warning included, sees that it exists, its kind, what follows and who answers for it.
+C073	Rules	no	drift	other	new:link_shaping	yes	The frame and the device class are fixed for the fleet; a node sets only whether it offers shaping.
+C074	Priorities	no	interaction	guard	new:link_shaping	yes	A node with shaping off gives a shaped link at its device class to a peer that asks.
+C075	Facts	no	drift	other	new:link_shaping	yes	Every class of the budget table, seat included, is an offer.
+C076	Rules	no	gap	guard	new:link_shaping	yes	A peer past the eight-link bound is admitted by displacement or refused, never run below its class.
+C077	Facts	no	drift	clock	new:link_shaping	partly	The hold after the last real frame is the operator's value with a ten-minute default, never a ceiling.
+C078	Facts	no	drift	wire	new:link_shaping	partly	Large is more than 64 KiB by the file's whole size, a bound apart from the 1 MiB envelope cap.
+C079	Model	no	gap	other	new:link_shaping	partly	Every named configuration key bounds a quantity some section defines.
+C080	Facts	no	data-repo	other	new:link_shaping	no	
+C081	Rules	no	gap	guard	new:privilege_register	partly	Every revision condition names its mechanical evaluator.
+C082	Facts	no	drift	other	new:privilege_register	no	
+C083	Manner	no	drift	other	none	no	
+C084	Premises	no	none	other	new:privilege_register	no	
+C085	Rules	no	drift	other	new:privilege_register	yes	The register holds two kinds of entry: privileges with all four cells, and entrenched structure listed for visibility.
+C086	Confidence	no	none	other	new:privilege_register	no	
+C087	Circumstances	no	none	count	two_path	no	
+C088	Manner	no	drift	other	none	no	
+C089	Confidence	no	drift	count	two_path	partly	The entrenchment quorum is a strict majority of the standing accord roster and is never set lower.
+C090	Manner	no	none	other	none	no	
+C091	Manner	no	drift	other	none	no	
+C092	Rules	no	drift	guard	authority_tree	yes	Every scope kind of the table, license and grant included, takes the enforced admission test.
+C093	Facts	no	drift	wire	authority_tree	yes	The closed set of infra scopes is the same eight tokens wherever it is listed.
+C094	Facts	no	drift	guard	authority_tree	yes	slash is a scope kind in the home table and in every duty scope set that admission reads.
+C095	Manner	no	drift	other	none	no	
+C096	Identity	no	drift	guard	authority_tree	yes	The agency gate reads whether the role set contains node, never whether the key is node-only.
+C097	Identity	yes	drift	signer	authority_tree	yes	A delegated act is signed by the agent occurrence key and is never read as the user's own signature.
+C098	Rules	no	drift	guard	authority_tree	yes	A key_grant is admitted only from an issuer that owns or stewards the asset or holds a grant-scoped delegation over it; possession alone is refused.
+C099	Manner	no	data-repo	other	authority_tree	no	
+C100	Circumstances	no	drift	clock	authority_tree	yes	A delegation past its valid_until is dead with the cascade of a withdrawal, and a renewal is a fresh conferral.
+C101	Manner	no	none	other	none	no	
+C102	Rules	no	interaction	change	membership	yes	A founder seat moves by a recorded ceremony or by the one bounded recovery widening while the root is stalled, and by nothing else.
+C103	Model	no	none	wire	membership	no	
+C104	Model	no	gap	guard	membership	partly	A targeted row naming a third party, and an acceptance already consumed, are each refused.
+C105	Model	no	drift	lifecycle	membership	yes	Leaving is the member's own membership:resignation row.
+C106	Structure	no	none	count	membership	no	
+C107	Circumstances	yes	drift	audience	new:owner_binding	yes	An owner binding written at self may be re-signed wider as a second row, and a serve-seat node's or an open joiner's stands at federation scope.
+C108	Identity	no	gap	signer	membership	yes	A steward-bound agent's acceptance is signed by the agent's own key; the binding is a precondition and never the vote.
+C109	Structure	no	drift	count	membership	yes	A unanimous removal is signed by every other member, and those signers are a strict majority.
+C110	Model	no	none	change	membership	no	
+C111	Manner	no	drift	other	none	no	
+C112	Manner	no	drift	other	none	no	
+C113	Model	no	drift	wire	new:stream_keys	yes	The epoch DEK is derived from the exporter secret, and the exporter secret is never wrapped.
+C114	Model	no	drift	fold	new:stream_keys	partly	A stream is kept by the producer's choice, read from history_on_join full or from the wraps.
+C115	Process	no	drift	change	new:stream_keys	yes	A stream epoch advances on every add; the community epoch DEK rotates on removal and never on admission.
+C116	Circumstances	no	drift	audience	new:stream_keys	yes	The community epoch DEK is wrapped to every current member; a stream DEK is wrapped only for a kept stream.
+C117	Circumstances	no	interaction	clock	new:freshness_window	yes	A chain-judged row older than W is refused whatever its signer's standing.
+C118	Circumstances	no	none	clock	new:freshness_window	no	
+C119	Model	no	gap	wire	new:freshness_window	partly	A row whose asserted_at is past the future bound is refused under one named token.
+C120	Circumstances	no	none	clock	new:freshness_window	no	
+C121	Facts	no	interaction	clock	new:freshness_window	yes	The freshness window is 72 hours for every row; only a proposal's own window_until reaches seven days.
+C122	Premises	no	gap	clock	new:freshness_window	partly	No rule reads a clock other than a peer's own synchronised UTC clock.
+C123	Manner	no	drift	other	none	no	
+C124	Manner	no	drift	other	none	no	
+C125	Manner	no	drift	other	none	no	
+C126	Manner	no	drift	other	none	no	
+C127	Manner	no	drift	other	none	no	
+C128	Manner	no	drift	other	none	no	
+C129	Manner	no	drift	other	none	no	
+C130	Manner	no	drift	other	none	no	
+C131	Rules	no	drift	wire	new:stream_keys	yes	Every case, separator or ordering variant of a wrap_algorithm string is refused as unknown.
+C132	Model	yes	drift	change	new:owner_binding	yes	Un-announcing retires the federation row and leaves the self row as it was.
+C133	Model	yes	drift	fold	new:owner_binding	yes	owner_of folds every live binding; an announcement supersedes none of the narrower rows.
+C134	Circumstances	yes	drift	audience	new:owner_binding	yes	A peer holds every owner binding whose scope it is in: federation for a stranger, the group's for a group peer, the addressed one for a contact.
+C135	Confidence	no	none	fold	trust_set	no	
+C136	Rules	no	drift	signer	moderator_election	yes	Nobody holds the moderate duty without the members' signed votes and their own acceptance.
+C137	Circumstances	no	drift	clock	new:moderation_window	yes	A private report opens no window; only an action raised in the room defaults to removal at the window's end.
+C138	Structure	no	none	count	affiliation	no	
+C139	Facts	no	none	clock	two_path	no	
+C140	Facts	no	drift	wire	event_lifecycle	no	
+C141	Manner	no	drift	other	event_lifecycle	no	
+C142	Manner	no	drift	other	anonymous	no	
+C143	Rules	no	drift	guard	onion_layers	partly	A phone relays under the default condition unless the owner's override says otherwise.
+C144	Structure	no	drift	count	onion_layers	yes	The floor of three is tested over the dealt layers, and the liveness of answering relays is a separate refusal.
+C145	Circumstances	no	none	audience	onion_layers	no	
+C146	Confidence	no	drift	wire	new:wire_codec	no	
+C147	Rules	no	drift	audience	contact	yes	A route reaches a peer only by its owner's own handing, and a referral carries only routes whose owners offered relay.
+C148	Manner	no	drift	other	new:text_lint	no	
+C149	Manner	no	drift	other	new:text_lint	no	
+C150	Facts	no	gap	clock	new:rendezvous_mailbox	partly	Every bound a mailbox cites resolves to a stated number.
+C151	Identity	no	drift	guard	onion_layers	yes	A node is dealt as a relay only if it is owner-bound under a root in the genesis charter set.
+C152	Rules	no	drift	other	onion_layers	partly	A serve seat's functions in the tier are one closed list that includes relaying and the federation-scope mailbox.
+C153	Manner	no	drift	other	new:text_lint	no	
+C154	Structure	no	none	count	census_ballot	yes	At most one return per owner per period is counted, however many nodes the owner has.
+C155	Identity	no	none	guard	census_ballot	partly	The door admits a share to any serve seat, and an honest sender uses only the pair drawn for the period.
+C156	Model	no	drift	fold	census_ballot	yes	A published census row carries the exact field sum, and rounding never changes a stored value.
+C157	Model	no	gap	count	census_ballot	partly	Every quantity a gate reads is a quantity the census publishes.
+C158	Model	no	drift	wire	new:key_cascade	yes	Every self and family write is sealed under a fresh key, so a removal needs no rotation.
+C159	Identity	no	drift	wire	new:key_cascade	yes	A wrap's recipient is always an occurrence encryption key and never an identity key.
+C160	Circumstances	no	none	audience	new:key_cascade	yes	At community and affiliations a joiner reads no earlier epoch, and at self and family admission re-keys the walk.
+C161	Identity	no	drift	signer	membership	yes	An acceptance is admitted only when its signer resolves to the invitee, and a node gives none of its own.
+C162	Manner	no	drift	other	new:text_lint	no	
+C163	Identity	no	gap	signer	self_roster	yes	An occurrence binding is admitted only when signed by the identity or a current occurrence of it.
+C164	Structure	no	gap	count	mesh_life	yes	A seated serve node's key is rebound only by the holders cosigning at the charter's M, never by one holder or the node itself.
+C165	Process	no	drift	guard	self_roster	yes	A device is added by one approval that signs two rows after the owner compares a code their own node derived.
+C166	Identity	no	drift	signer	self_roster	yes	An unowned node signs nothing but a device-join request.
+C167	Facts	no	drift	wire	new:wire_codec	partly	Each FedCode kind maps to exactly one value of one named vocabulary.
+C168	Facts	no	drift	other	new:text_lint	no	
+C169	Rules	no	drift	wire	new:key_cascade	yes	No wrapped key is admitted under the v1 suite on any axis.
+C170	Rules	yes	drift	change	new:key_cascade	yes	A withdraws or recants that names a key grant is refused.
+C171	Facts	no	drift	clock	new:takedown	yes	A Dmca512 withhold reverses at ten days counted from each holder's tombstone.
+C172	Rules	yes	drift	change	mesh_net	yes	Only its signer retracts a holding claim.
+C173	Rules	no	drift	fold	consent	yes	A peering with a withdrawn half never folds as ratified.
+C174	Rules	no	drift	audience	consent	yes	No replication list entry has scope self.
+C175	Manner	no	drift	other	new:text_lint	no	
+C176	Manner	no	drift	other	new:text_lint	no	
+C177	Manner	no	gap	other	new:text_lint	no	
+C178	Rules	no	drift	guard	new:namespace_matcher	yes	An exempt family is admitted with or without a tail.
+C179	Circumstances	no	drift	guard	new:namespace_matcher	partly	An ungated family may be admitted without a registry row, and a gated family never.
+C180	Facts	no	data-repo	guard	new:namespace_matcher	partly	Every gated stem of the manifest fits the definition of gated, and an unclaimed leaf under it is refused.
+C181	Rules	no	none	audience	new:capacity_gate	partly	No read rule of the substrate redacts a capacity row.
+C182	Rules	no	none	guard	new:capacity_gate	no	
+C183	Identity	no	none	signer	authority_tree	yes	A keyless family root charters and confers by a member's row whose signature set reaches the family's protocol.
+C184	Facts	no	none	other	new:text_lint	no	
+C185	Manner	no	drift	other	new:text_lint	no	
+C186	Manner	no	drift	other	new:text_lint	no	
+C187	Confidence	no	drift	guard	new:capacity_gate	no	
+C188	Model	no	drift	guard	consent	yes	A capacity row is admitted only under the scope member of a granted consent row, and no fold reads a consent scope dimension row.
+C189	Model	yes	drift	fold	affiliation	yes	Dissolution is reached with no deciding seat left, so it is a verdict of the fold and needs no signed row.
+C190	Manner	no	none	clock	authority_tree	no	
+C191	Model	no	gap	wire	affiliation	partly	Every value the affiliation record admits belongs to exactly one named member.
+C192	Rules	no	none	count	affiliation	yes	In a body with one deciding seat an act against a member is admitted only with a countersign from outside that seat, and otherwise stands as a proposal.
+C193	Facts	no	none	other	new:text_lint	no	
+C194	Manner	no	drift	other	new:text_lint	no	
+C195	Manner	no	drift	other	new:text_lint	no	
+C196	Identity	no	drift	guard	trust_set	partly	A pinned name confers no trust until it resolves against an anchored fingerprint.
+C197	Structure	no	drift	count	accord_roster	yes	A charter change carries on a strict majority of the standing roster, and only a fresh genesis needs every holder.
+C198	Facts	no	none	guard	trust_root	partly	A fresh node's pairs for every canonical come only from the bundle, and any other way pins one link.
+C199	Identity	no	drift	signer	trust_set	yes	No trust or un-trust edge of a node is honoured unless its owner signed it.
+C200	Manner	no	drift	other	new:text_lint	no	
+C201	Process	no	drift	clock	moderator_election	yes	A ballot with no votes has no winner and stays open, and no node's clock closes or reopens it.
+C202	Rules	no	drift	guard	moderator_election	yes	Every member is a candidate, and a track record orders the ballot and never excludes.
+C203	Circumstances	no	drift	guard	moderator_election	yes	A moderator's act is applied only if a live holder of the role exists at apply time, whatever ended the last one.
+C204	Identity	no	drift	guard	new:owner_binding	yes	The accountable-root predicate holds for an adult user key that is not steward-bound and for a steward-bound key, so a seated holder always satisfies it.
+C205	Model	no	drift	fold	trust_root	yes	A head and its witnessed descendant are never read as equivocation.
+C206	Structure	no	drift	count	trust_root	yes	The witness quorum is counted only over the witnesses the charter lists.
+C207	Model	no	none	wire	trust_root	partly	A witness's first cosignature carries an empty prior and is checked for descent against the genesis head.
+C208	Model	no	drift	fold	new:owner_binding	yes	An identity occurrence never makes a key steward-bound, and the steward fold reads owner-bindings alone.
+C209	Model	no	drift	fold	new:owner_binding	partly	The steward predicate is membership of a set that has at most one member.
+C210	Structure	no	none	count	new:owner_binding	yes	Custody is single-valued while agency delegation may have several parents.
+C211	Circumstances	no	none	clock	accord_halt	partly	A halt fires with no window before it, and the fuse window follows it.
+C212	Circumstances	no	drift	clock	self_roster	yes	A row from an evicted key is admitted only when dated within W before the eviction.
+C213	Circumstances	no	gap	clock	self_roster	yes	A live roster key's row is admitted at any signed instant, and that reach is listed among the residuals.
+C214	Rules	no	drift	audience	mesh_net	yes	A replication target above the audience is read as the audience and never refused.
+C215	Model	no	drift	audience	consent	partly	A node outside the grant's cohorts holds no grant, and no deny row exists on the wire.
+C216	Circumstances	no	interaction	audience	consent	yes	An owner's grant for their own node is held at self and publishes no cohort id.
+C217	Rules	no	none	guard	mesh_life	yes	An unclaimed node is in no cohort's audience and serves infrastructure only.
+C218	Identity	no	drift	signer	trust_set	yes	No roster is checked for a licensing authority, and a licence is honoured only through the reader's own edge.
+C219	Structure	no	drift	count	affiliation	yes	A licence is admitted when its signature set meets the affiliation's protocol, a one-member protocol included.
+C220	Manner	no	drift	other	new:text_lint	no	
+C221	Rules	no	none	wire	new:wire_codec	partly	A relay that re-serialises changes no signing byte.
+C222	Circumstances	no	drift	wire	new:wire_codec	partly	An intake refusal made before the parse completes carries the same token as the canonical-bytes refusal.
+C223	Facts	no	drift	wire	new:wire_codec	yes	An envelope of exactly 1 MiB of canonical bytes is admitted and one byte more is refused.
+C224	Confidence	no	drift	guard	new:text_lint	no	
+C225	Facts	no	drift	other	new:text_lint	no	
+C226	Identity	no	drift	signer	family_model	yes	A build manifest has one signer rule: the pipeline that built it, judged by the reader.
+C227	Circumstances	no	interaction	audience	consent	yes	No federation-scope row names an unannounced node.
+C228	Rules	yes	data-store	erasure	withdraws_admission	yes	An ordinary row about a subject is removed only by an admitted withdraws, and no node-local purge removes it.
+C229	Identity	no	gap	signer	self_roster	yes	Every revocation of an occurrence has a named signer, the key that could sign the occurrence.
+C230	Rules	no	drift	audience	mesh_net	yes	No node outside the audience holds a cohort's bytes, and carrying a sealed frame is not holding.
+C231	Facts	no	drift	wire	new:wire_codec	partly	The set of refusal tokens is closed and every token the text names is in it.
+C232	Model	no	drift	wire	new:wire_codec	yes	The key record's member set is closed and holds no hardware class outside the attestation evidence.
+C233	Facts	no	drift	other	new:text_lint	no	
+C234	Rules	no	drift	other	new:deferral	partly	A deferral trigger stops the action in question and leaves the agent running on everything else.
+C235	Facts	no	none	other	new:text_lint	no	
+C236	Manner	no	drift	other	new:text_lint	no	
+C237	Manner	no	drift	other	new:text_lint	no	
+C238	Rules	yes	drift	change	withdraws_admission	partly	A subject named by canonical hash withdraws under rule 3, through its proxy.
+C239	Model	no	none	wire	new:wire_codec	no	
+C240	Circumstances	no	interaction	audience	mesh_net	yes	A private cohort is invisible to an outsider who holds no envelope of it.
+C241	Model	no	drift	wire	new:wire_codec	yes	Every member the text names is a member of the signed-object table.
+C242	Manner	no	drift	other	new:text_lint	no	
+C243	Manner	no	drift	other	new:text_lint	no	
+C244	Process	no	drift	change	new:owner_binding	yes	Ownership moves by withdraw-then-rebind or supersede-then-rebind, and at most one live owner-binding holds at any instant.
+C245	Manner	no	none	other	guarantees	no	
+C246	Rules	no	none	guard	authority_tree	yes	A cycle of delegation edges is refused, and a cycle of acceptance edges is walked once.
+C247	Rules	no	drift	guard	new:owner_binding	yes	An identity occurrence never makes a key steward-bound, and the steward fold reads owner-bindings alone.
+C248	Process	no	none	guard	new:owner_binding	yes	A node takes part in normal operation only after the claim that binds it to its owner.
+C249	Circumstances	no	drift	audience	mesh_net	yes	A per-item replication target is available at every tier but the anonymous one.
+C250	Manner	no	drift	other	new:text_lint	no	
+C251	Manner	no	none	other	new:text_lint	no	
+C252	Rules	no	interaction	guard	mesh_life	yes	No serve seat is held by a node whose owner has not announced it.
+C253	Rules	no	interaction	audience	new:owner_binding	yes	A minor's node never carries an owner-binding at federation scope.
+C254	Circumstances	no	drift	audience	mesh_net	yes	The roster of an encrypted tier is never discoverable, and only a public room is found, by its listing row.
+C255	Rules	yes	none	change	withdraws_admission	yes	A custody report is withdrawn only by the device that signed it.
+C256	Facts	no	drift	guard	new:namespace_matcher	yes	A score is admitted only if it lies in the polarity class the registry gives its family.
+C257	Manner	no	none	other	new:text_lint	no	
+C258	Manner	no	none	other	new:text_lint	no	
+C259	Rules	no	data-repo	wire	new:wire_codec	yes	A row of any attestation type may carry a reference to another row, with composer meaning on the three composers alone.
+C260	Circumstances	no	drift	audience	mesh_net	yes	A holding claim's scope is one of the five the rule lists, and any other is refused.
+C261	Manner	no	drift	other	new:text_lint	no	
+C262	Rules	yes	drift	audience	standing	yes	A row about a person reaches that person, the author's self note alone excepted, and a duty-holder's record shows at least its existence, kind, consequence and answerer.
+C263	Manner	no	none	other	new:text_lint	no	
+C264	Facts	no	drift	wire	new:wire_codec	partly	Every signed member has exactly one row that gives its meaning.
+C265	Circumstances	yes	gap	change	withdraws_admission	partly	A withdrawal reaches forward only, so a copy taken before it is never recalled.
+C266	Model	no	drift	signer	trust_set	partly	Every reserved role is a delegation edge resolved against a root the reader trusts.
+C267	Structure	no	gap	guard	authority_tree	yes	No consumer policy walks a chain of more than five hops.
+C268	Rules	yes	drift	audience	standing	yes	A bounded-scope row names only keys it reaches, and is otherwise refused.
+C269	Circumstances	no	gap	clock	accord_halt	yes	Removing a trust entry never clears a halt already latched.
+C270	Manner	no	drift	other	new:text_lint	no	
+C271	Rules	yes	none	audience	standing	partly	A subject with authority to withdraw a row may have no reach over it when the row is the author's self note.
+C272	Model	yes	drift	erasure	new:deletion_window	yes	A deletion window is judged on the row that carries it, and a breach is that row still present after its deadline.
+C273	Manner	no	drift	other	new:text_lint	no	
+C274	Rules	no	drift	audience	mesh_net	yes	A private cohort is invisible to an outsider who holds no envelope of it.
+C275	Rules	yes	none	change	consent	partly	A revoked stance bounds grants in the consent fold and retires no row.
+C276	Rules	yes	interaction	change	withdraws_admission	yes	A self-asserted binding of a key to a hash never admits that key's withdraws against a row naming the hash.
+C277	Manner	no	none	other	new:text_lint	no	
+C278	Rules	no	drift	audience	mesh_net	yes	A row moves to a peer when the peer pulls it and its audience names the peer, or unasked under a replication grant.
+C279	Facts	no	none	wire	trust_root	partly	An absent witness quorum reads as zero, which is witnessed mode off.
+C280	Model	no	drift	wire	new:key_cascade	yes	A key grant is a scores row of the key-grant family, one per recipient, with no discriminator of its own.
+C281	Rules	yes	drift	change	withdraws_admission	yes	A withdraws is admitted on any one path of the admission table and on no other.
+C282	Manner	no	drift	other	new:text_lint	no	
+C283	Structure	no	interaction	count	membership	yes	A widening is admitted by exactly one rule, so no state exists where the declared protocol admits and the policy row refuses.
+C284	Structure	no	interaction	count	two_path	yes	No declared protocol admits on fewer voices than the floor at any roster size.
+C285	Structure	no	interaction	count	two_path	yes	The base of an act cosigned under a declared protocol is the standing roster.
+C286	Structure	no	none	count	two_path	yes	A community removal carries on at least two voices at every base of two or more.
+C287	Identity	no	drift	signer	family_model	yes	A build manifest has one signer rule: the pipeline that built it, judged by the reader.
+C288	Rules	no	gap	signer	new:signer_gate	yes	An accord holder's key signs only the families the enumeration of CC 4.2.1 lists, so every registered accord family is either in the enumeration or has no admissible signer.
+C289	Identity	no	none	count	accord_roster	no	
+C290	Identity	no	drift	signer	authority_tree	partly	A deferral response is admitted only on a chain from the party that conferred the seat, and that party can always withdraw the seat.
+C291	Rules	no	drift	audience	new:key_cascade	yes	A node denied for a cohort by its owner's allow list never receives a key for that cohort.
+C292	Circumstances	no	none	audience	mesh_net	no	
+C293	Rules	no	none	audience	mesh_net	no	
+C294	Rules	no	none	audience	transport_tiers	no	
+C295	Rules	no	drift	audience	transport_tiers	yes	A not-yet-Rooted sealed link carries exactly the four listed classes, and a row a bounded cohort delivers to the peer as its member is among them.
+C296	Rules	no	none	guard	new:namespace_gate	no	
+C297	Identity	no	none	audience	mesh_net	no	
+C298	Circumstances	no	interaction	guard	new:publish_seam	yes	Every item that becomes public was hash-matched at the seam it crossed, whether or not the receiving group enabled a list.
+C299	Circumstances	no	drift	guard	new:publish_seam	yes	Matching runs only at a promotion into the Commons or a post into a public room, and never inside a private cohort.
+C300	Structure	yes	drift	change	withdraws_admission	yes	A proxy withdrawal is admitted only on an edge from the subject's hash to the proxy key; an edge from a parent key to a student hash admits nothing.
+C301	Rules	yes	none	erasure	withdraws_admission	no	
+C302	Circumstances	yes	drift	erasure	new:takedown	yes	A court-order notice reaches the bytes plane only and never carries the dwell or the selection digest of a steward purge.
+C303	Circumstances	yes	none	clock	new:takedown	no	
+C304	Model	yes	drift	fold	new:deletion_window	yes	A deletion is in breach whenever its window has closed and the row is still present with none of the three composers against it, whatever completion row was emitted.
+C305	Model	yes	drift	fold	new:deletion_window	yes	A deletion is in breach whenever its window has closed and the row is still present with none of the three composers against it, whatever completion row was emitted.
+C306	Circumstances	yes	none	clock	new:takedown	no	
+C307	Structure	yes	data-repo	count	new:takedown	yes	A steward-purge notice is admitted only when cosigned under the trust root's consensus protocol, never on one voice.
+C308	Process	yes	none	clock	consent	no	
+C309	Circumstances	no	drift	clock	consent	partly	Every window names its clock: a count window runs from the instant the node first held the proposal, and the freshness bound W runs from the signed instant.
+C310	Process	no	none	fold	accord_halt	partly	A resumption that names one halt ends the halt at every node, whichever halt id that node latched first.
+C311	Identity	no	drift	audience	new:key_cascade	yes	Every wrap of a content key is made by the sealer to a current recipient occurrence, and no member's substrate re-wraps.
+C312	Priorities	yes	interaction	erasure	new:takedown	yes	Bytes under a live legal hold are never destroyed, and an immediate-removal notice always destroys on receipt: the two cannot both hold for one object.
+C313	Circumstances	no	drift	other	new:cre_trigger	partly	A Catastrophic-Risk Evaluation opens exactly when a system is assessed at RM 4 or above.
+C314	Process	no	none	guard	trust_set	no	
+C315	Structure	no	interaction	audience	alm	yes	A small-group realtime chunk reaches a member only on a direct link from its publisher, and no member forwards it.
+C316	Circumstances	no	drift	guard	age_assurance	yes	A person with no assurance on record may always act at their own and their family's scopes.
+C317	Rules	no	drift	guard	age_assurance	yes	No default setting leads an owner read at the minor band into an act that admission refuses.
+C318	Identity	no	interaction	audience	authority_tree	yes	A report from a child with no guardian present always has a seated receiver.
+C319	Rules	no	interaction	guard	new:namespace_gate	yes	A row of a family with no registry row is never admitted.
+C320	Process	no	drift	guard	new:namespace_gate	yes	A row whose dimension does not resolve through the registry is refused at admission, on all five row types.
+C321	Identity	no	drift	guard	new:signer_gate	yes	No key record holds the node type together with agent or user.
+C322	Facts	no	drift	wire	new:wire_shape	yes	A label's fingerprint recomputes from its key at one fixed length, so a verifier never meets a label it cannot check.
+C323	Rules	no	data-repo	signer	new:signer_gate	yes	A content-rating row is admitted only from a key that holds the trusted-publisher role by delegation.
+C324	Identity	no	drift	signer	new:signer_gate	yes	A reserved-prefix row is admitted only when the role was conferred by delegation; listing the role on one's own key record confers nothing.
+C325	Structure	no	drift	count	self_roster	yes	The lone path lands unless a strict majority of the other keys objects; one objector among two others does not cancel it.
+C326	Rules	yes	drift	guard	new:key_cascade	yes	A key grant that names the recipient occurrence as its attested key is admitted at the content's scope.
+C327	Rules	yes	drift	guard	new:key_cascade	yes	A key grant that names the recipient occurrence as its attested key is admitted at the content's scope.
+C328	Process	no	drift	guard	new:namespace_gate	yes	A row whose dimension does not resolve through the registry is refused at admission, on all five row types.
+C329	Identity	no	drift	signer	self_roster	yes	An agent's key never signs an owner act, even when it is seated as an occurrence of the person's identity.
+C330	Rules	yes	drift	guard	new:key_cascade	yes	A key grant that names the recipient occurrence as its attested key is admitted at the content's scope.
+C331	Rules	yes	data-store	audience	standing	yes	A bounded-scope row that names a key outside its audience is refused.
+C332	Rules	yes	interaction	change	new:supersede_rule	yes	A replacing row signed by someone other than the prior row's attester is admitted only where a named rule allows it, so a guardian is never displaced by a stranger's row.
+C333	Rules	yes	drift	change	new:supersede_rule	yes	A replacing row signed by someone other than the prior row's attester is admitted only where a named rule allows it.
+C334	Model	yes	drift	fold	new:supersede_rule	yes	A widening leaves the narrower row standing beside it and retires nothing.
+C335	Structure	no	interaction	audience	alm	yes	A small-group realtime chunk reaches a member only on a direct link from its publisher, and no member forwards it.
+C336	Structure	no	interaction	audience	alm	yes	A small-group realtime chunk reaches a member only on a direct link from its publisher, and no member forwards it.
+C337	Circumstances	no	none	audience	transport_tiers	no	
+C338	Rules	no	none	audience	transport_tiers	no	
+C339	Manner	no	none	other	trust_set	no	
+C340	Identity	no	none	fold	trust_set	no	
+C341	Model	no	drift	wire	new:wire_shape	yes	No outer nonce repeats under one link key.
+C342	Model	no	drift	wire	new:wire_shape	yes	The trailer a relay cuts from a chunk is the trailer the publisher signed, byte for byte, in the shipping form.
+C343	Rules	no	drift	guard	new:namespace_gate	yes	Every dimension the text permits a producer to emit matches a registered shape and is admitted.
+C344	Rules	yes	none	change	withdraws_admission	no	
+C345	Circumstances	yes	drift	change	withdraws_admission	yes	A proxy withdrawal is never admitted while two bindings for the same person compete.
+C346	Rules	yes	data-repo	change	withdraws_admission	yes	A rule-2 or rule-4 withdrawal of a live owner-binding is refused without an adjudication reference, and the owner's own withdrawal needs none.
+C347	Model	no	data-repo	fold	census_ballot	yes	The expected-active count counts each owner once in a period, however many of the last four periods the owner was active in.
+C348	Model	no	data-repo	fold	census_ballot	yes	A frozen base is released only by a period whose count reaches two thirds of the count before the fall.
+C349	Rules	no	drift	guard	census_ballot	yes	A census composite whose largest source multiplicity is not 1 is refused.
+C350	Circumstances	no	drift	guard	census_ballot	yes	The floor of ten owners refuses a census composite and never a ballot tally.
+C351	Structure	no	interaction	count	two_path	yes	The base of a members' count is one function of the roster and the census, the same in every sentence that names it.
+C352	Model	no	data-repo	count	two_path	yes	Above the small-community size the base of a count is the census count under the ratchet, not a function of roster size alone.
+C353	Facts	no	drift	count	two_path	yes	The size at or below which the base is the standing roster is the base law's k, and is not the fewest-voices minimum.
+C354	Rules	yes	interaction	guard	consent	yes	A grant of consent that names no scope is never admitted.
+C355	Facts	yes	none	lifecycle	consent	no	
+C356	Rules	no	drift	wire	new:wire_shape	yes	A membership proposal without an expiry instant is refused.
+C357	Model	no	none	wire	new:wire_shape	no	
+C358	Rules	no	data-repo	guard	new:stream_receipt	yes	A receipt on a stream that is not accountable is admitted against a published head without a witness cosignature.
+C359	Identity	no	drift	signer	new:signer_gate	yes	A key record is admitted only under its own key by possession; an anchor's scrub is a cosignature and never the base signature.
+C360	Identity	yes	drift	signer	new:partnership_pair	yes	A standalone partnership grant signed by the granting party and naming only the partner is admitted.
+C361	Model	yes	drift	wire	new:partnership_pair	yes	A grant and an acceptance built as the text directs always ratify as a pair.
+C362	Identity	yes	none	signer	consent	no	
+C363	Rules	no	data-repo	signer	new:signer_gate	yes	No delegate writes a ledger row; only the ledger's single owner does.
+C364	Identity	no	data-repo	signer	age_assurance	yes	A self-declared age row is admitted only when its signer is the subject's own occurrence or an admitted occurrence of it.
+C365	Identity	no	data-store	signer	new:signer_gate	yes	A watchlist is enabled or disabled only by a key holding the group's moderate or takedown authority.
+C366	Identity	no	data-store	signer	new:signer_gate	yes	A petition is the petitioner's own row, and each of the other three adjudication states is admitted only from the seated quorum.
+C367	Process	no	data-repo	lifecycle	retirement	yes	The decider can withdraw a decided retirement for as long as no frozen row exists.
+C368	Identity	no	drift	signer	new:signer_gate	yes	A location proof is admitted only under the subject's own signature; no delegation mints one.
+C369	Structure	no	data-repo	count	accord_roster	yes	A canonical rebind is admitted only when cosigned at the accord charter's threshold, never from one holder.
+C370	Rules	yes	drift	change	withdraws_admission	yes	The subject of a quarantine marker can never withdraw it.
+C371	Structure	no	data-store	count	affiliation	yes	An organisation's owner-binding is admitted only when cosigned under the named affiliation's protocol.
+C372	Circumstances	no	data-repo	clock	consent	yes	A licence, a deferral response and a membership check are judged at their signed instant, bounded by W, not at receipt.
+C373	Circumstances	no	none	audience	anonymous	no	
+C374	Structure	no	data-repo	count	accord_roster	yes	A canonical rebind is admitted only when cosigned at the accord charter's threshold, never from one holder.
+C375	Facts	yes	drift	clock	new:takedown	yes	The withhold window of each windowed basis is the one fixed number of days the home section gives, and no operator sets it.
+C376	Rules	yes	data-repo	clock	new:takedown	yes	Every windowed basis stops serving on admission, runs its window, and destroys the bytes at its close.
+C377	Rules	yes	data-repo	erasure	new:takedown	yes	Bytes withheld under a windowed notice are not destroyed at the close of the window if a reversal was admitted inside it.
+C378	Facts	no	data-repo	clock	accord_halt	yes	A confirmed halt never expires; only the heartbeat row carries a refresh bound.
+C379	Circumstances	no	drift	clock	mesh_net	partly	A setting the root's quorum establishes may be durable; only the unilateral emergency form carries a time limit, and either form only restricts.
+C380	Process	no	drift	audience	mesh_net	yes	Every claimed node of a member that the allow list admits receives the community's content without any act of the user.
+C381	Circumstances	yes	interaction	audience	mesh_net	yes	A self-scope row whose key is wrapped to a node is in that node's default served set, and a node with no wrap receives none of it.
+C382	Rules	no	drift	audience	affiliation	partly	A non-public affiliation has one federation-scope listing row carrying exactly its four listed fields, and the listing door admits it.
+C383	Circumstances	yes	data-store	audience	census_ballot	yes	An addressed census share is held by its author's node and its recipient's node and by no other.
+C384	Rules	yes	data-store	audience	standing	yes	A privately filed report's reporter and content are served to the duty holder only, never to the person named, unless the duty holder releases them.
+C385	Priorities	no	drift	fold	new:merge_policy	yes	For a licence the more restrictive state stands after merge, whatever the asserted instants or ids of the rows.
+C386	Rules	no	data-repo	lifecycle	family_model	yes	Every verb the text gives a family is in that family's verb set and has a transition.
+C387	Identity	no	drift	signer	family_model	yes	A key holding takedown without moderate cannot enable a watchlist for a group.
+C388	Identity	no	data-store	signer	family_model	yes	A watchlist row is admitted only when signed by the group's moderating authority, never by any registered key.
+C389	Facts	no	drift	clock	new:takedown	yes	The CommunityStandards withhold window is 30 days and no operator setting changes it.
+C390	Rules	yes	interaction	erasure	new:report_window	yes	Content with a removal majority and no keep-decision at window close is in exactly one state, removed or held behind consent, and that state is fixed by rule.
+C391	Process	no	data-repo	clock	new:report_window	yes	A report filed privately with the duty holder never starts a removal window.
+C392	Structure	no	data-repo	count	two_path	yes	A moderation action carries on a strict majority of the members who voted, not on a fraction of the active roster.
+C393	Structure	no	drift	count	moderation_lift	yes	A moderator's act, an age-band adjudication included, takes effect on one signature unless the community set itself a quorum.
+C394	Rules	yes	data-repo	guard	standing	yes	A reconsideration is admitted against any prior action or licence its filer has standing over, not only against a takedown notice.
+C395	Identity	no	interaction	signer	new:takedown	yes	Every takedown notice is signed by a key holding the takedown duty, and a node key holds no judgment duty.
+C396	Rules	no	drift	signer	authority_tree	yes	A delegate hands a duty on only where its own grant permits deputising, a Wise Authority seat included.
+C397	Facts	no	drift	guard	authority_tree	yes	A chain is admitted exactly when its depth is within the cap in force, which is five by default and may be configured.
+C398	Circumstances	no	data-repo	guard	authority_tree	yes	A deferral response is refused as unlicensed only where the seat row names a licensing authority.
+C399	Identity	no	interaction	signer	age_assurance	yes	A key whose only reserved role is log witness cannot raise a person's age band.
+C400	Identity	no	none	signer	family_model	no	
+C401	Structure	no	drift	signer	trust_root	yes	A substrate-family emitter is admitted on a live delegation under any root the reader trusts, with no fixed three cosigners required.
+C402	Model	no	drift	wire	moderator_election	yes	The election id is unchanged by a member joining or leaving during the lock.
+C403	Rules	no	drift	guard	membership	yes	A publication's subscriber list and a room's own listing are admitted under founder_only although they sit above the family.
+C404	Rules	yes	interaction	audience	new:key_epoch	yes	A joiner holds no key for an epoch before its admission unless the publisher signed a re-share.
+C405	Circumstances	no	drift	clock	new:key_epoch	yes	A new member's grant of the current epoch key is emitted at the minter's next sealed write, not at admission.
+C406	Rules	no	none	erasure	new:key_epoch	no	
+C407	Model	yes	interaction	wire	new:key_epoch	partly	The archive mode in force for a room is derivable from rows every member holds.
+C408	Identity	no	drift	fold	self_roster	yes	An evicted genesis key is not an admissible signer for the self and is never added back by resolution.
+C409	Rules	no	drift	guard	membership	yes	In a community that admits by invitation, a joiner with no contained location proof is still admitted.
+C410	Rules	no	drift	guard	affiliation	yes	A one-member affiliation admits under one voice with countersign and is not refused as founder_only above the family.
+C411	Rules	no	drift	guard	membership	yes	A member is seated founder only by a row that carries that member's own signature.
+C412	Structure	no	data-store	count	self_roster	yes	No single occurrence evicts another at once with no window.
+C413	Model	yes	drift	fold	consent	yes	After an admitted revocation no grant asserted earlier folds as granted, whether or not the revocation names it.
+C414	Process	no	drift	signer	consent	yes	Every consent decay row is signed by the party running the protocol and never by the substrate.
+C415	Circumstances	no	drift	clock	consent	yes	A grant lapses exactly when its valid_until passes without renewal, and no other member or scope token is read as its clock.
+C416	Identity	yes	drift	wire	new:partnership_pair	partly	In each partnership half subject_key_id names the other party, and ratification pairs the two halves on that member.
+C417	Rules	no	drift	guard	membership	yes	A change short only of signatures is held pending for the hold window and is never refused as a protocol violation.
+C418	Rules	no	drift	guard	membership	yes	A community whose geographic constraint admits nobody by containment still admits an invited joiner.
+C419	Identity	no	interaction	signer	moderator_election	yes	Whether a room with a live founder and no appointed moderator is locked for an election has one answer in every state.
+C420	Priorities	no	drift	fold	new:merge_policy	yes	A stale active licence row never overwrites a revocation after merge.
+C421	Confidence	no	drift	fold	age_assurance	yes	A self-level row never raises the band a person is read at.
+C422	Identity	no	data-store	signer	age_assurance	yes	A self-declared age row is admitted only when its signer acts for the subject.
+C423	Identity	no	data-store	signer	age_assurance	yes	An age assurance row is admitted on the same emitter test in the text and in the store, with no scope the text does not name.
+C424	Circumstances	no	none	guard	new:pqc_admission	no	
+C425	Circumstances	no	none	wire	new:pqc_admission	no	
+C426	Confidence	no	none	fold	trust_set	no	
+C427	Model	yes	drift	fold	consent	yes	Revoking the newest grant never makes an older grant read as granted.
+C428	Identity	yes	drift	fold	consent	yes	A withdrawal by the agent key named as a subject of the community trust row folds as a boundary, as the owner's does.
+C429	Rules	yes	drift	change	family_model	yes	An entity revocation is withdrawn by nobody.
+C430	Rules	no	data-repo	lifecycle	retirement	yes	A decided retirement can be withdrawn while no frozen row exists for it, and not after.
+C431	Circumstances	no	drift	clock	membership	yes	A signer who was a member at the row's signed instant counts toward the change although it has left since.
+C432	Structure	no	data-store	count	authority_tree	yes	An organisation-named licence is admitted and retracted only by the quorum of the authority it names.
+C433	Circumstances	no	data-repo	guard	new:stream_chunks	yes	A receipt on a best-effort stream is admitted against a producer-signed root with no witness cosignature.
+C434	Circumstances	no	drift	clock	consent	yes	A grant lapses on valid_until alone, independent of expires_at.
+C435	Rules	no	data-repo	clock	accord_halt	yes	A confirmed halt never expires.
+C436	Rules	no	drift	wire	family_model	yes	A session row without valid_until is refused at the door built from the member table.
+C437	Structure	no	drift	count	membership	yes	A resignation is admitted on the leaving member's signature alone.
+C438	Model	no	drift	wire	new:signed_object	yes	Every signed row carries its row mirror, and no signer member sits at the top level of a partnership half.
+C439	Rules	no	data-repo	wire	family_model	yes	A moderation row with no subject digest is admitted, and one with a malformed digest is refused.
+C440	Facts	no	data-repo	wire	family_model	partly	Every member a family's guard reads is a member of that family's body under the same name.
+C441	Model	no	interaction	wire	new:stream_chunks	yes	A sealed chunk has one name for the life of its stream, and an append that collides with it is refused across an epoch roll.
+C442	Model	no	drift	wire	new:signed_object	yes	Every row signature, an accord invocation's included, verifies over the JCS of the envelope and no other preimage.
+C443	Model	no	drift	wire	new:signed_object	yes	A derived row id is a well-formed attestation_id under the signed object's type, by a stated fold from the digest.
+C444	Rules	no	data-repo	guard	new:stream_chunks	yes	A receipt over a root that was never published is refused, not merely advised against.
+C445	Identity	no	data-store	signer	family_model	yes	A regime row is admitted only from the substrate steward's key.
+C446	Identity	no	data-store	signer	family_model	yes	An evidence row is admitted only from a key holding infra:attest.
+C447	Identity	no	data-store	signer	family_model	yes	A slashing row is admitted only from a holder of the slash duty.
+C448	Identity	no	data-store	signer	family_model	yes	A log cosignature is admitted on the witness identity type under a trusted root, with no further scope required.
+C449	Identity	yes	data-store	signer	consent	yes	A consent state row is admitted from a subject of the target row or a chain rooted at one, and by no owner arm.
+C450	Identity	no	data-store	signer	consent	yes	An expired stance is admitted only from the substrate and never from a subject or an owner.
+C451	Confidence	no	none	guard	age_assurance	no	
+C452	Structure	no	drift	fold	new:owner_binding	yes	A node with one owner and two live owner-signed rows reads steward-bound exactly as it does with one row.
+C453	Rules	yes	data-store	erasure	affiliation	yes	Under a legal hold a withdrawal is admitted and recorded and the descent it would force does not run.
+C454	Circumstances	no	drift	audience	contact	yes	An owned node's route reaches a peer only from its owner's hand or by a referral, never from an announce or the directory.
+C455	Rules	no	drift	change	anonymous	yes	No rendezvous row of one period replaces or names the row of another, so the periods are unlinkable.
+C456	Rules	yes	drift	clock	new:deletion_window	yes	A producer is in breach exactly when the window has passed with the row still present, whatever it had begun.
+C457	Structure	no	data-store	count	accord_halt	yes	A confirmed halt is never admitted on a lone signature.
+C458	Identity	no	data-store	signer	family_model	yes	No slashing verdict is admitted from a key that holds neither the slash duty nor a seat on the adjudicating body.
+C459	Circumstances	no	none	audience	mesh_net	no	
+C460	Circumstances	no	none	audience	mesh_net	no	
+C461	Circumstances	no	none	audience	family_model	no	
+C462	Circumstances	no	none	audience	family_model	no	
+C463	Circumstances	yes	data-repo	audience	mesh_net	yes	A room's membership rows are never served to a node outside its cohort, a public room's included.
+C464	Circumstances	no	data-repo	audience	anonymous	yes	An unannounced identity's occurrence row is offered to no peer that would not also be relayed its attester key.
+C465	Circumstances	yes	data-store	audience	census_ballot	yes	An addressed member share reaches the named tally member only.
+C466	Rules	no	drift	change	anonymous	yes	A replacing row is admitted only from the attester of the row it replaces, so a fresh-key rendezvous row replaces nothing.
+C467	Rules	no	data-repo	lifecycle	family_model	yes	A Goal's declarer can recant it, and the family has a recant transition.
+C468	Rules	no	data-repo	lifecycle	family_model	yes	A need row's signer can recant it, and the family has a recant transition.
+C469	Structure	no	data-store	count	family_model	yes	A group's Goal is replaced, withdrawn or recanted only by a row cosigned under the group's protocol.
+C470	Rules	no	data-store	lifecycle	census_ballot	yes	There is one composite per class and period and one partial per seat, and no row replaces either.
+C471	Structure	no	data-repo	count	accord_roster	yes	A canonical re-bind, a replacing one included, is never admitted on fewer than the charter's M holder signatures.
+C472	Structure	no	none	change	membership	no	
+C473	Process	no	drift	signer	new:deferral_route	yes	An expired deferral re-routes only to another live seat the party conferred and, with none, to the conferrer.
+C474	Facts	no	drift	wire	family_model	partly	Every dimension the text names resolves to a registered leaf, so no section relies on a row the home refuses.
+C475	Rules	yes	interaction	fold	moderation_lift	yes	Content is never withheld at read on a notice that an admitted lift has undone.
+C476	Structure	no	data-store	count	moderation_lift	yes	A moderator's act is lifted exactly when a strict majority of the roster as it stood at the act has objected inside the window.
+C477	Identity	no	data-repo	signer	new:duty_holder	yes	A moderation row is admitted only from a named moderator of the content's community or its chain, never from the content's subject as such.
+C478	Structure	no	drift	signer	new:duty_holder	yes	A slashing row is admitted only from a slash duty-holder or its chain, and no door depends on a quorum it cannot test.
+C479	Structure	no	interaction	count	membership	yes	No single key takes a member's key off a roster, an AI agent's key included, unless the removal rule names that exception.
+C480	Rules	yes	drift	audience	standing	yes	The person a moderation record names is always served its existence, its kind, what follows and who answers for it.
+C481	Rules	no	data-repo	wire	family_model	yes	A moderation row with no subject digest is admitted, and only a malformed digest is refused.
+C482	Circumstances	no	drift	fold	moderator_election	yes	A room locks only when no live holder of moderate remains, never on the lapse of one edge among several.
+C483	Facts	no	data-store	signer	authority_tree	partly	Every scope token a signer rule cites is one of the eight pinned infra tokens.
+C484	Identity	no	data-store	signer	family_model	yes	A regime row is admitted only from the substrate steward.
+C485	Identity	no	data-store	signer	consent	yes	An expired consent state is admitted only from the substrate and never from the subject or the owner.
+C486	Identity	no	data-repo	signer	family_model	yes	A system row from either substrate role, persist or edge, is admitted.
+C487	Structure	no	interaction	count	membership	yes	A room's removal of a member is carried by exactly one count, and a room that declared unanimity is not overridden by two thirds.
+C488	Process	no	data-repo	clock	accord_roster	yes	An accord roster change counts the participations cast inside its window and none after.
+C489	Rules	no	data-repo	guard	accord_halt	yes	A resume that names a halt other than the active one, or repeats an invocation id, never resumes.
+C490	Identity	no	drift	signer	new:key_plane	yes	A key grant for a blob is signed only by a key that speaks for the blob's owner, never by an admitting host for other members' blobs.
+C491	Circumstances	no	interaction	clock	new:key_plane	yes	No write after a removal is sealed under a key the removed member was granted.
+C492	Circumstances	no	data-repo	guard	membership	yes	An ordinary widening on a live roster is admitted without the recovery condition, which binds only the one widening on a stalled roster.
+C493	Circumstances	no	data-repo	change	new:key_plane	yes	After any departure, at any scope, later content is sealed under a key the departed member cannot derive.
+C494	Structure	no	data-store	count	membership	yes	The inviter alone withdraws their own pending proposal.
+C495	Model	yes	drift	erasure	new:deletion_window	yes	A deletion commitment carried in the envelope member is watched exactly as one carried in a row.
+C496	Identity	no	data-store	fold	consent	yes	A node-authored community trust grant is counted in the fold for its attested key.
+C497	Identity	no	data-store	signer	consent	yes	A consent state row from a proxy in the subject's delegation chain is admitted.
+C498	Process	no	drift	guard	moderator_election	yes	The seat is the same under every arrival order of ballots and seating rows.
+C499	Identity	no	data-store	signer	trust_set	yes	The acceptance edge is the owner's row, and every node and agent the owner holds reads it.
+C500	Rules	no	data-repo	clock	trust_root	yes	The passing of the attach window never moves a rooted node.
+C501	Confidence	no	drift	guard	age_assurance	yes	A self-declared adult row never meets the guardian floor, and the guardianship of the named child is verified.
+C502	Confidence	no	drift	guard	age_assurance	yes	Adult content opens only to the adult band at a verified level, never on a self-declared one.
+C503	Rules	yes	interaction	change	withdraws_admission	yes	Every withdrawal another section admits matches a line of the closed admission table.
+C504	Rules	no	data-repo	lifecycle	trust_root	yes	An owner can always end witnessing by withdrawing the acceptance.
+C505	Rules	yes	none	lifecycle	family_model	no	
+C506	Structure	no	data-store	count	membership	yes	The inviter alone withdraws their own pending proposal.
+C507	Structure	yes	data-store	count	withdraws_admission	yes	A row carrying a scrub set, a charter included, is withdrawn only by its quorum.
+C508	Structure	no	data-store	count	new:cosigned_row	yes	A group-declared goal, and each replacement or withdrawal of it, is admitted only when its scrub set meets the group's protocol.
+C509	Structure	no	data-store	count	accord_halt	yes	One holder sets only relief that lapses at its term, and a durable setting needs the quorum.
+C510	Rules	no	data-repo	guard	new:transparency_log	yes	A delivery receipt whose chunk root is no published head of its stream is refused.
+C511	Circumstances	no	data-repo	clock	consent	yes	A grant with no valid_until lapses by a clock only under the temporary bundle, and a partnered one never does.
+C512	Circumstances	no	data-repo	clock	membership	yes	A time-boxed seat, occurrence or pending binding is not live after its valid_until.
+C513	Rules	no	drift	guard	membership	yes	A standing proposal seats each key at most once and is not spent by its first joiner.
+C514	Model	no	data-repo	wire	family_model	partly	Every required body member of a family is in the signed object of the same edition.
+C515	Rules	no	drift	signer	trust_set	yes	A key holding a reserved role with no live conferral under a trusted root emits nothing that is admitted.
+C516	Rules	no	data-repo	guard	trust_root	yes	An occurrence citing a provenance row that is absent, not Rooted or of another manifest hash is refused.
+C517	Model	no	drift	wire	new:live_stream_wire	no	
+C518	Circumstances	no	data-repo	count	retirement	yes	The agent's own custody rung before retired needs no cosign, and a replacement after retired needs both signers.
+C519	Circumstances	no	data-repo	count	retirement	yes	The agent's own custody rung before retired needs no cosign, and a replacement after retired needs both signers.
+C520	Identity	no	data-repo	signer	consent	yes	A partnership grant is admitted only from the granting user with the partner as its one subject, and from no chain.
+C521	Identity	no	data-store	signer	new:duty_holder	yes	A takedown notice is admitted from the content's signed subject, a named takedown holder, or the owner of the detecting node on a hash match.
+C522	Confidence	no	drift	guard	new:capacity_assurance	yes	The shortest provisional tier opens on a provider rung with the adjudicated binding, and every continuing power needs the panel.
+C523	Rules	no	drift	fold	trust_root	yes	A halt never moves the validity of a root, a key or a conferral.
+C524	Rules	no	none	guard	contact	no	
+C525	Rules	yes	interaction	erasure	new:deletion_window	yes	After a subject's withdrawal the producer is in breach at the window's close unless one of the producer's own composers stands.
+C526	Priorities	no	interaction	clock	accord_halt	yes	A halt row a holder signed reaches exactly one verdict when its date is ahead of the node's clock, and a future date buys no longer pause.
+C527	Rules	no	drift	guard	new:adjudication	partly	Every ground another section sends to a verdict is an admitted ground of a slashing row.
+C528	Rules	yes	interaction	audience	standing	yes	A row at a targeted scope names only keys within its audience, so a licence shown to outside readers neither is refused nor hands them standing to withdraw it.
+C529	Rules	yes	drift	audience	mesh_net	yes	A non-member is served a public room's content on asking a member's node.
+C530	Rules	yes	data-repo	audience	mesh_net	yes	A roster row is never served outside its cohort, a public room's included.
+C531	Identity	no	gap	signer	new:room_listing	partly	A community has one live listing, and the set of keys that may replace it is the same in every section.
+C532	Process	no	none	guard	trust_root	no	
+C533	Identity	no	interaction	signer	new:duty_holder	yes	A key acts on content only while it holds the matching duty over the target, a named steward included.
+C534	Process	no	interaction	signer	new:duty_holder	yes	Every outcome of the ladder is either a row some key may sign or a verdict each node derives, and none needs a row the door refuses.
+C535	Identity	no	interaction	signer	consent	yes	A granted consent state is admitted only from a subject of the target, so a viewer's acknowledgement is never that row.
+C536	Identity	no	data-store	signer	new:duty_holder	yes	A takedown notice is admitted from the content's signed subject, a named takedown holder, or the owner of the detecting node on a hash match.
+C537	Identity	no	data-repo	signer	family_model	yes	A hard_case row from a key that is not the substrate is refused.
+C538	Rules	no	drift	guard	family_model	partly	A reserved family is closed to unnamed leaves only where the Part names its leaves.
+C539	Circumstances	no	drift	clock	new:key_plane	yes	Turning keep on wraps the current epoch and later ones, and turning it off stops from the next.
+C540	Structure	no	drift	count	self_roster	yes	With two or more live keys an addition lands only by strict majority or after the delay, never on one voucher at once.
+C541	Identity	no	interaction	signer	consent	yes	A granted consent state is admitted only from a subject of the target, so a viewer's acknowledgement is never that row.
+C542	Model	yes	none	fold	consent	no	
+C543	Identity	no	data-repo	signer	consent	yes	A partnership grant is admitted only from the granting user with the partner as its one subject, and from no chain.
+C544	Circumstances	no	none	clock	membership	no	
+C545	Rules	no	drift	guard	onion_layers	yes	A hop key equal to any other key on the same signed row, the content encryption halves included, is refused.
+C546	Identity	no	data-repo	signer	self_roster	yes	A revocation of a key by another key with authority over it is admitted, and a key's own revocation is one case of it.
+C547	Rules	no	drift	other	new:cre_trigger	yes	The evaluation opens only on the one stated trigger and never on the Stewardship Tier or a sector.
+C548	Priorities	no	interaction	fold	age_assurance	yes	A person's own declaration never raises the band and lowers it even against a witness row.
+C549	Circumstances	no	drift	clock	accord_halt	yes	A halt binds a node holding a live edge at the instant its store admits the row and latches, whatever the signed date says.
+C550	Rules	no	interaction	fold	trust_root	yes	A node rooted under a head whose witnesses cease to be independent reaches exactly one standing.
+C551	Rules	yes	data-store	lifecycle	withdraws_admission	yes	An entity revocation is withdrawn by nobody, its issuer included.
+C552	Rules	yes	data-repo	change	standing	yes	A withdrawal of a statement about an affiliation, signed by that affiliation as subject, is refused.
+C553	Model	no	gap	wire	accord_roster	partly	A new accord roster verifies by one stated set of signatures, the votes or the list's own.
+C554	Structure	no	data-repo	count	affiliation	yes	A one-voice body's removal, quarantine, slash or takedown against a member is admitted only with a countersign from outside the deciding seat.
+C555	Circumstances	no	data-repo	clock	authority_tree	yes	Every duty-carrying edge has a term of at most 365 days in any group, not in affiliations alone.

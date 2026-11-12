@@ -1,0 +1,94 @@
+id	kind	record	class	mechanism	model	would_catch	property
+C288	Rules	no	gap	signer	new:signer_gate	yes	An accord holder's key signs only the families the enumeration of CC 4.2.1 lists, so every registered accord family is either in the enumeration or has no admissible signer.
+C289	Identity	no	none	count	accord_roster	no	
+C290	Identity	no	drift	signer	authority_tree	partly	A deferral response is admitted only on a chain from the party that conferred the seat, and that party can always withdraw the seat.
+C291	Rules	no	drift	audience	new:key_cascade	yes	A node denied for a cohort by its owner's allow list never receives a key for that cohort.
+C292	Circumstances	no	none	audience	mesh_net	no	
+C293	Rules	no	none	audience	mesh_net	no	
+C294	Rules	no	none	audience	transport_tiers	no	
+C295	Rules	no	drift	audience	transport_tiers	yes	A not-yet-Rooted sealed link carries exactly the four listed classes, and a row a bounded cohort delivers to the peer as its member is among them.
+C296	Rules	no	none	guard	new:namespace_gate	no	
+C297	Identity	no	none	audience	mesh_net	no	
+C298	Circumstances	no	interaction	guard	new:publish_seam	yes	Every item that becomes public was hash-matched at the seam it crossed, whether or not the receiving group enabled a list.
+C299	Circumstances	no	drift	guard	new:publish_seam	yes	Matching runs only at a promotion into the Commons or a post into a public room, and never inside a private cohort.
+C300	Structure	yes	drift	change	withdraws_admission	yes	A proxy withdrawal is admitted only on an edge from the subject's hash to the proxy key; an edge from a parent key to a student hash admits nothing.
+C301	Rules	yes	none	erasure	withdraws_admission	no	
+C302	Circumstances	yes	drift	erasure	new:takedown	yes	A court-order notice reaches the bytes plane only and never carries the dwell or the selection digest of a steward purge.
+C303	Circumstances	yes	none	clock	new:takedown	no	
+C304	Model	yes	drift	fold	new:deletion_window	yes	A deletion is in breach whenever its window has closed and the row is still present with none of the three composers against it, whatever completion row was emitted.
+C305	Model	yes	drift	fold	new:deletion_window	yes	A deletion is in breach whenever its window has closed and the row is still present with none of the three composers against it, whatever completion row was emitted.
+C306	Circumstances	yes	none	clock	new:takedown	no	
+C307	Structure	yes	data-repo	count	new:takedown	yes	A steward-purge notice is admitted only when cosigned under the trust root's consensus protocol, never on one voice.
+C308	Process	yes	none	clock	consent	no	
+C309	Circumstances	no	drift	clock	consent	partly	Every window names its clock: a count window runs from the instant the node first held the proposal, and the freshness bound W runs from the signed instant.
+C310	Process	no	none	fold	accord_halt	partly	A resumption that names one halt ends the halt at every node, whichever halt id that node latched first.
+C311	Identity	no	drift	audience	new:key_cascade	yes	Every wrap of a content key is made by the sealer to a current recipient occurrence, and no member's substrate re-wraps.
+C312	Priorities	yes	interaction	erasure	new:takedown	yes	Bytes under a live legal hold are never destroyed, and an immediate-removal notice always destroys on receipt: the two cannot both hold for one object.
+C313	Circumstances	no	drift	other	new:cre_trigger	partly	A Catastrophic-Risk Evaluation opens exactly when a system is assessed at RM 4 or above.
+C314	Process	no	none	guard	trust_set	no	
+C315	Structure	no	interaction	audience	alm	yes	A small-group realtime chunk reaches a member only on a direct link from its publisher, and no member forwards it.
+C316	Circumstances	no	drift	guard	age_assurance	yes	A person with no assurance on record may always act at their own and their family's scopes.
+C317	Rules	no	drift	guard	age_assurance	yes	No default setting leads an owner read at the minor band into an act that admission refuses.
+C318	Identity	no	interaction	audience	authority_tree	yes	A report from a child with no guardian present always has a seated receiver.
+C319	Rules	no	interaction	guard	new:namespace_gate	yes	A row of a family with no registry row is never admitted.
+C320	Process	no	drift	guard	new:namespace_gate	yes	A row whose dimension does not resolve through the registry is refused at admission, on all five row types.
+C321	Identity	no	drift	guard	new:signer_gate	yes	No key record holds the node type together with agent or user.
+C322	Facts	no	drift	wire	new:wire_shape	yes	A label's fingerprint recomputes from its key at one fixed length, so a verifier never meets a label it cannot check.
+C323	Rules	no	data-repo	signer	new:signer_gate	yes	A content-rating row is admitted only from a key that holds the trusted-publisher role by delegation.
+C324	Identity	no	drift	signer	new:signer_gate	yes	A reserved-prefix row is admitted only when the role was conferred by delegation; listing the role on one's own key record confers nothing.
+C325	Structure	no	drift	count	self_roster	yes	The lone path lands unless a strict majority of the other keys objects; one objector among two others does not cancel it.
+C326	Rules	yes	drift	guard	new:key_cascade	yes	A key grant that names the recipient occurrence as its attested key is admitted at the content's scope.
+C327	Rules	yes	drift	guard	new:key_cascade	yes	A key grant that names the recipient occurrence as its attested key is admitted at the content's scope.
+C328	Process	no	drift	guard	new:namespace_gate	yes	A row whose dimension does not resolve through the registry is refused at admission, on all five row types.
+C329	Identity	no	drift	signer	self_roster	yes	An agent's key never signs an owner act, even when it is seated as an occurrence of the person's identity.
+C330	Rules	yes	drift	guard	new:key_cascade	yes	A key grant that names the recipient occurrence as its attested key is admitted at the content's scope.
+C331	Rules	yes	data-store	audience	standing	yes	A bounded-scope row that names a key outside its audience is refused.
+C332	Rules	yes	interaction	change	new:supersede_rule	yes	A replacing row signed by someone other than the prior row's attester is admitted only where a named rule allows it, so a guardian is never displaced by a stranger's row.
+C333	Rules	yes	drift	change	new:supersede_rule	yes	A replacing row signed by someone other than the prior row's attester is admitted only where a named rule allows it.
+C334	Model	yes	drift	fold	new:supersede_rule	yes	A widening leaves the narrower row standing beside it and retires nothing.
+C335	Structure	no	interaction	audience	alm	yes	A small-group realtime chunk reaches a member only on a direct link from its publisher, and no member forwards it.
+C336	Structure	no	interaction	audience	alm	yes	A small-group realtime chunk reaches a member only on a direct link from its publisher, and no member forwards it.
+C337	Circumstances	no	none	audience	transport_tiers	no	
+C338	Rules	no	none	audience	transport_tiers	no	
+C339	Manner	no	none	other	trust_set	no	
+C340	Identity	no	none	fold	trust_set	no	
+C341	Model	no	drift	wire	new:wire_shape	yes	No outer nonce repeats under one link key.
+C342	Model	no	drift	wire	new:wire_shape	yes	The trailer a relay cuts from a chunk is the trailer the publisher signed, byte for byte, in the shipping form.
+C343	Rules	no	drift	guard	new:namespace_gate	yes	Every dimension the text permits a producer to emit matches a registered shape and is admitted.
+C344	Rules	yes	none	change	withdraws_admission	no	
+C345	Circumstances	yes	drift	change	withdraws_admission	yes	A proxy withdrawal is never admitted while two bindings for the same person compete.
+C346	Rules	yes	data-repo	change	withdraws_admission	yes	A rule-2 or rule-4 withdrawal of a live owner-binding is refused without an adjudication reference, and the owner's own withdrawal needs none.
+C347	Model	no	data-repo	fold	census_ballot	yes	The expected-active count counts each owner once in a period, however many of the last four periods the owner was active in.
+C348	Model	no	data-repo	fold	census_ballot	yes	A frozen base is released only by a period whose count reaches two thirds of the count before the fall.
+C349	Rules	no	drift	guard	census_ballot	yes	A census composite whose largest source multiplicity is not 1 is refused.
+C350	Circumstances	no	drift	guard	census_ballot	yes	The floor of ten owners refuses a census composite and never a ballot tally.
+C351	Structure	no	interaction	count	two_path	yes	The base of a members' count is one function of the roster and the census, the same in every sentence that names it.
+C352	Model	no	data-repo	count	two_path	yes	Above the small-community size the base of a count is the census count under the ratchet, not a function of roster size alone.
+C353	Facts	no	drift	count	two_path	yes	The size at or below which the base is the standing roster is the base law's k, and is not the fewest-voices minimum.
+C354	Rules	yes	interaction	guard	consent	yes	A grant of consent that names no scope is never admitted.
+C355	Facts	yes	none	lifecycle	consent	no	
+C356	Rules	no	drift	wire	new:wire_shape	yes	A membership proposal without an expiry instant is refused.
+C357	Model	no	none	wire	new:wire_shape	no	
+C358	Rules	no	data-repo	guard	new:stream_receipt	yes	A receipt on a stream that is not accountable is admitted against a published head without a witness cosignature.
+C359	Identity	no	drift	signer	new:signer_gate	yes	A key record is admitted only under its own key by possession; an anchor's scrub is a cosignature and never the base signature.
+C360	Identity	yes	drift	signer	new:partnership_pair	yes	A standalone partnership grant signed by the granting party and naming only the partner is admitted.
+C361	Model	yes	drift	wire	new:partnership_pair	yes	A grant and an acceptance built as the text directs always ratify as a pair.
+C362	Identity	yes	none	signer	consent	no	
+C363	Rules	no	data-repo	signer	new:signer_gate	yes	No delegate writes a ledger row; only the ledger's single owner does.
+C364	Identity	no	data-repo	signer	age_assurance	yes	A self-declared age row is admitted only when its signer is the subject's own occurrence or an admitted occurrence of it.
+C365	Identity	no	data-store	signer	new:signer_gate	yes	A watchlist is enabled or disabled only by a key holding the group's moderate or takedown authority.
+C366	Identity	no	data-store	signer	new:signer_gate	yes	A petition is the petitioner's own row, and each of the other three adjudication states is admitted only from the seated quorum.
+C367	Process	no	data-repo	lifecycle	retirement	yes	The decider can withdraw a decided retirement for as long as no frozen row exists.
+C368	Identity	no	drift	signer	new:signer_gate	yes	A location proof is admitted only under the subject's own signature; no delegation mints one.
+C369	Structure	no	data-repo	count	accord_roster	yes	A canonical rebind is admitted only when cosigned at the accord charter's threshold, never from one holder.
+C370	Rules	yes	drift	change	withdraws_admission	yes	The subject of a quarantine marker can never withdraw it.
+C371	Structure	no	data-store	count	affiliation	yes	An organisation's owner-binding is admitted only when cosigned under the named affiliation's protocol.
+C372	Circumstances	no	data-repo	clock	consent	yes	A licence, a deferral response and a membership check are judged at their signed instant, bounded by W, not at receipt.
+C373	Circumstances	no	none	audience	anonymous	no	
+C374	Structure	no	data-repo	count	accord_roster	yes	A canonical rebind is admitted only when cosigned at the accord charter's threshold, never from one holder.
+C375	Facts	yes	drift	clock	new:takedown	yes	The withhold window of each windowed basis is the one fixed number of days the home section gives, and no operator sets it.
+C376	Rules	yes	data-repo	clock	new:takedown	yes	Every windowed basis stops serving on admission, runs its window, and destroys the bytes at its close.
+C377	Rules	yes	data-repo	erasure	new:takedown	yes	Bytes withheld under a windowed notice are not destroyed at the close of the window if a reversal was admitted inside it.
+C378	Facts	no	data-repo	clock	accord_halt	yes	A confirmed halt never expires; only the heartbeat row carries a refresh bound.
+C379	Circumstances	no	drift	clock	mesh_net	partly	A setting the root's quorum establishes may be durable; only the unilateral emergency form carries a time limit, and either form only restricts.
+C380	Process	no	drift	audience	mesh_net	yes	Every claimed node of a member that the allow list admits receives the community's content without any act of the user.

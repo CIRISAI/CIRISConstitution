@@ -1,0 +1,86 @@
+id	kind	record	class	mechanism	model	would_catch	property
+C471	Structure	no	data-repo	count	accord_roster	yes	A canonical re-bind, a replacing one included, is never admitted on fewer than the charter's M holder signatures.
+C472	Structure	no	none	change	membership	no	
+C473	Process	no	drift	signer	new:deferral_route	yes	An expired deferral re-routes only to another live seat the party conferred and, with none, to the conferrer.
+C474	Facts	no	drift	wire	family_model	partly	Every dimension the text names resolves to a registered leaf, so no section relies on a row the home refuses.
+C475	Rules	yes	interaction	fold	moderation_lift	yes	Content is never withheld at read on a notice that an admitted lift has undone.
+C476	Structure	no	data-store	count	moderation_lift	yes	A moderator's act is lifted exactly when a strict majority of the roster as it stood at the act has objected inside the window.
+C477	Identity	no	data-repo	signer	new:duty_holder	yes	A moderation row is admitted only from a named moderator of the content's community or its chain, never from the content's subject as such.
+C478	Structure	no	drift	signer	new:duty_holder	yes	A slashing row is admitted only from a slash duty-holder or its chain, and no door depends on a quorum it cannot test.
+C479	Structure	no	interaction	count	membership	yes	No single key takes a member's key off a roster, an AI agent's key included, unless the removal rule names that exception.
+C480	Rules	yes	drift	audience	standing	yes	The person a moderation record names is always served its existence, its kind, what follows and who answers for it.
+C481	Rules	no	data-repo	wire	family_model	yes	A moderation row with no subject digest is admitted, and only a malformed digest is refused.
+C482	Circumstances	no	drift	fold	moderator_election	yes	A room locks only when no live holder of moderate remains, never on the lapse of one edge among several.
+C483	Facts	no	data-store	signer	authority_tree	partly	Every scope token a signer rule cites is one of the eight pinned infra tokens.
+C484	Identity	no	data-store	signer	family_model	yes	A regime row is admitted only from the substrate steward.
+C485	Identity	no	data-store	signer	consent	yes	An expired consent state is admitted only from the substrate and never from the subject or the owner.
+C486	Identity	no	data-repo	signer	family_model	yes	A system row from either substrate role, persist or edge, is admitted.
+C487	Structure	no	interaction	count	membership	yes	A room's removal of a member is carried by exactly one count, and a room that declared unanimity is not overridden by two thirds.
+C488	Process	no	data-repo	clock	accord_roster	yes	An accord roster change counts the participations cast inside its window and none after.
+C489	Rules	no	data-repo	guard	accord_halt	yes	A resume that names a halt other than the active one, or repeats an invocation id, never resumes.
+C490	Identity	no	drift	signer	new:key_plane	yes	A key grant for a blob is signed only by a key that speaks for the blob's owner, never by an admitting host for other members' blobs.
+C491	Circumstances	no	interaction	clock	new:key_plane	yes	No write after a removal is sealed under a key the removed member was granted.
+C492	Circumstances	no	data-repo	guard	membership	yes	An ordinary widening on a live roster is admitted without the recovery condition, which binds only the one widening on a stalled roster.
+C493	Circumstances	no	data-repo	change	new:key_plane	yes	After any departure, at any scope, later content is sealed under a key the departed member cannot derive.
+C494	Structure	no	data-store	count	membership	yes	The inviter alone withdraws their own pending proposal.
+C495	Model	yes	drift	erasure	new:deletion_window	yes	A deletion commitment carried in the envelope member is watched exactly as one carried in a row.
+C496	Identity	no	data-store	fold	consent	yes	A node-authored community trust grant is counted in the fold for its attested key.
+C497	Identity	no	data-store	signer	consent	yes	A consent state row from a proxy in the subject's delegation chain is admitted.
+C498	Process	no	drift	guard	moderator_election	yes	The seat is the same under every arrival order of ballots and seating rows.
+C499	Identity	no	data-store	signer	trust_set	yes	The acceptance edge is the owner's row, and every node and agent the owner holds reads it.
+C500	Rules	no	data-repo	clock	trust_root	yes	The passing of the attach window never moves a rooted node.
+C501	Confidence	no	drift	guard	age_assurance	yes	A self-declared adult row never meets the guardian floor, and the guardianship of the named child is verified.
+C502	Confidence	no	drift	guard	age_assurance	yes	Adult content opens only to the adult band at a verified level, never on a self-declared one.
+C503	Rules	yes	interaction	change	withdraws_admission	yes	Every withdrawal another section admits matches a line of the closed admission table.
+C504	Rules	no	data-repo	lifecycle	trust_root	yes	An owner can always end witnessing by withdrawing the acceptance.
+C505	Rules	yes	none	lifecycle	family_model	no	
+C506	Structure	no	data-store	count	membership	yes	The inviter alone withdraws their own pending proposal.
+C507	Structure	yes	data-store	count	withdraws_admission	yes	A row carrying a scrub set, a charter included, is withdrawn only by its quorum.
+C508	Structure	no	data-store	count	new:cosigned_row	yes	A group-declared goal, and each replacement or withdrawal of it, is admitted only when its scrub set meets the group's protocol.
+C509	Structure	no	data-store	count	accord_halt	yes	One holder sets only relief that lapses at its term, and a durable setting needs the quorum.
+C510	Rules	no	data-repo	guard	new:transparency_log	yes	A delivery receipt whose chunk root is no published head of its stream is refused.
+C511	Circumstances	no	data-repo	clock	consent	yes	A grant with no valid_until lapses by a clock only under the temporary bundle, and a partnered one never does.
+C512	Circumstances	no	data-repo	clock	membership	yes	A time-boxed seat, occurrence or pending binding is not live after its valid_until.
+C513	Rules	no	drift	guard	membership	yes	A standing proposal seats each key at most once and is not spent by its first joiner.
+C514	Model	no	data-repo	wire	family_model	partly	Every required body member of a family is in the signed object of the same edition.
+C515	Rules	no	drift	signer	trust_set	yes	A key holding a reserved role with no live conferral under a trusted root emits nothing that is admitted.
+C516	Rules	no	data-repo	guard	trust_root	yes	An occurrence citing a provenance row that is absent, not Rooted or of another manifest hash is refused.
+C517	Model	no	drift	wire	new:live_stream_wire	no	
+C518	Circumstances	no	data-repo	count	retirement	yes	The agent's own custody rung before retired needs no cosign, and a replacement after retired needs both signers.
+C519	Circumstances	no	data-repo	count	retirement	yes	The agent's own custody rung before retired needs no cosign, and a replacement after retired needs both signers.
+C520	Identity	no	data-repo	signer	consent	yes	A partnership grant is admitted only from the granting user with the partner as its one subject, and from no chain.
+C521	Identity	no	data-store	signer	new:duty_holder	yes	A takedown notice is admitted from the content's signed subject, a named takedown holder, or the owner of the detecting node on a hash match.
+C522	Confidence	no	drift	guard	new:capacity_assurance	yes	The shortest provisional tier opens on a provider rung with the adjudicated binding, and every continuing power needs the panel.
+C523	Rules	no	drift	fold	trust_root	yes	A halt never moves the validity of a root, a key or a conferral.
+C524	Rules	no	none	guard	contact	no	
+C525	Rules	yes	interaction	erasure	new:deletion_window	yes	After a subject's withdrawal the producer is in breach at the window's close unless one of the producer's own composers stands.
+C526	Priorities	no	interaction	clock	accord_halt	yes	A halt row a holder signed reaches exactly one verdict when its date is ahead of the node's clock, and a future date buys no longer pause.
+C527	Rules	no	drift	guard	new:adjudication	partly	Every ground another section sends to a verdict is an admitted ground of a slashing row.
+C528	Rules	yes	interaction	audience	standing	yes	A row at a targeted scope names only keys within its audience, so a licence shown to outside readers neither is refused nor hands them standing to withdraw it.
+C529	Rules	yes	drift	audience	mesh_net	yes	A non-member is served a public room's content on asking a member's node.
+C530	Rules	yes	data-repo	audience	mesh_net	yes	A roster row is never served outside its cohort, a public room's included.
+C531	Identity	no	gap	signer	new:room_listing	partly	A community has one live listing, and the set of keys that may replace it is the same in every section.
+C532	Process	no	none	guard	trust_root	no	
+C533	Identity	no	interaction	signer	new:duty_holder	yes	A key acts on content only while it holds the matching duty over the target, a named steward included.
+C534	Process	no	interaction	signer	new:duty_holder	yes	Every outcome of the ladder is either a row some key may sign or a verdict each node derives, and none needs a row the door refuses.
+C535	Identity	no	interaction	signer	consent	yes	A granted consent state is admitted only from a subject of the target, so a viewer's acknowledgement is never that row.
+C536	Identity	no	data-store	signer	new:duty_holder	yes	A takedown notice is admitted from the content's signed subject, a named takedown holder, or the owner of the detecting node on a hash match.
+C537	Identity	no	data-repo	signer	family_model	yes	A hard_case row from a key that is not the substrate is refused.
+C538	Rules	no	drift	guard	family_model	partly	A reserved family is closed to unnamed leaves only where the Part names its leaves.
+C539	Circumstances	no	drift	clock	new:key_plane	yes	Turning keep on wraps the current epoch and later ones, and turning it off stops from the next.
+C540	Structure	no	drift	count	self_roster	yes	With two or more live keys an addition lands only by strict majority or after the delay, never on one voucher at once.
+C541	Identity	no	interaction	signer	consent	yes	A granted consent state is admitted only from a subject of the target, so a viewer's acknowledgement is never that row.
+C542	Model	yes	none	fold	consent	no	
+C543	Identity	no	data-repo	signer	consent	yes	A partnership grant is admitted only from the granting user with the partner as its one subject, and from no chain.
+C544	Circumstances	no	none	clock	membership	no	
+C545	Rules	no	drift	guard	onion_layers	yes	A hop key equal to any other key on the same signed row, the content encryption halves included, is refused.
+C546	Identity	no	data-repo	signer	self_roster	yes	A revocation of a key by another key with authority over it is admitted, and a key's own revocation is one case of it.
+C547	Rules	no	drift	other	new:cre_trigger	yes	The evaluation opens only on the one stated trigger and never on the Stewardship Tier or a sector.
+C548	Priorities	no	interaction	fold	age_assurance	yes	A person's own declaration never raises the band and lowers it even against a witness row.
+C549	Circumstances	no	drift	clock	accord_halt	yes	A halt binds a node holding a live edge at the instant its store admits the row and latches, whatever the signed date says.
+C550	Rules	no	interaction	fold	trust_root	yes	A node rooted under a head whose witnesses cease to be independent reaches exactly one standing.
+C551	Rules	yes	data-store	lifecycle	withdraws_admission	yes	An entity revocation is withdrawn by nobody, its issuer included.
+C552	Rules	yes	data-repo	change	standing	yes	A withdrawal of a statement about an affiliation, signed by that affiliation as subject, is refused.
+C553	Model	no	gap	wire	accord_roster	partly	A new accord roster verifies by one stated set of signatures, the votes or the list's own.
+C554	Structure	no	data-repo	count	affiliation	yes	A one-voice body's removal, quarantine, slash or takedown against a member is admitted only with a countersign from outside the deciding seat.
+C555	Circumstances	no	data-repo	clock	authority_tree	yes	Every duty-carrying edge has a term of at most 365 days in any group, not in affiliations alone.
