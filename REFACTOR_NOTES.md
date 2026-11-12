@@ -1090,3 +1090,10 @@ commitment, the four outcomes, the closing period, and a paragraph of what is cl
 the store; it is the first use of a set item in the text, described as "one signed item" without a family of its
 own yet. The steward has not answered whether a weak option's small round total is acceptable; the text says it
 is a count and never a person.
+
+Steward, 2026-11-12: "Can we add the UX to the kernel and model and validate?" Done for one family as the pattern:
+`KernelWorldScreen.tla`, with the screen laws L2, L3, L5, L9 and the cover as invariants, plus "offered is
+admitted" and "taken takes effect". The receipt-clock screen fails "offered is admitted", pinned. What this says
+for the kernel's interface: the queue item (present, enabled, reason) is a kernel output; a client never recomputes
+whether an act is open. Not modelled: L6 confirm and L12 shown-is-sent (held by formal/event_lifecycle and the
+confirm lookup), L7 and L11 (previews and stale answers), more than one act, more than one family.

@@ -105,6 +105,9 @@ def main():
     print(f"\nui closure: {len(ui['primitives'])} primitives: {closed} closed over the tables, {partly} open on a cell, {free} bound to no rule cell")
     world = re.search(r"ScreenStates == \{([^}]*)\}", open(os.path.join(ROOT, "formal", "kernel_world", "KernelWorld.tla"), encoding="utf-8").read())
     alien = sorted(set(re.findall(r'"([a-z_]+)"', world.group(1))) - set(ui["states"])) if world else ["no ScreenStates in KernelWorld.tla"]
+    scr = open(os.path.join(ROOT, "formal", "kernel_world", "KernelWorldScreen.tla"), encoding="utf-8").read()
+    shown = set(re.findall(r'"([a-z_]+)"', (re.search(r"Answered == \{([^}]*)\}", scr) or [None, ""])[1])) | set(re.findall(r'"([a-z_]+)"', (re.search(r"States == Answered \\cup \{([^}]*)\}", scr) or [None, ""])[1]))
+    alien += sorted(shown - set(ui["states"])) if shown else ["no States in KernelWorldScreen.tla"]
     for s2 in alien: print(f"FAIL formal/kernel_world shows `{s2}`, which is not a state of the screen standard")
     if "--check" in sys.argv and alien: return 1
     for v in unlisted: print(f"FAIL the reactions give the verdict `{v}` and verdict_state.tsv does not list it")

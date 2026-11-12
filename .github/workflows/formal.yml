@@ -127,6 +127,11 @@ jobs:
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k6" -deadlock -config KernelWorldSigned_late_rest.cfg KernelWorldSigned.tla || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k7" -deadlock -config KernelWorldSigned_late.cfg KernelWorldSigned.tla | tee t.log
           grep -q 'Invariant Inv_SameRowsSameStanding is violated' t.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k8" -deadlock -config KernelWorldScreen.cfg KernelWorldScreen.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k9" -deadlock -config KernelWorldScreen_receipt.cfg KernelWorldScreen.tla | tee u.log
+          grep -q 'Invariant Law_OfferedIsAdmitted is violated' u.log || exit 1
+          java -Xmx3g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k10" -deadlock -config KernelWorldScreen_reach.cfg KernelWorldScreen.tla | tee v.log
+          grep -q 'Invariant NotAllSeen is violated' v.log || exit 1
 
   authority:
     name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)

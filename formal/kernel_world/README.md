@@ -47,6 +47,25 @@ the bound and is expected to fail: the node that held the lift in time counts it
 residue is what a vouched past is for (CC 3.3.4), and it is the one case in which two nodes holding the same rows
 may still differ.
 
+**The screen, in the same world.** `KernelWorldScreen.tla` puts a screen on each node: a read that is idle,
+pending, failed or answered; the state the reader is shown; and one act the reader is offered, the objection
+that lifts a moderator's act. The laws of the screen standard are invariants in every reachable state.
+
+| Law | In the model |
+|---|---|
+| L2, exactly one state | the screen is always one of seven states |
+| L3, an honest zero | an answer is drawn only when the node answered, an error only when the read failed, loading only while it is pending |
+| L5, a reasoned refusal | an act that is present and disabled names its reason (the window has closed; already objected) |
+| the cover | a withheld item always has its notice behind it |
+| L9, nothing unreachable | expected to fail when negated: one trace shows every state and every form of the offer |
+| offered is admitted | whenever the screen offers the objection, an objection taken at that instant would count |
+| taken takes effect | an objection taken at a node restores the item at that node at once |
+
+"Offered is admitted" is the law that ties the screen to the kernel, and it is where a screen goes wrong.
+`KernelWorldScreen_receipt.cfg` has the screen judge the window by the node's own clock, where the kernel
+judges it at signed instants. It is expected to fail: a node that held the notice late offers an objection the
+kernel would not count. A screen has to ask the kernel whether an act is open, and never compute it again.
+
 **What it does not model.** Who may sign each row (the signer gate); clocks that differ between nodes; more
 than one blob; the other families. The module is the pattern: a family's fold, a schedule that is free, the
 screen states as the vocabulary of the result. The rest of the rules join it as they are typed.
