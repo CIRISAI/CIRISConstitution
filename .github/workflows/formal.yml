@@ -288,7 +288,9 @@ jobs:
           lean ../affiliation/Affiliation.lean
           lean ../standing/Standing.lean
           lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Order.olean" ../causal_order/Order.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 ../causal_order/Causal.lean
+          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Causal.olean" ../causal_order/Causal.lean
+          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Seat.olean" ../causal_order/Seat.lean
+          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 ../causal_order/Window.lean
           lean ../age_assurance/AgeBand.lean
           lean ../contact/Contact.lean
           lean -M 6000 -T 200000 ../transport_tiers/Tiers.lean
@@ -310,7 +312,7 @@ jobs:
           python3 -I ../roster_fork/fork_check.py --check
           python3 -I ../transport_tiers/frame_ab.py --check
           lean -M 6000 -T 200000 ../family_model/FamilyModel.lean
-          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../causal_order/Order.lean ../causal_order/Causal.lean ../contact/Contact.lean ../transport_tiers/Tiers.lean ../anonymous/Anonymous.lean ../moderator_election/Election.lean ../event_lifecycle/EventLifecycle.lean ../family_model/FamilyModel.lean ../alm/Alm.lean
+          ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../causal_order/Order.lean ../causal_order/Causal.lean ../causal_order/Seat.lean ../causal_order/Window.lean ../contact/Contact.lean ../transport_tiers/Tiers.lean ../anonymous/Anonymous.lean ../moderator_election/Election.lean ../event_lifecycle/EventLifecycle.lean ../family_model/FamilyModel.lean ../alm/Alm.lean
 
   retirement:
     name: TLC — the Retirement Standard as a machine (formal/retirement)

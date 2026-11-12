@@ -24,8 +24,9 @@ A removal by others reaches the rows of the removed signer that are not in its p
 a removal when a chain of rows leads from the removal back to it: an acknowledgement, a census, a roster
 version, a reply. No instant is compared.
 
-**What is proved.** `Order.lean` (the rank case and the failure of judging on arrival) and `Causal.lean`
-(no rank). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+**What is proved.** `Order.lean` (the rank case and the failure of judging on arrival), `Causal.lean` (no
+rank), `Seat.lean` (standing as one shape, and the cut) and `Window.lean` (a window's signed outcome, and the
+roster's tips). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -39,6 +40,13 @@ version, a reply. No instant is compared.
 | `Causal.means_function`, `two_readers`, `no_own_edge_no_reach` | meaning is a function of the offered set and the reader's key; two readers differ only through rows of their own; a reader with no edge of its own reaches only itself |
 | `Causal.acceptance_gives_meaning`, `only_withdrawals_remove` | the reader's later acceptance gives meaning to rows already kept; no row but a withdrawal removes meaning from any row for any reader |
 | `Causal.reaches_standing_irrelevant` | with an edge withdrawn only by its own signer, reach never depends on reach through negation |
+| `Kernel.no_offer_no_seat`, `no_acceptance_no_seat`, `one_row_only_to_self` | a seat needs two voices, the conferrer's offer and the holder's acceptance; one row is both voices only when a key seats itself |
+| `Kernel.offer_withdrawal_ends`, `acceptance_withdrawal_ends`, `third_key_cannot_end`, `only_withdrawals_and_cuts_end` | either side ends a seat alone by its own withdrawal; no third key ends it without a cut |
+| `Kernel.stands_function`, `stands_mono`, `means_is_seat_walk` | standing is a bounded walk of live seats and a function of the set; it grows with offers and acceptances and shrinks only with withdrawals and cuts; what a row means to a reader is that walk from the reader's own key |
+| `Kernel.cut_status_function`, `unique_when_uncontested`, `two_cuts_contested`, `winner_counts` | each cut counts, is void or is contested, as the least solution of its equations; two concurrent cuts that undo each other are both contested, and a row naming both settles it |
+| `Kernel.outsider_changes_no_cut`, `outsider_row_never_counts` | a row by a key with no entitlement on a slot changes no cut and never counts on it |
+| `Kernel.cannot_land_inside`, `ruleI_only_concluder_undoes`, `ruleII_never_final` | a window's landing cannot stand over an objection its signer acknowledged; under the rule taken only the concluder's own key undoes a landing; under the other rule any objector reopens any landing for ever |
+| `Kernel.rosterOf_function`, `merge_one_tip`, `fork_shares_signer` | with several tips the roster is the members common to them; a version naming every tip makes one tip; two versions of one head each counted by a strict majority share a signer |
 | `Causal.wins_unique`, `higher_kind_decides`, `same_kind_both_or_neither` | concurrent rows on one target that differ in kind are decided by a fixed order on kinds; rows of one kind are still both or neither |
 | `Causal.counts_function`, `only_removals_stop_counting` | a row of a removed signer counts when it lies in the past of the removal; that is a function of the offered set, and only a removal of its signer can stop a row counting |
 | `Causal.sign_after_removal_never_counts`, `Removal.acknowledged_counts`, `Removal.honest_but_unnamed` | a row first held after the removal is kept never counts; a row the removal's past had named counts, and one it had not named does not |
@@ -54,9 +62,15 @@ An edge is withdrawn only by its own signer.
 - The same reach for a retirement, a revocation or a withdrawn grant is the same rule under another name,
   and is proved here only for a removal.
 - A contested slot may stay empty; nothing here ends a dispute.
+- A window's length is not in the rows. A concluder who never acknowledges a timely objection lands over it,
+  and the objector's protection is the concluder's signed acknowledgement (`ruleI_concluder_decides`).
+- The cut's three terms, what clashes, what overrules and who is entitled, are parameters here. Their values for
+  each slot are in `formal/causal_kernel` and are not transcribed.
+- A voice counted by a group cannot be withdrawn in this model, and a version naming several heads is counted
+  over one.
 - A conclusion from silence, such as a window closing unopposed, cannot be drawn from rows and is not here.
 - The walk has one depth for all edges; the classes and budgets of `formal/trust_set` are not carried over.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run: `lean -o "$TMP/Order.olean" Order.lean && LEAN_PATH="$TMP" lean Causal.lean`
+Run, in this order, each with `LEAN_PATH="$TMP" lean -o "$TMP/NAME.olean" NAME.lean`: `Order`, `Causal`, `Seat`, `Window`
