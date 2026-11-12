@@ -983,3 +983,16 @@ the takedown model tightened to it. If he meant the takedown wins outright, CC 4
 out and the model's `hold_wins` flips. (3) the trust-root question was not understood as put; explained again.
 A stray pointer to an agent's working copy was committed in 1bed2bd and removed in a1b5503; `.claude/` is
 excluded locally.
+
+### The seat rule landed as text (2026-11-12)
+
+CC 3.4.7 rewritten from `handoff/lanes/out_e1.md` with the steward's D1 to D8 as recommended and the store's names
+(`reserved_family_unseated`, `infra:record_hard_case` kept, `assure:age`, `assure:capacity`). A writer applied it
+in an isolated copy; I read each new sentence in its report, scanned every added line for history words and
+length, and merged by patch. CC 4.5.8 and the D2 sentence of CC 3.3.1, which the writer left, are mine. The
+registry's `registry_sha256` moves (the `content_rating` catalogue description), so downstream pins move at the
+cut. NOT DONE, the data side: the role tokens `identity:substrate_persist`, `identity:substrate_edge`,
+`identity:lenscore_detector` in the census cells, `signer_rule_text.tsv`, 21 reaction cells, `check_signer_gate`
+(SUBSTRATE and two KNOWN keys) and `mesh_story.py`; the hard-coded rule strings of `build_cc_namespace.py:175-180`;
+the `agree` readings on the two assurance ladders, whose cells still say `infra:attest_assurance`. Residue in the
+text: CC 3.4.7.3 Clause E "the closed `infra:*` set"; Part 5 "reserved-prefix emitter gates"; follow-up F1.

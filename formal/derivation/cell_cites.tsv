@@ -8,27 +8,27 @@ accord:*	fold	agree	CC 4.2.2.1	where no chain verifies, the class is unattested 
 accord:*	fold	agree	CC 4.2.6	the one named by the latest recovery version that seated their current key
 accord:*	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:*	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
-accord:*	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:*	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 accord:human_dignity	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:human_dignity	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
-accord:human_dignity	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:human_dignity	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 accord:invoke:constitutional:{halt_id}	governance	fills	CC 4.5.13	one present holder fires, and a roster change counts its yes-votes against the standing roster, because the roster is the capture vector
 accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.4.1	**One accord holder's signed row** — pre-signable, fired on receipt, no vote ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); a majority of the standing roster lifts it by `accord:lifecycle:active` ([CC 4.2.6](part_4_composition_governance.md#4.2.6))
 accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
-accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 accord:invoke:drill:{drill_id}	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:invoke:drill:{drill_id}	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
 accord:invoke:drill:{drill_id}	signer_rule	agree	CC 3.4.1	One accord holder's signed row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)) — a drill rehearses the fire path, so it needs no more signatures than the fire
-accord:invoke:drill:{drill_id}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:invoke:drill:{drill_id}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 accord:invoke:notify:{notify_id}	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:invoke:notify:{notify_id}	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
-accord:invoke:notify:{notify_id}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:invoke:notify:{notify_id}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 accord:invoke:notify:{notify_id}	signer_rule	agree	CC 3.4.1	`accord:invoke:notify:{notify_id}` | +1.0 only | One accord holder's signed row ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); UI MUST distinguish from `constitutional` ([CC 4.2.1.2](part_4_composition_governance.md#4.2.1.2))
 accord:lifecycle	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:lifecycle	signer_rule	agree	CC 3.4.1	**The accord heartbeat** — wire `accord:lifecycle:v1`, frozen and genesis-signed; accord-holder self-attestation about the accord;
 accord:lifecycle	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
-accord:lifecycle	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:lifecycle	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 accord:lifecycle:{kind}	cosign_rule	fills	CC 3.4.1	`active` is **resumption** from a `constitutional` halt — the [CC 4.2.1.3](part_4_composition_governance.md) invocation kind, its own signed domain; a majority of the standing roster lifts ([CC
 accord:lifecycle:{kind}	cosign_rule	fills	CC 4.2.1.1	A confirmed halt stands until a strict majority resumes it. **A strict majority may resume an unconfirmed halt at any time**
 accord:lifecycle:{kind}	cosign_rule	fills	CC 4.2.1.1	| `lifecycle:active` | **strict majority of the standing roster**, cosigned | the quorum sits on the recoverable act ([CC 4.2.1.3](#4.2.1.3)) |
@@ -40,14 +40,14 @@ accord:lifecycle:{kind}	fold	agree	CC 4.2.6	the proposal still carries if a stri
 accord:lifecycle:{kind}	freshness	agree	CC 4.2.1.3	A confirmation after the fuse has lapsed confirms nothing, and a fresh halt is fired instead.
 accord:lifecycle:{kind}	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:lifecycle:{kind}	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
-accord:lifecycle:{kind}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
+accord:lifecycle:{kind}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved to the accord's holders, whom the accord's charter fixes ([CC 4.2](part_4_composition_governance.md)).
 age_assurance:{level}:{band}:{version}	fold	agree	CC 3.4.11	A consumer resolving an identity's age-assurance MUST union both prefixes and take the **highest** level on record.
 age_assurance:{level}:{band}:{version}	fold	agree	CC 3.4.11	A consumer unions both at read time, the witness rung outranks the self rung, and the gate's default is protective.
 age_assurance:{level}:{band}:{version}	fold	agree	CC 3.4.11	The `self` rung of the ladder materializes on the non-reserved `age_self_declared:` prefix; the `provider`/`government` rungs materialize on the witness-reserved `age_assurance:` prefix carrying the `{level}` token.
 age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.1.2	The subject-signed `age_self_declared:` counterpart is catalogued here too: it is *not* witness-reserved, but it carries an admission rule at [CC 3.4.11](part_3_the_namespace.md), so R1 requires its row.
 age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.3.12	Witness-reserved age-assurance attestation ([CC 3.1.2](part_3_the_namespace.md) row; rules at [CC 3.4.11](part_3_the_namespace.md)). `{level}` ∈ `provider` \| `government` (closed; `self` is refused here); `{band}` ∈ `minor` \| `adult` \| `under_13` \| `13_15` \|
-age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.4.10	Being a registered provider, authority or assessor for that ladder; "witness" there means *not the subject*
-age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.4.11	A subject MUST NOT emit on `age_assurance:`; per the [CC 3.4](#3.4) three-actor rule a CCS MUST reject a non-witness emitter at admission, a CCC MUST re-check, and a CCP MUST
+age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.4.10	Holding `assure:age` or `assure:capacity` as a provider, authority or assessor for that ladder; "witness" there means *not the subject*
+age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.4.11	The signer holds `assure:age` under a root the reader trusts and is not the subject ([CC 3.4.7](#3.4.7)).
 age_self_declared:band:{band}:{version}	body	agree	CC 3.1.2	Carries **no** `{level}` token: its level is `self` by construction, and a level token on this prefix is malformed.
 age_self_declared:band:{band}:{version}	body	agree	CC 3.1.2	never a wire token), canonical `{version}` = `v1`.
 age_self_declared:band:{band}:{version}	body	agree	CC 3.4.11	**The band and the ladder.** `{band}` ∈ { `minor`, `adult`, `under_13`, `13_15`, `16_17` }, the closed set the [CC 3.1.2](part_3_the_namespace.md) row registers (ordered by protection:
@@ -61,7 +61,7 @@ age_self_declared:band:{band}:{version}	signer_rule	fills	CC 3.4.11	Admitted iff
 agent_files:{kind}:{platform_or_target}	signer_rule	agree	CC 4.4.3.7	**Layer 2 — Open Contribution**: any federation-key holder may emit `agent_files:*` attestations. The wire format admits them; consumer policy decides whether to surface them. The "Browse alternatives" view shows third-party
 agent_files:{kind}:{platform_or_target}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
 agent_files:{kind}:{platform_or_target}	subject_rule	fills	CC 4.5.2.1	| `agent_files:*:{subject_target}` (when target names a person)
-archive_release:{basis}	signer_rule	agree	CC 3.1.5	**WA-emitted** (a seated Wise Authority or the steward's recorded WA standing for this agent); refused from any other key
+archive_release:{basis}	signer_rule	agree	CC 3.1.5	**WA-emitted** (the conferrer of the agent's seat or the person holding its unscoped seat); refused from any other key
 archive_release:{basis}	signer_rule	agree	CC 7.5.5	The other two are `archive_release:{basis}:v1` (the one row that opens a seal, WA-emitted, basis `wa_approval` or `lawful_order`) and `lawful_order:release:v1` (the steward's record of an order to release).
 attestation:agent_integrity	projection	agree	CC 3.1.7	The L1-L5 ladder lives as consumer-side composition
 attestation:agent_integrity	projection	agree	CC 4.1.3	`attestation:{mechanism}` bare mechanism (`self_verify` / `hardware_rooted` / `registry_consensus` / `license_validity` / `agent_integrity`); consumer composes L1-L5 ladder via [CC 4.4.3.6](#4.4.3.6) Policy I
@@ -106,8 +106,8 @@ capacity:composite	fold	agree	CC 3.1.8.1	𝒞_CIRIS — the minimum over the fiv
 capacity:composite	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
 capacity:composite	signer_rule	agree	CC 3.1.8.1	**Critical enforcement**: `capacity:*` rejects self-emission — the agent's own capacity score is never fed back into the agent's own context ([CC 3.4.5](#3.4.5)).
 capacity:composite	signer_rule	agree	CC 3.4.5	**Anti-self** — `attesting_key_id` MUST NOT equal `attested_key_id`
-capacity:composite	signer_rule	agree	CC 3.4.8	a folded `agent`+`lenscore_detector` key still MUST NOT emit a `capacity:*` score about itself.
-capacity:composite	signer_rule	agree	CC 4.5.8.3	A folded `{agent, lenscore_detector}` key still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)).
+capacity:composite	signer_rule	agree	CC 3.4.8	a key holding both still MUST NOT emit a `capacity:*` score about itself.
+capacity:composite	signer_rule	agree	CC 4.5.8.3	A key holding both an agency delegation and `infra:detect` still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)).
 capacity:relay_delivery	erasure_route	fills	CC 4.5.3	An **adverse** row about the subject, any row on the kept list of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), is reached by no subject-authority path
 capacity:relay_delivery	fold	agree	CC 3.1.4	MUST NOT enter `capacity:composite`, whose `min` runs over exactly `C, I_int, R, I_inc, S`
 capacity:relay_delivery	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
@@ -116,29 +116,29 @@ capacity:relay_delivery	signer_rule	agree	CC 3.1.4	gates bind the leaf regardles
 capacity:relay_delivery	signer_rule	agree	CC 3.1.4	the `capacity:` stem's two gates, no-self-emit and consent-before-scoring
 capacity:relay_delivery	signer_rule	agree	CC 3.1.8.1	**Critical enforcement**: `capacity:*` rejects self-emission — the agent's own capacity score is never fed back into the agent's own context ([CC 3.4.5](#3.4.5)).
 capacity:relay_delivery	signer_rule	agree	CC 3.4.5	**Anti-self** — `attesting_key_id` MUST NOT equal `attested_key_id`
-capacity:relay_delivery	signer_rule	agree	CC 3.4.8	a folded `agent`+`lenscore_detector` key still MUST NOT emit a `capacity:*` score about itself.
-capacity:relay_delivery	signer_rule	agree	CC 4.5.8.3	A folded `{agent, lenscore_detector}` key still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)).
+capacity:relay_delivery	signer_rule	agree	CC 3.4.8	a key holding both still MUST NOT emit a `capacity:*` score about itself.
+capacity:relay_delivery	signer_rule	agree	CC 4.5.8.3	A key holding both an agency delegation and `infra:detect` still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)).
 capacity:relay_delivery	subject_rule	fills	CC 5.4.3	So a node is scored only with its consent and never by itself
 capacity:{factor}	erasure_route	fills	CC 4.5.3	An **adverse** row about the subject, any row on the kept list of [CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1), is reached by no subject-authority path
 capacity:{factor}	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
 capacity:{factor}	signer_rule	agree	CC 3.1.8.1	**Critical enforcement**: `capacity:*` rejects self-emission — the agent's own capacity score is never fed back into the agent's own context ([CC 3.4.5](#3.4.5)).
 capacity:{factor}	signer_rule	agree	CC 3.4.5	**Anti-self** — `attesting_key_id` MUST NOT equal `attested_key_id`
-capacity:{factor}	signer_rule	agree	CC 3.4.8	a folded `agent`+`lenscore_detector` key still MUST NOT emit a `capacity:*` score about itself.
-capacity:{factor}	signer_rule	agree	CC 4.5.8.3	A folded `{agent, lenscore_detector}` key still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)).
+capacity:{factor}	signer_rule	agree	CC 3.4.8	a key holding both still MUST NOT emit a `capacity:*` score about itself.
+capacity:{factor}	signer_rule	agree	CC 4.5.8.3	A key holding both an agency delegation and `infra:detect` still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)).
 capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	agree	CC 3.1.2	Reversible-cause exclusion companion ([CC 3.4.12](part_3_the_namespace.md)): the assessor attests that delirium, infection-confusion, depression and polypharmacy are ruled out for the domain. A mandatory predicate on any continuing `incapacitated` rung; witness-reserved like
-capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	agree	CC 3.4.10	Being a registered provider, authority or assessor for that ladder; "witness" there means *not the subject*
+capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	agree	CC 3.4.10	Holding `assure:age` or `assure:capacity` as a provider, authority or assessor for that ladder; "witness" there means *not the subject*
 capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	agree	CC 3.4.12	The attestation is carried on a reserved `scores` dimension family that is the **sibling of the age-assurance ladder** ([CC 3.4.11](part_3_the_namespace.md)). It keeps the same witness-reservation discipline and the same ascending-confidence
-capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	agree	CC 3.4.12	The emitter rule is `witness ∈ attesting_key.identity_type`, identical to the age-assurance rule ([CC 3.4.7.1](part_3_the_namespace.md), [CC 3.4.11](part_3_the_namespace.md)). A registered qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT
+capacity_assurance:reversible_excluded:{domain}:{version}	signer_rule	agree	CC 3.4.12	The signer holds `assure:capacity` under a root the reader trusts, by the rule of [CC 3.4.11](#3.4.11) and [CC 3.4.7](#3.4.7). A qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT sign it, and the proposed steward MUST NOT sign it**.
 capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	agree	CC 3.1.2	Reversible-cause exclusion companion ([CC 3.4.12](part_3_the_namespace.md)): the assessor attests that delirium, infection-confusion, depression and polypharmacy are ruled out for the domain. A mandatory predicate on any continuing `incapacitated` rung; witness-reserved like
-capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	agree	CC 3.4.10	Being a registered provider, authority or assessor for that ladder; "witness" there means *not the subject*
+capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	agree	CC 3.4.10	Holding `assure:age` or `assure:capacity` as a provider, authority or assessor for that ladder; "witness" there means *not the subject*
 capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	agree	CC 3.4.12	The attestation is carried on a reserved `scores` dimension family that is the **sibling of the age-assurance ladder** ([CC 3.4.11](part_3_the_namespace.md)). It keeps the same witness-reservation discipline and the same ascending-confidence
-capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	agree	CC 3.4.12	The emitter rule is `witness ∈ attesting_key.identity_type`, identical to the age-assurance rule ([CC 3.4.7.1](part_3_the_namespace.md), [CC 3.4.11](part_3_the_namespace.md)). A registered qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT
+capacity_assurance:reversible_pending:{domain}:{version}	signer_rule	agree	CC 3.4.12	The signer holds `assure:capacity` under a root the reader trusts, by the rule of [CC 3.4.11](#3.4.11) and [CC 3.4.7](#3.4.7). A qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT sign it, and the proposed steward MUST NOT sign it**.
 capacity_assurance:{level}:{domain}:{band}:{version}	body	agree	CC 3.1.2	`{level}` ∈ `provider` \| `panel` \| `government` (closed — the two reversible-cause companions below are their own rows, never a `{level}`); `{band}` ∈ `capacitated` \|
 capacity_assurance:{level}:{domain}:{band}:{version}	fold	agree	CC 3.4.12	No row on a domain means the adult holds that domain.
 capacity_assurance:{level}:{domain}:{band}:{version}	projection	agree	CC 3.1.2	Aggregation across domains is forbidden — capacity is a vector, never collapsed to a scalar.
-capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	agree	CC 3.4.10	Being a registered provider, authority or assessor for that ladder; "witness" there means *not the subject*
+capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	agree	CC 3.4.10	Holding `assure:age` or `assure:capacity` as a provider, authority or assessor for that ladder; "witness" there means *not the subject*
 capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	agree	CC 3.4.12	The attestation is carried on a reserved `scores` dimension family that is the **sibling of the age-assurance ladder** ([CC 3.4.11](part_3_the_namespace.md)). It keeps the same witness-reservation discipline and the same ascending-confidence
-capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	agree	CC 3.4.12	The emitter rule is `witness ∈ attesting_key.identity_type`, identical to the age-assurance rule ([CC 3.4.7.1](part_3_the_namespace.md), [CC 3.4.11](part_3_the_namespace.md)). A registered qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT
+capacity_assurance:{level}:{domain}:{band}:{version}	signer_rule	agree	CC 3.4.12	The signer holds `assure:capacity` under a root the reader trusts, by the rule of [CC 3.4.11](#3.4.11) and [CC 3.4.7](#3.4.7). A qualified assessor (clinician, capacity panel, court-appointed evaluator) attests. **The subject MUST NOT sign it, and the proposed steward MUST NOT sign it**.
 census:composite:{class}	body	agree	CC 2.6.1.7	Merkle root over the accepted tokens; a contributor checks its token's path against it; both partials of a period must carry the same root.
 census:composite:{class}	body	agree	CC 2.6.1.7	Merkle root over the per-member masses.
 census:composite:{class}	body	agree	CC 2.6.1.7	Names the field prime, the one-hot bucket layout and the proof system the shares were made under.
@@ -249,10 +249,10 @@ consent:state:{stance}	projection	agree	CC 4.4.3.5.5	if rows is empty: return un
 consent:state:{stance}	signer_rule	agree	CC 3.3.1	`consent:state:{granted\|revoked}` | Subject's stance on the target Contribution. Closed-set stance values; `revoked` overrides prior `granted`. **Common case**: bare `scores` from a subject_key_id of the target. | enumerated | subject_key_id
 consent:state:{stance}	signer_rule	agree	CC 3.3.5	4. **Composition with the [CC 2.4.1.1](part_2_the_grammar.md) `withdraws` gate**: a `stance: revoked` `consent_record` whose `subject_key_id` ∈ the target's `subject_key_ids[]` is admitted under CC 2.4.1.1 subject-revocation authority (rules 2–4). The substrate SHOULD
 consent:state:{stance}	signer_rule	fills	CC 3.1.5	`expired` is the one substrate-emitted value
-consent:state:{stance}	signer_rule	fills	CC 3.3.1	**Substrate-emitted, not subject-emitted**
+consent:state:{stance}	signer_rule	fills	CC 3.3.1	**Signed by the node that holds the grant and saw it lapse, under `infra:attest`**
 consent:state:{stance}	signer_rule	fills	CC 3.3.5	**`expired` is substrate-emitted only**
 consent:state:{stance}	signer_rule	fills	CC 3.3.5	Substrate emission when valid_until passes without renewal
-consent:state:{stance}	signer_rule	fills	CC 3.4.5	**`consent:state:expired`** alone by `substrate_persist`, the one substrate-emitted consent leaf
+consent:state:{stance}	signer_rule	fills	CC 3.4.5	**`consent:state:expired`** is signed by the node that holds the grant and saw it lapse, under `infra:attest` ([CC 3.4.7](#3.4.7)).
 consent:state:{stance}	signer_rule	fills	CC 3.4.5	MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one
 consent:stream:{kind}	signer_rule	agree	CC 3.3.1	`consent:stream:{kind}` | Pre-packaged stream bundle. Recommended canonical kinds: `temporary` (14d auto-expire, default), `partnered` (bilateral + persistent — the subject's data-retention and learning choice, never a veto over the subject's data
 consent:{kind}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
@@ -304,23 +304,23 @@ detection:correlated_action:{axis}	body	agree	CC 3.1.8.4	**Polarity carries the 
 detection:correlated_action:{axis}	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:correlated_action:{axis}	fold	agree	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
 detection:correlated_action:{axis}	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
-detection:correlated_action:{axis}	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission and MUST
-detection:correlated_action:{axis}	signer_rule	agree	CC 3.4.8	`detection:correlated_action:*` and `detection:distributive:access:*` are LensCore-only emission. Emitter rule: `lenscore_detector ∈ attesting_key.identity_type`.
+detection:correlated_action:{axis}	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission, and its signer MUST hold `infra:detect`.
+detection:correlated_action:{axis}	signer_rule	agree	CC 3.4.8	`detection:*` is a detector's emission. The signer holds `infra:detect` under a root the reader trusts ([CC 3.4.7](#3.4.7)).
 detection:distributive:access:{resource_type}	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:distributive:access:{resource_type}	fold	agree	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
 detection:distributive:access:{resource_type}	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
-detection:distributive:access:{resource_type}	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission and MUST
-detection:distributive:access:{resource_type}	signer_rule	agree	CC 3.4.8	`detection:correlated_action:*` and `detection:distributive:access:*` are LensCore-only emission. Emitter rule: `lenscore_detector ∈ attesting_key.identity_type`.
+detection:distributive:access:{resource_type}	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission, and its signer MUST hold `infra:detect`.
+detection:distributive:access:{resource_type}	signer_rule	agree	CC 3.4.8	`detection:*` is a detector's emission. The signer holds `infra:detect` under a root the reader trusts ([CC 3.4.7](#3.4.7)).
 detection:hash_chain_integrity	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:hash_chain_integrity	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
-detection:hash_chain_integrity	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission and MUST
+detection:hash_chain_integrity	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission, and its signer MUST hold `infra:detect`.
 detection:intra_agent_consistency	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:intra_agent_consistency	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
-detection:intra_agent_consistency	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission and MUST
+detection:intra_agent_consistency	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission, and its signer MUST hold `infra:detect`.
 detection:{detector}	body	agree	CC 3.1.8.2	Three of the five detectors on one row: `{detector}` ∈ `cross_agent_divergence` \| `temporal_drift` \| `conscience_override_rate` — closed.
 detection:{detector}	erasure_route	fills	CC 4.5.3	the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row
 detection:{detector}	projection	agree	CC 3.1.8	LensCore observes; it does not adjudicate.
-detection:{detector}	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission and MUST
+detection:{detector}	signer_rule	agree	CC 3.4.8	Admission needs **no** `is_primary_detection` flag and **no** envelope-shape parsing. The prefix contract *is* the whole discriminator: **any** row whose `dimension` is under `detection:*` **is** a primary detector emission, and its signer MUST hold `infra:detect`.
 device:label	lifecycle	fills	CC 3.1.1	a rename is a `supersedes` of the previous row and the newest wins
 device:label	placement	agree	CC 3.1.1	at `cohort_scope: self`, the name in the envelope's `label`
 device:label	placement	fills	CC 3.1.1	at `cohort_scope: self`, the name in the envelope's `label`
@@ -367,17 +367,17 @@ group:roster	replication	fills	CC 2.4.1.1	roster-removal rows are addressed by `
 hard_case:{kind}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
 hard_case:{kind}	lifecycle	fills	CC 2.4.1.1	the substrate that produced the proof withdraws it under rule 1, or recants a false one, and nobody else
-hard_case:{kind}	signer_rule	agree	CC 3.4.2	Non-substrate emissions on these prefixes are a category error and MUST be rejected.
-hard_case:{kind}	signer_rule	agree	CC 3.4.2	`attesting_key_id` MUST match `federation_keys` row with `identity_type="substrate_persist"`
-hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:community_liveness_restored:{community_key_id}` | The named community's active founder set returns to `M + 1` or more by the T7 recovery widening ([CC 3.2](part_3_the_namespace.md) T7); same emitter rule as `_stalled` | Same:
+hard_case:{kind}	signer_rule	agree	CC 3.4.2	A row on these kinds from any other signer is refused ([CC 3.4.7](#3.4.7)).
+hard_case:{kind}	signer_rule	agree	CC 3.4.2	The node that admitted or refused the row, holding `infra:attest` from its owner ([CC 3.4.7](#3.4.7)). A kind whose body names another party needs `infra:record_hard_case`.
+hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:community_liveness_restored:{community_key_id}` | The named community's active founder set returns to `M + 1` or more by the T7 recovery widening ([CC 3.2](part_3_the_namespace.md) T7); same emitter rule as `_stalled` | Same.
 hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:community_liveness_stalled:{community_key_id}` | The named community's active founder set falls to `M` or fewer under `quorum:M/N` ([CC 3.2](part_3_the_namespace.md) T7): valid but non-admitting from this instant. Emitted by the substrate that admitted
-hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:location_proof_resolution_violation` | Substrate REJECTS a `location_proof` Contribution with `cell_resolution > 7` per [CC 2.6.6.1](part_2_the_grammar.md) rough-only enforcement; emitted against the producer's `key_id` so operators can observe malformed-client patterns | Same: substrate_persist
-hard_case:{kind}	signer_rule	agree	CC 3.4.4	Non-substrate emissions on these prefixes are a category error and MUST be rejected.
-hard_case:{kind}	signer_rule	agree	CC 3.4.4	Same: substrate_persist
-hard_case:{kind}	signer_rule	agree	CC 3.4.4	`attesting_key_id` MUST match a `federation_keys` row with `identity_type="substrate_persist"`
-hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:family_consensus_protocol_violation:{family_key_id}` | Substrate REJECTS a proposed amendment (rule unsatisfied OR entrenched) | Same: substrate_persist
+hard_case:{kind}	signer_rule	agree	CC 3.4.2	`hard_case:location_proof_resolution_violation` | Substrate REJECTS a `location_proof` Contribution with `cell_resolution > 7` per [CC 2.6.6.1](part_2_the_grammar.md) rough-only enforcement; emitted against the producer's `key_id` so operators can observe malformed-client patterns | Same.
+hard_case:{kind}	signer_rule	agree	CC 3.4.4	A row on these kinds from any other signer is refused ([CC 3.4.7](#3.4.7)).
+hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:family_membership_change:{family_key_id}` | Substrate admits an addition or removal in the named family's roster (per the family's `consensus_protocol`) | Same.
+hard_case:{kind}	signer_rule	agree	CC 3.4.4	The node that admitted or refused the row, holding `infra:attest` from its owner ([CC 3.4.7](#3.4.7)). A kind whose body names another party needs `infra:record_hard_case`.
+hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:family_consensus_protocol_violation:{family_key_id}` | Substrate REJECTS a proposed amendment (rule unsatisfied OR entrenched) | Same.
 hard_case:{kind}	signer_rule	agree	CC 3.4.4	`hard_case:recipient_excluded:{scope_key_id}` | Substrate fail-secure-skips a recipient in the [CC 5.2](part_5_transport_substrate.md) at-rest grant cascade. Payload: excluded recipient `key_id`, `reason ∈ {expired_occurrence, invalid_kem_key, missing_encryption_pubkeys}`, skipped Contribution's envelope ref. **Cohort-scoped: emitted INTO the
-hard_case:{kind}	signer_rule	agree	CC 4.5.12.4	The five substrate-emitted membership-event kinds (`hard_case:identity_occurrence_added`, `hard_case:family_membership_change`, `hard_case:family_consensus_protocol_change`, `hard_case:family_consensus_protocol_violation`, `hard_case:recipient_excluded`) are reserved to `identity_type="substrate_persist"` emitters.
+hard_case:{kind}	signer_rule	agree	CC 4.5.12.4	The membership-event kinds of [CC 3.4.4](part_3_the_namespace.md#3.4.4) are signed by the node that admitted the change ([CC 3.4.7](part_3_the_namespace.md#3.4.7)).
 hardware_custody:{platform}	fold	agree	CC 4.2.2.1	where no chain verifies, the class is unattested and the multiplier is 0.0
 health:liveness:{version}	signer_rule	agree	CC 3.1.9.4	**External service-health verdict — a third-person claim about a keyed service.** An attester states that *another* federation key's service is alive as a `scores` Contribution: `attested_key_id` is the service's own
 identity:occurrence	lifecycle	fills	CC 3.3.6	previously-delivered DEKs are out of scope
@@ -594,8 +594,8 @@ slashing:{outcome}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by t
 slashing:{outcome}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
 slashing:{outcome}	signer_rule	fills	CC 4.5.5	`slashing:{outcome}` verdicts and the `quarantine:{state}` marker plane
 system:*	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own
-system:*	signer_rule	agree	CC 3.4.3	Non-substrate emissions on these prefixes are a category error and MUST be rejected.
-system:*	signer_rule	agree	CC 4.5.8.1	- **`substrate_persist` / `substrate_edge` ([CC 3.4.3](part_3_the_namespace.md))**: substrate-self-report roles remain bound by the CC 3.4.3 reservation: a `system:*` row is emitted only by the running substrate. A key cohabiting a substrate
+system:*	signer_rule	agree	CC 3.4.3	The signer is the node the row is about and holds `infra:attest` from its owner ([CC 3.4.7](#3.4.7)).
+system:*	signer_rule	agree	CC 4.5.8.1	a `system:*` row is signed only by the node it is about, under `infra:attest`.
 takedown_notice:{basis}	signer_rule	agree	CC 3.1.1	**Yes:** duty-holder-signed under the [CC 4.5.5](part_4_composition_governance.md) enforced-admission rule for the legal bases; cosigned by the trust root for `steward_purge`
 takedown_notice:{basis}	signer_rule	agree	CC 4.4.3.4.3	`takedown` | a `takedown_notice` (incl. the CC 4.5.3 immediate-removal fast-path)
 takedown_notice:{basis}	signer_rule	agree	CC 4.5.3	**That key MUST hold the `takedown` duty over the content's community under [CC 4.5.5](#4.5.5) (a) as-self or (b) delegated from an accountable root** (`accountable_root`, [CC 3.2](part_3_the_namespace.md) — a key that
@@ -610,10 +610,10 @@ topical_relation:{kind}	signer_rule	agree	CC 3.1.9	None is reserved: all are ope
 trace:{form}:{version}	body	agree	CC 3.1.5	A row that violates the pinned schema is **refused, never truncated** (`trace_field_shape_violation`): a truncated row is a silently altered signed record.
 trace:{form}:{version}	signer_rule	agree	CC 3.1.5	`trace_summary:{kind}` | Post-scrub digest of a trace for cross-node consumption when the trace itself is out of scope or over cap. Same self-emission rule; carries no claim the full trace
 trace:{form}:{version}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_id` MUST be a member of `subject_key_ids`. Third-party emission on the namespace is REQUIRED to be refused.
-trace:{form}:{version}	signer_rule	agree	CC 4.5.8.3	- **Reasoning-trace dimensions**: no separate reserved `identity_type` required; reasoning-trace emission rides the agent role's open-vocabulary surface.
+trace:{form}:{version}	signer_rule	agree	CC 4.5.8.3	- **Reasoning-trace dimensions**: no reserved duty is required; reasoning-trace emission rides the agent role's open-vocabulary surface.
 trace_summary:{kind}	signer_rule	agree	CC 3.1.5	Same self-emission rule; carries no claim the full trace does not.
 trace_summary:{kind}	signer_rule	agree	CC 3.4.5	**Pro-self** — `attesting_key_id` MUST be a member of `subject_key_ids`. Third-party emission on the namespace is REQUIRED to be refused.
-transparency_log:cosigned:{tree_size}	signer_rule	agree	CC 3.1.2	`transparency_log:cosigned:{tree_size}` | Witness cosignature on an STH (substrate-conformance path; see [CC 5.3.1](part_5_transport_substrate.md) endpoints). Witness-emitted, verify-recognized — emitter rule (`identity_type="witness"`) at CC 3.4.9. | signed
+transparency_log:cosigned:{tree_size}	signer_rule	agree	CC 3.1.2	`transparency_log:cosigned:{tree_size}` | Witness cosignature on an STH (substrate-conformance path; see [CC 5.3.1](part_5_transport_substrate.md) endpoints). Witness-emitted, verify-recognized — the signer holds `infra:attest_assurance` ([CC 3.4.10](#3.4.10)). | signed
 transport:canonical_rebind	body	agree	CC 3.1.3	`SignedTransportDestination` under `transport_destination`.
 transport:canonical_rebind	signer_rule	agree	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
 transport:{kind}	signer_rule	agree	CC 3.1.4	Substrate-self-reports per [CC 3.4.3](part_3_the_namespace.md).
@@ -626,7 +626,7 @@ trust:{job}:{version}	lifecycle	fills	CC 4.3	The conferrer ends a seat by `withd
 trust:{job}:{version}	signer_rule	agree	CC 3.4.5	`trust:charter:v1` MUST be self-referential — `attesting_key_id` = `attested_key_id` — so a charter is only ever a key's own declaration about itself.
 trust:{job}:{version}	signer_rule	agree	CC 3.4.5	`trust:confers:v1` (root → subject) MUST carry the conferring root as `attesting_key_id`
 truth_grounding:{subject}	signer_rule	agree	CC 3.4.8	Cross-attestation by non-LensCore peers (on the same dimension, attesting to the same subject) is admitted as a score on the detector's verdict. Such cross-attestation is useful when the federation wants
-truth_grounding:{subject}	signer_rule	agree	CC 3.4.8	Under the same contract, a **cross-attestation** MUST ride the `truth_grounding:detection:*` prefix, which carries **no** `lenscore_detector` requirement (it is a score *on* the detector's verdict, not a shadowing re-emission of it).
+truth_grounding:{subject}	signer_rule	agree	CC 3.4.8	Under the same contract, a **cross-attestation** MUST ride the `truth_grounding:detection:*` prefix, which carries **no** `infra:detect` requirement (it is a score *on* the detector's verdict, not a shadowing re-emission of it).
 video:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md) consumer policy.
 vote:{contribution_id}	fold	agree	CC 3.1.9.3	Weight = Credits × expertise multiplier.
 wa_adjudication:{state}	signer_rule	fills	CC 3.1.9.4	`petition` is the petitioner's own row that opens the ownership-reclaim ceremony

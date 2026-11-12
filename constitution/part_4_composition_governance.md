@@ -1060,6 +1060,8 @@ A user MAY grant a device co-self while revoking its network agency, or vice-ver
 | `review` | a `reconsideration:{grounds}` appeal / review | [CC 3.1.9.2](part_3_the_namespace.md) |
 | `slash` | a `slashing:{outcome}` verdict or a `quarantine:{state}` marker | [CC 3.1.9.2](part_3_the_namespace.md) |
 | `resolve_deferral` | a `deferral:response:{outcome}` to the delegator's own deferrals or its agent's; `resolve_deferral:{domain}` narrows the seat to one domain | [CC 4.3](#4.3) / [CC 3.1.9.4](part_3_the_namespace.md) |
+| `assure:age` | an `age_assurance:{level}:{band}:{version}` attestation about a subject other than the holder. A person or an institution holds it; it is not an `infra:*` scope | [CC 3.4.11](part_3_the_namespace.md#3.4.11) / [CC 3.4.7](part_3_the_namespace.md#3.4.7) |
+| `assure:capacity` | a `capacity_assurance:*` attestation about a subject other than the holder, who is also not the proposed steward. A person or an institution holds it; it is not an `infra:*` scope | [CC 3.4.12](part_3_the_namespace.md#3.4.12) / [CC 3.4.7](part_3_the_namespace.md#3.4.7) |
 | `license` | a `licensure:{authority_id}` / `attestation:license_validity` attestation, **on behalf of a delegator that itself holds licence authority** by quorum ([CC 3.3.9](part_3_the_namespace.md)). The scope conveys the right to *issue*, never the authority itself: a licence does not chain ([CC 2.4.1.2.1](part_2_the_grammar.md)). Anyone may be an authority under their own key, the fold keys on emitter-resolves-to-authority, and the one refusal a `license`-scoped issuance meets is stated there. | [CC 3.1.2](part_3_the_namespace.md) / [CC 3.1.1](part_3_the_namespace.md) |
 | `grant` | a `key_grant` ([CC 3.3.2](part_3_the_namespace.md)) or a `consent:scope:*` grant over assets the delegator **owns or stewards, or holds a `grant`-scoped delegation over**. It is bounded by that authority, never by what the delegator can wrap. Every recipient can wrap the DEK it unwrapped, and admission refuses a grant issued on possession alone ([CC 2.4.1.2.1](part_2_the_grammar.md)). | [CC 3.3.2](part_3_the_namespace.md) / [CC 3.3.5](part_3_the_namespace.md) |
 
@@ -1071,7 +1073,7 @@ A user MAY grant a device co-self while revoking its network agency, or vice-ver
 
 | prefix | class | scopes |
 |---|---|---|
-| `infra:*` | server-class (allowed for a `node`-role delegate) | `infra:serve`, `infra:store`, `infra:transport`, `infra:attest`, `infra:network_presence`, `infra:hold_community_membership`, `infra:hold_family_membership`, `infra:relay` (the conferred relay role of [CC 5.4.6](part_5_transport_substrate.md#5.4.6)) |
+| `infra:*` | server-class (allowed for a `node`-role delegate) | `infra:serve`, `infra:store`, `infra:transport`, `infra:attest`, `infra:network_presence`, `infra:hold_community_membership`, `infra:hold_family_membership`, `infra:relay` (the conferred relay role of [CC 5.4.6](part_5_transport_substrate.md#5.4.6)), `infra:detect`, `infra:attest_assurance`, `infra:record_hard_case` |
 | `agency:*` | brain-only (forbidden for any delegate whose `identity_type` contains `node`) | the **class** the conformance rule below names, never an emitted string: the four unprefixed kinds above (`act_on_behalf`, `message_io`, `network_presence`, `sub_delegation`) are the only agent scope strings emitted |
 
 **Pinned `infra:*` one-liners (closed set).** Each token has one pinned meaning:
@@ -1082,7 +1084,12 @@ A user MAY grant a device co-self while revoking its network agency, or vice-ver
 - `attest` — vouch as the delegator's infrastructure;
 - `network_presence` — announce/resolve the delegator's `transport_destination`;
 - `relay` — hold the conferred relay role of [CC 5.4.6](part_5_transport_substrate.md#5.4.6);
+- `detect` — sign `detection:*` rows as a detector ([CC 3.4.8](part_3_the_namespace.md#3.4.8));
+- `attest_assurance` — cosign a transparency log's tree head as a log witness ([CC 3.4.10](part_3_the_namespace.md#3.4.10));
+- `record_hard_case` — record a `hard_case` event whose body names another party ([CC 3.4.7](part_3_the_namespace.md#3.4.7));
 - `hold_community_membership` / `hold_family_membership` — occupy a member seat on **community** / **family** rosters under the delegator's standing.
+
+**The assurance duties are held by people, not by nodes.** `assure:age` and `assure:capacity` are not `infra:*` scopes, and a `node`-role delegate holds neither. A person or an institution holds each, conferred by a root the reader trusts ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). The subject of a row never holds the duty over itself, and the proposed steward never holds `assure:capacity` over the ward.
 
 The two membership tokens **replace `infra:join_communities` outright, with no alias**. `community` and `family` are distinct CEG objects in different sensitivity classes. Scopes are exact-string matched, so a vague token is a silent interop hole, not a fallback. Retirement is a coordinated cut, not a deprecation window ([CC 2.6.4](part_2_the_grammar.md)).
 
@@ -1455,7 +1462,7 @@ A reader trusts a signed statement when the key that signed it (`attesting_key_i
 
 **Capability gate — the federation floor (fail-closed).** With no valid *external* trust root, federated agent capabilities and manifest validation MUST be disabled at the server tier. The base self-root is the floor, never sufficient for federation: it constitutes an identity, and identity is not standing ([CC 4.1.2](#4.1.2)).
 
-**Two conferral planes.** **Ceremony** confers root *identity* (an m-of-n co-scrub on the key record, [CC 4.2.1](#4.2.1)); **delegation** confers operational *capability* (`delegates_to(root → key, [scope])`, resolved at use against a root the asking node trusts). Every reserved-prefix role — `trusted_publisher` reserving `content_rating:*` ([CC 4.4.3.10](#4.4.3.10)), `lenscore_detector` reserving `detection:*` — is conferred on the **delegation** plane. Putting a routine operator role on the ceremony plane fails closed on every legitimate operator and leaves each newly-minted root *less* able to stand up its own; leaving a reserved-prefix role with **no** named plane leaves it self-assertable, which is the hole this rule closes.
+**Two conferral planes.** **Ceremony** confers root *identity* (an m-of-n co-scrub on the key record, [CC 4.2.1](#4.2.1)); **delegation** confers operational *capability* (`delegates_to(root → key, [scope])`, resolved at use against a root the asking node trusts). A reserved duty, such as `infra:detect` for `detection:*`, is conferred on the **delegation** plane ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). Putting a routine operator role on the ceremony plane fails closed on every legitimate operator and leaves each newly-minted root *less* able to stand up its own; leaving a reserved-prefix role with **no** named plane leaves it self-assertable, which is the hole this rule closes.
 
 **Charter recovery lives in the record.** A charter MUST carry a pre-rotation commitment (the successor key committed in advance) and an m-of-n recovery ceremony, and the m-of-n MUST be audited for holder **independence** — an m-of-n assembled inside one organisation is a 1-of-1. Absent both, root-key compromise is unrecoverable by construction: the attacker holds the tombstoning pen.
 
@@ -1862,37 +1869,37 @@ Content-watchlist auto-detection: a [CC 4.5.5](#4.5.5) `moderate`-scope holder *
 
 ### 4.5.8 `identity-set-2` — `identity_type` as a set — single-key role cohabitation
 
-Per [CC 3.4.7.1](part_3_the_namespace.md). `federation_keys.identity_type` is a **set of roles**, not a single scalar role, so the [CC 3.4](part_3_the_namespace.md) reserved-prefix gates are evaluated by set membership (`X ∈ identity_type`). This routes through the [CC 4.5.1](#4.5.1) amendment process.
+Per [CC 3.4.7.1](part_3_the_namespace.md). `federation_keys.identity_type` is a **set of labels** a key states about itself, not a single scalar. It opens no reserved family: a duty is held by delegation ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). This routes through the [CC 4.5.1](#4.5.1) amendment process.
 
 #### 4.5.8.1 `cohabitation` — Cohabitation discipline for constitutional + substrate roles
 
-Set membership is necessary for the wire-level *right* to emit per held role and never sufficient: every reserved role but `accord_holder` also needs its live conferral ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). Two roles carry defense-in-depth guidance against cohabitation:
+A label in the set confers nothing. Every reserved duty is held by a live conferral ([CC 3.4.7](part_3_the_namespace.md#3.4.7)), and the accord's standing by its charter. Two cases carry defence-in-depth guidance against cohabitation:
 
 - **`accord_holder` ([CC 3.4.1](part_3_the_namespace.md) + [CC 4.2](part_4_composition_governance.md))**: the halt authority of CC 4.2. Consumer policy SHOULD treat an `accord_holder` key that also holds non-constitutional roles (e.g., `{accord_holder, agent}`) with elevated scrutiny — the accord roster's halt authority is strongest when its keys are single-purpose. The cohabitation is NOT forbidden at the wire layer (the substrate cannot adjudicate constitutional intent), but the CC 4.2 entrenched-`family` discipline RECOMMENDS dedicated accord-holder keys.
-- **`substrate_persist` / `substrate_edge` ([CC 3.4.3](part_3_the_namespace.md))**: substrate-self-report roles remain bound by the CC 3.4.3 reservation: a `system:*` row is emitted only by the running substrate. A key cohabiting a substrate role with an application role (e.g., `{substrate_persist, agent}`) is still held to that reservation for its substrate-role emissions; cohabitation does not relax it.
+- **A node's reports ([CC 3.4.3](part_3_the_namespace.md))**: a `system:*` row is signed only by the node it is about, under `infra:attest`. A key that also holds an agency delegation is still held to that rule for its reports. Holding both does not relax it.
 
 #### 4.5.8.2 `amendment-what` — The role set is the representation
 
 | Surface | Rule |
 |---|---|
 | `federation_keys.identity_type` | a set of role strings; a scalar is read as a singleton set |
-| CC 3.4 emitter-rule evaluation | `X ∈ identity_type` ([CC 3.4.7.1](part_3_the_namespace.md)) |
+| CC 3.4 reserved families | the duty the signer holds ([CC 3.4.7](part_3_the_namespace.md#3.4.7)); the set is never read to open one |
 | CC 3.1 dimension namespace | independent of the role set |
 | Envelope ([CC 2.1](part_2_the_grammar.md)) | independent of the role set |
 | 1+4 structural primitives ([CC 2.4](part_2_the_grammar.md)) | independent of the role set |
 | subject_kinds ([CC 3.3](part_3_the_namespace.md)) | independent of the role set |
 
-**The rule (normative).** `identity_type` is a set of role strings, and a scalar reads as a singleton set, so for a single-role key the set reading and the scalar reading agree: `X ∈ {X}` ≡ `X == X`. The set is not a [CC 1.7](part_1_foundation.md) "Nth path" (it adds no namespace surface); it is the [CC 3.4](part_3_the_namespace.md)-layer rule that lets one key hold many roles without widening the wire's expressive surface.
+**The rule (normative).** `identity_type` is a set of role strings, and a scalar reads as a singleton set, so for a single-role key the set reading and the scalar reading agree: `X ∈ {X}` ≡ `X == X`. The set is not a [CC 1.7](part_1_foundation.md) "Nth path" (it adds no namespace surface); it lets one key carry several labels without widening the wire's expressive surface.
 
 #### 4.5.8.3 `settled` — The agent-side stance
 
-- **Capacity self-emission ([CC 3.4.5](part_3_the_namespace.md))**: **unaffected by role cohabitation** — which is the only claim made here. CC 3.4.5 also carries the normative consent-before-scoring gate and read-boundary rules; this section restates none of that material. What is unchanged is the interaction: the anti-Goodhart `attesting_key_id ≠ attested_key_id` rule binds regardless of how many roles a key holds. A folded `{agent, lenscore_detector}` key still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)). Role cohabitation does not create a self-attestation backdoor.
-- **Reasoning-trace dimensions**: no separate reserved `identity_type` required; reasoning-trace emission rides the agent role's open-vocabulary surface. Cohabitation does not change this.
+- **Capacity self-emission ([CC 3.4.5](part_3_the_namespace.md))**: **unaffected by role cohabitation** — which is the only claim made here. CC 3.4.5 also carries the normative consent-before-scoring gate and read-boundary rules; this section restates none of that material. What is unchanged is the interaction: the anti-Goodhart `attesting_key_id ≠ attested_key_id` rule binds regardless of how many roles a key holds. A key holding both an agency delegation and `infra:detect` still MUST NOT score its own `capacity:*` ([CC 3.4.5](part_3_the_namespace.md#3.4.5)). Role cohabitation does not create a self-attestation backdoor.
+- **Reasoning-trace dimensions**: no reserved duty is required; reasoning-trace emission rides the agent role's open-vocabulary surface. Cohabitation does not change this.
 - **Agent-intent / detector-envelope split**: a cohabiting key emits agent-intent attestations under the agent dimensions and detector verdicts under `detection:*` ([CC 3.4.8](part_3_the_namespace.md) worked example). The namespace keeps the two surfaces distinct; cohabitation grants the right to emit on each, never merges them.
 
 #### 4.5.8.4 `documents-what-6` — What this documents
 
-- The set-membership reading of every CC 3.4 reserved-prefix emitter rule ([CC 3.4.7.1](part_3_the_namespace.md))
+- That the set opens no reserved family, and that a duty is held by delegation ([CC 3.4.7](part_3_the_namespace.md#3.4.7))
 - The canonical-bytes encoding for the set (sorted-ascending, deduplicated, comma-joined; single-role keys encode identically to their scalar form)
 - The detector-fold worked example ([CC 3.4.8](part_3_the_namespace.md))
 - The cohabitation discipline for constitutional + substrate roles (CC 4.5.8.1)
@@ -1900,7 +1907,7 @@ Set membership is necessary for the wire-level *right* to emit per held role and
 What it does NOT do:
 - Expand the CC 3.1 dimension namespace, the CC 2.1 envelope, the CC 2.4 structural-primitive set, or the CC 3.3 subject_kinds (zero new wire surface beyond the `identity_type` representation)
 - Enumerate a closed set of role values — `identity_type` members remain an open vocabulary owned per [CC 3.4](part_3_the_namespace.md) reservations + sibling-component vocabulary extensions
-- Forbid cohabitation at the wire layer beyond the one pair [CC 3.4.7.3](part_3_the_namespace.md#3.4.7.3) Clause A refuses: a key whose `identity_type` contains `node` MUST NOT also contain `agent` or `user`. The substrate otherwise enforces gates by membership, and the cohabitation discipline of the constitutional and substrate roles is consumer and operator policy (CC 4.5.8.1)
+- Forbid cohabitation at the wire layer beyond the one pair [CC 3.4.7.3](part_3_the_namespace.md#3.4.7.3) Clause A refuses: a key whose `identity_type` contains `node` MUST NOT also contain `agent` or `user`. The substrate otherwise checks the duty a signer holds, and the cohabitation discipline of the constitutional and substrate roles is consumer and operator policy (CC 4.5.8.1)
 - Address `affiliations` (the fourth `cohort_scope` tier, defined at [CC 4.4.3.2.8](#4.4.3.2.8))
 
 ### 4.5.9 `registry-geographic` — Geographic-community privacy invariant
@@ -2015,7 +2022,7 @@ A new `identity_occurrence` is proposed by a signature from EITHER the root `ide
 
 #### 4.5.12.4 `reservation-reserved` — Reserved-prefix substrate emissions — locked in CC 3.4.4
 
-Per [CC 3.4.4](part_3_the_namespace.md). The five substrate-emitted membership-event kinds (`hard_case:identity_occurrence_added`, `hard_case:family_membership_change`, `hard_case:family_consensus_protocol_change`, `hard_case:family_consensus_protocol_violation`, `hard_case:recipient_excluded`) are reserved to `identity_type="substrate_persist"` emitters. Same discipline as the existing `system:*` substrate-self-report family.
+The membership-event kinds of [CC 3.4.4](part_3_the_namespace.md#3.4.4) are signed by the node that admitted the change ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). Same discipline as the existing `system:*` substrate-self-report family.
 
 #### 4.5.12.5 `family-admission` — Family admission — consensus_protocol (normative)
 

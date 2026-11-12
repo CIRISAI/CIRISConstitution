@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "0b4e43f84ec732a37fe4222aa63d23879a58fd4f051107a6c7499843579a6bb7",
+    "registry_sha256": "f6cea315a3484d67500b57d242a634c19ac333fb8cea5775a505fd32f34ca07d",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "df419b6d85ae43505d1bc6232490b21897768c3a0de47ee6aaece02bec462278"
+    "source_sha256": "b9acca01a2755c9f2f718791e62c7d1e3d24bf98c648e29b9cb9508de809f06a"
   },
   "families": [
     {
@@ -1921,7 +1921,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Catalogue row (CC 3.1.7 R1); semantics, schemes and the trusted-publisher emitter rule at CC 3.3.12.",
+      "description": "Catalogue row (CC 3.1.7 R1); semantics and schemes at CC 3.3.12.",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
