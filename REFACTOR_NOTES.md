@@ -532,3 +532,12 @@ on a withdraw of `retirement:{state}`, a verb that family has no transition for 
 A guard with no verb lands on attest and authorize only; whether it also binds a supersede is not decided.
 Not done: `guard_well_founded` (no guard requires a row whose own guard requires it back), the model extension in
 `formal/event_lifecycle`, the 34 statements the design could not encode, names for the bare refusals (persist).
+
+Data pass, step 3 (change): `tools/change_grammar.py` and `formal/derivation/change_text.tsv` (61 statements from
+`handoff/lanes/out_g_lifecycle.tsv`); a `change` cell on every transition (20 carry items), the default and the
+every-family rows under `_meta.changes`. Marks held from rising: recovery 4, cosigned_prior 1, committed_key 2,
+forfeited 1, no_weaker 1. Set aside: five `key_grant:{axis}` rows saying no supersede, withdraw or recant is admitted
+(the model already has no such transition, so they agree and add nothing), one `goal:{scale}` row naming a recant the
+family has no transition for, one ledger row whose quote spans cells. `guard_well_founded` is built (13 requiring
+nodes, longest chain 2). Not done: member names checked against the CDDL; the strength order `no_weaker` needs;
+the three properties the change design names; `lifecycle`'s supersedes and rotation parts derived from `change`.

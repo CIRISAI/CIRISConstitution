@@ -26,6 +26,9 @@ OUT = ROOT / "manifests" / "transitions.json"
 OUT_TSV = ROOT / "manifests" / "transitions.tsv"
 TEXT = ROOT / "formal" / "derivation" / "transition_text.tsv"
 GUARDS = ROOT / "formal" / "derivation" / "guard_text.tsv"
+CHANGES = ROOT / "formal" / "derivation" / "change_text.tsv"
+CHANGE_DEFAULT = "replace: by=same_attester, link=ranked:references_attestation_id, reach=own_prior ; withdraw: cascade=*/ref:stand"
+CHANGE_MARKS_MAX = {"recovery": 4, "cosigned_prior": 1, "committed_key": 2, "forfeited": 1, "no_weaker": 1}   # each number only falls
 GUARD_MARKS_MAX = {"refuse": 32, "ref:*": 10, "landed": 3, "signs": 2, "commits": 1}   # each number only falls
 POLICY_ROWS = {f["family"]: f["kind"] for f in json.loads((ROOT / "manifests" / "governance_policy.json").read_text())["families"]}
 
@@ -276,7 +279,107 @@ def apply_guards(rows):
     if over:
         raise SystemExit("guard_text.tsv: marks that may only fall have risen: " + ", ".join(over))
     guarded = sum(1 for f in rows for t in f["transitions"] if t["guard"]["value"])
-    return {"statements": n, "guarded_transitions": guarded, "marks": marks}
+    # Well founded: no row's admission requires a row whose own admission requires it back. A node is a family, or one
+    # leaf of it where the clause is limited to leaves; an edge is a row the guard requires (one, all, latest), an
+    # advisory clause excepted. A cycle would be two rows neither of which any node could admit first.
+    def req_atoms(cs, leaves=None):
+        for c in cs:
+            lv = [set(w["values"]) for w in c["when"] if w["cond"] == "leaf"]
+            mine = lv[0] if lv else leaves
+            if "group" in c:
+                yield from req_atoms(c["group"], mine)
+            else:
+                a = c["atom"]
+                if a["atom"] == "row" and a["quant"] in ("one", "all", "latest") and "of" in a["families"] and (c["else"] or {}).get("do") != "advise":
+                    yield a["families"]["of"], mine
+    nodes = {}
+    for f in rows:
+        for t in f["transitions"]:
+            if t["verb"] in ("attest", "authorize"):
+                for x in t["guard"]["value"]:
+                    for names, leaves in req_atoms(gg.parse(x["guard"])[0]):
+                        for lf in sorted(leaves) if leaves else [None]:
+                            nodes.setdefault((f["family"], lf), set()).update(names)
+    def hits(name):
+        out = []
+        for (fam, lf) in nodes:
+            segs = fam.split(":")
+            i = next((k for k, x in enumerate(segs) if x.startswith("{")), None)
+            if name == fam or (lf is None and gg.family_ok(name, {fam})) or (lf is not None and i is not None and name.split(":")[:i + 1] == segs[:i] + [lf]):
+                out.append((fam, lf))
+        return out
+    def depth(node, stack=()):
+        if node in stack:
+            raise SystemExit("guard_text.tsv: the guards are not well founded: " + " requires ".join(f"{a}" + (f" ({b})" if b else "") for a, b in stack + (node,)))
+        return 1 + max([depth(m, stack + (node,)) for name in sorted(nodes[node]) for m in hits(name)] or [0])
+    deepest = max([depth(x) for x in sorted(nodes, key=str)] or [0])
+    return {"statements": n, "guarded_transitions": guarded, "marks": marks,
+            "well_founded": {"requiring": len(nodes), "longest_chain": deepest,
+                             "reading": "no row's admission requires a row whose own admission requires it back"}}
+
+
+def apply_changes(rows):
+    """Give each transition its change items from formal/derivation/change_text.tsv: what the changing row may do, who
+    signs it, which members may move, what it displaces, what follows for dependants and for keys. An item lands on the
+    transition of its verb, or on the entry transition where it names a leaf. Every item parses, names only what the
+    vocabularies hold and rests on quoted words; the tokens no other vocabulary has are counted and held from rising."""
+    import csv, glob
+    sys.path.insert(0, str(ROOT / "tools"))
+    import change_grammar as cg, guard_grammar as gg
+    from build_family_model import section_span
+    reg = json.loads((ROOT / "manifests" / "namespace_registry.json").read_text())
+    fams = {f["family"] for f in rows}
+    for f in reg["families"]:
+        fams.add(f["prefix"]); fams.update(f.get("leaves", []))
+    text = "\n".join(open(p, encoding="utf-8").read() for p in sorted(glob.glob(str(ROOT / "constitution" / "part_*.md"))))
+    voc = {"families": fams, "roles": {r for f in rows for t in f["transitions"] for r in t["roles"]["value"]},
+           "tokens": set(re.findall(r"`([a-z_0-9:]+)`", text))}
+    by = {f["family"]: f for f in rows}
+    marks, n, every = {k: 0 for k in CHANGE_MARKS_MAX}, 0, []
+    for f in rows:
+        for t in f["transitions"]:
+            t["change"] = {"value": [], "source": "generic"}
+    cg.parse(CHANGE_DEFAULT)
+    lines = [l for l in CHANGES.read_text(encoding="utf-8").split("\n") if l and not l.startswith("#")]
+    for c in csv.DictReader(lines, delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"change_text.tsv: {c['family']} ({c['cc_ref']})"
+        try:
+            items, _ = cg.parse(c["change"])
+        except cg.ChangeError as e:
+            raise SystemExit(f"{where}: {e}")
+        bad = cg.closure(items, voc, gg.family_ok)
+        if bad:
+            raise SystemExit(f"{where}: outside the vocabularies: " + "; ".join(bad))
+        span = section_span(c["cc_ref"])
+        if span is None or c["quote"] not in span:
+            raise SystemExit(f"{where}: the quoted words do not stand in {c['cc_ref']}")
+        n += 1
+        if c["family"] == "*":
+            if {"change": c["change"], "cc_ref": c["cc_ref"]} not in every:
+                every.append({"change": c["change"], "cc_ref": c["cc_ref"]})
+            continue
+        if c["family"] not in by:
+            raise SystemExit(f"{where}: no such family")
+        for raw in c["change"].split(" ; "):
+            it, mk = cg.parse(raw)
+            on = it[0]["on"]
+            verbs = [{"replace": "supersede"}.get(on, on)] if on in cg.VERBS else ["attest", "authorize"]
+            hit = [t for t in by[c["family"]]["transitions"] if t["verb"] in verbs]
+            if not hit:
+                raise SystemExit(f"{where}: the family has no transition for {verbs}")
+            for t in hit:
+                cur = next((x for x in t["change"]["value"] if x["item"] == raw), None)
+                if cur:
+                    if c["cc_ref"] not in cur["cc_ref"]: cur["cc_ref"].append(c["cc_ref"])
+                else:
+                    t["change"]["value"].append({"item": raw, "cc_ref": [c["cc_ref"]]})
+                    for k in set(mk): marks[k] += 1
+                t["change"]["source"] = "cc-table"
+    over = [f"{k} {v} > {CHANGE_MARKS_MAX[k]}" for k, v in marks.items() if v > CHANGE_MARKS_MAX[k]]
+    if over:
+        raise SystemExit("change_text.tsv: marks that may only fall have risen: " + ", ".join(over))
+    return {"statements": n, "changed_transitions": sum(1 for f in rows for t in f["transitions"] if t["change"]["value"]),
+            "default": CHANGE_DEFAULT, "every_family": every, "marks": marks}
 
 
 def build():
@@ -342,6 +445,7 @@ def build():
     if text:
         raise SystemExit("transition_text.tsv names transitions outside the manifest: " + ", ".join(f"{f} {v}" for f, v in sorted(text)))
     guard_meta = apply_guards(rows)
+    change_meta = apply_changes(rows)
     # gaps summary
     gaps = sum(1 for f in rows for t in f["transitions"] for k in ("roles", "policy", "widens") if t[k]["source"] == "gap")
     total = sum(len(f["transitions"]) for f in rows)
@@ -354,6 +458,8 @@ def build():
                      "sources": {"cc-table": "the registry and CC table, or a cell the text states (it carries cc_ref)", "code-v61": "the census of the code", "derived": "this tool's rule over those", "gap": "nothing says; closed"},
                      "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
                      "guards": guard_meta,
+                     "change": "a change cell lists what the transition's row may do to the row it changes, as items in the grammar of tools/change_grammar.py, each with the sections that state it; a transition with none takes the default under `changes`",
+                     "changes": change_meta,
                      "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
                      "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",

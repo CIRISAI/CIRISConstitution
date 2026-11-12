@@ -53,6 +53,34 @@
     "landed": 3,
     "signs": 2,
     "commits": 1
+   },
+   "well_founded": {
+    "requiring": 13,
+    "longest_chain": 2,
+    "reading": "no row's admission requires a row whose own admission requires it back"
+   }
+  },
+  "change": "a change cell lists what the transition's row may do to the row it changes, as items in the grammar of tools/change_grammar.py, each with the sections that state it; a transition with none takes the default under `changes`",
+  "changes": {
+   "statements": 61,
+   "changed_transitions": 20,
+   "default": "replace: by=same_attester, link=ranked:references_attestation_id, reach=own_prior ; withdraw: cascade=*/ref:stand",
+   "every_family": [
+    {
+     "change": "withdraw: cascade=*/ref:stand",
+     "cc_ref": "CC 2.4.1.1"
+    },
+    {
+     "change": "withdraw: cascade=consent:deletion_sla:{days}/about:discharged ; replace: cascade=consent:deletion_sla:{days}/about:discharged",
+     "cc_ref": "CC 3.3.1"
+    }
+   ],
+   "marks": {
+    "recovery": 4,
+    "cosigned_prior": 1,
+    "committed_key": 2,
+    "forfeited": 1,
+    "no_weaker": 1
    }
   },
   "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
@@ -106,6 +134,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -141,6 +173,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -185,6 +221,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -222,6 +262,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -256,6 +300,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -304,6 +352,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -342,6 +394,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -384,6 +440,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -424,6 +484,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -458,6 +522,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -534,6 +602,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -574,6 +646,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -608,6 +684,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -655,6 +735,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -692,6 +776,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -726,6 +814,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -770,6 +862,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -805,6 +901,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -843,6 +943,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -877,6 +981,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -921,6 +1029,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -958,6 +1070,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -992,6 +1108,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1036,6 +1156,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1071,6 +1195,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1109,6 +1237,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1143,6 +1275,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1183,6 +1319,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1227,6 +1367,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1262,6 +1406,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1306,6 +1454,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1341,6 +1493,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1385,6 +1541,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1420,6 +1580,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1464,6 +1628,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1499,6 +1667,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1543,6 +1715,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1578,6 +1754,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1622,6 +1802,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1657,6 +1841,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1695,6 +1883,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1729,6 +1921,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1773,6 +1969,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1808,6 +2008,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1852,6 +2056,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1889,6 +2097,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -1923,6 +2135,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -1979,6 +2195,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2015,6 +2235,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2080,6 +2304,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -2123,6 +2351,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2158,6 +2390,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2202,6 +2438,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2239,6 +2479,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2273,6 +2517,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2317,6 +2565,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2354,6 +2606,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2388,6 +2644,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2432,6 +2692,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2467,6 +2731,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2505,6 +2773,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2539,6 +2811,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2583,6 +2859,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2618,6 +2898,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2662,6 +2946,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2699,6 +2987,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2733,6 +3025,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2780,6 +3076,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2816,6 +3116,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2850,6 +3154,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -2905,6 +3213,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2941,6 +3253,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -2975,6 +3291,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3022,6 +3342,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3058,6 +3382,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3092,6 +3420,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3139,6 +3471,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3176,6 +3512,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3210,6 +3550,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3257,6 +3601,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3294,6 +3642,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3328,6 +3680,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3390,6 +3746,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3427,6 +3787,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3461,6 +3825,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3513,6 +3881,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3550,6 +3922,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3584,6 +3960,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3629,6 +4009,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3666,6 +4050,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3700,6 +4088,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3745,6 +4137,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3780,6 +4176,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3832,6 +4232,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3867,6 +4271,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -3911,6 +4319,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3948,6 +4360,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -3982,6 +4398,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4034,6 +4454,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4069,6 +4493,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4113,6 +4541,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4148,6 +4580,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4192,6 +4628,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4227,6 +4667,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4265,6 +4709,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4299,6 +4747,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4343,6 +4795,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4380,6 +4836,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4414,6 +4874,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4458,6 +4922,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4493,6 +4961,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4531,6 +5003,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace: cascade=file:{version}/under:stand",
+        "cc_ref": [
+         "CC 3.1.3.4"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -4573,6 +5056,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4610,6 +5097,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4644,6 +5135,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4689,6 +5184,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4726,6 +5225,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4760,6 +5263,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4805,6 +5312,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4842,6 +5353,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4876,6 +5391,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -4920,6 +5439,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4957,6 +5480,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -4991,6 +5518,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5035,6 +5566,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5072,6 +5607,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5106,6 +5645,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5150,6 +5693,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5187,6 +5734,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5221,6 +5772,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5265,6 +5820,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5302,6 +5861,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5336,6 +5899,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5388,6 +5955,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5425,6 +5996,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "withdraw: cascade=trace:{form}:{version}/under:stand",
+        "cc_ref": [
+         "CC 3.3.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -5465,6 +6047,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5499,6 +6085,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5539,6 +6129,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5583,6 +6177,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5620,6 +6218,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5654,6 +6256,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5698,6 +6304,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5733,6 +6343,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5777,6 +6391,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5812,6 +6430,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -5857,6 +6479,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -5894,6 +6520,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "withdraw: reach=whole",
+        "cc_ref": [
+         "CC 3.3.7"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -5930,6 +6567,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace: field=attestation_prefixes:any",
+        "cc_ref": [
+         "CC 3.3.7"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -5968,6 +6616,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6013,6 +6665,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "expired: by=substrate, reach=other_attester, link=ranked:consent_supersedes",
+        "cc_ref": [
+         "CC 3.3.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -6050,6 +6713,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6084,6 +6751,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6128,6 +6799,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6165,6 +6840,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6199,6 +6878,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6278,6 +6961,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6315,6 +7002,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6349,6 +7040,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6393,6 +7088,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6428,6 +7127,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6472,6 +7175,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6509,6 +7216,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6543,6 +7254,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6587,6 +7302,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6622,6 +7341,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6687,6 +7410,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6731,6 +7458,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -6773,6 +7504,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6808,6 +7543,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6860,6 +7599,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6894,6 +7637,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -6938,6 +7685,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -6973,6 +7724,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7017,6 +7772,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7052,6 +7811,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7103,6 +7866,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7145,6 +7912,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7180,6 +7951,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7237,6 +8012,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -7279,6 +8058,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7315,6 +8098,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7349,6 +8136,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7393,6 +8184,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7429,6 +8224,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7463,6 +8262,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7507,6 +8310,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7543,6 +8350,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7577,6 +8388,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7621,6 +8436,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7657,6 +8476,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7691,6 +8514,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7735,6 +8562,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7771,6 +8602,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7805,6 +8640,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7849,6 +8688,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7886,6 +8729,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -7920,6 +8767,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -7964,6 +8815,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8001,6 +8856,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8035,6 +8894,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8079,6 +8942,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8116,6 +8983,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8150,6 +9021,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8194,6 +9069,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8231,6 +9110,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8265,6 +9148,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8309,6 +9196,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8346,6 +9237,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8380,6 +9275,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8422,6 +9321,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8455,6 +9358,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8491,6 +9398,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8535,6 +9446,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8570,6 +9485,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8608,6 +9527,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8642,6 +9565,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8686,6 +9613,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8723,6 +9654,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8757,6 +9692,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8799,6 +9738,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8833,6 +9776,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -8877,6 +9824,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8914,6 +9865,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -8948,6 +9903,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9000,6 +9959,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9037,6 +10000,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9071,6 +10038,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9115,6 +10086,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9152,6 +10127,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9186,6 +10165,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9228,6 +10211,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9262,6 +10249,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9306,6 +10297,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9343,6 +10338,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9377,6 +10376,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9421,6 +10424,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9458,6 +10465,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9492,6 +10503,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9536,6 +10551,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9573,6 +10592,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9607,6 +10630,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9651,6 +10678,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9686,6 +10717,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9724,6 +10759,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9758,6 +10797,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9802,6 +10845,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9839,6 +10886,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -9873,6 +10924,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -9940,6 +10995,17 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "attest: field=members:grow_signed",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -9976,6 +11042,35 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "withdraw: cascade=membership:{stage}/under:lapsed, cascade=trust:{job}:{version}/under:lapsed, cascade=key_grant:{axis}/under:stop, key=none",
+        "cc_ref": [
+         "CC 4.4.3.2.8"
+        ]
+       },
+       {
+        "item": "withdraw: cascade=licensure:{authority_id}/by:lapsed",
+        "cc_ref": [
+         "CC 4.4.3.2.8"
+        ]
+       },
+       {
+        "item": "withdraw: cascade=trust:{job}:{version}/by:lapsed",
+        "cc_ref": [
+         "CC 4.4.3.2.8"
+        ]
+       },
+       {
+        "item": "withdraw: cascade=custody:{kind}/under:stand",
+        "cc_ref": [
+         "CC 4.4.3.2.8"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -10027,6 +11122,58 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace: field=members:shrink",
+        "cc_ref": [
+         "CC 3.1.3.2",
+         "CC 3.3.4"
+        ]
+       },
+       {
+        "item": "replace[grade:trust_root]: field=members:grow_signed",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ]
+       },
+       {
+        "item": "replace[subkind:infrastructure]: field=consensus_protocol:no_weaker, field=admission_quorum_basis:frozen",
+        "cc_ref": [
+         "CC 3.2"
+        ]
+       },
+       {
+        "item": "replace: link=chained:prev_head_digest",
+        "cc_ref": [
+         "CC 4.4.3.4.4"
+        ]
+       },
+       {
+        "item": "replace[recovery]: by=committed_key",
+        "cc_ref": [
+         "CC 3.1.3"
+        ]
+       },
+       {
+        "item": "replace[entrenched]: field=consensus_protocol:frozen",
+        "cc_ref": [
+         "CC 3.3.4",
+         "CC 4.4.3.4.2",
+         "CC 4.5.12.5"
+        ]
+       },
+       {
+        "item": "replace: by=cosigned, field=consensus_protocol:any",
+        "cc_ref": [
+         "CC 3.3.4",
+         "CC 4.4.3.4.2",
+         "CC 4.5.12.5"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -10069,6 +11216,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10103,6 +11254,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10147,6 +11302,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10184,6 +11343,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10218,6 +11381,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10265,6 +11432,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10302,6 +11473,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10336,6 +11511,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10380,6 +11559,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10415,6 +11598,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10474,6 +11661,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10509,6 +11700,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10547,6 +11742,29 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace[seat:serve]: after=transport:canonical_rebind, refuse=serve_transit_pair_rotation_before_rebind",
+        "cc_ref": [
+         "CC 3.1.3"
+        ]
+       },
+       {
+        "item": "replace[seat:serve]: after=transport:canonical_rebind",
+        "cc_ref": [
+         "CC 3.3.6.2"
+        ]
+       },
+       {
+        "item": "replace: by=same_attester, reach=own_prior",
+        "cc_ref": [
+         "CC 4.4.3.4.6"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -10585,6 +11803,18 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "attest[scope:self]: key=stop_wrap",
+        "cc_ref": [
+         "CC 4.5.12.1",
+         "CC 3.3.6.3"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -10633,6 +11863,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -10675,6 +11909,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10710,6 +11948,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10754,6 +11996,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10789,6 +12035,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10827,6 +12077,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10861,6 +12115,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -10905,6 +12163,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10942,6 +12204,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -10976,6 +12242,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11020,6 +12290,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11057,6 +12331,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11091,6 +12369,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11135,6 +12417,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11172,6 +12458,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11206,6 +12496,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11248,6 +12542,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11284,6 +12582,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace[recovery]: by=committed_key",
+        "cc_ref": [
+         "CC 2.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -11325,6 +12634,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "attest: cascade=*/by:void_after:revoked_after",
+        "cc_ref": [
+         "CC 2.4.1.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -11361,6 +12681,18 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace: field=revoked_after:lower",
+        "cc_ref": [
+         "CC 2.4",
+         "CC 2.4.1.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -11403,6 +12735,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11438,6 +12774,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11496,6 +12836,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11534,6 +12878,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11576,6 +12924,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "attest: reach=below_seq",
+        "cc_ref": [
+         "CC 3.1.3"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -11610,6 +12969,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11652,6 +13015,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11686,6 +13053,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11728,6 +13099,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11762,6 +13137,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11806,6 +13185,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11842,6 +13225,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -11876,6 +13263,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -11930,6 +13321,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -11968,6 +13363,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12012,6 +13411,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12049,6 +13452,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12083,6 +13490,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12208,6 +13619,90 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "widening[stalled&recovery]: field=members:grow_signed, field=M:frozen, field=consensus_protocol:frozen, field=admission_quorum_basis:frozen, field=cohort_subkind:frozen",
+        "cc_ref": [
+         "CC 3.2"
+        ]
+       },
+       {
+        "item": "widening[stalled&recovery]: field=members:grow_signed",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ]
+       },
+       {
+        "item": "removal[last:seat]: cascade=group:roster/over:withdrawn",
+        "cc_ref": [
+         "CC 4.4.3.2.8"
+        ]
+       },
+       {
+        "item": "resignation[last:seat]: cascade=group:roster/over:withdrawn",
+        "cc_ref": [
+         "CC 4.4.3.2.8"
+        ]
+       },
+       {
+        "item": "resignation[ephemeral&last:member]: cascade=group:roster/over:withdrawn",
+        "cc_ref": [
+         "CC 5.3.3.2"
+        ]
+       },
+       {
+        "item": "widening[scope:self|family]: key=rekey_walk",
+        "cc_ref": [
+         "CC 3.3.4",
+         "CC 4.4.3.4.1",
+         "CC 4.4.3.4.2"
+        ]
+       },
+       {
+        "item": "removal[scope:self|family]: key=stop_wrap",
+        "cc_ref": [
+         "CC 4.4.3.4.2",
+         "CC 3.3.4",
+         "CC 4.4.3.4.5",
+         "CC 4.5.12.1"
+        ]
+       },
+       {
+        "item": "widening[scope:community|affiliations]: key=next_seal",
+        "cc_ref": [
+         "CC 4.4.3.2.1",
+         "CC 4.4.3.2.5",
+         "CC 4.4.3.4.1",
+         "CC 2.1",
+         "CC 4.4.3.2.6"
+        ]
+       },
+       {
+        "item": "removal[scope:community|affiliations]: key=rotate_epoch",
+        "cc_ref": [
+         "CC 4.4.3.2.6",
+         "CC 3.2",
+         "CC 4.4.3.2.2",
+         "CC 4.4.3.4.5"
+        ]
+       },
+       {
+        "item": "resignation[scope:self|family]: key=stop_wrap",
+        "cc_ref": [
+         "CC 3.3.4",
+         "CC 4.5.12.1"
+        ]
+       },
+       {
+        "item": "removal[axis:stream]: key=rotate_epoch",
+        "cc_ref": [
+         "CC 4.4.3.2.6"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -12244,6 +13739,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12278,6 +13777,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12322,6 +13825,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12359,6 +13866,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12393,6 +13904,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12437,6 +13952,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12474,6 +13993,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12508,6 +14031,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12552,6 +14079,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12587,6 +14118,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12625,6 +14160,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12659,6 +14198,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12720,6 +14263,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12756,6 +14303,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12790,6 +14341,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12834,6 +14389,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12870,6 +14429,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12904,6 +14467,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -12948,6 +14515,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -12985,6 +14556,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13019,6 +14594,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13063,6 +14642,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13100,6 +14683,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13134,6 +14721,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13178,6 +14769,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13213,6 +14808,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13251,6 +14850,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13285,6 +14888,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13329,6 +14936,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13364,6 +14975,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13412,6 +15027,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13449,6 +15068,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13483,6 +15106,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13535,6 +15162,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13570,6 +15201,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13612,6 +15247,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13646,6 +15285,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13699,6 +15342,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13735,6 +15382,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13769,6 +15420,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13813,6 +15468,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13850,6 +15509,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13884,6 +15547,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -13928,6 +15595,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13965,6 +15636,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -13999,6 +15674,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14053,6 +15732,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14089,6 +15772,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14130,6 +15817,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14174,6 +15865,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14211,6 +15906,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14245,6 +15944,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14289,6 +15992,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14324,6 +16031,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14368,6 +16079,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14403,6 +16118,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14447,6 +16166,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14482,6 +16205,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14526,6 +16253,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14561,6 +16292,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14605,6 +16340,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14640,6 +16379,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14684,6 +16427,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14721,6 +16468,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14755,6 +16506,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14799,6 +16554,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14836,6 +16595,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14870,6 +16633,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -14914,6 +16681,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14951,6 +16722,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -14985,6 +16760,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15029,6 +16808,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15066,6 +16849,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15100,6 +16887,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15144,6 +16935,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15181,6 +16976,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15215,6 +17014,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15259,6 +17062,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15296,6 +17103,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15330,6 +17141,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15374,6 +17189,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15411,6 +17230,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15445,6 +17268,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15497,6 +17324,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15532,6 +17363,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15574,6 +17409,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15608,6 +17447,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15658,6 +17501,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15692,6 +17539,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15768,6 +17619,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "custodian_minted: by=cosigned, reach=other_attester, cascade=custody:{kind}/by:stop",
+        "cc_ref": [
+         "CC 7.5.5"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -15810,6 +17672,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "attest: cascade=bond_posted:{currency}/about:forfeited",
+        "cc_ref": [
+         "CC 3.1.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -15844,6 +17717,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -15886,6 +17763,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -15926,6 +17807,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -15960,6 +17845,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16002,6 +17891,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -16040,6 +17933,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16084,6 +17981,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16119,6 +18020,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16157,6 +18062,23 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace: by=same_attester, field=valid_until:as_attest, refuse=session_claim_out_of_window",
+        "cc_ref": [
+         "CC 3.1.3.1"
+        ]
+       },
+       {
+        "item": "replace: by=same_attester",
+        "cc_ref": [
+         "CC 3.1.3.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     }
    ]
@@ -16199,6 +18121,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16234,6 +18160,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16323,6 +18253,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16357,6 +18291,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16401,6 +18339,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16438,6 +18380,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16472,6 +18418,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16524,6 +18474,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16558,6 +18512,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16602,6 +18560,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16639,6 +18601,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16673,6 +18639,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16717,6 +18687,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16752,6 +18726,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16796,6 +18774,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16831,6 +18813,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16875,6 +18861,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16910,6 +18900,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -16954,6 +18948,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -16989,6 +18987,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17029,6 +19031,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17073,6 +19079,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17108,6 +19118,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17150,6 +19164,23 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "attest: by=cosigned, reach=other_attester, refuse=transport_rebind_without_holder_quorum",
+        "cc_ref": [
+         "CC 3.1.3"
+        ]
+       },
+       {
+        "item": "attest: by=cosigned, reach=other_attester",
+        "cc_ref": [
+         "CC 3.1.3"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -17184,6 +19215,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17228,6 +19263,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17263,6 +19302,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17309,6 +19352,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -17352,6 +19399,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17388,6 +19439,17 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [
+       {
+        "item": "replace: by=cosigned_prior",
+        "cc_ref": [
+         "CC 2.1"
+        ]
+       }
+      ],
+      "source": "cc-table"
      }
     },
     {
@@ -17432,6 +19494,10 @@
        }
       ],
       "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -17474,6 +19540,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17511,6 +19581,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17545,6 +19619,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17589,6 +19667,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17624,6 +19706,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17662,6 +19748,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17696,6 +19786,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17740,6 +19834,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17777,6 +19875,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17811,6 +19913,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17855,6 +19961,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17892,6 +20002,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -17926,6 +20040,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -17970,6 +20088,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -18007,6 +20129,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -18041,6 +20167,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -18083,6 +20213,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -18117,6 +20251,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
@@ -18161,6 +20299,10 @@
      "guard": {
       "value": [],
       "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     },
     {
@@ -18196,6 +20338,10 @@
       "source": "derived"
      },
      "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
       "value": [],
       "source": "generic"
      }
