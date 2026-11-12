@@ -433,3 +433,39 @@ one gate. Briefs and the outputs that are design input are in `handoff/lanes/`.
 - `handoff/fix_entries.py` repairs register phrases after any text edit; run it before the
   entry check.
 
+## The data pass measured, and the five column designs (2026-11-11 night)
+
+Four readers compared 1,023 (statement, family) pairs in nine model columns with the model's
+cells (`handoff/lanes/out_f_*.tsv`): 273 are data already or fill an open cell, 231 are general
+rules, 27 disagree, 491 say something no column can express. A completeness check classified
+the 491 (`out_g_taxonomy.*`): guard 119, fold 88, reaction 63, count 41, change constraint 32,
+then a family with no model row 30, evidential weight 22, plain cell 20, policy row 16,
+audience rule 14, field rule 12, derived value 11, keyed cell 11, erasure effect 10, screen
+duty 2. Executable from data: 420 yes, 70 partly, 1 no. So the five concepts take per-family
+prose from 27% to about 60% data, and three smaller ones to about 70%.
+
+Five designs, each a closed grammar with every statement encoded and the failures listed:
+`out_g_guard.*` (on each transition; second pass asked to cover all 119 and the slashing
+evidence bars), `out_g_fold.*` (a column of the family model), `out_g_reaction.*` (expiry,
+clock, reaction; durations only by name; wants 18 constants), `out_g_lifecycle.*` (the
+`change` column, on each transition), `out_g_count.*` (typed columns and twelve rows for the
+policy table, a seven-row protocol table, a sheet of which protocol a group kind may name).
+Not integrated: the five were designed apart. To do before anything lands: one schema (the
+transition carries guard, change and reaction; the family carries fold; the policy table
+carries the count); one shared way to key a cell by leaf, role or group kind; every invented
+token and member matched to the CDDL or dropped; the refusal tokens the text never names
+(39 guards refuse with none); then generators and checks, then the cells, then the prose
+cut to a citation of the table.
+
+Edge v45.0.0 is tagged (merge commit a54c6a2); the register is not re-pinned to it yet (a
+cut step). Nothing about accord carriage is claimed for it.
+
+Decisions waiting on Eric, gathered: the seat rule's D1 to D8 (`out_e1.md` section 6); who
+emits a row a clock or a fold causes (the admitting door, peers re-derive: recommended; same
+question as D5); what decides a roster widening (the group's declared protocol, or the
+`community_invite` policy row's fractions); one guardian or a set; whether a steward-bound
+agent accepts membership under its own key; a halt row past `valid_until`; whether a
+canonical binding opens a withdrawal rule; six product names in rule text; the entrenched
+list of CC 4.2.1 and three wordings in CC 4.5.1; the hard-paragraph order (`out_h.md`);
+the founder's seat.
+
