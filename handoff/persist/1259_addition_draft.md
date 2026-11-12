@@ -225,6 +225,25 @@ Each is a member of a sealed or framed body the table does not list, or a name o
 | `wrapped_dek` | `key_grant:{axis}` | CC 3.1.3, CC 3.3.2, CC 4.4.3.4.1 |
 | `x25519_base64` | `identity:occurrence` | CC 3.3.6.1 |
 
+## What a halt invocation's signature covers (for the agent runtime and the verifier as well as the store)
+
+CC 4.2.1.1: "Every `accord:invoke:*` Contribution signs the canonical bytes below", a sha256 over labelled,
+newline-joined fields under `ciris.accord_invoke.v2`, and "a consumer verifies ONE holder's signature over
+`canonical`". CC 2.6.1.7: a row's signature covers JCS of the envelope "and nothing else", and no member is typed
+that could carry a second signature or the labelled digest. A halt signed over one input does not verify under
+the other. CC 5.3.3.6 states a two-layer reading for receipts; nothing states one for `accord:invoke`,
+`accord:lifecycle` (CC 4.2.1.3) or the roster-change objects of CC 4.2.6.
+Which do the shipped halt path and the pinned holders' signatures use: the row signature over JCS alone, with the
+labelled bytes as a derivation of the row's fields; or the labelled digest as an inner signed layer carried in a
+member? The text will state whichever is shipped. Until then CC 4.2.1.1 is left as written (conflict C442).
+
+## From the third and fourth readings: the text is consistent and the shipped store differs
+
+The conflict table marks these "to fix in the data" with reasoning that begins `store:` (fourth reading) or names
+a `code-v61` cell (third reading): C365, C366, C371, C383, C384, C388, C412, C422, C423, and the 24 fourth-reading
+rows listed in `handoff/lanes/out_v4_*.tsv` with verdict DATA and reasoning `store:`. Each is one question: does
+the store do what the cell says, and if so is the text or the store to change?
+
 ## Carried from earlier in the thread, still open
 
 - The refusal token for a future-dated row.
