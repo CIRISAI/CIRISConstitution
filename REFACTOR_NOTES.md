@@ -1059,3 +1059,10 @@ what an admission waits for; nine self-loops inside one family (granted to expir
 widening, the decay stages, the census steps, key grants), each of which descends by leaf and is not yet checked
 at that grain; the longest chain of emissions is three. To add: that check at leaf grain, and a lapse for every
 inert row, so nothing waits without a deadline.
+
+Steward, 2026-11-12: "excellent - keep at it! make sure we support ranked choice voting natively". Ranked choice
+was native to the moderator election alone (policy row `moderator_election`, `ranked_irv` of three, the Lean model
+of the seating). Now stated once as a count any choice may use (CC 4.5.13), written for a kernel as a mergeable
+tally plus a bounded finish (`formal/ranked_choice`), and the choice item's `ranking` uncapped. Not done: a policy
+row for a ranked poll that is not an election (the generated table), the cell layout of a ranked secret poll in
+CC 6.1.9 (one cell per ranking; for the store), and `ranked` as a kind a group may declare for its own decisions.
