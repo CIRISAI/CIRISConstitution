@@ -25,17 +25,17 @@ Properties, over every set of up to four rows in every order of arrival:
   O1  a node never reads two owners
   O2  the owner's own re-signed rows at wider scopes change nothing
   O3  an occurrence row changes nothing
-  O4  the owner changes from X only when X's withdrawal is held, never because a binding arrived
+  O4  ownership passes from X to another owner only when X's withdrawal is held; a second binding may leave
+      the key with no owner, and never hands it to its signer
   O5  a binding the node's key did not cosign, from a key that is not the owner, never makes its signer the owner
   O6  two nodes that have been offered the same rows read the same owner, whatever the order (the node's key
       having cosigned one binding for each time the key stood unowned)
   O7  the same, where the node's key cosigned two bindings for one unowned period
   O8  a reader that holds two live owners reads none and never picks one
 
-One reading holds O1 to O6: a refused binding is offered again, and every binding onto an unowned key needs the
-node's cosign. No reading holds O4 and O7 together: a door that refuses a second owner keeps whichever arrived
-first, and a reader that counts both un-owns the key on the second cosign. The check pins what each reading
-gives up (conflict C557 of formal/derivation/text_conflicts.tsv).
+The rule is the last reading: nothing is refused and forgotten, the reader counts the live bindings the node's
+own key cosigned, and any count other than one is no owner (CC 3.2). It holds all eight. Every reading with a door
+that refuses gives something up, and the check pins what, so the reason the door went is on record (C557).
 
 Run: python3 formal/owner_binding/owner_binding_model.py --check
 """
@@ -111,7 +111,7 @@ def check(refusal, cosign):
                 finals[order] = series[-1]
                 prev = None
                 for i, (r, now) in enumerate(zip(order, series)):
-                    if prev is not None and now != prev and not (r[0] == "withdraw" and r[1] == prev):
+                    if prev is not None and now is not None and now != prev and not (r[0] == "withdraw" and r[1] == prev):
                         fail["O4"] = fail["O4"] or (order, series)
                     prev = now
                 if refusal == "fold":
@@ -140,7 +140,7 @@ def check(refusal, cosign):
 
 # What each reading gives up. The check requires exactly this, so a change to the rule shows as a change here.
 EXPECTED = {("final", "first"): {"O2", "O5", "O6", "O7"}, ("final", "unowned"): {"O2", "O6", "O7"},
-            ("again", "first"): {"O5", "O6", "O7"}, ("again", "unowned"): {"O7"}, ("fold", "unowned"): {"O4"}}
+            ("again", "first"): {"O5", "O6", "O7"}, ("again", "unowned"): {"O7"}, ("fold", "unowned"): set()}
 
 
 def main():
@@ -153,8 +153,7 @@ def main():
         print(f"  refusal {refusal:5} cosign {cosign:7}: {n} runs, gives up {', '.join(sorted(bad)) or 'nothing'}" + ("" if ok else f"  FAIL expected {sorted(EXPECTED[(refusal, cosign)])}"))
         if "-v" in sys.argv:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
-    print("owner_binding: five readings of the bind-time refusal; a refused binding offered again, with the node's cosign on every "
-          "binding onto an unowned key, holds O1-O6; no reading holds O4 and O7 together (C557)" if not rc else "owner_binding: FAIL")
+    print("owner_binding: the fold over counted bindings holds O1-O8; each of the four door readings gives up what is pinned (C557)" if not rc else "owner_binding: FAIL")
     return rc
 
 if __name__ == "__main__":

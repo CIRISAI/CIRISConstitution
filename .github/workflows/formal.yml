@@ -123,6 +123,10 @@ jobs:
           grep -q 'Invariant NotAllSeen is violated' r.log || exit 1
           java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k4" -deadlock -config KernelWorld_standing.cfg KernelWorld.tla | tee s.log
           grep -q 'Invariant Inv_SameRowsSameStanding is violated' s.log || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k5" -deadlock -config KernelWorldSigned.cfg KernelWorldSigned.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers auto -metadir "$RUNNER_TEMP/k6" -deadlock -config KernelWorldSigned_late_rest.cfg KernelWorldSigned.tla || exit 1
+          java -Xmx2g -cp ../../tla2tools.jar tlc2.TLC -workers 2 -metadir "$RUNNER_TEMP/k7" -deadlock -config KernelWorldSigned_late.cfg KernelWorldSigned.tla | tee t.log
+          grep -q 'Invariant Inv_SameRowsSameStanding is violated' t.log || exit 1
 
   authority:
     name: Enumeration — licensure, grant, delegation to closure (formal/authority_tree)

@@ -37,6 +37,16 @@ were destroyed here and a reversal has since given the row its standing back, so
    `formal/derivation/text_conflicts.tsv`): whether a lift is judged at the instant each node held it, or at
    an instant every node reads the same.
 
+**Signed instants.** `KernelWorldSigned.tla` keeps the instant a row is signed apart from the instant a node
+holds it, and lets a signer date a row early. Standing is judged at signed instants, and a signed instant is
+trusted at a node only where the node first held the row within the freshness bound (CC 3.3.4, CC 4.5.13, the
+steward's ruling of 2026-11-12). With every row delivered inside the bound, the same rows give the same standing
+at every instant (49,240 states), a lift signed later than the bound after the instant it claims counts nowhere,
+and a node never shows as present what it destroyed. `KernelWorldSigned_late.cfg` lets a row arrive later than
+the bound and is expected to fail: the node that held the lift in time counts it and the late node does not. That
+residue is what a vouched past is for (CC 3.3.4), and it is the one case in which two nodes holding the same rows
+may still differ.
+
 **What it does not model.** Who may sign each row (the signer gate); clocks that differ between nodes; more
 than one blob; the other families. The module is the pattern: a family's fold, a schedule that is free, the
 screen states as the vocabulary of the result. The rest of the rules join it as they are typed.

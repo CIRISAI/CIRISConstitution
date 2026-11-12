@@ -1024,3 +1024,13 @@ Draft 3 the same day, on the client's reading: the state for the verdict `closed
 is also a wire value a populated view carries; `withheld` covers both a windowed takedown and a moderator's flag
 the viewer may reveal for themselves, the cover's contents telling them apart. How a reveal is recorded is the
 open consent-screen question.
+
+Steward, 2026-11-12, on the three decisions I put (which clock decides standing; C557 fold decides; which hard
+cases are signed): "Those 2 questions are officially over my head, but look like a duh again, forced by the model
+based on common sense - this is where we analyze how edge knows when to copy what where and make IT part of the
+kernel, because it is the same rules". Taken as yes to the two the model forces and landed: signed-instant standing
+(CC 3.3.4, 4.5.13, 4.5.3; KernelWorldSigned) and the fold for ownership (CC 3.2; owner_binding all eight). The
+freshness test stays per node, so a row later than W at one node is the pinned residue. Hard cases as rows or
+notices: derived from the same principle, to be typed kind by kind and sent to the store first; not landed. The
+edge session is writing FSD/KERNEL_COPY_RULES.md (its copy decisions as kernel answers); the store's design is
+FSD/KERNEL_SEAMS.md, and its breaker table B1 to B20 is the order for typing guards.
