@@ -22,6 +22,8 @@ Properties:
   K7  a wrap once made is never unmade
   K8  no write is sealed under a key held by a revoked device of a member who stays
   K9  a member admitted to a group with content in the current epoch holds that epoch's key without a further write
+  K10 a writer mints a key with no write only when a device no longer entitled holds its current key, or a
+      scheduled rotation fell due: a writer that has wrapped nothing to a departed device owes no rotation
 
 All nine hold at both tiers. K8 and K9 were found failing by this model on its first runs (conflicts C558 and
 C559): a revoked device kept the epoch key, and a newcomer waited on the writer's next write. The steward ruled on
@@ -34,6 +36,7 @@ import json, os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TIERS = {"per-write": ("self", "family"), "epoch": ("community", "affiliations")}
 DEPTH = 6
+DUE_ON_ANY_DEPARTURE = False   # the reading that is not the rule: every departure makes a rotation due
 DEVICES = {"b": ("b1", "b2"), "c": ("c1",)}
 
 
@@ -65,13 +68,17 @@ def explore(tab, scope, tier):
         seen_fail.setdefault(p, trace)
 
     def step(st, ev, trace):
-        members, live, left, revoked, epoch, due, cause, holders, nwrites, fresh, stale = st
-        holders = dict(holders); members = set(members); live = set(live); left = set(left); revoked = set(revoked); fresh = set(fresh); stale = set(stale)
+        members, live, left, revoked, epoch, due, cause, holders, nwrites, fresh, stale, tickdue, owed = st
+        holders = dict(holders); members = set(members); live = set(live); left = set(left); revoked = set(revoked); fresh = set(fresh); stale = set(stale); owed = set(owed)
         before = {k: set(v) for k, v in holders.items()}
         kind, who = ev
 
         def current():
             return {"w"} | {d for m in members for d in DEVICES[m] if d in live}
+
+        def is_due():
+            """a rotation is due when a device no longer entitled holds the writer's current key, or one was scheduled"""
+            return due or tickdue or bool((holders.get(("epoch", epoch), frozenset()) & owed) - current())
 
         def grant(dev, keys):
             for k in keys: holders[k] = holders.get(k, frozenset()) | {dev}
@@ -84,9 +91,10 @@ def explore(tab, scope, tier):
             elif eff("widening") == "next_seal": fresh.add(who)
             elif eff("widening") == "rotate_epoch": due = True; fresh.add(who)
             elif eff("widening") == "at_seat":       # wrapped when the writer's roster gains the member; a due rotation is made then
-                if due:
+                if is_due():
                     if not cause: note("K6", trace)
-                    epoch += 1; due = False; cause = False
+                    if not tickdue and not (holders.get(("epoch", epoch), frozenset()) - current()): note("K10", trace)
+                    epoch += 1; due = False; cause = False; tickdue = False
                     holders[("epoch", epoch)] = frozenset()
                     for d in current(): grant(d, [("epoch", epoch)])
                 elif ("epoch", epoch) in holders: grant(DEVICES[who][0], [("epoch", epoch)])
@@ -95,7 +103,9 @@ def explore(tab, scope, tier):
             members.discard(who); left |= {d for d in DEVICES[who] if any(d in v for v in holders.values()) or d in live}
             fresh.discard(who)
             e = eff("removal" if kind == "remove" else "resignation")
-            if e == "rotate_epoch": due = True; cause = True
+            if e == "rotate_epoch":
+                owed |= set(DEVICES[who]); cause = True
+                if DUE_ON_ANY_DEPARTURE: due = True
             elif e != "stop_wrap": stale |= {d for d in DEVICES[who] if d in live}   # no key effect: the writer goes on wrapping
         elif kind == "device_add":
             live.add(who)
@@ -103,14 +113,16 @@ def explore(tab, scope, tier):
             grant(who, list(holders) if tier == "per-write" else mine)   # CC 4.4.3.4.1: every key the member's other devices hold
         elif kind == "device_revoke":
             live.discard(who); revoked.add(who)
-            if eff("revocation") == "rotate_epoch": due = True; cause = True
+            if eff("revocation") == "rotate_epoch":
+                owed.add(who); cause = True
+                if DUE_ON_ANY_DEPARTURE: due = True
         elif kind == "tick":
-            due = True; cause = True
+            due = True; cause = True; tickdue = True
         elif kind == "write":
             if tier == "epoch":
-                if due:
+                if is_due():
                     if not cause: note("K6", trace)
-                    epoch += 1; due = False; cause = False
+                    epoch += 1; due = False; cause = False; tickdue = False
                 k = ("epoch", epoch)
             else:
                 k = ("write", nwrites)
@@ -138,7 +150,7 @@ def explore(tab, scope, tier):
             devs = [who] if kind == "device_add" else [d for d in DEVICES[who] if d in live]
             if any(d not in v for v in holders.values() for d in devs): note("K5", trace)
         return (frozenset(members), frozenset(live), frozenset(left), frozenset(revoked), epoch, due, cause,
-                tuple(sorted(holders.items())), nwrites, frozenset(fresh), frozenset(stale))
+                tuple(sorted(holders.items())), nwrites, frozenset(fresh), frozenset(stale), tickdue, frozenset(owed))
 
     def events(st):
         members, live, _, revoked = st[0], st[1], st[2], st[3]
@@ -158,7 +170,7 @@ def explore(tab, scope, tier):
             t2 = trace + (ev,)
             dfs(step(st, ev, t2), t2)
 
-    dfs((frozenset(), frozenset(), frozenset(), frozenset(), 0, False, False, (), 0, frozenset(), frozenset()), ())
+    dfs((frozenset(), frozenset(), frozenset(), frozenset(), 0, False, False, (), 0, frozenset(), frozenset(), False, frozenset()), ())
     return count[0], seen_fail
 
 
@@ -183,7 +195,7 @@ def main():
               ("" if ok else f"  FAIL expected {sorted(EXPECTED[tier]) or 'nothing'}"))
         if "-v" in sys.argv or not ok:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
-    print("key_plane: the key effects of the transitions manifest hold K1-K9 at both tiers" if not rc else "key_plane: FAIL")
+    print("key_plane: the key effects of the transitions manifest hold K1-K10 at both tiers" if not rc else "key_plane: FAIL")
     return rc
 
 

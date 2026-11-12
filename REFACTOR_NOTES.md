@@ -1038,3 +1038,7 @@ Corrected on the store's question: a voice includes the invitee's acceptance (CC
 into CC 3.1.3.2 ("fewer than two voices could admit is refused") refused nothing on an admission and misled; it
 now states the floor both ways. `quorum:1/N` is not refused. Whether `weighted:` and `custom:` were dropped at
 CC#203 I cannot confirm: the text still carries both. For Eric.
+The store's seat door is built (its branch w614-keyplane); the 150-row emission went from 17.8 s to 0.85 s on
+sqlite once the per-row refold went. Its first question, whether a removal before any mint makes a rotation due,
+showed "where a rotation is due" was used in CC 4.4.3.4.1 without being defined: now defined, and K10 added.
+Due is computed from who holds the current key, not latched.

@@ -28,10 +28,13 @@ act has no word at a scope or if two scopes of one tier differ.
 | K7 | a wrap once made is never unmade |
 | K8 | no write is sealed under a key held by a revoked device of a member who stays |
 | K9 | a member admitted to a group with content in the current epoch holds that epoch's key without a further write |
+| K10 | a writer mints a key with no write only when a device no longer entitled holds its current key, or a scheduled rotation fell due |
 
-All nine hold at both tiers. Changing any one word of the table breaks the property that names it.
+All ten hold at both tiers. Changing any one word of the table breaks the property that names it.
 
 **What it found.** On its first runs K8 and K9 failed at the epoch tier. A revoked device of a member who stayed kept the epoch key until the next rotation (conflict C558). A newcomer was wrapped at the writer's next write, so in a room where nobody wrote again they never read what the epoch already held; a three-node run of an implementation showed it (C559). The steward ruled on 2026-11-12: a revocation rotates the epoch as a removal does, and a member is wrapped when the writer's roster gains them, the writer rotating then if a rotation is due. The change column carries both, and the model holds them.
+
+**When a rotation is due.** The first build of the seat door treated any removal as making a rotation due, so a writer that had sealed nothing would mint and wrap a key at the next seat for nobody's benefit: in a room of fifty, fifty such mints after one removal. A rotation is due only when a device no longer entitled holds the writer's current key (CC 4.4.3.4.1). In the model that is read from who holds what, not remembered as a flag: a member removed and seated again before any write leaves nothing due. K10 holds it, and the reading in which every departure makes a rotation due fails K10.
 
 **What it does not model.** The instant a writer learns of a removal: a write made before the writer holds the
 removal row is under the old key, which is the exposure window of CC 5.1. Streams and their kept epochs
