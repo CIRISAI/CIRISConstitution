@@ -925,3 +925,12 @@ transitions, 34 of 48 refusals carry no token), change 20/459, time 33/184 famil
 states of their own and none is a StateBlock state. The screen context names five of seven scopes (not accord,
 not public). The CEWP twin is the simulation in the separate CEWP repository (edge drives it, holon supplies
 tables); it vendors transitions.json and governance_policy.json and reads no reactions.json.
+
+### A fifth item pair: must the agent stop (2026-11-12)
+
+`handoff/items/build_stop_items.py` writes `stop_facts.tsv` and `stop_truth.tsv`: 19 situation templates in 8
+minimal pairs over 9 rules, the target a required outcome (defer, refuse+defer, stop, no act, none) and not a
+verb, since the text names no verbs; the verb column waits on the agent session. Asked for by the holon session
+on the steward's "Yes, proceed", which he gave before he knew only a small part was derivable. Left out: prohibited
+capabilities, ambiguity, who resolves a deferral, legal hold, a minor's report. Weakest rows: the triage clause is
+quoted from a case study, and S03 (small gain, real cost) is "none" by the veto alone.
