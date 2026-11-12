@@ -661,3 +661,10 @@ A finding from answering the CIRISHolon session: the `confirm` and `widens` cell
 are nearly functions of the verb (every attest and authorize confirms; one withdraw of 146 does), because `widens`
 is derived from the replication tier with a default and the way back is "offered by this table". The confirm test
 of CC 4.5.13 is therefore not yet informative as data; it needs `widens` per family from the text.
+
+`widens` on entry transitions carries `when` (always 11, by_scope 165, unset 8); the boolean is unchanged, so a
+consumer reading only `value` and `confirm` behaves as before. Not done: a replacing row that promotes its scope
+(CC 4.4.3.3.1) widens and the table marks every supersede as not widening; changing that boolean changes what the
+client confirms, so it goes to the client thread first. `handoff/items/` holds outcome-bearing items (56 guard
+cases, 732 policy cases, 96 story steps; facts and truth files) made for the CIRISHolon instrument; Eric's go-ahead
+for that hour came relayed by that session.

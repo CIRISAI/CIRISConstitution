@@ -129,6 +129,16 @@ def policy_from_count(cell, role_stages=None):
     return out
 
 
+def widens_when(replication):
+    """When an entry row of the family widens: always (its tier is the federation whatever the signer chooses),
+    by_scope (the family lives at local or federation by the scope the signer gives the row, so a row at self
+    scope does not widen and a wider one does), or None where the replication cell does not say."""
+    tier = replication.get("tier") if isinstance(replication, dict) else None
+    if tier == "federation": return "always"
+    if isinstance(tier, list) and "federation" in tier and len(tier) > 1: return "by_scope"
+    return None
+
+
 def widens(replication, scope_hint):
     rep = replication or {}
     tier = rep.get("tier") if isinstance(rep, dict) else None
@@ -439,6 +449,10 @@ def build():
                           "roles": entry_roles(),
                           "policy": policy_from_count(counted, stages) if counted else {"value": pol, "source": psrc},
                           "widens": {"value": True, "source": "derived"}})
+        ww = widens_when(rep)
+        for t in trans:
+            if t["verb"] in ("attest", "authorize") and t["widens"]["value"] is True and t["widens"]["source"] == "derived" and ww:
+                t["widens"]["when"] = ww
         for t in trans:
             cells = text.pop((fam, t["verb"]), None)
             if cells: apply_text(fam, t, cells)
@@ -465,6 +479,7 @@ def build():
                      "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
                      "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
+                     "widens_when": "a widens cell that is true says the row MAY widen; `when` says when it does: always, or by_scope (a row signed at self scope does not widen, a row at any wider scope does). Where `when` is by_scope the confirm cell is an upper bound: the item is confirmed when the row's own scope widens or the row has no way back. A replacing row that promotes its scope (CC 4.4.3.3.1) widens too; this table does not yet mark it",
                      "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
                      "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
                      "families": len(rows), "transitions": total, "gap_cells": gaps,

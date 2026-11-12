@@ -86,6 +86,7 @@
   "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
   "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
+  "widens_when": "a widens cell that is true says the row MAY widen; `when` says when it does: always, or by_scope (a row signed at self scope does not widen, a row at any wider scope does). Where `when` is by_scope the confirm cell is an upper bound: the item is confirmed when the row's own scope widens or the row has no way back. A replacing row that promotes its scope (CC 4.4.3.3.1) widens too; this table does not yet mark it",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
@@ -119,7 +120,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -206,7 +208,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -339,7 +342,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -383,7 +387,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -427,7 +432,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -471,7 +477,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -579,7 +586,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -633,7 +641,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -720,7 +729,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -847,7 +857,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1014,7 +1025,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1141,7 +1153,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1352,7 +1365,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1439,7 +1453,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1526,7 +1541,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1613,7 +1629,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1700,7 +1717,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1787,7 +1805,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -1954,7 +1973,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2041,7 +2061,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2336,7 +2357,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2423,7 +2445,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2550,7 +2573,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2677,7 +2701,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2844,7 +2869,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -2931,7 +2957,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -3061,7 +3088,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -3190,7 +3218,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -3327,7 +3356,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -3456,7 +3486,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -3586,7 +3617,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -3716,7 +3748,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -3858,7 +3891,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -3994,7 +4028,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4122,7 +4157,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4209,7 +4245,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4304,7 +4341,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4431,7 +4469,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4526,7 +4565,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4613,7 +4653,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4780,7 +4821,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -4907,7 +4949,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5041,7 +5084,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5169,7 +5213,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -5297,7 +5342,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5424,7 +5470,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5551,7 +5598,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5678,7 +5726,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5805,7 +5854,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -5932,7 +5982,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6034,7 +6085,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -6118,7 +6170,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -6162,7 +6215,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6289,7 +6343,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6376,7 +6431,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6464,7 +6520,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6605,7 +6662,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -6650,7 +6708,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6784,7 +6843,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -6946,7 +7006,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7073,7 +7134,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7160,7 +7222,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7287,7 +7350,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7489,7 +7553,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7576,7 +7641,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7670,7 +7736,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7757,7 +7824,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7845,7 +7913,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -7897,7 +7966,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -7984,7 +8054,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -8043,7 +8114,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8169,7 +8241,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8295,7 +8368,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8421,7 +8495,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8547,7 +8622,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8673,7 +8749,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8800,7 +8877,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -8927,7 +9005,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9054,7 +9133,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9181,7 +9261,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9306,7 +9387,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9431,7 +9513,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9598,7 +9681,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9725,7 +9809,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -9809,7 +9894,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -9936,7 +10022,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10071,7 +10158,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10198,7 +10286,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -10282,7 +10371,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10409,7 +10499,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10536,7 +10627,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10663,7 +10755,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10830,7 +10923,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -10957,7 +11051,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -11201,7 +11296,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -11287,7 +11383,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -11417,7 +11514,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -11544,7 +11642,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -11646,7 +11745,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -11790,7 +11890,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": false,
@@ -11842,7 +11943,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -11894,7 +11996,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -11981,7 +12084,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -12148,7 +12252,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -12275,7 +12380,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -12402,7 +12508,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -12529,7 +12636,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": false,
@@ -12621,7 +12729,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": false,
@@ -12720,7 +12829,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -12808,7 +12918,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": false,
@@ -12911,7 +13022,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -13002,7 +13114,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -13086,7 +13199,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -13170,7 +13284,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -13312,7 +13427,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -13356,7 +13472,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -13400,7 +13517,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -13584,7 +13702,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "always"
      },
      "undo": {
       "value": true,
@@ -13845,7 +13964,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -13972,7 +14092,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14099,7 +14220,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14275,7 +14397,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14409,7 +14532,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14535,7 +14659,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14662,7 +14787,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14789,7 +14915,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -14956,7 +15083,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15047,7 +15175,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15174,7 +15303,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15269,7 +15399,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -15442,7 +15573,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15488,7 +15620,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15615,7 +15748,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -15885,7 +16019,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16012,7 +16147,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16099,7 +16235,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16186,7 +16323,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16273,7 +16411,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16360,7 +16499,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16447,7 +16587,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16574,7 +16715,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16701,7 +16843,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16828,7 +16971,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -16955,7 +17099,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -17082,7 +17227,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -17209,7 +17355,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -17346,7 +17493,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -17441,7 +17589,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -17525,7 +17674,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -17711,7 +17861,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -17804,7 +17955,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -17848,7 +18000,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -17932,7 +18085,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -17976,7 +18130,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -18020,7 +18175,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18160,7 +18316,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18247,7 +18404,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18378,7 +18536,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18505,7 +18664,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18599,7 +18759,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18726,7 +18887,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18813,7 +18975,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18900,7 +19063,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -18987,7 +19151,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -19074,7 +19239,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -19118,7 +19284,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -19205,7 +19372,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -19302,7 +19470,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -19525,7 +19694,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -19579,7 +19749,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -19706,7 +19877,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -19873,7 +20045,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -20000,7 +20173,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -20127,7 +20301,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
@@ -20254,7 +20429,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": false,
@@ -20338,7 +20514,8 @@
      },
      "widens": {
       "value": true,
-      "source": "derived"
+      "source": "derived",
+      "when": "by_scope"
      },
      "undo": {
       "value": true,
