@@ -1971,6 +1971,10 @@ Fold:
 - `key=attested_key_id,domain; result=vector(domain)` (CC 3.1.2)
 - `key=attested_key_id,domain; absent=full` (CC 3.4.12)
 
+In time:
+- [reversible_pending] expiry required `valid_until` (CC 3.4.12)
+- [reversible_pending] on close(expiry) unless admitted(capacity_assurance:reversible_excluded): read lapsed (CC 3.4.12)
+
 **`census:composite:{class}`** — Facts, account
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2615,6 +2619,8 @@ In time:
 - on withdrawn(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `hard_case:community_membership_change` by identity:substrate_persist (CC 3.4.4)
 - clock `window` = `self_roster_add.window_secs` (CC 3.3.6.3)
 - on admitted(self): emit `hard_case:identity_occurrence_added` by identity:substrate_persist (CC 3.3.6)
+- expiry optional `valid_until` (CC 3.3.6.2)
+- on close(expiry): read lapsed (CC 3.3.6.2)
 
 **`identity:occurrence_revocation`** — Identity, thing
 
@@ -2852,6 +2858,8 @@ In time:
 - [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.2.3, CC 3.1.3.2)
 - [proposal] on close(expiry): read closed (CC 4.4.3.2.3, CC 3.1.3.2)
 - @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.2)
+- [widening] expiry optional `valid_until` (CC 3.3.4)
+- [widening] on close(expiry): read lapsed (CC 3.3.4)
 
 Body: `group_kind`, `role`, `proposal_hash`, `expires_at`
 

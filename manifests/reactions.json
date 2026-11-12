@@ -4,11 +4,11 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 90,
+  "entries": 96,
   "kinds": {
-   "expiry": 17,
+   "expiry": 20,
    "clock": 19,
-   "react": 54
+   "react": 57
   },
   "emits": 24,
   "new_event_words": {
@@ -1864,6 +1864,114 @@
    "from": "delegation_valid_from",
    "cc_ref": [
     "CC 2.4.1"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "widening"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "widening"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.3.6.2"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.3.6.2"
+   ]
+  },
+  {
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "leaves": [
+    "reversible_pending"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 3.4.12"
+   ]
+  },
+  {
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "leaves": [
+    "reversible_pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "admitted",
+     "of": "capacity_assurance:reversible_excluded"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 3.4.12"
    ]
   }
  ]

@@ -906,3 +906,6 @@ the unposted draft. A node key that cosigns for two owners is the one case no re
 up to six acts; K1 to K7 hold at both tiers and each word of the table is mutation-checked. K8 fails at the epoch
 tier (a revoked device of a continuing member keeps the epoch key): C558, a question for Eric, eleventh on the
 list. Streams are not in the model.
+C512 closed in the data (three expiry entries). C510 stays: the receipt's step-2 guard needs a typed marker of an
+accountable stream to condition the witness cosign on, and the guard grammar has none. C488 stays: a roster-change
+row would alter the generated policy table of CC 4.5.13.
