@@ -52,5 +52,44 @@
   "partly: the votes and the counted set, yes with one link field; the window, no": 2,
   "yes, with the cautious conclusion; the exact before/after needs a link field": 2,
   "partly: the keep and the count yes with a link to the report; the fallback window no": 1
+ },
+ "link_kind_today_184": {
+  "only a retraction names anything (its target)": 120,
+  "names an object by an id in the family name": 13,
+  "names a row it answers or stands on (a ref member, or fm.reference pre:*)": 42,
+  "names a head it extends (prev_head_digest / attached_head_digest)": 2,
+  "names nothing": 7
+ },
+ "unranked_27": {
+  "n": 27,
+  "by_fold_class": {
+   "A": 20,
+   "D": 3,
+   "C": 2,
+   "B": 2
+  },
+  "needs_head_link": {
+   "no": 18,
+   "yes": 5,
+   "has one": 4
+  }
+ },
+ "families_needs_head_link": {
+  "yes": 54,
+  "no": 127,
+  "has one": 2,
+  "has one (prev_head_digest)": 1
+ },
+ "not16": {
+  "('D', 'no')": 2,
+  "('A', 'no')": 7,
+  "('B', 'has one (prev_head_digest)')": 1,
+  "('D', 'yes')": 3,
+  "('A', 'yes')": 3
+ },
+ "rule57": {
+  "('C', 'yes')": 48,
+  "('B', 'has one')": 2,
+  "('-', 'no')": 7
  }
 }

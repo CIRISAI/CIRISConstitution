@@ -38,6 +38,13 @@
               offered set and the reader's key. Two readers differ only through rows signed by
               their own keys. Meaning is lost only through a withdrawal row by the signer of an
               edge on a walk from the reader. The per-row conclusion stays final.
+    Kinds     A rule that picks by a fixed order on a kind the row carries decides between
+              concurrent rows and is a function of the set; rows of different kinds are not a
+              symmetric pair. Rows of the same kind are still both-or-neither.
+    Removal   A row counts iff it is concluded and in the causal past of every concluded
+              removal of its signer. A function of the set. Only such removals, and rows they
+              waited on, stop a row counting. A row signed after the removal never counts.
+              The cost and what the remover controls are shown on instances.
 
   Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core. Imports Order.lean.
 -/
@@ -1297,6 +1304,344 @@ theorem withdrawal : Cn S3 p ∧ ¬ Means S3 p := by
 
 end Trust
 
+/-! ## Part G. Kinds: a property the row carries may decide between concurrent rows
+
+  The both-or-neither result of Part D binds two rows only when a swap that the rule is
+  invariant under exchanges them. Two rows that differ in something the row itself carries
+  (its kind) are not such a pair: a swap that keeps kinds cannot exchange them. A rule that
+  picks by a fixed order on kinds therefore decides between concurrent rows, stays a function
+  of the set, and needs no extra clause. Two rows of the same kind are still bound. -/
+
+section Kinds
+
+variable {Row T : Type} (label : Row → Nat) (target : Row → T)
+
+/-- The derived conclusion: `r` wins when it is concluded and no concluded row on the same
+    target carries a higher kind. It reads the conclusions as a set. -/
+def wins (A : Row → Prop) (r : Row) : Prop :=
+  A r ∧ ∀ q, A q → target q = target r → label q ≤ label r
+
+/-- A function of the conclusions. -/
+theorem wins_function (A B : Row → Prop) (h : ∀ r, A r ↔ B r) :
+    wins label target A = wins label target B := by
+  have e : A = B := funext fun r => propext (h r)
+  rw [e]
+
+/-- The higher kind decides: a concluded row on the same target with a higher kind beats `a`,
+    whether or not the two are concurrent and whatever order they arrived in. -/
+theorem higher_kind_decides (A : Row → Prop) (a b : Row) (hb : A b)
+    (ht : target a = target b) (hl : label a < label b) : ¬ wins label target A a :=
+  fun h => Nat.lt_irrefl _ (Nat.lt_of_lt_of_le hl (h.2 b hb ht.symm))
+
+/-- If concluded rows on one target carry distinct kinds, at most one wins. -/
+theorem wins_unique (A : Row → Prop)
+    (hinj : ∀ q r, A q → A r → target q = target r → label q = label r → q = r)
+    (a b : Row) (ha : wins label target A a) (hb : wins label target A b)
+    (ht : target a = target b) : a = b :=
+  hinj a b ha.1 hb.1 ht (Nat.le_antisymm (hb.2 a ha.1 ht) (ha.2 b hb.1 ht.symm))
+
+/-- A swap that keeps kinds cannot exchange two rows of different kinds. So such rows are
+    never a pair that the both-or-neither result speaks about. -/
+theorem kind_preserving_swap_keeps_kind (σ : Row → Row) (hl : ∀ r, label (σ r) = label r)
+    (a b : Row) (hab : σ a = b) : label a = label b := by
+  rw [← hab, hl]
+
+/-- The rule is symmetric under every swap that keeps kinds and targets. -/
+theorem wins_equivariant (σ : Row → Row) (hσ : ∀ x, σ (σ x) = x)
+    (hl : ∀ r, label (σ r) = label r)
+    (ht : ∀ q r, target (σ q) = target (σ r) ↔ target q = target r)
+    (A : Row → Prop) (x : Row) :
+    wins label target (fun y => A (σ y)) x ↔ wins label target A (σ x) := by
+  constructor
+  · intro ⟨a, b⟩
+    refine ⟨a, fun q hq htq => ?_⟩
+    have h1 : A (σ (σ q)) := by rw [hσ]; exact hq
+    have h2 : target (σ q) = target x := (ht (σ q) x).1 (by rw [hσ]; exact htq)
+    have := b (σ q) h1 h2
+    rw [hl] at this
+    rw [hl]
+    exact this
+  · intro ⟨a, b⟩
+    refine ⟨a, fun q hq htq => ?_⟩
+    have := b (σ q) hq ((ht q x).2 htq)
+    rw [hl, hl] at this
+    exact this
+
+end Kinds
+
+/-- Two concurrent rows of the SAME kind on one target, under a symmetric rule and an offered
+    set the swap leaves unchanged: both win or neither does. This is `holder_both_or_neither`
+    with `wins` as the holder rule; the kind order adds nothing here and takes nothing away. -/
+theorem same_kind_both_or_neither {Row T : Type}
+    (parent : Row → Row → Prop) (wf : WellFounded parent)
+    (σ : Row → Row) (hσ : ∀ x, σ (σ x) = x)
+    (hp : ∀ p r, parent (σ p) (σ r) ↔ parent p r)
+    (wellFormed : Row → Prop) (hw : ∀ r, wellFormed (σ r) ↔ wellFormed r)
+    (judge : Row → (Row → Prop) → (Row → Prop) → Prop)
+    (hj : ∀ r P C, judge (σ r) P C ↔ judge r (fun q => P (σ q)) (fun q => C (σ q)))
+    (root : Row → Prop) (hroot : ∀ r, root (σ r) ↔ root r)
+    (label : Row → Nat) (target : Row → T)
+    (hl : ∀ r, label (σ r) = label r)
+    (ht : ∀ q r, target (σ q) = target (σ r) ↔ target q = target r)
+    (S : Row → Prop) (hS : ∀ x, S (σ x) ↔ S x) (a : Row) :
+    ¬ ((wins label target (concl parent wf judge wellFormed root S) a ∧
+          ¬ wins label target (concl parent wf judge wellFormed root S) (σ a)) ∨
+       (¬ wins label target (concl parent wf judge wellFormed root S) a ∧
+          wins label target (concl parent wf judge wellFormed root S) (σ a))) :=
+  holder_both_or_neither parent wf σ hσ hp wellFormed hw judge hj root hroot
+    (wins label target) (wins_equivariant label target σ hσ hl ht) S hS a
+
+/-- With a rule that accepts every row and every row a root, the conclusion is the kept set.
+    Used by the instances below. -/
+theorem concl_all {Row : Type} (parent : Row → Row → Prop) (wf : WellFounded parent)
+    (wellFormed : Row → Prop) (S : Row → Prop) (r : Row)
+    (h : kept parent wf wellFormed S r) :
+    concl parent wf (fun _ _ _ => True) wellFormed (fun _ => True) S r :=
+  (conclOf_iff parent wf _ _ r).2 ⟨⟨h, Or.inl trivial⟩, trivial⟩
+
+namespace Kinds
+
+/-- `t` is a statement. `a` withdraws it and `b` recants it; both name `t` and neither names
+    the other, so they are concurrent. -/
+inductive R | t | a | b
+  deriving DecidableEq, Repr
+
+open R
+
+def parentB : R → R → Bool | t, a => true | t, b => true | _, _ => false
+def parent (q r : R) : Prop := parentB q r = true
+def depth : R → Nat | t => 0 | a => 1 | b => 1
+
+theorem parent_wf : WellFounded parent :=
+  Subrelation.wf (r := InvImage (· < ·) depth)
+    (fun {q r} h => by
+      revert h; cases q <;> cases r <;> simp [parent, parentB, depth, InvImage])
+    (InvImage.wf depth Nat.lt_wfRel.wf)
+
+/-- Kinds in the fixed order: withdraws 1, recants 2. -/
+def label : R → Nat | t => 0 | a => 1 | b => 2
+def target : R → Nat | t => 0 | a => 1 | b => 1
+
+def All (_ : R) : Prop := True
+
+abbrev Cn : R → Prop :=
+  concl parent parent_wf (fun _ _ _ => True) (fun _ => True) (fun _ => True) All
+
+theorem concluded (r : R) : Cn r :=
+  concl_all parent parent_wf _ All r
+    (kept_of_closed parent parent_wf _ All (fun _ _ => trivial) (fun _ _ _ _ => trivial) r trivial)
+
+/-- The two retractions are concurrent, and the recantation wins by its kind. No rank, no
+    arrival order: the offered set is the three rows. -/
+theorem recant_beats_withdraw : wins label target Cn b ∧ ¬ wins label target Cn a :=
+  ⟨⟨concluded b, fun q _ _ => by cases q <;> decide⟩,
+   higher_kind_decides label target Cn a b (concluded b) rfl (by decide)⟩
+
+end Kinds
+
+/-! ## Part H. Removal binds by causal past
+
+  A removed member can sign rows that name an old head on purpose. They are concurrent with the
+  removal, and a rule that treats concurrent rows alike lets both stand. The rule modelled here
+  is a derived layer, like `means`: a row signed by key m COUNTS iff it is concluded and it is
+  an ancestor of every concluded removal of m. Ancestry runs through any chain of rows, by any
+  signers, that name the row. So a row counts if something in the removal's causal past had
+  already named it. There are no instants and no rank. The remover chooses one thing: the head
+  the removal extends. This is removal by others; the reach layer's withdrawal by the signer is
+  separate. -/
+
+section Removal
+
+variable {Row Key : Type}
+variable (parent : Row → Row → Prop) (wf : WellFounded parent) (wellFormed : Row → Prop)
+variable (signer : Row → Key) (removes : Row → Key → Prop)
+variable (C : (Row → Prop) → Row → Prop)
+
+/-- `r` counts: concluded, and in the causal past of every concluded removal of its signer. -/
+def counts (S : Row → Prop) (r : Row) : Prop :=
+  C S r ∧ ∀ x, C S x → removes x (signer r) → TransGen parent r x
+
+/-- (1) A function of the offered set. -/
+theorem counts_function (S S' : Row → Prop) (h : ∀ r, S r ↔ S' r) :
+    counts parent signer removes C S = counts parent signer removes C S' := by
+  have e : S = S' := funext fun r => propext (h r)
+  rw [e]
+
+theorem counts_perm (l l' : List Row) (h : l.Perm l') :
+    counts parent signer removes C (fun r => r ∈ l)
+      = counts parent signer removes C (fun r => r ∈ l') :=
+  counts_function parent signer removes C _ _ (fun _ => h.mem_iff)
+
+/-- (3) Sign-after-removal never counts. Let a removal `x` of key m be kept in `S`, and let
+    `r`, signed by m, not be in `S`. Then `r` is not in the past of `x`, and in every offered
+    set in which `x` is still concluded, `r` does not count. No later row can change that:
+    the past of a kept row is closed. -/
+theorem sign_after_removal_never_counts (S : Row → Prop) (x r : Row)
+    (hk : kept parent wf wellFormed S x) (hr : ¬ S r) (hrem : removes x (signer r))
+    (S' : Row → Prop) (hx' : C S' x) :
+    ¬ counts parent signer removes C S' r :=
+  fun h => (new_row_not_ancestor parent wf wellFormed S r x hk hr).2 (h.2 x hx' hrem)
+
+variable (hCk : ∀ S r, C S r → kept parent wf wellFormed S r)
+variable (hfin : ∀ S x r, kept parent wf wellFormed S r → ¬ S x →
+    (C S r ↔ C (fun q => S q ∨ q = x) r))
+include hCk hfin
+
+/-- (3), the step. The removal is concluded; the removed signer's new row is then offered. It
+    does not count. -/
+theorem sign_after_removal_step (S : Row → Prop) (x r : Row)
+    (hx : C S x) (hr : ¬ S r) (hrem : removes x (signer r)) :
+    ¬ counts parent signer removes C (fun q => S q ∨ q = r) r :=
+  sign_after_removal_never_counts parent wf wellFormed signer removes C S x r (hCk S x hx) hr
+    hrem _ ((hfin S r x (hCk S x hx) hr).1 hx)
+
+/-- (2) Exact locality. Let `r` count and let a row `x` be offered. `r` still counts, provided
+    every removal `y` of `r`'s signer either has `r` in its past, or is neither `x` nor a
+    descendant of `x`. So the only rows whose arrival can stop `r` counting are removals of
+    `r`'s signer that do not have `r` in their past, and rows such removals were waiting on. -/
+theorem counting_survives (S : Row → Prop) (x r : Row) (hx : ¬ S x)
+    (hc : counts parent signer removes C S r)
+    (hno : ∀ y, removes y (signer r) →
+      TransGen parent r y ∨ (y ≠ x ∧ ¬ TransGen parent x y)) :
+    counts parent signer removes C (fun q => S q ∨ q = x) r := by
+  refine ⟨(hfin S x r (hCk S r hc.1) hx).1 hc.1, fun y hcy hry => ?_⟩
+  cases hno y hry with
+  | inl h => exact h
+  | inr h =>
+    have hk : kept parent wf wellFormed S y :=
+      (kept_new_row parent wf wellFormed S x y h.1 h.2).2 (hCk _ y hcy)
+    exact hc.2 y ((hfin S x y hk hx).2 hcy) hry
+
+/-- (2), corollary. A row that is not a removal of `r`'s signer, and on which no such removal
+    was waiting, does not stop `r` counting. -/
+theorem only_removals_stop_counting (S : Row → Prop) (x r : Row) (hx : ¬ S x)
+    (hc : counts parent signer removes C S r)
+    (hnr : ∀ y, removes y (signer r) → y ≠ x ∧ ¬ TransGen parent x y) :
+    counts parent signer removes C (fun q => S q ∨ q = x) r :=
+  counting_survives parent wf wellFormed signer removes C hCk hfin S x r hx hc
+    (fun y hy => Or.inr (hnr y hy))
+
+end Removal
+
+namespace Removal
+
+/-- Keys: an admin who keeps the roster, a member m, and a third party u. -/
+inductive Key | admin | m | u
+  deriving DecidableEq, Repr
+
+/-- `h0` is a roster head. `r` is a row m signs, naming `h0`. `ack` is u's acknowledgement of
+    `r`. `h1a` is a later head that names only `h0`. `h1b` is a later head that names `h0` and
+    `ack`. `xa`, `xb`, `x0` are removals of m extending `h1a`, `h1b` and the old head `h0`. -/
+inductive R | h0 | r | ack | h1a | h1b | xa | xb | x0
+  deriving DecidableEq, Repr
+
+open R
+
+def parentB : R → R → Bool
+  | h0, r => true | r, ack => true
+  | h0, h1a => true
+  | h0, h1b => true | ack, h1b => true
+  | h1a, xa => true | h1b, xb => true | h0, x0 => true
+  | _, _ => false
+def parent (p q : R) : Prop := parentB p q = true
+
+def depth : R → Nat
+  | h0 => 0 | r => 1 | ack => 2 | h1a => 1 | h1b => 3 | xa => 2 | xb => 4 | x0 => 1
+
+theorem parent_wf : WellFounded parent :=
+  Subrelation.wf (r := InvImage (· < ·) depth)
+    (fun {p q} h => by
+      revert h; cases p <;> cases q <;> simp [parent, parentB, depth, InvImage])
+    (InvImage.wf depth Nat.lt_wfRel.wf)
+
+/-- The ancestry of the eight rows, written out. -/
+def ancB : R → R → Bool
+  | h0, r => true
+  | h0, ack => true | r, ack => true
+  | h0, h1a => true
+  | h0, h1b => true | ack, h1b => true | r, h1b => true
+  | h0, xa => true | h1a, xa => true
+  | h0, xb => true | h1b, xb => true | ack, xb => true | r, xb => true
+  | h0, x0 => true
+  | _, _ => false
+
+theorem par_anc : ∀ p q, parentB p q = true → ancB p q = true := by
+  intro p q; cases p <;> cases q <;> decide
+
+theorem anc_step : ∀ p b c, ancB p b = true → parentB b c = true → ancB p c = true := by
+  intro p b c; cases p <;> cases b <;> cases c <;> decide
+
+theorem anc_sound {p q : R} (h : TransGen parent p q) : ancB p q = true := by
+  induction h with
+  | single h => exact par_anc _ _ h
+  | tail _ h ih => exact anc_step _ _ _ ih h
+
+def signer : R → Key
+  | r => Key.m | ack => Key.u | _ => Key.admin
+def removesB : R → Bool | xa => true | xb => true | x0 => true | _ => false
+def removes (x : R) (k : Key) : Prop := removesB x = true ∧ k = Key.m
+
+abbrev Cn (S : R → Prop) : R → Prop :=
+  concl parent parent_wf (fun _ _ _ => True) (fun _ => True) (fun _ => True) S
+
+abbrev Counts (S : R → Prop) (q : R) : Prop := counts parent signer removes Cn S q
+
+theorem concluded (S : R → Prop) (hcl : ∀ p q, parent p q → S q → S p) (q : R) (h : S q) :
+    Cn S q :=
+  concl_all parent parent_wf _ S q
+    (kept_of_closed parent parent_wf _ S (fun _ _ => trivial) hcl q h)
+
+theorem offered (S : R → Prop) (q : R) (h : Cn S q) : S q :=
+  kept_offered parent parent_wf _ S q (concl_live parent parent_wf _ _ _ S q h).1
+
+def SAb : R → Bool | h0 => true | r => true | h1a => true | xa => true | _ => false
+def SBb : R → Bool | h0 => true | r => true | ack => true | h1b => true | xb => true | _ => false
+def SCb : R → Bool | h0 => true | r => true | ack => true | h1b => true | x0 => true | _ => false
+abbrev SA (q : R) : Prop := SAb q = true   -- m's row, a later head that does not name it, removal
+abbrev SB (q : R) : Prop := SBb q = true   -- m's row, u's acknowledgement, a head naming that, removal
+abbrev SC (q : R) : Prop := SCb q = true   -- as SB, but the removal extends the old head
+
+theorem SA_closed : ∀ p q, parent p q → SA q → SA p := by
+  intro p q; cases p <;> cases q <;> simp [parent, parentB, SA, SAb]
+theorem SB_closed : ∀ p q, parent p q → SB q → SB p := by
+  intro p q; cases p <;> cases q <;> simp [parent, parentB, SB, SBb]
+theorem SC_closed : ∀ p q, parent p q → SC q → SC p := by
+  intro p q; cases p <;> cases q <;> simp [parent, parentB, SC, SCb]
+
+/-- (4) The cost. m signed `r` honestly, before the removal. Nothing in the removal's past
+    names `r`. It is concluded and does not count. -/
+theorem honest_but_unnamed : Cn SA r ∧ ¬ Counts SA r := by
+  refine ⟨concluded SA SA_closed r rfl, fun h => ?_⟩
+  have := anc_sound (h.2 xa (concluded SA SA_closed xa rfl) ⟨rfl, rfl⟩)
+  simp [ancB] at this
+
+/-- (4) A third party's acknowledgement names `r`, and the head the removal extends names the
+    acknowledgement. `r` is then in the removal's past and counts. -/
+theorem acknowledged_counts : Counts SB r := by
+  refine ⟨concluded SB SB_closed r rfl, fun x hc hr => ?_⟩
+  have ho := offered SB x hc
+  have hb := hr.1
+  cases x with
+  | xb =>
+    exact TransGen.tail (TransGen.tail (TransGen.single (b := ack) rfl) (c := h1b) rfl) rfl
+  | h0 => simp [removesB] at hb
+  | r => simp [removesB] at hb
+  | ack => simp [removesB] at hb
+  | h1a => simp [removesB] at hb
+  | h1b => simp [removesB] at hb
+  | xa => simp [SB, SBb] at ho
+  | x0 => simp [SB, SBb] at ho
+
+/-- (5) What the remover controls. The same rows as in `acknowledged_counts`, but the removal
+    extends the old head `h0` and not the current one. `r` no longer counts, acknowledged or
+    not. A removal that extends an older head voids more. -/
+theorem stale_head_voids_more : Cn SC r ∧ ¬ Counts SC r := by
+  refine ⟨concluded SC SC_closed r rfl, fun h => ?_⟩
+  have := anc_sound (h.2 x0 (concluded SC SC_closed x0 rfl) ⟨rfl, rfl⟩)
+  simp [ancB] at this
+
+end Removal
+
 /-! ## Axioms used -/
 
 #print axioms kept_is_least
@@ -1338,5 +1683,18 @@ end Trust
 #print axioms Trust.before
 #print axioms Trust.acceptance
 #print axioms Trust.withdrawal
+#print axioms higher_kind_decides
+#print axioms wins_unique
+#print axioms wins_equivariant
+#print axioms same_kind_both_or_neither
+#print axioms Kinds.recant_beats_withdraw
+#print axioms counts_function
+#print axioms sign_after_removal_never_counts
+#print axioms sign_after_removal_step
+#print axioms counting_survives
+#print axioms only_removals_stop_counting
+#print axioms Removal.honest_but_unnamed
+#print axioms Removal.acknowledged_counts
+#print axioms Removal.stale_head_voids_more
 
 end Causal

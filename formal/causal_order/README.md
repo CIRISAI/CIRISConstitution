@@ -20,6 +20,10 @@ Every reader is its own seed. A row means something to a reader when it is concl
 live edges from the reader's own rows reaches its signer. Meaning is lost only through a withdrawal, by its
 own signer, of an edge on that walk.
 
+A removal by others reaches the rows of the removed signer that are not in its past. A row is in the past of
+a removal when a chain of rows leads from the removal back to it: an acknowledgement, a census, a roster
+version, a reply. No instant is compared.
+
 **What is proved.** `Order.lean` (the rank case and the failure of judging on arrival) and `Causal.lean`
 (no rank). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
@@ -35,14 +39,20 @@ own signer, of an edge on that walk.
 | `Causal.means_function`, `two_readers`, `no_own_edge_no_reach` | meaning is a function of the offered set and the reader's key; two readers differ only through rows of their own; a reader with no edge of its own reaches only itself |
 | `Causal.acceptance_gives_meaning`, `only_withdrawals_remove` | the reader's later acceptance gives meaning to rows already kept; no row but a withdrawal removes meaning from any row for any reader |
 | `Causal.reaches_standing_irrelevant` | with an edge withdrawn only by its own signer, reach never depends on reach through negation |
+| `Causal.wins_unique`, `higher_kind_decides`, `same_kind_both_or_neither` | concurrent rows on one target that differ in kind are decided by a fixed order on kinds; rows of one kind are still both or neither |
+| `Causal.counts_function`, `only_removals_stop_counting` | a row of a removed signer counts when it lies in the past of the removal; that is a function of the offered set, and only a removal of its signer can stop a row counting |
+| `Causal.sign_after_removal_never_counts`, `Removal.acknowledged_counts`, `Removal.honest_but_unnamed` | a row first held after the removal is kept never counts; a row the removal's past had named counts, and one it had not named does not |
 
 **What it assumes.** The naming relation is well-founded: a digest cannot name a row that names it back.
 An edge is withdrawn only by its own signer.
 
 **What it does not show.**
 
-- A signer who names old rows is concurrent with everything since. Bounding the age of what a row names is
-  not modelled.
+- A removal that extends an older head leaves more rows out of its past (`Removal.stale_head_voids_more`).
+  The roster chain's rule for two versions of one head must bound that, and that rule is not modelled.
+- Re-admission of a removed key and a contested removal are not modelled.
+- The same reach for a retirement, a revocation or a withdrawn grant is the same rule under another name,
+  and is proved here only for a removal.
 - A contested slot may stay empty; nothing here ends a dispute.
 - A conclusion from silence, such as a window closing unopposed, cannot be drawn from rows and is not here.
 - The walk has one depth for all edges; the classes and budgets of `formal/trust_set` are not carried over.
