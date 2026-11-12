@@ -432,6 +432,40 @@ PROPERTIES Prop_IrreversibleWaits Prop_HonestChangeResolves Prop_FloorNeverLands
     return names
 
 
+PART4 = os.path.join(ROOT, "constitution", "part_4_composition_governance.md")
+PART_LEAD = "The rows are these, generated into this section from the table:"
+
+
+def part_table(rows):
+    """The rows as the table CC 4.5.13 prints: the Part's own statement of each row, written from the data."""
+    voice = {"person": "one voice a person", "key": "one voice a key", "unstated": "voice not stated"}
+    at = {"signed": "the set as signed", "decision": "the set at the count", "act": "the set at the act",
+          "founding": "the set the record lists", "unstated": "instant not stated"}
+    esc = lambda x: x.replace("|", "\\|")
+    out = ["| Row | Who is counted | Enact | Cancel | Floor | Window | At the window |", "|---|---|---|---|---|---|---|"]
+    for r in rows:
+        c = {k: v["value"] for k, v in r["_counted"].items()}
+        who = f"`{esc(c['count_set'])}`, {voice[c['voice']]}, {at[c['counted_at']]}"
+        if c["target_silent"] == "yes": who += ", the target silent"
+        win = "none" if not r["window_secs"] else f"{r['window_secs']:,}".replace(",", " ") + " s"
+        out.append(f"| `{r['family']}` | {who} | {esc(r['enact'])} | {esc(r['cancel'])} | {esc(r['floor'])} | {win} | {r['at_window']} |")
+    return out
+
+
+def write_part_table(rows, check=False):
+    lines = open(PART4, encoding="utf-8").read().split("\n")
+    lead = [i for i, l in enumerate(lines) if PART_LEAD in l]
+    if len(lead) != 1 or lines[lead[0] + 1] != "" or not lines[lead[0] + 2].startswith("| Row |"):
+        sys.exit("governance_policy: CC 4.5.13 has no table after its lead sentence")
+    a = lead[0] + 2
+    b = a
+    while b < len(lines) and lines[b].startswith("|"): b += 1
+    new = lines[:a] + part_table(rows) + lines[b:]
+    if new != lines:
+        if check: sys.exit("governance_policy: the table in CC 4.5.13 is stale (run tools/build_governance_policy.py)")
+        open(PART4, "w", encoding="utf-8").write("\n".join(new))
+
+
 def build():
     lean_examples_agree()
     rows = load()
@@ -489,6 +523,7 @@ def build():
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)
+    write_part_table(rows)
     print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances; counted cells unstated {len(unstated)}; {len(protocols)} protocol kinds, one voice admits under {sum(p['one_voice_admits'] for p in protocols)}")
 
 

@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "8e37d161ae396bfda6b033c1fcf98f89a877890ca586352be31ce77e31ff5749",
+  "policy_sha256": "4128287cf97526a2d34fd16d54b5e88d5c6c80179b9e294b17662adf99eb38d4",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -323,14 +323,14 @@
     },
     "voices": {
      "value": "scrubs",
-     "cc_ref": "CC 4.5.13"
+     "cc_ref": "CC 3.3.4"
     },
     "target_silent": {
      "value": "no"
     },
     "changes_set": {
      "value": "removes",
-     "cc_ref": "CC 4.5.13"
+     "cc_ref": "CC 3.3.4"
     }
    },
    "cancel_over": "—",

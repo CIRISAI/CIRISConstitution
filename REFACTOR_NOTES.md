@@ -605,3 +605,10 @@ polarity are `fold_reader_defaults.tsv`. Four held rows (three guard, one change
 their rules are carried by other rows or stay prose. Four reader lanes launched for the unmeasured per-family
 columns: body (two lanes, 436 statements), signer (286), and freshness/window/formula/tie_break/monotone_field/
 projection/placement (about 240); outputs to scratch `lanes/out_f_{body_a,body_b,signer,small}.tsv`.
+
+First prose cut (the method): the bullet list of policy rows in CC 4.5.13 is replaced by a table that
+`tools/build_governance_policy.py` writes into the Part (found by its lead sentence; CI diffs the Part). The three
+restating entries now rest on table rows; the cross-references the bullets carried are kept in one paragraph after
+the table. The pattern for further cuts: (1) the data table prints into the Part, (2) entries that restated the
+value are repointed to the printed row, (3) a quote that rested on the cut words is moved to the sentence that
+states the rule, (4) links kept. A value stated only by the cut words must not be cut: it would cite itself.

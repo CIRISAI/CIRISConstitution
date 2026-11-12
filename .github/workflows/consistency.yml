@@ -63,7 +63,7 @@ jobs:
         run: |
           python3 tools/build_governance_policy.py
           python3 tools/build_governance_policy.py --self-test
-          git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/
+          git diff --exit-code manifests/governance_policy.json manifests/governance_policy_vectors.json formal/two_path/generated/ constitution/part_4_composition_governance.md
       - name: CSD/4 chain manifest (models → state table → atoms → claims → evidence → catalogue) is regenerated (no drift)
         run: |
           pip install -q pyyaml

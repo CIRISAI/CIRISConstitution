@@ -269,8 +269,8 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 99,
-   "citations": 146,
+   "cells_cited": 98,
+   "citations": 144,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "fold": {
@@ -38912,10 +38912,6 @@
      {
       "cc_ref": "CC 4.4.3.4.2",
       "reading": "fills"
-     },
-     {
-      "cc_ref": "CC 4.5.13",
-      "reading": "fills"
      }
     ]
    },
@@ -49139,13 +49135,7 @@
    },
    "governance": {
     "value": "none",
-    "source": "code-v61",
-    "cites": [
-     {
-      "cc_ref": "CC 4.5.13",
-      "reading": "fills"
-     }
-    ]
+    "source": "code-v61"
    },
    "evidence": {
     "value": {

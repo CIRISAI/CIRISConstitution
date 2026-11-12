@@ -2123,14 +2123,28 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 
 **The corridor.** A community may set its policy stricter than the defaults, up to a floor at enact, which is the reverse path switched off. It may not set it laxer than the corridor allows. A cancel or floor one voice can reach, an enact one voice can reach, a window under its class, or cancel or floor above enact, are refused as policy (the policy-corridor model; the register's row CLM-policy-corridor).
 
-**The governance policy table is published as data with its decision function, its base law, its pin and its vectors** (the register's row CLM-governance-policy-table). The decision function is `(policy, base, approvals, objections, elapsed) → lands | pending | cancelled`, which an implementation replays rather than re-reading this paragraph. Every two-path row is also an instance of the two-path model, which the build regenerates and checks, so a row that breaks the machine's invariants fails the build. The rows are these:
+**The governance policy table is published as data with its decision function, its base law, its pin and its vectors** (the register's row CLM-governance-policy-table). The decision function is `(policy, base, approvals, objections, elapsed) → lands | pending | cancelled`, which an implementation replays rather than re-reading this paragraph. Every two-path row is also an instance of the two-path model, which the build regenerates and checks, so a row that breaks the machine's invariants fails the build. The rows are these, generated into this section from the table:
 
-- the three defaults by class;
-- community invitation ([CC 3.1.3.2](part_3_the_namespace.md): the invitee's own acceptance still required) and removal (forward only, cosigned);
-- the self roster ([CC 3.3.6.3](part_3_the_namespace.md): one person's keys, so a floor of one key and its own 24 h window);
-- and three instances the table records under their own rule rather than the generic machine — this section's moderation fallback (a moderator acts alone, a live majority at 48 h), the halt's fire-and-fuse ([CC 4.2.1.1](#4.2.1.1)) and the custodian's cosigned replacement ([CC 7.5.5](part_7_lifecycle_stewardship.md)).
-- the cosigned act of a group, whose rule and count set are those of the group's declared protocol ([CC 3.3.4](part_3_the_namespace.md)), held for the standing window when signatures fall short;
-- and the accord's strict majority of its standing roster ([CC 4.2.1.3](#4.2.1.3)).
+| Row | Who is counted | Enact | Cancel | Floor | Window | At the window |
+|---|---|---|---|---|---|---|
+| `default_content` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled |
+| `default_standing` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
+| `default_irreversible` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
+| `community_invite` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
+| `community_remove` | `member`, one voice a person, the set as signed | 2/3 | — | — | 259 200 s | cancelled |
+| `self_roster_add` | `self`, one voice a key, the set at the count | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
+| `self_roster_evict` | `self`, one voice a key, the set at the count, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
+| `moderation_action` | `member`, one voice a person, the set at the count | role:moderator\|steward at 1 | — | 1/2 | 172 800 s | tallied |
+| `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed |
+| `moderator_recall` | `member`, one voice a person, the set as signed | 2/3 | — | 2 voices | 259 200 s | cancelled |
+| `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | 1/2 confirms | — | 86 400 s | lapsed |
+| `custodian_replace` | `operator+wa`, voice not stated, instant not stated | 2/2 | — | — | none | — |
+| `affiliation_member_action` | `deciding+outside`, voice not stated, instant not stated | 2/2 | — | — | none | — |
+| `moderator_election` | `member`, one voice a person, the set at the count | instant runoff over ranked choice of three | — | 2 voices | 86 400 s | stay_open |
+| `cosigned_act` | `protocol`, voice not stated, the set as signed | protocol | — | — | 259 200 s | cancelled |
+| `accord_majority` | `holder`, one voice a person, instant not stated | more than 1/2 | — | — | none | — |
+
+Each row is stated where its act is. Invitation and removal are at [CC 3.1.3.2](part_3_the_namespace.md), the self roster at [CC 3.3.6.3](part_3_the_namespace.md) and the halt at [CC 4.2.1.1](#4.2.1.1). The custodian's replacement is at [CC 7.5.5](part_7_lifecycle_stewardship.md), a group's cosigned act at [CC 3.3.4](part_3_the_namespace.md) and the accord's majority at [CC 4.2.1.3](#4.2.1.3). The other rows are stated in this section.
 
 **How a family's act is counted.** Each family's row in the family model names the policy row its act runs and the roster that row is read against. A family whose rows one signature carries counts nothing. Where the count differs by stage or by the kind of identity, the family lists its cases in order and the first that holds decides.
 

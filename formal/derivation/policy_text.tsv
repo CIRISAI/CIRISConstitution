@@ -17,11 +17,11 @@ community_invite	count_set	member	CC 4.5.13	The base is the standing roster at o
 community_invite	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 community_invite	voices	objection	CC 4.5.13	Votes travel on `objection:{state}`
 community_invite	changes_set	adds	CC 4.5.13	the second voice on an admission is the invitee's own acceptance
-community_remove	count_set	member	CC 4.5.13	removal (forward only, cosigned)
+community_remove	count_set	member	CC 4.5.13	The base is the standing roster at or below the count minimum the governance policy table pins
 community_remove	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
-community_remove	voices	scrubs	CC 4.5.13	removal (forward only, cosigned)
+community_remove	voices	scrubs	CC 3.3.4	**Removal** is a `membership:removal` cosigned under the current protocol
 community_remove	counted_at	signed	CC 3.1.3	the signer is an active member at the event's signed instant
-community_remove	changes_set	removes	CC 4.5.13	removal (forward only, cosigned)
+community_remove	changes_set	removes	CC 3.3.4	**Removal** is a `membership:removal` cosigned under the current protocol
 self_roster_add	count_set	self	CC 3.3.6.3	a strict majority of the live roster, proposer counted, approves and it lands at once
 self_roster_add	voice	key	CC 3.3.6.3	This is the one roster where a floor of one voice is right, because every key is the same person's.
 self_roster_add	counted_at	decision	CC 3.3.6.3	Both thresholds are counted over the roster as it stands when the decision is made

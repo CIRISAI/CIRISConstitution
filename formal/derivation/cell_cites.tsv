@@ -6,7 +6,6 @@ family	column	reading	cc_ref	quote
 accord:*	cosign_rule	fills	CC 4.2.6	| **Standing acts** (non-emergency) | strict majority of the standing roster (unchanged) | normal cadence |
 accord:human_dignity	subject_rule	fills	CC 3.4.1	(`attested_key_id` = the agent scored)
 accord:invoke:constitutional:{halt_id}	governance	fills	CC 4.5.13	one present holder fires, and a roster change counts its yes-votes against the standing roster, because the roster is the capture vector
-accord:invoke:constitutional:{halt_id}	governance	fills	CC 4.5.13	three instances the table records under their own rule rather than the generic machine — this section's moderation fallback (a moderator acts alone, a live
 accord:lifecycle:{kind}	cosign_rule	fills	CC 3.4.1	`active` is **resumption** from a `constitutional` halt — the [CC 4.2.1.3](part_4_composition_governance.md) invocation kind, its own signed domain; a majority of the standing roster lifts ([CC
 accord:lifecycle:{kind}	cosign_rule	fills	CC 4.2.1.1	A confirmed halt stands until a strict majority resumes it. **A strict majority may resume an unconfirmed halt at any time**
 accord:lifecycle:{kind}	cosign_rule	fills	CC 4.2.1.1	| `lifecycle:active` | **strict majority of the standing roster**, cosigned | the quorum sits on the recoverable act ([CC 4.2.1.3](#4.2.1.3)) |
@@ -137,7 +136,6 @@ licensure:{authority_id}	replication	fills	CC 4.5.5	A licence subject **can see 
 licensure:{authority_id}	subject_rule	fills	CC 4.5.2.1	| `licensure:{authority_id}:{practitioner_key}` (when practitioner is named)
 membership:{stage}	governance	fills	CC 4.4.3.4.2	// this protocol runs under the CC 4.5.13 floor, never one vote
 membership:{stage}	governance	fills	CC 4.4.3.4.2	A removal under `admission: open` runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
-membership:{stage}	governance	fills	CC 4.5.13	community invitation ([CC 3.1.3.2](part_3_the_namespace.md): the invitee's own acceptance still required) and removal (forward only, cosigned)
 membership:{stage}	lifecycle	fills	CC 3.3.4	A time-boxed guest is a widening with `valid_until`, and the seat lapses at that instant.
 membership:{stage}	replication	fills	CC 3.1.3.2	a proposal is readable by, and applied on, any node whose self-collective contains that entry, without that node holding the group's roster
 membership:{stage}	subject_rule	fills	CC 3.1.3.2	the founder's **standing** proposal to any requester, whose `subject_key_ids` is resolved at acceptance
@@ -145,7 +143,6 @@ mesh_config:{key}	cosign_rule	fills	CC 4.2.1	**Durable** settings are earned by 
 moderation:{allegation_type}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 moderation:{allegation_type}	governance	fills	CC 4.5.13	If **no moderator or steward acts within the 48 h window**, the proposal is tallied by **live-majority vote over the community's live members**.
 moderation:{allegation_type}	governance	fills	CC 4.5.13	a present moderator acts, and on the moderators' absence the live community governs its own content
-moderation:{allegation_type}	governance	fills	CC 4.5.13	three instances the table records under their own rule rather than the generic machine — this section's moderation fallback (a moderator acts alone, a live
 moderation:{allegation_type}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
 moderation:{allegation_type}	lifecycle	fills	CC 4.5.5	The person named cannot withdraw that record and contests it by `reconsideration:{grounds}`.
 moderation:{allegation_type}	replication	fills	CC 4.5.5	The moderator's process MAY shield the reporter.
@@ -156,7 +153,6 @@ provenance:build_manifest:{target}	lifecycle	fills	CC 3.1.2.1	a bad build is wit
 provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	A rebuild is a `supersedes` on the earlier Contribution
 provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	a bad build is withdrawn by the pipeline that signed it.
 rendezvous:route	replication	fills	CC 3.1.4	**Reach:** everyone, as on the bootstrap planes
-retirement:{state}	governance	fills	CC 4.5.13	three instances the table records under their own rule rather than the generic machine — this section's moderation fallback (a moderator acts alone, a live
 retirement:{state}	lifecycle	fills	CC 3.1.5	**A planned retirement is cancelled by the decider `withdraws`-ing the `decided` row** ([CC 2.4.1.1](part_2_the_grammar.md): taking back a declaration because circumstances changed), admissible only while no
 revocation:{entity_type}:{reason}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 revocation:{entity_type}:{reason}	lifecycle	fills	CC 2.4.1.1	a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`
