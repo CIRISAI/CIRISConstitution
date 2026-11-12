@@ -59,8 +59,9 @@ class Fail(Exception):
     pass
 
 
-def explore(tab, scope, tier):
+def explore(tab, scope, tier, full_history=False):
     eff = lambda act: tab.get((act, scope), "none")
+    history = eff("widening") == "at_seat_history"
     seen_fail = {}
     count = [0]
 
@@ -90,7 +91,7 @@ def explore(tab, scope, tier):
                     if d in live: grant(d, list(holders))
             elif eff("widening") == "next_seal": fresh.add(who)
             elif eff("widening") == "rotate_epoch": due = True; fresh.add(who)
-            elif eff("widening") == "at_seat":       # wrapped when the writer's roster gains the member; a due rotation is made then
+            elif eff("widening") in ("at_seat", "at_seat_history"):       # wrapped when the writer's roster gains the member; a due rotation is made then
                 if is_due():
                     if not cause: note("K6", trace)
                     if not tickdue and not (holders.get(("epoch", epoch), frozenset()) - current()): note("K10", trace)
@@ -99,6 +100,8 @@ def explore(tab, scope, tier):
                     for d in current(): grant(d, [("epoch", epoch)])
                 elif ("epoch", epoch) in holders: grant(DEVICES[who][0], [("epoch", epoch)])
                 else: fresh.add(who)
+                if eff("widening") == "at_seat_history":     # one history key opens every earlier epoch to the newcomer
+                    grant(DEVICES[who][0], [k for k in holders if k[1] <= epoch and holders[k]])
         elif kind in ("remove", "resign"):
             members.discard(who); left |= {d for d in DEVICES[who] if any(d in v for v in holders.values()) or d in live}
             fresh.discard(who)
@@ -134,7 +137,7 @@ def explore(tab, scope, tier):
             if not current() <= holders[k]: note("K3", trace)
             for m in list(fresh):
                 got = {kk for kk, v in holders.items() if any(d in v for d in DEVICES[m])} - {kk for kk, v in before.items() if any(d in v for d in DEVICES[m])}
-                if got - {k}: note("K4", trace)
+                if got - {k} and not full_history: note("K4", trace)
             fresh.clear()
             nwrites += 1
         # K1, K7 on every step
@@ -144,7 +147,8 @@ def explore(tab, scope, tier):
         for k, v in before.items():
             if not v <= holders.get(k, frozenset()): note("K7", trace)
         if tier == "epoch" and kind == "add":
-            if any(d in v - before.get(k, set()) for k, v in holders.items() for d in DEVICES[who] if k != ("epoch", epoch) or due): note("K4", trace)
+            if not full_history and any(d in v - before.get(k, set()) for k, v in holders.items() for d in DEVICES[who] if k != ("epoch", epoch) or due): note("K4", trace)
+            if full_history and any(DEVICES[who][0] not in v for v in holders.values() if v): note("K5", trace)
             if not due and ("epoch", epoch) in holders and DEVICES[who][0] not in holders[("epoch", epoch)]: note("K9", trace)
         if tier == "per-write" and kind in ("add", "device_add"):
             devs = [who] if kind == "device_add" else [d for d in DEVICES[who] if d in live]
@@ -195,7 +199,17 @@ def main():
               ("" if ok else f"  FAIL expected {sorted(EXPECTED[tier]) or 'nothing'}"))
         if "-v" in sys.argv or not ok:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
-    print("key_plane: the key effects of the transitions manifest hold K1-K10 at both tiers" if not rc else "key_plane: FAIL")
+    # A proposal, not the rule: files at self and family under one group key for an epoch, in place of a key for
+    # each write. An admission is wrapped at the seat with one history key that opens every earlier epoch; a
+    # removal, a resignation and a device revocation rotate. Run so the proposal is checked before any text moves.
+    prop = {("widening", "family"): "at_seat_history", ("removal", "family"): "rotate_epoch",
+            ("resignation", "family"): "rotate_epoch", ("revocation", "family"): "rotate_epoch"}
+    n, fail = explore(prop, "family", "epoch", full_history=True)
+    bad = set(fail); rc |= 1 if bad else 0
+    print(f"  proposed  (self, family files under a group key, with a history key): {n} sequences, fails {', '.join(sorted(bad)) or 'nothing'}")
+    if bad:
+        for p in sorted(bad): print(f"    {p}: {fail[p]}")
+    print("key_plane: the key effects of the transitions manifest hold K1-K10 at both tiers; the proposed group key for family files holds them with K5 in place of K4" if not rc else "key_plane: FAIL")
     return rc
 
 

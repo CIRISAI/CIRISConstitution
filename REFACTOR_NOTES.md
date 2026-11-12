@@ -1074,3 +1074,6 @@ is caused by a sealed write, which is the node's own act and not a row.
 the later of its own and its header's first-held instants; either other reading lets an item count a leaf whose
 row would be stale. No set family is in the Parts yet; each proposed item (set claim, wrap set, signer batch) has
 to pass this law in its own family before it is typed.
+`formal/key_plane` runs the proposed group key for self and family files as a third table (not the rule): all
+properties hold with K5 in place of K4; mutations bite (no rotation on revocation K8, on removal K2, no history key
+K5). The text of CC 4.4.3.4.1 moves when the store has a shape for the history key and the wrap-once row.
