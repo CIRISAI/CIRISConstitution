@@ -1862,7 +1862,7 @@ Fold:
 In time:
 - clock `window` = `moderator_election.window_secs` (CC 4.5.13)
 
-Body: `ranks` (text only), `salt`
+Body: `ranks` (text only)
 
 **`ballot:moderator_acceptance`** — Structure, thing
 
@@ -1888,7 +1888,7 @@ Fold:
 
 Count: `none`
 
-Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`, `salt`
+Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`
 
 **`bond_posted:{currency}`** — Facts, account
 
@@ -2036,7 +2036,7 @@ Guard:
 Fold:
 - `key=period,token; pick=once(ballot_share_duplicate_token)` (CC 3.1.3)
 
-Body: `for_key_id`, `period`, `return_token`, `share_index`, `salt`
+Body: `for_key_id`, `period`, `return_token`, `share_index`
 
 **`census:partial:{class}`** — Facts, account
 
@@ -2069,7 +2069,7 @@ Guard:
 Fold:
 - `key=period,token; pick=once(census_share_duplicate_token)` (CC 3.1.3)
 
-Body: `for_key_id`, `period`, `return_token`, `share_index`, `salt`
+Body: `for_key_id`, `period`, `return_token`, `share_index`
 
 **`cert_validity:{authority}`** — Identity, thing
 
@@ -3062,11 +3062,11 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | slash | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | slash | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `none`
+Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
 
 Fold:
 - `key=attested_key_id; pick=max(asserted_at),rank(withhold>release)` (CC 3.1.9.2)
@@ -3268,10 +3268,10 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | registered | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
-Count: `none`
+Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
 
 Guard:
 - attest: `one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.2, CC 3.4.11)
@@ -3285,10 +3285,10 @@ Guard:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | takedown | selfAct | true (by_scope) | true (if_widens) | withdraw |
+| attest | takedown | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
-Count: `leaf=steward_purge => cosigned_act@trust_root ; none` (CC 2.4.1.1, CC 4.5.3)
+Count: `leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 2.4.1.1, CC 4.4.3.2.8, CC 4.5.3)
 
 Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse` (CC 4.5.5)
@@ -3374,6 +3374,7 @@ In time:
 - [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
 - [moderate] on close(expiry) unless fold(live_moderator): read locked, open moderator_election (CC 4.4.3.2.8)
 - @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.2.8)
+- expiry required `delegation_valid_until` max `delegation_term_max_secs` (CC 2.4.1)
 
 Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`
 

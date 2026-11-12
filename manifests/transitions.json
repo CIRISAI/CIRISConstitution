@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "4b59babb2f4c0b4644d52fb14340ede33991d1cc04c8058d3b7bf74c2c754ff6",
+  "source_sha256": "fbb16e867cff169c27fe750904634f5af116f1c83dae7e3077cbf807a0cab4c6",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -16996,10 +16996,25 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "affiliation_member_action"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.4.3.2.8"
+      ],
+      "count": "group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
+      "cases": [
+       {
+        "when": "group=affiliations & seats=one",
+        "policy": "cosigned",
+        "rows": [
+         "affiliation_member_action"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -17051,7 +17066,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {
@@ -18889,10 +18904,25 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "affiliation_member_action"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.4.3.2.8"
+      ],
+      "count": "group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
+      "cases": [
+       {
+        "when": "group=affiliations & seats=one",
+        "policy": "cosigned",
+        "rows": [
+         "affiliation_member_action"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -18988,7 +19018,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {
@@ -19154,21 +19184,31 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "affiliation_member_action"
+       ]
       },
       "source": "cc-table",
       "cc_ref": [
        "CC 2.4.1.1",
+       "CC 4.4.3.2.8",
        "CC 4.5.3"
       ],
-      "count": "leaf=steward_purge => cosigned_act@trust_root ; none",
+      "count": "leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
       "cases": [
        {
         "when": "leaf=steward_purge",
         "policy": "cosigned",
         "rows": [
          "cosigned_act"
+        ]
+       },
+       {
+        "when": "group=affiliations & seats=one",
+        "policy": "cosigned",
+        "rows": [
+         "affiliation_member_action"
         ]
        }
       ]
@@ -19230,7 +19270,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {

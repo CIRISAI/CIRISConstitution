@@ -27,8 +27,6 @@ archive_release:{basis}	scope	"whole" / subject-scoped	unstated	yes	CC 3.1.5	Car
 audio:*	duration	unstated	unstated	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
 audio:*	transcript	unstated	optional	no	CC 3.3.13	Source struct carries codec, duration, sample rate, optional `transcript`, AI-generation disclosure, license info.
 ballot:moderator	ranks	unstated	unstated	no	CC 4.5.13	Each person ranks **up to three**.
-ballot:moderator	salt	bstr .size 16	required	yes	CC 2.6.1.8	carries a random salt as a payload member, bound by every signer, so neither its id nor its quorum key confirms a guess.
-ballot:tally:{poll_id}	salt	bstr .size 16	required	yes	CC 2.6.1.8	carries a random salt as a payload member, bound by every signer, so neither its id nor its quorum key confirms a guess.
 capacity:composite	consent_basis	[* consent-basis]	optional	yes	CC 2.6.1.7	The grants a witness relied on.
 capacity:composite	feature_dim	uint	optional	yes	CC 2.1	`sample_size`, `feature_dim`
 capacity:composite	feature_dim	uint	optional	yes	CC 2.6.1.7	Participation-ratio effective sample size; gated.
@@ -86,14 +84,12 @@ capacity:{factor}	target_n_eff	number	optional	yes	CC 2.1	`sample_size_gate`, `t
 capacity:{factor}	target_n_eff	number	optional	yes	CC 2.6.1.7	Participation-ratio effective sample size; gated.
 capacity:{factor}	window	uint	optional	yes	CC 2.1	The scoring or observation window, in rows.
 capacity:{factor}	window	uint	optional	yes	CC 2.6.1.7	Participation-ratio effective sample size; gated.
-census:member:share	salt	bstr .size 16	required	yes	CC 2.6.1.8	carries a random salt as a payload member, bound by every signer, so neither its id nor its quorum key confirms a guess.
 census:partial:{class}	aggregation_algorithm_id	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	mass_total	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	member_commitment_hex	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	period	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	share_count	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	share_index	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
-census:share:{class}	salt	bstr .size 16	required	yes	CC 2.6.1.8	carries a random salt as a payload member, bound by every signer, so neither its id nor its quorum key confirms a guess.
 community:listing	cohort_subkind	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md) `public`): a federation-scoped `scores` row by the founder carrying the room's name, description, `cohort_subkind`, admission policy, named
 community:listing	cohort_subkind	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by the founder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md)): name, description, `cohort_subkind`, the admission policy, the
 community:listing	community_key_id	key-id	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md) `public`): a federation-scoped `scores` row by the founder carrying the room's name, description, `cohort_subkind`, admission policy, named

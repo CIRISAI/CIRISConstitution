@@ -227,9 +227,9 @@
     "gap": 0
    },
    "count": {
-    "cc-table": 14,
+    "cc-table": 16,
     "code-v61": 0,
-    "generic": 166,
+    "generic": 164,
     "prose": 0,
     "mixed": 0,
     "gap": 4
@@ -307,7 +307,7 @@
     "witnesses: a witnessed lineage's charter"
    ],
    "members_from_text": {
-    "in_cddl": 100,
+    "in_cddl": 96,
     "named_by_the_text_alone": 146
    }
   },
@@ -7987,13 +7987,6 @@
        "presence": "unstated",
        "in_cddl": false,
        "cc_ref": "CC 4.5.13"
-      },
-      {
-       "member": "salt",
-       "type": "bstr .size 16",
-       "presence": "required",
-       "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -8531,13 +8524,6 @@
        "member": "partial_b",
        "type": "uuid",
        "presence": "required"
-      },
-      {
-       "member": "salt",
-       "type": "bstr .size 16",
-       "presence": "required",
-       "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -13888,13 +13874,6 @@
        "member": "share_index",
        "type": "uint",
        "presence": "required"
-      },
-      {
-       "member": "salt",
-       "type": "bstr .size 16",
-       "presence": "required",
-       "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -14613,13 +14592,6 @@
        "member": "share_index",
        "type": "uint",
        "presence": "required"
-      },
-      {
-       "member": "salt",
-       "type": "bstr .size 16",
-       "presence": "required",
-       "in_cddl": true,
-       "cc_ref": "CC 2.6.1.8"
       }
      ]
     },
@@ -20036,7 +20008,7 @@
    "signer_rule": {
     "value": {
      "who": "self",
-     "via": "delegates_to(chain rooted at a subject)",
+     "via": "none",
      "conditions": []
     },
     "source": "cc-table",
@@ -20045,7 +20017,7 @@
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
     },
-    "qualifier": "a subject of the target, or a chain rooted at one",
+    "qualifier": "the granting user signs, and the partner is the subject",
     "cites": [
      {
       "cc_ref": "CC 3.1.5",
@@ -21825,7 +21797,7 @@
      "deletion_complete": "self x none x {}",
      "deletion_sla": "self x none x {}",
      "partnership_accept": "self x none x {}",
-     "partnership_grant": "self x delegates_to(chain rooted at a subject) x {}",
+     "partnership_grant": "self x none x {}",
      "replication": "self | owner_of_subject(for_key_id) x none x {}",
      "scope": "self x delegates_to(chain rooted at a subject) x {}",
      "state": "self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {}",
@@ -21833,7 +21805,7 @@
     },
     "source": "cc-table",
     "per_stage": true,
-    "closed": "community_trust: owner_of_subject x none x {}; decay: self x none x {}; deletion_complete: self x none x {}; deletion_sla: self x none x {}; partnership_accept: self x none x {}; partnership_grant: self x delegates_to(chain rooted at a subject) x {}; replication: self | owner_of_subject(for_key_id) x none x {}; scope: self x delegates_to(chain rooted at a subject) x {}; state: self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {}; stream: self x delegates_to(chain rooted at a subject) x {}",
+    "closed": "community_trust: owner_of_subject x none x {}; decay: self x none x {}; deletion_complete: self x none x {}; deletion_sla: self x none x {}; partnership_accept: self x none x {}; partnership_grant: self x none x {}; replication: self | owner_of_subject(for_key_id) x none x {}; scope: self x delegates_to(chain rooted at a subject) x {}; state: self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {}; stream: self x delegates_to(chain rooted at a subject) x {}",
     "cc_ref": {
      "community_trust": "CC 3.3.1",
      "decay": "CC 3.3.1",
@@ -21852,6 +21824,7 @@
     },
     "qualifier": {
      "community_trust": "a row the owned node signed stays valid, read through the owner's binding",
+     "partnership_grant": "the granting user signs, and the partner is the subject",
      "state": "the stance expired is the store's alone (CC 3.4.5)"
     }
    },
@@ -49338,9 +49311,20 @@
     ]
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
+    "arms": [
+     {
+      "when": "group=affiliations & seats=one",
+      "doors": "affiliation_member_action@subject_group",
+      "cc_ref": "CC 4.4.3.2.8"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 4.4.3.2.8"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -55091,9 +55075,20 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
+    "arms": [
+     {
+      "when": "group=affiliations & seats=one",
+      "doors": "affiliation_member_action@subject_group",
+      "cc_ref": "CC 4.4.3.2.8"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 4.4.3.2.8"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [],
@@ -55802,12 +55797,17 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": "leaf=steward_purge => cosigned_act@trust_root ; none",
+    "value": "leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
     "arms": [
      {
       "when": "leaf=steward_purge",
       "doors": "cosigned_act@trust_root",
       "cc_ref": "CC 2.4.1.1"
+     },
+     {
+      "when": "group=affiliations & seats=one",
+      "doors": "affiliation_member_action@subject_group",
+      "cc_ref": "CC 4.4.3.2.8"
      },
      {
       "when": "*",

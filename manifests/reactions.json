@@ -4,9 +4,9 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 89,
+  "entries": 90,
   "kinds": {
-   "expiry": 16,
+   "expiry": 17,
    "clock": 19,
    "react": 54
   },
@@ -1850,6 +1850,17 @@
    ],
    "cc_ref": [
     "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "delegation_valid_until",
+   "max": "delegation_term_max_secs",
+   "from": "delegation_valid_from",
+   "cc_ref": [
+    "CC 2.4.1"
    ]
   }
  ]

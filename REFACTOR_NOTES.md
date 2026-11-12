@@ -826,3 +826,28 @@ to read first), F44 (a moderator ejecting an agent: CC 1.13.2 is Eric's stance t
 human's power over an agent and is his to make), the CC 1.13.2 term fix, F63 (a "retryable" refusal is a new
 notion), F08 (digest to uuid: the store's), and three that need the generated table or several lines.
 Nineteen data rows followed their sentences; three citations dropped.
+
+## The fifth reading (2026-11-12)
+
+Ten lanes, same shares (`out_r5_*.tsv`): 336 findings; major 151, of which 43 new (text 27, data 16) and 108 known
+and still present. Verified (`out_v5_*.tsv`): STALE 19 (class drift 12, interaction 7), DATA 15, CHOICE 5
+(interaction 4, gap 1), NOT_A_CONFLICT 4. Logged C513 to C555. Nine findings carry `model: yes`: a small formal
+model with both rules in it would have found them.
+Across readings two to five, new majors: 59, 89, 77, 43; text against text 51, 54, 26, 27; text against data 8,
+35, 51, 16. Eric, 2026-11-12: "note these are more subtle". The count of text findings held while their kind
+changed: drift (one rule restated wrongly) is giving way to interaction (two right rules meeting in a case neither
+was written for). Readers now re-find the known more than they find the new (108 against 43). The backlog is no
+longer the unfound; it is the held: Eric's open choices, the implementers' answers, the seat rule.
+Lesson recorded: when a sentence is fixed, a data row that quoted it is repointed, but a data VALUE that encoded
+the old rule is not corrected by that; two lanes found such lags (the consent fold's terminal cut, the partnership
+signer). After every text fix, re-read the values of the rows that quoted the old sentence.
+The five CHOICE: C526 (a future-dated halt: CC 4.2.1.1 itself says a future-dated row cannot buy a longer pause,
+so it fires; CC 2.6.7 takes the exception), C550 (a root whose witnesses stop being independent: T4 and T4a keep
+rooted nodes; new nodes are turned away): both settled from their home sections and given to the writer lane.
+C553 (accord roster version: votes as the signatures, or both) is the implementers'. C531 (who may change a room's
+listing) and C533 (a steward acting without appointment) join the founder's seat with Eric.
+Data fixed: `salt` rows dropped from body_text; partnership signer rows; count arms for quarantine, slashing and
+takedown at a one-seat affiliation; the delegation term as a general expiry row. Not fixed: the custodian_minted
+count needs an after-retired condition no selector key carries (C518, C519); key:revocation attest role (C546);
+`hard_case` unreserved in the registry (C537); the occurrence build-check guard (C516); an affiliation's
+withdrawal of a statement about itself (C552); the roster audience cell (C530).
