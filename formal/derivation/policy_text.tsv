@@ -33,9 +33,9 @@ self_roster_evict	counted_at	decision	CC 3.3.6.3	Both thresholds are counted ove
 self_roster_evict	voices	objection	CC 3.3.6.3	Votes travel on `objection:{state}`
 self_roster_evict	target_silent	yes	CC 3.3.6.3	for an eviction the target was silent all window
 self_roster_evict	changes_set	removes	CC 3.3.6.3	An addition or an eviction is a proposal signed by a live roster key
-moderation_action	count_set	member	CC 4.5.13	live-majority vote over the community's live members
+moderation_action	count_set	member	CC 4.5.13	a strict majority of the members who voted
 moderation_action	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
-moderation_action	counted_at	decision	CC 4.5.13	live-majority vote over the community's live members
+moderation_action	counted_at	decision	CC 4.5.13	a strict majority of the members who voted
 moderation_overturn	count_set	member	CC 4.5.13	Members object by signing `objection:raised` rows that name the moderator's act.
 moderation_overturn	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
 moderation_overturn	counted_at	act	CC 4.5.13	Only a member seated before that instant counts

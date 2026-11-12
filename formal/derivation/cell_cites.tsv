@@ -12,7 +12,6 @@ accord:*	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_key
 accord:human_dignity	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:human_dignity	signer_rule	agree	CC 3.4.1	No delegation confers `accord_holder`: occupancy is fixed by the accord's own charter.
 accord:human_dignity	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only `federation_keys` rows with `identity_type="accord_holder"` may emit — see [CC 4.2](part_4_composition_governance.md) HUMANITY_ACCORD.
-accord:human_dignity	subject_rule	fills	CC 3.4.1	(`attested_key_id` = the agent scored)
 accord:invoke:constitutional:{halt_id}	governance	fills	CC 4.5.13	one present holder fires, and a roster change counts its yes-votes against the standing roster, because the roster is the capture vector
 accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.1.1	**Reserved** — only `identity_type=accord_holder` may emit.
 accord:invoke:constitutional:{halt_id}	signer_rule	agree	CC 3.4.1	**One accord holder's signed row** — pre-signable, fired on receipt, no vote ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)); a majority of the standing roster lifts it by `accord:lifecycle:active` ([CC 4.2.6](part_4_composition_governance.md#4.2.6))
@@ -259,7 +258,6 @@ consent:state:{stance}	signer_rule	fills	CC 3.4.5	**`consent:state:expired`** al
 consent:state:{stance}	signer_rule	fills	CC 3.4.5	MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one
 consent:stream:{kind}	signer_rule	agree	CC 3.3.1	`consent:stream:{kind}` | Pre-packaged stream bundle. Recommended canonical kinds: `temporary` (14d auto-expire, default), `partnered` (bilateral + persistent — the subject's data-retention and learning choice, never a veto over the subject's data
 consent:{kind}	subject_rule	fills	CC 2.3.1	MUST carry `subject_key_ids` containing that subject
-consent:{kind}	subject_rule	fills	CC 4.5.2.1	| `consent:partnered:{user_key}` (the agent-side stance) | `consent:partnered:abc123` | `abc123` |
 corpus_health:n_eff_measurable	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own
 cosign:{state}	cosign_rule	fills	CC 3.1.3	It is admitted only if the primary's signature verifies and the primary resolves to an active member of the group at the event's signed instant.
 cosign:{state}	fold	agree	CC 3.3.4	it is named by its quorum key, which covers no signature, and cosignatures are counted by signer
@@ -507,7 +505,6 @@ mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	A root MAY relieve across its nod
 mesh_config:{key}	signer_rule	agree	CC 4.2.1.4	`mesh_config:{key}` ([CC 4.2.1](#4.2.1)) | **the trust root**, on the [CC 3.2](part_3_the_namespace.md) delegation plane | *"nodes under me shall carry ≤ N"* — about **others**.
 model_3d:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary content claims under ordinary [CC 4.4](part_4_composition_governance.md) consumer policy.
 moderation:{allegation_type}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
-moderation:{allegation_type}	governance	fills	CC 4.5.13	If **no moderator or steward acts within the 48 h window**, the proposal is tallied by **live-majority vote over the community's live members**.
 moderation:{allegation_type}	governance	fills	CC 4.5.13	a present moderator acts, and on the moderators' absence the live community governs its own content
 moderation:{allegation_type}	lifecycle	fills	CC 2.4.1.1	a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict
 moderation:{allegation_type}	lifecycle	fills	CC 4.5.5	The person named cannot withdraw that record and contests it by `reconsideration:{grounds}`.

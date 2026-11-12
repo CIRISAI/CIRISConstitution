@@ -1,7 +1,7 @@
 {
   "_meta": {
     "cc_version": "1.0-rc19",
-    "registry_sha256": "04a5595c39040447d94632543feeea0ab4d6ff2c0b9f5d9ae64fd3db0d180259",
+    "registry_sha256": "0b4e43f84ec732a37fe4222aa63d23879a58fd4f051107a6c7499843579a6bb7",
     "generator": "tools/cc_namespace_match.py",
     "contract": "every consumer replays these against its own matcher; expected (family, refusal) per dimension, exactly as the reference answers them \u2014 a malformed form is attributed to the registered leaf it mutates where one exists, else to its wildcard parent. Patterns are applied whole-segment (full-match): a `$` anchor never admits a trailing newline"
   },

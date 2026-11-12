@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "04a5595c39040447d94632543feeea0ab4d6ff2c0b9f5d9ae64fd3db0d180259",
+    "registry_sha256": "0b4e43f84ec732a37fe4222aa63d23879a58fd4f051107a6c7499843579a6bb7",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "2cfb9dfc6b704c5ee81b2f02c2a34fb9dfb7749fa0337c00779438c7e4f561b3"
+    "source_sha256": "4ecff80c7daf377c7e223f226831874257655a5c92565be25cbfbdd12fb93915"
   },
   "families": [
     {
@@ -348,7 +348,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "Catalogue row (CC 3.1.7 R1); the accord-holder verdict on an agent's human-dignity conduct, CC 3.4.1.",
+      "description": "Catalogue row (CC 3.1.7 R1); a leaf no accord holder signs, since accord authority gives no verdict on an agent's conduct, CC 3.4.1.",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",

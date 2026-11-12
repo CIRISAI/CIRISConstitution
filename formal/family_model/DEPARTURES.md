@@ -478,7 +478,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.
 
-**Text.** CC 5.4.6: "a node whose owner resolves to the `minor` band MUST NOT carry a federation-scope owner-binding"
+**Text.** CC 5.4.6: "a node whose owner a row on record places in a minor band MUST NOT carry a federation-scope owner-binding"
 
 | column | families |
 |---|---|

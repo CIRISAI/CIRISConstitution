@@ -804,3 +804,25 @@ family for a published, uncosigned head: C440, C510); moderation body digest and
 canonical re-bind supersede policy; an accord roster-change policy row (C488); missing expiry entries (C512);
 `system:*` signer. Twenty-four store findings go to the draft for the store.
 Writer lanes running: `out_w_settled.tsv` (the two rulings and twelve derived settlements) and `out_w4_stale.tsv`.
+
+## Landed 2026-11-12 early: rulings, settlements, fourth-reading fixes
+
+From `out_w_settled.tsv` (62 rows): applied 32. Eric's rulings A (unassured owner may announce, with the
+best-effort note) and B (hash match removed under the node owner's signature, or removed with a hard case and
+retrospective approval). Derived and applied: C (a vote against hides), D (majority of those who voted; the policy
+row `moderation_action` still reads base active and floor 1/2 and must follow), J (unregistered family refused),
+K (accord signs halt acts and heartbeat only; `accord:human_dignity` stays a registered leaf that no holder signs),
+M (tripwire always on, watchlist per group), N (standing mandated-report endpoint), and two allow-list pointers of G.
+NOT applied, because my derived outcome would have overridden a deliberate design and is not mine to decide:
+E (a late joiner and a kept stream: the stream's `history_on_join` setting exists), F (relay trees: CC 5.3.3.4's
+layered multipath landed 2026-11-08 at Eric's word and the edge builds to it; the member relays are audience
+members), H (`archive_mode` is stated as operator-local on purpose, and a signed member is a wire change),
+I (an empty grant "matches nothing, by design", and refusing it changes the CDDL), L (who vouches for an age band
+is the seat rule's D2, unreviewed), the rest of G (an agent's node is not always server class).
+Gaps B leaves: no row for the owner's retrospective approval or refusal; a peer cannot resolve "the node where the
+detection occurred" from rows it holds.
+From `out_w4_stale.tsv` (52 rows): applied 41. Held: F07 (what a halt invocation's signature covers: the halt, mine
+to read first), F44 (a moderator ejecting an agent: CC 1.13.2 is Eric's stance text; my settlement would weaken a
+human's power over an agent and is his to make), the CC 1.13.2 term fix, F63 (a "retryable" refusal is a new
+notion), F08 (digest to uuid: the store's), and three that need the generated table or several lines.
+Nineteen data rows followed their sentences; three citations dropped.

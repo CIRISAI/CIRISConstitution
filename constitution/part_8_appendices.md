@@ -2975,8 +2975,8 @@ Guard:
 - withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@admitted[id=ref:wa_adjudication_ref] else refuse` (CC 3.4.5)
 
 Fold:
-- `reads=own&live&signer:owner; key=attested_key_id; test=count=1 ?steward_bound:steward_less; by=node` (CC 3.2)
-- `key=attested_key_id; test=count=1 ?steward_bound:steward_less` (CC 3.2)
+- `reads=own&live&signer:owner; key=attested_key_id; test=count(owner)=1 ?steward_bound:steward_less; by=node` (CC 3.2)
+- `key=attested_key_id; test=count(owner)=1 ?steward_bound:steward_less` (CC 3.2)
 - `reads=own` (CC 3.2)
 
 **`preserve_response`** — Process, thing
@@ -3372,7 +3372,7 @@ Fold:
 
 In time:
 - [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
-- [moderate] on close(expiry): read locked, open moderator_election (CC 4.4.3.2.8)
+- [moderate] on close(expiry) unless fold(live_moderator): read locked, open moderator_election (CC 4.4.3.2.8)
 - @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.2.8)
 
 Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`

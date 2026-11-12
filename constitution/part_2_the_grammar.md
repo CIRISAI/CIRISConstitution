@@ -30,7 +30,7 @@ The members fall into three groups: those every row carries, those any row may c
 |---|---|---|
 | `context` | nothing | Free-form scoping detail. Not parsed by the substrate; read by consumers, audit and RATCHET. |
 | `evidence_refs` | nothing | URIs or content hashes pointing to backing evidence: a payment receipt, a licensing-body record, an observed interaction, a log entry, an audit-chain leaf. Optional in general; some dimensions in [CC 3.1](part_3_the_namespace.md#3.1) require it non-empty. |
-| `valid_until` | nothing | A datetime in the [CC 2.6.2](#2.6.2) form. If set, consumer policy treats the attestation as stale after that point, independent of the row's own `expires_at`. |
+| `valid_until` | nothing | A datetime in the [CC 2.6.2](#2.6.2) form. If set, consumer policy treats the attestation as stale after that point, independent of the row's own `expires_at`. It is REQUIRED on `session:*`, where it is the claim's signed horizon and a row without it is malformed ([CC 3.1.3.1](part_3_the_namespace.md)). |
 | `epistemic_mode` | `direct` | The Epistemic-mode axis of [CC 2.5](#2.5): how the claim was formed. Consumers MAY weight by mode, a direct witness above hearsay. |
 | `witness_relation` | `external` | `self`, `external` or `derived`: the attester's relation to the attested fact. `self` is the attested entity itself. `external` observed independently. `derived` inferred from other attestations or signed traces. Consumers weight by relation, so that self-attestation cannot game a verdict. |
 | `oversight_mode` | `null`: consumer policy applies a per-cell default | `HITL`, `HOTL` or `HOOTL`: the human-control gradient under which the attestation was produced. |
@@ -65,7 +65,7 @@ The members fall into three groups: those every row carries, those any row may c
 | `halt_fuse_secs` | the accord's `trust:charter:v1`, optional | Integer seconds. How long a `constitutional` halt signed by ONE holder stands before it lapses unless a strict majority of the standing roster confirms it ([CC 4.2.1.1](part_4_composition_governance.md)). **Absent means 86400.** The value is a constant of this document, read by the verifier, not a substrate-internal default. So a charter minted without the member is conformant and carries the 24-hour fuse. An explicit value overrides it, by re-scrub. |
 | `recovery_commitments` | the accord's `trust:charter:v1`, REQUIRED ([CC 4.2.6](part_4_composition_governance.md)) | Object `{holder_key_id: commitment}`. Each commitment is lowercase-hex SHA-256 over the JCS array of the committed recovery key's `{key_id, pubkey_ed25519_base64, pubkey_ml_dsa_65_base64}` exactly as stored on its key record ([CC 3.2](part_3_the_namespace.md) T3), a one-element array here. It binds key material, never only the id. A holder rotates lost signing-key material by a self-`supersedes` under a key whose record hashes to its entry. |
 | `consent_supersedes` | `consent:state:*`, optional | The prior consent-state row this one supersedes: a renewal, or the substrate's `consent:state:expired` naming the grant that lapsed ([CC 3.3.1](part_3_the_namespace.md)). |
-| `deletion_window` | a producer's row, optional | The producer's commitment at publication: the deadline by which the consented payload must be deleted once consent ends, carried on the envelope of the row that holds it ([CC 3.3.1](part_3_the_namespace.md)). Absent means the family's default. |
+| `deletion_window` | a producer's row, optional | The producer's commitment at publication: the deadline by which the consented payload must be deleted once consent ends, carried on the envelope of the row that holds it ([CC 3.3.1](part_3_the_namespace.md)). Absent means this member carries no commitment; no family default exists ([CC 2.6.1.7](#2.6.1.7)). |
 | `widened_at` | a widening `supersedes`, REQUIRED | The instant a widening took effect, RFC 3339 with milliseconds ([CC 2.6.2](#2.6.2)). It is the `scrub_timestamp` of the widening's signature ([CC 4.4.3.3.1](part_4_composition_governance.md)). |
 | `accord_root` | `accord:*` rows, REQUIRED | The `key_id` of the accord an `accord:*` row belongs to ([CC 4.2](part_4_composition_governance.md)). |
 | `consent_basis` | `capacity:*` and `observation:access_assumption:v1`, carried | The consent grants a witness relied on, as `[* {principal, paths, attestation_id}]`. For each principal: the paths by which its grant reached the subject (`subject`, `occurrence_of`, `delegates_to`) and the `attestation_id` of the `consent:state:granted` row. Validated at the family's gate. |
@@ -134,7 +134,7 @@ Consent is incomplete if only the producer of data has authority over it. `attes
 
 ### 2.3.1 `subject_kind-subject-2` — Subject-bearing dimensions (governance requirement)
 
-Per [CC 4.5.2](part_4_composition_governance.md#4.5.2), dimensions whose namespace pattern names a subject (e.g., `observed:user:{key_id}:*`, `epistemic:about:{key_id}:*`, `consent:partnered:{user_key}`, `agent_files:*:{subject_target}`) MUST carry `subject_key_ids` containing that subject. The substrate MAY reject admission of subject-naming dimensions that omit `subject_key_ids`. This closes the default-leak failure mode where subject-bearing content publishes without wire-level subject authority.
+Per [CC 4.5.2](part_4_composition_governance.md#4.5.2), dimensions whose namespace pattern names a subject (e.g., `observed:user:{key_id}:*`, `epistemic:about:{key_id}:*`, `agent_files:*:{subject_target}`) MUST carry `subject_key_ids` containing that subject. The substrate MAY reject admission of subject-naming dimensions that omit `subject_key_ids`. This closes the default-leak failure mode where subject-bearing content publishes without wire-level subject authority.
 
 ### 2.3.2 `federation-key` — Federation-key vs canonical-hash identifier
 
@@ -302,7 +302,7 @@ A cosigned act is named by its quorum key, the digest of what its signers signed
 What this brings onto the base, each as a registered family in [CC 3.1.3](part_3_the_namespace.md):
 
 - **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members),
-- **membership events** (`membership:widening:v1` / `removal:v1` / `resignation:v1`, cosigned, beside the single-signer proposal, acceptance and decline), and
+- **membership events** (`membership:widening:v1` / `removal:v1`, cosigned, and `resignation:v1`, signed by the leaving member alone ([CC 3.1.3.2](part_3_the_namespace.md)), beside the single-signer proposal, acceptance and decline), and
 - the **key plane**:
   - a key claim (`key:record:v1`, attester = the key, admitted by **proof of possession** against the keys it carries, the one stated exception to resolve-the-attester; rotation is `supersedes`; an anchor scrub or accord co-scrub is a cosignature),
   - occurrences (`identity:occurrence:v1`, signed by the identity or a live occurrence) and
@@ -334,7 +334,7 @@ The four structural composers act on the attestation graph itself, not as score-
 
 A `withdraws` row retires its target from the instant it is signed. It does not say the target was false. The rule below widens who may retract a row; the primitive itself does not change.
 
-A node MUST admit a `withdraws` against a target row `T` when one line of this table holds. It MUST refuse any other with `federation_withdraws_not_admitted`.
+A node MUST admit a `withdraws` against a target row `T` when one line of this table holds. It MUST also admit the key a `retirement:decided` row names in `decided_by`, against that row ([CC 7.5.5](part_7_lifecycle_stewardship.md)). It MUST refuse any other with `federation_withdraws_not_admitted`.
 
 | Rule | Who signs the withdrawal | Condition |
 |---|---|---|

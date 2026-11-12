@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "dde20988d5057d16f4a734f16e1d3a9848e307a09d4f3c700516ae65a90d6f44",
+  "registry_sha256": "4eae89f438655bea149fc6a8900098ae9ca7cb5753e4a255ed062d9e38e2854a",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -269,8 +269,8 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 322,
-   "citations": 497,
+   "cells_cited": 321,
+   "citations": 495,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "body": {
@@ -867,7 +867,7 @@
      "why": "A binding at federation scope makes its owner findable and contactable by adults with no connection to them. No steward, guardian or consent lifts that floor, so the promotion is refused.",
      "basis": "text",
      "cc_ref": "CC 5.4.6",
-     "quote": "a node whose owner resolves to the `minor` band MUST NOT carry a federation-scope owner-binding",
+     "quote": "a node whose owner a row on record places in a minor band MUST NOT carry a federation-scope owner-binding",
      "cells": 1
     },
     {
@@ -1508,13 +1508,7 @@
       "closed": "Targeted only",
       "note": "Targeted only (AV-84, cohort_standing_core) | PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"
      }
-    },
-    "cites": [
-     {
-      "cc_ref": "CC 3.4.1",
-      "reading": "fills"
-     }
-    ]
+    }
    },
    "cosign_rule": {
     "value": "none",
@@ -21901,10 +21895,6 @@
     "cites": [
      {
       "cc_ref": "CC 2.3.1",
-      "reading": "fills"
-     },
-     {
-      "cc_ref": "CC 4.5.2.1",
       "reading": "fills"
      }
     ]
@@ -45977,13 +45967,13 @@
    "fold": {
     "value": [
      {
-      "fold": "reads=own&live&signer:owner; key=attested_key_id; test=count=1 ?steward_bound:steward_less; by=node",
+      "fold": "reads=own&live&signer:owner; key=attested_key_id; test=count(owner)=1 ?steward_bound:steward_less; by=node",
       "cc_ref": [
        "CC 3.2"
       ]
      },
      {
-      "fold": "key=attested_key_id; test=count=1 ?steward_bound:steward_less",
+      "fold": "key=attested_key_id; test=count(owner)=1 ?steward_bound:steward_less",
       "cc_ref": [
        "CC 3.2"
       ]

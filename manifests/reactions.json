@@ -546,6 +546,12 @@
      "of": "expiry"
     }
    ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "live_moderator"
+    }
+   ],
    "effects": [
     {
      "effect": "read",
