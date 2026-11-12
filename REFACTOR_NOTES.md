@@ -541,3 +541,14 @@ forfeited 1, no_weaker 1. Set aside: five `key_grant:{axis}` rows saying no supe
 family has no transition for, one ledger row whose quote spans cells. `guard_well_founded` is built (13 requiring
 nodes, longest chain 2). Not done: member names checked against the CDDL; the strength order `no_weaker` needs;
 the three properties the change design names; `lifecycle`'s supersedes and rotation parts derived from `change`.
+
+Data pass, step 4 (fold): `tools/fold_grammar.py` and `formal/derivation/fold_text.tsv` (217 rows from
+`handoff/lanes/out_g_fold.tsv`); the `fold` cell of the family model (76 families, 160 statements), default and
+every-family rows under `_meta.fold`. Expressions are held to their alphabet only, not evaluated. Held back, 25 rows:
+14 that refuse by a token the text never names (`roster_change_below_majority`, `witness_quorum_invalid`,
+`evidence_score_mismatch`, `aggregation_meta_mismatch`, `locality_mismatch`), five reader defaults by polarity
+(a table of its own, not a family), two with two tests in one fold, two using `strictest`, two naming `cosign_rule`
+as a family. Not done: member names against the CDDL; a part inherited from the family's unselected value is not
+yet resolved into one fold per leaf; `fold_commutes`, `advisory_moves_nothing`, `ended_stays_ended`.
+The family model now reads role tokens from `manifests/transitions.json`, which is built from it: build the family
+model, then the transitions.

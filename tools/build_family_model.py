@@ -17,6 +17,8 @@ SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
+FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
+FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
 COUNT_SOURCES = ("subject_group", "signer_group", "dimension_authority", "accord", "trust_root", "self", "conferrer")
 COUNT_KEYS = ("leaf", "verb", "identity", "group", "seats")
 COUNT_OPEN_MAX = 7   # families with a cosign cell that is not none and no typed count; the number only falls
@@ -47,6 +49,7 @@ COLUMNS = OrderedDict([
     ("erasure_route", "dsar | purge | legal_hold | none"),
     ("blind", "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
+    ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild)"),
     ("confers", "trust | duty | standing | nothing (read by the trust-set fold, never by admission)"),
@@ -381,6 +384,40 @@ def main():
     for r in csv.DictReader([l for l in open(COUNT_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
         count_text.setdefault(r["family"], []).append(r)
     policy_rows = {f["family"] for f in json.load(open(POLICY, encoding="utf-8"))["families"]}
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import fold_grammar as fg, guard_grammar as gg
+    fold_text, fold_every, fold_marks = OrderedDict(), [], Counter()
+    for r in csv.DictReader([l for l in open(FOLD_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
+        fold_text.setdefault(r["family"], []).append(r)
+    reg_fams = set(cc) | set(census)
+    for f in reg.get("families", []):
+        if isinstance(f, dict) and "prefix" in f:
+            reg_fams.add(f["prefix"]); reg_fams.update(f.get("leaves", []))
+    part_text = "\n".join(open(p, encoding="utf-8").read() for p in sorted(glob.glob(os.path.join(ROOT, "constitution", "part_*.md"))))
+    fold_voc = {"families": reg_fams, "policy_rows": policy_rows, "tokens": set(re.findall(r"`([a-z_0-9:]+)`", part_text)),
+                "roles": set(json.load(open(os.path.join(ROOT, "manifests/transitions.json"), encoding="utf-8"))["_meta"]["role_tokens"])}
+    fg.parse(fg.DEFAULT)
+    def fold_cell(fam, stmts):
+        out = []
+        for st in stmts:
+            where = f"fold_text.tsv: {fam} ({st['cc_ref']})"
+            try:
+                parsed, mk, names = fg.parse(st["fold"])
+            except fg.FoldError as e:
+                print(f"{where}: {e}"); return None
+            bad = fg.closure(names, fold_voc, gg.family_ok)
+            if bad:
+                print(f"{where}: outside the vocabularies: " + "; ".join(bad)); return None
+            span = section_span(st["cc_ref"])
+            if span is None or st["quote"] not in span:
+                print(f"{where}: the quoted words do not stand in {st['cc_ref']}"); return None
+            cur = next((x for x in out if x["fold"] == st["fold"]), None)
+            if cur:
+                if st["cc_ref"] not in cur["cc_ref"]: cur["cc_ref"].append(st["cc_ref"])
+            else:
+                out.append(OrderedDict([("fold", st["fold"]), ("cc_ref", [st["cc_ref"]])]))
+                fold_marks.update(mk)
+        return out
     rows = []
     for fam in sorted(set(cc) | set(census)):
         c, z = cc.get(fam), census.get(fam)
@@ -439,6 +476,13 @@ def main():
         row["emitter_class"] = emitter_class(row["signer_rule"])
         for col in ("derived", "confers", "binds_segment"):
             row[col] = {"value": None, "source": "gap", "note": "new column; values come with the manifest's first ruled version"}
+        stmts = fold_text.pop(fam, [])
+        if stmts:
+            fc = fold_cell(fam, stmts)
+            if fc is None: return 1
+            row["fold"] = {"value": fc, "source": "cc-table"}
+        else:
+            row["fold"] = {"value": [], "source": "generic", "note": "no fold is typed for the family; it reads by the default"}
         # How the family's act is counted: typed arms over the policy table, each with the words it rests on.
         arms = count_text.pop(fam, [])
         if arms:
@@ -487,6 +531,13 @@ def main():
         print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
     if cell_text:
         print("cell_text.tsv names families outside the model: " + ", ".join(sorted(cell_text))); return 1
+    if "*" in fold_text:
+        fold_every = fold_cell("*", fold_text.pop("*"))
+        if fold_every is None: return 1
+    if fold_text:
+        print("fold_text.tsv names families outside the model: " + ", ".join(sorted(fold_text))); return 1
+    if sum(fold_marks.values()) > FOLD_MARKS_MAX:
+        print(f"fold: {sum(fold_marks.values())} uses of words no other vocabulary has, more than {FOLD_MARKS_MAX}"); return 1
     if count_text:
         print("count_text.tsv names families outside the model: " + ", ".join(sorted(count_text))); return 1
     count_open = [r["family"] for r in rows if r["count"]["source"] == "gap"]
@@ -532,6 +583,10 @@ def main():
         ("version", "0-draft"), ("taxonomy_version", "11+1 v1"),
         ("registry_sha256", reg_sha), ("census", "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341"),
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
+        ("fold", OrderedDict([("default", fg.DEFAULT), ("every_family", fold_every),
+                              ("typed_families", sum(1 for r in rows if r["fold"]["value"])),
+                              ("statements", sum(len(r["fold"]["value"]) for r in rows)),
+                              ("marks", OrderedDict(sorted(fold_marks.items()))), ("marks_total", sum(fold_marks.values()))])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),

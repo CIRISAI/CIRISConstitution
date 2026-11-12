@@ -25,6 +25,7 @@
    "erasure_route": "dsar | purge | legal_hold | none",
    "blind": "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
+   "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
    "count": "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)",
    "derived": "projection_id | none (the row must equal the named projection's rebuild)",
    "confers": "trust | duty | standing | nothing (read by the trust-set fold, never by admission)",
@@ -217,6 +218,14 @@
     "mixed": 0,
     "gap": 3
    },
+   "fold": {
+    "cc-table": 76,
+    "code-v61": 0,
+    "generic": 108,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 0
+   },
    "count": {
     "cc-table": 11,
     "code-v61": 0,
@@ -257,6 +266,109 @@
     "mixed": 0,
     "gap": 127
    }
+  },
+  "fold": {
+   "default": "reads=own&live; key=references_attestation_id,attesting_key_id; pick=rank(recants>withdraws>supersedes),max(asserted_at),min(attestation_id); bound=narrow_only(cohort_scope); cut=named,forward; over=standing/person; absent=none; result=scalar; by=node",
+   "every_family": [
+    {
+     "fold": "bound=narrow_only(cohort_scope)",
+     "cc_ref": [
+      "CC 2.1",
+      "CC 2.6.1.7"
+     ]
+    },
+    {
+     "fold": "key=references_attestation_id,attesting_key_id; pick=rank(recants>withdraws>supersedes),max(asserted_at),min(attestation_id)",
+     "cc_ref": [
+      "CC 3.5.1"
+     ]
+    },
+    {
+     "fold": "pick=rank(recants>withdraws>supersedes)",
+     "cc_ref": [
+      "CC 3.5.1"
+     ]
+    },
+    {
+     "fold": "pick=max(asserted_at)",
+     "cc_ref": [
+      "CC 3.5.1"
+     ]
+    },
+    {
+     "fold": "pick=min(attestation_id)",
+     "cc_ref": [
+      "CC 3.5.1"
+     ]
+    },
+    {
+     "fold": "key=references_attestation_id,attesting_key_id",
+     "cc_ref": [
+      "CC 3.5.1"
+     ]
+    },
+    {
+     "fold": "cut=named,forward",
+     "cc_ref": [
+      "CC 3.2"
+     ]
+    },
+    {
+     "fold": "reads=own&live",
+     "cc_ref": [
+      "CC 5.3.2.4.4"
+     ]
+    },
+    {
+     "fold": "reads=own&live&signer:trusted; key=dimension,attested_key_id; by=reader",
+     "cc_ref": [
+      "CC 4.4.3.8"
+     ]
+    },
+    {
+     "fold": "combine=count(attested_key_id)",
+     "cc_ref": [
+      "CC 3.4.5.1"
+     ]
+    },
+    {
+     "fold": "pick=min(affected_population_estimate); by=reader",
+     "cc_ref": [
+      "CC 4.4.3.9",
+      "CC 4.4.1"
+     ]
+    },
+    {
+     "fold": "over=standing/person",
+     "cc_ref": [
+      "CC 4.5.13"
+     ]
+    }
+   ],
+   "typed_families": 76,
+   "statements": 160,
+   "marks": {
+    "agree": 2,
+    "authority": 1,
+    "boundary": 6,
+    "chain": 4,
+    "count": 3,
+    "deciding_seats": 1,
+    "forward": 2,
+    "founders": 4,
+    "listed": 1,
+    "once": 4,
+    "pair": 4,
+    "present": 2,
+    "prior": 1,
+    "proxy": 1,
+    "seated": 3,
+    "seating": 1,
+    "terminal": 3,
+    "trusted": 6,
+    "whole": 1
+   },
+   "marks_total": 50
   },
   "default_row": {
    "columns": {
@@ -1058,6 +1170,29 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "weight=rate(hardware_class); by=reader",
+      "cc_ref": [
+       "CC 4.2.2"
+      ]
+     },
+     {
+      "fold": "reads=own&cites(hardware_custody:{platform}); weight=rate(hardware_class); by=reader",
+      "cc_ref": [
+       "CC 4.2.2.1"
+      ]
+     },
+     {
+      "fold": "key=attested_key_id; pick=max(version); absent=from(trust:{job}:{version})",
+      "cc_ref": [
+       "CC 4.2.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -1362,6 +1497,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -1670,6 +1810,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "accord_halt@accord",
@@ -1985,6 +2130,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -2293,6 +2443,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -2597,6 +2752,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -2899,6 +3059,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "over=standing@decision/person",
+      "cc_ref": [
+       "CC 4.2.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord",
@@ -3207,6 +3378,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -3509,6 +3685,18 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own+age_self_declared:band:{band}:{version}&live; key=attested_key_id; pick=rank(government>provider>self); absent=protective; by=reader",
+      "cc_ref": [
+       "CC 3.1.2",
+       "CC 3.4.11"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -3808,6 +3996,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=age_assurance:{level}:{band}:{version}",
+      "cc_ref": [
+       "CC 3.1.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -4104,6 +4303,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader",
+      "cc_ref": [
+       "CC 4.4.3.7"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -4396,6 +4606,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -4570,6 +4785,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -4883,6 +5103,19 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader",
+      "cc_ref": [
+       "CC 3.1.7",
+       "CC 4.1.3",
+       "CC 4.4.3.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -5173,6 +5406,18 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader",
+      "cc_ref": [
+       "CC 3.1.7",
+       "CC 4.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -5469,6 +5714,18 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader",
+      "cc_ref": [
+       "CC 3.1.7",
+       "CC 4.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -5760,6 +6017,24 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "absent=restricted; by=reader",
+      "cc_ref": [
+       "CC 3.1.2"
+      ]
+     },
+     {
+      "fold": "reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader",
+      "cc_ref": [
+       "CC 3.1.7",
+       "CC 4.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -6050,6 +6325,18 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader",
+      "cc_ref": [
+       "CC 3.1.7",
+       "CC 4.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -6343,6 +6630,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -6635,6 +6927,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -6926,6 +7223,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -7090,6 +7392,41 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=election_id,person; pick=agree; over=live@count/person",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "fold": "order=max(moderation_track_record),min(admission_order),min(key_id)",
+      "cc_ref": [
+       "CC 4.5.4"
+      ]
+     },
+     {
+      "fold": "combine=policy(moderator_election)",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     },
+     {
+      "fold": "over=live@count/person",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     },
+     {
+      "fold": "test=voices>=min(2,n) ?seated:open",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "moderator_election@subject_group",
@@ -7265,6 +7602,18 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=community_id,election_id; pick=max(ballot_count),min(ballot_set_digest); by=node",
+      "cc_ref": [
+       "CC 3.1.3",
+       "CC 4.5.13"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "moderator_election@subject_group!result",
@@ -7567,6 +7916,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -7864,6 +8218,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -8154,6 +8513,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -8447,6 +8811,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -8736,6 +9105,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -9027,6 +9401,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -9322,6 +9701,30 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     },
+     {
+      "fold": "absent=refuse",
+      "cc_ref": [
+       "CC 3.4.5"
+      ]
+     },
+     {
+      "fold": "reads=capacity:{factor}&live; key=attested_key_id; combine=min(C,I_int,R,I_inc,S); absent=undefined; by=reader",
+      "cc_ref": [
+       "CC 3.1.4",
+       "CC 3.1.8.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -9639,6 +10042,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     },
+     {
+      "fold": "reads=own&has(relay_countersignature|chunk_commitment); by=reader",
+      "cc_ref": [
+       "CC 3.1.4"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -9954,6 +10374,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -10279,6 +10710,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -10587,6 +11023,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -10897,6 +11338,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=attested_key_id,domain; result=vector(domain)",
+      "cc_ref": [
+       "CC 3.1.2"
+      ]
+     },
+     {
+      "fold": "key=attested_key_id,domain; absent=full",
+      "cc_ref": [
+       "CC 3.4.12"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -11193,6 +11651,29 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=class,period; pick=once(census_composite_duplicate_period)",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "fold": "combine=median(bucket); by=reader",
+      "cc_ref": [
+       "CC 6.1.9"
+      ]
+     },
+     {
+      "fold": "absent=refuse",
+      "cc_ref": [
+       "CC 6.1.2.1.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -11491,6 +11972,36 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=census:member:partial&last(4); over=active/owner; combine=count(owner)",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "fold": "over=active/owner",
+      "cc_ref": [
+       "CC 6.1.9"
+      ]
+     },
+     {
+      "fold": "combine=max(count(owner),(prev*9+9) div 10,floor)",
+      "cc_ref": [
+       "CC 4.5.13",
+       "CC 6.1.9"
+      ]
+     },
+     {
+      "fold": "test=count*3>=prev*2 ?open:frozen",
+      "cc_ref": [
+       "CC 6.1.9"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -11787,6 +12298,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=census:expected_active",
+      "cc_ref": [
+       "CC 6.1.9"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -12050,6 +12572,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=period,token; pick=once(ballot_share_duplicate_token)",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -12352,6 +12885,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=census:composite:{class}",
+      "cc_ref": [
+       "CC 6.1.9"
+      ]
+     },
+     {
+      "fold": "reads=census:share:{class}; key=period,token; test=count=2 !census_share_pair_incomplete",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -12615,6 +13165,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=period,token; pick=once(census_share_duplicate_token)",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -12916,6 +13477,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id; combine=all(present); by=reader",
+      "cc_ref": [
+       "CC 4.4.3.11"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -13208,6 +13780,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -13498,6 +14075,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -13797,6 +14385,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": null,
     "source": "gap",
@@ -14095,6 +14688,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -14365,6 +14963,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -14700,6 +15303,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -15004,6 +15612,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -15294,6 +15907,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -15586,6 +16204,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -15877,6 +16500,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -16139,6 +16767,35 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "cut=boundary(asserted_at)",
+      "cc_ref": [
+       "CC 3.3.1"
+      ]
+     },
+     {
+      "fold": "reads=own&signer:owner",
+      "cc_ref": [
+       "CC 3.3.1"
+      ]
+     },
+     {
+      "fold": "key=attested_key_id",
+      "cc_ref": [
+       "CC 3.3.1"
+      ]
+     },
+     {
+      "fold": "reads=own&signer:owner; key=attested_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node",
+      "cc_ref": [
+       "CC 3.3.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -16453,6 +17110,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -16747,6 +17409,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -17044,6 +17711,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -17343,6 +18015,25 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=bilateral_pair_id; pick=max(asserted_at)",
+      "cc_ref": [
+       "CC 4.4.3.5.3"
+      ]
+     },
+     {
+      "fold": "reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader",
+      "cc_ref": [
+       "CC 2.3.2.4",
+       "CC 3.3.5",
+       "CC 4.4.3.5.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -17641,6 +18332,24 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=bilateral_pair_id; pick=max(asserted_at)",
+      "cc_ref": [
+       "CC 4.4.3.5.3"
+      ]
+     },
+     {
+      "fold": "reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id; pick=pair(consent:partnership_accept),max(asserted_at); result=bool; by=reader",
+      "cc_ref": [
+       "CC 2.3.2.4",
+       "CC 3.3.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -17915,6 +18624,23 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "cut=whole",
+      "cc_ref": [
+       "CC 3.3.7"
+      ]
+     },
+     {
+      "fold": "key=attesting_key_id,attested_key_id; pick=pair(consent:replication:{version}); result=bool",
+      "cc_ref": [
+       "CC 3.3.7"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -18232,6 +18958,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -18515,6 +19246,65 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "pick=rank(revoked>granted)",
+      "cc_ref": [
+       "CC 3.3.1"
+      ]
+     },
+     {
+      "fold": "@stance=revoked: cut=boundary(asserted_at)",
+      "cc_ref": [
+       "CC 3.3.1"
+      ]
+     },
+     {
+      "fold": "@stance=revoked: cut=boundary(asserted_at),terminal",
+      "cc_ref": [
+       "CC 4.4.3.5.5"
+      ]
+     },
+     {
+      "fold": "@stance=revoked: cut=terminal",
+      "cc_ref": [
+       "CC 4.4.3.5.5"
+      ]
+     },
+     {
+      "fold": "pick=max(asserted_at); by=reader",
+      "cc_ref": [
+       "CC 4.4.3.5"
+      ]
+     },
+     {
+      "fold": "reads=own&signer:subject|proxy",
+      "cc_ref": [
+       "CC 4.4.3.5.5"
+      ]
+     },
+     {
+      "fold": "absent=unspecified",
+      "cc_ref": [
+       "CC 4.4.3.5.5"
+      ]
+     },
+     {
+      "fold": "pick=max(asserted_at)",
+      "cc_ref": [
+       "CC 4.4.3.5.5"
+      ]
+     },
+     {
+      "fold": "result=state(granted|revoked|expired|unspecified)",
+      "cc_ref": [
+       "CC 4.4.3.5.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -18827,6 +19617,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -19144,6 +19939,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -19444,6 +20244,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -19743,6 +20548,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -20035,6 +20845,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -20206,6 +21021,23 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=quorum_key,attesting_key_id; pick=union",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "fold": "key=quorum_key,attesting_key_id; pick=union; by=node",
+      "cc_ref": [
+       "CC 3.3.4"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -20511,6 +21343,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -20801,6 +21638,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -21106,6 +21948,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -21400,6 +22247,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -21699,6 +22551,29 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "over=seated@decision/person",
+      "cc_ref": [
+       "CC 4.3"
+      ]
+     },
+     {
+      "fold": "over=seated@prior/person",
+      "cc_ref": [
+       "CC 4.3"
+      ]
+     },
+     {
+      "fold": "over=present@decision/person",
+      "cc_ref": [
+       "CC 4.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -21994,6 +22869,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -22288,6 +23168,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -22592,6 +23477,23 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     },
+     {
+      "fold": "combine=median(score); by=reader",
+      "cc_ref": [
+       "CC 4.4.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -22915,6 +23817,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     },
+     {
+      "fold": "combine=median(score); by=reader",
+      "cc_ref": [
+       "CC 4.4.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -23232,6 +24151,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -23555,6 +24485,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -23873,6 +24814,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     },
+     {
+      "fold": "combine=median(score); by=reader",
+      "cc_ref": [
+       "CC 1.13.3.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -24179,6 +25137,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -24480,6 +25443,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -24770,6 +25738,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -25062,6 +26035,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -25353,6 +26331,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -25638,6 +26621,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -25942,6 +26930,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -26233,6 +27226,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -26522,6 +27520,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "pick=max(asserted_at); by=reader",
+      "cc_ref": [
+       "CC 3.3.8"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -26814,6 +27823,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -27104,6 +28118,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=progress_measure:{method_id}",
+      "cc_ref": [
+       "CC 3.1.5.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -27398,6 +28423,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -27697,6 +28727,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -27988,6 +29023,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -28278,6 +29318,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -28576,6 +29621,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -28867,6 +29917,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -29172,6 +30227,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -29483,6 +30543,91 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "bound=drop_only(members)",
+      "cc_ref": [
+       "CC 3.1.3.2",
+       "CC 3.3.4"
+      ]
+     },
+     {
+      "fold": "bound=narrow_only(consensus_protocol),fixed(admission_quorum_basis)",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "pick=chain(prev_head_digest)",
+      "cc_ref": [
+       "CC 4.4.3.4.4",
+       "CC 4.4.3.2.4"
+      ]
+     },
+     {
+      "fold": "reads=head+membership:{stage}&seat:human",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "order=min(key_id)",
+      "cc_ref": [
+       "CC 4.4.3.2.4.1"
+      ]
+     },
+     {
+      "fold": "feeds=replication.audience",
+      "cc_ref": [
+       "CC 4.4.3.2.6"
+      ]
+     },
+     {
+      "fold": "reads=head",
+      "cc_ref": [
+       "CC 4.4.3.4.4"
+      ]
+     },
+     {
+      "fold": "@cohort_subkind=infrastructure: over=listed@seating/person",
+      "cc_ref": [
+       "CC 3.1.3.2"
+      ]
+     },
+     {
+      "fold": "@cohort_subkind=infrastructure: over=founders@decision/person",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "reads=head+membership:{stage}&at(now)&seat:human",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "@cohort_subkind=infrastructure: over=founders@now/person; test=count>m ?live:stalled",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "reads=head; pick=chain(prev_head_digest)",
+      "cc_ref": [
+       "CC 4.4.3.2.4.1"
+      ]
+     },
+     {
+      "fold": "pick=chain(prev_head_digest),first_seen",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": null,
@@ -29808,6 +30953,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -30112,6 +31262,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=accord:*",
+      "cc_ref": [
+       "CC 4.2.2.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -30410,6 +31571,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -30666,6 +31832,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -30951,6 +32122,23 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&at(now); key=identity_key_id; result=set; by=node",
+      "cc_ref": [
+       "CC 4.4.3.4.6"
+      ]
+     },
+     {
+      "fold": "over=live@decision/key",
+      "cc_ref": [
+       "CC 3.3.6.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "identity=user => self_roster_add@self ; none",
@@ -31255,6 +32443,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "identity=node|agent => none ; identity=user => self_roster_evict@self",
     "arms": [
@@ -31554,6 +32747,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -31860,6 +33058,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -32152,6 +33355,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -32442,6 +33650,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -32734,6 +33947,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -33025,6 +34243,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -33286,6 +34509,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -33580,6 +34808,42 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=revoked_key_sha256_ed25519_raw; bound=lower_only(revoked_after)",
+      "cc_ref": [
+       "CC 2.4",
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "fold": "key=revoked_key_sha256_ed25519_raw",
+      "cc_ref": [
+       "CC 2.4.1.1"
+      ]
+     },
+     {
+      "fold": "key=revoked_key_sha256_ed25519_raw; bound=lower_only(revoked_after); combine=min(revoked_after)",
+      "cc_ref": [
+       "CC 2.4.1.1"
+      ]
+     },
+     {
+      "fold": "key=revoked_key_sha256_ed25519_raw; pick=max(quorum_weight),max(asserted_at),min(content_hash)",
+      "cc_ref": [
+       "CC 5.3.2.3"
+      ]
+     },
+     {
+      "fold": "cut=boundary(revoked_after)",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -33895,6 +35159,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -34157,6 +35426,24 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node",
+      "cc_ref": [
+       "CC 3.3.2",
+       "CC 3.1.3"
+      ]
+     },
+     {
+      "fold": "@axis=epoch|stream: key=stream_id; bound=raise_only(epoch)",
+      "cc_ref": [
+       "CC 5.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -34360,6 +35647,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -34687,6 +35979,18 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=unit,account; cut=boundary(seq)",
+      "cc_ref": [
+       "CC 3.1.3",
+       "CC 3.3.10.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -34997,6 +36301,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -35309,6 +36618,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -35620,6 +36934,66 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&signer:authority",
+      "cc_ref": [
+       "CC 2.4.1.2.1"
+      ]
+     },
+     {
+      "fold": "@status=revoked: cut=terminal",
+      "cc_ref": [
+       "CC 3.1.1"
+      ]
+     },
+     {
+      "fold": "result=set",
+      "cc_ref": [
+       "CC 3.1.1"
+      ]
+     },
+     {
+      "fold": "reads=own&declared(licence_class); by=reader",
+      "cc_ref": [
+       "CC 4.4.3.2.8"
+      ]
+     },
+     {
+      "fold": "key=license_id; bound=raise_only(revision)",
+      "cc_ref": [
+       "CC 3.3.9",
+       "CC 5.3.2.3"
+      ]
+     },
+     {
+      "fold": "key=license_id; pick=max(asserted_at),min(attestation_id)",
+      "cc_ref": [
+       "CC 3.3.9"
+      ]
+     },
+     {
+      "fold": "key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)",
+      "cc_ref": [
+       "CC 5.3.2.3"
+      ]
+     },
+     {
+      "fold": "pick=rank(revoked>suspended>active)",
+      "cc_ref": [
+       "CC 5.3.2.3"
+      ]
+     },
+     {
+      "fold": "weight=min(confidence,count(attesting_key_id)/2); by=reader",
+      "cc_ref": [
+       "CC 3.4.9"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -35942,6 +37316,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": null,
     "source": "gap",
@@ -36242,6 +37621,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "absent=refuse",
+      "cc_ref": [
+       "CC 4.4.3.1.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -36537,6 +37927,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.8"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -36799,6 +38200,69 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once",
+      "cc_ref": [
+       "CC 3.1.3.2"
+      ]
+     },
+     {
+      "fold": "@stage=resignation: cut=forward; feeds=group:roster",
+      "cc_ref": [
+       "CC 3.1.3.2"
+      ]
+     },
+     {
+      "fold": "feeds=group:roster",
+      "cc_ref": [
+       "CC 4.4.3.2.4",
+       "CC 4.4.3.4.4"
+      ]
+     },
+     {
+      "fold": "@stage=removal: over=others@decision/person",
+      "cc_ref": [
+       "CC 3.1.3.2",
+       "CC 4.5.13"
+      ]
+     },
+     {
+      "fold": "@cohort_subkind=infrastructure: over=founders@decision/person",
+      "cc_ref": [
+       "CC 3.2",
+       "CC 4.4.3.2.4.1"
+      ]
+     },
+     {
+      "fold": "@cohort_subkind=infrastructure: over=founders@decision/person; reads=own&direct",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "reads=own&direct",
+      "cc_ref": [
+       "CC 3.3.9",
+       "CC 6.1.8"
+      ]
+     },
+     {
+      "fold": "@group_kind=affiliation: over=deciding_seats@decision/person",
+      "cc_ref": [
+       "CC 4.4.3.2.8"
+      ]
+     },
+     {
+      "fold": "@stage=removal: bound=raise_only(revision); pick=max(quorum_weight),max(asserted_at),min(content_hash)",
+      "cc_ref": [
+       "CC 5.3.2.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group",
@@ -37165,6 +38629,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "bound=narrow_only(value)",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -37462,6 +38937,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -37753,6 +39233,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -38057,6 +39542,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "over=present@count/person",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "moderation_action@subject_group",
@@ -38369,6 +39865,29 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=ballot:moderator",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ]
+     },
+     {
+      "fold": "reads=truth_grounding:{subject}+witness_diversity:{contribution_id}+commitment_fulfillment:{prior_contribution_id}+hard_case:{kind}; key=community_key_id,attested_key_id; by=reader",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ]
+     },
+     {
+      "fold": "key=community_key_id,attested_key_id; result=vector(community_key_id); by=reader",
+      "cc_ref": [
+       "CC 4.5.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -38669,6 +40188,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -38959,6 +40483,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -39252,6 +40781,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -39541,6 +41075,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -39835,6 +41374,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "@state=proposal|assent: weight=1",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ]
+     },
+     {
+      "fold": "@state=raised: weight=-1",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "arms": [
@@ -40121,6 +41677,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -40390,6 +41951,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=attested_key_id; pick=set; by=reader",
+      "cc_ref": [
+       "CC 3.1.9.4"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -40655,6 +42227,29 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&live&signer:owner; key=attested_key_id; test=count=1 ?steward_bound:steward_less; by=node",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "key=attested_key_id; test=count=1 ?steward_bound:steward_less",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "reads=own",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -40967,6 +42562,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -41263,6 +42863,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -41445,6 +43050,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -41641,6 +43251,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -41954,6 +43569,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&cites(evidence:{suite}:{kind}:{cell}:{prefix})",
+      "cc_ref": [
+       "CC 3.1.5.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -42243,6 +43869,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -42540,6 +44171,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&cap(infra:attest); by=reader",
+      "cc_ref": [
+       "CC 3.1.2.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -42836,6 +44478,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&cap(infra:attest); by=reader",
+      "cc_ref": [
+       "CC 3.1.2.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -43126,6 +44779,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&cap(infra:attest); by=reader",
+      "cc_ref": [
+       "CC 3.1.2.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -43415,6 +45079,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=own&cap(infra:attest); by=reader",
+      "cc_ref": [
+       "CC 3.1.2.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -43719,6 +45394,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=attested_key_id; pick=max(asserted_at),rank(withhold>release)",
+      "cc_ref": [
+       "CC 3.1.9.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -44021,6 +45707,23 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.6"
+      ]
+     },
+     {
+      "fold": "combine=median(score); by=reader",
+      "cc_ref": [
+       "CC 4.4.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -44311,6 +46014,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -44603,6 +46317,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -44893,6 +46618,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -45185,6 +46921,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -45475,6 +47222,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=advisory",
+      "cc_ref": [
+       "CC 3.1.6"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -45778,6 +47536,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -46075,6 +47838,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -46371,6 +48139,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -46555,6 +48328,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "leaf=custodian_minted => custodian_replace ; none",
@@ -46877,6 +48655,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "bound=raise_only(revision); pick=max(quorum_weight),max(asserted_at),min(content_hash)",
+      "cc_ref": [
+       "CC 5.3.2.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -47179,6 +48968,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -47468,6 +49262,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -47763,6 +49562,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=none",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -48057,6 +49867,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "by=none",
+      "cc_ref": [
+       "CC 3.1.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -48337,6 +50158,42 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=community_id,session_id; result=one",
+      "cc_ref": [
+       "CC 3.1.3.1"
+      ]
+     },
+     {
+      "fold": "reads=own&signer:self",
+      "cc_ref": [
+       "CC 3.1.3.1"
+      ]
+     },
+     {
+      "fold": "reads=own&has(community_id)&has(session_id)&has(claimed_at)",
+      "cc_ref": [
+       "CC 3.1.3.1"
+      ]
+     },
+     {
+      "fold": "absent=none",
+      "cc_ref": [
+       "CC 3.1.3.1"
+      ]
+     },
+     {
+      "fold": "reads=own&signer:self; key=community_id,session_id; pick=min(claimed_at),min(attesting_key_id); absent=none; result=one; by=node",
+      "cc_ref": [
+       "CC 2.1",
+       "CC 3.1.3.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -48639,6 +50496,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "key=transfer_id; pick=pair(settlement:*); combine=sum(amount); test=sum=0 ?matched:flagged; by=reader",
+      "cc_ref": [
+       "CC 3.3.10.1"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -48929,6 +50797,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -49232,6 +51105,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -49498,6 +51376,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": null,
@@ -49812,6 +51695,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -50102,6 +51990,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "feeds=consent:partnership_grant,consent:partnership_accept",
+      "cc_ref": [
+       "CC 3.3.5"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -50382,6 +52281,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -50689,6 +52593,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -50978,6 +52887,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -51276,6 +53190,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -51565,6 +53484,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",
@@ -51859,6 +53783,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": null,
@@ -52170,6 +54099,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -52429,6 +54363,29 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "@job=charter: reads=head; pick=chain(prev_head_digest)",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "@job=accepts: reads=own+head&live; result=state(rooted|stalled|not_rooted); absent=refuse; by=node",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "@job=accepts: absent=refuse",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": null,
@@ -52734,6 +54691,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -53026,6 +54988,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -53316,6 +55283,23 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "weight=credits*expertise_multiplier",
+      "cc_ref": [
+       "CC 3.1.9.3"
+      ]
+     },
+     {
+      "fold": "key=contribution_id,person; pick=agree; by=node",
+      "cc_ref": [
+       "CC 4.5.13"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": "none",
@@ -53611,6 +55595,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [
+     {
+      "fold": "over=seated@decision/person",
+      "cc_ref": [
+       "CC 3.1.9.4"
+      ]
+     }
+    ],
+    "source": "cc-table"
    },
    "count": {
     "value": null,
@@ -53923,6 +55918,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -54213,6 +56213,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "fold": {
+    "value": [
+     {
+      "fold": "reads=vote:{contribution_id}&live; key=contribution_id; combine=sum(weight); by=node",
+      "cc_ref": [
+       "CC 3.1.9.3"
+      ]
+     }
+    ],
+    "source": "cc-table"
+   },
    "count": {
     "value": "none",
     "source": "generic",
@@ -54502,6 +56513,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "fold": {
+    "value": [],
+    "source": "generic",
+    "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
     "value": "none",

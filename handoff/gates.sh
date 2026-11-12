@@ -26,6 +26,7 @@ run python3 tools/check_family_kinds.py --check
 run python3 tools/build_family_model.py --check
 run python3 tools/guard_grammar.py
 run python3 tools/change_grammar.py
+run python3 tools/fold_grammar.py
 run python3 tools/build_transitions.py --check
 run python3 -I tools/mesh_story.py --check
 run python3 -I tools/check_fold_order.py
