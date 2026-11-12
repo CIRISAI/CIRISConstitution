@@ -27,14 +27,21 @@ act has no word at a scope or if two scopes of one tier differ.
 | K6 | the epoch changes only after a departure or a rotation falling due, never on an admission |
 | K7 | a wrap once made is never unmade |
 | K8 | no write is sealed under a key held by a revoked device of a member who stays |
+| K9 | a member admitted to a group with content in the current epoch holds that epoch's key without a further write |
 
 K1 to K7 hold at both tiers. Changing any one word of the table breaks the property that names it.
 
-**The one named breaker.** K8 fails at the epoch tier. The data gives a device revocation a key effect at `self`
+**Two named breakers.** K8 fails at the epoch tier. The data gives a device revocation a key effect at `self`
 scope alone, and the text says nothing of the epoch key when a continuing member's device is revoked. So a lost
 or stolen device keeps reading what the writer seals until a removal or a scheduled rotation moves the epoch. If
 a revocation rotated the epoch as a removal does, K8 would hold with nothing else changed. The check requires
 exactly this failure (conflict C558 of `formal/derivation/text_conflicts.tsv`).
+
+K9 fails at the epoch tier as well. `next_seal` wraps a newcomer at the writer's next write. In a room where
+nobody writes again, the newcomer never reads what the current epoch already holds, though the rule grants it.
+A three-node run of an implementation showed it. With the wrap made when the writer's roster gains the member,
+K9 holds and K1 to K7 still hold; where a rotation is due, the wrap still waits for the write that rotates
+(conflict C559).
 
 **What it does not model.** The instant a writer learns of a removal: a write made before the writer holds the
 removal row is under the old key, which is the exposure window of CC 5.1. Streams and their kept epochs

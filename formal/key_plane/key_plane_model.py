@@ -21,10 +21,13 @@ Properties:
   K6  the epoch changes only after a departure or a rotation falling due, never on an admission
   K7  a wrap once made is never unmade
   K8  no write is sealed under a key held by a revoked device of a member who stays
+  K9  a member admitted to a group with content in the current epoch holds that epoch's key without a further write
 
 K8 fails at the epoch tier and the check requires exactly that: the data gives a device revocation a key effect
 at `self` scope alone, so a continuing member's revoked device holds the epoch key until the next rotation
-(conflict C558 of formal/derivation/text_conflicts.tsv). When the rule is settled the expectation is removed.
+(conflict C558 of formal/derivation/text_conflicts.tsv). K9 fails there too: `next_seal` wraps a newcomer at the
+writer's next write, so in a room where nobody writes again the newcomer never reads what the epoch already holds
+(C559). Each expectation is removed when its rule is settled.
 
 Run: python3 formal/key_plane/key_plane_model.py --check
 """
@@ -82,6 +85,9 @@ def explore(tab, scope, tier):
                     if d in live: grant(d, list(holders))
             elif eff("widening") == "next_seal": fresh.add(who)
             elif eff("widening") == "rotate_epoch": due = True; fresh.add(who)
+            elif eff("widening") == "current_epoch_at_seat":      # proposed, not in the grammar: the wrap is made at the seat
+                fresh.add(who)
+                if not due and ("epoch", epoch) in holders: grant(DEVICES[who][0], [("epoch", epoch)])
         elif kind in ("remove", "resign"):
             members.discard(who); left |= {d for d in DEVICES[who] if any(d in v for v in holders.values()) or d in live}
             fresh.discard(who)
@@ -123,7 +129,8 @@ def explore(tab, scope, tier):
         for k, v in before.items():
             if not v <= holders.get(k, frozenset()): note("K7", trace)
         if tier == "epoch" and kind == "add":
-            if any(d in v - before.get(k, set()) for k, v in holders.items() for d in DEVICES[who]): note("K4", trace)
+            if any(d in v - before.get(k, set()) for k, v in holders.items() for d in DEVICES[who] if k != ("epoch", epoch) or due): note("K4", trace)
+            if not due and ("epoch", epoch) in holders and DEVICES[who][0] not in holders[("epoch", epoch)]: note("K9", trace)
         if tier == "per-write" and kind in ("add", "device_add"):
             devs = [who] if kind == "device_add" else [d for d in DEVICES[who] if d in live]
             if any(d not in v for v in holders.values() for d in devs): note("K5", trace)
@@ -152,7 +159,7 @@ def explore(tab, scope, tier):
     return count[0], seen_fail
 
 
-EXPECTED = {"per-write": set(), "epoch": {"K8"}}
+EXPECTED = {"per-write": set(), "epoch": {"K8", "K9"}}
 
 
 def main():
@@ -174,7 +181,7 @@ def main():
         if "-v" in sys.argv or not ok:
             for p in sorted(bad): print(f"    {p}: {fail[p]}")
     print("key_plane: the key effects of the transitions manifest hold K1-K7 at both tiers; a revoked device of a continuing "
-          "member keeps the epoch key until the next rotation (K8, C558)" if not rc else "key_plane: FAIL")
+          "member keeps the epoch key until the next rotation (K8, C558), and a newcomer waits for the writer's next write (K9, C559)" if not rc else "key_plane: FAIL")
     return rc
 
 

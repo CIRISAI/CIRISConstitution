@@ -909,3 +909,6 @@ list. Streams are not in the model.
 C512 closed in the data (three expiry entries). C510 stays: the receipt's step-2 guard needs a typed marker of an
 accountable stream to condition the witness cosign on, and the guard grammar has none. C488 stays: a roster-change
 row would alter the generated policy table of CC 4.5.13.
+C559 (from the server and store sessions, CIRISServer#874): `next_seal` leaves a newcomer in a quiet room with no
+key. K9 added to `formal/key_plane` and pinned as failing. The proposed word (wrap at the seat) holds K1-K7 and K9
+in the model; not in the change grammar and not in the text until Eric rules. Twelfth on the list for Eric.
