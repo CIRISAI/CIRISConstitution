@@ -1020,3 +1020,7 @@ screen states and vice versa by now". Done in answer: CSD/5 draft 2 (withheld un
 the three beyond `withheld` are mine); `verdict_state.tsv` and the two-way check; `formal/kernel_world` in TLA+.
 `forfeited` has no state yet. The world model covers one family; the pattern is to be generated from the manifests
 for the rest. C565 is the first thing the world found that no reading and no single-node model had.
+Draft 3 the same day, on the client's reading: the state for the verdict `closed` is named `ended`, since `closed`
+is also a wire value a populated view carries; `withheld` covers both a windowed takedown and a moderator's flag
+the viewer may reveal for themselves, the cover's contents telling them apart. How a reveal is recorded is the
+open consent-screen question.

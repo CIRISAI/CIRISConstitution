@@ -1,7 +1,7 @@
 {
  "_meta": {
   "standard": "CSD/5",
-  "draft": 2,
+  "draft": 3,
   "status": "draft. Hand-written, and the standard's one copy: a client vendors this file at a pinned commit of this repository and checks its screens against it.",
   "says": "A screen is a function of the node's answers, the person's input and the context it is opened in. This file names the parts a screen is built from, the states a part bound to a read may be in, and the laws every screen keeps.",
   "builds_on": {
@@ -116,22 +116,22 @@
   "withheld": {
    "outcome": "ok",
    "ships": false,
-   "meaning": "Held, and drawn under a cover: an act has stopped it being shown while a window runs. The cover says on what ground, who acted and when the window closes. It may still come back."
+   "meaning": "Held, and drawn under a cover: an act has stopped it being shown. The cover says on what ground and who acted. It says when the window closes, where one runs, and it offers the viewer a way to lift it for themselves alone, where the act allows one. It may still come back."
   },
   "lapsed": {
    "outcome": "ok",
    "ships": false,
    "meaning": "It ran out: a grant, a seat, a session or a claim passed its end and nobody took it back."
   },
-  "closed": {
+  "ended": {
    "outcome": "ok",
    "ships": false,
-   "meaning": "The question is no longer open: its window ended or it was answered."
+   "meaning": "The question is no longer open: its window ran out or it was answered. The rules' own word for this verdict is `closed`; the state is named apart from the wire values `closed` that a populated view may carry."
   },
   "locked": {
    "outcome": "ok",
    "ships": false,
-   "meaning": "The group is locked while it seats someone it needs; nothing new is admitted to it until it does."
+   "meaning": "The group is locked while it seats someone it needs; nothing new is admitted to it until it does. A state of a group, apart from the wire value `locked` a populated view may carry."
   },
   "hidden_by_rules": {
    "outcome": "ok",
