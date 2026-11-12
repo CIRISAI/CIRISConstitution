@@ -34,6 +34,7 @@ run python3 -I tools/mesh_story.py --check
 run python3 -I tools/check_fold_order.py
 run python3 tools/check_transition_roles.py
 run python3 tools/check_signer_gate.py
+run python3 formal/takedown/takedown_model.py --check
 run python3 -I formal/transport_tiers/frame_ab.py --check
 run python3 tools/check_compliance_wire_forms.py
 run python3 tools/check_rule_entries.py

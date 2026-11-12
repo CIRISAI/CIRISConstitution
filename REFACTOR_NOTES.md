@@ -885,3 +885,11 @@ property 5 (the entry transition admits exactly the duty-holder set). Two failur
 cell: takedown_notice (C536) and slashing (C447, C458); listed in KNOWN. Four KNOWN in all. Still to build: the
 conferral leg (a held role needs a live delegation under a root the reader trusts), which is a model over rows and
 wants TLA or Lean, not a table check.
+
+Second model from the analysis: `formal/takedown/takedown_model.py` with its README, in the gates and in the formal
+workflow. Reads bases and windows from `manifests/reactions.json`; six properties over 1,092 cases; mutation-checked
+(a reversal ignored fails P2, a lift after destruction fails P4, a late withhold fails P1). Legal hold against
+immediate removal (C312) is run both ways and each reading must fail exactly the property it gives up; when Eric
+answers, delete the other reading. Not in INVARIANTS.tsv (as `formal/alm` is not), so the published counts stand.
+Next in this family: the deletion deadline (CC 3.3.1 D1): a producer is in breach exactly when the window has
+passed with the row still present and none of the producer's own composers against it.
