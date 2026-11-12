@@ -17,6 +17,7 @@ SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
+SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
 CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
@@ -532,6 +533,35 @@ def main():
         print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
     if cell_text:
         print("cell_text.tsv names families outside the model: " + ", ".join(sorted(cell_text))); return 1
+    # The body of a family from the signed-object table (CC 2.6.1.7): each member whose presence that table states for
+    # a wire form of the family, with its type. A presence written in words that name no wire form is left to the
+    # table and counted. A cell the census reads as prose is not replaced.
+    all_fams = [r["family"] for r in rows]
+    def owners(name):
+        name = re.sub(r":v\d+$", "", name.strip())
+        if name.endswith(":*"):
+            return [(f, None) for f in all_fams if f.startswith(name[:-1])]
+        if name in by_fam_names: return [(name, None)]
+        return [(f, name) for f in all_fams if "{" in f and gg.family_ok(name, {f})]
+    by_fam_names = set(all_fams)
+    body_members, body_unread = OrderedDict(), []
+    for so in csv.DictReader(open(SIGNED_OBJECT, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE):
+        if so["object"] != "attestation_row": continue
+        for mode, lst in re.findall(r"(REQUIRED|OPTIONAL) on ([^;()]+)", so["presence"]):
+            for name in [x.strip() for x in re.split(r",| and ", lst) if x.strip()]:
+                own = owners(name) if re.fullmatch(r"[a-z_]+(:[a-z_{}*0-9]+)+", name) else []
+                if not own:
+                    body_unread.append(f"{so['member']}: {name}"); continue
+                for fam, leaf in own:
+                    e = OrderedDict([("member", so["member"]), ("type", so["type"]), ("presence", mode.lower())])
+                    if leaf: e["leaf"] = leaf
+                    if e not in body_members.setdefault(fam, []): body_members[fam].append(e)
+    for r in rows:
+        mem = body_members.get(r["family"])
+        if mem and r["body"].get("source") == "gap":
+            r["body"] = {"value": OrderedDict([("members", mem)]), "source": "cc-table", "cc_ref": "CC 2.6.1.7",
+                         "code": {"value": r["body"].get("value"), "source": "gap"},
+                         "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
     by_fam = {r["family"]: r for r in rows}
     cited = 0
@@ -615,6 +645,8 @@ def main():
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
         ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
                                ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),
+        ("body", OrderedDict([("source", "constitution/signed_object.tsv"), ("families_with_members", sum(1 for r in rows if isinstance(r["body"].get("value"), dict) and "members" in r["body"]["value"])),
+                              ("presence_in_words", sorted(set(body_unread)))])),
         ("fold", OrderedDict([("default", fg.DEFAULT), ("every_family", fold_every), ("reader_defaults", reader_defaults),
                               ("typed_families", sum(1 for r in rows if r["fold"]["value"])),
                               ("statements", sum(len(r["fold"]["value"]) for r in rows)),

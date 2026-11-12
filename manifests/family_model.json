@@ -131,12 +131,12 @@
     "gap": 0
    },
    "body": {
-    "cc-table": 0,
+    "cc-table": 11,
     "code-v61": 0,
     "generic": 0,
     "prose": 32,
     "mixed": 0,
-    "gap": 152
+    "gap": 141
    },
    "freshness": {
     "cc-table": 0,
@@ -272,6 +272,40 @@
    "cells_cited": 98,
    "citations": 144,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
+  },
+  "body": {
+   "source": "constitution/signed_object.tsv",
+   "families_with_members": 11,
+   "presence_in_words": [
+    "accord_root: accord:* rows",
+    "confidence: scores",
+    "delegation_purpose: delegates_to",
+    "delegation_valid_from: delegates_to",
+    "delegation_valid_until: a termed delegates_to",
+    "differs_in: supersedes",
+    "dimension: every row type",
+    "halt_fuse_secs: the accord's charter",
+    "recantation_reason: recants",
+    "recovers: a charter recovery",
+    "recovery_commitments: the accord's charter",
+    "references_attestation_id: recants",
+    "references_attestation_id: supersedes",
+    "references_attestation_id: withdraws",
+    "role: restated on membership:acceptance",
+    "scope: on delegates_to",
+    "score: scores",
+    "successor_keys: a charter recovery",
+    "supersession_reason: supersedes",
+    "trust_classes: a delegates_to bearing trust:accepts:v1",
+    "trust_depth: a delegates_to bearing trust:accepts:v1",
+    "what_was_false: recants",
+    "widened_at: a widening supersedes",
+    "widened_at: absent otherwise",
+    "withdrawal_reason: withdraws",
+    "witness_cadence_secs: a witnessed lineage's charter",
+    "witness_quorum: a witnessed lineage's charter",
+    "witnesses: a witnessed lineage's charter"
+   ]
   },
   "fold": {
    "default": "reads=own&live; key=references_attestation_id,attesting_key_id; pick=rank(recants>withdraws>supersedes),max(asserted_at),min(attestation_id); bound=narrow_only(cohort_scope); cut=named,forward; over=standing/person; absent=none; result=scalar; by=node",
@@ -7919,8 +7953,77 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "source_count",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "n_eff",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "max_source_multiplicity",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "mass_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "member_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "mass_total",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "aggregation_algorithm_id",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "noise_floor_descriptor",
+       "type": "tstr",
+       "presence": "optional"
+      },
+      {
+       "member": "version",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "partial_a",
+       "type": "uuid",
+       "presence": "required"
+      },
+      {
+       "member": "partial_b",
+       "type": "uuid",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -11694,8 +11797,77 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "source_count",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "n_eff",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "max_source_multiplicity",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "mass_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "member_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "mass_total",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "aggregation_algorithm_id",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "noise_floor_descriptor",
+       "type": "tstr",
+       "presence": "optional"
+      },
+      {
+       "member": "version",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "partial_a",
+       "type": "uuid",
+       "presence": "required"
+      },
+      {
+       "member": "partial_b",
+       "type": "uuid",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -12025,8 +12197,42 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "member_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "window_periods",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "active_count",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "floor_applied",
+       "type": "bool",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -12351,8 +12557,47 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "share_index",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "share_count",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "member_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "mass_total",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "aggregation_algorithm_id",
+       "type": "tstr",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -12636,8 +12881,37 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "for_key_id",
+       "type": "key-id",
+       "presence": "required"
+      },
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "return_token",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "share_index",
+       "type": "uint",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -12971,8 +13245,47 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "share_index",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "share_count",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "member_commitment_hex",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "mass_total",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "aggregation_algorithm_id",
+       "type": "tstr",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -13252,8 +13565,37 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "for_key_id",
+       "type": "key-id",
+       "presence": "required"
+      },
+      {
+       "member": "period",
+       "type": "uint",
+       "presence": "required"
+      },
+      {
+       "member": "return_token",
+       "type": "hex64",
+       "presence": "required"
+      },
+      {
+       "member": "share_index",
+       "type": "uint",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -38789,8 +39131,41 @@
     "s2": "open:self_admit"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "group_kind",
+       "type": "\"family\" / \"community\"",
+       "presence": "required",
+       "leaf": "membership:proposal"
+      },
+      {
+       "member": "role",
+       "type": "tstr",
+       "presence": "optional",
+       "leaf": "membership:proposal"
+      },
+      {
+       "member": "proposal_hash",
+       "type": "hex64",
+       "presence": "required",
+       "leaf": "membership:acceptance"
+      },
+      {
+       "member": "proposal_hash",
+       "type": "hex64",
+       "presence": "required",
+       "leaf": "membership:decline"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -42332,8 +42707,42 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "trace_level",
+       "type": "\"generic\" / \"detailed\" / \"full_traces\"",
+       "presence": "required"
+      },
+      {
+       "member": "occurrence_key_ids",
+       "type": "[* key-id]",
+       "presence": "required"
+      },
+      {
+       "member": "window_from",
+       "type": "rfc3339-ms",
+       "presence": "required"
+      },
+      {
+       "member": "window_to",
+       "type": "rfc3339-ms",
+       "presence": "required"
+      },
+      {
+       "member": "channel_classes",
+       "type": "[* tstr]",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -50864,8 +51273,27 @@
     "source": "code-v61"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "session_id",
+       "type": "tstr",
+       "presence": "required"
+      },
+      {
+       "member": "claimed_at",
+       "type": "rfc3339-ms",
+       "presence": "required"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {
@@ -55135,8 +55563,29 @@
     "closed": "family charter witness quorum"
    },
    "body": {
-    "value": "none (no family body; SchemaResolver no-op by default)",
-    "source": "gap"
+    "value": {
+     "members": [
+      {
+       "member": "attach_window_secs",
+       "type": "uint",
+       "presence": "optional",
+       "leaf": "trust:charter"
+      },
+      {
+       "member": "attached_head_digest",
+       "type": "hex64",
+       "presence": "required",
+       "leaf": "trust:accepts"
+      }
+     ]
+    },
+    "source": "cc-table",
+    "cc_ref": "CC 2.6.1.7",
+    "code": {
+     "value": "none (no family body; SchemaResolver no-op by default)",
+     "source": "gap"
+    },
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
    },
    "freshness": {
     "value": {

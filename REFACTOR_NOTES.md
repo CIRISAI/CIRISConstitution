@@ -612,3 +612,14 @@ restating entries now rest on table rows; the cross-references the bullets carri
 the table. The pattern for further cuts: (1) the data table prints into the Part, (2) entries that restated the
 value are repointed to the printed row, (3) a quote that rested on the cut words is moved to the sentence that
 states the rule, (4) links kept. A value stated only by the cut words must not be cut: it would cite itself.
+
+Body column: `tools/build_family_model.py` now reads a family's body members from `constitution/signed_object.tsv`
+where a presence cell names a wire form (11 families; 28 presences are written in words and listed under
+`_meta.body.presence_in_words`). The body lane for Parts 4 to 7 (scratch `lanes/out_f_body_b.*`): 120 statements,
+FILLS 56, RICHER 55, AGREE 4, DISAGREE 1, NOT_A_CELL 20; of the member names it proposes, 24 are in the CDDL and
+85 are not. So the text names many members the signed-object table does not carry: each is either a member of a
+sealed or framed body the table does not list, or a name the prose invented. That list goes to persist before any
+of it lands as a wire member. Objects with members in prose and no family row or CDDL: location_proof, live_stream,
+wholeness_witness, StorageBudgetV1, CorpusWantV1, the three accord roster-change objects. CC 4.4.3.2.8 says the
+family model manifest carries the affiliation config schema; it carries none.
+The first prose cut's gate failed once, as designed: four `cell_cites` rows quoted the cut bullets and were dropped.
