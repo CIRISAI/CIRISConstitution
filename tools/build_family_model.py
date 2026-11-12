@@ -238,8 +238,20 @@ def polarity_census(t):
     tag, rest = tag_of(t or "")
     return head_of(rest) if rest else None
 
+CARD_HOME, CARD_QUOTE = "CC 8.10", "=card"
+
+
+class _CardHome(str):
+    """The span of the family cards (CC 8.10) as a home: it holds exactly the marker `=card`. A row of a text
+    table whose value no prose states any longer names the cards as its home with that marker in place of a
+    quote: the card the build prints from the row is the document's statement of the value (CC 8.10)."""
+    def __contains__(self, quote):
+        return quote == CARD_QUOTE
+
+
 def section_span(ref):
     """The text of a Constitution section with its subsections, by its number; None when no heading carries it."""
+    if ref == CARD_HOME: return _CardHome()
     m = re.fullmatch(r"CC (\d+(?:\.\d+)*)", ref or "")
     if not m: return None
     num = m.group(1)

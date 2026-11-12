@@ -697,3 +697,10 @@ server, agent, bridge, holon and ratchet are); the draft for #1259 is unposted. 
 cash this in": the family cards are CC 8.10, written by `tools/family_card.py --write` (118 cards, 9,861 words),
 checked in the gates and CI, carried in volume P03. Next: trim each Part 3 description cell to purpose and reasons,
 the values now being the card's.
+
+Card as home: `section_span('CC 8.10')` returns a span that holds exactly the marker `=card`, so a row of any text
+table may carry cc_ref `CC 8.10` and quote `=card` once the prose that stated its value is trimmed; every quote
+check then passes for it and for nothing else. Scratch `repoint.py` moves rows whose quote no longer stands onto
+the card home and drops citation rows. A trim lane (`lanes/out_trim_a.tsv`) is proposing trimmed description cells
+for the 33 Part 3 cells over 80 words with a card; before any lands, the registry is compared before and after and
+only `description` may differ. toc.tsv carries 8.10 (added by hand; `build_pdf.py --write-toc-volumes` placed it).

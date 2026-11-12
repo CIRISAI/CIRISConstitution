@@ -10,6 +10,8 @@ Groups: scope (minimal pairs: the same new statement kept to the signer's own de
         no_way_back (kept to the signer's own devices, and the table offers no withdraw or recant);
         always (the row goes to everyone it concerns whatever the signer chooses);
         never (taking something back).
+Known confound: in the scope pairs the kept-private sentence is one template and is usually the longer text, so
+length can stand in for scope; control for it.
 Run from the repository root: python3 handoff/items/build_confirm_items.py
 """
 import csv, json, os
@@ -24,7 +26,7 @@ SCOPE = [  # family, who, pronoun, about_to, the wider reach in plain words
  ("chat:*", "Dana", "she", "Dana is about to post a short message.", "It goes to the forty members of her neighbourhood room."),
  ("blog:*", "Imran", "he", "Imran is about to publish a long piece of writing.", "It goes out to anyone on the network who follows him."),
  ("audio:*", "Lucia", "she", "Lucia is about to save a voice recording.", "It goes to her family group of six."),
- ("config:{scope}", "Tariq", "he", "Tariq is about to set how often his devices sync.", "The setting is published to every member of the community he helps run and applies to them."),
+ ("config:{scope}", "Tariq", "he", "Tariq is about to set how often his devices sync.", "The setting is published to every member of the community he helps run."),
  ("content_rating:{scheme}:{rating}", "Mei", "she", "Mei is about to mark a film clip as unsuitable for children.", "The mark is shown to every member of the parents' room."),
  ("cw_class:{class}", "Jonas", "he", "Jonas is about to put a content warning on a photo.", "The warning is shown to everyone in the photography community."),
  ("consent:stream:{kind}", "Aisha", "she", "Aisha is about to sign that her assistant may record her calendar activity.", "The permission is announced to the research partnership her assistant works with."),

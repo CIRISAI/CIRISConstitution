@@ -127,7 +127,7 @@ def policy():
         rule = RULE_PLAIN.format(e_num=p["enact"]["num"], e_den=p["enact"]["den"],
                                  irr=", except that this kind of change always waits its whole window" if p["irreversible"] else "",
                                  cancel=v["thresholds"]["cancel"] if v["thresholds"]["cancel"] is not None else "(no number: objections do not drop it)",
-                                 rev=f"; if not dropped it takes effect provided at least {v['thresholds']['floor']} agreed, and is dropped otherwise" if p["reverse_path"] else "; if not dropped it takes effect only if the number needed at once has agreed")
+                                 rev=f"; if not dropped it takes effect provided at least {v['thresholds']['floor']} agreed, and is dropped otherwise" if p["reverse_path"] else "; if not dropped it takes effect only if the number needed at once has agreed, and is dropped otherwise")
         facts.append([item, what, v["roster"], v["base"], v["approvals"], v["objections"], v["elapsed_secs"], win, rule,
                       "Has it taken effect, is it still waiting, or has it been dropped?", "yes"])
         truth.append([item, {"lands": "taken effect", "pending": "still waiting", "cancelled": "dropped"}[v["verdict"]], v["verdict"], v["path"], v["family"],
