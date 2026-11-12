@@ -968,3 +968,9 @@ under incapacity, the court's order there) is not touched by this ruling. Persis
 `reserved_family_unseated`; `infra:record_hard_case` kept, and a hard case whose body names another party needs it
 even when self-attested; `assure:age`, `assure:capacity`; `infra:attest` a scope only; Verify's INFRA_SCOPES knows 7
 of 13. The seat rule reaches the reserved-family gates only, not the user/node/agent reads of CC 3.2.
+
+Steward, 2026-11-12, on a contested guardianship: protective mode and not cut off ("Yes that makes sense"), then
+"land it with citations and model it". Landed in CC 3.2 with an informative paragraph of grounds, and
+`formal/guardianship` (eleven properties, 1,024 cases, mutation-checked). The band table is mine, put to him and
+not objected to: under 13 heard and not counted; 13 to 15 counted with the named guardian; 16 and 17 counted and a
+refusal blocks. C563: no family carries an order's attestation yet; CC 3.4.12 not touched.

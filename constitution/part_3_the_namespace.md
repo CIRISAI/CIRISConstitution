@@ -1051,6 +1051,26 @@ The minor-guardianship relation below is the analogous single-valued **user-targ
 
 **Guardianship rule (normative).** An under-18 `user` identity **MUST** have a **live steward-binding** — a non-superseded, non-withdrawn `delegates_to(adult-user → minor-user)` ([CC 2.4.1](part_2_the_grammar.md)) — from an adult (18 or older) `user` identity at all times. **No minor `user` identity operates without a live adult steward.** The adult is the `attesting_key_id` of the `delegates_to`; **its signature on that envelope IS the agreement-to-stewardship** — the explicit act by which the guardian consents to be the accountable responsible party for the minor. Guardianship is **transferable and revocable** through the existing structural composers, with **no new primitive**: a new guardian's `delegates_to` carried as a `supersedes` ([CC 2.4.1.1](part_2_the_grammar.md)) replaces the prior binding only where the current steward has signed its own step-down or a court's order names the new guardian. A new guardian's signature alone displaces no one. A court's order is attested by the people it binds, under their own keys: the minor, the guardian it displaces, the guardian it names. No one else's word for a court is admitted, and the named guardian's attestation does not count alone; a `withdraws` ([CC 2.4.1.1](part_2_the_grammar.md)) by the current steward (or by a subject with revocation authority over the binding) ends it. A minor whose steward-binding goes non-live (superseded-without-replacement or withdrawn) is **steward-less and MUST NOT operate** until re-stewarded — fail-secure, identical in posture to a steward-less `node`/`agent`.
 
+**A contested guardianship (normative).** A guardianship is contested while a node holds an attestation of a court's order by a person the order binds, the order is not yet admitted, and the current guardian has not stepped down. A node decides no custody. It keeps the dispute from harming the minor and tells those who can act.
+
+- **The minor is heard at any age.** A minor's own attestation opens a contest, whatever band is on record and where none is.
+- **The minor is not cut off.** While the contest stands the minor keeps operating under the floor of [CC 3.4.13](#3.4.13). The current binding stays live, so the rule against operating without a guardian does not fire.
+- **Powers freeze.** While the contest stands no new act of either guardian over the minor is admitted: no new delegation, no new grant of the minor's content to a guardian, no change to a group the minor is in.
+- **Someone is told.** Opening a contest raises the safeguarding report of [CC 3.4.13](#3.4.13) to the mandated-report endpoint.
+- **A contest ends** when the current guardian steps down, when the order is admitted, or when every attestation that opened it is withdrawn.
+
+Whose attestations admit the order turns on the minor's band ([CC 3.4.11](#3.4.11)), and the guardian the order names always attests with another.
+
+| Band on record | The order is admitted on |
+|---|---|
+| `under_13`, or none | the named guardian and the guardian it displaces. The minor's word opens the contest and does not count toward the order |
+| `13_15` | the named guardian and either the minor or the guardian it displaces |
+| `16_17` | the named guardian and the minor; or the named guardian and the guardian it displaces, unless the minor has attested a refusal |
+
+A node estimates no age: where no band is on record the minor is treated as the youngest. A child's word may be pressed from them by either adult, so it never admits an order alone. A young child whose guardian will not step down waits on the court's own power to compel it; no rule of this document reaches further, and each community decides whom it recognises meanwhile.
+
+**Why these bands (informative).** A child capable of forming views is heard in every matter affecting them, with weight according to age and maturity (Convention on the Rights of the Child, Articles 5 and 12; General Comment No. 12, CRC/C/GC/12, 2009). Best interests come first, and protection from abuse is owed (Articles 3 and 19). Only a competent authority separates a child from a parent (Article 9). The Hague Convention on the Civil Aspects of International Child Abduction (1980) sets no age for a child's objection, weighs it by age and maturity (Article 13), and ceases to apply at 16 (Article 4). Fourteen-year-olds did not differ from adults in understanding and reasoning about treatment decisions, and nine-year-olds did (Weithorn and Campbell, *Child Development* 53, 1982). English law presumes capacity to consent to treatment from 16 (Family Law Reform Act 1969, section 8) and judges it case by case below that (*Gillick v West Norfolk and Wisbech AHA* [1986] AC 112). The line at 13 follows the band this document already keeps.
+
 **User-target admission rule.** The steward-binding gate above guards only the `node`/`agent` direction; without this rule a `delegates_to` whose target resolves to a `user` would be unguarded, and stewarding a person admissible. A substrate evaluating a `delegates_to(S → T)` whose **target `T` resolves to a `user`-role identity** ([CC 3.4.7.1](part_3_the_namespace.md)) **MUST** admit it **only if** all of the following hold; otherwise it **MUST** reject:
 
 ```
