@@ -17,6 +17,7 @@ SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
+CELL_CITES = os.path.join(ROOT, "formal/derivation/cell_cites.tsv")
 FOLD_TEXT = os.path.join(ROOT, "formal/derivation/fold_text.tsv")
 FOLD_MARKS_MAX = 50   # uses of words no other vocabulary has; the number only falls
 COUNT_SOURCES = ("subject_group", "signer_group", "dimension_authority", "accord", "trust_root", "self", "conferrer")
@@ -531,6 +532,25 @@ def main():
         print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
     if cell_text:
         print("cell_text.tsv names families outside the model: " + ", ".join(sorted(cell_text))); return 1
+    # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.
+    by_fam = {r["family"]: r for r in rows}
+    cited = 0
+    for ct in csv.DictReader([l for l in open(CELL_CITES, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"cell_cites.tsv: {ct['family']} {ct['column']} ({ct['cc_ref']})"
+        cellv = by_fam.get(ct["family"], {}).get(ct["column"])
+        if not isinstance(cellv, dict) or ct["reading"] not in ("agree", "fills"):
+            print(f"{where}: no such cell, or a reading that is not agree or fills"); return 1
+        if cellv.get("source") == "gap":
+            print(f"{where}: the cell is open; state its value in cell_text.tsv"); return 1
+        span = section_span(ct["cc_ref"])
+        if span is None or ct["quote"] not in span:
+            print(f"{where}: the quoted words do not stand in {ct['cc_ref']}"); return 1
+        cites = cellv.setdefault("cites", [])
+        entry = next((x for x in cites if x["cc_ref"] == ct["cc_ref"]), None)
+        if entry is None:
+            cites.append(OrderedDict([("cc_ref", ct["cc_ref"]), ("reading", ct["reading"])])); cited += 1
+        elif ct["reading"] == "fills":
+            entry["reading"] = "fills"
     if "*" in fold_text:
         fold_every = fold_cell("*", fold_text.pop("*"))
         if fold_every is None: return 1
@@ -583,6 +603,8 @@ def main():
         ("version", "0-draft"), ("taxonomy_version", "11+1 v1"),
         ("registry_sha256", reg_sha), ("census", "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341"),
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
+        ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
+                               ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),
         ("fold", OrderedDict([("default", fg.DEFAULT), ("every_family", fold_every),
                               ("typed_families", sum(1 for r in rows if r["fold"]["value"])),
                               ("statements", sum(len(r["fold"]["value"]) for r in rows)),

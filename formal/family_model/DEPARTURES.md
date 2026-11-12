@@ -16,7 +16,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | placement | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
 | subject_rule | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
-| cosign_rule | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}` |
+| cosign_rule | `ballot:moderator_acceptance` |
 | freshness | `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}` |
 | lifecycle | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |
 | replication | `archive_release:{basis}`, `ballot:moderator`, `ballot:moderator_acceptance`, `cosign:{state}`, `lawful_order:release`, `preserve_request`, `preserve_response`, `retirement:{state}` |

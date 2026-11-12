@@ -75,12 +75,12 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 0,
+    "cc-table": 7,
     "code-v61": 9,
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 168
+    "gap": 161
    },
    "signer_rule": {
     "cc-table": 40,
@@ -115,12 +115,12 @@
     }
    },
    "cosign_rule": {
-    "cc-table": 3,
+    "cc-table": 5,
     "code-v61": 169,
     "generic": 0,
     "prose": 6,
     "mixed": 1,
-    "gap": 5
+    "gap": 3
    },
    "polarity": {
     "cc-table": 3,
@@ -211,12 +211,12 @@
     "gap": 3
    },
    "governance": {
-    "cc-table": 0,
+    "cc-table": 1,
     "code-v61": 181,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 3
+    "gap": 2
    },
    "fold": {
     "cc-table": 76,
@@ -266,6 +266,12 @@
     "mixed": 0,
     "gap": 127
    }
+  },
+  "cites": {
+   "source": "formal/derivation/cell_cites.tsv",
+   "cells_cited": 99,
+   "citations": 146,
+   "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "fold": {
    "default": "reads=own&live; key=references_attestation_id,attesting_key_id; pick=rank(recants>withdraws>supersedes),max(asserted_at),min(attestation_id); bound=narrow_only(cohort_scope); cut=named,forward; over=standing/person; absent=none; result=scalar; by=node",
@@ -428,7 +434,8 @@
     "5": 4,
     "6": 7,
     "7": 1,
-    "9": 3
+    "8": 2,
+    "9": 1
    },
    "reading": "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone"
   },
@@ -440,7 +447,7 @@
      "when": "The store holds no rows of the family: the census read no cell for it, or the family is held shut.",
      "why": "Its cells are unread, not different. When the family is built each cell sits on the default or takes a reason of its own.",
      "basis": "census",
-     "cells": 57
+     "cells": 55
     },
     {
      "id": "key",
@@ -1006,7 +1013,13 @@
    },
    "cosign_rule": {
     "value": "none",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.2.6",
+      "reading": "fills"
+     }
+    ]
    },
    "body": {
     "value": "none (no family body; SchemaResolver no-op by default)",
@@ -1334,7 +1347,13 @@
       "closed": "Targeted only",
       "note": "Targeted only (AV-84, cohort_standing_core) | PROSE: envelope accord_root named (= attested for accord:lifecycle:v1)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -1774,7 +1793,13 @@
    },
    "governance": {
     "value": "none",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     }
+    ]
    },
    "evidence": {
     "value": {
@@ -2900,7 +2925,25 @@
    },
    "cosign_rule": {
     "value": "none",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.2.1.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.2.1.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.2.6",
+      "reading": "fills"
+     }
+    ]
    },
    "body": {
     "value": "none (no family body; SchemaResolver no-op by default)",
@@ -4134,7 +4177,17 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.3.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -7325,9 +7378,19 @@
     "note": "not in the census"
    },
    "cosign_rule": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 4.5.13",
+    "code": {
+     "value": null,
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     }
+    ]
    },
    "body": {
     "value": null,
@@ -7360,9 +7423,23 @@
     "note": "not in the census"
    },
    "governance": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "policy_row: moderator_election",
+    "source": "cc-table",
+    "cc_ref": "CC 4.5.4",
+    "code": {
+     "value": null,
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.4",
+      "reading": "fills"
+     }
+    ]
    },
    "evidence": {
     "value": null,
@@ -7447,7 +7524,6 @@
    "departs": [
     "placement",
     "subject_rule",
-    "cosign_rule",
     "freshness",
     "lifecycle",
     "replication",
@@ -7460,9 +7536,6 @@
      "unbuilt"
     ],
     "subject_rule": [
-     "unbuilt"
-    ],
-    "cosign_rule": [
      "unbuilt"
     ],
     "freshness": [
@@ -9657,7 +9730,13 @@
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "source": "code-v61",
-    "closed": "purge"
+    "closed": "purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -9883,7 +9962,13 @@
       "closed": "Targeted only",
       "note": "Targeted only (AV-84, cohort_standing_core) | PROSE: subject's consent stance must permit (judged at received_at)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 5.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -9997,7 +10082,13 @@
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "source": "code-v61",
-    "closed": "purge"
+    "closed": "purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -10330,7 +10421,13 @@
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "source": "code-v61",
-    "closed": "purge"
+    "closed": "purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -11435,8 +11532,23 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC commons",
-    "source": "gap"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "CC commons",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -11755,8 +11867,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC targeted_room",
-    "source": "gap"
+    "value": "targeted_room",
+    "source": "cc-table",
+    "cc_ref": "CC 6.1.9",
+    "code": {
+     "value": "CC targeted_room",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -12388,9 +12511,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC addressed (for_key_id tally member); no addressed placement in code",
-    "source": "gap",
-    "closed": "CC addressed"
+    "value": "addressed",
+    "source": "cc-table",
+    "cc_ref": "CC 6.1.9",
+    "code": {
+     "value": "CC addressed (for_key_id tally member); no addressed placement in code",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -12461,7 +12594,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -12509,7 +12648,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -12668,8 +12813,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC commons",
-    "source": "gap"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 6.1.9",
+    "code": {
+     "value": "CC commons",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -13054,7 +13210,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -13102,7 +13264,17 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -14273,7 +14445,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.4",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -14769,7 +14947,13 @@
    "placement": {
     "value": "commons (public_room.rs:229, listing_not_federation)",
     "source": "code-v61",
-    "closed": "commons"
+    "closed": "commons",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -14859,7 +15043,13 @@
       "closed": "no | one live row per community",
       "note": "no | one live row per community (read fold live_listing)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -14891,7 +15081,21 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.8",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -15126,7 +15330,13 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -16649,7 +16859,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -17849,7 +18065,13 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -17903,7 +18125,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -18166,7 +18394,13 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -18220,7 +18454,17 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 1.13.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -18268,7 +18512,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -18465,7 +18715,13 @@
       "closed": "recipient",
       "note": "recipient (the node granted for; s2 adds a relay arm) | subjects: the peers"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -18516,7 +18772,17 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.7",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -18556,7 +18822,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -18912,7 +19184,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -19128,7 +19406,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.2.2",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -19775,7 +20059,17 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.3.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -20954,9 +21248,19 @@
     "note": "not in the census"
    },
    "cosign_rule": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "none",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "body": {
     "value": null,
@@ -21058,7 +21362,6 @@
    "departs": [
     "placement",
     "subject_rule",
-    "cosign_rule",
     "freshness",
     "lifecycle",
     "replication",
@@ -21071,9 +21374,6 @@
      "unbuilt"
     ],
     "subject_rule": [
-     "unbuilt"
-    ],
-    "cosign_rule": [
      "unbuilt"
     ],
     "freshness": [
@@ -21429,7 +21729,21 @@
    "placement": {
     "value": "the blob's held claim scope (holding_claim::check_holding_claim_scope)",
     "source": "prose",
-    "closed": "the blob's held claim scope"
+    "closed": "the blob's held claim scope",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 6.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -21519,7 +21833,21 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 5.3.2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 5.3.2.5",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -21567,7 +21895,33 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.3.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.6",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 6.1.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -22184,7 +22538,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -23431,7 +23791,13 @@
     ],
     "source": "code-v61",
     "closed": "dsar",
-    "note": "dsar (producer withdraws + tombstone) | purge"
+    "note": "dsar (producer withdraws + tombstone) | purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -23766,7 +24132,13 @@
     ],
     "source": "code-v61",
     "closed": "dsar",
-    "note": "dsar (producer withdraws + tombstone) | purge"
+    "note": "dsar (producer withdraws + tombstone) | purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -24105,7 +24477,13 @@
     ],
     "source": "code-v61",
     "closed": "dsar",
-    "note": "dsar (producer withdraws + tombstone) | purge"
+    "note": "dsar (producer withdraws + tombstone) | purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -24434,7 +24812,13 @@
     ],
     "source": "code-v61",
     "closed": "dsar",
-    "note": "dsar (producer withdraws + tombstone) | purge"
+    "note": "dsar (producer withdraws + tombstone) | purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -24767,7 +25151,13 @@
     ],
     "source": "code-v61",
     "closed": "dsar",
-    "note": "dsar (producer withdraws + tombstone) | purge"
+    "note": "dsar (producer withdraws + tombstone) | purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -24919,9 +25309,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC self_collective; not enforced",
-    "source": "gap",
-    "closed": "CC self_collective"
+    "value": "self_collective",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.1",
+    "code": {
+     "value": "CC self_collective; not enforced",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -25025,7 +25425,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -28007,7 +28413,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5.5",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -30003,8 +30415,25 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.1.9.7",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.7",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -30111,7 +30540,13 @@
       "closed": "no | amendment = declarer's supersedes with whole body",
       "note": "no | amendment = declarer's supersedes with whole body"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.7",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -30177,7 +30612,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.7",
+      "reading": "fills"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -30433,7 +30874,29 @@
       "source": "code-v61",
       "note": "yes (removal forces stream/community DEK rotation, blobs.rs:4487)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.2.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.6",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -30464,7 +30927,13 @@
       "source": "code-v61",
       "note": "settle_on_key (plane door by held row hash; framed kind SETTLE_EXEMPT)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -30834,7 +31303,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -30905,7 +31380,13 @@
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -32021,7 +32502,37 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.6",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.6.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.6.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.6.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.6",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.12.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -32348,7 +32859,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -32397,7 +32914,13 @@
       "value": "none",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -34407,7 +34930,17 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -34654,7 +35187,13 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
@@ -34707,7 +35246,17 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -34761,7 +35310,13 @@
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -35238,7 +35793,13 @@
    "placement": {
     "value": "the content's scope (attested = recipient, AV-84 exception)",
     "source": "prose",
-    "closed": "the content's scope"
+    "closed": "the content's scope",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -35328,7 +35889,53 @@
       "source": "code-v61",
       "note": "yes (key_grant: rotate the epoch; a removal forces rotation)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.4",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.5.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.6",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.6",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.5",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.12.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 5.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -35359,7 +35966,13 @@
       "source": "code-v61",
       "note": "refuse (SETTLE_EXEMPT KeyGrant: must reach the apply door)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.7",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -36758,11 +37371,27 @@
       "source": "code-v61",
       "note": "Targeted only (AV-84, cohort_standing_core)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": "none",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.2.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 3.3.9",
+      "reading": "fills"
+     }
+    ]
    },
    "body": {
     "value": "typed licence / partner_record payload (check_licence_payload, check_partner_record_revision)",
@@ -36859,7 +37488,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -36882,7 +37517,13 @@
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "source": "code-v61",
-    "closed": "purge"
+    "closed": "purge",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.3",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -38038,7 +38679,13 @@
     },
     "source": "code-v61",
     "closed": "proposal: cardinality exactly 1 invitee",
-    "note": "proposal: cardinality exactly 1 invitee (0 for a standing offer in an open public room), expires_at <= 30 d; reply: attested = invitee"
+    "note": "proposal: cardinality exactly 1 invitee (0 for a standing offer in an open public room), expires_at <= 30 d; reply: attested = invitee",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.2",
+      "reading": "fills"
+     }
+    ]
    },
    "cosign_rule": {
     "value": {
@@ -38097,7 +38744,13 @@
       "source": "code-v61",
       "note": "yes (removal forces stream/community DEK rotation, blobs.rs:4487)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.4",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -38128,7 +38781,13 @@
       "source": "code-v61",
       "note": "settle_on_key (plane door by held row hash; framed kind SETTLE_EXEMPT)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.2",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -38157,7 +38816,17 @@
    "governance": {
     "value": "none (community_invite / community_remove rows vendored, not read)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.2",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     }
+    ]
    },
    "evidence": {
     "value": {
@@ -38460,7 +39129,13 @@
    },
    "cosign_rule": {
     "value": "none",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "body": {
     "value": "relieve/restrict only; key names a consumer processor; emergency TTL <=72 h, not renewable back-to-back",
@@ -39423,7 +40098,17 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -39471,7 +40156,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -39494,12 +40185,24 @@
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none (moderation_action mirror row vendored, not read)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     }
+    ]
    },
    "evidence": {
     "value": {
@@ -39824,7 +40527,13 @@
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -40372,7 +41081,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -44059,7 +44774,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -44366,7 +45087,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -48075,7 +48802,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -48270,7 +49003,13 @@
    "lifecycle": {
     "value": "none (held shut)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": "none (held shut)",
@@ -48289,7 +49028,13 @@
    },
    "governance": {
     "value": "none",
-    "source": "code-v61"
+    "source": "code-v61",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "fills"
+     }
+    ]
    },
    "evidence": {
     "value": {
@@ -48540,7 +49285,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -48611,7 +49362,13 @@
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -49752,7 +50509,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -49800,7 +50563,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -50047,7 +50816,13 @@
       "closed": "no | earliest claimed_at wins",
       "note": "no | earliest claimed_at wins (fold)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -50095,7 +50870,13 @@
       "source": "code-v61",
       "note": "settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.1",
+      "reading": "fills"
+     }
+    ]
    },
    "projection": {
     "value": {
@@ -50284,8 +51065,25 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room | commons",
+    "note": "self_collective | targeted_family | targeted_room | commons",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "fills"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -50384,7 +51182,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.10",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -50686,7 +51490,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -50757,7 +51567,13 @@
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
     "source": "code-v61",
-    "closed": "none"
+    "closed": "none",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "fills"
+     }
+    ]
    },
    "governance": {
     "value": "none",
@@ -51583,7 +52399,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -54245,7 +55067,17 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "fills"
+     },
+     {
+      "cc_ref": "CC 4.3",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {
@@ -55800,7 +56632,13 @@
       "value": "no",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.7",
+      "reading": "fills"
+     }
+    ]
    },
    "replication": {
     "value": {

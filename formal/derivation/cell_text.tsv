@@ -6,3 +6,13 @@ family	column	value	cc_ref	quote
 accord:invoke:constitutional:{halt_id}	cosign_rule	none	CC 4.2.1.1	A `constitutional` halt is one holder's signature
 accord:invoke:drill:{drill_id}	cosign_rule	none	CC 4.2.1.1	| `drill` | **one** holder |
 accord:invoke:notify:{notify_id}	cosign_rule	none	CC 4.2.1.1	| `notify` | **one** holder |
+device:label	placement	self_collective	CC 3.1.1	at `cohort_scope: self`, the name in the envelope's `label`
+settlement:*	placement	self_collective | targeted_family | targeted_room | commons	CC 3.1.3	`cohort_scope` is the producer's choice
+census:composite:{class}	placement	commons	CC 3.1.3	Federation scope.
+goal:{scale}	placement	self_collective | targeted_family | targeted_room | commons	CC 3.1.9.7	`cohort_scope` is the declarer's choice
+census:partial:{class}	placement	commons	CC 6.1.9	the composite `census:composite:{class}:v1`, both federation-scope rows
+census:member:share	placement	addressed	CC 6.1.9	sent, as `census:member:share:v1`, to two **members** of that community drawn from its roster
+census:expected_active	placement	targeted_room	CC 6.1.9	A community's expected-active count is a member-only composite.
+cosign:{state}	cosign_rule	none	CC 3.1.3	It is admitted only if the primary's signature verifies and the primary resolves to an active member of the group at the event's signed instant.
+ballot:moderator	governance	policy_row: moderator_election	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
+ballot:moderator	cosign_rule	none	CC 4.5.13	**The voters' ballots are the appointment's signatures**: the seated moderator is appointed by the body under its protocol, with no node signing anything.

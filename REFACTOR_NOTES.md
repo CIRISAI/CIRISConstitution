@@ -572,3 +572,12 @@ Eight durations added to `constitution/constants.tsv`, each read in its section 
 consent_temporary_ttl_secs, accord_roster_window_max_secs (today inside the note of admission_freshness_window_secs),
 consent_revocation_promotion_window_secs, accord_heartbeat_max_secs, wa_freshness_window_secs, trace_orphan_age_secs,
 epoch_key_retention_secs, delegation_term for `trust`, and purge dwell (which is W itself and wants no second name).
+
+Reader-lane cells: ten gap cells landed through `cell_text.tsv`; `formal/derivation/cell_cites.tsv` (171 rows) gives
+99 closed cells their sections (`cites`, reading agree or fills). 100 lane rows were skipped: columns the model does
+not carry (evidence_screen), open cells, or quotes that span table cells. Six fills did not land: five placements
+(provenance:build_manifest:{target}, testimonial_witness:{kind}, need:{domain}:{kind}, watchlist:{id},
+attestation:registry_consensus) each need a departure reason in `departure_reasons.json`, and
+`lineage_witness:{stage}` cosign none contradicts a reason that says the family leaves the default.
+The 27 DISAGREE rows are not yet in `text_conflicts.tsv`. `cites` is what the prose cut will read: a sentence whose
+cell reads `agree` is covered by data; `fills` is not yet.
