@@ -497,3 +497,9 @@ take their set; `custodian_replace` and `affiliation_member_action` say nothing 
 Next (1b): the protocol sheet and the twelve rows the count design adds, after C-1 to C-4 of
 `handoff/lanes/out_g_count.md` are in `text_conflicts.tsv`; then the `count` cell of the family model (1c).
 The client is owed notice that the policy pin moved.
+
+Step 1b landed in part: the protocol kinds are `constitution/consensus_protocols.tsv` (seven rows, quotes checked),
+emitted as `protocols` in the policy manifest with votes by roster size. Found: the text gives no removal rule under
+`founder_only` or `open:self_admit` (the latter cites the floor of CC 4.5.13), and no count set for `custom`.
+C283 to C286 in `text_conflicts.tsv` are the count design's C-1 to C-4; C283 and C284 wait on Eric's confirmation.
+Still to do in 1b: the sheet of which group kind may name which protocol; the twelve policy rows the design adds.

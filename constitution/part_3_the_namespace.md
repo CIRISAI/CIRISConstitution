@@ -1523,6 +1523,8 @@ Canonical `ConsensusProtocol` kinds:
 | `weighted:{rubric}` | Sum of member weights (per a named operator rubric) must exceed a threshold. Suits formal organizations with weighted voting. |
 | `custom:{family_specific_id}` | Operator-defined custom protocol (e.g., role-based, time-locked, multi-stage). |
 
+The kinds are published as typed rows beside the governance policy table ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). Each row gives the set that is counted and the rule the count must meet. The build names the kinds under which one voice of the group admits, which are `founder_only` and `open:self_admit`.
+
 **Membership-change ceremony** (any addition or removal of a member):
 
 1. **Addition** rides the widening plane of [CC 3.1.3.2](#3.1.3.2), never a supersede. An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key. The joiner answers with its own `membership:acceptance`. A `membership:widening` cosigned under the CURRENT family's `consensus_protocol` seats the joiner. A time-boxed guest is a widening with `valid_until`, and the seat lapses at that instant. A `family` Contribution that supersedes the current one may change metadata or drop members and never adds one. **Removal** is a `membership:removal` cosigned under the current protocol, or the member's own `membership:resignation`.

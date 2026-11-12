@@ -49,12 +49,13 @@ OUT = os.path.join(ROOT, "manifests", "governance_policy.json")
 VEC = os.path.join(ROOT, "manifests", "governance_policy_vectors.json")
 GEN = os.path.join(ROOT, "formal", "two_path", "generated")
 TEXT = os.path.join(ROOT, "formal", "derivation", "policy_text.tsv")
+PROTO = os.path.join(ROOT, "constitution", "consensus_protocols.tsv")
 ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
 # Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.2.8, which no role token names.
 COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "decision", "act", "founding")),
                        ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no"))])
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no"}
-SET_ROLES = set(ROLES) | {"deciding", "outside"}
+SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
 SET_EXCL = ("target", "proposer", "node")
 UNSTATED_MAX = 10   # cells the text leaves unstated; the number only falls
 
@@ -247,6 +248,50 @@ def load_counted(rows):
     return unstated
 
 
+def proto_votes(rule, size, m=2):
+    """The voices a protocol's rule needs over a set of `size`; None where the table alone cannot evaluate it."""
+    if rule.startswith("role_at:"):
+        return int(rule.split(":")[2])
+    if rule == "all":
+        return size
+    if rule == "all_and_majority":            # every member but the target, and that number a strict majority of the roster
+        return size - 1 if 2 * (size - 1) > size else None
+    if rule == "strict_majority":
+        return size // 2 + 1
+    if rule.startswith("voices:"):
+        return m
+    if rule == "joiner":
+        return 1
+    return None
+
+
+def load_protocols():
+    """The protocol kinds as typed rows, each quote verbatim in its section, with the count each needs by roster size
+    and the sizes at which one voice alone meets it (the exceptions to the floor of two voices, named as data)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_family_model import section_span
+    rule_re = re.compile(r"role_at:[a-z]+:\d+|all|all_and_majority|strict_majority|voices:\{m\}|weight:\{rubric\}|predicate:\{[a-z_]+\}|joiner|unstated")
+    out = []
+    for t in csv.DictReader((l for l in open(PROTO, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE):
+        where = f"consensus_protocols.tsv: {t['kind']}"
+        for c in ("count_set", "removal_set"):
+            if t[c] != "unstated" and not counted_ok("count_set", t[c]):
+                sys.exit(f"{where}: {c} {t[c]!r} is not a count set")
+        for c in ("rule", "removal_rule"):
+            if not rule_re.fullmatch(t[c]):
+                sys.exit(f"{where}: {c} {t[c]!r} is not a typed rule")
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span:
+            sys.exit(f"{where}: the quoted words do not stand in {t['cc_ref']}")
+        d = OrderedDict((k, t[k]) for k in ("kind", "count_set", "rule", "removal_set", "removal_rule", "cc_ref"))
+        d["votes"] = OrderedDict((str(n), proto_votes(t["rule"], n)) for n in (1, 2, 3, 5, 9))
+        d["removal_votes"] = OrderedDict((str(n), proto_votes(t["removal_rule"], n)) for n in (2, 3, 5, 9))
+        d["evaluable"] = proto_votes(t["rule"], 3) is not None
+        d["one_voice_admits"] = any(proto_votes(t["rule"], n) == 1 for n in (2, 3, 5, 9))
+        out.append(d)
+    return out
+
+
 def machine_rows(rows):
     """rows the generic machine decides: numeric fractions, community corridor"""
     return [r for r in rows if r["kind"] == "two_path" and r["corridor"] == "community"]
@@ -350,6 +395,7 @@ def build():
     rows = load()
     check_corridor(rows)
     unstated = load_counted(rows)
+    protocols = load_protocols()
     fams = []
     for r in rows:
         d = OrderedDict()
@@ -375,6 +421,12 @@ def build():
                             ("target_silent", "yes: the reverse path lands only if no row signed by the target was first held inside the window"),
                             ("changes_set", "whether the act adds to or removes from the set it counts"),
                             ("unstated", "the text does not state the cell"), ("unstated_cells", unstated)])),
+                        ("protocols", OrderedDict([
+                            ("source", "constitution/consensus_protocols.tsv"),
+                            ("reading", "a kind is a count set and a typed rule; votes gives the voices the rule needs by set size, at m = 2 for a quorum kind, null where the table alone cannot evaluate it"),
+                            ("kinds", protocols),
+                            ("one_voice_admits", [p["kind"] for p in protocols if p["one_voice_admits"]]),
+                            ("not_evaluable", [p["kind"] for p in protocols if not p["evaluable"]])])),
                         ("decider", [l.strip() for l in __doc__.split("The one decision function")[1].split("The floor is")[0].strip().splitlines() if l.strip()][1:]),
                         ("verdicts", ["lands", "pending", "cancelled"]), ("paths", ["forward", "reverse", "none"]),
                         ("floor_is_reverse_only", "the floor is consulted only when the window has closed; before that only enact lands (Prop_FloorNeverLandsEarly)"), ("votes_family", "objection:{state} — proposal (counts as the proposer's approval), assent (+1), raised (−1); CC 3.1.9.2")])
@@ -391,7 +443,7 @@ def build():
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)
-    print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances; counted cells unstated {len(unstated)}")
+    print(f"governance_policy: {len(rows)} rows ({len(machine_rows(rows))} machine rows), pin {pin[:8]}, {len(vec)} vectors, {len(names)} TLC instances; counted cells unstated {len(unstated)}; {len(protocols)} protocol kinds, one voice admits under {sum(p['one_voice_admits'] for p in protocols)}")
 
 
 def self_test():
