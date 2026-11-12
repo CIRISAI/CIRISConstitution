@@ -1034,3 +1034,7 @@ freshness test stays per node, so a row later than W at one node is the pinned r
 notices: derived from the same principle, to be typed kind by kind and sent to the store first; not landed. The
 edge session is writing FSD/KERNEL_COPY_RULES.md (its copy decisions as kernel answers); the store's design is
 FSD/KERNEL_SEAMS.md, and its breaker table B1 to B20 is the order for typing guards.
+Corrected on the store's question: a voice includes the invitee's acceptance (CC 4.5.13), so the sentence I wrote
+into CC 3.1.3.2 ("fewer than two voices could admit is refused") refused nothing on an admission and misled; it
+now states the floor both ways. `quorum:1/N` is not refused. Whether `weighted:` and `custom:` were dropped at
+CC#203 I cannot confirm: the text still carries both. For Eric.

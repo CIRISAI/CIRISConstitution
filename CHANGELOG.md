@@ -127,7 +127,7 @@ The CIRIS Constitution is one document with one version line. Each release below
   - raising a deferral is not an effectful act, so a halted agent may still raise one (4.2.1.1);
   - a halt that arrives after its `valid_until` still fires unless the node already holds a resumption naming it (4.2.1.1).
 - Standing comes only from an explicit signed act of the people governed, never from a title or a default. Six statements say so:
-  - a group's consent to a widening or a removal is counted under its declared protocol and no other fraction; the policy rows give the window, the voices and the floor, and a protocol under which fewer than two voices could admit is refused (3.1.3.2);
+  - a group's consent to a widening or a removal is counted under its declared protocol and no other fraction; the policy rows give the window, the voices and the floor of two voices, which stands under every protocol: the invitee's acceptance is the second voice on an admission, and a removal, which has none, is never carried by one signature (3.1.3.2);
   - a steward acts on content only as a moderator by appointment (4.5.13);
   - content a live row places at a community's scope is that community's for a takedown, a widening included, and the notice reaches the copy in the room and never the author's original (4.5.5);
   - a room's listing is the community's row, signed by its founder or a current moderator (3.2);
