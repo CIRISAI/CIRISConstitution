@@ -680,3 +680,11 @@ their inventory rows removed; ten data rows had quoted the cut words: seven drop
 value, three moved to the home sentence (CC 4.4.3.4.5, CC 3.3.6.3). Conclusion: cutting restatements is nearly
 spent. The volume is in home statements of per-family values, which shrink only by the method of the policy table:
 a generated table becomes the Part's statement and the prose that listed the values goes.
+
+`tools/family_card.py` prints a family's card from the three manifests (signers by transition, policy, widens,
+confirm, way back; count; guard; change; fold; in time; body), each line with its sections; `--coverage`: of 184
+families, count typed 12, guard 27, change 16, fold 76, in time 31, body 49, any block 118. Samples in
+`handoff/cards/`. Building it showed the reactions manifest repeated a clause once per section that states it:
+merged, it is 83 distinct clauses, not 143. The card is the artifact for the larger cut: Part 3's registry rows
+hold about 6,300 words of per-family description in single cells (cosign:{state} alone 641 words), and the card
+for a family is what a generated statement of the same values would look like.

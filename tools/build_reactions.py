@@ -192,7 +192,12 @@ def build():
                 for e in c["effects"]:
                     if e["effect"] == "emit" and e["by"] != "origin_door":
                         open_emit.append(f"{r['family']}: emit {e['family']} by {e['by']}")
-            entries.append(OrderedDict([("family", r["family"])] + list(c.items()) + [("cc_ref", r["cc_ref"])]))
+            body = OrderedDict([("family", r["family"])] + list(c.items()))
+            same = next((e for e in entries if OrderedDict((k, v) for k, v in e.items() if k != "cc_ref") == body), None)
+            if same:                                   # one clause stated in several sections is one entry
+                if r["cc_ref"] not in same["cc_ref"]: same["cc_ref"].append(r["cc_ref"])
+            else:
+                body["cc_ref"] = [r["cc_ref"]]; entries.append(body)
     open_emit = sorted(set(open_emit))
     if len(open_emit) > EMITTER_OPEN_MAX:
         sys.exit(f"reactions: {len(open_emit)} clock- or fold-caused emits are not signed by the origin door, more than {EMITTER_OPEN_MAX}")

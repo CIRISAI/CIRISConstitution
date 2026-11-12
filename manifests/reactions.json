@@ -4,13 +4,13 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 143,
+  "entries": 83,
   "kinds": {
-   "expiry": 28,
-   "clock": 36,
-   "react": 79
+   "expiry": 17,
+   "clock": 17,
+   "react": 49
   },
-  "emits": 37,
+  "emits": 24,
   "new_event_words": {
    "purged": 7,
    "matched": 1,
@@ -47,7 +47,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.1"
+   "cc_ref": [
+    "CC 3.1.1"
+   ]
   },
   {
    "family": "session:{kind}",
@@ -57,7 +59,9 @@
    "max": "session_claim_max_secs",
    "from": "claimed_at",
    "by": "origin_door",
-   "cc_ref": "CC 3.1.3.1"
+   "cc_ref": [
+    "CC 3.1.3.1"
+   ]
   },
   {
    "family": "session:{kind}",
@@ -82,14 +86,18 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.3.1"
+   "cc_ref": [
+    "CC 3.1.3.1"
+   ]
   },
   {
    "family": "rendezvous:route",
    "kind": "expiry",
    "mode": "required",
    "member": "valid_until",
-   "cc_ref": "CC 3.1.4"
+   "cc_ref": [
+    "CC 3.1.4"
+   ]
   },
   {
    "family": "rendezvous:route",
@@ -108,7 +116,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.4"
+   "cc_ref": [
+    "CC 3.1.4"
+   ]
   },
   {
    "family": "consent:state:{stance}",
@@ -118,7 +128,10 @@
    "kind": "expiry",
    "mode": "optional",
    "member": "valid_until",
-   "cc_ref": "CC 3.3.1"
+   "cc_ref": [
+    "CC 3.3.1",
+    "CC 4.4.3.5.5"
+   ]
   },
   {
    "family": "consent:state:{stance}",
@@ -152,95 +165,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:state:{stance}",
-   "leaves": [
-    "granted"
-   ],
-   "kind": "expiry",
-   "mode": "optional",
-   "member": "valid_until",
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:state:{stance}",
-   "leaves": [
-    "granted"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "expiry"
-    }
-   ],
-   "unless": [
-    {
-     "event": "superseded",
-     "of": "self"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "lapsed",
-     "of": null,
-     "force": "must"
-    },
-    {
-     "effect": "emit",
-     "family": "consent:state:expired",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:state:{stance}",
-   "leaves": [
-    "granted"
-   ],
-   "kind": "expiry",
-   "mode": "optional",
-   "member": "valid_until",
-   "cc_ref": "CC 4.4.3.5.5"
-  },
-  {
-   "family": "consent:state:{stance}",
-   "leaves": [
-    "granted"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "expiry"
-    }
-   ],
-   "unless": [
-    {
-     "event": "superseded",
-     "of": "self"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "lapsed",
-     "of": null,
-     "force": "must"
-    },
-    {
-     "effect": "emit",
-     "family": "consent:state:expired",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.5"
+   "cc_ref": [
+    "CC 3.3.1",
+    "CC 4.4.3.5.5"
+   ]
   },
   {
    "family": "consent:stream:{kind}",
@@ -251,7 +179,9 @@
    "mode": "required",
    "member": "valid_until",
    "default": "consent_temporary_ttl_secs",
-   "cc_ref": "CC 3.3.1"
+   "cc_ref": [
+    "CC 3.3.1"
+   ]
   },
   {
    "family": "consent:deletion_sla:{days}",
@@ -277,7 +207,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.3.1"
+   "cc_ref": [
+    "CC 3.3.1"
+   ]
   },
   {
    "family": "key_grant:{axis}",
@@ -297,7 +229,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.3.4"
+   "cc_ref": [
+    "CC 3.3.4",
+    "CC 4.4.3.4.1"
+   ]
   },
   {
    "family": "consent:replication:{version}",
@@ -324,13 +259,17 @@
      "force": "should"
     }
    ],
-   "cc_ref": "CC 3.3.7"
+   "cc_ref": [
+    "CC 3.3.7"
+   ]
   },
   {
    "family": "encyclopedia:*",
    "kind": "expiry",
    "mode": "none",
-   "cc_ref": "CC 3.3.13"
+   "cc_ref": [
+    "CC 3.3.13"
+   ]
   },
   {
    "family": "identity:occurrence",
@@ -355,13 +294,19 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.4.4"
+   "cc_ref": [
+    "CC 3.4.4"
+   ]
   },
   {
    "family": "accord:invoke:constitutional:{halt_id}",
    "kind": "expiry",
    "mode": "none",
-   "cc_ref": "CC 4.2.1"
+   "cc_ref": [
+    "CC 4.2.1",
+    "CC 4.2.1.3",
+    "CC 4.2.1.1"
+   ]
   },
   {
    "family": "accord:invoke:constitutional:{halt_id}",
@@ -370,7 +315,11 @@
    "dur": "charter.halt_fuse_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 4.2.1"
+   "cc_ref": [
+    "CC 4.2.1",
+    "CC 4.2.1.3",
+    "CC 4.2.1.1"
+   ]
   },
   {
    "family": "accord:invoke:constitutional:{halt_id}",
@@ -395,47 +344,11 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.2.1"
-  },
-  {
-   "family": "accord:invoke:constitutional:{halt_id}",
-   "kind": "expiry",
-   "mode": "none",
-   "cc_ref": "CC 4.2.1.3"
-  },
-  {
-   "family": "accord:invoke:constitutional:{halt_id}",
-   "kind": "clock",
-   "name": "fuse",
-   "dur": "charter.halt_fuse_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": "CC 4.2.1.3"
-  },
-  {
-   "family": "accord:invoke:constitutional:{halt_id}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "fuse"
-    }
-   ],
-   "unless": [
-    {
-     "event": "admitted",
-     "of": "accord:lifecycle:confirmed"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "lapsed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.2.1.3"
+   "cc_ref": [
+    "CC 4.2.1",
+    "CC 4.2.1.3",
+    "CC 4.2.1.1"
+   ]
   },
   {
    "family": "key:record",
@@ -458,14 +371,18 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.2.1"
+   "cc_ref": [
+    "CC 4.2.1"
+   ]
   },
   {
    "family": "config:{scope}",
    "kind": "expiry",
    "mode": "required",
    "member": "valid_until",
-   "cc_ref": "CC 4.2.1.4"
+   "cc_ref": [
+    "CC 4.2.1.4"
+   ]
   },
   {
    "family": "mesh_config:{key}",
@@ -476,7 +393,11 @@
    "mode": "required",
    "member": "valid_until",
    "max": "mesh_config_emergency_ttl_secs",
-   "cc_ref": "CC 4.2.1.4"
+   "cc_ref": [
+    "CC 4.2.1.4",
+    "CC 4.2.1",
+    "CC 3.1.9.2"
+   ]
   },
   {
    "family": "key_grant:{axis}",
@@ -496,27 +417,11 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.1"
-  },
-  {
-   "family": "key_grant:{axis}",
-   "scope": "community",
-   "kind": "react",
-   "on": [
-    {
-     "event": "sealed",
-     "of": "self"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "key_grant:epoch",
-     "by": "author",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.2.5"
+   "cc_ref": [
+    "CC 4.4.3.2.1",
+    "CC 4.4.3.2.5",
+    "CC 4.4.3.4.1"
+   ]
   },
   {
    "family": "key_grant:{axis}",
@@ -536,47 +441,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.4.1"
-  },
-  {
-   "family": "key_grant:{axis}",
-   "scope": "family",
-   "kind": "react",
-   "on": [
-    {
-     "event": "admitted",
-     "of": "membership:widening"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "key_grant:content",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.4.1"
-  },
-  {
-   "family": "key_grant:{axis}",
-   "scope": "community",
-   "kind": "react",
-   "on": [
-    {
-     "event": "sealed",
-     "of": "self"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "key_grant:epoch",
-     "by": "author",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.4.1"
+   "cc_ref": [
+    "CC 4.4.3.4.1"
+   ]
   },
   {
    "family": "key_grant:{axis}",
@@ -596,7 +463,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.4.1"
+   "cc_ref": [
+    "CC 4.4.3.4.1"
+   ]
   },
   {
    "family": "group:roster",
@@ -616,27 +485,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.8"
-  },
-  {
-   "family": "group:roster",
-   "scope": "affiliations",
-   "kind": "react",
-   "on": [
-    {
-     "event": "fold",
-     "of": "no_live_deciding_seat"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "withdrawn",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "licensure:{authority_id}",
@@ -655,7 +506,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "trust:{job}:{version}",
@@ -677,7 +530,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "trust:{job}:{version}",
@@ -704,14 +559,18 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "group:roster",
    "kind": "expiry",
    "mode": "optional",
    "member": "dissolves_at",
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "group:roster",
@@ -730,21 +589,27 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "consent:partnership_grant",
    "kind": "expiry",
    "mode": "forbidden",
    "member": "valid_until",
-   "cc_ref": "CC 4.4.3.4.3.1"
+   "cc_ref": [
+    "CC 4.4.3.4.3.1"
+   ]
   },
   {
    "family": "consent:partnership_accept",
    "kind": "expiry",
    "mode": "forbidden",
    "member": "valid_until",
-   "cc_ref": "CC 4.4.3.4.3.1"
+   "cc_ref": [
+    "CC 4.4.3.4.3.1"
+   ]
   },
   {
    "family": "consent:deletion_sla:{days}",
@@ -761,7 +626,12 @@
      "of": "target"
     }
    ],
-   "cc_ref": "CC 4.5.2.2"
+   "cc_ref": [
+    "CC 4.5.2.2",
+    "CC 3.3.1",
+    "CC 4.4.3.5.2",
+    "CC 4.4.3.4.7"
+   ]
   },
   {
    "family": "consent:deletion_sla:{days}",
@@ -794,7 +664,12 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.5.2.2"
+   "cc_ref": [
+    "CC 4.5.2.2",
+    "CC 3.3.1",
+    "CC 4.4.3.5.2",
+    "CC 4.4.3.4.7"
+   ]
   },
   {
    "family": "watchlist:{id}",
@@ -816,7 +691,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.5.7"
+   "cc_ref": [
+    "CC 4.5.7"
+   ]
   },
   {
    "family": "group:roster",
@@ -826,7 +703,9 @@
    "kind": "expiry",
    "mode": "required",
    "member": "valid_until",
-   "cc_ref": "CC 5.3.3.2"
+   "cc_ref": [
+    "CC 5.3.3.2"
+   ]
   },
   {
    "family": "group:roster",
@@ -848,7 +727,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 5.3.3.2"
+   "cc_ref": [
+    "CC 5.3.3.2"
+   ]
   },
   {
    "family": "membership:{stage}",
@@ -857,7 +738,9 @@
    "dur": "admission_freshness_window_secs",
    "from": "asserted_at",
    "by": "receipt",
-   "cc_ref": "CC 2.6.7"
+   "cc_ref": [
+    "CC 2.6.7"
+   ]
   },
   {
    "family": "membership:{stage}",
@@ -882,7 +765,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 2.6.7"
+   "cc_ref": [
+    "CC 2.6.7"
+   ]
   },
   {
    "family": "identity:occurrence",
@@ -891,7 +776,9 @@
    "dur": "self_roster_add.window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 3.3.6.3"
+   "cc_ref": [
+    "CC 3.3.6.3"
+   ]
   },
   {
    "family": "accord:lifecycle:{kind}",
@@ -908,7 +795,12 @@
     }
    ],
    "by": "receipt",
-   "cc_ref": "CC 3.4.1"
+   "cc_ref": [
+    "CC 3.4.1",
+    "CC 4.2.1.1",
+    "CC 4.2.6",
+    "CC 4.2.1.3"
+   ]
   },
   {
    "family": "accord:lifecycle:{kind}",
@@ -930,124 +822,12 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.4.1"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "clock",
-   "name": "fuse",
-   "dur": "charter.halt_fuse_secs",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "accord:invoke:constitutional:{halt_id}"
-    }
-   ],
-   "by": "receipt",
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "fuse"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "clock",
-   "name": "fuse",
-   "dur": "charter.halt_fuse_secs",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "accord:invoke:constitutional:{halt_id}"
-    }
-   ],
-   "by": "receipt",
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "fuse"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "clock",
-   "name": "fuse",
-   "dur": "charter.halt_fuse_secs",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "accord:invoke:constitutional:{halt_id}"
-    }
-   ],
-   "by": "receipt",
-   "cc_ref": "CC 4.2.6"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "fuse"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.2.6"
+   "cc_ref": [
+    "CC 3.4.1",
+    "CC 4.2.1.1",
+    "CC 4.2.6",
+    "CC 4.2.1.3"
+   ]
   },
   {
    "family": "group:roster",
@@ -1057,7 +837,10 @@
    "max": "accord_roster_window_max_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 4.2.6"
+   "cc_ref": [
+    "CC 4.2.6",
+    "CC 4.4.3.4.2.1"
+   ]
   },
   {
    "family": "group:roster",
@@ -1082,42 +865,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.2.6"
-  },
-  {
-   "family": "group:roster",
-   "kind": "clock",
-   "name": "W",
-   "dur": "admission_freshness_window_secs",
-   "max": "accord_roster_window_max_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": "CC 4.4.3.4.2.1"
-  },
-  {
-   "family": "group:roster",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "W"
-    }
-   ],
-   "unless": [
-    {
-     "event": "fold",
-     "of": "policy_met"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "lapsed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.4.2.1"
+   "cc_ref": [
+    "CC 4.2.6",
+    "CC 4.4.3.4.2.1"
+   ]
   },
   {
    "family": "moderation:{allegation_type}",
@@ -1129,7 +880,9 @@
    "dur": "moderation_fallback_window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 4.5.13"
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
   },
   {
    "family": "moderation:{allegation_type}",
@@ -1157,47 +910,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.5.13"
-  },
-  {
-   "family": "moderation:{allegation_type}",
-   "leaves": [
-    "harm_report"
-   ],
-   "kind": "clock",
-   "name": "window",
-   "dur": "moderation_fallback_window_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": "CC 4.5.13"
-  },
-  {
-   "family": "moderation:{allegation_type}",
-   "leaves": [
-    "harm_report"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "window"
-    }
-   ],
-   "unless": [
-    {
-     "event": "fold",
-     "of": "keep_decided"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "withdrawn",
-     "of": "target",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.5.13"
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
   },
   {
    "family": "cosign:{state}",
@@ -1210,7 +925,10 @@
    "default": "default_standing.window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 3.1.3"
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
   },
   {
    "family": "cosign:{state}",
@@ -1231,7 +949,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.3"
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
   },
   {
    "family": "cosign:{state}",
@@ -1244,7 +965,10 @@
    "default": "default_standing.window_secs",
    "from": "asserted_at",
    "by": "receipt",
-   "cc_ref": "CC 3.1.3"
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
   },
   {
    "family": "cosign:{state}",
@@ -1266,76 +990,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.3"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "clock",
-   "name": "hold",
-   "dur": "group.hold_window_secs",
-   "default": "default_standing.window_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": "CC 3.3.4"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "hold"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "do",
-     "act": "drop_held",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.4"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "clock",
-   "name": "age",
-   "dur": "group.hold_window_secs",
-   "default": "default_standing.window_secs",
-   "from": "asserted_at",
-   "by": "receipt",
-   "cc_ref": "CC 3.3.4"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "age"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.4"
+   "cc_ref": [
+    "CC 3.1.3",
+    "CC 3.3.4"
+   ]
   },
   {
    "family": "membership:{stage}",
@@ -1348,7 +1006,10 @@
    "max": "membership_proposal_max_secs",
    "from": "asserted_at",
    "by": "signed",
-   "cc_ref": "CC 4.4.3.2.3"
+   "cc_ref": [
+    "CC 4.4.3.2.3",
+    "CC 3.1.3.2"
+   ]
   },
   {
    "family": "membership:{stage}",
@@ -1370,7 +1031,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.3"
+   "cc_ref": [
+    "CC 4.4.3.2.3",
+    "CC 3.1.3.2"
+   ]
   },
   {
    "family": "consent:{kind}",
@@ -1389,7 +1053,9 @@
      "force": "may"
     }
    ],
-   "cc_ref": "CC 2.3.1"
+   "cc_ref": [
+    "CC 2.3.1"
+   ]
   },
   {
    "family": "agent_files:{kind}:{platform_or_target}",
@@ -1408,7 +1074,9 @@
      "force": "may"
     }
    ],
-   "cc_ref": "CC 2.3.1"
+   "cc_ref": [
+    "CC 2.3.1"
+   ]
   },
   {
    "family": "watchlist:{id}",
@@ -1427,7 +1095,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.9.4"
+   "cc_ref": [
+    "CC 3.1.9.4"
+   ]
   },
   {
    "family": "watchlist:{id}",
@@ -1446,157 +1116,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.9.4"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "clock",
-   "name": "sla",
-   "dur": "self.days",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "target"
-    }
-   ],
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "sla"
-    }
-   ],
-   "unless": [
-    {
-     "event": "withdrawn",
-     "of": "target"
-    },
-    {
-     "event": "superseded",
-     "of": "target"
-    },
-    {
-     "event": "purged",
-     "of": "target"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "hard_case:deletion_window_breach",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "clock",
-   "name": "sla",
-   "dur": "self.days",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "target"
-    }
-   ],
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "sla"
-    }
-   ],
-   "unless": [
-    {
-     "event": "withdrawn",
-     "of": "target"
-    },
-    {
-     "event": "superseded",
-     "of": "target"
-    },
-    {
-     "event": "purged",
-     "of": "target"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "hard_case:deletion_window_breach",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.1"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "clock",
-   "name": "sla",
-   "dur": "self.days",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "target"
-    }
-   ],
-   "cc_ref": "CC 4.5.2.2"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "sla"
-    }
-   ],
-   "unless": [
-    {
-     "event": "withdrawn",
-     "of": "target"
-    },
-    {
-     "event": "superseded",
-     "of": "target"
-    },
-    {
-     "event": "purged",
-     "of": "target"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "hard_case:deletion_window_breach",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.5.2.2"
+   "cc_ref": [
+    "CC 3.1.9.4"
+   ]
   },
   {
    "family": "group:roster",
@@ -1615,7 +1137,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.2.3"
+   "cc_ref": [
+    "CC 4.4.3.2.3"
+   ]
   },
   {
    "family": "key_grant:{axis}",
@@ -1634,7 +1158,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.4.1"
+   "cc_ref": [
+    "CC 4.4.3.4.1"
+   ]
   },
   {
    "family": "membership:{stage}",
@@ -1660,7 +1186,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.4.2"
+   "cc_ref": [
+    "CC 4.4.3.4.2"
+   ]
   },
   {
    "family": "consent:decay:{stage}",
@@ -1683,7 +1211,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.5.1"
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
   },
   {
    "family": "consent:decay:{stage}",
@@ -1700,7 +1230,9 @@
      "of": "consent:partnership_grant"
     }
    ],
-   "cc_ref": "CC 4.4.3.5.1"
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
   },
   {
    "family": "consent:decay:{stage}",
@@ -1719,7 +1251,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.5.1"
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
   },
   {
    "family": "consent:decay:{stage}",
@@ -1736,7 +1270,9 @@
      "of": "consent:partnership_grant"
     }
    ],
-   "cc_ref": "CC 4.4.3.5.1"
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
   },
   {
    "family": "consent:decay:{stage}",
@@ -1755,7 +1291,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.4.3.5.1"
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
   },
   {
    "family": "takedown_notice:{basis}",
@@ -1791,7 +1329,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 6.1.2.2"
+   "cc_ref": [
+    "CC 6.1.2.2"
+   ]
   },
   {
    "family": "custody:{kind}",
@@ -1803,7 +1343,10 @@
    "member": "expires_at",
    "eq": "custody_report_ttl_secs",
    "from": "asserted_at",
-   "cc_ref": "CC 3.1.3.3"
+   "cc_ref": [
+    "CC 3.1.3.3",
+    "CC 5.3.2.1"
+   ]
   },
   {
    "family": "custody:{kind}",
@@ -1825,168 +1368,10 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.1.3.3"
-  },
-  {
-   "family": "custody:{kind}",
-   "leaves": [
-    "ack"
-   ],
-   "kind": "expiry",
-   "mode": "required",
-   "member": "expires_at",
-   "eq": "custody_report_ttl_secs",
-   "from": "asserted_at",
-   "cc_ref": "CC 5.3.2.1"
-  },
-  {
-   "family": "custody:{kind}",
-   "leaves": [
-    "ack"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "expiry"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "unknown",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 5.3.2.1"
-  },
-  {
-   "family": "mesh_config:{key}",
-   "leaves": [
-    "emergency"
-   ],
-   "kind": "expiry",
-   "mode": "required",
-   "member": "valid_until",
-   "max": "mesh_config_emergency_ttl_secs",
-   "cc_ref": "CC 4.2.1"
-  },
-  {
-   "family": "mesh_config:{key}",
-   "leaves": [
-    "emergency"
-   ],
-   "kind": "expiry",
-   "mode": "required",
-   "member": "valid_until",
-   "max": "mesh_config_emergency_ttl_secs",
-   "cc_ref": "CC 3.1.9.2"
-  },
-  {
-   "family": "session:{kind}",
-   "kind": "expiry",
-   "mode": "required",
-   "member": "valid_until",
-   "max": "session_claim_max_secs",
-   "from": "claimed_at",
-   "by": "origin_door",
-   "cc_ref": "CC 3.1.3.1"
-  },
-  {
-   "family": "session:{kind}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "expiry"
-    }
-   ],
-   "unless": [
-    {
-     "event": "superseded",
-     "of": "self"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "lapsed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.1.3.1"
-  },
-  {
-   "family": "membership:{stage}",
-   "leaves": [
-    "proposal"
-   ],
-   "kind": "expiry",
-   "mode": "required",
-   "member": "expires_at",
-   "max": "membership_proposal_max_secs",
-   "from": "asserted_at",
-   "by": "signed",
-   "cc_ref": "CC 3.1.3.2"
-  },
-  {
-   "family": "membership:{stage}",
-   "leaves": [
-    "proposal"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "expiry"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.1.3.2"
-  },
-  {
-   "family": "membership:{stage}",
-   "leaves": [
-    "proposal"
-   ],
-   "kind": "expiry",
-   "mode": "required",
-   "member": "expires_at",
-   "max": "membership_proposal_max_secs",
-   "from": "asserted_at",
-   "by": "signed",
-   "cc_ref": "CC 3.1.3.2"
-  },
-  {
-   "family": "membership:{stage}",
-   "leaves": [
-    "proposal"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "expiry"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.1.3.2"
+   "cc_ref": [
+    "CC 3.1.3.3",
+    "CC 5.3.2.1"
+   ]
   },
   {
    "family": "trust:{job}:{version}",
@@ -1997,18 +1382,9 @@
    "default": "delegation_term_max_secs",
    "max": "charter.role_term",
    "from": "delegation_valid_from",
-   "cc_ref": "CC 4.4.3.2.8"
-  },
-  {
-   "family": "trust:{job}:{version}",
-   "scope": "affiliations",
-   "kind": "expiry",
-   "mode": "required",
-   "member": "delegation_valid_until",
-   "default": "delegation_term_max_secs",
-   "max": "charter.role_term",
-   "from": "delegation_valid_from",
-   "cc_ref": "CC 4.4.3.2.8"
+   "cc_ref": [
+    "CC 4.4.3.2.8"
+   ]
   },
   {
    "family": "consent:state:{stance}",
@@ -2020,202 +1396,9 @@
    "member": "valid_until",
    "default": "consent_temporary_ttl_secs",
    "from": "asserted_at",
-   "cc_ref": "CC 4.4.3.5.6"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "clock",
-   "name": "sla",
-   "dur": "self.days",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "target"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.2"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "sla"
-    }
-   ],
-   "unless": [
-    {
-     "event": "withdrawn",
-     "of": "target"
-    },
-    {
-     "event": "superseded",
-     "of": "target"
-    },
-    {
-     "event": "purged",
-     "of": "target"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "hard_case:deletion_window_breach",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.2"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "clock",
-   "name": "sla",
-   "dur": "self.days",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "target"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.4.7"
-  },
-  {
-   "family": "consent:deletion_sla:{days}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "sla"
-    }
-   ],
-   "unless": [
-    {
-     "event": "withdrawn",
-     "of": "target"
-    },
-    {
-     "event": "superseded",
-     "of": "target"
-    },
-    {
-     "event": "purged",
-     "of": "target"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "hard_case:deletion_window_breach",
-     "by": "identity:substrate_persist",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.4.7"
-  },
-  {
-   "family": "consent:decay:{stage}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "consent:partnership_grant"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "consent:decay:identity_severed",
-     "by": "author",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.1"
-  },
-  {
-   "family": "consent:decay:{stage}",
-   "kind": "clock",
-   "name": "anonymise",
-   "dur": "decay_protocol.patterns_anonymized_secs",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "consent:partnership_grant"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.1"
-  },
-  {
-   "family": "consent:decay:{stage}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "anonymise"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "consent:decay:patterns_anonymized",
-     "by": "author",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.1"
-  },
-  {
-   "family": "consent:decay:{stage}",
-   "kind": "clock",
-   "name": "complete",
-   "dur": "decay_protocol.complete_secs",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "consent:state:revoked"
-    },
-    {
-     "event": "withdrawn",
-     "of": "consent:partnership_grant"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.1"
-  },
-  {
-   "family": "consent:decay:{stage}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "complete"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "emit",
-     "family": "consent:decay:complete",
-     "by": "author",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.4.3.5.1"
+   "cc_ref": [
+    "CC 4.4.3.5.6"
+   ]
   },
   {
    "family": "takedown_notice:{basis}",
@@ -2236,7 +1419,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.5.3"
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
   },
   {
    "family": "takedown_notice:{basis}",
@@ -2253,7 +1438,9 @@
     }
    ],
    "by": "receipt",
-   "cc_ref": "CC 4.5.3"
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
   },
   {
    "family": "takedown_notice:{basis}",
@@ -2274,7 +1461,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.5.3"
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
   },
   {
    "family": "takedown_notice:{basis}",
@@ -2304,7 +1493,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 4.5.13"
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
   },
   {
    "family": "moderation:{allegation_type}",
@@ -2313,7 +1504,9 @@
    "dur": "moderation_action.window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 4.5.13"
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
   },
   {
    "family": "ballot:moderator",
@@ -2322,7 +1515,9 @@
    "dur": "moderator_election.window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 4.5.13"
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
   },
   {
    "family": "retirement:{state}",
@@ -2334,7 +1529,9 @@
    "dur": "default_standing.window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 7.5.5"
+   "cc_ref": [
+    "CC 7.5.5"
+   ]
   },
   {
    "family": "accord:lifecycle:{kind}",
@@ -2342,7 +1539,9 @@
    "mode": "required",
    "member": "valid_until",
    "max": "accord_heartbeat_max_secs",
-   "cc_ref": "CC 3.4.1"
+   "cc_ref": [
+    "CC 3.4.1"
+   ]
   },
   {
    "family": "accord:lifecycle:{kind}",
@@ -2361,155 +1560,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.4.1"
-  },
-  {
-   "family": "accord:invoke:constitutional:{halt_id}",
-   "kind": "expiry",
-   "mode": "none",
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:invoke:constitutional:{halt_id}",
-   "kind": "clock",
-   "name": "fuse",
-   "dur": "charter.halt_fuse_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:invoke:constitutional:{halt_id}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "fuse"
-    }
-   ],
-   "unless": [
-    {
-     "event": "admitted",
-     "of": "accord:lifecycle:confirmed"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "lapsed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.2.1.1"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "clock",
-   "name": "fuse",
-   "dur": "charter.halt_fuse_secs",
-   "from": [
-    {
-     "event": "admitted",
-     "of": "accord:invoke:constitutional:{halt_id}"
-    }
-   ],
-   "by": "receipt",
-   "cc_ref": "CC 4.2.1.3"
-  },
-  {
-   "family": "accord:lifecycle:{kind}",
-   "leaves": [
-    "confirmed"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "fuse"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 4.2.1.3"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "clock",
-   "name": "hold",
-   "dur": "group.hold_window_secs",
-   "default": "default_standing.window_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": "CC 3.3.4"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "hold"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "do",
-     "act": "drop_held",
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.4"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "clock",
-   "name": "age",
-   "dur": "group.hold_window_secs",
-   "default": "default_standing.window_secs",
-   "from": "asserted_at",
-   "by": "receipt",
-   "cc_ref": "CC 3.3.4"
-  },
-  {
-   "family": "cosign:{state}",
-   "leaves": [
-    "pending"
-   ],
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "age"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "closed",
-     "of": null,
-     "force": "must"
-    }
-   ],
-   "cc_ref": "CC 3.3.4"
+   "cc_ref": [
+    "CC 3.4.1"
+   ]
   },
   {
    "family": "group:roster",
@@ -2518,7 +1571,9 @@
    "dur": "charter.witness_cadence_secs",
    "from": "effective_at",
    "by": "receipt",
-   "cc_ref": "CC 3.2"
+   "cc_ref": [
+    "CC 3.2"
+   ]
   },
   {
    "family": "group:roster",
@@ -2543,7 +1598,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.2"
+   "cc_ref": [
+    "CC 3.2"
+   ]
   },
   {
    "family": "trust:{job}:{version}",
@@ -2555,7 +1612,9 @@
    "dur": "charter.attach_window_secs",
    "from": "cosigned_at",
    "by": "receipt",
-   "cc_ref": "CC 3.2"
+   "cc_ref": [
+    "CC 3.2"
+   ]
   },
   {
    "family": "trust:{job}:{version}",
@@ -2577,7 +1636,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.2"
+   "cc_ref": [
+    "CC 3.2"
+   ]
   },
   {
    "family": "group:roster",
@@ -2596,7 +1657,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.2"
+   "cc_ref": [
+    "CC 3.2"
+   ]
   },
   {
    "family": "group:roster",
@@ -2615,7 +1678,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.2"
+   "cc_ref": [
+    "CC 3.2"
+   ]
   },
   {
    "family": "identity:occurrence",
@@ -2634,7 +1699,9 @@
      "force": "must"
     }
    ],
-   "cc_ref": "CC 3.3.6"
+   "cc_ref": [
+    "CC 3.3.6"
+   ]
   }
  ]
 }
