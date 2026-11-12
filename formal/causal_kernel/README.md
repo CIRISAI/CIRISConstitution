@@ -31,6 +31,20 @@ one slot that say different things contest each other, and neither counts until 
 - Under the cut: 4,898 sets in 440,291 orders, one answer each. After a counting cut is on a slot, no row by
   a key that may not cut that slot changed it.
 
+**Standing, windows, copying and keys** (`seat.py`, `roles.py`, `window.py`, `route.py`, `keyplane.py`,
+checked by `check_lock.py`).
+
+- **The seat.** An offer and an acceptance, with the conferrer as one parameter. 2,727 sets in 587,536 arrival
+  orders, one answer each. `role_shapes.tsv` writes the 23 role names of the tables as parameters of three
+  shapes; 215 instance checks pass.
+- **The window.** A receipt, a landing, and three rules for an answer concurrent with the landing, run against
+  the self-roster lone path, the moderation fallback and the halt fuse. `window_adversary.tsv` is the table:
+  recount breaks none of twenty checks.
+- **Copying as need.** A party given only its routed rows concludes the same as one given everything; a
+  stranger is routed nothing.
+- **A writer's keys.** The key plane re-read from rows on the writer's own chain agrees with
+  `formal/key_plane` on 402,950 comparisons.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -38,8 +52,7 @@ one slot that say different things contest each other, and neither counts until 
 - Two cuts by keys of equal standing that undo each other stay contested. What settles it is a voice the other
   cannot remove, which is a property of the count and not of the cut.
 - A window closing unopposed and the lapse of an unconfirmed halt are not expressible from rows.
-- The shared library lacked the closure over what rows name, concurrency, the frontier, a merge and a sum.
-  They are written here and marked.
+- A merge of roster tips is written here and is not in the shared library.
 
-Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run) and
-`python3 -I formal/causal_kernel/check_cut.py`
+Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
+`python3 -I formal/causal_kernel/check_cut.py` and `python3 -I formal/causal_kernel/check_lock.py`

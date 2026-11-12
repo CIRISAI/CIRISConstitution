@@ -16,6 +16,9 @@ check_cut.py: test the CUT (cut.py) as one rule in place of `counts`, the slot d
 import itertools
 import json
 import multiprocessing
+import resource
+resource.setrlimit(resource.RLIMIT_AS, (2 << 30, 2 << 30))   # every process, inherited by the workers
+PROCS = 3                                                    # three workers and this process
 import os
 import sys
 from collections import Counter
@@ -108,7 +111,7 @@ def job(arg):
 
 def order_check(bounds, wf=True):
     jobs = [(name, idx, wf) for name, b in bounds.items() for idx in BASE.subsets(range(len(ALL_POOLS[name])), b)]
-    with multiprocessing.Pool() as mp:
+    with multiprocessing.Pool(PROCS) as mp:
         res = mp.map(job, jobs, chunksize=16)
     return len(jobs), sum(r[0] for r in res), sum(r[1] for r in res), sum(r[2] for r in res)
 

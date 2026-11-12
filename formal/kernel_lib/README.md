@@ -14,6 +14,11 @@ again with these functions alone, agree with the originals on the originals' own
 | `rule` | the cell a typed table gives for a key |
 | `fix` | repeat a step until nothing changes, to a bound |
 
+| `ancestors`, `concurrent`, `frontier`, `past` | the closure over what rows name: what a row names and theirs, whether neither of two rows names the other, and the rows of a set that no other row of it has in its past |
+
+`group` also sums, and gives the least or greatest value. Asked for the least or greatest row, it refuses a tie
+between two different rows, so no answer depends on the order of a list.
+
 None of them knows a family, a model or a rule.
 
 **What is checked** (`kernel_lib_check.py`). Six decisions are re-expressed in `reexpress.py`: the takedown

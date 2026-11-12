@@ -309,6 +309,7 @@ jobs:
           python3 -I ../kernel_lib/kernel_lib_check.py --check
           python3 -I ../causal_kernel/check.py
           python3 -I ../causal_kernel/check_cut.py
+          python3 -I ../causal_kernel/check_lock.py
           python3 -I ../roster_fork/fork_check.py --check
           python3 -I ../transport_tiers/frame_ab.py --check
           lean -M 6000 -T 200000 ../family_model/FamilyModel.lean

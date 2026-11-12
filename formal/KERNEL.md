@@ -59,13 +59,13 @@ originals on 400,300 comparisons.
 | Operator | What it does |
 |---|---|
 | select | rows matching a pattern on their fields |
-| group and reduce | the least, the greatest, the one distinct value, the count of distinct values, or the sum (the sum is not yet in the library) |
+| group and reduce | the least, the greatest, the one distinct value, the count of distinct values, or the sum; a tie between two different rows is refused, never broken by position |
 | interval | whether a value lies between an opening and a closing |
 | table cell | the value a typed table gives for a key |
 | bounded repeat | a step applied until nothing changes |
 | closure over what rows name | ancestors, concurrency, the frontier of a set |
 
-The last is not yet in `formal/kernel_lib`; it is written in `formal/causal_kernel` and marked. **open**.
+All six are in `formal/kernel_lib`. **run**: the closure agrees with a hand-written definition on 15,864 comparisons.
 
 ## 5. Named answers
 
@@ -82,12 +82,23 @@ Eight. Each is a composition of the operators, and each role, window, policy and
 | **owed** | what must this node now emit or do | derived |
 | **window** | has this window closed, and with what outcome | derived; the one answer that reads now |
 
-**stands.** One relation for every role, owner, member, moderator, guardian, delegate and trusted authority.
-A key stands when a bounded walk of live edges leads to it from a root. For what a row means to this node the
-root is the node's own key. An edge is withdrawn only by its own signer, so the walk never depends on itself
-through negation. **proved**: `reaches_standing_irrelevant`, `only_withdrawals_remove`.
-**open**: which rows are edges for which role. The `confers` and `binds_segment` columns are empty for all 184
-families, and the 23 role names are a list with no definition.
+**stands.** One shape, the **seat**. A key holds a seat in a scope over an object when a conferrer's offer
+names it and the key's own acceptance names that offer, and neither has been withdrawn by its own signer, and
+no cut removes it. Two voices: neither side alone makes a seat, either side alone ends it, and no third key
+ends it without a cut. One row is both voices only when a key seats itself. The conferrer is one parameter with
+three values: the object's own key, a key holding a seat that may confer, or a group whose count is met. A key
+stands when a bounded walk of live seats leads to it from a root. For what a row means to this node the root is
+the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,
+`stands_function`, `means_is_seat_walk`. **run**: 2,727 sets in 587,536 arrival orders.
+
+The 23 role names of the tables are not 23 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
+covers 18 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
+`tally` fits none because its holders are drawn from a group secret that is not a row. Appointed `moderate`,
+`review`, `slash` and `takedown` are one seat with four scopes. `owner` and the steward of an agent are one
+seat. `member`, an accord holder and a key of a self roster are one counted seat over three objects. `serve` is
+two seats required together, which is a question for **may**.
+**open**: in 14 of 17 partly fitting rows the text states the conferral and no acceptance row. The `confers`
+and `binds_segment` columns are still empty.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
 (`manifests/transitions.json` states it so). A refusal is a named missing row. **open**: guards are typed on 26
@@ -95,15 +106,27 @@ of 459 transitions, and "receive" is not yet a verb of the table.
 
 **missing and copying.** A row moves to a peer because that peer must conclude something and lacks it. What
 to send is what lies among the ancestors of what the peer must conclude, within the row's audience. This is
-the closure a store already computes for its own retention, evaluated for the other party. **open**: the
-placement cell is empty for 156 of 184 families and no cell states the copy rule.
+the closure a store already computes for its own retention, evaluated for the other party. **run** (`formal/causal_kernel/route.py`): a
+party given only its routed rows concludes the same as a party given everything, and a stranger is routed
+nothing. That holds only with one rule added: a row's audience includes the audience of every row that names
+it. Without it a joiner can never keep its own admission. With it, a reply carries the message it answers to a
+later joiner. **open**: whether that carriage is wanted; the placement cell is empty for 156 of 184 families and
+no cell states the copy rule.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
-the close. A window names its opener and the acknowledgement by which the concluding party first held it; the
-concluder signs the outcome as a row, and from then on it is a row like any other. **measured**: 19 clock
-entries have this shape, 16 of them counted from receipt. The other 20 are a row stating its own end, which is
-read from the row alone against now. **open**: no model yet checks a signed outcome against a false one; who
-may conclude each window is a question of standing.
+the close. A window names its opener and the acknowledgement by which the concluding party first held it. The
+concluder signs the outcome as a landing row naming that acknowledgement and its own head. **measured**: 19
+clock entries have this shape, 16 of them counted from receipt. The other 20 are a row stating its own end,
+read from the row alone against now.
+
+A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with the
+landing is **recounted**: it is counted with the landing's past, and the landing stands only if the table still
+gives the outcome it stated. **run** (`formal/causal_kernel/window_adversary.tsv`): against the three windows
+of the text, twenty checks of what each exists to prevent. Recount breaks none. A landing that voids concurrent
+answers breaks seven, a thief evicting alone among them. An answer that contests any landing breaks two.
+**proved** for the two rejected rules only (`ruleI_concluder_decides`, `ruleII_never_final`); recount is
+**open** in Lean. What recount costs: a lone landing is never final against a key that can still sign, and the
+window's length is the concluder's own word.
 
 ## 6. Conflict between concurrent rows
 
@@ -135,6 +158,15 @@ An adversary holding the count of an old head signs a valid version alone. A wit
 
 **open, on the wire**: a roster version names one head today and must be able to name several.
 
+## 7a. A writer's keys are a fold
+
+Who is entitled to a wrap of which key is seats and cuts. The epoch is the count of the writer's mint rows, and
+a rotation is due when a holder of the current key is no longer entitled. None of the writer's state resists
+being a fold over its own rows, on one condition: each write and each mint names the head of the membership
+rows the writer held. **run** (`formal/causal_kernel/keyplane.py`): 402,950 comparisons with
+`formal/key_plane`, none differ. It also found that a re-admitted member's second live device is not wrapped at
+the seat.
+
 ## 8. What the kernel does not give
 
 - **No finality across readers.** Two nodes with the same rows conclude the same. A settled slot can be
@@ -154,7 +186,8 @@ An adversary holding the count of an old head signs a valid version alone. A wit
 | A roster version naming several heads | wire | the store's to shape |
 | Whether one acknowledgement of a head covers everything beneath it | wire | the store's to shape |
 | Placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
-| A signed outcome for each window, and who may sign it | rule and model | `manifests/reactions.json` |
+| A landing row for each window, and who may sign it | table data | `manifests/reactions.json` |
 | Constants out of config | table data | `constitution/constants.tsv` |
-| Closure over what rows name, in the shared library | code | `formal/kernel_lib` |
-| The key plane and the signer gate written over the library | code | `formal/key_plane`, `tools/check_signer_gate.py` |
+| An acceptance row for each seat the text confers without one | rule | the Parts |
+| Recount proved, and the cut's terms for each slot transcribed into the proof | proof | `formal/causal_order` |
+| The signer gate written over the library | code | `tools/check_signer_gate.py` |

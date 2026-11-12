@@ -47,10 +47,8 @@ def kept(offered, wf=WELL_FORMED):
 
 
 def ancestors(by, rid):
-    """The ids of the rows `rid` names, and theirs. NOT IN kernel_lib as a function: it is `fix` over a
-    step written by hand here (a transitive closure along `names`)."""
-    step = lambda acc: acc | frozenset(n for a in acc | {rid} if a in by for n in by[a]["names"])
-    return K.fix(step, frozenset(), len(by) + 1)
+    """The ids of the rows `rid` names, and theirs: kernel_lib.ancestors."""
+    return K.ancestors(by, rid)
 
 
 class State:
@@ -64,11 +62,11 @@ class State:
         self.Cs = [r for r in self.rows if self.C.get(r["id"])]
 
     def concurrent(self, a, b):
-        return a != b and a not in self.anc[b] and b not in self.anc[a]
+        return K.concurrent(self.anc, a, b)
 
 
 def concurrent(S, a, b):
-    """Neither names the other, through any chain. NOT IN kernel_lib."""
+    """Neither names the other, through any chain: kernel_lib.concurrent."""
     return S.concurrent(a, b)
 
 
@@ -129,17 +127,16 @@ def arrive(order, rule, root=None, wf=WELL_FORMED, wait=True):
 
 # ---- layer 3: derived ------------------------------------------------------------------------------------
 def frontier(S, rows):
-    """The rows of `rows` that no other row of `rows` has in its past. NOT IN kernel_lib."""
-    return [r for r in rows if not any(r["id"] in S.anc[q["id"]] for q in rows)]
+    """The rows of `rows` that no other row of `rows` has in its past: kernel_lib.frontier."""
+    return K.frontier(S.anc, rows)
 
 
 def wins(S, rows, label):
     """Of `rows` (concluded rows carrying a `target`), those with no row on the same target of a higher
     kind. Rows of the top kind all win: the order on kinds decides between kinds and nothing else."""
     on = [dict(r, _label=label(r)) for r in rows if r.get("target") is not None]
-    # group(greatest) hands back one row and breaks a tie by list order; only its label is read
-    top = K.group(on, "target", "greatest", "_label")
-    return [r for r in rows if r.get("target") is not None and label(r) == top[r["target"]]["_label"]]
+    top = K.group(on, "target", "max", "_label")        # only the label is read: the value reducer, a function of the set
+    return [r for r in rows if r.get("target") is not None and label(r) == top[r["target"]]]
 
 
 def slot(S, cands, value=lambda r: r["id"]):

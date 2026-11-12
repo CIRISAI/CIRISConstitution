@@ -44,6 +44,7 @@ run python3 formal/set_item/set_item_model.py --check
 run python3 -I formal/kernel_lib/kernel_lib_check.py --check
 run python3 -I formal/causal_kernel/check.py --bound 5
 run python3 -I formal/causal_kernel/check_cut.py
+run python3 -I formal/causal_kernel/check_lock.py
 run python3 -I formal/roster_fork/fork_check.py --check
 run python3 tools/ui_closure.py --check
 run python3 tools/check_termination.py

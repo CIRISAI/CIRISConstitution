@@ -10,8 +10,8 @@ t_of = lambda r: None if r is None else r["t"]
 # ---- takedown (formal/takedown/takedown_model.py: fold) -------------------------------------------------
 def takedown(H, now, basis, W, hold_wins):
     """H: rows {k, basis, t} held by now. basis: {leaf: 'immediate' | 'windowed'}."""
-    hold_from = t_of(K.group(K.sel(H, k="hold"), None, "least"))
-    hold_to = t_of(K.group(K.sel(H, k="hold_lifted"), None, "least"))
+    hold_from = K.group(K.sel(H, k="hold"), None, "min")
+    hold_to = K.group(K.sel(H, k="hold_lifted"), None, "min")
     destroyed, live_notice = False, False
     for n in K.sel(H, k="notice"):
         if K.rule(basis, n["basis"]) == "immediate":
@@ -29,7 +29,7 @@ def takedown(H, now, basis, W, hold_wins):
 # ---- deletion (formal/deletion/deletion_model.py: fold) -------------------------------------------------
 def deletion(H, now, table, W):
     """H: rows {k, t} held by now. table: {'starts': kinds, 'excuses': kinds}."""
-    start = t_of(K.group(K.sel(H, k=K.rule(table, "starts")), None, "least"))
+    start = K.group(K.sel(H, k=K.rule(table, "starts")), None, "min")
     if start is None: return "none"
     if K.sel(H, before=start + W, k=K.rule(table, "excuses")): return "met"
     return "breach" if K.in_range(now, start + W) else "running"
@@ -94,7 +94,7 @@ def set_item(H, leaf, A, W):
     header = K.group(K.sel(H, k="header"), "item", "one", "digest")
     for l in K.sel(H, k="leaf", n=leaf):
         parts = [l] + K.sel(H, k="header", item=l["item"], digest=l["digest"])
-        if K.rule(header, l["item"]) == l["digest"] and K.in_range(K.group(parts, None, "greatest")["t"], ALWAYS, A + W + 1): return True
+        if K.rule(header, l["item"]) == l["digest"] and K.in_range(K.group(parts, None, "max"), ALWAYS, A + W + 1): return True
     return False
 
 

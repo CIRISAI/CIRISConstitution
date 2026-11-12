@@ -15,6 +15,9 @@ import csv
 import itertools
 import json
 import multiprocessing
+import resource
+resource.setrlimit(resource.RLIMIT_AS, (2 << 30, 2 << 30))   # every process, inherited by the workers
+PROCS = 3                                                    # three workers and this process
 import os
 import sys
 from collections import Counter
@@ -230,7 +233,7 @@ def order_job(job):
 def order_check(bound, cfg_kw=None, procs=None):
     cfg_kw = cfg_kw or {}
     jobs = [(name, idx, cfg_kw) for name, pool in POOLS.items() for idx in subsets(range(len(pool)), bound)]
-    with multiprocessing.Pool(procs) as mp:
+    with multiprocessing.Pool(PROCS) as mp:
         res = mp.map(order_job, jobs, chunksize=16)
     return {"sets": len(jobs), "orders": sum(r[0] for r in res), "orders_differing": sum(r[1] for r in res),
             "sets_where_renaming_changed_an_answer": sum(r[2] for r in res)}
@@ -412,7 +415,10 @@ def instances():
 def library_findings():
     """What kernel_lib does that this kernel must step around."""
     x, y = {"id": "x", "l": 1}, {"id": "y", "l": 1}
-    tie = K.group([x, y], None, "greatest", "l")["id"] != K.group([y, x], None, "greatest", "l")["id"]
+    try:
+        tie = K.group([x, y], None, "greatest", "l")["id"] != K.group([y, x], None, "greatest", "l")["id"]
+    except K.Tie:
+        tie = False
     return {"group_greatest_breaks_a_tie_by_list_order": tie,
             "sel_matches_an_absent_field_against_None": bool(K.sel([{"id": "x"}], removes=None))}
 
