@@ -958,3 +958,13 @@ A landed second (six sentences). Values that lag and gaps: the enact cell of `co
 generated TLC instances); `community:listing` supersede is typed same-author, and a moderator now replaces a
 founder's row; no row carries a court's order naming a minor's guardian (ask persist); the takedown binding of a
 widened row is the store's #1260. The seat rule (handoff/lanes/out_e1.md, D1 to D8 as recommended) is next.
+
+Steward, 2026-11-12, on who confers the duty to attest a court's order: "the individuals under jurisdiction of the
+court and impacted by said, no one else realistically can". Landed in CC 3.2: the minor, the displaced guardian and
+the named guardian attest it under their own keys; no root and no conferred duty for a court. Derived from "a new
+guardian's signature alone displaces no one": the named guardian's attestation does not count alone. Open, for him:
+a minor too young to attest whose guardian will not step down has no path by these rules; and CC 3.4.12 (an adult
+under incapacity, the court's order there) is not touched by this ruling. Persist's answers on the seat rule: token
+`reserved_family_unseated`; `infra:record_hard_case` kept, and a hard case whose body names another party needs it
+even when self-attested; `assure:age`, `assure:capacity`; `infra:attest` a scope only; Verify's INFRA_SCOPES knows 7
+of 13. The seat rule reaches the reserved-family gates only, not the user/node/agent reads of CC 3.2.
