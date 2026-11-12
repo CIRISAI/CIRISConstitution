@@ -704,3 +704,12 @@ check then passes for it and for nothing else. Scratch `repoint.py` moves rows w
 the card home and drops citation rows. A trim lane (`lanes/out_trim_a.tsv`) is proposing trimmed description cells
 for the 33 Part 3 cells over 80 words with a card; before any lands, the registry is compared before and after and
 only `description` may differ. toc.tsv carries 8.10 (added by hand; `build_pdf.py --write-toc-volumes` placed it).
+
+Trim lane result (`handoff/lanes/out_trim_a.tsv`), NOT applied: across the 33 Part 3 description cells over 80
+words that have a card, 5,247 words would become 5,008. Thirteen cells cannot lose a sentence, because no card line
+carries a whole one; the pointer sentence each trimmed cell gains eats most of the rest. The cards carry about a
+twentieth of what these cells say. What the cells hold that the data does not: what the row is and why, id and
+digest derivations, audience and serving rules, the conditions marked partial in the guard table, and reasons.
+One mismatch found: the `retirement:{state}` cell cancels by `withdraws` and the model has no withdraw transition
+(the same finding the guard pass made). Conclusion: the data pass has produced kernel-readable tables and checks,
+not a shorter Part 3; shortening Part 3 needs the audience, derivation and body-rule columns that do not exist yet.
