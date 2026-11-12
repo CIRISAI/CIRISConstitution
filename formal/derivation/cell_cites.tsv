@@ -90,7 +90,6 @@ ballot:moderator	fold	agree	CC 4.5.13	**The floor in a small room** is the small
 ballot:moderator	fold	agree	CC 4.5.13	The electorate is the live roster at the count, a ballot from a member no longer live counting for nothing.
 ballot:moderator	fold	agree	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
 ballot:moderator	governance	fills	CC 4.5.13	The moderator election above **reconstitutes authority**: the room locks and its members elect, the ballot in merit order with the highest `moderation_track_record` first.
-ballot:moderator	governance	fills	CC 4.5.4	On that loss the community locks and elects ([CC 4.5.13](part_4_composition_governance.md): read-only throughout a 24 h ranked-choice vote over the roster, the ballot staying open until
 ballot:moderator	governance	fills	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
 ballot:moderator	signer_rule	agree	CC 3.1.3	**A member's ballot in a moderator election** ([CC 4.5.13](part_4_composition_governance.md#4.5.13)): `community_id`, the election id (digest of community id, roster head and last seating), `ranks` (up to three member keys in order);
 ballot:moderator_acceptance	fold	agree	CC 3.1.3	among valid acceptances the larger set, then the smaller digest, seats
@@ -393,11 +392,9 @@ health:liveness:{version}	signer_rule	agree	CC 3.1.9.4	**External service-health
 identity:occurrence	lifecycle	fills	CC 3.3.6	previously-delivered DEKs are out of scope
 identity:occurrence	lifecycle	fills	CC 3.3.6.1	a new `identity_occurrence` superseding the prior rotates the KEM keys **without touching the stable signing `key_id`**
 identity:occurrence	lifecycle	fills	CC 3.3.6.2	Rotating the Reticulum destination (new transport identity) is a new `identity_occurrence` `supersedes`-ing the prior: location changes without touching federation identity or community membership. A seated
-identity:occurrence	lifecycle	fills	CC 3.3.6.3	An eviction rotates no key material already shared
 identity:occurrence	lifecycle	fills	CC 4.4.3.4.3	`withdraws` the occurrence → no further grants to it; what it holds stays
 identity:occurrence	lifecycle	fills	CC 4.4.3.4.6	.where(envelope.valid_until IS NULL OR > now)
 identity:occurrence	lifecycle	fills	CC 4.4.3.4.6	.where(the occurrence's current version; a version supersedes only its own earlier one)
-identity:occurrence	lifecycle	fills	CC 4.5.12.1	The departed party keeps the `key_grant`s it already holds and nothing is re-encrypted.
 identity:occurrence	projection	agree	CC 4.4.3.4	the substrate computes the current member set by walking the latest `identity_occurrence` / `family` Contributions
 identity:occurrence	projection	agree	CC 4.4.3.4.6	For identity `I`, the current self-collective is computed as:
 identity:occurrence	signer_rule	agree	CC 2.4	- occurrences (`identity:occurrence:v1`, signed by the identity or a live occurrence) and
@@ -438,14 +435,12 @@ key_grant:{axis}	lifecycle	fills	CC 2.4.1.2.1	`rotation_chain` is supersession l
 key_grant:{axis}	lifecycle	fills	CC 3.1.3	a `withdraws` naming the row is refused
 key_grant:{axis}	lifecycle	fills	CC 3.3.4	the removed member retains existing key_grants (cannot retroactively un-share)
 key_grant:{axis}	lifecycle	fills	CC 3.3.5.1	a revealed `key_grant` ([CC 3.3.2](#3.3.2)) is forward-only
-key_grant:{axis}	lifecycle	fills	CC 3.3.6	once shared, always shared at the wire layer; rotation is a separate ceremony
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	epoch rolls on member removal (mandatory)
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	removed members retain extant `key_grant`s
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.2.6	the epoch rotates on removal, never on admission
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.4.3	`withdraws` the occurrence → no further grants to it; what it holds stays
 key_grant:{axis}	lifecycle	fills	CC 4.4.3.4.5	after a removal each minter rotates its epoch DEK before its next sealed write
-key_grant:{axis}	lifecycle	fills	CC 4.5.12.1	The departed party keeps the `key_grant`s it already holds and nothing is re-encrypted.
 key_grant:{axis}	lifecycle	fills	CC 5.1	`withdraws` on a `key_grant` is refused
 key_grant:{axis}	placement	agree	CC 3.1.3	Union by identity, never withdrawn, placed at the content's scope.
 key_grant:{axis}	projection	agree	CC 3.1.3	Union by identity, never withdrawn, placed at the content's scope.

@@ -673,3 +673,10 @@ Widens and confirm, agreed with the client session (a derived reading, not Eric'
 bound, `when` narrows it. Supersede on a by_scope family: widens true, when by_scope_change (69 transitions).
 confirm.when: always 49, if_widens 205. The client will state CSD/5 L6 as: confirmed when the row widens at the
 scope it is signed at, or has no way back. "Way back" still means this table offers a withdraw or recant.
+
+Restatement cuts (`lanes/out_cut_a.tsv` in scratch): of 93 restating sentences with data under them, 4 cut, 3
+shortened, 86 kept (list items, code lines, a local reason); 190 words. Applied with the guards; three entries and
+their inventory rows removed; ten data rows had quoted the cut words: seven dropped where another row carried the
+value, three moved to the home sentence (CC 4.4.3.4.5, CC 3.3.6.3). Conclusion: cutting restatements is nearly
+spent. The volume is in home statements of per-family values, which shrink only by the method of the policy table:
+a generated table becomes the Part's statement and the prose that listed the values goes.

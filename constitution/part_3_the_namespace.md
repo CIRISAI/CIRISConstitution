@@ -245,7 +245,6 @@ Distinct from the substrate self-reports above: these are **occurrence** self-re
 
 **What the substrate does not own.** Attendance itself. *"A human is present here"* / *"an agent is running here"* is not a storage fact, and no substrate can know it; when to claim, renew, and release is the consumer's decision.
 
-
 #### 3.1.3.2 `membership` — `membership:*` — nobody joins a family or community without their own consent (normative)
 
 This entry says which signed rows seat a key on the roster of a `family` or `community`, and which never do.
@@ -1704,8 +1703,6 @@ It rides the same admission gate as a bare `scores` on `consent:state:*`; the `c
 
 The structural primitives close the bilateral shape — no new attestation_type, no new envelope field beyond `subject_key_ids` itself.
 
-
-
 #### 3.3.5.1 `fair-exchange` — Optimistic fair exchange (worked example, no new primitive)
 
 This worked example states the [CC 1.7](part_1_foundation.md) in-grammar claim as **normative**. The claim is that accountable ("optimistic") fair exchange — a digital good D traded for a settlement S, with adjudicated recourse — composes entirely from the existing 1+4 set plus the bilateral pair pattern above. The trustless, third-party-free atomic swap (HTLC-class) remains the [CC 1.7](part_1_foundation.md) standing falsification target; this pattern does **not** reach it. Offeror A and acceptor B exchange across a steward-bound escrow custodian E, with the always-present named-moderator / WA as the optimistic third party invoked only on dispute (WBD applied to exchange).
@@ -1797,9 +1794,9 @@ identity_occurrence {
 | service | Background service / scheduled job / API integration acting |
 | | on the identity's behalf |
 
-**Admission is roster maintenance.** An `identity_occurrence` row is signed by a live roster key of the identity (the genesis key or any admitted occurrence) and lands under the two-path policy of [CC 3.3.6.3](#3.3.6.3). Under that policy the row lands at once by a strict majority of the live roster, or after the window when no majority objects ([CC 3.3.6.3](#3.3.6.3)). At one key the addition is the owner's approval alone. Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
+**Admission is roster maintenance.** An `identity_occurrence` row is signed by a live roster key of the identity (the genesis key or any admitted occurrence) and lands under the two-path policy of [CC 3.3.6.3](#3.3.6.3). Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
 
-**Revocation**: an eviction is a `withdraws` against the `identity_occurrence` row, proposed by a live roster key and landing under [CC 3.3.6.3](#3.3.6.3). No single occurrence evicts at once with no window: that unilateral configuration is one a thief wins in two steps. Once it lands the substrate stops wrapping new key_grants to the evicted key; previously-delivered DEKs are out of scope per the [CC 4.4.3.4.5](part_4_composition_governance.md) forward-secrecy rule (once shared, always shared at the wire layer; rotation is a separate ceremony).
+**Revocation**: an eviction is a `withdraws` against the `identity_occurrence` row, proposed by a live roster key and landing under [CC 3.3.6.3](#3.3.6.3). No single occurrence evicts at once with no window: that unilateral configuration is one a thief wins in two steps. Once it lands the substrate stops wrapping new key_grants to the evicted key; previously-delivered DEKs are out of scope per the [CC 4.4.3.4.5](part_4_composition_governance.md) forward-secrecy rule.
 
 **Cardinality**: an identity MAY admit unbounded occurrences; the substrate carries no hard cap (operator policy MAY impose per-deployment limits). When a new occurrence is admitted, substrate emits `hard_case:identity_occurrence_added` ([CC 3.4.3](part_3_the_namespace.md)) so consumer policy can observe membership growth.
 
@@ -1963,8 +1960,6 @@ A vote from an evicted key is void.
 
 *One key and two keys.* At **one** key the addition is unilateral: the owner's approval of the device that is joining, which is the add-device flow. At **two** keys the quorum path is both keys and the lone path is the other key's silence. So an honest pair lands at once, and a theft of one of two is a stalemate (each side objects to the other's eviction and the thief can block an addition). Safety holds through that stalemate, and nothing resolves it on the wire. That bound is stated so a person knows it: a self SHOULD hold three keys.
 
-An eviction rotates no key material already shared ([CC 4.4.3.4](part_4_composition_governance.md) Policy L; [CC 4.5.12.1](part_4_composition_governance.md)). It stops the next wrap.
-
 **What the self-roster model (pinned by the register) checks.** The model shows this, case by case:
 
 | Case | What the model shows |
@@ -2058,7 +2053,6 @@ The grant's parameters — `grants` (the constant `"replication"`) and `attestat
 
 ### 3.3.8 `namespace-event` — Event-lifecycle dimension families
 **Owning component**: NodeCore — registry rows at [CC 3.1.9](part_3_the_namespace.md) (content-ingestion families), per [CC 3.1.7](part_3_the_namespace.md) R1.
-
 
 Dimensions emitted against `external_content:event_listing` Contributions. Open vocabulary per [CC 4.5.1.1](part_4_composition_governance.md) axis-vocabulary discipline; canonical states named here.
 
@@ -2158,7 +2152,6 @@ The [CC 3.3.10](part_3_the_namespace.md) prohibition stands untouched: **CEG car
 ### 3.3.11 `inter-content` — Inter-content + relation prefixes
 **Owning component**: NodeCore — registry rows at [CC 3.1.9](part_3_the_namespace.md) (content-ingestion families), per [CC 3.1.7](part_3_the_namespace.md) R1.
 
-
 | Prefix | Description | Polarity |
 |---|---|---|
 | `news:*` | News-content claims; publisher-attested + time-decaying + fact-checker composition. | signed |
@@ -2171,7 +2164,6 @@ The [CC 3.3.10](part_3_the_namespace.md) prohibition stands untouched: **CEG car
 
 ### 3.3.12 `namespace-multimedia` — Multimedia dimension families
 **Owning component**: NodeCore — `content_class` / `cw_class` / `content_rating` are catalogued at [CC 3.1.9.2](part_3_the_namespace.md) and the five media-type families at [CC 3.1.9](part_3_the_namespace.md) (content-ingestion families), per [CC 3.1.7](part_3_the_namespace.md) R1; `age_assurance:*` is Verify's ([CC 3.1.2](part_3_the_namespace.md)).
-
 
 All four families are **open vocabulary** per [CC 4.5.1.1](part_4_composition_governance.md) axis-vocabulary discipline; canonical kinds named here, additions via documentation-only registry entries.
 

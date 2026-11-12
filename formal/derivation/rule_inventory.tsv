@@ -1752,7 +1752,6 @@ p3	1403	3.3.6	family	key_plane	body	identity	is	states		encryption_pubkeys.x2551
 p3	1413	3.3.6	mechanism	wire	body	identity	MUST	states	3.3.6.2.1	transport_destination.destination_hash MUST derive from reticulum_x25519_pubkey, reticulum_ed25519_pubkey, app_name and ordered aspects per the pinned RNS algorithm	table
 p3	1420	3.3.6	family	row_shape	body	identity	is	states		device_class is a closed set: phone, laptop, server, embedded, agent, service	table
 p3	1430	3.3.6	family	signer	signer_rule	identity	is	states	3.3.6.3	An identity_occurrence row is signed by a live roster key of the identity (genesis key or any admitted occurrence)	
-p3	1430	3.3.6	family	roster_fold	cosign_rule	identity	is	restates	3.3.6.3	An identity_occurrence lands at once by a strict majority of the live roster or after the window with no majority objection; at one key the owner's approval alone	
 p3	1430	3.3.6	family	licensure	evidence_screen	identity	MAY	states		Higher-assurance setups MAY layer requirements on hardware_attestation via consumer policy	
 p3	1432	3.3.6	family	withdraw	lifecycle	identity	is	states	3.3.6.3	An occurrence eviction is a withdraws against the identity_occurrence row proposed by a live roster key, landing under the two self-roster paths; no single occurrence evicts without a window	
 p3	1432	3.3.6	family	key_plane	lifecycle	identity,key_grant	is	restates	4.4.3.4.5	Once an eviction lands the substrate stops wrapping new key_grants to the evicted key; previously delivered DEKs stay shared (once shared always shared); rotation is a separate ceremony	
@@ -1823,7 +1822,6 @@ p3	1531	3.3.6.3	family	row_shape	body	objection	is	states	3.1.9.2	Self-roster vo
 p3	1531	3.3.6.3	family	policy_row	governance	identity	is	states	4.5.13,4.2.1.1	self_roster_add and self_roster_evict governance rows: enact a strict majority, cancel a strict majority of the others, floor one key, window 86400 s; the same policy shape as the constitutional halt	
 p3	1531	3.3.6.3	family	roster_fold	cosign_rule	identity	is	states		At one key a roster addition is unilateral: the owner's approval of the joining device	
 p3	1531	3.3.6.3	family	roster_fold	none	identity	SHOULD	states		At two keys a theft of one is a stalemate nothing resolves on the wire; a self SHOULD hold three keys	
-p3	1531	3.3.6.3	family	key_plane	lifecycle	identity	is	restates	4.4.3.4,4.5.12.1	An eviction rotates no key material already shared; it stops the next wrap	
 p3	1537	3.3.7	family	row_shape	none	consent	is	restates	3.3.1,4.5.1.1	consent:replication is a member of the consent:* family, open in parameters, riding scores with no new envelope field	
 p3	1537	3.3.7	family	consent_fold	none	consent	is	states		consent:replication is a fabric node's standing grant to replicate a class of its own attestations to a named peer node, distinct from a subject's consent over a target Contribution	
 p3	1539	3.3.7	family	audience	replication	consent	is	states	4.4.3.2.1,5.2	A node inside a community shares with co-members by cohort membership; an out-of-group peering needs an explicit revocable consent:replication object	
@@ -2646,7 +2644,6 @@ p4	850	4.4.3.4.2.1	kernel	cosign	cosign_rule	community	is	states		A room never s
 p4	850	4.4.3.4.2.1	family	roster_fold	cosign_rule	community,family	MUST	restates	3.2	Only an infrastructure community or conferring family must be founded at N >= M+1 (T7)	
 p4	850	4.4.3.4.2.1	family	roster_fold	cosign_rule	community,family	is	restates	3.2	T7 founding and fold constraint: live at >= M+1 active founders, stalled and declared at <= M, M not rebased	
 p4	850	4.4.3.4.2.1	family	halt	governance	humanity_accord	is	restates	4.2.6	The accord family is excluded from T7: a halt fires on the live set; a roster change counts yes-votes against the standing roster	
-p4	850	4.4.3.4.2.1	family	roster_fold	cosign_rule	community,family	is	restates	3.2	The T7 recovery widening adds a conferred human founder on the conferral alone; it can add, never remove, never lower M	
 p4	854	4.4.3.4.3	family	key_plane	none	identity_occurrence	is	states		A person's app and agent are two occurrences of one user identity sharing one Self DEK	
 p4	854	4.4.3.4.3	kernel	conformance	none		MUST	states		Every implementation composes the Self at login the same way so a Self is identical everywhere	
 p4	856	4.4.3.4.3	kernel	signature	none	identity_occurrence	is	restates	5.3.1,4.2.2	A user identity_key is hybrid Ed25519+ML-DSA-65 and hardware-rooted; WebAuthn is the presence factor, not the key	

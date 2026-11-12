@@ -56,9 +56,7 @@ membership:{stage}	widening[scope:community|affiliations]: key=next_seal	CC 2.1	
 membership:{stage}	widening[scope:community|affiliations]: key=next_seal ; removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.2.6	the epoch rotates on removal, never on admission
 membership:{stage}	removal[scope:self|family]: key=stop_wrap ; resignation[scope:self|family]: key=stop_wrap	CC 3.3.4	4. On admission of a REMOVE: per [CC 4.4.3.4.5](part_4_composition_governance.md) the removed member retains existing key_grants (cannot retroactively un-share); the substrate stops wrapping new key_grants to
 membership:{stage}	removal[scope:self|family]: key=stop_wrap	CC 4.4.3.4.5	no key is reused, so nothing is rotated
-membership:{stage}	removal[scope:self|family]: key=stop_wrap ; resignation[scope:self|family]: key=stop_wrap	CC 4.5.12.1	The departed party keeps the `key_grant`s it already holds and nothing is re-encrypted.
-identity:occurrence_revocation	attest[scope:self]: key=stop_wrap	CC 4.5.12.1	The departed party keeps the `key_grant`s it already holds and nothing is re-encrypted.
-identity:occurrence_revocation	attest[scope:self]: key=stop_wrap	CC 3.3.6.3	An eviction rotates no key material already shared
+identity:occurrence_revocation	attest[scope:self]: key=stop_wrap	CC 4.4.3.4.5	so the substrate simply stops wrapping new DEKs to the removed member's keys
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 3.2	a fresh epoch DEK after a removal, history never re-encrypted
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.4.5	after a removal each minter rotates its epoch DEK before its next sealed write

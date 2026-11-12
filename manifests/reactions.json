@@ -891,7 +891,7 @@
    "dur": "self_roster_add.window_secs",
    "from": "first_held",
    "by": "receipt",
-   "cc_ref": "CC 3.3.6"
+   "cc_ref": "CC 3.3.6.3"
   },
   {
    "family": "accord:lifecycle:{kind}",

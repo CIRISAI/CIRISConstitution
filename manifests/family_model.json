@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "d81f6d2d321d09ee58f85f11538c0dcb1ad0b7572064993b0bdc080783fcdee0",
+  "registry_sha256": "e5ee42b030d74db64a58a6d8681107bb6ddc9bcad9cdb2c7822e1722da7bb1a1",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -270,7 +270,7 @@
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
    "cells_cited": 323,
-   "citations": 506,
+   "citations": 502,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "body": {
@@ -34883,19 +34883,11 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 3.3.6.3",
-      "reading": "fills"
-     },
-     {
       "cc_ref": "CC 4.4.3.4.3",
       "reading": "fills"
      },
      {
       "cc_ref": "CC 4.4.3.4.6",
-      "reading": "fills"
-     },
-     {
-      "cc_ref": "CC 4.5.12.1",
       "reading": "fills"
      }
     ]
@@ -38499,10 +38491,6 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 3.3.6",
-      "reading": "fills"
-     },
-     {
       "cc_ref": "CC 4.4.3.2.2",
       "reading": "fills"
      },
@@ -38516,10 +38504,6 @@
      },
      {
       "cc_ref": "CC 4.4.3.4.5",
-      "reading": "fills"
-     },
-     {
-      "cc_ref": "CC 4.5.12.1",
       "reading": "fills"
      },
      {
