@@ -1066,3 +1066,7 @@ of the seating). Now stated once as a count any choice may use (CC 4.5.13), writ
 tally plus a bounded finish (`formal/ranked_choice`), and the choice item's `ranking` uncapped. Not done: a policy
 row for a ranked poll that is not an election (the generated table), the cell layout of a ranked secret poll in
 CC 6.1.9 (one cell per ranking; for the store), and `ranked` as a kind a group may declare for its own decisions.
+`tools/check_termination.py` (gates and CI): at leaf grain the reactions have 31 causes among 36 leaves, no cycle,
+longest chain two, and all 17 families that wait have a deadline. The nine self-loops seen at family grain were an
+artefact of that grain: the decay stages run from the revocation's clock and not from each other, and a key grant
+is caused by a sealed write, which is the node's own act and not a row.

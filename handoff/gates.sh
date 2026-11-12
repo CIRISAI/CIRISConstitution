@@ -41,6 +41,7 @@ run python3 formal/key_plane/key_plane_model.py --check
 run python3 formal/guardianship/guardianship_model.py --check
 run python3 formal/ranked_choice/ranked_choice_model.py --check
 run python3 tools/ui_closure.py --check
+run python3 tools/check_termination.py
 run python3 -I formal/transport_tiers/frame_ab.py --check
 run python3 tools/check_compliance_wire_forms.py
 run python3 tools/check_rule_entries.py
