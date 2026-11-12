@@ -1,0 +1,2222 @@
+{
+ "_meta": {
+  "source": "formal/derivation/reaction_text.tsv",
+  "cc_section": "4.5.13",
+  "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
+  "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
+  "entries": 116,
+  "kinds": {
+   "expiry": 13,
+   "clock": 34,
+   "react": 69
+  },
+  "emits": 37,
+  "new_event_words": {
+   "purged": 7,
+   "matched": 1,
+   "sealed": 4
+  },
+  "one_emitter": {
+   "rule": "a row a clock or a fold causes is emitted by the door the causing row first entered (CC 4.5.13)",
+   "not_yet_by_origin_door": [
+    "agent_files:{kind}:{platform_or_target}: emit hard_case:subject_authority_missing by identity:substrate_persist",
+    "consent:decay:{stage}: emit consent:decay:complete by author",
+    "consent:decay:{stage}: emit consent:decay:patterns_anonymized by author",
+    "consent:deletion_sla:{days}: emit hard_case:deletion_window_breach by identity:substrate_persist",
+    "consent:state:{stance}: emit consent:state:expired by identity:substrate_persist",
+    "consent:{kind}: emit hard_case:subject_authority_missing by identity:substrate_persist",
+    "key_grant:{axis}: emit hard_case:recipient_excluded by identity:substrate_persist"
+   ]
+  }
+ },
+ "reactions": [
+  {
+   "family": "bond_posted:{currency}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "revocation:{entity_type}:{reason}"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "forfeited",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.1"
+  },
+  {
+   "family": "rendezvous:route",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": "CC 3.1.4"
+  },
+  {
+   "family": "rendezvous:route",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "purgeable",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.4"
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "consent:state:expired",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "consent:state:expired",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "cc_ref": "CC 4.4.3.5.5"
+  },
+  {
+   "family": "consent:state:{stance}",
+   "leaves": [
+    "granted"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "consent:state:expired",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.5"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    },
+    {
+     "event": "superseded",
+     "of": "self"
+    },
+    {
+     "event": "purged",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "cancel_watch",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "family",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "membership:widening"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "consent:replication:{version}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    },
+    {
+     "event": "recanted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "cease_replication",
+     "force": "must"
+    },
+    {
+     "effect": "do",
+     "act": "deregister_peer",
+     "force": "should"
+    }
+   ],
+   "cc_ref": "CC 3.3.7"
+  },
+  {
+   "family": "encyclopedia:*",
+   "kind": "expiry",
+   "mode": "none",
+   "cc_ref": "CC 3.3.13"
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:family_membership_change",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "hard_case:community_membership_change",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.4.4"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "expiry",
+   "mode": "none",
+   "cc_ref": "CC 4.2.1"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.2.1"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "unless": [
+    {
+     "event": "admitted",
+     "of": "accord:lifecycle:confirmed"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "expiry",
+   "mode": "none",
+   "cc_ref": "CC 4.2.1.3"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.2.1.3"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "unless": [
+    {
+     "event": "admitted",
+     "of": "accord:lifecycle:confirmed"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1.3"
+  },
+  {
+   "family": "key:record",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "key:revocation"
+    },
+    {
+     "event": "withdrawn",
+     "of": "trust:accepts"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1"
+  },
+  {
+   "family": "config:{scope}",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": "CC 4.2.1.4"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "community",
+   "kind": "react",
+   "on": [
+    {
+     "event": "sealed",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.1"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "community",
+   "kind": "react",
+   "on": [
+    {
+     "event": "sealed",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.5"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "self",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "identity:occurrence"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.1"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "family",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "membership:widening"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.1"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "community",
+   "kind": "react",
+   "on": [
+    {
+     "event": "sealed",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.1"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "scope": "affiliations",
+   "kind": "react",
+   "on": [
+    {
+     "event": "sealed",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "key_grant:epoch",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.1"
+  },
+  {
+   "family": "group:roster",
+   "scope": "affiliations",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_live_deciding_seat"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "group:roster",
+   "scope": "affiliations",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_live_deciding_seat"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "licensure:{authority_id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "group:roster"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "leaves": [
+    "accepts"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "group:roster"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "leaves": [
+    "moderate"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "locked",
+     "of": "group:roster",
+     "force": "must"
+    },
+    {
+     "effect": "open",
+     "policy": "moderator_election",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "group:roster",
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "dissolves_at",
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.8"
+  },
+  {
+   "family": "consent:partnership_grant",
+   "kind": "expiry",
+   "mode": "forbidden",
+   "member": "valid_until",
+   "cc_ref": "CC 4.4.3.4.3.1"
+  },
+  {
+   "family": "consent:partnership_accept",
+   "kind": "expiry",
+   "mode": "forbidden",
+   "member": "valid_until",
+   "cc_ref": "CC 4.4.3.4.3.1"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target"
+    }
+   ],
+   "cc_ref": "CC 4.5.2.2"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target"
+    },
+    {
+     "event": "superseded",
+     "of": "target"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.2.2"
+  },
+  {
+   "family": "watchlist:{id}",
+   "leaves": [
+    "csam"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "withdrawn",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:watchlist_enabled",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.7"
+  },
+  {
+   "family": "group:roster",
+   "leaves": [
+    "ephemeral"
+   ],
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": "CC 5.3.3.2"
+  },
+  {
+   "family": "group:roster",
+   "leaves": [
+    "ephemeral"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_member"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 5.3.3.2"
+  },
+  {
+   "family": "membership:{stage}",
+   "kind": "clock",
+   "name": "W",
+   "dur": "admission_freshness_window_secs",
+   "from": "asserted_at",
+   "by": "receipt",
+   "cc_ref": "CC 2.6.7"
+  },
+  {
+   "family": "membership:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "W"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "signer_seated"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "stale",
+     "of": "cosign:signature",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 2.6.7"
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "clock",
+   "name": "window",
+   "dur": "self_roster_add.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 3.3.6"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "accord:invoke:constitutional:{halt_id}"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": "CC 3.4.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.4.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "accord:invoke:constitutional:{halt_id}"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "accord:invoke:constitutional:{halt_id}"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "accord:invoke:constitutional:{halt_id}"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": "CC 4.2.6"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.6"
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "leaves": [
+    "harm_report"
+   ],
+   "kind": "clock",
+   "name": "window",
+   "dur": "moderation_fallback_window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "leaves": [
+    "harm_report"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "window"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "keep_decided"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": "target",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "leaves": [
+    "harm_report"
+   ],
+   "kind": "clock",
+   "name": "window",
+   "dur": "moderation_fallback_window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "leaves": [
+    "harm_report"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "window"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "keep_decided"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "withdrawn",
+     "of": "target",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "hold",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 3.1.3"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "hold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "drop_held",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "age",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "asserted_at",
+   "by": "receipt",
+   "cc_ref": "CC 3.1.3"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "age"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.3"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "hold",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "hold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "drop_held",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "age",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "asserted_at",
+   "by": "receipt",
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "age"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "consent:{kind}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "subject_absent"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:subject_authority_missing",
+     "by": "identity:substrate_persist",
+     "force": "may"
+    }
+   ],
+   "cc_ref": "CC 2.3.1"
+  },
+  {
+   "family": "agent_files:{kind}:{platform_or_target}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "subject_absent"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:subject_authority_missing",
+     "by": "identity:substrate_persist",
+     "force": "may"
+    }
+   ],
+   "cc_ref": "CC 2.3.1"
+  },
+  {
+   "family": "watchlist:{id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:watchlist_enabled",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.9.4"
+  },
+  {
+   "family": "watchlist:{id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "matched",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:watchlist_match",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.1.9.4"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target"
+    },
+    {
+     "event": "superseded",
+     "of": "target"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target"
+    },
+    {
+     "event": "superseded",
+     "of": "target"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.1"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target"
+    }
+   ],
+   "cc_ref": "CC 4.5.2.2"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target"
+    },
+    {
+     "event": "superseded",
+     "of": "target"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.2.2"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "refused",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:community_consensus_protocol_violation",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.2.3"
+  },
+  {
+   "family": "key_grant:{axis}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "no_wrap_target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:recipient_excluded",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.1"
+  },
+  {
+   "family": "membership:{stage}",
+   "scope": "family",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:family_membership_change",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "key_grant:content",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.2"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:identity_severed",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "clock",
+   "name": "anonymise",
+   "dur": "decay_protocol.patterns_anonymized_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "anonymise"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:patterns_anonymized",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "clock",
+   "name": "complete",
+   "dur": "decay_protocol.complete_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "complete"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:complete",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "NcmecCsam",
+    "PerceptualHashCsam",
+    "TvecTerrorist",
+    "GifctCip",
+    "CourtOrder"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    },
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    },
+    {
+     "effect": "emit",
+     "family": "hard_case:fast_path_takedown",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 6.1.2.2"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.2"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target"
+    },
+    {
+     "event": "superseded",
+     "of": "target"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.2"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "clock",
+   "name": "sla",
+   "dur": "self.days",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "target"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.7"
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "sla"
+    }
+   ],
+   "unless": [
+    {
+     "event": "withdrawn",
+     "of": "target"
+    },
+    {
+     "event": "superseded",
+     "of": "target"
+    },
+    {
+     "event": "purged",
+     "of": "target"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:deletion_window_breach",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.4.7"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:identity_severed",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "clock",
+   "name": "anonymise",
+   "dur": "decay_protocol.patterns_anonymized_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "anonymise"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:patterns_anonymized",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "clock",
+   "name": "complete",
+   "dur": "decay_protocol.complete_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "consent:state:revoked"
+    },
+    {
+     "event": "withdrawn",
+     "of": "consent:partnership_grant"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "complete"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "consent:decay:complete",
+     "by": "author",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.4.3.5.1"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.3"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_dmca512",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": "CC 4.5.3"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.3"
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "NcmecCsam",
+    "PerceptualHashCsam",
+    "TvecTerrorist",
+    "GifctCip",
+    "CourtOrder"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    },
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "kind": "clock",
+   "name": "window",
+   "dur": "moderation_action.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "ballot:moderator",
+   "kind": "clock",
+   "name": "window",
+   "dur": "moderator_election.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.5.13"
+  },
+  {
+   "family": "retirement:{state}",
+   "leaves": [
+    "decided"
+   ],
+   "kind": "clock",
+   "name": "objection",
+   "dur": "default_standing.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 7.5.5"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "expiry",
+   "mode": "none",
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "unless": [
+    {
+     "event": "admitted",
+     "of": "accord:lifecycle:confirmed"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1.1"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "clock",
+   "name": "fuse",
+   "dur": "charter.halt_fuse_secs",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "accord:invoke:constitutional:{halt_id}"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": "CC 4.2.1.3"
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "fuse"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 4.2.1.3"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "hold",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "first_held",
+   "by": "receipt",
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "hold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "drop_held",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "clock",
+   "name": "age",
+   "dur": "group.hold_window_secs",
+   "default": "default_standing.window_secs",
+   "from": "asserted_at",
+   "by": "receipt",
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "age"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.4"
+  },
+  {
+   "family": "group:roster",
+   "kind": "clock",
+   "name": "cover",
+   "dur": "charter.witness_cadence_secs",
+   "from": "effective_at",
+   "by": "receipt",
+   "cc_ref": "CC 3.2"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "cover"
+    }
+   ],
+   "unless": [
+    {
+     "event": "fold",
+     "of": "head_covers_row"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lagging",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.2"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "leaves": [
+    "accepts"
+   ],
+   "kind": "clock",
+   "name": "attach",
+   "dur": "charter.attach_window_secs",
+   "from": "cosigned_at",
+   "by": "receipt",
+   "cc_ref": "CC 3.2"
+  },
+  {
+   "family": "trust:{job}:{version}",
+   "leaves": [
+    "accepts"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "attach"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "closed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.2"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "founder_quorum_unreachable"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:community_liveness_stalled",
+     "by": "origin_door",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.2"
+  },
+  {
+   "family": "group:roster",
+   "kind": "react",
+   "on": [
+    {
+     "event": "fold",
+     "of": "founder_quorum_restored"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:community_liveness_restored",
+     "by": "origin_door",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.2"
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "emit",
+     "family": "hard_case:identity_occurrence_added",
+     "by": "identity:substrate_persist",
+     "force": "must"
+    }
+   ],
+   "cc_ref": "CC 3.3.6"
+  }
+ ]
+}

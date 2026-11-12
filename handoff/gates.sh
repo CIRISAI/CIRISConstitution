@@ -28,6 +28,7 @@ run python3 tools/guard_grammar.py
 run python3 tools/change_grammar.py
 run python3 tools/fold_grammar.py
 run python3 tools/build_transitions.py --check
+run python3 tools/build_reactions.py --check
 run python3 -I tools/mesh_story.py --check
 run python3 -I tools/check_fold_order.py
 run python3 tools/check_transition_roles.py

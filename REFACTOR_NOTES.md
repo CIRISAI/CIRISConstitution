@@ -552,3 +552,17 @@ as a family. Not done: member names against the CDDL; a part inherited from the 
 yet resolved into one fold per leaf; `fold_commutes`, `advisory_moves_nothing`, `ended_stays_ended`.
 The family model now reads role tokens from `manifests/transitions.json`, which is built from it: build the family
 model, then the transitions.
+
+Data pass, step 5 (reactions): `tools/build_reactions.py` (grammar, closure, builder, --check) and
+`formal/derivation/reaction_text.tsv` (65 statements from `handoff/lanes/out_g_reaction.tsv`) give
+`manifests/reactions.json` (116 entries). Held, 41 rows: 30 wait on a duration with no row in
+`constitution/constants.tsv` (census_period_end, incapacity_t1_window_secs, session_claim_max_secs,
+consent_temporary_ttl_secs, mesh_config_emergency_ttl_secs, accord_roster_window_max_secs,
+membership_proposal_max_secs, custody_report_ttl_secs, delegation_term_max_secs,
+consent_revocation_promotion_window_secs, purge_dwell_secs, accord_heartbeat_max_secs, wa_freshness_window_secs,
+trace_orphan_age_secs, epoch_key_retention_secs); seven name `takedown_notice:PerceptualHashCsam`, a leaf the
+registry spells otherwise; the rest are quotes that span cells. One-emitter: seven clock- or fold-caused emits are
+written `by identity:substrate_persist` or `by author`, not `by origin_door`; the token does not yet say both the
+role and which node, so the list is pinned and may only shrink.
+All five column designs now have a grammar, a text table, a generator and a closure check. Left for each: the
+held rows, member names against the CDDL, the properties the designs named, and cutting the per-family prose.
