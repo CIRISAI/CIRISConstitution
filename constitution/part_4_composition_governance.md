@@ -1861,7 +1861,7 @@ Content-watchlist auto-detection: a [CC 4.5.5](#4.5.5) `moderate`-scope holder *
 | **Operator** | the *licensed hash-DB* (IWF/NCMEC/PDQ, [CC 4.5.10.1](#4.5.10.1), operator-provisioned + unshippable) + the NCMEC report obligation | turn it on for a group; act without the authority's opt-in |
 | **Authority** (`moderate`-holder) | the *opt-in* (per-group enable) | run the match itself; access the licensed list |
 
-**Audit — never silent (normative).** Enabling a watchlist emits `hard_case:watchlist_enabled:{group}` ([CC 3.1.9.4](part_3_the_namespace.md)) — who turned it on + which list; **every match** emits `hard_case:watchlist_match:{group}`. Enablement and matches are on the record, always.
+**Audit — never silent (normative).** Enabling a watchlist emits `hard_case:watchlist_enabled:{group}` ([CC 3.1.9.4](part_3_the_namespace.md)) — who turned it on + which list; **every match** emits `hard_case:watchlist_match:{group}`. Enablement and matches are on the record, always. The record of a match names the group, the list's source and the list version, and names no person. Any member of the group MAY read the count of matches under each source and list version. So a list that has been captured, or has drifted, shows as a rise in that count, and the group can leave it.
 
 **CSAM-disable non-silent floor (normative).** Disabling a **CSAM** watchlist MUST be an audited act: a `withdraws` signed by the authority that **emits `hard_case:watchlist_enabled` (disable variant)**. **Silent removal of a CSAM list is barred** (a predator-operator cannot turn off CSAM detection without leaving a trace). Ordinary (non-CSAM) lists may be freely toggled. This is the floor that keeps the opt-in honest.
 
