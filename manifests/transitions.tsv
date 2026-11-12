@@ -392,7 +392,8 @@ regime:{artifact}:{version}	attest	none	admitted	registered	selfAct	true	none		t
 regime:{artifact}:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 rendezvous:route	attest	none	admitted	self	selfAct	true	none		true	derived	derived	derived
 rendezvous:route	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-retirement:{state}	attest	none	admitted	custodian,operator,self,wa	selfAct	false	none		true	derived	cc-table	gap
+retirement:{state}	attest	none	admitted	custodian,operator,self,wa	selfAct	false	withdraw	selfAct	false	derived	cc-table	gap
+retirement:{state}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 revocation:{entity_type}:{reason}	attest	none	admitted	registered,self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 revocation:{entity_type}:{reason}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 rollback_detected:{revision_field}	attest	none	admitted	registered	selfAct	true	none		true	derived	derived	derived
@@ -426,7 +427,7 @@ transparency_log:consistency	withdraw	admitted	withdrawn	author,subject	selfAct	
 transparency_log:cosigned:{tree_size}	attest	none	admitted	attest	selfAct	true	none		true	derived	derived	derived
 transparency_log:inclusion	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 transparency_log:inclusion	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
-transport:canonical_rebind	attest	none	admitted	holder	selfAct	true	none		true	derived	derived	derived
+transport:canonical_rebind	attest	none	admitted	holder	cosigned	true	none		true	derived	cc-table	derived
 transport:canonical_rebind	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 transport:{kind}	attest	none	admitted	identity:substrate_edge	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 transport:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived

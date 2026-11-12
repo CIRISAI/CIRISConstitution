@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "3daf459ea7c2820b8ff275b47c0c9fe24c42f79addfeb3801315b14e95fdddf1",
+  "source_sha256": "df5a4d6dff33127380679b223fc40abf3f019f4678272c2efa2e2f01a2eca94c",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,18 +45,18 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 62,
-   "guarded_transitions": 28,
+   "statements": 60,
+   "guarded_transitions": 27,
    "marks": {
-    "refuse": 32,
-    "ref:*": 10,
+    "refuse": 31,
+    "ref:*": 9,
     "landed": 3,
     "signs": 2,
     "commits": 1
    },
    "well_founded": {
-    "requiring": 13,
-    "longest_chain": 2,
+    "requiring": 10,
+    "longest_chain": 1,
     "reading": "no row's admission requires a row whose own admission requires it back"
    }
   },
@@ -90,9 +90,9 @@
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
-  "transitions": 455,
+  "transitions": 456,
   "gap_cells": 5,
-  "confirmed": 254,
+  "confirmed": 253,
   "undo_gap_cells": 31,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -8075,16 +8075,8 @@
       "when": "always"
      },
      "guard": {
-      "value": [
-       {
-        "guard": "one licensure:{authority_id}@admitted[attested=signer] at asserted_at else refuse(deferral_response_unlicensed)",
-        "cc_ref": [
-         "CC 4.3"
-        ],
-        "reach": "partial"
-       }
-      ],
-      "source": "cc-table"
+      "value": [],
+      "source": "generic"
      },
      "change": {
       "value": [],
@@ -8219,13 +8211,6 @@
      },
      "guard": {
       "value": [
-       {
-        "guard": "one transparency_log:cosigned:{tree_size}@admitted[val:log_id=leaf:stream_id,val:root_hash=val:chunk_root,leaf:tree_size>=val:K] else refuse",
-        "cc_ref": [
-         "CC 5.3.3.6"
-        ],
-        "reach": "whole"
-       },
        {
         "guard": "one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise",
         "cc_ref": [
@@ -17829,16 +17814,8 @@
       "when": "if_widens"
      },
      "guard": {
-      "value": [
-       {
-        "guard": "one takedown_notice:{basis}@admitted[id=ref:*] else refuse",
-        "cc_ref": [
-         "CC 3.1.1"
-        ],
-        "reach": "whole"
-       }
-      ],
-      "source": "cc-table"
+      "value": [],
+      "source": "generic"
      },
      "change": {
       "value": [],
@@ -18134,13 +18111,14 @@
       "source": "gap"
      },
      "undo": {
-      "value": false,
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
       "source": "derived"
      },
      "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "always"
+      "value": false,
+      "source": "derived"
      },
      "guard": {
       "value": [],
@@ -18156,6 +18134,56 @@
        }
       ],
       "source": "cc-table"
+     }
+    },
+    {
+     "verb": "withdraw",
+     "from": "admitted",
+     "to": "withdrawn",
+     "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 7.5.5",
+      "value": [
+       "author"
+      ]
+     },
+     "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 7.5.5",
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      }
+     },
+     "widens": {
+      "value": false,
+      "source": "derived"
+     },
+     "undo": {
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": false,
+      "source": "derived"
+     },
+     "guard": {
+      "value": [
+       {
+        "guard": "when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else refuse",
+        "cc_ref": [
+         "CC 7.5.5"
+        ],
+        "reach": "whole"
+       }
+      ],
+      "source": "cc-table"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
      }
     }
    ]
@@ -19736,10 +19764,16 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "cosigned",
+       "rows": [
+        "accord_majority"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 3.1.3"
+      ],
+      "count": "accord_majority@accord"
      },
      "widens": {
       "value": true,

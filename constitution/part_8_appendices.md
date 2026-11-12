@@ -1612,7 +1612,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 118 of 184 families.
+A family with no card states none of these beyond the default row. Cards: 117 of 184 families.
 
 **`accord:*`** — Rules, thing
 
@@ -1686,6 +1686,10 @@ Body: `accord_root`
 
 Count: `none`
 
+In time:
+- expiry required `valid_until` max `accord_heartbeat_max_secs` (CC 3.4.1)
+- on close(expiry): read stale (CC 3.4.1)
+
 Body: `accord_root`
 
 **`accord:lifecycle:{kind}`** — Process, thing
@@ -1705,8 +1709,6 @@ Fold:
 In time:
 - [confirmed] clock `fuse` = `charter.halt_fuse_secs` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
 - [confirmed] on close(fuse): read closed (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
-- expiry required `valid_until` max `accord_heartbeat_max_secs` (CC 3.4.1)
-- on close(expiry): read stale (CC 3.4.1)
 
 Body: `accord_root`, `confirms_halt_id` (text only), `invocation_id` (text only), `invocation_kind` (text only), `resumes_halt_id` (text only)
 
@@ -1999,10 +2001,8 @@ Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commit
 Count: `none`
 
 Fold:
-- `reads=census:member:partial&last(4); over=active/owner; combine=count(owner)` (CC 3.1.3)
 - `over=active/owner` (CC 6.1.9)
 - `combine=max(count(owner),(prev*9+9) div 10,floor)` (CC 4.5.13, CC 6.1.9)
-- `test=count*3>=prev*2 ?open:frozen` (CC 6.1.9)
 
 Body: `period`, `member_commitment_hex`, `window_periods`, `active_count`, `floor_applied`
 
@@ -2354,9 +2354,6 @@ Body: `domain`
 
 Count: `none`
 
-Guard:
-- attest: `one licensure:{authority_id}@admitted[attested=signer] at asserted_at else refuse(deferral_response_unlicensed)` (CC 4.3)
-
 Fold:
 - `over=seated@decision/person` (CC 4.3)
 - `over=seated@prior/person` (CC 4.3)
@@ -2371,7 +2368,6 @@ Fold:
 Count: `none`
 
 Guard:
-- attest: `one transparency_log:cosigned:{tree_size}@admitted[val:log_id=leaf:stream_id,val:root_hash=val:chunk_root,leaf:tree_size>=val:K] else refuse` (CC 5.3.3.6)
 - attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.6)
 
 Body: `K` (text only), `chunk_root` (text only), `epoch` (text only), `stream_id` (text only), `subscriber_key_id` (text only)
@@ -3157,18 +3153,6 @@ Count: `none`
 Fold:
 - `by=advisory` (CC 3.1.6)
 
-**`reconsideration:{grounds}`** — Process, thing
-
-| Transition | Who signs | Policy | Widens | Confirm | Way back |
-|---|---|---|---|---|---|
-| attest | review, subject (filing: review, subject; ruling: review) | selfAct | true (by_scope) | true (if_widens) | withdraw |
-| withdraw | author, subject | selfAct | false | false | attest |
-
-Count: `none`
-
-Guard:
-- attest: `one takedown_notice:{basis}@admitted[id=ref:*] else refuse` (CC 3.1.1)
-
 **`rendezvous:route`** — Circumstances, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -3189,9 +3173,13 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | custodian, operator, self, wa (until_retired: self; after_retired: custodian; custodian_replace: operator, wa) | selfAct | false | true (always) | none |
+| attest | custodian, operator, self, wa (until_retired: self; after_retired: custodian; custodian_replace: operator, wa) | selfAct | false | false | withdraw |
+| withdraw | author | selfAct | false | false | attest |
 
 Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)
+
+Guard:
+- withdraw: `when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else refuse` (CC 7.5.5)
 
 Change:
 - attest: `custodian_minted: by=cosigned, reach=other_attester, cascade=custody:{kind}/by:stop` (CC 7.5.5)
@@ -3314,6 +3302,15 @@ In time:
 - [Dmca512] clock `withhold` = `withhold_window_dmca512` (CC 4.5.3)
 - [Dmca512] on close(withhold): do destroy_bytes (CC 4.5.3)
 - [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes (CC 4.5.13)
+- [DsaArticle16] on admitted(self): do stop_serving (CC 4.5.3)
+- [DsaArticle16] clock `withhold` = `withhold_window_dsa16` (CC 4.5.3)
+- [DsaArticle16] on close(withhold): do destroy_bytes (CC 4.5.3)
+- [OsaIllegalContent] on admitted(self): do stop_serving (CC 4.5.3)
+- [OsaIllegalContent] clock `withhold` = `withhold_window_osa` (CC 4.5.3)
+- [OsaIllegalContent] on close(withhold): do destroy_bytes (CC 4.5.3)
+- [CommunityStandards] on admitted(self): do stop_serving (CC 4.5.3)
+- [CommunityStandards] clock `withhold` = `withhold_window_community_standards` (CC 4.5.3)
+- [CommunityStandards] on close(withhold): do destroy_bytes (CC 4.5.3)
 
 Body: `asserted_at`, `claim_text` (text only), `claimant_key_id` (text only), `content_holder_key_ids` (text only), `content_sha256` (text only), `counter_notice_channel` (text only), `evidence_refs`, `expires_at`, `good_faith_statement` (text only), `jurisdiction` (text only), `legal_basis` (text only), `perceptual_hash` (text only), `subject_kind` (text only)
 
@@ -3333,10 +3330,10 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | holder | selfAct | true (by_scope) | true (always) | none |
+| attest | holder | cosigned `accord_majority` | true (by_scope) | true (always) | none |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `None`
+Count: `accord_majority@accord` (CC 3.1.3)
 
 Change:
 - attest: `attest: by=cosigned, reach=other_attester, refuse=transport_rebind_without_holder_quorum` (CC 3.1.3)

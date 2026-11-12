@@ -732,3 +732,25 @@ Not read by the second reading: the wire's known-answer vectors, CC 2.6.1.7 row 
 `formal/accord_halt`. The 123 new minor findings are in `out_k_all.tsv` and not yet in the conflict table.
 Stop criterion agreed with Eric in substance: every statement read twice, then one more rule-by-rule reading after
 the fixes whose count of new major findings is a handful.
+
+## The third reading (2026-11-11 night)
+
+Ten lanes over all 4,254 statements against the fixed text and the data (`out_r3_*.tsv`): 362 findings; major 129
+(89 new, 40 known), minor 233 (191 new, 42 known). Four verifier lanes on the 89 (`out_v3_*.tsv`): STALE 40, DATA
+31, CHOICE 9, NOT_A_CONFLICT 9. Logged as C347 to C435. Only 9 of 89 dissolved (17 of 59 last time).
+Eric's theory, 2026-11-11: each fault fixed makes the next easier to find. The breakdown fits it: on the general
+rules (the ground the second reading cleaned) new text-against-text majors fell from 51 to 12; 42 are per-family
+rules never compared statement against statement before; 35 are text against data, visible only because the data
+exists. Prediction to test on the next pass: per-family text majors fall to about ten, data findings fall as cells
+are corrected, and more findings have two finders (7 of 76 this pass).
+Data faults of this repository fixed: heartbeat expiry moved to `accord:lifecycle` (C378, C435); canonical re-bind
+counted `accord_majority@accord` (C369, C374; count open cells 4); the three further withhold windows (C376;
+the reversal condition on the delete, C377, has no event token and is open); `retirement:{state}` gains withdraw
+(roles author, selfAct) and its guard (C367, C430); guards dropped for reconsideration, delivery receipt cosign
+and deferral licence (C394, C358, C433, C398: each needs a condition the grammar cannot yet say); two
+expected-active folds dropped (C347, C348); two registry literals in `tools/build_cc_namespace.py` (C363, C364).
+Not fixed: C352 (the base law is a declared stand-in); C372 (freshness defaults); C386 (build manifest
+supersede: the kind grid gives Facts no replace); C391 (harm-report reactions); C392 (waits on choice C351);
+C432 (an organisation-named licence is cosigned: needs a `declarer` key in the count grammar).
+Text against the shipped store, for the implementers: C365, C366, C371, C383, C384, C388, C412, C422, C423.
+A writer lane (`out_w3_stale.tsv`) is drafting the 40 stale fixes.

@@ -178,7 +178,7 @@ observation:access_assumption	registry	Premises	ACCOUNT	attest,withdraw	L	an obs
 preserve_request	registry	Process	THING	attest,withdraw	L	a retirement-ladder request to preserve; held shut today	no	pre:Process
 preserve_response	registry	Process	THING	attest	L	the custodian's answer on preservation; held shut today	no	pre:Process
 rendezvous:route	registry	Circumstances	THING	attest,replace	L	an anonymous receiver's hourly route: what differs this period	no	—
-retirement:{state}	registry	Process	THING	attest	L	the seven-step retirement ladder, forward only; held shut today	no	pre:Process
+retirement:{state}	registry	Process	THING	attest,withdraw	L	the seven-step retirement ladder; a decided row is withdrawn while no frozen row exists (CC 3.1.5, 7.5.5); held shut today	no	pre:Process
 transport:canonical_rebind	registry	Identity	THING	attest,replace	L	a holder quorum rebinds the canonical's transport destination	no	—
 ballot:moderator	registry	Structure	THING	attest,withdraw	M	a member's ranked ballot in a moderator election; the fold keeps the person's latest	no	pre:Identity
 ballot:moderator_acceptance	registry	Structure	THING	attest	M	the winner's acceptance binding the ballot set it was counted over	no	pre:Structure

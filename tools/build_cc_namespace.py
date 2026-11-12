@@ -81,7 +81,7 @@ NORMATIVE_8 = {"registry", "attestation", "persist", "transport-delivery",
 # unclaimed leaf beneath it still refuses, because the rule would otherwise be
 # bypassed by an unminted leaf; the family's `reserved` flag is untouched.
 GATED_STEMS = [
-    ("age_self_declared:", "subject-or-steward-signed, not open-sender; no {level} token", "CC 3.4.11"),
+    ("age_self_declared:", "signed for the subject by its own or an admitted occurrence, not open-sender; no {level} token", "CC 3.4.11"),
     ("self:", "a cohort scope, never a dimension stem: closed to the two legacy labels", "CC 3.1.3"),
     ("device:", "closed: device:label is the only leaf", "CC 3.1.1"),
     ("community:", "closed: community:listing is the only leaf", "CC 3.1.1"),
@@ -262,7 +262,7 @@ def _reserved_rules():
         # CC 3.3.10.1: an in-grammar
         # ledger is owner-serialized content, not a substrate self-report — the table cell says so.
         (lambda p, c: p.startswith("ledger:"),
-         "the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline", "CC 3.3.10.1"),
+         "the ledger's single owner (the steward-bound identity of its ledger_id triple); a delegation confers no write on a ledger", "CC 3.3.10.1"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),

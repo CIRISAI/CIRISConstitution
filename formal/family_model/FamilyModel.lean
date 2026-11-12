@@ -680,7 +680,7 @@ def f178 : FamilyRow :=
   ⟨"rendezvous:route", ⟨.circumstances, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit178 : fits f178 = true := by decide
 def f179 : FamilyRow :=
-  ⟨"retirement:{state}", ⟨.process, [.attest], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"retirement:{state}", ⟨.process, [.attest, .withdraw], some ⟨.pre, some .process⟩⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit179 : fits f179 = true := by decide
 def f180 : FamilyRow :=
   ⟨"transport:canonical_rebind", ⟨.identity, [.attest, .replace], none⟩, ⟨false, .dsar, .none⟩⟩

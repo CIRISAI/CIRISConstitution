@@ -24,3 +24,5 @@ preserve_request	withdraw	policy		selfAct	CC 2.4.1.1
 preserve_request	withdraw	roles		author	CC 2.4.1.1
 preserve_response	attest	widens		true	CC 3.1.5
 retirement:{state}	attest	policy	custodian_replace	cosigned:custodian_replace	CC 7.5.5
+retirement:{state}	withdraw	roles		author	CC 7.5.5
+retirement:{state}	withdraw	policy		selfAct	CC 7.5.5

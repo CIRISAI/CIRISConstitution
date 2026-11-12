@@ -4,11 +4,11 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 83,
+  "entries": 92,
   "kinds": {
    "expiry": 17,
-   "clock": 17,
-   "react": 49
+   "clock": 20,
+   "react": 55
   },
   "emits": 24,
   "new_event_words": {
@@ -1534,7 +1534,7 @@
    ]
   },
   {
-   "family": "accord:lifecycle:{kind}",
+   "family": "accord:lifecycle",
    "kind": "expiry",
    "mode": "required",
    "member": "valid_until",
@@ -1544,7 +1544,7 @@
    ]
   },
   {
-   "family": "accord:lifecycle:{kind}",
+   "family": "accord:lifecycle",
    "kind": "react",
    "on": [
     {
@@ -1701,6 +1701,201 @@
    ],
    "cc_ref": [
     "CC 3.3.6"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_dsa16",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_osa",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "stop_serving",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "clock",
+   "name": "withhold",
+   "dur": "withhold_window_community_standards",
+   "from": [
+    {
+     "event": "admitted",
+     "of": "self"
+    }
+   ],
+   "by": "receipt",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "withhold"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "do",
+     "act": "destroy_bytes",
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 4.5.3"
    ]
   }
  ]
