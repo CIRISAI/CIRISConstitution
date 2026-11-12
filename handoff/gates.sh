@@ -44,6 +44,7 @@ run python3 formal/set_item/set_item_model.py --check
 run python3 tools/ui_closure.py --check
 run python3 tools/check_termination.py
 run python3 tools/kernel_closure.py --check
+run python3 tools/kernel_requirements.py --check
 run python3 -I formal/transport_tiers/frame_ab.py --check
 run python3 tools/check_compliance_wire_forms.py
 run python3 tools/check_rule_entries.py

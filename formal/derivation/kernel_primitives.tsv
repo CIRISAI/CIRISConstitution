@@ -1,0 +1,36 @@
+# The kernel's primitives: each answer a kernel gives, what it is composed from, and which cells of the tables state its rule.
+# depends_on is the declared composition; tools/kernel_requirements.py compares it with how the five repositories' decision sites actually build their answers.
+# A dependency written `K14^` is on the answer at the previous link of the same lineage: a roster is the earlier roster and the counted change to it. It is the one recursion, and it descends.
+# supplied_by names cells: fm.<column> of manifests/family_model.json, tr.<cell> of manifests/transitions.json, rx.<kind> of manifests/reactions.json, policy, verdict_state.
+# inputs lists what the primitive needs beyond rows, from: first_held, now, trust_set, own_keys (the kernel's four declared non-row inputs).
+id	name	kind	depends_on	supplied_by	inputs	meaning
+K01	held	base	-	-	first_held	the rows this node holds, each with the instant it first held it; the kernel's input
+K02	wellformed	outside	-	-	-	parse, signature and digest; done before the kernel sees a row
+K03	live	derived	K01	fm.lifecycle|tr.undo|rx.expiry	now	a row stands: not withdrawn, recanted, superseded, expired or lapsed
+K04	fresh	derived	K01	fm.freshness	first_held	a signed instant is trusted: first held within the freshness window of it
+K05	roster	derived	K03|K04|K14^	fm.fold|fm.count|tr.change	-	who is a member of a group as of a signed instant
+K06	standing	derived	K03|K04|K05|K07|K09	fm.signer_rule|fm.cosign_rule|tr.roles|fm.confers	-	a key holds a role or duty over a target at a signed instant, directly or by a chain
+K07	owner	derived	K03	fm.fold|fm.signer_rule	-	who owns a key; steward-bound; the accountable root
+K08	identity_facts	derived	K03|K09	fm.fold|fm.body	trust_set	kind of key, age band, capacity, licence
+K09	trust	derived	K03	fm.fold|fm.evidence	trust_set	the reader's trust set reaches a root or an attester; a fold of attestations
+K10	audience	derived	K03|K05|K07	fm.placement|fm.replication|fm.subject_rule	-	the parties a row may be held by
+K11	reach	derived	K05|K07	fm.replication	own_keys	what a given peer is: its cohorts, the keys it owns, what it has announced
+K12	may_hold	derived	K10|K11	-	-	audience joined with reach, for one row and one peer
+K13	consent	derived	K03|K04|K06	fm.fold|rx.expiry|rx.react	now	a subject's consent covers an act at an instant
+K14	count	derived	K03|K04|K05|K06	fm.count|fm.governance|tr.policy|policy	-	the tally of a counted act under its protocol or policy row
+K15	window	derived	K01|K04	rx.clock|rx.expiry|policy	now|first_held	a window or deadline is open, closed, or when it closes
+K16	object_state	derived	K03|K14|K15	fm.fold|rx.react|verdict_state	now	the state of a thing a reader could be shown
+K17	offer	derived	K06|K14|K15|K16	tr.roles|tr.guard|tr.confirm|tr.undo	-	an act is present or absent, enabled or disabled, with a reason and a cure
+K18	key_entitlement	derived	K05|K07|K03	tr.change|rx.react	-	which devices are entitled to which key; whether a rotation is due
+K19	custody	derived	K03|K04	fm.fold|fm.evidence	now	who holds a blob
+K20	placement	derived	K12|K25	fm.placement	first_held|now	this node keeps a row: hold, park with a lapse, discard
+K21	move	derived	K12|K03	fm.replication|fm.derived	-	for a row and a peer: never, may be asked for, may move, must move
+K22	effect	derived	K16|K15|K18	rx.react|fm.erasure_route	own_keys	something the node must do
+K23	draft	derived	K16|K15|K18|K13	rx.react	own_keys	a row the node itself must sign
+K24	halt	derived	K03|K06|K14|K15	rx.clock|rx.react|tr.guard	first_held|now	a halt is in force for an agent at this node
+K25	admission_verdict	derived	K03|K04|K06|K14	tr.guard|fm.signer_rule|fm.subject_rule	-	a row counts, is inert with a cure, or contradicts the rule
+N01	transport	outside	-	-	link_state	not a rule
+N02	storage	outside	-	-	config	not a rule
+N03	presentation	outside	-	-	-	not a rule
+N04	judgment	outside	-	-	model_output	not a rule
+N05	session	outside	-	-	caller_claim	not a rule
