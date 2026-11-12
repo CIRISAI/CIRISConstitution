@@ -33,6 +33,6 @@ one reading is deleted and the check tightens to no failure.
 **What it does not model.** Who may sign each row (the signer gate, `tools/check_signer_gate.py`); what a
 restored item looks like to a viewer (the consent gate of CC 4.5.13); more than one node (each node runs its own
 windows from its own first-held instants, CC 4.5.13, so two nodes may differ until their windows close); the
-deletion deadline a producer owes a subject (CC 3.3.1), which is the next model of this family.
+deletion deadline a producer owes a subject (CC 3.3.1), which is `formal/deletion`.
 
 Run: `python3 formal/takedown/takedown_model.py --check`

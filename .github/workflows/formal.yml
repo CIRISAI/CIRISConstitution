@@ -277,6 +277,7 @@ jobs:
           lean -M 6000 -T 200000 ../alm/Alm.lean
           python3 ../alm/alm_model.py --check
           python3 ../takedown/takedown_model.py --check
+          python3 ../deletion/deletion_model.py --check
           python3 -I ../transport_tiers/frame_ab.py --check
           lean -M 6000 -T 200000 ../family_model/FamilyModel.lean
           ! grep -nE '(:=|by)[[:space:]]*sorry' Reciprocity.lean Cascade.lean ../trust_set/TrustSet.lean ../affiliation/Affiliation.lean ../standing/Standing.lean ../contact/Contact.lean ../transport_tiers/Tiers.lean ../anonymous/Anonymous.lean ../moderator_election/Election.lean ../event_lifecycle/EventLifecycle.lean ../family_model/FamilyModel.lean ../alm/Alm.lean

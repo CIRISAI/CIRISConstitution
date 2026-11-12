@@ -860,8 +860,8 @@ which is a rule the text does not state), the CC 4.5.12.3 heading (titles are pi
 sections that wait on the edge), and G38's three T8 edits (a collapsed witness directory: the verifier's confidence
 is low, it is the trust root, and independence is a security property where T4 speaks of liveness; not mine to
 settle after all, for Eric).
-Value lags after this round: the deletion reactions still excuse a breach on any withdrawal of the target, where
-the text now says only the producer's composers discharge it (the event grammar has no "by whom"); the guard that
+Value lags after this round: (the deletion reactions excusing a breach on any withdrawal of the target is fixed:
+the event grammar names an actor, and `formal/deletion` holds the manifest to the text); the guard that
 a slashing row cites a moderation row is dropped, the grounds being wider now; the age fold should take the lower
 of a witness band and a self-declared band.
 Analysis launched at Eric's word (2026-11-12, "do your planned analysis for what each pass found, what type of

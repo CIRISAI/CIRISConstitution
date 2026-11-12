@@ -2184,7 +2184,7 @@ Count: `none`
 In time:
 - on withdrawn(self) or superseded(self) or purged(self): do cancel_watch (CC 3.3.1)
 - clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
-- on close(sla) unless withdrawn(target) or superseded(target) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
+- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
 
 **`consent:partnership_accept`** — Rules, thing
 

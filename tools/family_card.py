@@ -57,7 +57,7 @@ def card(fam, fm, tr, rx):
             if e["kind"] == "expiry": body = f"expiry {e['mode']}" + (f" `{e['member']}`" if e.get("member") else "") + "".join(f" {k} `{e[k]}`" for k in ("eq", "default", "max") if e.get(k))
             elif e["kind"] == "clock": body = f"clock `{e['name']}` = `{e['dur']}`"
             else:
-                ev = lambda xs: " or ".join(f"{x['event']}({x['of']})" for x in xs)
+                ev = lambda xs: " or ".join(f"{x['event']}({x['of']}" + (f", by the {x['by']}" if x.get('by') else "") + ")" for x in xs)
                 eff = ", ".join((f"emit `{x['family']}` by {x['by']}" if x["effect"] == "emit" else f"read {x['verdict']}" if x["effect"] == "read" else f"do {x.get('act')}" if x["effect"] == "do" else f"open {x['policy']}") for x in e["effects"])
                 body = f"on {ev(e['on'])}" + (f" unless {ev(e['unless'])}" if e.get("unless") else "") + f": {eff}"
             out.append(f"- {sel}{body} ({', '.join(e['cc_ref'])})")

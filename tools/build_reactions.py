@@ -12,7 +12,7 @@ relates two families and half its triggers are a clock, which is no transition, 
     expiry   := "expiry " MODE [ " " MEMBER ] [ " eq " dur ] [ " default " dur ] [ " max " dur ] [ " from " origin ] [ " by " JUDGE ]
     clock    := "clock " NAME " = " dur [ " default " dur ] [ " max " dur ] " from " origin [ " by " JUDGE ]
     react    := "on " event *( "|" event ) [ " unless " event *( "|" event ) ] " -> " effect *( ", " effect )
-    event    := STATE "(" famref ")" | "close(" NAME ")" | "fold(" FOLDNAME ")"
+    event    := STATE "(" famref [ "," ACTOR ] ")" | "close(" NAME ")" | "fold(" FOLDNAME ")"
     effect   := [ "should " | "may " ] ( "emit " famref " by " ROLE | "read " VERDICT [ " of " famref ] | "do " ACT | "open " POLICY_ROW )
     dur      := CONSTANT | POLICY_ROW ".window_secs" | HOLDER "." MEMBER
     origin   := "first_held" | SIGNED_MEMBER | event *( "|" event )
@@ -42,6 +42,8 @@ SIGNED_ORIGINS = ("asserted_at", "claimed_at", "effective_at", "cosigned_at", "d
 EMITTER_OPEN_MAX = 7   # clock- or fold-caused emits not signed by the origin door; the number only falls
 NAME = r"[A-Za-z_][A-Za-z_0-9]*"
 
+ACTORS = ("producer", "subject")   # whose act the event is, where the rule turns on it (CC 3.3.1 D1)
+
 
 class ReactionError(ValueError):
     pass
@@ -54,9 +56,11 @@ def parse_events(s, need):
         if not m or m.group(1) not in STATES + ("close", "fold"):
             raise ReactionError(f"event {e!r}")
         kind, arg = m.groups()
+        arg, _, actor = arg.partition(",")
+        if actor and (kind not in STATES or actor not in ACTORS): raise ReactionError(f"event {e!r}: actor {actor!r}")
         if kind in STATES and arg not in ("self", "target"): need["families"].append(arg)
         if kind in NEW_STATES: need["marks"].append(kind)
-        out.append({"event": kind, "of": arg})
+        out.append({"event": kind, "of": arg, **({"by": actor} if actor else {})})
     return out
 
 
@@ -219,8 +223,10 @@ def self_test():
     good = ["expiry none; clock fuse = charter.halt_fuse_secs from first_held by receipt; on close(fuse) unless admitted(accord:lifecycle:confirmed) -> read lapsed",
             "[granted] expiry optional valid_until default consent_temporary_ttl_secs from asserted_at",
             "@community on sealed(self) -> emit key_grant:epoch by author",
-            "on withdrawn(self)|recanted(self) -> do cease_replication, should do deregister_peer"]
-    bad = ["expiry sometimes", "clock x = 86400 from first_held", "clock x = a_secs", "on landed(self) -> read x", "on close(x) -> shout", "@galaxy expiry none"]
+            "on withdrawn(self)|recanted(self) -> do cease_replication, should do deregister_peer",
+            "on close(sla) unless withdrawn(target,producer)|purged(target) -> read breached"]
+    bad = ["expiry sometimes", "clock x = 86400 from first_held", "clock x = a_secs", "on landed(self) -> read x", "on close(x) -> shout", "@galaxy expiry none",
+           "on withdrawn(target,anyone) -> read x", "on close(sla,producer) -> read x"]
     for g in good: parse(g)
     n = 0
     for g in bad:
