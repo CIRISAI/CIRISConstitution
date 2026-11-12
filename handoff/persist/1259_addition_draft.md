@@ -37,6 +37,104 @@ The guard table carries 32 refusals with no name, and five folds refuse by a nam
 to give or confirm. The list with the nearest existing token for each is `handoff/lanes/out_g_guard.md`,
 section "The 39 first-pass rows that refused with no token".
 
+## Member names the text uses that the signed-object table does not carry (Parts 4 to 6; Parts 2 and 3 to follow)
+
+Each is a member of a sealed or framed body the table does not list, or a name only the prose uses. Which?
+
+| member | family or object | section |
+|---|---|---|
+| `K` | `delivery_receipt:{stream_id}` | CC 5.3.3.6 |
+| `action` | `accord_proposal / accord_participation / accord_decision` | CC 4.2.6 |
+| `affiliation_archetype` | `group:roster` | CC 4.4.3.2.8 |
+| `app_name` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `aspects` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `axis` | `key_grant:{axis}` | CC 4.4.3.4.1 |
+| `baa` | `group:roster` | CC 4.4.3.2.8 |
+| `bilateral_pair_id` | `consent:partnership_accept`, `consent:partnership_grant`, `topical_relation:{kind}` | CC 4.4.3.4.3.1, CC 4.4.3.5.3 |
+| `breach_notification` | `group:roster` | CC 4.4.3.2.8 |
+| `budget_bytes` | `StorageBudgetV1` | CC 6.1.5.2 |
+| `cell_resolution` | `location_proof` | CC 4.5.9.2, CC 4.5.9.3, CC 4.5.9.4 |
+| `chain_of_custody` | `group:roster` | CC 4.4.3.2.8 |
+| `chunk_root` | `delivery_receipt:{stream_id}` | CC 5.3.3.6 |
+| `claim_namespaces` | `wholeness_witness` | CC 6.1.1 |
+| `classification_scheme` | `group:roster` | CC 4.4.3.2.8 |
+| `cohort_subkind` | `group:roster` | CC 4.4.3.2.1 |
+| `compartment` | `group:roster` | CC 4.4.3.2.8 |
+| `compartments` | `group:roster` | CC 4.4.3.2.8 |
+| `confirms_halt_id` | `accord:lifecycle:{kind}` | CC 4.2.1.3 |
+| `consensus_protocol` | `group:roster` | CC 4.2.3 |
+| `consensus_protocol_entrenched` | `group:roster` | CC 4.2.3 |
+| `content_id` | `CorpusWantV1`, `wholeness_witness` | CC 6.1.1, CC 6.1.5.2 |
+| `content_sha256` | `key_grant:{axis}` | CC 4.4.3.4.1 |
+| `crypto_tier` | `group:roster` | CC 4.4.3.2.8 |
+| `data_subject_access_grant` | `group:roster` | CC 4.4.3.2.8 |
+| `decay_protocol` | `consent:decay:{stage}` | CC 4.4.3.5.1 |
+| `declared_cohort` | `group:roster` | CC 4.4.3.2.8 |
+| `derived_from` | `video:*` | CC 5.1 |
+| `designated_officials` | `group:roster` | CC 4.4.3.2.8 |
+| `destination_hash` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `device_class` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `disclosure_bar` | `group:roster` | CC 4.4.3.2.8 |
+| `domain` | `deferral:request` | CC 4.3 |
+| `duty` | `moderation:{allegation_type}` | CC 4.5.13 |
+| `encryption_pubkeys` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `epoch` | `delivery_receipt:{stream_id}`, `key_grant:{axis}` | CC 4.4.3.2.6, CC 5.3.3.6 |
+| `epoch_id` | `CorpusWantV1`, `wholeness_witness` | CC 6.1.1, CC 6.1.5.2 |
+| `erasure_exempt` | `group:roster` | CC 4.4.3.2.8 |
+| `exposure` | `moderation:{allegation_type}` | CC 4.5.13 |
+| `external_controller` | `group:roster` | CC 4.4.3.2.8 |
+| `family_key_id` | `group:roster` | CC 4.2.3 |
+| `family_name` | `group:roster` | CC 4.2.3 |
+| `geographic_constraint` | `group:roster` | CC 4.5.9.4 |
+| `hardware_class` | `hardware_custody:{platform}`, `key:record` | CC 4.2.2 |
+| `hierarchy` | `group:roster` | CC 4.4.3.2.8 |
+| `identity_key_id` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `invocation_id` | `accord:lifecycle:{kind}` | CC 4.2.1.3 |
+| `invocation_kind` | `accord:lifecycle:{kind}` | CC 4.2.1.3 |
+| `jurisdiction` | `group:roster` | CC 4.4.3.2.8 |
+| `lawful_access` | `group:roster` | CC 4.4.3.2.8 |
+| `leaf_count` | `wholeness_witness` | CC 6.1.1 |
+| `legal_basis` | `takedown_notice:{basis}` | CC 4.5.10.4, CC 4.5.3 |
+| `legal_weight` | `group:roster` | CC 4.4.3.2.8 |
+| `licence_classes` | `group:roster` | CC 4.4.3.2.8 |
+| `marking_binds_to_record` | `group:roster` | CC 4.4.3.2.8 |
+| `members` | `group:roster` | CC 4.2.3 |
+| `membership_basis` | `group:roster` | CC 4.4.3.2.8 |
+| `node_id` | `CorpusWantV1`, `StorageBudgetV1` | CC 6.1.5.2 |
+| `nonce` | `accord:*`, `accord_proposal / accord_participation / accord_decision` | CC 4.2.6 |
+| `occurrence_key_id` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `outcome` | `moderation:{allegation_type}` | CC 4.5.13 |
+| `peer_id` | `wholeness_witness` | CC 6.1.1 |
+| `pin_reserve_bytes` | `StorageBudgetV1` | CC 6.1.5.2 |
+| `poll_id` | `census:member:share` | CC 6.1.9 |
+| `prev_head_digest` | `group:roster` | CC 4.4.3.2.3, CC 4.4.3.4.2 |
+| `processor_chain` | `group:roster` | CC 4.4.3.2.8 |
+| `purpose` | `moderation:{allegation_type}` | CC 4.5.13 |
+| `ranking` | `ballot:moderator` | CC 4.5.13 |
+| `received_at` | `delivery_receipt:{stream_id}` | CC 5.3.3.6 |
+| `recipient_key_id` | `key_grant:{axis}` | CC 4.4.3.4.1 |
+| `regulatory_profile` | `group:roster` | CC 4.4.3.2.8 |
+| `remaining_budget_bytes` | `CorpusWantV1` | CC 6.1.5.2 |
+| `resumes_halt_id` | `accord:lifecycle:{kind}` | CC 4.2.1.3 |
+| `retention` | `group:roster` | CC 4.4.3.2.8 |
+| `reticulum_ed25519_pubkey` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `reticulum_x25519_pubkey` | `identity:occurrence` | CC 4.4.3.4.3.1 |
+| `revision` | `StorageBudgetV1` | CC 6.1.5.2 |
+| `signed_at` | `identity:occurrence`, `self:delegates_to:agent_occurrence` | CC 4.4.3.4.3.1 |
+| `size_cap_bytes` | `CorpusWantV1` | CC 6.1.5.2 |
+| `stance` | `consent:partnership_accept`, `consent:partnership_grant` | CC 4.4.3.4.3.1 |
+| `statutory_basis` | `group:roster` | CC 4.4.3.2.8 |
+| `stream_id` | `delivery_receipt:{stream_id}`, `video:*` | CC 5.1, CC 5.3.3.6 |
+| `subject_key_id` | `consent:partnership_accept`, `consent:partnership_grant` | CC 4.4.3.4.3.1 |
+| `subject_kind` | `StorageBudgetV1`, `consent:partnership_accept`, `consent:partnership_grant`, `identity:occurrence` | CC 4.4.3.4.3.1, CC 6.1.5.2 |
+| `subscriber_key_id` | `delivery_receipt:{stream_id}` | CC 5.3.3.6 |
+| `transparency_mode` | `group:roster` | CC 4.4.3.2.8 |
+| `transparency_obligations` | `group:roster` | CC 4.4.3.2.8 |
+| `transport_destination` | `identity:occurrence` | CC 4.4.3.4.3, CC 4.4.3.4.3.1 |
+| `window_until` | `accord_proposal / accord_participation / accord_decision` | CC 4.2.6 |
+| `wrap_algorithm` | `key_grant:{axis}` | CC 4.4.3.2.1, CC 4.4.3.4.1 |
+| `wrapped_dek` | `key_grant:{axis}` | CC 4.4.3.4.1 |
+
 ## Carried from earlier in the thread, still open
 
 - The refusal token for a future-dated row.
