@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "fbb16e867cff169c27fe750904634f5af116f1c83dae7e3077cbf807a0cab4c6",
+  "source_sha256": "5433c28452ffed638a827d676c6a78b074d2fd0ca649c979e67f859a6da0af55",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,7 +45,7 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 58,
+   "statements": 57,
    "guarded_transitions": 26,
    "marks": {
     "refuse": 30,
@@ -18957,14 +18957,6 @@
         "reach": "whole"
        },
        {
-        "guard": "one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse",
-        "cc_ref": [
-         "CC 3.1.9.2",
-         "CC 3.4.11"
-        ],
-        "reach": "whole"
-       },
-       {
         "guard": "one other(testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse",
         "cc_ref": [
          "CC 3.1.9.3",
@@ -18983,6 +18975,13 @@
         "guard": "one other(ratchet:flag:counter_rii:{layer})@admitted[id=ref:evidence_refs] else refuse",
         "cc_ref": [
          "CC 3.4.7.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse",
+        "cc_ref": [
+         "CC 3.4.11"
         ],
         "reach": "whole"
        }

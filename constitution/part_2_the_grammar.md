@@ -963,7 +963,7 @@ This entry says which clock every stated instant refers to, and how far that ins
 
 | Case | Window | Rule |
 |---|---|---|
-| An attestation whose `asserted_at` is in the future | 5 minutes in the future | Consumers receiving an attestation whose `asserted_at` is more than 5 minutes in the future MUST reject it as malformed. |
+| An attestation whose `asserted_at` is in the future | 5 minutes in the future | Consumers receiving an attestation whose `asserted_at` is more than 5 minutes in the future MUST reject it as malformed. A `constitutional` halt is the one exception: a node acts on it at receipt whatever its `asserted_at`, and counts the fuse from receipt ([CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1)). |
 | A cosignature on a single STH ([CC 5.3.1](part_5_transport_substrate.md#5.3.1)) | 5 minutes from the STH's published `signed_at`. Time-skew between cosigners on a single STH is bounded by the STH's own `signed_at` field. | Cosignatures with `signed_at` farther than 5 minutes from the STH's published `signed_at` MUST be rejected. |
 | A long-lived attestation carrying `valid_until` in the future | The freshness check is "the attestation has not yet reached its `valid_until`, AND the current consumer clock is within ±5 minutes of the substrate's network-consensus clock". | A consumer whose clock drifts past the skew bound MUST fail-secure (reject) rather than accept. |
 | A row whose admission walks a `delegates_to` chain | **`W` = 72 hours** (259 200 s) before the receiver's clock | The substrate MUST refuse such a row whose `asserted_at` precedes the receiver's clock by more than `W`, with the refusal token **`asserted_at_stale`**. |

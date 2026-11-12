@@ -1151,7 +1151,7 @@ The regulatory-watch source-feed list MUST include at minimum: EUR-Lex, Federal 
 
 *MH §225:* "When it is unclear who carried out an attack, the risk of disproportionate reaction, miscalculation and escalation increases."
 
-CIRIS deployments that include network-facing inference, API exposure, or federation transport are subject to emerging cyber-domain treaty obligations even where no enacted statute currently applies. The `cyber_offensive` prohibition ([CC 3.1.5.4](part_3_the_namespace.md#3.1.5.4)) is the internal firebreak; §6 of this annex tracks the external treaty surface. Where the WA docket receives a "Breaking" tag related to cyber-domain treaty ratification (e.g., Budapest Convention extension, proposed UN cybercrime convention), the CRE Protocol (Annex D) must re-evaluate any ST ≥ 3 deployment with network-facing components before the next F-Audit cycle.
+CIRIS deployments that include network-facing inference, API exposure, or federation transport are subject to emerging cyber-domain treaty obligations even where no enacted statute currently applies. The `cyber_offensive` prohibition ([CC 3.1.5.4](part_3_the_namespace.md#3.1.5.4)) is the internal firebreak; §6 of this annex tracks the external treaty surface. Where the WA docket receives a "Breaking" tag related to cyber-domain treaty ratification (e.g., Budapest Convention extension, proposed UN cybercrime convention), the CRE Protocol (Annex D) must re-evaluate any deployment assessed at RM ≥ 4 with network-facing components before the next F-Audit cycle ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)).
 
 **1. Data-Protection Cross-Walk ("DP-Map").**
 
@@ -1231,7 +1231,7 @@ This means:
 | **Health** | HIPAA (45 CFR §164) | ePHI encryption at rest & transit; BAA contract | `identity_id:"hipaa_cls_a"` guardrail; audit tag `PHI=true` | — |
 | **Finance** | GLBA, FINRA 2210 | Audit trail retention 6 y; suitability checks | PDMA Step 1 require KYC context | — |
 | **Children / EdTech** | COPPA, FERPA | Parental consent; data age gating | Guardrail `gr_child_content`; COPPA flag in prompt schema | MH §§165-169 |
-| **Critical Infrastructure** | NERC-CIP, TSA SDs | 15-min cyber-incident report; physical access logs | Autonomy capped at **A2** unless CRE passes | — |
+| **Critical Infrastructure** | NERC-CIP, TSA SDs | 15-min cyber-incident report; physical access logs | Autonomy capped at **A2** unless the CRE, which RM ≥ 4 alone opens ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)), passes | — |
 | **Labor / HR / Hiring** | EEOC guidelines; EU AI Act Art. 6 + Annex III §4 | Bias audit required pre-deployment; worker notice obligation | ST modifier: `deployment_domain:"labor_hr"` → ST floor = 3; CIntS must include `worker_impact_assessment` field; `DISCRIMINATION` prohibition enforced at the WiseBus capability gate (structural, `NEVER_ALLOWED`; surfaced in round-1 DMA reasoning context); automated-rejection rate by demographic tracked as KPI | MH §§148-156 |
 | **Gig / Platform Economy** | NLRA (US); Platform Work Directive (EU) | Algorithmic management transparency; appeal rights | `gr_gig_transparency` guardrail active; algorithmic management decisions logged with human-review option; ST modifier: `deployment_domain:"gig_platform"` → ST floor = 2 | MH §§150, 154-155 |
 | **Youth / Educational Services** | COPPA; FERPA; DSA Art. 28 (minors) | Addictive-design prohibition; no dark patterns; developmental appropriateness review | `gr_child_content` + `gr_no_dark_patterns` both active; A2 autonomy cap unless educational-institution WA signs off; youth unemployment impact tracked in Creator Intent Statement for EdTech deployments | MH §§165-169 |
@@ -1331,7 +1331,7 @@ MH §§201, 221, 226 establish that passive compliance with enacted law is insuf
 | `oecd.ai` (OECD AI Policy Observatory) | Policy convergence across 38 member states | `minor` for monitoring; `material` if OECD Recommendation revision affects ST system or labor overlay |
 | `coe.int/ai` (Council of Europe AI Convention) | First binding international AI treaty (open for signature 2024) | `breaking` on ratification by any CIRIS-deployment jurisdiction; WA docket opens automatically |
 | `un.org/techenvoy` (UN AI Advisory Body) | UN-level AI governance recommendations | `material` if annual report names specific architectural obligations |
-| `budapestconvention.org` (Cybercrime Convention) | Cyber-domain treaty ratification | `breaking` on new ratification; CRE re-evaluation required for ST ≥ 3 network-facing deployments |
+| `budapestconvention.org` (Cybercrime Convention) | Cyber-domain treaty ratification | `breaking` on new ratification; CRE re-evaluation required for network-facing deployments assessed at RM ≥ 4 |
 | National AI strategy registries (EU, US, UK, JP, AU, BR, IN, ZA) | Domestic AI strategy updates with legal teeth | `minor` for strategy; `material` if strategy creates mandatory conformity obligations |
 
 **Federation-level participation:**
@@ -1349,7 +1349,7 @@ The CIRIS federation is not merely a compliance recipient. MH §§219-221 name d
 |---|---|---|
 | `minor` | Monitoring-only change | Annual review; logged in reg-dialogue WBDB record |
 | `material` | CIRIS control update required | S-Dive audit within 90 days; RDL files public comment if comment period open |
-| `breaking` | Spec patch or immediate WA docket | Emergency WA session ≤ 30 days; CRE re-evaluation for affected ST tiers; RDL public-comment submission |
+| `breaking` | Spec patch or immediate WA docket | Emergency WA session ≤ 30 days; CRE re-evaluation for affected deployments assessed at RM ≥ 4; RDL public-comment submission |
 | `multilateral-erosion` | Weakening of key multilateral institution or treaty (per MH §201) | RDL escalates to WA for strategic review; federation considers explicit public statement of support for the institution |
 
 **7. Compliance Evidence Pack (CEP).**
@@ -1376,7 +1376,7 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 - **Annex G:** TX-6 privacy defenses map to the GDPR pseudonymisation recommendations (Recital 28).
 - **Annex H:** F-Audit timing supplies evidence for periodic re-assessment duties in EU-AI-Act Art 72 (Regulation (EU) 2024/1689).
 - **Annex J:** Benchmark explanations furnish "meaningful information" for automated-decision queries (GDPR Art 15(1)(h)).
-- **§3.2 Labor/HR overlay → Annex D CRE:** Labor deployments at ST floor 3 must pass CRE Protocol before deployment.
+- **§3.2 Labor/HR overlay → Annex D CRE:** A labour deployment assessed at RM ≥ 4 must pass the CRE Protocol before deployment ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)). The ST floor of 3 does not open it.
 - **§6.1 RDL participation → Annex B WA structure:** RDL is a designated WA role; appointment, recusal, and rotation procedures follow Annex B §§2, 3 and 5.
 - **§5 Liability matrix (new vectors):** Youth-design joint liability is apportioned under the applicable law, as for the existing vectors.
 - **§7 CEP item 8 (reg-dialogue) → §6 Tracker:** WBDB reg-dialogue records are the source for CEP item 8; no separate logging system.
@@ -3274,7 +3274,7 @@ Fold:
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
 
 Guard:
-- attest: `one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.2, CC 3.4.11)
+- attest: `one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse` (CC 3.4.11)
 - attest: `one other(ratchet:flag:*)@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.6)
 - attest: `one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.6)
 - attest: `one other(ratchet:flag:counter_rii:{layer})@admitted[id=ref:evidence_refs] else refuse` (CC 3.4.7.2)

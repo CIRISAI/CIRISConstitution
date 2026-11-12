@@ -491,7 +491,7 @@ The line is drawn at **"does it have a bounded membership roster?"** — yes →
 | **self / family** | `self`, `family` | encrypted, per-write DEK | **none** ([CC 5.2](part_5_transport_substrate.md) structural invisibility) | occurrences / family members |
 | **Community** | `community`, `affiliations` | **encrypted under the community DEK** | **none outside the roster**: `custody:ack:v1` within the cohort ([CC 3.1.3.3](part_3_the_namespace.md)) | community members (DEK cascade) |
 | **Commons** | `species`, `biosphere`, `federation` | **plaintext** | `custody:ack:v1` at federation scope — the holder directory | anyone |
-| **Public room** (`cohort_subkind: public`, [CC 3.2](part_3_the_namespace.md)) | `community` | **plaintext** (Commons tier, no DEK) | `custody:ack:v1` at federation scope; a `community:listing:v1` row | anyone who joins (open admission); replicated to the roster's nodes |
+| **Public room** (`cohort_subkind: public`, [CC 3.2](part_3_the_namespace.md)) | `community` | **plaintext** (Commons tier, no DEK) | `custody:ack:v1` at federation scope; a `community:listing:v1` row | anyone on request: a non-member reads the content by asking a member's node; replicated to the roster's nodes on join ([CC 3.2](part_3_the_namespace.md)) |
 
 *Wire discovery: none* for `self` / `family` means none **outside** the cohort. Within it, a device's custody report for a blob (`custody:ack:v1`, `here` \| `none`, [CC 3.1.3.3](part_3_the_namespace.md)) is permitted, at the blob's own scope and replicated only to members — never to a non-member.
 
@@ -1278,7 +1278,7 @@ watch_sla(T, s, revocation_at):
                  .where(asserted_at > revocation_at)
                  .first
 
-  if now > deadline and T is still present, neither withdrawn, superseded nor hard-deleted:   # CC 3.3.1 D1; completion is evidence toward D1, never a substitute
+  if now > deadline and T is still present, neither withdrawn nor superseded by T.attesting_key_id nor hard-deleted:   # CC 3.3.1 D1; completion is evidence toward D1, never a substitute
     emit hard_case:deletion_window_breach against T
 ```
 
@@ -1866,7 +1866,7 @@ Per [CC 3.4.7.1](part_3_the_namespace.md). `federation_keys.identity_type` is a 
 
 #### 4.5.8.1 `cohabitation` — Cohabitation discipline for constitutional + substrate roles
 
-Set membership grants the wire-level *right* to emit per held role, but two roles carry defense-in-depth guidance against cohabitation:
+Set membership is necessary for the wire-level *right* to emit per held role and never sufficient: every reserved role but `accord_holder` also needs its live conferral ([CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1)). Two roles carry defense-in-depth guidance against cohabitation:
 
 - **`accord_holder` ([CC 3.4.1](part_3_the_namespace.md) + [CC 4.2](part_4_composition_governance.md))**: the halt authority of CC 4.2. Consumer policy SHOULD treat an `accord_holder` key that also holds non-constitutional roles (e.g., `{accord_holder, agent}`) with elevated scrutiny — the accord roster's halt authority is strongest when its keys are single-purpose. The cohabitation is NOT forbidden at the wire layer (the substrate cannot adjudicate constitutional intent), but the CC 4.2 entrenched-`family` discipline RECOMMENDS dedicated accord-holder keys.
 - **`substrate_persist` / `substrate_edge` ([CC 3.4.3](part_3_the_namespace.md))**: substrate-self-report roles remain bound by the CC 3.4.3 reservation: a `system:*` row is emitted only by the running substrate. A key cohabiting a substrate role with an application role (e.g., `{substrate_persist, agent}`) is still held to that reservation for its substrate-role emissions; cohabitation does not relax it.
@@ -2009,7 +2009,7 @@ One identity MAY belong to multiple families. Each family has its own membership
 
 #### 4.5.12.3 `admission-self` — Self-occurrence admission — single-vouch
 
-A new `identity_occurrence` is admitted on a signature from EITHER the root `identity_key_id` (until the self evicts its genesis key) OR any currently active occurrence of that identity ("trust any device I've already onboarded"). A `node`-role signer counts only through its live owner-binding. A `user`-role key joins the self's roster by the self-roster door of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3). At one key that door is the owner's own signature. At two or more it is a strict majority of the live roster, the proposer included, or the lone path after its window unless a strict majority of the other members objects. Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
+A new `identity_occurrence` is proposed by a signature from EITHER the root `identity_key_id` (until the self evicts its genesis key) OR any currently active occurrence of that identity ("trust any device I've already onboarded"). A `node`-role signer counts only through its live owner-binding. A `user`-role key joins the self's roster by the self-roster door of [CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3). At one key that door is the owner's own signature. At two or more it is a strict majority of the live roster, the proposer included, or the lone path after its window unless a strict majority of the other members objects. Higher-assurance setups MAY layer requirements on `hardware_attestation` via consumer policy.
 
 **Rationale**: matches user-intuition for self-membership ("my phone unlocks my laptop's trust posture for new devices"); avoids the operational overhead of multi-vouch for routine onboarding; the security gradient lives in the optional `hardware_attestation` field, not in the admission rule.
 
@@ -2019,7 +2019,7 @@ Per [CC 3.4.4](part_3_the_namespace.md). The five substrate-emitted membership-e
 
 #### 4.5.12.5 `family-admission` — Family admission — consensus_protocol (normative)
 
-Unlike self-occurrence, family membership changes are **NOT single-vouch by default**. The family's `consensus_protocol` field governs admission. Six canonical protocols (`founder_only` / `unanimous` / `majority` / `quorum:M/N` / `weighted:{rubric}` / `custom:{family_id}`); operator vocabulary extends, and `open:self_admit` is the open protocol of a public group ([CC 4.4.3.2](#4.4.3.2)). `founder_only` is conformant for a family and for a publisher-gated subscription, refused for a community ([CC 4.5.13](#4.5.13)), and admissible for an affiliation only under the one-voice countersign rule of [CC 4.4.3.2.8](#4.4.3.2.8).
+Unlike a self of one key ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)), family membership changes are **NOT single-vouch by default**. The family's `consensus_protocol` field governs admission. Six canonical protocols (`founder_only` / `unanimous` / `majority` / `quorum:M/N` / `weighted:{rubric}` / `custom:{family_id}`); operator vocabulary extends, and `open:self_admit` is the open protocol of a public group ([CC 4.4.3.2](#4.4.3.2)). `founder_only` is conformant for a family and for a publisher-gated subscription, refused for a community ([CC 4.5.13](#4.5.13)), and admissible for an affiliation only under the one-voice countersign rule of [CC 4.4.3.2.8](#4.4.3.2.8).
 
 The consensus_protocol field is itself subject to amendment via the SAME protocol's rules (meta-amendment shape parallel to [CC 4.5.1.2](#4.5.1.2)) UNLESS the family is `consensus_protocol_entrenched: true`. Entrenched families reject amendments at the substrate gate; replacement requires the family's documented out-of-band ceremony.
 

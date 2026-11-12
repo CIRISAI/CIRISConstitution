@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "4eae89f438655bea149fc6a8900098ae9ca7cb5753e4a255ed062d9e38e2854a",
+  "registry_sha256": "15cd55d08f78e4e7d6adde568ca78b975f3caaf0ad0fb15e3c4da9e3083fbc8b",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -269,8 +269,8 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 321,
-   "citations": 495,
+   "cells_cited": 319,
+   "citations": 493,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "body": {
@@ -4041,13 +4041,7 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    },
-    "cites": [
-     {
-      "cc_ref": "CC 3.1.2",
-      "reading": "agree"
-     }
-    ]
+    }
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -4388,13 +4382,7 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    },
-    "cites": [
-     {
-      "cc_ref": "CC 3.1.2",
-      "reading": "agree"
-     }
-    ]
+    }
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",

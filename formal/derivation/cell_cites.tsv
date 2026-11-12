@@ -44,7 +44,6 @@ accord:lifecycle:{kind}	signer_rule	agree	CC 3.4.1	`accord:*` is reserved: only 
 age_assurance:{level}:{band}:{version}	fold	agree	CC 3.4.11	A consumer resolving an identity's age-assurance MUST union both prefixes and take the **highest** level on record.
 age_assurance:{level}:{band}:{version}	fold	agree	CC 3.4.11	A consumer unions both at read time, the witness rung outranks the self rung, and the gate's default is protective.
 age_assurance:{level}:{band}:{version}	fold	agree	CC 3.4.11	The `self` rung of the ladder materializes on the non-reserved `age_self_declared:` prefix; the `provider`/`government` rungs materialize on the witness-reserved `age_assurance:` prefix carrying the `{level}` token.
-age_assurance:{level}:{band}:{version}	projection	agree	CC 3.1.2	A consumer unions both and the witness rung outranks the self rung.
 age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.1.2	The subject-signed `age_self_declared:` counterpart is catalogued here too: it is *not* witness-reserved, but it carries an admission rule at [CC 3.4.11](part_3_the_namespace.md), so R1 requires its row.
 age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.3.12	Witness-reserved age-assurance attestation ([CC 3.1.2](part_3_the_namespace.md) row; rules at [CC 3.4.11](part_3_the_namespace.md)). `{level}` ∈ `provider` \| `government` (closed; `self` is refused here); `{band}` ∈ `minor` \| `adult` \| `under_13` \| `13_15` \|
 age_assurance:{level}:{band}:{version}	signer_rule	agree	CC 3.4.10	Being a registered provider, authority or assessor for that ladder; "witness" there means *not the subject*
@@ -56,7 +55,6 @@ age_self_declared:band:{band}:{version}	body	agree	CC 3.4.11	A self-declaration 
 age_self_declared:band:{band}:{version}	fold	agree	CC 3.4.11	A consumer resolving an identity's age-assurance MUST union both prefixes and take the **highest** level on record.
 age_self_declared:band:{band}:{version}	fold	agree	CC 3.4.11	A consumer unions both at read time, the witness rung outranks the self rung, and the gate's default is protective.
 age_self_declared:band:{band}:{version}	fold	agree	CC 3.4.11	The `self` rung of the ladder materializes on the non-reserved `age_self_declared:` prefix; the `provider`/`government` rungs materialize on the witness-reserved `age_assurance:` prefix carrying the `{level}` token.
-age_self_declared:band:{band}:{version}	projection	agree	CC 3.1.2	A consumer unions both and the witness rung outranks the self rung.
 age_self_declared:band:{band}:{version}	signer_rule	fills	CC 3.1.2	admitted only where the signer acts for the subject
 age_self_declared:band:{band}:{version}	signer_rule	fills	CC 3.3.12	the self rung is the subject-signed `age_self_declared:band:{band}:{version}`, which carries a band only
 age_self_declared:band:{band}:{version}	signer_rule	fills	CC 3.4.11	Admitted iff the signer acts for the subject (the subject's own occurrence or an admitted occurrence of it).

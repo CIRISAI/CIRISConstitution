@@ -851,3 +851,19 @@ takedown at a one-seat affiliation; the delegation term as a general expiry row.
 count needs an after-retired condition no selector key carries (C518, C519); key:revocation attest role (C546);
 `hard_case` unreserved in the registry (C537); the occurrence build-check guard (C516); an affiliation's
 withdrawal of a statement about itself (C552); the roster audience cell (C530).
+
+Fifth-reading stale fixes (`handoff/lanes/out_w5_stale.tsv`, 33 rows): 23 applied. Held: G16 (how a non-public
+licence reaches a reader outside the roster), G23/G29 (which row records a viewer's passing the consent screen: a
+viewer is no subject of the target, so `consent:state:granted` is refused by the emitter gate), G22 (who signs the
+removal of an undefended report: the lane wrote "no notice is signed, each node reads it from the closed window",
+which is a rule the text does not state), the CC 4.5.12.3 heading (titles are pinned in toc.tsv), G05 and G27 (wire
+sections that wait on the edge), and G38's three T8 edits (a collapsed witness directory: the verifier's confidence
+is low, it is the trust root, and independence is a security property where T4 speaks of liveness; not mine to
+settle after all, for Eric).
+Value lags after this round: the deletion reactions still excuse a breach on any withdrawal of the target, where
+the text now says only the producer's composers discharge it (the event grammar has no "by whom"); the guard that
+a slashing row cites a moderation row is dropped, the grounds being wider now; the age fold should take the lower
+of a witness band and a self-declared band.
+Analysis launched at Eric's word (2026-11-12, "do your planned analysis for what each pass found, what type of
+change they were per the RATCHET taxonomy, and use that to inform what models should be built"): five lanes classify
+C001 to C555 by kind, record, class, mechanism, model and property (`handoff/lanes/T_TAXONOMY.md`, `out_t_*.tsv`).
