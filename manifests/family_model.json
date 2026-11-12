@@ -20889,12 +20889,12 @@
      "partnership_grant": "self x delegates_to(chain rooted at a subject) x {}",
      "replication": "self | owner_of_subject(for_key_id) x none x {}",
      "scope": "self x delegates_to(chain rooted at a subject) x {}",
-     "state": "self | owner_of_subject(for_key_id) x none x {}",
+     "state": "self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {}",
      "stream": "self x delegates_to(chain rooted at a subject) x {}"
     },
     "source": "cc-table",
     "per_stage": true,
-    "closed": "community_trust: owner_of_subject x none x {}; decay: self x none x {}; deletion_complete: self x none x {}; deletion_sla: self x none x {}; partnership_accept: self x none x {}; partnership_grant: self x delegates_to(chain rooted at a subject) x {}; replication: self | owner_of_subject(for_key_id) x none x {}; scope: self x delegates_to(chain rooted at a subject) x {}; state: self | owner_of_subject(for_key_id) x none x {}; stream: self x delegates_to(chain rooted at a subject) x {}",
+    "closed": "community_trust: owner_of_subject x none x {}; decay: self x none x {}; deletion_complete: self x none x {}; deletion_sla: self x none x {}; partnership_accept: self x none x {}; partnership_grant: self x delegates_to(chain rooted at a subject) x {}; replication: self | owner_of_subject(for_key_id) x none x {}; scope: self x delegates_to(chain rooted at a subject) x {}; state: self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {}; stream: self x delegates_to(chain rooted at a subject) x {}",
     "cc_ref": {
      "community_trust": "CC 3.3.1",
      "decay": "CC 3.3.1",
@@ -20910,6 +20910,10 @@
     "code": {
      "value": "any_registered (CC reserves; no gate)",
      "source": "gap"
+    },
+    "qualifier": {
+     "community_trust": "a row the owned node signed stays valid, read through the owner's binding",
+     "state": "the stance expired is the store's alone (CC 3.4.5)"
     }
    },
    "subject_rule": {

@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "3beaee0244f97b9ea50f37dbe8780cb64b435553e0409684041eeab49c8f77f8",
+  "source_sha256": "d077b8a462205437a12741e95f347c1d91b944886d81d62053c14b1d3e362e14",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -13514,9 +13514,32 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "member"
+       "founder",
+       "member",
+       "self"
       ],
-      "source": "derived"
+      "source": "derived",
+      "stages": {
+       "proposal": [
+        "founder",
+        "member"
+       ],
+       "acceptance": [
+        "self"
+       ],
+       "decline": [
+        "self"
+       ],
+       "widening": [
+        "member"
+       ],
+       "removal": [
+        "member"
+       ],
+       "resignation": [
+        "self"
+       ]
+      }
      },
      "policy": {
       "value": {
@@ -13531,17 +13554,25 @@
        "CC 4.4.3.2.8"
       ],
       "count": "leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group",
+      "stages": {
+       "proposal": {
+        "policy": "selfAct",
+        "rows": []
+       },
+       "acceptance": {
+        "policy": "selfAct",
+        "rows": []
+       },
+       "decline": {
+        "policy": "selfAct",
+        "rows": []
+       },
+       "resignation": {
+        "policy": "selfAct",
+        "rows": []
+       }
+      },
       "cases": [
-       {
-        "when": "leaf=proposal|acceptance|decline",
-        "policy": "selfAct",
-        "rows": []
-       },
-       {
-        "when": "leaf=resignation",
-        "policy": "selfAct",
-        "rows": []
-       },
        {
         "when": "leaf=removal & group=affiliations & seats=one",
         "policy": "cosigned",
@@ -17292,9 +17323,19 @@
      "to": "admitted",
      "roles": {
       "value": [
-       "review"
+       "review",
+       "subject"
       ],
-      "source": "derived"
+      "source": "derived",
+      "stages": {
+       "filing": [
+        "review",
+        "subject"
+       ],
+       "ruling": [
+        "review"
+       ]
+      }
      },
      "policy": {
       "value": {
@@ -17648,9 +17689,18 @@
      "to": "admitted",
      "roles": {
       "value": [
+       "registered",
        "self"
       ],
-      "source": "derived"
+      "source": "derived",
+      "stages": {
+       "peer_admission": [
+        "self"
+       ],
+       "other": [
+        "registered"
+       ]
+      }
      },
      "policy": {
       "value": {

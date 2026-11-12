@@ -42,6 +42,7 @@ TOKEN_RULES = [  # (regex searched anywhere in the closed signer text, role toke
     (r"\bminter\b", ["member"]),   # the minter of an epoch is an active member occurrence (CC 3.3.2)
     (r"\bsteward\b", ["steward"]),
     (r"\bholder\b", ["holder"]),
+    (r"subject of the target", ["subject"]),   # the party a ruling is about files against it (CC 4.5.5)
     (r"any_registered", ["registered"]),
     (r"\bself\b", ["self"]),
 ]
@@ -68,7 +69,7 @@ def roles_from_signer(val, per_stage=False):
             return roles_from_text(" ".join(map(str, who)) if isinstance(who, list) else str(who)) + (None,)
         if per_stage:
             # one signer per stage, from the text: the value is the union, the stages ride beside it
-            stages = {stage: roles_from_text(str(rule).split(" x ")[0])[0] for stage, rule in val.items()}
+            stages = {st: roles_from_text(str(rule).split(" x ")[0])[0] for stage, rule in val.items() for st in stage.split("/")}
             return sorted({r for rs in stages.values() for r in rs}), "derived", stages
         # per-stage rule of the census (membership): the first stage is the attest transition's signer
         first = next(iter(val.values()), "")
@@ -396,7 +397,8 @@ def build():
         gov = val(r.get("governance"))
         rep = val(r.get("replication"))
         cell = r.get("signer_rule") if isinstance(r.get("signer_rule"), dict) else {}
-        per_stage = bool(cell.get("per_stage"))
+        # a cell that gives each stage its signer, from the text (per_stage) or from the census (a map with no `who`)
+        per_stage = bool(cell.get("per_stage")) or (isinstance(signer, dict) and "who" not in signer)
         roles, rsrc, stages = roles_from_signer(signer if per_stage else (signer_closed or signer), per_stage)
         conds = signer.get("conditions") if isinstance(signer, dict) and "who" in signer else None
         def entry_roles():

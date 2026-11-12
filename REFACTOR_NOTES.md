@@ -636,3 +636,10 @@ role where the family cell and the text give the invitee and the subject (a deri
 that built it (text against itself, for `text_conflicts.tsv`). RICHER needs: a role no token names (8), a
 condition (7), a delegation shape (4), per-leaf signers (3), a family with no row (3), a group as signer (2).
 Ten statements are marked seat-rule and wait.
+
+Signer disagreements worked: `tools/build_transitions.py` keeps per-stage roles for a census cell that is a map
+(membership, reconsideration, revocation), so membership's leaf arms are stages of its policy. `consent:{kind}`
+stage `state` carries the delegation chain. One correction was wrong and is reverted: adding `self` to
+`community_trust` let any signer grant for a node it does not own, and the mesh story (step 51) caught it; the cell
+stays owner-only with the node-authored form in its qualifier. `system:*` and `substrate_edge` is text against the
+census of the store alone and goes to the implementers, not into the cell. C287 records the build-manifest signer.

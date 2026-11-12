@@ -22,7 +22,7 @@ consent:partnership_accept	self x none x {} ; the producer side of the pair	CC 3
 consent:partnership_grant	self x delegates_to(chain rooted at a subject) x {} ; a subject of the target, or a chain rooted at one	CC 3.4.5	
 consent:scope:{kind}	self x delegates_to(chain rooted at a subject) x {} ; a subject of the target, or a chain rooted at one	CC 3.4.5	
 consent:stream:{kind}	self x delegates_to(chain rooted at a subject) x {} ; a subject of the target, or a chain rooted at one	CC 3.4.5	
-consent:{kind}	owner_of_subject x none x {}	CC 3.3.1	community_trust
+consent:{kind}	owner_of_subject x none x {} ; a row the owned node signed stays valid, read through the owner's binding	CC 3.3.1	community_trust
 consent:{kind}	self x none x {}	CC 3.3.1	decay
 consent:{kind}	self x none x {}	CC 3.3.1	deletion_complete
 consent:{kind}	self x none x {}	CC 3.3.1	deletion_sla
@@ -30,7 +30,7 @@ consent:{kind}	self x none x {}	CC 3.3.1	partnership_accept
 consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	partnership_grant
 consent:{kind}	self | owner_of_subject(for_key_id) x none x {}	CC 3.3.1	replication
 consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	scope
-consent:{kind}	self | owner_of_subject(for_key_id) x none x {}	CC 3.3.1	state
+consent:{kind}	self | owner_of_subject(for_key_id) x delegates_to(chain rooted at a subject) x {} ; the stance expired is the store's alone (CC 3.4.5)	CC 3.3.1	state
 consent:{kind}	self x delegates_to(chain rooted at a subject) x {}	CC 3.3.1	stream
 cosign:{state}	roster_member(at) x none x {} ; the event's primary signer, an active member of the group	CC 3.1.3	pending
 cosign:{state}	roster_member(at) x none x {} ; the member whose signature the row carries	CC 3.1.3	signature
