@@ -581,3 +581,9 @@ attestation:registry_consensus) each need a departure reason in `departure_reaso
 `lineage_witness:{stage}` cosign none contradicts a reason that says the family leaves the default.
 The 27 DISAGREE rows are not yet in `text_conflicts.tsv`. `cites` is what the prose cut will read: a sentence whose
 cell reads `agree` is covered by data; `fills` is not yet.
+
+The reader lanes' 27 DISAGREE rows are text against the census of the pinned build, about ten distinct points
+(key-grant supersede and rotation, revocation erasure and rollback, licence class, proposal withdrawal, eviction
+door, two audiences, the default in_audience, two token lists). They are drafted as questions for persist in
+`handoff/persist/1259_addition_draft.md`, with the unnamed refusals and the one-emitter question. Not posted:
+Eric reads it first. Once answered, each becomes a departure with a reason or a census correction.
