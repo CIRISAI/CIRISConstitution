@@ -15,6 +15,11 @@ CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
 SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
+COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
+POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
+COUNT_SOURCES = ("subject_group", "signer_group", "dimension_authority", "accord", "trust_root", "self", "conferrer")
+COUNT_KEYS = ("leaf", "verb", "identity", "group", "seats")
+COUNT_OPEN_MAX = 7   # families with a cosign cell that is not none and no typed count; the number only falls
 REG = os.path.join(ROOT, "manifests/namespace_registry.json")
 OUT = os.path.join(ROOT, "manifests/family_model.json")
 DEFAULT = os.path.join(ROOT, "formal/derivation/family_default_row.json")
@@ -42,6 +47,7 @@ COLUMNS = OrderedDict([
     ("erasure_route", "dsar | purge | legal_hold | none"),
     ("blind", "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
+    ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
     ("derived", "projection_id | none (the row must equal the named projection's rebuild)"),
     ("confers", "trust | duty | standing | nothing (read by the trust-set fold, never by admission)"),
     ("binds_segment", "placeholder → signer | subject | group | none"),
@@ -371,6 +377,10 @@ def main():
     if os.path.exists(CELL_TEXT):
         for r in csv.DictReader([l for l in open(CELL_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
             cell_text.setdefault(r["family"], []).append(r)
+    count_text = OrderedDict()
+    for r in csv.DictReader([l for l in open(COUNT_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
+        count_text.setdefault(r["family"], []).append(r)
+    policy_rows = {f["family"] for f in json.load(open(POLICY, encoding="utf-8"))["families"]}
     rows = []
     for fam in sorted(set(cc) | set(census)):
         c, z = cc.get(fam), census.get(fam)
@@ -429,6 +439,33 @@ def main():
         row["emitter_class"] = emitter_class(row["signer_rule"])
         for col in ("derived", "confers", "binds_segment"):
             row[col] = {"value": None, "source": "gap", "note": "new column; values come with the manifest's first ruled version"}
+        # How the family's act is counted: typed arms over the policy table, each with the words it rests on.
+        arms = count_text.pop(fam, [])
+        if arms:
+            out_arms = []
+            for i, a in enumerate(arms):
+                where = f"count_text.tsv: {fam} arm {i + 1}"
+                sel = a["selector"]
+                if sel != "*":
+                    for t in sel.split(" & "):
+                        mt = re.fullmatch(r"([a-z]+)=([a-z_]+(?:\|[a-z_]+)*)", t)
+                        if not mt or mt.group(1) not in COUNT_KEYS:
+                            print(f"{where}: {t!r} is not a test on one of {', '.join(COUNT_KEYS)}"); return 1
+                elif i != len(arms) - 1:
+                    print(f"{where}: an arm for every row is the last arm"); return 1
+                md = re.fullmatch(r"(none|shut)|([a-z_]+)(?:@([a-z_]+))?(?:!(confers|result))?", a["doors"])
+                if not md or (md.group(2) and (md.group(2) not in policy_rows or (md.group(3) and md.group(3) not in COUNT_SOURCES))):
+                    print(f"{where}: {a['doors']!r} is not none, shut or a policy row with a known source"); return 1
+                span = section_span(a["cc_ref"])
+                if span is None or a["quote"] not in span:
+                    print(f"{where}: the quoted words do not stand in {a['cc_ref']}"); return 1
+                out_arms.append(OrderedDict([("when", sel), ("doors", a["doors"]), ("cc_ref", a["cc_ref"])]))
+            row["count"] = {"value": " ; ".join((x["when"] + " => " if x["when"] != "*" else "") + x["doors"] for x in out_arms),
+                            "arms": out_arms, "source": "cc-table"}
+        elif row["cosign_rule"].get("value") == "none":
+            row["count"] = {"value": "none", "source": "generic", "note": "the cosign cell reads none: one signature carries the row"}
+        else:
+            row["count"] = {"value": None, "source": "gap", "note": "the cosign cell is not none and no arm is typed", "cosign_rule": row["cosign_rule"].get("value")}
         er = row["erasure_route"].get("value")
         erh = head_of(er) if isinstance(er, str) else (head_of(er[0]) if isinstance(er, list) and er else None)
         if erh in ("dsar", "purge"):
@@ -450,6 +487,11 @@ def main():
         print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
     if cell_text:
         print("cell_text.tsv names families outside the model: " + ", ".join(sorted(cell_text))); return 1
+    if count_text:
+        print("count_text.tsv names families outside the model: " + ", ".join(sorted(count_text))); return 1
+    count_open = [r["family"] for r in rows if r["count"]["source"] == "gap"]
+    if len(count_open) > COUNT_OPEN_MAX:
+        print(f"count: {len(count_open)} families have a cosign cell and no typed count, more than {COUNT_OPEN_MAX}: " + ", ".join(count_open)); return 1
     # The default row: the value a family takes in each of these columns unless it states its own.
     # Pinned as data, and held to be the commonest value of its column, so a change of default is a
     # deliberate edit and never a drift. Each row lists the columns in which it departs.

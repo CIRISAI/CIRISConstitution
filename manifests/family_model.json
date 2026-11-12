@@ -25,6 +25,7 @@
    "erasure_route": "dsar | purge | legal_hold | none",
    "blind": "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
+   "count": "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)",
    "derived": "projection_id | none (the row must equal the named projection's rebuild)",
    "confers": "trust | duty | standing | nothing (read by the trust-set fold, never by admission)",
    "binds_segment": "placeholder → signer | subject | group | none",
@@ -215,6 +216,14 @@
     "prose": 0,
     "mixed": 0,
     "gap": 3
+   },
+   "count": {
+    "cc-table": 11,
+    "code-v61": 0,
+    "generic": 166,
+    "prose": 0,
+    "mixed": 0,
+    "gap": 7
    },
    "derived": {
     "cc-table": 0,
@@ -1049,6 +1058,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -1348,6 +1362,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -1652,6 +1671,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "accord_halt@accord",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "accord_halt@accord",
+      "cc_ref": "CC 4.2.1.1"
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -1954,6 +1984,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -2258,6 +2293,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -2557,6 +2597,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -2855,6 +2900,22 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord",
+    "arms": [
+     {
+      "when": "leaf=confirmed",
+      "doors": "accord_halt@accord",
+      "cc_ref": "CC 4.2.1.1"
+     },
+     {
+      "when": "leaf=active",
+      "doors": "accord_majority@accord",
+      "cc_ref": "CC 4.2.1.3"
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -3145,6 +3206,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -3443,6 +3509,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -3737,6 +3808,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -4028,6 +4104,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -4315,6 +4396,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -4484,6 +4570,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],
@@ -4792,6 +4883,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -5077,6 +5173,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -5368,6 +5469,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -5654,6 +5760,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -5939,6 +6050,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -6227,6 +6343,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -6514,6 +6635,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -6800,6 +6926,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -6959,6 +7090,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "moderator_election@subject_group",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "moderator_election@subject_group",
+      "cc_ref": "CC 4.5.13"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": null,
@@ -7123,6 +7265,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "moderator_election@subject_group!result",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "moderator_election@subject_group!result",
+      "cc_ref": "CC 4.5.13"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": null,
@@ -7413,6 +7566,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -7706,6 +7864,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -7991,6 +8154,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -8279,6 +8447,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -8563,6 +8736,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -8849,6 +9027,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -9139,6 +9322,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -9451,6 +9639,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -9761,6 +9954,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -10081,6 +10279,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -10384,6 +10587,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -10689,6 +10897,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -10980,6 +11193,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -11273,6 +11491,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -11564,6 +11787,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -11822,6 +12050,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -12119,6 +12352,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -12377,6 +12615,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -12673,6 +12916,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -12960,6 +13208,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -13245,6 +13498,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -13539,6 +13797,12 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "CC group_consensus_protocol for amendments; not built"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -13831,6 +14095,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -14096,6 +14365,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -14426,6 +14700,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -14725,6 +15004,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -15010,6 +15294,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -15297,6 +15586,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -15583,6 +15877,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -15840,6 +16139,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -16149,6 +16453,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -16438,6 +16747,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -16730,6 +17044,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -17024,6 +17343,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -17317,6 +17641,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -17586,6 +17915,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -17898,6 +18232,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -18176,6 +18515,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -18483,6 +18827,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -18795,6 +19144,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -19090,6 +19444,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -19384,6 +19743,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -19671,6 +20035,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -19837,6 +20206,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": null,
@@ -20131,6 +20511,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -20416,6 +20801,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -20716,6 +21106,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -21005,6 +21400,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -21299,6 +21699,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -21589,6 +21994,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -21878,6 +22288,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -22177,6 +22592,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -22495,6 +22915,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -22807,6 +23232,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -23125,6 +23555,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -23438,6 +23873,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -23739,6 +24179,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -24035,6 +24480,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -24320,6 +24770,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -24607,6 +25062,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -24893,6 +25353,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -25173,6 +25638,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -25472,6 +25942,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -25758,6 +26233,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -26042,6 +26522,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -26329,6 +26814,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -26614,6 +27104,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -26903,6 +27398,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -27197,6 +27697,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -27483,6 +27988,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -27768,6 +28278,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -28061,6 +28576,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -28347,6 +28867,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -28647,6 +29172,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -28953,6 +29483,12 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "group_consensus_protocol (count_distinct_roster_scrubs over base + additional_scrubs[])"
    },
    "blind": {
     "value": [
@@ -29272,6 +29808,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -29571,6 +30112,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -29864,6 +30410,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -30115,6 +30666,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -30395,6 +30951,22 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "identity=user => self_roster_add@self ; none",
+    "arms": [
+     {
+      "when": "identity=user",
+      "doors": "self_roster_add@self",
+      "cc_ref": "CC 3.3.6.3"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.3.6.3"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -30683,6 +31255,22 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "identity=node|agent => none ; identity=user => self_roster_evict@self",
+    "arms": [
+     {
+      "when": "identity=node|agent",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3"
+     },
+     {
+      "when": "identity=user",
+      "doors": "self_roster_evict@self",
+      "cc_ref": "CC 3.1.3"
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -30966,6 +31554,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -31267,6 +31860,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -31554,6 +32152,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -31839,6 +32442,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -32126,6 +32734,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -32412,6 +33025,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -32668,6 +33286,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -32957,6 +33580,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],
@@ -33267,6 +33895,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -33524,6 +34157,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -33722,6 +34360,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],
@@ -34044,6 +34687,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -34349,6 +34997,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -34656,6 +35309,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -34962,6 +35620,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -35279,6 +35942,12 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "lineage_witness.rs gates the cosign object, not this row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -35573,6 +36242,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -35863,6 +36537,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -36120,6 +36799,32 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group",
+    "arms": [
+     {
+      "when": "leaf=proposal|acceptance|decline",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3.2"
+     },
+     {
+      "when": "leaf=resignation",
+      "doors": "none",
+      "cc_ref": "CC 3.1.3.2"
+     },
+     {
+      "when": "leaf=removal & group=affiliations & seats=one",
+      "doors": "affiliation_member_action@subject_group",
+      "cc_ref": "CC 4.4.3.2.8"
+     },
+     {
+      "when": "*",
+      "doors": "cosigned_act@subject_group",
+      "cc_ref": "CC 3.1.3.2"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -36460,6 +37165,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -36752,6 +37462,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -37038,6 +37753,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -37337,6 +38057,17 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "moderation_action@subject_group",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "moderation_action@subject_group",
+      "cc_ref": "CC 4.5.13"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [],
@@ -37638,6 +38369,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -37933,6 +38669,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -38218,6 +38959,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -38506,6 +39252,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -38790,6 +39541,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -39079,6 +39835,17 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "arms": [
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 3.1.9.2"
+     }
+    ],
+    "source": "cc-table"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -39354,6 +40121,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -39618,6 +40390,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -39878,6 +40655,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -40185,6 +40967,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -40476,6 +41263,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -40653,6 +41445,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],
@@ -40844,6 +41641,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],
@@ -41152,6 +41954,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -41436,6 +42243,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -41728,6 +42540,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -42019,6 +42836,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -42304,6 +43126,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -42588,6 +43415,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -42887,6 +43719,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -43184,6 +44021,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -43469,6 +44311,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -43756,6 +44603,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -44041,6 +44893,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -44328,6 +45185,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -44613,6 +45475,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -44911,6 +45778,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -45203,6 +46075,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -45494,6 +46371,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -45673,6 +46555,22 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "leaf=custodian_minted => custodian_replace ; none",
+    "arms": [
+     {
+      "when": "leaf=custodian_minted",
+      "doors": "custodian_replace",
+      "cc_ref": "CC 7.5.5"
+     },
+     {
+      "when": "*",
+      "doors": "none",
+      "cc_ref": "CC 7.5.5"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [],
@@ -45979,6 +46877,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [],
     "source": "derived",
@@ -46276,6 +47179,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -46560,6 +47468,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -46850,6 +47763,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -47139,6 +48057,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -47414,6 +48337,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -47711,6 +48639,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -47996,6 +48929,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],
@@ -48294,6 +49232,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -48555,6 +49498,12 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "legal bases: none; steward_purge: GAP (CC trust root's consensus_protocol; held shut)"
    },
    "blind": {
     "value": [
@@ -48863,6 +49812,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -49148,6 +50102,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -49423,6 +50382,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -49725,6 +50689,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -50009,6 +50978,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -50302,6 +51276,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -50586,6 +51565,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -50875,6 +51859,12 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "holder quorum (CC 5.3.4)"
    },
    "blind": {
     "value": [
@@ -51180,6 +52170,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -51434,6 +52429,12 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "family charter witness quorum (check_charter_witness_quorum)"
    },
    "blind": {
     "value": [
@@ -51733,6 +52734,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -52020,6 +53026,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -52305,6 +53316,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [
@@ -52595,6 +53611,12 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": null,
+    "source": "gap",
+    "note": "the cosign cell is not none and no arm is typed",
+    "cosign_rule": "WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"
    },
    "blind": {
     "value": [
@@ -52901,6 +53923,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -53186,6 +54213,11 @@
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
    },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
+   },
    "blind": {
     "value": [
      "body.note"
@@ -53470,6 +54502,11 @@
     "value": null,
     "source": "gap",
     "note": "new column; values come with the manifest's first ruled version"
+   },
+   "count": {
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [

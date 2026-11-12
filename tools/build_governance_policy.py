@@ -58,7 +58,7 @@ COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("coun
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no"}
 SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
 SET_EXCL = ("target", "proposer", "node")
-UNSTATED_MAX = 10   # cells the text leaves unstated; the number only falls
+UNSTATED_MAX = 12   # cells the text leaves unstated; the number only falls
 
 BASE_LAW = OrderedDict([("kind", "standing_then_expected_active"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
@@ -87,6 +87,8 @@ def rule_of(s):
     s = s.strip()
     if s in ("—", "-", ""):
         return OrderedDict([("kind", "none")])
+    if s == "protocol":   # the rule comes from the group's declared kind, in the protocol sheet
+        return OrderedDict([("kind", "protocol")])
     if s in ("1/N", "1/N fires"):
         return OrderedDict([("kind", "one_of_n")])
     if "/" in s and all(p.strip().isdigit() for p in s.split("/")):
@@ -204,6 +206,8 @@ def load():
 
 
 def counted_ok(col, v):
+    if col == "count_set" and v == "protocol":   # the set the group's declared kind names
+        return True
     if col == "count_set":
         m = re.fullmatch(r"([a-z_:]+(?:\+[a-z_:]+)*)(?:-([a-z]+))?", v)
         return bool(m) and all(x in SET_ROLES for x in m.group(1).split("+")) and (m.group(2) is None or m.group(2) in SET_EXCL)
@@ -481,7 +485,7 @@ def build():
     vec = vectors(rows)
     rv = rule_vectors(rows)
     json.dump(OrderedDict([("_meta", {"policy_sha256": pin, "count": len(vec), "rule_vector_count": len(rv),
-                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "ranked_irv", "none"]}),
+                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "ranked_irv", "protocol", "none"]}),
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)

@@ -55,3 +55,9 @@ moderator_election	count_set	member	CC 4.5.13	The **ballot is the roster**, ever
 moderator_election	voice	person	CC 4.5.13	There is **one ballot per person** however many keys they hold
 moderator_election	counted_at	decision	CC 4.5.13	The electorate is the live roster at the count
 moderator_election	voices	ballot	CC 4.5.13	A ballot names that id, and every ballot under it belongs to one election.
+cosigned_act	count_set	protocol	CC 3.3.4	Counts signatures on the row (via the `consensus_protocol` rule)
+cosigned_act	voices	scrubs	CC 3.3.4	hold the event as a `cosign:pending` row and collect the members' `cosign:signature` rows
+cosigned_act	counted_at	signed	CC 3.1.3	the signer is an active member at the event's signed instant
+accord_majority	count_set	holder	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
+accord_majority	voice	person	CC 4.2.3	Each holder is a person.
+accord_majority	voices	scrubs	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster

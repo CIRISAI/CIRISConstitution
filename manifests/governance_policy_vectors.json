@@ -1,8 +1,8 @@
 {
  "_meta": {
-  "policy_sha256": "2a92b5781b806c5eafd1bd498ddf2ef619f3a679e50834c27f690070e44ec046",
+  "policy_sha256": "8e37d161ae396bfda6b033c1fcf98f89a877890ca586352be31ce77e31ff5749",
   "count": 732,
-  "rule_vector_count": 210,
+  "rule_vector_count": 240,
   "rule_kinds": [
    "fraction",
    "one_of_n",
@@ -11,6 +11,7 @@
    "role_at",
    "voices",
    "ranked_irv",
+   "protocol",
    "none"
   ]
  },
@@ -13853,6 +13854,276 @@
    },
    "base": 100,
    "votes": 2
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "enact",
+   "rule": {
+    "kind": "protocol"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "enact",
+   "rule": {
+    "kind": "protocol"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "enact",
+   "rule": {
+    "kind": "protocol"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "enact",
+   "rule": {
+    "kind": "protocol"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "enact",
+   "rule": {
+    "kind": "protocol"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "cosigned_act",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "accord_majority",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 3,
+   "votes": 2
+  },
+  {
+   "family": "accord_majority",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 5,
+   "votes": 3
+  },
+  {
+   "family": "accord_majority",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 9,
+   "votes": 5
+  },
+  {
+   "family": "accord_majority",
+   "cell": "enact",
+   "rule": {
+    "kind": "strict_majority"
+   },
+   "base": 100,
+   "votes": 51
+  },
+  {
+   "family": "accord_majority",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "cancel",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 2,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 3,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 5,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 9,
+   "votes": null
+  },
+  {
+   "family": "accord_majority",
+   "cell": "floor",
+   "rule": {
+    "kind": "none"
+   },
+   "base": 100,
+   "votes": null
   }
  ]
 }

@@ -507,3 +507,12 @@ Still to do in 1b: the sheet of which group kind may name which protocol; the tw
 The admissibility sheet is `constitution/protocol_admissibility.tsv` (14 rows, quotes checked). It holds only pairs
 the text states: the count design's rows for `geographic`, `affiliations` and `family/conferring` are not in it,
 since no sentence gives them. Next: the policy rows a cosigned act runs (`enact = protocol`), then the `count` cell.
+
+Step 1c landed: the `count` cell of the family model (`formal/derivation/count_text.tsv`, 18 arms over 11 families;
+166 generic `none`; 7 open: collection:{kind}, group:roster, lineage_witness:{stage}, takedown_notice:{basis},
+transport:canonical_rebind, trust:{job}:{version}, wa_adjudication:{state}). Policy rows `cosigned_act`
+(enact = protocol) and `accord_majority` added. Not yet done: selector values held to the registry's leaves;
+`cosign_rule` and `governance` derived from `count`; each transition's `policy` derived from `count`
+(tools/build_transitions.py still reads the governance cell); the count design's rows with no stated numbers
+(harm report keep, moderator and WA quorums, capacity panel). `membership:{stage}` widening points at
+`cosigned_act`, which is the reading C283 waits on Eric to confirm; `community_invite` is pointed at by no family.

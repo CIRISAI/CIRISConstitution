@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "2a92b5781b806c5eafd1bd498ddf2ef619f3a679e50834c27f690070e44ec046",
+  "policy_sha256": "8e37d161ae396bfda6b033c1fcf98f89a877890ca586352be31ce77e31ff5749",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -876,6 +876,114 @@
    ],
    "status": "default",
    "note": "a locked room elects its moderator: ballot = the roster in worthiness order, one ballot per person, winner accepts or the next in runoff order; a steward may appoint directly at any time"
+  },
+  {
+   "family": "cosigned_act",
+   "cc_ref": "2.4 3.3.4",
+   "kind": "cosigned",
+   "standing_set": "the group's roster, counted as its declared protocol states",
+   "base": "standing",
+   "enact": "protocol",
+   "cancel": null,
+   "floor": null,
+   "enact_rule": {
+    "kind": "protocol"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "protocol",
+     "cc_ref": "CC 3.3.4"
+    },
+    "voice": {
+     "value": "unstated"
+    },
+    "counted_at": {
+     "value": "signed",
+     "cc_ref": "CC 3.1.3"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 3.3.4"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "formal/membership"
+   ],
+   "status": "normative",
+   "note": "a cosigned row of a group lands when the signatures held meet the rule of the group's declared protocol; a shortfall is held for the hold window, which a group may set longer and never shorter, and then dropped"
+  },
+  {
+   "family": "accord_majority",
+   "cc_ref": "4.2.1.3 4.2.6",
+   "kind": "cosigned",
+   "standing_set": "the accord holders",
+   "base": "standing",
+   "enact": "more than 1/2",
+   "cancel": null,
+   "floor": null,
+   "enact_rule": {
+    "kind": "strict_majority"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "holder",
+     "cc_ref": "CC 4.2.1.3"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.2.3"
+    },
+    "counted_at": {
+     "value": "unstated"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.2.1.3"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "—",
+   "window_secs": 0,
+   "window_class": "none",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "formal/accord_halt"
+   ],
+   "status": "normative",
+   "note": "a strict majority of the standing accord roster cosign one row: the resumption after a halt and every other accord threshold but the fire"
   }
  ],
  "base_law": {
@@ -917,7 +1025,9 @@
    "custodian_replace.voice",
    "custodian_replace.counted_at",
    "affiliation_member_action.voice",
-   "affiliation_member_action.counted_at"
+   "affiliation_member_action.counted_at",
+   "cosigned_act.voice",
+   "accord_majority.counted_at"
   ]
  },
  "protocols": {

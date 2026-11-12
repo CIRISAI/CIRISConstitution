@@ -2129,6 +2129,10 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 - community invitation ([CC 3.1.3.2](part_3_the_namespace.md): the invitee's own acceptance still required) and removal (forward only, cosigned);
 - the self roster ([CC 3.3.6.3](part_3_the_namespace.md): one person's keys, so a floor of one key and its own 24 h window);
 - and three instances the table records under their own rule rather than the generic machine — this section's moderation fallback (a moderator acts alone, a live majority at 48 h), the halt's fire-and-fuse ([CC 4.2.1.1](#4.2.1.1)) and the custodian's cosigned replacement ([CC 7.5.5](part_7_lifecycle_stewardship.md)).
+- the cosigned act of a group, whose rule and count set are those of the group's declared protocol ([CC 3.3.4](part_3_the_namespace.md)), held for the standing window when signatures fall short;
+- and the accord's strict majority of its standing roster ([CC 4.2.1.3](#4.2.1.3)).
+
+**How a family's act is counted.** Each family's row in the family model names the policy row its act runs and the roster that row is read against. A family whose rows one signature carries counts nothing. Where the count differs by stage or by the kind of identity, the family lists its cases in order and the first that holds decides.
 
 Votes travel on `objection:{state}` ([CC 3.1.9.2](part_3_the_namespace.md)): `proposal`, `assent`, `raised`. Two further fields are on every row:
 
