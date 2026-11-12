@@ -939,3 +939,17 @@ After the agent session's mapping: the halt pair is dropped (the step cannot see
 templates, 7 pairs, 8 rules. Three gaps between the text and the agent recorded for Eric: C560 (lethal action
 asks for two acts, the agent issues one), C561 (a deferral passes under a halt), C562 (nothing detects "one step
 from a lethal act"). The writer waits on Eric's "build Part A" or "hold".
+
+### The steward's two rulings of 2026-11-12, and what lands from each
+
+"I think both are yes - land that and re-analyze, and we need to land the seat rules etc... everything open is on
+the list." A: standing comes only from an explicit signed act of the people governed, never from a title or a
+network default. B: between a person and an agent the person's hand acts at once and alone, and the way to a
+human stays open. Not ruled and still open: C558, C559, C312, C550, the consent-screen row, the screen states and
+scopes, product names, posting the persist draft.
+
+B landed first (four sentences: CC 4.5.13 agent exception, CC 7.4 deferral owed, CC 4.2.1.1 deferral under a halt
+and a late halt). The "unless the node already holds a resumption that names it" on the late halt is derived, so
+that a halt already resumed is not re-fired by a straggling copy. Values that lag: the removal transition's roles
+have no case for an agent's key; the halt family has no typed cell for `valid_until`. C562 stays open as a finding
+against the agent.
