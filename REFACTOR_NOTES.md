@@ -587,3 +587,14 @@ The reader lanes' 27 DISAGREE rows are text against the census of the pinned bui
 door, two audiences, the default in_audience, two token lists). They are drafted as questions for persist in
 `handoff/persist/1259_addition_draft.md`, with the unnamed refusals and the one-emitter question. Not posted:
 Eric reads it first. Once answered, each becomes a departure with a reason or a census correction.
+
+## The measure: how much rule text rests under typed data (2026-11-11 late)
+
+`python3 tools/data_coverage.py` places every quote of every text table in its Part and marks the rule entries
+(`rule_entries.tsv`, 5,175 sentences that state or apply a rule) whose sentence a quote falls in. Today: 579 of
+5,175 (11%). By Part: 1: 6/156; 2: 18/513; 3: 342/1,998; 4: 177/1,295; 5: 17/703; 6: 18/358; 7: 1/152.
+This is not the lanes' figure (27% now, about 60% with the five designs): theirs is over 1,023 (statement, family)
+pairs in nine columns, the per-family statements only. The whole rule text is five times that and most of it is
+not per-family: general rules, wire layouts, transport, mathematics, stewardship. Largest uncovered homes in
+Part 3: CC 3.2 (257), 3.4.12 (122), 3.4.13 (111), 3.1.7 (90), 3.4.5 (80). The measure is of sentences a value
+rests on, not of sentences cut; nothing is cut yet. `--list-uncovered pN` lists the homes to work next.
