@@ -915,3 +915,13 @@ in the model; not in the change grammar and not in the text until Eric rules. Tw
 Steward, 2026-11-12, on a sign-once wrap set in place of one signed row per device: to be part of the modelling
 "when we get there, as an exploratory piece on the CEWP twin". Recorded in `formal/key_plane/README.md`. Not a
 change to CC 3.3.2 and nothing is built.
+
+### The screen standard against the typed tables (2026-11-12)
+
+`tools/ui_closure.py` (in the gates with floors that only rise). Write side nearly closed: roles 457/459, confirm
+459/459 (206 turn on the scope as signed), undo 429/459, price 459/459. Not closed: refusal reasons (26 guarded
+transitions, 34 of 48 refusals carry no token), change 20/459, time 33/184 families, folds 76/184, body members
+139/216 in the CDDL. Read side: of 11 verdicts the reactions give, 3 have a StateBlock state; the folds give ten
+states of their own and none is a StateBlock state. The screen context names five of seven scopes (not accord,
+not public). The CEWP twin is the simulation in the separate CEWP repository (edge drives it, holon supplies
+tables); it vendors transitions.json and governance_policy.json and reads no reactions.json.

@@ -55,6 +55,9 @@ own wrap with a short proof of inclusion: one signature for a rotation and about
 would have to answer, and a model should show before anyone chooses: a wrap is then admissible only once its
 header is held, so two nodes holding different parts must still converge; a header is a set object, a kind the
 row slot was closed against; and a header may disclose how many devices a room has. This is to be modelled as an
-exploratory piece on the wire-protocol twin (`formal/cewp_node`), against K1 to K9 here, when that work is reached.
+exploratory piece on the wire-protocol twin, the simulation in the separate CEWP repository, when that work is
+reached. The twin has no key plane as a protocol today, only its load, so this is a new package there: holders,
+partial delivery and the order of admission, with K1 to K9 here as its property list and the byte cost fed into
+its seat and phone budgets.
 
 Run: `python3 formal/key_plane/key_plane_model.py --check`
