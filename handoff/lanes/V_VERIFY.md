@@ -30,3 +30,16 @@ Output: a TSV at the path your launch message gives, header
 `id	verdict	confidence	which_side_changes	sentence_to_edit	plain_choice	reasoning`
 (no tab or newline in a field; `sentence_to_edit` verbatim from the Part where given;
 `reasoning` at most 60 words). Final message under 100 words: counts per verdict.
+
+## From the fifth reading on: say what kind of conflict it is
+
+Add a column `class` after `confidence`, one of:
+- `drift`: one rule, and a second statement of it that has fallen out of line (a number, an actor, a condition
+  that the home states and another place states differently).
+- `interaction`: two rules, each right in its own section, that give different answers in a case neither was
+  written for (a general rule meeting a special case; two mechanisms that overlap).
+- `gap`: the text is silent on a case and the finding reads the silence two ways.
+- `data`: the text is consistent and a manifest differs.
+Header then: `id	verdict	confidence	class	which_side_changes	sentence_to_edit	plain_choice	reasoning`.
+For an `interaction`, also say in `reasoning` whether a small formal model with both rules in it would have
+found it (`model: yes` or `model: no`).
