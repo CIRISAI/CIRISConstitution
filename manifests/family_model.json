@@ -269,8 +269,8 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 213,
-   "citations": 349,
+   "cells_cited": 323,
+   "citations": 506,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "body": {
@@ -1325,7 +1325,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.2.2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.2.6",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -3138,7 +3148,13 @@
     "source": "generic",
     "closed": "receipt future-skew <=5 min, us resolution",
     "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
+    "s3": "signed instants .sssZ only (signed_instant_form_violation)",
+    "cites": [
+     {
+      "cc_ref": "CC 4.2.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "lifecycle": {
     "value": {
@@ -3293,7 +3309,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.2.6",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord",
@@ -3881,7 +3903,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -3937,7 +3965,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.11",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -4096,7 +4130,17 @@
    "body": {
     "value": "age_self_declared:level* refused (self_declared_level_reserved), both dimension and attestation_type surfaces",
     "source": "prose",
-    "closed": "age_self_declared:level* refused"
+    "closed": "age_self_declared:level* refused",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.11",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -4206,7 +4250,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -4261,7 +4311,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.11",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -5345,7 +5401,17 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -5649,7 +5715,17 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -5958,7 +6034,17 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -6104,7 +6190,13 @@
       "commons"
      ],
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.2.1",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -6159,7 +6251,13 @@
    "body": {
     "value": "ladder spelling attestation:l{N}:{mechanism} refused (federation_deprecated_attestation_ladder_form)",
     "source": "prose",
-    "closed": "ladder spelling attestation:l{N}:{mechanism} refused"
+    "closed": "ladder spelling attestation:l{N}:{mechanism} refused",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -6269,7 +6367,21 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -6594,7 +6706,17 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -7782,7 +7904,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.4",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "moderator_election@subject_group",
@@ -7975,7 +8107,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.13",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "moderator_election@subject_group!result",
@@ -8191,7 +8333,17 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -10107,7 +10259,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -10185,7 +10343,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.8.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -10481,7 +10649,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -10552,7 +10726,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -10838,7 +11018,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -11739,7 +11925,13 @@
    "body": {
     "value": "companion {domain} case + shape parsed (capacity::reversible::parse_companion)",
     "source": "prose",
-    "closed": "companion {domain} case + shape parsed"
+    "closed": "companion {domain} case + shape parsed",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -11849,7 +12041,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -11910,7 +12108,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.12",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -12143,7 +12347,17 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -12253,7 +12467,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -12508,7 +12728,13 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -12692,7 +12918,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -12879,7 +13111,13 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -13199,7 +13437,13 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -13471,6 +13715,10 @@
     },
     "cites": [
      {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
       "cc_ref": "CC 6.1.9",
       "reading": "fills"
      }
@@ -13579,7 +13827,13 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -13750,7 +14004,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -13895,7 +14155,13 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -14937,7 +15203,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -17698,7 +17970,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -17778,7 +18056,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -18061,7 +18345,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.5.1",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -19016,7 +19306,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.3.2.4",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -19373,7 +19669,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.3.2.4",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -20244,7 +20546,13 @@
    "body": {
     "value": "scope tokens parsed (ConsentScopeTokenInvalid); a revoked consent_record at local tier transits only on a valid hybrid signature",
     "source": "prose",
-    "closed": "scope tokens parsed"
+    "closed": "scope tokens parsed",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -20357,7 +20665,17 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.5",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -22246,7 +22564,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.4",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -22700,7 +23024,25 @@
    "body": {
     "value": "custody_state here|none, evidence_refs exactly one blob digest (parse_custody_ack)",
     "source": "prose",
-    "closed": "custody_state here|none, evidence_refs exactly one blob digest"
+    "closed": "custody_state here|none, evidence_refs exactly one blob digest",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3.3",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -22710,7 +23052,17 @@
     "source": "generic",
     "closed": "receipt future-skew <=5 min, us resolution",
     "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
+    "s3": "signed instants .sssZ only (signed_instant_form_violation)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.3.2.1",
+      "reading": "agree"
+     }
+    ]
    },
    "lifecycle": {
     "value": {
@@ -23863,7 +24215,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -24629,7 +24987,13 @@
    "body": {
     "value": "detection body member validated when present (check_detection_body)",
     "source": "prose",
-    "closed": "detection body member validated when present"
+    "closed": "detection body member validated when present",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8.4",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -24739,7 +25103,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": [
@@ -24816,7 +25186,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.2",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -25086,7 +25462,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": [
@@ -25167,7 +25549,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.2",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -25437,7 +25825,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": [
@@ -25778,7 +26172,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": [
@@ -26013,7 +26413,13 @@
    "body": {
     "value": "detection body member validated when present (check_detection_body)",
     "source": "prose",
-    "closed": "detection body member validated when present"
+    "closed": "detection body member validated when present",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8.2",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -26123,7 +26529,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": [
@@ -28890,7 +29302,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -29506,7 +29924,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -31527,7 +31951,13 @@
    "body": {
     "value": "M-1 meta_goal_alignment + goal body (goal_text; cohort_id iff scale cohort), federation_malformed_row",
     "source": "prose",
-    "closed": "M-1 meta_goal_alignment + goal body"
+    "closed": "M-1 meta_goal_alignment + goal body",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -31878,7 +32308,13 @@
     "source": "generic",
     "closed": "receipt future-skew <=5 min, us resolution",
     "note": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)",
-    "s3": "signed instants .sssZ only (signed_instant_form_violation)"
+    "s3": "signed instants .sssZ only (signed_instant_form_violation)",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.2.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "lifecycle": {
     "value": {
@@ -31998,7 +32434,29 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.4.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.6",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.4",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -32135,7 +32593,21 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.2.4.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": null,
@@ -32805,7 +33277,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.2.2.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -33670,7 +34148,17 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (row only; the key/occurrence stays held, projection SET NULL)",
@@ -34199,7 +34687,17 @@
    },
    "body": {
     "value": "amendment_digest hex64, authorized_by uuid in evidence_refs",
-    "source": "prose"
+    "source": "prose",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -36436,7 +36934,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
@@ -36529,7 +37033,21 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.3.2.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -37140,7 +37658,17 @@
       "value": "none",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.4.3.4",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -37206,7 +37734,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.2",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -38721,7 +39255,17 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 2.4.1.2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.1",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -38843,7 +39387,21 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.9",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.4.9",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.3.2.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -39490,7 +40048,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.1.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -39737,7 +40301,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.8",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -39957,7 +40527,25 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3.2",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -40064,7 +40652,13 @@
       "source": "code-v61",
       "note": "byte_equal (SiloProjection rebuild gate)"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.3.4.2",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -40185,7 +40779,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 5.3.2.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group",
@@ -40404,7 +41008,25 @@
    "body": {
     "value": "relieve/restrict only; key names a consumer processor; emergency TTL <=72 h, not renewable back-to-back",
     "source": "prose",
-    "closed": "relieve/restrict only"
+    "closed": "relieve/restrict only",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.2.1.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 6.1.5.1",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -40577,7 +41199,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -41806,7 +42434,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "none (accountability record, unpurgeable: migration.rs:606)",
@@ -41879,7 +42513,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -42271,7 +42915,13 @@
       "commons"
      ],
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -43339,7 +43989,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -43570,7 +44226,17 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -43960,7 +44626,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -45602,7 +46274,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5.5",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -46038,7 +46716,13 @@
       "commons"
      ],
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.2.1",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -47520,7 +48204,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.2",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -47778,7 +48468,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -47839,7 +48535,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 4.4.2",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -48086,7 +48788,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -48388,7 +49096,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -48690,7 +49404,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -48992,7 +49712,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -49294,7 +50020,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.6",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -50835,7 +51567,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 5.3.2.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -51690,7 +52428,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -52013,7 +52757,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -52215,7 +52965,21 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.2",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -52345,7 +53109,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -52425,7 +53195,17 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 3.1.3.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -52760,7 +53540,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.3.10.1",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -53794,7 +54580,13 @@
       "commons"
      ],
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -54464,7 +55256,13 @@
    "body": {
     "value": "trace_id, agent_id_hash non-empty; trace_format fields (trace_field_shape_violation, trace_run_kind_mock)",
     "source": "prose",
-    "closed": "trace_id, agent_id_hash non-empty"
+    "closed": "trace_id, agent_id_hash non-empty",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.5",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -55991,7 +56789,13 @@
    "body": {
     "value": "carries a readable signed TransportDestination (REBIND_MEMBER)",
     "source": "prose",
-    "closed": "carries a readable signed TransportDestination"
+    "closed": "carries a readable signed TransportDestination",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -56605,7 +57409,17 @@
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
     },
-    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries"
+    "note": "the members the signed-object table states for this family's wire forms, beyond those every row carries",
+    "cites": [
+     {
+      "cc_ref": "CC 2.1",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "freshness": {
     "value": {
@@ -56797,7 +57611,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 2.6.1.7",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": null,
@@ -57723,7 +58543,13 @@
       ]
      }
     ],
-    "source": "cc-table"
+    "source": "cc-table",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "agree"
+     }
+    ]
    },
    "count": {
     "value": "none",
@@ -58136,7 +58962,17 @@
       "commons"
      ],
      "source": "gap"
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "agree"
+     },
+     {
+      "cc_ref": "CC 4.5.7",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -58316,7 +59152,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.4",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",
@@ -58623,7 +59465,13 @@
       "value": "n/a",
       "source": "code-v61"
      }
-    }
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.9.3",
+      "reading": "agree"
+     }
+    ]
    },
    "erasure_route": {
     "value": "purge (steward purge on a cosigned notice); legal_hold: none in code",

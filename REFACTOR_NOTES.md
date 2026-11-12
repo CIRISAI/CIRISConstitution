@@ -643,3 +643,12 @@ stage `state` carries the delegation chain. One correction was wrong and is reve
 `community_trust` let any signer grant for a node it does not own, and the mesh story (step 51) caught it; the cell
 stays owner-only with the node-authored form in its qualifier. `system:*` and `substrate_edge` is text against the
 census of the store alone and goes to the implementers, not into the cell. C287 records the build-manifest signer.
+
+All four reader lanes are in (`handoff/lanes/out_f_{signer,body_a,body_b,small}.*`). Totals over 965 statements:
+AGREE 632 rows, FILLS 216, RICHER 271, DISAGREE 21, NOT_A_CELL 173. 220 further agreeing rows are in
+`cell_cites.tsv` (projection 73, body 64, fold 60, placement 19, freshness 4); 84 agreeing rows sit on an open cell
+and wait for its value. Coverage: 833 of 5,175 (16%). The persist draft lists every member name the two body lanes
+could not find in either CDDL. Small-lane findings still to work: two disagreements (the halt row's `valid_until`
+against `expiry none` in the reactions table; the deletion watcher and `consent:deletion_complete`, CC 4.4.3.5.2
+against CC 3.3.1), thirteen unnamed durations, and needs for a recurring clock, a clock on a seat-holder's silence,
+a placement selector and the hardware-class weight table. 21 rows concern objects with no family row.
