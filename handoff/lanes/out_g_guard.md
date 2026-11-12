@@ -2,8 +2,9 @@
 
 Scope: an admission precondition (a row is admitted only if a named row of another family is
 held, live or cited) and a predicate on a key the row names. 73 statements collected from the
-four readers' `RICHER` rows (all 488 read): 56 encoded in `out_g_guard.tsv` (43 whole, 13
-marked `PARTIAL:` in the note), 17 not encoded (section 4).
+four readers' `RICHER` rows (all 488 read) in the first pass, 56 encoded and 17 not. The
+second pass (last section) covers the rows `out_g_taxonomy.tsv` marks `guard`: the table now
+holds 67 rows (50 whole, 17 marked `PARTIAL:`), and 34 statements are not encoded.
 
 ## 2. The column
 
@@ -189,3 +190,151 @@ and a new lemma follows: an item refused by its guard previews exactly its faili
 A second lemma is specific and checkable on the data: **a withdrawal un-admits nothing
 already admitted** unless the guard says `at receipt`, since every other guard is judged at
 signed instants over signed rows.
+
+## Second pass
+
+`out_g_taxonomy.tsv` marks 140 rows `guard` (119 primary, 21 second). Row numbers below are the
+taxonomy's `row_index` (1-based). The erasure reader's table has one broken line near row 312,
+so from there the taxonomy's index runs four ahead of the 0-based numbers used in sections 2 to 4
+and in the TSV's `source_table` column (taxonomy 357 is row 353 there); before it, one ahead.
+
+### Coverage
+
+| | taxonomy rows |
+|---|---|
+| already encoded by the first pass | 62 |
+| encoded by the second pass (11 new TSV rows) | 33 |
+| not encoded, already listed in section 4 | 17 |
+| not encoded, new (below) | 28 |
+| total | 140 |
+
+**Rows the first pass had not encoded (78), by source table and `row_index`.**
+- cosign: 121, 125, 207.
+- audience: 12, 86, 97, 112, 135, 167.
+- erasure: 32, 33, 40, 73, 111 to 130, 149, 150, 155, 156, 160, 177, 178, 180, 189, 211, 212,
+  224 to 226, 244, 245, 247, 250, 255, 256, 262, 268 to 275, 294, 295, 298, 299, 308, 310,
+  336 to 341.
+- lifecycle: 38, 93, 126, 127.
+
+### Added to the grammar
+
+Three additions to the family term of a row atom, and one reading made explicit. No new
+production elsewhere.
+
+```
+FAMILYSET := FAMILY *( "|" FAMILY ) | "other(" FAMILY *( "|" FAMILY ) ")" | "*"
+FAMILY    := a registry family | a registry leaf | STEM ":*"
+```
+
+| token | meaning | the kernel does |
+|---|---|---|
+| `other(F|G|…)` | a row of any registry family except those listed | the same scan as `one`, over the complement. **Added**: the sole-evidence bars cannot be said without a complement |
+| `STEM:*` | every registry family under the stem (`ratchet:flag:*`, `detection:*`), as the registry and the text already write it | expands the stem from the registry |
+| `*` | a row of any registry family | no family test. **Added** for a row that cites "the content" or "the event" whatever its family |
+| `SLOT=ref:MEMBER` where the member is a list | under `one`: some listed id resolves to such a row; under `all`: every listed id does; under `no`: none does | iterates the list; an id that resolves to no held row is skipped by `one` and `no` and fails `all` |
+
+### The evidence bar
+
+The statements say three different things, and one atom says all three:
+
+- "`ratchet:flag:*` cannot be sole evidence for `slashing:*`" (CC 3.1.6): the cited evidence
+  includes a row outside the family.
+  `one other(ratchet:flag:*)@admitted[id=ref:evidence_refs]`
+- "a `slashing:*` row whose entire resolvable evidence set falls within (detector ∪ testimonial),
+  with no moderation antecedent, is likewise insufficient" (CC 3.1.6): the complement of a
+  union. Two bars asked apart both pass on a mixture, which is the text's own point, so the
+  union is one clause with one `other(…)` and never two clauses joined by `&`.
+  `one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@admitted[id=ref:evidence_refs]`
+- "Only fires on documented Method-execution spoofing or the `moderation:{allegation_type}`
+  allegation types" (CC 3.1.9.2): a required antecedent, which the first-pass grammar already said.
+  `one moderation:{allegation_type}@admitted[id=ref:evidence_refs]`
+
+"Resolvable" is the kernel's ordinary reading: `one` scans held rows, so an id that resolves to
+nothing held neither helps nor hurts. `@admitted` adds that a withdrawn row grounds nothing.
+A general check follows: for every family the text bars as sole evidence, the consuming
+family's guard holds an `other(…)` whose list contains it; today that set is `ratchet:flag:*`,
+`detection:*`, `testimonial_witness:{kind}` and `seed_holder_voting_alignment:{cell}`, and the
+only consumer is `slashing:{outcome}`. All nine slashing rows end in a bare `refuse`: the text
+calls the row insufficient and names no token, and says the WA quorum is the gate, so whether
+the door refuses or the quorum's readers discount is the open point (it is `refuse` or `advise`,
+nothing else changes).
+
+Two readings to settle. CC 3.1.6 lets any row outside detector and testimony ground a slashing
+row; CC 3.1.9.2 closes the grounds to a moderation allegation or documented spoofing. The TSV
+holds both; if 3.1.9.2 governs, the three `other(…)` values are implied by it and can go.
+And "Transparency signal only — not a slashing trigger" (CC 3.1.9.4) is encoded as a bar; the
+stronger reading is `no seed_holder_voting_alignment:{cell}@admitted[id=ref:evidence_refs]`.
+
+### Still not encoded from the taxonomy's rows (28 new rows, 17 statements)
+
+| rows | family | why |
+|---|---|---|
+| erasure 33, 178, 212, 299 | `location_proof` | needs a row: four statements about the proof itself; no registry family, so nothing to hang a transition on |
+| erasure 308 | affiliation charter `member_attributes` | needs a row: decryption gated on a member attribute, declared in a charter member with no family |
+| erasure 337 to 341 | `detection:*` | ambiguous: "the operational definition lives in the calibration package version pinned via `evidence_refs[]`" names no family for the package and states no refusal. With a family it is `one <package>@admitted[id=ref:evidence_refs]` |
+| erasure 268 to 275 | `hardware_custody:{platform}` and the accord families | another column: "admits a class only when the chain for that mechanism verifies" is a cryptographic check of the row's own body, not a row or a key the node holds. The second half fits: `one key:record@admitted[attested=attested]` |
+| erasure 189 | `consent:deletion_complete` | another column (evidential weight): "evidence toward D1 and never a substitute for it"; D1 is a duty, and no row consumes the evidence |
+| erasure 180 | a public room | another column: a screen keyed on where a row is placed, not on a transition |
+| erasure 247 | `age_assurance` | a reader's gate (fold): "a consumer enforcing this checks the resolved level"; the door admits |
+| erasure 256 | `capacity_assurance` | per-value cell: what a provider level may support |
+| cosign 207 | `membership:{stage}` | count: a delegation chain never counts toward founder quorum. The count set would use `via=none`, which this grammar already has |
+| audience 86 | `census:share:{class}` | audience rule: refusal at the receive door for a node that is not the recipient (`federation_addressed_not_recipient`); it tests the receiving node, not a held row |
+| audience 112 | `config:{scope}` | placement: the smallest scope reaching the routing peers, a derived value |
+| audience 135 | `consent:{kind}`, `agent_files` | body: presence of `subject_key_ids`. Its strength is sayable with this column's outcome (`advise+subject_authority_missing`) once the body column names the test |
+| lifecycle 93 | `consent:community_trust` | fold: the new owner revokes by its own later row |
+| lifecycle 127 | `identity:occurrence_revocation` | policy: a revocation without the roster door's vote does not evict; that is `@landed`, the policy's own effect |
+
+Statements not encoded in all: 34 (17 from the first pass, 17 here). By cause: needs a row 12,
+general rule 3, another column or lane 16, ambiguous 3.
+
+### Changes to first-pass rows
+
+Reading CC 3.1.3.2's refusal list gave names to six clauses, and the TSV is updated:
+`membership_proposal_expired` and `membership_declined` (condition 2), `membership_reply_conflict`
+(the second reply), `membership_founding_member_unsigned` (founding, which was `exclude` and is
+now a refusal), `membership_supersede_cannot_add` (the amendment that seats a signer), each with
+`+community_consensus_protocol_violation`, which the text says surfaces every refusal of that
+entry; and `deferral_response_unlicensed` (Part 3, the `deferral:response` entry). The same list marks two tokens
+RETRYABLE (`membership_acceptance_unresolved`, `membership_proposal_unresolved`): they are the
+names of the hold rule's state for those two clauses, which supports reading "not held" apart
+from "held and failing".
+
+### The 39 first-pass rows that refused with no token
+
+`TSV row` is the data row of `out_g_guard.tsv` (1-based). "Nearest" is an existing token in the
+Parts or in the family's `evidence` cell; "none" means nothing near was found.
+
+| TSV row | family | CC | the refusal's meaning | nearest existing token |
+|---|---|---|---|---|
+| 3 | `reconsideration:{grounds}` | 3.1.1 | targets no admitted takedown notice | `reconsideration_community_mismatch` (same family, other test) |
+| 4 | `capacity_assurance:{level}:…` | 3.1.2 | incapacitated rung lacks exclusion companion | none |
+| 5, 6 | `capacity_assurance:{level}:…` | 3.4.12 | incapacitated rung lacks either companion | none |
+| 7 | `ballot:moderator_acceptance` | 3.1.3 | bound ballot set not held; signer not winner; lock younger than window | none (`ballot_tally_partials_mismatch` is the tally's) |
+| 8 | `ballot:moderator_acceptance` | 4.5.13 | bound ballot set not held | none |
+| 9 | `ballot:moderator` | 3.1.3 | ballot ranks a non-member | `ballot_share_recipient_not_tally_member` (shape only) |
+| 12, 13 | `membership:{stage}` | 3.1.3.2 | acceptance already spent by widening | `membership_acceptance_mismatch`; still unnamed, now `refuse+community_consensus_protocol_violation` |
+| 18 | `membership:{stage}` | 3.1.3.2 | node seat lacks conferring scrub | none |
+| 19 | `capacity:relay_delivery` | 3.1.4 | no analyze grant for consumer | `consent_for_key_not_delegated` (consent door, other test) |
+| 20 | `rendezvous:route` | 3.1.4 | named node holds no seat | `seat_without_hop_key`; `federation_rendezvous_key_not_an_identity` |
+| 21 | `key_grant:{axis}` | 3.1.5 | sealed archive, no release cited | none |
+| 23 | `observation:access_assumption` | 3.1.9.4 | a cited grant not live | none |
+| 26 | `deferral:response:{outcome}` | 4.3 | signer holds no live licence | **`deferral_response_unlicensed`** (the text's own; filled in) |
+| 27, 29 | `takedown_notice:{basis}` | 4.5.5 | signer not the content's subject | `takedown_unauthorised` (evidence cell) |
+| 28 | `moderation:{allegation_type}` | 4.5.5 | signer not the content's subject | `takedown_unauthorised` |
+| 30 | `delivery_receipt:{stream_id}` | 5.3.3.6 | chunk root never published ("REJECT") | none |
+| 32 | `trust:{job}:{version}` | 2.1 | witness not independent of lineage | none |
+| 34, 35, 36 | `consent:community_trust` | 3.3.1 | node's grant omits its owner | `community_trust_attester_not_owner` (evidence cell) |
+| 37, 38, 39 | `membership:{stage}` | 3.1.3.2, 3.2, 4.4.3.4.2.1 | recovery signer holds no conferral | none |
+| 40 to 43 | `accord:lifecycle:{kind}` | 3.4.1, 4.2.1.1, 4.2.6 | confirmation outside the halt's fuse | none |
+| 44, 45 | `group:roster` | 3.1.3, 4.2.6 | recovery key matches no commitment | `key_id_fingerprint_mismatch` (key record, other test) |
+| 46 | `key:record` | 2.1 | superseding key matches no commitment | `key_id_fingerprint_mismatch` |
+| 48 | `group:roster` | 3.1.3.2 | amendment seats a non-signer | **`membership_supersede_cannot_add`** (filled in) |
+| 50 | `ownership:{relation}:…` | 3.4.5 | recovery withdrawal cites no adjudication | none |
+| 51 | `group:roster` | 4.4.3.4.4 | version does not name held head | `trust_root_head_stale` (the edge's, other test) |
+| 52 | `retirement:{state}` | 7.5.5 | withdrawal after a frozen row | none (`registered_family_held_shut` today) |
+| 55 | `census:member:share` | 3.1.3 | second share, same token and index | `census_share_duplicate_token`; `ballot_share_duplicate_token` |
+| 56 | `membership:{stage}` | 3.1.3.2 | second, opposite reply to proposal | **`membership_reply_conflict`** (filled in) |
+
+Of the 39, three now carry the text's own token; 36 remain unnamed, plus the 9 slashing rows
+and the 2 other second-pass rows: 45 TSV rows with a bare `refuse`, and 2 more (12, 13) that
+name the hard case and no token.
