@@ -88,7 +88,7 @@ def main():
         demand[c][s["repo"]] += w(s)
         if s["order_dependent"] == "yes": order[c] += w(s)
         for i in s["non_row_inputs"].split("|"):
-            if i and i != "-": inputs[c][i] += w(s)
+            if i and i != "-" and s["kernel_side"] == "kernel": inputs[c][i] += w(s)
         for u in s["uses"].split("|"):
             if u in prim and u != c: seen_edges[(c, u)] += w(s)
 
@@ -119,7 +119,7 @@ def main():
     print(f"   edges seen at sites: {len(seen_edges)}; declared: {len(declared)}")
     print("   seen and not declared: " + ("; ".join(f"{prim[a]['name']} uses {prim[b]['name']} ({n})" for (a, b), n in undeclared[:14]) or "none"))
     print("   declared and not seen: " + ("; ".join(f"{prim[a]['name']} from {prim[b]['name']}" for a, b in unseen[:14]) or "none"))
-    print("\n5. Inputs that are not rows, read by sites on the kernel's side:")
+    print("\n5. Inputs that are not rows, read by sites their census puts on the kernel's side:")
     bad = collections.Counter(); per = collections.defaultdict(collections.Counter)
     for k in kern:
         for i, n in inputs[k].items():
