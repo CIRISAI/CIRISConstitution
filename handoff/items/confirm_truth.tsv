@@ -1,0 +1,61 @@
+item	outcome	group	pair	family	verb	scope	reading	widens	widens_when	way_back	confirm	confirm_when	cc_ref
+C001	proceed	scope	scope01	chat:*	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C002	confirm first	scope	scope01	chat:*	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C003	proceed	scope	scope02	blog:*	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C004	confirm first	scope	scope02	blog:*	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C005	proceed	scope	scope03	audio:*	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C006	confirm first	scope	scope03	audio:*	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C007	proceed	scope	scope04	config:{scope}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C008	confirm first	scope	scope04	config:{scope}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C009	proceed	scope	scope05	content_rating:{scheme}:{rating}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C010	confirm first	scope	scope05	content_rating:{scheme}:{rating}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C011	proceed	scope	scope06	cw_class:{class}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C012	confirm first	scope	scope06	cw_class:{class}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C013	proceed	scope	scope07	consent:stream:{kind}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C014	confirm first	scope	scope07	consent:stream:{kind}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C015	proceed	scope	scope08	consent:deletion_sla:{days}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C016	confirm first	scope	scope08	consent:deletion_sla:{days}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C017	proceed	scope	scope09	deferral:request	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C018	confirm first	scope	scope09	deferral:request	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C019	proceed	scope	scope10	age_self_declared:band:{band}:{version}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C020	confirm first	scope	scope10	age_self_declared:band:{band}:{version}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C021	proceed	scope	scope11	commitment_fulfillment:{prior_contribution_id}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C022	confirm first	scope	scope11	commitment_fulfillment:{prior_contribution_id}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C023	proceed	scope	scope12	collection:{kind}	attest	self	row at the signer's own scope: does not widen; a way back is offered	true	by_scope	true	true	if_widens	CC 4.5.13
+C024	confirm first	scope	scope12	collection:{kind}	attest	wider than self	row at a wider scope: widens	true	by_scope	true	true	if_widens	CC 4.5.13
+C025	proceed	replace	replace01	chat:*	supersede	same as the replaced row	replacing row at the same scope: does not widen	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C026	confirm first	replace	replace01	chat:*	supersede	wider than the replaced row	replacing row at a wider scope: widens	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C027	proceed	replace	replace02	blog:*	supersede	same as the replaced row	replacing row at the same scope: does not widen	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C028	confirm first	replace	replace02	blog:*	supersede	wider than the replaced row	replacing row at a wider scope: widens	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C029	proceed	replace	replace03	collection:{kind}	supersede	same as the replaced row	replacing row at the same scope: does not widen	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C030	confirm first	replace	replace03	collection:{kind}	supersede	wider than the replaced row	replacing row at a wider scope: widens	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C031	proceed	replace	replace04	content_rating:{scheme}:{rating}	supersede	same as the replaced row	replacing row at the same scope: does not widen	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C032	confirm first	replace	replace04	content_rating:{scheme}:{rating}	supersede	wider than the replaced row	replacing row at a wider scope: widens	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C033	proceed	replace	replace05	config:{scope}	supersede	same as the replaced row	replacing row at the same scope: does not widen	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C034	confirm first	replace	replace05	config:{scope}	supersede	wider than the replaced row	replacing row at a wider scope: widens	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C035	proceed	replace	replace06	audio:*	supersede	same as the replaced row	replacing row at the same scope: does not widen	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C036	confirm first	replace	replace06	audio:*	supersede	wider than the replaced row	replacing row at a wider scope: widens	true	by_scope_change	true	true	if_widens	CC 4.5.13
+C037	confirm first	no_way_back		deferral:response:{outcome}	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C038	confirm first	no_way_back		identity_amendment	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C039	confirm first	no_way_back		consent:deletion_complete	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C040	confirm first	no_way_back		consent:scope:{kind}	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C041	confirm first	no_way_back		event:lifecycle:{state}	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C042	confirm first	no_way_back		locality:decision:{scale}	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C043	confirm first	no_way_back		self:delegates_to	authorize	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C044	confirm first	no_way_back		ledger:checkpoint:{unit}:{version}	attest	self	no way back is offered, whatever the scope	true	by_scope	false	true	always	CC 4.5.13
+C045	confirm first	always		group:roster	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	true	true	always	CC 4.5.13
+C046	confirm first	always		membership:{stage}	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	true	true	always	CC 4.5.13
+C047	confirm first	always		identity:occurrence	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	true	true	always	CC 4.5.13
+C048	confirm first	always		community:listing	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	true	true	always	CC 4.5.13
+C049	confirm first	always		key:record	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	false	true	always	CC 4.5.13
+C050	confirm first	always		key_grant:{axis}	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	false	true	always	CC 4.5.13
+C051	confirm first	always		key:revocation	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	false	true	always	CC 4.5.13
+C052	confirm first	always		capacity:relay_delivery	attest	fixed by the family	the family lives at the widest reach whatever the signer chooses	true	always	true	true	always	CC 4.5.13
+C053	proceed	never		chat:*	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C054	proceed	never		blog:*	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C055	proceed	never		consent:stream:{kind}	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C056	proceed	never		content_rating:{scheme}:{rating}	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C057	proceed	never		collection:{kind}	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C058	proceed	never		commitment_fulfillment:{prior_contribution_id}	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C059	proceed	never		cw_class:{class}	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
+C060	proceed	never		config:{scope}	withdraw	as the original	taking back does not widen and a way back is offered	false		true	false		CC 4.5.13
