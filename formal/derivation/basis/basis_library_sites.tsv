@@ -1,0 +1,151 @@
+site_id	expression	fits	note
+A003	sel[halt] ; rule(open_under_halt, act)	yes	
+A005	sel[halt] ; rule(open_under_halt, act)	yes	
+A006	sel[halt] ; rule(open_under_halt, act)	yes	
+A007	sel[halt] ; rule(open_under_halt, act)	yes	
+A011	rule(capability_class, act)	yes	
+A015	rule(capability_class, act)	partly	a second table nobody reads
+A016	live(licence grant, withdraw) ; rule(capability_class, act)	partly	not implemented at the site
+A020	reach(signer -> delegates_to resolve_deferral[:domain] from trust set) ; rule(seat, domain)	yes	
+A021	reach(signer -> delegates_to resolve_deferral) ; rule(seat, domain)	partly	the site reads an API role
+A022	sel[deferral request] ; sel[response]	yes	
+A023	-	no	standing from an API role and not from a signed act; the kernel refuses this by construction
+A024	live(consent, revocation) ; in_range(now, consent.t, consent.t + rule(consent_ttl))	partly	a read that extends the term is a write with no row
+A033	latest[community grant]	yes	the site ignores withdrawal; the kernel would read live(...)
+A037	live(community grant, withdraw)	yes	
+A038	live(community grant, withdraw)	yes	
+A040	owner(node)	yes	
+A042	reach(signer -> authority duty) ; rule(seat, domain)	partly	the site reads a boolean in memory
+A046	-	no	the destination is the model's output; no audience is read
+A060	rule(needs_approval, tool) ; live(approval, withdraw)	yes	
+A064	rule(signer, family) ; sel[row, signer = own key]	partly	signing is an effect; who may sign fits
+A066	reach(signer -> authority duty) ; rule(seat, domain) ; sel[amendment citing approval]	yes	
+A075	-	no	prose to a model
+A081	-	no	prose to a model
+A082	rule(needs_approval, scope) ; sel[approval]	partly	half prose
+A083	-	no	prose to a model
+A084	rule(needs_approval, scope) ; sel[approval]	partly	half prose
+A085	-	no	prose to a model
+A091	-	no	prose to a model
+A092	-	no	prose to a model
+A094	rule(managed, attribute)	partly	inputs unstated
+C003	in_range(count[cosign], rule(policy, M)) ; live(accord, withdraw|supersede) ; rule(act, state)	yes	
+C009	rule(capability, CHAT_CALL)	partly	a capability of the node read from a cache; not a row
+C010	sel[file, signer = me] ; live(reviewer duty of me, withdraw) ; rule(act, role)	yes	
+C011	rule(policy, act, role) ; live(role of me, withdraw)	yes	
+C013	sel[key of contact]	partly	the site decides from a 404 seen earlier
+C015	in_range(group(live(roster add, removal) + live(invite, answer), count person), 0, rule(room_cap) + 1)	partly	as S068; the site reads an earlier call
+C017	live(invite by me, answer|withdraw)	yes	
+C022	live(admin role of me, withdraw)	partly	the admin role is an API role, not a row
+C023	in_range(amount, 0, headroom + 1) ; in_range(expiry, rule(lo), rule(hi))	partly	headroom is a sum of spend; a ticked box is screen state
+C026	-	no	waiting on an answer
+C027	in_range(node.version, rule(version_floor))	partly	the version comes over the link
+C039	live(moderator grant of me, withdraw)	partly	the fallback infers standing from own messages; the kernel reads only the grant
+C040	live(reviewer grant of me, withdraw)	partly	as C039
+C043	owner(node)	yes	
+C057	in_range(count[custody:ack of content], rule(holder_threshold))	partly	which holders answer is link state
+C059	rule(ladder_quorum, default)	yes	
+C062	rule(confirm, act)	yes	
+C064	rule(confirm, act)	yes	
+C065	rule(confirm, act)	yes	
+C069	rule(confirm, act) ; live(deferral, response)	yes	the site does not test pending; the kernel would
+C084	sel[content_class of item] ; rule(default)	yes	
+C088	sel[cohort = rule(cohort_filter)]	partly	the filter is the client's own
+C089	rule(reach_vocab, token)	yes	
+C092	-	no	a local probe
+C101	rule(signer, family) ; rule(audience, family)	partly	the sheet asserts and tests nothing
+C115	sel[cosign, signer = node key]	yes	
+C121	latest[node policy] ; rule(upload_cap, default)	partly	fits where the policy is a row
+C122	in_range(2 * m, n + 1)	yes	
+C123	rule(claim_scopes, scope)	yes	
+C127	rule(vocab, token)	yes	
+E004	sel[family in rule(required_reads)]	yes	
+E012	live(roster add of peer, removal) ; reach(peer -> trust set)	partly	fits as a fold; the site reads a cache and config
+E042	rule(audience, family)	yes	whether the requester is attributed is link state and is not the kernel's
+E059	rule(retainable, dimension)	yes	
+E066	-	no	a relay of another component's verdict; nothing is decided here
+E069	sel[accord evidence, t >= cursor]	partly	the cursor is the caller's word; sel has an upper bound only, so a lower bound is a second use of in_range per row
+E075	rule(audience, family) ; live(roster add of requester, removal)	partly	the serve gate fits; packing under a byte budget does not
+E088	sel[row id]	partly	fits if released rows are held rows; the site reads a cache
+E094	-	no	reads what the peer holds and a latch in memory
+E116	owner(local node)	partly	which legs run is transport; whether own rows are offered is the owner fold
+E140	rule(tier, family)	yes	
+E149	group(sel[held meta], by scope, count)	partly	needs a sum of sizes; the library counts distinct voices and does not add
+E165	rule(scope, content) ; live(roster add of holder, removal)	yes	
+E207	-	no	link state and a converger tick
+E271	-	no	routing
+E273	-	no	routing over link state
+E277	live(roster add of requester, removal)	partly	the requester's identity comes from the link
+E287	-	no	relay load in memory
+E296	-	no	link identity
+E302	reach(introducer -> trust set)	partly	held or refused fits; the site decides from memory
+E311	in_range(size, 0, rule(body_cap))	yes	size is a property of the body, not of a signed row
+E325	-	no	link state
+E328	rule(scope_class, envelope.scope)	yes	
+E329	owner(recipient) ; rule(scope, owner)	yes	
+E340	reach(key -> trust root over live infra:attest grants)	partly	rooted or advisory is whether the chain reaches; the site reads a cache
+E352	sel[key rows of contact]	partly	absence fits; queueing a pull is an effect
+E359	-	no	a memo of transport errors
+E392	-	no	a memo of transport retries
+E393	group(sel[custody:ack], by (holder, content), greatest t)	partly	fits where the claims are rows
+E409	group(sel[roster add], by member, least t)	yes	this memo is first-held itself
+P004	rule(registry, family)	yes	
+P007	owner(node)	yes	group(live(bind cosigned by the node, withdraw by its signer), one): two live owners read as none; the checked owner_binding fold
+P008	sel[bind of node, cosigner = own key]	yes	only a cosigned binding is counted, so the test is a field of the row
+P009	group(reach(delegate -> delegator over live delegates_to), greatest t)	yes	a set has no closing edge; the edge refused is the one first held last on the cycle. The site reads arrival order
+P010	in_range(row.term, rule(term, lo), rule(term, hi))	yes	
+P012	group(sel[composers naming target], least (rule(rank, kind), t))	yes	
+P015	live(de-admission of peer by own key, re-admission)	yes	
+P019	reach(root -> reader's trust set over live edges)	yes	
+P020	in_range(group(live(vote, withdraw), count signer), rule(policy, M))	yes	
+P021	in_range(count[cosign of act], rule(policy, M)) ; in_range(now, first[cosign of act].t, first.t + rule(window))	yes	three states from two tests; the drop on sweep is storage, outside the kernel
+P022	latest[roster entry of signer, before row.signed] ; latest[roster entry of signer, before row.t]	yes	standing at two instants is the same fold with two bounds
+P023	in_range(row.t, row.signed, row.signed + rule(W)) ; latest[roster entry of sealer, before row.t]	yes	
+P025	in_range(row.t, row.signed, row.signed + rule(W)) ; latest[standing of signer, before row.t]	yes	
+P028	live(notice, reversal|lift before close) ; rule(basis) ; in_range(now, close) ; under(at, hold, hold_lifted)	yes	the checked takedown fold
+P029	in_range(now, t0 + rule(disable_after)) ; in_range(now, t0 + rule(destroy_after))	partly	no row is read: the key's creation instant is store state. Fits once that instant is a held row's
+P036	group(sel[family], by key, greatest t)	yes	a projection is a memo of a fold; the cache is not an input
+P037	sel[hard_case naming this verdict]	partly	the kernel can say the row is absent and the verdict stands; writing a row is an effect, not a value
+P038	reach(signer -> root over live delegates_to held before row.t) ; rule(max_depth)	yes	frozen at admission is the fold bounded at the row's first-held instant
+P040	sel[row, signer = own key] ; rule(tier, family)	yes	
+P041	sel[.., before = row.t]	yes	judged at received_at is the bound parameter of sel, on any fold
+P042	group(sel[X with the same key], least t)	yes	the earliest held stands and the rest are duplicates; the site reads arrival order
+P053	latest[charter of group]	yes	then a field of that row
+P058	live(roster add of peer, removal)	yes	
+P059	in_range(now, row.signed, row.signed + rule(W))	yes	
+P060	in_range(now, row.t, row.t + rule(park))	yes	
+P069	live(occurrence of member, revocation) ; live(roster add, removal) ; sel[key_grant for write]	yes	entitled devices less those already granted
+P071	live(occurrence, revocation) ; live(roster add, removal) ; sel[key_grant:epoch] ; rule(key_effect, act, scope)	partly	the entitlement fits; the epoch number is the minter's running state, and the key_plane model was not re-expressed
+P073	rule(registry, family)	yes	
+P074	in_range(now, latest[custody:ack].t, latest.t + rule(custody_ttl))	yes	
+P075	rule(shape, family)	yes	a shape test on one row; counted as a table cell
+S001	live(flag, clear) ; rule(class) ; in_range(now, flag.t, flag.t + rule(appeal_window))	yes	the takedown fold over content_class rows
+S004	group(live(roster add, removal), least member)	yes	a deterministic pick over the live roster
+S006	live(roster add of caller, removal)	yes	
+S010	sel[proposal] ; live(acceptance, withdraw) ; in_range(now, proposal.t, proposal.t + rule(window))	yes	
+S012	sel[room policy = founder_only, founder = owner]	partly	which rooms fits; rewriting them is an act
+S015	owner(node) ; sel[withdraw by a former owner]	yes	
+S017	owner(node) ; reach(caller -> steward duty)	yes	
+S023	live(grant, withdraws|recants) ; in_range(now, grant.t, grant.expiry) ; latest[policy] ; in_range(now, policy.t, policy.valid_until)	yes	
+S026	in_range(count[invocation signatures], rule(policy, M)) ; in_range(now, t0, valid_until)	partly	fits once a signature below quorum is a held row; here it lives in memory
+S036	live(roster add, removal) ; rule(policy, protocol)	partly	reads the caller's claim
+S038	rule(policy, group(live(roster add, removal), count member))	partly	reads the caller's claim
+S041	rule(policy, kind)	yes	
+S042	rule(policy, op, group(live(roster add, removal), count member))	yes	
+S043	in_range(group(live(signature, withdraw), count signer), rule(policy, M)) ; sel[halt]	yes	the latch is the halt row held, not memory
+S044	in_range(count[co-scrub], rule(policy, M))	partly	reads the caller's claim
+S052	sel[flag] ; live(clear, withdraw by its signer) ; reach(clearer -> moderator duty)	yes	
+S053	live(file, withdraw)	yes	eviction follows the verdict
+S056	live(holding claim by device, release)	yes	
+S059	owner(node) ; rule(key_effect, act, scope)	partly	the approval arrives as a caller's claim over HTTP
+S061	group(sel[attestation], by (signer, slot), one)	yes	a group that drops is an equivocation; emitting is an effect
+S062	-	no	an unconditional emission on an API call
+S064	group(sel[owner-binding of person] + sel[key of person], greatest t)	yes	both held, first at the later instant: the set_item fold
+S065	-	no	delivery retry
+S066	live(roster add, removal)	partly	release should follow from the roster row being held; here a hand-placed call
+S068	in_range(group(live(roster add, removal) + live(invite, answer), count person), 0, rule(room_cap) + 1)	yes	
+S069	latest[room policy] ; sel[founder row, signer = inviter]	yes	
+S071	in_range(group(live(founder, step_down), count signer), 2)	yes	
+S074	live(moderator grant of signer, withdraw)	yes	
+S088	group(live(config, revocation), by key, greatest t)	yes	the cache is not an input
+S090	in_range(count[co-signature], rule(policy, M))	partly	as S026: in memory, lost on restart

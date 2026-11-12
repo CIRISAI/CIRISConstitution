@@ -1,0 +1,151 @@
+site_id	expression	fits	note
+A003	GLUE(HALT,SEL(tbl:acts;open_under_halt))	yes	the exempt act list is a table constant, not config
+A005	HALT	yes	the kernel gives the verdict; the refusal is the caller's
+A006	HALT	yes	same answer as A005
+A007	HALT	yes	the cache should be the HALT view itself
+A011	SEL(tbl:prohibitions;capability)	yes	constant table, no held rows
+A015	SEL(tbl:prohibitions;capability)	partly	dead code; a second copy of the A011 table
+A016	GLUE(SEL(tbl:prohibitions;capability),LIVE(licensure;attested=agent))	partly	not built; expression is what the comment describes
+A020	STANDS(signer,wa,subject,now)	partly	site reads a certificate store and config, not rows; the row answer is standing by delegates_to resolve_deferral
+A021	STANDS(caller,wa,subject,now)	partly	API role is config; the row answer replaces it
+A022	GLUE(SEL(deferral:request;id=ref),STANDS(signer,wa,subject,now))	yes	
+A023	STANDS(k,wa,subject,now)	partly	site maps an API admin to authority by config; standing from a signed act is the row answer and contradicts the mapping
+A024	CONSENT(subject,scope,now)	partly	the read extends TEMPORARY fourteen days: a write on read, outside a pure function
+A033	TOP(SEL(community_grant;attested=agent);key=attested;max(asserted_at))	yes	site ignores withdrawal; LIVE is the three-operator correction
+A037	GLUE(not LIVE(community_grant;attested=agent))	partly	verdict fits; emitting the new grant is an effect
+A038	LIVE(community_grant;attested=agent)	yes	
+A040	OWNER(self)	yes	
+A042	GLUE(SEL(deferral:response:approved;ref=task),STANDS(R.signer,wa,subject,R.asserted_at))	partly	site reads a boolean in process memory
+A046	GLUE(dest in AUDIENCE(row))	partly	the destination is model output; only the membership check is a kernel answer and the site does not make it
+A060	GLUE(SEL(tbl:tools;requires_approval),SEL(deferral:response:approved;ref=task))	partly	tool table is config; fails open today
+A064	GLUE(SEL(tbl:guard;family),CONSENT(subject,scope,now))	partly	signing a row is an effect; the kernel answers only whether it would be admitted
+A066	GLUE(SEL(deferral:response:approved;id=ref:authorized_by),STANDS(R.signer,wa,subject,R.asserted_at),no SEL(identity_amendment;ref=R.id))	yes	this is the guard cell of identity amendment, read as written
+A075	-	no	prose in a prompt; nothing is computed from rows
+A081	-	no	prose in a prompt; nothing is computed from rows
+A082	SEL(deferral:response:approved;ref=act)	partly	prose rule with a code check on process memory
+A083	-	no	prose in a prompt; nothing is computed from rows
+A084	SEL(deferral:response:approved;ref=act)	partly	as A082
+A085	-	no	prose in a prompt; nothing is computed from rows
+A091	-	no	prose in a prompt; nothing is computed from rows
+A092	-	no	prose in a prompt; nothing is computed from rows
+A094	SEL(tbl:managed_attributes;name)	partly	constant table; source of the list unstated
+C003	SEL(tbl:transitions;family=accord,from=COSIGN(row),roles has STANDS(me,holder,accord,now))	yes	the queue rule of transitions.json is a select over a table joined to standing
+C009	SEL(capability;attested=node,leaf=CHAT_CALL)	partly	capability comes from a cache of a node answer, not a held row
+C010	SEL(tbl:transitions;family=file,roles has STANDS(me,moderate|review,g,now),not_author)	yes	
+C011	GLUE(case;SEL(tbl:count_cell;identity,seats),CNT(ROSTER(self,now).members))	yes	DIRECT/PROPOSE/NOT_ALLOWED is the count cell: first arm that holds
+C013	SEL(key:record;attested=target)	partly	site decides from a 404 remembered this session
+C015	CNT(GLUE(ROSTER(g,now),LIVE(membership:proposal;object=g));distinct subject;<cap)	partly	site reads an earlier call, not rows
+C017	GLUE(LIVE(membership:proposal;signer=me),no SEL(membership:acceptance;ref=P.id))	yes	
+C022	STANDS(me,operator,node,now)	partly	site reads an earlier call
+C023	GLUE(CNT(SEL(budget;object=g);sum(amount);<=cap),SPAN(grant;open=valid_from;close=valid_until;now))	partly	needs sum, and a tick box that is screen state
+C026	-	no	waits on an answer in flight; screen state
+C027	-	no	peer software version is link state, not a signed row
+C039	STANDS(me,moderate,g,now)	partly	site infers standing from own messages when the field is absent
+C040	STANDS(me,review,g,now)	partly	as C039
+C043	OWNER(node)	yes	cache of the fold
+C057	CNT(LIVE(custody:ack;object=content);distinct signer;>=2)	partly	threshold is a constant; the notice says 2-of-3 and link state decides which holders answer
+C059	CNT(LIVE(custody:ack;object=content);distinct signer;>=tbl|2)	partly	fallback constant when no catalogue is served
+C062	SEL(tbl:transitions;confirm=true|if_widens)	yes	the confirm cell, read from the table
+C064	SEL(tbl:transitions;family=membership,verb,confirm)	yes	site disagrees with the table; expressible either way
+C065	SEL(tbl:transitions;family=membership,verb,confirm)	yes	as C064
+C069	SEL(tbl:transitions;family=deferral,from=TOP(SEL(deferral:*;ref=id);key=ref;rank))	yes	site omits the from=pending test
+C084	TOP(SEL(content_class:*;ref=item);key=item;max(asserted_at),rank(withhold>release))	yes	absent=false is the fold's absent default
+C088	SEL(R;cohort_scope in tbl:cohorts)	partly	client applies its own filter from config
+C089	SEL(tbl:reach_tokens;token)	yes	absent default
+C092	-	no	a local probe is link state
+C101	GLUE(SEL(tbl:signer_rule;family),AUDIENCE(row))	partly	the sheet asserts both and checks neither
+C115	COSIGN(act,policy)	yes	
+C121	TOP(SEL(config:*;leaf=upload_cap);key=leaf;max(asserted_at))	partly	falls back to 1 MiB when the node is unreachable
+C122	SEL(candidate;2*m>n)	partly	a linear inequality over two fields; SEL compares, it does not multiply
+C123	SEL(candidate;scope in tbl:scopes)	yes	
+C127	SEL(tbl:vocab)	yes	data, not a decision
+E004	GLUE(SEL(tbl:required_reads),peer in AUDIENCE(row))	partly	what to offer first is copy planning over the audience answer
+E012	GLUE(MEMBER(peer,accord,now),TRUSTED(peer))	yes	
+E042	GLUE(SEL(tbl:replication;family),requester in AUDIENCE(row))	yes	
+E059	SEL(tbl:dimension_allowlist;dimension)	yes	
+E066	SEL(R;peer in AUDIENCE(row))	partly	relays an answer held in process memory
+E069	SEL(accord_evidence;first_held>cursor)	partly	cursor is the caller's claim
+E075	SEL(R;peer in AUDIENCE(row))	partly	the gate fits; packing under a byte budget is an optimisation and does not
+E088	-	no	transport memo
+E094	-	no	depends on what the peer holds
+E116	GLUE(OWNER(local),SEL(R;signer in own_keys))	partly	which legs run is transport planning
+E140	SEL(tbl:replication;family,tier=local)	yes	
+E149	CNT(SEL(held_meta);group=scope;sum(bytes))	yes	needs sum, not count
+E165	GLUE(holder in AUDIENCE(content))	partly	site reads process memory
+E207	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E271	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E273	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E277	GLUE(requester in AUDIENCE(row))	partly	the roster is in process memory
+E287	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E296	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E302	GLUE(SEL(tbl:guard;family=key),TRUSTED(introducer))	partly	
+E311	SEL(candidate;size<=tbl:cap)	yes	
+E325	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E328	SEL(candidate;scope in tbl:class_scope)	yes	
+E329	GLUE(OWNER(recipient),SEL(candidate;scope in tbl))	yes	
+E340	STANDS(presenter,infra:attest,federation,now)	yes	rooted or advisory is the two values of the answer
+E352	GLUE(no SEL(key:record;attested=contact))	partly	queuing the pull is an effect
+E359	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E392	-	no	transport state (link, load or memo); an optimisation over answers, not an answer
+E393	SPAN(TOP(SEL(custody:ack);key=signer,object;max(asserted_at));open=asserted_at;close=+72h;now)	partly	memo not backed by rows today
+E409	TOP(SEL(membership:*;object=g);key=subject;min(first_held))	yes	first_held is a kernel input
+P004	SEL(tbl:families;pattern)	yes	
+P007	OWNER(k)	yes	
+P008	GLUE(SEL(delegates_to[withdrawn];attested=node),CNT(scrubs(candidate);signer=node;>=1))	yes	
+P009	CHAIN(candidate.attested;LIVE(delegates_to;signer=cur);reaches candidate.signer)	yes	which edge of a cycle is refused depends on which came last; over the set alone the answer needs a tie rule
+P010	SPAN(candidate;open=valid_from;close=+term_max;valid_until)	yes	
+P012	TOP(SEL(composer;attested=target);key=attested;order)	yes	
+P015	LIVE(peer_deadmission;signer=self,attested=peer)	yes	
+P019	TRUSTED(root)	yes	
+P020	COUNT(act,policy)	yes	
+P021	COSIGN(act,policy)	yes	dropping on sweep is an effect
+P022	GLUE(MEMBER(signer,self,asserted_at),SPAN(row;open=asserted_at;close=+W;first_held),MEMBER(signer,self,first_held))	yes	two as-of instants
+P023	FRESH(row)	yes	
+P025	FRESH(row)	yes	
+P028	SPAN(SEL(takedown;ref=content);open=first_held;close=+withhold;now)	yes	destroying bytes is an effect
+P029	SPAN(key_state;open=disabled_at;close=+retention;now)	partly	key state is not a signed row
+P036	TOP(SEL(family);key=tbl:fold.key;tbl:fold.pick)	yes	a projection is the fold cell evaluated
+P037	GLUE(SEL(tbl:reactions;on=fold),no SEL(hard_case;ref=cause))	partly	emit is an effect; the trigger is a change in a view
+P038	CHAIN(signer;LIVE(delegates_to;attested=cur);depth)	partly	the depth is frozen at admission, so it is the answer as of first_held, stored
+P040	GLUE(SEL(tbl:replication;family,tier),SEL(candidate;signer in own_keys))	yes	
+P041	TOP(SEL(family;first_held<=t);key;pick)	yes	as-of evaluation at first_held
+P042	GLUE(no SEL(family;object=object,token=token))	yes	first held wins: a guard over (set, candidate), not over the set
+P053	SEL(group:roster[charter];object=g,subkind in commons|public)	yes	
+P058	MEMBER(peer,g,now)	yes	
+P059	SPAN(row;open=asserted_at;close=+W;now)	yes	
+P060	GLUE(SPAN(row;open=first_held;close=+24h;now),not peer in AUDIENCE(row))	yes	
+P069	GLUE(SEL(LIVE(identity:occurrence);attested in AUDIENCE(row)),no SEL(key_grant:content;ref=row.id))	partly	the set fits; minting the grants is an effect
+P071	SEL(LIVE(identity:occurrence);attested in ROSTER(g,now))	partly	as P069
+P073	SEL(tbl:families;retired)	yes	
+P074	SPAN(LIVE(custody:ack);open=asserted_at;close=+72h;now)	yes	
+P075	CNT(candidate.evidence_refs;=1)	yes	
+S001	GLUE(TOP(SEL(content_class:*;ref=item);key=item;max(asserted_at),rank(withhold>release)),TWOPATH(act,moderation_overturn))	yes	
+S004	TOP(ROSTER(g,now).members;key=g;min(key_id))	yes	
+S006	MEMBER(caller,g,now)	yes	
+S010	GLUE(SEL(membership:acceptance;ref=LIVE(membership:proposal;object=g).id),SEL(candidate;signer in own_keys))	partly	candidates are chosen by wall clock, so two nodes can pick differently
+S012	SEL(group:roster[charter];protocol=founder_only,founder=OWNER(self))	partly	the selection fits; rewriting the rooms is an effect
+S015	GLUE(SEL(delegates_to[withdrawn];attested=self),not OWNER(self))	yes	the wipe is an effect
+S017	STANDS(k,owner|steward,g,now)	yes	
+S023	GLUE(LIVE(grant;attested=me),LIVE(policy;object=g))	yes	
+S026	COSIGN(act,policy)	partly	partial signatures sit in process memory, not in held rows
+S036	CNT(ROSTER(g,now).members;thr(tbl:protocols))	yes	
+S038	CNT(ROSTER(g,now).members;thr(tbl:protocols))	partly	new M is the threshold form applied to new N; the site takes M from the caller
+S041	SEL(tbl:policy;kind)	yes	
+S042	CNT(ROSTER(accord,now).members;thr(tbl:policy))	yes	
+S043	HALT	partly	the latch is process memory; the verdict fits
+S044	COUNT(act,policy)	yes	
+S052	GLUE(TOP(SEL(content_class:*;subject);key=subject;rank),STANDS(row.signer,moderate|review,g,row.asserted_at))	yes	
+S053	GLUE(not LIVE(file;id))	yes	eviction is an effect
+S056	LIVE(custody:ack;object=content)	yes	
+S059	GLUE(STANDS(caller,owner,g,now),AUDIENCE(row))	partly	approval arrives over HTTP, not as a row
+S061	CNT(SEL(R;signer,key);group=signer,key,asserted_at;distinct digest;>1)	partly	detection fits; the emit is an effect
+S062	-	no	an unconditional emit per call; nothing is decided
+S064	GLUE(SEL(delegates_to[owner];attested=person),SEL(key:record;attested=person))	partly	the trigger fits; the grant is an effect
+S065	-	no	transport retry
+S066	GLUE(MEMBER(self,g,now))	partly	release is an effect placed by hand; the trigger is the audience becoming resolvable
+S068	CNT(GLUE(ROSTER(g,now),LIVE(membership:proposal;object=g));distinct subject;<=2)	yes	
+S069	GLUE(SEL(group:roster[charter];object=g,protocol=founder_only),STANDS(signer,founder,g,now))	yes	
+S071	CNT(SEL(ROSTER(g,now).members;role=founder);<=1)	yes	
+S074	STANDS(signer,moderate,g,now)	yes	
+S088	LIVE(config:*;attested=self)	yes	the two-second cache is the view
+S090	COSIGN(act,policy)	partly	as S026

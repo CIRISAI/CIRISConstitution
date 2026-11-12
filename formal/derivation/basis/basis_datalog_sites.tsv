@@ -1,0 +1,151 @@
+site_id	expression	fits	note
+A003	fold(accord:lifecycle, accord, now)	partly	the fold says halted; which non-row acts stay open has no column
+A005	fold(accord:lifecycle, accord, now)	partly	as A003
+A006	fold(accord:lifecycle, accord, now)	partly	as A003
+A007	fold(accord:lifecycle, accord, now)	partly	as A003
+A011	-	no	prohibition table is config
+A015	-	no	dead code
+A016	-	no	comment only
+A020	may(caller, attest, deferral:response, now)	partly	site reads a certificate store and config, not rows
+A021	may(caller, attest, deferral:response, now)	partly	API level stands in for the seat
+A022	may(caller, attest, deferral:response, now)	yes	
+A023	holds(key, wa, agent, now)	partly	site maps an API role
+A024	fold(consent:state, user, now)	partly	consent is kept in the agent graph; a read that extends it is a write
+A033	fold(consent:community_trust, agent, now)	yes	site ignores the withdrawal the fold would honour
+A037	state(grant, now)	yes	
+A038	fold(consent:community_trust, agent, now)	yes	
+A040	holds(?, owner, own_node, now)	yes	
+A042	holds(key, wa, agent, now)	partly	site trusts a boolean in context
+A046	-	no	model output
+A060	-	no	tool approval config
+A064	may(own, verb, grant, now)	yes	
+A066	may(signer, attest, identity_amendment, now)	yes	guard: one approved response, not reused
+A075	-	no	prose
+A081	-	no	prose
+A082	may(agent, attest, identity_amendment, now)	partly	prose rule; the row guard exists
+A083	-	no	prose
+A084	may(agent, attest, identity_amendment, now)	partly	as A082
+A085	-	no	prose
+A091	-	no	prose
+A092	-	no	prose
+A094	-	no	managed attribute in code
+C003	may(me, verb, row, now)	yes	
+C009	-	no	a capability flag of the node build
+C010	may(me, verb, file, now)	yes	not_author condition
+C011	may(me, verb, household, now)	yes	direct | via(policy) | no is the output
+C013	may(me, attest, widening, now)	partly	site guesses from an earlier 404
+C015	may(me, attest, proposal, now)	partly	room cap is config
+C017	may(me, withdraw, proposal, now)	yes	
+C022	holds(me, operator, agent, now)	partly	admin is an API role, not a row
+C023	form(candidate)	partly	headroom is not rows
+C026	may(me, attest, candidate, now)	partly	duplicate check is a guard only where the family has one
+C027	-	no	software version floor
+C039	holds(me, moderate, room, now)	partly	site infers from own messages
+C040	holds(me, review, room, now)	partly	as C039
+C043	holds(me, owner, node, now)	yes	
+C057	tally(act, now)	partly	threshold hard-coded
+C059	tally(act, now)	partly	constant used when no catalogue
+C062	may(me, verb, candidate, now)	yes	confirm is an output
+C064	may(me, replace, role, now)	yes	confirm output
+C065	may(me, attest, widening, now)	yes	confirm output
+C069	may(me, attest, response, now)	yes	
+C084	fold(content_class, item, now)	yes	absent default
+C088	{r : may(me, receive, r, now)}	partly	filter is client config
+C089	-	no	drawing default for an unknown token
+C092	-	no	link probe
+C101	may(me, verb, candidate, now) ; {k : may(k, receive, candidate, now)}	yes	who signs and who learns
+C115	tally(act, now)	yes	
+C121	fold(config, key, now)	partly	node policy may not be a row
+C122	form(candidate)	yes	
+C123	form(candidate)	yes	
+C127	form(candidate)	partly	the vocabulary is the table, not a decision
+E004	{r : may(peer, receive, r, now)}	partly	the set of rows a judgement depends on (its support) is not an answer of this basis
+E012	may(peer, receive, row, now)	yes	
+E042	may(unattributed, receive, row, now)	yes	
+E059	form(row)	yes	
+E066	{r : may(peer, receive, r, now)}	yes	relay of the gate
+E069	{r : may(peer, receive, r, now)}	partly	the cursor is a caller claim
+E075	{r : may(peer, receive, r, now)}	partly	packing under a byte budget is not a rule over rows
+E088	-	no	cache of a sync round
+E094	-	no	sync protocol latch over what a peer holds
+E116	holds(own, owner, local_node, now)	partly	which pull legs run is sync protocol
+E140	may(peer, receive, row, now)	yes	tier local is no for every peer
+E149	-	no	bytes held are not rows
+E165	may(holder, receive, content, now)	yes	
+E207	-	no	repair of held bytes over links
+E271	-	no	transport steering
+E273	state(route, now)	partly	the request itself is link state
+E277	may(requester, receive, item, now)	partly	site reads a roster in memory, not rows
+E287	-	no	relay load admission
+E296	-	no	attribution from a link identity
+E302	state(row, now)	partly	waits on an introduction kept in memory
+E311	-	no	size cap from config
+E325	may(requester, receive, own_key_record, now)	partly	answering is link behaviour
+E328	may(peer, receive, row, now)	partly	the federation class comes from config, not a row
+E329	may(recipient, receive, row, now)	yes	
+E340	holds(signer, infra:attest, target, now)	yes	rooted or advisory is the by= of the fold
+E352	state(row, now)	partly	pending on a missing parent; which pull to queue is the support set, not an answer here
+E359	-	no	memo
+E392	-	no	memo
+E393	-	no	memo of observed holding claims
+E409	-	no	this is the kernel input first_held kept in a cache, not a decision
+P004	form(row)	yes	family class is a table lookup
+P007	holds(?, owner, node, now)	yes	the fold under it tests count(owner)=1; two owners is its named result
+P008	may(signer, attest, binding, first_held)	yes	needs a cosign guard on the ownership attest transition; the guard cell there is empty
+P009	may(signer, attest, edge, first_held)	yes	the cycle test is the closure inside holds; decided in first-held order
+P010	form(row)	yes	term bound is a constant
+P012	fold(composers, target, now)	yes	
+P015	fold(de_admission by own key, peer, now)	yes	
+P019	holds(root, trusted, reader, now)	yes	
+P020	tally(act, now)	yes	
+P021	tally(act, now) ; owed(now)	yes	drop_held is a reaction entry
+P022	holds(signer, self, roster, asserted_at) & holds(signer, self, roster, first_held)	yes	
+P023	holds(sealer, member, group, asserted_at) & (not due(row, W, first_held) | holds(sealer, member, group, first_held))	yes	
+P025	holds(signer, role, object, asserted_at) & (not due(row, W, first_held) | holds(signer, role, object, first_held))	yes	same shape as P023 with role and W as parameters
+P028	owed(now)	yes	destroy_bytes after the withhold clock
+P029	owed(now)	partly	key acts stop_wrap and rotate_epoch are change cells; the Enabled/Disabled/Destroyed sweep of a DEK has no reaction entry
+P036	fold(family, key, now)	yes	a projection is a stored fold; five parameter sets
+P037	owed(now)	yes	emit hard_case by the origin door
+P038	holds(signer, role, target, first_held)	partly	depth is an output of holds; freezing it into the row is the store
+P040	may(own, replace, row, now)	yes	promotion is a widening replace; reads replication.tier
+P041	fold(family, key, first_held)	yes	instant is a parameter
+P042	may(signer, attest, row, first_held)	yes	guard: no X@admitted; needs first-held order
+P053	fold(charter, group, now)	yes	
+P058	may(peer, receive, row, now)	yes	
+P059	due(row, park, now)	partly	proposed; the duration is config, no reaction entry for a parked row
+P060	due(row, park, now)	partly	as P059, counted from first_held
+P069	owed(now) over {k : may(k, receive, write, now)}	yes	emit key_grant:content
+P071	owed(now) over {k : may(k, receive, epoch, now)}	yes	emit key_grant:epoch
+P073	form(row)	yes	retired wire form
+P074	state(ack, now)	yes	expiry eq custody_report_ttl_secs
+P075	form(row)	yes	
+S001	fold(content_class, item, now) ; tally(appeal, now)	yes	
+S004	fold(roster, group, now)	yes	order=min(key_id)
+S006	holds(caller, member, group, now)	yes	
+S010	may(own, attest, widening, now)	partly	guard reads the acceptance; candidates chosen by wall clock
+S012	{g : holds(owner, founder, g, now)} ; fold(roster.protocol, g, now)	partly	a one-off rewrite of rows, not a decision
+S015	state(binding, now)	yes	the wipe that follows has no reaction entry
+S017	holds(key, owner|steward, object, now)	yes	
+S023	state(grant, now) & state(policy, now)	yes	
+S026	tally(invocation, now)	partly	voices are kept in memory, not held as rows
+S036	tally(act, now)	yes	eligible set and needed count are outputs
+S038	tally(candidate, now)	yes	
+S041	tally(act, now)	yes	
+S042	tally(act, now)	partly	fallback constant is config
+S043	tally(invocation, now) ; fold(accord:lifecycle, accord, now)	yes	the latch is the fold kept in memory
+S044	tally(act, now)	yes	
+S052	fold(content_class, subject, now)	yes	signer filter by role moderate
+S053	state(file, now) ; owed(now)	partly	no reaction entry evicts bytes on a withdrawn file row
+S056	fold(custody:ack, blob, now)	yes	
+S059	holds(caller, owner, object, now) ; owed(now)	partly	approval arrives as a caller claim over HTTP
+S061	owed(now)	partly	no reaction entry for equivocation; the detector is the fold pick=once
+S062	-	no	admin operations are caller claims; no reaction entry
+S064	owed(now)	partly	no reaction entry says a contact grant follows the binding
+S065	-	no	MLS transport retry
+S066	state(row, now)	partly	a hand-placed release the kernel would make unnecessary
+S068	may(caller, attest, proposal, now)	partly	the cap of two is config, not a guard cell
+S069	may(caller, attest, proposal, now)	yes	
+S071	may(caller, verb, change, now)	yes	
+S074	may(caller, attest, flag, now)	yes	
+S088	fold(config, key, now)	yes	
+S090	tally(act, now)	partly	voices kept in memory

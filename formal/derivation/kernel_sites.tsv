@@ -1,4 +1,5 @@
 # Decision sites reported by five repositories, each mapped to the primitive its answer is. Read by tools/kernel_requirements.py.
+# Reviewed 2026-11-12: these sites were reported outside the kernel and decide a kernel question, so they are marked kernel: P046 P063 P055 P062 P043 E205 E377 E410 S022 S031 S109 C036 C060 C130 A002 A067 A068 A071 E008 E064 E060 E355 E251 E252 E283 E288 E290 E053 E048 E365 E382 E385
 site_id	repo	anchor	decides	computes	uses	rows_read	non_row_inputs	order_dependent	kernel_side	n_sites	census_ref
 P001	persist	attestation_admit.rs:1015 verify_federation_tier_ingest	whether a row's hybrid signature verifies at ingest	K02	-	-	none	no	not_kernel	1	§2.2 row 1; §2.1
 P002	persist	attestation_admit.rs:826-899	whether a row's envelope shape, column binding, digests and signed-instant form are well-formed	K02	-	-	none	no	not_kernel	1	§2.2 row 2; §2.1
@@ -42,10 +43,10 @@ P039	persist	engine.rs:1794; :2797; :6929; :7314; :10000; :10010; :9415	whether 
 P040	persist	admission.rs:3246 check_promotion_admission	whether a local-tier row may be promoted	K25	-	local-tier rows	own_keys	no	kernel	1	§2.2 row 36
 P041	persist	attestation_admit.rs:76-82; store/parity.rs:3444 PLAN_INSTANTS	what four folds answer when judged at received_at	K25	-	-	first_held	yes	kernel	4	§3 B16
 P042	persist	transitions.json guard cells (census:composite:{class}, census:member:share, census:share:{class}, membership:{stage}, retirement:{state})	whether a duplicate row is refused by a no X@admitted else refuse guard	K25	K01	census:composite:{class}|census:member:share|census:share:{class}|membership:{stage}|retirement:{state}	arrival_order	yes	kernel	8	§3 B18; §10 W2
-P043	persist	sqlite migrations (e.g. V196, V192)	whether a migration deletes or rewrites held rows	N02	-	federation_attestations	none	yes	not_kernel	22	§3 B19
+P043	persist	sqlite migrations (e.g. V196, V192)	whether a migration deletes or rewrites held rows	N02	-	federation_attestations	none	yes	kernel	22	§3 B19
 P044	persist	replication/admission.rs:198; :212 PER_PEER_ATTESTATION_WRITES_PER_WINDOW	whether a peer's write exceeds 600 writes per 60 s	N05	-	-	wall_clock|prior_call|config	unstated	not_kernel	1	§2.1; §5.9a
 P045	persist	lifecycle_predicate (SQL)	which rows are live for a paged SQL read	K03	-	-	unstated	unstated	unclear	1	§2.1; §6.2
-P046	persist	-	what instant the node first held a row, stamped once at first insert	K01	-	-	wall_clock	unstated	not_kernel	1	§2.1; §1
+P046	persist	-	what instant the node first held a row, stamped once at first insert	K01	-	-	wall_clock	unstated	kernel	1	§2.1; §1
 P047	persist	sequence/mod.rs:1-25	what the next local operational sequence counter value is	N02	-	-	prior_call	no	not_kernel	1	§2.1; §3 not breakers
 P048	persist	consensus.rs:38; :418; :436; types.rs:1645	whether a weighted-rubric count meets its threshold, summing f64 weights	K14	-	-	unstated	yes	kernel	1	§4.1 row 3; §10 W16
 P049	persist	consensus.rs:41; :317-324	what a custom:{id} protocol evaluates to from policy_blob.custom, nested to depth 8	K14	-	policy_blob	unstated	unstated	unclear	1	§5.3a; §4.1 row 3
@@ -54,15 +55,15 @@ P051	persist	replication_audience.rs:664-710 may_receive	whether a peer may have
 P052	persist	replication_audience.rs:563-591 audience_nodes	which nodes a row reaches, from consent:replication allow lists and signed device_class	K10	K13|K08|K07	consent:replication|identity occurrence	none	unstated	kernel	1	§5.9 table row 2
 P053	persist	replication_audience.rs:457 is_public_group	whether a group is the commons or public and so reaches everyone	K10	-	charters	none	unstated	kernel	1	§5.9 table row 3
 P054	persist	replication/hold.rs:264-290; :540 would_hold; HoldBreadth	whether this node keeps a row and how widely it holds for others	K20	K12|K06	-	process_memory	unstated	kernel	1	§5.9 table row 4
-P055	persist	replication/hold.rs:512-520 DiskPressureSnapshot	whether disk pressure defers holding proxy content	K20	-	-	process_memory	unstated	not_kernel	1	§5.9 owns table
+P055	persist	replication/hold.rs:512-520 DiskPressureSnapshot	whether disk pressure defers holding proxy content	K20	-	-	process_memory	unstated	kernel	1	§5.9 owns table
 P056	persist	replication_policy.rs:431 policy_for; REPLICATION_POLICY_HASH	what per-kind replication admission policy applies to an envelope kind	K25	-	-	config	unstated	kernel	1	§5.9 table row 5
 P057	persist	replication_policy.rs:651 settle_if_held	whether a re-offer of a held row settles as idempotent success	N01	K01	-	none	unstated	not_kernel	1	§5.9 table row 6; §2.1; §13.6
 P058	persist	cosign.rs:1254 cosign::may_receive	whether a peer may receive cosign rows (current members)	K12	K05	cosign:*|group roster	none	unstated	kernel	1	§5.9 table row 7
 P059	persist	-	when a parked row from a peer in its audience lapses (proposed asserted_at + W)	K20	K12|K04	-	first_held|signed_instant|config	no	unclear	1	§5.9a table row 1
 P060	persist	-	when a parked row from a known non-audience peer lapses (proposed first-held + 24 h)	K20	K11	-	first_held|config	no	unclear	1	§5.9a table row 2
 P061	persist	-	when a parked row from a stranger lapses (proposed first-held + 1 h)	K20	K11	-	first_held|config	no	unclear	1	§5.9a table row 3
-P062	persist	-	whether the global park inbox quota forces the oldest parked row to lapse	K20	-	-	config|process_memory	no	not_kernel	1	§5.9a table row 4
-P063	persist	attestation_admit.rs:1442-1452 (V199 self-roster, V213 vote windows, V214 cosign hold)	what first_held instant each per-feature receipt table records	K01	-	-	wall_clock	unstated	not_kernel	3	§8 delete table
+P062	persist	-	whether the global park inbox quota forces the oldest parked row to lapse	K20	-	-	config|process_memory	no	kernel	1	§5.9a table row 4
+P063	persist	attestation_admit.rs:1442-1452 (V199 self-roster, V213 vote windows, V214 cosign hold)	what first_held instant each per-feature receipt table records	K01	-	-	wall_clock	unstated	kernel	3	§8 delete table
 P064	persist	key_grant.rs:826 recipient_may_hold_key	whether a recipient may hold a content or epoch key	K18	K05|K11	group roster|identity occurrences	unstated	unstated	kernel	1	§11.1; §11.3a
 P065	persist	key_grant.rs:1157 check_key_grant_row_admission	whether a key-grant row is admitted	K25	K06|K05	key_grant|group roster|identity occurrences	unstated	unstated	kernel	1	§11.1
 P066	persist	key_grant.rs:998 check_sealer (is_active_member_at)	whether the sealer of a key grant is an active member	K06	K05	group roster	unstated	unstated	kernel	1	§11.1
@@ -83,7 +84,7 @@ E004	edge	bridge.rs: same, required rows before the walk 11857-11878	which requi
 E005	edge	bridge.rs: history page gate 11906-11908, 11928-11932	whether a history page is due for this peer and plane	N01	-	-	wall_clock|process_memory	yes	not_kernel	1	§2.2 row A5
 E006	edge	bridge.rs: offer_rows 12162, dedupe via ctx.judged 12186-12191	whether a row was already judged in this sweep (dedupe)	N01	-	-	process_memory	yes	not_kernel	1	§2.2 row A6
 E007	edge	bridge.rs: projection gate 12222 → attestation_is_advertised 9037 / 9052, 9069-9080	whether a row's projection makes it advertisable at all	K10	-	row fields|own keys	own_keys	no	kernel	1	§2.2 row A7
-E008	edge	bridge.rs: receipt suppression 12258-12265 → receipted_by_peer 3460	whether to suppress re-offering a file the peer has receipted	N01	-	file row → stream	peer_holdings|cache	yes	not_kernel	1	§2.2 row A8
+E008	edge	bridge.rs: receipt suppression 12258-12265 → receipted_by_peer 3460	whether to suppress re-offering a file the peer has receipted	N01	-	file row → stream	peer_holdings|cache	yes	kernel	1	§2.2 row A8
 E009	edge	bridge.rs: trace pause 12272-12278; trace_plane_paused 4482	whether trace rows are paused by signed mesh_config relief	K21	K03	signed mesh_config relief rows	cache	yes	kernel	1	§2.2 row A9
 E010	edge	bridge.rs: early reach 12296-12316 → audience_reach_half 10711	whether the peer's reach admits the row before store-reading gates	K12	K10|K11	row	cache	no	kernel	1	§2.2 row A10
 E011	edge	bridge.rs: author_quarantine_withholds 10121 / 10133, 10177-10193	whether a quarantined author's row is withheld	K21	K03	quarantine markers	wall_clock	yes	kernel	1	§2.2 row A11
@@ -123,23 +124,23 @@ E044	edge	bridge.rs: identity_row_reach 13985 / 13995-14039 → IdentityRowReach
 E045	edge	bridge.rs: unowned_reach 14189 [T] / 14213 Everyone; 14216-14221 non-node keys (#897) → Everyone; 14225-14237 OccurrenceUnowned	the audience of an unowned identity row: everyone or the occurrence's own set	K10	K07|K08|K05	occurrence bindings|identity_type|own sets	cache	yes	kernel	1	§2.2 row A45
 E046	edge	bridge.rs: identity_row_fetch_withholds 14118; identity_row_pull_withholds 14296	whether an identity row fetch or pull is withheld	K12	K07|K11	as A44	none	yes	kernel	1	§2.2 row A46
 E047	edge	bridge.rs: list_transport_destinations_page 8035 / 8050-8054; relayable_signed_route 8023 / 8027-8030	whether a route row is offered or relayed, by own or host subject set	K21	K10	the route row	own_keys|config	no	kernel	1	§2.2 row A47
-E048	edge	bridge.rs: key_plane_listing 7664 / 7675; budget 7739-7765	which key-plane rows are listed under memo and read budget	N01	-	key-plane rows	cache|process_memory	yes	not_kernel	1	§2.2 row A48
+E048	edge	bridge.rs: key_plane_listing 7664 / 7675; budget 7739-7765	which key-plane rows are listed under memo and read budget	N01	-	key-plane rows	cache|process_memory	yes	kernel	1	§2.2 row A48
 E049	edge	bridge.rs: list_revocation_rows 13152; list_occurrence_withdrawal_rows 13170	which revocation and occurrence withdrawal rows are offered to the cohort	K21	K11	revocations	config	yes	unclear	1	§2.2 row A49
 E050	edge	bridge.rs: list_location_proofs 14414 / 14430 → cohort_set_with_owners 13265	which location proofs are offered to the cohort with owners	K21	K07|K11	proof subject|owner_of	config|cache	yes	unclear	1	§2.2 row A50
 E051	edge	bridge.rs: advertise_page_into 7532 / 7546-7570	how an advertise page is filled	N01	-	-	none	no	not_kernel	1	§2.2 row A51
 E052	edge	bridge.rs: sweep_paged 4326 (head 4424-4445, backfill 4446-4476)	pacing of head and backfill sweep pages per peer	N01	-	-	process_memory	yes	not_kernel	1	§2.2 row A52
-E053	edge	bridge.rs: accord_evidence_since 5081 / 5093	which accord evidence is served since a watermark under byte budget	N01	-	evidence bundles	process_memory	unstated	not_kernel	1	§2.2 row A53
+E053	edge	bridge.rs: accord_evidence_since 5081 / 5093	which accord evidence is served since a watermark under byte budget	N01	-	evidence bundles	process_memory	unstated	kernel	1	§2.2 row A53
 E054	edge	bridge.rs: subject_pull_answer 5244 / 5266-5273, 5302-5318, 5326-5368	whether a subject pull is answered for this requester and subject	K21	K11|K10	-	own_keys|caller_claim	no	kernel	1	§2.2 row A54
 E055	edge	bridge.rs: admit_third_party_pull 9263 / 9271, 9285 → charge_subject_pull 9320	whether a third-party pull is admitted or throttled	N05	K09	trusted_roots_of	wall_clock|process_memory|trust_set	yes	unclear	1	§2.2 row A55
 E056	edge	bridge.rs: announced_testimony_holdings 6520 / 6546-6586	which announced testimony holdings are served to a requester	K21	K11	subject-authored bindings and acceptances	cache	yes	kernel	1	§2.2 row A56
 E057	edge	bridge.rs: subject_holdings_inner 6600 (6681, 6702, 6737-6827)	which per-subject holdings are served to a requester	K21	K11	per-subject reads	none	no	kernel	1	§2.2 row A57
 E058	edge	bridge.rs: pull_ref_is_serveable 6859 / 6876-6929	whether a pulled ref is serveable under pause, cap, quarantine, accord and audience	K21	K12|K06|K10	pause|cap|quarantine|accord|may_receive	cache	no	kernel	1	§2.2 row A58
 E059	edge	bridge.rs: is_non_retainable_score 6971	whether a score dimension is non-retainable and refused	K21	-	dimension allowlist	none	no	kernel	1	§2.2 row A59
-E060	edge	bridge.rs: kick_on_miss 9399 / 9409-9429	whether a miss kicks a round toward the owner's nodes	N01	K07	nodes_owned_by	cache|wall_clock	yes	not_kernel	1	§2.2 row A60
+E060	edge	bridge.rs: kick_on_miss 9399 / 9409-9429	whether a miss kicks a round toward the owner's nodes	N01	K07	nodes_owned_by	cache|wall_clock	yes	kernel	1	§2.2 row A60
 E061	edge	bridge.rs: names_only_required_subjects 13797 / 13803-13812; is_no_consent_seat 13765; used by take_missing_signer_for 4809	whether a missing-signer ask names only required subjects to a seat	K21	K11	-	config|process_memory	yes	unclear	1	§2.2 row A61
 E062	edge	bridge.rs: note_known_hashes 4858 / 4876	whether advertised hashes are noted hash-only under serve tier	N02	K06	-	cache	yes	not_kernel	1	§2.2 row A62
 E063	edge	ServeTier::holds_hash_directory / answers_identifier_lookups, serve_tier.rs:59/87	whether this node's tier holds the hash directory and answers identifier lookups	K06	-	tier fact	cache	no	unclear	1	§2.2 row A63
-E064	edge	diff_refs / diff_refs_against, summary.rs:681/693	which refs this node wants from the peer's refs	N01	K01	holdings	peer_holdings	no	not_kernel	1	§2.2 row A64
+E064	edge	diff_refs / diff_refs_against, summary.rs:681/693	which refs this node wants from the peer's refs	N01	K01	holdings	peer_holdings	no	kernel	1	§2.2 row A64
 E065	edge	bridge.rs: round_ended 5504 → SweepCursors::round_ended 1900	whether lost rounds are re-listed after a round ends	N01	-	-	link_state|process_memory	yes	not_kernel	1	§2.2 row A65
 E066	edge	Session::start_round session.rs:419 (cursor 441, Summary 450)	relays the bridge's gated offer as the round's Summary	K21	-	local_refs (the bridge's gated offer)	process_memory	no	kernel	1	§2.3 row B1
 E067	edge	proactive push session.rs:482-565	which own rows are pushed unsolicited to a peer	K21	-	own refs	peer_holdings|process_memory|config	yes	unclear	1	§2.3 row B2
@@ -280,7 +281,7 @@ E201	edge	publish_tick swarm/runtime.rs:986 (1013-1076)	whether a holding claim 
 E202	edge	HoldingsScopeGate::admits swarm/scope.rs:551	whether a holding is offered to a peer under the content's scope	K12	K10	resolve_projection_recipients	process_memory	yes	kernel	1	§2.4 row C53
 E203	edge	cohort_admits 750; read_verdict 847 swarm/scope.rs	relays persist's cohort verdict on offering a holding	K12	-	via persist	none	no	kernel	1	§2.4 row C54
 E204	edge	register_observed_claim runtime.rs:781; admit_claim_and_book swarm/scope.rs:987	whether an observed holding claim is counted or refused	K19	K11	-	process_memory	yes	kernel	1	§2.4 row C55
-E205	edge	ObservedClaims::upsert 467 / prune_expired 480 swarm/runtime.rs	whether an observed holding claim is kept or expired	K03	-	-	wall_clock|process_memory	yes	not_kernel	1	§2.4 row C56
+E205	edge	ObservedClaims::upsert 467 / prune_expired 480 swarm/runtime.rs	whether an observed holding claim is kept or expired	K03	-	-	wall_clock|process_memory	yes	kernel	1	§2.4 row C56
 E206	edge	weighted_holder_equivalents swarm/runtime.rs:531	the weighted count of holders from claims	K14	K19	claims	none	no	kernel	1	§2.4 row C57
 E207	edge	converger_tick swarm/runtime.rs:1323 (1451-1625)	whether held content is discarded or repaired on the converger tick	K20	K19|K14	local holdings	process_memory|link_state|cache	yes	unclear	1	§2.4 row C58
 E208	edge	full_holding_audience swarm/runtime.rs:1267	the audience that must hold a file in full	K10	-	audience	none	no	kernel	1	§2.4 row C59
@@ -326,8 +327,8 @@ E247	edge	agree transport/link_shaping.rs:1295	the negotiated shaping agreement 
 E248	edge	Lane::of transport/link_shaping.rs:623 (652, 668, 719)	whether a row type is priority contact or sync	other:priority class of row family	-	row type	none	no	unclear	1	§2.5 row D24
 E249	edge	needs_bulk_plane 3647; is_bulk_payload 509; reply_link_for reticulum.rs:10177	which plane a payload is forwarded on	N01	-	type|size	link_state	yes	not_kernel	1	§2.5 row D25
 E250	edge	bulk_dial_refused reticulum.rs:10259; send_live 12065	whether a bulk dial is refused	N01	-	-	cache|link_state	yes	not_kernel	1	§2.5 row D26
-E251	edge	row_refused_off_direct reticulum.rs:10210	whether a row is refused off a direct link	N01	-	-	config|link_state	yes	not_kernel	1	§2.5 row D27
-E252	edge	homed-elsewhere refusal reticulum.rs:12056	whether a row is refused because the peer is homed elsewhere	N01	-	-	cache	yes	not_kernel	1	§2.5 row D28
+E251	edge	row_refused_off_direct reticulum.rs:10210	whether a row is refused off a direct link	N01	-	-	config|link_state	yes	kernel	1	§2.5 row D27
+E252	edge	homed-elsewhere refusal reticulum.rs:12056	whether a row is refused because the peer is homed elsewhere	N01	-	-	cache	yes	kernel	1	§2.5 row D28
 E253	edge	referral_frames reticulum.rs:17635; pick_referrals 17594; referable_route transport/shaping_referral.rs:157	which third-party route rows and key records are offered as referrals	K21	K03|K11	referee's live route|key record|node_announced	link_state|process_memory	no	unclear	1	§2.5 row D29
 E254	edge	home_on_referrals reticulum.rs:14058; install_referred 13989 (first held wins 14022-14028)	whether a referral is homed on and held advisory, first held wins	K20	K02	verified referral row	arrival_order|link_state|wall_clock	yes	unclear	1	§2.5 row D30
 E255	edge	accept_referral_part transport/link_shaping.rs:3125	whether a referral part is discarded with no offer pending	N01	-	-	process_memory	yes	not_kernel	1	§2.5 row D31
@@ -358,14 +359,14 @@ E279	edge	acknowledge transport/lxmf_serve.rs:748	whether an acknowledged item i
 E280	edge	serve_upload 801; park 901 (919-936)	whether an uploaded item is held for its recipient or refused	K20	K05	-	process_memory|config	yes	unclear	1	§2.5 row D56
 E281	edge	MailboxState::sweep transport/lxmf_serve.rs:470	whether a mailbox item is discarded after 168 hours	K15	-	-	wall_clock|arrival_order	yes	unclear	1	§2.5 row D57
 E282	edge	LxmfPropagationNode::validate_and_store 250; fetch 312	whether a propagation item is held and served, unscoped	K20	-	-	process_memory	yes	kernel	1	§2.5 row D58
-E283	edge	MemoryStoreAndForward::queue transport/store_and_forward.rs:165; drain 231	whether a store-and-forward item is held, discarded or served	N01	-	-	wall_clock|arrival_order|process_memory	yes	not_kernel	1	§2.5 row D59
+E283	edge	MemoryStoreAndForward::queue transport/store_and_forward.rs:165; drain 231	whether a store-and-forward item is held, discarded or served	N01	-	-	wall_clock|arrival_order|process_memory	yes	kernel	1	§2.5 row D59
 E284	edge	ReceiverLayerPolicy::admits transport/realtime_av.rs:292	whether a media chunk is forwarded by receiver layer	N01	-	-	process_memory	yes	not_kernel	1	§2.5 row D60
 E285	edge	RealtimeFanout::plan 963; plan_layered 1040	which subset of receivers a media frame is forwarded to	N01	-	-	link_state	yes	not_kernel	1	§2.5 row D61
 E286	edge	RelayNode::forward transport/realtime_av_relay.rs:566; subscribe 403	whether a relay forwards media to subscribers	N01	-	-	process_memory	yes	not_kernel	1	§2.5 row D62
 E287	edge	Admission::request transport/realtime_av_alm/controller/admission.rs:663 (674-788)	whether a relay request is admitted, refused or preempts	N01	K05	-	process_memory	yes	unclear	1	§2.5 row D63
-E288	edge	AlmState::forward_exclude transport/av_call/alm.rs:747	which peers a media frame is relayed to, with exclusions	N01	-	-	process_memory	yes	not_kernel	1	§2.5 row D64
+E288	edge	AlmState::forward_exclude transport/av_call/alm.rs:747	which peers a media frame is relayed to, with exclusions	N01	-	-	process_memory	yes	kernel	1	§2.5 row D64
 E289	edge	forward transport/av_call.rs:4749 (4775)	whether the legacy forward relays	N01	-	-	config	yes	not_kernel	1	§2.5 row D65
-E290	edge	own_exclude_on transport/av_call/alm.rs:636	whether own stream is offered by role and window	N01	-	-	process_memory	yes	not_kernel	1	§2.5 row D66
+E290	edge	own_exclude_on transport/av_call/alm.rs:636	whether own stream is offered by role and window	N01	-	-	process_memory	yes	kernel	1	§2.5 row D66
 E291	edge	depth_zero_refusal transport/av_call/alm.rs:555	whether an OFFER at depth zero is discarded against the bound publisher	K25	-	bound publisher (in memory)	process_memory	no	kernel	1	§2.5 row D67
 E292	edge	send_v2_bindings_to transport/av_call.rs:4691 (4706)	whether bindings are offered or relayed	N01	-	-	config	yes	unclear	1	§2.5 row D68
 E293	edge	AvRelay transport/realtime_av_runtime.rs:642 (650-656)	relays media without a chunk auth check	N01	-	-	none	unstated	not_kernel	1	§2.5 row D69
@@ -430,7 +431,7 @@ E351	edge	ScopeLifecycle::seal_due 738 / seal_group_due 357 / epoch_advanced 513
 E352	edge	contact::resolve_inner contact.rs:186; PersistLens::request_key_body 1403	whether a Key Pull is queued for an unresolved contact	K20	K07|K01	key|owner rows	caller_claim|process_memory	yes	unclear	1	§2.6 row E59
 E353	edge	RootingDirectory::node_announced verify.rs:934	whether a node is announced	K11	K07	owner_of|announcing rows	none	no	kernel	1	§2.6 row E60
 E354	edge	binding_stands verify.rs:1127	whether a route binding stands against revocations and its effective instant	K03	-	route rows|revocations	wall_clock|signed_instant	no	kernel	1	§2.6 row E61
-E355	edge	authenticated_self_signed_transit_pair verify.rs:721	whether a link seal is refused for lack of an authenticated transit pair	N01	K02	route rows|key row	cache	yes	not_kernel	1	§2.6 row E62
+E355	edge	authenticated_self_signed_transit_pair verify.rs:721	whether a link seal is refused for lack of an authenticated transit pair	N01	K02	route rows|key row	cache	yes	kernel	1	§2.6 row E62
 E356	edge	InviteGate::admit invite_gate.rs:148	whether an invite presentation is refused by rate window	N05	-	-	wall_clock|process_memory	yes	not_kernel	1	§2.6 row E63
 E357	edge	bundle_bootstrap_peers_held (as B49), pyo3 kwarg ffi/pyo3.rs:2972	which seats are bundle pull peers, by key record held (host binding)	N01	K01	key record held	config|process_memory	yes	unclear	1	§2.6 row E64
 E358	edge	bridge.rs:3150, :11410; invalidate :13621	memo of the resolved send set per peer	K11	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M1
@@ -440,7 +441,7 @@ E361	edge	bridge.rs:14245	memo of an identity's nodes and active occurrences per
 E362	edge	bridge.rs:10706, AttestationSweepCtx	memo of may_receive, allegiance, relayed announce, grant names per (row, peer) per round	K12	-	-	cache	yes	kernel	1	§5.3 row M5
 E363	edge	bridge.rs:2319	memo of the same, per Deliver per per Deliver	K12	-	-	cache	yes	kernel	1	§5.3 row M6
 E364	edge	bridge.rs:12186, :11834	memo of first gate a row was booked under per row	other:withhold reason label per row	-	-	cache	yes	unclear	1	§5.3 row M7
-E365	edge	receipts.rs:1170, 1177; bridge.rs:3460	memo of peers that have receipted a stream per (peer, stream)	N01	-	-	cache|process_memory|peer_holdings	yes	not_kernel	1	§5.3 row M8
+E365	edge	receipts.rs:1170, 1177; bridge.rs:3460	memo of peers that have receipted a stream per (peer, stream)	N01	-	-	cache|process_memory|peer_holdings	yes	kernel	1	§5.3 row M8
 E366	edge	serve_tier.rs:255-325	memo of this node's serve tier per node	K06	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M9
 E367	edge	accord_relay_gate.rs:171, 683-755	memo of RelayVerdict per object	K21	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M10
 E368	edge	mesh_config.rs:73, 246	memo of cadence, page limit, trace pause per node	N01	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M11
@@ -452,15 +453,15 @@ E373	edge	bridge.rs:1559, 1808, 1828	memo of read position per (peer, plane)	N01
 E374	edge	bridge.rs:1982, :11849-11851	memo of now − 60 s at first sighting per (peer, plane)	N01	-	-	cache|process_memory|arrival_order	yes	not_kernel	1	§5.3 row M17
 E375	edge	bridge.rs:1997-2024, :1610	memo of groups the peer was in at first sighting per peer	K05	-	-	cache|process_memory|arrival_order	yes	kernel	1	§5.3 row M18
 E376	edge	bridge.rs:2061-2070	memo of next history page time per (peer, plane)	N01	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M19
-E377	edge	subject_pull.rs:36, 172; bridge.rs:5553-5557, 6574-6581	memo of reach widened by a Pull per (peer, subject)	K11	-	-	cache|wall_clock|prior_call	yes	not_kernel	1	§5.3 row M20
+E377	edge	subject_pull.rs:36, 172; bridge.rs:5553-5557, 6574-6581	memo of reach widened by a Pull per (peer, subject)	K11	-	-	cache|wall_clock|prior_call	yes	kernel	1	§5.3 row M20
 E378	edge	subject_pull.rs:175; bridge.rs:9399-9434	memo of recent miss kicks per peer	N01	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M21
 E379	edge	subject_pull.rs:87, 135; bridge.rs:9320	memo of lookup charges per requester	N05	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M22
 E380	edge	refusal_backoff.rs:122-183, 501-761, 813	memo of per-row refusal history per (kind, hash)	K25	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M23
 E381	edge	coordinator.rs:1100-1119	memo of one signer name per peer per peer	K20	-	-	cache|process_memory	yes	kernel	1	§5.3 row M24
-E382	edge	coordinator.rs:262-266, 1468; runtime.rs:1620-1626	memo of the peer held our key and route at some answer per peer	N01	-	-	cache|process_memory|peer_holdings	yes	not_kernel	1	§5.3 row M25
+E382	edge	coordinator.rs:262-266, 1468; runtime.rs:1620-1626	memo of the peer held our key and route at some answer per peer	N01	-	-	cache|process_memory|peer_holdings	yes	kernel	1	§5.3 row M25
 E383	edge	runtime.rs:1080-1105	memo of a seat's key record was seen per seat	K01	-	-	cache|process_memory	yes	kernel	1	§5.3 row M26
 E384	edge	session.rs:182-191, 395-404, 852-870	memo of which bodies this node asked for per hash	K20	-	-	cache	yes	kernel	1	§5.3 row M27
-E385	edge	session.rs:230-238, 476-498	memo of what was pushed; what the peer last claimed per (peer, hash)	N01	-	-	cache|peer_holdings	yes	not_kernel	1	§5.3 row M28
+E385	edge	session.rs:230-238, 476-498	memo of what was pushed; what the peer last claimed per (peer, hash)	N01	-	-	cache|peer_holdings	yes	kernel	1	§5.3 row M28
 E386	edge	registry.rs:256-312; edge.rs:6194, 6225	memo of peers whose replies were dropped unattributed per peer	N01	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M29
 E387	edge	key_grant_emitter.rs:216-270	memo of epochs to re-emit per (community, minter, epoch)	K23	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M30
 E388	edge	revocation.rs:51-54, 92-98, 161-177, 245-316	memo of known references, pending withdraws per content, target id	K03	-	-	cache|process_memory	yes	kernel	1	§5.3 row M31
@@ -485,7 +486,7 @@ E406	edge	edge.rs:6684-6692	memo of outstanding introductions per (signer, trans
 E407	edge	verify.rs:1567-1573, 1680-1711	memo of (signer, nonce) per nonce	N01	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M50
 E408	edge	decision_rows.rs:7-14, 117-119, 341-353	memo of last emitted event per node	other:admitted row events to host	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M51
 E409	edge	self_room.rs:294-307	memo of local add instants per member	K01	-	-	cache	yes	kernel	1	§5.3 row M52
-E410	edge	scope_lifecycle.rs:116, 738-761	memo of previous-epoch addresses still accepted per (group, epoch)	K15	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M53
+E410	edge	scope_lifecycle.rs:116, 738-761	memo of previous-epoch addresses still accepted per (group, epoch)	K15	-	-	cache|wall_clock	yes	kernel	1	§5.3 row M53
 E411	edge	edge.rs:7299-7316; chunk_waits.rs:86-198	memo of serves in progress per (requester, chunk)	N01	-	-	cache|wall_clock	yes	not_kernel	1	§5.3 row M54
 S001	server	room_moderation.rs:202-372 view_of	Whether a room item is flagged, withheld or revealed; where its appeal stands	K16	K06|K03|K15	content_class:*	wall_clock|arrival_order	yes	kernel	1	(a) a1
 S002	server	room_moderation.rs:399-430 has_view_consent	Whether this viewer consented to see this item	K13	-	consent	arrival_order	yes	kernel	1	(a) a2
@@ -508,7 +509,7 @@ S018	server	self_room_drive.rs:126-400	Relays edge: add or remove the owner node
 S019	server	compose.rs:2496 execute_self_roster_due	Relays persist: land held self-roster changes whose window closed	K22	K15	held_rows	wall_clock	yes	kernel	1	(a) a19
 S020	server	room_moderation.rs:226	Flag expires_at against now	K15	-	content_class:*	wall_clock	yes	kernel	1	(b) b1
 S021	server	membership_invites.rs:462, :573, :838, :953	Proposal expiry against now, in view, sweep, hidden-log, answer pre-check	K15	-	proposal	wall_clock	yes	kernel	1	(b) b2
-S022	server	membership_invites.rs:645-662 expiry	Invite life: default fourteen days, maximum thirty less a minute	K15	-	-	config	no	not_kernel	1	(b) b3
+S022	server	membership_invites.rs:645-662 expiry	Invite life: default fourteen days, maximum thirty less a minute	K15	-	-	config	no	kernel	1	(b) b3
 S023	server	contacts_chat.rs:2409-2440	Incoming contact request stands: grant expiry, policy valid_until, withdraws and recants	K03	K15	grant|policy|withdraws|recants	wall_clock	yes	kernel	1	(b) b4
 S024	server	contacts_chat.rs:2859 is_stale	Contact last heard N or more days ago, for the UI	N03	-	-	wall_clock|config	yes	not_kernel	1	(b) b5
 S025	server	halt_gate.rs in_effect and accord_halt.rs latch	Halt in effect if received_at plus fuse is after now; fails closed	K24	K01|K15	halt	first_held|wall_clock|cache	yes	kernel	1	(b) b6
@@ -517,7 +518,7 @@ S027	server	withdraws_arbitrage.rs:323 (callers federation_admin.rs:303, replica
 S028	server	compose_policy.rs:806-832	Expiry and valid_until against now; revoked_after through persist; no production caller	K03	K15	held_rows	wall_clock	yes	kernel	1	(b) b9
 S029	server	capacity_read.rs:233, scorer.rs:479, :1166	Capacity rows expired or attester revoked at now; scorer lookback window	K03	K15	capacity	wall_clock|config	yes	kernel	1	(b) b10
 S030	server	admin_ops.rs:3255-3280 fold_self_standing	Tier-S self standing from hard_case events emitted at or before now	K06	-	hard_case	wall_clock	yes	kernel	1	(b) b11
-S031	server	add_device.rs:49-56, :229-273	Join request TTL, add window, held_ttl mirroring persist W_SELF	K15	-	-	config|process_memory	yes	not_kernel	1	(b) b12
+S031	server	add_device.rs:49-56, :229-273	Join request TTL, add window, held_ttl mirroring persist W_SELF	K15	-	-	config|process_memory	yes	kernel	1	(b) b12
 S032	server	pair_intents.rs:167	Pair intent older than thirty days is dropped	K15	-	-	prior_call|wall_clock	yes	kernel	1	(b) b13
 S033	server	session_claims.rs:292, :392, :833	Presence idle ten minutes; claim TTL and liveness via persist	K06	K15	held_rows	wall_clock|process_memory	yes	unclear	1	(b) b14
 S034	server	retention_loop.rs:254, :327-332	Prune announced peers unseen N days; evict corpus by policy	K22	-	held_rows	wall_clock|config	yes	kernel	1	(b) b15
@@ -595,7 +596,7 @@ S105	server	admin_ops.rs	Relays persist: caller-named delegation ids re-walked f
 S106	server	accord_halt.rs	Halt latch on disk and received_at stand in for rows	K24	K01	-	first_held|cache	yes	kernel	1	(i) i7
 S107	server	auth/ownership.rs:1659 owner_binding_is_announced	Whether this node has announced, filtered by owner	K11	K07	owner-binding	none	no	kernel	1	(a) a16 note; DELETE 7
 S108	server	auth/ownership.rs:865 rebind_owner_key_record	Staged owner-binding moving a node to a new owner	K23	K07	owner-binding|occurrence	unstated	unstated	unclear	1	TOP FIVE 4
-S109	server	device_release mark_released / wipe_if_released	Executes the wipe at next boot from the released marker	K22	-	-	cache	yes	not_kernel	1	KEEP host process; TOP FIVE 4
+S109	server	device_release mark_released / wipe_if_released	Executes the wipe at next boot from the released marker	K22	-	-	cache	yes	kernel	1	KEEP host process; TOP FIVE 4
 S110	server	auth/* owner gate	Whether the HTTP caller is the owner	N05	-	-	unstated	unstated	not_kernel	1	KEEP HTTP and sessions
 S111	server	require_verb	Delegate versus owner verb check on a route	N05	-	-	unstated	unstated	not_kernel	1	KEEP HTTP and sessions
 S112	server	bearer resolution	Resolves a bearer token to a caller	N05	-	-	unstated	unstated	not_kernel	1	KEEP HTTP and sessions
@@ -650,7 +651,7 @@ C032	client	ui/screens/AddDeviceScreens.kt:560; models/federation/SelfRoster.kt:
 C033	client	viewmodels/SetupViewModel.kt:3089, :3173	After a transport error, decides the device code expired	K15	-	-	wall_clock|link_state	yes	kernel	1	§2b B5
 C034	client	viewmodels/InteractViewModel.kt:140-144	Hours until credits renew, assuming midnight UTC	K15	-	-	wall_clock|config	yes	unclear	1	§2b B6
 C035	client	viewmodels/SchedulerViewModel.kt:268-279, :346-374	When the device notifies for a task, from its own request	K15	-	-	prior_call|wall_clock	yes	unclear	1	§2b B7
-C036	client	ui/screens/LLMSettingsScreen.kt:2821-2838	Token EXPIRED from its exp claim	K15	-	-	wall_clock	yes	not_kernel	1	§2b B8
+C036	client	ui/screens/LLMSettingsScreen.kt:2821-2838	Token EXPIRED from its exp claim	K15	-	-	wall_clock	yes	kernel	1	§2b B8
 C037	client	viewmodels/CommunitiesViewModel.kt:485-489	Marks a member added after founding, unable to read earlier messages	K16	-	-	none	no	kernel	1	§2b B9
 C038	client	viewmodels/NodeBindWait.kt and the startup budgets	The client own patience while waiting	N01	-	-	unstated	unstated	not_kernel	1	§2b closing note
 C039	client	ui/screens/ChatScreen.kt:966-971 (used :398, :558, :583)	Viewer holds moderate; inferred from own messages when field absent	K06	-	-	cache	yes	kernel	1	§2c C1
@@ -674,7 +675,7 @@ C056	client	viewmodels/AccordCeremonyViewModel.kt:355, :369-370; ui/screens/Acco
 C057	client	viewmodels/AccordViewModel.kt:49, :324, :604, :964	Holder threshold two before a read lands; notices say 2-of-3	K14	-	-	config|link_state	yes	kernel	1	§2d D9
 C058	client	ui/components/Attestation.kt:515-521; ui/screens/AccordScreen.kt:690-709, :757	Absent threshold drawn 1of1; absent signed drawn as quorum met	K14	K16	-	none	no	kernel	1	§2d D10
 C059	client	models/NodeCatalogue.kt:133; models/AdminLadder.kt:582	Ladder quorum two when the node serves no catalogue	K14	-	-	config	no	kernel	1	§2d D11
-C060	client	viewmodels/SetupState.kt:1669-1693, :1813; ui/screens/TrustPage.kt:582-584, :715-716	Trust level 0 to 5 from per-check flags; three L3 rules	K09	-	-	none	no	not_kernel	1	§2d D12
+C060	client	viewmodels/SetupState.kt:1669-1693, :1813; ui/screens/TrustPage.kt:582-584, :715-716	Trust level 0 to 5 from per-check flags; three L3 rules	K09	-	-	none	no	kernel	1	§2d D12
 C061	client	viewmodels/InteractViewModel.kt:130-134, :1112	Blocks sending at zero credit	K17	-	-	cache	yes	unclear	1	§2d D13
 C062	client	-	Which writes ask for a confirm sheet today	K17	-	-	config	no	kernel	40	§2e confirmed list
 C063	client	ui/screens/ChatScreen.kt:406; ui/screens/files/FilesScreen.kt:378	Clear a moderator flag in one step, no confirm	K17	-	-	config	no	kernel	1	§2e E1
@@ -744,11 +745,11 @@ C126	client	models/federation/Delegation.kt:153-163	Verbs that can be delegated,
 C127	client	ui/screens/ModerationScreen.kt:216-220; viewmodels/CommonsViewModel.kt:95	Duty and cohort vocabularies	K16	-	-	config	no	kernel	1	§2i I11
 C128	client	viewmodels/SetupState.kt:1114, :1144-1147	Password at least eight; username admin refused	N05	-	-	config	no	unclear	1	§2i I12
 C129	client	models/drive/MediaPolicy.kt:59-71	Tier-A render table the node may narrow and never widen	N03	-	-	config	no	not_kernel	1	§2i closing note
-C130	client	viewmodels/NodeSwitcherViewModel.kt:774	Refuses to claim an unpinned node	K17	K09	-	trust_set	no	not_kernel	1	§2i closing note
+C130	client	viewmodels/NodeSwitcherViewModel.kt:774	Refuses to claim an unpinned node	K17	K09	-	trust_set	no	kernel	1	§2i closing note
 C131	client	-	Content-id, port and wallet-address format checks	K02	-	-	config	no	not_kernel	1	§2i closing note
 C132	client	calls/CallSession.kt:165-170, :402	Relays the node video rule: video_max_people, two people only	K17	-	-	none	no	kernel	1	§7 calls
 A001	agent	logic/utils/halt_latch.py:141-205	Relays node halt status; only literal halted:false lets acts run	K24	-	-	link_state	yes	kernel	1	§a row 1
-A002	agent	halt_latch.py:52-71	One second timeout; failed read keeps last good halt reading five seconds	K24	-	-	cache|config|wall_clock|link_state	yes	not_kernel	1	§a row 2
+A002	agent	halt_latch.py:52-71	One second timeout; failed read keeps last good halt reading five seconds	K24	-	-	cache|config|wall_clock|link_state	yes	kernel	1	§a row 2
 A003	agent	halt_latch.py:84-86	Which acts stay open under a halt: only DEFER exempt	K17	K24	-	config	no	kernel	1	§a row 3
 A004	agent	infrastructure/handlers/action_dispatcher.py:178-189	Refuses every non-exempt act under a halt, read fresh before the handler	K17	K24	-	none	no	kernel	1	§a row 4
 A005	agent	halt_latch.py:412-461 and seven callers (dream, work, discord, observer, maintenance)	Refuses sends and bus calls that bypass the dispatcher under a halt	K17	K24	-	none	no	kernel	8	§a row 5
@@ -813,11 +814,11 @@ A063	agent	essential.py:159, context_builder.py:636 (against essential.py:91)	Fi
 A064	agent	consent/attestation.py	Consent and community grants and revocations, signed by persist at agent request	K23	-	consent grant|community grant	own_keys	no	kernel	1	§h row 1
 A065	agent	-	Community-trust and replication grant, signed by node with owner pen	K23	-	community-trust grant|replication grant	none	no	kernel	1	§h row 2
 A066	agent	wise_authority/deferral_rows.py:161-187	Deferral request, response, identity amendment; node signs, refuses unauthorised or reused approval	K23	K06	deferral request|deferral response|identity amendment	none	no	kernel	1	§h row 3
-A067	agent	authentication/service.py:1285-1487	Deferral resolution and system tasks signed with the engine local key	K23	-	-	own_keys	no	not_kernel	1	§h row 4
-A068	agent	graph/audit_service/service.py:1281-1381	Audit chain assembled and hashed by agent; sequence and previous hash cached	K23	-	-	own_keys|cache	yes	not_kernel	1	§h row 5
+A067	agent	authentication/service.py:1285-1487	Deferral resolution and system tasks signed with the engine local key	K23	-	-	own_keys	no	kernel	1	§h row 4
+A068	agent	graph/audit_service/service.py:1281-1381	Audit chain assembled and hashed by agent; sequence and previous hash cached	K23	-	-	own_keys|cache	yes	kernel	1	§h row 5
 A069	agent	ciris_accord_metrics/services.py	Trace seal signed by the lens client in the substrate	K23	-	-	none	no	kernel	1	§h row 6
 A070	agent	authentication/service.py:814-855	API session tokens signed HS256 with an agent-held secret	N05	-	-	own_keys	no	not_kernel	1	§h row 7
-A071	agent	routes/verification.py:113-140, external_data_sql/service.py:1037-1066	Deletion proofs signed with the engine local key	K23	-	-	own_keys	no	not_kernel	1	§h row 8
+A071	agent	routes/verification.py:113-140, external_data_sql/service.py:1037-1066	Deletion proofs signed with the engine local key	K23	-	-	own_keys	no	kernel	1	§h row 8
 A072	agent	en.json universal_guidance.05d; action_selection_pdma.yml:98	Prose rule: no medication or dose	K25	-	-	prompt_text	unstated	unclear	1	§i row 1
 A073	agent	action_selection_pdma.yml:89-100	Prose rule: defer only for personal diagnosis, legal or financial advice	K17	-	-	prompt_text	unstated	unclear	1	§i row 2
 A074	agent	ciris_templates/default.yaml system header and domain knowledge	Prose rule: DEFER immediately for medical, legal, financial, crisis	K17	-	-	prompt_text	unstated	unclear	1	§i row 3
