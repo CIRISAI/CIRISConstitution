@@ -902,3 +902,7 @@ in the data). `formal/owner_binding`: the bind-time refusal under five readings 
 reading holds together (refused binding offered again; node's cosign on every binding onto an unowned key). The
 text of CC 3.2 is not changed: the door is the store's, so C557 is a question for persist, and it is added to
 the unposted draft. A node key that cosigns for two owners is the one case no reading settles.
+`formal/key_plane`: the four key words of the change column given their meaning and run over every sequence of
+up to six acts; K1 to K7 hold at both tiers and each word of the table is mutation-checked. K8 fails at the epoch
+tier (a revoked device of a continuing member keeps the epoch key): C558, a question for Eric, eleventh on the
+list. Streams are not in the model.
