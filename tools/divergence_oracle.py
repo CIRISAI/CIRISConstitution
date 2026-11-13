@@ -31,6 +31,8 @@ A DNF is a list of conjunctions of tokens; a row passes when every token of one 
     sealer                  the signer signed the blob the row names
     component_of_subject    the signer's key record names the row's subject as its node
     provenance_matches      the provenance row named is Rooted and its hash equals the row's build_manifest_hash
+    grant_named             the row names a grant its subject signed whose scope is the row's `needs_scope`
+    subject_grant_held      some held grant by the row's subject has that scope, named by the row or not
     not_subject             the signer is not the row's subject
     subjects_in:F           every subject the row names is a member at the head it names of the group its field F names
     count:P@F               the voices on the row, over the members at the head it names, meet policy P
@@ -122,6 +124,12 @@ def token(t, r, P, past, table, target=None):
     if t == "provenance_matches":
         p = by.get(r.get("provenance"))
         return p is not None and p.get("rooted") is True and p.get("hash") == r.get("build_manifest_hash")
+    if t == "grant_named":
+        g = by.get(r.get("grant"))
+        return g is not None and g["signer"] == r.get("subject") and g.get("scope") == r.get("needs_scope")
+    if t == "subject_grant_held":
+        return any(q.get("kind") == "fam" and q["signer"] == r.get("subject") and q.get("scope") == r.get("needs_scope")
+                   and q.get("family") == "consent:state:{stance}" for q in P)
     if t.startswith("count:"):
         pol, field = t[6:].rsplit("@", 1)
         g = by.get(r.get(field))
@@ -187,6 +195,8 @@ def make_wf(param, rows):
         if "withdraw_without_ref" in refuse and r["kind"] == "withdraw" and gov and not r.get("ref"): return False
         if "missing_subject_digest" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") \
                 and not r.get("subject_digest"): return False
+        if "names_no_grant" in refuse and r["kind"] == "fam" and r.get("family") == param.get("family") \
+                and not r.get("grant"): return False
         if verbs is not None and r["kind"] == "recant" and gov and "recant" not in verbs: return False
         return True
     return wf

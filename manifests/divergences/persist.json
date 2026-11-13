@@ -11,7 +11,7 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 55
+  "count": 56
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
@@ -3340,6 +3340,51 @@
     "family": "identity:occurrence",
     "audience": "attester_relayed"
    }
+  },
+  {
+   "id": "persist/capacity:{factor}/consent gate",
+   "family": "capacity:{factor}",
+   "where": "consent gate",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "gr",
+      "kind": "fam",
+      "signer": "S",
+      "names": [],
+      "family": "consent:state:{stance}",
+      "scope": "analyze"
+     },
+     {
+      "id": "cp",
+      "kind": "fam",
+      "signer": "L",
+      "names": [],
+      "family": "capacity:{factor}",
+      "subject": "S",
+      "needs_scope": "analyze"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "cp"
+    }
+   },
+   "expect_kernel": "refused",
+   "expect_shipped": "concludes nothing",
+   "kernel_parameter": {
+    "family": "capacity:{factor}",
+    "gate": [
+     [
+      "grant_named"
+     ]
+    ],
+    "refuse": [
+     "names_no_grant"
+    ]
+   },
+   "also_assert": "the same verdict in every arrival order"
   },
   {
    "id": "persist/consent:community_trust/fold",

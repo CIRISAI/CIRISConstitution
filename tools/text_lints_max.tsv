@@ -1,17 +1,17 @@
 # The counts tools/check_text_lints.py measures over the prose of the Parts, each with the maximum it may reach.
 # A count above its maximum refuses the check; each number only falls. The worklists are formal/derivation/text_lints/<lint>.tsv.
 lint	max	note
-counts	7	a number the prose states against the table or tool that states it, and a constant restated with another value
-citations	75	a citation of no section, of a heading with no body, a link whose anchor or Part differs from the number it shows, an empty anchor, a below or above the wrong way
-citations_no_anchor	1682	a [CC x.y] link into a Part with no #x.y anchor
-terms	25	a name from the closed list of terms used outside the sense the text has settled
-force	40	an RFC 2119 keyword in an informative paragraph or example, a lower-case requirement in a normative paragraph, a restatement whose keyword differs from its home's
-length	222	prose sentences over 40 words in Parts 2 to 8
-length:p2	38	the same, Part 2
-length:p3	42	the same, Part 3
+counts	2	a number the prose states against the table or tool that states it, and a constant restated with another value
+citations	5	a citation of no section, of a heading with no body, a link whose anchor or Part differs from the number it shows, an empty anchor, a below or above the wrong way
+citations_no_anchor	482	a [CC x.y] link into a Part with no #x.y anchor
+terms	22	a name from the closed list of terms used outside the sense the text has settled
+force	15	an RFC 2119 keyword in an informative paragraph or example, a lower-case requirement in a normative paragraph, a restatement whose keyword differs from its home's
+length	83	prose sentences over 40 words in Parts 2 to 8
+length:p2	19	the same, Part 2
+length:p3	0	the same, Part 3
 length:p4	15	the same, Part 4
-length:p5	49	the same, Part 5
-length:p6	19	the same, Part 6
-length:p7	1	the same, Part 7
-length:p8	58	the same, Part 8
-history	79	history words, a ruling, review or refactor, and product, company or repository names
+length:p5	36	the same, Part 5
+length:p6	1	the same, Part 6
+length:p7	0	the same, Part 7
+length:p8	12	the same, Part 8
+history	19	history words, a ruling, review or refactor, and product, company or repository names

@@ -19,4 +19,4 @@ takedown_withhold	answers	reversed by review; lift by members	CC 4.5.3	They are 
 decay_stage	answers	none	CC 4.4.3.5.1	the party running the protocol emits each stage per its published `decay_protocol` stage map
 poll	tally	member	CC 6.1.9	The same two tally members fold it, and the result is `ballot:tally:{poll_id}:v1`, recomputed by every member.
 deferral	escalate	conferrer	CC 4.3	A request unanswered at its own end re-routes to the deferring party's other live seats and, with none, to the conferrer, as the seat rule below states.
-archive_release	signer	resolve_deferral	CC 3.4.7	`archive_release` is signed by the conferrer of the retired agent's seat or by the person holding its unscoped seat, as an identity amendment's approval is
+archive_release	signer	resolve_deferral	CC 3.4.7	`archive_release` is signed by the conferrer of the retired agent's seat or by the person holding its unscoped seat ([CC 3.1.5](#3.1.5)), as an identity amendment's approval is

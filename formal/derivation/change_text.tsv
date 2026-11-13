@@ -5,7 +5,7 @@ family	change	cc_ref	quote
 key:record	replace[recovery]: by=committed_key	CC 2.1	A holder rotates lost signing-key material by a self-`supersedes` under a key whose record hashes to its entry.
 trust:{job}:{version}	replace: by=cosigned_prior	CC 2.1	A change is a charter re-scrub, witnessed by the directory before it.
 key:revocation	replace: field=revoked_after:lower	CC 2.4	`revoked_after` only ever lowering
-key:revocation	replace: field=revoked_after:lower	CC 2.4.1.1	a later revocation MAY lower it and MUST NOT raise it
+key:revocation	replace: field=revoked_after:lower	CC 2.4.1.1	A later revocation MAY lower it and MUST NOT raise it
 transport:canonical_rebind	attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum	CC 3.1.3	It lands Rooted on every node that holds the root and **supersedes the bundle-seeded binding**
 transport:canonical_rebind	attest: by=cosigned, reach=other_attester	CC 3.1.3	It lands Rooted on every node that holds the root and **supersedes the bundle-seeded binding**
 identity:occurrence	replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind	CC 3.1.3	A seated node MUST NOT emit a unilateral rotation that would retire the pinned pair before a re-bind has landed, and no node counts one (`serve_transit_pair_rotation_before_rebind`)
@@ -19,9 +19,9 @@ group:roster	replace[subkind:infrastructure]: field=consensus_protocol:no_weaker
 group:roster	replace: field=members:shrink	CC 3.3.4	rides the widening plane of [CC 3.1.3.2](#3.1.3.2), never a supersede
 group:roster	replace: field=members:shrink	CC 3.3.4	A `family` Contribution that supersedes the current one may change metadata or drop members and never adds one.
 group:roster	replace: link=chained:prev_head_digest	CC 4.4.3.4.4	prev_head_digest names is held; a later signed instant that does not
-group:roster	replace[recovery]: by=committed_key	CC 3.1.3	A holder's recovery version ([CC 4.2.6](part_4_composition_governance.md)) is the one single-signer version.
+group:roster	replace[recovery]: by=committed_key	CC 3.1.3	A holder's recovery version ([CC 4.2.6](part_4_composition_governance.md#4.2.6)) is the one single-signer version.
 group:roster	attest: field=members:grow_signed	CC 3.1.3.2	A founding record seats a listed member iff that member **signed** the record, as its authority or a co-signer. A family record carries `additional_scrubs` as
-group:roster	replace[entrenched]: field=consensus_protocol:frozen	CC 3.3.4	It is locked at family creation. Changes ride the protocol's own rules (meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md)) UNLESS `consensus_protocol_entrenched == true`, in which case
+group:roster	replace[entrenched]: field=consensus_protocol:frozen	CC 3.3.4	It is locked at family creation. Changes ride the protocol's own rules (meta-amendment shape parallel to [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)) UNLESS `consensus_protocol_entrenched == true`, in which case
 group:roster	replace: by=cosigned, field=consensus_protocol:any	CC 3.3.4	changes the `consensus_protocol` field is admitted ONLY IF:
 group:roster	replace[entrenched]: field=consensus_protocol:frozen	CC 3.3.4	If consensus_protocol_entrenched == true, the substrate REJECTS the
 group:roster	replace: by=cosigned, field=consensus_protocol:any	CC 4.4.3.4.2	**Consensus-protocol amendment** (changing `consensus_protocol` itself on a non-entrenched family) rides the SAME admission rule on the proposed amendment Contribution
@@ -54,10 +54,10 @@ membership:{stage}	widening[scope:community|affiliations]: key=at_seat	CC 4.4.3.
 membership:{stage}	widening[scope:community|affiliations]: key=at_seat	CC 4.4.3.4.1	At community and affiliations there is no walk for a new member. A new member at those scopes is granted the current epoch's key when a minter's roster gains them
 membership:{stage}	widening[scope:community|affiliations]: key=at_seat	CC 2.1	a community joiner receives the current epoch's key and no earlier epoch's
 membership:{stage}	widening[scope:community|affiliations]: key=at_seat ; removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.2.6	the epoch rotates because of a removal and never because of an admission
-membership:{stage}	removal[scope:self|family]: key=stop_wrap ; resignation[scope:self|family]: key=stop_wrap	CC 3.3.4	4. On admission of a REMOVE: per [CC 4.4.3.4.5](part_4_composition_governance.md) the removed member retains existing key_grants (cannot retroactively un-share); the substrate stops wrapping new key_grants to
+membership:{stage}	removal[scope:self|family]: key=stop_wrap ; resignation[scope:self|family]: key=stop_wrap	CC 3.3.4	4. On admission of a REMOVE: per [CC 4.4.3.4.5](part_4_composition_governance.md#4.4.3.4.5) the removed member retains existing key_grants (cannot retroactively un-share); the substrate stops wrapping new key_grants to
 membership:{stage}	removal[scope:self|family]: key=stop_wrap	CC 4.4.3.4.5	no key is reused, so nothing is rotated
 identity:occurrence_revocation	attest[scope:self]: key=stop_wrap	CC 4.4.3.4.5	so the substrate simply stops wrapping new DEKs to the removed member's keys
-membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 3.2	a fresh epoch DEK after a removal, history never re-encrypted
+membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 3.2	A fresh epoch DEK follows a removal, and history is never re-encrypted
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
 membership:{stage}	removal[scope:community|affiliations]: key=rotate_epoch	CC 4.4.3.4.5	after a removal each minter rotates its epoch DEK before its next sealed write
 membership:{stage}	removal[axis:stream]: key=rotate_epoch	CC 4.4.3.2.6	epoch rolls on member removal (mandatory)

@@ -70,7 +70,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** The trust root moderates and does not edit history. An adverse record about a root would otherwise be removable only by that root, which is its subject.
 
-**Text.** CC 2.4.1.1: "trust-root moderation is not trust-root history-editing"
+**Text.** CC 2.4.1.1: "Trust-root moderation is not trust-root history-editing"
 
 | column | families |
 |---|---|

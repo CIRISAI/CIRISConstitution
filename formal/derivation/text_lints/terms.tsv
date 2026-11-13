@@ -1,25 +1,22 @@
 part	section	line	text	finding
-p3	3.1.3.2	252	Without it a record growing the roster by K would be admissible with no act by K, and a founder could enrol any registered key.	founder
 p3	3.2	931	- `M ≥ 2`, and the founder set MUST be founded at **N ≥ M + 1** active human founders; a charter or admission floor that raises the effective `M` MUST be refused rather than applied silently.	founder
-p3	3.2	931	The liveness margin, the declared stalled state and the one bounded recovery row are T7 below: a resignation that leaves exactly `M` founders stalls the root — loudly, by design — and recovery is the conferring body's conferral of a replacement founder, never a lowering of `M`.	founder
+p3	3.2	931	A resignation that leaves exactly `M` founders stalls the root — loudly, by design — and recovery is the conferring body's conferral of an added founder seat, never a lowering of `M`.	founder
 p3	3.2	978	The worked-example member list above is the *founder/member* set; "ships pinned to canonical" (every conformant deployment) is the *trust* set — different populations.	founder
-p3	3.2	1004	A second distinct claimant is never merged, as at a founder's first-run claim.	founder
 p3	3.2	1172	The rule therefore splits the two moments, and it measures freshness on the *witnesses'* signatures, never the founders'.	founder
 p3	3.2	1218	- It is not a founder of the lineage.	founder
-p3	3.2	1220	- It is not owner-bound or steward-bound ([CC 3.2](part_3_the_namespace.md) `is_steward_bound`) to any founder of it.	founder
+p3	3.2	1220	- It is not owner-bound or steward-bound ([CC 3.2](part_3_the_namespace.md#3.2) `is_steward_bound`) to any founder of it.	founder
 p3	3.2	1236	So a compromised founder key that equivocates cannot use the freeze to hold its own revocation hostage (T4).	founder
 p3	3.2	1238	A founder set revoked at head five can sign forks off head four forever, and none of them may freeze the witnessed lineage.	founder
 p3	3.2	1240	A founder roster recovering from its own restore re-syncs its head from the witness plane before it writes, exactly as a ledger owner does.	founder
 p3	3.2	1248	*The active founder set.	founder
 p3	3.2	1250	- *f* was seated as founder by the base row or an admitted widening whose `effective_at ≤ t`.	founder
 p3	3.2	1261	A stalled root is **valid but non-admitting**, and *non-admitting* means exactly this: no roster widening or removal by the founders' count, and no ceremony-plane conferral by this roster, until the margin is restored.	founder
-p3	3.2	1263	It is never by the members, and never by the remaining founders lowering M (entrenchment, [CC 4.5.1.2](part_4_composition_governance.md)).	founder
+p3	3.2	1263	It is never by the members, and never by the remaining founders lowering M (entrenchment, [CC 4.5.1.2](part_4_composition_governance.md#4.5.1.2)).	founder
 p3	3.2	1263	The founders' count cannot admit the row that would restore it.	founder
 p3	3.2	1263	So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat.	founder
-p3	3.2	1265	- The seat is for a key that carries a live ceremony-plane conferral from the collective's conferring family — `trust:confers:v1` under a co-scrub reaching that family's `consensus_protocol`, the same act that seated the original founders — and whose `identity_type` includes `user` and excludes `no…	founder
+p3	3.2	1265	The conferral is `trust:confers:v1` under a co-scrub reaching that family's `consensus_protocol`, the same act that seated the original founders.	founder
 p3	3.2	1317	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
 p3	3.3.4	1570	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
-p3	3.3.9	2121	- founding is self-founding under the founder's key — no administrator's door, no roster of permitted authorities.	founder
 p4	4.2.1	99	- **(2)** A pipeline key is not a holder, a founder or a voter, and its record carries no seat.	founder
 p4	4.4.3.2.8	853	- This strands no one: the founders are the roster root, not an edge, so when every admin's term lapses the quorum re-confers.	founder
 p4	4.5.13	2276	The standing is the roles the held rows give them: author, subject, member, moderator, founder, steward, holder, witness.	founder

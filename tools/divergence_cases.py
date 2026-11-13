@@ -306,6 +306,14 @@ def cases():
          fam("oc", "K", "identity:occurrence", ("pv",), provenance="pv", build_manifest_hash="h2")], "oc",
         census=None, kind="door", where="transition attest guard"))
     E[-1]["shipped_source"] = "manifests/transitions.json identity:occurrence attest guard (formal/derivation/guard_text.tsv has no row)"
+    E.append(signer_entry("persist", "capacity:{factor}", ["CLM-capacity-consent-gate"], "CC 3.4.5",
+        "a `capacity:*` row MUST name that grant in `evidence_refs[]`",
+        [["grant_named"]], [["subject_grant_held"]], "admission reads the subject's grants; the scoring row names none",
+        [fam("gr", "S", "consent:state:{stance}", (), scope="analyze"),
+         fam("cp", "L", "capacity:{factor}", (), subject="S", needs_scope="analyze")], "cp",
+        census=None, kind="door", where="consent gate"))
+    E[-1]["text_param"]["refuse"] = ["names_no_grant"]
+    E[-1]["shipped_source"] = "constitution/claims.tsv CLM-capacity-consent-gate (check_capacity_consent_admission)"
     e = dict(E[[i for i, x in enumerate(E) if "C346" in x["sources"]][0]])
     e.update(implementer="tooling", sources=["C346"], census=None,
              shipped_source="manifests/transitions.json ownership withdraw guard, from formal/derivation/guard_text.tsv")
@@ -358,7 +366,7 @@ def cases():
          fam("r2", "B", "consent:community_trust", (), leaf="revoke", at=2), fam("g3", "A", "consent:community_trust", (), leaf="grant", at=3)],
         {"bound": ["A", "B"]}, src="constitution/claims.tsv CLM-consent-community-trust; impl:CIRISPersist fold_community_trust"))
     E.append(fold_entry("persist", "key:revocation", ["seven_rankings item 3", "CLM-merge"], "CC 2.4.1.1",
-        "where a key carries multiple revocations the effective bound is the **minimum** `revoked_after` across all of them",
+        "Where a key carries multiple revocations the effective bound is the **minimum** `revoked_after` across all of them",
         "revocation_bound", "minimum", "ranked", "revocations ranked by quorum_weight, then signed timestamp, then content hash",
         [fam("r1", "A", "key:revocation", (), leaf="revocation", subject="K", revoked_after=10, weight=1, at=5),
          fam("r2", "B", "key:revocation", (), leaf="revocation", subject="K", revoked_after=20, weight=2, at=6)],
@@ -406,7 +414,7 @@ def cases():
                    fam("n", "A", "takedown_notice:{basis}", ("g", "cb"), group="g", head=("g",), leaf="steward_purge")], "n",
         leaf="steward_purge", kind="cosign", where="signer_rule[leaf=steward_purge]"))
     e = signer_entry("persist", "(default row)", ["C331"], "CC 2.1",
-        "A row naming a key outside its audience is refused `subject_outside_audience`.",
+        "A row naming a key outside its audience concludes nothing",
         [["subjects_in:group"]], [["any"]], '"in_audience": "no"',
         group(("A", "B")) + [fam("t", "A", "(default row)", ("g",), group="g", head=("g",), subjects=("X",))], "t",
         census=None, kind="subject", where="subject_rule.in_audience")

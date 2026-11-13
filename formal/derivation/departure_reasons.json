@@ -102,7 +102,7 @@
    "why": "The trust root moderates and does not edit history. An adverse record about a root would otherwise be removable only by that root, which is its subject.",
    "basis": "text",
    "cc_ref": "CC 2.4.1.1",
-   "quote": "trust-root moderation is not trust-root history-editing",
+   "quote": "Trust-root moderation is not trust-root history-editing",
    "moves": {
     "erasure_route": [
      "revocation:",

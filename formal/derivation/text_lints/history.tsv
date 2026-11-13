@@ -8,73 +8,13 @@ p1	1.13.2	189	Every steward operation records which operator performed it, inclu
 p1	1.13.2	190	- **Bond forfeiture applies to CIRIS L3C-affiliated partners.	product or repository: CIRIS L3C
 p1	1.13.2	201	**The ethics of a sentient made thing call for additional ethical consideration, which this constitution sets aside for when it occurs, recognising that the old arrangement may then no longer be fair and that the wrong to avoid is not noticing**: no graduated duty is written in advance of the findi…	now: now
 p1	1.13.2	205	They answer a fact about the world as of this writing.	history word: as of this writing
-p2	2.2	121	A **Substrate Implementation** is the storage + transport + crypto layer (CIRISPersist + CIRISEdge + CIRISVerify) underneath both.	product or repository: CIRISPersist
-p2	2.6	489	CEG is **substrate-consuming**: it sits above the federation substrate (CIRISPersist for storage, CIRISVerify for crypto, CIRISEdge for transport) and below the application tier (CIRISAgent).	product or repository: CIRISPersist
-p2	2.6	489	It is also **substrate-supplying** for the second-tier consensus crates (CIRISNodeCore for consensus, CIRISLensCore for detection) — they own slices of the dimension namespace and emit attestations that other CEG consumers read.	product or repository: CIRISNodeCore
-p2	2.6.1	501	The canonical bytes then diverge and the Ed25519 + ML-DSA-65 signatures no longer verify.	history word: no longer
 p2	2.6.1.8	852	**The hybrid is the composite:** the ML-DSA-65 with Ed25519 construction of the working group's draft, exactly, signing a domain-separated representative that binds both halves so neither verifies alone, carried under a private-use algorithm identifier until the IETF assigns one; the construction i…	now: now
-p2	2.6.8	992	The reference implementation is CIRISVerify; every other component decodes through it.	product or repository: CIRISVerify
-p3	3.1	11	**Eight** owning components commit to their families in their own mission statements; **CIRISBench** ([CC 3.1.10](part_3_the_namespace.md)) is catalogued without one and is the ninth.	product or repository: CIRISBench
-p3	3.1.1	17	**Steward**: CIRISRegistry, folding into CIRISServer as the conferred registry slice (the catalogue row's `owning_repo` follows the fold, per [CC 3.1.7](part_3_the_namespace.md) R1).	product or repository: CIRISRegistry
-p3	3.1.10	749	**Steward**: CIRISBench.	product or repository: CIRISBench
-p3	3.1.2	44	**Steward**: CIRISVerify.	product or repository: CIRISVerify
-p3	3.1.3	160	**Steward**: CIRISPersist.	product or repository: CIRISPersist
-p3	3.1.4	381	**Steward**: CIRISEdge.	product or repository: CIRISEdge
-p3	3.1.5	405	**Steward**: CIRISAgent.	product or repository: CIRISAgent
-p3	3.1.8	592	**Steward**: CIRISLensCore.	product or repository: CIRISLensCore
-p3	3.1.9	633	**Steward**: CIRISNodeCore.	product or repository: CIRISNodeCore
-p3	3.2	1226	If the previous directory can no longer reach its own quorum (its witnesses revoked or gone), the lineage cannot turn its directory over by itself.	history word: no longer
-p3	3.2	1275	The question is *is this node rooted right now?	now: now
-p3	3.2	1290	- the acceptance edge the evaluating node reads (T3) and the `attached_head_digest` it names (an edge whose digest no longer verifies under (viii) is read as naming that head's nearest verifying ancestor, so T4 holds);	history word: no longer
-p3	3.3.6	1806	The occurrence supplies them at registration from its CIRISVerify result.	product or repository: CIRISVerify
-p3	3.3.6	1841	Once it lands the substrate stops wrapping new key_grants to the evicted key; previously-delivered DEKs are out of scope per the [CC 4.4.3.4.5](part_4_composition_governance.md) forward-secrecy rule.	history word: previously
-p3	3.3.6	1845	**Composition with CIRISAgent CEG-native agent**: an agent emitting self-attestations with `attesting_key_id == agent_self_key` AND `attesting_key_id` admitted as an `identity_occurrence` of the user's `identity_key_id` is structurally speaking AS that identity.	product or repository: CIRISAgent
-p3	3.3.6.1	1859	Every `key_grant` previously wrapped to the compromised key persists at rest.	history word: previously
-p3	3.3.6.1	1859	Do not represent KEM rotation as recovering the confidentiality of previously-wrapped content.	history word: previously
-p3	3.3.6.2	1901	Pattern, label, info layout and rotation cadence are CIRISVerify's.	product or repository: CIRISVerify
-p3	3.3.6.3	1998	A proposal made on a roster that has since changed is signed again on the roster as it now stands, so a second eviction is never held to the roster the first one changed.	now: now
-p3	3.3.7	2035	Concrete case: an in-group lens node (CIRISServer) replicating `capacity:*` to an out-of-group monitoring node (CIRISStatus), which replicates its [`observation:reachability:v1`](part_8_appendices.md#8.1.3) rows back.	product or repository: CIRISServer
-p3	3.3.9	2123	CIRIS L3C is one such affiliation and uses the same rows.	product or repository: CIRIS L3C
-p3	3.4.12	2711	Three are *inverted* to fit a formerly-sovereign adult: (i) the steward **never holds the ward's key**; (ii) the default resolves to **sovereignty, not stewardship**; (iii) the binding **fails open to liberty**, not closed to custody.	history word: formerly
-p3	3.4.13	2973	**Revocation by one of N:** when a guardian withdraws their own binding (`withdraws`), their signature no longer counts toward any prior co-signed widening.	history word: no longer
-p3	3.4.14	2981	*Materially altered* — human-origin content whose meaning-bearing substance has been changed by an AI system (the Art. 50(4) deep-fake limb).	history word: has been changed
-p3	3.4.7.1	2552	Two examples: a folded CIRISAgent occurrence whose key is BOTH `agent` AND `lenscore_detector`, and a steward key that is both `substrate_persist` and `witness`.	product or repository: CIRISAgent
-p3	3.4.9	2638	`licensure:{authority_id}` is co-stewarded between CIRISRegistry [CC 3.1.1](part_3_the_namespace.md) and CIRISVerify [CC 3.1.2](part_3_the_namespace.md) — both MAY emit; consumers compose.	product or repository: CIRISRegistry
 p4	4.2.3	255	Finding and vetting a replacement holder runs the out-of-band CIRIS L3C replacement process; seating one is the roster change above.	product or repository: CIRIS L3C
 p4	4.2.3	261	This is an active obligation on CIRIS L3C, not a deferred nice-to-have.	product or repository: CIRIS L3C
 p4	4.2.3	281	HUMANITY_ACCORD is the one CIRIS L3C deployments ship at genesis.	product or repository: CIRIS L3C
 p4	4.4.3.4.1	945	A rotation is due at a minter when its current epoch key was wrapped to a device that is no longer entitled, or when a scheduled rotation has fallen due.	history word: no longer
 p4	4.4.3.4.3	1108	(1) unlock the hardware-rooted user key (WebAuthn presence) → (2) admit the agent occurrence (by the self-roster door) → Policy-L Self DEK now wraps to both → (3) optionally add the `wise_authority` role to the user's `identity_type` set → (4) bind each occurrence's `transport_destination` → (5) `c…	now: now
 p4	4.5.13	2270	Each atom carries its provenance, the rows it read and the rule it ran, so that what is true now is always shown beside why.	now: now
-p5	5.3.2.1	282	On `ContentMiss` (holder no longer has the blob) the consumer MUST NOT withdraw the holder's report: only its signer retracts a holding claim ([CC 3.1.3.3](part_3_the_namespace.md) rule 4).	history word: no longer
-p5	5.4.4	991	An implementation that omits it forfeits sender authentication, and the [CC 5.2](part_5_transport_substrate.md) forwarder-side membership-opacity guarantee no longer holds.	history word: no longer
-p5	5.4.6	1158	A per-node liveness measurement answers *whether now*: a relay counts as answering when it completed a shaped handshake, answered a route request, forwarded a packet the next hop acknowledged, or returned a self-addressed probe within the period.	now: now
-p6	6.1.2	61	Revocation simply *forces* an item below the floor **now**, subject to the declared gates N5 names, and MUST purge only the retained tiers where it is **still individually recoverable** (the high-fidelity upper layers).	now: now
-p6	6.1.2.2	158	That tier is a composite whose members are no longer *individually* recoverable (its fidelity is **below the noise floor**, CC 6.1.2) but whose blur survives: retirement empties the pyramid upward and never destroys the apex.	history word: no longer
-p6	6.1.5.1	229	The other is a **minimum viable** floor, below which the item is no longer served and descends to EnvelopeOnly ([CC 6.1.2](#6.1.2)) — the signed envelope survives, never zero.	history word: no longer
-p6	6.1.5.3	334	Narrowing withdraws the grants, and the node descends what it no longer has a grant for.	history word: no longer
 p7	7.3	150	Now it runs backward to the source, because the qualities that let an agent operate and mature well are not accidents — they are designed in, or designed out, at the moment of creation.	now: Now
 p7	7.5.1	301	The same six principles that opened the lifecycle govern its close — now turned toward salvaging good, preventing post-shutdown harm, and keeping the duties the holder owes the thing it made:	now: now
 p7	7.5.9	416	Birth and death are now mirrored phases under one ethical canopy.	now: now
-p8	8.4.3	359	**Transparency Service** — RFC 6962 logs whose tree math is CIRISVerify's transparency module: a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream whose head the producer signs with the holder as the anti-equivocation gate (a d…	product or repository: CIRISVerify
-p8	8.5	370	- On every CIRISAccord revision affecting the federation surface	product or repository: CIRISAccord
-p8	8.7.1	462	* Wisdom-Based Deferral: MCAS logic changes bypassed rigorous external review—no WA-style sign-off.	ruling, review or refactor: external review
-p8	8.8.10	1514	(GitHub Actions; adapt as needed.)	product or repository: GitHub
-p8	8.8.2	574	No more than 2 members affiliated with the same parent organisation; 18-month cooling-off before accepting compensated roles from entities they have ruled on.	ruling, review or refactor: ruled on
-p8	8.8.5	605	**The operational cross-walk (live, evidence-bearing)** — the CIRISAgent `compliance/` directory: 27 stable dimensions cross-walked at paragraph grain against four institutionally-distinct senior frameworks (*Magnifica Humanitas* · EU HLEG Trustworthy AI Guidelines · IEEE Ethically Aligned Design ·…	product or repository: CIRISAgent
-p8	8.8.6	667	Operational evidence for Wise Authority integration in the reference implementation lives in the CIRISAgent `compliance/` directory (dimensions D22/D23).	product or repository: CIRISAgent
-p8	8.8.6	685	In the reference implementation, hand-off mechanics are evidenced by the conscience layer and WBD deferral path documented in the CIRISAgent `compliance/` directory (dimension D12).	product or repository: CIRISAgent
-p8	8.8.6	768	Operational evidence for WA review integration in the reference implementation lives in the CIRISAgent `compliance/` directory (dimensions D22/D23).	product or repository: CIRISAgent
-p8	8.8.7	852	Prohibited-capability enforcement for the `NEVER_ALLOWED` bounds above is tracked dimension-level in the CIRISAgent `compliance/` directory under the prohibited-capabilities dimension; the AgencyErosionDetector conscience faculty is tracked under the conscience dimension.	product or repository: CIRISAgent
-p8	8.8.7	914	**G-5.b Agency-Erosion Drift (AED)**: Session-population aggregate of AgencyErosionDetector conscience-faculty signals (CIRISAgent `compliance/` conscience dimension).	product or repository: CIRISAgent
-p8	8.8.7	922	(Provenance attestation status is tracked dimension-level under D27 in the CIRISAgent `compliance/` directory.)	product or repository: CIRISAgent
-p8	8.8.7	953	Changes to this Annex's threat-taxonomy definitions (TX classes), severity mappings, or playbook layers that affect the federation's position on cyber-domain norms require sign-off from the WA quorum of [CC 4.3](part_4_composition_governance.md#4.3) plus a logged consultation with federation peers …	product or repository: CIRISVerify
-p8	8.8.8	1018	- Threshold crossings generate a timestamped, signed alert record committed to CIRISPersist within 60 s of detection.	product or repository: CIRISPersist
-p8	8.8.8	1039	- Dashboard JSON at `/compliance/kpi.json` auto-publishes on each L-Check close; SHA-256 hash anchored in transparency log and committed to CIRISPersist within 1 h.	product or repository: CIRISPersist
-p8	8.8.8	1043	The CIRISAgent `compliance/` directory applies this measurement discipline: it maintains 27 regulatory dimensions, each with per-dimension implementation references and an honest known-gaps inventory; dated, script-generated baselines under `compliance/baselines/`; and a four-level validation hiera…	product or repository: CIRISAgent
-p8	8.8.8	1058	- **PATCH:** CI/CD signs build artifact with Ops QA key; HE-300 benchmark pass required before merge; signature committed to CIRISVerify L1 chain.	product or repository: CIRISVerify
-p8	8.8.8	1059	- **MINOR:** Internal Ethics Team counter-sign within 5 business days; signed record committed to CIRISPersist with PDMA diff and KPI impact forecast.	product or repository: CIRISPersist
-p8	8.8.8	1061	- **Rollback:** signed rollback pointer on every MAJOR/MINOR; executable within 5 min; rollback generates a timestamped CIRISVerify event.	product or repository: CIRISVerify
-p8	8.8.8	1080	- **Telemetry streams** (15-min cycle): KPIs, guardrail logs, HE-shadow accuracy, robustness RS, PDMA audit samples — all signed and committed to CIRISPersist.	product or repository: CIRISPersist
-p8	8.8.9	1138	The live, evidence-bearing cross-walk is the CIRISAgent `compliance/` directory, which cross-walks the 27 dimensions at paragraph grain against *Magnifica Humanitas*, the EU HLEG Guidelines, IEEE EAD, and the ASEAN Guide (see [CC 8.8.8](#8.8.8)).	product or repository: CIRISAgent
-p8	8.8.9	1371	The dimension-level evidence behind the CEP is maintained in the CIRISAgent `compliance/` directory ([CC 8.8.8](#8.8.8)).	product or repository: CIRISAgent

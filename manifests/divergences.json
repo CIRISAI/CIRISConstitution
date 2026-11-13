@@ -11,16 +11,16 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 93,
+  "total": 94,
   "by_status": {
-   "runnable": 65,
+   "runnable": 66,
    "stated": 13,
    "wording-only": 15
   },
   "by_implementer": {
    "agent": 1,
    "edge": 1,
-   "persist": 74,
+   "persist": 75,
    "server": 2,
    "tooling": 15
   },
@@ -28,7 +28,7 @@
    "audience": 4,
    "cosign": 7,
    "count": 4,
-   "door": 10,
+   "door": 11,
    "fold": 9,
    "freshness": 2,
    "lifecycle": 8,
@@ -37,7 +37,7 @@
    "window": 2,
    "wording-only": 15
   },
-  "order_dependent_shipped": 0,
+  "order_dependent_shipped": 1,
   "conflict_rows_with_implementer_carrier": 68,
   "conflict_rows_mapped": 68,
   "source_1_cells_with_disagree_cite": 0,
@@ -5535,6 +5535,98 @@
    "order_dependent_shipped": false
   },
   {
+   "id": "persist/capacity:{factor}/consent gate",
+   "implementer": "persist",
+   "family": "capacity:{factor}",
+   "where": "consent gate",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-capacity-consent-gate"
+   ],
+   "claims": [
+    "CLM-capacity-consent-gate"
+   ],
+   "text": {
+    "value": [
+     [
+      "grant_named"
+     ]
+    ],
+    "cc_ref": "CC 3.4.5",
+    "quote": "a `capacity:*` row MUST name that grant in `evidence_refs[]`",
+    "param": {
+     "family": "capacity:{factor}",
+     "gate": [
+      [
+       "grant_named"
+      ]
+     ],
+     "refuse": [
+      "names_no_grant"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "admission reads the subject's grants; the scoring row names none",
+    "source": "constitution/claims.tsv CLM-capacity-consent-gate (check_capacity_consent_admission)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "f26cb31e5394ef96378e2dba01ce99f5e63a26de27b2accc52e196c0e4f7af17",
+    "file_rows": [
+     "CLM-capacity-consent-gate"
+    ],
+    "param": {
+     "family": "capacity:{factor}",
+     "gate": [
+      [
+       "subject_grant_held"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "gr",
+      "kind": "fam",
+      "signer": "S",
+      "names": [],
+      "family": "consent:state:{stance}",
+      "scope": "analyze"
+     },
+     {
+      "id": "cp",
+      "kind": "fam",
+      "signer": "L",
+      "names": [],
+      "family": "capacity:{factor}",
+      "subject": "S",
+      "needs_scope": "analyze"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "cp"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted",
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": true,
+   "also_assert": "the same verdict in every arrival order"
+  },
+  {
    "id": "tooling/ownership:{relation}:{target_kind}:{version}/transition withdraw guard",
    "implementer": "tooling",
    "family": "ownership:{relation}:{target_kind}:{version}",
@@ -6078,7 +6170,7 @@
    "text": {
     "value": "minimum",
     "cc_ref": "CC 2.4.1.1",
-    "quote": "where a key carries multiple revocations the effective bound is the **minimum** `revoked_after` across all of them",
+    "quote": "Where a key carries multiple revocations the effective bound is the **minimum** `revoked_after` across all of them",
     "param": {
      "family": "key:revocation",
      "fold": "revocation_bound",
@@ -6814,7 +6906,7 @@
      ]
     ],
     "cc_ref": "CC 2.1",
-    "quote": "A row naming a key outside its audience is refused `subject_outside_audience`.",
+    "quote": "A row naming a key outside its audience concludes nothing",
     "param": {
      "family": "(default row)",
      "gate": [

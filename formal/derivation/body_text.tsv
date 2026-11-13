@@ -90,14 +90,14 @@ census:partial:{class}	member_commitment_hex	unstated	unstated	yes	CC 6.1.9	The 
 census:partial:{class}	period	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	share_count	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
 census:partial:{class}	share_index	unstated	unstated	yes	CC 6.1.9	The partial is the field-wise sum of the shares the aggregator accepted, the count of shares it summed, and a commitment over the accepted tokens.
-community:listing	cohort_subkind	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
-community:listing	cohort_subkind	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md)). It carries the name, description, `cohort_subkind`, the admission policy, the
-community:listing	community_key_id	key-id	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
-community:listing	community_key_id	key-id	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md)). It carries the name, description, `cohort_subkind`, the admission policy, the
-community:listing	description	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
-community:listing	description	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md)). It carries the name, description, `cohort_subkind`, the admission policy, the
-community:listing	name	tstr	unstated	yes	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
-community:listing	name	unstated	unstated	yes	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	cohort_subkind	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	cohort_subkind	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	community_key_id	key-id	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	community_key_id	key-id	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	description	tstr	unstated	no	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	description	unstated	unstated	no	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
+community:listing	name	tstr	unstated	yes	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
+community:listing	name	unstated	unstated	yes	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
 consent:partnership_accept	asserted_at	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
 consent:partnership_accept	attestation_type	unstated	unstated	yes	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
 consent:partnership_accept	attesting_key_id	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
@@ -116,7 +116,7 @@ consent:partnership_grant	subject_key_id	unstated	unstated	no	CC 4.4.3.4.3.1	`co
 consent:partnership_grant	subject_kind	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
 consent:state:{stance}	asserted_at	unstated	unstated	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	bilateral_pair_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
-consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.1	The prior consent-state row this one supersedes: a renewal, or the substrate's `consent:state:expired` naming the grant that lapsed ([CC 3.3.1](part_3_the_namespace.md)).
+consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.1	The prior consent-state row this one supersedes: a renewal, or the substrate's `consent:state:expired` naming the grant that lapsed ([CC 3.3.1](part_3_the_namespace.md#3.3.1)).
 consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.6.1.7	The prior consent statement this one replaces. Separate from references_attestation_id by the CC 4.5.1.1 op split.
 consent:state:{stance}	decay_protocol	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	deletion_sla_days	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
@@ -150,7 +150,7 @@ fidelity:explainability_sla:{tier}	fallback_reason	unstated	optional	no	CC 3.1.5
 group:roster	baa	unstated	unstated	no	CC 4.4.3.2.8	with `marking_binds_to_record` so a class's classification + export marking + retention obligation **travel across the cohort boundary**
 group:roster	breach_notification	unstated	unstated	no	CC 4.4.3.2.8	SLA and notifier identity
 group:roster	chain_of_custody	unstated	unstated	no	CC 4.4.3.2.8	Rides `supersedes` + holding claims. Default: none.
-group:roster	charter_digest	hex64	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members),
+group:roster	charter_digest	hex64	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members
 group:roster	charter_digest	hex64	unstated	no	CC 3.1.3	envelope carrying the fold (seats, roles, `effective_at`s, bounds), `prev_head_digest` and `charter_digest`.
 group:roster	classification_scheme	unstated	unstated	no	CC 4.4.3.2.8	Each class entry binds: `crypto_tier`, `retention`, `disclosure_bar`, `erasure_exempt`, `external_controller`, and optional `compartment`.
 group:roster	cohort_subkind	tstr	unstated	no	CC 3.2	community_name: string // human-readable; non-unique
@@ -186,7 +186,7 @@ group:roster	marking_binds_to_record	unstated	unstated	no	CC 4.4.3.2.8	with `mar
 group:roster	members	[* { key_id, joined_at, ? role }]	unstated	yes	CC 3.2	community_name: string // human-readable; non-unique
 group:roster	members	unstated	unstated	yes	CC 4.2.3	the accord roster structurally IS a `family` subject_kind with:
 group:roster	membership_basis	unstated	unstated	no	CC 4.4.3.2.8	carried by an explicit `membership_basis` field
-group:roster	prev_head_digest	hex64	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members),
+group:roster	prev_head_digest	hex64	unstated	no	CC 2.4	- **roster versions** (`group:roster:v1`, the T6 head, with `prev_head_digest` and `charter_digest` as envelope members
 group:roster	prev_head_digest	hex64	unstated	no	CC 3.1.3	envelope carrying the fold (seats, roles, `effective_at`s, bounds), `prev_head_digest` and `charter_digest`.
 group:roster	prev_head_digest	unstated	unstated	no	CC 4.4.3.2.3	admitted under the group's quorum and chained by `prev_head_digest`
 group:roster	prev_head_digest	unstated	unstated	no	CC 4.4.3.4.2	admitted under the group's quorum and chained by `prev_head_digest`
@@ -198,7 +198,7 @@ group:roster	statutory_basis	unstated	unstated	no	CC 4.4.3.2.8	Each authority de
 group:roster	transparency_mode	unstated	unstated	no	CC 4.4.3.2.8	Each authority declares a **type**, a `statutory_basis`, a **per-authority `transparency_mode`**, and optional **carve-out compartments** lawful access cannot reach
 group:roster	transparency_obligations	unstated	unstated	no	CC 4.4.3.2.8	transparency here is a *duty to publish*, not an *access concession*. Default: none.
 hardware_custody:{platform}	hardware_class	tstr	optional	no	CC 3.1.2	is a JSON property, never a value of `{platform}`).
-identity:canonical_binding:{canonical_hash}	witness_relation	"self"	unstated	yes	CC 3.3.14	**Self-asserted** (`witness_relation: self`): K declares "I am the federation identity behind H." Hybrid-signed; admitted federation-tier (it grants authority — not local-tier-eligible, [CC 5.3.2.2](part_5_transport_substrate.md) discipline).
+identity:canonical_binding:{canonical_hash}	witness_relation	"self"	unstated	yes	CC 3.3.14	**Self-asserted** (`witness_relation: self`): K declares "I am the federation identity behind H." Hybrid-signed; admitted federation-tier (it grants authority — not local-tier-eligible, [CC 5.3.2.2](part_5_transport_substrate.md#5.3.2.2) discipline).
 identity:occurrence	app_name	unstated	unstated	no	CC 4.4.3.4.3.1	carrying the binding; signed by `identity_key_id` (or a current occurrence):
 identity:occurrence	aspects	unstated	unstated	no	CC 4.4.3.4.3.1	carrying the binding; signed by `identity_key_id` (or a current occurrence):
 identity:occurrence	asserted_at	unstated	unstated	yes	CC 3.3.6	device_class: DeviceClass // closed-set enum per below
@@ -247,8 +247,8 @@ key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 3.3.2	A wrap is one `scores
 key_grant:{axis}	wrapped_dek	unstated	unstated	no	CC 4.4.3.4.1	a grant names its recipient (attested_key_id, above) and its axis; it carries no scope
 lawful_order:release	reference	unstated	unstated	yes	CC 3.1.5	The steward's record, under their own name, of a lawful order to **release** sealed material: issuing authority, reference, scope, order digest.
 lawful_order:release	scope	unstated	unstated	yes	CC 3.1.5	The steward's record, under their own name, of a lawful order to **release** sealed material: issuing authority, reference, scope, order digest.
-ledger:head:{unit}:{version}	sequence	uint	unstated	yes	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md) clauses 1–4).
-ledger:head:{unit}:{version}	unit	unstated	unstated	no	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md) clauses 1–4).
+ledger:head:{unit}:{version}	sequence	uint	unstated	yes	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clauses 1–4).
+ledger:head:{unit}:{version}	unit	unstated	unstated	no	CC 3.1.3	Catalogue row (CC 3.1.7 R1); an in-grammar ledger's **head** — sequence, unit and the declared anchoring cadence ([CC 3.3.10.1](part_3_the_namespace.md#3.3.10.1) clauses 1–4).
 membership:{stage}	expires_at	rfc3339-ms presence=required leaf=membership:proposal	unstated	yes	CC 3.1.3.2	`subject_key_ids = [K]` (exactly one) and a required `expires_at`. On a `public` community whose record declares `consensus_protocol: open:self_admit` (`admission: open` is the shorthand,
 model_3d:*	description	unstated	required	no	CC 3.3.13	Source struct carries vertex/triangle counts, bounding-box, mandatory `description` accessibility metadata, license info. `format` is the IANA `model/*` type where one is registered; FBX and splat
 moderation:{allegation_type}	duty	unstated	unstated	no	CC 4.5.13	The record is a `moderation:*` row naming the duty, the purpose, the report or removal that followed, and the exposure.
@@ -293,7 +293,7 @@ self:delegates_to:agent_occurrence	delegation_valid_until	unstated	unstated	yes	
 self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.4.3	The row carries `scope` drawn from the canonical act-on-behalf kinds below, `delegation_purpose: "act_as_user"` and a bounded `delegation_valid_until`.
 self:delegates_to:agent_occurrence	scope	unstated	unstated	yes	CC 4.4.3.4.3.1	the act-on-behalf grant
 self:delegates_to:agent_occurrence	signed_at	unstated	unstated	no	CC 4.4.3.4.3.1	the act-on-behalf grant
-session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` in the [CC 2.6.2](part_2_the_grammar.md) canonical form.
+session:{kind}	community_id	key-id	required	yes	CC 3.1.3.1	`session_id` and `claimed_at` are this family's, REQUIRED on every `session:*` row, with `claimed_at` in the [CC 2.6.2](part_2_the_grammar.md#2.6.2) canonical form.
 settlement:*	amount_commitment	unstated	optional	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
 settlement:*	rail	tstr (open)	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
 settlement:*	settled_action_ref	unstated	unstated	no	CC 3.3.10	rail: string // open vocab; e.g. "base:usdc", "stellar:usdc", "x402"
