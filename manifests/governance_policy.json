@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "634cf399001e6b32732eedda85640a8b467d5561beed01dd5a8660236b998471",
+  "policy_sha256": "b3a2b59062bbb8b085f7722c46b6c2e88ec8f1d33184c082625fd64f9e8c6089",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -283,7 +283,7 @@
     "formal/two_path"
    ],
    "status": "normative",
-   "note": "the invitee's own acceptance is still required (3.1.3.2) and is the second of the floor's two voices: a room of one grows by the founder's proposal and the newcomer's yes; no single vote admits by silence"
+   "note": "the invitee's own acceptance is still required (3.1.3.2) and is the second of the floor's two voices: a room of one grows by its one member's proposal and the newcomer's yes; no single vote admits by silence"
   },
   {
    "family": "community_remove",
@@ -470,14 +470,13 @@
    "kind": "mirror",
    "standing_set": "the live community",
    "base": "active",
-   "enact": "role:moderator|steward at 1",
+   "enact": "role:moderate at 1",
    "cancel": null,
    "floor": "more than 1/2 of those who voted, at least 2 voices",
    "enact_rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },
@@ -522,7 +521,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "a moderator or steward acts alone in the window; on their absence a strict majority of the members who voted, never fewer than two voices"
+   "note": "a holder of `moderate` acts alone in the window; on the moderators' absence a strict majority of the members who voted, never fewer than two voices"
   },
   {
    "family": "moderation_overturn",
@@ -578,7 +577,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "the members' check: a strict majority of those seated before the act lift a moderator's or steward's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
+   "note": "the members' check: a strict majority of those seated before the act lift a duty holder's single-signature act within the window; below that the act stands; a restored item returns consent-gated"
   },
   {
    "family": "moderator_recall",
@@ -639,7 +638,7 @@
     "4.5.13"
    ],
    "status": "normative",
-   "note": "a room recalls a moderator it elected: more than two thirds of the standing roster cosign one row in the standing window; the room then locks and elects; an appointed moderator answers to the appointer and a founder's seat is not recalled"
+   "note": "the members recall any duty holder, however seated: more than two thirds of the standing roster cosign one row in the standing window; where that leaves no duty holder the room locks and elects"
   },
   {
    "family": "accord_halt",
@@ -866,7 +865,7 @@
     "formal/moderator_election"
    ],
    "status": "default",
-   "note": "a locked room elects its moderator: ballot = the roster in worthiness order, one ballot per person, winner accepts or the next in runoff order; a steward may appoint directly at any time"
+   "note": "a locked room elects its moderator: ballot = the roster, its shown order deciding nothing, one ballot per person, a tie seats nobody and the count runs again, winner accepts or the next in runoff order"
   },
   {
    "family": "cosigned_act",

@@ -182,7 +182,7 @@ Each of these is a known weakness the federation has chosen to carry rather than
 
 Child safety has two axes with two verdicts, and the detection limit is not solved.
 
-- **Governance — fails secure.** The common failure of a multi-party space is to fail open: the group persists with nobody accountable for it. CEG **fails secure**: the [CC 4.5.4](#) named-moderator existence invariant (a group cannot exist without an accountable moderator; an election in merit order when the seat falls empty, the room read-only until it is filled; `hard_case:community_unmoderated` quiesces it if none can be named), composed with the [CC 4.5.5](#) delegable-accountable-signed-revocable duty, trust-propagation, and the [CC 4.5.6](#) operational-language anti-censorship gate (public/voted/mechanically-checkable rules, deterministic verdicts, recused appeals).
+- **Governance — fails secure.** The common failure of a multi-party space is to fail open: the group persists with nobody accountable for it. CEG **fails secure**: the [CC 4.5.4](#) named-moderator existence invariant (a group cannot exist without an accountable moderator; an election when no duty holder is left, the room read-only until one is seated; `hard_case:community_unmoderated` quiesces it if none can be named), composed with the [CC 4.5.5](#) delegable-accountable-signed-revocable duty, trust-propagation, and the [CC 4.5.6](#) operational-language anti-censorship gate (public/voted/mechanically-checkable rules, deterministic verdicts, recused appeals).
 - **Detection — the shared wall, and CEG says so.** CSAM in *truly-private* content (self/family, [CC 5.2](#) E2EE-equivalent) is **unsolved under end-to-end encryption**; the one proposed answer, client-side scanning, is itself the censorship machinery [CC 1.13.3](part_1_foundation.md#1.13.3) and [CC 1.13.5](part_1_foundation.md#1.13.5) warn against, and US §2258A carries no scanning mandate. CEG **narrows** the surface to the share/publish seam + the still-visible metadata/coordination layer, and **declines client-side scanning**. **CEG does NOT claim to solve private-content detection.** The positioning is *"fails-secure governance + accountable, censorship-resistant moderation,"* never *"we detect CSAM in private content."*
 
 This is an **acknowledged inherent limit, not a spec gap** — no CEG mechanism closes it without becoming the surveillance backdoor the framework exists to refuse. The moderation surface is **specified in full**; the remaining child-safety work is implementation (admission enforcement → safety subsystem), not spec.
@@ -3382,7 +3382,7 @@ Fold:
 
 In time:
 - [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
-- [moderate] on close(expiry) unless fold(live_moderator): read locked, open moderator_election (CC 4.4.3.2.8)
+- [moderate] on close(expiry) unless fold(live_duty_holder): read locked, open moderator_election (CC 4.4.3.2.8)
 - @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.2.8)
 - expiry required `delegation_valid_until` max `delegation_term_max_secs` (CC 2.4.1)
 

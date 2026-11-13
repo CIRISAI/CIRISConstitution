@@ -303,7 +303,7 @@ def door_specs():
         clauses=(("once", "answered", ("abs", 1), "extra", "answered"),
                  ("close", "act", at_least_rule(fl, 2), "voted" if fl["kind"] == "voted_majority" else "all", "fallback")),
         silent=None, default="lapsed", secs=f["window_secs"], concluder="member", late="counts", outcomes=("answered", "fallback", "lapsed", "open"),
-        cells={"enact": "role_at moderator|steward 1 (steward tier dropped by ruling: duty holders with scope moderate)",
+        cells={"enact": "role_at moderate 1 (a holder of the moderate duty)",
                "floor": "floor_rule voted_majority 2: more than half of the members who voted, at least two voices",
                "window": "window_secs 172800", "default": "at_window tallied -> lapsed"},
         unstated=["who opens: a member raising the action", "what the members' answers are: 'act' and 'keep' (voices cell 'unstated')",

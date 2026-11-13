@@ -181,7 +181,7 @@ locality:decision:{scale}	absent=refuse	CC 4.4.3.1.1	When `cell_pool < min_pool(
 group:roster	pick=chain(prev_head_digest)	CC 4.4.3.2.4	// one held version per group id: a new version is admitted only if its signed
 group:roster	reads=head; pick=chain(prev_head_digest)	CC 4.4.3.2.4.1	A new version is admitted only if its signed `prev_head_digest` names the held head; a version with a later signed instant that does not name
 ballot:moderator	order=max(moderation_track_record),min(admission_order),min(key_id)	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
-ballot:moderator	combine=policy(moderator_election)	CC 4.5.13	The count is **instant runoff**, the weakest standing candidate eliminated in turn, a tie broken against the later in worthiness order, until one remains. The
+ballot:moderator	combine=policy(moderator_election)	CC 4.5.13	The count is **instant runoff**, the weakest standing candidate eliminated in turn, until one remains. A tie seats nobody, and the count runs again over the ballots then held. The
 ballot:moderator	over=live@named/person	CC 4.5.13	The electorate is the roster the election names, a ballot from a member that roster does not seat counting for nothing. There is no reopening as
 ballot:moderator	test=voices>=min(2,n) ?seated:open	CC 4.5.13	**The floor in a small room** is the smaller of two voices and the roster's size, so a room of one elects itself by its
 *	bound=narrow_only(cohort_scope)	CC 2.1	`cohort_scope` is the one mirror member a placement-touching re-sign may narrow; it is never re-authored

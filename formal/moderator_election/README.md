@@ -9,3 +9,5 @@
 **What it does not model.** The 24 h clock (per node, first held, as every window), the steward's direct appointment, and the worthiness order's inputs; the model takes the order as given.
 
 **Run.** `lean -M 6000 -T 200000 Election.lean` (exit 0, no `sorry`).
+
+**Not modelled.** An election declares no order, so a tie there seats nobody and the count runs again (CC 4.5.13). The tie rule in this model is the general count's, which goes against the option later in a declared order.

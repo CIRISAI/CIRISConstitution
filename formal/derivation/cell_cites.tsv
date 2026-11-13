@@ -86,7 +86,7 @@ ballot:moderator	cosign_rule	fills	CC 4.5.13	**The voters' ballots are the appoi
 ballot:moderator	fold	agree	CC 4.5.13	**The floor in a small room** is the smaller of two voices and the roster's size
 ballot:moderator	fold	agree	CC 4.5.13	The electorate is the roster the election names, a ballot from a member that roster does not seat counting for nothing.
 ballot:moderator	fold	agree	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
-ballot:moderator	governance	fills	CC 4.5.13	The moderator election above **reconstitutes authority**: the room locks and its members elect, the ballot in merit order with the highest `moderation_track_record` first.
+ballot:moderator	governance	fills	CC 4.5.13	the moderator election above **reconstitutes authority**: the room locks and its members elect
 ballot:moderator	governance	fills	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
 ballot:moderator_acceptance	fold	agree	CC 3.1.3	among valid acceptances the larger set, then the smaller digest, seats
 ballot:moderator_acceptance	fold	agree	CC 4.5.13	**The seat is a function of the rows held and never of their arrival**
@@ -187,12 +187,11 @@ collection:{kind}	lifecycle	fills	CC 3.1.3.4	Promoting a directory is a `superse
 collection:{kind}	lifecycle	fills	CC 3.1.3.4	renaming or moving it is a `supersedes` of that row
 collection:{kind}	signer_rule	agree	CC 3.1.3.4	**Yes — author-emitted:** the collection's creator; an amendment (rename, move) is its author's, or the cohort's under its `consensus_protocol` where the cohort's rules say so
 community:listing	lifecycle	fills	CC 3.1.1	A rename or policy change is a `supersedes`; closing the room is a `withdraws`.
-community:listing	placement	agree	CC 3.1.1	a federation-scoped `scores` row by the founder
-community:listing	placement	fills	CC 3.1.1	a federation-scoped `scores` row by the founder
+community:listing	placement	agree	CC 3.1.1	a federation-scoped `scores` row by a `moderate`-holder of the room
+community:listing	placement	fills	CC 3.1.1	a federation-scoped `scores` row by a `moderate`-holder of the room
 community:listing	replication	fills	CC 3.2	replicated like any Commons row
 community:listing	replication	fills	CC 4.4.3.2.1	`custody:ack:v1` at federation scope; a `community:listing:v1` row
 community:listing	replication	fills	CC 4.4.3.2.8	An affiliation's existence, its `community_key_id`, its officers' roles and the licence classes its charter declares are Commons-visible.
-community:listing	signer_rule	agree	CC 3.1.1	**Yes:** signed by the founder (or a current `moderate`-holder) of the community it names; one live row per community
 config:{scope}	signer_rule	agree	CC 3.4.5	**Self-or-owner** — `attesting_key_id` MUST be `attested_key_id` or its live `owner_of`.
 config:{scope}	signer_rule	agree	CC 4.2.1.4	A node MAY attest its own carried load as `config:load` — a self-report on `infra:attest`, `witness_relation: self`, bounded by `expires_at`, about the emitting node and no other party.
 config:{scope}	signer_rule	agree	CC 4.2.1.4	[CC 3.4.5](part_3_the_namespace.md)'s self-or-owner rule for `config:*` is enforced at **substrate admission** as [CC 3.4.7](part_3_the_namespace.md) requires, not by producer obligation alone. That is because, without the gate, any peer could make
@@ -489,7 +488,7 @@ membership:{stage}	projection	agree	CC 4.4.3.4.2	trigger the CC 4.4.3.4.1 key_gr
 membership:{stage}	replication	fills	CC 3.1.3.2	a proposal is readable by, and applied on, any node whose self-collective contains that entry, without that node holding the group's roster
 membership:{stage}	signer_rule	agree	CC 3.1.3.2	a proposal is an inviter's (under `founder_only`, an active founder; otherwise any active member at the proposal's `asserted_at`)
 membership:{stage}	signer_rule	agree	CC 3.1.3.2	an acceptance or decline is the invitee's only — the signer resolves (`signer_acts_for`, [CC 3.4.7.3](part_3_the_namespace.md)) to the proposal's `subject_key_ids[0]`
-membership:{stage}	subject_rule	fills	CC 3.1.3.2	the founder's **standing** proposal to any requester, whose `subject_key_ids` is resolved at acceptance
+membership:{stage}	subject_rule	fills	CC 3.1.3.2	a duty holder's **standing** proposal to any requester, whose `subject_key_ids` is resolved at acceptance
 mesh_config:{key}	body	agree	CC 3.1.9.2	consumer processor is refused at admission; emergency form TTL ≤ 72 h.
 mesh_config:{key}	body	agree	CC 4.2.1	A `mesh_config` action MAY relieve or restrict and MUST NOT expand what flows.
 mesh_config:{key}	body	agree	CC 4.2.1	A config key naming no consumer processor MUST be refused at admission.
@@ -512,7 +511,7 @@ moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	**(a) as-self** — `att
 moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	Hiding-for-yourself needs no authority; **acting on a group's behalf** (a takedown, an authoritative ModerationEvent, an appeal ruling) requires the delegated `moderate`/`takedown`/`review` duty (below).
 moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	`moderate` | `moderation:{allegation_type}` ModerationEvent + report→`scores` + `age_assurance`/`content_class` gates | [CC 3.1.9.2](part_3_the_namespace.md) / [CC 4.4.3.10](part_4_composition_governance.md)
 moderation:{allegation_type}	signer_rule	agree	CC 4.5.5	`moderation:{allegation_type}` against a subject | `is_named_moderator(·, C, moderate)` for the relevant community
-moderation:{allegation_type}	signer_rule	fills	CC 4.5.13	a **steward** the community has appointed to that duty, resolves the action by a **single signature**
+moderation:{allegation_type}	signer_rule	fills	CC 4.5.13	A holder of another duty acts here only where it also holds `moderate`
 moderation_track_record:{community_key_id}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 moderation_track_record:{community_key_id}	fold	agree	CC 3.1.9.2	**composed** from the existing corpus
 moderation_track_record:{community_key_id}	fold	agree	CC 4.5.5	[`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) composites a moderator's action outcomes into the **relative, positional reputation** decentralized-moderation converges on. It is never a single global score.

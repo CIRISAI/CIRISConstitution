@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "policy_sha256": "634cf399001e6b32732eedda85640a8b467d5561beed01dd5a8660236b998471",
+  "policy_sha256": "b3a2b59062bbb8b085f7722c46b6c2e88ec8f1d33184c082625fd64f9e8c6089",
   "count": 684,
   "rule_vector_count": 240,
   "rule_kinds": [
@@ -12054,8 +12054,7 @@
    "rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },
@@ -12068,8 +12067,7 @@
    "rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },
@@ -12082,8 +12080,7 @@
    "rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },
@@ -12096,8 +12093,7 @@
    "rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },
@@ -12110,8 +12106,7 @@
    "rule": {
     "kind": "role_at",
     "roles": [
-     "moderator",
-     "steward"
+     "moderate"
     ],
     "count": 1
    },

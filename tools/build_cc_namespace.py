@@ -188,9 +188,9 @@ def _reserved_rules():
         # component-wide persist rule so the manifest carries the rule the row states.
         (lambda p, c: p.startswith("session:"),
          "occurrence-self-report (attesting_key_id == attested_key_id == the claiming occurrence)", "CC 3.1.3.1"),
-        # CC 3.1.1 / 3.2 public-room listing: the founder's (or a moderate-holder's) own row.
+        # CC 3.1.1 / 3.2 public-room listing: a moderate-holder's row for the community.
         (lambda p, c: p.startswith("community:listing"),
-         "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
+         "moderate-holder-signed for the community it names; one live row per community; federation scope", "CC 3.2"),
         # CC 3.1.1 takedown notice as a row: duty-holder-signed, or cosigned by the trust root for steward_purge.
         (lambda p, c: p.startswith("takedown_notice:"),
          "duty-holder-signed under CC 4.5.5 for the legal bases; cosigned under the trust root's consensus_protocol for steward_purge, attester any seat, family derived from the verified signers", "CC 3.1.1"),

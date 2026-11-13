@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "f6cea315a3484d67500b57d242a634c19ac333fb8cea5775a505fd32f34ca07d",
+    "registry_sha256": "0087a7b31241781400a694bf0da1be2972a2de00881a01fb7fb317f98e1de196",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "815347bd76398c923445ff6abb0ef908bc38e78a3b23435c0115ebd688ab4533"
+    "source_sha256": "17f00dff6605b579de01b2909501ccd0ef10d42269bc7836f66106655047dd28"
   },
   "families": [
     {
@@ -1482,7 +1482,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "A public community's own discovery row (CC 3.2 public): a federation-scoped scores row by the founder carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, ranked by NodeCore votes.",
+      "description": "A public community's own discovery row (CC 3.2 public): a federation-scoped scores row by a moderate-holder of the room, carrying the room's name, description, cohort_subkind, admission policy, named moderator and community_key_id, ranked b",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "positive-only",
@@ -1490,7 +1490,7 @@
       "reserved": true,
       "reserved_rule": {
         "cc_ref": "CC 3.2",
-        "rule": "founder- or moderate-holder-signed for the community it names; one live row per community; federation scope"
+        "rule": "moderate-holder-signed for the community it names; one live row per community; federation scope"
       },
       "segments": [
         {

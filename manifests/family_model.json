@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "c4f368443cba562b30a67d162dcc0bbc9537573e38e02b21e6f91d1913f59dff",
+  "registry_sha256": "643038f1d1ca212b83f3f714e2f3588e21f2e298b49a5bd373c2de517802bb40",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -269,8 +269,8 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 319,
-   "citations": 493,
+   "cells_cited": 318,
+   "citations": 492,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
   },
   "body": {
@@ -707,7 +707,7 @@
      "why": "Two live listings for one community could disagree about its name, its rules or its moderator. A listing names exactly one community whose record the reader holds, and a newer listing replaces the older.",
      "basis": "text",
      "cc_ref": "CC 3.1.1",
-     "quote": "signed by the founder (or a current `moderate`-holder) of the community it names; one live row per community",
+     "quote": "signed by a current `moderate`-holder of the community it names; one live row per community",
      "cells": 2
     },
     {
@@ -16413,13 +16413,7 @@
     },
     "source": "code-v61",
     "closed": "seat_role(moderate) | founder",
-    "note": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}",
-    "cites": [
-     {
-      "cc_ref": "CC 3.1.1",
-      "reading": "agree"
-     }
-    ]
+    "note": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}"
    },
    "subject_rule": {
     "value": {

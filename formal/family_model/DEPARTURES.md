@@ -279,7 +279,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** Two live listings for one community could disagree about its name, its rules or its moderator. A listing names exactly one community whose record the reader holds, and a newer listing replaces the older.
 
-**Text.** CC 3.1.1: "signed by the founder (or a current `moderate`-holder) of the community it names; one live row per community"
+**Text.** CC 3.1.1: "signed by a current `moderate`-holder of the community it names; one live row per community"
 
 | column | families |
 |---|---|

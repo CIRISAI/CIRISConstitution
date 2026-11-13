@@ -549,7 +549,7 @@
    "unless": [
     {
      "event": "fold",
-     "of": "live_moderator"
+     "of": "live_duty_holder"
     }
    ],
    "effects": [
