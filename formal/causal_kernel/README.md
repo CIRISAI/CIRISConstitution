@@ -55,6 +55,31 @@ counts and a reader's own acknowledged line, and one that is not: a counted row 
 only older heads. That one is off unless asked for, and the attacks run it both ways to show why. It makes the
 longer line win.
 
+**A private room seats voices** (`roomkey.py`, `check_roomkey.py`). A community declares its membership private
+or public. A private room's roster seats a voice, a small counted roster of room keys made for that room, and
+every row of the room is signed under a room key. That a voice is a given person's is a binding: never a row,
+made for one addressee, opened against a commitment on the key's seat row. The kernel is not changed.
+
+- Every named answer for a room of 34 rows is the same over voices as over identity keys: 691 sets of rows,
+  22,468 answers in two arrival orders, none differ. A reader that breaks a tie by key name is caught.
+- A tally over voices equals the count of persons in each of 1,728 ways for devices to vote. A count of keys is
+  wrong in 1,216 of them.
+- Five ways to make the binding. The planned one, two encapsulations and no signature, is forged by 0 of 180
+  coalitions and lets 0 of 14 prove anything outside. An identity signature lets 14 of 14.
+- A count of persons is missing at a node for exactly the bindings it lacks: 20,736 pairs of nodes, none that
+  hold every binding disagree. Without the commitment two members make honest nodes count differently in 108 of
+  243 votes. With it none do, and the node told otherwise waits and names the key.
+- Under identity keys a carried reply proves all four members. Under room keys none of 657 sets of rows of the
+  room proves or names a person.
+- Detection in a private room: the detector's seat is conferred inside the room by the act that enables the
+  list, the owner-binding of the node's room key is a row of the room, and the record names no person.
+- The declaration: an absent member reads public, a self room and a family are seated by identity keys, and no
+  sequence of later declarations takes a room from public to private.
+
+The verdicts on the binding are symbolic: a fact has a set of parties able to make it, and a party is
+convinced when nobody else but the person could have. Nothing here is proved in Lean. The check prints ten
+limits and marks each as run or as stated from outside the model.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -65,5 +90,5 @@ longer line win.
 - A merge of roster tips is written here and is not in the shared library.
 
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
-`python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py` and
-`python3 -I formal/causal_kernel/check_attacks.py`
+`python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
+`python3 -I formal/causal_kernel/check_attacks.py` and `python3 -I formal/causal_kernel/check_roomkey.py`

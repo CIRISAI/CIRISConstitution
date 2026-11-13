@@ -110,7 +110,8 @@ the closure a store already computes for its own retention, evaluated for the ot
 party given only its routed rows concludes the same as a party given everything, and a stranger is routed
 nothing. That holds only with one rule added: a row's audience includes the audience of every row that names
 it. Without it a joiner can never keep its own admission. With it, a reply carries the message it answers to a
-later joiner. **open**: whether that carriage is wanted; the placement cell is empty for 156 of 184 families and
+later joiner. That carriage of content is intended (CC 3.1.3.2). What must not travel is proof of who said it or
+of who is in the room, which is section 7b. **open**: the placement cell is empty for 156 of 184 families and
 no cell states the copy rule.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
@@ -167,6 +168,72 @@ being a fold over its own rows, on one condition: each write and each mint names
 rows the writer held. **run** (`formal/causal_kernel/keyplane.py`): 402,950 comparisons with
 `formal/key_plane`, none differ. It also found that a re-admitted member's second live device is not wrapped at
 the seat.
+
+## 7b. A private room seats voices
+
+A community declares itself in its founding row: `membership` is `private` or `public`, and an absent member
+reads `public`. A room goes from private to public and never back. A self room and a family are seated by
+identity keys. The rule is CC 3.1.3.2, and the kernel is not changed by it: a room key is a key.
+
+In a private room the roster seats a **voice**, never an identity. A voice is a small counted roster of **room
+keys**, one for each device, made for that room only, and every row of the room is signed under a room key, a
+duty holder's verdict included. That a voice is a given person's is the **binding**. It is never a row and
+nobody signs it. It is made for one addressee, who can check it and cannot prove it to anyone else. The seat
+row of a room key carries a commitment to its person, and a binding that does not open it is refused.
+
+No answer of section 5 reads a binding. It is read to show a member who spoke, to check a joiner before a
+widening, and to count persons.
+
+All of this is **run** (`formal/causal_kernel/check_roomkey.py`). Nothing in this section is proved in Lean,
+and the verdicts on the binding are symbolic: a fact has a set of parties able to make it, and a party is
+convinced when nobody but the person named could have.
+
+- **The kernel does not care which key.** Every named answer for one room of 34 rows is the same over voices as
+  over identity keys, under a renaming that reverses the order of the names: 691 sets of rows, 22,468 answers in
+  two arrival orders. Who is entitled to a wrap is the same over 1,791 sequences of membership acts.
+- **One person, one voice.** A tally over voices equals the count of persons in each of 1,728 ways for the
+  devices of three persons to vote; a count of keys is wrong in 1,216. A person already seated gains a second
+  voice only when every signer of that admission did not check the binding.
+- **The binding.** Of five ways to make it, the planned one (two encapsulations and no signature) and a
+  designated-verifier signature are authentic inside and deniable outside: 0 of 180 coalitions forge, 0 of 14
+  prove anything. An identity signature, sealed or plain, lets 14 of 14 prove it. A code under the room's shared
+  key is forged by 168 of 180.
+- **A count of persons waits.** It is missing at a node for exactly the bindings that node lacks, over 20,736
+  pairs of nodes, and no two nodes holding every binding disagree. Without the commitment two members who share
+  a key make honest nodes count differently in 108 of 243 votes. With it none do: the node told otherwise
+  waits and names the key. A withheld binding is a stall at that node and never a fork.
+- **What a holder of rows can prove.** Under identity keys a reply carried elsewhere brings 15 rows of roster
+  ancestry and proves all four members. Under room keys none of 657 sets of rows of the room proves or names a
+  person, and a custody claim names none.
+- **An identity signature on any one kind of row undoes it.** Speech, a vote, a roster event, an acceptance, an
+  acknowledgement or a window row signed under an identity key lets between 8 and 14 of 14 coalitions prove
+  something about another person.
+- **Detection.** The owner-binding of a node's room key is a row of the room, read by any holder of the rows.
+  The detector's seat is conferred inside the room by the act that enables the list, and no outside root is on
+  the walk to it. The notice is admitted when its signer owns the detecting key by that row. The record names
+  no person, and withdrawing the enabling ends the seat.
+- **The declaration.** An absent member reads public; a founding row of a self room or a family that declares
+  is refused; `private` on a body that is public by function is refused; of 434 sequences of later declarations
+  none goes from public to private.
+
+**open**: the wire. The commitment, the two encapsulations, the key pair kept for bindings and the sealed
+invitation are planned for a later edition and are the implementer's (CC 3.1.3.2). **open**: no proof. The
+statements above are runs to a bound over a symbolic model.
+
+What a private room does not give, each marked as the check marks it:
+
+| Limit | How known |
+|---|---|
+| Deniability against a verifier who cheats, with a post-quantum key exchange, is conjectured and not proved | stated; the run shows only that a challenge its maker cannot open would make the confirmation transferable |
+| A member cooperating live with an outsider can prove what it sees | **run**: the outsider supplies the challenge and is convinced |
+| A member's word is always possible; what is removed is the proof | stated |
+| One signed row by the person outside the room, tying the room key to themself, makes that person's history in the room provable | **run**: eleven rows of one member, and no other member's |
+| A room already signed under identity keys stays provable | **run**: all four members; a later declaration of private concludes nothing |
+| A removed member keeps the bindings it was given | **run** |
+| Custody claims and delivery still reach a node; a network observer learns which nodes receive a room's rows unless delivery goes by the anonymous tier | **run** for the claim, which names no person; the network is outside the model |
+| A new key record appears when someone joins | **run**: each admission seats a key the head it names does not seat |
+| Erasure by person finds a person's room rows only through that person's own devices | stated |
+| A private room is out of reach of an order naming a person, except by testimony or by a member's device | **run**: no set of rows of the room names or proves a member |
 
 ## 8. What the kernel does not give
 
