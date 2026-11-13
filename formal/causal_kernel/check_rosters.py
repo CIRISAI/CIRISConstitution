@@ -988,6 +988,26 @@ def check_duty(spec, inst):
     W = [("the room removes a duty holder from its roster", [found(("A", "B", "C"))] + RS.remove(spec, "x", ("g",), "C", ("A", "B")), frozenset({"A", "B"}))]
     res.append(prop("a removal from the roster ends the removed member's duty seats (a non-member holds no duty)", W, "member_cut_only",
                     "a removal cuts the member seat only"))
+    # CC 4.5.4 (i) "a record MAY declare others", (iv) governs every duty seat: a seat the duty holders place over the room
+    # follows their count whatever its scope (Duty.lean one_of_several_confers_nothing, majority_confers, lone_holder_confers)
+    gd = lambda keys: dict(found(keys), duties=("verify",))           # a record that declares one more duty
+    stands = lambda S, k, s: ST.Seats(S).stands(k, s, "g")
+    own = lambda i, signer, k, s: [ST.offer(i, signer, k, s, "g", "self", ("g",)), ST.accept("a" + i, k, i)]
+    W2 = [("one of two holders seats detect:x alone", [found(("A", "B"))] + own("o", "A", "C", "detect:x"), ("C", "detect:x", False)),
+          ("one of two holders seats a declared duty alone", [gd(("A", "B"))] + own("o", "A", "C", "verify"), ("C", "verify", False)),
+          ("the lone holder seats detect:x, the holder accepting", [found(("A",))] + own("o", "A", "C", "detect:x"), ("C", "detect:x", True)),
+          ("two of three seat a declared duty, and its holder is a duty holder",
+           [gd(("A", "B", "D")), ST.offer("o", "A", "C", "verify", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("B", "C"))],
+           ("C", "duty", True))]
+    def ps(S, rows, n):
+        k, s, want = dict((w[0], w[2]) for w in W2)[n]
+        if stands(S, k, s) != want: return "%s holds %s: %s, want %s" % (k, s, stands(S, k, s), want)
+    base = run(spec, [(w[0], w[1]) for w in W2], ps)
+    with seat_mut("duty_list_only"):
+        m = run(spec, [(w[0], w[1]) for w in W2], ps, orders=False)
+    res.append(result(inst, "any seat the duty holders place over the room follows their count, a duty the record declares or any other scope",
+                      "CC 4.5.4 (i), (iv); Duty.lean one_of_several_confers_nothing, majority_confers, lone_holder_confers", verdict_of(base), base,
+                      "only the four named duties follow the count", m))
     return res
 
 

@@ -366,8 +366,9 @@ able to name several; the store's shape is an optional list of further heads bes
 **One mechanism, five instances.** A person's keys, a voice's room keys, a room, the accord and an
 infrastructure community are this one roster with parameters read from the policy table and the text. **run**
 (`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, six
-of a key's revocation, one of a member's leaving and five of a community's duty seats, in every arrival order
-to a cap, each with a deliberate break that is caught. A version does not count a key whose own leaving is in its past, whatever head it
+of a key's revocation, one of a member's leaving and six of a community's duty seats, in every arrival order
+to a cap, each with a deliberate break that is caught. Every seat the duty holders place over a room follows
+their count, whatever its scope; only membership is the roster's own seat. A version does not count a key whose own leaving is in its past, whatever head it
 names. The model counted such a key until the proof of `leaving_binds_by_past` showed the difference. A third
 key's revocation revokes nothing, and neither does a former owner's or either of two live owners'. With two
 live owners the key has no owner (CC 3.2), so that last is derived. A revoked key does not register again. The plain mechanism was wrong in four
@@ -546,7 +547,7 @@ that the ending row has not seen from counting.
 | 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
-| Two TLA+ models still state a moderator seated with no count and a founder's protocol in a community; their changes are written and not yet run. Three attack scenarios still seat a moderator by one signer of a member-scoped founding row. One of several duty holders still confers alone a scope that is not one of the four duties | model | `formal/mesh_life`, `formal/membership`, `formal/causal_kernel/attacks.py`, `formal/causal_kernel/seat.py` |
+| Two TLA+ models are brought under the community law in writing and not yet run: a locked room is read-only, the members' recall and the election seat or lift a duty holder, and a community never runs a founder's protocol | model | `formal/mesh_life`, `formal/membership` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
 | What each implementer's shipped behaviour does that the text does not: 65 cases the kernel runs, each a test to edit, 13 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
 

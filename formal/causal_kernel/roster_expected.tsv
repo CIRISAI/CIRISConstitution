@@ -24,6 +24,7 @@ community (public, members are persons)	Inv_ResignationEnabled	holds
 community (public, members are persons)	a key's leaving binds by the version's past: a version with it there does not count that key; one without it still does	holds
 community (public, members are persons)	a lone duty holder confers alone with the new holder's acceptance; one of two confers nothing alone	holds
 community (public, members are persons)	a removal from the roster ends the removed member's duty seats (a non-member holds no duty)	holds
+community (public, members are persons)	any seat the duty holders place over the room follows their count, a duty the record declares or any other scope	holds
 community (public, members are persons)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds
 community (public, members are persons)	conferral by a strict majority of the holders; withdrawal by a strict majority of the others, the holder concerned not counted	holds
 community (public, members are persons)	holders are equals: the key that conferred a duty seat does not end it alone	holds

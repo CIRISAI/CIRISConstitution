@@ -182,15 +182,30 @@ signers = lambda r: frozenset((r["signer"],) + tuple(r.get("cosigners", ())))
 covers = lambda have, want: have == want or want.startswith(have + ":")
 
 
-def is_duty(scope):
-    return scope == "duty" or scope.split(":")[0] in DUTIES
+def is_duty(scope, declared=()):
+    """A duty: the four the law names, or one the community's record declares (CC 4.5.4 (i): "a record MAY declare
+    others"). `declared` is the record's own list (the founding row's `duties`)."""
+    return scope == "duty" or scope.split(":")[0] in DUTIES or scope.split(":")[0] in declared
+
+
+def declared(by, obj):
+    g = by.get(obj)
+    return tuple((g or {}).get("duties", ()))
+
+
+# the seats over a community its duty holders do NOT place: membership is the roster's own seat, placed by the count
+# of the group's consensus_protocol and the joiner's yes (CC 3.1.3.2, CC 3.3.4). Every other seat they place over the
+# community is placed by them under CC 4.5.4 (iv), whatever its scope.
+ROSTER_SEATS = ("member",)
 
 
 def duty_seat(by, o):
-    """An offer of a duty over a community (an object that is a founding row seating duty holders)."""
+    """A seat placed over a community by its duty holders (an object that is a founding row seating duty holders):
+    every scope but the roster's own, so a scope the record declares, or any other, follows the holders' count."""
     g = by.get(o["obj"])
-    return (is_duty(o["scope"]) and g is not None and g["kind"] == "offer" and g["obj"] == g["id"] and g["id"] != o["id"]
-            and g["scope"] == "duty")
+    if g is None or g["kind"] != "offer" or g["obj"] != g["id"] or g["id"] == o["id"] or g["scope"] != "duty": return False
+    if "duty_list_only" in MUT: return is_duty(o["scope"])      # MUTATION: only the named duties follow the count
+    return o["scope"] not in ROSTER_SEATS
 
 
 def _lone(r, P, by):
@@ -246,7 +261,7 @@ class Seats:
             for u in unseats:
                 # a removal from the roster ends the removed member's duty seats too, "since a non-member holds no duty" (CC 4.5.4)
                 held = ("seat", k, o["scope"], o["obj"]) in u["cuts"] or (
-                    "member_cut_only" not in MUT and is_duty(o["scope"]) and ("seat", k, "member", o["obj"]) in u["cuts"])
+                    "member_cut_only" not in MUT and (is_duty(o["scope"]) or duty_seat(S.by, o)) and ("seat", k, "member", o["obj"]) in u["cuts"])
                 if not held: continue
                 # MUTATION by_arrival: an unseat ends the offers that were held before it, by list position
                 if (pos[o["id"]] < pos[u["id"]]) if by_arrival else (o["id"] in S.anc[u["id"]]): return True
@@ -294,7 +309,7 @@ class Seats:
         return any(covers(s, o["scope"]) for s in scopes) and o["obj"] == (up["obj"] if over == "same" else o["signer"])
 
     def _has(self, rec, s):
-        if s == "duty" and is_duty(rec["scope"]): return True              # a holder of any one duty is a duty holder
+        if s == "duty" and is_duty(rec["scope"], declared(self.S.by, rec["obj"])): return True   # a holder of any one duty is a duty holder
         return covers(rec["scope"], s) or s in K.rule(self.holds, rec["scope"], ())
 
     def stands(self, k, s, o, root=None):

@@ -445,8 +445,9 @@ def t08(t):
 def window_bases():
     Ws, Wm, Wh = WN.secs("self_roster_evict"), WN.secs("moderation_fallback"), WN.secs("halt_fuse")
     gs = ST.offer("g", "d1", ("d1", "d2", "d3"), "self", "@", "self", cosigners=("d2", "d3"))
-    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "member", "@", "self", cosigners=("m2", "m3"))
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "self", ("g",), cosigners=("MOD",))
+    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+                  cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
     gh = ST.offer("g", "h1", ("h1", "h2", "h3"), "holder", "@", "self", cosigners=("h2", "h3"))
     pm = WN.opener("p", "m2", "moderation_fallback", "g", ("md",))
     return {
@@ -554,8 +555,9 @@ def t11(t):
     t.fact("one hostile holder lapses another holder's halt at once by stating a receipt 24 h in its own past: recount=%s" % o["recount"], o["recount"] == "lapsed")
     o, bad = win(rows + [WN.answer("c1", "h1", "p", "confirm")]); t.order(bad)
     t.fact("the halting holder alone cannot undo that (its confirm is already counted): recount=%s; it takes a second honest holder" % o["recount"], o["recount"] == "lapsed")
-    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "member", "@", "self", cosigners=("m2", "m3"))
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "self", ("g",), cosigners=("MOD",))
+    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+                  cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
     rows = [gm, md, WN.opener("p", "m2", "moderation_fallback", "g", ("md",)), WN.receipt("r", "m2", "p", 0), WN.answer("x3", "m3", "p", "act"),
             WN.answer("x2", "m2", "p", "act"), WN.landing("L", "m2", "p", "r", "fallback", Wm, ("x2", "x3"))]
     o, bad = win(rows); t.order(bad)
@@ -1260,18 +1262,20 @@ def checkpoint_price():
     (m5_, s5_, t5_), bad = reader_view(pre + [hmc, hma, hm] + line + [RT.msg("mm", "A", "g", ("q2",)), RT.ack("kk", "B", "g", "mm", ("q2",))] + mgc + [mga, mg], own="B"); t.order(bad)
     t.fact("but for that reader the merge is built on a row behind its line, so the merge is void for it too (%s) and its roster stays %s: a reader whose acknowledgement outran a late honest row cannot take the merge that names it; "
            "the late row has to be signed again on the newer head" % (",".join(sorted(s5_)), fs(m5_)), {"hm", "mg"} <= s5_ and m5_ == {"A", "B", "C", "E", "G"})
-    md2 = ST.offer("md2", "A", "B", "moderate", "g", "self", ("g",), cosigners=("B",), room="g")
+    md2 = ST.offer("md2", "A", "B", "detect:x", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("B",), room="g")
     S = conc(pre + [md2] + line, ROUTE)
-    t.fact("a row that states no head is untouched: an appointment made on the founding row still stands two counted rows later (B moderates: %s)" % ST.Seats(S).stands("B", "moderate", "g"),
-           ST.Seats(S).stands("B", "moderate", "g"))
+    t.fact("a seat over the room is placed only by the duty holders' count (CC 4.5.4), so an appointment on the founding head is a counted act: two counted rows later "
+           "that leave it unnamed, it waits as a tip and B holds it = %s, as any counted row on an old head" % ST.Seats(S).stands("B", "detect:x", "g"),
+           not ST.Seats(S).stands("B", "detect:x", "g"))
     base = room_rows(*ROOM)
     (ma, sa, ta), bad = reader_view(base + forged_line(2, "w")); t.order(bad)
     (mb, sb, tb), bad = reader_view(base + forged_line(2, "w"), checkpoint=True); t.order(bad)
     t.fact("THE REASON THE GROUP CHECKPOINT IS OFF. A past count (seated A with removed C) signs two rows from the head the newest honest row is counted over, the second over the first. As the rule stands: two tips, members %s, nothing stale. "
            "With Seats(..., checkpoint=True): the forged line is one row deeper, the honest removal is left behind (%s) and the members are %s: the removed key is back. That is a rank by depth of line"
            % (fs(ma), ",".join(sorted(sb)), fs(mb)), ma == {"A"} and not sa and "x" in sb and mb == {"A", "C", "F2"})
-    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "member", "@", "self", cosigners=("m2", "m3"))
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "self", ("g",), cosigners=("MOD",))
+    gm = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+                  cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
     Wm = WN.secs("moderation_fallback")
     pm = WN.opener("p", "m2", "moderation_fallback", "g", ("md",))
     An = WN.answer("A", "MOD", "p", "answered")                              # the moderator answers in time
