@@ -2162,10 +2162,10 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 | `default_standing` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
 | `default_irreversible` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
 | `community_invite` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
-| `community_remove` | `member`, one voice a person, the set as signed | 2/3 | — | — | 259 200 s | cancelled |
+| `community_remove` | `member`, one voice a person, the set as signed | protocol | — | — | 259 200 s | cancelled |
 | `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
 | `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
-| `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderator\|steward at 1 | — | 1/2 | 172 800 s | tallied |
+| `moderation_action` | `member`, one voice a person, the set the proposal names | role:moderator\|steward at 1 | — | 2 voices | 172 800 s | tallied |
 | `moderation_overturn` | `member`, one voice a person, the set at the act | more than 1/2 | — | 2 voices | 172 800 s | lapsed |
 | `moderator_recall` | `member`, one voice a person, the set as signed | 2/3 | — | 2 voices | 259 200 s | cancelled |
 | `accord_halt` | `holder`, one voice a person, instant not stated | 1/N fires | 1/2 confirms | — | 86 400 s | lapsed |

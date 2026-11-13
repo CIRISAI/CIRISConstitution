@@ -130,6 +130,8 @@ def ceil_div(a, b):
 
 def votes(fr, base, strict):
     n, d = fr
+    if n >= d:                                # the whole set: every member, never more than there are
+        return base
     return n * base // d + 1 if strict else ceil_div(n * base, d)
 
 

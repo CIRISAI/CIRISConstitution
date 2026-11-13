@@ -105,6 +105,10 @@ def policy_table(path=None):
 
 
 POLICY = policy_table()
+# A removal runs under the room's own declared protocol (CC 3.3.4; the table's cell is `protocol`). The rooms of
+# these scenarios declare two thirds. roster.py runs the other protocols.
+if POLICY.get("community_remove", ("", 0, 0))[0] == "declared":
+    POLICY["community_remove"] = ("atleast", 2, 3)
 
 
 def met(policy, yes, n, declared=None, table=None):

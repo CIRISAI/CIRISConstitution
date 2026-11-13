@@ -1,7 +1,7 @@
 {
  "_meta": {
-  "policy_sha256": "7e8afc527ba48f3669b9b9b2fa0575ce08c194bdbd8d29569cc38bc9b490e0eb",
-  "count": 732,
+  "policy_sha256": "fd2801ab52258ba65f42a291a1fdffd198d6e21d96cc9d6bce7c7d775ebe500f",
+  "count": 684,
   "rule_vector_count": 240,
   "rule_kinds": [
    "fraction",
@@ -10959,774 +10959,6 @@
    "verdict": "lands",
    "path": "forward",
    "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 2,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 2,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 2,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 3,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 3,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 3,
-   "base": 3,
-   "thresholds": {
-    "enact": 3,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 3,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 4,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 4,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 4,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 5,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 5,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 6,
-   "base": 6,
-   "thresholds": {
-    "enact": 5,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 5,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 6,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 6,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 6,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 7,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 7,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10,
-   "base": 10,
-   "thresholds": {
-    "enact": 7,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 7,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 0,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 1,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 229,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 229,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "pending",
-   "path": "none",
-   "why": "window open"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 229,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "cancelled",
-   "path": "none",
-   "why": "window closed below enact; this door has no reverse path"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 230,
-   "objections": 0,
-   "elapsed_secs": 0,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 230,
-   "objections": 0,
-   "elapsed_secs": 259199,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
-  },
-  {
-   "family": "community_remove",
-   "roster": 10000,
-   "base": 344,
-   "thresholds": {
-    "enact": 230,
-    "cancel": null,
-    "floor": null
-   },
-   "approvals": 230,
-   "objections": 0,
-   "elapsed_secs": 259200,
-   "verdict": "lands",
-   "path": "forward",
-   "why": "enact reached"
   }
  ],
  "rule_vectors": [
@@ -12394,56 +11626,46 @@
    "family": "community_remove",
    "cell": "enact",
    "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 3
+    "kind": "protocol"
    },
    "base": 2,
-   "votes": 2
+   "votes": null
   },
   {
    "family": "community_remove",
    "cell": "enact",
    "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 3
+    "kind": "protocol"
    },
    "base": 3,
-   "votes": 3
+   "votes": null
   },
   {
    "family": "community_remove",
    "cell": "enact",
    "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 3
+    "kind": "protocol"
    },
    "base": 5,
-   "votes": 4
+   "votes": null
   },
   {
    "family": "community_remove",
    "cell": "enact",
    "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 3
+    "kind": "protocol"
    },
    "base": 9,
-   "votes": 7
+   "votes": null
   },
   {
    "family": "community_remove",
    "cell": "enact",
    "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 3
+    "kind": "protocol"
    },
    "base": 100,
-   "votes": 67
+   "votes": null
   },
   {
    "family": "community_remove",
@@ -12944,20 +12166,18 @@
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "fraction",
-    "num": 1,
-    "den": 2
+    "kind": "voices",
+    "count": 2
    },
    "base": 2,
-   "votes": 1
+   "votes": 2
   },
   {
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "fraction",
-    "num": 1,
-    "den": 2
+    "kind": "voices",
+    "count": 2
    },
    "base": 3,
    "votes": 2
@@ -12966,34 +12186,31 @@
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "fraction",
-    "num": 1,
-    "den": 2
+    "kind": "voices",
+    "count": 2
    },
    "base": 5,
-   "votes": 3
+   "votes": 2
   },
   {
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "fraction",
-    "num": 1,
-    "den": 2
+    "kind": "voices",
+    "count": 2
    },
    "base": 9,
-   "votes": 5
+   "votes": 2
   },
   {
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "fraction",
-    "num": 1,
-    "den": 2
+    "kind": "voices",
+    "count": 2
    },
    "base": 100,
-   "votes": 50
+   "votes": 2
   },
   {
    "family": "moderation_overturn",
@@ -13429,6 +12646,17 @@
     "den": 2
    },
    "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "custodian_replace",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 3,
    "votes": 3
   },
   {
@@ -13439,19 +12667,8 @@
     "num": 2,
     "den": 2
    },
-   "base": 3,
-   "votes": 4
-  },
-  {
-   "family": "custodian_replace",
-   "cell": "enact",
-   "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 2
-   },
    "base": 5,
-   "votes": 6
+   "votes": 5
   },
   {
    "family": "custodian_replace",
@@ -13462,7 +12679,7 @@
     "den": 2
    },
    "base": 9,
-   "votes": 10
+   "votes": 9
   },
   {
    "family": "custodian_replace",
@@ -13473,7 +12690,7 @@
     "den": 2
    },
    "base": 100,
-   "votes": 101
+   "votes": 100
   },
   {
    "family": "custodian_replace",
@@ -13574,6 +12791,17 @@
     "den": 2
    },
    "base": 2,
+   "votes": 2
+  },
+  {
+   "family": "affiliation_member_action",
+   "cell": "enact",
+   "rule": {
+    "kind": "fraction",
+    "num": 2,
+    "den": 2
+   },
+   "base": 3,
    "votes": 3
   },
   {
@@ -13584,19 +12812,8 @@
     "num": 2,
     "den": 2
    },
-   "base": 3,
-   "votes": 4
-  },
-  {
-   "family": "affiliation_member_action",
-   "cell": "enact",
-   "rule": {
-    "kind": "fraction",
-    "num": 2,
-    "den": 2
-   },
    "base": 5,
-   "votes": 6
+   "votes": 5
   },
   {
    "family": "affiliation_member_action",
@@ -13607,7 +12824,7 @@
     "den": 2
    },
    "base": 9,
-   "votes": 10
+   "votes": 9
   },
   {
    "family": "affiliation_member_action",
@@ -13618,7 +12835,7 @@
     "den": 2
    },
    "base": 100,
-   "votes": 101
+   "votes": 100
   },
   {
    "family": "affiliation_member_action",
