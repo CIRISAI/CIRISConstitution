@@ -89,10 +89,17 @@ def worlds(name):
     answerers = [k for k in keys if s["kind"] != "ranked" or True]
     answerers += [seat_of[x] for x in s["extra"]]
     if s.get("target_votes") and target: answerers.append(target)
-    answerers = list(dict.fromkeys(a for a in answerers if a != op or s["kind"] == "ranked" or name.startswith("moderation_action")))
+    answerers = list(dict.fromkeys(a for a in answerers if a != op or s["kind"] == "ranked" or name == "moderation_action"))
     if s["kind"] == "ranked": answerers.append(keys[0])                 # one person with a second ballot
     kinds = BALLOTS if s["kind"] == "ranked" else s["kinds"]
     opts = [None] + [(k, pos) for k in kinds for pos in ("named", "conc")]
+    if name == "moderation_action" and NK == 4:          # four members: the split vote only (the moderator silent, every answer named)
+        out = []
+        for choice in itertools.product([None, ("act", "named"), ("keep", "named")], repeat=len(keys)):
+            for sy in ("fallback", "lapsed"):
+                out.append({"door": name, "ans": tuple((a, ch[0], ch[1]) for a, ch in zip(keys, choice) if ch), "note": None,
+                            "L": (keys[1], sy, True), "op": op, "target": target, "joiners": None})
+        return out
     if s["concluder"] == "target": concl = [target, keys[0] if keys[0] != target else keys[1]]
     elif s["concluder"] == "winner": concl = list(keys)
     else:
@@ -185,12 +192,11 @@ def ref(w):
         if not el: return "open"
         got = RC.winner([(a, k) for a, k, _ in w["ans"]], ["m1", "m2", "m3"])
         return ("winner:" + got) if got else "open"
-    if name.startswith("moderation_action"):
+    if name == "moderation_action":
         if tally(w, "answered", {"MOD"}): return "answered"
         if not el: return "open"
         act, keep = tally(w, "act") & set(keys), tally(w, "keep") & set(keys)
-        if name.endswith("+voted"): return "fallback" if 2 * len(act) > len(act | keep) and len(act) >= 2 else "lapsed"
-        return "fallback" if len(act) >= 2 else "lapsed"                      # the cell: two voices
+        return "fallback" if 2 * len(act) > len(act | keep) and len(act) >= 2 else "lapsed"   # CC 4.5.13: of those who voted, two voices
     return None
 
 
@@ -228,7 +234,7 @@ def props(name):
                   lambda w, o: None if o != "removed" else len(tally(w, "assent") | {w["op"]}) >= 2))
         P.append(("every other member removes (note: 'every other member and a strict majority')", "community_remove note",
                   lambda w, o: None if not (set(keys) - {w["target"]} <= tally(w, "assent", None, ("named",)) | {w["op"]}) or not L(w)[1] == "removed" else o == "removed"))
-    if name.startswith("moderation_action"):
+    if name == "moderation_action":
         P.append(("the fallback carries only on a strict majority of the members who voted, floor two", "CC 4.5.13; the row's note",
                   lambda w, o: None if o != "fallback" else 2 * len(tally(w, "act", set(keys))) > len(tally(w, "act", set(keys)) | tally(w, "keep", set(keys)))
                   and len(tally(w, "act", set(keys))) >= 2))
@@ -237,7 +243,8 @@ def props(name):
         P.append(("the fallback needs the members' count", "window_adversary",
                   lambda w, o: None if o != "fallback" else len(tally(w, "act", set(keys))) >= 2))
         P.append(("the fallback works when the moderator is absent", "window_adversary",
-                  lambda w, o: None if tally(w, "answered", {"MOD"}) or len(tally(w, "act", set(keys), ("named",))) < 2 or L(w)[1] != "fallback" or not L(w)[2] or L(w)[0] == "MOD" else o == "fallback"))
+                  lambda w, o: None if tally(w, "answered", {"MOD"}) or len(tally(w, "act", set(keys), ("named",))) < 2 or L(w)[1] != "fallback" or not L(w)[2] or L(w)[0] == "MOD"
+                  or 2 * len(tally(w, "act", set(keys))) <= len(tally(w, "act", set(keys)) | tally(w, "keep", set(keys))) else o == "fallback"))
     if name == "moderation_overturn":
         P.append(("Inv_SeatedMajority: a lift is carried by a strict majority seated at the act", "moderation_lift",
                   lambda w, o: None if o != "lifted" else 2 * len(tally(w, "object", set(keys))) > n))
@@ -308,8 +315,7 @@ MUTATION = {
     "community_remove[unanimous]": ("one_voice", "every threshold read as one voice"),
     "community_remove[majority]": ("one_voice", "every threshold read as one voice"),
     "community_remove[quorum]": ("one_voice", "every threshold read as one voice"),
-    "moderation_action": ("void", "the landing voids concurrent answers"),
-    "moderation_action+voted": ("void", "the landing voids concurrent answers"),
+    "moderation_action": ("floor_two_voices", "the floor read as two voices of the roster (the old cell)"),
     "moderation_overturn": ("live_roster", "counted over whoever is seated at the count"),
     "moderator_recall": ("one_voice", "every threshold read as one voice"),
     "accord_halt@holder": ("void", "the landing voids concurrent answers"),
@@ -329,7 +335,7 @@ MUTATION = {
     "invitation": ("late_counts", "an acceptance after the close still admits"),
 }
 DOOR_NAMES = list(MUTATION)
-THREE_ONLY = {"moderator_election", "takedown_withhold", "moderation_action", "moderation_action+voted"}   # the largest world sets run at three keys only
+THREE_ONLY = {"moderator_election", "takedown_withhold"}   # the largest world sets run at three keys only
 
 
 def set_mut(m):
@@ -381,7 +387,9 @@ def _fmt(w, o):
 
 def order_job(args):
     """Every arrival order of a sample of worlds (all orders up to 8 rows; 600 sampled orders above)."""
+    global NK
     name, mut, every = args
+    NK = 3                                          # a worker may have run a four-key job before this one
     set_mut(mut)
     ws = worlds(name)
     if mut == "by_arrival": ws = [w for w in ws if any(x[2] == "conc" for x in w["ans"])]      # the plant needs a concurrent answer
@@ -482,19 +490,19 @@ def room_of_one():
 
 
 def moderation_split():
-    """Four members, two act and two keep, the moderator silent; a member lands the fallback after the window.
-    CC 4.5.13: 'a strict majority of the members who voted, never fewer than two voices' -> not carried."""
+    """Four members, two act and two keep, the moderator silent; a member lands after the window, stating the fallback
+    and then the lapse. CC 4.5.13: 'a strict majority of the members who voted, never fewer than two voices'."""
     out = []
-    for name in ("moderation_action", "moderation_action+voted"):
+    for name, says in (("moderation_action", "fallback"), ("moderation_action", "lapsed")):
         D.rebuild()
         keys = ("m1", "m2", "m3", "m4")
         g = ST.offer("g", "m1", keys, "member", "@", "self", cosigners=keys[1:])
         md = ST.offer("md", "m1", "MOD", "moderate", "g", "self", ("g",), cosigners=("MOD",))
         p = WN.opener("p", "m1", D.key(name), "g", ("md",))
         ans = [WN.answer("a1", "m1", "p", "act"), WN.answer("a2", "m2", "p", "act"), WN.answer("a3", "m3", "p", "keep"), WN.answer("a4", "m4", "p", "keep")]
-        rows = [g, md, p] + ans + [WN.receipt("r", "m2", "p", 0), WN.landing("L", "m2", "p", "r", "fallback", D.secs(D.key(name)), ("a1", "a2", "a3", "a4"))]
+        rows = [g, md, p] + ans + [WN.receipt("r", "m2", "p", 0), WN.landing("L", "m2", "p", "r", says, D.secs(D.key(name)), ("a1", "a2", "a3", "a4"))]
         S = CK.concluded(CK.kept(rows), D.rule)
-        out.append((name, D.outcome(S, "p")))
+        out.append((name, says, D.outcome(S, "p")))
     return out
 
 
@@ -666,9 +674,9 @@ def main():
     for name, cname, o, need in room_of_one():
         say("   room of one, %-26s %-70s -> %s (needs %s)" % (name, cname, o, need))
         got.append((name, "room of one: " + cname, o))
-    for name, o in moderation_split():
-        say("   moderation, four members, two act and two keep, a member lands the fallback: %-26s -> %s (CC 4.5.13 needs lapsed)" % (name, o))
-        got.append((name, "two act and two keep of four: the fallback", o))
+    for name, says, o in moderation_split():
+        say("   moderation, four members, two act and two keep, the moderator silent; a member lands '%s' -> %s (CC 4.5.13: lapsed)" % (says, o))
+        got.append((name, "two act and two keep of four: a landing stating %s" % says, o))
     n, bad, wit = vectors()
     say("3. governance_policy_vectors.json replayed on the door's table: %d vectors, %d differ %s" % (n, bad, wit))
     got.append(("two-path rows", "%d published vectors replayed" % n, "same" if bad == 0 else "differs"))

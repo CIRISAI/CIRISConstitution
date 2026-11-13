@@ -72,6 +72,7 @@ def at_least_rule(cell, mc):
     if k == "strict_majority": return ("strict", 1, 2, 1)
     if k == "one_of_n": return ("abs", 1)
     if k == "voices": return ("abs", cell["count"])
+    if k == "voted_majority": return ("strict", 1, 2, cell["count"])     # over those who voted (the clause's `over`)
     raise ValueError(cell)
 
 
@@ -296,18 +297,17 @@ def door_specs():
     D["community_invite+invitee"] = dict(D["community_invite"], target_votes=True,
         unstated=D["community_invite"]["unstated"] + ["target_votes (window.py's own parameter): the invitee's acceptance is a voice of the floor (the row's note; CC 4.5.13)"])
     f = POLICY["moderation_action"]
+    fl = {"kind": "voices", "count": 2} if "floor_two_voices" in MUT else f["floor_rule"]     # MUTATION: the old cell, two voices of the roster
     D["moderation_action"] = dict(policy="moderation_action", kind="mirror", opener="member", counted="member", extra=("moderate",),
         target_votes=False, opener_says=None, kinds=("answered", "act", "keep"),
-        clauses=(("once", "answered", ("abs", 1), "extra", "answered"), ("close", "act", at_least_rule(f["floor_rule"], 2), "all", "fallback")),
+        clauses=(("once", "answered", ("abs", 1), "extra", "answered"),
+                 ("close", "act", at_least_rule(fl, 2), "voted" if fl["kind"] == "voted_majority" else "all", "fallback")),
         silent=None, default="lapsed", secs=f["window_secs"], concluder="member", late="counts", outcomes=("answered", "fallback", "lapsed", "open"),
         cells={"enact": "role_at moderator|steward 1 (steward tier dropped by ruling: duty holders with scope moderate)",
-               "floor": "floor_rule voices 2", "window": "window_secs 172800", "default": "at_window tallied -> lapsed"},
+               "floor": "floor_rule voted_majority 2: more than half of the members who voted, at least two voices",
+               "window": "window_secs 172800", "default": "at_window tallied -> lapsed"},
         unstated=["who opens: a member raising the action", "what the members' answers are: 'act' and 'keep' (voices cell 'unstated')",
-                  "the cell gives two voices; 'a strict majority of the members who voted' is in the note and CC 4.5.13, in no cell",
                   "concluder: a member"])
-    D["moderation_action+voted"] = dict(D["moderation_action"],
-        clauses=(("once", "answered", ("abs", 1), "extra", "answered"), ("close", "act", ("strict", 1, 2, 2), "voted", "fallback")),
-        unstated=D["moderation_action"]["unstated"] + ["EXTRA PARAMETER: counted over those who voted, a strict majority, floor two (the row's note)"])
     f = POLICY["moderation_overturn"]
     D["moderation_overturn"] = dict(policy="moderation_overturn", kind="mirror", opener="moderate", counted="member", extra=(), target_votes=False,
         opener_says=None, kinds=("object",), clauses=(("once", "object", ("strict", 1, 2, 2), "all", "lifted"),),

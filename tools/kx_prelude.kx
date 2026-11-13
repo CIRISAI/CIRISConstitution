@@ -73,4 +73,5 @@ def rule_votes(kind, num, den, count, base, strict) = first(
     eq(kind, 'strict_majority') -> add(div(base, 2), 1),
     eq(kind, 'strict_majority_of_others') -> add(div(sub(base, 1), 2), 1),
     member(kind, {'role_at', 'voices'}) -> count,
+    eq(kind, 'voted_majority') -> first(ge(count, add(div(base, 2), 1)) -> count, else -> add(div(base, 2), 1)),
     else -> none)

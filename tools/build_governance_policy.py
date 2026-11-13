@@ -83,7 +83,9 @@ def rule_of(s):
     """Every cell as a typed rule, so no implementer parses prose (CEWP#16, 2026-11-08). One of:
     fraction{num,den}; one_of_n (any one member of the standing set); strict_majority (more than half of the
     standing set); strict_majority_of_others (more than half of the set less the actor); role_at{roles,count}
-    (a named role, count holders); voices{count}; ranked_irv{choices}; none (this path does not exist)."""
+    (a named role, count holders); voices{count}; voted_majority{count} (more than half of the members who voted,
+    never fewer than count voices: its base is the number who voted, not the roster); ranked_irv{choices};
+    none (this path does not exist)."""
     s = s.strip()
     if s in ("—", "-", ""):
         return OrderedDict([("kind", "none")])
@@ -93,6 +95,9 @@ def rule_of(s):
         return OrderedDict([("kind", "one_of_n")])
     if "/" in s and all(p.strip().isdigit() for p in s.split("/")):
         a, b = s.split("/"); return OrderedDict([("kind", "fraction"), ("num", int(a)), ("den", int(b))])
+    m = re.match(r"^more than 1/2 of those who voted, at least (\d+) voices$", s)
+    if m:   # CC 4.5.13: "the vote carries by a strict majority of those who voted, and the floor is two voices"
+        return OrderedDict([("kind", "voted_majority"), ("count", int(m.group(1)))])
     if s.startswith("more than 1/2 of the others"):
         return OrderedDict([("kind", "strict_majority_of_others")])
     if s in ("1/2 confirms", "more than 1/2"):
@@ -109,7 +114,8 @@ def rule_of(s):
 
 
 def rule_votes(rule, base, strict):
-    """The count a typed rule needs at a given base; None where the rule is not a count (ranked_irv, none)."""
+    """The count a typed rule needs at a given base; None where the rule is not a count (ranked_irv, none).
+    For voted_majority the base is the number of members who voted, never the roster."""
     k = rule["kind"]
     if k == "fraction":
         return votes((rule["num"], rule["den"]), base, strict)
@@ -121,6 +127,8 @@ def rule_votes(rule, base, strict):
         return (base - 1) // 2 + 1
     if k in ("role_at", "voices"):
         return rule["count"]
+    if k == "voted_majority":
+        return max(rule["count"], base // 2 + 1)
     return None
 
 
@@ -521,7 +529,7 @@ def build():
     vec = vectors(rows)
     rv = rule_vectors(rows)
     json.dump(OrderedDict([("_meta", {"policy_sha256": pin, "count": len(vec), "rule_vector_count": len(rv),
-                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "ranked_irv", "protocol", "none"]}),
+                                       "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "voted_majority", "ranked_irv", "protocol", "none"]}),
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
     names = gen_cfgs(rows)
@@ -541,8 +549,14 @@ def self_test():
     # the floor never lands before the window, in every vector
     early = [v for v in vec if v["verdict"] == "lands" and v["path"] == "reverse" and v["elapsed_secs"] < rows[v["family"]]["window_secs"]]
     lone = [v for v in vec if v["verdict"] == "lands" and v["approvals"] <= 1 and v["base"] > 2]
-    print(f"self-test: {len(vec)} vectors replayed, {bad} mismatches; reverse landings before the window: {len(early)}; landings on one voice at base > 2: {len(lone)}")
-    sys.exit(1 if bad or early or lone else 0)
+    # voted_majority counts over those who voted: two of three voters carry, two of four do not, one voice never does
+    vm = rule_of("more than 1/2 of those who voted, at least 2 voices")
+    vm_ok = [rule_votes(vm, n, False) for n in (1, 2, 3, 4, 5, 9)] == [2, 2, 2, 3, 3, 5]
+    rv = json.load(open(VEC))["rule_vectors"]
+    rv_bad = sum(1 for v in rv if rule_votes(v["rule"], v["base"], v["cell"] == "enact") != v["votes"])
+    print(f"self-test: {len(vec)} vectors replayed, {bad} mismatches; reverse landings before the window: {len(early)}; landings on one voice at base > 2: {len(lone)}; "
+          f"{len(rv)} rule vectors replayed, {rv_bad} mismatches; voted_majority counts {'as stated' if vm_ok else 'WRONG'}")
+    sys.exit(1 if bad or early or lone or rv_bad or not vm_ok else 0)
 
 
 if __name__ == "__main__":

@@ -46,13 +46,7 @@ moderation_action	a present moderator is not overridden	holds
 moderation_action	the fallback carries only on a strict majority of the members who voted, floor two	holds
 moderation_action	the fallback needs the members' count	holds
 moderation_action	the fallback works when the moderator is absent	holds
-moderation_action	plant: mutation void	caught
-moderation_action+voted	recount agrees with the reference	holds
-moderation_action+voted	a present moderator is not overridden	holds
-moderation_action+voted	the fallback carries only on a strict majority of the members who voted, floor two	holds
-moderation_action+voted	the fallback needs the members' count	holds
-moderation_action+voted	the fallback works when the moderator is absent	holds
-moderation_action+voted	plant: mutation void	caught
+moderation_action	plant: mutation floor_two_voices	caught
 moderation_overturn	recount agrees with the reference	holds
 moderation_overturn	Inv_SeatedMajority: a lift is carried by a strict majority seated at the act	holds
 moderation_overturn	Inv_StandsAfterWindow: an act not lifted stands	holds
@@ -119,7 +113,6 @@ community_remove[unanimous]	one answer in every arrival order	same
 community_remove[majority]	one answer in every arrival order	same
 community_remove[quorum]	one answer in every arrival order	same
 moderation_action	one answer in every arrival order	same
-moderation_action+voted	one answer in every arrival order	same
 moderation_overturn	one answer in every arrival order	same
 moderator_recall	one answer in every arrival order	same
 accord_halt@holder	one answer in every arrival order	same
@@ -159,8 +152,8 @@ community_invite	room of one: the founder proposes J, J accepts, the founder lan
 community_invite	room of one: the founder proposes J, nobody answers, the founder lands at the close	landed
 community_invite+invitee	room of one: the founder proposes J, J accepts, the founder lands at the close	landed
 community_invite+invitee	room of one: the founder proposes J, nobody answers, the founder lands at the close	landed
-moderation_action	two act and two keep of four: the fallback	fallback
-moderation_action+voted	two act and two keep of four: the fallback	open
+moderation_action	two act and two keep of four: a landing stating fallback	open
+moderation_action	two act and two keep of four: a landing stating lapsed	lapsed
 two-path rows	684 published vectors replayed	same
 time G3	withdrawal that never saw the act	cut [False]; first-held [True]
 time G3	withdrawal naming the act	cut [True]; first-held [True]

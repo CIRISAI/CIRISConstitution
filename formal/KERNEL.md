@@ -197,9 +197,6 @@ count, and every deliberate break is caught. The policy table states the count, 
 | the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands |
 | the threshold as the room's declared protocol | a removal is cosigned under the room's own protocol |
 
-One row still differs from its text. The moderation fallback lands when two members act and two keep, where
-CC 4.5.13 asks a strict majority of the members who voted. No cell states "of those who voted". **open**.
-
 Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
 

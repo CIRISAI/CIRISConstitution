@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "policy_sha256": "fd2801ab52258ba65f42a291a1fdffd198d6e21d96cc9d6bce7c7d775ebe500f",
+  "policy_sha256": "634cf399001e6b32732eedda85640a8b467d5561beed01dd5a8660236b998471",
   "count": 684,
   "rule_vector_count": 240,
   "rule_kinds": [
@@ -10,6 +10,7 @@
    "strict_majority_of_others",
    "role_at",
    "voices",
+   "voted_majority",
    "ranked_irv",
    "protocol",
    "none"
@@ -12166,7 +12167,7 @@
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voted_majority",
     "count": 2
    },
    "base": 2,
@@ -12176,7 +12177,7 @@
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voted_majority",
     "count": 2
    },
    "base": 3,
@@ -12186,31 +12187,31 @@
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voted_majority",
     "count": 2
    },
    "base": 5,
-   "votes": 2
+   "votes": 3
   },
   {
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voted_majority",
     "count": 2
    },
    "base": 9,
-   "votes": 2
+   "votes": 5
   },
   {
    "family": "moderation_action",
    "cell": "floor",
    "rule": {
-    "kind": "voices",
+    "kind": "voted_majority",
     "count": 2
    },
    "base": 100,
-   "votes": 2
+   "votes": 51
   },
   {
    "family": "moderation_overturn",
