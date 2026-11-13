@@ -344,6 +344,7 @@ def guard_sets(family, clauses, seed, n=30, maxrows=5):
                 L, R = slotname(j["left"]), slotname(j["right"])
                 if L and (R or j["right"]["slot"] == "const"): pairs.append((L, R, j["right"]["arg"] if j["right"]["slot"] == "const" else None))
     fams, vals, refs, roles, leaves, verbs, eachk = set(), set(), set(), set(), set(), set(), set()
+    hasv = set()                       # members a `when(has=...)` condition reads: some sets leave them out (below)
     def walkc(cs):
         for c in cs:
             if c["each"]: eachk.add(c["each"][4:] if c["each"].startswith("val:") else c["each"])
@@ -351,6 +352,7 @@ def guard_sets(family, clauses, seed, n=30, maxrows=5):
                 if w["cond"] == "leaf": leaves.update(w["values"])
                 if w["cond"] == "verb": verbs.update(w["values"])
                 if w["cond"] in ("has", "subkind"): vals.add(w["values"][0])
+                if w["cond"] == "has": hasv.add(w["values"][0])
             if "group" in c: walkc(c["group"])
     walkc(clauses)
     for a in walk_atoms(clauses):
@@ -412,6 +414,8 @@ def guard_sets(family, clauses, seed, n=30, maxrows=5):
             if k == "subject": selfrow["subject"] = v
             else: selfrow["val"][k] = v
         selfrow["cosig"] = frozenset(rnd.sample(KEYS, rnd.randint(0, 3)))
+        if hasv and random.Random(seed * 1009 + len(out)).random() < .35:   # a row without the member, so `has` is read both ways;
+            for v in hasv: selfrow["val"][v] = None                          # its own generator, so no other draw moves
         out.append((rows + [selfrow], selfrow["id"]))
     return out
 

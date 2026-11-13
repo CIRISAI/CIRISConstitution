@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "1d1d3d305b350b52ff3695b02a9b3d3087c866939b149161745ce3ad390573ce",
+  "registry_sha256": "bf21eef74fef0d4190521c14c647d198391675fe0a699709c57630133edf076f",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -435,7 +435,7 @@
     "witnesses: a witnessed lineage's charter"
    ],
    "members_from_text": {
-    "in_cddl": 96,
+    "in_cddl": 97,
     "named_by_the_text_alone": 151
    }
   },
@@ -42509,14 +42509,30 @@
     "value": [
      "state",
      "stands",
+     "may",
      "owed"
     ],
     "source": "cc-table",
     "rule": "cells",
     "by": [
      {
+      "grammar": "guard",
+      "cell": "formal/derivation/guard_text.tsv#key:record (CC 2.4.1.1)",
+      "answers": [
+       "may"
+      ]
+     },
+     {
       "grammar": "reaction",
       "cell": "formal/derivation/reaction_text.tsv#key:record (CC 4.2.1)",
+      "answers": [
+       "state",
+       "owed"
+      ]
+     },
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#key:record (CC 2.4.1.1)",
       "answers": [
        "state",
        "owed"

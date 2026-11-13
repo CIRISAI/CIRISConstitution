@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "0253df8582d9518432b23d9612a611a6bd848dfabedbba1faad505231b083a97",
+  "source_sha256": "9546d99c0645a9672570b86314895914703a4edffe450958b7544dd9c3574ab5",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,8 +45,8 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 58,
-   "guarded_transitions": 26,
+   "statements": 59,
+   "guarded_transitions": 28,
    "marks": {
     "refuse": 32,
     "ref:*": 10,
@@ -12917,8 +12917,16 @@
       "when": "always"
      },
      "guard": {
-      "value": [],
-      "source": "generic"
+      "value": [
+       {
+        "guard": "when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)",
+        "cc_ref": [
+         "CC 2.4.1.1"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      },
      "change": {
       "value": [],
@@ -12957,8 +12965,16 @@
       "source": "derived"
      },
      "guard": {
-      "value": [],
-      "source": "generic"
+      "value": [
+       {
+        "guard": "when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)",
+        "cc_ref": [
+         "CC 2.4.1.1"
+        ],
+        "reach": "partial"
+       }
+      ],
+      "source": "cc-table"
      },
      "change": {
       "value": [

@@ -352,7 +352,7 @@ p2	267	2.4	kernel	cosign	none	*	is	states		a cosigned act is named by its quorum
 p2	267	2.4	kernel	withdraw	lifecycle	*	is	states		retraction of a cosigned row is by the same quorum, a cosigned withdraws; rules 1 to 4 do not reach it, so no single signer or subject retires a group record	
 p2	267	2.4	family	row_shape	body	group,membership	is	restates	3.1.3	roster versions are group:roster:v1 with prev_head_digest and charter_digest; widening, removal and resignation are cosigned beside single-signer proposal, acceptance and decline	
 p2	267	2.4	family	registration	signer_rule	key	is	exception		key:record:v1 is attested by the key itself and admitted by proof of possession against the keys it carries, the one exception to resolve-the-attester	
-p2	267	2.4	family	supersede	lifecycle	key	is	states		key rotation is a supersedes of the key record; an anchor scrub or accord co-scrub is a cosignature	
+p2	267	2.4	family	supersede	lifecycle	key	is	states		key renewal is a supersedes by the same key and rotation is the next key's record cosigned by the old key; an anchor scrub or accord co-scrub is a cosignature	
 p2	267	2.4	family	signer	signer_rule	identity	is	states		identity:occurrence:v1 is signed by the identity or a live occurrence	
 p2	267	2.4	family	withdraw	lifecycle	key	MUST_NOT	states		key:revocation:v1 is never withdrawn; its subject is the key digest; revoked_after only ever lowers	
 p2	267	2.4	kernel	admission_order	none	*	is	states		a row is admitted only once its signer's key-claim row is held; a row signed by a key not yet held is retryable	
@@ -423,6 +423,17 @@ p2	312	2.4.1.1	kernel	withdraw	replication	*	MUST_NOT	states		A node must not se
 p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	MAY	states	4.5.5,4.4.3.2.8	The signer may hand a withdrawn row and its withdrawal to a party with a duty to judge it: a named moderator, or a body under a declared legal-weight class	
 p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	is	states		Saying a withdrawn statement again to the audience is a new row the named party may withdraw in turn	
 p2	312	2.4.1.1	kernel	withdraw	lifecycle	*	is	exception	3.3.1,4.4.3.2.8,4.4.3.5.1	The signer's keep gives way to every duty to delete: a committed deletion window, an affiliation's retention and erasure limbs, a decay protocol the signer runs	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	MUST NOT	states	3.3.6.3	A key record whose identity_type contains user or accord_holder MUST NOT state valid_until: no person loses their self to a clock	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	MUST	states	3.1.3.2	Any other key record whose identity_type contains node or agent MUST state valid_until, unless it is a room key of a private room	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	MAY	states	5.4.6	A pseudonym's key record MAY state valid_until and need not: it is neither a self nor a node or agent	
+p2	381	2.4.1.1	kernel	expiry	freshness	key:record	MUST	states	2.6.7	The bound reads the record alone: valid_until not before asserted_at and at most key_record_max_secs after it; otherwise refused key_record_out_of_window	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	is	states		The requirement binds records asserted at or after key_record_end_required_from; an earlier record that states no end stays endless	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	is	states		A key is live while one of its own records covers the instant and it has not revoked itself; no row of another key ends or revives it	
+p2	383	2.4.1.1	kernel	supersede	none	key:record	MAY	states		A key renews by a further record superseding its own; renewals all count to the greatest end; a renewal after the end revives the key	
+p2	383	2.4.1.1	kernel	supersede	none	key:record	is	states		A rotation is another key's record naming the old key's record and carrying its signature; two rotations naming neither hand on nothing	
+p2	385	2.4.1.1	kernel	expiry	none	*	MUST NOT	states	6.1.2	A row of an ended key that no live row names lapses and MUST NOT count in any reading; its own verdict is unchanged	
+p2	385	2.4.1.1	kernel	expiry	none	*	MAY	states		A node MAY stop serving and drop a lapsed row, MUST NOT drop one that has not lapsed, and MUST NOT keep a digest to refuse it again	
+p2	387	2.4.1.1	kernel	key_plane	none	key:record	is	states		A signer's instants are its own word: an ended key's holder can revive it, and only the key's own revocation makes its end final	
 p2	316	2.4.1.2	kernel	delegation	none		MAY	states	1.13.1,1.2	a framework claim names its source of authority by delegates_to against a framework key with scope naming the principle, not by a grounding prefix	
 p2	318	2.4.1.2	kernel	owner_binding	cosign_rule		MUST	states	3.2	a delegates_to with delegation_purpose owner_binding defines the self cohort; a key whose live counted bindings name one owner is owned by it, and one whose bindings name two distinct owners has none	
 p2	318	2.4.1.2	kernel	delegation	none		is	states	4.5.13	owner_binding is the one single-valued delegation_purpose; act-on-behalf, hierarchy and authority-source delegations are multi-parent DAGs	
@@ -889,7 +900,7 @@ p3	166	3.1.3	family	cosign	cosign_rule	group	is	exception	4.2.6	A holder's recov
 p3	166	3.1.3	family	withdraw	lifecycle	group	is	states		group:roster is withdrawn only by a cosigned withdraws.	table
 p3	167	3.1.3	family	row_shape	body	key	is	states		key:record has attesting_key_id equal to attested_key_id equal to the key and carries both pubkeys, identity_type and roles.	table
 p3	167	3.1.3	kernel	admission_order	none	key	is	exception		key:record is admitted by proof of possession against the keys it carries, the one exception to resolving the attester through a held row.	table
-p3	167	3.1.3	family	supersede	lifecycle	key	is	states		A key rebind or rotation is a supersedes of key:record.	table
+p3	167	3.1.3	family	supersede	lifecycle	key	is	states		A key rebind or renewal is a supersedes of key:record by the key itself; rotation is the next key's record cosigned by the old key.	table
 p3	167	3.1.3	family	cosign	cosign_rule	key	is	states	2.4	An anchor scrub, a root conferral or an accord co-scrub (infra:attest, conferred roles) on a key record is a cosignature under 2.4.	table
 p3	167	3.1.3	kernel	admission_order	none	*	is	states		Every row other than key:record is admitted only once its signer's key:record is held; otherwise the refusal is retryable.	table
 p3	168	3.1.3	family	signer	signer_rule	identity	is	states	3.3.6	identity:occurrence is signed by the identity or a live occurrence of it (signer_acts_for).	table

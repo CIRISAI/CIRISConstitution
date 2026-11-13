@@ -29,7 +29,7 @@ rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window
 and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
 `Harden3.lean` (the rules added after the kernel was attacked), and `SeatG.lean`, `Terms.lean`, `Reader.lean`,
 `Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads), and
-`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) and `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart) and `KeyEnd.lean` (a key's own end, read from its records and now). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -64,6 +64,9 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.TwoMechanisms.door_not_function_of_rows` | a window the reader closes on its own clock, with no answer held, is open at one instant and closed at a later one over the same rows |
 | `Kernel.TwoMechanisms.SeatModel.consent_not_door`, `offer_alone_never_stands` | whatever answers a window an offer opens, its outcome at every instant does not say whether the seat stands, and an offer alone stands at no instant |
 | `Kernel.Carry.nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged` | a naming row carries only from the same room or under the named row's own signer; then no key outside a room's own audiences is in the audience of its rows unless an author carried a row of its own out, rows by others elsewhere change no audience, and inside one room the rule is the earlier one |
+| `KeyEnd.bound_reads_row`, `live_perm`, `live_mono` | a key record's bound is a function of the record alone; whether a key is live does not depend on the order its records are held in; a further record never ends a live key |
+| `KeyEnd.live_own_rows`, `live_le_ceiling` | records of other keys change nothing, and a live key is within the ceiling of the instant of some record it signed |
+| `KeyEnd.ended_not_live`, `ended_stays_ended` | with the same records, a key ended at an instant is live at no later instant |
 | `Kernel.offer_withdrawal_ends`, `acceptance_withdrawal_ends`, `third_key_cannot_end`, `only_withdrawals_and_cuts_end` | either side ends a seat alone by its own withdrawal; no third key ends it without a cut |
 | `Kernel.stands_function`, `stands_mono`, `means_is_seat_walk` | standing is a bounded walk of live seats and a function of the set; it grows with offers and acceptances and shrinks only with withdrawals and cuts; what a row means to a reader is that walk from the reader's own key |
 | `Kernel.cut_status_function`, `unique_when_uncontested`, `two_cuts_contested`, `winner_counts` | each cut counts, is void or is contested, as the least solution of its equations; two concurrent cuts that undo each other are both contested, and a row naming both settles it |
@@ -135,5 +138,5 @@ An edge is withdrawn only by its own signer.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run: `bash formal/causal_order/build.sh`. It compiles the sixteen files in order and exits on a compile error,
+Run: `bash formal/causal_order/build.sh`. It compiles the seventeen files in order and exits on a compile error,
 a `sorry`, or an axiom beyond the three of core Lean.

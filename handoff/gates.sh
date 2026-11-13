@@ -51,6 +51,7 @@ run python3 -I formal/causal_kernel/check_rosters.py
 run python3 -I formal/causal_kernel/check_door.py
 run python3 -I formal/causal_kernel/check_time.py
 run python3 -I formal/causal_kernel/check_shapes.py
+run python3 -I formal/causal_kernel/check_key_end.py
 run bash formal/causal_order/build.sh
 run python3 -B tools/kx_check.py --check
 run python3 -I formal/roster_fork/fork_check.py --check

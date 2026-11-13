@@ -109,7 +109,7 @@ image:*	nothing shown	0	0	-	-	B002	10	-
 integrity:{aspect}	nothing shown	0	0	-	-	B001	17	-
 judge_model:verdict:{model_id}	nothing shown	0	0	-	-	B086	1	-
 justice:{aspect}	nothing shown	0	0	-	-	B001	17	-
-key:record	read by a rule	1	1	change react	-	B087	1	membership:{stage}.guard
+key:record	read by a rule	1	1	guard change react expiry	-	B087	1	membership:{stage}.guard
 key:revocation	read by a rule	1	0	fold change	-	B088	1	key:record.reaction
 key_boundary:{scope}	nothing shown	0	0	-	-	B012	2	-
 key_grant:{axis}	read by a rule	2	3	fold guard react	archive_release:{basis} identity:occurrence retirement:{state}	B089	1	group:roster.change membership:{stage}.reaction

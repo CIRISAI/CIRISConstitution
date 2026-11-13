@@ -266,7 +266,14 @@ two duty deadlines that take no answers.
 **Two notions of time.** A row's own stated end, read from the row against now, and a window with a landing.
 **run** (`formal/causal_kernel/check_time.py`, eleven readings over 86 worlds of two rows): these two replace
 the freshness window, by the cut, and an invitation's expiry, by a window that shuts out a late acceptance. A
-registered name is held by what the registrations name (CC 4.5.1.3). Two readings are not covered. A cosignature
+registered name is held by what the registrations name (CC 4.5.1.3). A key's own end is the first notion
+applied to a key record: a `node` or `agent` record states `valid_until`, and a key is live while one of its own
+records covers now (CC 2.4.1.1). A person's key states no end, and an accord holder's or a recovery key never
+does. **proved** (`KeyEnd.lean`): liveness is a function of the key's own records and now, and with the same
+records an ended key stays ended. **run** (`formal/causal_kernel/check_key_end.py`): a row of an ended key that
+no live row has in its past lapses and counts in no answer, and dropping exactly those rows changes no answer of
+any party, then or later. A node may stop serving a lapsed row and is not required to. No rule over rows and now
+tells a renewal signed in time from a back-dated one, so the holder of an ended key's private half can revive it. Two readings are not covered. A cosignature
 is attached against the node's clock at first receipt, which the two notions cover only if the cosignature
 states its own end. That one is **open**. A session goes to the earliest claimed instant among one
 person's own devices (CC 3.1.3.1). This is the one ranking by a signed instant that is kept, and on purpose:
@@ -498,12 +505,13 @@ What that leaves, each **run** with its witness:
 | The same, by leaked keys of removed members | whoever holds removed keys that once met a count | only against a reader with no acknowledgement of its own, as test 18 |
 | A new reader's first view | whoever controls a new reader's first view | until the reader withdraws its own rows; its own acknowledgement makes the wrong head stick |
 | A row withheld from some | the cut's own signer, or a relay, by omission | as long as the row is withheld; a row cited from another room is carried only by its own signer, so a cut that names one waits until then |
-| Rows signed to no purpose | any key at all, one signature a row | no answer moves; storage and read time grow without a bound in the kernel |
+| Rows signed to no purpose | any key at all, one signature a row | no answer moves; a `node` or `agent` key that stops renewing lapses at its own end, so a node that compacts holds at most mint rate × `key_record_max_secs` of abandoned keys; a key that keeps renewing, a person's key and a key record from before the rule that states no end are held without a bound |
+| An ended key revived | whoever holds its private half | a further record revives it at every node alike, and no reader can tell when it was signed; only the key's own revocation makes an end final |
 | History carried by a reply | any one member, by replying | intended carriage, row by row; cannot be undone |
 | One conferring seat seating many | one seated key whose seat may confer | one row seats any number of keys; ends with one withdrawal by its conferrer |
 | A line of several rows forged by a past count | keys that met the count at an old head, signing any number of rows | (a) a reader that acknowledged the honest head: nothing, the forged line is void whole (HOLDS for it). (b) a reader with none: plain tips-wait; no row is stale, the members are the keys common to the tips (the forger alone when it is on both lines), for good; a removed key is never listed |
 
-Four of the fifteen are forms of one attack, a fork signed by keys that once met a count.
+Four of the sixteen are forms of one attack, a fork signed by keys that once met a count.
 
 Two costs of the reader's line are stated here because no attack names them. An honest admission signed
 offline on an old head is behind the line of a reader that has acknowledged a newer head, so for that reader

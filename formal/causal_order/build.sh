@@ -6,7 +6,7 @@ here="$(cd "$(dirname "$0")" && pwd)"
 out="$(mktemp -d)"
 trap 'rm -rf "$out"' EXIT
 rc=0
-for f in Order Causal Seat Window Recount Harden Harden2 Harden3 SeatG Terms Reader Merge Consent Carry RosterHead TwoMechanisms; do
+for f in Order Causal Seat Window Recount Harden Harden2 Harden3 SeatG Terms Reader Merge Consent Carry RosterHead TwoMechanisms KeyEnd; do
   if ! LEAN_PATH="$out" lean -M 6000 -T 200000 --root="$here" -o "$out/$f.olean" "$here/$f.lean" > "$out/$f.log" 2>&1; then
     echo "does not compile: $f"; grep -m5 "error" "$out/$f.log"; rc=1
   fi
@@ -15,5 +15,5 @@ for f in Order Causal Seat Window Recount Harden Harden2 Harden3 SeatG Terms Rea
   fi
 done
 n=$(cat "$out"/*.log | grep -c "depend")
-echo "causal_order: 16 files, $n theorems reported, rc=$rc"
+echo "causal_order: 17 files, $n theorems reported, rc=$rc"
 exit $rc

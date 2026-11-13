@@ -2679,11 +2679,17 @@ Body: `alt_text` (text only), `format` (text only)
 
 Count: `none`
 
+Guard:
+- attest: `when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)` (CC 2.4.1.1)
+- supersede: `when(verb=attest|replace,has=valid_until) not type(signer,user) else refuse(key_record_out_of_window)` (CC 2.4.1.1)
+
 Change:
 - supersede: `replace[recovery]: by=committed_key` (CC 2.1)
 
 In time:
 - on admitted(key:revocation) or withdrawn(trust:accepts): read lapsed (CC 4.2.1)
+- expiry optional `valid_until` max `key_record_max_secs` (CC 2.4.1.1)
+- on close(expiry) unless superseded(self): read lapsed (CC 2.4.1.1)
 
 **`key:revocation`** — Identity, thing; keeps the Record
 

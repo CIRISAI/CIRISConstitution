@@ -4,12 +4,12 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 115,
+  "entries": 117,
   "kinds": {
-   "expiry": 21,
+   "expiry": 22,
    "clock": 19,
    "land": 17,
-   "react": 58
+   "react": 59
   },
   "emits": 25,
   "new_event_words": {
@@ -2224,6 +2224,44 @@
    "member": "valid_until",
    "cc_ref": [
     "CC 4.3"
+   ]
+  },
+  {
+   "family": "key:record",
+   "kind": "expiry",
+   "mode": "optional",
+   "member": "valid_until",
+   "max": "key_record_max_secs",
+   "from": "asserted_at",
+   "cc_ref": [
+    "CC 2.4.1.1"
+   ]
+  },
+  {
+   "family": "key:record",
+   "kind": "react",
+   "on": [
+    {
+     "event": "close",
+     "of": "expiry"
+    }
+   ],
+   "unless": [
+    {
+     "event": "superseded",
+     "of": "self"
+    }
+   ],
+   "effects": [
+    {
+     "effect": "read",
+     "verdict": "lapsed",
+     "of": null,
+     "force": "must"
+    }
+   ],
+   "cc_ref": [
+    "CC 2.4.1.1"
    ]
   }
  ]

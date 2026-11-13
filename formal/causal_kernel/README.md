@@ -120,6 +120,16 @@ parameter traced to a table cell or a quoted sentence and each quote checked aga
 `claim.py` states a claim and content over the kernel's layers. The check also removes the shapes in three
 orders and records which survive. Three made-up families that fit no shape must be reported as not fitting.
 
+**A key's own end** (`key_end.py`, `check_key_end.py`, `key_end_expected.tsv`). A `node` or `agent` key record
+states its own end, at most `key_record_max_secs` after its `asserted_at`, read from the record alone. A key is
+live while one of its own records covers now, renewal is a further record of the key, and rotation is the next
+key's record carrying the old key's signature. A row lapses when its key has ended and no row that has not
+lapsed has it in its past. The check reads ten properties over 5,670 generated worlds at six instants in eight
+arrival orders each, with a plant per property that must be caught. It runs six candidate readings of "renewed
+in time", the class condition read from the record and from an owner-binding, ten attacks in every arrival
+order of up to seven rows, and the store's steady state from stated rates. Nothing here is measured. Whoever
+holds an ended key's private half can revive it, and that is recorded as conceded.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -132,4 +142,4 @@ orders and records which survive. Three made-up families that fit no shape must 
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
 `python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
-`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` and `python3 -I formal/causal_kernel/check_shapes.py`
+`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` `python3 -I formal/causal_kernel/check_shapes.py` and `python3 -I formal/causal_kernel/check_key_end.py`
