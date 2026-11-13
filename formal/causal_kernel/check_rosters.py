@@ -926,6 +926,27 @@ def check_key_revocation(inst="a key (its registration, its owner, its revokers)
     return res
 
 
+def check_leaving(spec, inst):
+    """KERNEL.md 6 and 7, RosterHead.lean leaving_binds_by_past: a version that has a key's leaving in its own past
+    does not count that key's signature, whatever head it names; one naming the head without that leaving still does.
+    A and B found the room; D joins by v1; D withdraws its acceptance (wD); v2 names v1 and adds E, signed by A and D."""
+    g = RS.found(spec, ("A", "B"))
+    base_rows = [g, RS.accept(spec, "aD", "D", ("g",)), RS.add(spec, "v1", ("g",), "D", ("A", "B"), names=("aD",)),
+                 ST.withdraw("wD", "D", "aD", ("v1",)), RS.accept(spec, "aE", "E", ("g",))]
+    W = [("D's leaving in v2's past", base_rows + [RS.add(spec, "v2", ("v1",), "E", ("A", "D"), names=("aE", "wD"))], False),
+         ("D's leaving concurrent with v2", base_rows + [RS.add(spec, "v2", ("v1",), "E", ("A", "D"), names=("aE",))], True)]
+    def pl(S, rows, n):
+        want = dict((w[0], w[2]) for w in W)[n]
+        got = "E" in RS.roster(S, spec)
+        if got != want: return "E seated %s, want %s" % (got, want)
+    base = run(spec, [(n, rows) for n, rows, _ in W], pl)
+    with seat_mut("leaving_unread"):
+        m = run(spec, [(n, rows) for n, rows, _ in W], pl, orders=False)
+    return [result(inst, "a key's leaving binds by the version's past: a version with it there does not count that key; one without it still does",
+                   "KERNEL.md 6, 7; RosterHead.lean leaving_binds_by_past", verdict_of(base), base,
+                   "members read at the heads only (the leaving in the version's past unread)", m)]
+
+
 # =================================================================================================================
 TASKS = {
     "madeup": lambda I: check_madeup(I),
@@ -937,6 +958,7 @@ TASKS = {
     "accord": lambda I: check_accord(I["accord"], "accord (holders)"),
     "infra": lambda I: check_infra(I["infra"], "infrastructure community (operators' keys)"),
     "key_revocation": lambda I: check_key_revocation(),
+    "leaving": lambda I: check_leaving(I["community"], "community (public, members are persons)"),
     "fork_self": lambda I: check_fork("self roster (a person's keys)", "majority", 4, "012", "2"),
     "fork_comm_maj": lambda I: check_fork("community (public, members are persons)", "majority", 5, "0123", "3"),
     "fork_comm_join": lambda I: check_fork("community (public, members are persons)", "majority", 5, "0123", "4"),

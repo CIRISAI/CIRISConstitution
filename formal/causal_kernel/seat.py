@@ -299,6 +299,22 @@ def members_at(P, past, obj, heads, scope="member"):
     return out or frozenset()
 
 
+def left_in_past(P, obj, scope="member"):
+    """The keys whose own leaving is among P (a version's past): a concluded withdrawal, signed by the key, of the
+    acceptance or offer that seats it in `scope` over obj. KERNEL.md 6 and 7; RosterHead.lean leaving_binds_by_past:
+    a version that has a key's leaving in its own past does not count that key, whatever head it names."""
+    if "leaving_unread" in MUT: return frozenset()
+    by = {q["id"]: q for q in P}
+    out = set()
+    for w in P:
+        if w["kind"] != "withdraw": continue
+        t = by.get(w["target"])
+        if t is None or t.get("obj") not in (obj, None) or t.get("scope") not in (scope, None): continue
+        if (t["kind"] == "accept" and t["signer"] == w["signer"]) or (t["kind"] == "offer" and w["signer"] in t["to"]):
+            out.add(w["signer"])
+    return frozenset(out)
+
+
 def voices(r, P):
     """The keys that signed r: its signer, its cosigners, and the signers of the cosign rows it names that themselves
     name every head r is counted over."""
@@ -340,7 +356,8 @@ def seat_rule(r, P, past, table=None, other=None):
             return k == "offer" and r.get("under") in by and r["signer"] in by[r["under"]]["to"]
         if conf == "group":
             heads = r.get("head", ())
-            mem = members_at(P, past, r.get("over", r["obj"]), heads, r.get("counted", "member"))
+            mem = members_at(P, past, r.get("over", r["obj"]), heads, r.get("counted", "member")) \
+                - left_in_past(P, r.get("over", r["obj"]), r.get("counted", "member"))
             if K.rule(table or POLICY, r.get("policy"), ("unknown",))[0] == "ranked":
                 # the count is the ranked tally: the ballots the row names, one voice each, and the row seats the winner
                 ballots = [(b["signer"], b["ranking"]) for b in K.sel(P, kind="ballot") if b["id"] in r["names"] and b["signer"] in mem]

@@ -335,8 +335,10 @@ able to name several; the store's shape is an optional list of further heads bes
 
 **One mechanism, five instances.** A person's keys, a voice's room keys, a room, the accord and an
 infrastructure community are this one roster with parameters read from the policy table and the text. **run**
-(`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, and six
-of a key's revocation, in every arrival order to a cap, each with a deliberate break that is caught. A third
+(`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, six
+of a key's revocation and one of a member's leaving, in every arrival order to a cap, each with a deliberate
+break that is caught. A version does not count a key whose own leaving is in its past, whatever head it
+names. The model counted such a key until the proof of `leaving_binds_by_past` showed the difference. A third
 key's revocation revokes nothing, and neither does a former owner's or either of two live owners'. With two
 live owners the key has no owner (CC 3.2), so that last is derived. A revoked key does not register again. The plain mechanism was wrong in four
 places and a stated parameter restores each: a floor of two voices under every protocol, the joiner's yes
