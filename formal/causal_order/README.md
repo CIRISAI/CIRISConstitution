@@ -52,6 +52,8 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.RosterHead.counted_over_named_head`, `rows_outside_change_nothing` | whether a version stands is decided by the members at the heads it names and the signatures on it, and rows outside its past change nothing |
 | `Kernel.RosterHead.no_self_admission`, `outsiders_admit_nothing` | a key that is not a member at the heads a version names gives no voice to its count, and keys outside the roster admit nobody however much they sign |
 | `Kernel.RosterHead.removed_voice_does_not_count`, `readmission_needed` | a key a version leaves out is no voice of a version naming it, and further down the line is a member only if a version counted without it lists it again |
+| `Kernel.RosterHead.leaving_binds_by_past`, `left_head` | a member's own leaving is a fact for the rows that have it in their past and for no others, as a removal is |
+| `Kernel.RosterHead.Retro.retro_agrees`, `Retro.Model.retro_reaches_back` | the rejected reading through every held withdrawal agrees where each leaving is in the version's past, and otherwise lets a later leaving change the members at an older head |
 | `Kernel.RosterHead.old_head_still_counts` | by definition, a key that is a member at an older head is a voice of a version naming only that head |
 | `Kernel.RosterHead.one_signature_never_removes`, `one_key_alone_stands_nothing` | where the count asks two or more, a member leaves a standing version only by its own withdrawal or by the signatures of two distinct members |
 | `Kernel.RosterHead.voters_is_common` | a version naming several heads is counted over the members common to them, which is the common list of `Merge.lean` |

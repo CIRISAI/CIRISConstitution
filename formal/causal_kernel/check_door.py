@@ -193,7 +193,7 @@ def ref(w):
         return "landed" if (tally(w, "assent") | {w["op"]}) >= set(keys) else "open"
     if name == "moderator_election":
         if not el: return "open"
-        got = RC.winner([(a, k) for a, k, _ in w["ans"]], ["m1", "m2", "m3"])
+        got = RC.winner_no_order([(a, k) for a, k, _ in w["ans"]], ["m1", "m2", "m3"])
         return ("winner:" + got) if got else "open"
     if name.startswith("poll"):
         if not el: return "open"
@@ -294,6 +294,9 @@ def props(name):
     if name == "moderator_election":
         P.append(("the winner is the instant-runoff winner over one ballot per person (R1, R8, Election.winner)", "ranked_choice; moderator_election",
                   lambda w, o: None if not o.startswith("winner:") else ref(w) == o))
+        P.append(("a tie for weakest seats nobody: an election declares no order (R12, R13, Election.free_tie_seats_nobody)", "CC 4.5.13; ranked_choice",
+                  lambda w, o: None if not RC.count(RC.summary(RC.dedupe([(a, k) for a, k, _ in w["ans"]])), ["m1", "m2", "m3"])[2]
+                  else not o.startswith("winner:")))
         P.append(("below the floor of two voices nobody is seated (R7, no_ballots_no_winner)", "ranked_choice",
                   lambda w, o: None if len({a for a, _, _ in w["ans"]}) >= 2 else not o.startswith("winner:")))
     if name in ("cosigned_act", "accord_majority"):
@@ -391,7 +394,8 @@ MUTATION = {
     "deferral": ("default_answers", "silence at the request's end answers it"),
 }
 # a second deliberate break for a door whose text states two things
-MUTATION2 = {"retirement_objection": ("concluder_target", "the agent closes its own objection window")}
+MUTATION2 = {"retirement_objection": ("concluder_target", "the agent closes its own objection window"),
+             "moderator_election": ("tie_by_position", "a tie for weakest broken by where an option is listed")}
 DOOR_NAMES = list(MUTATION)
 THREE_ONLY = {"moderator_election", "takedown_withhold", "poll[stated]"}   # the largest world sets run at three keys only
 

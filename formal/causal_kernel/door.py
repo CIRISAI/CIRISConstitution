@@ -191,7 +191,8 @@ def door_table(spec, p, answers, inside, base, elapsed):
                 tops = Counter(b[1][0] for b in ballots)                  # the mutation also skips the fold: first choices
                 best = max(sorted(tops), key=lambda o: tops[o])
                 return out + best if 2 * tops[best] > len(ballots) else None
-            w, _ = WN.ST.RANKED(ballots, list(spec["options"]), floor=rule[1]) if ballots else (None, 0)
+            # an election declares no order (CC 4.5.13): a tie for weakest seats nobody and the count runs again
+            w, _ = WN.ST.RANKED(ballots, list(spec["options"]), floor=rule[1], declared="tie_by_position" in MUT) if ballots else (None, 0)
             return out + w if w else None
         if rule[0] == "all_and_majority":                         # every other member, and that a strict majority of the roster
             yes, n = count(value, "nontarget")
@@ -348,7 +349,7 @@ def door_specs():
     for kind in ("unanimous", "majority", "quorum:{m}/{n}"):
         pr = PROTOCOLS[kind]
         rr = pr["removal_rule"]
-        rule = {"all_and_majority": ("all_and_majority",), "strict_majority": ("strict", 1, 2, 1), "voices:{m}": ("abs", 2)}[rr]
+        rule = {"all_and_majority": ("all_and_majority",), "strict_majority": ("strict", 1, 2, 2), "voices:{m}": ("abs", 2)}[rr]   # never fewer than two voices (CC 4.5.13)
         over = "nontarget" if pr["removal_set"] == "member-target" else "all"
         D["community_remove[%s]" % kind.split(":")[0]] = hold_close(dict(policy="community_remove", kind="cosigned", opener="member", counted="member",
             extra=(), target_votes=False, opener_says="assent", kinds=("assent",), clauses=(("once", "assent", rule, over, "removed"),),

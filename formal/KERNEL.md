@@ -71,7 +71,7 @@ Every rule cell is written in these.
 | result assembly | a verdict for each element, or a set of effects |
 
 The first six are in `formal/kernel_lib`. **run**: six models rewritten with the first five agree with their
-originals on 400,300 comparisons, and the closure agrees with a hand-written definition on 15,864.
+originals on 415,804 comparisons, and the closure agrees with a hand-written definition on 15,864.
 
 **One language.** `tools/kx.py` is one expression language over these operators, and `tools/kx_prelude.kx`
 writes each of the eight named answers once in it. `tools/kx_translate.py` translates the cells of the five
@@ -226,7 +226,10 @@ window's length is the concluder's own word.
 (`formal/causal_kernel/door.py`, `check_door.py`, `doors.tsv`): all eighteen policy rows, ten clocks and a deferral's own end run on
 the window's own receipt, landing and recount, as instances at rooms of three and four keys. Each gives one
 answer in every arrival order, the recount agrees with the policy table's own vectors and with the ranked
-count, and every deliberate break is caught. The policy table states the count, the floor and the length. The door needs five more things. The reactions
+count, and every deliberate break is caught. An election declares no order, so its door seats nobody on a tie
+for weakest (CC 4.5.13). **proved** (`Election.lean`): the election's count does not depend on the order the
+options are listed in, and it seats whoever the declared count seats whenever it seats anyone (`free_perm`,
+`free_agrees`). The policy table states the count, the floor and the length. The door needs five more things. The reactions
 table now states the first two as a `land` clause on each window, each cell quoting its sentence:
 
 | Parameter | Why it matters |
@@ -282,9 +285,8 @@ shapes is **measured**.
 | a guessed parameter | 0 |
 | cannot run | 13 |
 
-No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1): the key's own revocation and
-the roster's count are **run**, and the owner's revocation of a key it owns is **open**, since no seat ends
-another key's seat here. Nineteen content
+No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1), and all three are **run**: the key's own, the roster's
+count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. Nineteen content
 families take their audience from the default placement, the scope each row carries, and state none of their own. Each family that cannot run lacks one thing, named in the table:
 two are doors with no row in `doors.tsv`, two are consents with no stated conferrer or signer, five are census
 families whose count is drawn from a group secret that is not a row, and four are labels or prefixes that
@@ -320,7 +322,7 @@ protocols were run once at the same bound and are not in the check.
 
 **proved** (`RosterHead.lean`): the members at a head are a function of the head, its signatures and its past
 (`membersAt_function`, `standing_final`). A removal is a later counted version and changes the members there,
-not at the old head. A member's own leaving binds the same way, by causal past. Where the count asks two or
+not at the old head. A member's own leaving binds the same way, by causal past (`leaving_binds_by_past`). Where the count asks two or
 more, one key's rows remove nobody: a member leaves only by its own withdrawal or by the signatures of two
 distinct members (`one_signature_never_removes`). A removed key counts again only after a version lists it
 again (`readmission_needed`). Two concurrent versions of one head are not decided there; they wait as tips.
@@ -333,8 +335,10 @@ able to name several; the store's shape is an optional list of further heads bes
 
 **One mechanism, five instances.** A person's keys, a voice's room keys, a room, the accord and an
 infrastructure community are this one roster with parameters read from the policy table and the text. **run**
-(`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, in every
-arrival order to a cap, each with a deliberate break that is caught. The plain mechanism was wrong in four
+(`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, and six
+of a key's revocation, in every arrival order to a cap, each with a deliberate break that is caught. A third
+key's revocation revokes nothing, and neither does a former owner's or either of two live owners'. With two
+live owners the key has no owner (CC 3.2), so that last is derived. A revoked key does not register again. The plain mechanism was wrong in four
 places and a stated parameter restores each: a floor of two voices under every protocol, the joiner's yes
 counted, an acceptance spent once its key has left, and the lone path kept to a person's roster. Two limits:
 the accord's rule that a removed holder no longer fires needs a latch at the node's receipt, which is not a
@@ -505,5 +509,5 @@ that the ending row has not seen from counting.
 | 126 cells with a word the expression language does not carry, and eleven folds a reaction calls that no cell defines | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
-| The owner's revocation of a key, an election's tie and the older models, each against the rules as they stand | model | `formal/` |
+| Seven older models still state a founder's power, a count that includes the member concerned, or a moderator seated with no count: four in the running kernel's tables and scenarios, one in the fork model, two in TLA+ | model | `formal/` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |

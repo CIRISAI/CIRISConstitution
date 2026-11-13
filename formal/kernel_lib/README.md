@@ -22,9 +22,10 @@ between two different rows, so no answer depends on the order of a list.
 None of them knows a family, a model or a rule.
 
 **What is checked** (`kernel_lib_check.py`). Six decisions are re-expressed in `reexpress.py`: the takedown
-fold, the deletion fold, the owner of a key, the guardianship fold, the ranked count and the set item. Each
+fold, the deletion fold, the owner of a key, the guardianship fold, the ranked count (with a declared order, and
+the election's with none) and the set item. Each
 is compared with the original on every case the original runs, then put in the original's place under the
-original's own property check. 400,300 comparisons, none disagree; every property of the six still holds.
+original's own property check. 415,804 comparisons, none disagree; every property of the six still holds.
 With `--ablate` each function is removed in turn and the models that break are listed.
 
 **What this does not show.**

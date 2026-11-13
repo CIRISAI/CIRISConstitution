@@ -214,7 +214,7 @@ door moderation_action	588 worlds, 4 properties hold	holds
 door moderation_action	plant: its mutation (check_door.MUTATION)	caught
 door moderation_overturn	324 worlds, 2 properties hold	holds
 door moderation_overturn	plant: its mutation (check_door.MUTATION)	caught
-door moderator_election	577 worlds, 2 properties hold	holds
+door moderator_election	577 worlds, 3 properties hold	holds
 door moderator_election	plant: its mutation (check_door.MUTATION)	caught
 door poll	556 worlds, 3 properties hold	holds
 door poll	plant: its mutation (check_door.MUTATION)	caught

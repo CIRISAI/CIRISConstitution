@@ -1,5 +1,11 @@
 instance	property	verdict
 MADE-UP: a room where one signature removes (no floor)	Inv_CoercedCannotRemoveHonest on an instance built to violate it (must be refused)	refused as required
+a key (its registration, its owner, its revokers)	a former owner, whose binding was withdrawn in the revocation's past, revokes nothing	holds
+a key (its registration, its owner, its revokers)	a revocation signed by any other key revokes nothing	holds
+a key (its registration, its owner, its revokers)	a revoked key cannot un-revoke itself (a revocation is never withdrawn)	holds
+a key (its registration, its owner, its revokers)	the key's own revocation ends its registration from the revocation forward, by causal past	holds
+a key (its registration, its owner, its revokers)	the owner's revocation ends the key's registration from the revocation forward, by causal past	holds
+a key (its registration, its owner, its revokers)	two live owner-bindings naming different owners: no owner, and neither alone revokes (derived from CC 3.2 owner_of)	holds
 accord (holders)	lame duck (a holder named for removal fires until the decision) AND a removed holder no longer fires	does NOT hold
 accord (holders)	lame duck AND a removed holder no longer fires, with the latch on receipt (a reader-relative parameter that reads arrival order)	holds with latch_on_receipt (per node; NOT a function of the rows)
 accord (holders)	recovery_keys_help_heal (a single-signer version, no quorum)	holds with the recovery parameter (a second root: the committed key)

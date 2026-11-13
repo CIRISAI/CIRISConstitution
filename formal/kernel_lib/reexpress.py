@@ -65,8 +65,9 @@ def guardianship(H, band):
 
 
 # ---- ranked_choice (formal/ranked_choice/ranked_choice_model.py: winner = finish . summary . dedupe) ----
-def ranked(rows, options, floor=2):
-    """rows: (person, ranking). Returns (winner or None, rounds)."""
+def ranked(rows, options, floor=2, declared=True):
+    """rows: (person, ranking). Returns (winner or None, rounds). declared=False: the election's count, with no
+    declared order, where a tie for weakest is refused by the reducer and seats nobody (CC 4.5.13)."""
     ballots = K.group([{"person": p, "ranking": r, "t": 0} for p, r in rows], "person", "one", "ranking")
     if not K.in_range(len(ballots), min(floor, max(len(options), 1))): return None, 0
     marks = [{"person": p, "option": o, "rank": i, "t": 0} for p, r in ballots.items() for i, o in enumerate(r)]
@@ -77,10 +78,14 @@ def ranked(rows, options, floor=2):
         tops = K.group(K.sel(marks, option=set(standing)), "person", "least", "rank")
         first = K.group(list(tops.values()), "option", "count", "person")
         if not tops: return standing, None, True, rounds
-        table = [{"o": o, "n": first.get(o, 0), "back": -options.index(o)} for o in standing]
-        lead = K.group(table, None, "greatest", ("n", "back"))
-        if K.in_range(2 * lead["n"], len(tops) + 1) or len(standing) == 1: return standing, lead["o"], True, rounds
-        weakest = K.group(table, None, "least", ("n", "back"))
+        table = [{"o": o, "n": first.get(o, 0), "back": -options.index(o) if declared else 0} for o in standing]
+        top = K.group(table, None, "max", "n")
+        if K.in_range(2 * top, len(tops) + 1) or len(standing) == 1:
+            return standing, K.group(K.sel(table, n=top), None, "one", "o"), True, rounds
+        try:
+            weakest = K.group(table, None, "least", ("n", "back"))
+        except K.Tie:
+            return standing, None, True, rounds                   # no declared order: a tie for weakest seats nobody
         return tuple(o for o in standing if o != weakest["o"]), None, False, rounds + 1
 
     _, winner, _, rounds = K.fix(round_, (tuple(options), None, False, 0), len(options) + 1)

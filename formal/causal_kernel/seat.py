@@ -79,6 +79,16 @@ CONFERS = {  # scope held -> (scopes it may confer, "same": over the same object
     "self": (("wa", "takedown", "author", "custodian", "operator"), "same"),
     "root": (("attest", "infra:attest", "assure:age", "assure:capacity", "infra:attest_assurance", "infra:detect"), "holder"),
 }
+# what the holder of a seat over an object may end over that same object, besides its own seat (a cut, so it takes
+# standing). CC 2.4.1.1: "Its owner revokes it under the owner-binding." The owner seat is the owner-binding: the
+# owner's row and the key's own signature on it (CC 3.2, The first binding). The ender must be the ONE live owner
+# over the ender's own past: `owner_of` "resolves to at most one key", and with two the key "MUST NOT be treated as
+# owned by any of them" (CC 3.2), so with two live owners neither alone revokes (derived from those two sentences).
+ENDS = {"owner": ("registered",)}
+# seats whose ending is final: a revocation is "never withdrawn" (CC 2.4.1.1), so no offer re-seats the same key in the
+# same scope over the same object once a concluded revocation of that slot is in its past
+FINAL = ("registered",)
+MUT = set()       # named mutations, switched on by a check (formal/causal_kernel/check_rosters.py, the key instance)
 
 
 def policy_table(path=None):
@@ -297,16 +307,36 @@ def voices(r, P):
                                   if c["id"] in r["names"] and heads <= set(c["names"]))
 
 
+def _revoked_before(r, P):
+    if "reseat" in MUT: return False
+    return any(q["kind"] == "unseat" and q["scope"] in FINAL and set(q["cuts"]) & set(r.get("on", ())) for q in P)
+
+
+def _ender(r, P, by):
+    """An unseat by the holder of a seat over the same object (ENDS). Read over the unseat's own past only: the
+    ender's seat stands there, and it is the one live holder of that scope over the object."""
+    if "any_key_revokes" in MUT: return True
+    up = by.get(r.get("under"))
+    if up is None or up["kind"] != "offer" or up["obj"] != r["obj"] or r["signer"] not in up["to"]: return False
+    if r["scope"] not in ENDS.get(up["scope"], ()) or tuple(r["to"]) != (r["obj"],): return False
+    if "owner_unread" in MUT: return True                         # MUTATION: the binding named is enough
+    sole = Seats(CK.State(P, {q["id"]: True for q in P}))
+    if "owner_any_live" in MUT: return sole.stands(r["signer"], up["scope"], r["obj"])
+    return sole.one(up["scope"], r["obj"]) == r["signer"]
+
+
 def seat_rule(r, P, past, table=None, other=None):
     """The conclusion rule. P: r's concluded ancestors."""
     k, by = r["kind"], {q["id"]: q for q in P}
     if k in ("offer", "unseat"):
         conf = r["conf"]
+        if k == "offer" and _revoked_before(r, P): return False   # a revoked key does not re-seat itself (FINAL)
         if conf == "self":
             if r["obj"] == r["id"]: return k == "offer"          # a founding row is its own object
             if k == "unseat" and founding_many(by, r["obj"]): return False    # among several founding keys, ending a seat takes the count
             return r["signer"] in own_keys(by, r["obj"]) and (r["obj"] not in by or True)
         if conf == "seat":
+            if k == "unseat": return _ender(r, P, by)
             return k == "offer" and r.get("under") in by and r["signer"] in by[r["under"]]["to"]
         if conf == "group":
             heads = r.get("head", ())
@@ -314,7 +344,8 @@ def seat_rule(r, P, past, table=None, other=None):
             if K.rule(table or POLICY, r.get("policy"), ("unknown",))[0] == "ranked":
                 # the count is the ranked tally: the ballots the row names, one voice each, and the row seats the winner
                 ballots = [(b["signer"], b["ranking"]) for b in K.sel(P, kind="ballot") if b["id"] in r["names"] and b["signer"] in mem]
-                return k == "offer" and bool(ballots) and RANKED(ballots, list(r["options"]))[0] == r["to"][0]
+                # the one ranked row is the election, which declares no order: a tie for weakest seats nobody (CC 4.5.13)
+                return k == "offer" and bool(ballots) and RANKED(ballots, list(r["options"]), declared=False)[0] == r["to"][0]
             return met(r.get("policy"), len(voices(r, P) & mem), len(mem), r.get("need"), table)
         return False
     if k == "accept":

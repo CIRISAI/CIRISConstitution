@@ -5,7 +5,8 @@ CC — ranked choice as one count, as a small executable model (CC 4.5.13).
 A ballot ranks up to R of the options, best first. The count is instant runoff: while no option holds more than
 half of the ballots still counting, the weakest standing option is eliminated and its ballots pass to their next
 standing choice; a ballot with no standing choice left stops counting. A tie for weakest is broken against the
-option later in the declared order.
+option later in the declared order. An election declares no order, so there a tie for weakest seats nobody and
+the count runs again (CC 4.5.13; CC 4.5.4: the ballot's shown order "confers nothing and decides nothing").
 
 The count is written here the way a kernel must run it, in two parts:
 
@@ -33,6 +34,12 @@ Properties, over every profile of ballots up to the bound:
   R11 a round's totals are a sum over cells, so two holders of additive shares of the summary each publish a
       share of the totals and the two add to the true totals, for every set of standing options: a secret
       ranked poll publishes its rounds and never the tally of rankings
+
+And of the count with no declared order (`winner_no_order`, the election's):
+  R12 the result does not depend on the order the options are listed in
+  R13 it agrees with the declared-order count whenever that count breaks no tie, and is no winner exactly when it does
+  R14 renaming the options moves the winner with them
+A mutation that breaks a tie by list position must fail R12.
 
 Not claimed, because instant runoff does not have it: that ranking an option higher can never hurt it.
 
@@ -65,18 +72,31 @@ def merge(a, b):
 
 def finish(s, options, floor=FLOOR):
     """Instant runoff over a summary. Returns (winner or None, rounds)."""
-    if sum(s.values()) < min(floor, max(len(options), 1)): return None, 0
-    standing, rounds = list(options), 0
+    return count(s, options, floor)[:2]
+
+
+def count(s, options, floor=FLOOR, declared=True, by_position=False):
+    """Instant runoff over a summary. Returns (winner or None, rounds, tied): `tied` says a tie for weakest arose.
+    declared=True: a tie for weakest goes against the option later in the declared order (`options`).
+    declared=False: the election's count. There is no order, so a tie for weakest seats nobody.
+    by_position: MUTATION for the check, the count with no order breaking a tie by where an option is listed."""
+    if sum(s.values()) < min(floor, max(len(options), 1)): return None, 0, False
+    standing, rounds, tied_any = list(options), 0, False
     while True:
         first = Counter()
         for ranking, n in s.items():
             top = next((o for o in ranking if o in standing), None)
             if top is not None: first[top] += n
         live = sum(first.values())
-        if live == 0: return None, rounds
+        if live == 0: return None, rounds, tied_any
         lead = max(standing, key=lambda o: (first[o], -options.index(o)))
-        if 2 * first[lead] > live or len(standing) == 1: return lead, rounds
-        weakest = min(standing, key=lambda o: (first[o], -options.index(o)))   # a tie goes against the later option
+        if 2 * first[lead] > live or len(standing) == 1: return lead, rounds, tied_any
+        low = min(first[o] for o in standing)
+        tied = [o for o in standing if first[o] == low]
+        if len(tied) > 1:
+            tied_any = True
+            if not declared and not by_position: return None, rounds, True     # no order: a tie seats nobody
+        weakest = max(tied, key=options.index)                    # a tie goes against the later option
         standing.remove(weakest); rounds += 1
 
 
@@ -101,6 +121,41 @@ def shares(s, cells):
 
 def winner(rows, options):
     return finish(summary(dedupe(rows)), options)[0]
+
+
+def winner_no_order(rows, options):
+    """The election's count (CC 4.5.13): no declared order, so a tie for weakest seats nobody and the count runs
+    again. `options` is a set given as a list; its order is read by nothing."""
+    return count(summary(dedupe(rows)), list(options), declared=False)[0]
+
+
+def check_no_order(n_options=3, r=3, max_ballots=5, by_position=False):
+    """R12-R14 over every profile to the bound. by_position: run with the mutation, which R12 must catch."""
+    options = [chr(ord("a") + i) for i in range(n_options)]
+    R = rankings(options, r)
+    fail, n = {}, 0
+    def note(p, *w): fail.setdefault(p, w)
+    free = lambda s, opts: count(s, list(opts), declared=False, by_position=by_position)[0]
+    for size in range(0, max_ballots + 1):
+        for profile in itertools.combinations_with_replacement(R, size):
+            n += 1
+            s = summary(profile)
+            w = free(s, options)
+            # R12: every listing of the options gives the same result
+            for perm in itertools.permutations(options):
+                if free(s, perm) != w: note("R12", profile, perm)
+            # R13: agrees with the declared count where that count broke no tie; no winner where it did
+            dw, _, tied = count(s, options)
+            if not tied and dw != w: note("R13", profile, dw, w)
+            if tied and w is not None: note("R13", profile, "a tie, and a winner", w)
+            # R14: renaming the options moves the winner with them
+            flip = dict(zip(options, reversed(options)))
+            w2 = free(summary(tuple(tuple(flip[o] for o in p) for p in profile)), options)
+            if (flip[w] if w else None) != w2: note("R14", profile, w, w2)
+    # R13, a known answer: three first choices one each is a tie for weakest; the declared count seats one, the election nobody
+    tie = summary([("a", "b"), ("b", "a"), ("c", "b")])
+    if not by_position and (finish(tie, options)[0] != "b" or free(tie, options) is not None): note("R13", "the known tie")
+    return n, fail
 
 
 def check(n_options=3, r=3, max_ballots=5):
@@ -159,7 +214,12 @@ def main():
     n, fail = check()
     for p, w in sorted(fail.items()): print(f"  FAIL {p}: {w}")
     print(f"ranked_choice: {n} profiles of up to five ballots over three options, eleven properties " + ("hold" if not fail else f"fail {sorted(fail)}"))
-    return 1 if fail else 0
+    n2, fail2 = check_no_order()
+    for p, w in sorted(fail2.items()): print(f"  FAIL {p}: {w}")
+    print(f"ranked_choice, no declared order (the election): {n2} profiles, R12-R14 " + ("hold" if not fail2 else f"fail {sorted(fail2)}"))
+    _, caught = check_no_order(by_position=True)
+    print("ranked_choice, mutation (a tie broken by list position): " + ("caught by R12" if "R12" in caught else "NOT caught"))
+    return 1 if fail or fail2 or "R12" not in caught else 0
 
 
 if __name__ == "__main__":

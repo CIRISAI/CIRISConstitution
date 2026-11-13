@@ -34,6 +34,21 @@ disagree has none.
 
 Each fails when its line of the count is changed.
 
+**An election declares no order.** The general count breaks a tie for weakest against the option later in the
+choice's declared order. An election declares none, so there a tie for weakest seats nobody and the count runs
+again (CC 4.5.13; CC 4.5.4: the ballot's shown order decides nothing). `winner_no_order` is that count, checked
+over the same 15,504 profiles:
+
+| | Property |
+|---|---|
+| R12 | the result does not depend on the order the options are listed in |
+| R13 | it agrees with the declared-order count wherever that count breaks no tie, and seats nobody wherever it does |
+| R14 | renaming the options moves the winner with them |
+
+A mutation that breaks the tie by where an option is listed is caught by R12. `Election.lean` proves (i) and (ii)
+for any number of options and ballots (`free_perm`, `free_agrees`), and `formal/causal_kernel/door.py` runs the
+election's door on this count.
+
 **A secret ranked poll publishes its rounds.** Because each round's totals are a sum over cells once the standing options are known, and the standing options are public, the two tally members never need the tally of rankings. Each applies the round's sum to its own share and publishes the result; the two add; everyone reads the elimination from the published totals. The tally of rankings, in which most cells hold one ballot and a ranking is close to a signature, is never published. R11 checks the sum.
 
 **Not claimed.** That ranking an option higher can never hurt it. Instant runoff does not have that property, and

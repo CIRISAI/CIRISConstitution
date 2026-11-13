@@ -79,9 +79,11 @@ affiliation_member_action	both signing acts	holds
 affiliation_member_action	one side alone never acts	holds
 affiliation_member_action	plant: mutation one_voice	caught
 moderator_election	recount agrees with the reference	holds
+moderator_election	a tie for weakest seats nobody: an election declares no order (R12, R13, Election.free_tie_seats_nobody)	holds
 moderator_election	below the floor of two voices nobody is seated (R7, no_ballots_no_winner)	holds
 moderator_election	the winner is the instant-runoff winner over one ballot per person (R1, R8, Election.winner)	holds
 moderator_election	plant: mutation dedupe_off	caught
+moderator_election	plant: mutation tie_by_position	caught
 cosigned_act	lands only when the protocol's count is met	holds
 cosigned_act	plant: mutation one_voice	caught
 accord_majority	lands only when the protocol's count is met	holds

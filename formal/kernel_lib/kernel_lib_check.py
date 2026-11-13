@@ -94,6 +94,8 @@ def run_ranked():
         for profile in itertools.combinations_with_replacement(R, size):
             rows = [(i, p) for i, p in enumerate(profile)]
             n += 1; bad += X.ranked(rows, options) != rc.finish(rc.summary(profile), options)
+            # the election's count, with no declared order (CC 4.5.13): a tie for weakest seats nobody
+            n += 1; bad += X.ranked(rows, options, declared=False)[0] != rc.winner_no_order(rows, options)
             if size:   # the two cases of R8: a repeated ballot, and one person with two different ballots
                 other = next(x for x in R if x != profile[0])
                 for extra in (rows[:1], [(0, other)]):
