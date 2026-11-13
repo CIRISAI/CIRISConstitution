@@ -7,10 +7,11 @@ Reads formal/derivation/reaction_text.tsv and writes manifests/reactions.json, o
 relates two families and half its triggers are a clock, which is no transition, so it has a table of its own.
 
     cell     := clause *( "; " clause )
-    clause   := [ selector " " ] ( expiry | clock | react )
+    clause   := [ selector " " ] ( expiry | clock | land | react )
     selector := "[" LEAF *( "|" LEAF ) "]" | "@" SCOPE
     expiry   := "expiry " MODE [ " " MEMBER ] [ " eq " dur ] [ " default " dur ] [ " max " dur ] [ " from " origin ] [ " by " JUDGE ]
     clock    := "clock " NAME " = " dur [ " default " dur ] [ " max " dur ] " from " origin [ " by " JUDGE ]
+    land     := "land " NAME ( " local" | " by " ROLE " as " famref ) [ " late " ( "closed" | "counts" ) ]
     react    := "on " event *( "|" event ) [ " unless " event *( "|" event ) ] " -> " effect *( ", " effect )
     event    := STATE "(" famref [ "," ACTOR ] ")" | "close(" NAME ")" | "fold(" FOLDNAME ")"
     effect   := [ "should " | "may " ] ( "emit " famref " by " ROLE | "read " VERDICT [ " of " famref ] | "do " ACT | "open " POLICY_ROW )
@@ -23,11 +24,18 @@ the door like any other; every other effect is a verdict a node recomputes. The 
 fold causes has one emitter (CC 4.5.13) is checked: such an emit not signed `by origin_door` is listed, and the
 list may only shrink.
 
+A `land` clause says who concludes a window. NAME is a clock of the same family and leaves, or `expiry` for the
+row's own stated end. `by ROLE as FAMREF` names the seat that signs the outcome and the row that carries it.
+`local` says each node reads the close on its own clock, the outcome binds that node alone and nothing is signed.
+`late closed` says an answer the concluder first holds after its close changes nothing, and `late counts` says
+it is still counted. A clause is written only where a sentence of the Parts states it. The clocks with no such
+clause are listed, and that list may only shrink.
+
 Run: python3 tools/build_reactions.py            # build
      python3 tools/build_reactions.py --check    # the manifest is current
 """
 import csv, glob, hashlib, json, os, re, sys
-from collections import OrderedDict
+from collections import Counter, OrderedDict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEXT = os.path.join(ROOT, "formal", "derivation", "reaction_text.tsv")
@@ -40,6 +48,8 @@ SCOPES = ("self", "family", "affiliations", "community", "federation", "accord",
 HOLDERS = ("charter", "group", "self", "decay_protocol", "community")
 SIGNED_ORIGINS = ("asserted_at", "claimed_at", "effective_at", "cosigned_at", "delegation_valid_from")
 EMITTER_OPEN_MAX = 7   # clock- or fold-caused emits not signed by the origin door; the number only falls
+LANDING_OPEN_MAX = 4   # clocks whose concluder no clause states; the number only falls
+LATE = ("closed", "counts")
 NAME = r"[A-Za-z_][A-Za-z_0-9]*"
 
 ACTORS = ("producer", "subject")   # whose act the event is, where the rule turns on it (CC 3.3.1 D1)
@@ -107,6 +117,17 @@ def parse_clause(raw, need):
         c["kind"] = "clock"; c["name"] = m.group(1); c["dur"] = parse_dur(m.group(2), need)
         t = tail(raw[m.end():], ("default", "max", "from", "by"))
         if "from" not in t: raise ReactionError(f"a clock runs from an origin: {raw!r}")
+    elif raw.startswith("land "):
+        m = re.fullmatch(r"land (" + NAME + r")(?: (local)| by (\S+) as (\S+))(?: late ([a-z]+))?", raw)
+        if not m or (m.group(5) and m.group(5) not in LATE): raise ReactionError(f"landing {raw!r}")
+        c["kind"] = "land"; c["name"] = m.group(1)
+        if m.group(2):
+            c["concluder"] = "local"
+        else:
+            need["roles"].append(m.group(3)); need["families"].append(m.group(4))
+            c["concluder"] = m.group(3); c["landing"] = m.group(4)
+        if m.group(5): c["late"] = m.group(5)
+        return c
     elif raw.startswith("on "):
         m = re.fullmatch(r"on (\S+)(?: unless (\S+))? -> (.+)", raw)
         if not m: raise ReactionError(f"reaction {raw!r}")
@@ -205,14 +226,30 @@ def build():
     open_emit = sorted(set(open_emit))
     if len(open_emit) > EMITTER_OPEN_MAX:
         sys.exit(f"reactions: {len(open_emit)} clock- or fold-caused emits are not signed by the origin door, more than {EMITTER_OPEN_MAX}")
-    kinds = {k: sum(1 for e in entries if e["kind"] == k) for k in ("expiry", "clock", "react")}
+    key = lambda e: (e["family"], "|".join(e.get("leaves", ())), e.get("name", "expiry"))
+    show = lambda k: k[0] + (f" [{k[1]}]" if k[1] else "") + " " + k[2]
+    windows = [key(e) for e in entries if e["kind"] in ("clock", "expiry")]
+    lands = [key(e) for e in entries if e["kind"] == "land"]
+    stray = sorted(show(k) for k in set(lands) - set(windows)); twice = sorted(show(k) for k in set(lands) if lands.count(k) > 1)
+    if stray or twice:
+        sys.exit("reactions: a landing names one clock or expiry of its own family and leaves, once: " + "; ".join(
+            [f"no clock for {k}" for k in stray] + [f"two landings for {k}" for k in twice]))
+    unlanded = sorted(show(key(e)) for e in entries if e["kind"] == "clock" and key(e) not in lands)
+    if len(unlanded) > LANDING_OPEN_MAX:
+        sys.exit(f"reactions: {len(unlanded)} clocks have no landing clause, more than {LANDING_OPEN_MAX}: " + "; ".join(unlanded))
+    land_by = lambda f: OrderedDict(sorted(Counter(f(e) for e in entries if e["kind"] == "land").items()))
+    kinds = {k: sum(1 for e in entries if e["kind"] == k) for k in ("expiry", "clock", "land", "react")}
     emits = sum(1 for e in entries if e["kind"] == "react" for x in e["effects"] if x["effect"] == "emit")
     doc = OrderedDict([("_meta", OrderedDict([
         ("source", "formal/derivation/reaction_text.tsv"), ("cc_section", "4.5.13"),
-        ("reading", "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant"),
+        ("reading", "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant"),
         ("durations", "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record"),
         ("entries", len(entries)), ("kinds", kinds), ("emits", emits),
         ("new_event_words", marks),
+        ("landing", OrderedDict([("rule", "a land entry names who concludes a clock or an expiry of its family: a seat and the row it signs, or `local` where each node reads the close on its own clock and nothing is signed"),
+                                 ("late", "`closed`: an answer the concluder first holds after its close changes nothing; `counts`: it is still counted; absent: no sentence states it"),
+                                 ("by_concluder", land_by(lambda e: e["concluder"])), ("by_late", land_by(lambda e: e.get("late", "unstated"))),
+                                 ("clocks_with_no_landing", unlanded)])),
         ("one_emitter", OrderedDict([("rule", "a row a clock or a fold causes is emitted by the door the causing row first entered (CC 4.5.13)"),
                                      ("not_yet_by_origin_door", open_emit)]))])),
         ("reactions", entries)])
@@ -224,9 +261,11 @@ def self_test():
             "[granted] expiry optional valid_until default consent_temporary_ttl_secs from asserted_at",
             "@community on sealed(self) -> emit key_grant:epoch by author",
             "on withdrawn(self)|recanted(self) -> do cease_replication, should do deregister_peer",
-            "on close(sla) unless withdrawn(target,producer)|purged(target) -> read breached"]
+            "on close(sla) unless withdrawn(target,producer)|purged(target) -> read breached",
+            "land fuse local late closed", "[pending] land hold local", "land window by winner as ballot:moderator_acceptance late counts"]
     bad = ["expiry sometimes", "clock x = 86400 from first_held", "clock x = a_secs", "on landed(self) -> read x", "on close(x) -> shout", "@galaxy expiry none",
-           "on withdrawn(target,anyone) -> read x", "on close(sla,producer) -> read x"]
+           "on withdrawn(target,anyone) -> read x", "on close(sla,producer) -> read x",
+           "land fuse", "land fuse by holder", "land fuse local as hard_case:x", "land fuse local late sometimes", "land fuse late closed"]
     for g in good: parse(g)
     n = 0
     for g in bad:
@@ -246,4 +285,5 @@ if __name__ == "__main__":
         ok = os.path.exists(OUT) and open(OUT, encoding="utf-8").read() == js
         print("reactions: current" if ok else "reactions.json is stale (run tools/build_reactions.py)"); sys.exit(0 if ok else 1)
     open(OUT, "w", encoding="utf-8").write(js)
-    print(f"reactions: {meta['entries']} entries {meta['kinds']}, {meta['emits']} emits, {len(meta['one_emitter']['not_yet_by_origin_door'])} clock- or fold-caused emits not by the origin door")
+    print(f"reactions: {meta['entries']} entries {meta['kinds']}, {meta['emits']} emits, {len(meta['one_emitter']['not_yet_by_origin_door'])} clock- or fold-caused emits not by the origin door, "
+          f"{len(meta['landing']['clocks_with_no_landing'])} clocks with no landing clause")

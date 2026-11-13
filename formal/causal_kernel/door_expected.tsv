@@ -162,3 +162,16 @@ time invitation	J accepts late with a back-dated asserted_at; m2 first holds it 
 time invitation	m2 lands 'closed' at its window; J's acceptance is concurrent (back-dated)	closed
 time invitation	m2 lands 'closed' early (lies), J's acceptance concurrent	open
 time invitation	m2 lands 'closed' at its window; m3 holds the acceptance inside its own window and lands 'admitted' naming both	admitted
+self_roster_add	concluder, landing row and late answer read from reactions.json	self; none: each node reads its own close; late not stated
+moderation_action	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
+accord_halt@node+late_closed	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late closed
+moderator_election	concluder, landing row and late answer read from reactions.json	winner; ballot:moderator_acceptance; late counts
+deletion_sla	concluder, landing row and late answer read from reactions.json	substrate; hard_case:deletion_window_breach; late not stated
+accord_roster_change	concluder, landing row and late answer read from reactions.json	holder; group:roster; late closed
+harm_report	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
+takedown_withhold	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late counts
+decay_stage	concluder, landing row and late answer read from reactions.json	author; consent:decay:patterns_anonymized; late not stated
+invitation	concluder, landing row and late answer read from reactions.json	member; membership:widening; late closed
+doors.tsv	parameters no table states	57
+accord_halt@node+late_closed	plant: the fuse's land entry rewritten to a holder	caught
+doors.tsv	written from the doors as run	current

@@ -7,7 +7,7 @@ tools/kx.py. Each translator takes the parse tree the grammar's own tool returns
     translate(guard_clauses)            guards        -> verdicts(...)
     Tx(parts, family, when).build()     folds         -> tuple(groups, order, combined, verdict, absent, n)
     ch_kx(items)                        changes       -> set of (on, verdict, effects)
-    re_kx(clauses)                      reactions     -> set of (kind, name, state) / (react, effects)
+    re_kx(clauses)                      reactions     -> set of (kind, name, state) / (land, name, held, late) / (react, effects)
     count_kx(arms)                      count arms    -> the door of the first arm whose selector holds
     policy_call(row)                    policy rows   -> tally2(...) with BASE, A, O, EL to be filled
 """
@@ -515,6 +515,7 @@ def ch_kx(items):
 
 
 CONST_DUR = 3
+LAND_ROW_ALONE = ("self", "author")     # a landing by the signer of the row that opened the window: read off the two rows, no seat
 
 
 def re_kx(clauses, only=None):
@@ -568,9 +569,10 @@ def re_kx(clauses, only=None):
                 body = f"let O = {o} in let E = {end} in tuple('expiry', first({', '.join(arms)}))"
             items.append(f"first({guard} -> single({body}), else -> {{}})")
         elif c["kind"] == "land":
-            if c["concluder"] == "local": items.append(f"first({guard} -> single(tuple('land', {q(c['name'])}, 'local')), else -> {{}})"); continue
-            who = "eq(x.signer, self.signer)" if c["concluder"] == "self" else f"stands(x.signer, {q(c['concluder'])}, self.object)"
-            items.append(f"first({guard} -> single(tuple('land', {q(c['name'])}, some(sel(held, \\x: and(isfam(x, {q(c['landing'])}), member(self.id, x.names), live(x), {who}))))), else -> {{}})")
+            late = q(c.get("late", "unstated"))        # whether an answer first held after the close still counts
+            if c["concluder"] == "local": items.append(f"first({guard} -> single(tuple('land', {q(c['name'])}, 'local', {late})), else -> {{}})"); continue
+            who = "eq(x.signer, self.signer)" if c["concluder"] in LAND_ROW_ALONE else f"stands(x.signer, {q(c['concluder'])}, self.object)"
+            items.append(f"first({guard} -> single(tuple('land', {q(c['name'])}, some(sel(held, \\x: and(isfam(x, {q(c['landing'])}), member(self.id, x.names), live(x), {who}))), {late})), else -> {{}})")
         else:
             on = [event(e) for e in c["on"]]; un = [event(e) for e in c.get("unless", [])]
             if None in on or None in un:

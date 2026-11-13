@@ -2,12 +2,13 @@
  "_meta": {
   "source": "formal/derivation/reaction_text.tsv",
   "cc_section": "4.5.13",
-  "reading": "an entry is an expiry rule, a named clock or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
+  "reading": "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 97,
+  "entries": 113,
   "kinds": {
    "expiry": 20,
    "clock": 19,
+   "land": 16,
    "react": 58
   },
   "emits": 25,
@@ -15,6 +16,29 @@
    "purged": 7,
    "matched": 1,
    "sealed": 4
+  },
+  "landing": {
+   "rule": "a land entry names who concludes a clock or an expiry of its family: a seat and the row it signs, or `local` where each node reads the close on its own clock and nothing is signed",
+   "late": "`closed`: an answer the concluder first holds after its close changes nothing; `counts`: it is still counted; absent: no sentence states it",
+   "by_concluder": {
+    "author": 2,
+    "holder": 1,
+    "identity:substrate_persist": 1,
+    "local": 10,
+    "member": 1,
+    "winner": 1
+   },
+   "by_late": {
+    "closed": 4,
+    "counts": 5,
+    "unstated": 7
+   },
+   "clocks_with_no_landing": [
+    "cosign:{state} [pending] age",
+    "group:roster cover",
+    "membership:{stage} W",
+    "retirement:{state} [decided] objection"
+   ]
   },
   "one_emitter": {
    "rule": "a row a clock or a fold causes is emitted by the door the causing row first entered (CC 4.5.13)",
@@ -1994,6 +2018,191 @@
    ],
    "cc_ref": [
     "CC 4.4.3.4.1"
+   ]
+  },
+  {
+   "family": "accord:invoke:constitutional:{halt_id}",
+   "kind": "land",
+   "name": "fuse",
+   "concluder": "local",
+   "late": "closed",
+   "cc_ref": [
+    "CC 4.2.1.1",
+    "CC 4.2.1.3"
+   ]
+  },
+  {
+   "family": "accord:lifecycle:{kind}",
+   "leaves": [
+    "confirmed"
+   ],
+   "kind": "land",
+   "name": "fuse",
+   "concluder": "local",
+   "late": "closed",
+   "cc_ref": [
+    "CC 4.2.1.1",
+    "CC 4.2.1.3"
+   ]
+  },
+  {
+   "family": "consent:deletion_sla:{days}",
+   "kind": "land",
+   "name": "sla",
+   "concluder": "identity:substrate_persist",
+   "landing": "hard_case:deletion_window_breach",
+   "cc_ref": [
+    "CC 3.3.1"
+   ]
+  },
+  {
+   "family": "identity:occurrence",
+   "kind": "land",
+   "name": "window",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 3.3.6.3"
+   ]
+  },
+  {
+   "family": "group:roster",
+   "kind": "land",
+   "name": "W",
+   "concluder": "holder",
+   "landing": "group:roster",
+   "late": "closed",
+   "cc_ref": [
+    "CC 4.2.6"
+   ]
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "leaves": [
+    "harm_report"
+   ],
+   "kind": "land",
+   "name": "window",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "moderation:{allegation_type}",
+   "kind": "land",
+   "name": "window",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "cosign:{state}",
+   "leaves": [
+    "pending"
+   ],
+   "kind": "land",
+   "name": "hold",
+   "concluder": "local",
+   "cc_ref": [
+    "CC 3.3.4"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "Dmca512"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "DsaArticle16"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "OsaIllegalContent"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "takedown_notice:{basis}",
+   "leaves": [
+    "CommunityStandards"
+   ],
+   "kind": "land",
+   "name": "withhold",
+   "concluder": "local",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.3"
+   ]
+  },
+  {
+   "family": "ballot:moderator",
+   "kind": "land",
+   "name": "window",
+   "concluder": "winner",
+   "landing": "ballot:moderator_acceptance",
+   "late": "counts",
+   "cc_ref": [
+    "CC 4.5.13"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "land",
+   "name": "anonymise",
+   "concluder": "author",
+   "landing": "consent:decay:patterns_anonymized",
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
+  },
+  {
+   "family": "consent:decay:{stage}",
+   "kind": "land",
+   "name": "complete",
+   "concluder": "author",
+   "landing": "consent:decay:complete",
+   "cc_ref": [
+    "CC 4.4.3.5.1"
+   ]
+  },
+  {
+   "family": "membership:{stage}",
+   "leaves": [
+    "proposal"
+   ],
+   "kind": "land",
+   "name": "expiry",
+   "concluder": "member",
+   "landing": "membership:widening",
+   "late": "closed",
+   "cc_ref": [
+    "CC 3.1.3.2"
    ]
   }
  ]

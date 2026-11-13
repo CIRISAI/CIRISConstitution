@@ -1,11 +1,11 @@
 family	need	read_by_rules	read_by_sites	acts	names	behaviour	families_sharing_it	readers
 accord:*	read by a rule	1	0	fold	-	B019	1	hardware_custody:{platform}.fold
 accord:human_dignity	nothing shown	0	0	-	-	B020	1	-
-accord:invoke:constitutional:{halt_id}	read by a rule	2	0	count expiry clock react	-	B021	1	accord:lifecycle:{kind}.guard accord:lifecycle:{kind}.reaction
+accord:invoke:constitutional:{halt_id}	read by a rule	2	0	count expiry clock react land	-	B021	1	accord:lifecycle:{kind}.guard accord:lifecycle:{kind}.reaction
 accord:invoke:drill:{drill_id}	nothing shown	0	0	-	-	B006	2	-
 accord:invoke:notify:{notify_id}	nothing shown	0	0	-	-	B006	2	-
 accord:lifecycle	read by a rule	8	0	expiry react	-	B022	1	accord:*.subject_rule accord:human_dignity.subject_rule accord:invoke:constitutional:{halt_id}.reaction accord:invoke:constitutional:{halt_id}.subject_rule accord:invoke:drill:{drill_id}.subject_rule accord:invoke:notify:{notify_id}.subject_rule
-accord:lifecycle:{kind}	acts of its own	0	0	fold count guard clock react	accord:invoke:constitutional:{halt_id}	B023	1	-
+accord:lifecycle:{kind}	acts of its own	0	0	fold count guard clock react land	accord:invoke:constitutional:{halt_id}	B023	1	-
 activity_tier:{period}	nothing shown	0	0	-	-	B024	1	-
 age_assurance:{level}:{band}:{version}	read by a rule	1	0	fold	-	B025	1	age_self_declared:band:{band}:{version}.fold
 age_self_declared:band:{band}:{version}	read by a rule	1	0	fold	-	B026	1	age_assurance:{level}:{band}:{version}.fold
@@ -20,8 +20,8 @@ attestation:self_verify	read by a rule	4	0	fold	-	B005	3	attestation:agent_integ
 audio:*	nothing shown	0	0	-	-	B002	10	-
 audit_chain:hash_continuity	nothing shown	0	0	-	-	B031	1	-
 autonomy:{aspect}	nothing shown	0	0	-	-	B001	17	-
-ballot:moderator	read by a rule	2	1	fold count guard clock	reference	B032	1	ballot:moderator_acceptance.guard moderation_track_record:{community_key_id}.fold
-ballot:moderator_acceptance	acts of its own	0	0	fold count guard	ballot:moderator reference	B033	1	-
+ballot:moderator	read by a rule	2	1	fold count guard clock land	reference	B032	1	ballot:moderator_acceptance.guard moderation_track_record:{community_key_id}.fold
+ballot:moderator_acceptance	read by a rule	1	0	fold count guard	ballot:moderator reference	B033	1	ballot:moderator.reaction
 ballot:tally:{poll_id}	nothing shown	0	0	-	reference	B034	1	-
 benchmark:he300:{category}:{version}	nothing shown	0	0	-	-	B035	1	-
 beneficence:{aspect}	nothing shown	0	0	-	-	B001	17	-
@@ -52,9 +52,9 @@ conscience:entropy	nothing shown	0	0	-	-	B001	17	-
 conscience:epistemic_humility	nothing shown	0	0	-	-	B001	17	-
 conscience:optimization_veto	nothing shown	0	0	-	-	B001	17	-
 consent:community_trust	acts of its own	0	0	fold guard change	reference trace:{form}:{version}	B051	1	-
-consent:decay:{stage}	acts of its own	0	0	react clock	reference	B052	1	-
+consent:decay:{stage}	acts of its own	0	0	react clock land	reference	B052	1	-
 consent:deletion_complete	nothing shown	0	0	-	reference	B053	1	-
-consent:deletion_sla:{days}	acts of its own	0	0	react clock	reference	B054	1	-
+consent:deletion_sla:{days}	acts of its own	0	0	react clock land	reference	B054	1	-
 consent:partnership_accept	read by a rule	2	0	fold expiry	reference	B055	1	consent:partnership_grant.fold topical_relation:{kind}.fold
 consent:partnership_grant	read by a rule	3	0	fold expiry	reference	B056	1	consent:decay:{stage}.reaction consent:partnership_accept.fold topical_relation:{kind}.fold
 consent:replication:{version}	read by a site only	0	1	fold change react	reference	B057	1	-
@@ -65,7 +65,7 @@ consent:{kind}	acts of its own	0	0	react	reference	B061	1	-
 content_class:{class}	read by a site only	0	3	-	-	B062	1	-
 content_rating:{scheme}:{rating}	nothing shown	0	0	-	-	B003	5	-
 corpus_health:n_eff_measurable	nothing shown	0	0	-	-	B010	2	-
-cosign:{state}	read by a rule	1	2	fold guard clock react	reference	B063	1	membership:{stage}.reaction
+cosign:{state}	read by a rule	1	2	fold guard clock react land	reference	B063	1	membership:{stage}.reaction
 credits:{domain}:{language}:{subject}	nothing shown	0	0	-	-	B007	2	-
 custody:{kind}	read by a rule	2	3	guard expiry react	-	B064	1	group:roster.change retirement:{state}.change
 cw_class:{class}	nothing shown	0	0	-	-	B011	2	-
@@ -96,12 +96,12 @@ fidelity:{aspect}	nothing shown	0	0	-	-	B001	17	-
 file:{version}	read by a rule	1	0	-	-	B076	1	collection:{kind}.change
 film:*	nothing shown	0	0	-	-	B002	10	-
 goal:{scale}	read by a rule	1	0	-	-	B077	1	evidence:{suite}:{kind}:{cell}:{prefix}.guard
-group:roster	read by a rule	4	1	fold guard change react expiry clock	custody:{kind} key_grant:{axis} licensure:{authority_id} membership:{stage} trust:{job}:{version}	B078	1	licensure:{authority_id}.reaction membership:{stage}.change membership:{stage}.fold trust:{job}:{version}.reaction
+group:roster	read by a rule	4	1	fold guard change react expiry clock land	custody:{kind} key_grant:{axis} licensure:{authority_id} membership:{stage} trust:{job}:{version}	B078	1	licensure:{authority_id}.reaction membership:{stage}.change membership:{stage}.fold trust:{job}:{version}.reaction
 hard_case:{kind}	read by a rule	10	0	-	-	B079	1	agent_files:{kind}:{platform_or_target}.reaction consent:deletion_sla:{days}.reaction consent:{kind}.reaction group:roster.reaction identity:occurrence.reaction key_grant:{axis}.reaction
 hardware_custody:{platform}	read by a rule	1	0	fold	-	B080	1	accord:*.fold
 health:liveness:{version}	nothing shown	0	0	-	-	B081	1	-
 identity:canonical_binding:{canonical_hash}	nothing shown	0	0	-	-	B082	1	-
-identity:occurrence	read by a rule	2	1	fold count change react clock expiry	transport:canonical_rebind	B083	1	key_grant:{axis}.guard key_grant:{axis}.reaction
+identity:occurrence	read by a rule	2	1	fold count change react clock expiry land	transport:canonical_rebind	B083	1	key_grant:{axis}.guard key_grant:{axis}.reaction
 identity:occurrence_revocation	acts of its own	0	0	count change	reference	B084	1	-
 identity_amendment	acts of its own	0	0	guard	deferral:response:{outcome} reference	B085	1	-
 identity_continuity:relational_anchor	nothing shown	0	0	-	-	B010	2	-
@@ -121,11 +121,11 @@ licensure:{authority_id}	read by a rule	1	0	fold react	reference	B092	1	group:ro
 lineage_witness:{stage}	nothing shown	0	0	-	-	B093	1	-
 locality:decision:{scale}	acts of its own	0	0	fold	-	B094	1	-
 manifold_conformity:{cohort}	acts of its own	0	0	fold	-	B009	2	-
-membership:{stage}	read by a rule	3	1	fold count guard change clock react expiry	group:roster key:record reference	B095	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
+membership:{stage}	read by a rule	3	1	fold count guard change clock react expiry land	group:roster key:record reference	B095	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
 mesh_config:{key}	acts of its own	0	0	fold expiry	-	B096	1	-
 method:{approach_id}:{substrate_rung}	nothing shown	0	0	-	-	B003	5	-
 model_3d:*	nothing shown	0	0	-	-	B002	10	-
-moderation:{allegation_type}	read by a rule	1	0	fold count clock react	-	B097	1	slashing:{outcome}.guard
+moderation:{allegation_type}	read by a rule	1	0	fold count clock react land	-	B097	1	slashing:{outcome}.guard
 moderation_track_record:{community_key_id}	acts of its own	0	0	fold	-	B098	1	-
 multilateral_participation:{forum}:{kind}	nothing shown	0	0	-	-	B003	5	-
 need:{domain}:{kind}	nothing shown	0	0	-	-	B099	1	-
@@ -165,7 +165,7 @@ session:{kind}	acts of its own	0	0	fold change expiry react	-	B119	1	-
 settlement:*	acts of its own	0	0	fold	-	B120	1	-
 slashing:{outcome}	acts of its own	0	0	count guard	moderation:{allegation_type} ratchet:flag:counter_rii:{layer} seed_holder_voting_alignment:{cell} testimonial_witness:{kind}	B121	1	-
 system:*	nothing shown	0	0	-	-	B122	1	-
-takedown_notice:{basis}	acts of its own	0	0	count guard react clock	-	B123	1	-
+takedown_notice:{basis}	acts of its own	0	0	count guard react clock land	-	B123	1	-
 testimonial_witness:{kind}	read by a rule	1	0	-	-	B124	1	slashing:{outcome}.guard
 topical_relation:{kind}	acts of its own	0	0	fold	-	B125	1	-
 trace:{form}:{version}	read by a rule	1	0	-	-	B126	1	consent:community_trust.change

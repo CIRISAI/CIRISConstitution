@@ -961,10 +961,11 @@ def re_ref(clauses, held, s, now):
             if end is not None and c.get("max") and o is not None and end - o > dur_of(c["max"], s): out.append(("expiry", "refuse")); continue
             out.append(("expiry", "open" if end is None else ("live" if now < end else "expired")))
         elif c["kind"] == "land":
-            if c["concluder"] == "local": out.append(("land", c["name"], "local")); continue
+            late = c.get("late", "unstated")
+            if c["concluder"] == "local": out.append(("land", c["name"], "local", late)); continue
             ok = any(fam_match(x["fam"], c["landing"]) and s["id"] in x.get("names", ()) and ref_state(held, x) == "admitted"
-                     and (x.get("signer") == s.get("signer") if c["concluder"] == "self" else ref_stands(held, x.get("signer"), c["concluder"], s.get("object"))) for x in held)
-            out.append(("land", c["name"], ok))
+                     and (x.get("signer") == s.get("signer") if c["concluder"] in ("self", "author") else ref_stands(held, x.get("signer"), c["concluder"], s.get("object"))) for x in held)
+            out.append(("land", c["name"], ok, late))
         else:
             on = [event_ref(e, s, held, clocks, now) for e in c["on"]]
             un = [event_ref(e, s, held, clocks, now) for e in c.get("unless", [])]

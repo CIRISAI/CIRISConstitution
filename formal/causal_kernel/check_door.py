@@ -12,6 +12,8 @@ claims, over every arrival order of bounded generated worlds, each with a mutati
   3  the two-path rows' published vectors replayed on the door's table
   4  time: G3 (an act signed before its signer's delegation was withdrawn) under the cut by causal past; the
      invitation's `acceptance asserted_at <= expires_at` against the door's window
+  5  who concludes, with which row, and the late answer, as each door reads them from manifests/reactions.json; the
+     count of parameters no table states; a rewritten land entry that must change the halt's answer; doors.tsv current
 
 python3 -I check_door.py            compares every (instance, property, verdict) with door_expected.tsv; exit 1 on any
                                     difference, any mutation not caught, any order difference outside the plants
@@ -321,7 +323,7 @@ MUTATION = {
     "accord_halt@holder": ("void", "the landing voids concurrent answers"),
     "accord_halt@node": ("concluder_holder", "a holder lands the node's fuse"),
     "accord_halt@node+late_closed": ("concluder_holder", "a holder lands the node's fuse"),
-    "custodian_replace": ("strict_2_2", "2/2 read strictly, as the build's vectors read it (3 of 2)"),
+    "custodian_replace": ("strict_2_2", "2/2 read strictly: 3 of 2, which no pair reaches"),
     "affiliation_member_action": ("one_voice", "every threshold read as one voice"),
     "moderator_election": ("dedupe_off", "a person's ballots all count; first choices only"),
     "cosigned_act": ("one_voice", "every threshold read as one voice"),
@@ -594,29 +596,55 @@ def time_invitation():
 
 
 # ---- doors.tsv -------------------------------------------------------------------------------------------------------
-def write_doors():
+def doors_text():
     D.rebuild()
     cols = ["door", "source", "kind", "opener", "answerers", "answer_kinds", "window_secs", "clauses (when value rule over -> outcome)",
             "default_at_close", "late_answer", "target_silent", "concluder", "landing_row", "table_read_by", "cells_used", "not_stated_in_tables"]
-    landing = {"accord_halt@node": "objection:landed (NEW), self scope, by the halted node", "accord_halt@holder": "objection:landed (NEW) by a holder",
-               "moderator_election": "ballot:moderator_acceptance (exists)", "deletion_sla": "hard_case:deletion_window_breach (exists)",
-               "takedown_withhold": "custody:ack none (exists)", "retirement_objection": "retirement:frozen (exists)", "decay_stage": "consent:decay:<stage> (exists)",
-               "invitation": "membership:widening (exists)", "custodian_replace": "the cosigned row itself", "affiliation_member_action": "the cosigned row itself",
-               "accord_majority": "the cosigned row itself", "cosigned_act": "the cosigned row itself; the close is a local drop",
-               "community_remove[unanimous]": "the cosigned removal itself; the close is a local drop",
-               "community_remove[majority]": "the cosigned removal itself; the close is a local drop",
-               "community_remove[quorum]": "the cosigned removal itself; the close is a local drop", "moderator_recall": "the cosigned recall itself; the close is a local drop"}
-    with open(os.path.join(HERE, "doors.tsv"), "w", encoding="utf-8") as f:
-        f.write("\t".join(cols) + "\n")
-        for name in DOOR_NAMES:
-            s = D.DOORS[name]
-            ans = [s["counted"]] + list(s["extra"]) + (["target"] if s.get("target_votes") else [])
-            cl = "; ".join("%s %s %s over %s -> %s" % (a, b, "/".join(map(str, c)), d, e) for a, b, c, d, e in s["clauses"])
-            f.write("\t".join([name, s["policy"], s["kind"], "one voice seated in '%s'" % s["opener"] + (" (its row is the act)" if s["kind"] == "mirror" else ""),
-                               "+".join(ans), ",".join(s["kinds"]) or ("ballot" if s["kind"] == "ranked" else "-"),
-                               "none" if s["secs"] is None else str(s["secs"]), cl or "-", s["default"], s.get("late", "counts"),
-                               str(s.get("silent")), s["concluder"], landing.get(name, "objection:landed (NEW) or none named"), "window.py" if D.to_window(s) else "door.py",
-                               "; ".join("%s=%s" % kv for kv in s["cells"].items()), " | ".join(s["unstated"])]) + "\n")
+    # the landing row of a door whose clock has a `land` entry is that entry's (door.stated); these are the doors with none
+    landing = {"retirement_objection": "retirement:frozen (exists; no cell names it)", "custodian_replace": "the cosigned row itself",
+               "affiliation_member_action": "the cosigned row itself", "accord_majority": "the cosigned row itself", "cosigned_act": "the cosigned row itself",
+               "community_remove[unanimous]": "the cosigned removal itself", "community_remove[majority]": "the cosigned removal itself",
+               "community_remove[quorum]": "the cosigned removal itself", "moderator_recall": "the cosigned recall itself"}
+    out = ["\t".join(cols)]
+    for name in DOOR_NAMES:
+        s = D.DOORS[name]
+        ans = [s["counted"]] + list(s["extra"]) + (["target"] if s.get("target_votes") else [])
+        cl = "; ".join("%s %s %s over %s -> %s" % (a, b, "/".join(map(str, c)), d, e) for a, b, c, d, e in s["clauses"])
+        out.append("\t".join([name, s["policy"], s["kind"], "one voice seated in '%s'" % s["opener"] + (" (its row is the act)" if s["kind"] == "mirror" else ""),
+                              "+".join(ans), ",".join(s["kinds"]) or ("ballot" if s["kind"] == "ranked" else "-"),
+                              "none" if s["secs"] is None else str(s["secs"]), cl or "-", s["default"], s.get("late", "counts"),
+                              str(s.get("silent")), s["concluder"], s.get("landing_row") or landing.get(name, "none named"), "window.py" if D.to_window(s) else "door.py",
+                              "; ".join("%s=%s" % kv for kv in s["cells"].items()), " | ".join(s["unstated"])]))
+    return "\n".join(out) + "\n"
+
+
+# ---- 5. who concludes, with which row, and the late answer: read from manifests/reactions.json --------------------------
+def landing_cells():
+    """(door, what the manifest states) for every door that reads a `land` entry; the count of parameters no table
+    states over all doors; and a plant: the fuse's entry rewritten to a holder must change the halt's answer."""
+    D.rebuild()
+    out = []
+    for name in DOOR_NAMES:
+        s = D.DOORS[name]
+        if s.get("landing_from"):
+            out.append((name, "concluder, landing row and late answer read from reactions.json",
+                        "%s; %s; late %s" % (s["concluder"], s["landing_row"].split(" (run as")[0], s["late"] if "late " in s["cells"]["landing"] else "not stated")))
+    unstated = sum(len(D.DOORS[n]["unstated"]) for n in DOOR_NAMES)
+    def lone_lapse():
+        g = ST.offer("g", "h1", ("h1", "h2", "h3"), "holder", "@", "self", cosigners=("h2", "h3"))
+        name = "accord_halt@node+late_closed"
+        p = WN.opener("p", "h1", D.key(name), "g", ("g",), target="N")
+        rows = [g, p, WN.receipt("r", "h2", "p", 0), WN.landing("L", "h2", "p", "r", "lapsed", D.secs(D.key(name)))]
+        return D.outcome(CK.concluded(CK.kept(rows), D.rule), "p")
+    before = lone_lapse()
+    e = D.land_entry(*D.LANDS["accord_halt"])
+    keep = dict(e)
+    e.pop("late", None); e.update(concluder="holder", landing="accord:lifecycle:{kind}")
+    D.rebuild()
+    after = lone_lapse()
+    e.clear(); e.update(keep)
+    D.rebuild()
+    return out, unstated, (before, after)
 
 
 def main():
@@ -687,10 +715,25 @@ def main():
     for cname, o, need in time_invitation():
         say("   invitation: %-112s -> %s (needs %s)" % (cname, o, need))
         got.append(("time invitation", cname, o))
+    say("5. who concludes, with which row, and whether a late answer counts")
+    cells, unstated, (before, after) = landing_cells()
+    for name, label, v in cells:
+        say("   %-30s %s" % (name, v))
+        got.append((name, label, v))
+    say("   parameters no table states, over all doors: %d (doors.tsv, the last column)" % unstated)
+    got.append(("doors.tsv", "parameters no table states", str(unstated)))
+    caught = before == "open" and after == "lapsed"
+    say("   plant: the fuse's land entry rewritten to a holder; a coerced holder lands the lapse at once: %s -> %s: %s" % (before, after, "caught" if caught else "NOT CAUGHT"))
+    got.append(("accord_halt@node+late_closed", "plant: the fuse's land entry rewritten to a holder", "caught" if caught else "not caught"))
+    if not caught: uncaught.append("land entry")
+    dpath = os.path.join(HERE, "doors.tsv")
+    if write: open(dpath, "w", encoding="utf-8").write(doors_text())
+    same = os.path.exists(dpath) and open(dpath, encoding="utf-8").read() == doors_text()
+    say("   doors.tsv is %s" % ("current" if same else "STALE (run with --write)"))
+    got.append(("doors.tsv", "written from the doors as run", "current" if same else "stale"))
     path = os.path.join(HERE, "door_expected.tsv")
     lines = ["instance\tproperty\tverdict"] + ["\t".join(g) for g in got]
     if write:
-        write_doors()
         open(path, "w", encoding="utf-8").write("\n".join(lines) + "\n")
         say("wrote door_expected.tsv (%d verdicts) and doors.tsv" % len(got))
         diff = []

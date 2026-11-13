@@ -61,6 +61,7 @@ def main():
         return {emitted_node(o["of"], fams)}
     for e in rx:
         if e["kind"] in ("clock", "expiry"): timed.add(e["family"]); continue
+        if e["kind"] == "land": continue      # who concludes a window: the row it names is already an effect of a clause, or nothing is signed
         srcs = set()
         for o in e["on"]:
             srcs |= cause(e, o)

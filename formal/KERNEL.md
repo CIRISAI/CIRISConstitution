@@ -176,8 +176,9 @@ it, and 21 are placed by a sentence of their own. **open**: the default is state
 checked for none of the 147. The copy rule is a row of that table.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
-the close. A window names its opener and the acknowledgement by which the concluding party first held it. The
-concluder signs the outcome as a landing row naming that acknowledgement and its own head. **measured**: 19
+the close. A window names its opener and the acknowledgement by which the concluding party first held it. Where the
+outcome binds others, the concluder signs it as a landing row naming that acknowledgement and its own head.
+Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 19
 clock entries have this shape, 16 of them counted from receipt. The other 20 are a row stating its own end,
 read from the row alone against now.
 
@@ -197,15 +198,23 @@ window's length is the concluder's own word.
 (`formal/causal_kernel/door.py`, `check_door.py`, `doors.tsv`): all sixteen policy rows and ten clocks run on
 the window's own receipt, landing and recount, as instances at rooms of three and four keys. Each gives one
 answer in every arrival order, the recount agrees with the policy table's own vectors and with the ranked
-count, and every deliberate break is caught. The policy table states the count, the floor and the length. Five things the door needs are stated by the text and carried by no cell:
+count, and every deliberate break is caught. The policy table states the count, the floor and the length. The door needs five more things. The reactions
+table now states the first two as a `land` clause on each window, each cell quoting its sentence:
 
 | Parameter | Why it matters |
 |---|---|
-| who concludes | if a holder lands the halt's lapse, one holder lying about its clock lapses it at every node; if each node lands its own, only that node's does |
+| who concludes, and with which row | if a holder lands the halt's lapse, one holder lying about its clock lapses it at every node; if each node lands its own, only that node's does |
 | whether a late answer counts | a confirmation after the fuse has lapsed confirms nothing |
 | whether the opening act is in force while the window is open | a halt is, a moderation proposal is not; not yet run |
 | the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands |
 | the threshold as the room's declared protocol | a removal is cosigned under the room's own protocol |
+
+**measured**: twelve of the thirteen answerable windows state their concluder, and the invitation's expiry
+does. An agent's objection at retirement states none, since no sentence says who closes it. Where the text has
+each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
+a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.3). A late answer is closed for
+the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. The last
+three parameters are still in no cell. `doors.tsv` lists 57 things the tables do not state, down from 73.
 
 Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.

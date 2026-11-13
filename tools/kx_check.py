@@ -267,7 +267,14 @@ def reaction_sets(c, clauses, rnd, n):
         later = []
         if lands and rnd.random() < .6:
             later.append({"id": "L", "fam": R.fill(lands[0], rnd), "verb": "attest", "signer": s["signer"] if rnd.random() < .6 else rnd.choice(R.KEYS), "attested": None,
-                          "object": s["object"], "asserted_at": 4, "val": {}, "leaf": {}, "ref": {}, "names": frozenset(["self"])})
+                          "object": s["object"], "asserted_at": 4, "val": {}, "leaf": {}, "ref": {}, "names": frozenset(["self"]) if rnd.random() < .8 else frozenset()})
+            role = next(x["concluder"] for x in clauses if x["kind"] == "land" and x.get("landing"))
+            if role not in T.LAND_ROW_ALONE and rnd.random() < .7:      # the landing's signer holds the concluder's seat over the object
+                k = later[-1]["signer"]
+                later.append({"id": "so", "fam": "seat:offer", "verb": "attest", "signer": s["object"], "attested": k, "object": s["object"], "asserted_at": 0,
+                              "val": {"role": role}, "leaf": {}, "ref": {}, "names": frozenset()})
+                later.append({"id": "sa", "fam": "seat:accept", "verb": "attest", "signer": k, "attested": None, "object": s["object"], "asserted_at": 1,
+                              "val": {}, "leaf": {}, "ref": {}, "names": frozenset(["so"])})
         if rnd.random() < .3:
             later.append({"id": "W", "fam": s["fam"], "verb": rnd.choice(["withdraw", "recant", "replace"]), "signer": s["signer"], "attested": None, "object": s["object"],
                           "asserted_at": 4, "val": {}, "leaf": {}, "ref": {}, "names": frozenset(["self"])})
@@ -310,7 +317,7 @@ VOCAB = {
              r"\b(lower_only|raise_only|narrow_only|drop_only|fixed)\(", r"&(live|direct)\b", r"pick=(union|set|agree|once|tips)\b"],
     "guard": [r"\b(one|all|no|latest) ", r"@(admitted|withdrawn|recanted|superseded|landed)\[", r" at (asserted_at|receipt|its_asserted_at)\b",
               r"via=(none|delegates_to)", r"else (refuse|exclude|advise)\b"],
-    "reaction": [r" by (signed|receipt|origin_door)\b", r"expiry (required|optional|forbidden|none)\b", r"-> (should |may )"],
+    "reaction": [r" by (signed|receipt|origin_door)\b", r"expiry (required|optional|forbidden|none)\b", r"-> (should |may )", r" late (closed|counts)\b"],
     "change": [r":(any|frozen|shrink|grow_signed|lower|no_weaker|as_attest)\b", r"reach=(own_prior|other_attester|below_seq|whole)",
                r"by=(same_attester|none|cosigned|cosigned_prior|committed_key|substrate)\b", r"/(by|under|about|ref|over):"],
 }

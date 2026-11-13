@@ -1654,6 +1654,7 @@ In time:
 - expiry none (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
 - clock `fuse` = `charter.halt_fuse_secs` (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
 - on close(fuse) unless admitted(accord:lifecycle:confirmed): read lapsed (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
+- landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
 Body: `accord_root`
 
@@ -1710,6 +1711,7 @@ Fold:
 In time:
 - [confirmed] clock `fuse` = `charter.halt_fuse_secs` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
 - [confirmed] on close(fuse): read closed (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
+- [confirmed] landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
 
 Body: `accord_root`, `confirms_halt_id` (text only), `invocation_id` (text only), `invocation_kind` (text only), `resumes_halt_id` (text only)
 
@@ -1861,6 +1863,7 @@ Fold:
 
 In time:
 - clock `window` = `moderator_election.window_secs` (CC 4.5.13)
+- landing of `window`: by winner as `ballot:moderator_acceptance`; a late answer counts (CC 4.5.13)
 
 Body: `ranks` (text only)
 
@@ -2174,6 +2177,8 @@ In time:
 - on close(anonymise): emit `consent:decay:patterns_anonymized` by author (CC 4.4.3.5.1)
 - clock `complete` = `decay_protocol.complete_secs` (CC 4.4.3.5.1)
 - on close(complete): emit `consent:decay:complete` by author (CC 4.4.3.5.1)
+- landing of `anonymise`: by author as `consent:decay:patterns_anonymized` (CC 4.4.3.5.1)
+- landing of `complete`: by author as `consent:decay:complete` (CC 4.4.3.5.1)
 
 **`consent:deletion_sla:{days}`** — Rules, thing
 
@@ -2189,6 +2194,7 @@ In time:
 - on withdrawn(self) or superseded(self) or purged(self): do cancel_watch (CC 3.3.1)
 - clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
 - on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
+- landing of `sla`: by identity:substrate_persist as `hard_case:deletion_window_breach` (CC 3.3.1)
 
 **`consent:partnership_accept`** — Rules, thing
 
@@ -2322,6 +2328,7 @@ In time:
 - [pending] on close(hold): do drop_held (CC 3.1.3, CC 3.3.4)
 - [pending] clock `age` = `group.hold_window_secs` (CC 3.1.3, CC 3.3.4)
 - [pending] on close(age): read closed (CC 3.1.3, CC 3.3.4)
+- [pending] landing of `hold`: each node for itself, nothing signed (CC 3.3.4)
 
 **`custody:{kind}`** — Facts, account
 
@@ -2569,6 +2576,7 @@ In time:
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
+- landing of `W`: by holder as `group:roster`; a late answer does not count (CC 4.2.6)
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 
@@ -2621,6 +2629,7 @@ In time:
 - on admitted(self): emit `hard_case:identity_occurrence_added` by identity:substrate_persist (CC 3.3.6)
 - expiry optional `valid_until` (CC 3.3.6.2)
 - on close(expiry): read lapsed (CC 3.3.6.2)
+- landing of `window`: each node for itself, nothing signed (CC 3.3.6.3)
 
 **`identity:occurrence_revocation`** — Identity, thing
 
@@ -2862,6 +2871,7 @@ In time:
 - @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.2)
 - [widening] expiry optional `valid_until` (CC 3.3.4)
 - [widening] on close(expiry): read lapsed (CC 3.3.4)
+- [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
 
 Body: `group_kind`, `role`, `proposal_hash`, `expires_at`
 
@@ -2911,6 +2921,8 @@ In time:
 - [harm_report] clock `window` = `moderation_fallback_window_secs` (CC 4.5.13)
 - [harm_report] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
 - clock `window` = `moderation_action.window_secs` (CC 4.5.13)
+- [harm_report] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
+- landing of `window`: each node for itself, nothing signed (CC 4.5.13)
 
 **`moderation_track_record:{community_key_id}`** — Confidence, account
 
@@ -3318,6 +3330,10 @@ In time:
 - [CommunityStandards] on admitted(self): do stop_serving (CC 4.5.3)
 - [CommunityStandards] clock `withhold` = `withhold_window_community_standards` (CC 4.5.3)
 - [CommunityStandards] on close(withhold): do destroy_bytes (CC 4.5.3)
+- [Dmca512] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
+- [DsaArticle16] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
+- [OsaIllegalContent] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
+- [CommunityStandards] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
 
 Body: `asserted_at`, `claim_text` (text only), `claimant_key_id` (text only), `content_holder_key_ids` (text only), `content_sha256` (text only), `counter_notice_channel` (text only), `evidence_refs`, `expires_at`, `good_faith_statement` (text only), `jurisdiction` (text only), `legal_basis` (text only), `perceptual_hash` (text only), `subject_kind` (text only)
 

@@ -56,6 +56,9 @@ def card(fam, fm, tr, rx):
             sel = ("[" + "|".join(e["leaves"]) + "] " if e.get("leaves") else "") + (f"@{e['scope']} " if e.get("scope") else "")
             if e["kind"] == "expiry": body = f"expiry {e['mode']}" + (f" `{e['member']}`" if e.get("member") else "") + "".join(f" {k} `{e[k]}`" for k in ("eq", "default", "max") if e.get(k))
             elif e["kind"] == "clock": body = f"clock `{e['name']}` = `{e['dur']}`"
+            elif e["kind"] == "land":
+                body = f"landing of `{e['name']}`: " + ("each node for itself, nothing signed" if e["concluder"] == "local" else f"by {e['concluder']} as `{e['landing']}`")
+                body += {"closed": "; a late answer does not count", "counts": "; a late answer counts"}.get(e.get("late"), "")
             else:
                 ev = lambda xs: " or ".join(f"{x['event']}({x['of']}" + (f", by the {x['by']}" if x.get('by') else "") + ")" for x in xs)
                 eff = ", ".join((f"emit `{x['family']}` by {x['by']}" if x["effect"] == "emit" else f"read {x['verdict']}" if x["effect"] == "read" else f"do {x.get('act')}" if x["effect"] == "do" else f"open {x['policy']}") for x in e["effects"])
