@@ -1918,7 +1918,7 @@ Count: `none`
 Fold:
 - `by=advisory` (CC 3.1.8)
 - `absent=refuse` (CC 3.4.5)
-- `reads=capacity:{factor}&live; key=attested_key_id; combine=min(C,I_int,R,I_inc,S); absent=undefined; by=reader` (CC 3.1.4, CC 3.1.8.1)
+- `reads=capacity:{factor}&live; key=attested_key_id,dimension,attesting_key_id; combine=min(C,I_int,R,I_inc,S); absent=undefined; by=reader` (CC 3.1.4, CC 3.1.8.1)
 
 Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h`, `n_eff_pr`, `sample_size`, `sample_size_gate`, `target_n_eff`, `window`
 
@@ -1971,8 +1971,8 @@ Guard:
 - attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else refuse` (CC 3.4.12)
 
 Fold:
-- `key=attested_key_id,domain; result=vector(domain)` (CC 3.1.2)
-- `key=attested_key_id,domain; absent=full` (CC 3.4.12)
+- `key=attested_key_id,domain,attesting_key_id; result=vector(domain)` (CC 3.1.2)
+- `key=attested_key_id,domain,attesting_key_id; absent=full` (CC 3.4.12)
 
 In time:
 - [reversible_pending] expiry required `valid_until` (CC 3.4.12)
@@ -2057,7 +2057,7 @@ Count: `none`
 
 Fold:
 - `feeds=census:composite:{class}` (CC 6.1.9)
-- `reads=census:share:{class}; key=period,token; test=count=2 !census_share_pair_incomplete` (CC 3.1.3)
+- `reads=census:share:{class}; key=period,token; pick=union; test=count=2 !census_share_pair_incomplete` (CC 3.1.3)
 
 Body: `period`, `share_index`, `share_count`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`
 
@@ -2088,7 +2088,7 @@ Body: `for_key_id`, `period`, `return_token`, `share_index`
 Count: `none`
 
 Fold:
-- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id; combine=all(present); by=reader` (CC 4.4.3.11)
+- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.11)
 
 **`coherence_standing:{cohort}`** — Confidence, account
 
@@ -2699,9 +2699,9 @@ Change:
 - supersede: `replace: field=revoked_after:lower` (CC 2.4, CC 2.4.1.1)
 
 Fold:
-- `key=revoked_key_sha256_ed25519_raw; bound=lower_only(revoked_after)` (CC 2.4, CC 3.1.3)
-- `key=revoked_key_sha256_ed25519_raw` (CC 2.4.1.1)
-- `key=revoked_key_sha256_ed25519_raw; bound=lower_only(revoked_after); combine=min(revoked_after)` (CC 2.4.1.1)
+- `key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after)` (CC 2.4, CC 3.1.3)
+- `key=revoked_key_sha256_ed25519_raw; pick=union` (CC 2.4.1.1)
+- `key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after); combine=min(revoked_after)` (CC 2.4.1.1)
 - `key=revoked_key_sha256_ed25519_raw; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
 - `cut=boundary(revoked_after)` (CC 3.2)
 
@@ -2719,7 +2719,7 @@ Guard:
 
 Fold:
 - `key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node` (CC 3.3.2, CC 3.1.3)
-- `@axis=epoch|stream: key=stream_id; bound=raise_only(epoch)` (CC 5.1)
+- `@axis=epoch|stream: key=stream_id; pick=union; bound=raise_only(epoch)` (CC 5.1)
 
 In time:
 - @family on admitted(membership:widening): emit `key_grant:content` by identity:substrate_persist (CC 3.3.4, CC 4.4.3.4.1)
@@ -2754,7 +2754,7 @@ Change:
 - attest: `attest: reach=below_seq` (CC 3.1.3)
 
 Fold:
-- `key=unit,account; cut=boundary(seq)` (CC 3.1.3, CC 3.3.10.1)
+- `key=unit,account,attesting_key_id; cut=boundary(seq)` (CC 3.1.3, CC 3.3.10.1)
 
 **`ledger:head:{unit}:{version}`** — Facts, account; keeps the Record
 
@@ -2939,8 +2939,8 @@ Count: `none`
 
 Fold:
 - `feeds=ballot:moderator` (CC 3.1.9.2)
-- `reads=truth_grounding:{subject}+witness_diversity:{contribution_id}+commitment_fulfillment:{prior_contribution_id}+hard_case:{kind}; key=community_key_id,attested_key_id; by=reader` (CC 3.1.9.2)
-- `key=community_key_id,attested_key_id; result=vector(community_key_id); by=reader` (CC 4.5.5)
+- `reads=truth_grounding:{subject}+witness_diversity:{contribution_id}+commitment_fulfillment:{prior_contribution_id}+hard_case:{kind}; key=community_key_id,attested_key_id,dimension,attesting_key_id; by=reader` (CC 3.1.9.2)
+- `key=community_key_id,attested_key_id,attesting_key_id; result=vector(community_key_id); by=reader` (CC 4.5.5)
 
 **`objection:{state}`** — Structure, thing
 
@@ -3000,8 +3000,8 @@ Guard:
 - withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@admitted[id=ref:wa_adjudication_ref] else refuse` (CC 3.4.5)
 
 Fold:
-- `reads=own&live&signer:owner; key=attested_key_id; test=count(owner)=1 ?steward_bound:steward_less; by=node` (CC 3.2)
-- `key=attested_key_id; test=count(owner)=1 ?steward_bound:steward_less` (CC 3.2)
+- `reads=own&live&signer:owner; key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less; by=node` (CC 3.2)
+- `key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less` (CC 3.2)
 - `reads=own` (CC 3.2)
 
 **`preserve_response`** — Process, thing
@@ -3266,11 +3266,11 @@ Change:
 - supersede: `replace: by=same_attester` (CC 3.1.3.1)
 
 Fold:
-- `key=community_id,session_id; result=one` (CC 3.1.3.1)
+- `key=community_id,session_id,identity_key_id; result=one` (CC 3.1.3.1)
 - `reads=own&signer:self` (CC 3.1.3.1)
 - `reads=own&has(community_id)&has(session_id)&has(claimed_at)` (CC 3.1.3.1)
 - `absent=none` (CC 3.1.3.1)
-- `reads=own&signer:self; key=community_id,session_id; pick=min(claimed_at),min(attesting_key_id); absent=none; result=one; by=node` (CC 2.1, CC 3.1.3.1)
+- `reads=own&signer:self; key=community_id,session_id,identity_key_id; pick=min(claimed_at),min(attesting_key_id); absent=none; result=one; by=node` (CC 2.1, CC 3.1.3.1)
 
 In time:
 - expiry required `valid_until` max `session_claim_max_secs` (CC 3.1.3.1)
@@ -3473,4 +3473,4 @@ In time:
 Count: `none`
 
 Fold:
-- `reads=vote:{contribution_id}&live; key=contribution_id; combine=sum(weight); by=node` (CC 3.1.9.3)
+- `reads=vote:{contribution_id}&live; key=contribution_id,person; pick=agree; combine=sum(weight); by=node` (CC 3.1.9.3)

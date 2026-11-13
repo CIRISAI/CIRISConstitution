@@ -1,10 +1,12 @@
 # The counts tools/kx_check.py measures over the rule cells, each with the maximum it may reach. A count above its
 # maximum refuses the check; each number only falls. A cell is counted once per distinct (grammar, family, text).
+# For an order, the total and the count across signers are held. The count of one signer's own rows is printed and not held:
+# a cell leaving the count across signers for it is the intended movement.
 count	max	note
-ORDER_BY_SIGNED_INSTANT_OWN	88	a cell orders by a signed instant only within groups fixed to one signer (or one self): one voice ordering its own rows
-ORDER_BY_SIGNED_INSTANT_CROSS	28	a cell orders by a signed instant over rows that may be of different signers (or the grouping could not be shown to be one signer's)
-ORDER_BY_DIGEST_OWN	82	the same, ordering by a digest or a key id
-ORDER_BY_DIGEST_CROSS	26	the same, ordering by a digest or a key id, rows of different signers
+ORDER_BY_SIGNED_INSTANT	108	a cell orders rows by a signed instant, whoever signed them: the total of the two counts below it
+ORDER_BY_SIGNED_INSTANT_CROSS	10	a cell orders by a signed instant over rows that may be of different signers (or the grouping could not be shown to be one signer's)
+ORDER_BY_DIGEST	100	a cell orders rows by a digest or a key id, whoever signed them
+ORDER_BY_DIGEST_CROSS	8	the same, ordering by a digest or a key id, rows of different signers
 ORDER_UNDECIDED	0	an order whose grouping the check cannot read (each is also counted CROSS)
 CROSS_SIGNER_INSTANT	15	a cell compares the signed instants of two different rows (at asserted_at, boundary(asserted_at), @signed, counted_at=signed)
 ARRIVAL_OUTSIDE_WINDOW	1	a cell reads when this node first held a row, outside a clock or an expiry (order=…min(admission_order))
@@ -18,6 +20,6 @@ READS_DROPPED	126	a cell uses a word this translation does not carry (DROPPED in
 CARRIED_WORD_COLLISIONS	0	two words of one closed class that the translation reads alike, neither declared dropped
 LABEL_WORDS_NOT_EVALUATED	53	a fold cell states by=, result= or feeds=: carried to the manifest, not evaluated
 UNCAUGHT_MUTANTS_GUARD	20	seeded one-operator mutants of guard translations that no generated row set tells apart
-UNCAUGHT_MUTANTS_FOLD	136	the same, folds
+UNCAUGHT_MUTANTS_FOLD	132	the same, folds
 UNCAUGHT_MUTANTS_CHANGE	34	the same, changes
 UNCAUGHT_MUTANTS_REACTION	17	the same, reactions

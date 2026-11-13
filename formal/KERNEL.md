@@ -91,14 +91,16 @@ reading is this work's own and agreement shows the translation matches that read
 uses a word the translation does not carry is not counted as translated. The dropped words are listed as
 data, among them `@decision`, `@count`, `@seating` and `@prior`, which no text defines.
 
-The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`):
+The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`). For an order it holds the total
+and the count across signers. The count of one signer's own rows is shown and not held, since a cell moving
+into it from the count across signers is the intended movement.
 
 | Count | Now |
 |---|---|
-| a cell orders rows of different signers by a signed instant | 28 |
-| a cell orders rows of different signers by a digest or a key id | 26 |
-| a cell orders one signer's own rows by a signed instant | 88 |
-| a cell orders one signer's own rows by a digest | 82 |
+| a cell orders rows of different signers by a signed instant | 10 |
+| a cell orders rows of different signers by a digest or a key id | 8 |
+| a cell orders one signer's own rows by a signed instant | 98 |
+| a cell orders one signer's own rows by a digest | 92 |
 | a cell compares the signed instants of two rows | 15 |
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
@@ -112,10 +114,11 @@ two acts of one kind by one signer on one named row, the later signed instant wi
 a tie. A signer who back-dates changes only what the signer itself says, so the last two rows are allowed and
 are counted only to keep them in view. The first two rows contradict section 2: they order rows of different
 signers by a value one of them chose. A cell counts as one signer's own only when its expression fixes the
-signer in the group it orders; any other cell counts as across signers. Seventeen families are in the first
-row, most because they state a key without the signer and inherit the default under it. A session is among
-them and is kept on purpose (section 5); its key does not yet show that its claimants are one person's keys.
-**open**.
+signer in the group it orders; any other cell counts as across signers. A session's key names the self, so
+its claims count as one voice's own (section 5). Six families are in the first row: a trace-consent grant, the
+two halves of a partnership, a key revocation, a licence and a quarantine marker. The second row adds the
+moderator ballot's listing, the winner's acceptance and the roster's member order. In each the text itself
+ranks rows of different signers, so the cell is kept as written. **open**.
 
 ## 5. Named answers
 

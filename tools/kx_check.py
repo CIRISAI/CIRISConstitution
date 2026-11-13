@@ -431,14 +431,14 @@ def run_policy():
 
 
 # ------------------------------------------------------------------ the counts that may only fall
-REFERENCE = {"ORDER_BY_SIGNED_INSTANT", "ORDER_BY_DIGEST"}   # printed for reference; the _OWN/_CROSS split is gated
+REFERENCE = {"ORDER_BY_SIGNED_INSTANT_OWN", "ORDER_BY_DIGEST_OWN"}   # printed for reference: a cell leaving CROSS for OWN is the intended movement. The total and CROSS are gated
 
 
 def measures(results, counts, policy):
     ok = [r for r in results if r.get("status") in ("ok", "reads_dropped")]
     flagged = lambda fl: sorted({(r["grammar"], r["family"], r["text"]) for r in ok if fl in r["flags"]})
     m = {}
-    m["ORDER_BY_SIGNED_INSTANT"] = flagged("ORDER_BY_SIGNED_INSTANT")      # reference totals, not gated
+    m["ORDER_BY_SIGNED_INSTANT"] = flagged("ORDER_BY_SIGNED_INSTANT")      # the totals: gated, with the _CROSS counts
     m["ORDER_BY_DIGEST"] = flagged("ORDER_BY_DIGEST")
     for kind, name in (("signed_instant", "ORDER_BY_SIGNED_INSTANT"), ("digest", "ORDER_BY_DIGEST")):
         own, cross = set(), set()
@@ -550,7 +550,7 @@ def main():
     print("counts    (may only fall; maxima in tools/kx_maxima.tsv)")
     for k, v in m.items():
         if k in REFERENCE:
-            print(f"  {k:28s} {len(v):4d}  (reference total, not gated)"); continue
+            print(f"  {k:28s} {len(v):4d}  (for reference, not gated)"); continue
         mx = maxima.get(k)
         line = f"  {k:28s} {len(v):4d}" + (f"  max {mx}" if mx is not None else "  (no maximum recorded)")
         print(line)
