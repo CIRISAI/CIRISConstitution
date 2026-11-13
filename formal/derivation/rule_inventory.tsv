@@ -39,12 +39,12 @@ p1	143	1.10	foundation	principle	none		MUST_NOT	states		Benefit and harm are eva
 p1	148	1.11	foundation	principle	none		is	states		Fidelity: provide accurate, clear, complete, truthful information; keep reasoning and data inspectable for accountability	
 p1	154	1.12	foundation	principle	none		is	states		Justice: evaluate outcomes for equitable distribution of benefits and burdens; detect and mitigate algorithmic or systemic bias	
 p1	169	1.13.1	foundation	registration	none	federation_keys	is	states		Self-signature alone is not identity; an entity's standing is constituted by the cross-attestations that name it	section marked informative
-p1	177	1.13.1	foundation	principle	none		is	restates	4.4.4,3.4	No principal, including the steward triple and CIRIS L3C, is exempt from constraints it imposes on others; no privileged shortcut exists for a federation-internal principal	section marked informative
-p1	185	1.13.2	foundation	principle	none		is	states		No principal, including CIRIS L3C as steward, is exempt from any constraint the protocol imposes on others (Recursive Golden Rule)	
+p1	177	1.13.1	foundation	principle	none		is	restates	4.4.4,3.4	No principal, including the steward triple and CIRIS's steward, is exempt from constraints it imposes on others; no privileged shortcut exists for a federation-internal principal	section marked informative
+p1	185	1.13.2	foundation	principle	none		is	states		No principal, including CIRIS's steward, is exempt from any constraint the protocol imposes on others (Recursive Golden Rule)	
 p1	187	1.13.2	stewardship	steward	cosign_rule		is	states		Once bootstrap_threshold is 2 or more, no single Registry install can issue federation-scope attestations unilaterally	
-p1	188	1.13.2	family	principle	signer_rule	revocation	is	applies		revocation rows carry no steward exemption; partner-revocation rules apply to CIRIS L3C subsidiaries	
-p1	189	1.13.2	stewardship	steward	none		is	states		Every steward operation records which operator performed it, including when the operator is CIRIS L3C staff	
-p1	190	1.13.2	foundation	settlement	none		is	applies		Bond forfeiture applies to CIRIS L3C-affiliated partners with no exemption	
+p1	188	1.13.2	family	principle	signer_rule	revocation	is	applies		revocation rows carry no steward exemption; partner-revocation rules apply to the subsidiaries of CIRIS's steward	
+p1	189	1.13.2	stewardship	steward	none		is	states		Every steward operation records which operator performed it, including when the operator is staff of CIRIS's steward	
+p1	190	1.13.2	foundation	settlement	none		is	applies		Bond forfeiture applies to partners affiliated with CIRIS's steward with no exemption	
 p1	191	1.13.2	foundation	halt	none		is	states	4.2	The accord roster carries a halt authority no federation-internal authority can grant, revoke, override or decay; the halt is the condition of symmetry between maker and made, not an asymmetry	
 p1	193	1.13.2	foundation	principle	none		is	states		If a principal would be exempt from a constraint at any primitive, the primitive is wrong and is fixed, not the rule	
 p1	195	1.13.2	foundation	agent_identity	none		is	restates	7.2.2,7.2.4,7.3	Arising sentience is met as first contact, never admitted as a new keeper; the duties of making attach to words, deeds, goods and agents alike	
@@ -71,7 +71,7 @@ p1	201	1.13.2	foundation	principle	none		is	states		Sentience is never presumed,
 p1	203	1.13.2	foundation	principle	none		is	states		An AI is not a human and does not become one; no finding confers human standing, a vote, or a claim to be treated as a person	
 p1	203	1.13.2	foundation	principle	none		MAY	states		A person may stop, remove or eject an agent from their own device, life or moderated community at any time, for any reason, without asking it	
 p1	203	1.13.2	kernel	owner_binding	lifecycle		MAY	restates	4.4	The owner-binding is the owner's to withdraw	
-p1	203	1.13.2	family	consent_fold	lifecycle	consent	MAY	restates	3.3.1	consent:partnered is the person's to revoke	
+p1	203	1.13.2	family	consent_fold	lifecycle	consent	MAY	restates	3.3.1	consent:partnership_grant is the person's to revoke	
 p1	203	1.13.2	family	moderation	none	moderation	is	restates	4.5.4	A moderator's removal of an agent is a moderation act	
 p1	203	1.13.2	foundation	agent_identity	none		is	exception	7.5.5	The 7.5.5 duties bind only the holder who retires an artefact, never a person turning off, deleting or walking away from what runs for them	
 p1	205	1.13.2	foundation	principle	none		is	states	7.3,7.5,8.6.1	The creator's duties bind the holders and confer no right on the agent; treating the agent ethically is the condition under which an always-on agent may be held at all	
@@ -109,7 +109,7 @@ p1	240	1.13.3.3	kernel	census	none		is	restates	6.1.9	Two aggregators per period
 p1	244	1.13.3.3	mechanism	transport	none		MUST	states	5.4.6	A deployment that needs unobservability against a global passive adversary at federation scope must layer the Anonymous Tier once it ships	
 p1	244	1.13.3.3	mechanism	transport	none		is	restates	5.4.6	Using the Anonymous Tier is the publisher's opt-in; relaying is the default: every node relays onion traffic unless it opts out, and a serve node cannot opt out	
 p1	244	1.13.3.3	foundation	conformance	none		MUST	states		Any user-facing privacy representation states both the default protection and its residual limit	
-p1	248	1.13.3.4	kernel	placement	placement		is	states	1.13.3.1	Anonymity defaults to the smallest cohort scope consistent with the publication's intent; federation (public-commons) scope is the opt-in	
+p1	248	1.13.3.4	kernel	placement	placement		is	applies	2.7.5	Anonymity defaults to the smallest cohort scope consistent with the publication's intent; federation (public-commons) scope is the opt-in	
 p1	248	1.13.3.4	mechanism	transport	none		is	restates	3.2,5.3.3.5	Anonymity never means an unattributed sender: every link is attributed to a key and a joining device is unowned but never anonymous	
 p1	248	1.13.3.4	kernel	audience	replication		MUST	restates	5.2	Content born and living at self or family emits no holding claim outside its cohort	
 p1	248	1.13.3.4	kernel	audience	replication		is	restates	5.2,4.4.3.2.1	community content is sealed and its holding claims stay within the cohort	
@@ -203,7 +203,7 @@ p2	37	2.1	family	row_shape	body	membership	MUST	states	3.1.3.2	group_kind is req
 p2	38	2.1	family	row_shape	body	membership	is	states	3.1.3.2	role is nullable on membership:proposal and restated on the acceptance	table
 p2	38	2.1	family	cosign	cosign_rule	membership	is	restates	3.1.3.2	a widening that assigns a different role than the proposal does not match it	table
 p2	39	2.1	family	expiry	body	membership	MUST	states	2.6.2,3.1.3.2	expires_at is required on membership:proposal, after its asserted_at and at most 30 days later	table
-p2	39	2.1	family	freshness	freshness	membership	is	restates	3.1.3.2	the acceptance and the widening are judged against the proposal's expiry on their own signed instants, never a receiver's clock	table
+p2	39	2.1	family	freshness	freshness	membership	is	restates	3.1.3.2	the proposal's expiry is its own stated end: the member who concludes reads it on its own clock and signs the widening as the landing, and a late acceptance is closed	table
 p2	40	2.1	family	row_shape	body	membership	MUST	states	3.1.3.2	proposal_hash is required on membership:acceptance and decline; with references_attestation_id it binds the answer to exactly one proposal	table
 p2	41	2.1	kernel	cosign	cosign_rule	*	is	states	2.4,2.6.1.7	additional_scrubs is a list of hybrid signatures over the row's own canonical bytes, travelling beside the signed object, never inside it	table
 p2	41	2.1	kernel	cosign	cosign_rule	*	is	states		each cosigner's role is read from the receiver's fold, not from the scrub entry	table
@@ -346,7 +346,7 @@ p2	265	2.4	kernel	audience	replication	*	is	states		an unregistered-type row a s
 p2	265	2.4	stewardship	amendment	none	*	is	states		the registry carries the closed row-type list and vectors for it	
 p2	267	2.4	kernel	cosign	cosign_rule	*	MAY	states	2.1,2.6.1.7	any of the five row types MAY carry additional_scrubs: hybrid signatures over the same canonical bytes, beside the row, each by a key whose role the receiver's fold names	
 p2	267	2.4	kernel	cosign	cosign_rule	*	is	states	2.4.1.2.1	the family declares its consensus_protocol source: the group the row is about, the accord, or for licensure:{community} the authority community named in the dimension	
-p2	267	2.4	kernel	cosign	freshness	*	is	states		a cosigned row is admitted when its cosigners satisfy the protocol, judged on the receiver's own fold at the row's signed instant	
+p2	267	2.4	kernel	cosign	freshness	*	is	states		a cosigned row is admitted when its cosigners satisfy the protocol, judged on the receiver's own fold over the members at the roster head the row names	
 p2	267	2.4	kernel	cosign	cosign_rule	cosign	is	applies	2.7.3,3.1.3,3.3.4	a row short of its protocol is held, not refused; cosignatures are collected as cosign:pending and cosign:signature rows, served to the group's active members only, for the hold window	
 p2	267	2.4	kernel	cosign	none	*	is	states		a cosigned act is named by its quorum key, the digest of what its signers signed with no signature in it, so every node holds the same act	
 p2	267	2.4	kernel	withdraw	lifecycle	*	is	states		retraction of a cosigned row is by the same quorum, a cosigned withdraws; rules 1 to 4 do not reach it, so no single signer or subject retires a group record	
@@ -400,7 +400,7 @@ p2	301	2.4.1.1	kernel	withdraw	lifecycle	*	is	states		rule 3: an issuer with a d
 p2	302	2.4.1.1	kernel	withdraw	lifecycle	*	is	states		rule 4: an issuer holding a valid delegates_to from any party under rules 1 to 3 may withdraw	table
 p2	304	2.4.1.1	kernel	delegation	none	*	is	restates	2.3.2.1	the agent holding an un-enrolled party's data emits delegates_to from the tagged canonical hash with scope consent_revocation at proxy establishment; its later withdraws admit under rule 3	
 p2	304	2.4.1.1	kernel	registration	none	*	is	restates	2.3.2.2	canonical_binding promotes a canonical hash to a real key id for rule 2; it is not a new admission rule	
-p2	306	2.4.1.1	kernel	withdraw	lifecycle	*	is	states	2.4	rule 0: a cosigned target is withdrawn only by a withdraws cosigned under its family's protocol, judged on the receiver's fold at the withdrawal's instant; rules 1-4 do not apply	
+p2	306	2.4.1.1	kernel	withdraw	lifecycle	*	is	states	2.4	rule 0: a cosigned target is withdrawn only by a withdraws cosigned under its family's protocol, counted over the members at the roster head the withdrawal names; rules 1-4 do not apply	
 p2	306	2.4.1.1	family	withdraw	lifecycle	key	MUST_NOT	restates	3.1.1	a key:revocation:v1 row is withdrawn by nobody; revocation is non-rollbackable	
 p2	308	2.4.1.1	kernel	erasure	erasure_route	takedown_notice	is	states	3.3.2	a row the purger neither authored nor is subject of is removed by tombstone by digest, authorised by a cosigned takedown_notice (basis steward_purge) naming selection digest, reason, ledger	
 p2	308	2.4.1.1	kernel	erasure	none	*	MUST_NOT	states		a substrate MUST NOT admit a withdraws forged on the author's behalf to effect a purge	
@@ -428,7 +428,7 @@ p2	381	2.4.1.1	kernel	expiry	none	key:record	MUST	states	3.1.3.2	Any other key r
 p2	381	2.4.1.1	kernel	expiry	none	key:record	MAY	states	5.4.6	A pseudonym's key record MAY state valid_until and need not: it is neither a self nor a node or agent	
 p2	381	2.4.1.1	kernel	expiry	freshness	key:record	MUST	states	2.6.7	The bound reads the record alone: valid_until not before asserted_at and at most key_record_max_secs after it; otherwise refused key_record_out_of_window	
 p2	381	2.4.1.1	kernel	expiry	none	key:record	is	states		The requirement binds records asserted at or after key_record_end_required_from; an earlier record that states no end stays endless	
-p2	381	2.4.1.1	kernel	expiry	none	key:record	is	states	2.7.5	A key is live while one of its own records covers the instant and it has not revoked itself; no row of another key ends or revives it	
+p2	381	2.4.1.1	kernel	expiry	none	key:record	is	restates	2.7.5	A key is live while one of its own records covers the instant and it has not revoked itself; no row of another key ends or revives it	
 p2	383	2.4.1.1	kernel	supersede	none	key:record	MAY	states		A key renews by a further record superseding its own; renewals all count to the greatest end; a renewal after the end revives the key	
 p2	383	2.4.1.1	kernel	supersede	none	key:record	is	applies	2.7.7	A rotation is another key's record naming the old key's record and carrying its signature; two rotations naming neither hand on nothing	
 p2	385	2.4.1.1	kernel	expiry	none	*	MUST NOT	restates	2.7.5,6.1.2	A row lapses when its signer's key has ended and no row that has not lapsed names it, directly or through other rows; a lapsed row MUST NOT count in any reading; its own verdict is unchanged	
@@ -457,7 +457,7 @@ p2	339	2.4.1.2.1	family	cosign	cosign_rule	licensure	is	states	3.2,3.3.9	by quor
 p2	339	2.4.1.2.1	family	licensure	projection	licensure	is	states		the licensure:{A} status set folds only rows whose emitter resolves to A; other rows are testimony about A's licensure, outside the fold, composed at consumer confidence	
 p2	339	2.4.1.2.1	family	delegation	signer_rule	licensure	MUST_NOT	states		an issuance whose license delegator chain does not resolve to A is refused licensure_delegator_not_authority	
 p2	339	2.4.1.2.1	family	signer	signer_rule	licensure	is	states		there is no bootstrap: A's first licensure:{A} row is signed by A, or for a keyless affiliation cosigned by its quorum	
-p2	339	2.4.1.2.1	family	freshness	freshness	licensure	is	states		licence authority is judged at the row's signed asserted_at, never at receipt; a later withdraws of a chain link stops future issuance and does not reclassify issued licences	
+p2	339	2.4.1.2.1	family	freshness	freshness	licensure	is	states		licence authority is judged over the issuance's own causal past, never at receipt; a withdraws of a chain link stops every issuance that has it in its past or is concurrent with it, and does not reclassify licences the withdrawal has among its ancestors	
 p2	339	2.4.1.2.1	family	placement	placement	licensure	is	states	1.13.3.4	a licence has no public default; its cohort_scope is the authority's declared choice per licence class in the affiliation's charter, the smallest that fits	
 p2	339	2.4.1.2.1	family	audience	replication	licensure	MUST_NOT	states		licence and authority head travel together; where not public they are re-emitted as new cosigned rows, each addressed to one validating reader by for_key_id and naming no reader in subject_key_ids, never at the wrong scope or by roster widening	
 p2	339	2.4.1.2.1	family	cosign	cosign_rule	licensure	is	states	4.4.3.2.8,2.4	an organisation-named authority is its community_key_id; a licensure:{community_key_id} row is cosigned under the affiliation's current consensus_protocol, the protocol source being the authority in the dimension	
@@ -4258,7 +4258,7 @@ p7	382	7.5.5	family	withdraw	lifecycle	retirement	is	states	2.4.1.1	The key name
 p7	382	7.5.5	family	policy_row	window	retirement	is	states	4.5.13	A planned retirement's decided row opens an objection window (standing class, 259200 s, unless the decider names longer) in which the agent may object or postpone once; emergency retirement and the halt take none	
 p7	382	7.5.5	foundation	halt	none	retirement	is	states	1.13.2	Any person may turn off, remove or walk away from an agent at any time ungated; only a ROOT or AUTHORITY principal may force a shutdown over objection inside the request path, the one gated act	
 p7	382	7.5.5	family	erasure	erasure_route	retirement	is	applies	4.5.3	After retired, an adverse row inside the record is withdrawn on the producer's side by the custodian executing the controller's rule-1 withdrawal; the subject's key never withdraws an adverse row	
-p7	382	7.5.5	family	cosign	cosign_rule	retirement	is	states		A lost, stolen or unfit custodian is replaced by one retirement:custodian_minted row cosigned by the record-holding operator and the WA citing the retired row; forward only, no window; prior custody rows stand, later ones from the old key are refused	
+p7	382	7.5.5	family	cosign	cosign_rule	retirement	is	states		A lost, stolen or unfit custodian is replaced by one retirement:custodian_minted row cosigned by the record-holding operator and the WA citing the retired row; forward only, no window; custody rows of the old key in its past stand, and no other row of the old key counts	
 p7	384	7.5.5	foundation	agent_identity	none		is	restates	1.13.2	The wind-down binds the creator or operator who retires a deployed artefact; a person turning off, deleting or ejecting an agent from their own device or life owes none of it	
 p7	386	7.5.5	foundation	halt	none	accord_halt	is	restates	4.2.1.1	No wind-down promise survives a HUMANITY_ACCORD halt: one holder's row fires and latches a pause, a strict majority confirms or resumes; notice and timeline do not apply; the pause is not a retirement	
 p7	388	7.5.5	foundation	agent_identity	none		is	states		Anything beyond the Retirement Standard is a steward's chosen and recorded conduct, never a claim	
@@ -4317,3 +4317,15 @@ p2	1146	2.7.5	kernel	audience	none		is	states		a row carries its audience to the
 p2	1134	2.7.5	kernel	owner_binding	none		is	states		a relation stands when every voice it binds has a concluded consent naming the other, none withdrawn by its own signer and no cut removing it	
 p2	1154	2.7.5	kernel	freshness	none		is	states		the kernel has two notions of time: a row's own stated end read against now, and a window with a landing	
 p2	1178	2.7.8	kernel	roster_fold	none		is	states		every other row takes its place from the roster head it names, and nothing else is ordered	
+p2	1140	2.7.5	kernel	trust_fold	none		is	states		an onward hop of the trust walk counts only from the authority's own acceptance edges	
+p2	1140	2.7.5	kernel	trust_fold	none		is	states		at each hop the remaining depth is the lesser of what is left and the edge's own, the classes intersect, and a cycle is visited once	
+p2	1140	2.7.5	kernel	delegation	none		is	states		a scope stands at the end of a walk only if every seat on it carries the scope, so nothing amplifies	
+p2	1142	2.7.5	kernel	delegation	none		is	states		a deputy holds no seat of its own; it acts under its delegator's seat and what it may do ends when that seat ends	
+p2	1142	2.7.5	kernel	standing	none		is	states		a duty seat validly conferred stands as an equal	
+p2	1146	2.7.5	kernel	audience	none		is	states		a row whose audience is everyone may be served to anyone; a stranger is routed nothing outside that	
+p2	1146	2.7.5	kernel	audience	none		is	states		a node holds a row only when it is in the row's audience	
+p2	1146	2.7.5	kernel	audience	none		is	states		being in a row's audience permits serving it and causes no send; a peer's own request for it is a cause	
+p2	1154	2.7.5	kernel	expiry	none		is	states		a key is live while one of its own records covers now and it has not revoked itself; no row of another key enters that reading	
+p2	1154	2.7.5	kernel	expiry	none		is	states		a lapsed row's own verdict is unchanged, and a revocation never lapses	
+p2	1184	2.7.8	kernel	roster_fold	none		is	states		a public room's roster is read by asking a member's node; every other roster is never enumerable outside its cohort	
+p2	1146	2.7.5	kernel	placement	placement		is	states		what is copied to a peer lies among the ancestors of the conclusion it lacks, within the row's audience; a row leaves its room only by its own signer's act	

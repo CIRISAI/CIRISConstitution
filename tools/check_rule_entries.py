@@ -54,12 +54,7 @@ MAX_WORDS = 40
 # A statement that says a rule again cites the section that states it. These restatements cite
 # nothing yet (home, file, inventory line). The list only shrinks: the check fails on an uncited
 # restatement that is not listed and on a listed one that now cites.
-UNCITED_RESTATES = {
-    ('1.15.1', 'p1', '323'),
-    ('1.16.6', 'p1', '438'),
-    ('7.3.6', 'p7', 'x'),
-    ('7.5.9', 'p7', 'x'),
-}
+UNCITED_RESTATES = set()
 # Sentences kept whole by name: their shape is their argument, or their wording is a standard's.
 # Each is read out of its paragraph before the count (link markup already removed).
 EXEMPT = (

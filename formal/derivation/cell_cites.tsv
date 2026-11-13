@@ -219,7 +219,7 @@ consent:partnership_accept	signer_rule	agree	CC 3.3.1	Subject side of a bilatera
 consent:partnership_accept	signer_rule	agree	CC 3.4.5	`consent:deletion_sla:*`, `consent:deletion_complete`, `consent:partnership_accept`, `consent:replication:*` by the producer/granting key
 consent:partnership_accept	signer_rule	agree	CC 4.4.3.4.3.1	`attesting_key_id` | **the signer** = `granter_key_id` (grant) / `accepter_key_id` (accept)
 consent:partnership_accept	subject_rule	fills	CC 4.4.3.4.3.1	**the partner** — the OTHER party (agent occurrence for `grant`, user identity for `accept`); singular, non-empty
-consent:partnership_grant	lifecycle	fills	CC 1.13.2	`consent:partnered` is theirs to revoke
+consent:partnership_grant	lifecycle	fills	CC 1.13.2	`consent:partnership_grant` is theirs to revoke
 consent:partnership_grant	lifecycle	fills	CC 4.4.3.4.3	Either half may be withdrawn by its signer's `withdraws`
 consent:partnership_grant	projection	agree	CC 2.3.2.4	composition of the pair into a ratified partnership is a downstream read-time computation, never an admission gate
 consent:partnership_grant	replication	fills	CC 4.4.3.4.3	so the partnering+delegation is signed + promoted at login

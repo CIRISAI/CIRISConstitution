@@ -32,8 +32,8 @@ membership:{stage}	widening[stalled&recovery]: field=members:grow_signed	CC 3.1.
 consent:replication:{version}	withdraw: reach=whole ; replace: field=attestation_prefixes:any	CC 3.3.7	A `withdraws`/`recants` against a grant retracts it **whole**. A producer **narrowing** the prefix set (dropping `capacity:` while keeping another) MUST `supersedes` ([CC 2.4.1](part_2_the_grammar.md#2.4.1)) the grant
 ledger:checkpoint:{unit}:{version}	attest: reach=below_seq	CC 3.1.3	a co-witnessed balance snapshot at a sequence number, superseding the detail below it
 consent:state:{stance}	expired: by=substrate, reach=other_attester, link=ranked:consent_supersedes	CC 3.3.1	which it emits for a grant whose `valid_until` has passed without renewal
-retirement:{state}	custodian_minted: by=cosigned, reach=other_attester, cascade=custody:{kind}/by:stop	CC 7.5.5	Custody rows the old key signed before the `retirement:custodian_minted:v1` row's instant stay valid, and rows after it are not admitted.
-*	withdraw: cascade=*/ref:stand	CC 2.4.1.1	Acts taken while `T` stood still stand.
+retirement:{state}	custodian_minted: by=cosigned, reach=other_attester, cascade=custody:{kind}/by:stop	CC 7.5.5	Custody rows of the old key that the `retirement:custodian_minted:v1` row has among its ancestors stay valid, and no other row of the old key counts
+*	withdraw: cascade=*/ref:stand	CC 2.4.1.1	Acts the withdrawal has among its ancestors still stand.
 key:revocation	attest: cascade=*/by:void_after:revoked_after	CC 2.4.1.1	a key revoked as compromised is void back to its `revoked_after` bound
 *	withdraw: cascade=consent:deletion_sla:{days}/about:discharged ; replace: cascade=consent:deletion_sla:{days}/about:discharged	CC 3.3.1	Evidence toward D1 below; the watcher is cancelled only by a `withdraws`, `supersedes` or hard deletion of the row.
 *	withdraw: cascade=consent:deletion_sla:{days}/about:discharged ; replace: cascade=consent:deletion_sla:{days}/about:discharged	CC 3.3.1	A producer has proven deletion **iff**, before the deadline, the row was **withdrawn, superseded, or hard-deleted**
