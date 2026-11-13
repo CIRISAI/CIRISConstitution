@@ -156,7 +156,8 @@ an old head gains nothing.
 An adversary holding the count of an old head signs a valid version alone. A witnessed lineage answers that
 (CC 3.2 T6), and it is each reader's own trust that decides whose witnesses count.
 
-**open, on the wire**: a roster version names one head today and must be able to name several.
+The text states the rule (CC 3.2 T6). **open, on the wire**: a roster version names one head today and must be
+able to name several; the store's shape is an optional list of further heads beside the one it names now.
 
 ## 7a. A writer's keys are a fold
 
@@ -228,8 +229,8 @@ The limits, each **run** with its witness:
 | Which rows seat which key in which role: `confers`, `binds_segment`, the 23 roles as one walk | table data | `manifests/family_model.json` |
 | Twelve guards that refuse a row for another row become folds | table data | `manifests/transitions.json` |
 | "Counted at decision" has no solution and leaves the policy table | table data | `manifests/governance_policy.json` |
-| A roster version naming several heads | wire | the store's to shape |
-| Whether one acknowledgement of a head covers everything beneath it | wire | the store's to shape |
+| A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
+| One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | Placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
 | A landing row for each window, and who may sign it | table data | `manifests/reactions.json` |
 | Constants out of config | table data | `constitution/constants.tsv` |

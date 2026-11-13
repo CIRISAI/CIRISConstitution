@@ -2554,7 +2554,7 @@ Fold:
 - `reads=head+membership:{stage}&at(now)&seat:human` (CC 3.2)
 - `@cohort_subkind=infrastructure: over=founders@now/person; test=count>m ?live:stalled` (CC 3.2)
 - `reads=head; pick=chain(prev_head_digest)` (CC 4.4.3.2.4.1)
-- `pick=chain(prev_head_digest),first_seen` (CC 3.2)
+- `pick=chain(prev_head_digest),tips` (CC 3.2)
 
 In time:
 - @affiliations on fold(no_live_deciding_seat): read withdrawn (CC 4.4.3.2.8)

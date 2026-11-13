@@ -1,9 +1,9 @@
 # `formal/roster_fork` — two versions of one roster head
 
 **The question.** A roster version names the head it extends and is counted over that head's members. Two
-versions may name one head, by honest concurrency or by a faction. The rule in force for an ordinary room is that
-the first version a node sees wins ([CC 3.2](../../constitution/part_3_the_namespace.md) T6), which is not a
-function of the rows a node holds.
+versions may name one head, by honest concurrency or by a faction. A rule under which the first version a
+node sees wins is not a function of the rows a node holds. The rule of
+[CC 3.2](../../constitution/part_3_the_namespace.md) T6 is the one this model checked: tips wait.
 
 **The model** (`fork.py`). Every set of at most K versions that can exist when an adversary holds some keys and
 signs anything, naming any head, and an honest key signs only what it accepts. Nothing is assumed about when a

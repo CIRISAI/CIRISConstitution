@@ -4,7 +4,7 @@ CC — two versions of one roster head, checked over every set of versions an ad
 
 `fork.py` enumerates every set of at most K roster versions that can exist when an adversary holds some keys
 and signs anything, naming any head, and an honest key signs only what it accepts. A rule is then a function
-from the set to a roster. This check runs the rule in force (the first version seen wins, CC 3.2 T6) and the
+from the set to a roster. This check runs the rule it replaced (the first version seen wins) and the rule of CC 3.2 T6, the
 rule `M0` beside it:
 
     M0   tips wait. With one tip the roster is its roster. With several it is the members common to all, until a
