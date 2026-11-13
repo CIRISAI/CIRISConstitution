@@ -7,7 +7,9 @@ enforces today on each axis). Every cell carries its value and its source: cc-ta
 prose (bespoke code outside the closed vocabulary), or gap (nothing enforces). The vendor gate of a
 later version refuses a gap; this draft counts them. A placement the census leaves to the signer and the
 text states for no family takes the default of formal/derivation/placement_text.tsv, with the audience of
-each scope. Writes manifests/family_model.json; --check
+each scope. What a row confers comes from the family's shape (formal/derivation/family_shapes.tsv) and
+formal/derivation/confers_text.tsv; which key slot each placeholder holds from the registry's segment classes;
+which rows a derived row must equal from confers_text.tsv; which named answers read the family's rows (`read_by`) from the KX of its rule cells. Writes manifests/family_model.json; --check
 only compares.
 """
 import csv, glob, hashlib, json, os, re, sys
@@ -57,9 +59,10 @@ COLUMNS = OrderedDict([
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
-    ("derived", "projection_id | none (the row must equal the named projection's rebuild)"),
-    ("confers", "trust | duty | standing | nothing (read by the trust-set fold, never by admission)"),
-    ("binds_segment", "placeholder → signer | subject | group | none"),
+    ("derived", "projection_id | none (the row must equal the named projection's rebuild; formal/derivation/confers_text.tsv)"),
+    ("read_by", "the named answers that read the family's rows (state, stands, tally, may, audience, missing, owed, window), from the KX of its rule cells (tools/kx_translate.py over tools/kx_prelude.kx); `by` names each cell. A family with no cell of its own takes the default reading (state, stands) of the default fold and change: rule default, stated once and checked for none of the families it covers"),
+    ("confers", "nothing | a permission (binds the signer: one row) | a seat (binds the placer and the holder: two consents) | an ending, with scope, conferrer, consent and ends (formal/derivation/family_shapes.tsv, confers_text.tsv)"),
+    ("binds_segment", "placeholder → signer | subject | group | none; a segment of class literal, vocab or external names no key (formal/derivation/confers_text.tsv)"),
     ("evidence", "{claim_ids, refusal tokens}"),
 ])
 CENSUS_MAP = {"placement": "2_placement", "signer_rule": "3_signer_rule", "subject_rule": "4_subject_rule",
@@ -427,6 +430,184 @@ def placement_text(default_value):
     return out, errs
 
 
+SHAPES = os.path.join(ROOT, "formal/derivation/family_shapes.tsv")
+CONFERS_TEXT = os.path.join(ROOT, "formal/derivation/confers_text.tsv")
+RELATION = {"signer": "permission", "signer+holder": "seat", "body+holder": "seat"}   # formal/KERNEL.md 5: one voice bound is one row, two are a seat
+SEAT_PARAMS = ("role", "scope", "roster", "holders", "conferrer", "consent", "proposal", "ends", "revoker", "single", "closes", "door")
+BLOCKED = (("conferrer", "unstated"), ("signer", "unstated"), ("role", "a term on an offer"))   # the shapes table's own `cannot run` for a consent
+
+
+def tsv_rows(path):
+    return list(csv.DictReader([l for l in open(path, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE))
+
+
+def conferral_columns(fams, reg):
+    """The `confers`, `binds_segment` and `derived` cells, from formal/derivation/family_shapes.tsv, the registry's segment classes and
+    formal/derivation/confers_text.tsv. A consent family's `confers` is its shape's parameters, each with the source the shapes
+    table gives it; a family whose shapes row says confers=nothing takes that sentence; a claim or content family takes the one
+    default. Returns ({family: cell}, {family: cell}, {family: cell}, errors)."""
+    errs, conf, segs = [], OrderedDict(), OrderedDict()
+    shapes = OrderedDict()
+    for r in tsv_rows(SHAPES):
+        p = [tuple(x.split("=", 1)) for x in r["parameters"].split(" ; ")] if r["parameters"] else []
+        s = [tuple(x.split(" <- ", 1)) for x in r["sources"].split(" ; ")] if r["sources"] else []
+        if [k for k, _ in p] != [k for k, _ in s]: errs.append(f"family_shapes.tsv: {r['family']}: parameters and sources do not name the same things")
+        shapes[r["family"]] = (r, OrderedDict(p), OrderedDict(s))
+    if set(shapes) != set(fams): errs.append("family_shapes.tsv: its families are not the model's: " + ", ".join(sorted(set(shapes) ^ set(fams))))
+    default, by_seg, by_class, stated, derived = None, {}, {}, OrderedDict(), OrderedDict()
+    for t in tsv_rows(CONFERS_TEXT):
+        where = f"confers_text.tsv: {t['column']} {t['when']}"
+        span = section_span(t["cc_ref"])
+        if span is None or t["quote"] not in span: errs.append(f"{where}: the quoted words do not stand in {t['cc_ref']}"); continue
+        src = OrderedDict([("cc_ref", t["cc_ref"]), ("quote", t["quote"])])
+        if t["column"] == "confers" and t["when"].startswith("shape="):
+            if default is not None: errs.append(f"{where}: the default is stated once")
+            default = (set(t["when"][6:].split("|")), t["value"], src)
+        elif t["column"] == "confers":
+            if t["when"] not in fams: errs.append(f"{where}: no such family"); continue
+            k, _, v = t["value"].partition("=") if t["value"] != "nothing" else ("confers", "", "nothing")
+            if k != "confers" and k not in SEAT_PARAMS: errs.append(f"{where}: {k} is not a seat parameter"); continue
+            stated.setdefault(t["when"], OrderedDict())[k] = (v, f'quote:{t["cc_ref"]} "{t["quote"]}"')
+        elif t["column"] == "binds_segment":
+            if t["value"] not in ("signer", "subject", "group", "none"): errs.append(f"{where}: {t['value']} is not signer, subject, group or none"); continue
+            if t["when"].startswith("class="): by_class[t["when"][6:]] = (t["value"], src)
+            else:
+                fam, _, ph = t["when"].rpartition(" ")
+                if fam not in fams: errs.append(f"{where}: no such family")
+                by_seg[(fam, ph)] = (t["value"], src)
+        elif t["column"] == "derived":
+            if t["when"] not in fams: errs.append(f"{where}: no such family"); continue
+            derived[t["when"]] = OrderedDict([("value", t["value"]), ("source", "cc-table"), ("cc_ref", t["cc_ref"]), ("rule", "stated"), ("from", "formal/derivation/confers_text.tsv")])
+        else: errs.append(f"{where}: the column is confers, binds_segment or derived")
+    if default is None: errs.append("confers_text.tsv: no default for confers")
+    for f in fams:
+        if f not in shapes: continue
+        r, P, S = shapes[f]
+        here = "formal/derivation/family_shapes.tsv"
+        for k, (v, src) in stated.get(f, {}).items():   # a parameter the shapes table does not state, from confers_text.tsv; never a copy
+            if k in P: errs.append(f"confers_text.tsv: {f}: family_shapes.tsv already states {k}; remove the row"); continue
+            P, S = OrderedDict(P, **{k: v}), OrderedDict(S, **{k: src})
+        if "confers" in P:
+            if r["shape"] in default[0]: errs.append(f"confers_text.tsv: {f}: a {r['shape']} takes the default; its row is a copy")
+            m = re.match(r'^quote:(CC [\d.]+) "(.*)"$', S["confers"])
+            if not m: errs.append(f"{f}: confers rests on a sentence, not {S['confers']}"); continue
+            conf[f] = OrderedDict([("value", P["confers"]), ("source", "cc-table"), ("cc_ref", m.group(1)), ("rule", "stated"), ("from", "formal/derivation/confers_text.tsv")])
+        elif "consent" in r["shape"].split("+") and r["binds"] not in ("", "-"):
+            blocked = [f"{k}={v}" for k, v in BLOCKED if P.get(k) == v] + [f"{k} guessed" for k, v in S.items() if v == "guessed" and P.get(k) not in [b for _, b in BLOCKED]]
+            if blocked:
+                conf[f] = OrderedDict([("value", None), ("source", "gap"), ("from", here), ("note", "the shapes table cannot run this consent (" + "; ".join(blocked) + "): " + r["misfit"])])
+                continue
+            rel = "|".join(sorted({RELATION.get(b, "?") for b in r["binds"].split("|")}))
+            v = OrderedDict([("relation", "ending" if P.get("role") == "ending" else rel), ("binds", r["binds"])])
+            v.update((k, P[k]) for k in SEAT_PARAMS if k in P)
+            if "binds" in P: v["binds_by_leaf"] = P["binds"]
+            if "consent" not in v and r["binds"] == "signer":   # one voice bound: its own row is the consent
+                v["consent"] = "same_row"; S = OrderedDict(S, consent=f"cell:{here}#{f}.binds")
+            refs = sorted({m.group(1) for x in S.values() for m in [re.match(r'^quote:(CC [\d.]+) ', x)] if m})
+            conf[f] = OrderedDict([("value", v), ("source", "cc-table"), ("cc_ref", refs), ("rule", "shape"), ("from", here),
+                                   ("sources", OrderedDict((k, S[k]) for k in list(v) if k in S)), ("cells_from", sorted({here} | ({"formal/derivation/confers_text.tsv"} if f in stated else set())))])
+        elif r["shape"] in default[0]:
+            conf[f] = OrderedDict([("value", default[1]), ("source", "cc-table"), ("cc_ref", default[2]["cc_ref"]), ("rule", "default")])
+        else:
+            conf[f] = OrderedDict([("value", None), ("source", "gap"), ("from", here),
+                                   ("note", f"a {r['shape']} family, and no sentence says what its rows confer")])
+    classes = {x["prefix"]: x.get("segments", []) for x in reg.get("families", []) if isinstance(x, dict) and "prefix" in x}
+    for f in fams:
+        sg = classes.get(f)
+        if sg is None: segs[f] = OrderedDict([("value", None), ("source", "gap"), ("note", "not in the registry")]); continue
+        val, srcs, open_ = OrderedDict(), OrderedDict(), []
+        for s in sg:
+            c, ph = s["class"], s["segment"]
+            if c in ("literal", "wildcard"):
+                if c not in by_class: open_.append(ph)
+                continue
+            if (f, ph) in by_seg: val[ph], src = by_seg[(f, ph)]
+            elif c in by_class: val[ph], src = by_class[c]
+            else: open_.append(ph); continue
+            srcs[ph] = src["cc_ref"]
+        if open_:
+            segs[f] = OrderedDict([("value", None), ("source", "gap"), ("parts", val), ("note", "no sentence says which key slot " + ", ".join(open_) + " holds")])
+        else:
+            segs[f] = OrderedDict([("value", val or "none"), ("source", "cc-table"), ("cc_ref", sorted(set(srcs.values())) or by_class["literal"][1]["cc_ref"]),
+                                   ("rule", "stated" if any((f, p) in by_seg for p in val) else "class")])
+    der = OrderedDict((f, derived.get(f) or OrderedDict([("value", None), ("source", "gap"), ("note", "no sentence says whether a row of this family equals a recomputation from other rows")])) for f in fams)
+    return conf, segs, der, errs
+
+
+# The named answers of formal/KERNEL.md 5, as tools/kx_prelude.kx writes them: each answer and the prelude functions that are it.
+ANSWERS = OrderedDict([("state", ("state", "state_in", "live", "live_in")),
+                       ("stands", ("stands", "stands_in", "holders_in", "holder_units_in", "conferrers", "offers", "accepted")),
+                       ("tally", ("tally", "tally2", "roster", "voters", "votes", "rule_votes")),
+                       ("may", ("may",)), ("audience", ("audience",)), ("missing", ("missing",)), ("owed", ("owed",)), ("window", ("window",))])
+
+
+def read_by_cells(fams):
+    """Which named answers read a family's rows: every rule cell of the family (guard, fold, change, reaction, count) translated
+    by tools/kx_translate.py, and the answers its KX calls, through the prelude's own definitions. A guard is the `guard`
+    argument of `may`; a count arm that names a policy row is a `tally`; a clock or a landing is a `window`. A family with no
+    cell of its own in a grammar reads by that grammar's default. Returns ({family: cell}, errors)."""
+    import fold_grammar as fg, guard_grammar as gg, change_grammar as cg, build_reactions as br, kx_translate as T
+    errs = []
+    pre = open(os.path.join(ROOT, "tools/kx_prelude.kx"), encoding="utf-8").read()
+    defs = {m.group(1): set(re.findall(r"\b([a-z_0-9]+)\(", m.group(2))) for m in re.finditer(r"^def (\w+)\([^)]*\)\s*=\s*(.*?)(?=^def |\Z)", pre, re.M | re.S)}
+    for a, fs in ANSWERS.items():
+        for fn in fs:
+            if fn not in defs: errs.append(f"read_by: {fn} (the answer {a}) is not defined in tools/kx_prelude.kx")
+    def answers(src, extra=()):
+        seen, todo = set(), set(re.findall(r"\b([a-z_0-9]+)\(", src))
+        while todo:
+            fn = todo.pop()
+            if fn not in seen: seen.add(fn); todo |= defs.get(fn, set())
+        got = {a for a, fs in ANSWERS.items() if seen & set(fs)} | set(extra)
+        if "tuple('tally'," in src: got.add("tally")
+        if "tuple('clock'," in src or "tuple('land'," in src: got.add("window")
+        return got
+    dparts = fg.parse(fg.DEFAULT)[0]["parts"]
+    def fold_src(fam, text):
+        parsed = fg.parse(text)[0]; parts = dict(parsed["parts"])
+        if not [k for k in parts if k not in T.LABELS]: return ""
+        for k in ("reads", "key", "pick", "cut"):
+            if k not in parts and k in dparts: parts[k] = dparts[k]
+        return T.Tx(parts, "x:{y}" if fam.startswith("*") else fam, parsed["when"]).build()
+    D = os.path.join(ROOT, "formal/derivation")
+    own, every = {f: [] for f in fams}, []
+    def put(fam, grammar, where, got):
+        e = OrderedDict([("grammar", grammar), ("cell", where), ("answers", [a for a in ANSWERS if a in got])])
+        if fam == "*": every.append(e)
+        elif fam in own: own[fam].append(e)
+    jobs = [("guard", "guard_text.tsv", "guard", lambda f, t: answers(T.translate(gg.parse(t)[0]), ("may",))),
+            ("fold", "fold_text.tsv", "fold", lambda f, t: answers(fold_src(f, t))),
+            ("change", "change_text.tsv", "change", lambda f, t: answers(T.ch_kx(cg.parse(t)[0]))),
+            ("reaction", "reaction_text.tsv", "reaction", lambda f, t: answers(T.re_kx(br.parse(t)[0])[0]))]
+    typed, failed = {g: set() for g, _, _, _ in jobs}, {}
+    for g, fn, col, tr in jobs:
+        for i, r in enumerate(tsv_rows(os.path.join(D, fn))):
+            try: got = tr(r["family"], r[col])
+            except Exception as e:  # noqa: BLE001 -- a cell its own tool refuses is reported by that tool; here the family stays open
+                failed.setdefault(r["family"], []).append(f"{fn} row {i + 1}: {type(e).__name__}"); continue
+            put(r["family"], g, f"formal/derivation/{fn}#{r['family']} ({r['cc_ref']})", got)
+            typed[g].add(r["family"])
+    arms = OrderedDict()
+    for r in tsv_rows(os.path.join(D, "count_text.tsv")): arms.setdefault(r["family"], []).append(r)
+    for f, a in arms.items(): put(f, "count", f"formal/derivation/count_text.tsv#{f}", answers(T.count_kx(a)))
+    m = re.search(r'^CHANGE_DEFAULT = "([^"]+)"', open(os.path.join(ROOT, "tools/build_transitions.py"), encoding="utf-8").read(), re.M)
+    dflt = [OrderedDict([("grammar", "fold"), ("cell", "tools/fold_grammar.py DEFAULT"), ("answers", [a for a in ANSWERS if a in answers(fold_src("*", fg.DEFAULT))])])]
+    if m: dflt.append(OrderedDict([("grammar", "change"), ("cell", "tools/build_transitions.py CHANGE_DEFAULT"), ("answers", [a for a in ANSWERS if a in answers(T.ch_kx(cg.parse(m.group(1))[0]))])]))
+    base = set().union(*[set(e["answers"]) for e in every + dflt])
+    out = OrderedDict()
+    for f in fams:
+        by = list(own[f])
+        if f not in typed["fold"]: by.append(dflt[0])
+        if f not in typed["change"] and len(dflt) > 1: by.append(dflt[1])
+        got = set().union(*[set(e["answers"]) for e in by]) | base
+        val = [a for a in ANSWERS if a in got]
+        if f in failed:
+            out[f] = OrderedDict([("value", None), ("source", "gap"), ("note", "a rule cell does not translate into KX: " + "; ".join(failed[f]))]); continue
+        out[f] = OrderedDict([("value", val), ("source", "cc-table"), ("rule", "cells" if own[f] else "default"),
+                              ("by", [e for e in by if e["answers"]])])
+    return out, OrderedDict([("every_family", every), ("defaults", dflt), ("value", [a for a in ANSWERS if a in base])]), errs
+
+
 def main():
     cc = {r["family"]: r for r in csv.DictReader(open(CC, encoding="utf-8"), delimiter="\t")}
     census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
@@ -487,6 +668,13 @@ def main():
                 out.append(OrderedDict([("fold", st["fold"]), ("cc_ref", [st["cc_ref"]])]))
                 fold_marks.update(mk)
         return out
+    conf_cells, seg_cells, derived_text, cerrs = conferral_columns(sorted(set(cc) | set(census)), reg)
+    if cerrs:
+        [print(e) for e in cerrs]; return 1
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    der_cells, der_meta, derrs = read_by_cells(sorted(set(cc) | set(census)))
+    if derrs:
+        [print(e) for e in derrs]; return 1
     rows = []
     for fam in sorted(set(cc) | set(census)):
         c, z = cc.get(fam), census.get(fam)
@@ -550,8 +738,8 @@ def main():
         pv = polarity_census(z["6_polarity"]) if z else None
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
         row["emitter_class"] = emitter_class(row["signer_rule"])
-        for col in ("derived", "confers", "binds_segment"):
-            row[col] = {"value": None, "source": "gap", "note": "new column; values come with the manifest's first ruled version"}
+        row["derived"], row["read_by"] = derived_text[fam], der_cells[fam]
+        row["confers"], row["binds_segment"] = conf_cells[fam], seg_cells[fam]
         stmts = fold_text.pop(fam, [])
         if stmts:
             fc = fold_cell(fam, stmts)
@@ -741,6 +929,9 @@ def main():
                               ("typed_families", sum(1 for r in rows if r["fold"]["value"])),
                               ("statements", sum(len(r["fold"]["value"]) for r in rows)),
                               ("marks", OrderedDict(sorted(fold_marks.items()))), ("marks_total", sum(fold_marks.values()))])),
+        ("conferral", OrderedDict([(col, OrderedDict(sorted(Counter(r[col].get("rule") or r[col]["source"] for r in rows).items()))) for col in ("confers", "binds_segment", "derived", "read_by")] +
+                                  [("read_by_default", der_meta),
+                                   ("reading", "rule default: the one stated default (confers: a claim or content confers nothing; read_by: the default fold and change, checked for none of the families it covers); shape: the family's consent parameters in formal/derivation/family_shapes.tsv; stated: a sentence for this family; class: every placeholder names no key by its registry class; cells: the family's own rule cells; gap: listed with what is missing")])),
         ("default_row", OrderedDict([("columns", default), ("families_on_it", by_count.get(0, 0)),
                                      ("families_by_departures", OrderedDict((str(k), by_count[k]) for k in sorted(by_count))),
                                      ("reading", "a family's cell in one of these columns is the default unless the family is listed in departs; manifests/family_departures.tsv carries the departures alone")])),
@@ -767,6 +958,7 @@ def main():
     print(f"departure reasons: {len(spec['reasons'])} reasons move {len(claims)} cells; {len(opens)} open")
     print(f"placement: {placed_by_default} families take the default, the scope each row carries; {len(placing['scopes'])} audience rows, {len(placing['reach'])} on reach, {len(placing['moves'])} on what moves, {len(placing['copy'])} on copying")
     print(f"default row: {by_count.get(0, 0)} of {len(rows)} families are on it in all {len(default)} columns, {by_count.get(1, 0)} depart in one; {len(departures)} departures in all")
+    print("conferral: " + "; ".join(f"{col} " + ", ".join(f"{k} {v}" for k, v in meta["conferral"][col].items()) for col in ("confers", "binds_segment", "derived", "read_by")))
     print(f"family_model: {len(rows)} families; coverage per column (cc-table/code-v61/generic/prose/mixed/gap): " +
           "; ".join(f"{k} {v['cc-table']}/{v['code-v61']}/{v['generic']}/{v['prose']}/{v['mixed']}/{v['gap']}" for k, v in cov.items()))
     return 0

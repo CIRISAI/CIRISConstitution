@@ -167,7 +167,15 @@ delegate only with the delegate's own signature (CC 4.4.3.4.3), and a custodian 
 (CC 7.5.5). Those two sentences cover the fourteen rows that stated a conferral and no acceptance. Three places
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
-seating are not settled. The `confers` and `binds_segment` columns are still empty.
+seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
+stated for 159 of 184 families. 134 claim and content families take one default, that a claim seats no one
+(CC 3.4.5.1). Twenty consents take their seat from `family_shapes.tsv`, and five families have a sentence of
+their own. **open**: 25 families confer nothing that a sentence states: 21 doors, three consents the shape
+table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 155
+families; 29 have a segment that names another row and no word yet says so. Which answers read a family's
+rows is filled for all 184 from the expression language: every family is read by **state** and **stands**
+through the default fold, a default checked for none of the 83 that take it, and 41 are also read by another
+answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
 (`manifests/transitions.json` states it so). A refusal is a named missing row. **open**: guards are typed on 26
@@ -473,7 +481,7 @@ that the ending row has not seen from counting.
 
 | Item | Kind | Where |
 |---|---|---|
-| Which rows seat which key in which role: `confers`, `binds_segment`, the 23 roles as one walk | table data | `manifests/family_model.json` |
+| Which rows seat which key in which role: what 21 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
 | Four guard clauses still refuse a row for another row; their sentences do not say what happens to the row | table data | `manifests/transitions.json` |
 | A count taken when the fold is evaluated has no solution. It has left the policy table; fourteen fold cells of other families still read `@decision` or `@count` | table data | `formal/derivation/fold_text.tsv` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |

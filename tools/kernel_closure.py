@@ -13,7 +13,7 @@ A kernel reads its rules from the tables. A cell of a table is one of four thing
 Everything that is not `ruled` is a residual: a decision some implementation makes that the tables do not yet
 carry. This tool lists the residuals by the kernel output that needs them, so that none is out of sight.
 
-    views       what is true now: fold, lifecycle, projection, body
+    views       what is true now: fold, lifecycle, projection, body, which answers read a family's rows
     queue       what waits on a hand: who may sign, the guard, the way back, confirmation
     counts      the tally an act takes: count, governance, the policy cell
     standing    who holds what, when: signer, subject and cosign rules, freshness, what a row confers
@@ -29,14 +29,14 @@ J = lambda p: json.load(open(os.path.join(ROOT, "manifests", p), encoding="utf-8
 KIND = {"cc-table": "ruled", "prose": "ruled", "derived": "ruled", "code-v61": "as built", "mixed": "as built",
         "generic": "default", "gap": "open", None: "open"}
 OUTPUTS = collections.OrderedDict([
-    ("views", (("fm", "fold"), ("fm", "lifecycle"), ("fm", "projection"), ("fm", "body"))),
+    ("views", (("fm", "fold"), ("fm", "lifecycle"), ("fm", "projection"), ("fm", "body"), ("fm", "read_by"))),
     ("queue", (("tr", "roles"), ("tr", "guard"), ("tr", "undo"), ("tr", "confirm"))),
     ("counts", (("fm", "count"), ("fm", "governance"), ("tr", "policy"))),
     ("standing", (("fm", "signer_rule"), ("fm", "subject_rule"), ("fm", "cosign_rule"), ("fm", "freshness"), ("fm", "confers"))),
     ("moves", (("fm", "placement"), ("fm", "replication"), ("fm", "evidence"), ("fm", "derived"))),
     ("effects", (("rx", "timed"), ("fm", "erasure_route"))),
 ])
-FLOORS = {"fold": 76, "guard": 26, "roles": 311, "signer_rule": 56, "placement": 28, "count": 16, "timed": 33, "body": 81}
+FLOORS = {"fold": 76, "guard": 26, "roles": 311, "signer_rule": 56, "placement": 28, "count": 16, "timed": 33, "body": 81, "confers": 25, "derived": 3, "read_by": 101}
 
 
 def main():
