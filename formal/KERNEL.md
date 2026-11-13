@@ -81,7 +81,7 @@ Eight. Each is a composition of the operators, and each role, window, policy and
 | **stands** | does this key hold this relation over this object | derived: a bounded walk of live edges |
 | **tally** | is this count met, over the head it names | derived |
 | **may** | may this key do this act on this target; if not, which row is missing and who could sign it | derived |
-| **audience** | who is this row for | concluded |
+| **audience** | who is this row for | derived: a row's audience includes that of every row naming it, and such a row may come later |
 | **missing** | which rows does this conclusion depend on that are not held | kept |
 | **owed** | what must this node now emit or do | derived |
 | **window** | has this window closed, and with what outcome | derived; the one answer that reads now |
@@ -95,8 +95,10 @@ and not a second object, and it stands the same whichever of the two signed firs
 of others, any bound voice ends it alone, and no third key ends it without a cut. **proved**
 (`Consent.lean`): `silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end`,
 `one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands`. The proof covers a
-relation that binds named voices; a seat conferred by a count of voices is proved only in the seat's own form. The conferrer is one parameter with
-three values: the object's own key, a key holding a seat that may confer, or a group whose count is met. A key
+relation that binds named voices; a seat conferred by a count of voices is proved only in the seat's own form.
+
+Who may place a duty is one parameter with three values: the object's own key, a key holding a seat that may
+confer, or a group whose count is met. A key
 stands when a bounded walk of live seats leads to it from a root. For what a row means to this node the root is
 the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,
 `only_withdrawals_and_cuts_end`, `means_is_seat_walk`. **run**: 2,727 sets in 587,536 arrival orders.
@@ -142,6 +144,30 @@ landing with a strict majority behind it is final where no key has answered both
 for the two rejected rules `ruleI_concluder_decides`, `ruleII_never_final`. What recount costs: a lone landing is never final against a key that can still sign, and the
 window's length is the concluder's own word.
 
+**The door's parameters.** One door runs every policy row and every clock that takes answers. **run**
+(`formal/causal_kernel/roster.py`, `window.py`): the lone paths of a person's roster, an invitation and the
+halt's fuse run on it in every arrival order. A wider run of all sixteen policy rows and ten clocks on the same
+door, 26 instances at rooms of three and four keys, is not yet in the repository. The policy table states the
+count, the floor and the length. Five things the door needs are stated by the text and carried by no cell:
+
+| Parameter | Why it matters |
+|---|---|
+| who concludes | if a holder lands the halt's lapse, one holder lying about its clock lapses it at every node; if each node lands its own, only that node's does |
+| whether a late answer counts | a confirmation after the fuse has lapsed confirms nothing |
+| whether the opening act is in force while the window is open | a halt is, a moderation proposal is not; not yet run |
+| the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands |
+| the threshold as the room's declared protocol | a removal is cosigned under the room's own protocol |
+
+Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
+two duty deadlines that take no answers.
+
+**Two notions of time.** A row's own stated end, read from the row against now, and a window with a landing.
+**run** at a small bound, outside the repository: these two replace the freshness window, by the cut, and an
+invitation's expiry, by a window that shuts out a late acceptance. Two readings are not covered. A cosignature
+is attached against the node's clock at first receipt, which the two notions cover only if the cosignature
+states its own end. A session goes to the earliest claimed instant among one person's own devices
+(CC 3.1.3.1), which is a ranking by an instant its signer chooses. Both are **open**.
+
 ## 6. Conflict between concurrent rows
 
 1. **Different kinds on one target** are decided by a fixed order on kinds. **proved**: `wins_unique`.
@@ -174,6 +200,19 @@ An adversary holding the count of an old head signs a valid version alone. A wit
 
 The text states the rule (CC 3.2 T6). **open, on the wire**: a roster version names one head today and must be
 able to name several; the store's shape is an optional list of further heads beside the one it names now.
+
+**One mechanism, five instances.** A person's keys, a voice's room keys, a room, the accord and an
+infrastructure community are this one roster with parameters read from the policy table and the text. **run**
+(`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, in every
+arrival order to a cap, each with a deliberate break that is caught. The plain mechanism was wrong in four
+places and a stated parameter restores each: a floor of two voices under every protocol, the joiner's yes
+counted, an acceptance spent once its key has left, and the lone path kept to a person's roster. Two limits:
+the accord's rule that a removed holder no longer fires needs a latch at the node's receipt, which is not a
+function of the rows, and the parameters for removing a key from a voice are guessed.
+
+A public room's roster is public (CC 3.2). A post is proved outside the room only with the rows that seat its
+author, and a row carries what it names. So an audience is the members of a roster, everyone, or one named key.
+An invitation goes to a key the roster's open offer names.
 
 ## 7a. A writer's keys are a fold
 
