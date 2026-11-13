@@ -1,0 +1,158 @@
+; CC 2.6.1.8 — the signed object of the v62 edition (a release candidate of 1.0): CBOR and COSE,
+; aligned with SCITT (RFC 9943). PLANNED, hand-written; RFC 8610 CDDL over CBOR with CBOR
+; Deterministic Encoding (draft-ietf-cbor-cde, updating RFC 8949). The JSON/JCS object of 2.6.1.7
+; stays the signed object of every earlier candidate and verifies as itself for ever.
+
+; PROPOSED: a root that names every top-level rule, so a generator exercises them all.
+ceg-anything = ceg-statement / row-id-input / seat-commitment-input / ceg-key-record / occurrence-keys
+             / revocation-snapshot / cutover-proof / ceg-typ / hpke-info / statement-id-input / ceg-key
+
+; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
+; A quorum is several statements over the same payload bytes, one per signer, each with its own
+; statement id, found by the quorum key: the digest of the payload alone (below).
+; PROPOSED: each voice signs the whole payload, and so the `refs.head` the row is counted over: a
+; cosignature names its head by construction, and no voice can stand for the row over another head.
+ceg-statement = #6.18(COSE_Sign1)
+
+COSE_Sign1 = [
+  protected: bstr .cbor statement-protected,
+  unprotected: {
+    ? -70005: [+ bstr .cbor sd-disclosure],   ; blinded members as PRESENTED beside the statement to one who may see them; a disclosure
+                                   ; set is held and travels as bytes under the object's consent edge (CIRISPersist#914), never in the row
+    * int => any,                  ; a receipt (RFC 9942) may be added by a holder, never signed
+  },
+  payload: bstr .cbor attestation-envelope,
+  signature: bstr,                 ; the composite ML-DSA-65-Ed25519 signature of draft-ietf-jose-pq-composite-sigs
+]
+
+statement-protected = {
+  1: int,                          ; alg: the composite ML-DSA-65-Ed25519; private-use id -70100 until IANA assigns, the construction exactly the draft's
+  3: tstr,                         ; cty: "application/vnd.ciris.row+cbor;type=<one of the five>;family=<registry family>"
+  4: bstr,                         ; kid: the RFC 9679 thumbprint of the signer's AKP composite key (below)
+  15: cwt-claims,                  ; RFC 9597: iss and sub as RFC 9943 requires
+  16: tstr,                        ; typ (RFC 9596): "ceg-row/2", the domain separator of this object kind
+}
+
+cwt-claims = {
+  1: tstr,                         ; iss: the signer's stable identity reference (its genesis key's thumbprint URI), never the rotating kid
+                                   ; PROPOSED: under a room key, iss is the room key's own thumbprint, never its person's genesis key
+  2: tstr,                         ; sub: what the row is about (the attested key or object reference)
+  6: uint,                         ; iat: floor(asserted_at / 1000), seconds, derived; a verifier refuses disagreement
+  ? 5: uint,                       ; nbf: floor(valid_from / 1000) where the row has one
+  ? 4: uint,                       ; exp: floor(valid_until / 1000) where the row has one
+  -70003: uint,                    ; edition: 2 for this object
+}
+
+; The envelope: the 2.6.1.7 member set less what the header now carries (type, family, author key),
+; every text and byte member bounded, no free text: `context` becomes a bounded `note` in the body.
+attestation-envelope = {
+  ? "refs": refs,                  ; EVERY row this row names, by digest, and nothing else names a row
+  ? "seat_commitment": seat-commitment,   ; on the seat row of a room key (CC 3.1.3.2): opened by a binding, never blinded
+  ? "membership": "private" / "public",   ; on a community's founding row only; absent reads public
+  ? "ack_scope": tstr,             ; on an acknowledgement of a head: the scope (group key id or audience) whose past is held
+  ? "score": fixed6, ? "confidence": fixed6, ? "weight": fixed6,   ; gap (a): integers, never floats (see fixed6)
+  * tstr => any,                   ; typed members as 2.6.1.7 names them, absent never null
+  ? "asserted_at": ms-time, ? "valid_from": ms-time, ? "valid_until": ms-time,
+  ? "expires_at": ms-time,
+  ? "reason": uint,                ; a code from a closed registry, 0 = unspecified
+  ? "salt": bstr .size 16,        ; required where the content is low-entropy (a ballot, a census cell); bound by every signer
+  ? "_sd": [+ bstr .size 32],      ; digests of the blinded members, in mint order: present iff the row was minted erasable
+  ? "body": { ? "note": tstr .size (0..2048), * tstr => any },
+}
+
+; Erasability (CC 2.6.1.1, 2.6.1.8): the selective disclosure of draft-ietf-spice-sd-cwt, exactly; the
+; member name "_sd" and the header label -70005 are CIRIS-scoped until the draft's labels are assigned.
+; A blinded member is absent from the payload; its disclosure is [salt, name, value], its digest is
+; SHA-256 over the disclosure's deterministic encoding. A family whose erasure_route is dsar or purge
+; mints every free-text member and every member another party authored blind, body.note first; the
+; members are the family model's `blind` column, and no fold, verdict or admission reads one.
+sd-disclosure = [salt: bstr .size 16, name: tstr, value: any]
+ms-time = uint                     ; POSIX milliseconds, no tag, never a float (CC 2.6.2)
+
+; The statement id: SHA-256 over the deterministic encoding of this labelled structure, so one
+; statement has one id whatever its signatures, and no Sig_structure can be confused with it.
+statement-id-input = ["CEG-statement-id/2", protected: bstr, payload: bstr]
+statement-id = [ -16, bstr .size 32 ]   ; [COSE hash alg id (SHA-256), digest]: hash-agile
+
+; The quorum key: SHA-256 over the payload bstr's content alone, in the same hash-agile form, so the
+; statements of one quorum share one key whatever their signers; a fold counts them by person.
+; PROPOSED: replaced by the row id below, which the quorum key does not meet: it omits cty (type and
+; family) and sub, which ride only the protected header, so two different rows could share one key.
+; quorum-key-input = ["CEG-quorum-key/2", payload: bstr]
+; quorum-key = [ -16, bstr .size 32 ]
+
+; PROPOSED. The row id: the digest a row is NAMED by, the kernel's one order. One per row, the same
+; for every voice of a counted row, unchanged when a voice, a receipt or a disclosure is added, and
+; committing to every member a conclusion reads. `cty` and `sub` are copied byte for byte from the
+; protected header; `author` is the statement's `iss` when the family is authored and null when the
+; family is counted (a column of the family model), so voices of a counted row share one id and two
+; authors of identical bytes make two rows. A payload not in deterministic encoding is refused, so
+; one row has one payload and one id.
+row-id-input = ["CEG-row/2", cty: tstr, sub: tstr, author: tstr / null, payload: bstr]
+row-id = hash-digest
+
+hash-digest = [ alg: int, digest: bstr .size 32 ]   ; [-16, ...] = SHA-256; hash-agile
+; A reference to a row of either edition. Edition 1: the digest is original_content_hash (SHA-256 of
+; JCS(attestation_envelope)) as raw bytes; never an attestation_id. Edition 2: the row id above.
+row-ref = [ edition: 1 / 2, id: hash-digest ]
+
+; Every member that names a row. A verifier gathers the named set from `refs` alone, without knowing
+; the family, so `missing` and the closure are computed the same by every holder.
+refs = {
+  ? "head": row-ref,               ; the roster head this row is counted over, or a version extends
+  ? "further_heads": [+ row-ref],  ; further tips named beside `head` (a merge; an ack of several tips): a set
+  ? "answers": row-ref,            ; the proposal voted on or accepted, the window opened, the row replied to
+  ? "target": row-ref,             ; the row superseded, withdrawn, recanted, cut or removed
+  ? "trusted_through": [+ row-ref],; on a key revocation: the last rows of the revoked key held good (gap e)
+  ? "also": { + tstr => [+ row-ref] },   ; any other named row, under a role name from a closed registry
+}
+
+; The seat commitment: SHA-256 over this structure; the binding carries `nonce` and `person`.
+seat-commitment = hash-digest
+seat-commitment-input = ["CEG-seat/2", room: tstr, room_key: bstr, person: tstr, nonce: bstr .size 32]
+
+; Gap (a): a fixed-point integer, the value times 10^6, range fixed by the family (score in
+; [-10^6, 10^6], confidence in [0, 10^6]). Sums are exact, so a fold is a function of the set.
+fixed6 = int                       ; the family states the range
+
+; Keys: one AKP COSE_Key (RFC 9964 kty 7) whose alg is the composite and whose pub is the composite
+; public key encoding of the LAMPS draft; the kid is its RFC 9679 thumbprint, computed under the
+; private-use alg and fixed for the key's life (ids are CIRIS-scoped until the codepoint lands).
+ceg-key = { 1: 7, 3: int, -1: bstr }
+
+; PROPOSED. A room key carries its record inline and takes no identity_occurrence (CC 3.1.3.2), so
+; the KEM half it is wrapped to rides its own record. An identity's binding key pair rides its
+; identity_occurrence beside encryption_pubkeys (CC 3.3.6.1) and is never the content-KEM pair.
+ceg-key-record = {
+  "key": ceg-key,
+  ? "kem": kem-key,                ; a room key's own X-Wing KEM public key
+  * tstr => any,
+}
+kem-key = { 1: int, 3: int, -1: bstr }   ; kty and alg as the HPKE-PQ codepoints fix them; implementer's
+occurrence-keys = {
+  ? "encryption_pubkeys": kem-key,
+  ? "binding_pubkey": kem-key,     ; distinct bytes from encryption_pubkeys, refused at admission otherwise
+}
+
+; PROPOSED, gap (b). Signed objects that are not rows, each its own typ; external_aad is the empty
+; bstr for all of them and for rows. A binding and a sealed invitation are never signed and are not
+; here: each is an HPKE seal with its own info label.
+ceg-typ = "ceg-row/2" / "ceg-build-manifest/2" / "ceg-evidence/2" / "ceg-key-record/2"
+        / "ceg-accord-invocation/2" / "ceg-genesis/2" / "ceg-text-manifest/2" / "ceg-revocation-snapshot/2"
+hpke-info = "CEG-binding/2" / "CEG-invitation/2"
+
+; PROPOSED, gap (e). A revocation snapshot is a signed object, not a row: a signer's own record of the
+; revocations whose past it holds. It names its predecessor; it carries no clock and no revision order.
+revocation-snapshot = {
+  "prev": row-ref / null,
+  "ack": row-ref,                  ; the signer's acknowledgement of the head of the revocation scope
+  "revoked": [* [key_digest: bstr .size 32, revocation: row-ref, trusted_through: [* row-ref]]],
+}
+
+; PROPOSED, gap (c). The edition's ceremony row names, through `refs`, an acknowledgement of each
+; scope it carries over. An earlier-form object is accepted iff it lies in the past of the ceremony row.
+cutover-proof = [ ceremony: row-ref, path: [+ row-ref] ]   ; a chain of names from the ceremony to the object
+
+; Receipts over the provenance log and each stream's log are COSE Receipts (RFC 9942) with
+; vds = 1 (RFC9162_SHA256); each witness issues its own receipt over the same root, with its
+; instant in the protected header; a receipt is issued per batch of a stream, never per chunk.
