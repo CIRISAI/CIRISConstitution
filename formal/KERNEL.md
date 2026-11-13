@@ -148,8 +148,12 @@ covers 18 of them, three are read off the row judged (`author`, `self`, `subject
 `review`, `slash` and `takedown` are one seat with four scopes. `owner` and the steward of an agent are one
 seat. `member`, an accord holder and a key of a self roster are one counted seat over three objects. `serve` is
 two seats required together, which is a question for **may**.
-**open**: in 14 of 17 partly fitting rows the text states the conferral and no acceptance row. The `confers`
-and `binds_segment` columns are still empty.
+The text states the second consent wherever it places a duty: a delegation that carries a scope seats its
+delegate only with the delegate's own signature (CC 4.4.3.4.3), and a custodian holds custody only with its own
+(CC 7.5.5). Those two sentences cover the fourteen rows that stated a conferral and no acceptance. Three places
+need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
+under its owner. **open**: how the second signature travels and from when a delegation without it stops
+seating are not settled. The `confers` and `binds_segment` columns are still empty.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
 (`manifests/transitions.json` states it so). A refusal is a named missing row. **open**: guards are typed on 26
