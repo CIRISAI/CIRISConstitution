@@ -1702,8 +1702,8 @@ Body: `accord_root`
 Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord` (CC 4.2.1.1, CC 4.2.1.3)
 
 Guard:
-- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else refuse` (CC 4.2.1.3)
-- attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else refuse` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
+- attest: `when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude` (CC 4.2.1.3)
+- attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else exclude` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
 
 Fold:
 - `over=standing@decision/person` (CC 4.2.6)
@@ -1852,7 +1852,7 @@ Body: `duration` (text only), `transcript` (text only)
 Count: `moderator_election@subject_group` (CC 4.5.13)
 
 Guard:
-- attest: `each(val:ranks) member(key,object) else refuse` (CC 3.1.3)
+- attest: `each(val:ranks) member(key,object) else exclude` (CC 3.1.3)
 
 Fold:
 - `key=election_id,person; pick=agree; over=live@count/person` (CC 3.1.3)
@@ -1876,8 +1876,8 @@ Body: `ranks` (text only)
 Count: `moderator_election@subject_group!result` (CC 4.5.13)
 
 Guard:
-- attest: `set(ref:*) ballot:moderator@admitted[object=object] else refuse & winner(signer,object) else refuse & after(moderator_election) else refuse` (CC 3.1.3)
-- attest: `set(ref:*) ballot:moderator@admitted[object=object] else refuse` (CC 4.5.13)
+- attest: `set(ref:*) ballot:moderator@named[object=object] else void & winner(signer,object) else exclude & after(moderator_election) else exclude` (CC 3.1.3)
+- attest: `set(ref:*) ballot:moderator@named[object=object] else void` (CC 4.5.13)
 
 Fold:
 - `key=community_id,election_id; pick=max(ballot_count),min(ballot_set_digest); by=node` (CC 3.1.3, CC 4.5.13)
@@ -1933,7 +1933,7 @@ Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h
 Count: `none`
 
 Guard:
-- attest: `one consent:state:granted@admitted[signer=attested,subject=signer,val:scope=analyze] else refuse` (CC 3.1.4)
+- attest: `one consent:state:granted@admitted[signer=attested,subject=signer,val:scope=analyze] else withhold` (CC 3.1.4)
 
 Fold:
 - `by=advisory` (CC 3.1.8)
@@ -1967,8 +1967,8 @@ Body: `consent_basis`, `feature_dim`, `min_feature_dim`, `n_eff_floor`, `n_eff_h
 Count: `none`
 
 Guard:
-- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else refuse` (CC 3.1.2)
-- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else refuse` (CC 3.4.12)
+- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else exclude` (CC 3.1.2)
+- attest: `when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else exclude` (CC 3.4.12)
 
 Fold:
 - `key=attested_key_id,domain,attesting_key_id; result=vector(domain)` (CC 3.1.2)
@@ -1989,7 +1989,7 @@ In time:
 Count: `none`
 
 Guard:
-- attest: `no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else refuse(census_composite_duplicate_period)` (CC 3.1.3)
+- attest: `no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else contested(census_composite_duplicate_period)` (CC 3.1.3)
 
 Fold:
 - `key=class,period; pick=once(census_composite_duplicate_period)` (CC 3.1.3)
@@ -2038,7 +2038,7 @@ Body: `period`, `share_index`, `share_count`, `member_commitment_hex`, `mass_tot
 Count: `none`
 
 Guard:
-- attest: `no census:member:share@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse` (CC 3.1.3)
+- attest: `no census:member:share@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else contested` (CC 3.1.3)
 
 Fold:
 - `key=period,token; pick=once(ballot_share_duplicate_token)` (CC 3.1.3)
@@ -2071,7 +2071,7 @@ Body: `period`, `share_index`, `share_count`, `member_commitment_hex`, `mass_tot
 Count: `none`
 
 Guard:
-- attest: `no census:share:{class}@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse(census_share_duplicate_token)` (CC 3.1.3)
+- attest: `no census:share:{class}@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else contested(census_share_duplicate_token)` (CC 3.1.3)
 
 Fold:
 - `key=period,token; pick=once(census_share_duplicate_token)` (CC 3.1.3)
@@ -2151,7 +2151,7 @@ In time:
 Count: `none`
 
 Guard:
-- attest: `when(type(signer,node)) owner(subject,attested) at asserted_at else refuse` (CC 3.3.1)
+- attest: `when(type(signer,node)) owner(subject,attested) at asserted_at else exclude` (CC 3.3.1)
 
 Change:
 - withdraw: `withdraw: cascade=trace:{form}:{version}/under:stand` (CC 3.3.1)
@@ -2317,7 +2317,7 @@ In time:
 Count: `none` (CC 3.1.3)
 
 Guard:
-- attest: `when(leaf=pending) (one *@admitted[id=ref:*] as E else refuse & owner(E.signer,signer) else refuse)` (CC 3.1.3)
+- attest: `when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)` (CC 3.1.3)
 
 Fold:
 - `key=quorum_key,attesting_key_id; pick=union` (CC 3.1.3)
@@ -2340,7 +2340,7 @@ In time:
 Count: `none`
 
 Guard:
-- attest: `one *@admitted[id=ref:*,val:cohort_scope=val:cohort_scope] else refuse` (CC 3.1.3.3)
+- attest: `one *@named[id=ref:*,val:cohort_scope=val:cohort_scope] else void` (CC 3.1.3.3)
 
 In time:
 - [ack] expiry required `expires_at` eq `custody_report_ttl_secs` (CC 3.1.3.3, CC 5.3.2.1)
@@ -2503,7 +2503,7 @@ Fold:
 Count: `none`
 
 Guard:
-- attest: `when(has=references_attestation_id) one goal:{scale}|approach:{goal_id}|method:{approach_id}:{substrate_rung}@admitted[id=ref:references_attestation_id] else refuse(evidence_reference_unresolved)` (CC 3.1.5.5)
+- attest: `when(has=references_attestation_id) one goal:{scale}|approach:{goal_id}|method:{approach_id}:{substrate_rung}@named[id=ref:references_attestation_id] else void(evidence_reference_unresolved)` (CC 3.1.5.5)
 
 Fold:
 - `feeds=progress_measure:{method_id}` (CC 3.1.5.5)
@@ -2531,11 +2531,11 @@ Body: `achieved_tier` (text only), `committed_tier` (text only), `fallback_reaso
 Count: `None`
 
 Guard:
-- attest: `each(subject) when(type(key,node)) not founder(key,object) else refuse+community_consensus_protocol_violation` (CC 3.2)
+- attest: `each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation` (CC 3.2)
 - attest: `each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation` (CC 3.1.3.2)
-- attest: `when(leaf=recovery) one trust:charter@admitted[object=object,val:recovery_commitments commits signer] else refuse` (CC 3.1.3, CC 4.2.6)
-- supersede: `each(subject) when(verb=replace,not member(key,object)) signs(key) else refuse(membership_supersede_cannot_add)+community_consensus_protocol_violation` (CC 3.1.3.2)
-- supersede: `when(verb=replace) one group:roster@admitted[object=object,id=ref:prev_head_digest] else refuse` (CC 4.4.3.4.4)
+- attest: `when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void` (CC 3.1.3, CC 4.2.6)
+- supersede: `each(subject) when(verb=replace,not member(key,object)) signs(key) else exclude(membership_supersede_cannot_add)+community_consensus_protocol_violation` (CC 3.1.3.2)
+- supersede: `when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void` (CC 4.4.3.4.4)
 
 Change:
 - attest: `attest: field=members:grow_signed` (CC 3.1.3.2)
@@ -2619,7 +2619,7 @@ Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.3)
 
 Change:
 - supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.4.6)
-- supersede: `replace[seat:serve]: after=transport:canonical_rebind, refuse=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
+- supersede: `replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind` (CC 3.3.6.2)
 
 Fold:
@@ -2655,7 +2655,7 @@ Change:
 Count: `none`
 
 Guard:
-- attest: `one deferral:response:approved@admitted[id=ref:authorized_by,subject=subject] as R else refuse(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else refuse(identity_amendment_unauthorized)` (CC 3.1.5)
+- attest: `one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)` (CC 3.1.5)
 
 **`image:*`** — Facts, account
 
@@ -2715,7 +2715,7 @@ Count: `none`
 
 Guard:
 - attest: `each(subject) one identity:occurrence@admitted[attested=key] else exclude+recipient_excluded` (CC 3.3.6.1)
-- attest: `when(one retirement:{state}@admitted[attested=object]) one archive_release:{basis}@admitted[id=ref:*] else refuse` (CC 3.1.5)
+- attest: `when(one retirement:{state}@admitted[attested=object]) one archive_release:{basis}@admitted[id=ref:*] else exclude` (CC 3.1.5)
 
 Fold:
 - `key=dimension,attesting_key_id,attested_key_id,axis_identity; pick=union; cut=none; by=node` (CC 3.3.2, CC 3.1.3)
@@ -2835,11 +2835,11 @@ Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; le
 
 Guard:
 - attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else refuse+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.2.3)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else refuse(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.2.3, CC 4.4.3.2.5, CC 4.4.3.4.2)
-- attest: `each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else refuse` (CC 3.1.3.2)
-- attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else refuse(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.2.3)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.2.3, CC 4.4.3.2.5, CC 4.4.3.4.2)
+- attest: `each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else exclude` (CC 3.1.3.2)
+- attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
 Change:
 - attest: `removal[axis:stream]: key=rotate_epoch` (CC 4.4.3.2.6)
@@ -2968,7 +2968,7 @@ Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only), `objects_to_
 Count: `none`
 
 Guard:
-- attest: `all consent:state:granted@admitted[id=ref:consent_basis] at asserted_at else refuse` (CC 3.1.9.4)
+- attest: `all consent:state:granted@named[id=ref:consent_basis] at asserted_at else void` (CC 3.1.9.4)
 
 Body: `trace_level`, `occurrence_key_ids`, `window_from`, `window_to`, `channel_classes`, `consent_basis`, `evidence_refs`, `window`
 
@@ -2997,7 +2997,7 @@ Body: `witness_relation`
 Count: `none`
 
 Guard:
-- withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@admitted[id=ref:wa_adjudication_ref] else refuse` (CC 3.4.5)
+- withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void` (CC 3.4.5)
 
 Fold:
 - `reads=own&live&signer:owner; key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less; by=node` (CC 3.2)
@@ -3201,7 +3201,7 @@ In time:
 Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)
 
 Guard:
-- withdraw: `when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else refuse` (CC 7.5.5)
+- withdraw: `when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else exclude` (CC 7.5.5)
 
 Change:
 - attest: `custodian_minted: by=cosigned, reach=other_attester, cascade=custody:{kind}/by:stop` (CC 7.5.5)
@@ -3262,8 +3262,8 @@ Body: `attested_key_id`, `delegation_purpose`, `delegation_valid_from`, `delegat
 Count: `none`
 
 Change:
-- supersede: `replace: by=same_attester, field=valid_until:as_attest, refuse=session_claim_out_of_window` (CC 3.1.3.1)
 - supersede: `replace: by=same_attester` (CC 3.1.3.1)
+- supersede: `replace: field=valid_until:as_attest, refuse=session_claim_out_of_window` (CC 3.1.3.1)
 
 Fold:
 - `key=community_id,session_id,identity_key_id; result=one` (CC 3.1.3.1)
@@ -3300,12 +3300,12 @@ Fold:
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
 
 Guard:
-- attest: `one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse` (CC 3.4.11)
-- attest: `one other(ratchet:flag:*)@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.6)
-- attest: `one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.6)
-- attest: `one other(ratchet:flag:counter_rii:{layer})@admitted[id=ref:evidence_refs] else refuse` (CC 3.4.7.2)
-- attest: `one other(seed_holder_voting_alignment:{cell})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.4)
-- attest: `one other(testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse` (CC 3.1.9.3, CC 4.4.1)
+- attest: `one moderation:{allegation_type}@named[id=ref:evidence_refs] else void` (CC 3.4.11)
+- attest: `one other(ratchet:flag:*)@named[id=ref:evidence_refs] else void` (CC 3.1.6)
+- attest: `one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@named[id=ref:evidence_refs] else void` (CC 3.1.6)
+- attest: `one other(ratchet:flag:counter_rii:{layer})@named[id=ref:evidence_refs] else void` (CC 3.4.7.2)
+- attest: `one other(seed_holder_voting_alignment:{cell})@named[id=ref:evidence_refs] else void` (CC 3.1.9.4)
+- attest: `one other(testimonial_witness:{kind})@named[id=ref:evidence_refs] else void` (CC 3.1.9.3, CC 4.4.1)
 
 **`takedown_notice:{basis}`** — Rules, thing
 
@@ -3317,7 +3317,7 @@ Guard:
 Count: `leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 2.4.1.1, CC 4.4.3.2.8, CC 4.5.3)
 
 Guard:
-- attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse` (CC 4.5.5)
+- attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude` (CC 4.5.5)
 
 In time:
 - [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by identity:substrate_persist (CC 6.1.2.2)
@@ -3363,7 +3363,7 @@ Fold:
 Count: `accord_majority@accord` (CC 3.1.3)
 
 Change:
-- attest: `attest: by=cosigned, reach=other_attester, refuse=transport_rebind_without_holder_quorum` (CC 3.1.3)
+- attest: `attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum` (CC 3.1.3)
 - attest: `attest: by=cosigned, reach=other_attester` (CC 3.1.3)
 
 **`transport:{kind}`** — Circumstances, thing
@@ -3377,7 +3377,7 @@ Change:
 Count: `none`
 
 Guard:
-- supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else refuse(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
+- supersede: `when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else exclude(serve_transit_pair_rotation_before_rebind)` (CC 3.1.3)
 
 **`trust:{job}:{version}`** — Rules, thing
 

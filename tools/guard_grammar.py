@@ -16,11 +16,26 @@ text. It is used by tools/build_transitions.py, which reads formal/derivation/gu
     join    := SLOT OP SLOT
     keyatom := [ "not " ] ( ROLE "(" KEY "," TARGET [ ",via=" VIA ] ")" | CONDITION "(" KEY ")" | "type(" KEY "," TYPE ")" | "signs(" KEY ")" ) [ " at " INSTANT ]
     window  := ( "within" | "after" ) "(" POLICY ")"        ; also a clause of its own
-    outcome := ( "refuse" [ "(" TOKEN ")" ] | "exclude" | "advise" ) [ "+" HARD_CASE_KIND ]
+    outcome := ( VERDICT [ "(" TOKEN ")" ] | "advise" ) [ "+" HARD_CASE_KIND ]
+    VERDICT := "refuse" | "void" | "contested" | "exclude" | "withhold"
+
+What a failed clause does follows the layer the clause reads (formal/KERNEL.md section 3). The layer is computed
+from the translated clause by tools/kx_check.py, which counts a word its layer does not allow:
+
+    refuse     the door: the row is not kept. Right only on a clause that reads the judged row alone.
+    void       concluded: the clause reads the rows this row names. The row waits while a row it names by digest
+               is not held; once held, a clause that fails leaves the row kept and concluding nothing. Final.
+    contested  derived, on a `no` atom: rows on one slot that others may write; none of them counts while they differ.
+    exclude    derived: the row, or the element of each(...), is not counted. A later row may change that.
+    withhold   derived: the row is kept and is not served. A later row may change that.
+    advise     nothing is withheld; the reader is told.
+
+The state `named` reads a row among the rows this row names, directly or through others, as live at the head
+this row names; every other state reads the rows the node holds.
 
 Three tokens name something no other vocabulary does and are counted wherever they are used: the state
 `landed` (admitted and its policy met), the operator `commits`, the key atom `signs`. So are a reference to
-no named member (`ref:*`) and a refusal with no token (`refuse` bare). parse() returns the tree and the list
+no named member (`ref:*`) and a verdict with no token (counted as `refuse`, whichever word it is). parse() returns the tree and the list
 of those marks; closure() returns what is outside the vocabularies.
 
 Run: python3 tools/guard_grammar.py --self-test
@@ -28,7 +43,8 @@ Run: python3 tools/guard_grammar.py --self-test
 import re, sys
 
 QUANTS = ("one", "all", "latest", "no")
-STATES = ("admitted", "withdrawn", "recanted", "superseded", "landed")
+STATES = ("admitted", "withdrawn", "recanted", "superseded", "landed", "named")
+VERDICTS = ("refuse", "void", "contested", "exclude", "withhold")
 OPS = (">=", "<=", "=", " in ", " commits ")
 INSTANTS = ("asserted_at", "receipt", "its_asserted_at")
 VERBS = ("attest", "authorize", "replace", "withdraw", "recant")
@@ -136,8 +152,8 @@ def parse_atom(s, marks):
 
 
 def parse_outcome(s):
-    m = re.fullmatch(r"(refuse|exclude|advise)(?:\(([a-z_0-9]+)\))?(?:\+([a-z_0-9]+))?", s.strip())
-    if not m or (m.group(2) and m.group(1) != "refuse"):
+    m = re.fullmatch(r"(" + "|".join(VERDICTS) + r"|advise)(?:\(([a-z_0-9]+)\))?(?:\+([a-z_0-9]+))?", s.strip())
+    if not m or (m.group(2) and m.group(1) == "advise"):
         raise GuardError(f"outcome {s!r}")
     return {"do": m.group(1), "token": m.group(2), "hard_case": m.group(3)}
 
@@ -166,7 +182,7 @@ def parse_clause(s, marks):
     body = parts[0].strip()
     if len(parts) == 2:
         c["else"] = parse_outcome(parts[1])
-        if c["else"]["do"] == "refuse" and not c["else"]["token"]: marks.append("refuse")
+        if c["else"]["do"] in VERDICTS and not c["else"]["token"]: marks.append("refuse")
     if body.startswith("(") and body.endswith(")") and take_call("g" + body, "g")[1] == "":
         c["group"] = parse(body[1:-1], marks)[0]
     else:
@@ -238,6 +254,17 @@ def closure(clauses, voc, family=None):
                 if o["token"] and o["token"] not in voc["tokens"]: bad.append(f"refusal token {o['token']}")
                 if o["hard_case"] and o["hard_case"] not in voc["hard_cases"]: bad.append(f"hard-case kind {o['hard_case']}")
     walk(clauses)
+    return bad + placement(clauses)
+
+
+def placement(clauses):
+    """An outcome on a form it cannot be read on: `contested` is a verdict on a slot, so it stands only on a `no` atom."""
+    bad = []
+    for c in clauses:
+        if "group" in c:
+            bad += placement(c["group"])
+        elif (c["else"] or {}).get("do") == "contested" and not (c["atom"]["atom"] == "row" and c["atom"]["quant"] == "no"):
+            bad.append("contested on a clause that is not a `no` atom")
     return bad
 
 
@@ -262,8 +289,13 @@ def self_test():
         "when(leaf=recovery) one trust:charter@admitted[object=object,val:recovery_commitments commits signer] else refuse",
         "when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else refuse",
         "one *@admitted[id=ref:*,val:cohort_scope=val:cohort_scope] else refuse",
+        "one *@named[id=ref:*,val:cohort_scope=val:cohort_scope] else void(x)",
+        "no census:share:{class}@admitted[object=object,val:return_token=val:return_token] else contested(x)",
+        "each(subject) when(type(key,node)) not founder(key,object) else exclude(x)+k",
+        "one consent:state:granted@admitted[signer=attested] else withhold",
     ]
-    bad = ["one x@held[id=id]", "some x@admitted[id=id]", "member(key) else refuse(a)(b)", "one x@admitted[id~id]", "each(subject one x@admitted[id=id]"]
+    bad = ["one x@held[id=id]", "some x@admitted[id=id]", "member(key) else refuse(a)(b)", "one x@admitted[id~id]", "each(subject one x@admitted[id=id]",
+           "one x@admitted[id=id] else advise(t)", "one x@admitted[id=id] else drop"]
     for g in good:
         parse(g)
     n = 0
@@ -275,6 +307,7 @@ def self_test():
     _, marks = parse(good[2])
     assert n == len(bad), f"{len(bad) - n} malformed guards parsed"
     assert marks.count("ref:*") == 1 and marks.count("refuse") == 1
+    assert placement(parse("one x@admitted[object=object] else contested")[0]) and not placement(parse(good[9])[0])
     assert top_conds(parse("when(verb=withdraw,leaf=decided) no a@admitted[object=object] else refuse")[0], "verb") == ["withdraw"]
     assert family_ok("membership:acceptance", {"membership:{stage}"}) and not family_ok("membership", {"membership:{stage}"})
     print(f"guard grammar: {len(good)} forms parse, {len(bad)} malformed forms refused")

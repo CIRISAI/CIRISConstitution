@@ -59,7 +59,7 @@ def measures():
     tok = bare = 0
     for t in guarded:
         s = json.dumps(t["guard"]["value"])
-        tok += len(re.findall(r"else refuse\([a-z_]+\)", s)); bare += len(re.findall(r"else refuse(?!\()", s))
+        tok += len(re.findall(r"else (?:refuse|void|contested|exclude|withhold)\([a-z_]+\)", s)); bare += len(re.findall(r"else (?:refuse|void|contested|exclude|withhold)(?![(a-z_])", s))
     m["reason"] = (len(guarded), n, "why an act is refused (L5): a guard is typed; of its refusals %d carry a token and %d carry none" % (tok, bare))
     m["change"] = (sum(bool(t["change"]["value"]) for _, t in T), n, "what the row displaces and what follows for rows that depended on it")
     timed = {e["family"] for e in rx}

@@ -43,12 +43,12 @@
    "derived": "this tool's rule over those",
    "gap": "nothing says; closed"
   },
-  "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
+  "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
    "statements": 57,
    "guarded_transitions": 26,
    "marks": {
-    "refuse": 30,
+    "refuse": 31,
     "ref:*": 9,
     "landed": 2,
     "signs": 2,
@@ -610,7 +610,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else refuse",
+        "guard": "when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else exclude",
         "cc_ref": [
          "CC 3.4.1",
          "CC 4.2.1.1",
@@ -619,7 +619,7 @@
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else refuse",
+        "guard": "when(leaf=active) one accord:invoke:constitutional:{halt_id}@admitted[leaf:halt_id=val:resumes_halt_id] else exclude",
         "cc_ref": [
          "CC 4.2.1.3"
         ],
@@ -2258,7 +2258,7 @@
      "guard": {
       "value": [
        {
-        "guard": "each(val:ranks) member(key,object) else refuse",
+        "guard": "each(val:ranks) member(key,object) else exclude",
         "cc_ref": [
          "CC 3.1.3"
         ],
@@ -2361,14 +2361,14 @@
      "guard": {
       "value": [
        {
-        "guard": "set(ref:*) ballot:moderator@admitted[object=object] else refuse & winner(signer,object) else refuse & after(moderator_election) else refuse",
+        "guard": "set(ref:*) ballot:moderator@named[object=object] else void & winner(signer,object) else exclude & after(moderator_election) else exclude",
         "cc_ref": [
          "CC 3.1.3"
         ],
         "reach": "whole"
        },
        {
-        "guard": "set(ref:*) ballot:moderator@admitted[object=object] else refuse",
+        "guard": "set(ref:*) ballot:moderator@named[object=object] else void",
         "cc_ref": [
          "CC 4.5.13"
         ],
@@ -3302,7 +3302,7 @@
      "guard": {
       "value": [
        {
-        "guard": "one consent:state:granted@admitted[signer=attested,subject=signer,val:scope=analyze] else refuse",
+        "guard": "one consent:state:granted@admitted[signer=attested,subject=signer,val:scope=analyze] else withhold",
         "cc_ref": [
          "CC 3.1.4"
         ],
@@ -3842,14 +3842,14 @@
      "guard": {
       "value": [
        {
-        "guard": "when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else refuse",
+        "guard": "when(leaf=incapacitated) one capacity_assurance:reversible_excluded@admitted[attested=attested,leaf:domain=leaf:domain] else exclude",
         "cc_ref": [
          "CC 3.1.2"
         ],
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else refuse",
+        "guard": "when(leaf=incapacitated) one capacity_assurance:reversible_excluded|capacity_assurance:reversible_pending@admitted[attested=attested,leaf:domain=leaf:domain] else exclude",
         "cc_ref": [
          "CC 3.4.12"
         ],
@@ -3989,7 +3989,7 @@
      "guard": {
       "value": [
        {
-        "guard": "no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else refuse(census_composite_duplicate_period)",
+        "guard": "no census:composite:{class}@admitted[object=object,leaf:class=leaf:class] else contested(census_composite_duplicate_period)",
         "cc_ref": [
          "CC 3.1.3"
         ],
@@ -4352,7 +4352,7 @@
      "guard": {
       "value": [
        {
-        "guard": "no census:member:share@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse",
+        "guard": "no census:member:share@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else contested",
         "cc_ref": [
          "CC 3.1.3"
         ],
@@ -4581,7 +4581,7 @@
      "guard": {
       "value": [
        {
-        "guard": "no census:share:{class}@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else refuse(census_share_duplicate_token)",
+        "guard": "no census:share:{class}@admitted[object=object,val:return_token=val:return_token,val:share_index=val:share_index] else contested(census_share_duplicate_token)",
         "cc_ref": [
          "CC 3.1.3"
         ],
@@ -6115,7 +6115,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(type(signer,node)) owner(subject,attested) at asserted_at else refuse",
+        "guard": "when(type(signer,node)) owner(subject,attested) at asserted_at else exclude",
         "cc_ref": [
          "CC 3.3.1"
         ],
@@ -7618,7 +7618,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(leaf=pending) (one *@admitted[id=ref:*] as E else refuse & owner(E.signer,signer) else refuse)",
+        "guard": "when(leaf=pending) (one *@named[id=ref:*] as E else void & owner(E.signer,signer) else exclude)",
         "cc_ref": [
          "CC 3.1.3"
         ],
@@ -7811,7 +7811,7 @@
      "guard": {
       "value": [
        {
-        "guard": "one *@admitted[id=ref:*,val:cohort_scope=val:cohort_scope] else refuse",
+        "guard": "one *@named[id=ref:*,val:cohort_scope=val:cohort_scope] else void",
         "cc_ref": [
          "CC 3.1.3.3"
         ],
@@ -10214,7 +10214,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(has=references_attestation_id) one goal:{scale}|approach:{goal_id}|method:{approach_id}:{substrate_rung}@admitted[id=ref:references_attestation_id] else refuse(evidence_reference_unresolved)",
+        "guard": "when(has=references_attestation_id) one goal:{scale}|approach:{goal_id}|method:{approach_id}:{substrate_rung}@named[id=ref:references_attestation_id] else void(evidence_reference_unresolved)",
         "cc_ref": [
          "CC 3.1.5.5"
         ],
@@ -11309,14 +11309,14 @@
      "guard": {
       "value": [
        {
-        "guard": "each(subject) when(type(key,node)) not founder(key,object) else refuse+community_consensus_protocol_violation",
+        "guard": "each(subject) when(type(key,node)) not founder(key,object) else exclude+community_consensus_protocol_violation",
         "cc_ref": [
          "CC 3.2"
         ],
         "reach": "whole"
        },
        {
-        "guard": "when(leaf=recovery) one trust:charter@admitted[object=object,val:recovery_commitments commits signer] else refuse",
+        "guard": "when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void",
         "cc_ref": [
          "CC 3.1.3",
          "CC 4.2.6"
@@ -11444,14 +11444,14 @@
      "guard": {
       "value": [
        {
-        "guard": "each(subject) when(verb=replace,not member(key,object)) signs(key) else refuse(membership_supersede_cannot_add)+community_consensus_protocol_violation",
+        "guard": "each(subject) when(verb=replace,not member(key,object)) signs(key) else exclude(membership_supersede_cannot_add)+community_consensus_protocol_violation",
         "cc_ref": [
          "CC 3.1.3.2"
         ],
         "reach": "partial"
        },
        {
-        "guard": "when(verb=replace) one group:roster@admitted[object=object,id=ref:prev_head_digest] else refuse",
+        "guard": "when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void",
         "cc_ref": [
          "CC 4.4.3.4.4"
         ],
@@ -12099,7 +12099,7 @@
      "change": {
       "value": [
        {
-        "item": "replace[seat:serve]: after=transport:canonical_rebind, refuse=serve_transit_pair_rotation_before_rebind",
+        "item": "replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind",
         "cc_ref": [
          "CC 3.1.3"
         ]
@@ -12217,7 +12217,7 @@
      "guard": {
       "value": [
        {
-        "guard": "one deferral:response:approved@admitted[id=ref:authorized_by,subject=subject] as R else refuse(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else refuse(identity_amendment_unauthorized)",
+        "guard": "one deferral:response:approved@named[id=ref:authorized_by,subject=subject] as R else void(identity_amendment_unauthorized) & wa(R.signer,subject,via=none) at its_asserted_at else exclude(identity_amendment_unauthorized)",
         "cc_ref": [
          "CC 3.1.5"
         ],
@@ -13204,7 +13204,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(one retirement:{state}@admitted[attested=object]) one archive_release:{basis}@admitted[id=ref:*] else refuse",
+        "guard": "when(one retirement:{state}@admitted[attested=object]) one archive_release:{basis}@admitted[id=ref:*] else exclude",
         "cc_ref": [
          "CC 3.1.5"
         ],
@@ -14054,7 +14054,7 @@
      "guard": {
       "value": [
        {
-        "guard": "each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else refuse(membership_acceptance_mismatch)+community_consensus_protocol_violation",
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation",
         "cc_ref": [
          "CC 3.1.3.2",
          "CC 4.4.3.2.3",
@@ -14064,7 +14064,7 @@
         "reach": "whole"
        },
        {
-        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)",
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)",
         "cc_ref": [
          "CC 3.1.3.2"
         ],
@@ -14078,21 +14078,21 @@
         "reach": "whole"
        },
        {
-        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else refuse(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else refuse(membership_declined)+community_consensus_protocol_violation)",
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)",
         "cc_ref": [
          "CC 4.4.3.2.3"
         ],
         "reach": "whole"
        },
        {
-        "guard": "each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else refuse",
+        "guard": "each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else exclude",
         "cc_ref": [
          "CC 3.1.3.2"
         ],
         "reach": "partial"
        },
        {
-        "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else refuse(membership_reply_conflict)+community_consensus_protocol_violation",
+        "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation",
         "cc_ref": [
          "CC 3.1.3.2"
         ],
@@ -15714,7 +15714,7 @@
      "guard": {
       "value": [
        {
-        "guard": "all consent:state:granted@admitted[id=ref:consent_basis] at asserted_at else refuse",
+        "guard": "all consent:state:granted@named[id=ref:consent_basis] at asserted_at else void",
         "cc_ref": [
          "CC 3.1.9.4"
         ],
@@ -15899,7 +15899,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@admitted[id=ref:wa_adjudication_ref] else refuse",
+        "guard": "when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void",
         "cc_ref": [
          "CC 3.4.5"
         ],
@@ -18313,7 +18313,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else refuse",
+        "guard": "when(verb=withdraw,leaf=decided) no retirement:frozen@admitted[object=object] else exclude",
         "cc_ref": [
          "CC 7.5.5"
         ],
@@ -18788,7 +18788,7 @@
      "change": {
       "value": [
        {
-        "item": "replace: by=same_attester, field=valid_until:as_attest, refuse=session_claim_out_of_window",
+        "item": "replace: field=valid_until:as_attest, refuse=session_claim_out_of_window",
         "cc_ref": [
          "CC 3.1.3.1"
         ]
@@ -18949,21 +18949,21 @@
      "guard": {
       "value": [
        {
-        "guard": "one other(ratchet:flag:*)@admitted[id=ref:evidence_refs] else refuse",
+        "guard": "one other(ratchet:flag:*)@named[id=ref:evidence_refs] else void",
         "cc_ref": [
          "CC 3.1.6"
         ],
         "reach": "whole"
        },
        {
-        "guard": "one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse",
+        "guard": "one other(ratchet:flag:*|detection:*|testimonial_witness:{kind})@named[id=ref:evidence_refs] else void",
         "cc_ref": [
          "CC 3.1.6"
         ],
         "reach": "whole"
        },
        {
-        "guard": "one other(testimonial_witness:{kind})@admitted[id=ref:evidence_refs] else refuse",
+        "guard": "one other(testimonial_witness:{kind})@named[id=ref:evidence_refs] else void",
         "cc_ref": [
          "CC 3.1.9.3",
          "CC 4.4.1"
@@ -18971,21 +18971,21 @@
         "reach": "whole"
        },
        {
-        "guard": "one other(seed_holder_voting_alignment:{cell})@admitted[id=ref:evidence_refs] else refuse",
+        "guard": "one other(seed_holder_voting_alignment:{cell})@named[id=ref:evidence_refs] else void",
         "cc_ref": [
          "CC 3.1.9.4"
         ],
         "reach": "whole"
        },
        {
-        "guard": "one other(ratchet:flag:counter_rii:{layer})@admitted[id=ref:evidence_refs] else refuse",
+        "guard": "one other(ratchet:flag:counter_rii:{layer})@named[id=ref:evidence_refs] else void",
         "cc_ref": [
          "CC 3.4.7.2"
         ],
         "reach": "whole"
        },
        {
-        "guard": "one moderation:{allegation_type}@admitted[id=ref:evidence_refs] else refuse",
+        "guard": "one moderation:{allegation_type}@named[id=ref:evidence_refs] else void",
         "cc_ref": [
          "CC 3.4.11"
         ],
@@ -19237,7 +19237,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(not moderate(signer,object)) subject(signer,ref:content_sha256) else refuse",
+        "guard": "when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude",
         "cc_ref": [
          "CC 4.5.5"
         ],
@@ -19961,7 +19961,7 @@
      "change": {
       "value": [
        {
-        "item": "attest: by=cosigned, reach=other_attester, refuse=transport_rebind_without_holder_quorum",
+        "item": "attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum",
         "cc_ref": [
          "CC 3.1.3"
         ]
@@ -20145,7 +20145,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else refuse(serve_transit_pair_rotation_before_rebind)",
+        "guard": "when(verb=replace,serve(signer,federation)) one transport:canonical_rebind@landed[attested=signer] else exclude(serve_transit_pair_rotation_before_rebind)",
         "cc_ref": [
          "CC 3.1.3"
         ],

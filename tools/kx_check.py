@@ -132,11 +132,8 @@ def run_guard(c, idx, planted=False):
     except Exception as e: return dict(res, status="not_translated", err=str(e))
     info = kx.analyse(expr, PRELUDE)
     res.update(kx=src, layer=kx.layer_name(info), flags=sorted(info.flags), clauses=[])
-    for cl in clauses:
-        i1 = kx.analyse(kx.parse(T.t_clauses([cl])), PRELUDE)
-        atom = cl.get("atom") or {}
-        res["clauses"].append({"layer": kx.layer_name(i1), "flags": sorted(i1.flags), "outcome": (cl["else"] or {}).get("do"),
-                               "window": atom.get("atom") == "window"})
+    res["clauses"] = clause_layers(clauses)
+    if c.get("layers_only"): return res
     pol = policy_windows(); rnd = random.Random(1000 + idx)
     muts = [m for m in (mutate(src, rnd) for _ in range(3)) if m[0]]
     muts = [[kx.parse(m), h, 0] for m, h in muts]
@@ -158,6 +155,21 @@ def run_guard(c, idx, planted=False):
                     except Exception: mt = "error"
                     m[2] += mt != o
     out = finish(res, agree, dis, ex, muts, lambda v: T.translate(gg.parse(v)[0]))
+    return out
+
+
+def clause_layers(clauses):
+    """Each clause that states an outcome, a clause inside a group among them, with the layer its own expression
+    reads: computed with the rows its siblings bind and under the conditions of the group that holds it."""
+    out = []
+    def walk(cs, outer, at):
+        for n, cl in enumerate(cs):
+            i1 = kx.analyse(kx.parse(T.t_clause_among(cl, cs, outer)), PRELUDE)
+            atom = cl.get("atom") or {}
+            out.append({"at": at + str(n), "layer": kx.layer_name(i1), "flags": sorted(i1.flags), "outcome": (cl["else"] or {}).get("do"),
+                        "window": atom.get("atom") == "window"})
+            if "group" in cl: walk(cl["group"], cl, at + str(n) + ".")
+    walk(clauses, None, "")
     return out
 
 
@@ -222,7 +234,8 @@ def run_change(c, idx):
     items_nc = [dict(it, clauses=[x for x in it["clauses"] if x["clause"] != "cascade"]) for it in items]
     i2 = kx.analyse(kx.parse(T.ch_kx(items_nc)), PRELUDE)
     res.update(kx=src, layer=kx.layer_name(info), flags=sorted(info.flags), layer_checks=kx.layer_name(i2),
-               has_refuse=any(x["clause"] == "refuse" for it in items for x in it["clauses"]))
+               outcomes=sorted({x.get("do", "refuse") for it in items for x in it["clauses"] if x["clause"] == "refuse"}))
+    if c.get("layers_only"): return res
     rnd = random.Random(idx)
     muts = [m for m in (mutate(src, rnd) for _ in range(3)) if m[0]]
     muts = [[kx.parse(m), h, 0] for m, h in muts]
@@ -316,10 +329,11 @@ VOCAB = {
              r"absent=(none|unspecified|restricted|protective|full|undefined|refuse)\b", r"cut=(named|whole|terminal|forward|none)\b",
              r"\b(lower_only|raise_only|narrow_only|drop_only|fixed)\(", r"&(live|direct)\b", r"pick=(union|set|agree|once|tips)\b"],
     "guard": [r"\b(one|all|no|latest) ", r"@(admitted|withdrawn|recanted|superseded|landed)\[", r" at (asserted_at|receipt|its_asserted_at)\b",
-              r"via=(none|delegates_to)", r"else (refuse|exclude|advise)\b"],
+              r"via=(none|delegates_to)", r"else (refuse|void|contested|exclude|withhold|advise)\b"],
     "reaction": [r" by (signed|receipt|origin_door)\b", r"expiry (required|optional|forbidden|none)\b", r"-> (should |may )", r" late (closed|counts)\b"],
     "change": [r":(any|frozen|shrink|grow_signed|lower|no_weaker|as_attest)\b", r"reach=(own_prior|other_attester|below_seq|whole)",
-               r"by=(same_attester|none|cosigned|cosigned_prior|committed_key|substrate)\b", r"/(by|under|about|ref|over):"],
+               r"by=(same_attester|none|cosigned|cosigned_prior|committed_key|substrate)\b", r"/(by|under|about|ref|over):",
+               r"\b(refuse|void|exclude)=[a-z_0-9]+"],
 }
 WORDS = {}
 for g, rxs in VOCAB.items():
@@ -439,6 +453,44 @@ def over_maximum(sizes, maxima):
     return [(k, n, maxima.get(k)) for k, n in sizes.items() if k not in REFERENCE and (maxima.get(k) is None or n > maxima[k])]
 
 
+def outcome_measures(results):
+    """An outcome word against the layer its clause is computed to read. A `refuse` belongs to the door: counted on
+    any clause or change that reads another row. A `void` is final: counted on one that reads the rows held."""
+    ref, fin = [], []
+    for r in results:
+        if r["grammar"] == "guard":
+            ref += [(r["family"], r["text"], cl["at"]) for cl in r["clauses"] if cl["outcome"] == "refuse" and cl["layer"] != "kept"]
+            fin += [(r["family"], r["text"], cl["at"]) for cl in r["clauses"] if cl["outcome"] == "void" and cl["layer"] == "derived"]
+        if r["grammar"] == "change":
+            if "refuse" in r["outcomes"] and r["layer_checks"] != "kept": ref.append((r["family"], r["text"], "0"))
+            if "void" in r["outcomes"] and r["layer_checks"] == "derived": fin.append((r["family"], r["text"], "0"))
+    return sorted(set(ref)), sorted(set(fin))
+
+
+OUTCOME_PLANTS = [   # (grammar, made-up cell, counted as a refusal off the door, counted as a final word on a derived clause)
+    ("guard", "one x:y@admitted[id=ref:a] else refuse", 1, 0),
+    ("guard", "one x:y@named[id=ref:a] else refuse", 1, 0),
+    ("guard", "one x:y@named[id=ref:a] else void", 0, 0),
+    ("guard", "one x:y@admitted[id=ref:a] else void", 0, 1),
+    ("guard", "when(member(signer,object)) (one x:y@named[id=ref:a] as E else void & member(E.signer,object) else refuse)", 1, 1),
+    ("guard", "no x:y@admitted[object=object] else contested", 0, 0),
+    ("guard", "each(subject) signs(key) else refuse", 0, 0),
+    ("change", "replace: by=same_attester, refuse=t", 1, 0),
+    ("change", "replace: by=same_attester, void=t", 0, 0),
+    ("change", "replace[seat:serve]: by=same_attester, void=t", 0, 1),
+    ("change", "replace: field=valid_until:as_attest, refuse=t", 0, 0),
+]
+
+
+def outcome_plants():
+    out = []
+    for g, text, want_ref, want_fin in OUTCOME_PLANTS:
+        r = (run_guard if g == "guard" else run_change)({"family": "plant:x", g: text, "layers_only": True}, 0)
+        ref, fin = outcome_measures([r])
+        out.append((g, text, (len(ref), len(fin)), (want_ref, want_fin)))
+    return out
+
+
 def measures(results, counts, policy):
     ok = [r for r in results if r.get("status") in ("ok", "reads_dropped")]
     flagged = lambda fl: sorted({(r["grammar"], r["family"], r["text"]) for r in ok if fl in r["flags"]})
@@ -466,12 +518,7 @@ def measures(results, counts, policy):
     m["ARRIVAL_OUTSIDE_WINDOW"] = sorted(set(arr))
     m["FLOATING_POINT"] = sorted({(r["grammar"], r["family"], r["text"]) for r in ok if r.get("gaps")})
     m["UNRESOLVED_FOLDS"] = sorted({u for r in ok if r["grammar"] == "reaction" for u in r.get("unresolved", [])})
-    ref = []
-    for r in ok:
-        if r["grammar"] == "guard":
-            ref += [(r["family"], r["text"], i) for i, cl in enumerate(r["clauses"]) if cl["outcome"] == "refuse" and cl["layer"] != "kept"]
-        if r["grammar"] == "change" and r["has_refuse"] and r["layer_checks"] != "kept": ref.append((r["family"], r["text"], 0))
-    m["REFUSE_ON_NON_DOOR_CLAUSE"] = sorted(set(ref))
+    m["REFUSE_ON_NON_DOOR_CLAUSE"], m["FINAL_WORD_ON_DERIVED_CLAUSE"] = outcome_measures(ok)
     m["INSTANT_AT_DECISION"] = sorted({(r["family"], r["text"]) for r in ok if r.get("at_decision")})
     m["UNTYPED_MEMBERS"] = sorted({f.split(":", 1)[1] for r in ok for f in r["flags"] if f.startswith("UNTYPED:")})
     m["UNTRANSLATED_CELLS"] = sorted({(r["grammar"], r["family"], r["text"]) for r in results if r.get("status") not in ("ok", "labels_only", "reads_dropped")})
@@ -528,7 +575,7 @@ def main():
     print(f"plant     the mistranslated cell ({plant_mis['family']}, meets read as member): {pm} disagreements, " + ("caught" if pm else "not caught"))
     if not pm: refusals.append("the planted mistranslation was not caught")
     gg = TOOLS["guard_grammar"]       # the second plant: a translator that reads every verdict word alike must be caught as a drop
-    blur = lambda v: re.sub(r"'(refuse|exclude|advise)", "'VERDICT", T.translate(gg.parse(v)[0]))
+    blur = lambda v: re.sub(r"'(refuse|void|contested|exclude|withhold|advise)", "'VERDICT", T.translate(gg.parse(v)[0]))
     pc = [x for c in cs["guard"] for x in collisions("guard", c["guard"], blur(c["guard"]), blur)]
     print(f"plant     a translator that reads every verdict word alike: {len(pc)} undeclared drops found, " + ("caught" if pc else "not caught"))
     if not pc: refusals.append("the planted undeclared drop was not caught")
@@ -564,6 +611,10 @@ def main():
         got = [k for k, _, _ in over_maximum(case, sizes)]
         print(f"plant     {name}: " + (f"refused on {', '.join(got)}" if got else "passes") + (", as it must" if got == want else ", wrong"))
         if got != want: refusals.append(f"the gate plant `{name}` gave {got}, not {want}")
+    for g, text, got, want in outcome_plants():      # an outcome word on a made-up cell, against the layer the cell is computed to read
+        say = lambda t: ("a refusal off the door" if t[0] else "") + (" and " if t[0] and t[1] else "") + ("a final word on a derived clause" if t[1] else "") or "not counted"
+        print(f"plant     made-up {g} `{text}`: {say(got)}" + (", as it must" if got == want else ", wrong"))
+        if got != want: refusals.append(f"the made-up {g} `{text}` was counted {got}, not {want}")
     print("counts    (may only fall; maxima in tools/kx_maxima.tsv)")
     for k, v in m.items():
         if k in REFERENCE:

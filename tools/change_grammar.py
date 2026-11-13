@@ -10,7 +10,12 @@ keys. Used by tools/build_transitions.py, which reads formal/derivation/change_t
     change := item *( " ; " item )
     item   := on [ "[" atom *( "&" atom ) "]" ] ": " clause *( ", " clause )
     clause := "by=" BY | "link=" ( "ranked:" | "chained:" ) MEMBER | "field=" MEMBER ":" DIR | "reach=" REACH
-            | "after=" FAMILY | "cascade=" FAMILY "/" REL ":" EFFECT | "key=" KEY | "refuse=" TOKEN
+            | "after=" FAMILY | "cascade=" FAMILY "/" REL ":" EFFECT | "key=" KEY | OUTCOME "=" TOKEN
+    OUTCOME := "refuse" | "void" | "exclude"
+
+The outcome names what a row that fails the item's checks meets, with its token: `refuse` where the checks read the
+row alone, `void` where they read the row it changes or the rows it names, `exclude` where they read the rows held
+(tools/guard_grammar.py states the three; tools/kx_check.py counts a word its layer does not allow).
 
 Tokens that name something no other vocabulary does are returned as marks and counted where they are used.
 
@@ -24,6 +29,7 @@ DIRS = ("any", "frozen", "shrink", "grow_signed", "lower", "no_weaker", "as_atte
 REACH = ("own_prior", "other_attester", "below_seq", "whole")
 RELS = ("by", "under", "about", "ref", "over")
 EFFECTS = ("stand", "lapsed", "withdrawn", "stop", "discharged", "forfeited")
+OUTCOMES = ("refuse", "void", "exclude")
 KEYS = ("rekey_walk", "next_seal", "at_seat", "stop_wrap", "rotate_epoch", "none")
 BARE_ATOMS = ("entrenched", "stalled", "ephemeral", "cosigned", "recovery")
 KEYED_ATOMS = ("grade", "subkind", "scope", "seat", "last", "axis")
@@ -69,7 +75,7 @@ def parse(s):
                     raise ChangeError(f"cascade {v!r}")
                 d.update(family=mc.group(1), rel=mc.group(2), effect=mc.group(3), member=mc.group(4))
             elif k == "key" and v in KEYS: d["key"] = v
-            elif k == "refuse" and re.fullmatch(r"[a-z_0-9]+", v): d["token"] = v
+            elif k in OUTCOMES and re.fullmatch(r"[a-z_0-9]+", v): d["clause"], d["do"], d["token"] = "refuse", k, v
             else:
                 raise ChangeError(f"clause {c!r}")
             for x in (d.get("by"), d.get("dir"), d.get("effect")):
@@ -98,8 +104,10 @@ def self_test():
             "widening[stalled&recovery]: field=members:grow_signed, field=M:frozen",
             "attest: cascade=*/by:void_after:revoked_after",
             "removal[scope:community|affiliations]: key=rotate_epoch",
-            "replace[seat:serve]: after=transport:canonical_rebind, refuse=serve_transit_pair_rotation_before_rebind"]
-    bad = ["replace by=none", "replace: by=anyone", "replace[scope:galaxy]: by=none", "replace: field=members:sideways", "withdraw: cascade=*/near:stand", "replace: key=melt"]
+            "replace[seat:serve]: after=transport:canonical_rebind, refuse=serve_transit_pair_rotation_before_rebind",
+            "attest: by=cosigned, reach=other_attester, void=transport_rebind_without_holder_quorum",
+            "replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind"]
+    bad = ["replace by=none", "replace: by=anyone", "replace[scope:galaxy]: by=none", "replace: field=members:sideways", "withdraw: cascade=*/near:stand", "replace: key=melt", "replace: by=none, withhold=x"]
     for g in good: parse(g)
     n = 0
     for g in bad:
@@ -107,6 +115,7 @@ def self_test():
         except ChangeError: n += 1
     assert n == len(bad), f"{len(bad) - n} malformed changes parsed"
     assert parse(good[1])[1] == ["recovery"]
+    assert [c["do"] for g in good[4:] for c in parse(g)[0][0]["clauses"] if c["clause"] == "refuse"] == ["refuse", "void", "exclude"]
     print(f"change grammar: {len(good)} forms parse, {len(bad)} malformed forms refused")
 
 

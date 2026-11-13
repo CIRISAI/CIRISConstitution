@@ -284,7 +284,21 @@ class Ref:
             res = {v for _, v in inner}
             if o and inner: res.add(verdict)
             return res
+        if o and o["do"] == "void" and self.unheld(c["atom"]) is not None:      # a row it names is not held: it waits, unjudged
+            return {"wait(" + self.unheld(c["atom"]) + ")"}
         return set() if self.atom(c["atom"], bind) else {verdict}
+
+    def unheld(self, a):
+        """The member of the judged row that names a row this node does not hold, for a row atom found by that digest."""
+        if a["atom"] != "row": return None
+        src = digest_source(a["joins"])
+        f = a["quant"][4:-1].split(":", 1)[1] if a["quant"].startswith("set(") else src[1] if src and src[0] is None else None
+        if f is None: return None
+        have = {x["id"] for x in self.held}
+        if f == "*":
+            return f if any(i not in have or i == self.self["id"] for i in self.self.get("names", ())) else None
+        rid = (self.self.get("ref") or {}).get(f)
+        return f if rid is not None and rid not in have else None
 
     def cond(self, w, bind):
         if w["cond"] == "verb": return self.self.get("verb") in w["values"]
@@ -813,7 +827,7 @@ def ch_ref(items, held, s):
                 ok = ok and any({o["attested"] for o in held if fam_match(o["fam"], "seat:offer") and (o.get("val") or {}).get("role") == v
                                  and ref_stands(held, o["attested"], v, s.get("object"))} == {s["signer"]} for v in vs)
         if not ok: continue
-        checks, effects, tok = [], [], None
+        checks, effects, tok, word = [], [], None, "refuse"
         for c in it["clauses"]:
             k = c["clause"]
             if k == "by":
@@ -838,7 +852,7 @@ def ch_ref(items, held, s):
                 checks.append(True if r in ("other_attester", "whole") else T is not None and (
                     T.get("signer") == s["signer"] if r == "own_prior" else (getf(T, ["seq"]) is not None and getf(s, ["seq"]) is not None and getf(T, ["seq"]) < getf(s, ["seq"]))))
             elif k == "after": checks.append(any(fam_match(x["fam"], c["family"]) for x in ref_past(held, s)))
-            elif k == "refuse": tok = c["token"]
+            elif k == "refuse": tok, word = c["token"], c.get("do", "refuse")
             elif k == "key": effects.append(("key", c["key"]))
             elif k == "cascade":
                 if T is None: continue
@@ -849,7 +863,7 @@ def ch_ref(items, held, s):
                             if getf(x, ["asserted_at"]) is not None and getf(T, [c["member"]]) is not None and x["asserted_at"] > getf(T, [c["member"]]):
                                 effects.append((x["id"], "void"))
                         else: effects.append((x["id"], c["effect"]))
-        verdict = "ok" if all(checks) else ("refuse(" + tok + ")" if tok else "refuse")
+        verdict = "ok" if all(checks) else (word + "(" + tok + ")" if tok else "refuse")
         out.append((it["on"], verdict, frozenset(effects)))
     return frozenset(out)
 

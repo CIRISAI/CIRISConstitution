@@ -148,12 +148,28 @@ def t_outcome(o):
     return q(outcome(o))
 
 
+def named_field(a):
+    """The member of the judged row by whose digest a row atom finds its rows (`*`: any of them), else None."""
+    if a["atom"] != "row": return None
+    if a["quant"].startswith("set("): return a["quant"][4:-1].split(":", 1)[1]
+    src = digest_source(a["joins"])
+    return src[1] if src and src[0] is None else None
+
+
+def t_waits(f):
+    """A row the judged row names in member f is not held: the kept layer's `missing`, read for one member."""
+    return "some(missing(self))" if f == "*" else f"and(not(isnone(self.ref.{f})), none(named(self, {q(f)})))"
+
+
 def t_clause(c):
     if "group" in c:
         inner = t_clauses(c["group"])
         body = inner if not c["else"] else f"let G = {inner} in first(some(G) -> verdicts(G, {t_outcome(c['else'])}), else -> G)"
     else:
         body = f"check({t_atom(c['atom'])}, {t_outcome(c['else'])})"
+        f = named_field(c["atom"])
+        if f and (c["else"] or {}).get("do") == "void":       # void: the row waits for what it names, and is judged once that is held
+            body = f"first({t_waits(f)} -> wait({q(f)}), else -> {body})"
     if c["when"]:
         conds = []
         for w in c["when"]:
@@ -178,6 +194,20 @@ def t_clauses(cs):
     body = f"verdicts({', '.join(t_clause(c) for c in cs)})"
     for n, e in reversed(lets):
         body = f"let {n} = {e} in {body}"
+    return body
+
+
+def t_clause_among(c, siblings, outer=None):
+    """One clause as its own expression, for its layer: with the rows its siblings bind by `as`, and inside the
+    `when` and `each` of the group clause that holds it."""
+    body = t_clauses([c])
+    for x in reversed(siblings):
+        if x is not c and "atom" in x and x["atom"]["atom"] == "row" and x["atom"]["as"]:
+            a = x["atom"]
+            body = f"let {a['as']} = the(sel({t_cands(a, None)}, \\m: {t_state(a, 'm')})) in {body}"
+    if outer:
+        for w in outer["when"]:
+            if w["cond"] == "atom": body = f"first({t_atom(w['atom'])} -> {body}, else -> ok())"
     return body
 
 
@@ -476,7 +506,7 @@ def ch_kx(items):
             elif k in ("subkind", "scope", "axis"): conds.append(f"member(self.{k}, {setlit})")
             elif k == "seat": conds.append("or(" + ", ".join(f"stands(self.signer, {q(v)}, self.object)" for v in vs) + ")")
             elif k == "last": conds.append("or(" + ", ".join(f"eq(holders_in(held, {q(v)}, self.object), single(self.signer))" for v in vs) + ")")
-        checks, effects, tok = [], [], None
+        checks, effects, tok, word = [], [], None, "refuse"
         for c in it["clauses"]:
             k = c["clause"]
             if k == "by":
@@ -498,7 +528,7 @@ def ch_kx(items):
                 checks.append("true" if r in ("other_attester", "whole") else
                               "and(some(T), eq(T.signer, self.signer))" if r == "own_prior" else "lt(T.seq, self.seq)")
             elif k == "after": checks.append(f"some(sel(past(self), \\x: isfam(x, {q(c['family'])})))")
-            elif k == "refuse": tok = c["token"]
+            elif k == "refuse": tok, word = c["token"], c.get("do", "refuse")
             elif k == "key": effects.append(f"single(tuple('key', {q(c['key'])}))")
             elif k == "cascade":
                 fam = "true" if c["family"] == "*" else f"isfam(x, {q(c['family'])})"
@@ -507,7 +537,7 @@ def ch_kx(items):
                     effects.append(f"setof({base}, gt(x.asserted_at, T.{c['member']}))), \\x: tuple(x.id, 'void'))")
                 else:
                     effects.append(f"setof({base})), \\x: tuple(x.id, {q(c['effect'])}))")
-        v = q("refuse(" + tok + ")") if tok else q("refuse")
+        v = q(word + "(" + tok + ")") if tok else q("refuse")
         verdict = f"first(and({', '.join(checks) or 'true'}) -> 'ok', else -> {v})"
         eff = f"union({', '.join(effects)})" if effects else "{}"
         arms.append(f"first(and({', '.join(conds)}) -> single(tuple({q(it['on'])}, {verdict}, {eff})), else -> {{}})")
