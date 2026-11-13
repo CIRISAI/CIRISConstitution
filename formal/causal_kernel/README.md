@@ -105,6 +105,12 @@ concludes. All sixteen policy rows are built from their own cells, and ten more 
 records 170 verdicts and exits on any difference, any break that is not caught and any difference between
 arrival orders. Rooms are of three and four keys. Nothing here is proved in Lean.
 
+**Two notions of time** (`check_time.py`, `time_expected.tsv`). A row's own stated end, and a window with a
+landing. The check builds 86 worlds of two rows and looks for two worlds that the two notions and the naming
+cannot tell apart and that a reading sends to different results. Six readings are covered. Two need an instant
+as written and have a replacement. Two are not covered and are recorded with their witnesses: a cosignature
+attached against the node's clock at first receipt, and a session held by the earliest claimed instant.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -117,4 +123,4 @@ arrival orders. Rooms are of three and four keys. Nothing here is proved in Lean
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
 `python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
-`python3 -I formal/causal_kernel/check_rosters.py`, then `python3 -I formal/causal_kernel/check_door.py`
+`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` and `python3 -I formal/causal_kernel/check_time.py`

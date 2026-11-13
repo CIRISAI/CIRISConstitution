@@ -287,19 +287,7 @@ jobs:
           lean ../trust_set/TrustSet.lean
           lean ../affiliation/Affiliation.lean
           lean ../standing/Standing.lean
-          lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Order.olean" ../causal_order/Order.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Causal.olean" ../causal_order/Causal.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Seat.olean" ../causal_order/Seat.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Window.olean" ../causal_order/Window.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Recount.olean" ../causal_order/Recount.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Harden.olean" ../causal_order/Harden.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Harden2.olean" ../causal_order/Harden2.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Harden3.olean" ../causal_order/Harden3.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/SeatG.olean" ../causal_order/SeatG.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Terms.olean" ../causal_order/Terms.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 -o "$RUNNER_TEMP/Reader.olean" ../causal_order/Reader.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 ../causal_order/Merge.lean
-          LEAN_PATH="$RUNNER_TEMP" lean -M 6000 -T 200000 ../causal_order/Consent.lean
+          bash ../causal_order/build.sh
           lean ../age_assurance/AgeBand.lean
           lean ../contact/Contact.lean
           lean -M 6000 -T 200000 ../transport_tiers/Tiers.lean
@@ -323,6 +311,7 @@ jobs:
           python3 -I ../causal_kernel/check_roomkey.py
           python3 -I ../causal_kernel/check_rosters.py
           python3 -I ../causal_kernel/check_door.py
+          python3 -I ../causal_kernel/check_time.py
           python3 -I ../roster_fork/fork_check.py --check
           python3 -I ../transport_tiers/frame_ab.py --check
           lean -M 6000 -T 200000 ../family_model/FamilyModel.lean

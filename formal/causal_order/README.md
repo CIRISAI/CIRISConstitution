@@ -116,4 +116,5 @@ An edge is withdrawn only by its own signer.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run, in this order, each with `LEAN_PATH="$TMP" lean -o "$TMP/NAME.olean" NAME.lean`: `Order`, `Causal`, `Seat`, `Window`, `Recount`, `Harden`, `Harden2`, `Harden3`, `SeatG`, `Terms`, `Reader`, `Merge`, `Consent`
+Run: `bash formal/causal_order/build.sh`. It compiles the thirteen files in order and exits on a compile error,
+a `sorry`, or an axiom beyond the three of core Lean.
