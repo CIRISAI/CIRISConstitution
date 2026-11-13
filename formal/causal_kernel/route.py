@@ -13,8 +13,11 @@ duties; a removed key, its own seat and the state of its own rows; a stranger, n
 Audience. `own`: the members of the room at the row's own head, its signers and the keys it names. That is a
 function of the row and its ancestors, as KERNEL.md asks. It is not enough: a joiner is not in the audience of the
 founding row its own admission names, so under the door it can never keep its admission. `closed` adds the rule
-that makes the door and the audience agree: whoever is in the audience of a row is in the audience of every row
-it names. Both are run and the difference is reported.
+that makes the door and the audience agree: a row carries its audience to the rows it names, when the row is
+concluded and its signer is already in the audience of the row named. So an admission carries the joiner to the
+founding rows it names, and a member's reply carries what it answers to a later joiner. A row by a key outside the
+named row's audience, or a row that concludes nothing, carries nobody: knowing a digest gives no access.
+Both are run and the difference is reported.
 """
 import os
 import sys
@@ -86,7 +89,18 @@ def audience(S, how="closed", by_arrival=False):
             mem = ST.members_at(S.Cs, past, r["room"], (r["id"],))
         own[r["id"]] = mem | ST.signers(r) | frozenset(r.get("to", ()))
     if how == "own": return own
-    return {i: frozenset().union(a, *(own[d] for d in S.by if i in S.anc[d])) for i, a in own.items()}
+    namers = {i: [] for i in S.by}
+    for d in S.rows:
+        for n in d["names"]:
+            if n in namers: namers[n].append(d)
+    aud, changed = dict(own), True
+    while changed:                                          # the least fixed point; it only grows
+        changed = False
+        for i in S.by:
+            for d in namers[i]:
+                if S.C.get(d["id"]) and d["signer"] in aud[i] and not aud[d["id"]] <= aud[i]:
+                    aud[i] = aud[i] | aud[d["id"]]; changed = True
+    return aud
 
 
 # ---- conclusions: a value and the rows it reads ----------------------------------------------------------

@@ -23,6 +23,17 @@ target's silence, any row the target signed) and is CONCURRENT with the landing.
 A row that NAMES the landing is judged at the head it names under every rule: it came after and changes nothing.
 Concurrency is the signer's own word: a key can always leave the landing unnamed.
 
+Under recount two things bound that word.
+    ended seat   a row of a key whose seat over the object was ended (a counting unseat, or a withdrawal of the offer
+                 that seated it) is counted only if the ending row has it in its past (KERNEL.md section 6).
+    standing     a landing that does not stand says nothing against a landing that does: the outcome is contested only
+                 when no frontier landing stands, or two that stand state different outcomes.
+
+The checkpoint (checkpoint.py) is NOT applied to a window's answers. A window protects one voice against the count,
+and a checkpoint is made by the count: with it on, a majority voids a present moderator's timely answer by signing
+counted rows that leave it unnamed (attacks.py, checkpoint_price). `outcome(..., checkpoint=True)` exists only to
+show that witness.
+
 The three windows are data (WINDOWS): the policy row of manifests/governance_policy.json, the clauses that close
 the window at once, the clauses read at the close, and the default.
 """
@@ -34,6 +45,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
 import seat as ST  # noqa: E402
+import checkpoint as CP  # noqa: E402
 
 CK, CUT, K, R = ST.CK, ST.CUT, ST.K, ST.R
 
@@ -138,7 +150,7 @@ def rule(r, P, past):
 
 
 # ---- derived: the outcome of a window under each rule ----------------------------------------------------
-def outcome(S, pid, how, by_arrival=False):
+def outcome(S, pid, how, by_arrival=False, checkpoint=False):
     """how: void | contest | recount. Returns the outcome, "open" (no landing counts yet) or "contested"."""
     p = S.by.get(pid)
     if p is None or not S.C.get(pid): return "none"
@@ -154,11 +166,23 @@ def outcome(S, pid, how, by_arrival=False):
     past = lambda a, b: a in S.anc[b]
     base = _base(S.Cs, past, p)
     pos = {r["id"]: i for i, r in enumerate(S.rows)}
+    late = lambda r: False
+    if how == "recount":
+        C = CUT.Cut(S)
+        # the rows that ended a seat over the object, with the keys each ended
+        gone = [(frozenset(u["to"]), u) for u in K.sel(S.Cs, kind="unseat") if u["obj"] == p["obj"] and C.counts(u)]
+        for w in K.sel(S.Cs, kind="withdraw"):
+            o = S.by.get(w["target"])
+            if o is not None and o["kind"] == "offer" and o["obj"] == p["obj"]:
+                gone.append((frozenset({w["signer"]}) if w["signer"] in o["to"] else frozenset(o["to"]), w))
+        cps = CP.checkpoints(S, C, p["obj"]) if checkpoint else []          # off by default: see the module's head
+        late = lambda r: any(r["signer"] in ks and r["id"] not in S.anc[x["id"]] for ks, x in gone) or CP.stale_answer(S, cps, p, r)
     said = []
     for L in K.frontier(S.anc, Ls):                             # a landing that a later landing names is answered by it
         # MUTATION by_arrival: "concurrent" read as "arrived after the landing", by list position
         conc = [r for r in S.Cs if (pos[r["id"]] > pos[L["id"]] and L["id"] not in S.anc[r["id"]]) if by_arrival] if by_arrival else \
                [r for r in S.Cs if S.concurrent(r["id"], L["id"])]
+        conc = [r for r in conc if not late(r)]
         ans = [r for r in K.sel(conc, kind="answer", of=pid) if r["signer"] in base("all") | base("moderate")]
         tgt = K.sel(conc, signer=p["target"]) if spec["silent"] else []
         if how == "contest":
@@ -169,6 +193,8 @@ def outcome(S, pid, how, by_arrival=False):
             inside = [q for q in mine if q["id"] != rec["id"] and q["id"] not in S.anc[rec["id"]]] + tgt
             again = table_outcome(spec, p, K.sel(mine, kind="answer", of=pid) + ans, inside, base, L["at"] - rec["at"] >= secs(p["window"]))
             said.append({"v": L["says"] if again == L["says"] else "contested"})
+    if how == "recount" and any(x["v"] != "contested" for x in said):
+        said = [x for x in said if x["v"] != "contested"]       # a landing that does not stand is no voice against one that does
     return K.group(said, None, "one", "v") or "contested"
 
 

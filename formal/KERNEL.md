@@ -176,6 +176,51 @@ the seat.
 - **No decision that is not a function of rows.** Link and load decisions, retries, rendering and the prose
   rules given to a model stay outside.
 
+## 8a. Attacked
+
+`formal/causal_kernel/check_attacks.py` runs thirty-three attacks drawn from the published failures of
+comparable systems, as 108 scenarios in 98,925 arrival orders. **run**: twelve gain the attacker nothing, none
+gains what this page does not concede, fifteen are the limits below, and six cannot be expressed without a
+second implementation, a byte form, a storage model or a request protocol.
+
+Eight attacks did gain something before seven rules were added, and each rule is now part of the kernel:
+
+- a row of a key whose seat was ended counts in a window only if the ending row has it in its past;
+- a landing that does not stand says nothing against one that does;
+- a cosignature is a voice only for a row counted over a head the cosignature itself names;
+- an offer conferred by a count is ended by its holder or by a count, never by its proposer alone;
+- among several founding keys one founder's unseat concludes nothing, and a founder's own offers live only
+  while that founder's seat does;
+- a row that names another adds its audience to it only if it is concluded and its signer was already in that
+  audience;
+- the holders of a counted scope are the keys common to the tips.
+
+A counted row on the roster's lineage is a **checkpoint**: a counted act concurrent with it that names only
+older heads does not count, and its signer may sign it again. A reader's own acknowledged line is its own
+checkpoint. A window's answers are outside the checkpoint, because a window protects one voice against the
+count: with it on, a majority voids a present moderator's timely answer. **run**; none of this paragraph or
+the seven rules is yet **proved**.
+
+The limits, each **run** with its witness:
+
+| Limit | Who can use it | How far it reaches, and what ends it |
+|---|---|---|
+| A fork on the newest head by a past count | keys that met the count at the head the newest counted row is counted over (one seated key and one removed key suffice) | only on that one head; unlists a member until a counted row names both tips; an act on any older head is void |
+| A relay choosing the order of delivery | a relay ordering delivery; no key | until the withheld row is delivered; an emission made meanwhile cannot be unsent |
+| A landed window reopened | one key counted at the opener's head that still holds its seat | no deadline; until a concluder signs a landing naming both, which must state the flipped outcome; the checkpoint is not applied to window answers |
+| A landing over an objection that never reached the concluder | a relay between objector and concluder; no key | as long as the eclipse; ends when any concluder lands naming both |
+| The concluder's own clock | any one key holding the concluder's seat | a lone window has no length against a lying concluder; ends when the target or a counted key signs and a landing names both |
+| A stale proposal forcing the tips to wait | a member below the count holding a stale honest proposal on the same head as the admission | one flood per head; one merge by the count ends it; stale proposals on older heads are void |
+| An invariant of the form "at least one" | two honest keys acting concurrently | 'at least one' is kept by no rule; an emptied founder set has no recovery in the kernel |
+| A fork by the count of an old head | keys that met the count at an old head, signing two versions | only against a reader with no acknowledgement of its own; undecided for that reader for good |
+| The same, by leaked keys of removed members | whoever holds removed keys that once met a count | only against a reader with no acknowledgement of its own |
+| A new reader's first view | whoever controls a new reader's first view | until the reader withdraws its own rows; its own acknowledgement makes the wrong head stick |
+| A row withheld from some | the cut's own signer, or a relay, by omission | as long as the row is withheld; any holder may serve it |
+| Rows signed to no purpose | any key at all, one signature a row | no answer moves; storage and read time grow without a bound in the kernel |
+| A row carried on by naming it | a key already in the row's audience (a member, or a former member for rows of its time) | intended carriage: to a later joiner or to another group, with the named row's ancestry; cannot be undone |
+| History carried by a reply | any one member, by replying | intended carriage, row by row; cannot be undone |
+| One conferring seat seating many | one seated key whose seat may confer | one row seats any number of keys; ends with one withdrawal by its conferrer |
+
 ## 9. What stands between this and a build
 
 | Item | Kind | Where |
@@ -190,4 +235,6 @@ the seat.
 | Constants out of config | table data | `constitution/constants.tsv` |
 | An acceptance row for each seat the text confers without one | rule | the Parts |
 | The cut's terms for each slot transcribed into the proof | proof | `formal/causal_order` |
+| The seven rules of 8a and the checkpoint proved | proof | `formal/causal_order` |
+| A rule that keeps at least one founder, or a stated way back when none is left | rule | the Parts |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |

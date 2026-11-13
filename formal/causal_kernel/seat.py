@@ -20,14 +20,30 @@ Pairing. The acceptance names the offer (`of`), or the offer names the acceptanc
 offer itself, as signer or as one of `cosigners` (several signatures on one row), has accepted by that.
 `consent="one"` on an offer waives the acceptance (a node has no agency); it is refused under conf=seat.
 
+A cosignature is a voice for an offer or an unseat only when it names every head that row is counted over. A
+voice given once is not a voice for a later row of the same content at another head.
+
 What ends a seat.
     withdraw   a row naming the offer or the acceptance, signed by the signer of what it names, or by the
                holder against the offer that seats it. Read at the concluded layer: no standing is needed.
                A holder's withdrawal ends its own seat only; the conferrer's ends the offer for all it seats.
+               The conferrer of a counted offer (conf=group) is the count, not the key that signed the row: that
+               key's lone withdrawal ends nothing. A counted seat ends by its holder's withdrawal or a counted unseat.
     unseat     a CUT on the slot ("seat", k, s, o), by the object's own key (self) or by a count (group). Every
                offer on the slot in its past is ended, every offer and acceptance on the slot concurrent with
                it is void (cut.py), and an offer that names it is a new seat.
-    upstream   a seat conferred under another falls with it (the walk is run again on every read).
+               Over a founding row that seats several keys no one of them is "the object's own key" against the
+               others: a `self` unseat there concludes nothing, and ending such a seat takes the count.
+    upstream   a seat conferred under another falls with it (the walk is run again on every read). A `self` offer
+               over a founding row that seats several keys, signed by one of them, is live only while that
+               signer's own founding seat is: it falls with it like any seat conferred under it.
+
+Tips wait (KERNEL.md section 7). When several counted acts on one object are concurrent, the holders of a scope
+over it are the keys common to the tips, until a counted act names them all.
+
+The checkpoint (checkpoint.py). A counted act concurrent with a counting checkpoint of its object, and counted over
+heads all older than the head that checkpoint names, does not count. With `own`, the reader's own acknowledgements
+are checkpoints for that reader.
 
 Layers. Whether an offer or an unseat was validly made is CONCLUDED: it reads the row and its concluded
 ancestors only (the object's own key; the count over the head it names). Whether the seat is live now is
@@ -46,6 +62,7 @@ sys.path.insert(0, HERE)
 sys.dont_write_bytecode = True
 import causal_kernel as CK  # noqa: E402
 import cut as CUT           # noqa: E402
+import checkpoint as CP     # noqa: E402
 
 K, R = CK.K, CK.row
 sys.path.insert(0, os.path.join(ROOT, "formal", "kernel_lib"))
@@ -133,6 +150,12 @@ signers = lambda r: frozenset((r["signer"],) + tuple(r.get("cosigners", ())))
 covers = lambda have, want: have == want or want.startswith(have + ":")
 
 
+def founding_many(by, obj):
+    """obj is a founding row that seats several keys."""
+    g = by.get(obj)
+    return g is not None and g["kind"] == "offer" and g["obj"] == g["id"] and len(g["to"]) > 1
+
+
 def own_keys(by, obj):
     """The object's own key: the object when it is a key; the signers and named subjects of the row when a row."""
     if obj in by:
@@ -142,8 +165,8 @@ def own_keys(by, obj):
 
 # ---- derived: the live seats ---------------------------------------------------------------------------
 class Seats:
-    def __init__(self, S, holds=HOLDS, confers=CONFERS, depth=DEPTH, by_arrival=False):
-        self.S, self.holds, self.confers = S, holds, confers
+    def __init__(self, S, holds=HOLDS, confers=CONFERS, depth=DEPTH, by_arrival=False, own=None):
+        self.S, self.holds, self.confers, self.own = S, holds, confers, own
         self.cut = C = CUT.Cut(S)
         Cs = S.Cs
         wd = K.sel(Cs, kind="withdraw")
@@ -152,8 +175,11 @@ class Seats:
         # a holder's withdrawal ends its own seat; the conferrer's (a signer who is not seated by the row) ends the offer
         # MUTATION by_arrival: a withdrawal held after the offer's acceptance comes too late (first held wins)
         late = lambda w, o: by_arrival and any(pos[a["id"]] < pos[w["id"]] for a in K.sel(Cs, kind="accept", of=o["id"]))
-        off_ended = lambda o, k: any(w["target"] == o["id"] and (w["signer"] == k or w["signer"] not in o["to"]) and not late(w, o) for w in wd)
-        unseats = [u for u in K.sel(Cs, kind="unseat") if C.counts(u)]
+        # the conferrer of a counted offer is the count: the lone withdrawal of the key that signed the row ends nothing
+        off_ended = lambda o, k: any(w["target"] == o["id"] and (w["signer"] == k or (w["signer"] not in o["to"] and o["conf"] != "group"))
+                                     and not late(w, o) for w in wd)
+        self.stale = V = CP.void(S, C, own)                     # counted acts that a checkpoint leaves behind
+        unseats = [u for u in K.sel(Cs, kind="unseat") if C.counts(u) and u["id"] not in V]
 
         def unseated(o, k):
             for u in unseats:
@@ -171,7 +197,7 @@ class Seats:
                 if paired and not ended(a) and C.counts(a): return True
             return False
 
-        base = [(o, k) for o in K.sel(Cs, kind="offer") if C.counts(o)
+        base = [(o, k) for o in K.sel(Cs, kind="offer") if C.counts(o) and o["id"] not in V
                 for k in o["to"] if not off_ended(o, k) and accepted(o, k) and not unseated(o, k)]
 
         def step(live):
@@ -179,7 +205,10 @@ class Seats:
             out = set(live)
             for o, k in base:
                 if (o["id"], k) in at: continue
-                if o["conf"] == "self": out.add((o["id"], k, 0, o["signer"]))
+                if o["conf"] == "self":
+                    # over a founding row that seats several keys, a signer's own offer stands on that signer's founding seat
+                    if o["obj"] == o["id"] or not founding_many(S.by, o["obj"]) or (o["obj"], o["signer"]) in at:
+                        out.add((o["id"], k, 0, o["signer"]))
                 elif o["conf"] == "group": out.add((o["id"], k, 0, ("group", o["obj"])))
                 elif o["conf"] == "seat":
                     up = S.by.get(o.get("under"))
@@ -203,10 +232,32 @@ class Seats:
         return covers(rec["scope"], s) or s in K.rule(self.holds, rec["scope"], ())
 
     def stands(self, k, s, o, root=None):
-        return any(self._has(r, s) and (root is None or r["root"] == root) for r in K.sel(self.recs, k=k, obj=o))
+        if not any(self._has(r, s) and (root is None or r["root"] == root) for r in K.sel(self.recs, k=k, obj=o)): return False
+        common = self.tips_common(s, o)                         # while tips wait, a key stands only if every tip seats it
+        return common is None or k in common
 
     def holders(self, s, o, root=None):
-        return frozenset(r["k"] for r in K.sel(self.recs, obj=o) if self._has(r, s) and (root is None or r["root"] == root))
+        got = frozenset(r["k"] for r in K.sel(self.recs, obj=o) if self._has(r, s) and (root is None or r["root"] == root))
+        common = self.tips_common(s, o)
+        return got if common is None else got & common
+
+    def tips(self, o):
+        """The frontier of the counted acts on o that count, with its founding row."""
+        acts = [r for r in self.S.Cs if r["kind"] in ("offer", "unseat") and r.get("obj") == o and (r.get("conf") == "group" or r["id"] == o)
+                and self.cut.counts(r) and r["id"] not in self.stale]
+        return K.frontier(self.S.anc, acts)
+
+    def tips_common(self, s, o):
+        """KERNEL.md section 7: with several tips, the keys common to all of them. None with one tip or none."""
+        tp = self.tips(o)
+        if len(tp) <= 1: return None
+        S, out = self.S, None
+        for t in tp:
+            sub = [q for q in S.Cs if q["id"] == t["id"] or q["id"] in S.anc[t["id"]]]          # one tip: no further recursion
+            Q = Seats(CK.State(sub, {q["id"]: True for q in sub}), self.holds, self.confers)
+            m = frozenset(r["k"] for r in K.sel(Q.recs, obj=o) if Q._has(r, s))
+            out = m if out is None else out & m
+        return out
 
     def one(self, s, o):
         """The single holder, where the seat is single-valued (an owner): two live holders is none."""
@@ -234,8 +285,11 @@ def members_at(P, past, obj, heads, scope="member"):
 
 
 def voices(r, P):
-    """The keys that signed r: its signer, its cosigners, and the signers of the cosign rows it names."""
-    return signers(r) | frozenset(c["signer"] for c in K.sel(P, kind="cosign", of=r.get("content", r["id"])) if c["id"] in r["names"])
+    """The keys that signed r: its signer, its cosigners, and the signers of the cosign rows it names that themselves
+    name every head r is counted over."""
+    heads = set(r.get("head", ()))
+    return signers(r) | frozenset(c["signer"] for c in K.sel(P, kind="cosign", of=r.get("content", r["id"]))
+                                  if c["id"] in r["names"] and heads <= set(c["names"]))
 
 
 def seat_rule(r, P, past, table=None, other=None):
@@ -245,6 +299,7 @@ def seat_rule(r, P, past, table=None, other=None):
         conf = r["conf"]
         if conf == "self":
             if r["obj"] == r["id"]: return k == "offer"          # a founding row is its own object
+            if k == "unseat" and founding_many(by, r["obj"]): return False    # among several founding keys, ending a seat takes the count
             return r["signer"] in own_keys(by, r["obj"]) and (r["obj"] not in by or True)
         if conf == "seat":
             return k == "offer" and r.get("under") in by and r["signer"] in by[r["under"]]["to"]

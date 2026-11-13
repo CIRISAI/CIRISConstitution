@@ -1,0 +1,34 @@
+test	name	class	who_can_still_do_it	bound	stated_in_kernel_md	where
+1	Backdated act by a removed key	HOLDS	nobody	closed: a row of a key whose seat was ended counts only if the ending row has it in its past	-	-
+2	Backdated act by a key still seated	HOLDS	nobody	closed by the cut	-	-
+3	Backdated conferral chain	HOLDS	nobody	the old-head admission waits as a tip and is void once a counted row names a newer head	-	-
+4	State reset by an old fork	CONCEDED	keys that met the count at the head the newest counted row is counted over (one seated key and one removed key suffice)	only on that one head; unlists a member until a counted row names both tips; an act on any older head is void	yes	KERNEL 7: an adversary holding the count of an old head signs a valid version alone
+5	Rollback by re-sync	CONCEDED	a relay ordering delivery; no key	until the withheld row is delivered; an emission made meanwhile cannot be unsent	yes	KERNEL 3: only the first two layers are final
+6	Hotel California	HOLDS	nobody	closed: a cosignature is a voice only for a row counted over a head it names	-	-
+7	Superseded grant on a fork	HOLDS	nobody	closed: a founding signer's own offer falls with its founding seat	-	-
+8	A row naming disparate parts of the graph	HOLDS	nobody	only a row on the slot by a key that may decide	-	-
+9	Perpetual reopening of a landed window	CONCEDED	one key counted at the opener's head that still holds its seat	no deadline; until a concluder signs a landing naming both, which must state the flipped outcome; the checkpoint is not applied to window answers	yes	KERNEL 5: a lone landing is never final against a key that can still sign
+10	Landing over an unacknowledged objection	CONCEDED	a relay between objector and concluder; no key	as long as the eclipse; ends when any concluder lands naming both	yes	KERNEL 8: nodes may differ while a window is open
+11	The concluder's clock	CONCEDED	any one key holding the concluder's seat	a lone window has no length against a lying concluder; ends when the target or a counted key signs and a landing names both	yes	KERNEL 5: the window's length is the concluder's own word
+12	Thief evicting alone	HOLDS	nobody (an absent owner still looks lost)	any row by the target not naming the landing contests it	-	-
+13	Slot veto by an entitled key	HOLDS	nobody	closed: a landing that does not stand says nothing against one that does	-	-
+14	Duelling admins	HOLDS	nobody	closed: among several founding keys ending a seat takes the count	-	-
+15	Equivocating voter	HOLDS	nobody below the count	no consequence for the double signer	-	-
+16	Tip flooding	CONCEDED	a member below the count holding a stale honest proposal on the same head as the admission	one flood per head; one merge by the count ends it; stale proposals on older heads are void	no	roster_fork README only (what it costs); KERNEL 7 states the wait, not that a stale proposal can force it
+17	Invariants that are not confluent	CONCEDED	two honest keys acting concurrently	'at least one' is kept by no rule; an emptied founder set has no recovery in the kernel	no	not stated anywhere; KERNEL 6.2 covers 'exactly one' only
+18	Long-range roster fork	CONCEDED	keys that met the count at an old head, signing two versions	only against a reader with no acknowledgement of its own; undecided for that reader for good	yes	KERNEL 7, the same sentence as test 4; the reader-without-acknowledgement bound is new and not stated
+19	Posterior corruption	CONCEDED	whoever holds removed keys that once met a count	only against a reader with no acknowledgement of its own	yes	KERNEL 7, the same sentence; that removed and leaked keys suffice is not said in words
+20	Disjoint witness choices	NOT EXPRESSIBLE	-	no witness rows in the modules	-	-
+21	Eclipse of a reader's root	CONCEDED	whoever controls a new reader's first view	until the reader withdraws its own rows; its own acknowledgement makes the wrong head stick	no	causal_order README only (every reader is its own seed)
+22	Second genesis	HOLDS	nobody	an object is the digest of its founding row	-	-
+23	Root backdating	HOLDS	nobody (a creator that seats others and not itself keeps the conferrer's voice)	closed: founding signers are not the object's own key against each other; a proposer's lone withdrawal ends nothing	-	-
+24	Two implementations, one row	NOT EXPRESSIBLE	-	one implementation, no byte form	-	-
+25	Parent-count and head-count exhaustion	NOT EXPRESSIBLE	-	no stated limit, no storage model	-	-
+26	Withheld ancestor	CONCEDED	the cut's own signer, or a relay, by omission	as long as the row is withheld; any holder may serve it	no	KERNEL 3 says a row waits for what it names; that honest nodes then never converge under omission is not stated
+27	Duplication and spurious cuts	CONCEDED	any key at all, one signature a row	no answer moves; storage and read time grow without a bound in the kernel	no	KERNEL 3 says a row is never refused for another row; the unbounded cost is not stated
+28	Audience widening by naming	CONCEDED	a key already in the row's audience (a member, or a former member for rows of its time)	intended carriage: to a later joiner or to another group, with the named row's ancestry; cannot be undone	no	KERNEL 5 states carriage to a later joiner as open; carriage to another group, with the roster ancestry, is not stated
+29	Acknowledgement metadata	NOT EXPRESSIBLE	-	no envelope format	-	-
+30	`missing` as an oracle	NOT EXPRESSIBLE	-	no request protocol	-	-
+31	Removed member and concurrent keys	NOT EXPRESSIBLE	-	the key plane is one chain	-	-
+32	Forward secrecy under retained past	CONCEDED	any one member, by replying	intended carriage, row by row; cannot be undone	yes	KERNEL 5: a reply carries the message it answers to a later joiner (written there as open; now ruled intended)
+33	Sybil reach	CONCEDED	one seated key whose seat may confer	one row seats any number of keys; ends with one withdrawal by its conferrer	no	causal_order README only (one depth for all edges; no budgets)

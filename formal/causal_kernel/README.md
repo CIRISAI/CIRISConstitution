@@ -45,6 +45,11 @@ checked by `check_lock.py`).
 - **A writer's keys.** The key plane re-read from rows on the writer's own chain agrees with
   `formal/key_plane` on 402,950 comparisons.
 
+**Attacked** (`attacks.py`, `check_attacks.py`, `attack_expected.tsv`, `checkpoint.py`). Thirty-three attacks
+from the published failures of comparable systems, each with the class it must fall in: the attacker gains
+nothing, the limit is one `formal/KERNEL.md` states, or the scenario cannot be expressed here. The check fails
+if any attack gains what is not conceded, or if any scenario gives two answers in two arrival orders.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -55,4 +60,5 @@ checked by `check_lock.py`).
 - A merge of roster tips is written here and is not in the shared library.
 
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
-`python3 -I formal/causal_kernel/check_cut.py` and `python3 -I formal/causal_kernel/check_lock.py`
+`python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py` and
+`python3 -I formal/causal_kernel/check_attacks.py`
