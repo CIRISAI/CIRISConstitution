@@ -94,8 +94,10 @@ places it and the one who carries it, so it takes two consents. That pair is the
 and not a second object, and it stands the same whichever of the two signed first. Nobody is bound by the rows
 of others, any bound voice ends it alone, and no third key ends it without a cut. **proved**
 (`Consent.lean`): `silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end`,
-`one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands`. The proof covers a
-relation that binds named voices; a seat conferred by a count of voices is proved only in the seat's own form.
+`one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands`. Where a body places the duty,
+the body is one party and its consent is a count of its members' rows: `count_needs_holder`,
+`one_voice_is_not_a_count`, `only_members_withdraw`, `count_of_one_is_one_row`. The count is over the members
+given; that they are the members at the head the row names is the roster's part and is not in this file.
 
 Who may place a duty is one parameter with three values: the object's own key, a key holding a seat that may
 confer, or a group whose count is met. A key

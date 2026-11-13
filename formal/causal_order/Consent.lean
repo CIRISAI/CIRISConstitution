@@ -16,7 +16,9 @@
   Proved here: nobody is bound by the rows of others; rows by a voice the relation does not bind
   change nothing; any bound voice ends it alone and no one else does; with one voice bound one row is
   enough; with two it is two rows in either order, and with the conferrer's row as the root it is
-  exactly `Kernel.seat`. The seat conferred by a count of voices is not treated here.
+  exactly `Kernel.seat`. Where a body places the duty, the body is one party and its consent is a
+  count of its members' rows: the holder's row is still needed, one voice is never a count of
+  two, and a body of one with a count of one is the one-key case.
 
   Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core. Imports Seat.lean.
 -/
@@ -235,6 +237,106 @@ theorem holder_first_stands (P W : Row → Prop) (cut : Row → T → Prop) (t :
 
 end IsSeat
 
+/-! ### A body consents by a count -/
+
+section Counted
+
+variable {Row Key T : Type}
+variable (parent : Row → Row → Prop) (signer : Row → Key) (isWd : Row → Prop)
+variable (gives : Row → T → Prop) (ans : Row → Prop)
+/- `member t k`: `k` is a voice of the body that places `t`, read at the head the root names.
+   `need t`: the count the body's protocol asks. `holder t`: the voice that carries `t`. -/
+variable (member : T → Key → Prop) (need : T → Nat) (holder : T → Key)
+
+/-- The body consents on root `o`: at least `need` members, no two the same voice, each with a
+    live row tied to the root. The body is one party to the relation and this is its consent. -/
+def bodyConsents (P W : Row → Prop) (t : T) (o : Row) : Prop :=
+  ∃ l : List Row, l.Pairwise (fun a b => signer a ≠ signer b) ∧ need t ≤ l.length ∧
+    ∀ a, a ∈ l → P a ∧ member t (signer a) ∧ tied parent ans o a ∧
+      ¬ withdrawn parent signer isWd W a
+
+/-- A duty placed by a body stands on root `o`: the body consents by its count and the holder by
+    its own row. Two consents, as for a duty placed by one key; one of them is a count. -/
+def standsCounted (P W : Row → Prop) (cut : Row → T → Prop) (t : T) (o : Row) : Prop :=
+  P o ∧ gives o t ∧ ¬ cut o t ∧ bodyConsents parent signer isWd ans member need P W t o ∧
+    ∃ a, consentOf parent signer isWd ans (fun _ _ => True) P W t o (holder t) a
+
+/-- The holder's own row is needed whatever the count: a body seats nobody by its votes alone. -/
+theorem count_needs_holder (P W : Row → Prop) (cut : Row → T → Prop) (t : T) (o : Row)
+    (hs : ∀ a, P a → signer a ≠ holder t) :
+    ¬ standsCounted parent signer isWd gives ans member need holder P W cut t o :=
+  fun h => let ⟨a, a1, a2, _⟩ := h.2.2.2.2; hs a a1 a2
+
+/-- Where the count asks two or more, rows by one voice, in any number, are not the body's
+    consent. -/
+theorem one_voice_is_not_a_count (P W : Row → Prop) (t : T) (o : Row) (h2 : 2 ≤ need t)
+    (h1 : ∀ a b, P a → P b → member t (signer a) → member t (signer b) → signer a = signer b) :
+    ¬ bodyConsents parent signer isWd ans member need P W t o := by
+  intro ⟨l, hp, hn, hl⟩
+  match l, hp, hn, hl with
+  | [], _, hn, _ => exact Nat.not_succ_le_zero 1 (Nat.le_trans h2 hn)
+  | [_], _, hn, _ => exact Nat.not_succ_le_self 1 (Nat.le_trans h2 hn)
+  | a :: b :: _, hp, _, hl =>
+    cases hp with
+    | cons hab _ =>
+      have ha := hl a (List.mem_cons_self _ _)
+      have hb := hl b (List.mem_cons_of_mem _ (List.mem_cons_self _ _))
+      exact hab b (List.mem_cons_self _ _) (h1 a b ha.1 hb.1 ha.2.1 hb.2.1)
+
+/-- Rows by keys that are not members of the body change nothing in its consent. -/
+theorem nonmember_rows_change_nothing (P W : Row → Prop) (t : T) (o : Row) :
+    bodyConsents parent signer isWd ans member need P W t o ↔
+    bodyConsents parent signer isWd ans member need (fun r => P r ∧ member t (signer r))
+      (fun r => W r ∧ member t (signer r)) t o := by
+  constructor
+  · intro ⟨l, hp, hn, hl⟩
+    refine ⟨l, hp, hn, fun a ha => ?_⟩
+    have ⟨a1, a2, a3, a4⟩ := hl a ha
+    exact ⟨⟨a1, a2⟩, a2, a3, fun ⟨w, hw, hW⟩ => a4 ⟨w, hw, hW.1⟩⟩
+  · intro ⟨l, hp, hn, hl⟩
+    refine ⟨l, hp, hn, fun a ha => ?_⟩
+    have ⟨a1, a2, a3, a4⟩ := hl a ha
+    refine ⟨a1.1, a2, a3, fun ⟨w, hw, hW⟩ => a4 ⟨w, hw, hW, ?_⟩⟩
+    have e : signer w = signer a := hw.2.2
+    exact e ▸ a2
+
+/-- More rows, by anyone, end nothing: the body's consent is lost only through a withdrawal by a
+    member of its own row. A cut is separate. -/
+theorem only_members_withdraw (P P' W W' : Row → Prop) (t : T) (o : Row)
+    (hP : ∀ r, P r → P' r) (hW : ∀ w, W' w → member t (signer w) → W w)
+    (h : bodyConsents parent signer isWd ans member need P W t o) :
+    bodyConsents parent signer isWd ans member need P' W' t o := by
+  have ⟨l, hp, hn, hl⟩ := h
+  refine ⟨l, hp, hn, fun a ha => ?_⟩
+  have ⟨a1, a2, a3, a4⟩ := hl a ha
+  refine ⟨hP a a1, a2, a3, fun ⟨w, hw, hW'⟩ => a4 ⟨w, hw, hW w hW' ?_⟩⟩
+  have e : signer w = signer a := hw.2.2
+  exact e ▸ a2
+
+/-- A body of one voice with a count of one is the consent of that one key: the counted form
+    contains the two-row seat. -/
+theorem count_of_one_is_one_row (P W : Row → Prop) (t : T) (o : Row) (c : Key)
+    (hm : ∀ k, member t k ↔ k = c) (hn : need t = 1) :
+    bodyConsents parent signer isWd ans member need P W t o ↔
+    ∃ a, P a ∧ signer a = c ∧ tied parent ans o a ∧ ¬ withdrawn parent signer isWd W a := by
+  constructor
+  · intro ⟨l, _, hlen, hl⟩
+    match l, hlen, hl with
+    | [], hlen, _ => exact absurd (by rw [hn] at hlen; exact hlen) (Nat.not_succ_le_zero 0)
+    | a :: _, _, hl =>
+      have ⟨a1, a2, a3, a4⟩ := hl a (List.mem_cons_self _ _)
+      exact ⟨a, a1, (hm _).1 a2, a3, a4⟩
+  · intro ⟨a, a1, a2, a3, a4⟩
+    refine ⟨[a], List.Pairwise.cons (fun _ h => nomatch h) List.Pairwise.nil, by rw [hn]; exact Nat.le_refl 1, fun b hb => ?_⟩
+    have e : b = a := by
+      cases hb with
+      | head => rfl
+      | tail _ h => exact nomatch h
+    subst e
+    exact ⟨a1, (hm _).2 a2, a3, a4⟩
+
+end Counted
+
 end Consent
 
 #print axioms Consent.needs_every_bound_voice
@@ -245,5 +347,10 @@ end Consent
 #print axioms Consent.two_voices_two_rows
 #print axioms Consent.seat_is_two_consents
 #print axioms Consent.holder_first_stands
+#print axioms Consent.count_needs_holder
+#print axioms Consent.one_voice_is_not_a_count
+#print axioms Consent.nonmember_rows_change_nothing
+#print axioms Consent.only_members_withdraw
+#print axioms Consent.count_of_one_is_one_row
 
 end Kernel
