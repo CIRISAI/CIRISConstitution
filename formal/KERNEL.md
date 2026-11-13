@@ -124,8 +124,8 @@ landing is **recounted**: it is counted with the landing's past, and the landing
 gives the outcome it stated. **run** (`formal/causal_kernel/window_adversary.tsv`): against the three windows
 of the text, twenty checks of what each exists to prevent. Recount breaks none. A landing that voids concurrent
 answers breaks seven, a thief evicting alone among them. An answer that contests any landing breaks two.
-**proved** for the two rejected rules only (`ruleI_concluder_decides`, `ruleII_never_final`); recount is
-**open** in Lean. What recount costs: a lone landing is never final against a key that can still sign, and the
+**proved**: `Recount.dishonest_never_stands`, `stands_is_table_over_all_not_late`, `quorum_closed_final`, and
+for the two rejected rules `ruleI_concluder_decides`, `ruleII_never_final`. What recount costs: a lone landing is never final against a key that can still sign, and the
 window's length is the concluder's own word.
 
 ## 6. Conflict between concurrent rows
@@ -189,5 +189,5 @@ the seat.
 | A landing row for each window, and who may sign it | table data | `manifests/reactions.json` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | An acceptance row for each seat the text confers without one | rule | the Parts |
-| Recount proved, and the cut's terms for each slot transcribed into the proof | proof | `formal/causal_order` |
+| The cut's terms for each slot transcribed into the proof | proof | `formal/causal_order` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
