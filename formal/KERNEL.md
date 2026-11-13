@@ -166,8 +166,10 @@ party given only its routed rows concludes the same as a party given everything,
 nothing. That holds only with one rule added: a row's audience includes the audience of every row that names
 it. Without it a joiner can never keep its own admission. With it, a reply carries the message it answers to a
 later joiner. That carriage of content is intended (CC 3.1.3.2). What must not travel is proof of who said it or
-of who is in the room, which is section 7b. **open**: the placement cell is empty for 156 of 184 families and
-no cell states the copy rule.
+of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
+is empty. Of 184 families, 147 take the one default, the scope each row carries with the audience CC 5.2 gives
+it, and 21 are placed by a sentence of their own. **open**: the default is stated once for all families and is
+checked for none of the 147. The copy rule is a row of that table, and the text states it for a reply only.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
 the close. A window names its opener and the acknowledgement by which the concluding party first held it. The
@@ -229,12 +231,12 @@ makes an offer stand, so consent stays. This is measured on one property of each
 
 | | Families |
 |---|---|
-| every parameter traced to a table cell or a quoted sentence | 147 |
-| a guessed parameter | 20 |
+| every parameter traced to a table cell or a quoted sentence | 166 |
+| a guessed parameter | 1 |
 | cannot run | 17 |
 
-The guesses are nineteen content families whose audience cell is empty, and key revocation, where the text
-does not say who may revoke another's key. Each family that cannot run lacks one thing, named in the table:
+The guess is key revocation, where the text does not say who may revoke another's key. Nineteen content
+families take their audience from the default placement, the scope each row carries, and state none of their own. Each family that cannot run lacks one thing, named in the table:
 eight are doors with no row in `doors.tsv`, five are census families whose count is drawn from a group secret
 that is not a row, and four are labels or prefixes that confer nothing. A family is counted as traced when its
 own parameters are; most door rows still rest on parameters the tables do not state (section 5). **open**.

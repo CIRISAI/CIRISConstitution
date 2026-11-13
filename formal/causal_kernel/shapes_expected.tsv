@@ -3,22 +3,22 @@ subject	what	verdict
 accord:*	claim	sourced | runs
 accord:human_dignity	claim	sourced | runs
 accord:invoke:constitutional:{halt_id}	door	sourced | runs; accord_halt@node+late_closed breaks one holder cannot lift a confirmed halt alone
-accord:invoke:drill:{drill_id}	content	guessed | runs
-accord:invoke:notify:{notify_id}	content	guessed | runs
+accord:invoke:drill:{drill_id}	content	sourced | runs
+accord:invoke:notify:{notify_id}	content	sourced | runs
 accord:lifecycle	claim	sourced | runs
 accord:lifecycle:{kind}	door	sourced | runs; accord_halt@node+late_closed breaks one holder cannot lift a confirmed halt alone
 activity_tier:{period}	claim	sourced | runs
 age_assurance:{level}:{band}:{version}	claim	sourced | runs
 age_self_declared:band:{band}:{version}	claim	sourced | runs
 agent_files:{kind}:{platform_or_target}	claim	sourced | runs
-approach:{goal_id}	content	guessed | runs
+approach:{goal_id}	content	sourced | runs
 archive_release:{basis}	door	cannot run | cannot run: held shut; no doors.tsv row
 attestation:agent_integrity	claim	sourced | runs
 attestation:hardware_rooted	claim	sourced | runs
 attestation:license_validity	claim	sourced | runs
 attestation:registry_consensus	claim	sourced | runs
 attestation:self_verify	claim	sourced | runs
-audio:*	content	guessed | runs
+audio:*	content	sourced | runs
 audit_chain:hash_continuity	claim	sourced | runs
 autonomy:{aspect}	claim	sourced | runs
 ballot:moderator	door	sourced | runs
@@ -26,7 +26,7 @@ ballot:moderator_acceptance	consent+door binds=body+holder	sourced | runs
 ballot:tally:{poll_id}	door	cannot run | cannot run: a poll has no policy row and no doors.tsv row
 benchmark:he300:{category}:{version}	claim	sourced | runs
 beneficence:{aspect}	claim	sourced | runs
-blog:*	content	guessed | runs
+blog:*	content	sourced | runs
 bond_posted:{currency}	claim	sourced | runs
 build:registered:{target}	claim	sourced | runs
 capacity:composite	claim	sourced | runs
@@ -42,9 +42,9 @@ census:member:share	door	cannot run | cannot run: the count is drawn from a grou
 census:partial:{class}	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
 census:share:{class}	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
 cert_validity:{authority}	claim	sourced | runs
-chat:*	content	guessed | runs
+chat:*	content	sourced | runs
 coherence_standing:{cohort}	claim	sourced | runs
-collection:{kind}	content	guessed | runs
+collection:{kind}	content	sourced | runs
 commitment_fulfillment:{prior_contribution_id}	claim	sourced | runs
 community:listing	content	sourced | runs
 config:{scope}	claim	sourced | runs
@@ -85,17 +85,17 @@ dma:dsdma:{domain}:*	claim	sourced | runs
 dma:idma:*	claim	sourced | runs
 dma:pdma:*	claim	sourced | runs
 duty:{kind}	consent binds=signer+holder	cannot run | cannot run: it moves no seat: an obligation on a referenced permission by that permission's attester; no world runs a term
-encyclopedia:*	content	guessed | runs
+encyclopedia:*	content	sourced | runs
 event:attendance	claim	sourced | runs
-event:lifecycle:{state}	content	guessed | runs
+event:lifecycle:{state}	content	sourced | runs
 event:rsvp_count	claim	sourced | runs
 evidence:{suite}:{kind}:{cell}:{prefix}	claim	sourced | runs
 expertise:{domain}:{language}	claim	sourced | runs
 federation_directory:replication_lag	claim	sourced | runs
 fidelity:explainability_sla:{tier}	claim	sourced | runs
 fidelity:{aspect}	claim	sourced | runs
-file:{version}	content	guessed | runs
-film:*	content	guessed | runs
+file:{version}	content	sourced | runs
+film:*	content	sourced | runs
 goal:{scale}	content	sourced | runs
 group:roster	consent+door binds=body+holder	sourced | runs
 hard_case:{kind}	claim	sourced | runs
@@ -104,9 +104,9 @@ health:liveness:{version}	claim	sourced | runs
 identity:canonical_binding:{canonical_hash}	claim	sourced | runs
 identity:occurrence	consent+door binds=body+holder	sourced | runs
 identity:occurrence_revocation	consent+door binds=body+holder	sourced | runs
-identity_amendment	content	guessed | runs
+identity_amendment	content	sourced | runs
 identity_continuity:relational_anchor	claim	sourced | runs
-image:*	content	guessed | runs
+image:*	content	sourced | runs
 integrity:{aspect}	claim	sourced | runs
 judge_model:verdict:{model_id}	claim	sourced | runs
 justice:{aspect}	claim	sourced | runs
@@ -124,13 +124,13 @@ locality:decision:{scale}	claim	sourced | runs
 manifold_conformity:{cohort}	claim	sourced | runs
 membership:{stage}	consent+door binds=body+holder	sourced | runs
 mesh_config:{key}	claim	sourced | runs
-method:{approach_id}:{substrate_rung}	content	guessed | runs
-model_3d:*	content	guessed | runs
+method:{approach_id}:{substrate_rung}	content	sourced | runs
+model_3d:*	content	sourced | runs
 moderation:{allegation_type}	door	sourced | runs
 moderation_track_record:{community_key_id}	claim	sourced | runs
 multilateral_participation:{forum}:{kind}	claim	sourced | runs
 need:{domain}:{kind}	content	sourced | runs
-news:*	content	guessed | runs
+news:*	content	sourced | runs
 non_maleficence:{aspect}	claim	sourced | runs
 objection:{state}	door	sourced | runs
 observation:access_assumption	claim	sourced | runs
@@ -169,8 +169,8 @@ system:*	claim	sourced | runs
 takedown_notice:{basis}	door	sourced | runs
 testimonial_witness:{kind}	claim	sourced | runs
 topical_relation:{kind}	claim	sourced | runs
-trace:{form}:{version}	content	guessed | runs
-trace_summary:{kind}	content	guessed | runs
+trace:{form}:{version}	content	sourced | runs
+trace_summary:{kind}	content	sourced | runs
 transparency_log:consistency	claim	sourced | runs
 transparency_log:cosigned:{tree_size}	claim	sourced | runs
 transparency_log:inclusion	claim	sourced | runs
@@ -178,7 +178,7 @@ transport:canonical_rebind	door	sourced | runs
 transport:{kind}	claim	sourced | runs
 trust:{job}:{version}	consent binds=signer|signer+holder|body+holder	sourced | runs
 truth_grounding:{subject}	claim	sourced | runs
-video:*	content	guessed | runs
+video:*	content	sourced | runs
 vote:{contribution_id}	claim	sourced | runs
 wa_adjudication:{state}	door	cannot run | cannot run: no policy row for the WA quorum and no doors.tsv row
 watchlist:{id}	claim	sourced | runs
@@ -248,8 +248,8 @@ mechanism claim	keeps the characteristic property of door	no
 mechanism consent	keeps the characteristic property of door	no
 mechanism content	keeps the characteristic property of door	no
 mechanism door	keeps the characteristic property of door	yes
-removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 134, e.g. accord:*)
-removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 134, e.g. accord:*) ; door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id})
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 153, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 153, e.g. accord:*) ; door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id})
 removal	order door > consent > content > claim	surviving consent,door | door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 19, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
 counts	families per shape	claim 110, consent 17, consent+door 6, content 24, door 24, none fits 3
-counts	status	cannot run 17, guessed 20, sourced 147
+counts	status	cannot run 17, guessed 1, sourced 166

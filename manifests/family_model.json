@@ -75,12 +75,12 @@
     "gap": 0
    },
    "placement": {
-    "cc-table": 12,
+    "cc-table": 168,
     "code-v61": 9,
     "generic": 0,
     "prose": 7,
     "mixed": 0,
-    "gap": 156
+    "gap": 0
    },
    "signer_rule": {
     "cc-table": 40,
@@ -269,9 +269,128 @@
   },
   "cites": {
    "source": "formal/derivation/cell_cites.tsv",
-   "cells_cited": 318,
-   "citations": 492,
+   "cells_cited": 325,
+   "citations": 499,
    "reading": "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds"
+  },
+  "placement": {
+   "source": "formal/derivation/placement_text.tsv",
+   "default": {
+    "value": [
+     "self_collective",
+     "targeted_family",
+     "targeted_room",
+     "commons"
+    ],
+    "chosen_by": "the emitter, for each row",
+    "cc_ref": "CC 3.4.5.1",
+    "quote": "Scope is per-row; a family is not scope-pinned."
+   },
+   "scopes": [
+    {
+     "cohort_scope": [
+      "self"
+     ],
+     "public_room": false,
+     "placement": "self_collective",
+     "audience": "the owner's own nodes",
+     "outside": "nothing, not even that the content exists",
+     "cc_ref": "CC 5.2"
+    },
+    {
+     "cohort_scope": [
+      "family"
+     ],
+     "public_room": false,
+     "placement": "targeted_family",
+     "audience": "the nodes of the family's current members",
+     "outside": "nothing, not even that the content exists",
+     "cc_ref": "CC 5.2"
+    },
+    {
+     "cohort_scope": [
+      "community",
+      "affiliations"
+     ],
+     "public_room": false,
+     "placement": "targeted_room",
+     "audience": "the claimed nodes of the roster's members",
+     "outside": "nothing of the content, of the roster or of who holds it",
+     "cc_ref": "CC 5.2"
+    },
+    {
+     "cohort_scope": [
+      "community"
+     ],
+     "public_room": true,
+     "placement": "targeted_room",
+     "audience": "the claimed nodes of the roster's members",
+     "outside": "the listing, the holding claims and, by asking a member's node, the content and the roster",
+     "cc_ref": "CC 5.2"
+    },
+    {
+     "cohort_scope": [
+      "species",
+      "biosphere",
+      "federation"
+     ],
+     "public_room": false,
+     "placement": "commons",
+     "audience": "every node",
+     "outside": "everything: the holding claims here are the holder directory",
+     "cc_ref": "CC 5.2"
+    }
+   ],
+   "reach": [
+    {
+     "when": "named_party",
+     "statement": "a row that names a node is always served to that node",
+     "cc_ref": "CC 5.2",
+     "quote": "A row that names a node, or a grant issued for it, is always served to that node"
+    },
+    {
+     "when": "named_within",
+     "statement": "at family, community or affiliations a row may name only keys within its audience",
+     "cc_ref": "CC 5.2",
+     "quote": "A row placed at `family`, `community` or `affiliations` may name only keys within its audience"
+    }
+   ],
+   "moves": [
+    {
+     "when": "in_audience",
+     "statement": "the row may be served to a node, not that it is sent",
+     "cc_ref": "CC 5.2",
+     "quote": "Being in a row's audience means the row may be served to a node, not that it is sent."
+    },
+    {
+     "when": "requested",
+     "statement": "the peer itself pulls for a subject or a dimension",
+     "cc_ref": "CC 5.2",
+     "quote": "| requested | the peer itself pulls for a subject or a dimension ([CC 5.3.2.4.4](#5.3.2.4.4)); an automatic diff is not a request |"
+    },
+    {
+     "when": "required",
+     "statement": "the peer must hold it to seal, address and take part",
+     "cc_ref": "CC 5.2",
+     "quote": "| required | the peer must hold it to seal, address and take part: the consent-free set of [CC 5.4.6](#5.4.6) and the rows of the cohorts it belongs to |"
+    },
+    {
+     "when": "appropriate",
+     "statement": "its audience names the peer",
+     "cc_ref": "CC 5.2",
+     "quote": "| appropriate | its audience names the peer: it is addressed to the peer, is about it, or is placed in a cohort it is in,"
+    }
+   ],
+   "copy": [
+    {
+     "when": "reply",
+     "statement": "a row's audience includes whoever receives a reply to it",
+     "cc_ref": "CC 3.1.3.2",
+     "quote": "A reply carries the row it answers to whoever receives the reply, and that carriage of content is intended."
+    }
+   ],
+   "families_on_the_default": 147,
+   "reading": "a placement cell with rule default is the scope each row carries, chosen by its emitter; the audience of a row is the scopes entry for its cohort_scope; copy states whose audience a row joins because another row names it"
   },
   "body": {
    "source": "constitution/signed_object.tsv",
@@ -489,10 +608,10 @@
     "erasure_route": "purge (steward purge on a cosigned notice); legal_hold: none in code",
     "governance": "none"
    },
-   "families_on_it": 102,
+   "families_on_it": 99,
    "families_by_departures": {
-    "0": 102,
-    "1": 40,
+    "0": 99,
+    "1": 43,
     "2": 9,
     "3": 16,
     "4": 2,
@@ -977,6 +1096,36 @@
      "cc_ref": "CC 4.4.3.2.1",
      "quote": "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)",
      "cells": 1
+    },
+    {
+     "id": "rendezvous_public",
+     "title": "A rendezvous route is published to everyone",
+     "when": "The row is a receiver's route for delivery through the Anonymous Tier, signed under a key made for one period.",
+     "why": "A sender must find the route before it holds any standing with the receiver, so the row is placed in the commons. The key is fresh each period and names no identity.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.4",
+     "quote": "**Reach:** everyone, as on the bootstrap planes",
+     "cells": 1
+    },
+    {
+     "id": "evidence_public",
+     "title": "An evidence row is public",
+     "when": "The row names one evidence blob of a registered suite.",
+     "why": "The blob is a Commons blob and any reader must be able to check a claim against it, so the row is emitted at federation scope.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.5.5",
+     "quote": "Emitted at `federation` scope by a key holding `infra:attest`",
+     "cells": 1
+    },
+    {
+     "id": "deferral_in_cell",
+     "title": "A deferral stays within the deferring party's cell",
+     "when": "The row is one ask routed to a Wise Authority.",
+     "why": "The ask concerns one party and is answered by the seats over that party. It is placed at a scope that reaches them and is never sent to the whole federation.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.9.3",
+     "quote": "the audience is the cell (for an agent, the steward's cohort and the WA it routes to), never a federation broadcast",
+     "cells": 1
     }
    ],
    "open": [
@@ -1069,8 +1218,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -1443,8 +1603,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -1777,8 +1948,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -2128,8 +2310,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -2467,8 +2660,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -2807,8 +3011,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -3141,8 +3356,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -3551,8 +3777,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -3847,8 +4084,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -4192,8 +4440,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -4525,8 +4784,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -4849,8 +5119,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -5385,8 +5666,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -5705,8 +5997,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -6018,8 +6321,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -6686,8 +7000,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -7011,8 +7336,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -7335,8 +7671,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -7639,8 +7986,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -7928,9 +8286,13 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "targeted_room",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -8183,9 +8545,13 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": "targeted_room",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -8391,8 +8757,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC targeted_room",
-    "source": "gap"
+    "value": "targeted_room",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "CC targeted_room",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -8778,8 +9155,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -9074,8 +9462,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -9371,8 +9770,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -9672,8 +10082,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -9968,8 +10389,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -10264,8 +10696,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -10723,8 +11166,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -11202,8 +11656,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -11638,8 +12103,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -11966,8 +12442,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -12294,8 +12781,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -13439,8 +13937,19 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC targeted_room",
-    "source": "gap"
+    "value": "targeted_room",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "CC targeted_room",
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 6.1.9",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -14525,9 +15034,13 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": "CC addressed (for_key_id serve seat); no addressed placement in code",
-    "source": "gap",
-    "closed": "CC addressed"
+    "value": "addressed",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": "CC addressed (for_key_id serve seat); no addressed placement in code",
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -14867,8 +15380,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -15170,8 +15694,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -15472,8 +16007,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -15780,8 +16326,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -16102,8 +16659,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -16762,8 +17330,25 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.4.5.1",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -17105,8 +17690,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -17401,8 +17997,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -17697,8 +18304,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -17993,8 +18611,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -18288,8 +18917,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -18625,8 +19265,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -18945,8 +19596,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -19257,8 +19919,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -19568,8 +20241,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -19984,8 +20668,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -20402,8 +21097,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -20749,8 +21455,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -21063,8 +21780,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -21461,8 +22189,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -21769,8 +22508,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -22100,8 +22850,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -22412,8 +23173,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -22709,8 +23481,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -23006,9 +23789,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": null,
-    "source": "gap",
-    "note": "not in the census"
+    "value": [
+     "targeted_family",
+     "targeted_room"
+    ],
+    "source": "cc-table",
+    "closed": "targeted_family | targeted_room",
+    "note": "targeted_family | targeted_room",
+    "cc_ref": "CC 3.1.3",
+    "code": {
+     "value": null,
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -23230,8 +24022,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -23926,8 +24729,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -24218,11 +25032,21 @@
     "value": [
      "self_collective",
      "targeted_family",
-     "targeted_room",
-     "commons"
+     "targeted_room"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "closed": "self_collective | targeted_family | targeted_room",
+    "note": "self_collective | targeted_family | targeted_room",
+    "cc_ref": "CC 3.1.9.3",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -24513,8 +25337,14 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:2134; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "deferral_in_cell"
+    ]
+   }
   },
   {
    "family": "deferral:response:{outcome}",
@@ -24548,8 +25378,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -24890,8 +25731,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -25195,8 +26047,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -25555,8 +26418,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -25920,8 +26794,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -26283,8 +27168,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -26630,8 +27526,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -26981,8 +27888,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -27681,8 +28599,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -27981,8 +28910,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -28277,8 +29217,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -28573,8 +29524,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -29172,8 +30134,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -29474,8 +30447,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -29779,8 +30763,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -30093,8 +31088,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -30389,14 +31395,18 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.5.5",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    }
    },
    "signer_rule": {
     "value": {
@@ -30678,8 +31688,14 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:2646; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "evidence_public"
+    ]
+   }
   },
   {
    "family": "expertise:{domain}:{language}",
@@ -30715,8 +31731,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -31019,8 +32046,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -31323,8 +32361,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -31649,8 +32698,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -31945,8 +33005,25 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.4",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -32254,8 +33331,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -32919,7 +34007,13 @@
     ],
     "source": "code-v61",
     "closed": "targeted_family | targeted_room",
-    "note": "targeted_family | targeted_room (cohort_scope family|community + group_kind)"
+    "note": "targeted_family | targeted_room (cohort_scope family|community + group_kind)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.2",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -33390,8 +34484,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -33736,8 +34841,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -34060,8 +35176,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -34368,8 +35495,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -35360,8 +36498,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -35664,8 +36813,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -35969,8 +37129,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -36294,8 +37465,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -36590,8 +37772,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -36886,8 +38079,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -37873,8 +39077,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -38898,8 +40113,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -39231,8 +40457,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -39580,8 +40817,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -39907,8 +41155,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -40354,8 +41613,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -40684,8 +41954,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -40996,8 +42277,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -41308,7 +42600,13 @@
     ],
     "source": "code-v61",
     "closed": "targeted_family | targeted_room",
-    "note": "targeted_family | targeted_room (at the group)"
+    "note": "targeted_family | targeted_room (at the group)",
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.3.2",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -41802,8 +43100,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -42160,8 +43469,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -42457,8 +43777,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -42775,8 +44106,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -43151,8 +44493,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -43497,8 +44850,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -44113,8 +45477,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -44414,8 +45789,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -44710,8 +46096,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": "any_registered at the write door; roster_member(at) counted by the read fold",
@@ -45085,8 +46482,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -45424,8 +46832,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -46042,8 +47461,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -46338,8 +47768,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -47083,8 +48524,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -47427,8 +48879,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -48073,8 +49536,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -48402,8 +49876,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -48740,8 +50225,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -49042,8 +50538,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -49394,8 +50901,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -49714,8 +51232,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -50022,8 +51551,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -50330,8 +51870,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -50638,8 +52189,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -50946,8 +52508,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -51253,8 +52826,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -51581,8 +53165,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -51870,14 +53465,24 @@
     "source": "cc-table"
    },
    "placement": {
-    "value": [
-     "self_collective",
-     "targeted_family",
-     "targeted_room",
-     "commons"
-    ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "value": "commons",
+    "source": "cc-table",
+    "cc_ref": "CC 3.1.4",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap"
+    },
+    "cites": [
+     {
+      "cc_ref": "CC 3.1.4",
+      "reading": "agree"
+     }
+    ]
    },
    "signer_rule": {
     "value": {
@@ -52157,8 +53762,14 @@
     "carries_kind_census": "UNLABELLED",
     "sources": "src/federation/namespace/namespace_registry.json:4240; plan_put_attestation@src/federation/attestation_admit.rs:572"
    },
-   "departs": [],
-   "because": {}
+   "departs": [
+    "placement"
+   ],
+   "because": {
+    "placement": [
+     "rendezvous_public"
+    ]
+   }
   },
   {
    "family": "retirement:{state}",
@@ -52472,8 +54083,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -52802,8 +54424,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -53097,8 +54730,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -53391,8 +55035,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -53708,8 +55363,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -54090,8 +55756,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -54821,8 +56498,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -55156,8 +56844,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -55467,8 +57166,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -56218,8 +57928,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -56525,8 +58246,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -56841,8 +58573,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -57152,8 +58895,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -57446,8 +59200,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -57755,8 +59520,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -58050,8 +59826,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": "holder quorum over the carried transport destination",
@@ -58381,8 +60168,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -58688,8 +60486,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": "charter: self; confers: steward (root) x delegates_to(scope, depth, term); accepts: self (node -> root)",
@@ -59051,8 +60860,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -59354,8 +61174,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -59700,8 +61531,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -60021,8 +61863,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": "seat_role(wa) quorum, re-derived from this node's state",
@@ -60683,8 +62536,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {
@@ -60990,8 +62854,19 @@
      "targeted_room",
      "commons"
     ],
-    "source": "gap",
-    "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default",
+    "code": {
+     "value": [
+      "self_collective",
+      "targeted_family",
+      "targeted_room",
+      "commons"
+     ],
+     "source": "gap",
+     "note": "any of {self_collective, targeted_family, targeted_room, commons}, signer-chosen (GAP: no per-family constraint)"
+    }
    },
    "signer_rule": {
     "value": {

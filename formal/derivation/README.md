@@ -147,3 +147,12 @@ applies a row only over an open cell and keeps the census reading as `code`. A c
 closes is never overridden here: where text and build differ, that is a departure and takes a
 reason in `departure_reasons.json`. `signer_rule_text.tsv` does the same for the signer column,
 with its own grammar.
+
+`placement_text.tsv` states where a row goes when its family states no placement of its own.
+Its one `default` row gives the placements a family's rows may take and the sentence that leaves
+the choice to the emitter. A placement cell the census leaves to the signer takes that default
+and is marked `rule: default`. `tools/kernel_closure.py` counts such a cell as a default and not
+as a rule. Its `scope` rows give the audience of each `cohort_scope`, each quoting its line of the
+CC 5.2 table. The `reach`, `moves` and `copy` rows state whom a row reaches because it names
+them, when a row moves to a peer, and whose audience a row joins because another row names it.
+The text states the last for a reply only. The build puts the table in `_meta.placement`.

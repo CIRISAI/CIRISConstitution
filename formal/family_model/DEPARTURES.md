@@ -617,6 +617,48 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | placement | `attestation:registry_consensus` |
 
+## A rendezvous route is published to everyone
+
+**When.** The row is a receiver's route for delivery through the Anonymous Tier, signed under a key made for one period.
+
+**Why.** A sender must find the route before it holds any standing with the receiver, so the row is placed in the commons. The key is fresh each period and names no identity.
+
+**Text.** CC 3.1.4: "**Reach:** everyone, as on the bootstrap planes"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the text.
+
+| column | families |
+|---|---|
+| placement | `rendezvous:route` |
+
+## An evidence row is public
+
+**When.** The row names one evidence blob of a registered suite.
+
+**Why.** The blob is a Commons blob and any reader must be able to check a claim against it, so the row is emitted at federation scope.
+
+**Text.** CC 3.1.5.5: "Emitted at `federation` scope by a key holding `infra:attest`"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the text.
+
+| column | families |
+|---|---|
+| placement | `evidence:{suite}:{kind}:{cell}:{prefix}` |
+
+## A deferral stays within the deferring party's cell
+
+**When.** The row is one ask routed to a Wise Authority.
+
+**Why.** The ask concerns one party and is answered by the seats over that party. It is placed at a scope that reaches them and is never sent to the whole federation.
+
+**Text.** CC 3.1.9.3: "the audience is the cell (for an agent, the steward's cohort and the WA it routes to), never a federation broadcast"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the text.
+
+| column | families |
+|---|---|
+| placement | `deferral:request` |
+
 ## Open
 
 Cells that leave the default with no reason yet, each with the question that would give it one.

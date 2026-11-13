@@ -51,7 +51,8 @@ def ruled_share(cells):
         where, _, col = c.partition(".")
         if where == "fm":
             for row in fm["rows"]:
-                n += 1; r += KIND.get(row[col].get("source") if isinstance(row.get(col), dict) else None) == "ruled"
+                c_ = row[col] if isinstance(row.get(col), dict) else {}
+                n += 1; r += KIND.get(c_.get("source")) == "ruled" and c_.get("rule") != "default"
         elif where == "tr":
             for row in tr["rows"]:
                 for t in row["transitions"]:

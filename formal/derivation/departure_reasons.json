@@ -789,6 +789,51 @@
      "attestation:registry_consensus"
     ]
    }
+  },
+  {
+   "id": "rendezvous_public",
+   "title": "A rendezvous route is published to everyone",
+   "when": "The row is a receiver's route for delivery through the Anonymous Tier, signed under a key made for one period.",
+   "why": "A sender must find the route before it holds any standing with the receiver, so the row is placed in the commons. The key is fresh each period and names no identity.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.4",
+   "quote": "**Reach:** everyone, as on the bootstrap planes",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "rendezvous:route"
+    ]
+   }
+  },
+  {
+   "id": "evidence_public",
+   "title": "An evidence row is public",
+   "when": "The row names one evidence blob of a registered suite.",
+   "why": "The blob is a Commons blob and any reader must be able to check a claim against it, so the row is emitted at federation scope.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.5.5",
+   "quote": "Emitted at `federation` scope by a key holding `infra:attest`",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "evidence:{suite}:{kind}:{cell}:{prefix}"
+    ]
+   }
+  },
+  {
+   "id": "deferral_in_cell",
+   "title": "A deferral stays within the deferring party's cell",
+   "when": "The row is one ask routed to a Wise Authority.",
+   "why": "The ask concerns one party and is answered by the seats over that party. It is placed at a scope that reaches them and is never sent to the whole federation.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.9.3",
+   "quote": "the audience is the cell (for an agent, the steward's cohort and the WA it routes to), never a federation broadcast",
+   "enforced": false,
+   "moves": {
+    "placement": [
+     "deferral:request"
+    ]
+   }
   }
  ],
  "open": [

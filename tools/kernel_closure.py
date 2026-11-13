@@ -7,7 +7,7 @@ A kernel reads its rules from the tables. A cell of a table is one of four thing
     ruled     the text states it, and the cell cites where (cc-table, prose, or derived from cells that are)
     as built  the cell records what the shipped store does (code-v61, mixed): a fact about one implementation
     default   the family takes the general rule, stated once for all or not at all, and nobody has checked that
-              the general rule was meant for this family (generic)
+              the general rule was meant for this family (generic, or a cell whose rule is `default`)
     open      nothing says (gap)
 
 Everything that is not `ruled` is a residual: a decision some implementation makes that the tables do not yet
@@ -36,7 +36,7 @@ OUTPUTS = collections.OrderedDict([
     ("moves", (("fm", "placement"), ("fm", "replication"), ("fm", "evidence"), ("fm", "derived"))),
     ("effects", (("rx", "timed"), ("fm", "erasure_route"))),
 ])
-FLOORS = {"fold": 76, "guard": 26, "roles": 311, "signer_rule": 56, "placement": 19, "count": 16, "timed": 33, "body": 81}
+FLOORS = {"fold": 76, "guard": 26, "roles": 311, "signer_rule": 56, "placement": 28, "count": 16, "timed": 33, "body": 81}
 
 
 def main():
@@ -48,6 +48,7 @@ def main():
         if where == "fm":
             for r in fm["rows"]:
                 kind = KIND.get(r[col].get("source") if isinstance(r.get(col), dict) else None, "open")
+                if kind == "ruled" and r[col].get("rule") == "default": kind = "default"   # stated once for all families, not for this one
                 k[kind] += 1
                 if kind != "ruled": by_family[r["family"]] += 1
         elif where == "tr":
@@ -70,7 +71,7 @@ def main():
             print(f"    {col:14} ruled {k['ruled']:4} of {n:4} {100 * k['ruled'] // n:3}%   as built {k['as built']:4}   default {k['default']:4}   open {k['open']:4}")
     n = sum(tot.values())
     print(f"\nkernel closure: {tot['ruled']} of {n} cells are rules the text states ({100 * tot['ruled'] // n}%); "
-          f"{tot['as built']} record what the shipped store does, {tot['default']} take an unstated default, {tot['open']} are open")
+          f"{tot['as built']} record what the shipped store does, {tot['default']} take a general default, {tot['open']} are open")
     if "--families" in sys.argv:
         print("\nFamilies with the most cells that are not rules:")
         for f, c in by_family.most_common(15): print(f"  {c:3}  {f}")

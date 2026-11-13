@@ -637,3 +637,10 @@ watchlist:{id}	signer_rule	fills	CC 3.1.9.4	A `moderate`-scope holder ([CC 4.5.5
 watchlist:{id}	signer_rule	fills	CC 4.5.7	`moderate`-scope holder **optionally** enables a watchlist
 weighted_aggregate:{contribution_id}	projection	agree	CC 3.1.9.3	Rolling tally per Contribution (P7).
 witness_diversity:{contribution_id}	signer_rule	agree	CC 3.4.10	`testimonial_witness:*`, `witness_diversity:*` | dimension families ([CC 3.1.9.3](part_3_the_namespace.md)) | Nothing — any party may testify; these are claims, not roles
+file:{version}	placement	agree	CC 3.1.3.4	A file: one row per file, placed at a `cohort_scope`
+config:{scope}	placement	agree	CC 3.4.5.1	Nothing in this document pins `config:*` — or any self-report family — to a `cohort_scope`.
+rendezvous:route	placement	agree	CC 3.1.4	**Reach:** everyone, as on the bootstrap planes
+membership:{stage}	placement	agree	CC 3.1.3.2	A **proposal** is an invitation to one key K, targeted at the group
+group:roster	placement	agree	CC 3.2	every other roster is never enumerable outside its cohort
+census:member:partial	placement	agree	CC 6.1.9	The two publish `census:member:partial:v1` into the room
+ballot:tally:{poll_id}	placement	agree	CC 6.1.9	the result is `ballot:tally:{poll_id}:v1`, recomputed by every member

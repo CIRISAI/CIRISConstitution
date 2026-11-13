@@ -17,7 +17,7 @@ archive_release:{basis}	replication	unbuilt	"none (held shut)"
 archive_release:{basis}	projection	unbuilt	"none (never stored)"
 archive_release:{basis}	erasure_route	unbuilt	"none (never stored)"
 attestation:registry_consensus	placement	registry_consensus_public	"commons"
-ballot:moderator	placement	unbuilt	null
+ballot:moderator	placement	unbuilt	"targeted_room"
 ballot:moderator	subject_rule	unbuilt	null
 ballot:moderator	freshness	unbuilt	null
 ballot:moderator	lifecycle	unbuilt	null
@@ -25,7 +25,7 @@ ballot:moderator	replication	unbuilt	null
 ballot:moderator	projection	unbuilt	null
 ballot:moderator	erasure_route	unbuilt	null
 ballot:moderator	governance	unbuilt	"policy_row: moderator_election"
-ballot:moderator_acceptance	placement	unbuilt	null
+ballot:moderator_acceptance	placement	unbuilt	"targeted_room"
 ballot:moderator_acceptance	subject_rule	unbuilt	null
 ballot:moderator_acceptance	cosign_rule	unbuilt	null
 ballot:moderator_acceptance	freshness	unbuilt	null
@@ -34,7 +34,7 @@ ballot:moderator_acceptance	replication	unbuilt	null
 ballot:moderator_acceptance	projection	unbuilt	null
 ballot:moderator_acceptance	erasure_route	unbuilt	null
 ballot:moderator_acceptance	governance	unbuilt	null
-ballot:tally:{poll_id}	placement	poll_result	"CC targeted_room"
+ballot:tally:{poll_id}	placement	poll_result	"targeted_room"
 capacity:composite	subject_rule	verdict_not_yours	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "PROSE: subject's consent stance must permit (judged at received_at)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 capacity:composite	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 capacity:composite	replication	verdict_never_local	{"audience": {"commons": "everyone", "self_collective": "owner's nodes", "targeted": "cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)"}, "held": "settle_on_key", "non_recipient": null, "tier": "federation"}
@@ -49,11 +49,11 @@ capacity_assurance:reversible_pending:{domain}:{version}	subject_rule	verdict_no
 capacity_assurance:{level}:{domain}:{band}:{version}	subject_rule	verdict_not_yours	{"attested_party": ["Targeted only (AV-84, cohort_standing_core)", "not_subject (attester != attested)"], "cardinality": "any", "for_key_id": "none", "in_audience": "no", "kind": "any", "must_be_registered": "attested yes, subjects no"}
 census:composite:{class}	placement	census_published	"commons"
 census:expected_active	placement	community_count	"targeted_room"
-census:member:partial	placement	community_count	"CC targeted_room"
+census:member:partial	placement	community_count	"targeted_room"
 census:member:share	placement	census_addressed	"addressed"
 census:member:share	subject_rule	census_addressed	"CC for_key_id = recipient (tally member); not enforced"
 census:partial:{class}	placement	census_published	"commons"
-census:share:{class}	placement	census_addressed	"CC addressed (for_key_id serve seat); no addressed placement in code"
+census:share:{class}	placement	census_addressed	"addressed"
 census:share:{class}	subject_rule	census_addressed	"CC for_key_id = serve_seat; not enforced"
 collection:{kind}	cosign_rule	quorum	"CC group_consensus_protocol for amendments; not built"
 community:listing	placement	listing_public	"commons (public_room.rs:229, listing_not_federation)"
@@ -70,7 +70,7 @@ consent:replication:{version}	projection	derived_no_rebuild	{"rebuild": "none", 
 consent:state:{stance}	subject_rule	open	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
 consent:state:{stance}	freshness	standing_at_signing	{"W": "W on the owner's standing", "judged_at": "signed_instant_with_W"}
 content_class:{class}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "withdrawal clears only its emitter's flag (read)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
-cosign:{state}	placement	unbuilt	null
+cosign:{state}	placement	unbuilt	["targeted_family", "targeted_room"]
 cosign:{state}	subject_rule	unbuilt	null
 cosign:{state}	freshness	unbuilt	null
 cosign:{state}	lifecycle	unbuilt	null
@@ -82,6 +82,7 @@ credits:{domain}:{language}:{subject}	projection	typed_view	{"rebuild": "byte_eq
 custody:{kind}	placement	custody_scope	"the blob's held claim scope (holding_claim::check_holding_claim_scope)"
 custody:{kind}	subject_rule	custody_own_report	{"for_key_id": "none", "kind": ["the device", "attested == attester", "evidence_refs exactly 1 blob digest"]}
 custody:{kind}	lifecycle	custody_own_withdrawal	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
+deferral:request	placement	deferral_in_cell	["self_collective", "targeted_family", "targeted_room"]
 detection:correlated_action:{axis}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 detection:correlated_action:{axis}	projection	typed_view	{"rebuild": "byte_equal", "table": "detection_events"}
 detection:correlated_action:{axis}	erasure_route	signer_erases_adverse	["dsar (producer withdraws + tombstone)", "purge"]
@@ -99,6 +100,7 @@ detection:{detector}	projection	typed_view	{"rebuild": "byte_equal", "table": "d
 detection:{detector}	erasure_route	signer_erases_adverse	["dsar (producer withdraws + tombstone)", "purge"]
 device:label	placement	device_name	"self_collective"
 duty:{kind}	placement	open	"never wider than the referenced permission's projection"
+evidence:{suite}:{kind}:{cell}:{prefix}	placement	evidence_public	"commons"
 expertise:{domain}:{language}	projection	typed_view	{"rebuild": "byte_equal", "table": "expertise_ledger"}
 goal:{scale}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "amendment = declarer's supersedes with whole body"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 goal:{scale}	projection	typed_view	{"rebuild": "byte_equal", "table": "goals"}
@@ -184,6 +186,7 @@ preserve_response	projection	unbuilt	"none (never stored)"
 preserve_response	erasure_route	unbuilt	"none (never stored)"
 provenance:build_manifest:{target}	placement	build_manifest_public	"commons"
 quarantine:{state}	lifecycle	open	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "released supersedes withheld (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+rendezvous:route	placement	rendezvous_public	"commons"
 retirement:{state}	placement	unbuilt	"none (held shut: never stored)"
 retirement:{state}	subject_rule	unbuilt	"none (held shut)"
 retirement:{state}	lifecycle	unbuilt	"none (held shut)"

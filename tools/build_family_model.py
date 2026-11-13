@@ -5,7 +5,9 @@ Sources: the CC table (formal/derivation/family_kind_verb.tsv: kind, side, verbs
 reference) and persist's census at the v61 head (formal/derivation/census_v61.tsv: what the code
 enforces today on each axis). Every cell carries its value and its source: cc-table, code-v61,
 prose (bespoke code outside the closed vocabulary), or gap (nothing enforces). The vendor gate of a
-later version refuses a gap; this draft counts them. Writes manifests/family_model.json; --check
+later version refuses a gap; this draft counts them. A placement the census leaves to the signer and the
+text states for no family takes the default of formal/derivation/placement_text.tsv, with the audience of
+each scope. Writes manifests/family_model.json; --check
 only compares.
 """
 import csv, glob, hashlib, json, os, re, sys
@@ -15,6 +17,8 @@ CC = os.path.join(ROOT, "formal/derivation/family_kind_verb.tsv")
 CENSUS = os.path.join(ROOT, "formal/derivation/census_v61.tsv")
 SIGNER_TEXT = os.path.join(ROOT, "formal/derivation/signer_rule_text.tsv")
 CELL_TEXT = os.path.join(ROOT, "formal/derivation/cell_text.tsv")
+PLACEMENT_TEXT = os.path.join(ROOT, "formal/derivation/placement_text.tsv")
+SCOPES = ("self", "family", "community", "affiliations", "species", "biosphere", "federation")   # CC 2.1: the closed set of seven
 COUNT_TEXT = os.path.join(ROOT, "formal/derivation/count_text.tsv")
 POLICY = os.path.join(ROOT, "manifests/governance_policy.json")
 SIGNED_OBJECT = os.path.join(ROOT, "constitution/signed_object.tsv")
@@ -285,7 +289,8 @@ def departure_reasons(rows, default):
     """
     spec = json.load(open(REASONS, encoding="utf-8"), object_pairs_hook=OrderedDict)
     errs, claims, seen = [], OrderedDict(), set()
-    unbuilt = {r["family"] for r in rows if r["placement"].get("value") is None or str(r["placement"]["value"]).startswith("none (held shut")}
+    census_place = lambda r: (r["placement"].get("code") or r["placement"]).get("value")   # the census reading, under a value the text gives
+    unbuilt = {r["family"] for r in rows if census_place(r) is None or str(census_place(r)).startswith("none (held shut")}
     for rs in spec["reasons"]:
         rid = rs.get("id", "?")
         if rid in seen: errs.append(f"{rid}: named twice")
@@ -377,6 +382,51 @@ def reasons_md(spec, claims, opens, rows, default):
     return "\n".join(out)
 
 
+def placement_text(default_value):
+    """Where a row goes when its family states no placement of its own (formal/derivation/placement_text.tsv).
+
+    One `default` row: the placements a family's rows may take, with the sentence that leaves the choice to
+    the emitter. `scope` rows: the audience of each `cohort_scope`, each quoting its line of the CC 5.2 table.
+    `reach` rows: whom a row reaches because it names them. `moves` rows: when a row in a peer's audience moves to it. `copy` rows: whose audience a row joins because
+    another row names it. Returns (table, errors); every quote stands in its section, the scope rows cover the
+    seven scopes once each, and their placements are exactly the default's.
+    """
+    rows = list(csv.DictReader([l for l in open(PLACEMENT_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE))
+    errs, out = [], OrderedDict([("source", "formal/derivation/placement_text.tsv"), ("default", None), ("scopes", []), ("reach", []), ("moves", []), ("copy", [])])
+    seen = Counter()
+    for r in rows:
+        where = f"placement_text.tsv: {r['rule']} {r['when']}"
+        span = section_span(r["cc_ref"])
+        if span is None or not r["quote"] or r["quote"] not in span:
+            errs.append(f"{where}: the quoted words do not stand in {r['cc_ref']}"); continue
+        if r["rule"] == "default":
+            if out["default"] is not None: errs.append(f"{where}: the default is stated once")
+            out["default"] = OrderedDict([("value", [x.strip() for x in r["placement"].split(" | ")]), ("chosen_by", r["audience"]), ("cc_ref", r["cc_ref"]), ("quote", r["quote"])])
+        elif r["rule"] == "scope":
+            names = [x.strip() for x in r["when"].split(",")]
+            room = r["public_room"] == "yes"
+            for x in names:
+                if x not in SCOPES or "`" + x + "`" not in r["quote"]: errs.append(f"{where}: {x} is not a scope the quoted line names")
+                elif not room: seen[x] += 1
+            for k in ("audience", "outside"):
+                if r[k] not in r["quote"]: errs.append(f"{where}: the {k} is not in the quoted line")
+            out["scopes"].append(OrderedDict([("cohort_scope", names), ("public_room", room), ("placement", r["placement"]), ("audience", r["audience"]),
+                                              ("outside", r["outside"]), ("cc_ref", r["cc_ref"])]))
+        elif r["rule"] in ("reach", "moves", "copy"):
+            if r["audience"] in ("", "-"): errs.append(f"{where}: no statement")
+            out[r["rule"]].append(OrderedDict([("when", r["when"]), ("statement", r["audience"]), ("cc_ref", r["cc_ref"]), ("quote", r["quote"])]))
+        else:
+            errs.append(f"{where}: the rule is one of default, scope, reach, moves, copy")
+    if out["default"] is None: errs.append("placement_text.tsv: no default row")
+    elif out["default"]["value"] != default_value:
+        errs.append("placement_text.tsv: the default's placements are not those of the default row (formal/derivation/family_default_row.json)")
+    for x in SCOPES:
+        if seen[x] != 1: errs.append(f"placement_text.tsv: the scope {x} has {seen[x]} audience rows; it has one")
+    if out["default"] and {s["placement"] for s in out["scopes"]} != set(out["default"]["value"]):
+        errs.append("placement_text.tsv: the placements of the scope rows are not exactly the default's")
+    return out, errs
+
+
 def main():
     cc = {r["family"]: r for r in csv.DictReader(open(CC, encoding="utf-8"), delimiter="\t")}
     census_lines = [l for l in open(CENSUS, encoding="utf-8").read().split("\n") if not l.startswith("#")]
@@ -394,6 +444,11 @@ def main():
     if os.path.exists(CELL_TEXT):
         for r in csv.DictReader([l for l in open(CELL_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t"):
             cell_text.setdefault(r["family"], []).append(r)
+    # Where a row goes when its family states no placement: the default, with the audience of each scope.
+    placing, perrs = placement_text(json.load(open(DEFAULT, encoding="utf-8"))["columns"]["placement"])
+    if perrs:
+        [print(e) for e in perrs]; return 1
+    placed_by_default = 0
     count_text = OrderedDict()
     for r in csv.DictReader([l for l in open(COUNT_TEXT, encoding="utf-8").read().split("\n") if l and not l.startswith("#")], delimiter="\t", quoting=csv.QUOTE_NONE):
         count_text.setdefault(r["family"], []).append(r)
@@ -485,6 +540,13 @@ def main():
             new["source"] = "cc-table"; new["cc_ref"] = ct["cc_ref"]
             new["code"] = {"value": cur.get("value"), "source": cur.get("source")}
             row[col] = new
+        # A family whose rows the census finds at any scope the signer chooses, and for which the text states no
+        # placement of its own, takes the default: the scope each row carries, with the audience CC 5.2 gives it.
+        cur = row["placement"]
+        if cur.get("source") == "gap" and cur.get("value") == placing["default"]["value"]:
+            row["placement"] = {"value": cur["value"], "source": "cc-table", "cc_ref": placing["default"]["cc_ref"], "rule": "default",
+                                "code": OrderedDict((k, cur[k]) for k in ("value", "source", "note") if k in cur)}
+            placed_by_default += 1
         pv = polarity_census(z["6_polarity"]) if z else None
         row["polarity"] = {"value": pv or pol.get(fam), "source": "code-v61" if pv else ("cc-table" if pol.get(fam) else "gap"), "registry": pol.get(fam)}
         row["emitter_class"] = emitter_class(row["signer_rule"])
@@ -670,6 +732,8 @@ def main():
         ("columns", COLUMNS), ("families", len(rows)), ("coverage", cov),
         ("cites", OrderedDict([("source", "formal/derivation/cell_cites.tsv"), ("cells_cited", sum(1 for r in rows for c in r.values() if isinstance(c, dict) and c.get("cites"))),
                                ("citations", cited), ("reading", "a cell with `cites` is stated by those sections; `fills` marks a sentence that says more than the cell holds")])),
+        ("placement", OrderedDict(list(placing.items()) + [("families_on_the_default", placed_by_default),
+                                  ("reading", "a placement cell with rule default is the scope each row carries, chosen by its emitter; the audience of a row is the scopes entry for its cohort_scope; copy states whose audience a row joins because another row names it")])),
         ("body", OrderedDict([("source", "constitution/signed_object.tsv"), ("families_with_members", sum(1 for r in rows if isinstance(r["body"].get("value"), dict) and "members" in r["body"]["value"])),
                               ("presence_in_words", sorted(set(body_unread))),
                               ("members_from_text", OrderedDict([("in_cddl", body_text_n["yes"]), ("named_by_the_text_alone", body_text_n["no"])]))])),
@@ -701,6 +765,7 @@ def main():
         open(DEPARTS, "w", encoding="utf-8").write(dep_out)
         open(REASONS_MD, "w", encoding="utf-8").write(md_out)
     print(f"departure reasons: {len(spec['reasons'])} reasons move {len(claims)} cells; {len(opens)} open")
+    print(f"placement: {placed_by_default} families take the default, the scope each row carries; {len(placing['scopes'])} audience rows, {len(placing['reach'])} on reach, {len(placing['moves'])} on what moves, {len(placing['copy'])} on copying")
     print(f"default row: {by_count.get(0, 0)} of {len(rows)} families are on it in all {len(default)} columns, {by_count.get(1, 0)} depart in one; {len(departures)} departures in all")
     print(f"family_model: {len(rows)} families; coverage per column (cc-table/code-v61/generic/prose/mixed/gap): " +
           "; ".join(f"{k} {v['cc-table']}/{v['code-v61']}/{v['generic']}/{v['prose']}/{v['mixed']}/{v['gap']}" for k, v in cov.items()))
