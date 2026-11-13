@@ -362,6 +362,7 @@ prohibited:{category}	attest	none	admitted	registered	selfAct	true	withdraw	self
 prohibited:{category}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 provenance:build_manifest:{target}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 provenance:build_manifest:{target}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
+provenance:build_manifest:{target}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 provenance:build_manifest:{target}:locale:{lang_code}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 provenance:build_manifest:{target}:locale:{lang_code}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 provenance:skill_import:{source}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived

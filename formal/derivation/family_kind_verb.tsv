@@ -121,7 +121,7 @@ partner_role:{role}	registry	Rules	THING	attest,replace,withdraw	M	partner statu
 peer_reachability:{network}	transport-delivery	Circumstances	THING	attest,replace,withdraw	H	reachability now	no	—
 progress_measure:{method_id}	node	Facts	ACCOUNT	attest,replace,withdraw	M	evidence of progress	no	—
 prohibited:{category}	accord-agent	Rules	THING	attest,withdraw	H	-1 / -0.5 only: a never-allowed category	no	—
-provenance:build_manifest:{target}	attestation	Facts	ACCOUNT	attest,withdraw	H	provenance: manifest hash equality	no	—
+provenance:build_manifest:{target}	attestation	Facts	ACCOUNT	attest,replace,withdraw	H	provenance: manifest hash equality	no	—
 provenance:build_manifest:{target}:locale:{lang_code}	attestation	Facts	ACCOUNT	attest,withdraw	H	provenance per locale	no	—
 provenance:skill_import:{source}	attestation	Facts	ACCOUNT	attest,withdraw	H	import provenance	no	—
 provenance:slsa:{level}	attestation	Facts	ACCOUNT	attest,withdraw	H	SLSA level provenance	no	—

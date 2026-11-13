@@ -168,14 +168,13 @@ class Ref:
         for r in S:
             if r["id"] == self.self["id"]: continue
             if "of" in fs and not fam_match(r["fam"], "|".join(fs["of"])): continue
-            if "other" in fs and not (fam_match(r["fam"], "|".join(fs["other"])) and r.get("signer") != self.self.get("signer")): continue
+            if "other" in fs and fam_match(r["fam"], "|".join(fs["other"])): continue     # other(F): a row of a family other than F
             if not all(self.join(j, r, bind) for j in a["joins"]): continue
             if a["at"] == "asserted_at" and not (r.get("asserted_at") is not None and self.self.get("asserted_at") is not None and r["asserted_at"] <= self.self["asserted_at"]): continue
             if a["at"] == "receipt" and not r["t"] < self.self["t"]: continue
             if a["window"]:
-                w = self.policy.get(a["window"]["policy"], 0); s0 = self.self.get("asserted_at"); r0 = r.get("asserted_at")
-                if s0 is None or r0 is None: continue
-                inside = r0 <= s0 < r0 + w
+                w = self.policy.get(a["window"]["policy"], 0)
+                inside = self.self["t"] < r["t"] + w        # first held here before the window from this node's first holding of r closed
                 if (a["window"]["dir"] == "within") != inside: continue
             out.append(r)
         return out
@@ -356,7 +355,7 @@ def guard_sets(family, clauses, seed, n=30, maxrows=5):
     walkc(clauses)
     for a in walk_atoms(clauses):
         if a["atom"] == "row":
-            fs = a["families"]; fams.update(fs.get("of", []) + fs.get("other", []))
+            fs = a["families"]; fams.update(fs.get("of", []) + fs.get("other", []) + (["zz:other"] if "other" in fs else []))   # other(F): rows outside F too
             if a["quant"].startswith("set("): refs.add(a["quant"][4:-1].split(":", 1)[1])
             for j in a["joins"]:
                 for s in (j["left"], j["right"]):
@@ -501,7 +500,7 @@ class RefFold:
         bits = reads.split("&"); srcs = bits[0].split("+")
         S = []
         for src in srcs:
-            if src == "own": S += [r for r in self.held if fam_match(r["fam"], self.family) and r["id"] != "p"]
+            if src == "own": S += [r for r in self.held if fam_match(r["fam"], self.family) and r["id"] != self.p["id"]]
             elif src == "head": S += [r for r in self.held if fam_match(r["fam"], "group:roster") and not any(r["id"] in q.get("names", ()) and fam_match(q["fam"], "group:roster") for q in self.held)]
             else: S += [r for r in self.held if fam_match(r["fam"], src)]
         S = list({r["id"]: r for r in S}.values())
@@ -537,6 +536,9 @@ class RefFold:
             if c == "named": S = [r for r in S if not self.retracted(r)]
             elif c == "forward": S = [r for r in S if not any(self.retracted(x) for x in ref_past(self.held, r))]
             elif c == "terminal": S = [r for r in S if not any(getf(x, ["terminal"]) == 1 for x in ref_past(self.held, r))]
+            elif c == "whole":      # CC 3.3.7: retracted whole: the row, the versions it names and the versions naming it
+                S = [r for r in S if not self.retracted(r) and not any(self.retracted(x) for x in ref_past(self.held, r))
+                     and not any(self.retracted(y) and r["id"] in {x["id"] for x in ref_past(self.held, y)} for y in self.held)]
             elif c.startswith("boundary("):
                 m = c[9:-1]
                 def b(r):
@@ -609,6 +611,8 @@ class RefFold:
         for b in split_top(spec):
             mono, m = re.fullmatch(r"([a-z_]+)\((.+)\)", b).groups()
             vs = [self.f(r, m) for r in G if self.f(r, m) is not None]
+            if mono == "drop_only":     # each version's members within those of the version it names (CC 3.3.4)
+                out.append(all(not (set(self.f(r, m) or ()) - set(self.f(x, m) or ())) for r in G for x in G if x["id"] in r.get("names", ()))); continue
             if mono == "raise_only": out.append(max(vs) if vs else None)
             elif mono == "fixed": out.append(next(iter(set(vs))) if len(set(vs)) == 1 else None)
             else: out.append(min(vs) if vs else None)
@@ -744,6 +748,7 @@ def fold_sets(family, parts, seed, n=24, maxrows=5, when=None):
     roles = [x for r in roles for x in r.split("|")]
     ov = re.match(r"([a-z_]+)", parts.get("over", "")) if parts.get("over") else None
     if ov: roles.append(ov.group(1))
+    setm = set(re.findall(r"drop_only\(([A-Za-z_]+)\)", parts.get("bound", "")))      # members compared as sets
     caps = re.findall(r"cap\(([^)]+)\)", parts.get("reads", ""))
     roles += ["cap:" + c for c in caps]
     out = []
@@ -759,7 +764,8 @@ def fold_sets(family, parts, seed, n=24, maxrows=5, when=None):
                  "attested": rnd.choice(KEYS), "object": p["object"] if rnd.random() < .7 else rnd.choice(OBJS), "asserted_at": rnd.randint(0, 2),
                  "leafname": rnd.choice(when["leaves"]) if when and rnd.random() < .75 else rnd.choice(leafnames), "val": {}, "leaf": {}, "ref": {}, "names": frozenset()}
             for m in members:
-                r["val"][m] = rnd.choice(KEYS[:2]) if m.endswith("key_id") or m in ("owner", "person", "quorum_key") else rnd.randint(0, 2)
+                r["val"][m] = frozenset(rnd.sample(KEYS, rnd.randint(0, 3))) if m in setm else \
+                    rnd.choice(KEYS[:2]) if m.endswith("key_id") or m in ("owner", "person", "quorum_key") else rnd.randint(0, 2)
             r["val"]["value"] = rnd.randint(0, 1); r["val"]["terminal"] = int(rnd.random() < .15); r["val"]["present"] = rnd.randint(0, 1)
             if rnd.random() < .2: r["val"]["valid_until"] = rnd.randint(0, 6)
             if rows and rnd.random() < .5:
@@ -803,7 +809,7 @@ def fold_sets(family, parts, seed, n=24, maxrows=5, when=None):
 
 REL_REF = {
     "by": lambda r, t: r.get("signer") == t.get("signer"),
-    "under": lambda r, t: t["id"] in r.get("names", ()),
+    "under": None,       # names t, directly or through others (KERNEL 2, 7): needs the rows held, read in ch_ref
     "ref": lambda r, t: t["id"] in r.get("names", ()),
     "about": lambda r, t: r.get("subject") is not None and r.get("subject") == t.get("attested"),
     "over": lambda r, t: r.get("object") is not None and r.get("object") == t.get("object"),
@@ -819,7 +825,8 @@ def ch_ref(items, held, s):
         ok = True
         for a in it["when"]:
             k, vs = a["test"], a["values"]
-            if vs is None: ok = ok and (s.get("leafname") == "recovery" if k == "recovery" else len(s.get("cosig", ())) >= 1 if k == "cosigned" else getf(s, [k]) == 1)
+            if vs is None: ok = ok and (s.get("leafname") == "recovery" if k == "recovery" else len(s.get("cosig", ())) >= 1 if k == "cosigned" else
+                                        (T is not None and getf(T, ["consensus_protocol_entrenched"]) == 1) if k == "entrenched" else getf(s, [k]) == 1)
             elif k == "grade": ok = ok and T is not None and getf(T, ["grade"]) in vs
             elif k in ("subkind", "scope", "axis"): ok = ok and getf(s, [k]) in vs
             elif k == "seat": ok = ok and any(ref_stands(held, s["signer"], v, s.get("object")) for v in vs)
@@ -838,11 +845,16 @@ def ch_ref(items, held, s):
                     T.get("signer") in s.get("cosig", ()) if b == "cosigned_prior" else
                     s["signer"] in (getf(T, ["recovery_commitments"]) or ()) if b == "committed_key" else
                     typeof(s["signer"]) == "node"))
+            elif k == "link" and c.get("how") == "chained":
+                checks.append(T is not None and (s.get("ref") or {}).get(c["member"]) == T["id"]
+                              and not any(x["id"] != s["id"] and (x.get("ref") or {}).get(c["member"]) == T["id"] for x in held))
             elif k == "link": checks.append(T is not None and (s.get("ref") or {}).get(c["member"]) == T["id"])
             elif k == "field":
                 d, m = c["dir"], c["member"]
                 a, b = getf(s, [m]), getf(T, [m]) if T else None
                 if d in ("any", "as_attest"): checks.append(True)
+                elif d == "shrink": checks.append(T is not None and not (set(a or ()) - set(b or ())))      # drops members, never adds one
+                elif d == "grow_signed": checks.append(all(k == s["signer"] or k in s.get("cosig", ()) for k in set(a or ()) - set(b or ())))
                 elif a is None or b is None: checks.append(False)
                 elif d == "frozen": checks.append(a == b)
                 elif d in ("shrink", "lower"): checks.append(a <= b)
@@ -858,7 +870,8 @@ def ch_ref(items, held, s):
                 if T is None: continue
                 for x in held:
                     if x["id"] in (s["id"], T["id"]): continue
-                    if (c["family"] == "*" or fam_match(x["fam"], c["family"])) and REL_REF[c["rel"]](x, T):
+                    rel = (lambda r, t: t["id"] in {y["id"] for y in ref_past(held, r)}) if c["rel"] == "under" else REL_REF[c["rel"]]
+                    if (c["family"] == "*" or fam_match(x["fam"], c["family"])) and rel(x, T):
                         if c["effect"] == "void_after":
                             if getf(x, ["asserted_at"]) is not None and getf(T, [c["member"]]) is not None and x["asserted_at"] > getf(T, [c["member"]]):
                                 effects.append((x["id"], "void"))
@@ -866,6 +879,9 @@ def ch_ref(items, held, s):
         verdict = "ok" if all(checks) else (word + "(" + tok + ")" if tok else "refuse")
         out.append((it["on"], verdict, frozenset(effects)))
     return frozenset(out)
+
+
+SET_DIRS = ("shrink", "grow_signed")
 
 
 def ch_gen(items, rnd, n=20):
@@ -876,7 +892,7 @@ def ch_gen(items, rnd, n=20):
         rows = [T]
         for it in items:
             for c in it["clauses"]:
-                if c["clause"] == "field": T["val"][c["member"]] = rnd.randint(0, 2)
+                if c["clause"] == "field": T["val"][c["member"]] = frozenset(rnd.sample(KEYS, rnd.randint(0, 3))) if c["dir"] in SET_DIRS else rnd.randint(0, 2)
                 if c["clause"] == "by" and c["by"] == "committed_key": T["val"]["recovery_commitments"] = frozenset(rnd.sample(KEYS, rnd.randint(0, 2)))
                 if c["clause"] == "cascade" and c.get("member"): T["val"][c["member"]] = rnd.randint(0, 3)
                 if c["clause"] == "cascade" and len(rows) < 4:
@@ -884,6 +900,7 @@ def ch_gen(items, rnd, n=20):
                     x = {"id": f"c{len(rows)}", "fam": fam, "verb": "attest", "signer": T["signer"] if rnd.random() < .5 else rnd.choice(KEYS),
                          "attested": rnd.choice(KEYS), "object": T["object"] if rnd.random() < .5 else rnd.choice(OBJS), "subject": T["attested"] if rnd.random() < .5 else rnd.choice(KEYS),
                          "asserted_at": rnd.randint(0, 4), "val": {}, "leaf": {}, "ref": {}, "names": frozenset(["t"]) if rnd.random() < .5 else frozenset()}
+                    if c["rel"] == "under" and len(rows) > 1 and rnd.random() < .5: x["names"] = frozenset([rows[-1]["id"]])   # under t through another row
                     rows.append(x)
                 if c["clause"] == "after" and len(rows) < 4 and rnd.random() < .5:
                     rows.append({"id": f"a{len(rows)}", "fam": fill(c["family"], rnd), "verb": "attest", "signer": rnd.choice(KEYS), "attested": None,
@@ -901,11 +918,15 @@ def ch_gen(items, rnd, n=20):
         s["names"] = frozenset(s["names"])
         for it in items:
             for c in it["clauses"]:
-                if c["clause"] == "field": s["val"][c["member"]] = rnd.randint(0, 2)
+                if c["clause"] == "field": s["val"][c["member"]] = frozenset(rnd.sample(KEYS, rnd.randint(0, 3))) if c["dir"] in SET_DIRS else rnd.randint(0, 2)
                 if c["clause"] == "link": s["ref"][c["member"]] = "t" if rnd.random() < .7 else "zz"
+                if c["clause"] == "link" and c.get("how") == "chained" and rnd.random() < .4:     # another version already names t
+                    rows.append({"id": "h2", "fam": "f:x", "verb": "attest", "signer": rnd.choice(KEYS), "attested": None, "object": None, "asserted_at": 1,
+                                 "val": {}, "leaf": {}, "ref": {c["member"]: "t"}, "names": frozenset(["t"])})
                 if c["clause"] == "reach" and c["reach"] == "below_seq": s["val"]["seq"] = rnd.randint(0, 2); T["val"]["seq"] = rnd.randint(0, 2)
             for a in it["when"]:
-                if a["values"] is None:
+                if a["values"] is None and a["test"] == "entrenched": T["val"]["consensus_protocol_entrenched"] = rnd.randint(0, 1)
+                elif a["values"] is None:
                     s["val"][a["test"]] = rnd.randint(0, 1)
                     if a["test"] == "recovery" and rnd.random() < .6: s["leafname"] = "recovery"
                 elif a["test"] == "grade": T["val"]["grade"] = rnd.choice(a["values"] + ["zz"])
@@ -925,6 +946,7 @@ def dur_of(name, s):
 
 def origin_ref(c, s, held):
     o = c.get("from")
+    if c.get("by") == "signed" and not (isinstance(o, str) and o != "first_held"): return None   # a row's own end: a signed member only
     if o is None or o == "first_held": return s["t"]
     if isinstance(o, str): return getf(s, [o])
     ts = [x["t"] for x in held for e in o if e["event"] in ("admitted", "withdrawn") and e["of"] not in ("self", "target") and fam_match(x["fam"], e["of"])
@@ -932,11 +954,13 @@ def origin_ref(c, s, held):
     return min(ts) if ts else None
 
 
-def event_ref(e, s, held, clocks, now):
+def event_ref(e, s, held, clocks, now, folds=None, family=None):
     k, of = e["event"], e["of"]
     if k == "close":
         return clocks.get(of) is not None and now >= clocks[of]
-    if k == "fold": return None
+    if k == "fold":
+        f = (folds or {}).get((family, of))
+        return None if f is None else RefFold(f["parts"], family, held, s, now, {}, f["when"]).run()[3] == of
     rows = [s] if of == "self" else [x for x in held if x["id"] == (s.get("ref") or {}).get("target")] if of == "target" else [x for x in held if fam_match(x["fam"], of) and x["id"] != s["id"]]
     if e.get("by") == "producer": rows = [x for x in rows if x.get("signer") == s.get("signer")]
     if e.get("by") == "subject": rows = [x for x in rows if x.get("signer") == s.get("subject")]
@@ -945,7 +969,7 @@ def event_ref(e, s, held, clocks, now):
     return any(getf(x, ["state"]) == k for x in rows)
 
 
-def re_ref(clauses, held, s, now):
+def re_ref(clauses, held, s, now, folds=None, family=None):
     out = []
     clocks = {}
     for c in clauses:
@@ -981,11 +1005,12 @@ def re_ref(clauses, held, s, now):
                      and (x.get("signer") == s.get("signer") if c["concluder"] in ("self", "author") else ref_stands(held, x.get("signer"), c["concluder"], s.get("object"))) for x in held)
             out.append(("land", c["name"], ok, late))
         else:
-            on = [event_ref(e, s, held, clocks, now) for e in c["on"]]
-            un = [event_ref(e, s, held, clocks, now) for e in c.get("unless", [])]
+            on = [event_ref(e, s, held, clocks, now, folds, family) for e in c["on"]]
+            un = [event_ref(e, s, held, clocks, now, folds, family) for e in c.get("unless", [])]
             if None in on or None in un: out.append(("react", "unresolved")); continue
             fires = any(on) and not any(un)
-            out.append(("react", tuple(sorted(("" if x.get("force", "must") == "must" else x["force"] + " ") + f"{x['effect']}:{x.get('family') or x.get('verdict') or x.get('act') or x.get('policy')}" for x in c["effects"])) if fires else ()))
+            out.append(("react", tuple(sorted(("" if x.get("force", "must") == "must" else x["force"] + " ") + f"{x['effect']}:{x.get('family') or x.get('verdict') or x.get('act') or x.get('policy')}"
+                                              + (f" by {x['by']}" if x["effect"] == "emit" else "") for x in c["effects"])) if fires else ()))
     return tuple(out)
 
 
@@ -1002,3 +1027,61 @@ def count_ref(arms, s):
             md = re.fullmatch(r"(none|shut)|([a-z_]+)(?:@([a-z_]+))?(?:!(confers|result))?", a["doors"])
             return md.group(1) if md.group(1) else ("tally", md.group(2), md.group(3) or "", md.group(4) or "")
     return "none"
+
+
+def policy_ref(row, cells, held, s, policy):
+    """The reading of a policy row's typed cells (CC 4.5.13), over the rows held: the base, the voices counted from
+    the count set, and whether the target stayed silent through the window. Matches kx_translate.policy_count_kx."""
+    m = re.fullmatch(r"([a-z_:]+(?:\+[a-z_:]+)*)(?:-([a-z]+))?", cells["count_set"])
+    past = ref_past(held, s)
+    cs = set()
+    for role in m.group(1).split("+"):
+        cs |= {o["attested"] for o in past if fam_match(o["fam"], "seat:offer") and (o.get("val") or {}).get("role") == role and ref_stands(past, o["attested"], role, s.get("object"))}
+    if m.group(2) == "target": cs -= {getf(s, ["target"])}
+    if m.group(2) == "proposer": cs -= {s.get("signer")}
+    unit = (lambda ks: {UNITS["person"].get(k, k) for k in ks}) if cells.get("voice") == "person" else (lambda ks: set(ks))
+    out = [len(unit(cs))]
+    if cells.get("voices"):
+        V = set()
+        for x in cells["voices"].split("|"):
+            if x == "scrubs": V |= set(s.get("cosig", ()))
+            else: V |= {v["signer"] for v in held if fam_match(v["fam"], x + ":*") and s["id"] in v.get("names", ()) and ref_state(held, v) == "admitted"}
+        out.append(len(unit(V & cs)))
+    if cells.get("target_silent") == "yes":
+        w = policy.get(row, 3); tk = getf(s, ["target"])
+        out.append(not any(x.get("signer") == tk and tk is not None and s["t"] <= x["t"] < s["t"] + w for x in held))
+    return tuple(out)
+
+
+def policy_sets(cells, rnd, n=12):
+    """Row sets for a policy row: seats in the count set's roles over the object, some named by the row; votes of the
+    kinds its voices name, some withdrawn; the row's cosignatures; rows by its target."""
+    roles = re.fullmatch(r"([a-z_:]+(?:\+[a-z_:]+)*)(?:-([a-z]+))?", cells["count_set"]).group(1).split("+")
+    kinds = [x for x in (cells.get("voices") or "").split("|") if x in ("objection", "ballot")]
+    out = []
+    for _ in range(n):
+        rows = []
+        for k in rnd.sample(KEYS, rnd.randint(1, 3)):
+            role = rnd.choice(roles); oid = f"so{len(rows)}"
+            rows.append({"id": oid, "fam": "seat:offer", "verb": "attest", "signer": "o1", "attested": k, "object": "o1", "val": {"role": role},
+                         "names": frozenset(), "asserted_at": 0, "ref": {}})
+            if rnd.random() < .85:
+                rows.append({"id": f"sa{len(rows)}", "fam": "seat:accept", "verb": "attest", "signer": k, "attested": k, "object": "o1", "val": {},
+                             "names": frozenset([oid]), "asserted_at": 0, "ref": {}})
+        seats = [r["id"] for r in rows]
+        s = {"id": "self", "fam": "proposal:x", "verb": "attest", "signer": rnd.choice(KEYS), "attested": None, "object": "o1", "asserted_at": 1,
+             "val": {"target": rnd.choice(KEYS)}, "ref": {}, "cosig": frozenset(rnd.sample(KEYS, rnd.randint(0, 3))),
+             "names": frozenset(x for x in seats if rnd.random() < .8)}
+        later = []
+        for k in rnd.sample(KEYS, rnd.randint(0, 2)) if kinds else []:
+            vid = f"v{len(later)}"
+            later.append({"id": vid, "fam": rnd.choice(kinds) + ":" + rnd.choice(["raised", "yes"]), "verb": "attest", "signer": k, "attested": None,
+                          "object": "o1", "asserted_at": 2, "val": {}, "ref": {}, "names": frozenset(["self"] if rnd.random() < .85 else [])})
+            if rnd.random() < .25:
+                later.append({"id": f"w{vid}", "fam": later[-1]["fam"], "verb": "withdraw", "signer": k, "attested": None, "object": "o1",
+                              "asserted_at": 3, "val": {}, "ref": {}, "names": frozenset([vid])})
+        if cells.get("target_silent") == "yes" and rnd.random() < .7:
+            later.append({"id": "tz", "fam": "x:y", "verb": "attest", "signer": s["val"]["target"] if rnd.random() < .7 else rnd.choice(KEYS),
+                          "attested": None, "object": "o1", "asserted_at": 2, "val": {}, "ref": {}, "names": frozenset()})
+        out.append(rows + [s] + later[:4])
+    return out

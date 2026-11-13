@@ -2,7 +2,7 @@
  "_meta": {
   "source": "tools/build_csd4_chain.py",
   "pins": {
-   "state_table_sha256": "b4f9dc9c9b02b1e42f3565f294c5bdcc184fe23fa789d4f48f5c5f9eb019cb2b",
+   "state_table_sha256": "2fff1fafeb06571dd2c4143967f166e64df0ba90538173d9bcf9bcb41ae93949",
    "invariants_sha256": "2ccd977d0c6d1f2941831d8c0c4879a4c7ac78241915e9070ebe6285d53567a2",
    "vocabulary_sha256": "c37f6f9651579932835ff700a2ec376a0c5c928545c3ed476362ec4bd4ac0769",
    "vocabulary_catalogue_version": 6,
@@ -39,7 +39,7 @@
    "card_relations": "the CSD cards' 'stops at rel[k]:…' relation list and its owner-by-repo map are CEWPOS / CIRISClient packaging/csd4 data, not CC's",
    "tag": "these files ride the v1.0-rc9 tag; a repo that vendors tagged CC only vendors them at the tag, or pins the rc9 commit as a test fixture as persist does for governance_policy.json"
   },
-  "chain_sha256": "e327d3fddcd1c33f591a05285c9cccf7b859517683f4f5534c3f25e7da0f1729"
+  "chain_sha256": "78ebfb4a8b734c49e8cab5d28112d3897bc40b11c1ad3b40468fe8951eb86a61"
  },
  "chain": [
   {
@@ -48816,7 +48816,7 @@
      "variable": "delegation.scope",
      "state": "license",
      "plane": "authority",
-     "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+     "cc_ref": "4.4.3.4.3 2.4.1.2.1",
      "enters_by": "delegates_to with scope license admitted; delegator holds licence authority for the authority_id",
      "signer": "principal",
      "model_ref": "authority_tree.authority_tree.py:issue_licence",
@@ -48826,8 +48826,8 @@
    "invariants": [],
    "claims": [
     {
-     "claim_id": "CLM-canonicalization-signing",
-     "cc_ref": "4.4.3.4.3.1",
+     "claim_id": "CLM-cohort",
+     "cc_ref": "4.4.3.4.3",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -48836,7 +48836,137 @@
        "repo": "CIRISVerify",
        "path": "src/ciris-verify-core/src/self_at_login.rs",
        "symbols": [
-        "sign_partnership_grant"
+        "perform_self_at_login"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-stream-is-data-choice",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/services/governance/consent/service.py",
+       "symbols": [
+        "ConsentService.grant_consent"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/types.rs",
+       "symbols": [
+        "delegation_scope::INFRA"
        ]
       }
      ]
@@ -48854,7 +48984,7 @@
      "variable": "delegation.scope",
      "state": "grant",
      "plane": "authority",
-     "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+     "cc_ref": "4.4.3.4.3 2.4.1.2.1",
      "enters_by": "delegates_to with scope grant admitted; delegator owns, stewards or holds a grant-scoped delegation over the asset",
      "signer": "principal",
      "model_ref": "authority_tree.authority_tree.py:issue_grant",
@@ -48864,8 +48994,8 @@
    "invariants": [],
    "claims": [
     {
-     "claim_id": "CLM-canonicalization-signing",
-     "cc_ref": "4.4.3.4.3.1",
+     "claim_id": "CLM-cohort",
+     "cc_ref": "4.4.3.4.3",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -48874,7 +49004,137 @@
        "repo": "CIRISVerify",
        "path": "src/ciris-verify-core/src/self_at_login.rs",
        "symbols": [
-        "sign_partnership_grant"
+        "perform_self_at_login"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-stream-is-data-choice",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/services/governance/consent/service.py",
+       "symbols": [
+        "ConsentService.grant_consent"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-issuance-scope",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/admission.rs",
+       "symbols": [
+        "check_licensure_delegator_is_authority"
+       ]
+      },
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/key_grant.rs",
+       "symbols": [
+        "admit_replicated_key_grant"
+       ]
+      },
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I4",
+        "I5",
+        "I6"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-attenuation",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I1"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-cascade",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I3"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-sub-delegation-requirement",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I7"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-delegation-determinism",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "test",
+       "repo": "CIRISConstitution",
+       "path": "formal/authority_tree/authority_tree.py",
+       "symbols": [
+        "I9"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/types.rs",
+       "symbols": [
+        "delegation_scope::INFRA"
        ]
       }
      ]
@@ -48892,7 +49152,7 @@
      "variable": "delegation.link",
      "state": "refused",
      "plane": "authority",
-     "cc_ref": "4.4.3.4.3.1 2.4.1.2.1",
+     "cc_ref": "4.4.3.4.3 2.4.1.2.1",
      "enters_by": "enforced admission: delegator lacks the underlying authority; refused, not unweighted",
      "signer": "substrate at the door",
      "model_ref": "—",
@@ -49187,8 +49447,8 @@
      ]
     },
     {
-     "claim_id": "CLM-canonicalization-signing",
-     "cc_ref": "4.4.3.4.3.1",
+     "claim_id": "CLM-cohort",
+     "cc_ref": "4.4.3.4.3",
      "status": "established",
      "join": "by_section",
      "evidence": [
@@ -49197,7 +49457,39 @@
        "repo": "CIRISVerify",
        "path": "src/ciris-verify-core/src/self_at_login.rs",
        "symbols": [
-        "sign_partnership_grant"
+        "perform_self_at_login"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-consent-stream-is-data-choice",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISAgent",
+       "path": "ciris_engine/logic/services/governance/consent/service.py",
+       "symbols": [
+        "ConsentService.grant_consent"
+       ]
+      }
+     ]
+    },
+    {
+     "claim_id": "CLM-scope-infra-relay",
+     "cc_ref": "4.4.3.4.3",
+     "status": "established",
+     "join": "by_section",
+     "evidence": [
+      {
+       "kind": "impl",
+       "repo": "CIRISPersist",
+       "path": "src/federation/types.rs",
+       "symbols": [
+        "delegation_scope::INFRA"
        ]
       }
      ]
@@ -49288,7 +49580,7 @@
      "variable": "grant.state",
      "state": "onward_refused",
      "plane": "authority",
-     "cc_ref": "2.4.1.2.1 4.4.3.4.3.1",
+     "cc_ref": "2.4.1.2.1 4.4.3.4.3",
      "enters_by": "key_grant whose issuer holds the DEK but neither the asset nor a grant-scoped delegation; refused at admission",
      "signer": "substrate at the door",
      "model_ref": "—",
@@ -53003,12 +53295,10 @@
    "4.4.3.2": "bold"
   },
   "deferral_response_unlicensed": {
-   "3.1.9.3": "after_refusal",
-   "4.3": "after_refusal"
+   "3.1.9.3": "after_refusal"
   },
   "deferral_response_unseated": {
-   "3.1.9.3": "after_refusal",
-   "4.3": "after_refusal"
+   "3.1.9.3": "after_refusal"
   },
   "delegates_to": {
    "4.4.3.8": "after_refusal"

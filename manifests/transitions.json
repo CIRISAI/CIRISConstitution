@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "563cacc16e35354ade3d2498dc6681920b3ed079cb3c0145e64cf4d227b1910a",
+  "source_sha256": "a24c5ef1943bedeb0857d4b3411dd5aeb13ead4b8ba630ce75306fe5173688f0",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -90,9 +90,9 @@
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
-  "transitions": 459,
+  "transitions": 460,
   "gap_cells": 5,
-  "confirmed": 253,
+  "confirmed": 254,
   "undo_gap_cells": 30,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
@@ -16714,6 +16714,49 @@
      "confirm": {
       "value": false,
       "source": "derived"
+     },
+     "guard": {
+      "value": [],
+      "source": "generic"
+     },
+     "change": {
+      "value": [],
+      "source": "generic"
+     }
+    },
+    {
+     "verb": "supersede",
+     "from": "admitted",
+     "to": "superseded",
+     "roles": {
+      "value": [
+       "author"
+      ],
+      "source": "derived"
+     },
+     "policy": {
+      "value": {
+       "policy": "selfAct",
+       "rows": []
+      },
+      "source": "derived"
+     },
+     "widens": {
+      "value": true,
+      "when": "by_scope_change",
+      "source": "derived",
+      "cc_ref": "CC 4.4.3.3.1"
+     },
+     "undo": {
+      "value": true,
+      "via": "supersede",
+      "policy": "selfAct",
+      "source": "derived"
+     },
+     "confirm": {
+      "value": true,
+      "source": "derived",
+      "when": "if_widens"
      },
      "guard": {
       "value": [],

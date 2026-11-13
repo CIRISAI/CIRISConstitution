@@ -121,13 +121,25 @@ def policy_windows():
     return {f["family"]: 3 for f in json.load(open(os.path.join(ROOT, "manifests", "governance_policy.json")))["families"]}
 
 
-def run_guard(c, idx, planted=False):
+def plant_src(src, swap, retranslate):
+    """A seeded mistranslation of one cell: ("kx", a, b) swaps text of the translation, ("text", a, b) translates the
+    cell with its words changed, while the reference still reads the cell as written."""
+    if not swap: return src
+    kind, a, b = swap
+    if kind in ("kx", "kx*"):       # kx*: every occurrence
+        assert a in src, f"plant: {a!r} is not in the translation"
+        return src.replace(a, b) if kind == "kx*" else src.replace(a, b, 1)
+    return retranslate(a, b)
+
+
+def run_guard(c, idx, planted=False, swap=None):
     gg = TOOLS["guard_grammar"]
     res = {"grammar": "guard", "cell": idx, "family": c["family"], "text": c["guard"]}
     try: clauses, _ = gg.parse(c["guard"])
     except Exception as e: return dict(res, status="not_parsed", err=str(e))
     src = T.translate(clauses)
     if planted: src = src.replace("meets(", "member(", 1)
+    src = plant_src(src, swap, lambda a, b: T.translate(gg.parse(c["guard"].replace(a, b))[0]))
     try: expr = kx.parse(src)
     except Exception as e: return dict(res, status="not_translated", err=str(e))
     info = kx.analyse(expr, PRELUDE)
@@ -167,13 +179,13 @@ def clause_layers(clauses):
             i1 = kx.analyse(kx.parse(T.t_clause_among(cl, cs, outer)), PRELUDE)
             atom = cl.get("atom") or {}
             out.append({"at": at + str(n), "layer": kx.layer_name(i1), "flags": sorted(i1.flags), "outcome": (cl["else"] or {}).get("do"),
-                        "window": atom.get("atom") == "window"})
+                        "window": atom.get("atom") == "window" or bool(atom.get("window"))})
             if "group" in cl: walk(cl["group"], cl, at + str(n) + ".")
     walk(clauses, None, "")
     return out
 
 
-def run_fold(c, idx):
+def run_fold(c, idx, swap=None):
     fg = TOOLS["fold_grammar"]
     res = {"grammar": "fold", "cell": idx, "family": c["family"], "text": c["fold"]}
     try: parsed, _, _ = fg.parse(c["fold"])
@@ -186,8 +198,13 @@ def run_fold(c, idx):
     fam = "x:{y}" if c["family"].startswith("*") or c["family"].startswith("PLANT") else c["family"]
     when = parsed["when"]
     tx = T.Tx(parts, fam, when)
+    def retx(a, b):
+        p2 = fg.parse(c["fold"].replace(a, b))[0]; parts2 = dict(p2["parts"])
+        for k in ("reads", "key", "pick", "cut"):
+            if k not in parts2 and k in dparts: parts2[k] = dparts[k]
+        return T.Tx(parts2, fam, p2["when"]).build()
     try:
-        src = tx.build(); expr = kx.parse(src)
+        src = plant_src(tx.build(), swap, retx); expr = kx.parse(src)
     except T.NeedsOperator as e: return dict(res, status="needs_operator", err=f"function {e}")
     except Exception as e: return dict(res, status="not_translated", err=repr(e)[:200])
     info = kx.analyse(expr, PRELUDE)
@@ -222,12 +239,12 @@ def run_fold(c, idx):
     return finish(res, agree, dis, ex, muts, tr)
 
 
-def run_change(c, idx):
+def run_change(c, idx, swap=None):
     cg = TOOLS["change_grammar"]
     res = {"grammar": "change", "cell": idx, "family": c["family"], "text": c["change"]}
     try: items, _ = cg.parse(c["change"])
     except Exception as e: return dict(res, status="not_parsed", err=str(e))
-    src = T.ch_kx(items)
+    src = plant_src(T.ch_kx(items), swap, lambda a, b: T.ch_kx(cg.parse(c["change"].replace(a, b))[0]))
     try: expr = kx.parse(src)
     except Exception as e: return dict(res, status="not_translated", err=str(e))
     info = kx.analyse(expr, PRELUDE)
@@ -255,7 +272,7 @@ def run_change(c, idx):
     return finish(res, agree, dis, ex, muts, lambda v: T.ch_kx(cg.parse(v)[0]))
 
 
-def reaction_sets(c, clauses, rnd, n):
+def reaction_sets(c, clauses, rnd, n, called=()):
     fams = [e["of"] for x in clauses for e in x.get("on", []) + x.get("unless", []) + (x["from"] if isinstance(x.get("from"), list) else [])
             if e["event"] not in ("close", "fold") and e["of"] not in ("self", "target")]
     lands = [x["landing"] for x in clauses if x["kind"] == "land" and x.get("landing")]
@@ -291,15 +308,27 @@ def reaction_sets(c, clauses, rnd, n):
         if rnd.random() < .3:
             later.append({"id": "W", "fam": s["fam"], "verb": rnd.choice(["withdraw", "recant", "replace"]), "signer": s["signer"], "attested": None, "object": s["object"],
                           "asserted_at": 4, "val": {}, "leaf": {}, "ref": {}, "names": frozenset(["self"])})
+        for f in called:      # a fold the cell calls: seats in the role its count is over, conferred by the object and named by the row
+            ov = re.match(r"([a-z_]+)", f["parts"].get("over", ""))
+            if not ov: continue
+            for k in rnd.sample(R.KEYS, rnd.randint(0, 3)):
+                oid = f"f{len(later)}"
+                later.append({"id": oid, "fam": "seat:offer", "verb": "attest", "signer": s["object"], "attested": k, "object": s["object"], "asserted_at": 0,
+                              "val": {"role": ov.group(1)}, "leaf": {}, "ref": {}, "names": frozenset()})
+                later.append({"id": oid + "a", "fam": "seat:accept", "verb": "attest", "signer": k, "attested": k, "object": s["object"], "asserted_at": 0,
+                              "val": {}, "leaf": {}, "ref": {}, "names": frozenset([oid])})
+                if rnd.random() < .85: s["names"] = s["names"] | {oid, oid + "a"}
         yield rows + [s] + later, rnd.randint(0, 8)
 
 
-def run_reaction(c, idx):
+def run_reaction(c, idx, swap=None):
     br = TOOLS["build_reactions"]
     res = {"grammar": "reaction", "cell": idx, "family": c["family"], "text": c["reaction"]}
     try: clauses, _ = br.parse(c["reaction"])
     except Exception as e: return dict(res, status="not_parsed", err=str(e))
-    src, unresolved = T.re_kx(clauses)
+    fg = TOOLS["fold_grammar"]; folds = T.fold_names(cells(ROOT)["fold"], fg.parse, fg.parse(fg.DEFAULT)[0]["parts"])
+    src, unresolved = T.re_kx(clauses, folds=folds, family=c["family"])
+    src = plant_src(src, swap, lambda a, b: T.re_kx(br.parse(c["reaction"].replace(a, b))[0], folds=folds, family=c["family"])[0])
     try: expr = kx.parse(src)
     except Exception as e: return dict(res, status="not_translated", err=str(e))
     info = kx.analyse(expr, PRELUDE)
@@ -308,19 +337,80 @@ def run_reaction(c, idx):
     muts = [m for m in (mutate(src, rnd) for _ in range(3)) if m[0]]
     muts = [[kx.parse(m), h, 0] for m, h in muts]
     agree = dis = 0; ex = []
-    for allrows, now in reaction_sets(c, clauses, rnd, REACTION_SETS):
+    called = [folds[(c["family"], e["of"])] for x in clauses for e in x.get("on", []) + x.get("unless", []) if e["event"] == "fold" and (c["family"], e["of"]) in folds]
+    tables = {"dur": {}, **T.UNITS}
+    for allrows, now in reaction_sets(c, clauses, rnd, REACTION_SETS, called):
         for held in R.orders(allrows, cap=24):
             s = next(x for x in held if x["id"] == "self")
-            o = frozenset(R.re_ref(clauses, held, s, now)); t = kx.Ev(PRELUDE, held, s, now, {"dur": {}}).run(expr)
+            o = frozenset(R.re_ref(clauses, held, s, now, folds, c["family"])); t = kx.Ev(PRELUDE, held, s, now, tables).run(expr)
             if o == t: agree += 1
             else:
                 dis += 1
                 if len(ex) < 2: ex.append({"orig": repr(sorted(map(repr, o)))[:300], "kx": repr(sorted(map(repr, t)))[:300]})
             for m in muts:
-                try: mt = kx.Ev(PRELUDE, held, s, now, {"dur": {}}).run(m[0])
+                try: mt = kx.Ev(PRELUDE, held, s, now, tables).run(m[0])
                 except Exception: mt = "error"
                 m[2] += mt != o
-    return finish(res, agree, dis, ex, muts, lambda v: T.re_kx(br.parse(v)[0])[0])
+    return finish(res, agree, dis, ex, muts, lambda v: T.re_kx(br.parse(v)[0], folds=folds, family=c["family"])[0])
+
+
+# ------------------------------------------------------------------ a misreading of each word given a meaning must be caught
+WORD_PLANTS = [   # (word, grammar, a cell whose text holds this, the misreading)
+    ("other(F): of a family other than F", "guard", "one other(testimonial_witness:{kind})@named", ("kx", "not(isfam(r, 'testimonial_witness:{kind}'))", "isfam(r, 'testimonial_witness:{kind}')")),
+    ("set(ref:*): every named row", "guard", "set(ref:*) ballot:moderator@named[object=object] else void\t", ("text", "set(ref:*) ballot", "one ballot")),
+    ("within(POLICY): from first holding", "guard", "within(accord_halt)", ("kx", "lt(arrival(self), add(arrival(r)", "lt(self.asserted_at, add(r.asserted_at")),
+    ("after(POLICY): from first holding", "guard", {"family": "ballot:moderator_acceptance", "guard": "after(moderator_election) else exclude", "cc_ref": "made up"}, ("kx", "add(arrival(x), cell('policy', 'moderator_election'))", "add(x.asserted_at, cell('policy', 'moderator_election'))")),
+    ("@named: the head the row names", "fold", "over=seated@named/person", ("text", "@named", "@now")),
+    ("cut=whole", "fold", "cut=whole", ("kx", "member(r.id, ids(past(y)))", "eq(r.id, y.id)")),
+    ("drop_only(MEMBER)", "fold", "drop_only(members)", ("kx", "none(diff(r.members, x.members))", "none(diff(x.members, r.members))")),
+    ("test ?founder_quorum_restored:founder_quorum_unreachable", "fold", "founder_quorum_restored", ("text", "n>M", "n>=M")),
+    ("/under: through others", "change", "cascade=membership:{stage}/under:lapsed", ("kx*", "member(T.id, ids(past(x)))", "member(T.id, x.names)")),
+    ("/over: the same object", "change", "cascade=group:roster/over:withdrawn", ("kx", "eq(x.object, T.object)", "eq(x.signer, T.signer)")),
+    ("entrenched: the record's flag", "change", "replace[entrenched]: field=consensus_protocol:frozen\t", ("kx", "eq(T.consensus_protocol_entrenched, 1)", "eq(self.entrenched, 1)")),
+    (":shrink", "change", "replace: field=members:shrink", ("kx", "none(diff(self.members, T.members))", "none(diff(T.members, self.members))")),
+    (":grow_signed", "change", "replace[grade:trust_root]: field=members:grow_signed", ("kx", "member(k, cosigners(self))", "true")),
+    ("link=chained:", "change", "link=chained:prev_head_digest", ("text", "link=chained:", "link=ranked:")),
+    ("by receipt: from first holding", "reaction", "accord:invoke:constitutional:{halt_id}\texpiry none; clock fuse = charter.halt_fuse_secs from first_held by receipt", ("kx", "add(arrival(self)", "add(self.asserted_at")),
+    ("by signed: the row's own end", "reaction", "[proposal] expiry required expires_at max membership_proposal_max_secs from asserted_at by signed", ("kx", "let O = self.asserted_at", "let O = arrival(self)")),
+    ("by signed on a first-held clock reads no instant", "reaction", "accord:invoke:constitutional:{halt_id}\texpiry none; clock fuse = charter.halt_fuse_secs from first_held by receipt", ("text", "by receipt", "by signed")),
+    ("fold(NAME): the fold's verdict", "reaction", "on fold(founder_quorum_unreachable)", ("kx", "'founder_quorum_unreachable')), not(", "'founder_quorum_restored')), not(")),
+]
+POLICY_PLANTS = [  # (word, row, the misreading)
+    ("voice person: one voice a person", "moderation_overturn", ("cell('person', k, k)", "k")),
+    ("voice key: each key a voice", "self_roster_add", ("size(CS)", "size(setof(CS, \\k: cell('person', k, k)))")),
+    ("voices objection", "moderation_overturn", ("'objection:*'", "'ballot:*'")),
+    ("voices ballot", "moderator_election", ("'ballot:*'", "'objection:*'")),
+    ("voices scrubs", "moderator_recall", ("cosigners(self)", "setof(held, \\v: v.signer)")),
+    ("target_silent yes", "self_roster_evict", ("ge(arrival(x), arrival(self))", "true")),
+]
+
+
+def word_plants():
+    cs = cells(ROOT); out = []
+    run = {"guard": run_guard, "fold": run_fold, "change": run_change, "reaction": run_reaction}
+    for word, g, where, swap in WORD_PLANTS:
+        rows = [(0, where)] if isinstance(where, dict) else [(i, c) for i, c in enumerate(cs[g]) if where in "\t".join(c.values())]   # a made-up cell where the word's verdict is not masked
+        if not rows: out.append((word, None)); continue
+        i, c = rows[0]
+        r = run[g](c, i, swap=swap)
+        out.append((word, r.get("disagree")))
+    return out
+
+
+def policy_plants():
+    pt = tsv(os.path.join(ROOT, "formal", "derivation", "policy_text.tsv")); cellsof = defaultdict(dict)
+    for c in pt: cellsof[c["row"]][c["column"]] = c["value"]
+    out = []
+    for word, row, (a, b) in POLICY_PLANTS:
+        cl = cellsof[row]; src = T.policy_count_kx(row, cl)
+        if src is None or a not in src: out.append((word, None)); continue
+        e = kx.parse(src.replace(a, b, 1)); rnd = random.Random(sum(map(ord, row))); pol = {row: 3}; dis = 0
+        for rows in R.policy_sets(cl, rnd):
+            for held in R.orders(rows, cap=24):
+                s = next(x for x in held if x["id"] == "self")
+                dis += R.policy_ref(row, cl, held, s, pol) != kx.Ev(PRELUDE, held, s, 0, {"policy": pol, "person": T.UNITS["person"]}).run(e)
+        out.append((word, dis))
+    return out
 
 
 # ------------------------------------------------------------------ dropped words and undeclared drops
@@ -343,19 +433,19 @@ for g, rxs in VOCAB.items():
         WORDS[g].append((rx, [a for a in alts]))
 
 
-def collisions(grammar, text, base, tr):
+def collisions(grammar, text, base, tr, resolved=()):
     """Every carried word must change the translation: swap each closed word for each other word of its class; a
     variant that parses, drops nothing the cell does not, and translates to the same KX is an undeclared drop."""
     out = []
-    mine = T.dropped_words(grammar, text)
-    spans = T.dropped_spans(grammar, text)
+    mine = T.dropped_words(grammar, text, resolved)
+    spans = T.dropped_spans(grammar, text, resolved)
     for rx, alts in WORDS[grammar]:
         for m in re.finditer(rx, text):
             if any(a <= m.start(1) < b for a, b in spans): continue     # a word inside a declared drop
             for w in alts:
                 if w == m.group(1): continue
                 v = text[:m.start(1)] + w + text[m.end(1):]
-                if T.dropped_words(grammar, v) != mine: continue
+                if T.dropped_words(grammar, v, resolved) != mine: continue
                 try: k = tr(v)
                 except Exception: continue
                 if k == base: out.append(f"{m.group(1).strip()} reads as {w.strip()}")
@@ -364,10 +454,11 @@ def collisions(grammar, text, base, tr):
 
 def finish(res, agree, dis, ex, muts, tr):
     g, text = res["grammar"], res["text"]
-    dw = T.dropped_words(g, text)
+    resolved = set(re.findall(r"\bfold\(([a-z_]+)\)", text)) - {u[5:-1] for u in res.get("unresolved", [])}
+    dw = T.dropped_words(g, text, resolved)
     return dict(res, status="reads_dropped" if dw else "ok", dropped=[w for w, _ in dw], why=[y for _, y in dw],
                 order_sites=kx.order_sites(kx.parse(res["kx"])),
-                labels=T.label_words(g, text), collisions=collisions(g, text, res["kx"], tr),
+                labels=T.label_words(g, text), collisions=collisions(g, text, res["kx"], tr, resolved),
                 agree=agree, disagree=dis, examples=ex, mutants=len(muts), uncaught=sum(1 for m in muts if m[2] == 0))
 
 
@@ -433,15 +524,37 @@ def run_policy():
                         ga += d == t; gd += d != t
     pt = tsv(os.path.join(ROOT, "formal", "derivation", "policy_text.tsv"))
     counted, dropped, sets = [], [], []
+    cellsof = defaultdict(dict)
+    for c in pt: cellsof[c["row"]][c["column"]] = c["value"]
+    counts = {}      # each row's count (count_set, voice, voices, target_silent) against the reference reading, every order
+    for row, cl in cellsof.items():
+        src = T.policy_count_kx(row, cl)
+        if src is None: continue
+        e = kx.parse(src); info = kx.analyse(e, PRELUDE); rnd = random.Random(sum(map(ord, row)))
+        muts = [[kx.parse(m), h, 0] for m, h in (mutate(src, rnd) for _ in range(3)) if m]
+        ag = di = 0
+        pol = {row: 3}; tables = {"policy": pol, "person": T.UNITS["person"]}
+        for rows in R.policy_sets(cl, rnd):
+            for held in R.orders(rows, cap=24):
+                s = next(x for x in held if x["id"] == "self")
+                o = R.policy_ref(row, cl, held, s, pol); t = kx.Ev(PRELUDE, held, s, 0, tables).run(e)
+                ag += o == t; di += o != t
+                for m in muts:
+                    try: mt = kx.Ev(PRELUDE, held, s, 0, tables).run(m[0])
+                    except Exception: mt = "error"
+                    m[2] += mt != o
+        counts[row] = {"kx": src, "flags": sorted(info.flags), "agree": ag, "disagree": di, "mutants": len(muts), "uncaught": sum(1 for m in muts if m[2] == 0)}
     for c in pt:
         if c["column"] == "count_set" and T.count_set_kx(c["value"]):      # the seats the cell names, as an expression with a layer
             i = kx.analyse(kx.parse(T.count_set_kx(c["value"])), PRELUDE)
             sets.append({"row": c["row"], "value": c["value"], "layer": kx.layer_name(i), "flags": sorted(i.flags)})
-        elif c["column"] != "counted_at": dropped.append(c)     # how a voice is counted and found: not yet translated
+        elif c["column"] in ("voice", "voices", "target_silent") and c["row"] in counts and not counts[c["row"]]["disagree"]: pass   # in the row's count
+        elif c["column"] != "counted_at": dropped.append(c)     # the count set is no seat, or whether the act changes its set: not translated
         if c["column"] == "counted_at":
             i = kx.analyse(kx.parse(T.counted_at_kx(c["value"])), PRELUDE)
             counted.append({"row": c["row"], "value": c["value"], "layer": kx.layer_name(i), "flags": sorted(i.flags)})
-    return {"vectors": (va, vd), "rule_vectors": (ra, rd), "grid": (ga, gd), "rows_called": sorted(calls), "examples": ex[:6], "counted_at": counted, "count_set": sets, "dropped": dropped}
+    return {"vectors": (va, vd), "rule_vectors": (ra, rd), "grid": (ga, gd), "rows_called": sorted(calls), "examples": ex[:6], "counted_at": counted, "count_set": sets,
+            "dropped": dropped, "counts": counts}
 
 
 # ------------------------------------------------------------------ the counts that may only fall
@@ -525,6 +638,7 @@ def measures(results, counts, policy):
     m["READS_DROPPED"] = sorted({(r["grammar"], r["family"], r["text"]) for r in results if r.get("status") == "reads_dropped"}) + \
         [("policy", c["row"], c["column"] + "=" + c["value"]) for c in policy["dropped"]]
     m["CARRIED_WORD_COLLISIONS"] = sorted({(r["grammar"], r["family"], x) for r in ok for x in r.get("collisions", [])})
+    m["UNCAUGHT_MUTANTS_POLICY"] = [(row, c["kx"]) for row, c in policy["counts"].items() for _ in range(c["uncaught"])]
     m["LABEL_WORDS_NOT_EVALUATED"] = sorted({(r["grammar"], r["family"], r["text"]) for r in results if r.get("labels")})
     for g in ("guard", "fold", "change", "reaction"):
         m[f"UNCAUGHT_MUTANTS_{g.upper()}"] = [(r["family"], r["text"]) for r in ok if r["grammar"] == g for _ in range(r["uncaught"])]
@@ -569,6 +683,10 @@ def main():
     print(f"count     families {len(counts):3d}  agree {ca}  disagree {cd}")
     print(f"policy    rows called {len(policy['rows_called'])}  vectors {policy['vectors'][0]}/{sum(policy['vectors'])}  rule vectors {policy['rule_vectors'][0]}/{sum(policy['rule_vectors'])}  decide() grid {policy['grid'][0]}/{sum(policy['grid'])}")
     if cd: refusals.append(f"count: {cd} disagreements")
+    pc_ = policy["counts"]; pa, pdd = sum(c["agree"] for c in pc_.values()), sum(c["disagree"] for c in pc_.values())
+    print(f"policy    counts of {len(pc_)} rows (count set, voice, voices, target silent) against the reference reading: agree {pa}  disagree {pdd}  "
+          f"mutants {sum(c['mutants'] for c in pc_.values())}, caught {sum(c['mutants'] - c['uncaught'] for c in pc_.values())}")
+    if pdd: refusals.append(f"policy counts: {pdd} disagreements: " + ", ".join(r for r, c in pc_.items() if c["disagree"]))
     for k in ("vectors", "rule_vectors", "grid"):
         if policy[k][1]: refusals.append(f"policy {k}: {policy[k][1]} disagree: {policy['examples'][:2]}")
     pm = plant_mis.get("disagree") or 0
@@ -623,6 +741,9 @@ def main():
         got = [k for k, _, _ in over_maximum(case, sizes)]
         print(f"plant     {name}: " + (f"refused on {', '.join(got)}" if got else "passes") + (", as it must" if got == want else ", wrong"))
         if got != want: refusals.append(f"the gate plant `{name}` gave {got}, not {want}")
+    for word, dis in word_plants() + policy_plants():      # a misreading of each word given a meaning
+        print(f"plant     the word {word}, misread: " + ("no cell holds it" if dis is None else f"{dis} disagreements, " + ("caught" if dis else "not caught")))
+        if not dis: refusals.append(f"the misread word `{word}` was not caught")
     for g, text, got, want in outcome_plants():      # an outcome word on a made-up cell, against the layer the cell is computed to read
         say = lambda t: ("a refusal off the door" if t[0] else "") + (" and " if t[0] and t[1] else "") + ("a final word on a derived clause" if t[1] else "") or "not counted"
         print(f"plant     made-up {g} `{text}`: {say(got)}" + (", as it must" if got == want else ", wrong"))

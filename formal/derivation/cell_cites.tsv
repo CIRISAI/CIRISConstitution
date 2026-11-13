@@ -405,7 +405,7 @@ image:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary con
 key:record	lifecycle	fills	CC 2.4	rotation is `supersedes`; an anchor scrub or accord co-scrub is a cosignature
 key:record	lifecycle	fills	CC 3.1.3	Rebind or rotation is `supersedes`
 key:record	signer_rule	agree	CC 2.4	- a key claim (`key:record:v1`, attester = the key, admitted by **proof of possession** against the keys it carries, the one stated exception to resolve-the-attester; rotation is `supersedes`; an anchor
-key:record	signer_rule	agree	CC 4.2.4	**Key material** (Ed25519 + ML-DSA-65 pubkeys for the three holders) lives in the persistence substrate: `federation_keys` rows with `identity_type="accord_holder"`, self-signed at provisioning, and admitted as accord holders by the accord's
+key:record	signer_rule	agree	CC 4.2.4	**Key material** (Ed25519 + ML-DSA-65 pubkeys for the holders) lives in the persistence substrate: `federation_keys` rows with `identity_type="accord_holder"`, self-signed at provisioning, and admitted as accord holders by the accord's
 key:record	signer_rule	agree	CC 5.4.6	It is a fresh hybrid key pair whose `key:record:v1` travels inline, of `identity_type` `pseudonym`, with no occurrence and no standing
 key:revocation	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 key:revocation	fold	agree	CC 2.4.1.1	a later revocation MAY lower it and MUST NOT raise it
@@ -633,8 +633,8 @@ watchlist:{id}	lifecycle	fills	CC 4.5.7	Enable/disable is **signed by the author
 watchlist:{id}	placement	agree	CC 3.1.9.4	**Per-group, NEVER global**
 watchlist:{id}	placement	agree	CC 4.5.7	A watchlist is enabled per-group by its `moderate`/`takedown` authority
 watchlist:{id}	projection	agree	CC 3.1.9.4	enabling + every match emit `hard_case:watchlist_enabled` / `:watchlist_match` (never silent)
-watchlist:{id}	signer_rule	fills	CC 3.1.9.4	A `moderate`-scope holder ([CC 4.5.5](part_4_composition_governance.md)) enables a watchlist `{id}` for a group they moderate
-watchlist:{id}	signer_rule	fills	CC 4.5.7	`moderate`-scope holder **optionally** enables a watchlist
+watchlist:{id}	signer_rule	fills	CC 3.1.9.4	A `moderate`- or `takedown`-scope holder ([CC 4.5.5](part_4_composition_governance.md)) enables a watchlist `{id}` for a group they moderate
+watchlist:{id}	signer_rule	fills	CC 4.5.7	`moderate`- or `takedown`-scope holder **optionally** enables a watchlist
 weighted_aggregate:{contribution_id}	projection	agree	CC 3.1.9.3	Rolling tally per Contribution (P7).
 witness_diversity:{contribution_id}	signer_rule	agree	CC 3.4.10	`testimonial_witness:*`, `witness_diversity:*` | dimension families ([CC 3.1.9.3](part_3_the_namespace.md)) | Nothing — any party may testify; these are claims, not roles
 file:{version}	placement	agree	CC 3.1.3.4	A file: one row per file, placed at a `cohort_scope`

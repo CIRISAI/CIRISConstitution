@@ -79,17 +79,22 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 
 | Grammar | Translated in full | Translated with a word dropped |
 |---|---|---|
-| guards | 44 | 14 |
-| folds | 162 | 28 |
-| changes | 31 | 31 |
-| reactions | 61 | 50 |
-| policy text cells | 16 | 39 |
+| guards | 56 | 2 |
+| folds | 185 | 6 |
+| changes | 45 | 17 |
+| reactions | 81 | 30 |
+| policy text cells | 47 | 8 |
 
-Every translation agrees with a reference reading on generated row sets, and the policy rows agree with the
-policy table's own vectors. Four of the five grammars had a parser and no evaluator, so for those the reference
+Every translation agrees with a reference reading on generated row sets in every arrival order. The policy
+rows agree with the policy table's own vectors, and each row's count of persons and voices agrees with a
+reference reading. Four of the five grammars had a parser and no evaluator, so for those the reference
 reading is this work's own and agreement shows the translation matches that reading, not the text. A cell that
 uses a word the translation does not carry is not counted as translated. The dropped words are listed as
-data, among them `@decision`, `@count`, `@seating` and `@prior`, which no text defines.
+data, and each word given a meaning has a misreading the check must catch. **measured**: 48 cells keep a
+dropped word, each listed with the sentence it needs. A count is over the members at the head its row names:
+no fold cell reads `@decision`, `@count` or `@prior`, and each reads `@named` (**proved**:
+`counted_over_named_head`). A reaction calls a fold by the state its test names. Of eleven folds the reactions
+call, two are defined. **open**: nine.
 
 The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`). For an order it holds the total
 and the count across signers. The count of one signer's own rows is shown and not held, since a cell moving
@@ -101,13 +106,13 @@ into it from the count across signers is the intended movement.
 | a cell orders rows of different signers by a digest or a key id | 0 |
 | a cell orders one signer's own rows by a signed instant | 102 |
 | a cell orders one signer's own rows by a digest | 94 |
-| a cell compares the signed instants of two rows | 15 |
+| a cell compares the signed instants of two rows | 14 |
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
-| a fold a reaction calls and no cell defines | 11 |
+| a fold a reaction calls and no cell defines | 9 |
 | a refusal on a clause that reads another row | 0 |
-| a count over the set its own outcome changes | 11 |
-| a cell with a dropped word | 126 |
+| a count over the set its own outcome changes | 0 |
+| a cell with a dropped word | 48 |
 
 One voice may order its own rows. The fold default (CC 3.5.1) evaluates each signer's chain on its own: between
 two acts of one kind by one signer on one named row, the later signed instant wins and the lower row id breaks
@@ -208,7 +213,9 @@ the close. A window names its opener and the acknowledgement by which the conclu
 outcome binds others, the concluder signs it as a landing row naming that acknowledgement and its own head.
 Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 19
 clock entries have this shape, 16 of them counted from receipt. The other 21 are a row stating its own end,
-read from the row alone against now.
+read from the row alone against now. `by receipt` on a clock is the concluder's own first holding of the opener.
+**measured**: five clocks time a window from a signed instant and judge it at receipt, which is neither notion
+of time, so those five stay without a meaning. **open**.
 
 A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with the
 landing is **recounted**: it is counted with the landing's past, and the landing stands only if the table still
@@ -503,12 +510,11 @@ that the ending row has not seen from counting.
 | Item | Kind | Where |
 |---|---|---|
 | Which rows seat which key in which role: what 21 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
-| A count taken when the fold is evaluated has no solution. It has left the policy table; eleven fold cells of other families still read `@decision` or `@count` | table data | `formal/derivation/fold_text.tsv` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
 | Three door parameters in no cell: whether the opening act is in force while its window is open, the joiner's yes as a voice, the threshold as the room's protocol; and 73 things `doors.tsv` lists as stated by no table | table data | `manifests/reactions.json`, `formal/causal_kernel/doors.tsv` |
-| 126 cells with a word the expression language does not carry, and eleven folds a reaction calls that no cell defines | table data | `tools/kx_maxima.tsv` |
+| 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | Seven older models still state a founder's power, a count that includes the member concerned, or a moderator seated with no count: four in the running kernel's tables and scenarios, one in the fork model, two in TLA+ | model | `formal/` |

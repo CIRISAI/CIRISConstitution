@@ -1706,7 +1706,7 @@ Guard:
 - attest: `when(leaf=confirmed) one accord:invoke:constitutional:{halt_id}@admitted[object=object] within(accord_halt) else exclude` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6)
 
 Fold:
-- `over=standing@decision/person` (CC 4.2.6)
+- `over=standing@named/person` (CC 4.2.6)
 
 In time:
 - [confirmed] clock `fuse` = `charter.halt_fuse_secs` (CC 3.4.1, CC 4.2.1.1, CC 4.2.6, CC 4.2.1.3)
@@ -1855,7 +1855,7 @@ Guard:
 - attest: `each(val:ranks) member(key,object) else exclude` (CC 3.1.3)
 
 Fold:
-- `key=election_id,person; pick=agree; over=live@count/person` (CC 3.1.3)
+- `key=election_id,person; pick=agree; over=live@named/person` (CC 3.1.3)
 - `order=max(moderation_track_record),min(admission_order),min(key_id)` (CC 4.5.4)
 - `combine=policy(moderator_election)` (CC 4.5.13)
 - `over=live@named/person` (CC 4.5.13)
@@ -2009,7 +2009,7 @@ Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commit
 Count: `none`
 
 Fold:
-- `over=active/owner` (CC 6.1.9)
+- `over=active@named/owner` (CC 6.1.9)
 - `combine=max(count(owner),(prev*9+9) div 10,floor)` (CC 4.5.13, CC 6.1.9)
 
 Body: `period`, `member_commitment_hex`, `window_periods`, `active_count`, `floor_applied`
@@ -2369,9 +2369,8 @@ Body: `domain`
 Count: `none`
 
 Fold:
-- `over=seated@decision/person` (CC 4.3)
-- `over=seated@prior/person` (CC 4.3)
-- `over=present@decision/person` (CC 4.3)
+- `over=seated@named/person` (CC 4.3)
+- `over=present@named/person` (CC 4.3)
 
 **`delivery_receipt:{stream_id}`** — Facts, account
 
@@ -2560,11 +2559,12 @@ Fold:
 - `feeds=replication.audience` (CC 4.4.3.2.6)
 - `reads=head` (CC 4.4.3.4.4)
 - `@cohort_subkind=infrastructure: over=listed@seating/person` (CC 3.1.3.2)
-- `@cohort_subkind=infrastructure: over=founders@decision/person` (CC 3.2)
+- `@cohort_subkind=infrastructure: over=founders@named/person` (CC 3.2)
 - `reads=head+membership:{stage}&at(now)&seat:human` (CC 3.2)
 - `@cohort_subkind=infrastructure: over=founders@now/person; test=count>m ?live:stalled` (CC 3.2)
 - `reads=head; pick=chain(prev_head_digest)` (CC 4.4.3.2.4.1)
 - `pick=chain(prev_head_digest),tips` (CC 3.2)
+- `over=founders@named/person; test=n>M ?founder_quorum_restored:founder_quorum_unreachable` (CC 3.2)
 
 In time:
 - @affiliations on fold(no_live_deciding_seat): read withdrawn (CC 4.4.3.2.8)
@@ -2859,11 +2859,11 @@ Fold:
 - `@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once` (CC 3.1.3.2)
 - `@stage=resignation: cut=forward; feeds=group:roster` (CC 3.1.3.2)
 - `feeds=group:roster` (CC 4.4.3.2.4, CC 4.4.3.4.4)
-- `@stage=removal: over=others@decision/person` (CC 3.1.3.2, CC 4.5.13)
-- `@cohort_subkind=infrastructure: over=founders@decision/person` (CC 3.2, CC 4.4.3.2.4.1)
-- `@cohort_subkind=infrastructure: over=founders@decision/person; reads=own&direct` (CC 3.2)
+- `@stage=removal: over=others@named/person` (CC 3.1.3.2, CC 4.5.13)
+- `@cohort_subkind=infrastructure: over=founders@named/person` (CC 3.2, CC 4.4.3.2.4.1)
+- `@cohort_subkind=infrastructure: over=founders@named/person; reads=own&direct` (CC 3.2)
 - `reads=own&direct` (CC 3.3.9, CC 6.1.8)
-- `@group_kind=affiliation: over=deciding_seats@decision/person` (CC 4.4.3.2.8)
+- `@group_kind=affiliation: over=deciding_seats@named/person` (CC 4.4.3.2.8)
 - `@stage=removal: bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
 In time:
@@ -2918,7 +2918,7 @@ Body: `description` (text only)
 Count: `moderation_action@subject_group` (CC 4.5.13)
 
 Fold:
-- `over=present@count/person` (CC 4.5.13)
+- `over=present@named/person` (CC 4.5.13)
 
 In time:
 - [harm_report] clock `window` = `moderation_fallback_window_secs` (CC 4.5.13)
@@ -2982,7 +2982,7 @@ Body: `trace_level`, `occurrence_key_ids`, `window_from`, `window_to`, `channel_
 Count: `none`
 
 Fold:
-- `key=attested_key_id; pick=set; by=reader` (CC 3.1.9.4)
+- `key=attested_key_id; pick=union; by=reader` (CC 3.1.9.4)
 
 Body: `witness_relation`
 
@@ -3035,6 +3035,7 @@ Body: `computation` (text only), `goodhart_resistance` (text only), `tracks` (te
 |---|---|---|---|---|---|
 | attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
+| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
 
@@ -3446,7 +3447,7 @@ Fold:
 Count: `None`
 
 Fold:
-- `over=seated@decision/person` (CC 3.1.9.4)
+- `over=seated@named/person` (CC 3.1.9.4)
 
 **`watchlist:{id}`** — Rules, thing
 

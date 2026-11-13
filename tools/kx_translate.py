@@ -86,7 +86,7 @@ def t_cands(a, policy):
     preds = ["ne(r.id, self.id)"]
     fs = a["families"]
     if "of" in fs: preds.append(f"isfam(r, {q('|'.join(fs['of']))})")
-    if "other" in fs: preds += [f"isfam(r, {q('|'.join(fs['other']))})", "ne(r.signer, self.signer)"]
+    if "other" in fs: preds.append(f"not(isfam(r, {q('|'.join(fs['other']))}))")   # a row of a family other than these (CC 3.1.6: never sole evidence)
     src = digest_source(a["joins"]) if not a["quant"].startswith("set(") and a["state"] != "named" else None
     for j in a["joins"]:
         if src and j["op"] == "=" and j["left"]["slot"] == "id" and j["right"]["slot"] == "ref": continue
@@ -94,9 +94,9 @@ def t_cands(a, policy):
     if a["at"] == "asserted_at": preds.append("le(r.asserted_at, self.asserted_at)")
     if a["at"] == "receipt": preds.append("lt(arrival(r), arrival(self))")
     if a["window"]:
-        w = f"cell('policy', {q(a['window']['policy'])})"
-        inside = f"in(self.asserted_at, r.asserted_at, add(r.asserted_at, {w}))"
-        preds.append(inside if a["window"]["dir"] == "within" else f"and(has(r, 'asserted_at'), has(self, 'asserted_at'), not({inside}))")
+        w = f"cell('policy', {q(a['window']['policy'])})"     # from this node's first holding of the row (CC 4.2.1.1: after each node received it)
+        inside = f"lt(arrival(self), add(arrival(r), {w}))"
+        preds.append(inside if a["window"]["dir"] == "within" else f"not({inside})")
     return f"sel({t_source(a)}, \\r: and({', '.join(preds)}))"
 
 
@@ -332,6 +332,10 @@ class Tx:
             if c == "named": S = f"sel({S}, \\r: not({retracted.replace('X.', 'r.')}))"
             elif c == "forward": S = f"sel({S}, \\r: none(sel(past(r), \\y: {retracted.replace('X.', 'y.')})))"
             elif c == "terminal": S = f"sel({S}, \\r: none(sel(past(r), \\y: eq(y.terminal, 1))))"
+            elif c == "whole":      # CC 3.3.7: a withdraws or recants retracts the grant whole: the row, the versions it names and those naming it
+                ret = lambda v: retracted.replace("X.", v + ".")
+                S = (f"sel({S}, \\r: and(not({ret('r')}), none(sel(past(r), \\y: {ret('y')})), "
+                     f"none(sel(held, \\y: and({ret('y')}, member(r.id, ids(past(y))))))))")
             elif c.startswith("boundary("):
                 m = c[9:-1]
                 b = f"min(sel(held, \\k: and(isfam(k, 'key:revocation'), eq(k.attested, r.signer), live(k))), \\k: k.revoked_after)"
@@ -394,6 +398,8 @@ class Tx:
         out = []
         for b in split_top(spec):
             mono, m = re.fullmatch(r"([a-z_]+)\((.+)\)", b).groups()
+            if mono == "drop_only":     # CC 3.3.4: drops members, never adds one, against the version it names
+                out.append(f"every({G}, \\r: every(sel({G}, \\x: member(x.id, r.names)), \\x: none(diff(r.{m}, x.{m}))))"); continue
             how = {"raise_only": "max", "fixed": "one"}.get(mono, "min")
             out.append(f"{how}({G}, \\r: {self.fld('r', m)})")
         return "tuple(" + ", ".join(out) + ")"
@@ -432,7 +438,7 @@ class Tx:
         if t == "/": self.gaps.append("'/' in a cell: read as floor division (div); the cell does not say")
         return f"{ {'+': 'add', '-': 'sub', '*': 'mul', 'div': 'div', '/': 'div'}[t] }({a}, {b})"
 
-    def build(self):
+    def build(self, verdict_only=False):
         S = self.cut(self.source())
         K = self.key("r")
         per_group = f"tuple({self.pick('G')}, {self.bounds('G')})"
@@ -485,12 +491,18 @@ class Tx:
             verdict = f"first({cmp}({lv}, {rv}) -> {q('ok') if tok else q(a)}, else -> {q('refuse(' + tok + ')') if tok else q(b)})"
         absent = f"first(and(none(STAND), true) -> {q(self.P['absent'])}, else -> none)" if "absent" in self.P else "none"
         body = f"tuple(GROUPS, {order}, COMB, {verdict}, {absent}, {'N' if ov else 'none'})"
+        if verdict_only:        # the verdict alone, with only the lets it reads
+            lets = [("S", S), ("STAND", stand)] + ([("N", ov)] if ov else []) + [("COMB", comb)]
+            expr = verdict
+            for n, e in reversed(lets):
+                if re.search(r"\b" + n + r"\b", expr): expr = f"let {n} = {e} in {expr}"
+            return expr
         body = body.replace("GROUPS", groups)
         expr = f"let S = {S} in let STAND = {stand} in " + (f"let N = {ov} in " if ov else "") + f"let COMB = {comb} in {body}"
         return expr
 
 
-REL_KX = {"by": "eq(x.signer, T.signer)", "under": "member(T.id, x.names)", "ref": "member(T.id, x.names)",
+REL_KX = {"by": "eq(x.signer, T.signer)", "under": "member(T.id, ids(past(x)))", "ref": "member(T.id, x.names)",
           "about": "eq(x.subject, T.attested)", "over": "eq(x.object, T.object)"}
 
 
@@ -501,7 +513,8 @@ def ch_kx(items):
         for a in it["when"]:
             k, vs = a["test"], a["values"]
             setlit = "{" + ", ".join(q(v) for v in vs) + "}" if vs else None
-            if vs is None: conds.append("eq(self.leafname, 'recovery')" if k == "recovery" else "ge(size(cosigners(self)), 1)" if k == "cosigned" else f"eq(self.{k}, 1)")
+            if vs is None: conds.append("eq(self.leafname, 'recovery')" if k == "recovery" else "ge(size(cosigners(self)), 1)" if k == "cosigned" else
+                                        "and(some(T), eq(T.consensus_protocol_entrenched, 1))" if k == "entrenched" else f"eq(self.{k}, 1)")
             elif k == "grade": conds.append(f"and(some(T), member(fld(T, 'grade'), {setlit}))")
             elif k in ("subkind", "scope", "axis"): conds.append(f"member(self.{k}, {setlit})")
             elif k == "seat": conds.append("or(" + ", ".join(f"stands(self.signer, {q(v)}, self.object)" for v in vs) + ")")
@@ -516,10 +529,14 @@ def ch_kx(items):
                                "cosigned_prior": "and(some(T), member(T.signer, cosigners(self)))",
                                "committed_key": "and(some(T), member(self.signer, T.recovery_commitments))",
                                "substrate": "and(some(T), eq(typeof(self.signer), 'node'))"}[b])
+            elif k == "link" and c.get("how") == "chained":     # names the held head: no other held row names T by that member
+                checks.append(f"and(some(T), eq(self.ref.{c['member']}, T.id), none(sel(held, \\x: and(ne(x.id, self.id), eq(x.ref.{c['member']}, T.id)))))")
             elif k == "link": checks.append(f"and(some(T), eq(self.ref.{c['member']}, T.id))")
             elif k == "field":
                 d, m = c["dir"], c["member"]
                 if d in ("any", "as_attest"): checks.append("true")
+                elif d == "shrink": checks.append(f"and(some(T), none(diff(self.{m}, T.{m})))")
+                elif d == "grow_signed": checks.append(f"every(diff(self.{m}, fld(T, {q(m)})), \\k: or(eq(k, self.signer), member(k, cosigners(self))))")
                 else:
                     op = {"frozen": "eq", "shrink": "le", "lower": "le"}.get(d, "ge")
                     checks.append(f"{op}(self.{m}, T.{m})")
@@ -548,8 +565,24 @@ CONST_DUR = 3
 LAND_ROW_ALONE = ("self", "author")     # a landing by the signer of the row that opened the window: read off the two rows, no seat
 
 
-def re_kx(clauses, only=None):
-    """-> KX source, and the names the cell calls that no table defines."""
+def fold_names(fold_cells, parse, default_parts):
+    """The folds a reaction may call: a fold cell whose test ends `?A:B` defines fold(A) and fold(B) for its family, each
+    true when the fold's verdict is that state. -> {(family, name): {parts, when}}."""
+    out = {}
+    for c in fold_cells:
+        try: p = parse(c["fold"])[0]
+        except Exception: continue
+        m = re.search(r" \?([a-z_]+):([a-z_]+)$", p["parts"].get("test", ""))
+        if not m: continue
+        parts = dict(p["parts"])
+        for k in ("reads", "key", "pick", "cut"):
+            if k not in parts and k in default_parts: parts[k] = default_parts[k]
+        for n in m.groups(): out[(c["family"], n)] = {"parts": parts, "when": p["when"]}
+    return out
+
+
+def re_kx(clauses, only=None, folds=None, family=None):
+    """-> KX source, and the names the cell calls that no table defines. folds: fold_names(); family: the cell's family."""
     lets, items, unresolved = [], [], []
     def dur(name):
         if name is None: return "none"
@@ -557,6 +590,9 @@ def re_kx(clauses, only=None):
         return f"cell('dur', {q(name)}, {CONST_DUR})"
     def origin(c):
         o = c.get("from")
+        # by signed: a row's own stated end, read from the row against now (KERNEL 5): only a signed member of the row gives
+        # the instant. by receipt: a window the concluder measures from its own first holding of the opener (KERNEL 5).
+        if c.get("by") == "signed" and not (isinstance(o, str) and o != "first_held"): return "none"
         if o is None or o == "first_held": return "arrival(self)"
         if isinstance(o, str): return f"self.{o}"
         alts = []
@@ -568,7 +604,10 @@ def re_kx(clauses, only=None):
     def event(e):
         k, of = e["event"], e["of"]
         if k == "close": return f"and(not(isnone(C_{of})), ge(now, C_{of}))" if any(c.get("name") == of and c["kind"] == "clock" for c in clauses) else "false"
-        if k == "fold": unresolved.append(f"fold({of})"); return None
+        if k == "fold":
+            f = (folds or {}).get((family, of))
+            if f is None: unresolved.append(f"fold({of})"); return None
+            return f"eq({Tx(f['parts'], family, f['when']).build(verdict_only=True)}, {q(of)})"
         rows = "single(self)" if of == "self" else None
         src = ("sel(held, \\x: eq(x.id, self.id))" if of == "self" else "named(self, 'target')" if of == "target" else f"sel(held, \\x: and(isfam(x, {q(of)}), ne(x.id, self.id)))")
         if e.get("by") == "producer": src = f"sel({src}, \\x: eq(x.signer, self.signer))"
@@ -607,7 +646,8 @@ def re_kx(clauses, only=None):
             on = [event(e) for e in c["on"]]; un = [event(e) for e in c.get("unless", [])]
             if None in on or None in un:
                 items.append(f"first({guard} -> single(tuple('react', 'unresolved')), else -> {{}})"); continue
-            eff = sorted(("" if x.get("force", "must") == "must" else x["force"] + " ") + f"{x['effect']}:{x.get('family') or x.get('verdict') or x.get('act') or x.get('policy')}" for x in c["effects"])
+            eff = sorted(("" if x.get("force", "must") == "must" else x["force"] + " ") + f"{x['effect']}:{x.get('family') or x.get('verdict') or x.get('act') or x.get('policy')}"
+                         + (f" by {x['by']}" if x["effect"] == "emit" else "") for x in c["effects"])
             efft = "tuple(" + ", ".join(q(x) for x in eff) + ")"
             items.append(f"first({guard} -> single(tuple('react', owed(and(or({', '.join(on)}), not(or({', '.join(un) or 'false'}))), {efft}))), else -> {{}})")
     if only is not None: items = [items[only]]
@@ -620,44 +660,48 @@ def re_kx(clauses, only=None):
 # uses one is reported `reads_dropped` with the word; it does not count as translated. The words are listed here as
 # data so the list can only shrink as each gets a meaning of its own. (grammar, regex on the cell text, word, why)
 DROPPED = [
-    ("guard", r"\bother\(", "other(...)", "which rows are 'other' is not stated (read as another signer)"),
-    ("guard", r"\bset\(ref", "set(ref:...)", "the quantifier over the named rows is not stated"),
     ("guard", r"@landed\b", "@landed", "admitted and its policy met: the policy is not read"),
-    ("guard", r"\bafter\(", "after(POLICY)", "which instant the window runs from is not stated"),
-    ("guard", r"\bwithin\(", "within(POLICY)", "which instant the window runs from is not stated"),
     ("guard", r"via=delegates_to", "via=delegates_to", "the delegation walk is not translated"),
     ("fold", r"@(decision|count|seating|prior|close|act|founding)\b", "@INSTANT", "the grammar does not say which head or instant"),
     ("fold", r"over=[a-z_]+(?:/[a-z]+)?(?:;|$)", "over without an instant", "the cell does not say which head or instant"),
-    ("fold", r"\b(narrow_only|drop_only)\(", "BOUND", "the order a narrowing or a drop is judged in is not stated"),
-    ("fold", r"cut=[a-z_(),]*\bwhole\b", "cut=whole", "not implemented"),
+    ("fold", r"\bnarrow_only\(", "BOUND", "the order on the values a narrowing is judged in is not stated"),
     ("fold", r"pick=set\b", "pick=set", "not told apart from union"),
     ("fold", r"combine=policy\(", "combine=policy(...)", "the tally of the policy row is not called"),
-    ("change", r"/(about|over|under):", "cascade REL", "which rows stand in this relation to the changed row is not stated"),
-    ("change", r"link=(ranked|chained):", "link=ranked:/chained:", "the rank or chain the link implies is not read"),
-    ("change", r":(shrink|grow_signed|no_weaker|as_attest)\b", "field DIR", "set inclusion, the signed growth, the protocol order or the attest guard is not read"),
+    ("change", r"/about:", "cascade REL", "which rows are 'about' the changed row is read two ways: by its target (CC 3.3.1) and by its subject (CC 3.1.1)"),
+    ("change", r"link=ranked:", "link=ranked:", "the rank the link implies is not read"),
+    ("change", r":(no_weaker|as_attest)\b", "field DIR", "the order on protocols, or the guard an attest of the family meets, is not read"),
     ("change", r"reach=whole", "reach=whole", "every version is reached: not read"),
     ("change", r"by=cosigned\b(?!_)", "by=cosigned", "the count of cosigners is the family's count arm: not called"),
-    ("change", r"\b(entrenched|ephemeral|stalled)\b", "ATOM", "a property of the group, not of the row: not read"),
-    ("reaction", r" by (receipt|signed|origin_door)\b", "by JUDGE", "who judges the clock is not read"),
+    ("change", r"\b(ephemeral|stalled)\b", "ATOM", "a property of the group, not of the row: not read"),
+    ("reaction", r"\bfrom (?:asserted_at|claimed_at|effective_at|cosigned_at|delegation_valid_from) by receipt\b", "by receipt from a signed instant",
+     "a window from a signed instant judged at receipt: KERNEL 5 has the row's own end or a window from first holding, not this"),
+    ("reaction", r"\bfrom \S+ by origin_door\b", "by origin_door", "which node is the door the row first entered is not a function of the rows held"),
     ("reaction", r"\b(purged|matched|sealed|refused)\(", "EVENT", "the state has no row that states it"),
     ("reaction", r"[^;]*\bfold\([^;]*", "fold(NAME)", "no cell defines the fold: the whole clause is dropped"),
 ]
 LABEL_PARTS = {"fold": r"\b(by|result|feeds)=[A-Za-z_.:*{},|()]+"}   # who runs the fold, its shape, its readers: carried, not evaluated
 
 
-def dropped_words(grammar, text):
+def _resolved(m, resolved):
+    """A fold clause whose every fold(NAME) a fold cell defines (fold_names) is carried, not dropped."""
+    ns = re.findall(r"\bfold\(([a-z_]+)\)", m.group(0))
+    return bool(ns) and set(ns) <= set(resolved)
+
+
+def dropped_words(grammar, text, resolved=()):
     out = []
     for g, rx, word, why in DROPPED:
         if g != grammar: continue
         for m in re.finditer(rx, text):
+            if _resolved(m, resolved): continue
             w = word
             if "INSTANT" in word or word in ("BOUND", "cascade REL", "field DIR", "ATOM", "by JUDGE", "EVENT"): w = m.group(0).strip()
             out.append((w, why))
     return sorted(set(out))
 
 
-def dropped_spans(grammar, text):
-    return [m.span() for g, rx, _, _ in DROPPED if g == grammar for m in re.finditer(rx, text)]
+def dropped_spans(grammar, text, resolved=()):
+    return [m.span() for g, rx, _, _ in DROPPED if g == grammar for m in re.finditer(rx, text) if not _resolved(m, resolved)]
 
 
 def label_words(grammar, text):
@@ -725,3 +769,30 @@ def count_set_kx(value):
 def counted_at_kx(value):
     """The set a policy row counts over, by its counted_at cell (formal/derivation/policy_text.tsv)."""
     return f"size(holders_in({COUNTED_AT[value]}, 'member', self.object))"
+
+
+# Who a policy row counts, by its typed cells (formal/derivation/policy_text.tsv, CC 4.5.13), as one expression:
+# tuple(the base, the voices counted[, the target silent]). The base is the keys seated in the count set's roles
+# (count_set_kx); `voice` person folds them to one voice a person however many devices (the table `person`), key
+# counts each key; `voices` says where a voice is found: the row's own cosignatures (scrubs), live objection:{state}
+# rows naming it, or live ballot rows naming it, a voice counted only from the count set; `target_silent` yes is
+# true when no row signed by the target was first held here inside the window from this node's first holding of
+# the row (the window is the policy row's).
+POLICY_VOICES = {"scrubs": "cosigners(self)",
+                 "objection": "setof(sel(held, \\v: and(isfam(v, 'objection:*'), member(self.id, v.names), live(v))), \\v: v.signer)",
+                 "ballot": "setof(sel(held, \\v: and(isfam(v, 'ballot:*'), member(self.id, v.names), live(v))), \\v: v.signer)"}
+
+
+def policy_count_kx(row, cells):
+    """cells: {column: value} of one policy row; None where the count set is no seat (count_set_kx)."""
+    cs = count_set_kx(cells.get("count_set", "unstated"))
+    if cs is None: return None
+    unit = lambda s: f"setof({s}, \\k: cell('person', k, k))" if cells.get("voice") == "person" else s
+    out = [f"size({unit('CS')})"]
+    body = f"let CS = {cs} in "
+    if cells.get("voices"):
+        body += "let V = " + (lambda xs: xs[0] if len(xs) == 1 else f"union({', '.join(xs)})")([POLICY_VOICES[x] for x in cells["voices"].split("|")]) + " in "
+        out.append(f"size({unit('diff(V, diff(V, CS))')})")
+    if cells.get("target_silent") == "yes":
+        out.append(f"none(sel(held, \\x: and(eq(x.signer, self.target), ge(arrival(x), arrival(self)), lt(arrival(x), add(arrival(self), cell('policy', {q(row)}, 3))))))")
+    return body + f"tuple({', '.join(out)})"

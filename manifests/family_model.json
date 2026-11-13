@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "13c44791f71d234e3863c1451644bc509fe46cdd42f520d813db6f87e87c09d9",
+  "registry_sha256": "8fd4719c4509b49b38e858d4daed9f39e24d84ae0389731fb75e770935111a10",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -511,7 +511,7 @@
      ]
     },
     {
-     "fold": "over=standing/person",
+     "fold": "over=standing@named/person",
      "cc_ref": [
       "CC 4.5.13"
      ]
@@ -551,23 +551,21 @@
     "authority": 1,
     "boundary": 6,
     "chain": 4,
-    "count": 2,
     "deciding_seats": 1,
     "forward": 2,
-    "founders": 4,
+    "founders": 5,
     "listed": 1,
     "once": 4,
     "pair": 4,
     "present": 2,
-    "prior": 1,
     "proxy": 1,
-    "seated": 3,
+    "seated": 2,
     "seating": 1,
     "terminal": 3,
     "trusted": 6,
     "whole": 1
    },
-   "marks_total": 50
+   "marks_total": 47
   },
   "conferral": {
    "confers": {
@@ -4198,7 +4196,7 @@
    "fold": {
     "value": [
      {
-      "fold": "over=standing@decision/person",
+      "fold": "over=standing@named/person",
       "cc_ref": [
        "CC 4.2.6"
       ]
@@ -9430,7 +9428,7 @@
    "fold": {
     "value": [
      {
-      "fold": "key=election_id,person; pick=agree; over=live@count/person",
+      "fold": "key=election_id,person; pick=agree; over=live@named/person",
       "cc_ref": [
        "CC 3.1.3"
       ]
@@ -15345,7 +15343,7 @@
    "fold": {
     "value": [
      {
-      "fold": "over=active/owner",
+      "fold": "over=active@named/owner",
       "cc_ref": [
        "CC 6.1.9"
       ]
@@ -28419,19 +28417,13 @@
    "fold": {
     "value": [
      {
-      "fold": "over=seated@decision/person",
+      "fold": "over=seated@named/person",
       "cc_ref": [
        "CC 4.3"
       ]
      },
      {
-      "fold": "over=seated@prior/person",
-      "cc_ref": [
-       "CC 4.3"
-      ]
-     },
-     {
-      "fold": "over=present@decision/person",
+      "fold": "over=present@named/person",
       "cc_ref": [
        "CC 4.3"
       ]
@@ -37747,6 +37739,14 @@
       ]
      },
      {
+      "grammar": "fold",
+      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 3.2)",
+      "answers": [
+       "state",
+       "stands"
+      ]
+     },
+     {
       "grammar": "reaction",
       "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.2.8)",
       "answers": [
@@ -37887,7 +37887,7 @@
       ]
      },
      {
-      "fold": "@cohort_subkind=infrastructure: over=founders@decision/person",
+      "fold": "@cohort_subkind=infrastructure: over=founders@named/person",
       "cc_ref": [
        "CC 3.2"
       ]
@@ -37912,6 +37912,12 @@
      },
      {
       "fold": "pick=chain(prev_head_digest),tips",
+      "cc_ref": [
+       "CC 3.2"
+      ]
+     },
+     {
+      "fold": "over=founders@named/person; test=n>M ?founder_quorum_restored:founder_quorum_unreachable",
       "cc_ref": [
        "CC 3.2"
       ]
@@ -47631,21 +47637,21 @@
       ]
      },
      {
-      "fold": "@stage=removal: over=others@decision/person",
+      "fold": "@stage=removal: over=others@named/person",
       "cc_ref": [
        "CC 3.1.3.2",
        "CC 4.5.13"
       ]
      },
      {
-      "fold": "@cohort_subkind=infrastructure: over=founders@decision/person",
+      "fold": "@cohort_subkind=infrastructure: over=founders@named/person",
       "cc_ref": [
        "CC 3.2",
        "CC 4.4.3.2.4.1"
       ]
      },
      {
-      "fold": "@cohort_subkind=infrastructure: over=founders@decision/person; reads=own&direct",
+      "fold": "@cohort_subkind=infrastructure: over=founders@named/person; reads=own&direct",
       "cc_ref": [
        "CC 3.2"
       ]
@@ -47658,7 +47664,7 @@
       ]
      },
      {
-      "fold": "@group_kind=affiliation: over=deciding_seats@decision/person",
+      "fold": "@group_kind=affiliation: over=deciding_seats@named/person",
       "cc_ref": [
        "CC 4.4.3.2.8"
       ]
@@ -49245,7 +49251,7 @@
    "fold": {
     "value": [
      {
-      "fold": "over=present@count/person",
+      "fold": "over=present@named/person",
       "cc_ref": [
        "CC 4.5.13"
       ]
@@ -52106,7 +52112,7 @@
    "fold": {
     "value": [
      {
-      "fold": "key=attested_key_id; pick=set; by=reader",
+      "fold": "key=attested_key_id; pick=union; by=reader",
       "cc_ref": [
        "CC 3.1.9.4"
       ]
@@ -54441,6 +54447,7 @@
    "verbs": {
     "value": [
      "attest",
+     "replace",
      "withdraw"
     ],
     "source": "cc-table"
@@ -68518,7 +68525,7 @@
    "fold": {
     "value": [
      {
-      "fold": "over=seated@decision/person",
+      "fold": "over=seated@named/person",
       "cc_ref": [
        "CC 3.1.9.4"
       ]

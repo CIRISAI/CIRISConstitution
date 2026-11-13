@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "974a8c50cec2b1b9bee84153f2d2c2240a258bbd63f02d85ac02e679c4de8dc7",
+    "source_sha256": "5d199e25f7526e2bb6a494319a07dc7576e6af282575b5601ea824fa4a3adde6",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "f74d1b2a",
@@ -1105,7 +1105,7 @@
         "default": "absent",
         "cc_ref": "6.1.2.1 6.1.9",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
-        "note": "The largest multiplicity cluster; aggregation_meta_multiplicity above the floor."
+        "note": "The largest multiplicity cluster; aggregation_meta_multiplicity above the floor; on a census composite any value but 1 is refused (CC 6.1.9)."
       },
       {
         "member": "mass_commitment_hex",

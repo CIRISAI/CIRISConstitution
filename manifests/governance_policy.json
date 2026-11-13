@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "e41b1099de6ba3d180ad2e174b6105e8bee4588d2d85d6f8603b6a57c66e84ff",
+  "policy_sha256": "6b3b6c01d56058940c2d54d98dbbeac2931dd91c039227cad2566d5e45e176dc",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -973,7 +973,7 @@
     "formal/accord_halt"
    ],
    "status": "normative",
-   "note": "a strict majority of the standing accord roster cosign one row: the resumption after a halt and every other accord threshold but the fire"
+   "note": "a strict majority of the standing accord roster cosign one row: the confirmation and the resumption of a halt, and the standing acts; a roster change runs its own participation window (CC 4.2.6)"
   },
   {
    "family": "poll",

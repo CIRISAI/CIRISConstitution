@@ -509,7 +509,7 @@ def f121 : FamilyRow :=
   ⟨"prohibited:{category}", ⟨.rules, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit121 : fits f121 = true := by decide
 def f122 : FamilyRow :=
-  ⟨"provenance:build_manifest:{target}", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
+  ⟨"provenance:build_manifest:{target}", ⟨.facts, [.attest, .replace, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩
 theorem fit122 : fits f122 = true := by decide
 def f123 : FamilyRow :=
   ⟨"provenance:build_manifest:{target}:locale:{lang_code}", ⟨.facts, [.attest, .withdraw], none⟩, ⟨false, .dsar, .none⟩⟩

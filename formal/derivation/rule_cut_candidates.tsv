@@ -182,7 +182,7 @@ p5	478	483	duplicate_table	1443	Edge-decision table restates 5.3.3.2 profiles, 5
 p5	541	543	restated_block	510	Scope pointer restates 2.4, 5.3.3.3 and 5.3.3.5 E2
 p5	556	572	example	800	Illustrative JSON of the trust-root bundle response; fields restated in prose at 574-578
 p5	615	625	example	250	Illustrative JSON of the error envelope; fields are named in the MUST at 613
-p5	709	723	example	900	Three record_id conformance vectors; normative but published with CIRISVerify (725)
+p5	709	723	example	900	Three record_id conformance vectors; normative but published with the release (725)
 p5	784	790	rationale	2600	'Why these values' model-run findings for rho, W, frame size; marked informative
 p5	794	794	restated_block	1330	Fragment unit paragraph restates 729 (chunks whole, A/V no symbols) and 5.4.2 framing
 p5	870	872	informative	1930	Two 'normative framing' paragraphs stating what observers see; claim boundaries already at 1.13.3.1
