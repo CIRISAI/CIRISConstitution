@@ -322,6 +322,7 @@ jobs:
           python3 -I ../causal_kernel/check_attacks.py
           python3 -I ../causal_kernel/check_roomkey.py
           python3 -I ../causal_kernel/check_rosters.py
+          python3 -I ../causal_kernel/check_door.py
           python3 -I ../roster_fork/fork_check.py --check
           python3 -I ../transport_tiers/frame_ab.py --check
           lean -M 6000 -T 200000 ../family_model/FamilyModel.lean

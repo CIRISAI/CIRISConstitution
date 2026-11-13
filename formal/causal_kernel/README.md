@@ -97,6 +97,14 @@ Two limits. The accord's rule that a removed holder no longer fires needs a latc
 reads arrival order and is not a function of the rows. The parameters for removing a key from a voice are
 guessed, since the text states only how a voice's keys are seated.
 
+**One door, every policy row and clock** (`door.py`, `check_door.py`, `doors.tsv`, `door_expected.tsv`). The
+door is the window of `window.py` with its parameters named: who opens, who answers, the answer kinds, the
+length, the clauses read at once or at the close, whether a late answer counts, the target's silence and who
+concludes. All sixteen policy rows are built from their own cells, and ten more instances cover the clocks.
+`doors.tsv` holds one row for each instance, with a column for what the tables do not state. The check
+records 170 verdicts and exits on any difference, any break that is not caught and any difference between
+arrival orders. Rooms are of three and four keys. Nothing here is proved in Lean.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -109,4 +117,4 @@ guessed, since the text states only how a voice's keys are seated.
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
 `python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
-`python3 -I formal/causal_kernel/check_rosters.py`
+`python3 -I formal/causal_kernel/check_rosters.py`, then `python3 -I formal/causal_kernel/check_door.py`

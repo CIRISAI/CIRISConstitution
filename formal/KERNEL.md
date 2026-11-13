@@ -147,10 +147,10 @@ for the two rejected rules `ruleI_concluder_decides`, `ruleII_never_final`. What
 window's length is the concluder's own word.
 
 **The door's parameters.** One door runs every policy row and every clock that takes answers. **run**
-(`formal/causal_kernel/roster.py`, `window.py`): the lone paths of a person's roster, an invitation and the
-halt's fuse run on it in every arrival order. A wider run of all sixteen policy rows and ten clocks on the same
-door, 26 instances at rooms of three and four keys, is not yet in the repository. The policy table states the
-count, the floor and the length. Five things the door needs are stated by the text and carried by no cell:
+(`formal/causal_kernel/door.py`, `check_door.py`, `doors.tsv`): all sixteen policy rows and ten clocks run on
+the window's own receipt, landing and recount, as instances at rooms of three and four keys. Each gives one
+answer in every arrival order, the recount agrees with the policy table's own vectors and with the ranked
+count, and every deliberate break is caught. The policy table states the count, the floor and the length. Five things the door needs are stated by the text and carried by no cell:
 
 | Parameter | Why it matters |
 |---|---|
@@ -159,6 +159,9 @@ count, the floor and the length. Five things the door needs are stated by the te
 | whether the opening act is in force while the window is open | a halt is, a moderation proposal is not; not yet run |
 | the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands |
 | the threshold as the room's declared protocol | a removal is cosigned under the room's own protocol |
+
+One row still differs from its text. The moderation fallback lands when two members act and two keep, where
+CC 4.5.13 asks a strict majority of the members who voted. No cell states "of those who voted". **open**.
 
 Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
