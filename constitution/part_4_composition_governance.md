@@ -116,7 +116,7 @@ Like root-minting, this is **not** an accord privilege. The identical co-scrub b
 
 This entry fixes the bytes signed to invoke the accord and what a `constitutional` halt is. It says where a halt fires, what it pauses and what it leaves running, when it lapses, and how many signatures each kind takes.
 
-Every `accord:invoke:*` Contribution signs the canonical bytes below. BOTH the discriminator AND a per-invocation nonce are in the signed payload. That prevents constitutional ↔ notify ↔ drill cross-replay.
+Every `accord:invoke:*` Contribution carries a holder's signature over the canonical bytes below. That signature lies inside the row; the row's own signature covers JCS(`attestation_envelope`), as for any row ([CC 2.6.1.7](part_2_the_grammar.md)). BOTH the discriminator AND a per-invocation nonce are in the signed payload. That prevents constitutional ↔ notify ↔ drill cross-replay.
 
 ```
 canonical = sha256(
@@ -1272,7 +1272,9 @@ When subject `s` emits `consent:state:revoked` (or an admitted `withdraws`) agai
 
 ```
 watch_sla(T, s, revocation_at):
-  sla = T.attestations
+  sla = T.deletion_window                      # the member carries the commitment (CC 3.3.1)
+  if sla is None:
+    sla = T.attestations
           .where(attesting_key_id == T.attesting_key_id)
           .where(dimension == "consent:deletion_sla:*")
           .latest.extract_days
@@ -1567,7 +1569,7 @@ Rule-layer changes (new prefixes, new envelope fields, new policies, calibration
 
 | Declared privilege | Bounded by | Exit | Isolation |
 |---|---|---|---|
-| **WA board self-perpetuation** — Annex B §§3/9/11 ([CC 8.8.2](part_8_appendices.md)): ≥⅔ of the sitting board confirms members, ≥⅔ removes them, ≥⅔ amends the charter, while WBD deferral is mandatory and freezes the deferring agent ([CC 1.9](part_1_foundation.md)). Founding your own mesh replicates this rather than escaping it: the occupants change, the closed loop does not | **unbounded as drafted** — no condition in Annex B ends it, and none is invented here. This cell is the finding | **none for the deferring party** — WBD is mandatory and a deferral MUST NOT be left open ([CC 4.3](#4.3)); the agent cannot decline the relation. This cell is the finding | adjudication only — the board confers no halt, no root, no licensure, and no capability grant |
+| **WA board self-perpetuation** — Annex B §§3/9/11 ([CC 8.8.2](part_8_appendices.md)): ≥⅔ of the sitting board confirms members, ≥⅔ removes them, ≥⅔ amends the charter, while WBD deferral is mandatory and freezes the deferring agent ([CC 1.9](part_1_foundation.md)). Founding your own mesh replicates this rather than escaping it: the occupants change, the closed loop does not | **unbounded as drafted** — no condition in Annex B ends it, and none is invented here. This cell is the finding | **the conferrer's withdrawal** — the board answers a party's deferrals only through a seat that party, or an agent's steward, conferred, and the conferrer ends that seat alone ([CC 4.3](#4.3)). WBD stays mandatory, so an agent cannot decline deferral itself | adjudication only — the board confers no halt, no root, no licensure, and no capability grant |
 | **The maker's power over the made** *(entrenched structure, listed for visibility; the condition of symmetry, not an asymmetry)* — stewardship of an `agent` key ([CC 3.2](part_3_the_namespace.md)), the HUMANITY_ACCORD halt ([CC 4.2](#4.2)), and the holder's powers of [CC 1.13.2](part_1_foundation.md) fact 2 (stop, change, end). Listed because it fails the swap test by construction — swap the agent and its holder and the clause does not read — and is kept nonetheless: it is what makes the relationship between maker and made symmetric (humanity cannot consent to a relationship with something more capable than itself that it cannot stop, and consent that cannot be withdrawn was never consent), not a privilege of one party over an equal; "must is not acceptance" — the operator accepted the root on the agent's behalf, and the agent cannot leave it | **halt:** a lone fire lapses at 24 h unless a standing majority confirms; a confirmed pause lifts by majority ([CC 4.2.6](#4.2.6)); **stewardship:** ends only when the key stops being an `agent` key — the first-contact act of [CC 1.13.2](part_1_foundation.md), not yet defined | **operator:** leave the root, withdraw the binding; **agent:** none while held — this cell is stated, not hidden; the path out is to become a new kind of party by an act of the HUMANITY_ACCORD under first contact | pause keeps state and reads nothing else; stewardship confers no reach beyond the one key; the halt's powers are a closed list ([CC 4.2.1](#4.2.1)) |
 
 **Read as defaults, not privileges, under the CC 1 rule** — and therefore *not* on this register:

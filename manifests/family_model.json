@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "bf21eef74fef0d4190521c14c647d198391675fe0a699709c57630133edf076f",
+  "registry_sha256": "efd0e179d8400e0d4087e868574dfb6a49e2fa46cefb622f40861a027a256677",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -416,6 +416,7 @@
     "recantation_reason: recants",
     "recovers: a charter recovery",
     "recovery_commitments: the accord's charter",
+    "references_attestation_id: otherwise OPTIONAL",
     "references_attestation_id: recants",
     "references_attestation_id: supersedes",
     "references_attestation_id: withdraws",
@@ -426,6 +427,7 @@
     "supersession_reason: supersedes",
     "trust_classes: a delegates_to bearing trust:accepts:v1",
     "trust_depth: a delegates_to bearing trust:accepts:v1",
+    "valid_until: otherwise OPTIONAL",
     "what_was_false: recants",
     "widened_at: a widening supersedes",
     "widened_at: absent otherwise",
@@ -61563,6 +61565,11 @@
    "body": {
     "value": {
      "members": [
+      {
+       "member": "valid_until",
+       "type": "rfc3339-ms",
+       "presence": "required"
+      },
       {
        "member": "session_id",
        "type": "tstr",

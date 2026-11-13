@@ -2,7 +2,7 @@
   "_meta": {
     "cc_section": "2.6.1.7",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "5d199e25f7526e2bb6a494319a07dc7576e6af282575b5601ea824fa4a3adde6",
+    "source_sha256": "3b0957965aad0ee9e36f5e77f8bd7e5826843b45991382116639563e62cef2d4",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "f74d1b2a",
@@ -181,7 +181,7 @@
         "default": "absent (no expiry)",
         "cc_ref": "2.1 3.1.3.2",
         "impl": "src/federation/admission.rs#check_instant_binding",
-        "note": "The column's signed twin; present iff the column is set, any other pairing refused. REQUIRED on census:share:{class}:v1 and census:member:share:v1, where it is the period's end (census_return_expired after it)."
+        "note": "The column's signed twin; present iff the column is set, any other pairing refused. REQUIRED on membership:proposal and lineage_witness:proposal (CC 3.1.3.2, CC 3.1.3), and on census:share:{class}:v1 and census:member:share:v1, where it is the period's end (census_return_expired after it)."
       },
       {
         "member": "dimension",
@@ -201,11 +201,11 @@
         "cc_name": "-",
         "type": "uuid",
         "array_kind": "-",
-        "presence": "REQUIRED on supersedes, withdraws, recants",
+        "presence": "REQUIRED on supersedes, withdraws, recants, otherwise OPTIONAL",
         "default": "-",
-        "cc_ref": "2.4.1 4.5.1.1",
+        "cc_ref": "2.4.1 3.1.2.1 4.5.1.1",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
-        "note": "The composer target: the prior row's attestation_id. Its meaning is read only with the row type as discriminator (three readings, CC 4.5.1.1); a fourth reading is a separate member, which is why consent_supersedes exists."
+        "note": "On the three composers it is the composer target: the prior row's attestation_id, read only with the row type as discriminator (three readings, CC 4.5.1.1). On any other type it cites a row and carries no composer meaning (CC 3.1.2.1). A fourth composer reading is a separate member, which is why consent_supersedes exists."
       },
       {
         "member": "scope",
@@ -453,11 +453,11 @@
         "cc_name": "-",
         "type": "rfc3339-ms",
         "array_kind": "-",
-        "presence": "OPTIONAL",
+        "presence": "REQUIRED on session:*, otherwise OPTIONAL",
         "default": "absent",
-        "cc_ref": "2.1 2.6.2",
+        "cc_ref": "2.1 2.6.2 3.1.3.1",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "Consumer-policy staleness, independent of expires_at."
+        "note": "Consumer-policy staleness, independent of expires_at. On session:* it is the claim's signed horizon (CC 3.1.3.1)."
       },
       {
         "member": "epistemic_mode",
@@ -1081,7 +1081,7 @@
         "default": "absent",
         "cc_ref": "6.1.2.1 6.1.9",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
-        "note": "Distinct owners behind the composite; below 10 the cell is refused census_composite_below_k."
+        "note": "Distinct owners behind the composite. On census:composite:{class}:v1 a count below 10 is refused census_composite_below_k."
       },
       {
         "member": "n_eff",

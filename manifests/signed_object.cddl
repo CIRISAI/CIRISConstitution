@@ -32,7 +32,7 @@ envelope = {
   asserted_at: rfc3339-ms,  ; REQUIRED; default stamped at the mint
   ? expires_at: rfc3339-ms,  ; OPTIONAL; default absent (no expiry)
   dimension: tstr,  ; REQUIRED on every row type
-  ? references_attestation_id: uuid,  ; REQUIRED on supersedes, withdraws, recants
+  ? references_attestation_id: uuid,  ; REQUIRED on supersedes, withdraws, recants, otherwise OPTIONAL
   ? scope: tstr / [* tstr],  ; REQUIRED on consent:state:granted and on delegates_to; array kind: set
   ? pre_rotation_commitment: hex64,  ; OPTIONAL (charter); default absent
   ? recovers: key-id,  ; REQUIRED on a charter recovery; default absent
@@ -53,7 +53,7 @@ envelope = {
   ? confidence: number,  ; REQUIRED on scores
   ? context: tstr,  ; OPTIONAL; default absent
   ? evidence_refs: [* tstr],  ; OPTIONAL (some families require it); default absent; array kind: sequence
-  ? valid_until: rfc3339-ms,  ; OPTIONAL; default absent
+  ? valid_until: rfc3339-ms,  ; REQUIRED on session:*, otherwise OPTIONAL; default absent
   ? epistemic_mode: "direct" / "crypto" / "hearsay" / "derivative" / "appeal",  ; OPTIONAL; default direct
   ? witness_relation: "self" / "external" / "derived",  ; OPTIONAL; default external
   ? oversight_mode: "HITL" / "HOTL" / "HOOTL",  ; OPTIONAL; default absent (per-cell default)

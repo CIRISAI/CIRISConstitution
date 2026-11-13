@@ -196,7 +196,7 @@ p2	33	2.1	family	row_shape	body	session	MUST	states	3.1.3.1	session_id is requir
 p2	34	2.1	family	row_shape	body	session	MUST	states	2.6.2,3.1.3.1	claimed_at is required on session:* rows in canonical datetime form	table
 p2	34	2.1	family	supersede	tie_break	session	is	restates	3.1.3.1	the convergent merge of session claims orders on claimed_at	table
 p2	35	2.1	family	row_shape	body	consent	MUST	states	3.3.1,4.4.3.4.3	scope is required on consent:state:granted (the grant's scope) and on delegates_to (the delegated scope set); a bare token or an array	table
-p2	35	2.1	family	consent_fold	body	consent	is	restates	3.3.1	a consent grant's scope tokens are retain, share, analyze, train, publish, sub-scoped as retain:90d; a grant naming no scope matches nothing	table
+p2	35	2.1	family	consent_fold	body	consent	is	restates	3.3.1	a consent grant's scope tokens are retain, share, analyze, train, publish, sub-scoped as retain:90d; a grant whose scope names no token matches nothing	table
 p2	35	2.1	family	consent_fold	none	capacity,consent	MUST_NOT	states	2.1.1	a consumer that does not know the scope member preserves it and MUST NOT compose a capacity:* verdict that ignores it	table
 p2	36	2.1	family	row_shape	body	custody	MUST	states	3.1.3.3	custody_state is required on custody:ack, here or none; a signed none is a custody fact, not an absence	table
 p2	37	2.1	family	row_shape	body	membership	MUST	states	3.1.3.2	group_kind is required on membership:proposal, family or community	table
@@ -249,7 +249,7 @@ p2	71	2.1	kernel	withdraw	lifecycle	*	is	states		each listed subject key may iss
 p2	71	2.1	kernel	wire	none	*	MUST_NOT	restates	2.6.1.1.1	an explicit null subject_key_ids is refused	table
 p2	72	2.1	kernel	row_shape	body	*	is	states		delivery_mode is optional, pull or push; absent reads as pull	table
 p2	72	2.1	kernel	transport	replication	*	is	restates	3.1.3.3,5.3.2	pull delivery: subscribers discover via custody:ack here rows at the content's scope and fetch by ContentFetch	table
-p2	72	2.1	kernel	transport	replication	*	is	restates	5.3.3.4	push delivery fans out to entitled-and-reachable on direct links, never through a relay tree	table
+p2	72	2.1	kernel	transport	replication	*	is	restates	5.3.3.4	push delivery fans out to entitled-and-reachable on links between members, directly or through the member relay tree	table
 p2	72	2.1	kernel	transport	replication	*	is	restates	5.3.3.5	one-to-many delivery to a large audience stays pull-only	table
 p2	73	2.1	kernel	row_shape	body	*	is	states		history_on_join is optional, full or from_join; absent reads as from_join	table
 p2	73	2.1	family	key_plane	replication	membership	is	restates	4.4.3.4.1	at community and affiliations history_on_join does not change what a joiner receives: the current epoch's key and no earlier epoch's	table
@@ -365,7 +365,7 @@ p2	275	2.4.1	kernel	delegation	window		MUST_NOT	states		a perpetual or over-ceil
 p2	275	2.4.1	kernel	delegation	body		is	states		delegation_valid_from absent means the edge's own asserted_at	table
 p2	275	2.4.1	kernel	expiry	lifecycle		is	states		delegation_valid_until absent on an edge that needs no term is open-ended, never malformed	table
 p2	275	2.4.1	mechanism	wire	body		MUST_NOT	states	2.1	the delegated scope rides the 2.1 scope member, a bare token or a set; never delegated_scope[]	table
-p2	276	2.4.1	kernel	supersede	lifecycle	*	is	states		supersedes replaces a prior row by the same attester; carries references_attestation_id, supersession_reason, differs_in[]	table
+p2	276	2.4.1	kernel	supersede	lifecycle	*	is	states		supersedes replaces a prior row by the same attester or cosigning protocol, another signer's row only after its own step-down, and a widening replaces nothing; carries references_attestation_id, supersession_reason, differs_in[]	table
 p2	277	2.4.1	kernel	withdraw	lifecycle	*	is	states		withdraws retracts the signer's prior attestation without claiming it was false; carries references_attestation_id and withdrawal_reason	table
 p2	278	2.4.1	kernel	withdraw	lifecycle	*	is	states		recants admits the signer's prior attestation was false at issuance; carries references_attestation_id, recantation_reason, what_was_false	table
 p2	282	2.4.1	kernel	supersede	lifecycle	*	is	applies		a doctrinal-development claim is supersedes with differs_in, not recants	
@@ -459,7 +459,7 @@ p2	339	2.4.1.2.1	family	delegation	signer_rule	licensure	MUST_NOT	states		an iss
 p2	339	2.4.1.2.1	family	signer	signer_rule	licensure	is	states		there is no bootstrap: A's first licensure:{A} row is signed by A, or for a keyless affiliation cosigned by its quorum	
 p2	339	2.4.1.2.1	family	freshness	freshness	licensure	is	states		licence authority is judged at the row's signed asserted_at, never at receipt; a later withdraws of a chain link stops future issuance and does not reclassify issued licences	
 p2	339	2.4.1.2.1	family	placement	placement	licensure	is	states	1.13.3.4	a licence has no public default; its cohort_scope is the authority's declared choice per licence class in the affiliation's charter, the smallest that fits	
-p2	339	2.4.1.2.1	family	audience	replication	licensure	MUST_NOT	states		licence and authority head travel together; where not public they are re-emitted as new cosigned rows naming validating readers in subject_key_ids, never at the wrong scope or by roster widening	
+p2	339	2.4.1.2.1	family	audience	replication	licensure	MUST_NOT	states		licence and authority head travel together; where not public they are re-emitted as new cosigned rows, each addressed to one validating reader by for_key_id and naming no reader in subject_key_ids, never at the wrong scope or by roster widening	
 p2	339	2.4.1.2.1	family	cosign	cosign_rule	licensure	is	states	4.4.3.2.8,2.4	an organisation-named authority is its community_key_id; a licensure:{community_key_id} row is cosigned under the affiliation's current consensus_protocol, the protocol source being the authority in the dimension	
 p2	339	2.4.1.2.1	family	delegation	signer_rule	licensure	is	states		a license-scoped chain roots at the affiliation's quorum; one founder suffices only where the protocol says so	
 p2	341	2.4.1.2.1	family	signer	signer_rule	key_grant	is	states	4.4.3.4.3	a key_grant conveys access, not the power to convey it; an onward grant is a new grant by the owner, steward or a grant-scoped delegate, never a forwarded one	
@@ -724,9 +724,9 @@ p2	864	2.6.6.3	family	roster_fold	none	community,location_proof	is	exception		Th
 p2	868	2.6.7	kernel	freshness	freshness	*	is	states		Every signed_at, asserted_at, valid_until, delegation_valid_from/until and cosigned_at is wall-clock UTC at the asserting peer's clock	
 p2	868	2.6.7	kernel	freshness	none	*	SHOULD	states		Producers synchronize clocks via NTPv4 or Roughtime to a known-good source	
 p2	868	2.6.7	kernel	freshness	window	*	MAY	states		Maximum tolerated attester-consumer skew for a freshness check is +-5 minutes by default; tighter thresholds may be applied by consumer policy	
-p2	868	2.6.7	kernel	freshness	freshness	*	MUST	states		A consumer rejects as malformed an attestation whose asserted_at is more than 5 minutes in the future	
+p2	868	2.6.7	kernel	freshness	freshness	*	MUST	states		A consumer rejects with CLOCK_SKEW_VIOLATION an attestation whose asserted_at is more than 5 minutes in the future	
 p2	870	2.6.7	mechanism	transparency_log	none	*	MUST	states	5.3.1	A cosignature on an STH whose signed_at is more than 5 minutes from the STH's signed_at is rejected	
-p2	872	2.6.7	kernel	freshness	freshness	*	MUST	states		For a row with future valid_until, freshness holds when valid_until is unreached and the consumer clock is within 5 minutes of network consensus; a drifted consumer rejects	
+p2	872	2.6.7	kernel	freshness	freshness	*	MUST	states		For a row with future valid_until, freshness holds when valid_until is unreached and the consumer's own clock is within 5 minutes of the known-good time source it synchronises to; a drifted consumer rejects	
 p2	874	2.6.7	kernel	freshness	freshness	key_grant,consent,licensure,deferral,membership	is	restates	2.4.1.2.1	A row whose admission walks a delegates_to chain (key wrap, consent, licence, deferral response, epoch-axis membership) is judged at its signed asserted_at	
 p2	874	2.6.7	kernel	freshness	window	key_grant,consent,licensure,deferral,membership	MUST	states	4.2.6	The substrate refuses a chain-judged row whose asserted_at precedes the receiver's clock by more than W = 72 hours with asserted_at_stale; well-formed, not admitted-as-stale; the remedy is re-signing	
 p2	874	2.6.7	family	cosign	cosign_rule	membership	is	states	3.3.4	A cosigned roster event is bound signature by signature; a signer who has since left counts only inside W	
@@ -1615,7 +1615,7 @@ p3	978	3.3.1	family	reserved_prefix	none	consent	MAY	states		Decay stages are op
 p3	979	3.3.1	family	signer	signer_rule	consent	is	states		consent:partnership_grant is emitted by the subject_key_id	table
 p3	979	3.3.1	family	cosign	cosign_rule	consent,topical_relation	is	states		consent:partnership_grant pairs with the producer's consent:partnership_accept via topical_relation:bilateral_pair	table
 p3	980	3.3.1	family	signer	signer_rule	consent	is	states		consent:partnership_accept is emitted by the producer's attesting_key_id	table
-p3	981	3.3.1	family	row_shape	body	consent	is	states		The scope of a grant is the scope member of the consent:state:granted envelope: a string or array of tokens; a granted naming no scope matches nothing	table
+p3	981	3.3.1	family	row_shape	body	consent	is	states		The scope of a grant is the scope member of the consent:state:granted envelope: a string or array of tokens; a granted whose scope names no token matches nothing, and one without the member is malformed	table
 p3	981	3.3.1	family	reserved_prefix	none	consent	is	states		Scope kinds are open vocabulary with sub-scoping in the token (retain:90d, share:cohort:family)	table
 p3	981	3.3.1	family	row_shape	projection	consent	is	states	3.1.7	A consent:scope:{kind} dimension row is descriptive; no fold reads it and it confers nothing; registered only so the family has an owner	table
 p3	981	3.3.1	family	admission_order	evidence_screen	consent,capacity	is	applies	2.3.5,3.4.5	The door refuses a federation-tier capacity:* row whose subject holds no live analyze consent grant addressed to the scoring community	table
@@ -2330,7 +2330,7 @@ p4	77	4.2.1	kernel	halt	replication	accord	is	states	4.4.3.8	A constitutional ha
 p4	77	4.2.1	kernel	halt	freshness	accord	MUST	states		A node resolves halt reach against the edge it holds at the instant the halt becomes active there and its store records that instant; severing the edge after it does not remove the node from reach; exit is prospective	
 p4	77	4.2.1	family	accord	none	accord	is	states		The accord's powers are exactly those enumerated, pre-committed over edges already held; never act-then-ratify	
 p4	77	4.2.1	stewardship	amendment	window	accord	is	states	4.2.6	A change widening accord reach takes effect only after a published severance window of 72 h during which any bound node may cut its edge; widening waits, firing does not	
-p4	81	4.2.1.1	mechanism	wire	body	accord	is	states		Every accord:invoke row signs canonical bytes that include the invocation kind discriminator and a per-invocation nonce, preventing cross-kind replay	
+p4	81	4.2.1.1	mechanism	wire	body	accord	is	states		Every accord:invoke row carries a holder's signature, inside the row, over canonical bytes that include the invocation kind discriminator and a per-invocation nonce, preventing cross-kind replay	
 p4	83	4.2.1.1	mechanism	wire	body	accord	is	states	2.6.2,2.6.3	Accord invoke canonical bytes: sha256 over label ciris.accord_invoke.v2, invocation_kind, invocation_id, nonce, asserted_at, valid_until, payload_sha256 as newline-joined fields	
 p4	93	4.2.1.1	mechanism	signature	none	accord	is	restates	3.1.2.1	Accord invocations carry the hybrid Ed25519 plus ML-DSA-65 bound-payload signature	
 p4	93	4.2.1.1	family	cosign	cosign_rule	accord	is	states		A constitutional halt is one holder's signature; a consumer verifies one holder's signature over the canonical bytes against the pinned roster and halts	
@@ -3441,7 +3441,7 @@ p5	340	5.3.3.1	mechanism	wire	none	live_stream	is	states	5.1	last_flag is 0x01 o
 p5	342	5.3.3.1	mechanism	wire	none	live_stream	is	states		Within one epoch the counter is strictly monotonic and never wraps; across epochs the counter reset is nonce-safe because the DEK changes	
 p5	344	5.3.3.1	mechanism	media	none	live_stream	MUST_NOT	states		The counter space of a (stream_id, epoch) is owned by exactly one sender, the producer; two senders MUST NOT seal chunks under the same (stream_id, epoch) DEK	
 p5	344	5.3.3.1	mechanism	media	none	live_stream	is	applies	5.3.3.2	In group video each participant emits their own live_stream with their own stream_id, so the nonce prefix is per-sender unique	
-p5	344	5.3.3.1	mechanism	admission_order	none	live_stream	MUST	states	5.1	The substrate MUST reject a chunk append whose (stream_id, seq) collides with an existing sealed chunk	
+p5	344	5.3.3.1	mechanism	admission_order	none	live_stream	MUST	states	5.1	The substrate MUST reject a chunk append whose (stream_id, epoch, chunk_seq) collides with an existing sealed chunk	
 p5	348	5.3.3.2	kernel	conformance	none	community,live_stream,chat_message	is	restates	1.7,3.2,4.4.3.2.4.1	Realtime group communication composes from community, live_stream, chat_message and member/transport resolution with zero new structural primitives	
 p5	354	5.3.3.2	mechanism	media	none	live_stream,community	is	states		In a group call each participant emits a live_stream of their A/V scoped to the channel community and subscribes to peers	table
 p5	356	5.3.3.2	mechanism	media	none	live_stream	is	applies		Screen sharing is a live_stream whose source is a screen capture, one-to-N within the channel, same chunk seal and epoch DEK	table
@@ -3649,7 +3649,7 @@ p5	633	5.3.6.1	mechanism	transparency_log	none		is	applies	5.3.1	404 UNKNOWN_WIT
 p5	634	5.3.6.1	mechanism	endpoint	none		is	states		404 NOT_FOUND: generic resource not found (build, partner, key).	table
 p5	635	5.3.6.1	mechanism	transparency_log	none		is	states		409 IDEMPOTENT_CONFLICT: replay detected, e.g. duplicate (tree_size, witness_key_id) cosignature with different signatures.	table
 p5	636	5.3.6.1	mechanism	signature	none		is	states		422 SIGNATURE_VERIFICATION_FAILED: Ed25519 or ML-DSA-65 failed; details.algorithm names which.	table
-p5	637	5.3.6.1	mechanism	freshness	none		is	applies	2.6.7	422 CLOCK_SKEW_VIOLATION: signed_at exceeds the ±5 minute tolerance.	table
+p5	637	5.3.6.1	mechanism	freshness	none		is	applies	2.6.7	422 CLOCK_SKEW_VIOLATION: asserted_at or signed_at exceeds the ±5 minute tolerance.	table
 p5	638	5.3.6.1	mechanism	transparency_log	none		is	states		422 WITNESS_QUORUM_NOT_MET: insufficient cosignatures to validate.	table
 p5	639	5.3.6.1	mechanism	transparency_log	none		is	states	5.3.1.1	422 CONSISTENCY_PROOF_INVALID: a witness cosignature's consistency proof against its prior cosigned STH is absent or fails; missing proof with a prior STH, or tree_size behind it, is MALFORMED_REQUEST.	table
 p5	640	5.3.6.1	mechanism	transparency_log	none	hard_case	is	states	5.3.1,3.2	422 LINEAGE_HEAD_INCONSISTENT: cosignature names an unrecorded prior head or one not descending by prev_head_digest; a quorum-signed head not descending from the witnessed head is instead recorded uncosigned as hard_case:lineage_fork_attempt.	table
