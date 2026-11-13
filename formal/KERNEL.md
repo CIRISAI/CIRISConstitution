@@ -22,7 +22,9 @@ There is no trust set among the inputs. Who a node trusts is a fold over the row
 
 Config is not an input. A value that binds others is a row signed by whoever decided it. A value that binds
 only the node is a row under the node's own key. **measured**: 174 decision sites on the kernel's side read
-config today. **open**: the constants are not yet all in `constitution/constants.tsv`.
+config today. **measured** (`formal/derivation/constants_missing.tsv`): a scan of the Parts for a number with a unit
+stated as a parameter found ten not in `constitution/constants.tsv`, and they are rows there, 55 in all. **open**: nine
+values it did not add are listed with the reason for each.
 
 ## 2. The only order is what rows name
 
@@ -192,8 +194,13 @@ through the default fold, a default checked for none of the 83 that take it, and
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
-(`manifests/transitions.json` states it so). A refusal is a named missing row. **open**: guards are typed on 26
-of 459 transitions, and "receive" is not yet a verb of the table.
+(`manifests/transitions.json` states it so). A refusal is a named missing row. **run** (`formal/screen`): a
+screen is a function of the rows a node holds, the viewer's key and now. It offers exactly what the door
+admits, and confirms exactly what widens at the scope signed or has no way back. It never draws a fact the node
+did not send as sent, and it draws a row that waits as waiting, with what it waits on. Six properties hold over
+the mesh story, every family's states and 720 generated worlds, and eleven deliberate breaks are caught.
+**open**: "receive" is not yet a verb of the table, and 25 ways back that the text states have no transition to
+draw them.
 
 **missing and copying.** A row moves to a peer because that peer must conclude something and lacks it. What
 to send is what lies among the ancestors of what the peer must conclude, within the row's audience. This is
@@ -418,7 +425,8 @@ convinced when nobody but the person named could have.
 - **Detection.** The owner-binding of a node's room key is a row of the room, read by any holder of the rows.
   The detector's seat is conferred inside the room by the act that enables the list, and no outside root is on
   the walk to it. The notice is admitted when its signer owns the detecting key by that row. The record names
-  no person, and withdrawing the enabling ends the seat.
+  no person. The enabling is a conferral by the room's duty holders under their count, and their counted
+  withdrawal ends the seat.
 - **The declaration.** An absent member reads public; a founding row of a self room or a family that declares
   is refused; `private` on a body that is public by function is refused; of 434 sequences of later declarations
   none goes from public to private.
@@ -462,7 +470,8 @@ written by the authors of the rules, so this check confirms what they expected a
 
 Eight attacks did gain something before these rules were added. Each rule is part of the kernel and **run**.
 Each is **proved** over the definitions of the earlier proof files (`formal/causal_order/Harden.lean`,
-`Harden2.lean`, `Harden3.lean`, and `Reader.lean` for a reader's own line as the kernel runs it), within the
+`Harden2.lean`, `Harden3.lean`, `Duty.lean` for a community's duty seats, and `Reader.lean` for a reader's own
+line as the kernel runs it), within the
 limits that folder's README lists.
 
 - a row of a key whose seat was ended counts in a window only if the ending row has it in its past;
@@ -470,10 +479,10 @@ limits that folder's README lists.
 - a cosignature is a voice only for a row counted over a head the cosignature itself names;
 - an offer conferred by a count is ended by its holder or by a count, never by its proposer alone;
 - among several duty holders one holder's unseat concludes nothing, and one holder's own conferral concludes
-  only while it is the one duty holder; a duty seat validly conferred then stands as an equal. The proofs of
-  `Harden.F5` state the first of these. Their second clause, that a holder's own grant lives while its seat
-  does, is not what the model runs since the community law: with three holders one holder's grant never
-  concludes. That clause is **open** until the proof is restated;
+  only while it is the one duty holder; a duty seat validly conferred then stands as an equal. `Duty.lean`
+  proves this over the community law, with a withdrawal on a strict majority of the other holders and two
+  voices at least. `Harden.F5` held that a holder's own grant lives while its seat does. Under the law that is
+  false, and `Duty.Rejected` keeps its counter-models;
 - a row that names another adds its audience to it only if it is concluded, its signer was already in that
   audience, and it sits in the same room or is signed by the named row's own signer;
 - the holders of a counted scope are the keys common to the tips;
@@ -531,5 +540,5 @@ that the ending row has not seen from counting.
 | 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
-| Two TLA+ models still state a moderator seated with no count and a founder's protocol in a community; their changes are written and not yet run. Three places in the running kernel still let a signer of a member-scoped founding row seat a moderator alone. One clause of `Harden.F5` is behind the model | model | `formal/mesh_life`, `formal/membership`, `formal/causal_kernel`, `formal/causal_order` |
+| Two TLA+ models still state a moderator seated with no count and a founder's protocol in a community; their changes are written and not yet run. Three attack scenarios still seat a moderator by one signer of a member-scoped founding row. One of several duty holders still confers alone a scope that is not one of the four duties | model | `formal/mesh_life`, `formal/membership`, `formal/causal_kernel/attacks.py`, `formal/causal_kernel/seat.py` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |

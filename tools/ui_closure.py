@@ -40,7 +40,7 @@ BINDS = {
     "LineageChain": ("change",), "CodeCompare": (), "QrCode": (), "Transcript": ("verdicts",), "ConscienceStep": ("fold",),
     "PolicyLens": ("fold",), "GraphView": (), "Document": ("change",), "Media": ("body",),
 }
-FLOORS = {"roles": 457, "confirm": 459, "undo": 429, "reason": 26, "change": 20, "fold": 76}
+FLOORS = {"roles": 459, "confirm": 459, "undo": 457, "reason": 26, "change": 20, "fold": 76}
 
 
 def measures():

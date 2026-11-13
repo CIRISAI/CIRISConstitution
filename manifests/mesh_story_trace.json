@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "75f2534ded13a567242fcaa626e78b1dc4a3972941521f3fd5778cae70445e42",
+  "transitions_sha256": "cceaf66f6fbb86078dc6068187f90d75f8f74c83c4b3ce143ab338ae247578f2",
   "policy_sha256": "6b3b6c01d56058940c2d54d98dbbeac2931dd91c039227cad2566d5e45e176dc",
-  "steps": 98,
-  "rows": 69,
+  "steps": 100,
+  "rows": 71,
   "errors": []
  },
  "steps": [
@@ -2596,7 +2596,7 @@
   },
   {
    "n": 98,
-   "note": "Bob tries to carry a framed revocation of his old phone: refused, the family names no signer, so the transition is shut to everyone",
+   "note": "Bob tries to carry alone a framed revocation of his old phone: refused, a person's occurrence is revoked by a strict majority of the person's own roster",
    "actor": "bob",
    "standing": [
     "self",
@@ -2607,12 +2607,74 @@
     "family": "identity:occurrence_revocation",
     "state_before": null,
     "state_after": "none",
-    "atoms": {}
+    "atoms": {
+     "stage": "user_self"
+    }
    },
    "queue": [],
    "chosen": null,
    "refused": true,
    "row": null
+  },
+  {
+   "n": 99,
+   "note": "Bob's own roster carries the revocation of his old phone: a strict majority of his live keys",
+   "actor": "bob",
+   "standing": [
+    "member"
+   ],
+   "view": {
+    "object": "unbind:1",
+    "family": "identity:occurrence_revocation",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "stage": "user_self",
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row70",
+    "family": "identity:occurrence_revocation",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "unbind:1"
+   }
+  },
+  {
+   "n": 100,
+   "note": "Bob revokes the occurrence of his node: its owner",
+   "actor": "bob",
+   "standing": [
+    "owner"
+   ],
+   "view": {
+    "object": "unbind:2",
+    "family": "identity:occurrence_revocation",
+    "state_before": null,
+    "state_after": "admitted",
+    "atoms": {
+     "stage": "node_or_agent",
+     "last_attest_by": "bob"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row71",
+    "family": "identity:occurrence_revocation",
+    "verb": "attest",
+    "signer": "bob",
+    "object": "unbind:2"
+   }
   }
  ]
 }

@@ -44,3 +44,13 @@ consent_temporary_ttl_secs	14 days from `asserted_at` for a temporary grant that
 epoch_key_retention_secs	30 days: the rotate-forward window after which holders delete past-epoch keys (the default mode)	3.2	manifests/reactions.json	
 key_record_max_secs	31,536,000 s (365 × 86,400): `valid_until − asserted_at` of a `node` or `agent` key record never exceeds it	2.4.1.1	manifests/reactions.json	
 key_record_end_required_from	the release instant of the edition that carries the own-end paragraph of CC 2.4.1.1, set at that release; a `node` or `agent` key record whose `asserted_at` is earlier and states no end stays endless	2.4.1.1		
+clock_skew_tolerance_secs	300 s (±5 minutes), the default maximum skew between an attester's clock and a consumer's clock in a freshness check; a future-dated row is malformed	2.6.7		
+owner_abandonment_window_floor_secs	90 days: a deployment's `owner_abandonment_window` is never shorter; a deployment MUST publish its window, and with none published no abandonment finding is admissible	3.2		
+accord_drill_liveness_bands	0–90 days green, 90–180 yellow, 180+ or never red, by the age of the last accord drill	3.2		
+halt_fuse_secs	86,400 s (24 hours) where the charter states none: a halt signed by one holder lapses this long after each node received it unless a strict majority of the standing roster confirms it	4.2.1.1	tools/topology_to_cfg.py	
+moderator_election_window_secs	24 h on the node's own clock from when it first held the lock, before an election's acceptance is counted	4.5.13		
+federation_promotion_window_secs	24 hours by default, operator-tunable: a revocation from a subject in the set MUST promote to federation tier within it	5.3.2.2		
+sth_cadence_chunks, sth_cadence_secs	K = 64 chunks or T = 2 s, whichever comes first; default pins, operator-tunable	5.3.3.3		
+av_binding_max_bytes	8,192 bytes for the whole chunk-key binding encoding; trailing bytes are refused	5.3.3.2.3		
+av_binding_parts_max, av_binding_parts_in_flight	at most 64 parts per binding on the A/V link; at most four reassembling in flight per link	5.3.3.2.3		
+multiplicity_n_min	2 by default, substrate-side and pinned per corpus kind; never producer-settable	6.1.2.1.2		

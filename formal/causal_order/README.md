@@ -29,7 +29,7 @@ rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window
 and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
 `Harden3.lean` (the rules added after the kernel was attacked), and `SeatG.lean`, `Terms.lean`, `Reader.lean`,
 `Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads), and
-`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart) and `KeyEnd.lean` (a key's own end, read from its records and now). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart), `KeyEnd.lean` (a key's own end, read from its records and now) and `Duty.lean` (the duty seat of a community). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -76,7 +76,16 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.Recount.undone_only_by_counted_answer`, `naming_answer_changes_nothing`, `count_door_final`, `quorum_closed_final` | only a newly counted concurrent answer that moves the table undoes a landing; an answer naming the landing changes nothing; a landing with a strict majority behind it is final, against every key but one that has answered both ways (`quorum_closed_final` assumes no key of the roster answered both ways) |
 | `Kernel.Harden.F1.ended_keys_change_nothing`, `F2.rival_cannot_move` | rows by a key whose seat was ended, unseen by the ending, neither unseat nor rescue a landing; a landing that does not stand moves no outcome |
 | `Kernel.Harden.F3.no_replay`, `F4.proposer_cannot_end` | a cosignature in the past of a head is no voice for a row counted over that head; the proposer of a counted offer does not end it alone |
-| `Kernel.Harden.F5.no_single_founder_removes`, `removed_cannot_reseat`, `no_row_restores_a_founder` | among several founders one removes no other; a removed founder seats itself again by no row; and once every founder has withdrawn, no later row restores one; the running model runs these over duty holders (CC 4.5.4), and its lone-holder rule is stricter than the second clause here |
+| `Kernel.Harden.F5.no_single_founder_removes`, `removed_cannot_reseat`, `no_row_restores_a_founder` | among several founders one removes no other, and a removed founder seats itself again by no row; over founding seats, once every founder has withdrawn no later row restores one; `Duty.lean` states each against the community law |
+| `Kernel.Duty.lone_holder_confers`, `lone_count_is_own` | with one duty holder at the head a row names, that holder's signature and the new holder's yes seat, and no other key's signature is a voice |
+| `Kernel.Duty.one_of_several_confers_nothing`, `one_of_several_rows` | with two or more duty holders, a row carrying one holder's signature alone seats nobody, and so does any number of such rows |
+| `Kernel.Duty.majority_confers`, `confers_only_by_majority` | a duty seat stands exactly when more than half the holders at the head have signed the row and the new holder has said yes |
+| `Kernel.Duty.withdrawal_needs_two_others`, `two_holders_neither_unseats`, `lone_holder_not_unseated` | a withdrawal counts exactly on more than half of the other holders and at least two of them; of two holders neither unseats the other, and no holder unseats a lone one |
+| `Kernel.Duty.conferrer_cannot_end`, `conferrer_cannot_lower_count` | once a duty seat stands, a withdrawal signed by any key but its holder, a conferrer's included, ends nothing |
+| `Kernel.Duty.equals_perm`, `equals_rename` | every duty count reads the holders as a set: the answer is the same whatever order they were seated in, and under any renaming of keys |
+| `Kernel.Duty.removal_ends_duty`, `removed_confers_nothing`, `removal_cuts_duty` | a key a standing roster version leaves out holds no duty at that version or below it until it is listed again, its signatures confer nothing there, and the removal ends each conferral of its seat in its past |
+| `Kernel.Duty.none_left_members_seat`, `holders_left_members_do_not`, `one_member_seats_nothing` | with no duty holder at the head a row names, only the members' count confers a duty seat; while a holder remains, only the holders' count does |
+| `Kernel.Duty.Rejected.three_holders_lone_grant`, `lone_grant_outlives_conferrer`, `members_restore` | three readings of F5 the community law rejects: one of three holders' own grant seats nobody, a lone holder's grant outlives its conferrer's withdrawal, and the members' count seats a holder when none is left |
 | `Kernel.Harden.F6.rows_of_one_key`, `no_self_service`, `member_can_widen` | a key enters a row's audience by no rows of its own; a key already inside widens it by one concluded naming row |
 | `Kernel.Harden.F7.backdated_conferral_seats_no_one` | while two tips wait a seat with no offer under one of them is not held |
 | `Kernel.Harden.CP.checkpoint_voids_any_answer`, `without_checkpoint_fixed` | under the rejected rule: were a counted row to leave older acts behind, two counted rows would void any answer in a window; without that rule nothing later changes whether a concluded answer is counted |
@@ -138,5 +147,5 @@ An edge is withdrawn only by its own signer.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run: `bash formal/causal_order/build.sh`. It compiles the seventeen files in order and exits on a compile error,
+Run: `bash formal/causal_order/build.sh`. It compiles the eighteen files in order and exits on a compile error,
 a `sorry`, or an axiom beyond the three of core Lean.

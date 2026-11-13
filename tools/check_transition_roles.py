@@ -43,8 +43,6 @@ FM = json.loads((ROOT / "manifests" / "family_model.json").read_text())
 PINNED = {
     ("duty:{kind}", "attest", "roles"):
         "is a duty the permission-giver's alone to state, or any registered key's?",
-    ("identity:occurrence_revocation", "attest", "roles"):
-        "which key signs the carrier for a node's or an agent's occurrence, and which for a self's under its roster's majority?",
     ("retirement:{state}", "attest", "widens"):
         "at what scope does an agent's retirement row travel?",
     ("archive_release:{basis}", "attest", "widens"):

@@ -558,8 +558,9 @@ def moderation_split():
     for name, says in (("moderation_action", "fallback"), ("moderation_action", "lapsed")):
         D.rebuild()
         keys = ("m1", "m2", "m3", "m4")
-        g = ST.offer("g", "m1", keys, "member", "@", "self", cosigners=keys[1:])
-        md = ST.offer("md", "m1", "MOD", "moderate", "g", "self", ("g",), cosigners=("MOD",))
+        g = ST.offer("g", "m1", keys, "duty", "@", "self", cosigners=keys[1:])            # four duty holders (CC 4.5.4)
+        md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+                      cosigners=("m2", "m3", "MOD"))                           # three of the four confer, MOD accepting
         p = WN.opener("p", "m1", D.key(name), "g", ("md",))
         ans = [WN.answer("a1", "m1", "p", "act"), WN.answer("a2", "m2", "p", "act"), WN.answer("a3", "m3", "p", "keep"), WN.answer("a4", "m4", "p", "keep")]
         rows = [g, md, p] + ans + [WN.receipt("r", "m2", "p", 0), WN.landing("L", "m2", "p", "r", says, D.secs(D.key(name)), ("a1", "a2", "a3", "a4"))]
@@ -600,7 +601,7 @@ def time_g3():
     """witnesses.tsv G3: del = trust:moderate root->mod; act by mod; xdel = withdraw of del by root. Under the cut by
     causal past the act counts iff the withdrawal has it in its past, in every arrival order; under the freshness
     reading (signed instant against first held, W) the answer follows arrival."""
-    root = ST.offer("g", "root", ("root",), "member", "@", "self")
+    root = ST.offer("g", "root", ("root",), "duty", "@", "self")              # the lone duty holder confers alone (CC 4.5.4 (iv))
     dl = ST.offer("del", "root", "mod", "moderate", "g", "self", ("g",), cosigners=("mod",))
     act = R("act", "act", "mod", ("del",), head=("del",), at=50)
     xdel_unseen = ST.withdraw("xdel", "root", "del", ("del",))

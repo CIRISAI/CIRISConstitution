@@ -207,7 +207,10 @@ def more(s):
     one("order:1", "lawful_order:release", "bob", ["steward"], "Bob records the order under his own name")
     # 18. what the text does not yet say stays shut
     one("duty:1", "duty:{kind}", "bob", ["self", "registered"], "Bob tries to state a duty: refused, the family names no signer, so the transition is shut to everyone")
-    one("unbind:1", "identity:occurrence_revocation", "bob", ["self", "owner"], "Bob tries to carry a framed revocation of his old phone: refused, the family names no signer, so the transition is shut to everyone")
+    # 19. revoking an occurrence: a person's by the count of the person's own roster, a node's by its key or its owner
+    one("unbind:1", "identity:occurrence_revocation", "bob", ["self", "owner"], "Bob tries to carry alone a framed revocation of his old phone: refused, a person's occurrence is revoked by a strict majority of the person's own roster", stage="user_self")
+    one("unbind:1", "identity:occurrence_revocation", "bob", ["member"], "Bob's own roster carries the revocation of his old phone: a strict majority of his live keys", stage="user_self")
+    one("unbind:2", "identity:occurrence_revocation", "bob", ["owner"], "Bob revokes the occurrence of his node: its owner", stage="node_or_agent")
 
 def check(s):
     errs = []
@@ -222,8 +225,8 @@ def check(s):
     told = set()
     for name in ("signer_rule_text.tsv", "transition_text.tsv"):
         for l in (ROOT / "formal" / "derivation" / name).read_text().split("\n"):
-            if l and not l.startswith("#") and not l.startswith("family\t"):
-                told.add(l.split("\t")[0])
+            if l and not l.startswith("#") and not l.startswith("family\t") and l.split("\t")[2:3] != ["undo"]:
+                told.add(l.split("\t")[0])   # an undo row states a way back, not a signer
     for fam in sorted(told - {r["family"] for r in s.rows}):
         errs.append(f"{fam}: the text names its signer and no step of the story signs it")
     return errs

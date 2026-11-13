@@ -1662,7 +1662,7 @@ Body: `accord_root`
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | holder | selfAct | true (by_scope) | true (always) | none |
+| attest | holder | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -1672,7 +1672,7 @@ Body: `accord_root`
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | holder | selfAct | true (by_scope) | true (always) | none |
+| attest | holder | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -1682,7 +1682,7 @@ Body: `accord_root`
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | holder | selfAct | true (by_scope) | true (always) | none |
+| attest | holder | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
@@ -1697,7 +1697,7 @@ Body: `accord_root`
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | holder | mirror `accord_halt`, `accord_majority` | true (by_scope) | true (always) | none |
+| attest | holder | mirror `accord_halt`, `accord_majority` | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `leaf=confirmed => accord_halt@accord ; leaf=active => accord_majority@accord` (CC 4.2.1.1, CC 4.2.1.3)
 
@@ -2166,7 +2166,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (by_scope) | true (always) | none |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
@@ -2364,7 +2364,7 @@ Body: `domain`
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | steward, wa | selfAct | true (by_scope) | true (always) | none |
+| attest | steward, wa | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -2376,7 +2376,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | member | selfAct | true (by_scope) | true (always) | none |
+| attest | member | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -2483,7 +2483,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (always) | none |
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
@@ -2638,7 +2638,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | open cell | selfAct | true (always) | true (always) | none |
+| attest | member, owner, self (node_or_agent: owner, self; user_self: member) | selfAct | true (always) | true (always) | none |
 
 Count: `identity=node|agent => none ; identity=user => self_roster_evict@self` (CC 3.1.3)
 
@@ -2650,7 +2650,7 @@ Change:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (by_scope) | true (always) | none |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -2765,7 +2765,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (by_scope) | true (always) | none |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
@@ -2808,7 +2808,7 @@ Count: `none` (CC 3.4.10)
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (always) | none |
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -2982,7 +2982,7 @@ Body: `trace_level`, `occurrence_key_ids`, `window_from`, `window_to`, `channel_
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (by_scope) | true (always) | none |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
@@ -3186,7 +3186,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (by_scope) | true (always) | none |
+| attest | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`
@@ -3238,7 +3238,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| authorize | self | selfAct | true (by_scope) | true (always) | none |
+| authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -3249,7 +3249,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| authorize | self | selfAct | true (by_scope) | true (always) | none |
+| authorize | self | selfAct | true (by_scope) | true (if_widens) | withdraw |
 
 Count: `none`
 
@@ -3364,7 +3364,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | holder | cosigned `accord_majority` | true (by_scope) | true (always) | none |
+| attest | holder | cosigned `accord_majority` | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `accord_majority@accord` (CC 3.1.3)
@@ -3474,7 +3474,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | registered | selfAct | true (by_scope) | true (always) | none |
+| attest | registered | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `none`

@@ -63,6 +63,9 @@ run python3 tools/family_need.py --check
 run python3 -I formal/transport_tiers/frame_ab.py --check
 run python3 tools/check_compliance_wire_forms.py
 run python3 tools/check_rule_entries.py
+run python3 tools/check_restatements.py
+run python3 tools/check_text_lints.py
 run python3 tools/check_ui_primitives.py
+run python3 -I formal/screen/check_screen.py
 echo "fail=$fail"
 exit $fail

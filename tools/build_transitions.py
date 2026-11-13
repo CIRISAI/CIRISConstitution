@@ -175,10 +175,50 @@ def way_back(trans, lifecycle):
         else:
             cell = {"value": False, "source": "derived" if entry and closed else "gap"}
         t["undo"] = cell
-        t["confirm"] = {"value": bool(t["widens"]["value"]) or back is None, "source": "derived"}
-        if t["confirm"]["value"]:
-            narrowed = back is not None and t["widens"].get("when") in ("by_scope", "by_scope_change")
-            t["confirm"]["when"] = "if_widens" if narrowed else "always"
+        confirm_of(t)
+
+def confirm_of(t):
+    """CC 4.5.13: an item is confirmed when its rows widen or have no way back; every other item takes one step."""
+    back = t["undo"]["value"]
+    t["confirm"] = {"value": bool(t["widens"]["value"]) or not back, "source": "derived"}
+    if t["confirm"]["value"]:
+        narrowed = back and t["widens"].get("when") in ("by_scope", "by_scope_change")
+        t["confirm"]["when"] = "if_widens" if narrowed else "always"
+
+UNDO_VIAS = ("withdraw", "recant", "attest")   # attest: a withdrawn row is said again, as a new row
+
+def apply_undo_text(fam, t, rows):
+    """The way back the text states for a row whose family's verbs list none (CC 2.4.1.1 and the family's home).
+    Only a gap cell takes one, so the file empties as the registry's verbs column closes; the value is `false`
+    (the text states no way back) or `via:policy`, where policy is selfAct or a kind of the policy table (a
+    cosigned row is withdrawn by its quorum, CC 2.4.1.1 rule 0)."""
+    if t["undo"]["source"] != "gap":
+        raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} undo is not a gap ({t['undo']['source']}); remove the row")
+    (stage, v, ref, quote), = rows
+    if stage:
+        raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} undo takes no stage")
+    if v == "false":
+        t["undo"] = {"value": False, "source": "cc-table", "cc_ref": ref}
+    else:
+        via, _, pol = v.partition(":")
+        if via not in UNDO_VIAS or not pol:
+            raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} undo is false or via:policy, via one of {UNDO_VIAS}")
+        if pol != "selfAct" and pol not in set(POLICY_ROWS.values()):
+            raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} undo policy {pol} is not a kind of the policy table")
+        t["undo"] = {"value": True, "via": via, "policy": pol, "source": "cc-table", "cc_ref": ref, "stated": True}
+    confirm_of(t)
+
+def quote_stands(fam, verb, cell, ref, quote):
+    """A quote a text row carries stands verbatim in the section it cites; an undo row must carry one."""
+    if not quote:
+        if cell == "undo":
+            raise SystemExit(f"transition_text.tsv: {fam} {verb} undo carries no quote")
+        return
+    sys.path.insert(0, str(ROOT / "tools"))
+    from build_family_model import section_span
+    span = section_span(ref)
+    if span is None or quote not in span:
+        raise SystemExit(f"transition_text.tsv: {fam} {verb} {cell}: the quoted words do not stand in {ref}")
 
 def val(cell):
     return cell.get("value") if isinstance(cell, dict) else cell
@@ -190,12 +230,15 @@ def text_cells():
     head = lines[0].split("\t")
     for l in lines[1:]:
         r = dict(zip(head, l.split("\t") + [""] * len(head)))
-        out.setdefault((r["family"], r["verb"]), {}).setdefault(r["cell"], []).append((r["stage"].strip(), r["value"].strip(), r["cc_ref"].strip()))
+        quote_stands(r["family"], r["verb"], r["cell"], r["cc_ref"].strip(), r.get("quote", ""))
+        out.setdefault((r["family"], r["verb"]), {}).setdefault(r["cell"], []).append((r["stage"].strip(), r["value"].strip(), r["cc_ref"].strip(), r.get("quote", "")))
     return out
 
 def apply_text(fam, t, cells):
     """Lay the text's cells over one derived transition; a cell the census closes is refused."""
     for cell, rows in cells.items():
+        if cell == "undo":
+            continue    # laid over the way back after it is derived (apply_undo_text)
         cur = t[cell]
         if cur["source"] == "code-v61":
             raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} {cell} is closed by the census; remove the row")
@@ -205,7 +248,7 @@ def apply_text(fam, t, cells):
         refs = sorted({r[2] for r in rows})
         new = {"source": "cc-table", "cc_ref": refs[0] if len(refs) == 1 else refs}
         if cell == "roles":
-            toks = {stg: sorted(x.strip() for x in v.split(",") if x.strip()) for stg, v, _ in rows}
+            toks = {stg: sorted(x.strip() for x in v.split(",") if x.strip()) for stg, v, *_ in rows}
             if stages == [""]:
                 new["value"] = toks[""]
             else:
@@ -224,7 +267,7 @@ def apply_text(fam, t, cells):
                 new["value"] = pol_of(rows[0][1])
             else:  # the transition's own policy stands; the stage's rides beside it
                 new = dict(cur); new["cc_ref"] = refs[0] if len(refs) == 1 else refs
-                new["stages"] = {stg: pol_of(v) for stg, v, _ in rows}
+                new["stages"] = {stg: pol_of(v) for stg, v, *_ in rows}
         elif stages != [""]:
             raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} {cell} takes no stage")
         elif cell == "widens":
@@ -459,10 +502,14 @@ def build():
             # a replacing row that promotes its scope widens (CC 4.4.3.3.1); a family already at the federation cannot
             if t["verb"] == "supersede" and ww == "by_scope" and t["widens"]["source"] == "derived" and t["widens"]["value"] is False:
                 t["widens"] = {"value": True, "when": "by_scope_change", "source": "derived", "cc_ref": "CC 4.4.3.3.1"}
+        undo_text = {}
         for t in trans:
             cells = text.pop((fam, t["verb"]), None)
             if cells: apply_text(fam, t, cells)
+            if cells and "undo" in cells: undo_text[t["verb"]] = cells["undo"]
         way_back(trans, lifecycle)
+        for t in trans:
+            if t["verb"] in undo_text: apply_undo_text(fam, t, undo_text[t["verb"]])
         rows.append({"family": fam, "kind": kind, "transitions": trans})
     if text:
         raise SystemExit("transition_text.tsv names transitions outside the manifest: " + ", ".join(f"{f} {v}" for f, v in sorted(text)))
@@ -484,7 +531,7 @@ def build():
                      "changes": change_meta,
                      "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
                      "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
-                     "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
+                     "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list; source cc-table is a way back the text states (cc_ref) for a family whose verbs list none, `stated` marking that its `via` is the structural verb of CC 2.4.1.1 and not a transition of this table",
                      "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.3.1). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
                      "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
                      "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",

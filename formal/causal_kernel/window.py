@@ -258,8 +258,9 @@ def self_world():
 
 
 def moderation_world():
-    g = ST.offer("g", "m1", ("m1", "m2", "m3"), "member", "@", "self", cosigners=("m2", "m3"))
-    md = ST.offer("md", "m1", "MOD", "moderate", "g", "self", ("g",), cosigners=("MOD",))
+    g = ST.offer("g", "m1", ("m1", "m2", "m3"), "duty", "@", "self", cosigners=("m2", "m3"))     # three duty holders (CC 4.5.4)
+    md = ST.offer("md", "m1", "MOD", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty",
+                  cosigners=("m3", "MOD"))                                     # two of the three confer, MOD accepting
     W = secs("moderation_fallback")
     p = opener("p", "m2", "moderation_fallback", "g", ("md",))
     acts = [answer("x1", "m1", "p", "act"), answer("x3", "m3", "p", "act")]

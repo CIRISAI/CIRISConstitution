@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "3848a851dbe67c36a4f9d3156ee5b808ac9a9588737f8e3e6794902dfe389d3f",
+  "source_sha256": "868953394698e2f6f3c6d72dd99627befa8cdda894a5c09d1ca44952fb1782c7",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -85,15 +85,15 @@
   },
   "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
-  "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list",
+  "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list; source cc-table is a way back the text states (cc_ref) for a family whose verbs list none, `stated` marking that its `via` is the structural verb of CC 2.4.1.1 and not a transition of this table",
   "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.3.1). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
   "transitions": 460,
-  "gap_cells": 5,
-  "confirmed": 254,
-  "undo_gap_cells": 30,
+  "gap_cells": 4,
+  "confirmed": 253,
+  "undo_gap_cells": 3,
   "note": "draft 0: states are the five retraction states of CC 2.4.1.1; a family with its own lifecycle (membership stages, the moderator election, the halt) refines these in its chapter model; gap cells mean the queue generator treats the transition as closed until the manifest says otherwise"
  },
  "rows": [
@@ -349,7 +349,8 @@
      },
      "undo": {
       "value": false,
-      "source": "gap"
+      "source": "cc-table",
+      "cc_ref": "CC 4.2.1.3"
      },
      "confirm": {
       "value": true,
@@ -394,13 +395,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -440,13 +445,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -486,13 +495,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -599,13 +612,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "cosigned",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -662,13 +679,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6206,13 +6227,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6295,13 +6320,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 3.3.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -6798,13 +6827,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8073,13 +8106,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -8208,13 +8245,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -9590,13 +9631,16 @@
       "source": "derived"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "attest",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
-      "value": true,
-      "source": "derived",
-      "when": "always"
+      "value": false,
+      "source": "derived"
      },
      "guard": {
       "value": [],
@@ -9980,13 +10024,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -10470,13 +10518,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -12131,15 +12183,41 @@
      "from": "none",
      "to": "admitted",
      "roles": {
-      "value": [],
-      "source": "gap"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 2.4.1.1",
+       "CC 3.1.3"
+      ],
+      "value": [
+       "member",
+       "owner",
+       "self"
+      ],
+      "stages": {
+       "node_or_agent": [
+        "owner",
+        "self"
+       ],
+       "user_self": [
+        "member"
+       ]
+      }
      },
      "policy": {
       "value": {
        "policy": "selfAct",
        "rows": []
       },
-      "source": "derived"
+      "source": "derived",
+      "cc_ref": "CC 3.3.6.3",
+      "stages": {
+       "user_self": {
+        "policy": "two_path",
+        "rows": [
+         "self_roster_evict"
+        ]
+       }
+      }
      },
      "widens": {
       "value": true,
@@ -12206,13 +12284,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -13411,13 +13493,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13500,13 +13586,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -13825,13 +13915,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -15821,13 +15915,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18099,13 +18197,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18188,13 +18290,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [
@@ -18526,13 +18632,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18572,13 +18682,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18661,13 +18775,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -18707,13 +18825,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -20012,13 +20134,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "cosigned",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],
@@ -21095,13 +21221,17 @@
       "when": "by_scope"
      },
      "undo": {
-      "value": false,
-      "source": "gap"
+      "value": true,
+      "via": "withdraw",
+      "policy": "selfAct",
+      "source": "cc-table",
+      "cc_ref": "CC 2.4.1.1",
+      "stated": true
      },
      "confirm": {
       "value": true,
       "source": "derived",
-      "when": "always"
+      "when": "if_widens"
      },
      "guard": {
       "value": [],

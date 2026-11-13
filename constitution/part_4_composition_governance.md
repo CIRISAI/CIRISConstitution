@@ -116,7 +116,7 @@ Like root-minting, this is **not** an accord privilege. The identical co-scrub b
 
 This entry fixes the bytes signed to invoke the accord and what a `constitutional` halt is. It says where a halt fires, what it pauses and what it leaves running, when it lapses, and how many signatures each kind takes.
 
-Every `accord:invoke:*` Contribution carries a holder's signature over the canonical bytes below. That signature lies inside the row; the row's own signature covers JCS(`attestation_envelope`), as for any row ([CC 2.6.1.7](part_2_the_grammar.md)). BOTH the discriminator AND a per-invocation nonce are in the signed payload. That prevents constitutional ↔ notify ↔ drill cross-replay.
+Every `accord:invoke:*` Contribution carries a holder's signature over the canonical bytes below. That signature lies inside the row; the row's own signature covers JCS(`attestation_envelope`), as for any row ([CC 2.6.1.7](part_2_the_grammar.md#2.6.1.7)). BOTH the discriminator AND a per-invocation nonce are in the signed payload. That prevents constitutional ↔ notify ↔ drill cross-replay.
 
 ```
 canonical = sha256(

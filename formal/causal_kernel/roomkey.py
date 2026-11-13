@@ -87,13 +87,13 @@ def in_room(r):
 
 
 def room_world(nm):
-    """The room of route.py (A and B found it, A moderates, C is admitted, writes and is removed), and then: C is
+    """The room of route.py (A and B found it as its two duty holders, so both moderate; C is admitted, writes and is removed), and then: C is
     admitted again, J joins later, A replies to a message from before J joined, the room votes, and a member opens the
     moderation fallback. nm: person -> the key the roster seats (an identity key, or a voice)."""
     A, B, C, J = nm["A"], nm["B"], nm["C"], nm["J"]
     C2 = nm.get("C2", C)                                        # the key of C's second stint (a fresh room key, where given)
-    g = ST.offer("g", A, (A, B), "member", "@", "self", cosigners=(B,), room=ROOM)
-    md = ST.offer("md", A, A, "moderate", "g", "self", ("g",), room=ROOM)
+    g = ST.offer("g", A, (A, B), "duty", "@", "self", cosigners=(B,), room=ROOM)       # the founding record seats its signers as duty holders (CC 4.5.4)
+    md = R("md", "record", A, ("g",), room=ROOM, duties=("moderate",))                  # the room's record declares its duties, as route.py
     ac = in_room(ST.accept("ac", C, None, ("g", "md"), scope="member", obj="g"))
     cb = in_room(ST.cosign("cb", B, "w", ("g",)))
     w = ST.offer("w", A, C, "member", "g", "group", ("g", "ac", "cb"), head=("g",), policy="community_invite", content="w", room=ROOM)
@@ -996,29 +996,30 @@ def commitment_and_limits():
 # =========================================================================================================
 # 11. detection in a private room: the detector's seat is conferred inside the room
 # =========================================================================================================
-ROOM_CONFERS = dict(ST.CONFERS, moderate=(("detect",), "same"))       # enabling a list is an act of the room's moderate authority
-
-
 def detection_in_room():
-    """A and B found the room, A moderates. A's node holds a room key, owned inside the room by A's room key. A enables
-    a list: that act seats the node's room key as a detector for the list, over the room. The node signs a detection,
-    the owner signs the notice."""
+    """A and B found the room as its two duty holders (CC 4.5.4). A's node holds a room key, owned inside the room by A's
+    room key. The duty holders enable a list: that act, counted as a conferral of a duty seat (a strict majority of the
+    holders, never fewer than two voices where there are two), seats the node's room key as a detector for the list,
+    over the room. The node signs a detection, the owner signs the notice."""
     facts = []
     A, B, NODE, LIST = "rk:q", "rk:n", "rk:q/node", "detect:list1"
-    g = ST.offer("g", A, (A, B), "member", "@", "self", cosigners=(B,), room=ROOM)
-    md = ST.offer("md", A, A, "moderate", "g", "self", ("g",), room=ROOM)
+    g = ST.offer("g", A, (A, B), "duty", "@", "self", cosigners=(B,), room=ROOM)
+    md = R("md", "record", A, ("g",), room=ROOM, duties=("moderate",))
     ob = ST.offer("ob", NODE, A, "owner", NODE, "self", ("g",), cosigners=(A,), room=ROOM)
-    en = ST.offer("en", A, NODE, LIST, "g", "seat", ("md", "ob"), under="md", cosigners=(NODE,), room=ROOM)
+    en = ST.offer("en", A, NODE, LIST, "g", "group", ("md", "ob"), head=("g",), policy="duty_confer", counted="duty",
+                  cosigners=(B, NODE), room=ROOM)
     det = R("det", "detection", NODE, ("en",), room=ROOM, offered_by=B, list="list1")
     note = R("note", "notice", A, ("det", "ob"), room=ROOM, target="det")
     rows = [g, md, ob, en, det, note]
-    seats = lambda rs: ST.Seats(state_of(rs), confers=ROOM_CONFERS)
+    seats = lambda rs: ST.Seats(state_of(rs))
     Q = seats(rows)
-    facts.append(("enabling the list seats the room's node as its detector: an ordinary seat, offered by the room's moderate holder and held by the node's room key",
-                  Q.holders(LIST, "g") == frozenset({NODE}) and Q.stands(NODE, LIST, "g", root=A)))
-    facts.append(("the seat is the room's: no outside root is on the walk to it, and the same offer by a key that holds no moderate seat seats nobody",
+    facts.append(("enabling the list seats the room's node as its detector: an ordinary seat, conferred by the count of the room's duty holders and held by the node's room key",
+                  Q.holders(LIST, "g") == frozenset({NODE}) and Q.stands(NODE, LIST, "g", root=("group", "g"))))
+    facts.append(("the seat is the room's: no outside root is on the walk to it; the same enabling signed by one duty holder of two alone, "
+                  "or by a key that holds no duty seat, seats nobody",
                   not Q.stands(NODE, LIST, "g", root="root:outside")
-                  and seats([g, md, ob, dict(en, signer=B)]).holders(LIST, "g") == frozenset()))
+                  and seats([g, md, ob, dict(en, cosigners=(NODE,))]).holders(LIST, "g") == frozenset()
+                  and seats([g, md, ob, dict(en, signer="rk:z", cosigners=(NODE,))]).holders(LIST, "g") == frozenset()))
     def admitted(rs):
         """The door on the notice: its signer owns, by the binding in the room, the key that signed the detection it
         names, and that key held the detector's seat."""
@@ -1036,8 +1037,10 @@ def detection_in_room():
     facts.append(("a detector's seat tied to the node's public key would name the node's owner to any holder of the detection",
                   proves(pub)[0] == frozenset({"id:A"}) or "id:A" in proves(pub)[1]))
     wd = in_room(ST.withdraw("wd", A, "en", ("en",)))
-    facts.append(("the enabling is revocable: withdrawn by the authority that signed it, the node holds no detector's seat",
-                  seats(rows + [wd]).holders(LIST, "g") == frozenset()))
+    xw = ST.unseat("xw", A, NODE, LIST, "g", "group", ("en",), head=("g",), policy="duty_withdraw", counted="duty", cosigners=(B,), room=ROOM)
+    facts.append(("the enabling is revocable: withdrawn by the count of the room's duty holders, the node holds no detector's seat; "
+                  "one holder's withdrawal of its own signature ends nothing (CC 4.5.4)",
+                  seats(rows + [xw]).holders(LIST, "g") == frozenset() and seats(rows + [wd]).holders(LIST, "g") == frozenset({NODE})))
     before, after = ST.Seats(state_of([g, md, ob, en])), ST.Seats(state_of(rows))
     facts.append(("a detection is a claim and no verdict: with the detection and the notice held, no seat in the room has changed",
                   before.snapshot() == after.snapshot()))
