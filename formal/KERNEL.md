@@ -111,11 +111,11 @@ into it from the count across signers is the intended movement.
 
 One voice may order its own rows. The fold default (CC 3.5.1) evaluates each signer's chain on its own: between
 two acts of one kind by one signer on one named row, the later signed instant wins and the lower row id breaks
-a tie. A signer who back-dates changes only what the signer itself says, so the last two rows are allowed and
-are counted only to keep them in view. The first two rows contradict section 2: they order rows of different
-signers by a value one of them chose. A cell counts as one signer's own only when its expression fixes the
+a tie. A signer who back-dates changes only what the signer itself says, so the two rows for one signer's own rows
+are allowed and are counted only to keep them in view. The two rows for different signers contradict
+section 2, since they order rows by a value one of the signers chose, and are held at zero. A cell counts as one signer's own only when its expression fixes the
 signer in the group it orders; any other cell counts as across signers. A session's key names the self, so
-its claims count as one voice's own (section 5). No cell is in the first two rows. A trace-consent grant, the two
+its claims count as one voice's own (section 5). No cell orders across signers. A trace-consent grant, the two
 halves of a partnership, a key revocation, a licence, a quarantine marker and the winner's acceptance are each
 decided by a party's own rows, a count or a fixed order on kinds (section 6). A listing is not a ranking: the
 moderator ballot's shown order and the roster's member order give each row a position that no operator reads, so
@@ -448,8 +448,8 @@ limits that folder's README lists.
 - an offer conferred by a count is ended by its holder or by a count, never by its proposer alone;
 - among several founding keys one founder's unseat concludes nothing, and a founder's own offers live only
   while that founder's seat does;
-- a row that names another adds its audience to it only if it is concluded and its signer was already in that
-  audience;
+- a row that names another adds its audience to it only if it is concluded, its signer was already in that
+  audience, and it sits in the same room or is signed by the named row's own signer;
 - the holders of a counted scope are the keys common to the tips;
 - a counted row counts only if every counted row it is built on counts.
 
@@ -474,18 +474,17 @@ What that leaves, each **run** with its witness:
 | A landing over an objection that never reached the concluder | a relay between objector and concluder; no key | as long as the eclipse; ends when any concluder lands naming both |
 | The concluder's own clock | any one key holding the concluder's seat | a lone window has no length against a lying concluder; ends when the target or a counted key signs and a landing names both |
 | A stale proposal forcing the tips to wait | a member below the count holding a stale honest proposal on any past head | one flood per pocketed proposal; each ends with a merge by the count; a reader that acknowledged a merge is not moved by a later flood from below it |
-| An invariant of the form "at least one" | two honest keys acting concurrently | 'at least one' is kept by no rule; an emptied founder set has no recovery in the kernel |
+| An invariant of the form "at least one" | two honest keys acting concurrently | 'at least one' is kept by no rule of the kernel; for a community the text gives the way back: with no duty holder left the room locks and the members' count seats one (CC 4.5.4) |
 | A fork by the count of an old head | keys that met the count at an old head, signing one version | only against a reader with no acknowledgement of its own: its roster is the keys common to the two lines (nobody), for good |
 | The same, by leaked keys of removed members | whoever holds removed keys that once met a count | only against a reader with no acknowledgement of its own, as test 18 |
 | A new reader's first view | whoever controls a new reader's first view | until the reader withdraws its own rows; its own acknowledgement makes the wrong head stick |
-| A row withheld from some | the cut's own signer, or a relay, by omission | as long as the row is withheld; any holder may serve it |
+| A row withheld from some | the cut's own signer, or a relay, by omission | as long as the row is withheld; a row cited from another room is carried only by its own signer, so a cut that names one waits until then |
 | Rows signed to no purpose | any key at all, one signature a row | no answer moves; storage and read time grow without a bound in the kernel |
-| A row carried on by naming it | a key already in the row's audience (a member, or a former member for rows of its time) | intended carriage: to a later joiner or to another group, with the named row's ancestry; cannot be undone |
 | History carried by a reply | any one member, by replying | intended carriage, row by row; cannot be undone |
 | One conferring seat seating many | one seated key whose seat may confer | one row seats any number of keys; ends with one withdrawal by its conferrer |
 | A line of several rows forged by a past count | keys that met the count at an old head, signing any number of rows | (a) a reader that acknowledged the honest head: nothing, the forged line is void whole (HOLDS for it). (b) a reader with none: plain tips-wait; no row is stale, the members are the keys common to the tips (the forger alone when it is on both lines), for good; a removed key is never listed |
 
-Four of the sixteen are forms of one attack, a fork signed by keys that once met a count.
+Four of the fifteen are forms of one attack, a fork signed by keys that once met a count.
 
 Two costs of the reader's line are stated here because no attack names them. An honest admission signed
 offline on an old head is behind the line of a reader that has acknowledged a newer head, so for that reader
@@ -499,12 +498,13 @@ that the ending row has not seen from counting.
 |---|---|---|
 | Which rows seat which key in which role: what 21 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
 | Four guard clauses still refuse a row for another row; their sentences do not say what happens to the row | table data | `manifests/transitions.json` |
-| A count taken when the fold is evaluated has no solution. It has left the policy table; fourteen fold cells of other families still read `@decision` or `@count` | table data | `formal/derivation/fold_text.tsv` |
+| A count taken when the fold is evaluated has no solution. It has left the policy table; eleven fold cells of other families still read `@decision` or `@count` | table data | `formal/derivation/fold_text.tsv` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
-| Placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
-| A landing row for each window, and who may sign it | table data | `manifests/reactions.json` |
+| The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
+| Three door parameters in no cell: whether the opening act is in force while its window is open, the joiner's yes as a voice, the threshold as the room's protocol; and 73 things `doors.tsv` lists as stated by no table | table data | `manifests/reactions.json`, `formal/causal_kernel/doors.tsv` |
+| 126 cells with a word the expression language does not carry, and eleven folds a reaction calls that no cell defines | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
-| An acceptance row for each seat the text confers without one | rule | the Parts |
-| A rule that keeps at least one founder, or a stated way back when none is left | rule | the Parts |
+| How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
+| The owner's revocation of a key, an election's tie and the older models, each against the rules as they stand | model | `formal/` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
