@@ -56,9 +56,7 @@ change what a reader with no acknowledgement of its own concludes (8a).
 
 ## 4. Operators
 
-Every rule cell is written in these. **measured**: 205 of 211 fold-cell parts, all 43 guard clauses and the 39
-clock and expiry entries map onto them. **run**: six models rewritten with the first five agree with their
-originals on 400,300 comparisons.
+Every rule cell is written in these.
 
 | Operator | What it does |
 |---|---|
@@ -67,9 +65,48 @@ originals on 400,300 comparisons.
 | interval | whether a value lies between an opening and a closing |
 | table cell | the value a typed table gives for a key |
 | bounded repeat | a step applied until nothing changes |
-| closure over what rows name | ancestors, concurrency, the frontier of a set |
+| closure over what rows name | the past of a row; no cell needs more |
+| integer arithmetic | an opening plus a duration, a fraction of a base; no floating point |
+| join on a named row | two rows that name the same row; one cell uses it |
+| result assembly | a verdict for each element, or a set of effects |
 
-All six are in `formal/kernel_lib`. **run**: the closure agrees with a hand-written definition on 15,864 comparisons.
+The first six are in `formal/kernel_lib`. **run**: six models rewritten with the first five agree with their
+originals on 400,300 comparisons, and the closure agrees with a hand-written definition on 15,864.
+
+**One language.** `tools/kx.py` is one expression language over these operators, and `tools/kx_prelude.kx`
+writes each of the eight named answers once in it. `tools/kx_translate.py` translates the cells of the five
+authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on the repository's own text):
+
+| Grammar | Translated in full | Translated with a word dropped |
+|---|---|---|
+| guards | 43 | 14 |
+| folds | 162 | 28 |
+| changes | 31 | 31 |
+| reactions | 38 | 50 |
+| policy text cells | 0 | 49 |
+
+Every translation agrees with a reference reading on generated row sets, and the policy rows agree with the
+policy table's own vectors. Four of the five grammars had a parser and no evaluator, so for those the reference
+reading is this work's own and agreement shows the translation matches that reading, not the text. A cell that
+uses a word the translation does not carry is not counted as translated. The dropped words are listed as
+data, among them `@decision`, `@count`, `@seating` and `@prior`, which no text defines.
+
+The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`):
+
+| Count | Now |
+|---|---|
+| a cell orders rows by a signed instant | 116 |
+| a cell orders rows by a digest or a key id | 108 |
+| a cell compares the signed instants of two rows | 15 |
+| a cell reads arrival outside a clock | 1 |
+| floating point in a cell | 9 |
+| a fold a reaction calls and no cell defines | 11 |
+| a refusal on a clause that reads another row | 41 |
+| a count over the set its own outcome changes | 11 |
+| a cell with a dropped word | 136 |
+
+The first two rows are the fold default, which most fold cells inherit. They contradict section 2 and are the
+largest piece of the tables still to convert. **open**.
 
 ## 5. Named answers
 

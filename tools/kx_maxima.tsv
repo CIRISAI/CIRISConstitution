@@ -1,0 +1,20 @@
+# The counts tools/kx_check.py measures over the rule cells, each with the maximum it may reach. A count above its
+# maximum refuses the check; each number only falls. A cell is counted once per distinct (grammar, family, text).
+count	max	note
+ORDER_BY_SIGNED_INSTANT	116	a cell orders rows by a signed instant (most through the fold default pick=…max(asserted_at)…)
+ORDER_BY_DIGEST	108	a cell orders rows by a digest or a key id (the fold default ends …min(attestation_id))
+CROSS_SIGNER_INSTANT	15	a cell compares the signed instants of two different rows (at asserted_at, boundary(asserted_at), @signed, counted_at=signed)
+ARRIVAL_OUTSIDE_WINDOW	1	a cell reads when this node first held a row, outside a clock or an expiry (order=…min(admission_order))
+FLOATING_POINT	9	mean, median, rate or / in a cell: read here as integers (floor of the mean, lower median, table weight, floor division)
+UNRESOLVED_FOLDS	11	a reaction names fold(NAME) and no cell defines that fold
+REFUSE_ON_NON_DOOR_CLAUSE	41	refuse on a guard clause or a change whose computed layer is not the door (it reads another row)
+INSTANT_AT_DECISION	11	a fold counts a set @decision or @count: the set its own outcome changes
+UNTYPED_MEMBERS	0	a member a cell reads has no row in formal/derivation/kx_field_types.tsv
+UNTRANSLATED_CELLS	0	a cell that does not parse or does not translate
+READS_DROPPED	136	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
+CARRIED_WORD_COLLISIONS	0	two words of one closed class that the translation reads alike, neither declared dropped
+LABEL_WORDS_NOT_EVALUATED	53	a fold cell states by=, result= or feeds=: carried to the manifest, not evaluated
+UNCAUGHT_MUTANTS_GUARD	20	seeded one-operator mutants of guard translations that no generated row set tells apart
+UNCAUGHT_MUTANTS_FOLD	136	the same, folds
+UNCAUGHT_MUTANTS_CHANGE	34	the same, changes
+UNCAUGHT_MUTANTS_REACTION	17	the same, reactions

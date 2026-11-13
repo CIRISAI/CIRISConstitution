@@ -1,0 +1,107 @@
+# The type of every member a rule cell reads, for tools/kx.py: a cell that orders rows by a signed_instant, a digest
+# or a key (a key id is the digest of a key), or compares the signed_instants of two different rows, carries a type
+# error; a member with no row here is UNTYPED and refuses tools/kx_check.py. A member of a row's `ref` is a digest by
+# construction and needs no row. Types: signed_instant | digest | key | set | value.
+member	type	note
+C	value	
+I_inc	value	
+I_int	value	
+M	value	
+R	value	
+S	value	
+account	value	
+admission_quorum_basis	value	
+affected_population_estimate	value	
+amount	value	
+asserted_at	signed_instant	an instant its signer states
+attestation_id	digest	a row's digest
+attested	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+attested_key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+attesting_key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+axis	value	
+axis_identity	value	
+ballot_count	value	a count
+ballot_set_digest	digest	
+bilateral_pair_id	value	identifier; read by equality only
+bucket	value	
+chunk_commitment	digest	
+chunk_root	digest	a Merkle root
+claimed_at	signed_instant	an instant its signer states
+class	value	
+cohort_scope	value	
+cohort_subkind	value	
+community_id	value	identifier; read by equality only
+community_key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+confidence	value	
+consensus_protocol	value	
+content_hash	digest	
+contribution_id	value	identifier; read by equality only
+credits	value	
+days	value	
+delegation_valid_from	signed_instant	an instant its signer states
+delegation_valid_until	signed_instant	an instant its signer states
+dimension	value	
+dissolves_at	signed_instant	an instant its signer states
+domain	value	
+effective_at	signed_instant	an instant its signer states
+election_id	value	identifier; read by equality only
+entrenched	value	
+ephemeral	value	
+epoch	value	a counter
+expertise_multiplier	value	
+expires_at	signed_instant	an instant its signer states
+grade	value	
+halt_id	value	identifier; read by equality only
+hardware_class	value	
+id	digest	a row's digest
+identity_key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+landed	value	
+leafname	value	
+licence_class	value	
+license_id	value	identifier; read by equality only
+members	set	a roster's member keys
+moderation_track_record	value	a count
+names	set	the digests a row names
+object	key	the key of the object (a group, a person)
+owner	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+period	value	
+person	key	a person (fedID)
+present	value	
+proposal_id	value	identifier; read by equality only
+quorum_key	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+quorum_weight	value	a count of cosigners
+recovery_commitments	set	commitments to recovery keys
+references_attestation_id	digest	the digest of the row referenced
+relay_countersignature	digest	signature bytes
+rendezvous_node_key_id	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+resumes_halt_id	value	identifier; read by equality only
+return_token	value	equality only
+revision	value	a counter the signer sets
+revoked_after	signed_instant	an instant its signer states
+revoked_key_sha256_ed25519_raw	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+role	value	
+root_hash	digest	a Merkle root
+scope	value	
+score	value	
+seq	value	a counter the signer sets
+session_id	value	identifier; read by equality only
+share_index	value	
+signed_at	signed_instant	an instant its signer states
+signer	key	a key id (the digest of a key: ordering by it is ordering by a digest)
+stalled	value	
+state	value	
+stream_id	value	identifier; read by equality only
+subject	key	a key, or a list of keys under each(subject)
+subkind	value	
+terminal	value	
+token	value	a return token; equality only
+transfer_id	value	identifier; read by equality only
+unit	value	
+valid_until	signed_instant	an instant its signer states
+value	value	
+verb	value	
+version	value	a counter
+via	value	
+wa_adjudication_ref	digest	the digest of the row referenced
+weight	value	
