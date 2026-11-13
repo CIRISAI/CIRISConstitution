@@ -205,8 +205,10 @@ two duty deadlines that take no answers.
 the freshness window, by the cut, and an invitation's expiry, by a window that shuts out a late acceptance. A
 registered name is held by what the registrations name (CC 4.5.1.3). Two readings are not covered. A cosignature
 is attached against the node's clock at first receipt, which the two notions cover only if the cosignature
-states its own end. A session goes to the earliest claimed instant among one person's own devices
-(CC 3.1.3.1), which is a ranking by an instant its signer chooses. Both are **open**.
+states its own end. That one is **open**. A session goes to the earliest claimed instant among one
+person's own devices (CC 3.1.3.1). This is the one ranking by a signed instant that is kept, and on purpose:
+both claimants are one person's keys, so it is one voice ordering its own rows, and a back-dated claim gains at
+most one lease against that person's other devices.
 
 ## 6. Conflict between concurrent rows
 
