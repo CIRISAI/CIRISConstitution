@@ -1627,7 +1627,7 @@ The CC 4.5.1 amendment process itself, the [CC 1.2](part_1_foundation.md) T1–T
 
 When two parties independently register confusingly-similar `{kind}` / `{axis}` values within the same prefix family, the following resolution applies:
 
-1. **First-registered wins** for the canonical-attestation surface. The earlier `signed_at` holds the name; later registrations carry a `differs_in: ["semantic_disambiguation"]` clarification or pick a distinct value.
+1. **First-registered wins** for the canonical-attestation surface. A registration holds the name against every registration that has it in its past. No signed instant is compared, since a signer chooses its own. Two registrations where neither names the other are both contested until one yields or an amendment under [CC 4.5.1](#4.5.1) names both. Later registrations carry a `differs_in: ["semantic_disambiguation"]` clarification or pick a distinct value.
 2. **Levenshtein-distance guard**: a CEG-Conforming Substrate (CCS) SHOULD compute Levenshtein distance against existing values in the same prefix family at admission. Values within distance ≤ 2 of an existing canonical value SHOULD return a `409 IDEMPOTENT_CONFLICT` with an advisory hint, NOT a hard reject. The producer may proceed if the similarity is intentional (e.g., `commonsense` vs `commonsense_hard` are intentionally close).
 3. **No squatting**: a `{kind}` registered but never used (no scored attestations in 90 days) MAY be reclaimed by another producer via the [CC 4.5.1](#4.5.1) amendment process.
 
