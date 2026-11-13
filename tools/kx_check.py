@@ -434,6 +434,11 @@ def run_policy():
 REFERENCE = {"ORDER_BY_SIGNED_INSTANT_OWN", "ORDER_BY_DIGEST_OWN"}   # printed for reference: a cell leaving CROSS for OWN is the intended movement. The total and CROSS are gated
 
 
+def over_maximum(sizes, maxima):
+    """The counts that hold no maximum or stand above it: [(count, size, maximum or None)]."""
+    return [(k, n, maxima.get(k)) for k, n in sizes.items() if k not in REFERENCE and (maxima.get(k) is None or n > maxima[k])]
+
+
 def measures(results, counts, policy):
     ok = [r for r in results if r.get("status") in ("ok", "reads_dropped")]
     flagged = lambda fl: sorted({(r["grammar"], r["family"], r["text"]) for r in ok if fl in r["flags"]})
@@ -547,6 +552,18 @@ def main():
         got = bool(sites) and all(o is True for _, _, o in sites)
         print(f"plant     made-up fold `{text}`: " + ("OWN" if got else "CROSS") + (", as it must" if got == want else ", wrong"))
         if got != want: refusals.append(f"the made-up fold `{text}` was not counted {'OWN' if want else 'CROSS'}")
+    # plants for the gate, each against the measured sizes taken as the maxima: a cell that leaves CROSS for OWN must
+    # pass, and one more ordering cell must be refused whichever side it is counted on
+    sizes = {k: len(v) for k, v in m.items()}
+    T_, O_, C_ = "ORDER_BY_SIGNED_INSTANT", "ORDER_BY_SIGNED_INSTANT_OWN", "ORDER_BY_SIGNED_INSTANT_CROSS"
+    moved = dict(sizes, **{O_: sizes[O_] + 1, C_: sizes[C_] - 1})
+    added = dict(sizes, **{O_: sizes[O_] + 1, T_: sizes[T_] + 1})
+    crossed = dict(sizes, **{O_: sizes[O_] - 1, C_: sizes[C_] + 1})
+    for name, case, want in (("a cell leaving CROSS for OWN", moved, []), ("one more cell ordering its signer's own rows", added, [T_]),
+                             ("a cell leaving OWN for CROSS", crossed, [C_])):
+        got = [k for k, _, _ in over_maximum(case, sizes)]
+        print(f"plant     {name}: " + (f"refused on {', '.join(got)}" if got else "passes") + (", as it must" if got == want else ", wrong"))
+        if got != want: refusals.append(f"the gate plant `{name}` gave {got}, not {want}")
     print("counts    (may only fall; maxima in tools/kx_maxima.tsv)")
     for k, v in m.items():
         if k in REFERENCE:
@@ -554,8 +571,9 @@ def main():
         mx = maxima.get(k)
         line = f"  {k:28s} {len(v):4d}" + (f"  max {mx}" if mx is not None else "  (no maximum recorded)")
         print(line)
+    for k, n, mx in over_maximum({k: len(v) for k, v in m.items()}, maxima):
         if mx is None: refusals.append(f"{k} has no maximum in tools/kx_maxima.tsv")
-        elif len(v) > mx: refusals.append(f"{k} rose to {len(v)}, above its maximum {mx}: " + "; ".join(map(str, v[:4]))[:300])
+        else: refusals.append(f"{k} rose to {n}, above its maximum {mx}: " + "; ".join(map(str, m[k][:4]))[:300])
     if a.json:
         json.dump({"results": results, "counts": counts, "policy": policy, "measures": m, "plants": [plant_mis, plant_made]}, open(a.json, "w"), indent=1, default=str)
     print(f"time {time.time() - t0:.1f} s on {a.workers} workers")
