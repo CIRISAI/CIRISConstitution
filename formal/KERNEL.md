@@ -242,7 +242,7 @@ that the ending row has not seen from counting.
 |---|---|---|
 | Which rows seat which key in which role: `confers`, `binds_segment`, the 23 roles as one walk | table data | `manifests/family_model.json` |
 | Twelve guards that refuse a row for another row become folds | table data | `manifests/transitions.json` |
-| "Counted at decision" has no solution and leaves the policy table | table data | `manifests/governance_policy.json` |
+| A count taken when the fold is evaluated has no solution. It has left the policy table; fourteen fold cells of other families still read `@decision` or `@count` | table data | `formal/derivation/fold_text.tsv` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | Placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |

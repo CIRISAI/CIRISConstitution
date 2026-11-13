@@ -84,7 +84,7 @@ audio:*	signer_rule	agree	CC 3.1.9	None is reserved: all are open-vocabulary con
 audit_chain:hash_continuity	signer_rule	agree	CC 3.1.3	The `system:*` dimensions here are substrate-self-reports — emittable only by the running Persist instance, which is what makes them honest: the substrate cannot be made to lie about its own
 ballot:moderator	cosign_rule	fills	CC 4.5.13	**The voters' ballots are the appointment's signatures**: the seated moderator is appointed by the body under its protocol, with no node signing anything.
 ballot:moderator	fold	agree	CC 4.5.13	**The floor in a small room** is the smaller of two voices and the roster's size
-ballot:moderator	fold	agree	CC 4.5.13	The electorate is the live roster at the count, a ballot from a member no longer live counting for nothing.
+ballot:moderator	fold	agree	CC 4.5.13	The electorate is the roster the election names, a ballot from a member that roster does not seat counting for nothing.
 ballot:moderator	fold	agree	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
 ballot:moderator	governance	fills	CC 4.5.13	The moderator election above **reconstitutes authority**: the room locks and its members elect, the ballot in merit order with the highest `moderation_track_record` first.
 ballot:moderator	governance	fills	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.

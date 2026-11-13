@@ -1856,7 +1856,7 @@ Fold:
 - `key=election_id,person; pick=agree; over=live@count/person` (CC 3.1.3)
 - `order=max(moderation_track_record),min(admission_order),min(key_id)` (CC 4.5.4)
 - `combine=policy(moderator_election)` (CC 4.5.13)
-- `over=live@count/person` (CC 4.5.13)
+- `over=live@named/person` (CC 4.5.13)
 - `test=voices>=min(2,n) ?seated:open` (CC 4.5.13)
 
 In time:
@@ -2613,7 +2613,7 @@ Change:
 
 Fold:
 - `reads=own&at(now); key=identity_key_id; result=set; by=node` (CC 4.4.3.4.6)
-- `over=live@decision/key` (CC 3.3.6.3)
+- `over=live@named/key` (CC 3.3.6.3)
 
 In time:
 - on withdrawn(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `hard_case:community_membership_change` by identity:substrate_persist (CC 3.4.4)

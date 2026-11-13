@@ -53,7 +53,7 @@ PROTO = os.path.join(ROOT, "constitution", "consensus_protocols.tsv")
 ADMIT = os.path.join(ROOT, "constitution", "protocol_admissibility.tsv")
 ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
 # Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.2.8, which no role token names.
-COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "decision", "act", "founding")),
+COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "named", "act", "founding")),
                        ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no"))])
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no"}
 SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
@@ -246,7 +246,7 @@ def load_counted(rows):
     # the set as signed or as at the act, or leaves the target out, or lands only on the target's silence.
     for r in rows:
         c = {k: v["value"] for k, v in r["_counted"].items()}
-        if c["changes_set"] == "removes" and not (c["counted_at"] in ("signed", "act") or c["count_set"].endswith("-target") or c["target_silent"] == "yes"):
+        if c["changes_set"] == "removes" and not (c["counted_at"] in ("signed", "act", "named") or c["count_set"].endswith("-target") or c["target_silent"] == "yes"):
             sys.exit(f"governance_policy: {r['family']} removes from the set it counts and nothing fixes that set before the act")
         if c["voice"] == "key" and r["corridor"] != "self":
             sys.exit(f"governance_policy: {r['family']} counts keys and is not a self roster (CC 4.5.13, one vote per person)")
@@ -439,7 +439,7 @@ PART_LEAD = "The rows are these, generated into this section from the table:"
 def part_table(rows):
     """The rows as the table CC 4.5.13 prints: the Part's own statement of each row, written from the data."""
     voice = {"person": "one voice a person", "key": "one voice a key", "unstated": "voice not stated"}
-    at = {"signed": "the set as signed", "decision": "the set at the count", "act": "the set at the act",
+    at = {"signed": "the set as signed", "named": "the set the proposal names", "act": "the set at the act",
           "founding": "the set the record lists", "unstated": "instant not stated"}
     esc = lambda x: x.replace("|", "\\|")
     out = ["| Row | Who is counted | Enact | Cancel | Floor | Window | At the window |", "|---|---|---|---|---|---|---|"]
@@ -493,7 +493,7 @@ def build():
                         ("counted_columns", OrderedDict([
                             ("count_set", "the role tokens whose keys the fold seats, joined by + (one voice each), less -target, -proposer or -node"),
                             ("voice", "person: signatures fold to one voice per fedID; key: each key is a voice (a self roster only)"),
-                            ("counted_at", "signed: the set at the row's signed instant; decision: the set when the fold is evaluated; act: the set at the first-held instant of the act the count answers; founding: the set the record lists"),
+                            ("counted_at", "signed: the set at the row's signed instant; named: the set of the roster the proposal names; act: the set at the first-held instant of the act the count answers; founding: the set the record lists"),
                             ("voices", "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)"),
                             ("target_silent", "yes: the reverse path lands only if no row signed by the target was first held inside the window"),
                             ("changes_set", "whether the act adds to or removes from the set it counts"),

@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "de0ff092516cadef9f46daba3e5454e06fcc050b18e5b4cc82a33985bf8fc501",
+  "policy_sha256": "7e8afc527ba48f3669b9b9b2fa0575ce08c194bdbd8d29569cc38bc9b490e0eb",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -379,7 +379,7 @@
      "cc_ref": "CC 3.3.6.3"
     },
     "counted_at": {
-     "value": "decision",
+     "value": "named",
      "cc_ref": "CC 3.3.6.3"
     },
     "voices": {
@@ -440,7 +440,7 @@
      "cc_ref": "CC 3.3.6.3"
     },
     "counted_at": {
-     "value": "decision",
+     "value": "named",
      "cc_ref": "CC 3.3.6.3"
     },
     "voices": {
@@ -507,7 +507,7 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "decision",
+     "value": "named",
      "cc_ref": "CC 4.5.13"
     },
     "voices": {
@@ -850,7 +850,7 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "decision",
+     "value": "named",
      "cc_ref": "CC 4.5.13"
     },
     "voices": {
@@ -1010,7 +1010,7 @@
  "counted_columns": {
   "count_set": "the role tokens whose keys the fold seats, joined by + (one voice each), less -target, -proposer or -node",
   "voice": "person: signatures fold to one voice per fedID; key: each key is a voice (a self roster only)",
-  "counted_at": "signed: the set at the row's signed instant; decision: the set when the fold is evaluated; act: the set at the first-held instant of the act the count answers; founding: the set the record lists",
+  "counted_at": "signed: the set at the row's signed instant; named: the set of the roster the proposal names; act: the set at the first-held instant of the act the count answers; founding: the set the record lists",
   "voices": "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)",
   "target_silent": "yes: the reverse path lands only if no row signed by the target was first held inside the window",
   "changes_set": "whether the act adds to or removes from the set it counts",

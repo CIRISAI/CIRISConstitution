@@ -3123,7 +3123,7 @@ p4	1777	4.5.13	family	moderation	governance	ballot	is	states		A room where nobod
 p4	1777	4.5.13	family	moderation	signer_rule	ballot	MAY	states		A steward, where one exists, may appoint a moderator directly at any point and end the vote	
 p4	1777	4.5.13	family	moderation	body	ballot	is	states		The election id is the digest of the community id and the last seating row, or the roster genesis for a room never seated; a ballot names that id	
 p4	1777	4.5.13	family	moderation	governance	ballot	is	states		A member leaving while locked changes nothing about the election; a lock traps nobody; nothing is admitted or removed	
-p4	1777	4.5.13	family	moderation	formula	ballot	is	states		The electorate is the live roster at the count; a ballot from a member no longer live counts for nothing; the ballot stays open until a seating lands	
+p4	1777	4.5.13	family	moderation	formula	ballot	is	states		The electorate is the roster the election names; a ballot from a member no longer live counts for nothing; the ballot stays open until a seating lands	
 p4	1777	4.5.13	family	moderation	body	ballot	is	states		The winner's acceptance row carries the election id and the digest of the ballot set it was counted over	
 p4	1777	4.5.13	family	moderation	none	ballot	is	states		A node admits an acceptance only when it holds the ballot set, the count yields the signer, the set meets the floor, and its own 24 h have passed	
 p4	1777	4.5.13	family	moderation	tie_break	ballot	is	states		Among valid acceptances held a node seats the one counted over the larger set, on equal size the smaller digest; the seat follows rows held, never arrival	

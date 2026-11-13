@@ -116,7 +116,7 @@ group:roster	@cohort_subkind=infrastructure: over=listed@seating/person	CC 3.1.3
 membership:{stage}	@cohort_subkind=infrastructure: over=founders@decision/person	CC 3.2	the admission predicate is `consensus_protocol` over the founder subset
 membership:{stage}	@cohort_subkind=infrastructure: over=founders@decision/person	CC 4.4.3.2.4.1	members = resolve_community(C, now) // (a) above; admission verified under the current consensus_protocol (founder subset for infrastructure)
 membership:{stage}	@cohort_subkind=infrastructure: over=founders@decision/person; reads=own&direct	CC 3.2	counting in `consensus_protocol` **only where the member's role is one the protocol counts**
-identity:occurrence	over=live@decision/key	CC 3.3.6.3	- Both thresholds are counted over the roster as it stands when the decision is made, not as it stood at the proposal's instant (a
+identity:occurrence	over=live@named/key	CC 3.3.6.3	- Both thresholds are counted over the roster the proposal names.
 membership:{stage}	reads=own&direct	CC 3.3.9	A delegated holder never stands in for the `consensus_protocol` on a roster or config change (roster events stay cosigned under the protocol), and a keyless
 membership:{stage}	reads=own&direct	CC 6.1.8	- **N1 (trust ≠ membership)** — a successful chain walk yields **trust+serve standing only** ([CC 3.2](part_3_the_namespace.md) TRUST≠MEMBERSHIP). Admission to any **non-`infrastructure`** community remains gated, at
 membership:{stage}	@group_kind=affiliation: over=deciding_seats@decision/person	CC 4.4.3.2.8	Members of an affiliation hold no governance vote unless its charter grants one.
@@ -182,7 +182,7 @@ group:roster	pick=chain(prev_head_digest)	CC 4.4.3.2.4	// one held version per g
 group:roster	reads=head; pick=chain(prev_head_digest)	CC 4.4.3.2.4.1	A new version is admitted only if its signed `prev_head_digest` names the held head; a version with a later signed instant that does not name
 ballot:moderator	order=max(moderation_track_record),min(admission_order),min(key_id)	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
 ballot:moderator	combine=policy(moderator_election)	CC 4.5.13	The count is **instant runoff**, the weakest standing candidate eliminated in turn, a tie broken against the later in worthiness order, until one remains. The
-ballot:moderator	over=live@count/person	CC 4.5.13	The electorate is the live roster at the count, a ballot from a member no longer live counting for nothing. There is no reopening as
+ballot:moderator	over=live@named/person	CC 4.5.13	The electorate is the roster the election names, a ballot from a member that roster does not seat counting for nothing. There is no reopening as
 ballot:moderator	test=voices>=min(2,n) ?seated:open	CC 4.5.13	**The floor in a small room** is the smaller of two voices and the roster's size, so a room of one elects itself by its
 *	bound=narrow_only(cohort_scope)	CC 2.1	`cohort_scope` is the one mirror member a placement-touching re-sign may narrow; it is never re-authored
 *	bound=narrow_only(cohort_scope)	CC 2.6.1.7	The one mirror member a placement-touching re-sign may narrow; it may never be re-authored.
