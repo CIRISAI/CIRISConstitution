@@ -2981,7 +2981,7 @@ Body: `cohort`, `cohort_key_id` (text only), `grounds` (text only), `objects_to_
 Count: `none`
 
 Guard:
-- attest: `all consent:state:granted@named[id=ref:consent_basis] at asserted_at else void` (CC 3.1.9.4)
+- attest: `all consent:state:granted@named[id=ref:consent_basis] else void` (CC 3.1.9.4)
 
 Body: `trace_level`, `occurrence_key_ids`, `window_from`, `window_to`, `channel_classes`, `consent_basis`, `evidence_refs`, `window`
 

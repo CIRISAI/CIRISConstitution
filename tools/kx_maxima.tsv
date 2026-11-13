@@ -8,7 +8,7 @@ ORDER_BY_SIGNED_INSTANT_CROSS	0	a cell orders by a signed instant over rows that
 ORDER_BY_DIGEST	94	a cell orders rows by a digest or a key id, whoever signed them
 ORDER_BY_DIGEST_CROSS	0	the same, ordering by a digest or a key id, rows of different signers
 ORDER_UNDECIDED	0	an order whose grouping the check cannot read (each is also counted CROSS)
-CROSS_SIGNER_INSTANT	14	a cell compares the signed instants of two different rows (at asserted_at, boundary(asserted_at), @signed, counted_at=signed)
+CROSS_SIGNER_INSTANT	13	a cell compares the signed instants of two different rows (at asserted_at, boundary(asserted_at), @signed, counted_at=signed)
 ARRIVAL_OUTSIDE_WINDOW	1	a cell reads when this node first held a row, outside a clock or an expiry (order=…min(admission_order))
 FLOATING_POINT	9	mean, median, rate or / in a cell: read here as integers (floor of the mean, lower median, table weight, floor division)
 UNRESOLVED_FOLDS	9	a reaction names fold(NAME) and no cell defines that fold
