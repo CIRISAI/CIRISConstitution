@@ -106,7 +106,7 @@ concludes. All eighteen policy rows are built from their own cells, and further 
 `doors.tsv` holds one row for each instance, with a column for what the tables do not state. Twelve instances
 read who concludes, with which row and whether a late answer counts from the `land` entries of
 `manifests/reactions.json`, and nine read from its `while` entries whether the opening row is in force while its
-window is open. The check records 263 verdicts and exits on any difference, any break that is not caught and any difference between
+window is open. The check records 265 verdicts and exits on any difference, any break that is not caught and any difference between
 arrival orders. Rooms are of three and four keys. Nothing here is proved in Lean.
 
 **Two notions of time** (`check_time.py`, `time_expected.tsv`). A row's own stated end, and a window with a

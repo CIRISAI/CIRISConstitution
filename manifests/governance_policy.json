@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "a3197c38103f78ed2adfa47309b51c512f3095153e3e4727043f435dd52d1d8f",
+  "policy_sha256": "12bf0c626a3dd3b86635c564e20c1fc96d263893bd8e5356f7cf0475a4dd2cab",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -1462,11 +1462,14 @@
   "enact_votes  = enact_num  * base // enact_den + 1              (strictly more than the fraction)",
   "cancel_votes = max(min_count, ceil(cancel_num * base / cancel_den))   (at least the fraction, never one voice)",
   "floor_votes  = max(min_count, ceil(floor_num  * base / floor_den))    (min_count = 2 for a community, 1 for a self)",
-  "if approvals >= enact_votes and not irreversible:  lands  (forward, now)",
+  "voices       = approvals + (1 if target_voice else 0)      (target_voice: the target's own yes is held, and the",
+  "row's target_voice cell is yes; it is never a member)",
+  "enacted      = approvals >= enact_votes and voices >= min_count   (one voice never decides who is in a room)",
+  "if enacted and not irreversible:                   lands  (forward, now)",
   "if elapsed < window:                               pending",
   "if objections >= cancel_votes:                     cancelled (cancel reached)",
-  "if approvals >= enact_votes:                       lands  (forward; it waited its window)",
-  "if reverse_path and approvals >= floor_votes:      lands  (reverse: floored, unopposed, window closed)",
+  "if enacted:                                        lands  (forward; it waited its window)",
+  "if reverse_path and voices >= floor_votes:         lands  (reverse: floored, unopposed, window closed)",
   "else:                                              cancelled (below the floor, or no reverse path)"
  ],
  "verdicts": [

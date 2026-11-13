@@ -19,11 +19,14 @@ The one decision function, which every consumer implements and replays against t
     enact_votes  = enact_num  * base // enact_den + 1              (strictly more than the fraction)
     cancel_votes = max(min_count, ceil(cancel_num * base / cancel_den))   (at least the fraction, never one voice)
     floor_votes  = max(min_count, ceil(floor_num  * base / floor_den))    (min_count = 2 for a community, 1 for a self)
-    if approvals >= enact_votes and not irreversible:  lands  (forward, now)
+    voices       = approvals + (1 if target_voice else 0)      (target_voice: the target's own yes is held, and the
+                                                                row's target_voice cell is yes; it is never a member)
+    enacted      = approvals >= enact_votes and voices >= min_count   (one voice never decides who is in a room)
+    if enacted and not irreversible:                   lands  (forward, now)
     if elapsed < window:                               pending
     if objections >= cancel_votes:                     cancelled (cancel reached)
-    if approvals >= enact_votes:                       lands  (forward; it waited its window)
-    if reverse_path and approvals >= floor_votes:      lands  (reverse: floored, unopposed, window closed)
+    if enacted:                                        lands  (forward; it waited its window)
+    if reverse_path and voices >= floor_votes:         lands  (reverse: floored, unopposed, window closed)
     else:                                              cancelled (below the floor, or no reverse path)
 
 The floor is a reverse-path predicate only: it never lands anything before the window closes (the
@@ -184,19 +187,31 @@ def lean_examples_agree():
 MIN_COUNT = {"community": 2, "self": 1}
 
 
-def decide(row, base, approvals, objections, elapsed):
+def target_voice_cell(row):
+    """The row's target_voice cell (formal/derivation/policy_text.tsv): whether the target's own yes is a voice."""
+    if "_target_voice" in row: return row["_target_voice"]
+    return row.get("counted", row.get("_counted", {})).get("target_voice", {}).get("value") == "yes"
+
+
+PLANT = set()   # --self-test switches a misreading on to show the vectors catch it
+
+
+def decide(row, base, approvals, objections, elapsed, target_voice=False):
+    """target_voice: the target's own yes is held. It is a voice only where the row's target_voice cell says so."""
     e, c, f = row["_enact"], row["_cancel"], row["_floor"]
     mc = MIN_COUNT.get(row["corridor"], 2)
     ev = votes(e, base, True)
-    if approvals >= ev and not row["irreversible"]:
+    voices = approvals + (1 if target_voice and target_voice_cell(row) else 0)
+    enacted = approvals >= ev and (voices >= mc or "lone_enact" in PLANT)     # CC 4.5.13: the floor of two voices
+    if enacted and not row["irreversible"]:
         return "lands", "forward", "enact reached"
     if elapsed < row["window_secs"]:
         return "pending", "none", "window open"
     if c and objections >= max(mc, votes(c, base, False)):
         return "cancelled", "none", "cancel reached at the window"
-    if approvals >= ev:
+    if enacted:
         return "lands", "forward", "enact reached; the irreversible waited its window"
-    if row["reverse_path"] and f and approvals >= max(mc, votes(f, base, False)):
+    if row["reverse_path"] and f and voices >= max(mc, votes(f, base, False)):
         return "lands", "reverse", "floored and unopposed when the window closed"
     if not row["reverse_path"]:
         return "cancelled", "none", "window closed below enact; this door has no reverse path"
@@ -205,7 +220,10 @@ def decide(row, base, approvals, objections, elapsed):
 
 def load():
     rows = list(csv.DictReader(open(TSV, encoding="utf-8"), delimiter="\t", quoting=csv.QUOTE_NONE))
+    tv = {t["row"] for t in csv.DictReader((l for l in open(TEXT, encoding="utf-8") if not l.startswith("#")), delimiter="\t", quoting=csv.QUOTE_NONE)
+          if t["column"] == "target_voice" and t["value"] == "yes"}
     for r in rows:
+        r["_target_voice"] = r["family"] in tv
         r["window_secs"] = int(r["window_secs"])
         r["irreversible"] = r["irreversible"] == "yes"
         r["reverse_path"] = r["reverse_path"] == "yes"
@@ -394,6 +412,25 @@ def vectors(rows):
                                                 ("thresholds", {"enact": ev, "cancel": cv, "floor": fv}),
                                                 ("approvals", a), ("objections", o), ("elapsed_secs", t),
                                                 ("verdict", v), ("path", path), ("why", why)]))
+    # the small rooms, appended so every earlier vector keeps its place: rosters of one and two, every count, and on a
+    # row whose target_voice cell is yes, with and without the target's own yes (CC 4.5.13, the floor of two voices)
+    for r in machine_rows(rows):
+        e, c, f = r["_enact"], r["_cancel"], r["_floor"]
+        for N in (1, 2):
+            base = N if r["base"] == "standing" else expected_active(N)
+            ev = votes(e, base, True)
+            cv = max(2, votes(c, base, False)) if c else None
+            fv = max(2, votes(f, base, False)) if f else None
+            for tv in ((False, True) if target_voice_cell(r) else (False,)):
+                for a in range(base + 1):
+                    for o in range(base - a + 1):
+                        for t in sorted({0, r["window_secs"] - 1, r["window_secs"]}):
+                            v, path, why = decide(r, base, a, o, t, tv)
+                            out.append(OrderedDict([("family", r["family"]), ("roster", N), ("base", base),
+                                                    ("thresholds", {"enact": ev, "cancel": cv, "floor": fv}),
+                                                    ("approvals", a), ("objections", o), ("elapsed_secs", t)]
+                                                   + ([("target_voice", tv)] if target_voice_cell(r) else [])
+                                                   + [("verdict", v), ("path", path), ("why", why)]))
     return out
 
 
@@ -531,6 +568,9 @@ def build():
     vec = vectors(rows)
     rv = rule_vectors(rows)
     json.dump(OrderedDict([("_meta", {"policy_sha256": pin, "count": len(vec), "rule_vector_count": len(rv),
+                                       "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: "
+                                                       "one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; "
+                                                       "a vector without the field reads false",
                                        "rule_kinds": ["fraction", "one_of_n", "strict_majority", "strict_majority_of_others", "role_at", "voices", "voted_majority", "ranked_irv", "protocol", "none"]}),
                            ("vectors", vec), ("rule_vectors", rv)]),
               open(VEC, "w", encoding="utf-8"), indent=1, ensure_ascii=False); open(VEC, "a").write("\n")
@@ -544,21 +584,28 @@ def self_test():
     rows = {r["family"]: r for r in load()}
     vec = json.load(open(VEC))["vectors"]
     bad = 0
-    for v in vec:
-        got = decide(rows[v["family"]], v["base"], v["approvals"], v["objections"], v["elapsed_secs"])
-        if (got[0], got[1]) != (v["verdict"], v["path"]):
-            bad += 1
+    replay = lambda: sum(1 for v in vec if decide(rows[v["family"]], v["base"], v["approvals"], v["objections"], v["elapsed_secs"],
+                                                  v.get("target_voice", False))[:2] != (v["verdict"], v["path"]))
+    bad = replay()
+    # a room of one (CC 4.5.13): the founder alone never admits; the founder and the invitee's yes do
+    ci = rows["community_invite"]
+    room = {(tv, t): decide(ci, 1, 1, 0, t, tv)[0] for tv in (False, True) for t in (0, ci["window_secs"])}
+    room_ok = room == {(False, 0): "pending", (False, ci["window_secs"]): "cancelled", (True, 0): "lands", (True, ci["window_secs"]): "lands"}
+    small = sum(1 for v in vec if v["base"] < 3)
+    PLANT.add("lone_enact"); planted = replay(); PLANT.clear()        # the misreading: the enact met on one of one
     # the floor never lands before the window, in every vector
     early = [v for v in vec if v["verdict"] == "lands" and v["path"] == "reverse" and v["elapsed_secs"] < rows[v["family"]]["window_secs"]]
-    lone = [v for v in vec if v["verdict"] == "lands" and v["approvals"] <= 1 and v["base"] > 2]
+    lone = [v for v in vec if v["verdict"] == "lands" and v["approvals"] + (1 if v.get("target_voice") else 0) <= 1]
     # voted_majority counts over those who voted: two of three voters carry, two of four do not, one voice never does
     vm = rule_of("more than 1/2 of those who voted, at least 2 voices")
     vm_ok = [rule_votes(vm, n, False) for n in (1, 2, 3, 4, 5, 9)] == [2, 2, 2, 3, 3, 5]
     rv = json.load(open(VEC))["rule_vectors"]
     rv_bad = sum(1 for v in rv if rule_votes(v["rule"], v["base"], v["cell"] == "enact") != v["votes"])
-    print(f"self-test: {len(vec)} vectors replayed, {bad} mismatches; reverse landings before the window: {len(early)}; landings on one voice at base > 2: {len(lone)}; "
-          f"{len(rv)} rule vectors replayed, {rv_bad} mismatches; voted_majority counts {'as stated' if vm_ok else 'WRONG'}")
-    sys.exit(1 if bad or early or lone or rv_bad or not vm_ok else 0)
+    print(f"self-test: {len(vec)} vectors replayed, {bad} mismatches; reverse landings before the window: {len(early)}; landings on one voice: {len(lone)}; "
+          f"{len(rv)} rule vectors replayed, {rv_bad} mismatches; voted_majority counts {'as stated' if vm_ok else 'WRONG'}; "
+          f"{small} vectors below a base of 3; a room of one {'as stated' if room_ok else 'WRONG'}; "
+          f"plant (the enact met on one of one): {planted} vectors disagree, {'caught' if planted else 'NOT CAUGHT'}")
+    sys.exit(1 if bad or early or lone or rv_bad or not vm_ok or not room_ok or not planted else 0)
 
 
 if __name__ == "__main__":
@@ -568,7 +615,8 @@ if __name__ == "__main__":
         import argparse
         ap = argparse.ArgumentParser(); ap.add_argument("family"); ap.add_argument("--base", type=int, required=True)
         ap.add_argument("--approvals", type=int, default=0); ap.add_argument("--objections", type=int, default=0); ap.add_argument("--elapsed", type=int, default=0)
+        ap.add_argument("--target-voice", action="store_true")
         a = ap.parse_args(sys.argv[2:]); r = {x["family"]: x for x in load()}[a.family]
-        print(*decide(r, a.base, a.approvals, a.objections, a.elapsed))
+        print(*decide(r, a.base, a.approvals, a.objections, a.elapsed, a.target_voice))
     else:
         build()

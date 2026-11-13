@@ -1,16 +1,4 @@
 part	section	line	text	finding
 p1	1.13.6	305	An agent that must consider and reject — the disposition [CC 1.9](part_1_foundation.md) Wisdom-Based Deferral positively *requires* — would otherwise accumulate a permanent archive of every rejected path.	requirement "must" with no keyword in a normative paragraph
 p1	1.13.6	311	It does not preserve an interrupted attempt for post-hoc reconstruction: where a path is abandoned mid-deliberation the deliberation is gone, and no adapter is required to have kept it.	requirement "is required to" with no keyword in a normative paragraph
-p4	4.2.1.1	138	What it must then do is prevent every fresh halt by every holder, indefinitely.	requirement "must" with no keyword in a normative paragraph
-p4	4.2.6	309	**The firing decision must never deadlock; a roster decision may.	requirement "must" with no keyword in a normative paragraph
-p4	4.2.6	327	It is bounded by the number of holders an adversary must coerce.	requirement "must" with no keyword in a normative paragraph
-p4	4.2.6	335	The charter is not re-scrubbed, because a re-scrub needs the quorum and a recovery must not.	requirement "must not" with no keyword in a normative paragraph
-p4	4.4.3.2.8	784	It is a body others must be able to find and verify, and it carries no pro-social privacy presumption.	requirement "must" with no keyword in a normative paragraph
-p4	4.4.3.4.2.1	1023	Only an `infrastructure` community or a conferring family must be founded at `N ≥ M + 1` ([CC 3.2](part_3_the_namespace.md) T7).	requirement "must" with no keyword in a normative paragraph
-p4	4.4.3.4.2.1	1023	Absolute-`M` says nothing about how many signers must remain for the gate to stay operable.	requirement "must" with no keyword in a normative paragraph
-p4	4.4.3.4.3	1043	*Other peers must verify the agent's authority before honoring its messages/presence*, so the partnering+delegation is signed + promoted at login.	requirement "must" with no keyword in a normative paragraph
-p4	4.5.1	1589	The justification is stated once: humanity must be able to halt the agents to keep consent possible, and this is the least bad option available.	requirement "must" with no keyword in a normative paragraph
-p4	4.5.13	2113	A community must never sit without a moderator, and no node holds a key that could appoint one.	requirement "must" with no keyword in a normative paragraph
-p4	4.5.2.2	1681	CEG does NOT prescribe which regulatory framework an operator MUST comply with; the wire primitives compose to ANY of them based on operator policy.	keyword MUST in an informative paragraph or an example
-p4	4.5.2.2	1681	Operators in regulated verticals (medical / legal / financial / educational) SHOULD pin compliance mappings as configuration above the wire primitives, not as new wire shapes.	keyword SHOULD in an informative paragraph or an example
 p5	5.3.3.2.1	454	For realtime **A/V at scale**, a fetching node asks a serving peer for one layer, and the peer sends that layer, **without** either side decrypting the chunks — so the codec's layer-numbering semantics must be a **clear (non-AEAD) discriminator**; no relay reads it.	requirement "must" with no keyword in a normative paragraph

@@ -44,18 +44,21 @@ def votes(n, d, base, strict) = first(
     strict -> add(div(mul(n, base), d), 1),
     else -> cdiv(mul(n, base), d))
 
-def tally2(en, ed, cn, cd, fn, fd, mc, win, irrev, rev, base, a, o, el) =
+# tv: 1 where the target's own yes is held and the row's target_voice cell is yes, else 0: a voice toward the floor of
+# two and the floor count, never part of the enact fraction (CC 4.5.13: one voice never decides who is in a room)
+def tally2(en, ed, cn, cd, fn, fd, mc, win, irrev, rev, base, a, o, el, tv) =
   let ev = votes(en, ed, base, true) in
-  first(and(ge(a, ev), not(irrev)) -> 'lands',
+  let enacted = and(ge(a, ev), ge(add(a, tv), mc)) in
+  first(and(enacted, not(irrev)) -> 'lands',
         lt(el, win) -> 'pending',
         and(gt(cd, 0), ge(o, imax(mc, votes(cn, cd, base, false)))) -> 'cancelled',
-        ge(a, ev) -> 'lands',
-        and(rev, gt(fd, 0), ge(a, imax(mc, votes(fn, fd, base, false)))) -> 'lands',
+        enacted -> 'lands',
+        and(rev, gt(fd, 0), ge(add(a, tv), imax(mc, votes(fn, fd, base, false)))) -> 'lands',
         else -> 'cancelled')
 
 def tally(p, role, en, ed, cn, cd, fn, fd, mc, win, irrev, rev, el) =
   let R = roster(p, role) in
-  tally2(en, ed, cn, cd, fn, fd, mc, win, irrev, rev, size(R), size(voters(p, R, 'vote:approve')), size(voters(p, R, 'vote:object')), el)
+  tally2(en, ed, cn, cd, fn, fd, mc, win, irrev, rev, size(R), size(voters(p, R, 'vote:approve')), size(voters(p, R, 'vote:object')), el, 0)
 
 def window(open, dur, answered) = first(answered -> 'answered', ge(now, add(open, dur)) -> 'closed', else -> 'open')
 

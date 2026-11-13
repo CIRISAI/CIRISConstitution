@@ -223,11 +223,13 @@ community_invite	room of one: the founder proposes J, nobody answers, the founde
 community_invite	room of one, two consents (CC 4.5.13, CC 3.1.3.2): the founder proposes J, nobody answers, the founder lands at the close	holds
 community_invite-invitee	room of one: the founder proposes J, J accepts, the founder lands at the close	open
 community_invite-invitee	room of one: the founder proposes J, nobody answers, the founder lands at the close	open
+moderator_election	room of one: the member's own ballot elects it (the floor is the smaller of two and the roster)	holds
+moderator_election	plant: room of one, mutation election_floor_two	caught
 community_invite	plant: room of one, mutation enact_floor_off	caught
 community_invite	plant: room of one, mutation target_voice_ignored	caught
 moderation_action	two act and two keep of four: a landing stating fallback	open
 moderation_action	two act and two keep of four: a landing stating lapsed	lapsed
-two-path rows	684 published vectors replayed	same
+two-path rows	819 published vectors replayed	same
 time G3	withdrawal that never saw the act	cut [False]; first-held [True]
 time G3	withdrawal naming the act	cut [True]; first-held [True]
 time invitation	J accepts; m2 holds it inside the window and lands 'admitted'	admitted

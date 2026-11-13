@@ -427,29 +427,6 @@ def cases():
         census=("moderation:{allegation_type}", "7_body"), kind="door", where="body.subject_digest")
     e["shipped_param"]["refuse"] = ["missing_subject_digest"]
     E.append(e)
-    # ---- the policy table's own decision function: a room of one (check_door.py room_of_one) ----------------------
-    def invite(accepts):
-        rows = [SEAT.offer("g", "F", ("F",), "member", "@", "self"),
-                WN.opener("p", "F", "door:community_invite", "g", ("g",), target="J")]
-        if accepts: rows.append(WN.answer("acc", "J", "p", "approve"))
-        rows += [WN.receipt("r", "F", "p", 0), WN.landing("L", "F", "p", "r", "landed", 259200, ("acc",) if accepts else ())]
-        return rows
-    E.append({"implementer": "tooling", "family": "community_invite", "where": "policy decide (room of one)", "kind": "count",
-              "sources": ["check_door room_of_one", "CC 4.5.13 floor"], "cc_ref": "CC 3.1.3.2",
-              "quote": "On an admission by invitation the invitee's acceptance is the second voice, so one member's signature with it admits.",
-              "text_value": "two voices, the invitee's acceptance among them",
-              "shipped_value": "decide(): enact 2/3 of a base of 1 is one vote, so the founder's own approval lands",
-              "shipped_source": "tools/build_governance_policy.py decide", "shipped_file": "tools/build_governance_policy.py", "census": None,
-              "text_param": {"family": "community_invite", "door": "community_invite", "count": "floor_two_with_invitee"},
-              "shipped_param": {"family": "community_invite", "door": "community_invite", "count": "policy_decide"},
-              "rows": invite(False), "ask": {"answer": "door", "proposal": "p"},
-              "controls": [{"note": "the same with the invitee's yes: both land", "rows": invite(True), "ask": {"answer": "door", "proposal": "p"}}],
-              "replayed_by": "every implementer that replays manifests/governance_policy_vectors.json",
-              "vectors_to_add": ("manifests/governance_policy_vectors.json has rosters 3, 6, 10 and 10000 only, and counts approvals "
-                                 "without saying whose. Add community_invite at roster 1 (base 1): approvals 1, objections 0, at "
-                                 "elapsed 0 and at the window's close, verdict not landed; and the same with an `invitee_yes` field "
-                                 "true, verdict lands. The field is new: without it the invitee's acceptance cannot be told from a "
-                                 "member's approval")})
     # ---- stated: the kernel model cannot express it ------------------------------------------------------------------
     E.append(stated("persist", "(targeted rows)", "refusal token", "door", ["C104"], "CC 2.1",
         "A targeted row naming a third party in `attested_key_id` is refused at admission", "no token in CC 3.1.3.2's list",

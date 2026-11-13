@@ -17,7 +17,4 @@ p3	3.2	1263	So a stalled roster admits **exactly one row kind without that count
 p3	3.2	1265	The conferral is `trust:confers:v1` under a co-scrub reaching that family's `consensus_protocol`, the same act that seated the original founders.	founder
 p3	3.2	1317	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
 p3	3.3.4	1570	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
-p4	4.2.1	99	- **(2)** A pipeline key is not a holder, a founder or a voter, and its record carries no seat.	founder
-p4	4.4.3.2.8	853	- This strands no one: the founders are the roster root, not an edge, so when every admin's term lapses the quorum re-confers.	founder
 p4	4.5.13	2276	The standing is the roles the held rows give them: author, subject, member, moderator, founder, steward, holder, witness.	founder
-p4	4.5.5	1827	A room chooses at its founding whether a report to a duty holder outside it can be verified.	founder

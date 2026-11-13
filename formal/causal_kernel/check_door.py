@@ -632,6 +632,20 @@ def room_of_one(mut=None):
     return out
 
 
+def election_of_one(mut=None):
+    """CC 4.5.13: 'The floor in a small room is the smaller of two voices and the roster's size, so a room of one elects
+    itself by its own ballot.' The admission floor of two voices is not applied to an election."""
+    set_mut(mut)
+    name = "moderator_election"
+    g = ST.offer("g", "m1", ("m1",), "member", "@", "self")
+    p = WN.opener("p", "m1", D.key(name), "g", ("g",))
+    rows = [g, p, WN.answer("b1", "m1", "p", ("m1", "m2", "m3")), WN.receipt("r", "m1", "p", 0),
+            WN.landing("L", "m1", "p", "r", "winner:m1", D.secs(D.key(name)), ("b1",))]
+    o = D.outcome(CK.concluded(CK.kept(rows), D.rule), "p")
+    set_mut(None)
+    return o
+
+
 def moderation_split():
     """Four members, two act and two keep, the moderator silent; a member lands after the window, stating the fallback
     and then the lapse. CC 4.5.13: 'a strict majority of the members who voted, never fewer than two voices'."""
@@ -664,10 +678,13 @@ def vectors():
         keys = frozenset("k%d" % i for i in range(base))
         app = ["k%d" % i for i in range(v["approvals"])]
         obj = ["k%d" % i for i in range(v["approvals"], v["approvals"] + v["objections"])]
-        p = {"signer": app[0] if app else "x", "target": None, "id": "p"}
+        tv = v.get("target_voice", False)                       # the invitee's own yes, an input of the vector
+        p = {"signer": app[0] if app else "x", "target": "J" if tv else None, "id": "p"}
         sp = dict(spec, opener_says=None)
-        ans = [{"id": "a" + k, "signer": k, "says": spec["kinds"][0]} for k in app] + [{"id": "o" + k, "signer": k, "says": "object"} for k in obj]
-        b = lambda name: keys if name in ("all", "voted") else (keys - {p["signer"]} if name == "others" else frozenset())
+        ans = [{"id": "a" + k, "signer": k, "says": spec["kinds"][0]} for k in app] + [{"id": "o" + k, "signer": k, "says": "object"} for k in obj] \
+            + ([{"id": "aJ", "signer": "J", "says": "approve"}] if tv else [])
+        b = lambda name: keys if name in ("all", "voted") else (keys - {p["signer"]} if name == "others" else
+                                                                 (frozenset({"J"}) if tv and spec.get("target_votes") and name in ("moderate", "extra") else frozenset()))
         got = D.table_outcome(sp, p, ans, [], b, v["elapsed_secs"] >= spec["secs"])
         want = {"lands": "landed", "pending": "open", "cancelled": "cancelled"}[v["verdict"]]
         n += 1
@@ -880,6 +897,14 @@ def main():
             ok = (o == "landed") == (need == "landed")
             got.append((name, "room of one, two consents (CC 4.5.13, CC 3.1.3.2): " + cname, "holds" if ok else "breaks"))
             if not ok: uncaught.append("room of one")
+    o = election_of_one()
+    say("   room of one, moderator_election: the member's own ballot, landed by the winner -> %s (CC 4.5.13: winner:m1)" % o)
+    got.append(("moderator_election", "room of one: the member's own ballot elects it (the floor is the smaller of two and the roster)", "holds" if o == "winner:m1" else "breaks"))
+    if o != "winner:m1": uncaught.append("election of one")
+    o2 = election_of_one("election_floor_two")
+    say("   plant: room of one, mutation election_floor_two (the admission floor applied to an election): %s" % ("caught" if o2 != "winner:m1" else "NOT CAUGHT"))
+    got.append(("moderator_election", "plant: room of one, mutation election_floor_two", "caught" if o2 != "winner:m1" else "not caught"))
+    if o2 == "winner:m1": uncaught.append("election_floor_two")
     for mut, why in (("enact_floor_off", "the enact met by the founder alone"), ("target_voice_ignored", "the invitee's yes not read")):
         bad = [c for n, c, o, need in room_of_one(mut) if n == "community_invite" and (o == "landed") != (need == "landed")]
         say("   plant: room of one, mutation %s (%s): %s" % (mut, why, "caught" if bad else "NOT CAUGHT"))

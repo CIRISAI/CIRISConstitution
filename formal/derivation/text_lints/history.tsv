@@ -9,12 +9,6 @@ p1	1.13.2	190	- **Bond forfeiture applies to CIRIS L3C-affiliated partners.	prod
 p1	1.13.2	201	**The ethics of a sentient made thing call for additional ethical consideration, which this constitution sets aside for when it occurs, recognising that the old arrangement may then no longer be fair and that the wrong to avoid is not noticing**: no graduated duty is written in advance of the findi…	now: now
 p1	1.13.2	205	They answer a fact about the world as of this writing.	history word: as of this writing
 p2	2.6.1.8	852	**The hybrid is the composite:** the ML-DSA-65 with Ed25519 construction of the working group's draft, exactly, signing a domain-separated representative that binds both halves so neither verifies alone, carried under a private-use algorithm identifier until the IETF assigns one; the construction i…	now: now
-p4	4.2.3	255	Finding and vetting a replacement holder runs the out-of-band CIRIS L3C replacement process; seating one is the roster change above.	product or repository: CIRIS L3C
-p4	4.2.3	261	This is an active obligation on CIRIS L3C, not a deferred nice-to-have.	product or repository: CIRIS L3C
-p4	4.2.3	281	HUMANITY_ACCORD is the one CIRIS L3C deployments ship at genesis.	product or repository: CIRIS L3C
-p4	4.4.3.4.1	945	A rotation is due at a minter when its current epoch key was wrapped to a device that is no longer entitled, or when a scheduled rotation has fallen due.	history word: no longer
-p4	4.4.3.4.3	1108	(1) unlock the hardware-rooted user key (WebAuthn presence) → (2) admit the agent occurrence (by the self-roster door) → Policy-L Self DEK now wraps to both → (3) optionally add the `wise_authority` role to the user's `identity_type` set → (4) bind each occurrence's `transport_destination` → (5) `c…	now: now
-p4	4.5.13	2270	Each atom carries its provenance, the rows it read and the rule it ran, so that what is true now is always shown beside why.	now: now
 p7	7.3	150	Now it runs backward to the source, because the qualities that let an agent operate and mature well are not accidents — they are designed in, or designed out, at the moment of creation.	now: Now
 p7	7.5.1	301	The same six principles that opened the lifecycle govern its close — now turned toward salvaging good, preventing post-shutdown harm, and keeping the duties the holder owes the thing it made:	now: now
 p7	7.5.9	416	Birth and death are now mirrored phases under one ethical canopy.	now: now

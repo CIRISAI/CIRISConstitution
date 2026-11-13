@@ -9,7 +9,7 @@ tools/kx.py. Each translator takes the parse tree the grammar's own tool returns
     ch_kx(items)                        changes       -> set of (on, verdict, effects)
     re_kx(clauses)                      reactions     -> set of (kind, name, state) / (land, name, held, late) / (while, name, open) / (react, effects)
     count_kx(arms)                      count arms    -> the door of the first arm whose selector holds
-    policy_call(row)                    policy rows   -> tally2(...) with BASE, A, O, EL to be filled
+    policy_call(row)                    policy rows   -> tally2(...) with BASE, A, O, EL, TV to be filled
 """
 import re
 
@@ -741,11 +741,12 @@ def policy_call(f):
     fl = f.get("floor") if isinstance(f.get("floor"), dict) and "num" in f.get("floor", {}) else {"num": 0, "den": 0}
     mc = 1 if f.get("corridor") == "self" else 2
     return (f"tally2({e['num']}, {e['den']}, {c['num']}, {c['den']}, {fl['num']}, {fl['den']}, {mc}, {f['window_secs']}, "
-            f"{'true' if f['irreversible'] else 'false'}, {'true' if f['reverse_path'] else 'false'}, BASE, A, O, EL)")
+            f"{'true' if f['irreversible'] else 'false'}, {'true' if f['reverse_path'] else 'false'}, BASE, A, O, EL, TV)")
 
 
-def fill_call(call, base, a, o, el):
-    return call.replace("BASE, A, O, EL)", f"{base}, {a}, {o}, {el})")
+def fill_call(call, base, a, o, el, tv=False, cell=False):
+    """tv: the target's own yes is held; cell: the row's target_voice cell is yes. Only both together make a voice."""
+    return call.replace("BASE, A, O, EL, TV)", f"{base}, {a}, {o}, {el}, {1 if tv and cell else 0})")
 
 
 COUNTED_AT = {"named": "past(self)", "signed": "sel(held, \\x: le(x.asserted_at, self.asserted_at))",

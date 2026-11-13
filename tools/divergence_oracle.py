@@ -352,7 +352,7 @@ def door_count(S, param, ask):
         import build_governance_policy as G
         sys.dont_write_bytecode = _d
         row = {r["family"]: r for r in G.load()}[param["door"]]
-        v = G.decide(row, len(mem), len(yes & set(mem)), 0, elapsed)[0]
+        v = G.decide(row, len(mem), len(yes & set(mem)), 0, elapsed, p["target"] in yes)[0]
         return {"lands": "landed", "cancelled": "not landed"}.get(v, v)
     raise ValueError(param["count"])
 

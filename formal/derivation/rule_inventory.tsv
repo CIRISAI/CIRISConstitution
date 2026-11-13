@@ -3190,7 +3190,7 @@ p4	1807	4.5.13	kernel	freshness	window	*	is	states	3.3.6.3,4.2.1.1	Every window 
 p4	1807	4.5.13	kernel	freshness	window	*	is	states		Two nodes may close a window at different moments; nothing lands early at either	
 p4	1807	4.5.13	kernel	row_shape	body	objection	is	states	3.1.9.2	Votes travel on objection:{state}: proposal, assent, raised	
 p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		cancel_over is the cancel denominator: the base with the proposer counted for a community; the other keys for a self roster	
-p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		at_window: cancelled for every community row; stay_open for the self roster, cleared by the proposer's withdrawal or the target's act; the halt lapses; a moderation proposal is tallied	
+p4	1807	4.5.13	kernel	policy_row	governance	*	is	states		at_window: cancelled for a community row unless the table states another value; stay_open for the self roster and an election; the halt and a moderation overturn lapse; a moderation action and a poll are tallied	
 p4	1809	4.5.13	kernel	admission_order	none	*	is	states		A node's state is the set of rows it holds, each with the instant it first held it, and nothing else	
 p4	1809	4.5.13	kernel	freshness	window	*	is	states		The first-held instant is the node's own receipt, outside the signed row and never replicated; every window runs from it	
 p4	1809	4.5.13	kernel	admission_order	projection	*	is	states		An object's state, a person's standing toward it and a room's seated roles are folds over the held set, never stored verdicts	

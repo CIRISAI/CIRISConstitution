@@ -1,8 +1,9 @@
 {
  "_meta": {
-  "policy_sha256": "a3197c38103f78ed2adfa47309b51c512f3095153e3e4727043f435dd52d1d8f",
-  "count": 684,
+  "policy_sha256": "12bf0c626a3dd3b86635c564e20c1fc96d263893bd8e5356f7cf0475a4dd2cab",
+  "count": 819,
   "rule_vector_count": 270,
+  "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; a vector without the field reads false",
   "rule_kinds": [
    "fraction",
    "one_of_n",
@@ -10957,6 +10958,2220 @@
    "approvals": 230,
    "objections": 114,
    "elapsed_secs": 259200,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "cancel reached at the window"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 86399,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 86400,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 86399,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_content",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 86400,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "cancel reached at the window"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_standing",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "cancel reached at the window"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 604800,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 604799,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "default_irreversible",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 604800,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached; the irreversible waited its window"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 1,
+   "base": 1,
+   "thresholds": {
+    "enact": 1,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "cancel reached at the window"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": false,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": false,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": false,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "window closed below the floor: silence alone never admits"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 0,
+   "objections": 2,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "cancelled",
+   "path": "none",
+   "why": "cancel reached at the window"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "reverse",
+   "why": "floored and unopposed when the window closed"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "pending",
+   "path": "none",
+   "why": "window open"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 1,
+   "objections": 1,
+   "elapsed_secs": 259200,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "reverse",
+   "why": "floored and unopposed when the window closed"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 0,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 259199,
+   "target_voice": true,
+   "verdict": "lands",
+   "path": "forward",
+   "why": "enact reached"
+  },
+  {
+   "family": "community_invite",
+   "roster": 2,
+   "base": 2,
+   "thresholds": {
+    "enact": 2,
+    "cancel": 2,
+    "floor": 2
+   },
+   "approvals": 2,
+   "objections": 0,
+   "elapsed_secs": 259200,
+   "target_voice": true,
    "verdict": "lands",
    "path": "forward",
    "why": "enact reached"

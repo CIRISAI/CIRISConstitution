@@ -11,9 +11,9 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 94,
+  "total": 93,
   "by_status": {
-   "runnable": 66,
+   "runnable": 65,
    "stated": 13,
    "wording-only": 15
   },
@@ -22,12 +22,12 @@
    "edge": 1,
    "persist": 75,
    "server": 2,
-   "tooling": 15
+   "tooling": 14
   },
   "by_kind": {
    "audience": 4,
    "cosign": 7,
-   "count": 4,
+   "count": 3,
    "door": 11,
    "fold": 9,
    "freshness": 2,
@@ -7075,236 +7075,6 @@
     ]
    },
    "order_dependent_shipped": false
-  },
-  {
-   "id": "tooling/community_invite/policy decide (room of one)",
-   "implementer": "tooling",
-   "family": "community_invite",
-   "where": "policy decide (room of one)",
-   "kind": "count",
-   "status": "runnable",
-   "sources": [
-    "CC 4.5.13 floor",
-    "check_door room_of_one"
-   ],
-   "claims": [],
-   "text": {
-    "value": "two voices, the invitee's acceptance among them",
-    "cc_ref": "CC 3.1.3.2",
-    "quote": "On an admission by invitation the invitee's acceptance is the second voice, so one member's signature with it admits.",
-    "param": {
-     "family": "community_invite",
-     "door": "community_invite",
-     "count": "floor_two_with_invitee"
-    }
-   },
-   "shipped": {
-    "value": "decide(): enact 2/3 of a base of 1 is one vote, so the founder's own approval lands",
-    "source": "tools/build_governance_policy.py decide",
-    "census_cell": null,
-    "file": "tools/build_governance_policy.py",
-    "file_sha256": "f7a57a6dc4cdb5b5279e1567e37d9afb91661035d1f6a76b4152543387de30bb",
-    "param": {
-     "family": "community_invite",
-     "door": "community_invite",
-     "count": "policy_decide"
-    }
-   },
-   "case": {
-    "rows": [
-     {
-      "id": "g",
-      "kind": "offer",
-      "signer": "F",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "F"
-      ],
-      "scope": "member",
-      "obj": "g",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "F",
-        "member",
-        "g"
-       ]
-      ]
-     },
-     {
-      "id": "p",
-      "kind": "open",
-      "signer": "F",
-      "names": [
-       "g"
-      ],
-      "family": "open",
-      "window": "door:community_invite",
-      "obj": "g",
-      "head": [
-       "g"
-      ],
-      "target": "J",
-      "slot": [
-       "win",
-       "p"
-      ]
-     },
-     {
-      "id": "r",
-      "kind": "receipt",
-      "signer": "F",
-      "names": [
-       "p"
-      ],
-      "family": "receipt",
-      "of": "p",
-      "at": 0
-     },
-     {
-      "id": "L",
-      "kind": "landing",
-      "signer": "F",
-      "names": [
-       "r"
-      ],
-      "family": "landing",
-      "of": "p",
-      "receipt": "r",
-      "says": "landed",
-      "at": 259200,
-      "cuts": [
-       [
-        "win",
-        "p"
-       ]
-      ]
-     }
-    ],
-    "ask": {
-     "answer": "door",
-     "proposal": "p"
-    }
-   },
-   "expect_shipped": "landed",
-   "expect_kernel": "not landed",
-   "orders": {
-    "run": 24,
-    "of": 24,
-    "kernel": [
-     "not landed"
-    ],
-    "shipped_judged_on_arrival": [
-     "landed"
-    ]
-   },
-   "order_dependent_shipped": false,
-   "replayed_by": "every implementer that replays manifests/governance_policy_vectors.json",
-   "vectors_to_add": "manifests/governance_policy_vectors.json has rosters 3, 6, 10 and 10000 only, and counts approvals without saying whose. Add community_invite at roster 1 (base 1): approvals 1, objections 0, at elapsed 0 and at the window's close, verdict not landed; and the same with an `invitee_yes` field true, verdict lands. The field is new: without it the invitee's acceptance cannot be told from a member's approval",
-   "door_model_at_build": "open",
-   "controls": [
-    {
-     "note": "the same with the invitee's yes: both land",
-     "rows": [
-      {
-       "id": "g",
-       "kind": "offer",
-       "signer": "F",
-       "names": [],
-       "family": "offer",
-       "to": [
-        "F"
-       ],
-       "scope": "member",
-       "obj": "g",
-       "conf": "self",
-       "on": [
-        [
-         "seat",
-         "F",
-         "member",
-         "g"
-        ]
-       ]
-      },
-      {
-       "id": "p",
-       "kind": "open",
-       "signer": "F",
-       "names": [
-        "g"
-       ],
-       "family": "open",
-       "window": "door:community_invite",
-       "obj": "g",
-       "head": [
-        "g"
-       ],
-       "target": "J",
-       "slot": [
-        "win",
-        "p"
-       ]
-      },
-      {
-       "id": "acc",
-       "kind": "answer",
-       "signer": "J",
-       "names": [
-        "p"
-       ],
-       "family": "answer",
-       "of": "p",
-       "says": "approve",
-       "on": [
-        [
-         "win",
-         "p"
-        ]
-       ]
-      },
-      {
-       "id": "r",
-       "kind": "receipt",
-       "signer": "F",
-       "names": [
-        "p"
-       ],
-       "family": "receipt",
-       "of": "p",
-       "at": 0
-      },
-      {
-       "id": "L",
-       "kind": "landing",
-       "signer": "F",
-       "names": [
-        "acc",
-        "r"
-       ],
-       "family": "landing",
-       "of": "p",
-       "receipt": "r",
-       "says": "landed",
-       "at": 259200,
-       "cuts": [
-        [
-         "win",
-         "p"
-        ]
-       ]
-      }
-     ],
-     "ask": {
-      "answer": "door",
-      "proposal": "p"
-     },
-     "expect_kernel": "landed",
-     "expect_shipped": "landed"
-    }
-   ]
   },
   {
    "id": "persist/(targeted rows)/refusal token",

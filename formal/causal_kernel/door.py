@@ -262,8 +262,9 @@ def door_table(spec, p, answers, inside, base, elapsed):
                 tops = Counter(b[1][0] for b in ballots)                  # the mutation also skips the fold: first choices
                 best = max(sorted(tops), key=lambda o: tops[o])
                 return out + best if 2 * tops[best] > len(ballots) else None
-            # an election declares no order (CC 4.5.13): a tie for weakest seats nobody and the count runs again
-            w, _ = WN.ST.RANKED(ballots, list(spec["options"]), floor=rule[1], declared="tie_by_position" in MUT) if ballots else (None, 0)
+            # an election declares no order (CC 4.5.13): a tie for weakest seats nobody and the count runs again; the floor
+            # in a small room is the smaller of two voices and the roster's size, so a room of one elects itself
+            w, _ = WN.ST.RANKED(ballots, list(spec["options"]), floor=rule[1] if "election_floor_two" in MUT else min(rule[1], len(keys)), declared="tie_by_position" in MUT) if ballots else (None, 0)
             return out + w if w else None
         if rule[0] == "protocol":                                 # the rule of the protocol the group declares (its founding row)
             kind = base("declared")
@@ -280,6 +281,10 @@ def door_table(spec, p, answers, inside, base, elapsed):
             return out if n and yes == n and 2 * yes > len(base("all")) else None
         yes, n = count(value, over, when == "close")
         if "one_voice" in MUT: return out if yes >= 1 else None
+        if when == "once" and value == "approve" and spec.get("target_votes") and p.get("target") and rule[0] in ("strict", "atleast"):
+            # the target's own yes is a voice toward the floor of two, never part of the enact fraction (decide(), CC 4.5.13)
+            tv = 1 if said.get(p["target"]) == "approve" else 0
+            return out if met(rule[:3] + (0,), yes, n) and yes + tv >= rule[3] else None
         return out if met(rule, yes, n) else None
     for c in spec["clauses"]:
         if c[0] != "once": continue

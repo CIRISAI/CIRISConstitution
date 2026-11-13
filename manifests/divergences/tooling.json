@@ -11,7 +11,7 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 10
+  "count": 9
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
@@ -495,97 +495,6 @@
     "family": "age_assurance:{level}:{band}:{version}",
     "fold": "age_band",
     "mode": "witness_then_self_lowers"
-   }
-  },
-  {
-   "id": "tooling/community_invite/policy decide (room of one)",
-   "family": "community_invite",
-   "where": "policy decide (room of one)",
-   "kind": "count",
-   "case": {
-    "rows": [
-     {
-      "id": "g",
-      "kind": "offer",
-      "signer": "F",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "F"
-      ],
-      "scope": "member",
-      "obj": "g",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "F",
-        "member",
-        "g"
-       ]
-      ]
-     },
-     {
-      "id": "p",
-      "kind": "open",
-      "signer": "F",
-      "names": [
-       "g"
-      ],
-      "family": "open",
-      "window": "door:community_invite",
-      "obj": "g",
-      "head": [
-       "g"
-      ],
-      "target": "J",
-      "slot": [
-       "win",
-       "p"
-      ]
-     },
-     {
-      "id": "r",
-      "kind": "receipt",
-      "signer": "F",
-      "names": [
-       "p"
-      ],
-      "family": "receipt",
-      "of": "p",
-      "at": 0
-     },
-     {
-      "id": "L",
-      "kind": "landing",
-      "signer": "F",
-      "names": [
-       "r"
-      ],
-      "family": "landing",
-      "of": "p",
-      "receipt": "r",
-      "says": "landed",
-      "at": 259200,
-      "cuts": [
-       [
-        "win",
-        "p"
-       ]
-      ]
-     }
-    ],
-    "ask": {
-     "answer": "door",
-     "proposal": "p"
-    }
-   },
-   "expect_kernel": "not landed",
-   "expect_shipped": "landed",
-   "kernel_parameter": {
-    "family": "community_invite",
-    "door": "community_invite",
-    "count": "floor_two_with_invitee"
    }
   }
  ],

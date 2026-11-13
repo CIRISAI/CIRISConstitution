@@ -99,21 +99,21 @@ community:listing	description	unstated	unstated	no	CC 3.2	**Discovery: the listi
 community:listing	name	tstr	unstated	yes	CC 3.1.1	**A public community's own discovery row** ([CC 3.2](part_3_the_namespace.md#3.2) `public`): a federation-scoped `scores` row by a `moderate`-holder of the room, carrying the room's name, description, `cohort_subkind`, admission policy, named
 community:listing	name	unstated	unstated	yes	CC 3.2	**Discovery: the listing row (normative).** Discovery is a federation-scoped `scores` row by a `moderate`-holder on **`community:listing:v1`** ([CC 3.1.1](part_3_the_namespace.md#3.1.1)). It carries the name, description, `cohort_subkind`, the admission policy, the
 consent:partnership_accept	asserted_at	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
-consent:partnership_accept	attestation_type	unstated	unstated	yes	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
+consent:partnership_accept	attestation_type	unstated	unstated	yes	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 consent:partnership_accept	attesting_key_id	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
-consent:partnership_accept	bilateral_pair_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
+consent:partnership_accept	bilateral_pair_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 consent:partnership_accept	dimension	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
-consent:partnership_accept	stance	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
-consent:partnership_accept	subject_key_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
-consent:partnership_accept	subject_kind	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
+consent:partnership_accept	stance	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_accept	subject_key_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_accept	subject_kind	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 consent:partnership_grant	asserted_at	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
-consent:partnership_grant	attestation_type	unstated	unstated	yes	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
+consent:partnership_grant	attestation_type	unstated	unstated	yes	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 consent:partnership_grant	attesting_key_id	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
-consent:partnership_grant	bilateral_pair_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
+consent:partnership_grant	bilateral_pair_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 consent:partnership_grant	dimension	unstated	unstated	yes	CC 4.4.3.4.3.1	That core is eight members present in every `:v1` half
-consent:partnership_grant	stance	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
-consent:partnership_grant	subject_key_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
-consent:partnership_grant	subject_kind	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md)) bound by `bilateral_pair_id`:
+consent:partnership_grant	stance	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	subject_key_id	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
+consent:partnership_grant	subject_kind	unstated	unstated	no	CC 4.4.3.4.3.1	`consent_record` rows ([CC 3.3.5](part_3_the_namespace.md#3.3.5)) bound by `bilateral_pair_id`:
 consent:state:{stance}	asserted_at	unstated	unstated	yes	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	bilateral_pair_id	unstated	optional	no	CC 3.3.5	stance: ConsentStance // closed-set enum per below
 consent:state:{stance}	consent_supersedes	uuid	optional	yes	CC 2.1	The prior consent-state row this one supersedes: a renewal, or the substrate's `consent:state:expired` naming the grant that lapsed ([CC 3.3.1](part_3_the_namespace.md#3.3.1)).

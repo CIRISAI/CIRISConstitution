@@ -505,7 +505,8 @@ def run_policy():
     va = vd = 0; ex = []
     for v in vec["vectors"]:
         if v["family"] not in calls: vd += 1; ex.append(("no call", v["family"])); continue
-        t = run(T.fill_call(calls[v["family"]], v["base"], v["approvals"], v["objections"], v["elapsed_secs"]))
+        cell = rows[v["family"]].get("counted", {}).get("target_voice", {}).get("value") == "yes"
+        t = run(T.fill_call(calls[v["family"]], v["base"], v["approvals"], v["objections"], v["elapsed_secs"], v.get("target_voice", False), cell))
         va += t == v["verdict"]; vd += t != v["verdict"]
         if t != v["verdict"] and len(ex) < 3: ex.append((v, t))
     ra = rd = 0
@@ -523,8 +524,10 @@ def run_policy():
             for a in range(base + 1):
                 for o in range(base + 1):
                     for el in (0, f["window_secs"]):
-                        d = bgp.decide(f, base, a, o, el)[0]; t = run(T.fill_call(call, base, a, o, el))
-                        ga += d == t; gd += d != t
+                        for tv in (False, True):
+                            cell = bgp.target_voice_cell(f)
+                            d = bgp.decide(f, base, a, o, el, tv)[0]; t = run(T.fill_call(call, base, a, o, el, tv, cell))
+                            ga += d == t; gd += d != t
     pt = tsv(os.path.join(ROOT, "formal", "derivation", "policy_text.tsv"))
     counted, dropped, sets = [], [], []
     cellsof = defaultdict(dict)

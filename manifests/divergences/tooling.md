@@ -6,7 +6,7 @@ How to consume: each entry is one test: build `case`, ask `ask`, assert `expect_
 
 To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.
 
-15 entries: 10 runnable, 0 disputed, 3 stated, 2 wording only.
+14 entries: 9 runnable, 0 disputed, 3 stated, 2 wording only.
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
@@ -19,7 +19,6 @@ To return an entry whose verdict you hold wrong, add a row to `formal/derivation
 | tooling/takedown_notice:{basis}/reaction on close(withhold) | takedown_notice:{basis} | reaction on close(withhold) | CC 4.5.3: **Inside the window** the bytes are still held: serving resumes, the hard-delete sweep skips them | n:takedown_notice:{basis} by A; l:landing by A names n; v:reversal by A names n \| ask owed | nothing |
 | tooling/moderation:{allegation_type}/reaction on close(window) | moderation:{allegation_type} | reaction on close(window) | CC 4.5.13: A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room. | m:moderation:{allegation_type} by A \| ask owed | nothing |
 | tooling/age_assurance:{level}:{band}:{version}/fold | age_assurance:{level}:{band}:{version} | fold | CC 3.4.11: A subject's declaration of a lower band lowers the reading and never raises it | aw:age_assurance:{level}:{band}:{version} by W; as:age_self_declared:band:{band}:{version} by S \| ask fold | minor |
-| tooling/community_invite/policy decide (room of one) | community_invite | policy decide (room of one) | CC 3.1.3.2: On an admission by invitation the invitee's acceptance is the second voice, so one member's signature with it admits. | g:offer by F; p:open by F names g; r:receipt by F names p; L:landing by F names r \| ask door | not landed |
 | tooling/(any)/refusal token for a future asserted_at | (any) | refusal token for a future asserted_at | CC 5.3.2.3: the existing `CLOCK_SKEW_VIOLATION` error class | (stated) the reason a store gives for a future-dated row is a token of the wire; the kernel reads no token | - |
 | tooling/(policy base)/BASE_LAW | (policy base) | BASE_LAW | CC 4.5.13: The expected-active count is the community's own member-only census composite | (stated) the base above k is the census composite, drawn from a group secret that is not a row (KERNEL.md 5a: census families cannot run) | - |
 | tooling/membership:{stage}/guard[leaf=widening on a stalled roster] | membership:{stage} | guard[leaf=widening on a stalled roster] | CC 3.2: So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat. | (stated) a stalled roster (T7) is no answer of the kernel model; its condition reads a count of active founders over a margin | - |
