@@ -500,7 +500,7 @@ def measures(results, counts, policy):
     for kind, name in (("signed_instant", "ORDER_BY_SIGNED_INSTANT"), ("digest", "ORDER_BY_DIGEST")):
         own, cross = set(), set()
         for r in ok:
-            sites = [x for x in r.get("order_sites", []) if x[0] == kind]
+            sites = [x for x in r.get("order_sites", []) if x[0] == kind and x[2] != "shown"]   # a listing picks no row (kx.order_sites)
             if not sites: continue
             key = (r["grammar"], r["family"], r["text"])
             if all(o is True for _, _, o in sites): own.add(key)
@@ -599,6 +599,18 @@ def main():
         got = bool(sites) and all(o is True for _, _, o in sites)
         print(f"plant     made-up fold `{text}`: " + ("OWN" if got else "CROSS") + (", as it must" if got == want else ", wrong"))
         if got != want: refusals.append(f"the made-up fold `{text}` was not counted {'OWN' if want else 'CROSS'}")
+    # plants for a listing: an `order=` gives each standing row a position and no operator reads it, so it ranks nobody;
+    # the same comparison read as a pick (the row at position 0 is selected) must still be counted across signers
+    shown = sorted({(r["family"], r["text"]) for r in results for x in (r.get("order_sites") or []) if x[2] == "shown"})
+    print(f"            listings that pick no row (a position for each row, read by no operator): {len(shown)}: " + "; ".join(f"{f} `{c}`" for f, c in shown))
+    lparts = dict(fg.parse("key=attested_key_id; pick=union; order=min(key_id)")[0]["parts"], reads=dparts["reads"], cut=dparts["cut"])
+    pos = "count(sel(S, \\x: lt_tuple(tuple(x.key_id), tuple(r.key_id))), \\x: x.id)"
+    for name, expr, want in (("made-up fold `key=attested_key_id; pick=union; order=min(key_id)`", T.Tx(lparts, "plant:x", None).build(), ["shown"]),
+                             ("the same order read as a pick (the row at position 0 is selected)", f"let S = sel(held, \\r: isfam(r, 'plant:x')) in sel(S, \\r: eq({pos}, 0))", [False]),
+                             ("the same order under a least", f"let S = sel(held, \\r: isfam(r, 'plant:x')) in least(S, \\r: {pos})", [False])):
+        got = sorted({o for k, mm, o in kx.order_sites(kx.parse(expr)) if mm == "key_id"}, key=repr)
+        print(f"plant     {name}: " + ("a listing, not counted" if got == ["shown"] else "counted across signers" if got == [False] else f"read as {got}") + (", as it must" if got == want else ", wrong"))
+        if got != want: refusals.append(f"the listing plant `{name}` gave {got}, not {want}")
     # plants for the gate, each against the measured sizes taken as the maxima: a cell that leaves CROSS for OWN must
     # pass, and one more ordering cell must be refused whichever side it is counted on
     sizes = {k: len(v) for k, v in m.items()}

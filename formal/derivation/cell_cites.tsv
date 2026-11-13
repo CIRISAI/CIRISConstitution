@@ -88,7 +88,7 @@ ballot:moderator	fold	agree	CC 4.5.13	The electorate is the roster the election 
 ballot:moderator	fold	agree	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
 ballot:moderator	governance	fills	CC 4.5.13	the moderator election above **reconstitutes authority**: the room locks and its members elect
 ballot:moderator	governance	fills	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
-ballot:moderator_acceptance	fold	agree	CC 3.1.3	among valid acceptances the larger set, then the smaller digest, seats
+ballot:moderator_acceptance	fold	agree	CC 3.1.3	among valid acceptances the larger set seats, and two sets of equal size seat nobody until an acceptance over their union is held
 ballot:moderator_acceptance	fold	agree	CC 4.5.13	**The seat is a function of the rows held and never of their arrival**
 ballot:moderator_acceptance	signer_rule	agree	CC 3.1.3	**The winner's acceptance, binding the ballot set it was seated on**: `community_id`, the election id, the digest of the ballot and withdrawal rows counted and the signer's own key; admitted
 ballot:moderator_acceptance	signer_rule	agree	CC 4.5.13	**The winner accepts by their own row**, as a member accepts an invitation ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A winner who declines, or is silent past a grace the room's policy names, passes
@@ -197,7 +197,7 @@ config:{scope}	signer_rule	agree	CC 4.2.1.4	A node MAY attest its own carried lo
 config:{scope}	signer_rule	agree	CC 4.2.1.4	[CC 3.4.5](part_3_the_namespace.md)'s self-or-owner rule for `config:*` is enforced at **substrate admission** as [CC 3.4.7](part_3_the_namespace.md) requires, not by producer obligation alone. That is because, without the gate, any peer could make
 config:{scope}	signer_rule	agree	CC 4.2.1.4	`config:load` ([CC 3.1](part_3_the_namespace.md) / [CC 3.4.5](part_3_the_namespace.md)) | **the node**, on `infra:attest`, `witness_relation: self` | *"I am at capacity"* — about **itself**
 config:{scope}	subject_rule	fills	CC 3.1.9	it is only ever about the emitting node
-consent:community_trust	fold	agree	CC 3.3.1	the latest `asserted_at` wins, ties on the smallest attestation id
+consent:community_trust	fold	agree	CC 3.3.1	A party's revocation ends that party's consent, and only that party's own later grant, naming the revocation it follows, undoes it.
 consent:community_trust	lifecycle	fills	CC 3.3.1	**Revocation authority (normative):** the node's owner MUST always be able to revoke.
 consent:community_trust	lifecycle	fills	CC 3.3.1	Each named party may withdraw
 consent:community_trust	projection	agree	CC 3.3.1	**Fold (normative):** rows are grouped by **`attested_key_id`** — the node whose traces are at issue.
@@ -410,7 +410,7 @@ key:record	signer_rule	agree	CC 5.4.6	It is a fresh hybrid key pair whose `key:r
 key:revocation	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 key:revocation	fold	agree	CC 2.4.1.1	a later revocation MAY lower it and MUST NOT raise it
 key:revocation	fold	agree	CC 3.1.3	`revoked_after` only ever lowering across versions
-key:revocation	fold	agree	CC 5.3.2.3	The same anti-rollback and comparator as the licence row.
+key:revocation	fold	agree	CC 5.3.2.3	For `key:revocation:v1` the effective bound is the minimum `revoked_after` over all of them
 key:revocation	lifecycle	fills	CC 2.4.1.1	A `key:revocation:v1` row is withdrawn by nobody, because revocation is non-rollbackable
 key:revocation	lifecycle	fills	CC 2.4.1.1	The revocation is a `key:revocation:v1` row ([CC 3.1.3](part_3_the_namespace.md)), never withdrawn
 key:revocation	lifecycle	fills	CC 3.1.3	**Never withdrawn** (non-rollbackable
@@ -454,8 +454,8 @@ licensure:{authority_id}	erasure_route	fills	CC 4.5.3	An **adverse** row about t
 licensure:{authority_id}	fold	agree	CC 3.3.9	A licence carries a monotonic `revision`; admission refuses a decrease
 licensure:{authority_id}	fold	agree	CC 3.4.9	MUST be marked as `confidence ≤ 0.5` in consumer composition until the second co-steward's attestation arrives
 licensure:{authority_id}	fold	agree	CC 5.3.2.3	Admission anti-rollback first: a write whose `revision` decreases never enters the merge.
-licensure:{authority_id}	fold	agree	CC 5.3.2.3	More-restrictive state wins on conflict: `revoked` > `suspended` > `active`.
-licensure:{authority_id}	fold	agree	CC 5.3.2.3	Then the `MergeBallot` comparator: `quorum_weight` → signed timestamp → content hash.
+licensure:{authority_id}	fold	agree	CC 5.3.2.3	At equal weight the more restrictive state stands: `revoked` > `suspended` > `active`.
+licensure:{authority_id}	fold	agree	CC 5.3.2.3	Then the `MergeBallot` comparator: the greater `quorum_weight` stands, a weight being a count.
 licensure:{authority_id}	projection	agree	CC 2.4.1.2.1	The `licensure:{A}` status set for a subject folds only rows whose emitter resolves to `A`
 licensure:{authority_id}	projection	agree	CC 3.1.1	**`suspended` is reversible; `revoked` is terminal**
 licensure:{authority_id}	projection	agree	CC 3.1.1	so a consumer composes the set rather than reading a scalar
@@ -480,7 +480,7 @@ membership:{stage}	body	agree	CC 2.6.1.2	n/a (REQUIRED on a membership proposal)
 membership:{stage}	body	agree	CC 2.6.1.7	REQUIRED on membership:proposal
 membership:{stage}	body	agree	CC 3.1.3.2	The membership ceremony, one attestation-plane row per step: `{stage}` ∈ `proposal` \| `acceptance` \| `decline` \| `widening` \| `removal` \| `resignation` — closed.
 membership:{stage}	fold	agree	CC 3.2	evaluated over the **founder** subset (`role == founder`), independent of how many non-founder members exist
-membership:{stage}	fold	agree	CC 5.3.2.3	The same anti-rollback and comparator as the licence row.
+membership:{stage}	fold	agree	CC 5.3.2.3	The same anti-rollback as the licence row. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
 membership:{stage}	governance	fills	CC 4.4.3.4.2	// this protocol runs under the CC 4.5.13 floor, never one vote
 membership:{stage}	governance	fills	CC 4.4.3.4.2	A removal under `admission: open` runs under the floor of [CC 4.5.13](#4.5.13), no single vote excluding.
 membership:{stage}	lifecycle	fills	CC 3.3.4	A time-boxed guest is a widening with `valid_until`, and the seat lapses at that instant.
@@ -537,7 +537,7 @@ provenance:build_manifest:{target}	placement	agree	CC 3.1.2.1	Its `cohort_scope`
 provenance:build_manifest:{target}	signer_rule	agree	CC 3.1.2.1	`agent_files:build:{target}` ([CC 3.1.9.1](part_3_the_namespace.md)) is **a different claim by a different attester** — the canonical attester's statement that an agent may load that file set, composed under [CC 4.4.3.7](part_4_composition_governance.md) — and
 provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	A rebuild is a `supersedes` on the earlier Contribution
 provenance:build_manifest:{target}:locale:{lang_code}	lifecycle	fills	CC 3.1.2.1	a bad build is withdrawn by the pipeline that signed it.
-quarantine:{state}	fold	agree	CC 3.1.9.2	**withhold beats release at a same-instant tie**
+quarantine:{state}	fold	agree	CC 3.1.9.2	**a withhold outranks a release whatever their instants**
 quarantine:{state}	signer_rule	agree	CC 3.1.9.2	Subject-scoped quarantine marker: **slash-duty-holder-only** emitter.
 quarantine:{state}	signer_rule	agree	CC 4.5.5	`slash` | `slashing:{outcome}` verdicts and the `quarantine:{state}` marker plane | [CC 3.1.9.2](part_3_the_namespace.md)
 ratchet:flag:coordinated_voting_cluster	fold	agree	CC 4.4.2	Detector dimensions (`detection:correlated_action:*`, `detection:distributive:access:*`, `ratchet:flag:*`)
@@ -560,7 +560,7 @@ rendezvous:route	signer_rule	agree	CC 5.4.6	A receiver that accepts targeted ano
 retirement:{state}	lifecycle	fills	CC 3.1.5	**A planned retirement is cancelled by the decider `withdraws`-ing the `decided` row** ([CC 2.4.1.1](part_2_the_grammar.md): taking back a declaration because circumstances changed), admissible only while no
 retirement:{state}	signer_rule	agree	CC 3.1.5	**The agent's own retirement row** ([CC 7.5.5](part_7_lifecycle_stewardship.md), the Retirement Standard). `{state}` is the closed lifecycle of the `retirement_record` workflow (`decided` \| `frozen` \| `secrets_destroyed` \| `handed_over` \| `notified` \| `custodian_minted`
 revocation:{entity_type}:{reason}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
-revocation:{entity_type}:{reason}	fold	agree	CC 5.3.2.3	The same anti-rollback and comparator as the licence row.
+revocation:{entity_type}:{reason}	fold	agree	CC 5.3.2.3	The same anti-rollback as the licence row. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.
 revocation:{entity_type}:{reason}	lifecycle	fills	CC 2.4.1.1	a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`
 self:delegates_to	projection	agree	CC 3.1.3	a reader treats a row carrying it as unlabeled and infers nothing from it
 self:delegates_to	signer_rule	agree	CC 3.1.3	**Yes — closed:** only on an owner's own `delegates_to` row; confers nothing

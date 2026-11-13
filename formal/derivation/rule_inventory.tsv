@@ -966,7 +966,7 @@ p3	206	3.1.3	family	policy_row	projection	ballot	is	states	4.5.13	One moderator 
 p3	206	3.1.3	family	admission_order	subject_rule	ballot	is	states		A ballot naming an unknown election id or a non-member is refused; a late ballot is stored, never refused, and is void only against the seating that wins.	table
 p3	206	3.1.3	family	signer	signer_rule	ballot	is	states		ballot:moderator is signed by a member whose membership is live at evaluation; community scope.	table
 p3	207	3.1.3	family	admission_order	evidence_screen	ballot	is	states		moderator_acceptance is admitted only when the node holds the bound ballot set, the count yields the signer, the set meets the floor and 24 h since the lock have passed.	table
-p3	207	3.1.3	family	supersede	tie_break	ballot	is	states		Among valid moderator acceptances the larger ballot set, then the smaller digest, seats.	table
+p3	207	3.1.3	family	supersede	tie_break	ballot	is	states		Among valid moderator acceptances the larger ballot set seats; two sets of equal size seat nobody until an acceptance over their union is held.	table
 p3	207	3.1.3	family	signer	signer_rule	ballot	is	states		ballot:moderator_acceptance is signed by the count's winner over the bound set.	table
 p3	211	3.1.3.1	stewardship	conformance	none	session	is	states		Persist stewards session rows, projection, merge rule and read, and enforces the emitter and merge rules; validators read them from this section only.	
 p3	213	3.1.3.1	family	other:session-claim	projection	session	is	states		Of a self's N occurrences exactly one may act on an addressed stateful exchange; the claim is keyed by (community, session).	
@@ -1239,7 +1239,7 @@ p3	520	3.1.9.2	family	policy_row	projection	objection	is	states		objection:propo
 p3	520	3.1.9.2	kernel	policy_row	cosign_rule	objection	is	states	4.2.1.1	Any two-path door carries its votes on the objection family.	table
 p3	521	3.1.9.2	family	signer	signer_rule	quarantine	is	states		quarantine is emitted only by the slash-duty holder.	table
 p3	521	3.1.9.2	family	moderation	replication	quarantine	MUST_NOT	states		The quarantine marker plane never withholds itself: a release that stops replicating MUST NOT make a quarantine permanent by accident.	table
-p3	521	3.1.9.2	family	supersede	tie_break	quarantine	is	states		On quarantine, withhold beats release at a same-instant tie.	table
+p3	521	3.1.9.2	family	supersede	tie_break	quarantine	is	states		On quarantine a withhold outranks a release whatever their instants, until a release names the withhold it lifts; one holder's own markers take the CC 3.5.1 default.	table
 p3	522	3.1.9.2	family	signer	signer_rule	mesh_config	is	states	4.2.1	mesh_config is trust-root-emitted: a scores row authored under the root's trust:confers:v1 edge.	table
 p3	522	3.1.9.2	family	supersede	monotone_field	mesh_config	is	states		Every mesh_config key is relieve-never-expand.	table
 p3	522	3.1.9.2	family	trust_fold	formula	mesh_config	is	states		mesh_config composes most-restrictive across roots.	table
@@ -1614,13 +1614,13 @@ p3	982	3.3.1	family	withdraw	lifecycle	consent	is	states		consent:replication is
 p3	982	3.3.1	family	placement	replication	consent	is	states		consent:replication is federation-tier	table
 p3	983	3.3.1	family	signer	signer_rule	consent	is	states	3.4.5	consent:community_trust is emitted by the node's owner-binding chain: the owner, or the node it owns (self-or-owner)	table
 p3	983	3.3.1	family	consent_fold	projection	consent	is	states		consent:community_trust rows are folded grouped by attested_key_id, the node whose traces are at issue	table
-p3	983	3.3.1	family	withdraw	lifecycle	consent	is	states		A withdraws or recants on consent:community_trust is a boundary R: every grant asserted at or before R leaves the fold whichever row was named; nothing older is resurrected	table
-p3	983	3.3.1	family	supersede	tie_break	consent	is	states		Among consent:community_trust grants after R the latest asserted_at wins, ties to the smallest attestation id; no grant means no consent	table
-p3	983	3.3.1	family	consent_fold	lifecycle	consent	is	states		A consent:community_trust revocation is a hard stop no configuration overrides; capture resumes only on a fresh grant asserted after R from the owner-binding chain	table
+p3	983	3.3.1	family	withdraw	lifecycle	consent	is	states		A withdraws or recants on consent:community_trust is a boundary R of the party that signed it: that party's own grants asserted at or before R leave the fold whichever row was named; nothing older is resurrected	table
+p3	983	3.3.1	family	supersede	tie_break	consent	is	states		Each party's consent on consent:community_trust is its own: a party's revocation is undone only by that party's own later grant naming it; one party's own rows take the CC 3.5.1 default; no grant means no consent	table
+p3	983	3.3.1	family	consent_fold	lifecycle	consent	is	states		A consent:community_trust revocation is a hard stop no configuration overrides; capture runs only while every party a grant binds has a live consent	table
 p3	983	3.3.1	family	signer	signer_rule	consent	MAY	states	3.3.6.3	A consent:community_trust grant MAY be authored by the node's owner: attester a live roster key of the owner's fedID at asserted_at, attested the node	table
 p3	983	3.3.1	family	subject	subject_rule	consent	is	states		An owner-authored consent:community_trust grant names in subject_key_ids[] the node, the key that was the node's owner at asserted_at, and the agent key acting on the node	table
 p3	983	3.3.1	family	withdraw	lifecycle	consent	is	applies	2.4.1.1,2.4.1.3	Each party named in consent:community_trust may withdraw; only the attester recants	table
-p3	983	3.3.1	family	withdraw	lifecycle	consent	is	states		A new owner's revocation door on consent:community_trust is its own grant or revocation as the later row; it never inherits the old owner's seat	table
+p3	983	3.3.1	family	withdraw	lifecycle	consent	is	states		A new owner's revocation door on consent:community_trust is its own grant or revocation, read as its own voice; it never inherits the old owner's seat	table
 p3	983	3.3.1	family	withdraw	lifecycle	consent	is	states	1.13.6	The agent key's withdrawal is folded like the owner's as a boundary R; a boundary excludes grants only, never traces already captured while a grant was live	table
 p3	983	3.3.1	family	consent_fold	lifecycle	consent	is	applies		consent:state:* rows on one subject use the same boundary fold: the latest admitted revocation's asserted_at puts every earlier grant out	table
 p3	983	3.3.1	family	consent_fold	lifecycle	consent	is	states		A decay protocol begun under a grant runs to complete after a fresh grant; the fresh grant covers capture from its own asserted_at and resurrects nothing the decay removed	table
@@ -2477,7 +2477,7 @@ p4	347	4.4.2	kernel	trust_fold	formula		is	states	3.1	Default aggregation for si
 p4	348	4.4.2	kernel	trust_fold	formula	prohibited	is	states		Default aggregation for boolean-via-score polarity: min, any negative trumps positive (fail-secure for hard constraints)	table
 p4	349	4.4.2	kernel	trust_fold	formula		is	states		Default aggregation for positive-only polarity: max across attesters, any positive conclusive	table
 p4	350	4.4.2	kernel	trust_fold	formula		is	states		Default aggregation for -1.0-only polarity: min across attesters, any negative conclusive	table
-p4	351	4.4.2	kernel	trust_fold	formula		is	states	3.4	Default aggregation for enumerated polarity: most recent by signed_at from the attesters authorized to emit	table
+p4	351	4.4.2	kernel	trust_fold	formula		is	states	3.4	Default aggregation for enumerated polarity: each authorised attester's own most recent value by signed_at stands; the reader combines attesters by its own trust; no attester's value replaces another's by its date	table
 p4	352	4.4.2	family	trust_fold	formula	detection,ratchet	is	states		Default aggregation for detector dimensions (detection:correlated_action, detection:distributive:access, ratchet:flag): median across attesters	table
 p4	354	4.4.2	kernel	conformance	none		MAY	states	2.2	Specific dimensions may override the default aggregation via consumer policy; the defaults are the conforming-consumer minimum	
 p4	360	4.4.3	kernel	conformance	none		is	states		RECOMMENDED names the consumer's choice of composition; a subsection marked normative or MANDATORY inside a policy section binds the substrate whenever its subject exists, whichever policy is composed	
@@ -2758,7 +2758,7 @@ p4	1095	4.4.3.5.2	family	moderation	window	consent,hard_case	is	states		If the d
 p4	1099	4.4.3.5.2	kernel	moderation	projection	hard_case,detection	is	restates	4.5.2	The hard_case emission is the primitive signal; derived detectors compose on top of it	
 p4	1106	4.4.3.5.3	family	cosign	cosign_rule	consent	is	states	3.3.5	A pair is ratified only when both grant and accept halves exist, neither withdrawn, both with stance granted	
 p4	1110	4.4.3.5.3	family	withdraw	lifecycle	consent	is	restates	4.4.3.5.5	A withdrawn half is gone from ratification	
-p4	1111	4.4.3.5.3	family	supersede	lifecycle	consent	is	states		Each half is the latest by asserted_at among rows of its dimension under the pair id	
+p4	1111	4.4.3.5.3	family	supersede	lifecycle	consent	is	states		Each signer's own latest half by asserted_at stands; the pair is ratified when a live grant and a live accept name each other; a half naming no counterpart counts for nothing	
 p4	1111	4.4.3.5.3	family	signer	signer_rule	consent	is	restates		The grant is signed by the user naming the agent occurrence; the accept by the agent occurrence naming the user	
 p4	1115	4.4.3.5.3	family	subject	subject_rule	consent	is	states		Each half names the other: grant.subject_key_id equals accept's signer and accept.subject_key_id equals grant's signer	
 p4	1119	4.4.3.5.3	family	row_shape	body	topical_relation,consent	MAY	states		topical_relation:bilateral_pair is recommended, not required; bilateral_pair_id is the binding mechanism	
@@ -3126,7 +3126,7 @@ p4	1777	4.5.13	family	moderation	governance	ballot	is	states		A member leaving w
 p4	1777	4.5.13	family	moderation	formula	ballot	is	states		The electorate is the roster the election names; a ballot from a member no longer live counts for nothing; the ballot stays open until a seating lands	
 p4	1777	4.5.13	family	moderation	body	ballot	is	states		The winner's acceptance row carries the election id and the digest of the ballot set it was counted over	
 p4	1777	4.5.13	family	moderation	none	ballot	is	states		A node admits an acceptance only when it holds the ballot set, the count yields the signer, the set meets the floor, and its own 24 h have passed	
-p4	1777	4.5.13	family	moderation	tie_break	ballot	is	states		Among valid acceptances held a node seats the one counted over the larger set, on equal size the smaller digest; the seat follows rows held, never arrival	
+p4	1777	4.5.13	family	moderation	tie_break	ballot	is	states		Among valid acceptances held the one counted over the larger set stands; two over different sets of equal size seat nobody until one counted over their union is held; the seat follows rows held, never arrival	
 p4	1777	4.5.13	kernel	admission_order	none	ballot	is	states		A node stores every ballot and acceptance it receives rather than refusing a late one; a ballot is void only against the winning seating; never unseat on arrival order	
 p4	1777	4.5.13	family	moderation	formula	ballot	is	states		The small-room floor is the smaller of two voices and the roster size; a room of one elects itself	
 p4	1777	4.5.13	family	row_shape	body	ballot	is	states	3.1.4	The ballot and acceptance are the rows ballot:moderator:v1 and ballot:moderator_acceptance:v1; the policy table row is moderator_election	
@@ -3357,10 +3357,10 @@ p5	233	5.3.2.3	family	withdraw	lifecycle	organization,org_membership	is	states		
 p5	233	5.3.2.3	family	supersede	tie_break	organization,org_membership	is	states	3.5.1	organization and org_membership: latest asserted_at wins; tie-break smallest attestation_id	table
 p5	233	5.3.2.3	family	withdraw	lifecycle	organization,org_membership	is	exception	4.4.3.4	The forward-only withdrawal on org rows is a lightweight authz flag, not the DEK-cascade crypto path; Commons tier, no DEK exists	table
 p5	234	5.3.2.3	family	supersede	monotone_field	licensure	is	states	2.4.1.2.1,4.4.3.2.8	The licence (licensure:{authority_id}) merges monotonic_quorum on license_id: a write whose revision decreases never enters the merge	table
-p5	234	5.3.2.3	family	supersede	tie_break	licensure	is	states		Licence MergeBallot comparator: quorum_weight, then signed timestamp, then content hash; quorum above time	table
-p5	234	5.3.2.3	family	supersede	monotone_field	licensure	is	states		On licence conflict the more restrictive state wins: revoked over suspended over active	table
-p5	235	5.3.2.3	family	supersede	monotone_field	revocation,key,membership	is	states		revocation and the three membership revocations merge monotonic_quorum with the same anti-rollback and comparator as the licence row	table
-p5	235	5.3.2.3	family	supersede	none	key,membership	is	states	2.4.1.1	key:revocation:v1 merges on its digest subject revoked_key_sha256_ed25519_raw; membership revocations merge on the member key_id	table
+p5	234	5.3.2.3	family	supersede	tie_break	licensure	is	states		Licence MergeBallot comparator: the greater quorum_weight, then the more restrictive state; no signed timestamp and no content hash ranks two writers	table
+p5	234	5.3.2.3	family	supersede	monotone_field	licensure	is	states		At equal weight the more restrictive licence state stands: revoked over suspended over active	table
+p5	235	5.3.2.3	family	supersede	monotone_field	revocation,key,membership	is	states		revocation and the three membership revocations merge monotonic_quorum with the same anti-rollback as the licence row; no comparator picks among revocations of one subject and every admitted one stands	table
+p5	235	5.3.2.3	family	supersede	none	key,membership	is	states	2.4.1.1	key:revocation:v1 merges on its digest subject revoked_key_sha256_ed25519_raw, its effective bound the minimum revoked_after over all; membership revocations merge on the member key_id	table
 p5	236	5.3.2.3	family	admission_order	none	key,identity,family,community,location	is	states		Keys, attestations, occurrences, families, communities and location_proofs admit content-addressed and idempotent: same content same envelope_hash dedups; rotation collisions rejected non-destructively	table
 p5	238	5.3.2.3	family	freshness	freshness	organization,org_membership	MUST	states	2.6.7	For every lww_skew_bounded subject_kind the substrate MUST reject at admission an envelope with asserted_at later than now plus the 5-minute skew tolerance (CLOCK_SKEW_VIOLATION)	
 p5	240	5.3.2.3	mechanism	cosign	none		is	restates	3.3.9,3.2	The steward-signature admission quorum (M-of-N over identical JCS bytes, Verify's layer) is not the region merge quorum (quorum_weight, substrate's layer); neither counts the other	

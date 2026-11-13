@@ -3,10 +3,10 @@
 # For an order, the total and the count across signers are held. The count of one signer's own rows is printed and not held:
 # a cell leaving the count across signers for it is the intended movement.
 count	max	note
-ORDER_BY_SIGNED_INSTANT	108	a cell orders rows by a signed instant, whoever signed them: the total of the two counts below it
-ORDER_BY_SIGNED_INSTANT_CROSS	10	a cell orders by a signed instant over rows that may be of different signers (or the grouping could not be shown to be one signer's)
-ORDER_BY_DIGEST	100	a cell orders rows by a digest or a key id, whoever signed them
-ORDER_BY_DIGEST_CROSS	8	the same, ordering by a digest or a key id, rows of different signers
+ORDER_BY_SIGNED_INSTANT	102	a cell orders rows by a signed instant, whoever signed them: the total of the two counts below it
+ORDER_BY_SIGNED_INSTANT_CROSS	0	a cell orders by a signed instant over rows that may be of different signers (or the grouping could not be shown to be one signer's)
+ORDER_BY_DIGEST	94	a cell orders rows by a digest or a key id, whoever signed them
+ORDER_BY_DIGEST_CROSS	0	the same, ordering by a digest or a key id, rows of different signers
 ORDER_UNDECIDED	0	an order whose grouping the check cannot read (each is also counted CROSS)
 CROSS_SIGNER_INSTANT	15	a cell compares the signed instants of two different rows (at asserted_at, boundary(asserted_at), @signed, counted_at=signed)
 ARRIVAL_OUTSIDE_WINDOW	1	a cell reads when this node first held a row, outside a clock or an expiry (order=…min(admission_order))

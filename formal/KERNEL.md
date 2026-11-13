@@ -97,10 +97,10 @@ into it from the count across signers is the intended movement.
 
 | Count | Now |
 |---|---|
-| a cell orders rows of different signers by a signed instant | 10 |
-| a cell orders rows of different signers by a digest or a key id | 8 |
-| a cell orders one signer's own rows by a signed instant | 98 |
-| a cell orders one signer's own rows by a digest | 92 |
+| a cell orders rows of different signers by a signed instant | 0 |
+| a cell orders rows of different signers by a digest or a key id | 0 |
+| a cell orders one signer's own rows by a signed instant | 102 |
+| a cell orders one signer's own rows by a digest | 94 |
 | a cell compares the signed instants of two rows | 15 |
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
@@ -115,10 +115,12 @@ a tie. A signer who back-dates changes only what the signer itself says, so the 
 are counted only to keep them in view. The first two rows contradict section 2: they order rows of different
 signers by a value one of them chose. A cell counts as one signer's own only when its expression fixes the
 signer in the group it orders; any other cell counts as across signers. A session's key names the self, so
-its claims count as one voice's own (section 5). Six families are in the first row: a trace-consent grant, the
-two halves of a partnership, a key revocation, a licence and a quarantine marker. The second row adds the
-moderator ballot's listing, the winner's acceptance and the roster's member order. In each the text itself
-ranks rows of different signers, so the cell is kept as written. **open**.
+its claims count as one voice's own (section 5). No cell is in the first two rows. A trace-consent grant, the two
+halves of a partnership, a key revocation, a licence, a quarantine marker and the winner's acceptance are each
+decided by a party's own rows, a count or a fixed order on kinds (section 6). A listing is not a ranking: the
+moderator ballot's shown order and the roster's member order give each row a position that no operator reads, so
+no row is picked or removed by it. The check reads that from the cell's expression, and the same comparison read
+as a pick is counted across signers. **measured**.
 
 ## 5. Named answers
 

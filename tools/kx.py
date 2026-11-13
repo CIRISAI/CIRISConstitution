@@ -312,7 +312,10 @@ def order_sites(e):
     whether the set ordered is fixed to ONE signer. -> [(kind, member, own)], own True (every group is one signer's:
     a member holding the signer is fixed across the group by an equality in the selection), False (the group is a
     selection whose equalities fix no signer, over the rows held, a past or a named set), None (undecided: the set is
-    not a selection this reads)."""
+    not a selection this reads), or "shown": the comparison only gives each row of a set its position in a listing,
+    `each(S, \\r: count(sel(S, \\x: lt_tuple(..x.., ..r..)), ..))`, and that listing is the expression's result or a
+    member of its result tuple, so no operator reads a position and no row is picked or removed by it. The same
+    comparison anywhere else (inside a selection, a least, a test) is read as a ranking and is not "shown"."""
     out = []
     def resolve(x, env, seen=0):
         while x[0] == "path" and len(x[1]) == 1 and x[1][0] in env and seen < 20:
@@ -348,11 +351,19 @@ def order_sites(e):
             if t == "signed_instant": ks.append(("signed_instant", p[-1]))
             elif t in ("digest", "key"): ks.append(("digest", p[-1]))
         return ks
-    def walk(x, env):
+    def listing(x):
+        """each(S, \\r: count(sel(S2, \\x: lt_tuple(...)), \\x: ...)): a position for each row of S."""
+        if not (x[0] == "call" and x[1] == "each" and len(x[2]) == 2 and x[2][1][0] == "lam"): return False
+        b = x[2][1][2]
+        if not (b[0] == "call" and b[1] == "count" and b[2] and b[2][0][0] == "call" and b[2][0][1] == "sel"): return False
+        s = b[2][0][2]
+        return len(s) == 2 and s[1][0] == "lam" and s[1][2][0] == "call" and s[1][2][1] == "lt_tuple"
+    def walk(x, env, res=False, shown=False):
+        # res: x is the expression's result or a member of its result tuple. shown: x is the comparison of a listing there
         if not isinstance(x, tuple) or not x: return
         t = x[0]
         if t == "let":
-            walk(x[2], env); walk(x[3], {**env, x[1]: ("expr", x[2], env)}); return
+            walk(x[2], env); walk(x[3], {**env, x[1]: ("expr", x[2], env)}, res); return
         if t == "first":
             for c, v in x[1]:
                 if c != ("else",): walk(c, env)
@@ -369,16 +380,22 @@ def order_sites(e):
                 for p in _paths(a):
                     if p[0] in env and env[p[0]][0] == "rowof":
                         _, S, senv = env[p[0]]
-                        o = own(S, senv)
+                        o = "shown" if shown else own(S, senv)
                         t = ftype(p) if len(p) >= 2 else None
                         if t == "signed_instant": out.append(("signed_instant", p[-1], o))
                         elif t in ("digest", "key"): out.append(("digest", p[-1], o))
+        if res and listing(x):
+            lam = args[1]; cnt = lam[2]; sl = cnt[2][0]; env2 = {**env, lam[1]: ("rowof", args[0], env)}
+            walk(args[0], env); walk(sl[2][0], env2)
+            walk(sl[2][1][2], {**env2, sl[2][1][1]: ("rowof", sl[2][0], env2)}, False, True)
+            for a in cnt[2][1:]: walk(a[2] if a[0] == "lam" else a, env2)
+            return
         for a in args:
             if a[0] == "lam" and args and name in ("sel", "least", "greatest", "count", "sum", "one", "min", "max", "every", "each", "setof"):
                 walk(a[2], {**env, a[1]: ("rowof", args[0], env)})
             else:
-                walk(a, env)
-    walk(e, {})
+                walk(a, env, res and name == "tuple")
+    walk(e, {}, True)
     return sorted(set(out), key=repr)
 
 

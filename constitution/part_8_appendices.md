@@ -1880,7 +1880,7 @@ Guard:
 - attest: `set(ref:*) ballot:moderator@named[object=object] else void` (CC 4.5.13)
 
 Fold:
-- `key=community_id,election_id; pick=max(ballot_count),min(ballot_set_digest); by=node` (CC 3.1.3, CC 4.5.13)
+- `key=community_id,election_id; pick=max(ballot_count); by=node` (CC 3.1.3, CC 4.5.13)
 
 **`ballot:tally:{poll_id}`** — Facts, account
 
@@ -2159,8 +2159,8 @@ Change:
 Fold:
 - `cut=boundary(asserted_at)` (CC 3.3.1)
 - `reads=own&signer:owner` (CC 3.3.1)
-- `key=attested_key_id` (CC 3.3.1)
-- `reads=own&signer:owner; key=attested_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node` (CC 3.3.1)
+- `key=attested_key_id,attesting_key_id` (CC 3.3.1)
+- `reads=own&signer:owner; key=attested_key_id,attesting_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node` (CC 3.3.1)
 
 **`consent:decay:{stage}`** — Process, thing
 
@@ -2206,8 +2206,8 @@ In time:
 Count: `none`
 
 Fold:
-- `key=bilateral_pair_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
-- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5, CC 4.4.3.5.3)
+- `key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
+- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5, CC 4.4.3.5.3)
 
 In time:
 - expiry forbidden `valid_until` (CC 4.4.3.4.3.1)
@@ -2224,8 +2224,8 @@ Body: `asserted_at`, `attestation_type`, `attesting_key_id`, `bilateral_pair_id`
 Count: `none`
 
 Fold:
-- `key=bilateral_pair_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
-- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id; pick=pair(consent:partnership_accept),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5)
+- `key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
+- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_accept),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5)
 
 In time:
 - expiry forbidden `valid_until` (CC 4.4.3.4.3.1)
@@ -2701,8 +2701,7 @@ Change:
 Fold:
 - `key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after)` (CC 2.4, CC 3.1.3)
 - `key=revoked_key_sha256_ed25519_raw; pick=union` (CC 2.4.1.1)
-- `key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after); combine=min(revoked_after)` (CC 2.4.1.1)
-- `key=revoked_key_sha256_ed25519_raw; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+- `key=revoked_key_sha256_ed25519_raw; pick=union; bound=lower_only(revoked_after); combine=min(revoked_after)` (CC 2.4.1.1, CC 5.3.2.3)
 - `cut=boundary(revoked_after)` (CC 3.2)
 
 **`key_grant:{axis}`** — Rules, thing
@@ -2782,8 +2781,8 @@ Fold:
 - `@status=revoked: cut=terminal` (CC 3.1.1)
 - `result=set` (CC 3.1.1)
 - `reads=own&declared(licence_class); by=reader` (CC 4.4.3.2.8)
-- `key=license_id; bound=raise_only(revision)` (CC 3.3.9, CC 5.3.2.3)
-- `key=license_id; pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 3.3.9, CC 5.3.2.3)
+- `key=license_id; bound=raise_only(revision); pick=max(quorum_weight),rank(revoked>suspended>active)` (CC 3.3.9, CC 5.3.2.3)
+- `key=license_id; pick=max(quorum_weight),rank(revoked>suspended>active)` (CC 3.3.9, CC 5.3.2.3)
 - `pick=rank(revoked>suspended>active)` (CC 5.3.2.3)
 - `weight=min(confidence,count(attesting_key_id)/2); by=reader` (CC 3.4.9)
 
@@ -2864,7 +2863,7 @@ Fold:
 - `@cohort_subkind=infrastructure: over=founders@decision/person; reads=own&direct` (CC 3.2)
 - `reads=own&direct` (CC 3.3.9, CC 6.1.8)
 - `@group_kind=affiliation: over=deciding_seats@decision/person` (CC 4.4.3.2.8)
-- `@stage=removal: bound=raise_only(revision); pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+- `@stage=removal: bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
 In time:
 - clock `W` = `admission_freshness_window_secs` (CC 2.6.7)
@@ -3094,7 +3093,7 @@ Fold:
 Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
 
 Fold:
-- `key=attested_key_id; pick=max(asserted_at),rank(withhold>release)` (CC 3.1.9.2)
+- `key=attested_key_id; pick=rank(withhold>release)` (CC 3.1.9.2)
 
 **`ratchet:flag:coordinated_voting_cluster`** — Facts, account
 
@@ -3225,7 +3224,7 @@ Change:
 - attest: `attest: cascade=bond_posted:{currency}/about:forfeited` (CC 3.1.1)
 
 Fold:
-- `bound=raise_only(revision); pick=max(quorum_weight),max(asserted_at),min(content_hash)` (CC 5.3.2.3)
+- `bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
 **`self:delegates_to`** — Identity, thing
 
