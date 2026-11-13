@@ -86,10 +86,16 @@ Eight. Each is a composition of the operators, and each role, window, policy and
 | **owed** | what must this node now emit or do | derived |
 | **window** | has this window closed, and with what outcome | derived; the one answer that reads now |
 
-**stands.** One shape, the **seat**. A key holds a seat in a scope over an object when a conferrer's offer
-names it and the key's own acceptance names that offer, and neither has been withdrawn by its own signer, and
-no cut removes it. Two voices: neither side alone makes a seat, either side alone ends it, and no third key
-ends it without a cut. One row is both voices only when a key seats itself. The conferrer is one parameter with
+**stands.** One act: a voice consents to what binds it. A relation stands when every voice it binds has a
+concluded consent, the consents are tied by one naming the other, none is withdrawn by its own signer, and no
+cut removes it. The number of voices is not a parameter; it is read off who the relation binds. A permission
+gives something of the signer's own and binds nobody else, so one row carries it. A duty binds the one who
+places it and the one who carries it, so it takes two consents. That pair is the **seat**: it is two consents
+and not a second object, and it stands the same whichever of the two signed first. Nobody is bound by the rows
+of others, any bound voice ends it alone, and no third key ends it without a cut. **proved**
+(`Consent.lean`): `silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end`,
+`one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands`. The proof covers a
+relation that binds named voices; a seat conferred by a count of voices is proved only in the seat's own form. The conferrer is one parameter with
 three values: the object's own key, a key holding a seat that may confer, or a group whose count is met. A key
 stands when a bounded walk of live seats leads to it from a root. For what a row means to this node the root is
 the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,

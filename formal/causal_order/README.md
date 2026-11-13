@@ -28,7 +28,8 @@ version, a reply. No instant is compared.
 rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window's signed outcome under two rules,
 and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
 `Harden3.lean` (the rules added after the kernel was attacked), and `SeatG.lean`, `Terms.lean`, `Reader.lean`,
-`Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+`Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads), and
+`Consent.lean` (the one act beneath the seat). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -43,6 +44,8 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Causal.acceptance_gives_meaning`, `only_withdrawals_remove` | the reader's later acceptance gives meaning to rows already kept; no row but a withdrawal removes meaning from any row for any reader |
 | `Causal.reaches_standing_irrelevant` | with an edge withdrawn only by its own signer, reach never depends on reach through negation |
 | `Kernel.no_offer_no_seat`, `no_acceptance_no_seat`, `one_row_only_to_self` | a seat needs two voices, the conferrer's offer and the holder's acceptance; one row is both voices only when a key seats itself |
+| `Kernel.Consent.silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end` | a relation stands when every voice it binds has consented; nobody is bound by the rows of others, rows by an unbound voice change nothing, and only a bound voice's own withdrawal or a cut ends it |
+| `Kernel.Consent.one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands` | with one voice bound one row is enough; with two it is two rows, one naming the other, in either order; the seat conferred by one key is exactly that act with the conferrer's row first |
 | `Kernel.offer_withdrawal_ends`, `acceptance_withdrawal_ends`, `third_key_cannot_end`, `only_withdrawals_and_cuts_end` | either side ends a seat alone by its own withdrawal; no third key ends it without a cut |
 | `Kernel.stands_function`, `stands_mono`, `means_is_seat_walk` | standing is a bounded walk of live seats and a function of the set; it grows with offers and acceptances and shrinks only with withdrawals and cuts; what a row means to a reader is that walk from the reader's own key |
 | `Kernel.cut_status_function`, `unique_when_uncontested`, `two_cuts_contested`, `winner_counts` | each cut counts, is void or is contested, as the least solution of its equations; two concurrent cuts that undo each other are both contested, and a row naming both settles it |
@@ -112,4 +115,4 @@ An edge is withdrawn only by its own signer.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run, in this order, each with `LEAN_PATH="$TMP" lean -o "$TMP/NAME.olean" NAME.lean`: `Order`, `Causal`, `Seat`, `Window`, `Recount`, `Harden`, `Harden2`, `Harden3`, `SeatG`, `Terms`, `Reader`, `Merge`
+Run, in this order, each with `LEAN_PATH="$TMP" lean -o "$TMP/NAME.olean" NAME.lean`: `Order`, `Causal`, `Seat`, `Window`, `Recount`, `Harden`, `Harden2`, `Harden3`, `SeatG`, `Terms`, `Reader`, `Merge`, `Consent`
