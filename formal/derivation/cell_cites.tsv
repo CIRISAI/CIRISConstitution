@@ -88,9 +88,9 @@ ballot:moderator	fold	agree	CC 4.5.13	The electorate is the roster the election 
 ballot:moderator	fold	agree	CC 4.5.4	highest [`moderation_track_record`](part_3_the_namespace.md) ([CC 3.1.9.2](part_3_the_namespace.md)) first,
 ballot:moderator	governance	fills	CC 4.5.13	the moderator election above **reconstitutes authority**: the room locks and its members elect
 ballot:moderator	governance	fills	CC 4.5.4	the community **locks and elects** ([CC 4.5.13](#4.5.13), the moderator election): read-only until a 24 h ranked-choice vote over its own roster seats one.
-ballot:moderator_acceptance	fold	agree	CC 3.1.3	among valid acceptances the larger set seats, and two sets of equal size seat nobody until an acceptance over their union is held
+ballot:moderator_acceptance	fold	agree	CC 3.1.3	Among valid acceptances the larger set seats, and two sets of equal size seat nobody until an acceptance over their union is held
 ballot:moderator_acceptance	fold	agree	CC 4.5.13	**The seat is a function of the rows held and never of their arrival**
-ballot:moderator_acceptance	signer_rule	agree	CC 3.1.3	**The winner's acceptance, binding the ballot set it was seated on**: `community_id`, the election id, the digest of the ballot and withdrawal rows counted and the signer's own key; admitted
+ballot:moderator_acceptance	signer_rule	agree	CC 3.1.3	**The winner's acceptance, binding the ballot set it was seated on**: `community_id`, the election id, the digest of the ballot and withdrawal rows counted and the signer's own key. It waits
 ballot:moderator_acceptance	signer_rule	agree	CC 4.5.13	**The winner accepts by their own row**, as a member accepts an invitation ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2)). A winner who declines, or is silent past a grace the room's policy names, passes
 ballot:tally:{poll_id}	body	agree	CC 2.6.1.7	Merkle root over the accepted tokens; a contributor checks its token's path against it; both partials of a period must carry the same root.
 ballot:tally:{poll_id}	body	agree	CC 2.6.1.7	Merkle root over the per-member masses.
@@ -269,7 +269,7 @@ custody:{kind}	lifecycle	fills	CC 3.1.3.3	nobody withdraws another device's repo
 custody:{kind}	lifecycle	fills	CC 5.3.2.1	only its signer retracts a holding claim
 custody:{kind}	lifecycle	fills	CC 5.3.2.5	never a `withdraws` of another device's holding claim
 custody:{kind}	placement	agree	CC 3.1.3.3	Placed at the blob's own `cohort_scope` and replicated only within that cohort.
-custody:{kind}	placement	agree	CC 3.1.3.3	The substrate refuses a report whose scope is not its content's. An emitter never chooses a scope constant.
+custody:{kind}	placement	agree	CC 3.1.3.3	A report waits for the content it names, and where that content's scope is not the report's, the report concludes nothing. An emitter never chooses a scope constant.
 custody:{kind}	placement	agree	CC 3.1.3.3	it is the **one** holding claim at every tier, placed at the content's own scope
 custody:{kind}	placement	agree	CC 3.2	Content is Commons-tier: plaintext, holding claims at federation scope
 custody:{kind}	placement	agree	CC 3.2	and there is no non-member holder of community bytes
@@ -348,15 +348,15 @@ goal:{scale}	projection	agree	CC 3.1.9.7	a substrate's `goals` table is a rebuil
 goal:{scale}	projection	fills	CC 3.1.9.7	a substrate's `goals` table is a rebuildable projection of declaration rows, never replicated itself
 group:roster	fold	agree	CC 3.2	Founder *f* counts at instant *t* iff all four of these hold.
 group:roster	fold	agree	CC 3.2	It is **live** while its active founder set holds at least **M + 1** signers and **stalled** when it holds M or fewer.
-group:roster	fold	agree	CC 4.4.3.2.4	// one held version per group id: a new version is admitted only if its signed
-group:roster	fold	agree	CC 4.4.3.2.4.1	A new version is admitted only if its signed `prev_head_digest` names the held head
+group:roster	fold	agree	CC 4.4.3.2.4	// one held version per group id: a new version waits until the head its signed
+group:roster	fold	agree	CC 4.4.3.2.4.1	A new version waits until the head its signed `prev_head_digest` names is held
 group:roster	freshness	agree	CC 4.4.3.2.4.1	the resolving Consumer's own clock; membership is evaluated as of `now`
 group:roster	lifecycle	fills	CC 3.1.3	withdrawn only by a cosigned `withdraws`
 group:roster	lifecycle	fills	CC 3.2	a fresh epoch DEK after a removal, history never re-encrypted
 group:roster	lifecycle	fills	CC 4.2.3	A seat is added or vacated only by roster change on the public record under the standing-majority rule.
 group:roster	lifecycle	fills	CC 4.4.3.2.2	After a removal each minter **rotates its epoch DEK before its next sealed write**, so the removed member receives no new community content ([CC 4.4.3.4.5](#4.4.3.4.5)).
 group:roster	lifecycle	fills	CC 4.4.3.2.6	the epoch rotates because of a removal and never because of an admission
-group:roster	projection	agree	CC 3.2	and a consumer's roster fold MUST drop such a seat rather than count it
+group:roster	projection	agree	CC 3.2	A consumer's roster fold MUST drop such a seat rather than count it
 group:roster	projection	agree	CC 4.4.3.2.4	roster = fold(head, membership rows effective at now)
 group:roster	projection	agree	CC 4.4.3.2.4.1	the returned set is canonically ordered by `key_id` (lowercase-hex byte order) for any downstream hashing/iteration
 group:roster	projection	agree	CC 4.4.3.2.6	subscriber_set(C) = resolve_community(C.community_id, now)
@@ -557,7 +557,7 @@ reconsideration:{grounds}	signer_rule	agree	CC 4.5.5	`review` | `reconsideration
 rendezvous:route	replication	fills	CC 3.1.4	**Reach:** everyone, as on the bootstrap planes
 rendezvous:route	signer_rule	agree	CC 3.1.4	A federation-scope row whose attester and subject are one **rendezvous key**: a fresh hybrid key pair for each rotation period
 rendezvous:route	signer_rule	agree	CC 5.4.6	A receiver that accepts targeted anonymous delivery publishes the route to itself as a `rendezvous:route:v1` row
-retirement:{state}	lifecycle	fills	CC 3.1.5	**A planned retirement is cancelled by the decider `withdraws`-ing the `decided` row** ([CC 2.4.1.1](part_2_the_grammar.md): taking back a declaration because circumstances changed), admissible only while no
+retirement:{state}	lifecycle	fills	CC 3.1.5	**A planned retirement is cancelled by the decider `withdraws`-ing the `decided` row** ([CC 2.4.1.1](part_2_the_grammar.md): taking back a declaration because circumstances changed). The withdrawal is not counted where a `frozen` row
 retirement:{state}	signer_rule	agree	CC 3.1.5	**The agent's own retirement row** ([CC 7.5.5](part_7_lifecycle_stewardship.md), the Retirement Standard). `{state}` is the closed lifecycle of the `retirement_record` workflow (`decided` \| `frozen` \| `secrets_destroyed` \| `handed_over` \| `notified` \| `custodian_minted`
 revocation:{entity_type}:{reason}	erasure_route	fills	CC 2.4.1.1	rows are never purgeable, by the root or by anyone
 revocation:{entity_type}:{reason}	fold	agree	CC 5.3.2.3	The same anti-rollback as the licence row. A revocation has one state, so no comparator picks among the revocations of one subject: every admitted one stands.

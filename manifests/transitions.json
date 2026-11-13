@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "3b2da75ffd2ac362bcd2a45f303981634b3f6d76dc7e3bd880c73b2211128f02",
+  "source_sha256": "563cacc16e35354ade3d2498dc6681920b3ed079cb3c0145e64cf4d227b1910a",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,11 +45,11 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 57,
+   "statements": 58,
    "guarded_transitions": 26,
    "marks": {
-    "refuse": 31,
-    "ref:*": 9,
+    "refuse": 32,
+    "ref:*": 10,
     "landed": 2,
     "signs": 2,
     "commits": 1
@@ -14071,7 +14071,7 @@
         "reach": "whole"
        },
        {
-        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else refuse+community_consensus_protocol_violation)",
+        "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)",
         "cc_ref": [
          "CC 3.1.3.2"
         ],
@@ -14093,6 +14093,13 @@
        },
        {
         "guard": "when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation",
+        "cc_ref": [
+         "CC 3.1.3.2"
+        ],
+        "reach": "whole"
+       },
+       {
+        "guard": "each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)",
         "cc_ref": [
          "CC 3.1.3.2"
         ],
@@ -18133,7 +18140,7 @@
      "guard": {
       "value": [
        {
-        "guard": "serve(val:rendezvous_node_key_id,federation) else refuse",
+        "guard": "serve(val:rendezvous_node_key_id,federation) else exclude",
         "cc_ref": [
          "CC 3.1.4"
         ],
@@ -20292,7 +20299,7 @@
      "guard": {
       "value": [
        {
-        "guard": "when(leaf=charter) each(val:witnesses) (not founder(key,object) else refuse & not member(key,object) else refuse)",
+        "guard": "when(leaf=charter) each(val:witnesses) (not founder(key,object) else exclude & not member(key,object) else exclude)",
         "cc_ref": [
          "CC 2.1"
         ],

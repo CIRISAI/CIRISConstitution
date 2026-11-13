@@ -37,4 +37,4 @@ p6	the result is `ballot:tally:{poll_id}:v1`, recomputed by every member
 p3	the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it
 p3	the substrate refuses a report whose scope is not its content's
 p2	trust-root moderation is not trust-root history-editing
-p3	The substrate refuses a report whose scope is not its content's
+p3	where that content's scope is not the report's, the report concludes nothing

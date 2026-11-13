@@ -79,7 +79,7 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 
 | Grammar | Translated in full | Translated with a word dropped |
 |---|---|---|
-| guards | 43 | 14 |
+| guards | 44 | 14 |
 | folds | 162 | 28 |
 | changes | 31 | 31 |
 | reactions | 61 | 50 |
@@ -105,7 +105,7 @@ into it from the count across signers is the intended movement.
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
 | a fold a reaction calls and no cell defines | 11 |
-| a refusal on a clause that reads another row | 4 |
+| a refusal on a clause that reads another row | 0 |
 | a count over the set its own outcome changes | 11 |
 | a cell with a dropped word | 126 |
 
@@ -497,7 +497,6 @@ that the ending row has not seen from counting.
 | Item | Kind | Where |
 |---|---|---|
 | Which rows seat which key in which role: what 21 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
-| Four guard clauses still refuse a row for another row; their sentences do not say what happens to the row | table data | `manifests/transitions.json` |
 | A count taken when the fold is evaluated has no solution. It has left the policy table; eleven fold cells of other families still read `@decision` or `@count` | table data | `formal/derivation/fold_text.tsv` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |

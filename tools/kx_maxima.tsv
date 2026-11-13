@@ -12,7 +12,7 @@ CROSS_SIGNER_INSTANT	15	a cell compares the signed instants of two different row
 ARRIVAL_OUTSIDE_WINDOW	1	a cell reads when this node first held a row, outside a clock or an expiry (order=…min(admission_order))
 FLOATING_POINT	9	mean, median, rate or / in a cell: read here as integers (floor of the mean, lower median, table weight, floor division)
 UNRESOLVED_FOLDS	11	a reaction names fold(NAME) and no cell defines that fold
-REFUSE_ON_NON_DOOR_CLAUSE	4	refuse on a guard clause, a clause inside a group or a change whose computed layer is not the door (it reads another row)
+REFUSE_ON_NON_DOOR_CLAUSE	0	refuse on a guard clause, a clause inside a group or a change whose computed layer is not the door (it reads another row)
 FINAL_WORD_ON_DERIVED_CLAUSE	0	void on a guard clause or a change whose computed layer is derived: a final word on what a later row can change
 INSTANT_AT_DECISION	11	a fold counts a set @decision or @count: the set its own outcome changes
 UNTYPED_MEMBERS	0	a member a cell reads has no row in formal/derivation/kx_field_types.tsv
