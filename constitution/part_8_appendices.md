@@ -2357,8 +2357,8 @@ In time:
 Count: `none`
 
 In time:
-- expiry required `valid_until` (CC 4.3)
 - landing of `expiry`: each node for itself, nothing signed (CC 4.3)
+- expiry required `valid_until` (CC 4.3)
 
 Body: `domain`
 
@@ -2877,8 +2877,6 @@ Fold:
 - `@stage=removal: bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
 In time:
-- clock `W` = `admission_freshness_window_secs` (CC 2.6.7)
-- on close(W) unless fold(signer_seated): read stale (CC 2.6.7)
 - [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.2.3, CC 3.1.3.2)
 - [proposal] on close(expiry): read closed (CC 4.4.3.2.3, CC 3.1.3.2)
 - @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.2)

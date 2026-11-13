@@ -65,11 +65,11 @@ consent:{kind}	acts of its own	0	0	react	reference	B061	1	-
 content_class:{class}	read by a site only	0	3	-	-	B062	1	-
 content_rating:{scheme}:{rating}	nothing shown	0	0	-	-	B003	5	-
 corpus_health:n_eff_measurable	nothing shown	0	0	-	-	B010	2	-
-cosign:{state}	read by a rule	1	2	fold guard clock react land	reference	B063	1	membership:{stage}.reaction
+cosign:{state}	read by a site only	0	2	fold guard clock react land	reference	B063	1	-
 credits:{domain}:{language}:{subject}	nothing shown	0	0	-	-	B007	2	-
 custody:{kind}	read by a rule	2	3	guard expiry react	-	B064	1	group:roster.change retirement:{state}.change
 cw_class:{class}	nothing shown	0	0	-	-	B011	2	-
-deferral:request	acts of its own	0	0	expiry land	-	B065	1	-
+deferral:request	acts of its own	0	0	land expiry	-	B065	1	-
 deferral:response:{outcome}	read by a rule	1	0	fold	reference	B066	1	identity_amendment.guard
 delivery:{class}	nothing shown	0	0	-	-	B012	2	-
 delivery_receipt:{stream_id}	acts of its own	0	0	guard	transparency_log:inclusion	B067	1	-
@@ -121,7 +121,7 @@ licensure:{authority_id}	read by a rule	1	0	fold react	reference	B092	1	group:ro
 lineage_witness:{stage}	nothing shown	0	0	-	-	B093	1	-
 locality:decision:{scale}	acts of its own	0	0	fold	-	B094	1	-
 manifold_conformity:{cohort}	acts of its own	0	0	fold	-	B009	2	-
-membership:{stage}	read by a rule	3	1	fold count guard change clock react expiry land while	group:roster key:record reference	B095	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
+membership:{stage}	read by a rule	3	1	fold count guard change expiry react land while	group:roster key:record reference	B095	1	group:roster.change group:roster.fold key_grant:{axis}.reaction
 mesh_config:{key}	acts of its own	0	0	fold expiry	-	B096	1	-
 method:{approach_id}:{substrate_rung}	nothing shown	0	0	-	-	B003	5	-
 model_3d:*	nothing shown	0	0	-	-	B002	10	-

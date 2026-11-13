@@ -4,13 +4,13 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 128,
+  "entries": 126,
   "kinds": {
    "expiry": 22,
-   "clock": 19,
+   "clock": 18,
    "land": 18,
    "while": 10,
-   "react": 59
+   "react": 58
   },
   "emits": 25,
   "new_event_words": {
@@ -36,8 +36,7 @@
    },
    "clocks_with_no_landing": [
     "cosign:{state} [pending] age",
-    "group:roster cover",
-    "membership:{stage} W"
+    "group:roster cover"
    ]
   },
   "while_open": {
@@ -772,41 +771,12 @@
    ]
   },
   {
-   "family": "membership:{stage}",
-   "kind": "clock",
-   "name": "W",
-   "dur": "admission_freshness_window_secs",
-   "from": "asserted_at",
-   "by": "receipt",
+   "family": "deferral:request",
+   "kind": "land",
+   "name": "expiry",
+   "concluder": "local",
    "cc_ref": [
-    "CC 2.6.7"
-   ]
-  },
-  {
-   "family": "membership:{stage}",
-   "kind": "react",
-   "on": [
-    {
-     "event": "close",
-     "of": "W"
-    }
-   ],
-   "unless": [
-    {
-     "event": "fold",
-     "of": "signer_seated"
-    }
-   ],
-   "effects": [
-    {
-     "effect": "read",
-     "verdict": "stale",
-     "of": "cosign:signature",
-     "force": "must"
-    }
-   ],
-   "cc_ref": [
-    "CC 2.6.7"
+    "CC 4.3"
    ]
   },
   {
@@ -2378,15 +2348,6 @@
    "open": "pending",
    "cc_ref": [
     "CC 4.2.6"
-   ]
-  },
-  {
-   "family": "deferral:request",
-   "kind": "land",
-   "name": "expiry",
-   "concluder": "local",
-   "cc_ref": [
-    "CC 4.3"
    ]
   }
  ]

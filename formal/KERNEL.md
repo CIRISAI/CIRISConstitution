@@ -272,7 +272,7 @@ cosigned act and an adjudication read their count from the protocol the group's 
 Parameters the text states and no rule table has a column for are rows of `formal/derivation/door_text.tsv`,
 each with its quote. `doors.tsv` lists 27 things the tables do not state, and three stated and not run.
 
-Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
+Five of the eighteen clocks are not doors: one freshness check, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
 
 **Two notions of time.** A row's own stated end, read from the row against now, and a window with a landing.
