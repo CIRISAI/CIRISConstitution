@@ -264,9 +264,8 @@ written by the authors of the rules, so this check confirms what they expected a
 
 Eight attacks did gain something before these rules were added. Each rule is part of the kernel and **run**.
 Each is **proved** over the definitions of the earlier proof files (`formal/causal_order/Harden.lean`,
-`Harden2.lean`, `Harden3.lean`), within the limits that folder's README lists. One of them matters here: the
-reader's line is proved with the rejected rule of the next paragraph still inside its operator, so for that
-rule the proof and the code do not yet say the same thing. **open**.
+`Harden2.lean`, `Harden3.lean`, and `Reader.lean` for a reader's own line as the kernel runs it), within the
+limits that folder's README lists.
 
 - a row of a key whose seat was ended counts in a window only if the ending row has it in its past;
 - a landing that does not stand says nothing against one that does;
@@ -332,6 +331,5 @@ that the ending row has not seen from counting.
 | A landing row for each window, and who may sign it | table data | `manifests/reactions.json` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | An acceptance row for each seat the text confers without one | rule | the Parts |
-| The cut's terms for each slot transcribed into the proof | proof | `formal/causal_order` |
 | A rule that keeps at least one founder, or a stated way back when none is left | rule | the Parts |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
