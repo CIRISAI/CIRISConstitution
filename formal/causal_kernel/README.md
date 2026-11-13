@@ -45,10 +45,15 @@ checked by `check_lock.py`).
 - **A writer's keys.** The key plane re-read from rows on the writer's own chain agrees with
   `formal/key_plane` on 402,950 comparisons.
 
-**Attacked** (`attacks.py`, `check_attacks.py`, `attack_expected.tsv`, `checkpoint.py`). Thirty-three attacks
-from the published failures of comparable systems, each with the class it must fall in: the attacker gains
+**Attacked** (`attacks.py`, `check_attacks.py`, `attack_expected.tsv`, `checkpoint.py`). Thirty-four attacks,
+thirty-three from the published failures of comparable systems, each with the class it must fall in: the attacker gains
 nothing, the limit is one `formal/KERNEL.md` states, or the scenario cannot be expressed here. The check fails
 if any attack gains what is not conceded, or if any scenario gives two answers in two arrival orders.
+
+`checkpoint.py` holds two rules that are part of the kernel, a counted row counting only if what it is built on
+counts and a reader's own acknowledged line, and one that is not: a counted row leaving behind acts that name
+only older heads. That one is off unless asked for, and the attacks run it both ways to show why. It makes the
+longer line win.
 
 **What it shows that the proof does not.**
 

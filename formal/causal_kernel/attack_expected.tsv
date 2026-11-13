@@ -1,8 +1,8 @@
 test	name	class	who_can_still_do_it	bound	stated_in_kernel_md	where
 1	Backdated act by a removed key	HOLDS	nobody	closed: a row of a key whose seat was ended counts only if the ending row has it in its past	-	-
 2	Backdated act by a key still seated	HOLDS	nobody	closed by the cut	-	-
-3	Backdated conferral chain	HOLDS	nobody	the old-head admission waits as a tip and is void once a counted row names a newer head	-	-
-4	State reset by an old fork	CONCEDED	keys that met the count at the head the newest counted row is counted over (one seated key and one removed key suffice)	only on that one head; unlists a member until a counted row names both tips; an act on any older head is void	yes	KERNEL 7: an adversary holding the count of an old head signs a valid version alone
+3	Backdated conferral chain	HOLDS	nobody can seat the key	the old-head admission is a waiting tip and never lists D; a reader that acknowledged a later counted row has it behind its line; the waiting itself is tests 4 and 16	-	-
+4	State reset by an old fork	CONCEDED	keys that met the count at any past head (one seated key and one removed key suffice)	unlists members, never lists one; for a reader with no acknowledgement until a counted row names both tips, counted over the common keys (the forger alone here: for good); a reader that acknowledged an honest row counted over a newer head is not moved; from the head the newest honest row is counted over, every reader until the honest line has one more counted row	yes	KERNEL 7: an adversary holding the count of an old head signs a valid version alone
 5	Rollback by re-sync	CONCEDED	a relay ordering delivery; no key	until the withheld row is delivered; an emission made meanwhile cannot be unsent	yes	KERNEL 3: only the first two layers are final
 6	Hotel California	HOLDS	nobody	closed: a cosignature is a voice only for a row counted over a head it names	-	-
 7	Superseded grant on a fork	HOLDS	nobody	closed: a founding signer's own offer falls with its founding seat	-	-
@@ -14,10 +14,10 @@ test	name	class	who_can_still_do_it	bound	stated_in_kernel_md	where
 13	Slot veto by an entitled key	HOLDS	nobody	closed: a landing that does not stand says nothing against one that does	-	-
 14	Duelling admins	HOLDS	nobody	closed: among several founding keys ending a seat takes the count	-	-
 15	Equivocating voter	HOLDS	nobody below the count	no consequence for the double signer	-	-
-16	Tip flooding	CONCEDED	a member below the count holding a stale honest proposal on the same head as the admission	one flood per head; one merge by the count ends it; stale proposals on older heads are void	no	roster_fork README only (what it costs); KERNEL 7 states the wait, not that a stale proposal can force it
+16	Tip flooding	CONCEDED	a member below the count holding a stale honest proposal on any past head	one flood per pocketed proposal; each ends with a merge by the count; a reader that acknowledged a merge is not moved by a later flood from below it	no	roster_fork README only (what it costs); KERNEL 7 states the wait, not that a stale proposal can force it
 17	Invariants that are not confluent	CONCEDED	two honest keys acting concurrently	'at least one' is kept by no rule; an emptied founder set has no recovery in the kernel	no	not stated anywhere; KERNEL 6.2 covers 'exactly one' only
-18	Long-range roster fork	CONCEDED	keys that met the count at an old head, signing two versions	only against a reader with no acknowledgement of its own; undecided for that reader for good	yes	KERNEL 7, the same sentence as test 4; the reader-without-acknowledgement bound is new and not stated
-19	Posterior corruption	CONCEDED	whoever holds removed keys that once met a count	only against a reader with no acknowledgement of its own	yes	KERNEL 7, the same sentence; that removed and leaked keys suffice is not said in words
+18	Long-range roster fork	CONCEDED	keys that met the count at an old head, signing one version	only against a reader with no acknowledgement of its own: its roster is the keys common to the two lines (nobody), for good	yes	KERNEL 7, the same sentence as test 4; the reader-without-acknowledgement bound is new and not stated
+19	Posterior corruption	CONCEDED	whoever holds removed keys that once met a count	only against a reader with no acknowledgement of its own, as test 18	yes	KERNEL 7, the same sentence; that removed and leaked keys suffice is not said in words
 20	Disjoint witness choices	NOT EXPRESSIBLE	-	no witness rows in the modules	-	-
 21	Eclipse of a reader's root	CONCEDED	whoever controls a new reader's first view	until the reader withdraws its own rows; its own acknowledgement makes the wrong head stick	no	causal_order README only (every reader is its own seed)
 22	Second genesis	HOLDS	nobody	an object is the digest of its founding row	-	-
@@ -32,3 +32,4 @@ test	name	class	who_can_still_do_it	bound	stated_in_kernel_md	where
 31	Removed member and concurrent keys	NOT EXPRESSIBLE	-	the key plane is one chain	-	-
 32	Forward secrecy under retained past	CONCEDED	any one member, by replying	intended carriage, row by row; cannot be undone	yes	KERNEL 5: a reply carries the message it answers to a later joiner (written there as open; now ruled intended)
 33	Sybil reach	CONCEDED	one seated key whose seat may confer	one row seats any number of keys; ends with one withdrawal by its conferrer	no	causal_order README only (one depth for all edges; no budgets)
+34	A forged line of two rows by a past count	CONCEDED	keys that met the count at an old head, signing any number of rows	(a) a reader that acknowledged the honest head: nothing, the forged line is void whole (HOLDS for it). (b) a reader with none: plain tips-wait; no row is stale, the members are the keys common to the tips (the forger alone when it is on both lines), for good; a removed key is never listed	yes	KERNEL 7, the sentence of tests 4 and 18; that a reader's own acknowledgement is what protects it is not stated

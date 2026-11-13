@@ -2,12 +2,12 @@
 """
 check_attacks.py: one command, exit 0 or 1.
 
-Runs the thirty-three attacks of attacks.py against the kernel modules in this folder, three worker processes and this
+Runs the thirty-four attacks of attacks.py against the kernel modules in this folder, three worker processes and this
 one, each capped at 2 GiB of address space, and compares each test's class with attack_expected.tsv.
 
 Exit 0 only if
     every test's class equals the expected one, and none is BROKEN;
-    every observation a test rests on came out as written, and so did the measured price of the checkpoint;
+    every observation a test rests on came out as written, and so did the measured price of tips and the reader's line;
     every scenario gave one answer in every arrival order run.
 
     python3 -I formal/causal_kernel/check_attacks.py            the table
@@ -42,7 +42,7 @@ def main():
         res = mp.map(A.run_one, nums, chunksize=1)
         price, price_bad = mp.apply(A.checkpoint_price)
     facts = "--facts" in sys.argv
-    ok = len(res) == 33 and set(want) == set(nums)
+    ok = len(res) == 34 and set(want) == set(nums)
     count, orders, differ, scen = {}, 0, 0, 0
     for d in res:
         exp = want[d["n"]]["class"]
@@ -60,7 +60,7 @@ def main():
             for text in d["notes"]: print("        - " + text)
             print("      who: " + d["who"]); print("      witness: " + d["witness"]); print("      " + d["protects"])
             print("      expected bound: %s; who can still do it: %s\n" % (want[d["n"]]["bound"], want[d["n"]]["who_can_still_do_it"]))
-    print("the price of the checkpoint, measured:")
+    print("tips, the reader's line, and why the group checkpoint is off, measured:")
     for text, v in price:
         ok &= bool(v)
         print("   %s%s" % ("" if v else "FAIL, not as written: ", text))

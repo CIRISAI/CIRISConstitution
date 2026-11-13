@@ -41,9 +41,10 @@ What ends a seat.
 Tips wait (KERNEL.md section 7). When several counted acts on one object are concurrent, the holders of a scope
 over it are the keys common to the tips, until a counted act names them all.
 
-The checkpoint (checkpoint.py). A counted act concurrent with a counting checkpoint of its object, and counted over
-heads all older than the head that checkpoint names, does not count. With `own`, the reader's own acknowledgements
-are checkpoints for that reader.
+Built on, and the reader's line (checkpoint.py). A counted act counts only if every counted act among the heads it
+names counts. With `own`, the counted acts that reader has acknowledged are its line: a counted act concurrent with
+the line and counted over older heads does not count for that reader; one counted over the same head waits as a tip.
+`checkpoint=True` turns on the group checkpoint, which is refused (it ranks lines by depth) and kept only to show why.
 
 Layers. Whether an offer or an unseat was validly made is CONCLUDED: it reads the row and its concluded
 ancestors only (the object's own key; the count over the head it names). Whether the seat is live now is
@@ -165,7 +166,7 @@ def own_keys(by, obj):
 
 # ---- derived: the live seats ---------------------------------------------------------------------------
 class Seats:
-    def __init__(self, S, holds=HOLDS, confers=CONFERS, depth=DEPTH, by_arrival=False, own=None):
+    def __init__(self, S, holds=HOLDS, confers=CONFERS, depth=DEPTH, by_arrival=False, own=None, checkpoint=False):
         self.S, self.holds, self.confers, self.own = S, holds, confers, own
         self.cut = C = CUT.Cut(S)
         Cs = S.Cs
@@ -178,7 +179,7 @@ class Seats:
         # the conferrer of a counted offer is the count: the lone withdrawal of the key that signed the row ends nothing
         off_ended = lambda o, k: any(w["target"] == o["id"] and (w["signer"] == k or (w["signer"] not in o["to"] and o["conf"] != "group"))
                                      and not late(w, o) for w in wd)
-        self.stale = V = CP.void(S, C, own)                     # counted acts that a checkpoint leaves behind
+        self.stale = V = CP.void(S, C, own, checkpoint)         # counted acts built on one that does not count, or behind the reader's line
         unseats = [u for u in K.sel(Cs, kind="unseat") if C.counts(u) and u["id"] not in V]
 
         def unseated(o, k):

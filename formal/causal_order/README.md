@@ -26,7 +26,8 @@ version, a reply. No instant is compared.
 
 **What is proved.** `Order.lean` (the rank case and the failure of judging on arrival), `Causal.lean` (no
 rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window's signed outcome under two rules,
-and the roster's tips) and `Recount.lean` (the window's rule as taken). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
+`Harden3.lean` (the rules added after the kernel was attacked). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -48,6 +49,12 @@ and the roster's tips) and `Recount.lean` (the window's rule as taken). Core Lea
 | `Kernel.cannot_land_inside`, `ruleI_only_concluder_undoes`, `ruleII_never_final` | a window's landing cannot stand over an objection its signer acknowledged; under the rule taken only the concluder's own key undoes a landing; under the other rule any objector reopens any landing for ever |
 | `Kernel.Recount.dishonest_never_stands`, `stands_is_table_over_all_not_late`, `unnamed_gains_nothing` | under recount a landing that states an outcome its own past does not give never stands, and a landing stands only if it states the table's outcome over every answer that does not name it |
 | `Kernel.Recount.undone_only_by_counted_answer`, `naming_answer_changes_nothing`, `count_door_final`, `quorum_closed_final` | only a newly counted concurrent answer that moves the table undoes a landing; an answer naming the landing changes nothing; a landing with a strict majority behind it is final |
+| `Kernel.Harden.F1.ended_keys_change_nothing`, `F2.rival_cannot_move` | rows by a key whose seat was ended, unseen by the ending, neither unseat nor rescue a landing; a landing that does not stand moves no outcome |
+| `Kernel.Harden.F3.no_replay`, `F4.proposer_cannot_end` | a cosignature in the past of a head is no voice for a row counted over that head; the proposer of a counted offer does not end it alone |
+| `Kernel.Harden.F5.no_single_founder_removes`, `removed_cannot_reseat`, `no_row_restores_a_founder` | among several founders one removes no other; a removed founder seats itself again by no row; and once every founder has withdrawn, no later row restores one |
+| `Kernel.Harden.F6.rows_of_one_key`, `no_self_service`, `member_can_widen` | a key enters a row's audience by no rows of its own; a key already inside widens it by one concluded naming row |
+| `Kernel.Harden.F7.backdated_conferral_seats_no_one`, `CP.old_fork_void_for_ever`, `CP.built_on_void_for_reader` | while two tips wait a seat with no offer under one of them is not held; a line from below a reader's acknowledged head is void for that reader, row by row |
+| `Kernel.Harden.CP.checkpoint_voids_any_answer`, `without_checkpoint_fixed` | were a counted row to leave older acts behind, two counted rows would void any answer in a window; without that rule nothing later changes whether a concluded answer is counted |
 | `Kernel.rosterOf_function`, `merge_one_tip`, `fork_shares_signer` | with several tips the roster is the members common to them; a version naming every tip makes one tip; two versions of one head each counted by a strict majority share a signer |
 | `Causal.wins_unique`, `higher_kind_decides`, `same_kind_both_or_neither` | concurrent rows on one target that differ in kind are decided by a fixed order on kinds; rows of one kind are still both or neither |
 | `Causal.counts_function`, `only_removals_stop_counting` | a row of a removed signer counts when it lies in the past of the removal; that is a function of the offered set, and only a removal of its signer can stop a row counting |
@@ -65,6 +72,11 @@ An edge is withdrawn only by its own signer.
   and is proved here only for a removal.
 - A contested slot may stay empty; nothing here ends a dispute.
 - A window's length is not in the rows. No theorem says a landing came late enough.
+- The rules of `Harden` are proved over the definitions of the earlier files. The form of the kernel each
+  attack succeeded against is a reconstruction, not an earlier version of the code. The refined seat that
+  carries the founders' rule is not proved equal to the seat of `Seat.lean`.
+- A cosignature that names two heads is a voice at both. What is proved is that one naming a single head is a
+  voice at that head only.
 - Under recount a lone landing is final only against keys whose answers cannot move the count. A key whose
   answer would move it can unseat the landing at any later time by leaving it unnamed
   (`unnamed_answer_unseats`). Which of two standing landings wins is not modelled.
@@ -77,4 +89,4 @@ An edge is withdrawn only by its own signer.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run, in this order, each with `LEAN_PATH="$TMP" lean -o "$TMP/NAME.olean" NAME.lean`: `Order`, `Causal`, `Seat`, `Window`, `Recount`
+Run, in this order, each with `LEAN_PATH="$TMP" lean -o "$TMP/NAME.olean" NAME.lean`: `Order`, `Causal`, `Seat`, `Window`, `Recount`, `Harden`, `Harden2`, `Harden3`

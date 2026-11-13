@@ -175,7 +175,7 @@ def outcome(S, pid, how, by_arrival=False, checkpoint=False):
             o = S.by.get(w["target"])
             if o is not None and o["kind"] == "offer" and o["obj"] == p["obj"]:
                 gone.append((frozenset({w["signer"]}) if w["signer"] in o["to"] else frozenset(o["to"]), w))
-        cps = CP.checkpoints(S, C, p["obj"]) if checkpoint else []          # off by default: see the module's head
+        cps = CP.checkpoints(S, C, p["obj"], group=True) if checkpoint else []   # off by default: see the module's head
         late = lambda r: any(r["signer"] in ks and r["id"] not in S.anc[x["id"]] for ks, x in gone) or CP.stale_answer(S, cps, p, r)
     said = []
     for L in K.frontier(S.anc, Ls):                             # a landing that a later landing names is answered by it
