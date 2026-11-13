@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "8fd4719c4509b49b38e858d4daed9f39e24d84ae0389731fb75e770935111a10",
+  "registry_sha256": "1d1d3d305b350b52ff3695b02a9b3d3087c866939b149161745ce3ad390573ce",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -21056,7 +21056,7 @@
       ]
      },
      {
-      "fold": "reads=own&signer:owner",
+      "fold": "reads=own&signer:owner|self",
       "cc_ref": [
        "CC 3.3.1"
       ]
@@ -21068,7 +21068,7 @@
       ]
      },
      {
-      "fold": "reads=own&signer:owner; key=attested_key_id,attesting_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node",
+      "fold": "reads=own&signer:owner|self; key=attested_key_id,attesting_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node",
       "cc_ref": [
        "CC 3.3.1"
       ]

@@ -165,12 +165,15 @@ Who may place a duty is one parameter with three values: the object's own key, a
 confer, or a group whose count is met. A key
 stands when a bounded walk of live seats leads to it from a root. For what a row means to this node the root is
 the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,
-`only_withdrawals_and_cuts_end`, `means_is_seat_walk`. **run**: 2,727 sets in 587,536 arrival orders.
+`only_withdrawals_and_cuts_end`, `means_is_seat_walk`. **run**: 2,774 sets in 701,176 arrival orders.
 
 The 23 role names of the tables are not 23 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
 covers 18 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
-`tally` fits none because its holders are drawn from a group secret that is not a row. Appointed `moderate`,
-`review`, `slash` and `takedown` are one seat with four scopes. `owner` and the steward of an agent are one
+`tally` fits none because its holders are drawn from a group secret that is not a row. A duty seat over a community is one seat with four scopes: `moderate`, `review`, `slash` and `takedown`. The
+founding record seats the duty holders who sign it, and they are equals (CC 4.5.4). A duty seat is conferred
+by a strict majority of the duty holders, or by the lone holder with the new holder's acceptance. It is
+withdrawn by a strict majority of the others, never on fewer than two voices where there are two holders.
+**run**: five properties, each with a deliberate break that is caught. `owner` and the steward of an agent are one
 seat. `member`, an accord holder and a key of a self roster are one counted seat over three objects. `serve` is
 two seats required together, which is a question for **may**.
 The text states the second consent wherever it places a duty: a delegation that carries a scope seats its
@@ -343,8 +346,8 @@ able to name several; the store's shape is an optional list of further heads bes
 **One mechanism, five instances.** A person's keys, a voice's room keys, a room, the accord and an
 infrastructure community are this one roster with parameters read from the policy table and the text. **run**
 (`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, six
-of a key's revocation and one of a member's leaving, in every arrival order to a cap, each with a deliberate
-break that is caught. A version does not count a key whose own leaving is in its past, whatever head it
+of a key's revocation, one of a member's leaving and five of a community's duty seats, in every arrival order
+to a cap, each with a deliberate break that is caught. A version does not count a key whose own leaving is in its past, whatever head it
 names. The model counted such a key until the proof of `leaving_binds_by_past` showed the difference. A third
 key's revocation revokes nothing, and neither does a former owner's or either of two live owners'. With two
 live owners the key has no owner (CC 3.2), so that last is derived. A revoked key does not register again. The plain mechanism was wrong in four
@@ -459,8 +462,11 @@ limits that folder's README lists.
 - a landing that does not stand says nothing against one that does;
 - a cosignature is a voice only for a row counted over a head the cosignature itself names;
 - an offer conferred by a count is ended by its holder or by a count, never by its proposer alone;
-- among several founding keys one founder's unseat concludes nothing, and a founder's own offers live only
-  while that founder's seat does;
+- among several duty holders one holder's unseat concludes nothing, and one holder's own conferral concludes
+  only while it is the one duty holder; a duty seat validly conferred then stands as an equal. The proofs of
+  `Harden.F5` state the first of these. Their second clause, that a holder's own grant lives while its seat
+  does, is not what the model runs since the community law: with three holders one holder's grant never
+  concludes. That clause is **open** until the proof is restated;
 - a row that names another adds its audience to it only if it is concluded, its signer was already in that
   audience, and it sits in the same room or is signed by the named row's own signer;
 - the holders of a counted scope are the keys common to the tips;
@@ -517,5 +523,5 @@ that the ending row has not seen from counting.
 | 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
-| Seven older models still state a founder's power, a count that includes the member concerned, or a moderator seated with no count: four in the running kernel's tables and scenarios, one in the fork model, two in TLA+ | model | `formal/` |
+| Two TLA+ models still state a moderator seated with no count and a founder's protocol in a community; their changes are written and not yet run. Three places in the running kernel still let a signer of a member-scoped founding row seat a moderator alone. One clause of `Harden.F5` is behind the model | model | `formal/mesh_life`, `formal/membership`, `formal/causal_kernel`, `formal/causal_order` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |

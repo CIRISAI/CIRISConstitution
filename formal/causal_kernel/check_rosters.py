@@ -947,6 +947,50 @@ def check_leaving(spec, inst):
                    "members read at the heads only (the leaving in the version's past unread)", m)]
 
 
+def check_duty(spec, inst):
+    """CC 4.5.4 community law on the one mechanism: members and duty holders, no other tier. The founding record seats
+    the duty holders who sign it. (iv) conferral by a strict majority of the holders, withdrawal by a strict majority of
+    the others, never fewer than two voices where there are two holders; a lone holder confers alone with the new
+    holder's acceptance. (iii) holders are equals. A removal from the roster ends the removed member's duty seats."""
+    src = "CC 4.5.4 Community law (iii), (iv); 'a non-member holds no duty'"
+    duty = lambda S: ST.Seats(S).holders("duty", "g")
+    def found(keys): return RS.found(spec, keys, scope="duty")
+    def confer(i, signers, k, head=("g",), names=()):
+        return ST.offer(i, signers[0], k, "duty", "g", "group", tuple(head) + tuple(names), head=tuple(head), policy="duty_confer",
+                        counted="duty", cosigners=tuple(signers[1:]) + (k,))
+    def withdraw(i, signers, k, head=("g",)):
+        return ST.unseat(i, signers[0], k, "duty", "g", "group", tuple(head), head=tuple(head), policy="duty_withdraw",
+                         counted="duty", cosigners=tuple(signers[1:]))
+    lone = lambda i, signer, k, under="g", names=("g",): [ST.offer(i, signer, k, "duty", "g", "seat", names, under=under), ST.accept("a" + i, k, i)]
+    def prop(name, worlds, mut, mut_name):
+        def p(S, rows, n):
+            got = duty(S)
+            want = dict((w[0], w[2]) for w in worlds)[n]
+            if got != want: return "duty holders %s, want %s" % (sorted(got), sorted(want))
+        base = run(spec, [(w[0], w[1]) for w in worlds], p)
+        with seat_mut(mut), mutated(mut=("no_floor",) if mut == "no_duty_floor" else ()):   # the room's own floor of two as well
+            m = run(spec, [(w[0], w[1]) for w in worlds], p, orders=False)
+        return result(inst, name, src, verdict_of(base), base, mut_name, m)
+    res = []
+    W = [("a lone holder confers alone, the new holder accepting", [found(("A",))] + lone("o", "A", "B"), frozenset({"A", "B"})),
+         ("one holder of two confers alone", [found(("A", "B"))] + lone("o", "A", "C"), frozenset({"A", "B"}))]
+    res.append(prop("a lone duty holder confers alone with the new holder's acceptance; one of two confers nothing alone", W, "lone_any",
+                    "any holder confers alone"))
+    W = [("two of three confer", [found(("A", "B", "C")), confer("o", ("A", "B"), "D")], frozenset({"A", "B", "C", "D"})),
+         ("four holders: two of the three others withdraw the fourth", [found(("A", "B", "C", "D")), withdraw("x", ("A", "B"), "D")], frozenset({"A", "B", "C"}))]
+    res.append(prop("conferral by a strict majority of the holders; withdrawal by a strict majority of the others, the holder concerned not counted", W,
+                    "count_target", "the holder concerned counted in its own withdrawal"))
+    W = [("two holders: one withdraws the other alone", [found(("A", "B")), withdraw("x", ("A",), "B")], frozenset({"A", "B"}))]
+    res.append(prop("where there are two holders, no duty seat is withdrawn on fewer than two voices", W, "no_duty_floor", "no floor of two voices"))
+    W = [("A confers alone, then withdraws the offer", [found(("A",))] + lone("o", "A", "B") + [ST.withdraw("w", "A", "o", ("ao",))], frozenset({"A", "B"})),
+         ("A confers alone, then leaves", [found(("A",))] + lone("o", "A", "B") + [ST.withdraw("w", "A", "g", ("ao",))], frozenset({"B"}))]
+    res.append(prop("holders are equals: the key that conferred a duty seat does not end it alone", W, "duty_ranked", "a conferrer's withdrawal ends what it conferred"))
+    W = [("the room removes a duty holder from its roster", [found(("A", "B", "C"))] + RS.remove(spec, "x", ("g",), "C", ("A", "B")), frozenset({"A", "B"}))]
+    res.append(prop("a removal from the roster ends the removed member's duty seats (a non-member holds no duty)", W, "member_cut_only",
+                    "a removal cuts the member seat only"))
+    return res
+
+
 # =================================================================================================================
 TASKS = {
     "madeup": lambda I: check_madeup(I),
@@ -958,6 +1002,7 @@ TASKS = {
     "accord": lambda I: check_accord(I["accord"], "accord (holders)"),
     "infra": lambda I: check_infra(I["infra"], "infrastructure community (operators' keys)"),
     "key_revocation": lambda I: check_key_revocation(),
+    "duty": lambda I: check_duty(I["community"], "community (public, members are persons)"),
     "leaving": lambda I: check_leaving(I["community"], "community (public, members are persons)"),
     "fork_self": lambda I: check_fork("self roster (a person's keys)", "majority", 4, "012", "2"),
     "fork_comm_maj": lambda I: check_fork("community (public, members are persons)", "majority", 5, "0123", "3"),

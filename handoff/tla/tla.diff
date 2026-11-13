@@ -1,0 +1,362 @@
+diff --git a/formal/membership/Membership.tla b/formal/membership/Membership.tla
+index d94068c..e085d5d 100644
+--- a/formal/membership/Membership.tla
++++ b/formal/membership/Membership.tla
+@@ -49,9 +49,14 @@ EXTENDS Naturals, FiniteSets
+ 
+ CONSTANTS Keys, Listed, Founders, Protocol, M, Roles, Offered, Window, HoldWindow, MaxGen,
+           MaxProposals, MaxChanges, Coercible,
+-          Binding, RemovalRule, FounderBasis, FoundingRule, HoldExpiry, UnanimousRemoval
++          Binding, RemovalRule, FounderBasis, FoundingRule, HoldExpiry, UnanimousRemoval, GroupKind
+ 
+ ASSUME Protocol \in {"founder_only", "unanimous", "majority", "quorum"}
++(* GroupKind: "family" or "community". founder_only is one of a family's kinds (CC 3.2: "founder_only only on a
++   publication's subscriber list or a room's own listing ... or on an affiliation under the countersign rule"); a
++   community has members and duty holders and no founder tier (CC 4.5.4), so it never runs founder_only. *)
++ASSUME GroupKind \in {"family", "community"}
++ASSUME Protocol = "founder_only" => GroupKind = "family"
+ ASSUME Founders \subseteq Listed /\ Listed \subseteq Keys /\ Coercible \subseteq Keys
+ ASSUME Offered \in Roles
+ ASSUME Binding \in {"spent", "literal", "none"} /\ RemovalRule \in {"protocol", "unilateral"}
+@@ -101,7 +106,10 @@ CanSignAsMember(s) == s \in active \/ (FounderBasis = "record" /\ formed /\ s \i
+ ProtocolMet(kind, k, signers, rosterAt) ==
+   LET counted == signers \cap rosterAt
+       voters  == IF kind = "remove" THEN rosterAt \ {k} ELSE rosterAt
+-  IN CASE Protocol = "founder_only" -> signers \cap FoundersAt(rosterAt) # {}
++      \* CC 4.5.13: in a community one voice never decides who is in a room, whatever the size
++      floor   == GroupKind = "community" /\ Cardinality(rosterAt) >= 2 => Cardinality(counted) >= 2
++  IN floor /\
++     CASE Protocol = "founder_only" -> signers \cap FoundersAt(rosterAt) # {}
+        [] Protocol = "unanimous"    -> /\ voters # {} /\ voters \subseteq signers
+                                        /\ (kind = "remove" /\ UnanimousRemoval = "others_majority"
+                                            => Cardinality(voters) * 2 > Cardinality(rosterAt))
+diff --git a/formal/membership/Membership_any_member_removes.cfg b/formal/membership/Membership_any_member_removes.cfg
+index 27659c2..76579b0 100644
+--- a/formal/membership/Membership_any_member_removes.cfg
++++ b/formal/membership/Membership_any_member_removes.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_founder_only.cfg b/formal/membership/Membership_founder_only.cfg
+index 18a65f5..c5a57a4 100644
+--- a/formal/membership/Membership_founder_only.cfg
++++ b/formal/membership/Membership_founder_only.cfg
+@@ -1,4 +1,4 @@
+-\* CC 3.3.4: founder_only, one founder k1; the coerced key is any non-founder.
++\* CC 3.3.4: founder_only (a family's protocol; a community has no founder tier, CC 4.5.4), one founder k1; the coerced key is any non-founder.
+ SPECIFICATION Spec
+ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   Keys = {k1, k2, k3, k4}
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "family"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_founder_only_coerced.cfg b/formal/membership/Membership_founder_only_coerced.cfg
+index d844db9..7fa7597 100644
+--- a/formal/membership/Membership_founder_only_coerced.cfg
++++ b/formal/membership/Membership_founder_only_coerced.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "family"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_founding_unsigned.cfg b/formal/membership/Membership_founding_unsigned.cfg
+index 80d3b75..83db765 100644
+--- a/formal/membership/Membership_founding_unsigned.cfg
++++ b/formal/membership/Membership_founding_unsigned.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "listed"
+   HoldExpiry = TRUE
++  GroupKind = "family"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_majority.cfg b/formal/membership/Membership_majority.cfg
+index 5c5be9d..c6e22d9 100644
+--- a/formal/membership/Membership_majority.cfg
++++ b/formal/membership/Membership_majority.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_no_binding.cfg b/formal/membership/Membership_no_binding.cfg
+index 33ce062..56bee77 100644
+--- a/formal/membership/Membership_no_binding.cfg
++++ b/formal/membership/Membership_no_binding.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_no_hold_expiry.cfg b/formal/membership/Membership_no_hold_expiry.cfg
+index d056668..1699c56 100644
+--- a/formal/membership/Membership_no_hold_expiry.cfg
++++ b/formal/membership/Membership_no_hold_expiry.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = FALSE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_quorum2of3.cfg b/formal/membership/Membership_quorum2of3.cfg
+index 32d95de..8b1e40b 100644
+--- a/formal/membership/Membership_quorum2of3.cfg
++++ b/formal/membership/Membership_quorum2of3.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_stale_founder.cfg b/formal/membership/Membership_stale_founder.cfg
+index 340efd2..52d8757 100644
+--- a/formal/membership/Membership_stale_founder.cfg
++++ b/formal/membership/Membership_stale_founder.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "record"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "family"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_unanimous.cfg b/formal/membership/Membership_unanimous.cfg
+index 73db717..1ea7d5b 100644
+--- a/formal/membership/Membership_unanimous.cfg
++++ b/formal/membership/Membership_unanimous.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_unanimous_two.cfg b/formal/membership/Membership_unanimous_two.cfg
+index b35bd84..67bcd4b 100644
+--- a/formal/membership/Membership_unanimous_two.cfg
++++ b/formal/membership/Membership_unanimous_two.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/membership/Membership_unspent.cfg b/formal/membership/Membership_unspent.cfg
+index b879769..407090d 100644
+--- a/formal/membership/Membership_unspent.cfg
++++ b/formal/membership/Membership_unspent.cfg
+@@ -17,6 +17,7 @@ CONSTANTS k1 = k1 k2 = k2 k3 = k3 k4 = k4
+   FounderBasis = "active"
+   FoundingRule = "signed"
+   HoldExpiry = TRUE
++  GroupKind = "community"
+   UnanimousRemoval = "others_majority"
+   MaxProposals = 2
+   MaxChanges = 2
+diff --git a/formal/mesh_life/MeshLife.cfg b/formal/mesh_life/MeshLife.cfg
+index 58ae599..d89f51d 100644
+--- a/formal/mesh_life/MeshLife.cfg
++++ b/formal/mesh_life/MeshLife.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife.tla b/formal/mesh_life/MeshLife.tla
+index 5ace99e..d3c76d7 100644
+--- a/formal/mesh_life/MeshLife.tla
++++ b/formal/mesh_life/MeshLife.tla
+@@ -112,7 +112,9 @@ Found(p) == Live /\ ~m.winding /\ Announced(p) /\ m.community = "none"
+                     !.charter = IF RoomKind = "affiliation" THEN "declared" ELSE "none"]
+ CharterSuperseded == On("event") /\ Live /\ m.charter = "declared" /\ Members # {}
+   /\ m' = [m EXCEPT !.charter = "superseded"]
+-Propose(p, q) == Live /\ ~m.winding /\ m.community = "founded" /\ m.member[p] = "member"
++\* CC 4.5.4 (v): with no duty holder left the room locks, read-only until the members' count seats one
++Locked == m.community = "founded" /\ m.moderator = "-"
++Propose(p, q) == Live /\ ~m.winding /\ m.community = "founded" /\ ~Locked /\ m.member[p] = "member"
+   /\ m.member[q] \in {"none", "left"} /\ (Announced(q) \/ (q \in Minors /\ m.guardian[q] # "none"))
+   /\ m' = [m EXCEPT !.member[q] = "proposed"]
+ Accept(q) == Live /\ m.member[q] = "proposed" /\ Members # {} /\ m' = [m EXCEPT !.member[q] = "member"]
+@@ -130,10 +132,12 @@ GrantWrite(p) == WriteRight = "named" /\ Live /\ ~m.winding /\ m.member[p] = "me
+ RevokeWrite(p) == WriteRight = "named" /\ Live /\ m.writer[p] /\ ModeratorActs /\ p # m.moderator
+   /\ m' = [m EXCEPT !.writer[p] = FALSE]
+ MayWrite(p) == m.member[p] = "member" /\ (WriteRight = "all" \/ m.writer[p])
+-NameModerator(p) == Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.member[p] = "member"
++\* the members' count seats one (the election of CC 4.5.13, its 24 h ranked vote abstracted): never fewer than two
++\* voices, so a room of one member stays locked; the one seated is a member who accepts
++NameModerator(p) == Live /\ Locked /\ m.member[p] = "member" /\ Cardinality(Members) >= 2
+   /\ m' = [m EXCEPT !.moderator = p]
+ \* moderation delegated to an agent: the bonded agent, held by its steward, takes the moderate duty
+-NameAgentModerator == On("moderation") /\ Live /\ m.community = "founded" /\ m.moderator = "-" /\ m.agent = "bonded"
++NameAgentModerator == On("moderation") /\ Live /\ Locked /\ Cardinality(Members) >= 2 /\ m.agent = "bonded"
+   /\ m' = [m EXCEPT !.moderator = "agent"]
+ Dissolve == Live /\ m.community = "founded" /\ Members = {} /\ \A p \in Persons : m.member[p] # "proposed"
+   /\ m' = [m EXCEPT !.community = "dissolved", !.moderator = "-", !.charter = "none", !.event = "none",
+@@ -333,6 +337,9 @@ Inv_AnnouncedIsPqcComplete == On("identity") => \A p \in Persons : Announced(p)
+ Inv_GuardianIsAnnouncedAdult == \A p \in Persons : m.guardian[p] # "none" => (m.guardian[p] \in Adults /\ Announced(m.guardian[p]))
+ Inv_IncapacitatedHoldsNoSeat == \A p \in Persons : m.capacity[p] = "incapacitated" => (m.steward # p /\ m.waPerson # p /\ Wards(p) = {})
+ Inv_ModeratorIsMember == m.moderator \in Persons => m.member[m.moderator] = "member"
++\* CC 4.5.4 (v): nobody is invited into a locked room, and a duty holder is seated in one only by the members' count
++Act_LockedAdmitsNobody == [][Locked => \A q \in Persons : (m'.member[q] = "proposed" => m.member[q] = "proposed")]_m
++Act_LockLiftsByTheCount == [][(Locked /\ m'.moderator # "-" /\ m'.community = "founded") => Cardinality(Members) >= 2]_m
+ Inv_AgentModeratorIsBonded == m.moderator = "agent" => m.agent = "bonded"
+ \* the halt reaches the delegated moderator: no flag is decided and no row withheld by the agent while a halt stands
+ Act_HaltStopsAgentModeration == [][(m.moderator = "agent" /\ m.halt # "clear") =>
+diff --git a/formal/mesh_life/MeshLife_channel.cfg b/formal/mesh_life/MeshLife_channel.cfg
+index 31b8060..d23d4e4 100644
+--- a/formal/mesh_life/MeshLife_channel.cfg
++++ b/formal/mesh_life/MeshLife_channel.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_contact.cfg b/formal/mesh_life/MeshLife_contact.cfg
+index cd3629a..6766ee7 100644
+--- a/formal/mesh_life/MeshLife_contact.cfg
++++ b/formal/mesh_life/MeshLife_contact.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_EndedIsEmpty Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_content.cfg b/formal/mesh_life/MeshLife_content.cfg
+index d88ca14..e912ec5 100644
+--- a/formal/mesh_life/MeshLife_content.cfg
++++ b/formal/mesh_life/MeshLife_content.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_deferral.cfg b/formal/mesh_life/MeshLife_deferral.cfg
+index a054cc4..8abc810 100644
+--- a/formal/mesh_life/MeshLife_deferral.cfg
++++ b/formal/mesh_life/MeshLife_deferral.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_event.cfg b/formal/mesh_life/MeshLife_event.cfg
+index b9070bf..d954495 100644
+--- a/formal/mesh_life/MeshLife_event.cfg
++++ b/formal/mesh_life/MeshLife_event.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_evidence.cfg b/formal/mesh_life/MeshLife_evidence.cfg
+index 2990f7e..a06ba08 100644
+--- a/formal/mesh_life/MeshLife_evidence.cfg
++++ b/formal/mesh_life/MeshLife_evidence.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_goal.cfg b/formal/mesh_life/MeshLife_goal.cfg
+index ca06577..77a71c1 100644
+--- a/formal/mesh_life/MeshLife_goal.cfg
++++ b/formal/mesh_life/MeshLife_goal.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_identity.cfg b/formal/mesh_life/MeshLife_identity.cfg
+index c6f8049..a180240 100644
+--- a/formal/mesh_life/MeshLife_identity.cfg
++++ b/formal/mesh_life/MeshLife_identity.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_ledger.cfg b/formal/mesh_life/MeshLife_ledger.cfg
+index 5717c91..770e717 100644
+--- a/formal/mesh_life/MeshLife_ledger.cfg
++++ b/formal/mesh_life/MeshLife_ledger.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_moderation.cfg b/formal/mesh_life/MeshLife_moderation.cfg
+index 3f7fd6d..611a0e4 100644
+--- a/formal/mesh_life/MeshLife_moderation.cfg
++++ b/formal/mesh_life/MeshLife_moderation.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_moderation_halt.cfg b/formal/mesh_life/MeshLife_moderation_halt.cfg
+index 08d3824..2ca140e 100644
+--- a/formal/mesh_life/MeshLife_moderation_halt.cfg
++++ b/formal/mesh_life/MeshLife_moderation_halt.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_spine.cfg b/formal/mesh_life/MeshLife_spine.cfg
+index d7b5f36..31f4347 100644
+--- a/formal/mesh_life/MeshLife_spine.cfg
++++ b/formal/mesh_life/MeshLife_spine.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount
+diff --git a/formal/mesh_life/MeshLife_wa.cfg b/formal/mesh_life/MeshLife_wa.cfg
+index 05b32fa..e308007 100644
+--- a/formal/mesh_life/MeshLife_wa.cfg
++++ b/formal/mesh_life/MeshLife_wa.cfg
+@@ -10,4 +10,4 @@ CONSTANTS
+ SYMMETRY Symm
+ SPECIFICATION Spec
+ INVARIANTS Inv_NothingBeforeMint Inv_DeviceHasOwner Inv_MemberIsAnnounced Inv_MinorNeverAnnounced Inv_RowInFoundedRoom Inv_AgentHasSteward Inv_HaltIsMajority Inv_EndedIsEmpty Inv_ContactIsAnnounced Inv_IgnoreIsInvisibleToTheAsker Inv_BlockHasABlocker Inv_MuteIsBetweenMembers Inv_AnnouncedIsPqcComplete Inv_GuardianIsAnnouncedAdult Inv_IncapacitatedHoldsNoSeat Inv_ModeratorIsMember Inv_AgentModeratorIsBonded Inv_WriterIsMember Inv_FlagDecidedByModerator Inv_DecidedByRulingOrMajority Inv_ReportOpensNoWindow Inv_HardRemovalWithdraws Inv_DurableRidesAnAdmittedRow Inv_WaPersonIsAnnounced Inv_AmendedCitesApproval Inv_GoalInFoundedRoom Inv_EvidenceNamesADeclaredGoal Inv_CountedNeedsAMeasure Inv_MeasureChainIsWhole Inv_EventInFoundedRoom Inv_CharterOnlyForAffiliation Inv_WindAlwaysCanStep
+-PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow
++PROPERTIES Act_ReportLandsOnlyByRuling Act_ReportIsPrivate Act_HaltStopsAgentModeration Act_MajorityLandsOnlyTheAsk Act_HaltLeavesTheMembersTheirVote Act_RowsOnlyByWriters Act_WindNeverRaisesRank Act_WindStepLowersRank Act_MuteChangesNoRow Act_LockedAdmitsNobody Act_LockLiftsByTheCount

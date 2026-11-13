@@ -37,6 +37,11 @@ What ends a seat.
     upstream   a seat conferred under another falls with it (the walk is run again on every read). A `self` offer
                over a founding row that seats several keys, signed by one of them, is live only while that
                signer's own founding seat is: it falls with it like any seat conferred under it.
+    duty       over a community the founding record seats duty holders (scope `duty`), who are equals (CC 4.5.4).
+               A duty seat is conferred by a strict majority of the holders or by the lone holder, withdrawn by a
+               strict majority of the others, never on fewer than two voices where there are two holders, and
+               ended by a removal from the roster. A seat so conferred is rooted in the group: its conferrer's
+               withdrawal or departure does not end it.
 
 Tips wait (KERNEL.md section 7). When several counted acts on one object are concurrent, the holders of a scope
 over it are the keys common to the tips, until a counted act names them all.
@@ -72,9 +77,14 @@ DEPTH = 5                                       # CC 3.4.7: a delegation chain i
 
 # ---- table data ----------------------------------------------------------------------------------------
 # what a seat holds at zero hops (the root holds what it may confer), and what it may confer over which object
-HOLDS = {"founder": ("member", "moderate", "review", "slash", "takedown"), "owner": ("steward",)}
+# CC 4.5.4 community law: "A community has members and duty holders, and no other tier." A founding record seats the
+# duty holders it names, each by its own signature on it (scope `duty`); "Whoever founds a community alone is its first
+# duty holder." A holder of any one duty is a duty holder. `founder` is kept only in the infrastructure community's
+# sense (its operators, CC 3.2 T7), where it holds membership and no duty.
+DUTIES = ("moderate", "review", "slash", "takedown")
+HOLDS = {"duty": ("member",) + DUTIES, "founder": ("member",), "owner": ("steward",)}
 CONFERS = {  # scope held -> (scopes it may confer, "same": over the same object | "holder": over the holder's own key)
-    "founder": (("moderate", "review", "slash", "takedown"), "same"),
+    "duty": (("duty",) + DUTIES, "same"),     # alone only while the one duty holder (LONE); otherwise by the count
     "owner": (("wa", "infra:attest", "operator"), "same"),
     "self": (("wa", "takedown", "author", "custodian", "operator"), "same"),
     "root": (("attest", "infra:attest", "assure:age", "assure:capacity", "infra:attest_assurance", "infra:detect"), "holder"),
@@ -88,6 +98,12 @@ ENDS = {"owner": ("registered",)}
 # seats whose ending is final: a revocation is "never withdrawn" (CC 2.4.1.1), so no offer re-seats the same key in the
 # same scope over the same object once a concluded revocation of that slot is in its past
 FINAL = ("registered",)
+# CC 4.5.4 (iv): "A duty seat is conferred by a strict majority of the duty holders, and withdrawn by a strict majority
+# of the other duty holders, the holder concerned not counted. Where there are two holders or more, neither takes fewer
+# than two voices. A lone duty holder confers alone, with the new holder's acceptance." Two policy names, counted
+# over the duty holders at the head the row names; a seat conferred alone stands only if its signer was then the
+# one duty holder, read over the offer's own past.
+DUTY_POLICY = {"duty_confer": "confer", "duty_withdraw": "withdraw"}
 MUT = set()       # named mutations, switched on by a check (formal/causal_kernel/check_rosters.py, the key instance)
 
 
@@ -117,6 +133,7 @@ def policy_table(path=None):
 POLICY = policy_table()
 # A removal runs under the room's own declared protocol (CC 3.3.4; the table's cell is `protocol`). The rooms of
 # these scenarios declare two thirds. roster.py runs the other protocols.
+POLICY.update({k: ("duty", 0, 0) for k in DUTY_POLICY})          # CC 4.5.4 (iv), read by duty_count, not by met()
 if POLICY.get("community_remove", ("", 0, 0))[0] == "declared":
     POLICY["community_remove"] = ("atleast", 2, 3)
 
@@ -165,6 +182,32 @@ signers = lambda r: frozenset((r["signer"],) + tuple(r.get("cosigners", ())))
 covers = lambda have, want: have == want or want.startswith(have + ":")
 
 
+def is_duty(scope):
+    return scope == "duty" or scope.split(":")[0] in DUTIES
+
+
+def duty_seat(by, o):
+    """An offer of a duty over a community (an object that is a founding row seating duty holders)."""
+    g = by.get(o["obj"])
+    return (is_duty(o["scope"]) and g is not None and g["kind"] == "offer" and g["obj"] == g["id"] and g["id"] != o["id"]
+            and g["scope"] == "duty")
+
+
+def _lone(r, P, by):
+    """CC 4.5.4 (iv): a duty conferred by one key stands only if that key is then the one duty holder over the object."""
+    if "lone_any" in MUT: return True
+    held = Seats(CK.State(P, {q["id"]: True for q in P})).holders("duty", r["obj"])
+    return held == frozenset({r["signer"]})
+
+
+def duty_count(r, P, yes, mem):
+    """CC 4.5.4 (iv) over the duty holders at the head: conferral by a strict majority of them, withdrawal by a strict
+    majority of the others (the holder concerned not counted); never fewer than two voices where there are two holders."""
+    base = mem - set(r["to"]) if DUTY_POLICY[r["policy"]] == "withdraw" and "count_target" not in MUT else mem
+    y = yes & base
+    return 2 * len(y) > len(base) and (len(y) >= 2 or len(mem) < 2 or "no_duty_floor" in MUT)
+
+
 def founding_many(by, obj):
     """obj is a founding row that seats several keys."""
     g = by.get(obj)
@@ -191,14 +234,20 @@ class Seats:
         # MUTATION by_arrival: a withdrawal held after the offer's acceptance comes too late (first held wins)
         late = lambda w, o: by_arrival and any(pos[a["id"]] < pos[w["id"]] for a in K.sel(Cs, kind="accept", of=o["id"]))
         # the conferrer of a counted offer is the count: the lone withdrawal of the key that signed the row ends nothing
-        off_ended = lambda o, k: any(w["target"] == o["id"] and (w["signer"] == k or (w["signer"] not in o["to"] and o["conf"] != "group"))
+        # a duty seat over a community: duty holders are equals (CC 4.5.4 (iii)), so the key that conferred it does not end it
+        # alone; it ends by its holder's withdrawal or a count (duty_withdraw, or the members' recall)
+        eq = lambda o: duty_seat(S.by, o) and "duty_ranked" not in MUT
+        off_ended = lambda o, k: any(w["target"] == o["id"] and (w["signer"] == k or (w["signer"] not in o["to"] and o["conf"] != "group" and not eq(o)))
                                      and not late(w, o) for w in wd)
         self.stale = V = CP.void(S, C, own, checkpoint)         # counted acts built on one that does not count, or behind the reader's line
         unseats = [u for u in K.sel(Cs, kind="unseat") if C.counts(u) and u["id"] not in V]
 
         def unseated(o, k):
             for u in unseats:
-                if ("seat", k, o["scope"], o["obj"]) not in u["cuts"]: continue
+                # a removal from the roster ends the removed member's duty seats too, "since a non-member holds no duty" (CC 4.5.4)
+                held = ("seat", k, o["scope"], o["obj"]) in u["cuts"] or (
+                    "member_cut_only" not in MUT and is_duty(o["scope"]) and ("seat", k, "member", o["obj"]) in u["cuts"])
+                if not held: continue
                 # MUTATION by_arrival: an unseat ends the offers that were held before it, by list position
                 if (pos[o["id"]] < pos[u["id"]]) if by_arrival else (o["id"] in S.anc[u["id"]]): return True
             return False
@@ -225,6 +274,7 @@ class Seats:
                     if o["obj"] == o["id"] or not founding_many(S.by, o["obj"]) or (o["obj"], o["signer"]) in at:
                         out.add((o["id"], k, 0, o["signer"]))
                 elif o["conf"] == "group": out.add((o["id"], k, 0, ("group", o["obj"])))
+                elif eq(o): out.add((o["id"], k, 0, ("group", o["obj"])))     # validly made by the lone holder: it stands as an equal
                 elif o["conf"] == "seat":
                     up = S.by.get(o.get("under"))
                     hit = at.get((o.get("under"), o["signer"]))
@@ -244,6 +294,7 @@ class Seats:
         return any(covers(s, o["scope"]) for s in scopes) and o["obj"] == (up["obj"] if over == "same" else o["signer"])
 
     def _has(self, rec, s):
+        if s == "duty" and is_duty(rec["scope"]): return True              # a holder of any one duty is a duty holder
         return covers(rec["scope"], s) or s in K.rule(self.holds, rec["scope"], ())
 
     def stands(self, k, s, o, root=None):
@@ -347,6 +398,7 @@ def seat_rule(r, P, past, table=None, other=None):
     if k in ("offer", "unseat"):
         conf = r["conf"]
         if k == "offer" and _revoked_before(r, P): return False   # a revoked key does not re-seat itself (FINAL)
+        if k == "offer" and conf in ("self", "seat") and duty_seat(by, r) and not _lone(r, P, by): return False
         if conf == "self":
             if r["obj"] == r["id"]: return k == "offer"          # a founding row is its own object
             if k == "unseat" and founding_many(by, r["obj"]): return False    # among several founding keys, ending a seat takes the count
@@ -363,6 +415,7 @@ def seat_rule(r, P, past, table=None, other=None):
                 ballots = [(b["signer"], b["ranking"]) for b in K.sel(P, kind="ballot") if b["id"] in r["names"] and b["signer"] in mem]
                 # the one ranked row is the election, which declares no order: a tie for weakest seats nobody (CC 4.5.13)
                 return k == "offer" and bool(ballots) and RANKED(ballots, list(r["options"]), declared=False)[0] == r["to"][0]
+            if r.get("policy") in DUTY_POLICY: return duty_count(r, P, voices(r, P) & mem, mem)
             return met(r.get("policy"), len(voices(r, P) & mem), len(mem), r.get("need"), table)
         return False
     if k == "accept":

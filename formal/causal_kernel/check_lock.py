@@ -49,18 +49,19 @@ def _limit():
 
 # ---- the pools ---------------------------------------------------------------------------------------------
 def seat_pool():
-    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
+    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))   # three duty holders (CC 4.5.4)
     return [
         g,
         ST.accept("am", "m", None, ("g",), scope="member", obj="g"),
         ST.cosign("c2", "f2", "w", ("g",)),
         ST.offer("w", "f1", "m", "member", "g", "group", ("g", "am", "c2"), head=("g",), policy="community_invite", content="w"),
         ST.offer("w1", "f1", "m", "member", "g", "group", ("g", "am"), head=("g",), policy="community_invite", content="w1"),   # one voice
-        ST.offer("d", "f1", "K", "moderate", "g", "seat", ("g",), under="g", sub=True),
+        # a duty seat conferred by a strict majority of the duty holders, then a narrower one by the four of them (CC 4.5.4 (iv))
+        ST.offer("d", "f1", "K", "duty", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("f2",)),
         ST.accept("ak", "K", "d"),
-        ST.offer("d2", "K", "J", "moderate:spam", "g", "seat", ("ak",), under="d", cosigners=("J",)),
+        ST.offer("d2", "K", "J", "moderate:spam", "g", "group", ("ak",), head=("ak",), policy="duty_confer", counted="duty", cosigners=("J", "f2", "f3")),
         ST.withdraw("wd", "f1", "d"),
-        ST.withdraw("wk", "K", "d", ("ak",)),
+        ST.withdraw("wk", "K", "d"),                                   # the holder's own, naming only the offer
         ST.withdraw("wz", "m", "d"),                                   # a third party
         ST.cosign("x2", "f2", "x", ("w",)),
         ST.cosign("x3", "f3", "x", ("w",)),
@@ -296,7 +297,7 @@ def main():
         need(m["differ"] > 0, "the route mutation was not caught")
 
     joiner = [x for x in RT.world() if x["id"] not in ("xc", "x", "m4", "m5", "k4")] + [RT.REPLY]
-    for label, rows in (("the room (16 rows: two founders, a joiner who is removed, five messages, four acknowledgements)", RT.world()),
+    for label, rows in (("the room (16 rows: two duty holders who found it, the record declaring the duty, a joiner who is removed, five messages, four acknowledgements)", RT.world()),
                         ("the same room with no removal, and a reply to a message from before the joiner came (12 rows)", joiner)):
         for how in ("closed", "own"):
             ms = RT.measure(rows, how)

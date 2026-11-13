@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "d9ccc448494e9afdd552c8ca60accdbfb8f071948c282e8aa83127f309a4162d",
+    "registry_sha256": "e56f969530a9a2415effed79bbf05000888ef4aae4c659e3147326449a9fd121",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "f342d61cc70c9f7c617d600cc378a13a4a9d08daa70661ad800a6b8fe9506991"
+    "source_sha256": "e59a2d88f027def132fb065365f2613a5db95747fe79be4f2f454e69b81e67c3"
   },
   "families": [
     {
@@ -2767,7 +2767,7 @@
     },
     {
       "cc_section": "3.1.9.4",
-      "description": "Open vocabulary.",
+      "description": "Open vocabulary of kinds; the emitter is reserved (CC 3.4.2, CC 3.4.4).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",

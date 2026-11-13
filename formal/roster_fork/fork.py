@@ -55,24 +55,28 @@ class World:
         self.vs.append(g); self.key[((), (), R0, 0)] = 0
 
     # the count: does the signer set s meet the protocol over the base roster b
-    def meets(self, s, b):
+    def meets(self, s, b, drop=0):
+        """drop: the members the version removes. Under `unanimous` (all_and_majority over member-target) the member
+        concerned is not counted: every OTHER member signs, and they are a strict majority of the roster (CC 4.5.13)."""
         s &= b
         p = self.protocol
         k = bin(s).count('1'); nb = bin(b).count('1')
         if nb == 0: return False
         if p == 'majority': return 2 * k > nb
         if p == 'two_thirds': return 3 * k >= 2 * nb
-        if p == 'unanimous': return k == nb
+        if p == 'unanimous':
+            others = b & ~drop
+            return (s & others) == others and 2 * bin(s & others).count('1') > nb
         if p.startswith('quorum'): return k >= int(p[6:])        # absolute M (CC 4.4.3.4.2.1)
         if p == 'founder_only': return (s & self.founders) != 0
         raise ValueError(p)
 
     # the count of a version over the heads it builds on: over the members common to them,
     # or (percount) over the roster of each head in turn
-    def count_ok(self, sig, E):
+    def count_ok(self, sig, E, drop=0):
         vs = self.vs
         if self.percount == 1:
-            return all(self.meets(sig, vs[e]['R']) for e in E)
+            return all(self.meets(sig, vs[e]['R'], drop) for e in E)
         if self.percount == 2:
             # over each head's roster, less the members another named head's line removed
             any_ = False
@@ -83,11 +87,11 @@ class World:
                 el = vs[e]['R'] & ~gone
                 if el == 0: continue
                 any_ = True
-                if not self.meets(sig, el): return False
+                if not self.meets(sig, el, drop): return False
             return any_
         base = self.ALL
         for e in E: base &= vs[e]['R']
-        return self.meets(sig, base)
+        return self.meets(sig, base, drop)
 
     def mk(self, E, A, R, sig):
         E = tuple(sorted(E)); A = tuple(sorted(A))
@@ -101,7 +105,9 @@ class World:
         for e in E: line |= vs[e]['line']
         base = self.ALL
         for e in E: base &= vs[e]['R']
-        ok = all(vs[e]['ok'] for e in E) and self.count_ok(sig, E)
+        union = 0
+        for e in E: union |= vs[e]['R']
+        ok = all(vs[e]['ok'] for e in E) and self.count_ok(sig, E, union & ~R)
         out = set()
         for x in A: out |= vs[x]['line']
         out -= line
@@ -138,14 +144,14 @@ class World:
             return (listed & self.H) & ~R == 0           # keeps every honest member it names
         return (base & self.H) & ~R == 0                 # keeps every honest member of its base
 
-    def sigsets(self, E, okh):
+    def sigsets(self, E, okh, drop=0):
         vs = self.vs; pool = 0; base = self.ALL
         for e in E: pool |= vs[e]['R']; base &= vs[e]['R']
         if not self.percount: pool = base
         res = []
         s = pool
         while True:
-            if (okh or (s & self.H) == 0) and self.count_ok(s, E):
+            if (okh or (s & self.H) == 0) and self.count_ok(s, E, drop):
                 res.append(s)
             if s == 0: break
             s = (s - 1) & pool
@@ -158,16 +164,16 @@ class World:
         out = []
         def emit(E, A, R):
             okh = self.accepts(E, A, R)
+            union = 0
+            for e in E: union |= vs[e]['R']
             if honest_only:
                 if not okh: return
-                pool = 0
-                for e in E: pool |= vs[e]['R']
-                s = pool & self.H
-                if self.count_ok(s, E):
+                s = union & self.H
+                if self.count_ok(s, E, union & ~R):
                     i = self.mk(E, A, R, s)
                     if self.valid(i) and i not in S: out.append(i)
                 return
-            for s in self.sigsets(E, okh):
+            for s in self.sigsets(E, okh, union & ~R):
                 i = self.mk(E, A, R, s)
                 if self.valid(i) and i not in S: out.append(i)
         def asides(E):

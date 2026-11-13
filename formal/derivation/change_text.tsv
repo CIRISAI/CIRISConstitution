@@ -46,7 +46,7 @@ membership:{stage}	resignation[ephemeral&last:member]: cascade=group:roster/over
 revocation:{entity_type}:{reason}	attest: cascade=bond_posted:{currency}/about:forfeited	CC 3.1.1	A bond posted for Sybil resistance (proof of bond); forfeited on revocation.
 consent:community_trust	withdraw: cascade=trace:{form}:{version}/under:stand	CC 3.3.1	the agent key's withdrawal is folded like the owner's, a boundary `R`
 collection:{kind}	replace: cascade=file:{version}/under:stand	CC 3.1.3.4	A file its author pinned narrower stays narrower, and widening the directory never drags it.
-membership:{stage}	widening[scope:self|family]: key=rekey_walk	CC 3.3.4	3. On admission of an ADD: substrate emits retroactive `key_grant`s wrapping all `cohort_scope: family` content DEKs to the new member's live occurrence encryption keys, one
+membership:{stage}	widening[scope:self|family]: key=rekey_walk	CC 3.3.4	3. On admission of an ADD: each blob owner's own substrate, as the blob's sealer, emits retroactive `key_grant`s wrapping that owner's `cohort_scope: family` content DEKs to the new member's live occurrence encryption keys, one
 membership:{stage}	widening[scope:self|family]: key=rekey_walk	CC 4.4.3.4.1	For every at-rest blob the cohort already holds grants on, the substrate recovers each per-write DEK from its own retention, wraps it to the newcomer's
 membership:{stage}	widening[scope:self|family]: key=rekey_walk ; removal[scope:self|family]: key=stop_wrap	CC 4.4.3.4.2	trigger the CC 4.4.3.4.1 key_grant cascade
 membership:{stage}	widening[scope:community|affiliations]: key=at_seat	CC 4.4.3.2.1	wrapped to every current member occurrence at each sealed write (a member admitted since the epoch's DEK was minted is wrapped when the minter's roster gains them

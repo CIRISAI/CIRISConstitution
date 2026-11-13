@@ -2158,9 +2158,9 @@ Change:
 
 Fold:
 - `cut=boundary(asserted_at)` (CC 3.3.1)
-- `reads=own&signer:owner` (CC 3.3.1)
+- `reads=own&signer:owner|self` (CC 3.3.1)
 - `key=attested_key_id,attesting_key_id` (CC 3.3.1)
-- `reads=own&signer:owner; key=attested_key_id,attesting_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node` (CC 3.3.1)
+- `reads=own&signer:owner|self; key=attested_key_id,attesting_key_id; pick=max(asserted_at),min(attestation_id); cut=boundary(asserted_at); absent=none; result=bool; by=node` (CC 3.3.1)
 
 **`consent:decay:{stage}`** — Process, thing
 

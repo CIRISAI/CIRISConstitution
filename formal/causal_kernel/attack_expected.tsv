@@ -5,7 +5,7 @@ test	name	class	who_can_still_do_it	bound	stated_in_kernel_md	where
 4	State reset by an old fork	CONCEDED	keys that met the count at any past head (one seated key and one removed key suffice)	unlists members, never lists one; for a reader with no acknowledgement until a counted row names both tips, counted over the common keys (the forger alone here: for good); a reader that acknowledged an honest row counted over a newer head is not moved; from the head the newest honest row is counted over, every reader until the honest line has one more counted row	yes	KERNEL 8a
 5	Rollback by re-sync	CONCEDED	a relay ordering delivery; no key	until the withheld row is delivered; an emission made meanwhile cannot be unsent	yes	KERNEL 8a
 6	Hotel California	HOLDS	nobody	closed: a cosignature is a voice only for a row counted over a head it names	-	-
-7	Superseded grant on a fork	HOLDS	nobody	closed: a founding signer's own offer falls with its founding seat	-	-
+7	Superseded grant on a fork	HOLDS	nobody	closed: concurrent counted acts wait as tips; a duty seat validly conferred stands as an equal (CC 4.5.4)	-	-
 8	A row naming disparate parts of the graph	HOLDS	nobody	only a row on the slot by a key that may decide	-	-
 9	Perpetual reopening of a landed window	CONCEDED	one key counted at the opener's head that still holds its seat	no deadline; until a concluder signs a landing naming both, which must state the flipped outcome; the checkpoint is not applied to window answers	yes	KERNEL 8a
 10	Landing over an unacknowledged objection	CONCEDED	a relay between objector and concluder; no key	as long as the eclipse; ends when any concluder lands naming both	yes	KERNEL 8a

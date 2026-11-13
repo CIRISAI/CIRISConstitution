@@ -51,10 +51,11 @@ def rule(r, P, past):
 
 
 def world():
-    """One room. A and B found it and A moderates. C is admitted, writes, and is removed. X is a stranger."""
+    """One room. A and B found it, and the founding record seats both as duty holders (CC 4.5.4), so both moderate.
+    C is admitted, writes, and is removed. X is a stranger."""
     room = lambda r: dict(r, room="g")
-    g = ST.offer("g", "A", ("A", "B"), "member", "@", "self", cosigners=("B",), room="g")
-    md = ST.offer("md", "A", "A", "moderate", "g", "self", ("g",), room="g")
+    g = ST.offer("g", "A", ("A", "B"), "duty", "@", "self", cosigners=("B",), room="g")
+    md = R("md", "record", "A", ("g",), room="g", duties=("moderate",))    # the room's record declares its duties (CC 4.5.4 (i))
     ac = room(ST.accept("ac", "C", None, ("g",), scope="member", obj="g"))
     cb = room(ST.cosign("cb", "B", "w", ("g",)))
     w = ST.offer("w", "A", "C", "member", "g", "group", ("g", "ac", "cb"), head=("g",), policy="community_invite", content="w", room="g")

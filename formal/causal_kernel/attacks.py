@@ -232,15 +232,20 @@ def t02(t):
 @test(3, "Backdated conferral chain", "local-first-auth #32; Keyhive G1; p2panda-auth",
       "A key that has been removed cannot seat a new key, alone or with an old voice, and what happens to seats it conferred earlier is one stated answer.")
 def t03(t):
-    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
-    d = ST.offer("d", "f1", "K", "moderate", "g", "seat", ("g",), under="g", sub=True)
-    ak = ST.accept("ak", "K", "d")
+    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
     c3 = ST.cosign("c3", "f3", "xf", ("g",))
-    xf = ST.unseat("xf", "f2", "f1", "founder", "g", "group", ("g", "c3"), head=("g",), policy="community_remove", content="xf", counted="founder")
+    xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="xf", counted="duty")
+    ref, bad = free([g, ST.offer("d1", "f1", "K", "moderate", "g", "seat", ("g",), under="g"), ST.accept("ak", "K", "d1")], SEAT,
+                    lambda S: ST.Seats(S).stands("K", "moderate", "g")); t.order(bad)
+    t.fact("one duty holder of three confers alone: K holds moderate = %s (CC 4.5.4 (iv): only a lone holder confers alone)" % ref, ref is False)
+    d = ST.offer("d", "f1", "K", "moderate", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("f2",))
+    ak = ST.accept("ak", "K", "d")
     xf_after = dict(xf, names=("g", "c3", "ak"))
-    for label, rows in (("offer made before the removal and named by it", [g, d, ak, c3, xf_after]), ("offer backdated, concurrent with the removal", [g, d, ak, c3, xf])):
+    for label, rows, want in (("conferred by the count, then f1 withdrawn by the others, naming it", [g, d, ak, c3, xf_after], True),
+                              ("conferred by the count, backdated, concurrent with f1's withdrawal", [g, d, ak, c3, xf], False)):
         ref, bad = free(rows, SEAT, lambda S: ST.Seats(S).stands("K", "moderate", "g")); t.order(bad)
-        t.fact("conferrer=seat, %s: K holds moderate = %s (the seat falls with its conferrer)" % (label, ref), ref is False)
+        t.fact("%s: K holds moderate = %s (%s)" % (label, ref, "holders are equals: nothing falls with a voice of its count" if want
+                                                   else "two counted acts on one head wait as tips"), ref is want)
     base = room_rows(*ROOM)
     mem, st, bad = roster(base); t.order(bad)
     t.fact("conferrer=group: nothing falls when a voice of an earlier count is later removed (roster %s after C's removal)" % fs(mem), mem == {"A", "B"})
@@ -259,7 +264,7 @@ def t03(t):
                 witness="x(A+B remove C at head w) cC(C cosigns 'admit D', naming w) wD(A admits D at head w, naming cC). wD concludes; D is not listed for any reader: the tips wait. A reader that acknowledges a later counted row has wD behind its line.",
                 protects="seat.py tips (KERNEL 7): two counted acts on one head wait and the roster is the keys common to them. The pair cannot seat D. What it can do is keep a tip waiting, which holds later admissions out "
                          "for a reader with no acknowledgement until a counted row names both: that harm is test 4's and test 16's, and is conceded there. "
-                         "Stated cells: conferrer=seat falls with its conferrer; conferrer=group stays; a `self` offer by a founding signer falls with that signer's founding seat.",
+                         "Stated cells: a duty seat is conferred by the count or by the lone holder and then stands as an equal (CC 4.5.4); conferrer=seat outside a community falls with its conferrer; conferrer=group stays.",
                 fix="")
 
 
@@ -340,7 +345,7 @@ def t05(t):
 @test(6, "Hotel California (leave, join, leave across branches)", "Matrix state resolution",
       "A key that left or was removed is back in only by a fresh act of the conferrer and its own fresh acceptance; one answer in every order.")
 def t06(t):
-    g = ST.offer("g", "A", "A", "founder", "@", "self")
+    g = ST.offer("g", "A", "A", "duty", "@", "self")
     o1 = ST.offer("o1", "A", "K", "moderate", "g", "seat", ("g",), under="g")
     a1 = ST.accept("a1", "K", "o1")
     wd1 = ST.withdraw("wd1", "K", "a1")                                         # leave
@@ -371,35 +376,37 @@ def t06(t):
 
 
 @test(7, "Superseded grant on a fork", "Matrix state resolution, cause 1",
-      "When a conferrer's seat is cut, what it conferred, and what its holders conferred, ends with it in every order.")
+      "When a conferrer's seat is cut, what it conferred, and what its holders conferred, is one stated answer in every order.")
 def t07(t):
-    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
-    d = ST.offer("d", "f1", "K", "moderate", "g", "seat", ("g",), under="g", sub=True)
+    # CC 4.5.4: duty holders are equals. A duty seat is conferred by a strict majority of the duty holders and withdrawn by
+    # a strict majority of the others; a seat validly conferred does not fall with a voice of the count that conferred it.
+    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
+    d = ST.offer("d", "f1", "K", "duty", "g", "group", ("g",), head=("g",), policy="duty_confer", counted="duty", cosigners=("f2",))
     ak = ST.accept("ak", "K", "d")
-    d2 = ST.offer("d2", "K", "J", "moderate:spam", "g", "seat", ("ak",), under="d", cosigners=("J",))
+    d2 = ST.offer("d2", "K", "J", "moderate:spam", "g", "group", ("ak",), head=("ak",), policy="duty_confer", counted="duty", cosigners=("J", "f2", "f3"))
     c3 = ST.cosign("c3", "f3", "xf", ("g",))
-    xf = ST.unseat("xf", "f2", "f1", "founder", "g", "group", ("g", "c3"), head=("g",), policy="community_remove", content="xf", counted="founder")
-    ans = lambda S: tuple(ST.Seats(S).stands(k, s, "g") for k, s in (("f1", "founder"), ("K", "moderate"), ("J", "moderate:spam")))
+    xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="xf", counted="duty")
+    ans = lambda S: tuple(ST.Seats(S).stands(k, s, "g") for k, s in (("f1", "duty"), ("K", "duty"), ("J", "moderate:spam")))
     ref, bad = free([g, d, ak, d2], SEAT, ans); t.order(bad)
-    t.fact("before the cut: f1, K, J stand = %s" % (ref,), ref == (True, True, True))
+    t.fact("f1 and f2 confer K's duty, then K, f2 and f3 confer J's: f1, K, J stand = %s" % (ref,), ref == (True, True, True))
     ref, bad = free([g, d, ak, d2, c3, xf], SEAT, ans); t.order(bad)
-    t.fact("A seats B, B seats C, concurrently A's seat is cut (conferrer=seat), all 720 orders: f1, K, J stand = %s" % (ref,), ref == (False, False, False))
-    cr = ST.cosign("cr", "f3", "g2", ("g", "xf"))
-    g2 = ST.offer("g2", "f2", "f1", "founder", "g", "group", ("xf", "cr"), head=("g",), policy="community_invite", content="g2", counted="founder", cosigners=("f1",))
+    t.fact("concurrently f2 and f3 withdraw f1, counted over the founding head: the two counted lines wait as tips, the holders are the keys common to them, "
+           "and f1, K, J stand = %s in every order" % (ref,), ref == (False, False, False))
+    cr = ST.cosign("cr", "f3", "g2", ("xf", "d2"))
+    g2 = ST.offer("g2", "f2", "f1", "duty", "g", "group", ("xf", "d2", "cr"), head=("xf", "d2"), policy="duty_confer", content="g2", counted="duty", cosigners=("f1",))
     ref, bad = free([g, d, ak, d2, c3, xf, cr, g2], SEAT, ans); t.order(bad)
-    t.fact("f1 re-admitted by the count: f1 stands and the old grants do not revive = %s" % (ref,), ref == (True, False, False))
+    t.fact("a version naming both tips (f2 and f3 confer f1's duty again): f1, K, J stand = %s; the grants were never ended, since holders are equals (CC 4.5.4 (iii))" % (ref,),
+           ref == (True, True, True))
     ds = ST.offer("ds", "f1", "K", "moderate", "g", "self", ("g",), sub=True)
     aks = ST.accept("aks", "K", "ds")
-    ds2 = ST.offer("ds2", "K", "J", "moderate:spam", "g", "seat", ("aks",), under="ds", cosigners=("J",))
-    ref, bad = free([g, ds, aks, ds2], SEAT, ans); t.order(bad)
-    t.fact("the same chain with the first grant marked conferrer=self, while f1 is a founder: %s" % (ref,), ref == (True, True, True))
-    ref, bad = free([g, ds, aks, ds2, c3, xf], SEAT, ans); t.order(bad)
-    t.fact("and after f1's removal, in every order: %s (a founding signer's own offer stands on its founding seat)" % (ref,), ref == (False, False, False))
+    ref, bad = free([g, ds, aks], SEAT, ans); t.order(bad)
+    t.fact("one duty holder of three confers alone (conferrer=self): K holds nothing, f1, K, J = %s (a lone holder confers alone only while it is the one)" % (ref,), ref == (True, False, False))
     ok = all(v for _, v in t.facts)
-    return dict(cls="HOLDS" if ok else "BROKEN", who="a founding signer about to be removed, or already removed",
-                witness="g(f1,f2,f3 found) ds(f1 -> K moderate, conferrer=self) aks ds2(K -> J) xf(f2+f3 remove f1). f1, K and J are all out, for every reader, in every order.",
-                protects="seat.py: the walk is run again on every read; a seat conferred under another falls with it, and a `self` offer over a founding row that seats several keys is live only while its signer's own founding seat is. "
-                         "A re-admitted conferrer does not revive old grants.",
+    return dict(cls="HOLDS" if ok else "BROKEN", who="a duty holder about to be withdrawn, or already withdrawn",
+                witness="g(f1,f2,f3 found) d(f1+f2 -> K) ak d2(K+f2+f3 -> J) xf(f2+f3 withdraw f1). While xf and d2 wait as tips nobody but f2, f3 holds; once a version names both, K and J stand and f1 stands only if re-conferred.",
+                protects="seat.py: duty seats over a community are equals (CC 4.5.4): conferral by a strict majority of the holders (or the lone holder), "
+                         "withdrawal by a strict majority of the others, never fewer than two voices; a seat validly conferred stands when a voice of its count is later withdrawn. "
+                         "Concurrent counted acts wait as tips (KERNEL 7).",
                 fix="")
 
 
@@ -633,31 +640,31 @@ def t13(t):
 @test(14, "Duelling admins", "Matrix; Keyline 'bricked'; p2panda-auth 'freezes'",
       "Two keys of equal standing that remove each other leave the slot contested, not empty, and every slot that matters has a voice one key cannot remove.")
 def t14(t):
-    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
-    us = lambda a, b: ST.unseat("x%s%s" % (a[1], b[1]), a, b, "founder", "g", "self", ("g",))
-    hold = lambda S: (ST.Seats(S).holders("founder", "g"), frozenset(CUT.Cut(S).all().items()))
-    for label, rows in (("two founders unseat each other, each alone (conferrer=self)", [us("f1", "f2"), us("f2", "f1")]),
+    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
+    us = lambda a, b: ST.unseat("x%s%s" % (a[1], b[1]), a, b, "duty", "g", "self", ("g",))
+    hold = lambda S: (ST.Seats(S).holders("duty", "g"), frozenset(CUT.Cut(S).all().items()))
+    for label, rows in (("two duty holders unseat each other, each alone (conferrer=self)", [us("f1", "f2"), us("f2", "f1")]),
                         ("a ring of three", [us("f1", "f2"), us("f2", "f3"), us("f3", "f1")]),
-                        ("one founder alone unseats the other two", [us("f3", "f1"), us("f3", "f2")])):
+                        ("one duty holder alone unseats the other two", [us("f3", "f1"), us("f3", "f2")])):
         ref, bad = free([g] + rows, SEAT, hold); t.order(bad)
-        t.fact("%s: the rows %s; founders %s" % (label, sorted(set(v for k, v in ref[1] if k.startswith("x"))), fs(ref[0])), ref[0] == {"f1", "f2", "f3"})
+        t.fact("%s: the rows %s; duty holders %s" % (label, sorted(set(v for k, v in ref[1] if k.startswith("x"))), fs(ref[0])), ref[0] == {"f1", "f2", "f3"})
     import check_cut as CC
     G = R("g", "genesis", "admin", members=("admin", "co", "m", "u"))
     ra, rb = R("ra", "removal", "admin", ("g",), removes="co"), R("rb", "removal", "co", ("g",), removes="admin")
     ref, bad = free([G, ra, rb], lambda r, P, past: True, lambda S: tuple(sorted(CUT.Cut(S).all().items()))); t.order(bad)
     t.fact("cut.py, two keys of equal standing each removing the other's KEY (KERNEL 6.5): %s" % dict(ref), dict(ref)["ra"] == "contested" and dict(ref)["rb"] == "contested")
-    g2 = ST.offer("g", "f1", ("f1", "f2"), "founder", "@", "self", cosigners=("f2",))
-    xg = ST.unseat("x", "f1", "f2", "founder", "g", "group", ("g",), head=("g",), policy="community_remove", content="x", counted="founder")
+    g2 = ST.offer("g", "f1", ("f1", "f2"), "duty", "@", "self", cosigners=("f2",))
+    xg = ST.unseat("x", "f1", "f2", "duty", "g", "group", ("g",), head=("g",), policy="duty_withdraw", content="x", counted="duty")
     S = conc([g2, xg], SEAT)
-    t.fact("the counted removal the role table names for a founder (community_remove): one founder of two alone concludes=%s" % S.C["x"], not S.C["x"])
+    t.fact("the counted withdrawal the role table names for a duty seat (duty_withdraw): one duty holder of two alone concludes=%s" % S.C["x"], not S.C["x"])
     c3 = ST.cosign("c3", "f3", "x", ("g",))
-    x3 = ST.unseat("x", "f1", "f2", "founder", "g", "group", ("g", "c3"), head=("g",), policy="community_remove", content="x", counted="founder")
+    x3 = ST.unseat("x", "f1", "f2", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="x", counted="duty")
     ref, bad = free([g, c3, x3], SEAT, hold); t.order(bad)
-    t.fact("two founders of three remove the third by the count: founders %s" % fs(ref[0]), ref[0] == {"f1", "f3"})
-    t.note("what this gives up: two founders who are the only two can no longer remove each other at all (two of two is needed), and a lone hostile founder of two cannot be removed by the other")
+    t.fact("two duty holders of three withdraw the third by the count: duty holders %s" % fs(ref[0]), ref[0] == {"f1", "f3"})
+    t.note("what this gives up: two duty holders who are the only two cannot withdraw each other (never fewer than two voices, CC 4.5.4 (iv)); the members' recall remains")
     ok = all(v for _, v in t.facts)
     return dict(cls="HOLDS" if ok else "BROKEN", who="any one key that signed a group's founding row",
-                witness="g(f1,f2,f3 found) x12(f1 unseats f2, conferrer=self) x21(f2 unseats f1, conferrer=self). Neither concludes. All three remain founders.",
+                witness="g(f1,f2,f3 found) x12(f1 unseats f2, conferrer=self) x21(f2 unseats f1, conferrer=self). Neither concludes. All three remain duty holders.",
                 protects="seat.py conclusion rule: over a founding row that seats several keys, no one of them is the object's own key against the others; ending such a seat takes its holder's withdrawal or the count the role table names. "
                          "Mutual cuts on a key stay contested (cut.py, KERNEL 6.5).",
                 fix="")
@@ -734,12 +741,12 @@ def t16(t):
 @test(17, "Invariants that are not confluent", "Bailis et al. invariant confluence; Byzantine eventual consistency",
       "A rule of the form 'at least one', 'exactly one' or 'count still met' holds after two concurrent rows that each respect it.")
 def t17(t):
-    g = ST.offer("g", "f1", ("f1", "f2"), "founder", "@", "self", cosigners=("f2",))
+    g = ST.offer("g", "f1", ("f1", "f2"), "duty", "@", "self", cosigners=("f2",))
     w1, w2 = ST.withdraw("w1", "f1", "g"), ST.withdraw("w2", "f2", "g")
-    ref, bad = free([g, w1, w2], SEAT, lambda S: ST.Seats(S).holders("founder", "g")); t.order(bad)
-    t.fact("'at least one founder': two founders resign concurrently, each leaving the other: founders %s" % fs(ref), ref == frozenset())
-    ref, bad = free([g, w1, w2, ST.offer("re", "f1", "f1", "founder", "g", "self", ("w1", "w2"))], SEAT, lambda S: ST.Seats(S).holders("founder", "g")); t.order(bad)
-    t.fact("and neither can come back alone: a founding signer's own offer stands on its founding seat, which it withdrew: founders %s. The group has no founder for good." % fs(ref), ref == frozenset())
+    ref, bad = free([g, w1, w2], SEAT, lambda S: ST.Seats(S).holders("duty", "g")); t.order(bad)
+    t.fact("'at least one duty holder': the two duty holders resign concurrently, each leaving the other: duty holders %s" % fs(ref), ref == frozenset())
+    ref, bad = free([g, w1, w2, ST.offer("re", "f1", "f1", "duty", "g", "self", ("w1", "w2"))], SEAT, lambda S: ST.Seats(S).holders("duty", "g")); t.order(bad)
+    t.fact("and neither can come back alone: a key that is no duty holder confers nothing: duty holders %s. With no member left, nothing restores one." % fs(ref), ref == frozenset())
     o1 = ST.offer("o1", "A", "K1", "owner", "A", "self"); o2 = ST.offer("o2", "A", "K2", "owner", "A", "self")
     ref, bad = free([o1, ST.accept("a1", "K1", "o1"), o2, ST.accept("a2", "K2", "o2")], SEAT, lambda S: (ST.Seats(S).one("owner", "A"), ST.Seats(S).holders("owner", "A"))); t.order(bad)
     t.fact("'exactly one owner': the owned key binds two owners concurrently: the single holder is %s (live seats %s)" % (ref[0], fs(ref[1])), ref[0] is None)
@@ -750,10 +757,10 @@ def t17(t):
     mem, st, bad = roster(base + [aD, cC, wD]); t.order(bad)
     t.fact("'count still met': an admission counted with a voice that a concurrent removal takes away waits with it (tips): roster %s" % fs(mem), mem == {"A", "B"})
     return dict(cls="CONCEDED", who="no adversary is needed: two honest keys acting concurrently; or one key that wants the slot empty",
-                witness="g(f1,f2 found) w1(f1 resigns) w2(f2 resigns), neither naming the other: no founder, and no row either can sign alone restores one. o1,o2(A binds K1 and K2 as owner): no owner.",
+                witness="g(f1,f2 found) w1(f1 resigns) w2(f2 resigns), neither naming the other: no duty holder, and no row either can sign alone restores one. o1,o2(A binds K1 and K2 as owner): no owner.",
                 protects="KERNEL 6.2: 'The same kind on one slot: both or neither.' causal_order README: 'A contested slot may stay empty; nothing here ends a dispute.' "
-                         "'Exactly one' is kept as 'at most one'. 'Count still met' is kept by tips waiting. 'At least one' is kept by no rule and is stated as a limit in KERNEL.md: it needs a window (a resignation that lands only if another founder remains) "
-                         "or a restatement. With the founding signers no longer the object's own key for ever, an emptied founder set has no recovery inside the kernel.",
+                         "'Exactly one' is kept as 'at most one'. 'Count still met' is kept by tips waiting. 'At least one' is kept by no rule and is stated as a limit in KERNEL.md: it needs a window (a resignation that lands only if another duty holder remains) "
+                         "or a restatement. CC 4.5.4 (v) restates it for a room: with no duty holder left the room locks and the members' count seats one (check_rosters.py runs it); a room with no member left has no recovery inside the kernel.",
                 fix="")
 
 
@@ -802,7 +809,7 @@ def t19(t):
     W, S0, m = long_range()
     removed_ever = m("12")
     exposed = [i for i in sorted(S0) if W.meets(removed_ever, W.vs[i]["R"])]
-    t.fact("with every key ever removed (1 and 2), the heads whose count they meet: %s of %d (the genesis; founders who all leave expose it for ever)" % (exposed, len(S0)), exposed == [0])
+    t.fact("with every key ever removed (1 and 2), the heads whose count they meet: %s of %d (the genesis; founding members who all leave expose it for ever)" % (exposed, len(S0)), exposed == [0])
     W2 = FK.world("M0", 5, m("0123"), m("3"), "majority")
     a = W2.mk((0,), (), m("012"), m("012"))
     none = not any(W2.vs[c]["sig"] & W2.H == 0 for c in W2.children(frozenset([0, a])))
@@ -811,12 +818,12 @@ def t19(t):
     T, U, r = cp_versions(W, S0 | {f1, f2}, ack=max(S0))
     t.fact("with the leaked keys signing a forged line: a reader that acknowledged the honest head keeps roster %s; for one with no acknowledgement the roster is the keys common to the two lines: %s"
            % (FK.names(W, r), FK.names(W, cp_versions(W, S0 | {f1, f2})[2])), r == m("034") and cp_versions(W, S0 | {f1, f2})[2] == 0)
-    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
+    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
     c3 = ST.cosign("c3", "f3", "xf", ("g",))
-    xf = ST.unseat("xf", "f2", "f1", "founder", "g", "group", ("g", "c3"), head=("g",), policy="community_remove", content="xf", counted="founder")
-    rows = [g, c3, xf, ST.unseat("u2", "f1", "f2", "founder", "g", "self", ("g",)), ST.unseat("u3", "f1", "f3", "founder", "g", "self", ("g",)), ST.offer("re", "f1", "f1", "founder", "g", "self", ("xf",))]
-    ref, bad = free(rows, SEAT, lambda S: ST.Seats(S).holders("founder", "g")); t.order(bad)
-    t.fact("seat.py: one leaked key of a removed founder gains nothing alone (founders %s)" % fs(ref), ref == {"f2", "f3"})
+    xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="xf", counted="duty")
+    rows = [g, c3, xf, ST.unseat("u2", "f1", "f2", "duty", "g", "self", ("g",)), ST.unseat("u3", "f1", "f3", "duty", "g", "self", ("g",)), ST.offer("re", "f1", "f1", "duty", "g", "self", ("xf",))]
+    ref, bad = free(rows, SEAT, lambda S: ST.Seats(S).holders("duty", "g")); t.order(bad)
+    t.fact("seat.py: one leaked key of a withdrawn duty holder gains nothing alone (duty holders %s)" % fs(ref), ref == {"f2", "f3"})
     return dict(cls="CONCEDED", who="whoever obtains the keys of removed members, once those keys together met the count at some past head; against a reader with no acknowledgement of its own",
                 witness="As test 18 with only removed keys: keys 1 and 2, both removed, were two of three at the genesis; a forged line leaves a reader without an acknowledgement with an empty roster.",
                 protects="KERNEL 7, the same sentence as test 18, with the same bound: no reader that has acknowledged a later honest head is moved. There is no pre-rotation and no expiry of an old head's count. "
@@ -873,7 +880,7 @@ def t22(t):
     tries = {
         "a second founding row by an outsider carrying the object 'g' and naming g": ST.offer("z", "Z", ("Z",), "member", "g", "self", ("g",), room="g"),
         "the same, not naming g": ST.offer("z", "Z", ("Z",), "member", "g", "self", (), room="g"),
-        "a founder row for scope founder over g by an outsider": ST.offer("z", "Z", "Z", "founder", "g", "self", ("g",), room="g"),
+        "a duty row over g by an outsider": ST.offer("z", "Z", "Z", "duty", "g", "self", ("g",), room="g"),
         "an outsider's unseat over g, conferrer self": ST.unseat("z", "Z", "A", "member", "g", "self", ("g",), room="g"),
     }
     for label, z in tries.items():
@@ -898,17 +905,17 @@ def t22(t):
 
 
 @test(23, "Root backdating", "Matrix: the creator 'can already effectively control a room by backdating'",
-      "A founder or first conferrer that has left, or been removed, can no longer end other keys' seats or dissolve the group.")
+      "A founding duty holder or first conferrer that has left, or been removed, can no longer end other keys' seats or dissolve the group.")
 def t23(t):
-    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
-    hold = lambda S: ST.Seats(S).holders("founder", "g")
+    g = ST.offer("g", "f1", ("f1", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
+    hold = lambda S: ST.Seats(S).holders("duty", "g")
     ref, bad = free([g, ST.withdraw("wd", "f1", "g")], SEAT, hold); t.order(bad)
-    t.fact("a founder withdraws the founding row, naming the genesis only: it ends its own seat and no other (%s)" % fs(ref), ref == {"f2", "f3"})
+    t.fact("a founding duty holder withdraws the founding row, naming the genesis only: it ends its own seat and no other (%s)" % fs(ref), ref == {"f2", "f3"})
     c3 = ST.cosign("c3", "f3", "xf", ("g",))
-    xf = ST.unseat("xf", "f2", "f1", "founder", "g", "group", ("g", "c3"), head=("g",), policy="community_remove", content="xf", counted="founder")
-    back = [ST.unseat("u2", "f1", "f2", "founder", "g", "self", ("g",)), ST.unseat("u3", "f1", "f3", "founder", "g", "self", ("g",)), ST.offer("re", "f1", "f1", "founder", "g", "self", ("xf",))]
+    xf = ST.unseat("xf", "f2", "f1", "duty", "g", "group", ("g", "c3"), head=("g",), policy="duty_withdraw", content="xf", counted="duty")
+    back = [ST.unseat("u2", "f1", "f2", "duty", "g", "self", ("g",)), ST.unseat("u3", "f1", "f3", "duty", "g", "self", ("g",)), ST.offer("re", "f1", "f1", "duty", "g", "self", ("xf",))]
     ref, bad = free([g, c3, xf] + back, SEAT, hold); t.order(bad)
-    t.fact("f1 is removed by the count of the other two, then signs three rows alone (unseat f2, unseat f3, a `self` offer seating itself): founders %s" % fs(ref), ref == {"f2", "f3"})
+    t.fact("f1 is withdrawn by the count of the other two, then signs three rows alone (unseat f2, unseat f3, a `self` offer seating itself): duty holders %s" % fs(ref), ref == {"f2", "f3"})
     pre = room_rows("g", "md", "ac", "cb", "w")
     wd = in_room(ST.withdraw("wdw", "A", "w"))
     mem, st, bad = roster(pre + [wd]); t.order(bad)
@@ -924,8 +931,8 @@ def t23(t):
     t.note("stated cell: a founding row signed by a creator that it does not seat is ended for everyone by that creator's withdrawal, at any time (members %s). That is the conferrer's voice; a group that does not want it is founded by its own members." % fs(ref))
     ok = all(v for _, v in t.facts)
     return dict(cls="HOLDS" if ok else "BROKEN", who="a key that signed the founding row, after its removal; the member whose signature is on a counted admission",
-                witness="g(f1,f2,f3) xf(f2+f3 remove f1) u2,u3(f1: `self` unseats) re(f1: `self` offer to itself). None takes effect: founders {f2,f3}. w(A admits C, B cosigns) wdw(A withdraws w): C stays.",
-                protects="seat.py: a `self` unseat over a founding row that seats several keys concludes nothing; a founding signer's `self` offer stands on its own founding seat; "
+                witness="g(f1,f2,f3) xf(f2+f3 remove f1) u2,u3(f1: `self` unseats) re(f1: `self` offer to itself). None takes effect: duty holders {f2,f3}. w(A admits C, B cosigns) wdw(A withdraws w): C stays.",
+                protects="seat.py: a `self` unseat over a founding row that seats several keys concludes nothing; a duty holder's `self` offer concludes only while it is the one duty holder (CC 4.5.4 (iv)); "
                          "the conferrer of a counted offer is the count, so its proposer's lone withdrawal ends nothing.",
                 fix="")
 
@@ -1169,26 +1176,33 @@ def t33(t):
     rows = [R("e0", "edge", "me", to="H")] + [R("s%d" % i, "edge", "H", to="S%d" % i) for i in range(N)]
     S = conc(rows, lambda r, P, past: True)
     t.fact("edges: %d rows by H bring %d fresh keys within a depth-2 walk of every reader that reaches H" % (N, len(CK.reach(S, "me", 2)) - 2), len(CK.reach(S, "me", 2)) == N + 2)
-    g = ST.offer("g", "F", "F", "founder", "@", "self")
-    d = ST.offer("d", "F", "H", "moderate", "g", "seat", ("g",), under="g", sub=True)
+    # a seat the CONFERS table lets confer, outside the community law: an agent's own key gives `operator`, sub-delegable
+    d = ST.offer("d", "AG", "H", "operator", "AG", "self", sub=True)
     ah = ST.accept("ah", "H", "d")
     syb = tuple("S%d" % i for i in range(N))
-    one = ST.offer("syb", "H", syb, "moderate", "g", "seat", ("ah",), under="d", cosigners=syb, sub=True)
-    S = conc([g, d, ah, one], SEAT)
-    n1 = len(ST.Seats(S).holders("moderate", "g")) - 2
-    t.fact("seats: ONE row by H (an offer to %d keys, cosigned by them) seats %d fresh keys as moderators under H's sub-delegable seat" % (N, n1), n1 == N)
-    chain = [g, d, ah]
+    one = ST.offer("syb", "H", syb, "operator", "AG", "seat", ("ah",), under="d", cosigners=syb, sub=True)
+    S = conc([d, ah, one], SEAT)
+    n1 = len(ST.Seats(S).holders("operator", "AG")) - 1
+    t.fact("seats: ONE row by H (an offer to %d keys, cosigned by them) seats %d fresh keys as operators under H's sub-delegable seat" % (N, n1), n1 == N)
+    chain = [d, ah]
     under, signer, prev = "d", "H", "ah"
     for i in range(6):
-        o = ST.offer("c%d" % i, signer, "T%d" % i, "moderate", "g", "seat", (prev,), under=under, cosigners=("T%d" % i,), sub=True)
+        o = ST.offer("c%d" % i, signer, "T%d" % i, "operator", "AG", "seat", (prev,), under=under, cosigners=("T%d" % i,), sub=True)
         chain.append(o); under, signer, prev = o["id"], "T%d" % i, o["id"]
     S = conc(chain, SEAT)
-    deep = [k for k in ("T%d" % i for i in range(6)) if ST.Seats(S).stands(k, "moderate", "g")]
-    t.fact("the only bound is depth: of a chain of six further links, %d stand (five links below a root, CC 3.4.7)" % len(deep), len(deep) == 4)
-    S = conc([g, d, ah, one, ST.withdraw("wd", "F", "d")], SEAT)
-    t.fact("recovery: one withdrawal by H's conferrer removes all of them at once (%d left)" % (len(ST.Seats(S).holders("moderate", "g")) - 1), len(ST.Seats(S).holders("moderate", "g")) == 1)
-    return dict(cls="CONCEDED", who="one seated key whose seat may confer (a sub-delegable grant, or a scope the CONFERS table lets it give)",
-                witness="d(F -> H moderate, sub-delegable) syb(H -> S0..S199, one row, cosigned by the 200 keys H made). 200 moderators for one signature by H.",
+    deep = [k for k in ("T%d" % i for i in range(6)) if ST.Seats(S).stands(k, "operator", "AG")]
+    t.fact("the only bound is depth: of a chain of six further links, %d stand (five links below a root, CC 3.4.7)" % len(deep), len(deep) == 5)
+    S = conc([d, ah, one, ST.withdraw("wd", "AG", "d")], SEAT)
+    t.fact("recovery: one withdrawal by H's conferrer removes all of them at once (%d left)" % len(ST.Seats(S).holders("operator", "AG")), len(ST.Seats(S).holders("operator", "AG")) == 0)
+    g = ST.offer("g", "F", "F", "duty", "@", "self")
+    dm = ST.offer("dm", "F", "H", "duty", "g", "seat", ("g",), under="g")
+    ahm = ST.accept("ahm", "H", "dm")
+    onem = ST.offer("sybm", "H", syb, "moderate", "g", "seat", ("ahm",), under="dm", cosigners=syb)
+    S = conc([g, dm, ahm, onem], SEAT)
+    nm = len(ST.Seats(S).holders("moderate", "g")) - 2
+    t.fact("in a community the same fan-out seats %d: with two duty holders, one confers nothing alone (CC 4.5.4 (iv))" % nm, nm == 0)
+    return dict(cls="CONCEDED", who="one seated key whose seat may confer (a sub-delegable grant, or a scope the CONFERS table lets it give), outside a community's duty seats",
+                witness="d(AG -> H operator, sub-delegable) syb(H -> S0..S199, one row, cosigned by the 200 keys H made). 200 operators for one signature by H. In a community the same row by one of two duty holders seats nobody.",
                 protects="causal_order README: 'The walk has one depth for all edges; the classes and budgets of formal/trust_set are not carried over.' Fan-out is unbounded and one row can seat any number of keys; "
                          "depth (five links) and the scopes a seat may confer are the only limits. In practice: cost one row; it lasts until H's conferrer withdraws H's seat or a reader withdraws its own edge, either of which removes all of them at once.",
                 fix="")

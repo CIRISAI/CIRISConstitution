@@ -48,6 +48,16 @@ def main():
               + (f", costs {len(cost)} of {len(COST)}" if cost else ", no cost shown")
               + ("; first seen wins is not a function of the set" if t6.get("function") else "; FAIL first seen was not caught")
               + ("" if not bad else f"  FAIL {bad}"))
+    # the unanimous protocol (all_and_majority over member-target): the member a removal concerns is not counted (CC 4.5.13)
+    from fork import World
+    W = World(4, m("0123"), 0, "unanimous")
+    others = W.meets(m("012"), m("0123"), drop=m("3"))      # every other member removes 3; 3 does not sign
+    with_target = W.meets(m("012"), m("0123"))              # the old reading: the removed member's own signature is needed
+    short = W.meets(m("01"), m("0123"), drop=m("3"))        # one other missing
+    ok_u = others and not with_target and not short
+    rc |= 0 if ok_u else 1
+    print("  unanimous removal: every other member removes without the member concerned: %s; one other missing removes nothing: %s"
+          % (others, not short) + ("" if ok_u else "  FAIL"))
     print("roster_fork: with tips waiting on a version that names them, the roster is a function of the set and the adversary below the count gains nothing" if not rc else "roster_fork: FAIL")
     return rc
 

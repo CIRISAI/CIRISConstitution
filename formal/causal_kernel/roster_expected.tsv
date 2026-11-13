@@ -22,13 +22,18 @@ community (public, members are persons)	Inv_LeavingNotUndone, leaving read as a 
 community (public, members are persons)	Inv_NoSelfAdmission	holds
 community (public, members are persons)	Inv_ResignationEnabled	holds
 community (public, members are persons)	a key's leaving binds by the version's past: a version with it there does not count that key; one without it still does	holds
+community (public, members are persons)	a lone duty holder confers alone with the new holder's acceptance; one of two confers nothing alone	holds
+community (public, members are persons)	a removal from the roster ends the removed member's duty seats (a non-member holds no duty)	holds
 community (public, members are persons)	community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects	holds with target_votes (the joiner's own yes is a voice of the window's floor)
+community (public, members are persons)	conferral by a strict majority of the holders; withdrawal by a strict majority of the others, the holder concerned not counted	holds
+community (public, members are persons)	holders are equals: the key that conferred a duty seat does not end it alone	holds
 community (public, members are persons)	roster_fork M0 (tips wait): majority over 0123, adversary 3; 7 properties	holds
 community (public, members are persons)	roster_fork M0 (tips wait): majority over 0123, adversary 4; 7 properties	holds
 community (public, members are persons)	roster_fork M0 (tips wait): quorum3 over 01234, adversary 34; 7 properties	holds
 community (public, members are persons)	roster_fork M0 (tips wait): two_thirds over 0123, adversary 3; 7 properties	holds
 community (public, members are persons)	tips wait (KERNEL 7): two versions of one head give the members common to both; a version naming both makes one head	holds
 community (public, members are persons)	when no duty holder is left the members' count seats one (and one member does not)	holds
+community (public, members are persons)	where there are two holders, no duty seat is withdrawn on fewer than two voices	holds
 community, with the stated parameter spent on (does it break anything else?)	Inv_CoercedCannotRemoveHonest, with the floor of two voices under every protocol	holds with floor=2 (the table's min_count)
 community, with the stated parameter spent on (does it break anything else?)	Inv_DeclineTerminal, Inv_LeavingNotUndone (leaving = withdrawing the acceptance)	holds
 community, with the stated parameter spent on (does it break anything else?)	Inv_JoinerConsented	holds

@@ -39,9 +39,9 @@ def build(t):
     conf, s = t["conferrer"], t["scope"]
     body = None
     if conf == "self:holder":
-        if s in ("founder", "moderate"):
-            g = ST.offer("o", "K", ("K", "f2", "f3"), "founder", "@", "self", cosigners=("f2", "f3"))
-            return dict(rows=[g], s=s, obj="o", o="o", a=None, up=None, body=("o", "member", ("f2", "f3")), root="K")
+        if s in ("duty", "moderate"):        # a founding record seats the duty holders that sign it (CC 4.5.4)
+            g = ST.offer("o", "K", ("K", "f2", "f3"), "duty", "@", "self", cosigners=("f2", "f3"))
+            return dict(rows=[g], s=s, obj="o", o="o", a=None, up=None, body=("o", "duty", ("f2", "f3")), root="K")
         return dict(rows=[ST.offer("o", "K", "K", s, "K", "self")], s=s, obj="K", o="o", a=None, up=None, body=None, root="K")
     if conf == "self:object":
         if s == "root":            # the reader confers; the root's own charter is the acceptance, named by the offer
@@ -57,10 +57,10 @@ def build(t):
             rows.append(ST.offer("g", "f1", ("f1", "f2", "f3"), "member", "@", "self", cosigners=("f2", "f3")))
             body = ("g", "member", ("f1", "f2", "f3"))
         return dict(rows=rows, s=s, obj="A", o="o", a="a", up=None, body=body, root="A")
-    if conf == "seat:founder":
-        g = ST.offer("g", "F", "F", "founder", "@", "self")
+    if conf == "seat:duty":                 # a lone duty holder confers alone, with the new holder's acceptance (CC 4.5.4)
+        g = ST.offer("g", "F", "F", "duty", "@", "self")
         return dict(rows=[g, ST.offer("o", "F", "K", s, "g", "seat", ("g",), under="g"), ST.accept("a", "K", "o")],
-                    s=s, obj="g", o="o", a="a", up="g", body=None, root="F")
+                    s=s, obj="g", o="o", a="a", up="g", body=None, root=("group", "g"))   # an equal: rooted in the group
     if conf == "seat:owner":
         obj = "K" if s == "infra:attest" else "A"          # a node attests about itself; a Wise Authority is over the agent
         b, ab = ST.offer("b", obj, "OWN", "owner", obj, "self"), ST.accept("ab", "OWN", "b")
@@ -72,7 +72,7 @@ def build(t):
         return dict(rows=[ch, t0, ST.offer("o", "ROOT", "K", s, "ROOT", "seat", ("t",), under="t"), ST.accept("a", "K", "o")],
                     s=s, obj="ROOT", o="o", a="a", up="t", body=None, root="READER")
     if conf == "group":
-        counted = s if s in ("member", "holder", "self") else "member"
+        counted = "duty" if t["policy"] in ST.DUTY_POLICY else s if s in ("member", "holder", "self") else "member"
         g = ST.offer("g", "f1", ("f1", "f2", "f3"), counted, "@", "self", cosigners=("f2", "f3"))
         rows, names, a, kw = [g], ["g"], None, {}
         if t["consent"] == "one":

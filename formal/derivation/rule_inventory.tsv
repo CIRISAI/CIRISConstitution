@@ -318,8 +318,8 @@ p2	189	2.3.2.1	mechanism	wire	none	*	MUST_NOT	states		an id ending in White_Spac
 p2	190	2.3.2.1	mechanism	wire	none	*	MUST_NOT	states		an id containing a C0 control is rejected	table
 p2	191	2.3.2.1	mechanism	wire	none	*	MUST_NOT	states		an id with an unpaired surrogate is rejected, never WTF-8 and never U+FFFD	table
 p2	197	2.3.2.2	kernel	delegation	none	*	is	restates	2.4.1.1	an enrolled key proxies an un-enrolled subject's revocation by a delegates_to from the canonical hash with scope consent_revocation; the subject never enrolls	
-p2	198	2.3.2.2	kernel	registration	none	*	is	states		canonical_binding: a now-enrolled key asserts it is the entity behind a canonical hash; after admission that key signs withdraws directly under rule 2	
-p2	200	2.3.2.2	kernel	registration	none	*	is	states		canonical_binding is not a fifth admission rule; it is a delegates_to-shaped row with scope identity_binding, admitted because the key proves preimage control out of band	
+p2	198	2.3.2.2	kernel	registration	none	*	is	states		canonical_binding: a now-enrolled key asserts it is the entity behind a canonical hash; the claim admits nothing and opens no withdraws under rule 2	
+p2	200	2.3.2.2	kernel	registration	none	*	is	states		canonical_binding is not a fifth admission rule; it is a bare scores row self-asserted by the enrolling key, and withdrawal for that subject stays the rule 3 proxy	
 p2	204	2.3.2.3	kernel	row_shape	body	*	is	states	2.6.1.7,2.1.1	subject_kind is not a typed envelope member; it rides inside the signed envelope under the * row, preserved on relay	
 p2	204	2.3.2.3	kernel	row_shape	none	*	is	states		the substrate neither validates nor indexes subject_kind	
 p2	204	2.3.2.3	kernel	admission_order	body	*	is	states	3.3	subject_kind selects which 3.3 payload schema applies, validated at the family's own gate, as sub_kind does on external_content	
@@ -840,7 +840,7 @@ p3	73	3.1.2	family	row_shape	body	capacity_assurance	is	states		capacity_assuran
 p3	73	3.1.2	family	licensure	projection	capacity_assurance	MUST_NOT	states		Capacity bands are never aggregated across domains; capacity is a vector, never a scalar.	table
 p3	74	3.1.2	family	licensure	evidence_screen	capacity_assurance	is	states	3.4.12	A reversible_excluded row is a mandatory predicate on any continuing incapacitated rung.	table
 p3	74	3.1.2	family	signer	signer_rule	capacity_assurance	is	states		The reversible-cause companions are witness-reserved like their parent.	table
-p3	75	3.1.2	family	expiry	lifecycle	capacity_assurance	MUST	states	3.4.12	reversible_pending is admissible for the T1 emergency tier only and MUST lapse unless it resolves to reversible_excluded within its valid_until.	table
+p3	75	3.1.2	family	expiry	lifecycle	capacity_assurance	MUST	states	3.4.12	reversible_pending is admissible for the T1 provisional tier only and MUST lapse unless it resolves to reversible_excluded within its valid_until.	table
 p3	83	3.1.2.1	family	row_shape	body	provenance	is	states		A build manifest is published as one scores Contribution on provenance:build_manifest, signed by the pipeline, citing the manifest bytes from evidence_refs.	
 p3	83	3.1.2.1	family	signer	signer_rule	provenance,agent_files	is	states	3.1.9.1,4.4.3.7	agent_files:build is the canonical attester's claim, not the pipeline's; a pipeline does not emit it, and one key emitting both would be two claims about one fact.	
 p3	83	3.1.2.1	mechanism	wire	body	provenance	is	restates	5.3.2.5	The build descriptor carries manifest_size beside manifest_hash so a fetcher checks size before hashing.	
@@ -1081,7 +1081,7 @@ p3	320	3.1.4	family	projection	projection	capacity	is	states		Edge owns relay_de
 p3	320	3.1.4	family	moderation	evidence_screen	capacity	is	states		A relay_delivery row carries standing against a relay only when it binds the relay's countersignature over the window measured or a commitment to the chunks covered; otherwise it weighs nothing.	table
 p3	320	3.1.4	family	reserved_prefix	signer_rule	capacity	is	restates	3.4.5	capacity:relay_delivery is under the capacity: stem's two gates: no self-emit and consent-before-scoring.	table
 p3	322	3.1.4	family	signer	signer_rule	capacity	is	restates	3.4.5	On any capacity: leaf attesting_key_id differs from attested_key_id regardless of which component owns the leaf.	
-p3	322	3.1.4	family	consent_fold	evidence_screen	capacity	is	restates	3.4.5	A capacity: row is admitted only over a subject holding a live consent:scope:analyze grant.	
+p3	322	3.1.4	family	consent_fold	evidence_screen	capacity	is	restates	3.4.5	A capacity: row is admitted only over a subject holding a live grant whose scope names analyze.	
 p3	322	3.1.4	family	other:composition	formula	capacity	MUST_NOT	states	3.1.8.1	capacity:relay_delivery is never one of the five factors and MUST NOT enter capacity:composite, whose min runs over exactly C, I_int, R, I_inc, S.	
 p3	322	3.1.4	family	consent_fold	evidence_screen	capacity,consent	is	states		For a relay-consumer pair the analyze grant must resolve Granted for the attesting consumer through the scoped-consent fold; a node re-checks it before serving the row and the emitter withholds by name.	
 p3	322	3.1.4	family	consent_fold	none	capacity	is	restates		A mesh whose relays have not minted their analyze grant emits nothing on relay_delivery.	
@@ -1213,7 +1213,7 @@ p3	446	3.1.8.1	family	other:composition	formula	capacity	is	states		capacity:com
 p3	448	3.1.8.1	family	other:composition	formula	capacity	MUST	states		A composer MUST compute capacity:composite as min(C, I_int, R, I_inc, S) over the five live factor scores and MUST NOT compute it as their product.	
 p3	448	3.1.8.1	family	other:composition	formula	capacity	MUST_NOT	states		A factor with no live score makes the composite undefined, not zero, and it MUST NOT be emitted; polarity and range stay signed [-1,1].	
 p3	450	3.1.8.1	family	signer	signer_rule	capacity	is	restates	3.4.5	capacity:* rejects self-emission; an agent's own capacity score is never fed back into its own context.	
-p3	450	3.1.8.1	family	consent_fold	evidence_screen	capacity	is	restates	3.4.5	Federation-tier admission of a capacity row requires a live consent:scope:analyze grant, family-scoped, abuse-response families exempt.	
+p3	450	3.1.8.1	family	consent_fold	evidence_screen	capacity	is	restates	3.4.5	Federation-tier admission of a capacity row requires a live grant whose scope names analyze, family-scoped, abuse-response families exempt.	
 p3	450	3.1.8.1	family	audience	replication	capacity	is	restates	3.4.5	The read boundary of capacity rows is the composition-context rule of 3.4.5.	
 p3	456	3.1.8.2	family	row_shape	body	detection	is	states		detection detector is closed to cross_agent_divergence, temporal_drift, conscience_override_rate; intra_agent_consistency and hash_chain_integrity are their own leaves; polarity signed.	table
 p3	462	3.1.8.3	family	row_shape	body	manifold_conformity,coherence_standing	is	states		manifold_conformity:{cohort} and coherence_standing:{cohort} are polarity signed.	
@@ -1271,7 +1271,7 @@ p3	542	3.1.9.3	family	row_shape	body	deferral	is	states		deferral:response outco
 p3	542	3.1.9.3	family	admission_order	evidence_screen	deferral	is	states		A response from a key with no live chain bearing the scope the request needs is refused deferral_response_unseated; one lacking a licence the seat requires is refused deferral_response_unlicensed.	table
 p3	542	3.1.9.3	family	projection	projection	deferral,wa_adjudication	is	states	4.3	A deferral response is the ruling 4.3 publishes on the accountability cadence and composes into the WA's conduct record; it is not a wa_adjudication finding.	table
 p3	546	3.1.9.4	mechanism	wire	none	hard_case	is	states		A substrate emits hard_case:{kind}; a key-id suffix written in this Part is readability only, travels in the payload, and is never part of the dimension.	
-p3	550	3.1.9.4	family	row_shape	body	hard_case	is	states	4.5.1	hard_case kind is open vocabulary with the canonical kinds listed; new kinds land via the 4.5.1 amendment process; polarity positive-only.	table
+p3	550	3.1.9.4	family	row_shape	body	hard_case	is	states	4.5.1	hard_case kind is open vocabulary with the canonical kinds listed and a reserved emitter (CC 3.4.2, 3.4.4); new kinds land via the 4.5.1 amendment process; polarity positive-only.	table
 p3	550	3.1.9.4	family	moderation	body	hard_case	is	states	3.3.1	deletion_window_breach is substrate-observed evidence of a lapsed deletion_window with the row still present, never a verdict.	table
 p3	550	3.1.9.4	family	moderation	body	hard_case	is	states	4.5.7,4.5.4,7.5.5	hard_case records legal hold set/lifted/violation, community_unmoderated, watchlist_enabled and watchlist_match (who and which list), among the canonical kinds.	table
 p3	551	3.1.9.4	family	row_shape	body	wa_adjudication	is	states	4.3	wa_adjudication state is closed to abandonment, seizure, successor, petition.	table
@@ -1351,7 +1351,7 @@ p3	696	3.2	family	row_shape	body	community	MAY	states		community archive_mode is
 p3	702	3.2	family	conformance	none	community	MUST	states		archive_mode must be surfaced at community creation	
 p3	704	3.2	family	key_plane	window	community	MUST	states	6.1.2	Under rotate-forward honest holders delete past-epoch content keys, epoch DEKs and K_record_id/K_symbol after a 30-day window	
 p3	705	3.2	family	key_plane	lifecycle	community	is	states		Under retain holders keep past-epoch keys indefinitely	
-p3	707	3.2	family	key_plane	none	community	is	states		archive_mode is operator-local config: rides no attestation, not part of the signed roster or consensus_protocol	
+p3	707	3.2	family	key_plane	none	community	is	states		archive_mode is a member of the community's signed record, changed only as that record changes; a holder's compliance is not observable	
 p3	707	3.2	family	key_plane	none	community	MUST_NOT	states		A community needing guaranteed past-epoch unreadability must not rely on archive_mode alone	advisory to deployers
 p3	717	3.2	family	roster_fold	subject_rule	community,location_proof	is	restates	2.6.6.3	A geographic constraint finer than resolution 7 admits nobody by containment	table; inside informative example
 p3	738	3.2	family	withdraw	lifecycle	consent	is	restates	2.4.1.1	A named subject_key_id carries revocation rights over the row (rule 2)	table; inside informative example
@@ -1438,13 +1438,13 @@ p3	840	3.2	kernel	admission_order	lifecycle	delegates_to	is	exception		Act-on-be
 p3	841	3.2	kernel	expiry	lifecycle	delegates_to	SHOULD	states	2.4.1.2	An owner-binding should carry delegation_valid_until so it can lapse	
 p3	841	3.2	kernel	owner_binding	lifecycle	delegates_to	MUST	states		A key left ownerless by a WA-adjudicated abandonment or seizure finding remains re-claimable; ownerless is fail-secure, never permanent	
 p3	842	3.2	kernel	withdraw	signer_rule	delegates_to	is	restates	2.4.1.1	Recovery withdraws of an owner-binding ride rule 2 (K itself as subject) or rule 4 (a recovery authority holding delegates_to K to R scope owner_binding_recovery); no third-party withdraws	
-p3	843	3.2	kernel	withdraw	evidence_screen	delegates_to	MUST	states	4.3	A substrate rejects a rule-2 or rule-4 withdraws against a live owner-binding unless it carries a wa_adjudication_ref naming a WA quorum finding of abandonment or seizure	
+p3	843	3.2	kernel	withdraw	evidence_screen	delegates_to	MUST	states	4.3	A rule-2 or rule-4 withdraws against a live owner-binding concludes nothing unless it carries a wa_adjudication_ref naming a WA quorum finding of abandonment or seizure	
 p3	843	3.2	kernel	principle	none		is	states		The substrate records an adjudication finding; it never makes one	
 p3	844	3.2	kernel	freshness	window	delegates_to	is	states		Abandonment requires the owner's most recent owner-signed attestation to have not advanced for longer than owner_abandonment_window (floor 90 days) plus out-of-band confirmation	
 p3	844	3.2	kernel	freshness	window		MUST	states		A deployment publishes its owner_abandonment_window; unpublished means no abandonment finding is admissible	
 p3	844	3.2	kernel	owner_binding	lifecycle	delegates_to,wa_adjudication	MUST_NOT	states		Reclaim is four uncollapsible steps: petition, WA finding, gated withdraws leaving K unowned, fresh co-signed owner-binding; never a one-act transfer	
 p3	845	3.2	kernel	owner_binding	projection		MUST	states	5.2	A consumer resolving self via owner_of treats cardinality not 1 as an error and fails closed; never picks one owner from a sorted set	
-p3	847	3.2	kernel	minor_floor	lifecycle	delegates_to	is	restates		A minor has at most one live guardian, transferred by supersedes, never accreted	
+p3	847	3.2	kernel	minor_floor	lifecycle	delegates_to	is	restates		Each guardian's binding is transferred by supersedes, never accreted; a minor may have more than one guardian (CC 3.4.13 Q7)	
 p3	851	3.2	kernel	standing	none		is	restates	3.4.7.1,3.2	A node key has steward plus infra reach only, never agency; admitted under the steward-binding gate	
 p3	852	3.2	kernel	standing	none		is	restates	1.13.2	An agent key has agency under stewardship and keeps its autonomy; admitted under the steward-binding gate	
 p3	853	3.2	kernel	minor_floor	none	delegates_to	is	restates	3.4.13	A minor user is bound by a guardian's user-to-key steward-binding that is_steward_bound folds; the duty is the guardian's under their own law	
@@ -1534,7 +1534,7 @@ p3	924	3.2	kernel	withdraw	lifecycle	lineage_witness	is	states		An owner ends wi
 p3	924	3.2	kernel	transparency_log	evidence_screen	trust	is	states		A witness is independent: not a founder, seat, or owner- or steward-bound to a founder, judged at signed_at against the head's roster; founder-witnessed lineages are unwitnessed	
 p3	924	3.2	kernel	transparency_log	evidence_screen	trust	is	states		A cosignature is verified against the directory of the head's parent (genesis against the bundle charter), never the head's own charter_digest	
 p3	924	3.2	kernel	transparency_log	none	trust,hard_case	is	states	3.4.2	If the previous directory cannot reach quorum the conferring body re-seats it by charter re-scrub; the substrate records hard_case lineage_directory_reseated; that head attaches only by out-of-band anchor	
-p3	924	3.2	kernel	transparency_log	none		SHOULD	states		A consumer obtains at least one counted cosignature directly from the witness	
+p3	924	3.2	kernel	transparency_log	none		SHOULD	states		A consumer obtains at least one counted cosignature directly from a witness that signed it	
 p3	924	3.2	kernel	transparency_log	window	trust	MUST	states		The witness cadence is the equivocation-exposure window and is stated in the charter, never implied zero	
 p3	926	3.2	kernel	transparency_log	governance	trust	MAY	states		A charter may declare witness_quorum 0 (witnessed mode off); listing and turning on are separate acts; no cosignature counts at 0	
 p3	926	3.2	kernel	freshness	evidence_screen	trust	is	states	5.3.4	With witnessed mode off a head is current when founder-quorum signed and descending by prev_head_digest from an out-of-band head; attach only through an anchor	
@@ -1649,7 +1649,7 @@ p3	1045	3.3.2	family	moderation	none	takedown_notice	is	states		ncmec_csam taked
 p3	1046	3.3.2	family	moderation	none	takedown_notice	is	states		gifct_cip takedown is immediate (within-hours coordinated response)	table
 p3	1047	3.3.2	family	moderation	none	takedown_notice	is	states		community_standards takedown is expeditious-with-counter-notice on an operator-set window	table
 p3	1048	3.3.2	family	moderation	none	takedown_notice	is	states		perceptual_hash_csam takedown is immediate	table
-p3	1049	3.3.2	family	moderation	none	takedown_notice	is	states		osa_illegal_content takedown is expeditious-with-counter-notice on OSA timelines	table
+p3	1049	3.3.2	family	moderation	none	takedown_notice	is	states		osa_illegal_content takedown is expeditious-with-counter-notice with a 14-day withhold window (CC 4.5.3)	table
 p3	1050	3.3.2	family	moderation	none	takedown_notice,age_assurance	is	states		avmsd_age_inappropriate composes with the age_assurance:* gate and is not immediate removal	table
 p3	1051	3.3.2	family	moderation	none	takedown_notice	is	states		court_order takedown is immediate subject to the court's stated timeline	table
 p3	1052	3.3.2	family	cosign	cosign_rule	takedown_notice	is	states	2.4,2.4.1.1	A steward_purge takedown_notice is cosigned under the trust root's consensus_protocol	table
@@ -1660,8 +1660,8 @@ p3	1052	3.3.2	family	signature	none	takedown_notice	is	states		A receiver that h
 p3	1058	3.3.2	family	row_shape	body	key_grant	is	states	3.1.3	A key wrap is one scores row on key_grant:{axis}:v1 with no struct of its own; members are axis, axis identity, target alias, wrap_algorithm, wrapped_dek	
 p3	1058	3.3.2	family	signer	signer_rule	key_grant	is	states		key_grant sealer is attesting_key_id; recipient is attested_key_id	
 p3	1058	3.3.2	family	key_plane	lifecycle	key_grant	is	states		A key rotation is a new key_grant row under a new axis identity, never an edit of an old one	
-p3	1063	3.3.2	mechanism	wire	none	key_grant	is	states		wrap_algorithm v1 wire string is hpke_rfc9180_base_x25519_aes_gcm (HPKE RFC 9180 base, X25519, HKDF-SHA-256, AES-256-GCM)	table
-p3	1064	3.3.2	mechanism	wire	none	key_grant	MUST	states	5.1	wrap_algorithm v2 x25519_mlkem768_aes256_gcm_hkdf_sha256 is MANDATORY for streaming epoch-DEK grants; a hyphenated spelling is a non-conformant alias	table
+p3	1063	3.3.2	mechanism	wire	none	key_grant	is	states		wrap_algorithm v1 wire string is hpke_rfc9180_base_x25519_aes_gcm (HPKE RFC 9180 base, X25519, HKDF-SHA-256, AES-256-GCM); no DEK is wrapped with it	table
+p3	1064	3.3.2	mechanism	wire	none	key_grant	MUST	states	5.1	wrap_algorithm v2 x25519_mlkem768_aes256_gcm_hkdf_sha256 is MANDATORY for every wrapped DEK; a hyphenated spelling is a non-conformant alias	table
 p3	1067	3.3.2	mechanism	wire	none	key_grant	MUST	states	5.3.3.1,5.1	Producer, substrate and every consumer MUST serialize and match the exact wrap_algorithm wire string; MUST NOT normalize case or separators; a variant spelling is unknown under fail-secure decode	
 p3	1069	3.3.2	mechanism	wire	none	key_grant	MUST	states		Consumers MUST reject an unknown wrap_algorithm string (fail-secure); new algorithms are additive rows	
 p3	1071	3.3.2	mechanism	wire	none	takedown_notice,key_grant	MUST	restates	5.1	Every CC 3.3.2 closed set serializes and matches its lowercase snake_case wire string exactly; the PascalCase variant never appears on the wire; no case, separator or ordering normalization	
@@ -1697,7 +1697,7 @@ p3	1124	3.3.4	family	row_shape	body	family	MUST	states		A family row REQUIRES co
 p3	1151	3.3.4	family	amendment	governance	family	is	states	4.5.1.2	consensus_protocol is locked at family creation; changes ride the protocol's own rules unless entrenched, in which case replacement requires an out-of-band ceremony	
 p3	1157	3.3.4	family	cosign	cosign_rule	family,publication	is	states	4.5.13,3.1.3.2	founder_only is a family's and publication's protocol, not a community's; a founder active at the instant of the act is sole admission authority; a resigned founder cannot re-seat itself	table
 p3	1158	3.3.4	family	cosign	cosign_rule	family	is	states	3.1.3.2	Under unanimous every current member signs an admission; a removal needs every non-target member and those signers a strict majority of the roster; a two-member group removes nobody	table
-p3	1159	3.3.4	family	cosign	cosign_rule	family	is	states	4.2,4.2.6	Under majority more than 50% of current members sign; the accord-holder family decides by a strict majority of its standing roster with entrenched true	table
+p3	1159	3.3.4	family	cosign	cosign_rule	family	is	states	4.2,4.2.6	Under majority more than 50% of the members at the roster head the row names sign; the accord-holder family decides by a strict majority of its standing roster with entrenched true	table
 p3	1160	3.3.4	family	cosign	cosign_rule	family	is	states	4.4.3.4.2.1,3.2	Under quorum:{m}/{n} any m members sign, m an absolute count; n is documentary (roster size at adoption) never recomputed; the infrastructure community signs under quorum:2/3 entrenched	table
 p3	1161	3.3.4	family	cosign	cosign_rule	family	is	states		Under weighted:{rubric} the sum of member weights per a named operator rubric must exceed a threshold	table
 p3	1166	3.3.4	family	roster_fold	lifecycle	family,membership	is	states	3.1.3.2	A family addition rides the widening plane: an active member emits membership:proposal to the joiner, the joiner answers membership:acceptance, a membership:widening cosigned under the current protocol seats the joiner	
@@ -1712,7 +1712,7 @@ p3	1170	3.3.4	family	admission_order	none	cosign,membership	is	states		An event 
 p3	1171	3.3.4	family	audience	replication	cosign	is	states		A held pending row and its signatures are served only to members active at the signed instant and still members; removed members, the invitee and outsiders see nothing	
 p3	1171	3.3.4	family	withdraw	lifecycle	cosign	MAY	states		The proposer may withdraw a pending row; a member that has signed cannot recall its signature	
 p3	1172	3.3.4	family	cosign	tie_break	cosign	is	states		An act is named by its quorum key covering no signature; cosignatures count by signer; a second sufficient set for an admitted act settles as held; retraction reaches every node	
-p3	1174	3.3.4	family	key_plane	lifecycle	family,key_grant	is	states		On admission of a family ADD the substrate emits retroactive key_grants wrapping all family-scoped content DEKs to the new member	
+p3	1174	3.3.4	family	key_plane	lifecycle	family,key_grant	is	states		On admission of a family ADD each blob owner's substrate, as sealer, emits retroactive key_grants wrapping that owner's family-scoped content DEKs to the new member; no other member's substrate wraps them	
 p3	1176	3.3.4	family	key_plane	lifecycle	family,key_grant	is	restates	4.4.3.4.5	On a family REMOVE the removed member retains existing key_grants; the substrate stops wrapping new key_grants to them	
 p3	1178	3.3.4	family	freshness	freshness	membership	is	states	2.6.7	A signature by someone no longer an active member counts toward a roster event only while its signed instant is inside window W; an event left short is refused asserted_at_stale	
 p3	1178	3.3.4	family	freshness	freshness	membership	is	applies	3.3.6.3	A signature by a member still standing counts at any age	
@@ -1744,7 +1744,7 @@ p3	1372	3.3.5.1	family	key_plane	lifecycle	key_grant	is	restates	3.3.2	A reveale
 p3	1375	3.3.6	family	registration	none	identity	is	states	2.1	The occurrence_id envelope member names which occurrence emitted a Contribution; identity_occurrence binds an occurrence key to its identity_key_id so co-self keys are a cryptographic fact	
 p3	1377	3.3.6	family	key_plane	lifecycle	identity	is	states		When content is admitted at cohort_scope self the at-rest encryption flow wraps DEKs to all admitted occurrences of the identity	
 p3	1380	3.3.6	family	row_shape	body	identity	is	states	2.6.2,3.1.2	identity_occurrence carries identity_key_id, occurrence_key_id, closed-set device_class, optional hardware_attestation, transport_destination, encryption_pubkeys, build_manifest_hash, build_manifest_ref, asserted_at, valid_until	
-p3	1397	3.3.6	family	registration	body	identity,provenance	MUST	states	2.6.3,3.1.2	An occurrence names its build (build_manifest_hash, build_manifest_ref) from its CIRISVerify result; at admission the cited provenance row MUST exist, be Rooted, and its hash MUST equal build_manifest_hash	
+p3	1397	3.3.6	family	registration	body	identity,provenance	MUST	states	2.6.3,3.1.2	An occurrence names its build (build_manifest_hash, build_manifest_ref); it waits for the cited provenance row and counts only where that row is Rooted and its hash equals build_manifest_hash	
 p3	1397	3.3.6	kernel	licensure	projection	identity	is	states		A row about a running occurrence resolves its version from the occurrence row live at the claim's asserted_at, never a producer-asserted version string; both members absent names no build	
 p3	1403	3.3.6	family	key_plane	body	identity	is	states		encryption_pubkeys.x25519 is a fresh content-KEM key, not the signing key nor the transport x25519; ml_kem_768 is exactly 1184 raw bytes pre-base64	table
 p3	1413	3.3.6	mechanism	wire	body	identity	MUST	states	3.3.6.2.1	transport_destination.destination_hash MUST derive from reticulum_x25519_pubkey, reticulum_ed25519_pubkey, app_name and ordered aspects per the pinned RNS algorithm	table
@@ -1827,7 +1827,7 @@ p3	1541	3.3.7	family	row_shape	body	consent	is	states	5.3.2.2	consent:replicatio
 p3	1543	3.3.7	family	row_shape	body	consent	MUST	states	2.1,2.3.2.3,2.6.1	consent:replication envelope: witness_relation self REQUIRED, optional valid_until; payload under subject_kind consent_replication carries grants replication, attestation_prefixes (JCS sorted deduplicated), optional cohorts	
 p3	1543	3.3.7	family	withdraw	lifecycle	consent	is	states	3.1.5	consent:replication score is within the declared signed polarity; a withdraws or recants retracts, never a score value	
 p3	1561	3.3.7	family	admission_order	none	consent	is	states	3.4,3.3.14	P admits G's replicated rows because G's key exists in P's federation_keys plus the reserved-prefix rules; consent:replication adds no substrate admission check	
-p3	1561	3.3.7	family	admission_order	evidence_screen	consent,capacity	is	states	3.4.5	The no-admission-check posture is family-scoped: capacity:* carries a substrate-side consent admission gate on consent:scope:analyze	
+p3	1561	3.3.7	family	admission_order	evidence_screen	consent,capacity	is	states	3.4.5	The no-admission-check posture is family-scoped: capacity:* carries a substrate-side consent admission gate on a grant whose scope names analyze	
 p3	1561	3.3.7	family	cosign	evidence_screen	consent	is	states		Each replication direction is an independent unilateral grant; a bilateral peering is ratified iff both consent:replication grants are present	
 p3	1563	3.3.7	family	withdraw	lifecycle	consent	MUST	states	2.4.1.1,4.5	A withdraws or recants from G retracts its consent:replication; G MUST cease replicating the named prefixes and SHOULD deregister P; rows replicated under a withdrawn grant are non-conformant	
 p3	1563	3.3.7	family	expiry	lifecycle	consent	MAY	states	3.3.5	A consent:replication grant carries optional valid_until for time-boxed peering	
@@ -1998,7 +1998,7 @@ p3	1864	3.4.4	family	withdraw	lifecycle	identity_occurrence,hard_case	is	states	
 p3	1866	3.4.4	family	reserved_prefix	signer_rule	hard_case	MUST	states	3.4.3	A row on a substrate-self-report hard_case kind from any other signer is refused	
 p3	1870	3.4.5	kernel	signer	signer_rule	capacity,trace,consent,ownership,config	is	states		A verdict about a key must not be signed by that key; a record of a key's own reasoning, consent, ownership or configuration must not be signed by anyone else	
 p3	1874	3.4.5	family	signer	signer_rule	capacity	MUST_NOT	states	3.1.8.1	On a capacity:* row attesting_key_id MUST NOT equal attested_key_id	table
-p3	1874	3.4.5	family	consent_fold	evidence_screen	capacity,consent	MUST	states	3.3.1	At federation tier a capacity:* row is admitted only when the subject holds a live consent:scope:analyze grant addressed to the scoring community; otherwise refused at admission before persistence	table
+p3	1874	3.4.5	family	consent_fold	evidence_screen	capacity,consent	MUST	states	3.3.1	At federation tier a capacity:* row is admitted only when the subject holds a live grant whose scope names analyze, addressed to the scoring community; otherwise refused at admission before persistence	table
 p3	1874	3.4.5	family	consent_fold	evidence_screen	detection,moderation,slashing	is	exception		Consent-before-scoring binds capacity:* only; detection:*, moderation:* and slashing:* need no consent from their subject	table
 p3	1875	3.4.5	family	signer	signer_rule	trace,trace_summary	MUST	states	3.1.5	On a trace:* or trace_summary:* row attesting_key_id MUST be a member of subject_key_ids; third-party emission is refused	table
 p3	1875	3.4.5	family	row_shape	body	trace	is	states	3.1.5	A trace row failing the pro-self rule, the exactly-one-of inline trace or manifest shape, or the trace_manifest:v1 field constraints is refused with federation_trace_dimension_invalid	table
@@ -2078,15 +2078,15 @@ p3	1979	3.4.7.3	kernel	delegation	subject_rule	delegates_to,agency	MUST_NOT	stat
 p3	1981	3.4.7.3	kernel	delegation	subject_rule	delegates_to	MUST_NOT	states	1.7	There MUST NOT be a direct agent-to-node or node-to-agent edge; the pairing derives from the human's owner-binding (human to node, infra:* only, single-valued) and stewardship delegation (human to agent, agency:*)	
 p3	1983	3.4.7.3	kernel	owner_binding	formula	delegates_to	MAY	states	3.2	An agent MAY act through a node iff some human h is owner_of(node) and h is in stewards_of(agent); the quantifier is existential because node ownership is single-valued	
 p3	1992	3.4.7.3	kernel	owner_binding	none	delegates_to	MUST_NOT	states	3.2,2.4.1.2	stewards_of(agent) is the granter of the one live owner-binding delegates_to carrying the owner-binding marker, nothing else; an unmarked delegates_to confers a job, not custody, and MUST NOT satisfy the clause	
-p3	1994	3.4.7.3	kernel	owner_binding	cosign_rule	delegates_to,identity_occurrence	is	states		The steward set has at most one occurrence anchor and one custody anchor; a key whose live counted bindings name a second distinct owner has no owner; same-owner refresh is idempotent	
+p3	1994	3.4.7.3	kernel	owner_binding	cosign_rule	delegates_to,identity_occurrence	is	states		The steward set has at most one member, the granter of the one live owner-binding; an identity_occurrence is no anchor; a second distinct owner leaves the key with no owner	
 p3	1994	3.4.7.3	kernel	owner_binding	none	*	MUST	states		An unresolvable owner walk (owner absent, ambiguous or revoked edge) MUST refuse and MUST NOT resolve to unknown	
 p3	1996	3.4.7.3	kernel	delegation	none	*	MUST	states		Before executing an authorization envelope the node MUST verify the human's signature, the agent's standing, the common-human predicate and scope match, refusing by infra:attest otherwise	
-p3	1996	3.4.7.3	kernel	owner_binding	formula	*	is	states		At the enforcement seam owner_of(node) equals steward_of(agent) equals signer_of(envelope): one human in three roles across three keys	
+p3	1996	3.4.7.3	kernel	owner_binding	formula	*	is	states		At the enforcement seam owner_of(node) equals signer_of(envelope) and is in stewards_of(agent): one human in three roles across three keys	
 p3	2002	3.4.7.3	kernel	registration	none	*	is	states		An actor needs its own key; an agent signing with the node's key makes the authorization envelope self-referential and the check vacuous	
 p3	2004	3.4.7.3	kernel	conformance	none	*	is	states	6.1.2.1	A key holding node together with an actor role is non-conformant with no transition window and no exempted producer	
 p3	2004	3.4.7.3	kernel	supersede	lifecycle	*	is	states	4.5.9.3	The fused-key prohibition attaches to the live configuration only; attestations already signed by a fused key remain valid history and the key is re-minted, not re-authored	
 p3	2004	3.4.7.3	kernel	delegation	subject_rule	agency	MUST	states		A fused key that exists MUST still be refused agency:* under Clause B	
-p3	2006	3.4.7.3	kernel	owner_binding	none	delegates_to	MUST_NOT	states		An agent whose occurrence and custody anchors both exclude the node's owner is not admissible to act through that node and MUST NOT be reached by relaxing Clause D	
+p3	2006	3.4.7.3	kernel	owner_binding	none	delegates_to	MUST_NOT	states		An agent whose custody anchor excludes the node's owner is not admissible to act through that node and MUST NOT be reached by relaxing Clause D	
 p3	2006	3.4.7.3	kernel	owner_binding	none	delegates_to	MUST_NOT	states		General hosting of an agent on a node needs its own conferral from the node owner on the node's infra:* plane	
 p3	2010	3.4.8	family	reserved_prefix	signer_rule	detection	MUST	states		detection:* is a detector's emission, signed only by a key holding infra:detect under a root the reader trusts	
 p3	2010	3.4.8	family	signer	signer_rule	detection,truth_grounding	MUST	states		A non-LensCore cross-attestation on a detector verdict is admitted as a score on it but MUST use a different prefix (truth_grounding:detection:...) so it does not shadow the detector's emission	
@@ -2127,7 +2127,7 @@ p3	2087	3.4.12	kernel	owner_binding	subject_rule	delegates_to,capacity_assurance
 p3	2089	3.4.12	kernel	owner_binding	body	delegates_to	is	states	2.4.1	An adult-incapacity binding is a scoped live delegates_to, never a key handover; the steward never holds the ward's key; default resolves to sovereignty; the binding fails open to liberty	
 p3	2091	3.4.12	family	reserved_prefix	signer_rule	capacity_assurance	is	restates	3.4.11	capacity_assurance:* is a reserved scores family under the same witness-reservation discipline as age assurance, multiplied per decision domain	
 p3	2097	3.4.12	family	row_shape	body	capacity_assurance	is	states	3.1.7	capacity_assurance:{level}:{domain}:{band}:v1 with level in {provider, panel, government}, open domain vocabulary, band in {capacitated, incapacitated}; trailing :vN mandatory	
-p3	2104	3.4.12	family	row_shape	evidence_screen	capacity_assurance	MUST	states		Any incapacitated attestation needs a capacity_assurance:reversible_excluded:{domain} companion; reversible_pending is admissible solely for T1 emergency necessity and MUST resolve to reversible_excluded or the binding lapses	
+p3	2104	3.4.12	family	row_shape	evidence_screen	capacity_assurance	MUST	states		Any incapacitated attestation needs a capacity_assurance:reversible_excluded:{domain} companion; reversible_pending is admissible solely for the T1 provisional tier and MUST resolve to reversible_excluded or the binding lapses	
 p3	2112	3.4.12	family	moderation	erasure_route	moderation,slashing	is	states	3.1.9.2	Capacity misattestation adjudicates on moderation:capacity_misattestation and never fires slashing:* alone	
 p3	2115	3.4.12	family	reserved_prefix	signer_rule	capacity_assurance	MUST	states	3.4.11,3.4.7.1	capacity_assurance: is signed only by a key holding assure:capacity under a root the reader trusts; the subject MUST NOT sign it; a node refuses any other signer at admission, a consumer re-checks, a producer MUST NOT emit	
 p3	2115	3.4.12	family	reserved_prefix	signer_rule	capacity_assurance	MUST	states	3.4.11,3.4.7.1	The proposed steward MUST NOT sign capacity_assurance; a node refuses any other signer at admission	

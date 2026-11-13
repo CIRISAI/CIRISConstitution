@@ -224,9 +224,9 @@ Together these make the rule-(3) `delegates_to` proxy chain (`canonical_hash ∈
 These are **two distinct mechanisms**, not one:
 
 - **Rule-(3) `delegates_to` proxy** ([CC 2.4.1.1](#2.4.1.1) admission rule 3) — *ongoing* revocation authority for an un-enrolled subject. A federation-enrolled key (typically the agent holding data on behalf of the external party) carries `delegates_to(canonical_hash → agent_key, scope: [consent_revocation])`; the agent proxies revocation ([CC 2.4.1.1](#2.4.1.1)). The subject never enrolls; the agent acts for them indefinitely.
-- **`canonical_binding`** — *retroactive identity claim*. A now-enrolled federation key asserts "I AM the entity behind `canonical:sha256:{hex}`", binding past canonical-hash subject entries to its real identity. After an admitted `canonical_binding`, the formerly-un-enrolled subject can sign `withdraws` **directly** under rule (2) — the binding promotes the canonical-hash to a real key_id for admission purposes.
+- **`canonical_binding`** — *retroactive identity claim*. A now-enrolled federation key asserts "I AM the entity behind `canonical:sha256:{hex}`", binding past canonical-hash subject entries to its real identity. The binding is a claim consumers weigh, and it admits nothing by itself: it opens no `withdraws` under rule (2) ([CC 3.3.14](part_3_the_namespace.md#3.3.14)).
 
-`canonical_binding` is **NOT a new admission rule** (no "rule 5"). It composes: the binding is itself a `delegates_to`-shaped attestation (`delegates_to(canonical_hash → newly_enrolled_key, scope: [identity_binding])`) admitted because the enrolling key proves control of the preimage out-of-band. Once bound, rule (2) [direct subject revocation] becomes available to the bound key, and rule (3) [proxy] is no longer needed for that subject.
+`canonical_binding` is **NOT a new admission rule** (no "rule 5"). It is a bare `scores` row on `identity:canonical_binding:{canonical_hash}`, self-asserted by the enrolling key ([CC 3.3.14](part_3_the_namespace.md#3.3.14)). Proof that the key controls the preimage is the consumer's to weigh. Withdrawal for that subject stays the rule (3) proxy.
 
 #### 2.3.2.3 `subject_kind-payload` — `subject_kind` is a payload-level discriminator
 

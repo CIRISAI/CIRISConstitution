@@ -34,9 +34,11 @@ one slot that say different things contest each other, and neither counts until 
 **Standing, windows, copying and keys** (`seat.py`, `roles.py`, `window.py`, `route.py`, `keyplane.py`,
 checked by `check_lock.py`).
 
-- **The seat.** An offer and an acceptance, with the conferrer as one parameter. 2,727 sets in 587,536 arrival
+- **The seat.** An offer and an acceptance, with the conferrer as one parameter. 2,774 sets in 701,176 arrival
   orders, one answer each. `role_shapes.tsv` writes the 23 role names of the tables as parameters of three
-  shapes; 215 instance checks pass.
+  shapes; 222 instance checks pass. Over a community the founding record seats duty holders, who are equals
+  (CC 4.5.4): a duty seat is conferred by a strict majority of them or by the lone holder, and withdrawn by a
+  strict majority of the others, never on fewer than two voices.
 - **The window.** A receipt, a landing, and three rules for an answer concurrent with the landing, run against
   the self-roster lone path, the moderation fallback and the halt fuse. `window_adversary.tsv` is the table:
   recount breaks none of twenty checks.
