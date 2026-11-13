@@ -752,7 +752,7 @@ def t17(t):
     return dict(cls="CONCEDED", who="no adversary is needed: two honest keys acting concurrently; or one key that wants the slot empty",
                 witness="g(f1,f2 found) w1(f1 resigns) w2(f2 resigns), neither naming the other: no founder, and no row either can sign alone restores one. o1,o2(A binds K1 and K2 as owner): no owner.",
                 protects="KERNEL 6.2: 'The same kind on one slot: both or neither.' causal_order README: 'A contested slot may stay empty; nothing here ends a dispute.' "
-                         "'Exactly one' is kept as 'at most one'. 'Count still met' is kept by tips waiting. 'At least one' is kept by no rule and is not stated as a limit in KERNEL.md: it needs a window (a resignation that lands only if another founder remains) "
+                         "'Exactly one' is kept as 'at most one'. 'Count still met' is kept by tips waiting. 'At least one' is kept by no rule and is stated as a limit in KERNEL.md: it needs a window (a resignation that lands only if another founder remains) "
                          "or a restatement. With the founding signers no longer the object's own key for ever, an emptied founder set has no recovery inside the kernel.",
                 fix="")
 

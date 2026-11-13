@@ -18,7 +18,7 @@ sites, `formal/derivation`), or **open**.
 | own key | the key the node signs under |
 
 There is no trust set among the inputs. Who a node trusts is a fold over the rows its own key signed
-(CC 4.4.3.8). **proved**: `Causal.means_function`, `two_readers`, `no_own_edge_no_reach`.
+(CC 4.4.3.8). **proved**: `Causal.two_readers`, `no_own_edge_no_reach`.
 
 Config is not an input. A value that binds others is a row signed by whoever decided it. A value that binds
 only the node is a row under the node's own key. **measured**: 174 decision sites on the kernel's side read
@@ -41,14 +41,18 @@ results from one set (`formal/derivation/order/witnesses.tsv`).
 | Layer | Reads | Property |
 |---|---|---|
 | **kept** | the row alone, and whether the rows it names are kept | the least set closed under the door; the same in every arrival order; a row waits for what it names and is never refused for another row |
-| **concluded** | the row against its ancestors | one solution, negation and counts allowed; final once the row is kept |
+| **concluded** | the row against its ancestors | one solution, negation and counts allowed; final once the row is kept, for a rule that reads no row concurrent with it |
 | **derived** | conclusions over a set of rows | a function of the kept set, the node's key and, in one place, now |
 
-**proved**: `kept_is_least`, `door_any_order`, `concl_function`, `concl_final`, `concl_new_row`.
-**run**: 6,606 sets of up to six rows in 2,182,671 arrival orders, one answer each.
+**proved**: `kept_is_least`, `door_any_order`, `close_saturated`, `door_spec`, `door_perm`, `conclOf_unique`,
+`concl_final`, `concl_new_row`. That each layer is a function of the set it reads follows from how it is defined;
+the content is in these: the door stops and ends at one set in every order, and the conclusion has one solution.
+**run**: 6,606 sets of up to six rows in 2,182,671 arrival orders, one answer each. That is the bound the
+continuous build runs; `--bound 5` is a shorter run of the same check.
 
-Only the first two layers are final. A derived answer can be changed by a later row, and only by a row whose
-signer has standing on that answer's slot. **run**: after a counting cut, no other key changed a slot.
+Only the first two layers are final. A derived answer can be changed by a later row. **run**: after a counting
+cut on a slot, no key changed that slot but one that may cut it. A key whose standing has ended can still
+change what a reader with no acknowledgement of its own concludes (8a).
 
 ## 4. Operators
 
@@ -73,7 +77,7 @@ Eight. Each is a composition of the operators, and each role, window, policy and
 
 | Answer | Question | Layer |
 |---|---|---|
-| **state** | is this row live: admitted, withdrawn, recanted, superseded | concluded, with the order on kinds |
+| **state** | is this row live: admitted, withdrawn, recanted, superseded | derived: the order on kinds is read over rows concurrent on one target, so a later retraction changes it |
 | **stands** | does this key hold this relation over this object | derived: a bounded walk of live edges |
 | **tally** | is this count met, over the head it names | derived |
 | **may** | may this key do this act on this target; if not, which row is missing and who could sign it | derived |
@@ -89,7 +93,7 @@ ends it without a cut. One row is both voices only when a key seats itself. The 
 three values: the object's own key, a key holding a seat that may confer, or a group whose count is met. A key
 stands when a bounded walk of live seats leads to it from a root. For what a row means to this node the root is
 the node's own key. **proved**: `no_offer_no_seat`, `no_acceptance_no_seat`, `third_key_cannot_end`,
-`stands_function`, `means_is_seat_walk`. **run**: 2,727 sets in 587,536 arrival orders.
+`only_withdrawals_and_cuts_end`, `means_is_seat_walk`. **run**: 2,727 sets in 587,536 arrival orders.
 
 The 23 role names of the tables are not 23 things. **run** (`formal/causal_kernel/role_shapes.tsv`): the seat
 covers 18 of them, three are read off the row judged (`author`, `self`, `subject`), `winner` is a tally, and
@@ -123,9 +127,12 @@ read from the row alone against now.
 A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with the
 landing is **recounted**: it is counted with the landing's past, and the landing stands only if the table still
 gives the outcome it stated. **run** (`formal/causal_kernel/window_adversary.tsv`): against the three windows
-of the text, twenty checks of what each exists to prevent. Recount breaks none. A landing that voids concurrent
+of the text, twenty checks of what each exists to prevent. Recount breaks none. The check that a thief does
+not evict alone holds against an owner who signs anything inside the window; an owner who signs nothing
+looks lost. A landing that voids concurrent
 answers breaks seven, a thief evicting alone among them. An answer that contests any landing breaks two.
-**proved**: `Recount.dishonest_never_stands`, `stands_is_table_over_all_not_late`, `quorum_closed_final`, and
+**proved**: `Recount.dishonest_never_stands`, `stands_is_table_over_all_not_late`, and `quorum_closed_final` (a
+landing with a strict majority behind it is final where no key has answered both ways), and
 for the two rejected rules `ruleI_concluder_decides`, `ruleII_never_final`. What recount costs: a lone landing is never final against a key that can still sign, and the
 window's length is the concluder's own word.
 
@@ -139,10 +146,11 @@ window's length is the concluder's own word.
    it do not count; rows in its past stand; rows that name it are judged at the head they name. A removal is a
    cut on a key and a deciding row is a cut on a contest. **run**: 4,898 sets in 440,291 orders.
 5. **Equal standing.** Two cuts by keys of equal standing that undo each other stay contested. What settles it
-   is a voice the other cannot remove. So no slot that matters is held on one signature. **run**.
+   is a voice the other cannot remove. **run**. So no slot that matters may be held on one signature: that is a
+   requirement on the tables, and nothing yet checks them for it. **open**.
 
 A row of a removed key counts when the removal has it among its ancestors: something the removal can see had
-already named it. **proved**: `counts_function`, `sign_after_removal_never_counts`.
+already named it. **proved**: `only_removals_stop_counting`, `sign_after_removal_never_counts`.
 
 ## 7. The roster is the one ledger
 
@@ -150,9 +158,10 @@ A group's roster is a lineage: each version names the heads it extends and is co
 Every other row takes its place from the roster head it names. Nothing else is ordered.
 
 Two versions of one head wait. The roster is then the members common to all tips, until a version naming the
-tips makes one head again. **run**: over every set of versions an adversary below the count can cause, under
-eight counting protocols, the roster is a function of the set, no removed key is listed, and a removal naming
-an old head gains nothing.
+tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over every set of up to three
+versions an adversary below the count can cause, in three settings under two counting protocols, the roster is
+a function of the set, no removed key is listed, and a removal naming an old head gains nothing. Four further
+protocols were run once at the same bound and are not in the check.
 
 An adversary holding the count of an old head signs a valid version alone. A witnessed lineage answers that
 (CC 3.2 T6), and it is each reader's own trust that decides whose witnesses count.
@@ -247,12 +256,17 @@ What a private room does not give, each marked as the check marks it:
 ## 8a. Attacked
 
 `formal/causal_kernel/check_attacks.py` runs thirty-four attacks, thirty-three of them drawn from the published
-failures of comparable systems, as 126 scenarios in 116,943 arrival orders. **run**: twelve gain the attacker
-nothing, none gains what this page does not concede, sixteen are the limits below, and six cannot be expressed
-without a second implementation, a byte form, a storage model or a request protocol.
+failures of comparable systems, as 126 scenarios in 116,943 arrival orders: every order of a scenario of up to
+seven rows, and a fixed sample of a thousand above that. **run**: twelve gain the attacker nothing, none gains
+what this page does not concede, sixteen are the limits below, and six cannot be expressed without a second
+implementation, a byte form, a storage model or a request protocol. The class each attack must fall in was
+written by the authors of the rules, so this check confirms what they expected and is no independent test.
 
-Eight attacks did gain something before these rules were added. Each rule is part of the kernel, **run** and
-**proved** (`formal/causal_order/Harden.lean`, `Harden2.lean`, `Harden3.lean`):
+Eight attacks did gain something before these rules were added. Each rule is part of the kernel and **run**.
+Each is **proved** over the definitions of the earlier proof files (`formal/causal_order/Harden.lean`,
+`Harden2.lean`, `Harden3.lean`), within the limits that folder's README lists. One of them matters here: the
+reader's line is proved with the rejected rule of the next paragraph still inside its operator, so for that
+rule the proof and the code do not yet say the same thing. **open**.
 
 - a row of a key whose seat was ended counts in a window only if the ending row has it in its past;
 - a landing that does not stand says nothing against one that does;
@@ -296,6 +310,8 @@ What that leaves, each **run** with its witness:
 | History carried by a reply | any one member, by replying | intended carriage, row by row; cannot be undone |
 | One conferring seat seating many | one seated key whose seat may confer | one row seats any number of keys; ends with one withdrawal by its conferrer |
 | A line of several rows forged by a past count | keys that met the count at an old head, signing any number of rows | (a) a reader that acknowledged the honest head: nothing, the forged line is void whole (HOLDS for it). (b) a reader with none: plain tips-wait; no row is stale, the members are the keys common to the tips (the forger alone when it is on both lines), for good; a removed key is never listed |
+
+Four of the sixteen are forms of one attack, a fork signed by keys that once met a count.
 
 Two costs of the reader's line are stated here because no attack names them. An honest admission signed
 offline on an old head is behind the line of a reader that has acknowledged a newer head, so for that reader

@@ -48,7 +48,7 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.outsider_changes_no_cut`, `outsider_row_never_counts` | a row by a key with no entitlement on a slot changes no cut and never counts on it |
 | `Kernel.cannot_land_inside`, `ruleI_only_concluder_undoes`, `ruleII_never_final` | a window's landing cannot stand over an objection its signer acknowledged; under the rule taken only the concluder's own key undoes a landing; under the other rule any objector reopens any landing for ever |
 | `Kernel.Recount.dishonest_never_stands`, `stands_is_table_over_all_not_late`, `unnamed_gains_nothing` | under recount a landing that states an outcome its own past does not give never stands, and a landing stands only if it states the table's outcome over every answer that does not name it |
-| `Kernel.Recount.undone_only_by_counted_answer`, `naming_answer_changes_nothing`, `count_door_final`, `quorum_closed_final` | only a newly counted concurrent answer that moves the table undoes a landing; an answer naming the landing changes nothing; a landing with a strict majority behind it is final |
+| `Kernel.Recount.undone_only_by_counted_answer`, `naming_answer_changes_nothing`, `count_door_final`, `quorum_closed_final` | only a newly counted concurrent answer that moves the table undoes a landing; an answer naming the landing changes nothing; a landing with a strict majority behind it is final where no key has answered both ways |
 | `Kernel.Harden.F1.ended_keys_change_nothing`, `F2.rival_cannot_move` | rows by a key whose seat was ended, unseen by the ending, neither unseat nor rescue a landing; a landing that does not stand moves no outcome |
 | `Kernel.Harden.F3.no_replay`, `F4.proposer_cannot_end` | a cosignature in the past of a head is no voice for a row counted over that head; the proposer of a counted offer does not end it alone |
 | `Kernel.Harden.F5.no_single_founder_removes`, `removed_cannot_reseat`, `no_row_restores_a_founder` | among several founders one removes no other; a removed founder seats itself again by no row; and once every founder has withdrawn, no later row restores one |
@@ -72,6 +72,12 @@ An edge is withdrawn only by its own signer.
   and is proved here only for a removal.
 - A contested slot may stay empty; nothing here ends a dispute.
 - A window's length is not in the rows. No theorem says a landing came late enough.
+- A theorem named `…_function` says that an answer depends only on the set it is defined over, which follows
+  from its definition. The content is elsewhere: `door_perm`, `adm_perm`, `close_saturated`, `conclOf_unique` and
+  the theorems that say which rows can change an answer.
+- In `Harden3.lean` the reader's own line is defined with the rejected rule, a counted row leaving older acts
+  behind, still inside its operator. The kernel as it runs has no such rule. Until the reader's line is
+  restated without it, that proof and the code do not say the same thing.
 - The rules of `Harden` are proved over the definitions of the earlier files. The form of the kernel each
   attack succeeded against is a reconstruction, not an earlier version of the code. The refined seat that
   carries the founders' rule is not proved equal to the seat of `Seat.lean`.
