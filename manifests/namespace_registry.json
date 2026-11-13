@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "5375b610893ea104470642268380bf4de57e146bc81a0c8c29eb61c7e8597f5c",
+    "registry_sha256": "e1c82f0a0177782d1280de7cada3cf5235c86e3c8d09d71fbbc44c54404d6ad7",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "69e7072abaf834127329bdc5b8a3eb46234e0e2ae37bfe71febb0bf7c48eb4e9"
+    "source_sha256": "b22a698cc5125da6d6ed3c77dceb65f92b7c47495fde6536d8e65062f2a5e4b1"
   },
   "families": [
     {
@@ -3580,7 +3580,7 @@
     },
     {
       "cc_section": "3.1.9.2",
-      "description": "Reverse-quorum objection marker: a signed, roster-pinned vote on a pending act.",
+      "description": "Reverse-quorum objection marker: a signed, roster-pinned vote on a pending act (CC 2.7.5).",
       "owning_component": "node",
       "owning_repo": "CIRISNodeCore",
       "polarity": "signed",
