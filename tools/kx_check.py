@@ -352,6 +352,7 @@ def finish(res, agree, dis, ex, muts, tr):
     g, text = res["grammar"], res["text"]
     dw = T.dropped_words(g, text)
     return dict(res, status="reads_dropped" if dw else "ok", dropped=[w for w, _ in dw], why=[y for _, y in dw],
+                order_sites=kx.order_sites(kx.parse(res["kx"])),
                 labels=T.label_words(g, text), collisions=collisions(g, text, res["kx"], tr),
                 agree=agree, disagree=dis, examples=ex, mutants=len(muts), uncaught=sum(1 for m in muts if m[2] == 0))
 
@@ -427,12 +428,26 @@ def run_policy():
 
 
 # ------------------------------------------------------------------ the counts that may only fall
+REFERENCE = {"ORDER_BY_SIGNED_INSTANT", "ORDER_BY_DIGEST"}   # printed for reference; the _OWN/_CROSS split is gated
+
+
 def measures(results, counts, policy):
     ok = [r for r in results if r.get("status") in ("ok", "reads_dropped")]
     flagged = lambda fl: sorted({(r["grammar"], r["family"], r["text"]) for r in ok if fl in r["flags"]})
     m = {}
-    m["ORDER_BY_SIGNED_INSTANT"] = flagged("ORDER_BY_SIGNED_INSTANT")
+    m["ORDER_BY_SIGNED_INSTANT"] = flagged("ORDER_BY_SIGNED_INSTANT")      # reference totals, not gated
     m["ORDER_BY_DIGEST"] = flagged("ORDER_BY_DIGEST")
+    for kind, name in (("signed_instant", "ORDER_BY_SIGNED_INSTANT"), ("digest", "ORDER_BY_DIGEST")):
+        own, cross = set(), set()
+        for r in ok:
+            sites = [x for x in r.get("order_sites", []) if x[0] == kind]
+            if not sites: continue
+            key = (r["grammar"], r["family"], r["text"])
+            if all(o is True for _, _, o in sites): own.add(key)
+            else: cross.add(key + (",".join(sorted({mm for _, mm, o in sites if o is not True})),))
+        m[name + "_OWN"] = sorted(own)
+        m[name + "_CROSS"] = sorted(cross)
+    m["ORDER_UNDECIDED"] = sorted({(r["grammar"], r["family"], r["text"], mm) for r in ok for _, mm, o in r.get("order_sites", []) if o is None})
     m["CROSS_SIGNER_INSTANT"] = flagged("CROSS_SIGNER_INSTANT") + [("policy", c["row"], "counted_at=" + c["value"]) for c in policy["counted_at"] if "CROSS_SIGNER_INSTANT" in c["flags"]]
     arr = []
     for r in ok:
@@ -516,8 +531,20 @@ def main():
     for w, n in sorted(words.items(), key=lambda x: (-x[1], x[0])): print(f"            {n:3d}  {w}")
     pd = Counter(c["column"] for c in policy["dropped"])
     print("            policy cells not translated: " + ", ".join(f"{k} {v}" for k, v in sorted(pd.items())))
+    # plants for the split: one fold ordering two signers' rows by asserted_at, one ordering one signer's own
+    fg = TOOLS["fold_grammar"]; dparts = fg.parse(fg.DEFAULT)[0]["parts"]
+    for text, want in (("key=attested_key_id; pick=max(asserted_at)", False), ("key=attesting_key_id; pick=max(asserted_at)", True)):
+        parts = dict(fg.parse(text)[0]["parts"])
+        for k in ("reads", "cut"):
+            if k not in parts: parts[k] = dparts[k]
+        sites = [x for x in kx.order_sites(kx.parse(T.Tx(parts, "plant:x", None).build())) if x[0] == "signed_instant"]
+        got = bool(sites) and all(o is True for _, _, o in sites)
+        print(f"plant     made-up fold `{text}`: " + ("OWN" if got else "CROSS") + (", as it must" if got == want else ", wrong"))
+        if got != want: refusals.append(f"the made-up fold `{text}` was not counted {'OWN' if want else 'CROSS'}")
     print("counts    (may only fall; maxima in tools/kx_maxima.tsv)")
     for k, v in m.items():
+        if k in REFERENCE:
+            print(f"  {k:28s} {len(v):4d}  (reference total, not gated)"); continue
         mx = maxima.get(k)
         line = f"  {k:28s} {len(v):4d}" + (f"  max {mx}" if mx is not None else "  (no maximum recorded)")
         print(line)

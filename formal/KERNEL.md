@@ -95,8 +95,10 @@ The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`):
 
 | Count | Now |
 |---|---|
-| a cell orders rows by a signed instant | 116 |
-| a cell orders rows by a digest or a key id | 108 |
+| a cell orders rows of different signers by a signed instant | 28 |
+| a cell orders rows of different signers by a digest or a key id | 26 |
+| a cell orders one signer's own rows by a signed instant | 88 |
+| a cell orders one signer's own rows by a digest | 82 |
 | a cell compares the signed instants of two rows | 15 |
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
@@ -105,8 +107,15 @@ The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`):
 | a count over the set its own outcome changes | 11 |
 | a cell with a dropped word | 136 |
 
-The first two rows are the fold default, which most fold cells inherit. They contradict section 2 and are the
-largest piece of the tables still to convert. **open**.
+One voice may order its own rows. The fold default (CC 3.5.1) evaluates each signer's chain on its own: between
+two acts of one kind by one signer on one named row, the later signed instant wins and the lower row id breaks
+a tie. A signer who back-dates changes only what the signer itself says, so the last two rows are allowed and
+are counted only to keep them in view. The first two rows contradict section 2: they order rows of different
+signers by a value one of them chose. A cell counts as one signer's own only when its expression fixes the
+signer in the group it orders; any other cell counts as across signers. Seventeen families are in the first
+row, most because they state a key without the signer and inherit the default under it. A session is among
+them and is kept on purpose (section 5); its key does not yet show that its claimants are one person's keys.
+**open**.
 
 ## 5. Named answers
 

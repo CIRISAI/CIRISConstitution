@@ -50,6 +50,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CODE_ROOT = os.path.dirname(HERE)
 K = None
 FIELD_TYPES = {}
+SIGNER_MEMBERS = set()   # members that hold the row's own signer, or one self (kx_field_types.tsv column is_signer)
 EXT = {}          # which kernel_lib additions are present: sel(where=), group(val=callable), the()
 
 
@@ -67,12 +68,13 @@ def use_root(root, kernel=None):
     EXT["where"] = "where" in inspect.signature(K.sel).parameters
     EXT["callable_val"] = getattr(K, "COMPUTED_VALUES", False)
     EXT["the"] = hasattr(K, "the")
-    FIELD_TYPES.clear()
+    FIELD_TYPES.clear(); SIGNER_MEMBERS.clear()
     path = find(root, "formal/derivation/kx_field_types.tsv")
     if not os.path.exists(path): return K
     with open(path, encoding="utf-8") as f:
         for row in csv.DictReader((l for l in f if not l.startswith("#")), delimiter="\t"):
             FIELD_TYPES[row["member"]] = row["type"]
+            if (row.get("is_signer") or "").strip() in ("yes", "self"): SIGNER_MEMBERS.add(row["member"])
     return K
 
 # ------------------------------------------------------------------ lexer / parser
@@ -301,6 +303,93 @@ def fields_of(e):
             if x and x[0] == "path" and len(x[1]) >= 2: out.append(x[1][-1])
             for y in x[1:]:
                 if isinstance(y, (tuple, list)): w(y) if isinstance(y, tuple) else [w(z) for z in y]
+    w(e); return out
+
+
+# ------------------------------------------------------------------ whose rows an order ranks
+def order_sites(e):
+    """Every place the expression orders rows (least, greatest, lt_tuple) by a signed_instant or a digest/key, and
+    whether the set ordered is fixed to ONE signer. -> [(kind, member, own)], own True (every group is one signer's:
+    a member holding the signer is fixed across the group by an equality in the selection), False (the group is a
+    selection whose equalities fix no signer, over the rows held, a past or a named set), None (undecided: the set is
+    not a selection this reads)."""
+    out = []
+    def resolve(x, env, seen=0):
+        while x[0] == "path" and len(x[1]) == 1 and x[1][0] in env and seen < 20:
+            b = env[x[1][0]]
+            if b[0] != "expr": return x, env
+            x, env = b[1], b[2]; seen += 1
+        return x, env
+    def fixed(lam):
+        _, v, body = lam
+        conj = body[2] if body[0] == "call" and body[1] == "and" else [body]
+        mem = set()
+        for c in conj:
+            if c[0] == "call" and c[1] == "eq" and len(c[2]) == 2:
+                for a, b in (c[2], c[2][::-1]):
+                    pa = [p for p in _paths(a) if p[0] == v]
+                    if pa and not any(p[0] == v for p in _paths(b)):
+                        mem |= {p[-1] for p in pa if len(p) >= 2}
+        return mem
+    def own(S, env, depth=0):
+        S, env = resolve(S, env)
+        if depth > 12: return None
+        if S[0] == "path" and S[1] in (["held"],): return False
+        if S[0] == "call" and S[1] in ("past", "named"): return False
+        if S[0] == "call" and S[1] == "sel" and len(S[2]) == 2 and S[2][1][0] == "lam":
+            if fixed(S[2][1]) & SIGNER_MEMBERS: return True
+            return own(S[2][0], env, depth + 1)
+        return None
+    def kinds(v, var):
+        ks = []
+        for p in _paths(v):
+            if p[0] != var or len(p) < 2: continue
+            t = ftype(p)
+            if t == "signed_instant": ks.append(("signed_instant", p[-1]))
+            elif t in ("digest", "key"): ks.append(("digest", p[-1]))
+        return ks
+    def walk(x, env):
+        if not isinstance(x, tuple) or not x: return
+        t = x[0]
+        if t == "let":
+            walk(x[2], env); walk(x[3], {**env, x[1]: ("expr", x[2], env)}); return
+        if t == "first":
+            for c, v in x[1]:
+                if c != ("else",): walk(c, env)
+                walk(v, env)
+            return
+        if t == "lam": walk(x[2], env); return
+        if t != "call": return
+        name, args = x[1], x[2]
+        if name in ("least", "greatest") and len(args) == 2 and args[1][0] == "lam":
+            o = own(args[0], env)
+            for k, m in kinds(args[1][2], args[1][1]): out.append((k, m, o))
+        if name == "lt_tuple":
+            for a in args:
+                for p in _paths(a):
+                    if p[0] in env and env[p[0]][0] == "rowof":
+                        _, S, senv = env[p[0]]
+                        o = own(S, senv)
+                        t = ftype(p) if len(p) >= 2 else None
+                        if t == "signed_instant": out.append(("signed_instant", p[-1], o))
+                        elif t in ("digest", "key"): out.append(("digest", p[-1], o))
+        for a in args:
+            if a[0] == "lam" and args and name in ("sel", "least", "greatest", "count", "sum", "one", "min", "max", "every", "each", "setof"):
+                walk(a[2], {**env, a[1]: ("rowof", args[0], env)})
+            else:
+                walk(a, env)
+    walk(e, {})
+    return sorted(set(out), key=repr)
+
+
+def _paths(e):
+    out = []
+    def w(x):
+        if isinstance(x, tuple) and x:
+            if x[0] == "path": out.append(tuple(x[1])); return
+            for y in x[1:]:
+                if isinstance(y, tuple): w(y)
+                elif isinstance(y, list): [w(z) for z in y]
     w(e); return out
 
 
