@@ -538,12 +538,12 @@
   },
   {
    "id": "roster_in_group",
-   "title": "A roster is never listed outside its group",
+   "title": "A roster is never listed outside its group, a public room's excepted",
    "when": "The row is a version of a family's or a community's roster.",
-   "why": "The members of a group are the members' to know. The roster is placed at the group, so no reader outside it can list the members, and that holds for a public room too.",
+   "why": "The members of a group are the members' to know. The roster is placed at the group, so no reader outside it can list the members. A public room's roster is public, since a post is proved only with the rows that seat its author.",
    "basis": "text",
    "cc_ref": "CC 3.2",
-   "quote": "a roster is never enumerable outside its cohort, a public room's included",
+   "quote": "every other roster is never enumerable outside its cohort",
    "moves": {
     "placement": [
      "group:roster"

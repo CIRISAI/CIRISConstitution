@@ -491,7 +491,7 @@ The line is drawn at **"does it have a bounded membership roster?"** — yes →
 | **self / family** | `self`, `family` | encrypted, per-write DEK | **none** ([CC 5.2](part_5_transport_substrate.md) structural invisibility) | occurrences / family members |
 | **Community** | `community`, `affiliations` | **encrypted under the community DEK** | **none outside the roster**: `custody:ack:v1` within the cohort ([CC 3.1.3.3](part_3_the_namespace.md)) | community members (DEK cascade) |
 | **Commons** | `species`, `biosphere`, `federation` | **plaintext** | `custody:ack:v1` at federation scope — the holder directory | anyone |
-| **Public room** (`cohort_subkind: public`, [CC 3.2](part_3_the_namespace.md)) | `community` | **plaintext** (Commons tier, no DEK) | `custody:ack:v1` at federation scope; a `community:listing:v1` row | anyone on request: a non-member reads the content by asking a member's node; replicated to the roster's nodes on join ([CC 3.2](part_3_the_namespace.md)) |
+| **Public room** (`cohort_subkind: public`, [CC 3.2](part_3_the_namespace.md)) | `community` | **plaintext** (Commons tier, no DEK) | `custody:ack:v1` at federation scope; a `community:listing:v1` row | anyone on request: a non-member reads the content and the roster by asking a member's node; replicated to the roster's nodes on join ([CC 3.2](part_3_the_namespace.md)) |
 
 *Wire discovery: none* for `self` / `family` means none **outside** the cohort. Within it, a device's custody report for a blob (`custody:ack:v1`, `here` \| `none`, [CC 3.1.3.3](part_3_the_namespace.md)) is permitted, at the blob's own scope and replicated only to members — never to a non-member.
 

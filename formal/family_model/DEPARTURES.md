@@ -410,13 +410,13 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | governance | `membership:{stage}`, `moderation:{allegation_type}` |
 
-## A roster is never listed outside its group
+## A roster is never listed outside its group, a public room's excepted
 
 **When.** The row is a version of a family's or a community's roster.
 
-**Why.** The members of a group are the members' to know. The roster is placed at the group, so no reader outside it can list the members, and that holds for a public room too.
+**Why.** The members of a group are the members' to know. The roster is placed at the group, so no reader outside it can list the members. A public room's roster is public, since a post is proved only with the rows that seat its author.
 
-**Text.** CC 3.2: "a roster is never enumerable outside its cohort, a public room's included"
+**Text.** CC 3.2: "every other roster is never enumerable outside its cohort"
 
 | column | families |
 |---|---|

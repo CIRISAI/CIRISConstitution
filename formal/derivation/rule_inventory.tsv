@@ -793,7 +793,7 @@ p3	31	3.1.1	family	reserved_prefix	none	takedown_notice	is	states		The takedown_
 p3	31	3.1.1	family	signer	signer_rule	takedown_notice	is	states	4.5.5	For the legal bases a takedown_notice is signed by the duty holder under the 4.5.5 enforced-admission rule; steward_purge is cosigned by the trust root.	table
 p3	32	3.1.1	family	placement	placement	community	is	states	3.2	community:listing is a federation-scoped scores row for a public community.	table
 p3	32	3.1.1	family	row_shape	body	community	is	states		community:listing carries name, description, cohort_subkind, admission policy, named moderator and community_key_id; wire community:listing:v1.	table
-p3	32	3.1.1	kernel	roster_fold	replication	community	is	states		A roster is never enumerable outside its cohort; a listing names no roster and there is no member-level listing.	table
+p3	32	3.1.1	kernel	roster_fold	replication	community	is	states		A public room's roster is public and is read by asking a member's node; every other roster is never enumerable outside its cohort; a listing names no roster.	table
 p3	32	3.1.1	family	supersede	lifecycle	community	is	states		A community rename or policy change is a supersedes of the listing; one live row per community.	table
 p3	32	3.1.1	family	withdraw	lifecycle	community	is	states		Closing a community is a withdraws of its listing.	table
 p3	32	3.1.1	family	reserved_prefix	none	community	is	states		The community: stem is closed to the listing leaf.	table
@@ -1472,7 +1472,7 @@ p3	885	3.2	family	roster_fold	cosign_rule	membership,community	is	states		Under 
 p3	885	3.2	family	cosign	cosign_rule	membership	is	restates	3.1.3.2,5.3.3	The two-consents rule holds under open admission: the inviter's act is a standing offer, the joiner still signs	
 p3	885	3.2	family	admission_order	governance	community	MUST	states		open:self_admit is admissible only on a public community; an encrypted roster anyone may join is refused; any other protocol is invite-only	
 p3	887	3.2	family	row_shape	body	scores,community	is	states	3.1.1,4.4.3.7	Discovery is a federation-scoped scores row by the founder on community:listing:v1 carrying name, description, cohort_subkind, admission policy, named moderator, community_key_id; ranked by NodeCore votes	
-p3	887	3.2	kernel	audience	replication	community	MUST_NOT	restates		A roster is never enumerable outside its cohort, a public room's included; the listing names no roster	
+p3	887	3.2	kernel	audience	replication	community	MUST_NOT	restates		A public room's roster is public; every other roster is never enumerable outside its cohort; the listing names no roster	
 p3	887	3.2	family	announce	none	community	is	states		There is no community directory; a private community_key_id arrives out of band	
 p3	889	3.2	family	content_ingestion	evidence_screen	community	MUST	restates	1.13	Posting into a public room is publication: the perceptual-hash tripwire runs on the post as on a Commons promotion, never inside a private cohort or on the device	
 p3	891	3.2	kernel	moderation	none	community	MUST_NOT	states		CC admits no group ban; nothing bans a room mesh-wide	
@@ -3763,7 +3763,7 @@ p5	845	5.4.6	kernel	freshness	freshness	owner_binding	is	states		The seat-owner 
 p5	845	5.4.6	kernel	owner_binding	none	owner_binding	is	states		While no federation-scope owner-binding exists a seated node does not serve under the seat, refused serve_seat_owner_unannounced; the check is persist's and the server gates on it.	
 p5	845	5.4.6	mechanism	announce	none	owner_binding	is	states		A node that boots seated and owned but unannounced announces itself if its owner's key is present and otherwise raises an alarm.	
 p5	845	5.4.6	kernel	audience	replication	owner_binding	MUST_NOT	states	2.6.8	A node whose owner-binding is held only at self is reachable by the owner's nodes and v3-code holders, never listed; no directory, serve policy or read route enumerates it.	
-p5	845	5.4.6	kernel	roster_fold	replication	*	is	applies		A roster is never enumerable outside its cohort; re-signing the binding at federation scope is the opt-in.	
+p5	845	5.4.6	kernel	roster_fold	replication	*	is	applies		A roster other than a public room's is never enumerable outside its cohort; re-signing the binding at federation scope is the opt-in.	
 p5	845	5.4.6	kernel	minor_floor	placement	owner_binding	MUST_NOT	states	3.4.13	A node whose owner resolves to the minor band never carries a federation-scope owner-binding; admission refuses the promotion; the minor is reachable only on the derived plane; nothing lifts this.	
 p5	847	5.4.6	kernel	audience	replication	identity,owner_binding	is	states		A node offers an identity:occurrence:v1 row to a peer only when it would also relay the attester's federation-announced owner-binding; an unverifiable attester's row is withheld, not served to be refused.	
 p5	847	5.4.6	family	audience	replication	identity	is	applies	3.2	An agent attester's key carries a live steward binding and is relayable exactly when its owner-binding is announced, by the per-node rule, like any device of a person.	

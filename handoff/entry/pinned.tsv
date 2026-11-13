@@ -17,7 +17,7 @@ p5	`witness_relation` MUST be `self` for any local-tier write
 p3	a `withdraws` or `recants` naming a `key_grant` row is refused; once shared, always shared at the wire layer, and forward secrecy is by rotation
 p5	a node whose owner resolves to the `minor` band MUST NOT carry a federation-scope owner-binding
 p3	a record of your own reasoning, consent, ownership or configuration must not be anyone else's
-p3	a roster is never enumerable outside its cohort, a public room's included
+p3	A public room's roster is public and is read by asking a member's node; every other roster is never enumerable outside its cohort
 p2	a row is admitted only once its signer's key-claim row is held
 p6	a row whose signed `for_key_id` names one recipient is held by the author's node and the recipient's node and by no other
 p3	a verdict about you must not be yours
