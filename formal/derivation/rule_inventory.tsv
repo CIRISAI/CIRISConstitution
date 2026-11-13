@@ -764,6 +764,24 @@ p2	918	2.6.9	foundation	conformance	none	*	is	states		BCP 14 key words bind only
 p2	922	2.6.9.1	foundation	conformance	none	*	is	states	2.4,2.1,3.1,2.6.1,2.6.2,3.5,3.4,4.4,5.3,1.7	The normative surface is the wire format and conformance surface (primitives, envelope fields, namespace, canonicalization, precedence, reservations, policies, endpoints, keyworded statements); conformance is judged against nothing else	
 p2	923	2.6.9.1	foundation	conformance	none	*	is	states	1.13.1	Informative framing adds no conformance obligation; an implementer who rejects the philosophy but is wire-correct conforms	
 p2	925	2.6.9.1	foundation	conformance	none	*	is	restates	5.2,1.13.3,1.7	Where framing has a wire consequence it is restated as a normative rule in its own section; keywords and the 1.7 surface govern and informative prose never overrides them	
+p2	1085	2.7.2	kernel	admission_order	none		is	states		judging each row as it arrives against what was admitted so far is not a function of the rows; the kernel reads only what a row names	
+p2	1099	2.7.3	kernel	admission_order	none		is	states		after a counting cut on a slot no key changes that slot but one that may cut it	
+p2	1117	2.7.4	kernel	admission_order	none		is	states		a reduce over a tie between two different rows concludes nothing for the group and never breaks the tie by position	
+p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing whose own past does not give the outcome it states concludes nothing	
+p2	1150	2.7.5	kernel	policy_row	none		is	states		an answer concurrent with a landing is recounted with the landing's past; the landing stands only if the table still gives its stated outcome	
+p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing that does not stand says nothing against a landing that does	
+p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing with a strict majority behind it is final where no key has answered both ways	
+p2	1154	2.7.5	kernel	expiry	none		is	states		the kernel has two notions of time: a row's own stated end read against now, and a window with a landing	
+p2	1160	2.7.6	kernel	consent_fold	none		is	states		the four family shapes are labels over two mechanisms, consent and the door	
+p2	1160	2.7.6	kernel	consent_fold	none		is	states		content is carried by consent: its audience is read off roster heads and naming rows, its life is the state answer	
+p2	1160	2.7.6	kernel	consent_fold	none		is	states		a claim means to a reader the reader's own one-voice consents walked from the reader's key	
+p2	1167	2.7.7	kernel	admission_order	none		is	states		two concurrent rows of the same kind on one slot: both count or neither does; no rule that cannot tell them apart picks one	
+p2	1168	2.7.7	kernel	admission_order	none		is	states		a row that names both concurrent rows may decide between them	
+p2	1170	2.7.7	kernel	admission_order	none		is	states		two cuts by keys of equal standing that undo each other stay contested until a voice the other cannot remove settles them	
+p2	1174	2.7.7	kernel	cosign	none		is	states		a cosignature is a voice only for a row counted over a head the cosignature itself names	
+p2	1174	2.7.7	kernel	standing	none		is	states		an offer conferred by a count is ended by its holder or by a count, never by its proposer alone	
+p2	1174	2.7.7	kernel	roster_fold	none		is	states		a counted row counts only if every counted row it is built on counts	
+p2	1186	2.7.8	kernel	key_plane	none		is	states		each write and each mint names the head of the membership rows the writer held, so the writer's key state is a fold over its own rows	
 p3	11	3.1	stewardship	other:family-registration	none	*	is	states	3.1.1	Each dimension family is registered once, under one owning component that commits to it.	
 p3	11	3.1	stewardship	amendment	none	*	is	states		The generated registry manifest is the count of record for families; a count restated in prose is never read as authoritative.	
 p3	11	3.1	stewardship	other:family-registration	none	*	is	states	3.1.10	Owning components commit to their families in their own mission statements; CIRISBench is catalogued without one.	
