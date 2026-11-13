@@ -163,13 +163,17 @@ of 459 transitions, and "receive" is not yet a verb of the table.
 to send is what lies among the ancestors of what the peer must conclude, within the row's audience. This is
 the closure a store already computes for its own retention, evaluated for the other party. **run** (`formal/causal_kernel/route.py`): a
 party given only its routed rows concludes the same as a party given everything, and a stranger is routed
-nothing. That holds only with one rule added: a row's audience includes the audience of every row that names
-it. Without it a joiner can never keep its own admission. With it, a reply carries the message it answers to a
-later joiner. That carriage of content is intended (CC 3.1.3.2). What must not travel is proof of who said it or
-of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
+nothing. That holds only with one rule added: a row carries its audience to the rows it names, when it is
+concluded, sits in the same room and its signer is already in the named row's audience. Without it a joiner can
+never keep its own admission. With it, a reply carries the message it answers to a later joiner. A row leaves
+its room only by its own signer's act: a row that names it from another room carries it only when the same key
+signed both (CC 5.2). No member carries another member's signed row out. **proved** (`Carry.lean`):
+`nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged`. The cost: a cut
+that names a row of another room waits until that row's signer carries it. What must not travel is proof of
+who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
 is empty. Of 184 families, 147 take the one default, the scope each row carries with the audience CC 5.2 gives
 it, and 21 are placed by a sentence of their own. **open**: the default is stated once for all families and is
-checked for none of the 147. The copy rule is a row of that table, and the text states it for a reply only.
+checked for none of the 147. The copy rule is a row of that table.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
 the close. A window names its opener and the acknowledgement by which the concluding party first held it. The
@@ -284,7 +288,7 @@ the accord's rule that a removed holder no longer fires needs a latch at the nod
 function of the rows, and the parameters for removing a key from a voice are guessed.
 
 A public room's roster is public (CC 3.2). A post is proved outside the room only with the rows that seat its
-author, and a row carries what it names. So an audience is the members of a roster, everyone, or one named key.
+author, and anyone who asks a member's node reads them. So an audience is the members of a roster, everyone, or one named key.
 An invitation goes to a key the roster's open offer names.
 
 ## 7a. A writer's keys are a fold
@@ -375,8 +379,8 @@ What a private room does not give, each marked as the check marks it:
 
 `formal/causal_kernel/check_attacks.py` runs thirty-four attacks, thirty-three of them drawn from the published
 failures of comparable systems, as 126 scenarios in 116,943 arrival orders: every order of a scenario of up to
-seven rows, and a fixed sample of a thousand above that. **run**: twelve gain the attacker nothing, none gains
-what this page does not concede, sixteen are the limits below, and six cannot be expressed without a second
+seven rows, and a fixed sample of a thousand above that. **run**: thirteen gain the attacker nothing, none gains
+what this page does not concede, fifteen are the limits below, and six cannot be expressed without a second
 implementation, a byte form, a storage model or a request protocol. The class each attack must fall in was
 written by the authors of the rules, so this check confirms what they expected and is no independent test.
 

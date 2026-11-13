@@ -978,12 +978,12 @@ def t26(t):
                    memA == {"A", "B"} and "C" in memB and need == {"h", "x"})
     S = conc(full, ROUTE)
     own, closed = RT.audience(S, "own"), RT.audience(S, "closed")
-    t.fact("is B in the audience of h? by h's own head: %s; by carriage: %s (the removal is concluded and its signer A is in h's audience, so any holder may serve h to B)" % ("B" in own["h"], "B" in closed["h"]),
-           "B" not in own["h"] and "B" in closed["h"])
+    t.fact("is B in the audience of h? by h's own head: %s; by carriage: %s (h is a row of another room and A did not sign it, so the removal that names it carries it to nobody)" % ("B" in own["h"], "B" in closed["h"]),
+           "B" not in own["h"] and "B" not in closed["h"])
     return dict(cls="CONCEDED" if split else "HOLDS", who="the signer of the cut (a key with standing on the slot), or any relay, by omission",
                 witness="x(A+B remove C, naming h, a row of another room that A serves to nobody). A and those it serves: C is out. B: the removal is offered but never kept, C stays a member, and every row that names x waits too.",
                 protects="KERNEL 3: 'a row waits for what it names'; KERNEL 8: 'Two nodes with the same rows conclude the same' and nothing more. The attacker gains only what not sending the cut at all would give. "
-                         "It lasts as long as the row is withheld; `missing` names it, and carriage puts B in its audience so any holder may serve it.",
+                         "It lasts as long as the row is withheld; `missing` names it. A row cited from another room is carried only by its own signer, so a cut that names one waits until that signer carries it.",
                 fix="")
 
 
@@ -1064,18 +1064,18 @@ def t28(t):
     ms1, ms2 = RT.measure(RT.world()), RT.measure([x for x in RT.world() if x["id"] not in ("xc", "x", "m4", "m5", "k4")] + [RT.REPLY])
     differ = sum(len(x["differ"]) for x in ms1.values()) + sum(len(x["differ"]) for x in ms2.values())
     t.fact("a party given only its routed rows still concludes what a party given everything does (conclusions that differ: %d)" % differ, differ == 0)
-    cross = t.fact("carriage to ANOTHER group: A, a member of g and of g2, names m1 (a message of g) from a row it writes in g2. The row is concluded in g2 and A is in m1's audience, so g2's member Y enters the audience of m1: %s; "
+    cross = t.fact("no carriage to ANOTHER group by another's hand: A, a member of g and of g2, names m1 (a message of g that A did not sign) from a row it writes in g2. g2's member Y enters the audience of m1: %s; "
                    "and of the rows m1 names, down to g's founding row: %s" % (got["member A names m1 from a row of another room g2"], got["  ...and the founding row of g travels to g2 with it"]),
-                   got["member A names m1 from a row of another room g2"] and got["  ...and the founding row of g travels to g2 with it"])
+                   not got["member A names m1 from a row of another room g2"] and not got["  ...and the founding row of g travels to g2 with it"])
     S = RT.state_of(rows + [ST.offer("g2", "C", ("C", "Y"), "member", "@", "self", cosigners=("Y",), room="g2"), RT.msg("z1", "C", "g2", ("g2",), names=("m2", "m5"))])
     a = RT.audience(S)
-    t.fact("a REMOVED member can still carry, to a group of its own, a row it was in the audience of (m2, from its time: %s), and not one it never was (m5: %s)" % ("Y" in a["m2"], "Y" in a["m5"]), "Y" in a["m2"] and "Y" not in a["m5"])
+    t.fact("a signer carries its OWN row to a group of its own, removed or not (m2, which C signed: %s), and no row another signed (m5: %s)" % ("Y" in a["m2"], "Y" in a["m5"]), "Y" in a["m2"] and "Y" not in a["m5"])
     ok = all(v for _, v in t.facts)
-    return dict(cls="CONCEDED" if ok and cross else "BROKEN", who="a key already in the row's audience: a member, or a former member for the rows of its time",
-                witness="g2(A and Y) z1(A, in g2, naming m1 of g). Y is routed m1 and, because the door wants what m1 names, g's founding row with its roster. Nothing in g records that it happened; z1 is a row of g2.",
+    return dict(cls="HOLDS" if ok and cross else "BROKEN", who="nobody but the row's own signer",
+                witness="g2(A and Y) z1(A, in g2, naming m1 of g, which B signed). Y is routed nothing of g. A row of g travels to g2 only when its own signer names it there.",
                 protects="Ruled by the owner: 'a reply carries what it answers'. route.py: a naming row carries its audience only if it is concluded and its signer is already in the named row's audience, "
-                         "so a digest alone gives nothing to an outsider, a removed member or a joiner. What a key can read it can carry, to a later joiner or to another group, and the carriage brings the named row's ancestry (the roster rows) with it. "
-                         "It cannot be undone; the group's recourse is against the member. Restricting carriage to one room would close the cross-group case and make test 26 permanent for a row cited from another room.",
+                         "so a digest alone gives nothing to an outsider, a removed member or a joiner. Carriage stays inside one room, and a row leaves its room only when its own signer names it from elsewhere (Carry.lean). "
+                         "The cost is test 26: a cut that names a row of another room waits until that row's signer carries it.",
                 fix="")
 
 

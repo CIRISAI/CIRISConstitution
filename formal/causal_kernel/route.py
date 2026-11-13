@@ -17,6 +17,8 @@ that makes the door and the audience agree: a row carries its audience to the ro
 concluded and its signer is already in the audience of the row named. So an admission carries the joiner to the
 founding rows it names, and a member's reply carries what it answers to a later joiner. A row by a key outside the
 named row's audience, or a row that concludes nothing, carries nobody: knowing a digest gives no access.
+Carriage stays inside one room: a row that names another from a different room carries it only when the same key
+signed both (formal/causal_order/Carry.lean). `any_member` is the rule without that clause, kept for comparison.
 Both are run and the difference is reported.
 """
 import os
@@ -98,6 +100,9 @@ def audience(S, how="closed", by_arrival=False):
         changed = False
         for i in S.by:
             for d in namers[i]:
+                r = S.by[i]
+                if how != "any_member" and not (d.get("room") == r.get("room") or d["signer"] == r["signer"]):
+                    continue                                # a row leaves its room only by its own signer's act
                 if S.C.get(d["id"]) and d["signer"] in aud[i] and not aud[d["id"]] <= aud[i]:
                     aud[i] = aud[i] | aud[d["id"]]; changed = True
     return aud

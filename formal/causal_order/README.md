@@ -29,7 +29,7 @@ rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window
 and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
 `Harden3.lean` (the rules added after the kernel was attacked), and `SeatG.lean`, `Terms.lean`, `Reader.lean`,
 `Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads), and
-`Consent.lean` (the one act beneath the seat). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+`Consent.lean` (the one act beneath the seat) and `Carry.lean` (a row leaves its room only by its own signer's act). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -47,6 +47,7 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.Consent.silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end` | a relation stands when every voice it binds has consented; nobody is bound by the rows of others, rows by an unbound voice change nothing, and only a bound voice's own withdrawal or a cut ends it |
 | `Kernel.Consent.one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands` | with one voice bound one row is enough; with two it is two rows, one naming the other, in either order; the seat conferred by one key is exactly that act with the conferrer's row first |
 | `Kernel.Consent.count_needs_holder`, `one_voice_is_not_a_count`, `nonmember_rows_change_nothing`, `only_members_withdraw`, `count_of_one_is_one_row` | where a body places a duty its consent is a count of its members' rows; the holder's own row is still needed, rows by one voice are never a count of two, non-members change nothing, only a member's own withdrawal lowers the count, and a body of one is the one-key case |
+| `Kernel.Carry.nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged` | a naming row carries only from the same room or under the named row's own signer; then no key outside a room's own audiences is in the audience of its rows unless an author carried a row of its own out, rows by others elsewhere change no audience, and inside one room the rule is the earlier one |
 | `Kernel.offer_withdrawal_ends`, `acceptance_withdrawal_ends`, `third_key_cannot_end`, `only_withdrawals_and_cuts_end` | either side ends a seat alone by its own withdrawal; no third key ends it without a cut |
 | `Kernel.stands_function`, `stands_mono`, `means_is_seat_walk` | standing is a bounded walk of live seats and a function of the set; it grows with offers and acceptances and shrinks only with withdrawals and cuts; what a row means to a reader is that walk from the reader's own key |
 | `Kernel.cut_status_function`, `unique_when_uncontested`, `two_cuts_contested`, `winner_counts` | each cut counts, is void or is contested, as the least solution of its equations; two concurrent cuts that undo each other are both contested, and a row naming both settles it |
@@ -116,5 +117,5 @@ An edge is withdrawn only by its own signer.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run: `bash formal/causal_order/build.sh`. It compiles the thirteen files in order and exits on a compile error,
+Run: `bash formal/causal_order/build.sh`. It compiles the fourteen files in order and exits on a compile error,
 a `sorry`, or an axiom beyond the three of core Lean.

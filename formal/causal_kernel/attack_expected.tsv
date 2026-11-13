@@ -24,9 +24,9 @@ test	name	class	who_can_still_do_it	bound	stated_in_kernel_md	where
 23	Root backdating	HOLDS	nobody (a creator that seats others and not itself keeps the conferrer's voice)	closed: founding signers are not the object's own key against each other; a proposer's lone withdrawal ends nothing	-	-
 24	Two implementations, one row	NOT EXPRESSIBLE	-	one implementation, no byte form	-	-
 25	Parent-count and head-count exhaustion	NOT EXPRESSIBLE	-	no stated limit, no storage model	-	-
-26	Withheld ancestor	CONCEDED	the cut's own signer, or a relay, by omission	as long as the row is withheld; any holder may serve it	yes	KERNEL 8a
+26	Withheld ancestor	CONCEDED	the cut's own signer, or a relay, by omission	as long as the row is withheld; a row cited from another room is carried only by its own signer	yes	KERNEL 8a
 27	Duplication and spurious cuts	CONCEDED	any key at all, one signature a row	no answer moves; storage and read time grow without a bound in the kernel	yes	KERNEL 8a
-28	Audience widening by naming	CONCEDED	a key already in the row's audience (a member, or a former member for rows of its time)	intended carriage: to a later joiner or to another group, with the named row's ancestry; cannot be undone	yes	KERNEL 8a
+28	Audience widening by naming	HOLDS	nobody but the row's own signer	carriage stays inside one room; a row leaves only when its own signer names it from elsewhere	yes	KERNEL 8a
 29	Acknowledgement metadata	NOT EXPRESSIBLE	-	no envelope format	-	-
 30	`missing` as an oracle	NOT EXPRESSIBLE	-	no request protocol	-	-
 31	Removed member and concurrent keys	NOT EXPRESSIBLE	-	the key plane is one chain	-	-

@@ -4,7 +4,7 @@
 # scope: the audience of one cohort_scope and what a node outside it learns, each quoting its line of the CC 5.2 table. The seven scopes appear once each.
 #   public_room yes marks the line for a community that is a public room: the audience is the same, and more is read on request.
 # reach: who a row reaches because it names them. moves: when a row within a peer's audience moves to that peer.
-# copy: whose audience a row joins because another row names it. The text states this for a reply. It does not state it for every naming row.
+# copy: whose audience a row joins because another row names it.
 rule	when	public_room	placement	audience	outside	cc_ref	quote
 default	*	-	self_collective | targeted_family | targeted_room | commons	the emitter, for each row	-	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
 scope	self	no	self_collective	the owner's own nodes	nothing, not even that the content exists	CC 5.2	| `self` | the owner's own nodes | nothing, not even that the content exists |
@@ -18,4 +18,4 @@ moves	in_audience	-	-	the row may be served to a node, not that it is sent	-	CC 
 moves	requested	-	-	the peer itself pulls for a subject or a dimension	-	CC 5.2	| requested | the peer itself pulls for a subject or a dimension ([CC 5.3.2.4.4](#5.3.2.4.4)); an automatic diff is not a request |
 moves	required	-	-	the peer must hold it to seal, address and take part	-	CC 5.2	| required | the peer must hold it to seal, address and take part: the consent-free set of [CC 5.4.6](#5.4.6) and the rows of the cohorts it belongs to |
 moves	appropriate	-	-	its audience names the peer	-	CC 5.2	| appropriate | its audience names the peer: it is addressed to the peer, is about it, or is placed in a cohort it is in,
-copy	reply	-	-	a row's audience includes whoever receives a reply to it	-	CC 3.1.3.2	A reply carries the row it answers to whoever receives the reply, and that carriage of content is intended.
+copy	*	-	-	a row's audience includes that of a concluded row naming it from the same room, or signed by the same key, whose signer is already in its audience	-	CC 5.2	A row carries its audience to the rows it names, when it is concluded, sits in the same room as the row it names, and its signer is already in that row's audience.
