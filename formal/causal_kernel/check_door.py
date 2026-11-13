@@ -12,7 +12,9 @@ claims, over every arrival order of bounded generated worlds, each with a mutati
   3  the two-path rows' published vectors replayed on the door's table
   4  time: G3 (an act signed before its signer's delegation was withdrawn) under the cut by causal past; the
      invitation's `acceptance asserted_at <= expires_at` against the door's window
-  5  who concludes, with which row, and the late answer, as each door reads them from manifests/reactions.json; the
+  5  who concludes, with which row, and the late answer, as each door reads them from manifests/reactions.json; what
+     the opening row is while its window is open (the `while` entries), and a rewritten while entry that must change
+     the halt's state; the quotes of formal/derivation/door_text.tsv, and a changed quote that must be refused; the
      count of parameters no table states; a rewritten land entry that must change the halt's answer; doors.tsv current
 
 python3 -I check_door.py            compares every (instance, property, verdict) with door_expected.tsv; exit 1 on any
@@ -54,10 +56,10 @@ def cast(name):
     s = D.DOORS[name]
     counted = s["counted"]
     keys = {"producer": ("P",), "decider": ("DC",), "subject": ("S",), "pair": ("op", "wa"), "resolve_deferral": ("WA",)}.get(counted, tuple("m%d" % i for i in range(1, NK + 1)))
-    target = {"self_roster_evict": "m2", "accord_halt@node": "N", "accord_halt@holder": "N", "accord_halt@node+late_closed": "N", "invitation": "J",
+    target = {"self_roster_evict": "m2", "accord_halt@node": "N", "accord_halt@holder": "N", "accord_halt@node+late_closed": "N", "invitation": "J", "community_invite": "J",
               "takedown_withhold": "H", "retirement_objection": "A", "deletion_sla": "P", "community_remove[unanimous]": "m3",
               "community_remove[majority]": "m3", "community_remove[quorum]": "m3", "moderator_recall": None,
-              "accord_halt@node+late_closed": "N", "community_invite+invitee": "J"}.get(name)
+              "accord_halt@node+late_closed": "N", "community_invite-invitee": "J"}.get(name)
     scopes = [x for x in (s["opener"], s["concluder"]) + tuple(s["extra"]) if x not in (counted, "target", "winner")]
     return keys, target, list(dict.fromkeys(scopes))
 
@@ -68,6 +70,7 @@ def setup(name, n=None):
     keys, target, scopes = cast(name)
     if n: keys = tuple("m%d" % i for i in range(1, n + 1))
     rows = [ST.offer("g", keys[0], keys, s["counted"], "@", "self", cosigners=keys[1:])]
+    if s.get("declared"): rows[0] = dict(rows[0], protocol=s["declared"])          # the group's founding row declares its protocol
     seat_of = {}
     for i, sc in enumerate(scopes):
         k = {"moderate": "MOD", "review": "REV", "takedown": "TK", "substrate": "SUB", "author": "AU", "subject": "S", "decider": "DC", "deferring": "AG"}.get(sc, sc.upper())
@@ -90,7 +93,7 @@ def worlds(name):
     p = WN.opener("p", op, D.key(name), "g", (base[-1]["id"],), target=target)
     answerers = [k for k in keys if s["kind"] != "ranked" or True]
     answerers += [seat_of[x] for x in s["extra"]]
-    if s.get("target_votes") and target: answerers.append(target)
+    if target and (s.get("target_votes") or target_voice_cell(s)): answerers.append(target)
     answerers = list(dict.fromkeys(a for a in answerers if a != op or s["kind"] in ("ranked", "tally") or name == "moderation_action"))
     if s["kind"] in ("ranked", "tally"): answerers.append(keys[0])      # one person with a second ballot
     kinds = BALLOTS if s["kind"] == "ranked" else s["kinds"]
@@ -112,15 +115,47 @@ def worlds(name):
     notes = [None, "named", "conc"] if s.get("silent") else [None]
     out = []
     joiners = [None, "named", "conc"] if name in ("moderation_overturn", "community_invite", "default_standing") else [None]
+    ops = [op] + (["X"] if s["kind"] == "seat_act" else [])          # a key outside the seat tries the act
     for choice in itertools.product(opts, repeat=len(answerers)):
       for jn in joiners:
         for note in notes:
             for c in concl:
                 for sy in ([x for x in says if x == "winner:" + c] if s["concluder"] == "winner" else says):
                     for el in (False, True):
-                        out.append({"door": name, "ans": tuple((a, ch[0], ch[1]) for a, ch in zip(answerers, choice) if ch),
-                                    "note": note, "L": (c, sy, el), "op": op, "target": target, "joiners": jn})
+                        for o in ops:
+                            out.append({"door": name, "ans": tuple((a, ch[0], ch[1]) for a, ch in zip(answerers, choice) if ch),
+                                        "note": note, "L": (c, sy, el), "op": o, "target": target, "joiners": jn})
     return out
+
+
+def target_voice_cell(s):
+    """The policy row's own target_voice cell, read here apart from door.py (a mutation may make door.py ignore it)."""
+    return D.POLICY.get(s["policy"], {}).get("counted", {}).get("target_voice", {}).get("value") == "yes"
+
+
+# what the opening row is while its window is open, as the text says it (independent of the manifest door.py reads)
+TEXT_OPEN = {"accord_halt": ("in_force", "CC 4.2.1.1: it fires on receipt"), "moderation_action": ("pending", "CC 4.5.13: the window governs only the fallback"),
+             "harm_report": ("pending", "CC 4.5.13: each node reads the removal from the closed window"),
+             "takedown_withhold": ("in_force", "CC 4.5.3: every holder withholds from its own receipt"),
+             "invitation": ("pending", "CC 3.1.3.2: the widening is the only door that adds anyone"),
+             "self_roster_add": ("pending", "CC 3.3.6.3: an addition is a proposal"),
+             "accord_roster_change": ("pending", "CC 4.2.6: until W has closed the named holder remains")}
+
+
+def text_open(name):
+    return TEXT_OPEN.get(name.split("@")[0])
+
+
+def declared_met(kind, yes, keys, target, floor):
+    """The count of a declared protocol (consensus_protocols.tsv, CC 3.3.4) over the keys, apart from door.py."""
+    y = set(yes) & set(keys)
+    if kind == "unanimous":
+        nt = set(keys) - {target}
+        return nt <= y and 2 * len(y & nt) > len(keys)
+    if kind == "majority": return 2 * len(y) > len(keys) and len(y) >= floor
+    if kind.startswith("quorum"): return len(y) >= max(2, floor)
+    if kind == "all": return y >= set(keys)
+    raise ValueError(kind)
 
 
 def rows_of(w):
@@ -204,6 +239,8 @@ def ref(w):
         y = (tally(w, "assent") | {w["op"]}) & set(keys)
         if 2 * len(y) > n: return "landed"                                                            # over the full seated roster
         return "cancelled" if el else "open"
+    if s["kind"] == "seat_act":
+        return "released" if w["op"] in keys else None                                                  # one row of the seat
     if name == "deferral":
         said = {k for _, k, _ in w["ans"]}
         if len(said) == 1: return next(iter(said))                                                    # the seat's one answer
@@ -254,6 +291,21 @@ def props(name):
         if name == "self_roster_add":
             P.append(("a strict majority of the others objecting is not overridden by a lone landing", "CC 3.3.6.3 cancel",
                       lambda w, o: None if len(tally(w, "object", {"m2", "m3"})) < 2 else o != "landed"))
+    if s.get("declared"):
+        fl = 2 if name.startswith("community_remove") else 1
+        dk = s["declared"].split(":")[0]
+        P.append(("acts only when the protocol the founding row declares is met (%s)" % dk, "CC 3.3.4; consensus_protocols.tsv",
+                  lambda w, o: None if o not in ("removed", "landed") else declared_met(dk, tally(w, "assent") | {w["op"]}, keys, w["target"], fl)))
+        P.append(("the declared count, named by the landing, acts (%s)" % dk, "CC 3.3.4; consensus_protocols.tsv",
+                  lambda w, o: None if not declared_met(dk, tally(w, "assent", None, ("named",)) | {w["op"]}, keys, w["target"], fl)
+                  or L(w)[1] not in ("removed", "landed") else o == L(w)[1]))
+    if name == "community_invite":
+        P.append(("the invitee's own yes is the floor's second voice: the proposer and the invitee land it at the close", "CC 4.5.13 target_voice cell",
+                  lambda w, o: None if not tally(w, "approve", {w["target"]}, ("named",)) or tally(w, "object") or len(tally(w, "approve")) != 1
+                  or w.get("joiners") or L(w)[1:] != ("landed", True) else o == "landed"))
+    if s["kind"] == "seat_act":
+        P.append(("a key outside the seat opens no seal", "CC 3.4.7 the seal", lambda w, o: None if o != "released" else w["op"] in keys))
+        P.append(("the seat's one row opens the seal", "CC 3.4.7 the seal", lambda w, o: None if w["op"] not in keys or L(w)[1] != "released" else o == "released"))
     if name.startswith("community_remove"):
         P.append(("no single key removes a member", "CC 4.5.13; community_remove note",
                   lambda w, o: None if o != "removed" else len(tally(w, "assent") | {w["op"]}) >= 2))
@@ -352,6 +404,15 @@ def props(name):
     return P
 
 
+def force_props(name):
+    """What the opening row is while its window is open: (label, source, predicate(w, outcome, state))."""
+    t = text_open(name)
+    if not t: return []
+    want, src = t
+    return [("while its window is open the opening row is %s at the node holding it" % want.replace("_", " "), src,
+             lambda w, o, st: None if o != "open" else st == want)]
+
+
 def recount_ok(w, o):
     """Recount.stands_is_table_over_all_not_late against the independent reference."""
     r = ref(w)
@@ -363,7 +424,7 @@ MUTATION = {
     "default_content": ("no_floor", "silence lands on the proposer alone"),
     "default_standing": ("no_floor", "silence lands on the proposer alone"),
     "community_invite": ("no_floor", "silence lands on the proposer alone"),
-    "community_invite+invitee": ("no_floor", "silence lands on the proposer alone"),
+    "community_invite-invitee": ("no_floor", "silence lands on the proposer alone"),
     "default_irreversible": ("ignore_irreversible", "an irreversible change lands at once"),
     "self_roster_add": ("void", "the landing voids concurrent answers"),
     "self_roster_evict": ("no_silent", "the target's silence is not read"),
@@ -392,10 +453,17 @@ MUTATION = {
     "poll[stated]": ("stated_ignored", "the opening row's own rule is not read: the default counts"),
     "wa_adjudication": ("live_subset", "the count is over those who answered, not the full seated roster"),
     "deferral": ("default_answers", "silence at the request's end answers it"),
+    "archive_release": ("any_opener", "a key outside the seat opens the seal"),
 }
 # a second deliberate break for a door whose text states two things
 MUTATION2 = {"retirement_objection": ("concluder_target", "the agent closes its own objection window"),
-             "moderator_election": ("tie_by_position", "a tie for weakest broken by where an option is listed")}
+             "moderator_election": ("tie_by_position", "a tie for weakest broken by where an option is listed"),
+             "community_invite": ("target_voice_ignored", "the row's target_voice cell not read: the invitee's yes is no voice")}
+for _d in ("accord_halt@holder", "accord_halt@node", "accord_halt@node+late_closed", "moderation_action", "harm_report", "takedown_withhold",
+           "invitation", "self_roster_add", "accord_roster_change"):
+    MUTATION2[_d] = ("force_flipped", "the while cell read the other way: in force for pending, pending for in force")
+for _d in ("community_remove[unanimous]", "community_remove[majority]", "community_remove[quorum]", "cosigned_act", "wa_adjudication"):
+    MUTATION2[_d] = ("protocol_misread", "the founding row's declared protocol read as another")
 DOOR_NAMES = list(MUTATION)
 THREE_ONLY = {"moderator_election", "takedown_withhold", "poll[stated]"}   # the largest world sets run at three keys only
 
@@ -418,12 +486,22 @@ def door_job(args):
     set_mut(mut)
     fails, checked, rc_n, rc_bad, wit, recwit, n = {}, {}, 0, 0, {}, None, 0
     P = props(name)
+    FP = force_props(name)
     for w in worlds(name):
+        st = None
         try:
             S, o = run(rows_of(w), name)
+            if FP: st = D.state(S, "p")
         except K.Tie:
             o = "tie"
         n += 1
+        for label, src, pr in FP:
+            v = pr(w, o, st)
+            if v is None: continue
+            checked[label] = checked.get(label, 0) + 1
+            if not v:
+                fails[label] = fails.get(label, 0) + 1
+                wit.setdefault(label, (w, o + " state " + str(st)))
         ok = recount_ok(w, o)
         if ok is not None:
             rc_n += 1
@@ -535,10 +613,12 @@ def halt_compare():
     return out
 
 
-def room_of_one():
+def room_of_one(mut=None):
+    """CC 4.5.13: a room of one grows by its founder's proposal and the newcomer's yes, two keys and two consents;
+    CC 3.1.3.2: admission is never one consent. `mut`: a mutation switched on for the run."""
     out = []
-    for name in ("community_invite", "community_invite+invitee"):
-        D.rebuild()
+    for name in ("community_invite", "community_invite-invitee"):
+        set_mut(mut)
         g = ST.offer("g", "m1", ("m1",), "member", "@", "self")
         p = WN.opener("p", "m1", D.key(name), "g", ("g",), target="J")
         W = D.secs(D.key(name))
@@ -548,6 +628,7 @@ def room_of_one():
             ("the founder proposes J, nobody answers, the founder lands at the close", [g, p, WN.receipt("r", "m1", "p", 0), WN.landing("L", "m1", "p", "r", "landed", W)], "not landed")):
             S = CK.concluded(CK.kept(rows), D.rule)
             out.append((name, cname, D.outcome(S, "p"), need))
+    set_mut(None)
     return out
 
 
@@ -660,7 +741,8 @@ def time_invitation():
 def doors_text():
     D.rebuild()
     cols = ["door", "source", "kind", "opener", "answerers", "answer_kinds", "window_secs", "clauses (when value rule over -> outcome)",
-            "default_at_close", "late_answer", "target_silent", "concluder", "landing_row", "table_read_by", "cells_used", "not_stated_in_tables"]
+            "default_at_close", "late_answer", "target_silent", "concluder", "landing_row", "table_read_by", "open_window", "cells_used",
+            "stated_not_run", "not_stated_in_tables"]
     # the landing row of a door whose clock has a `land` entry is that entry's (door.stated); these are the doors with none
     landing = {"wa_adjudication": "the cosigned finding itself", "custodian_replace": "the cosigned row itself",
                "affiliation_member_action": "the cosigned row itself", "accord_majority": "the cosigned row itself", "cosigned_act": "the cosigned row itself",
@@ -675,7 +757,9 @@ def doors_text():
                               "+".join(ans), ",".join(s["kinds"]) or ("ballot" if s["kind"] == "ranked" else "-"),
                               "none" if s["secs"] is None else str(s["secs"]), cl or "-", s["default"], s.get("late", "counts"),
                               str(s.get("silent")), s["concluder"], s.get("landing_row") or landing.get(name, "none named"), "window.py" if D.to_window(s) else "door.py",
-                              "; ".join("%s=%s" % kv for kv in s["cells"].items()), " | ".join(s["unstated"])]))
+                              s.get("open") or "-",
+                              "; ".join("%s=%s" % kv for kv in list(s["cells"].items()) + ([("contrast", s["contrast"])] if s.get("contrast") else [])),
+                              " | ".join(s.get("stated_not_run", [])), " | ".join(s["unstated"])]))
     return "\n".join(out) + "\n"
 
 
@@ -697,6 +781,19 @@ def landing_cells():
         p = WN.opener("p", "h1", D.key(name), "g", ("g",), target="N")
         rows = [g, p, WN.receipt("r", "h2", "p", 0), WN.landing("L", "h2", "p", "r", "lapsed", D.secs(D.key(name)))]
         return D.outcome(CK.concluded(CK.kept(rows), D.rule), "p")
+    opens = [(name, "while its window is open, read from reactions.json", D.DOORS[name]["open"]) for name in DOOR_NAMES if D.DOORS[name].get("open")]
+    def held_halt():
+        g = ST.offer("g", "h1", ("h1", "h2", "h3"), "holder", "@", "self", cosigners=("h2", "h3"))
+        name = "accord_halt@node+late_closed"
+        rows = [g, WN.opener("p", "h1", D.key(name), "g", ("g",), target="N"), WN.receipt("r", "N", "p", 0)]
+        return D.state(CK.concluded(CK.kept(rows), D.rule), "p")
+    s_before = held_halt()
+    we = D.while_entry(*D.LANDS["accord_halt"]); wkeep = dict(we)
+    we["open"] = "pending"
+    D.rebuild()
+    s_after = held_halt()
+    we.clear(); we.update(wkeep)
+    D.rebuild()
     before = lone_lapse()
     e = D.land_entry(*D.LANDS["accord_halt"])
     keep = dict(e)
@@ -705,7 +802,16 @@ def landing_cells():
     after = lone_lapse()
     e.clear(); e.update(keep)
     D.rebuild()
-    return out, unstated, (before, after)
+    return out + opens, unstated, (before, after), (s_before, s_after)
+
+
+def door_text_quotes():
+    """Every quote of formal/derivation/door_text.tsv stands in its section; a changed quote is refused."""
+    from build_family_model import section_span
+    ok = lambda t: bool(section_span(t["cc_ref"])) and t["quote"] in section_span(t["cc_ref"])
+    good = sum(ok(t) for t in D.DOOR_TEXT)
+    t0 = dict(D.DOOR_TEXT[0], quote=D.DOOR_TEXT[0]["quote"].replace("each node", "the proposer", 1) + " x")
+    return good, len(D.DOOR_TEXT), not ok(t0)
 
 
 def main():
@@ -742,7 +848,7 @@ def main():
         if rc[0]: got.append((d, "recount agrees with the reference", "holds" if rc[1] == 0 else "breaks"))
         for label in sorted(r["checked"]):
             fl = r["fails"].get(label, 0)
-            say("      %-6s %s (%s; %d worlds)%s" % ("holds" if not fl else "BREAKS", label, [x[1] for x in props(d) if x[0] == label][0], r["checked"][label],
+            say("      %-6s %s (%s; %d worlds)%s" % ("holds" if not fl else "BREAKS", label, [x[1] for x in props(d) + force_props(d) if x[0] == label][0], r["checked"][label],
                                                   "" if not fl else "; %d break, e.g. %s" % (fl, r["witness"][label])))
             got.append((d, label, "holds" if not fl else "breaks"))
         caught = sum(m["fails"].values()) + m["recount"][1]
@@ -770,6 +876,15 @@ def main():
     for name, cname, o, need in room_of_one():
         say("   room of one, %-26s %-70s -> %s (needs %s)" % (name, cname, o, need))
         got.append((name, "room of one: " + cname, o))
+        if name == "community_invite":
+            ok = (o == "landed") == (need == "landed")
+            got.append((name, "room of one, two consents (CC 4.5.13, CC 3.1.3.2): " + cname, "holds" if ok else "breaks"))
+            if not ok: uncaught.append("room of one")
+    for mut, why in (("enact_floor_off", "the enact met by the founder alone"), ("target_voice_ignored", "the invitee's yes not read")):
+        bad = [c for n, c, o, need in room_of_one(mut) if n == "community_invite" and (o == "landed") != (need == "landed")]
+        say("   plant: room of one, mutation %s (%s): %s" % (mut, why, "caught" if bad else "NOT CAUGHT"))
+        got.append(("community_invite", "plant: room of one, mutation " + mut, "caught" if bad else "not caught"))
+        if not bad: uncaught.append("room of one " + mut)
     for name, says, o in moderation_split():
         say("   moderation, four members, two act and two keep, the moderator silent; a member lands '%s' -> %s (CC 4.5.13: lapsed)" % (says, o))
         got.append((name, "two act and two keep of four: a landing stating %s" % says, o))
@@ -784,10 +899,19 @@ def main():
         say("   invitation: %-112s -> %s (needs %s)" % (cname, o, need))
         got.append(("time invitation", cname, o))
     say("5. who concludes, with which row, and whether a late answer counts")
-    cells, unstated, (before, after) = landing_cells()
+    cells, unstated, (before, after), (s_before, s_after) = landing_cells()
     for name, label, v in cells:
         say("   %-30s %s" % (name, v))
         got.append((name, label, v))
+    caught = s_before == "in_force" and s_after == "pending"
+    say("   plant: the fuse's while entry rewritten to pending; the halt held by its node with no landing: %s -> %s: %s" % (s_before, s_after, "caught" if caught else "NOT CAUGHT"))
+    got.append(("accord_halt@node+late_closed", "plant: the fuse's while entry rewritten to pending", "caught" if caught else "not caught"))
+    if not caught: uncaught.append("while entry")
+    good, total, refused = door_text_quotes()
+    say("   door_text.tsv: %d of %d quotes stand in their sections; plant: a changed quote %s" % (good, total, "refused: caught" if refused else "accepted: NOT CAUGHT"))
+    got.append(("door_text.tsv", "quotes standing in their sections", "%d of %d" % (good, total)))
+    got.append(("door_text.tsv", "plant: a changed quote", "caught" if refused else "not caught"))
+    if not refused or good != total: uncaught.append("door_text quote")
     say("   parameters no table states, over all doors: %d (doors.tsv, the last column)" % unstated)
     got.append(("doors.tsv", "parameters no table states", str(unstated)))
     caught = before == "open" and after == "lapsed"

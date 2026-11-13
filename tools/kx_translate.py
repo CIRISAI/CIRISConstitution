@@ -7,7 +7,7 @@ tools/kx.py. Each translator takes the parse tree the grammar's own tool returns
     translate(guard_clauses)            guards        -> verdicts(...)
     Tx(parts, family, when).build()     folds         -> tuple(groups, order, combined, verdict, absent, n)
     ch_kx(items)                        changes       -> set of (on, verdict, effects)
-    re_kx(clauses)                      reactions     -> set of (kind, name, state) / (land, name, held, late) / (react, effects)
+    re_kx(clauses)                      reactions     -> set of (kind, name, state) / (land, name, held, late) / (while, name, open) / (react, effects)
     count_kx(arms)                      count arms    -> the door of the first arm whose selector holds
     policy_call(row)                    policy rows   -> tally2(...) with BASE, A, O, EL to be filled
 """
@@ -642,6 +642,8 @@ def re_kx(clauses, only=None, folds=None, family=None):
             if c["concluder"] == "local": items.append(f"first({guard} -> single(tuple('land', {q(c['name'])}, 'local', {late})), else -> {{}})"); continue
             who = "eq(x.signer, self.signer)" if c["concluder"] in LAND_ROW_ALONE else f"stands(x.signer, {q(c['concluder'])}, self.object)"
             items.append(f"first({guard} -> single(tuple('land', {q(c['name'])}, some(sel(held, \\x: and(isfam(x, {q(c['landing'])}), member(self.id, x.names), live(x), {who}))), {late})), else -> {{}})")
+        elif c["kind"] == "while":                     # what the opening row is while its window is open
+            items.append(f"first({guard} -> single(tuple('while', {q(c['name'])}, {q(c['open'])})), else -> {{}})")
         else:
             on = [event(e) for e in c["on"]]; un = [event(e) for e in c.get("unless", [])]
             if None in on or None in un:
@@ -792,7 +794,8 @@ def policy_count_kx(row, cells):
     body = f"let CS = {cs} in "
     if cells.get("voices"):
         body += "let V = " + (lambda xs: xs[0] if len(xs) == 1 else f"union({', '.join(xs)})")([POLICY_VOICES[x] for x in cells["voices"].split("|")]) + " in "
-        out.append(f"size({unit('diff(V, diff(V, CS))')})")
+        cv = "union(CS, single(self.target))" if cells.get("target_voice") == "yes" else "CS"     # the target's own yes is a voice
+        out.append(f"size({unit(f'diff(V, diff(V, {cv}))')})")
     if cells.get("target_silent") == "yes":
         out.append(f"none(sel(held, \\x: and(eq(x.signer, self.target), ge(arrival(x), arrival(self)), lt(arrival(x), add(arrival(self), cell('policy', {q(row)}, 3))))))")
     return body + f"tuple({', '.join(out)})"

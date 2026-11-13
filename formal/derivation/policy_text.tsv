@@ -1,7 +1,7 @@
 # Who a door of the governance policy table counts, typed, each value with the words it rests on.
 # Applied by tools/build_governance_policy.py: a row's `counted` cells take these values; the quote must stand verbatim in the cited section.
 # Columns: count_set (role tokens joined by +, less -target, -proposer or -node), voice (person | key), counted_at (signed | named | act | founding),
-# voices (scrubs | objection | ballot, joined by |), target_silent (yes | no), changes_set (adds | removes | no).
+# voices (scrubs | objection | ballot, joined by |), target_silent (yes | no), changes_set (adds | removes | no), target_voice (yes | no).
 # A cell with no row here reads `unstated`: the text does not say, and the build counts those so the number only falls.
 row	column	value	cc_ref	quote
 default_content	count_set	member	CC 4.5.13	The base is the standing roster at or below the size `k` the governance policy table's base law pins
@@ -69,3 +69,4 @@ wa_adjudication	count_set	wa	CC 4.3	The count is over the full seated roster the
 wa_adjudication	voice	person	CC 4.3	The count is over the full seated roster the finding names, one voice a person.
 wa_adjudication	counted_at	named	CC 4.3	The count is over the full seated roster the finding names, one voice a person.
 wa_adjudication	voices	scrubs	CC 4.3	A finding of the designated body is one row cosigned under that body's declared protocol
+community_invite	target_voice	yes	CC 4.5.13	the second voice on an admission is the invitee's own acceptance

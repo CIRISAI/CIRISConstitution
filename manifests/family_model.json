@@ -252,12 +252,12 @@
     "gap": 0
    },
    "confers": {
-    "cc-table": 159,
+    "cc-table": 161,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 25
+    "gap": 23
    },
    "binds_segment": {
     "cc-table": 155,
@@ -571,9 +571,9 @@
   },
   "conferral": {
    "confers": {
-    "default": 134,
-    "gap": 25,
-    "shape": 20,
+    "default": 135,
+    "gap": 23,
+    "shape": 21,
     "stated": 5
    },
    "binds_segment": {
@@ -28015,11 +28015,19 @@
    "read_by": {
     "value": [
      "state",
-     "stands"
+     "stands",
+     "window"
     ],
     "source": "cc-table",
     "rule": "cells",
     "by": [
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#deferral:request (CC 4.3)",
+      "answers": [
+       "window"
+      ]
+     },
      {
       "grammar": "fold",
       "cell": "tools/fold_grammar.py DEFAULT",
@@ -33081,10 +33089,18 @@
     ]
    },
    "confers": {
-    "value": null,
-    "source": "gap",
+    "value": {
+     "relation": "seat",
+     "binds": "signer+holder"
+    },
+    "source": "cc-table",
+    "cc_ref": [],
+    "rule": "shape",
     "from": "formal/derivation/family_shapes.tsv",
-    "note": "the shapes table cannot run this consent (role=a term on an offer): it moves no seat: an obligation on a referenced permission by that permission's attester; no world runs a term"
+    "sources": {},
+    "cells_from": [
+     "formal/derivation/family_shapes.tsv"
+    ]
    },
    "binds_segment": {
     "value": {
@@ -44220,10 +44236,10 @@
     ]
    },
    "confers": {
-    "value": null,
-    "source": "gap",
-    "from": "formal/derivation/family_shapes.tsv",
-    "note": "a door family, and no sentence says what its rows confer"
+    "value": "nothing",
+    "source": "cc-table",
+    "cc_ref": "CC 3.4.5.1",
+    "rule": "default"
    },
    "binds_segment": {
     "value": "none",
@@ -47605,7 +47621,7 @@
      "roster": "community",
      "consent": "accept_row (waived for an infrastructure node)",
      "proposal": "an invitation, no quorum",
-     "door": "community_invite+invitee|community_remove[majority]|invitation|affiliation_member_action"
+     "door": "community_invite|community_remove[majority]|invitation|affiliation_member_action"
     },
     "source": "cc-table",
     "cc_ref": [

@@ -1,0 +1,22 @@
+# Door parameters the text states and no rule table has a column for, read by formal/causal_kernel/door.py.
+# One row per (door, parameter). `door` is a row of the governance policy table or a door of door.py (its instances take it).
+# parameter: concluder (local) | opener_counts (yes) | silent (at_window) | opener (none) | options (roster) | decline (next)
+#   | answers (a closed list, or none) | tally (member) | escalate (conferrer) | signer (a seat).
+# The quote must stand verbatim in the cited section; formal/causal_kernel/check_door.py checks it and catches a changed quote.
+door	parameter	value	cc_ref	quote
+default_content	concluder	local	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner.
+default_standing	concluder	local	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner.
+default_irreversible	concluder	local	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner.
+community_invite	concluder	local	CC 4.5.13	Every window of this table is measured by each node from the instant it first held the proposal, never from a signed instant of the proposer or of a cosigner.
+self_roster_evict	concluder	local	CC 3.3.6.3	So a landing is a node's own verdict in the way a root's standing is.
+self_roster_add	opener_counts	yes	CC 3.3.6.3	a strict majority of the live roster, proposer counted, approves and it lands at once
+self_roster_evict	opener_counts	yes	CC 3.3.6.3	a strict majority of the live roster, proposer counted, approves and it lands at once
+self_roster_evict	silent	at_window	CC 3.3.6.3	for an eviction the target was silent all window (any signed act by a roster key answers every open proposal and proves the key is not lost)
+moderator_election	opener	none	CC 4.5.13	Nothing signed opens an election, since a lapse by inactivity has no row.
+moderator_election	options	roster	CC 4.5.13	The **ballot is the roster**, every member a candidate
+moderator_election	decline	next	CC 4.5.13	A winner who declines, or is silent past a grace the room's policy names, passes the duty to the next in runoff order, and so on.
+takedown_withhold	answers	reversed by review; lift by members	CC 4.5.3	They are withheld while an admitted notice stands against them with no admitted reversal and no admitted lift by the members
+decay_stage	answers	none	CC 4.4.3.5.1	the party running the protocol emits each stage per its published `decay_protocol` stage map
+poll	tally	member	CC 6.1.9	The same two tally members fold it, and the result is `ballot:tally:{poll_id}:v1`, recomputed by every member.
+deferral	escalate	conferrer	CC 4.3	A request unanswered at its own end re-routes to the deferring party's other live seats and, with none, to the conferrer, as the seat rule below states.
+archive_release	signer	resolve_deferral	CC 3.4.7	`archive_release` is signed by the conferrer of the retired agent's seat or by the person holding its unscoped seat, as an identity amendment's approval is

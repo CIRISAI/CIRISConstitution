@@ -91,8 +91,9 @@ def window_from_table(name, family, counted, evict, declared_enact=None):
     if f["kind"] == "one_of_n": default = "landed"
     elif f["kind"] == "fraction" and row["reverse_path"]: at_close.append(("approve", ("atleast", f["num"], f["den"], mc), "all", "landed"))
     silent = "refused" if evict and row["counted"]["target_silent"]["value"] == "yes" else None
+    tv = row["counted"].get("target_voice", {}).get("value") == "yes"     # the joiner's own yes is a voice of the floor: the row's cell
     WN.WINDOWS[name] = {"policy": family, "counted": counted, "concluder": counted, "opener_says": "approve",
-                        "at_once": tuple(at_once), "silent": silent, "at_close": tuple(at_close), "default": default}
+                        "at_once": tuple(at_once), "silent": silent, "at_close": tuple(at_close), "default": default, "target_votes": tv}
     return name
 
 

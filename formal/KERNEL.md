@@ -84,7 +84,7 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 | guards | 56 | 2 |
 | folds | 185 | 6 |
 | changes | 45 | 17 |
-| reactions | 81 | 30 |
+| reactions | 93 | 30 |
 | policy text cells | 47 | 8 |
 
 Every translation agrees with a reference reading on generated row sets in every arrival order. The policy
@@ -184,9 +184,9 @@ delegate only with the delegate's own signature (CC 4.4.3.4.3), and a custodian 
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
 seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
-stated for 159 of 184 families. 134 claim and content families take one default, that a claim seats no one
+stated for 161 of 184 families. 134 claim and content families take one default, that a claim seats no one
 (CC 3.4.5.1). Twenty consents take their seat from `family_shapes.tsv`, and five families have a sentence of
-their own. **open**: 25 families confer nothing that a sentence states: 21 doors, three consents the shape
+their own. **open**: 23 families confer nothing that a sentence states: 19 doors, three consents the shape
 table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 155
 families; 29 have a segment that names another row and no word yet says so. Which answers read a family's
 rows is filled for all 184 from the expression language: every family is read by **state** and **stands**
@@ -246,16 +246,16 @@ answer in every arrival order, the recount agrees with the policy table's own ve
 count, and every deliberate break is caught. An election declares no order, so its door seats nobody on a tie
 for weakest (CC 4.5.13). **proved** (`Election.lean`): the election's count does not depend on the order the
 options are listed in, and it seats whoever the declared count seats whenever it seats anyone (`free_perm`,
-`free_agrees`). The policy table states the count, the floor and the length. The door needs five more things. The reactions
-table now states the first two as a `land` clause on each window, each cell quoting its sentence:
+`free_agrees`). The policy table states the count, the floor and the length. The door needs five more things, and each is a
+cell that quotes its sentence:
 
 | Parameter | Why it matters |
 |---|---|
 | who concludes, and with which row | if a holder lands the halt's lapse, one holder lying about its clock lapses it at every node; if each node lands its own, only that node's does |
 | whether a late answer counts | a confirmation after the fuse has lapsed confirms nothing |
-| whether the opening act is in force while the window is open | a halt is, a moderation proposal is not; not yet run |
-| the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands |
-| the threshold as the room's declared protocol | a removal is cosigned under the room's own protocol |
+| whether the opening act is in force while the window is open | a halt is, a moderation proposal is not: a `while` clause of the reactions table, **run** |
+| the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands: the policy row's `target_voice` cell |
+| the threshold as the room's declared protocol | a removal is cosigned under the protocol the room's founding row declares, read from that row |
 
 **measured**: all thirteen answerable windows state their concluder, and the invitation's expiry does. The
 decider closes an agent's objection window at retirement by the `decided` row, which names the objection
@@ -263,9 +263,14 @@ decider closes an agent's objection window at retirement by the `decided` row, w
 agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
 a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.3). A late answer is closed for
-the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. The last
-three parameters are still in no cell. `doors.tsv` lists 73 things the tables do not state, 15 of them on the four
-doors of the poll, the adjudication and the deferral.
+the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. Seven doors state whether the opening row is in force while its window is open: the halt and a takedown's
+withhold are, from each node's own receipt; a moderation action, a harm report, an invitation, a device's
+addition and the accord's roster change are not. **run**: the **state** answer gives each while no landing
+stands, and a cell read the other way is caught at every door. The invitation counts the invitee's yes by the
+policy row's `target_voice` cell, and a room of one admits nobody on its founder's proposal alone. A removal, a
+cosigned act and an adjudication read their count from the protocol the group's founding row declares.
+Parameters the text states and no rule table has a column for are rows of `formal/derivation/door_text.tsv`,
+each with its quote. `doors.tsv` lists 27 things the tables do not state, and three stated and not run.
 
 Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
@@ -291,8 +296,8 @@ most one lease against that person's other devices.
 
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
-(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 184 families, 110 are
-claims, 24 content, 24 doors, 16 consents and 7 both a consent and a door. Three fit none.
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 184 families, 111 are
+claims, 24 content, 23 doors, 16 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
 consent and the door. Content is carried by consent, since its audience is the holders of a roster and its
@@ -305,16 +310,17 @@ shapes is **measured**.
 
 | | Families |
 |---|---|
-| every parameter traced to a table cell or a quoted sentence | 171 |
+| every parameter traced to a table cell or a quoted sentence | 173 |
 | a guessed parameter | 0 |
-| cannot run | 13 |
+| cannot run | 2 |
+| no shape, and the text says why | 9 |
 
 No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1), and all three are **run**: the key's own, the roster's
 count, and the owner's, by the one owner its owner-bindings name over the revocation's own past. Nineteen content
-families take their audience from the default placement, the scope each row carries, and state none of their own. Each family that cannot run lacks one thing, named in the table:
-two are doors with no row in `doors.tsv`, two are consents with no stated conferrer or signer, five are census
-families whose count is drawn from a group secret that is not a row, and four are labels or prefixes that
-confer nothing. A family is counted as traced when its
+families take their audience from the default placement, the scope each row carries, and state none of their own. The seal's release runs as a door of one row by its stated seat (CC 3.4.7). Two consents cannot run: no
+sentence names who confers a partner role or who signs an entity revocation. Nine families take no shape, and
+the table says why with its source: five census rows are field sums over secret shares, with no window that
+takes answers and no offer that seats, and four are labels or prefixes that confer nothing. A family is counted as traced when its
 own parameters are; most door rows still rest on parameters the tables do not state (section 5). **open**.
 
 ## 6. Conflict between concurrent rows
@@ -532,11 +538,11 @@ that the ending row has not seen from counting.
 
 | Item | Kind | Where |
 |---|---|---|
-| Which rows seat which key in which role: what 21 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
+| Which rows seat which key in which role: what 19 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
-| Three door parameters in no cell: whether the opening act is in force while its window is open, the joiner's yes as a voice, the threshold as the room's protocol; and 73 things `doors.tsv` lists as stated by no table | table data | `manifests/reactions.json`, `formal/causal_kernel/doors.tsv` |
+| 27 things `doors.tsv` lists as stated by no table, and three stated and not run; the policy table's own decision function admits on one of one in a room of one, which no vector reaches | table data | `formal/causal_kernel/doors.tsv`, `tools/build_governance_policy.py` |
 | 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |

@@ -114,3 +114,14 @@ membership:{stage}	[proposal] land expiry by member as membership:widening late 
 retirement:{state}	[decided] land objection by author as retirement:{state}	CC 7.5.5	The decider closes the window by the `decided` row, which names the agent's objection where one was made.
 deferral:request	expiry required valid_until	CC 4.3	A `deferral:request` states its own end.
 key:record	expiry optional valid_until max key_record_max_secs from asserted_at; on close(expiry) unless superseded(self) -> read lapsed	CC 2.4.1.1	A key renews by signing a further record that `supersedes` its own earlier record.
+accord:invoke:constitutional:{halt_id}	while fuse in_force	CC 4.2.1.1	It **fires on receipt** at every node that holds a live acceptance edge to the root.
+moderation:{allegation_type}	while window pending	CC 4.5.13	The window governs only the fallback, since a moderator rules at any time and a withhold is immediate.
+moderation:{allegation_type}	[harm_report] while window pending	CC 4.5.13	for a report undefended no notice is signed, and each node reads the removal from the closed window
+takedown_notice:{basis}	[Dmca512] while withhold in_force	CC 4.5.3	So every holder withholds for the full window from its own receipt of the notice.
+takedown_notice:{basis}	[DsaArticle16] while withhold in_force	CC 4.5.3	So every holder withholds for the full window from its own receipt of the notice.
+takedown_notice:{basis}	[OsaIllegalContent] while withhold in_force	CC 4.5.3	So every holder withholds for the full window from its own receipt of the notice.
+takedown_notice:{basis}	[CommunityStandards] while withhold in_force	CC 4.5.3	So every holder withholds for the full window from its own receipt of the notice.
+membership:{stage}	[proposal] while expiry pending	CC 3.1.3.2	The group decides on the **growth record**: a membership **widening**, the only door that adds anyone.
+identity:occurrence	while window pending	CC 3.3.6.3	An addition or an eviction is a proposal signed by a live roster key; one open proposal per proposer.
+group:roster	while W pending	CC 4.2.6	Until then the named holder remains a current roster member *for firing purposes*, and a valid `accord:invoke` row from them fires ([CC 4.2.1.1](#4.2.1.1)).
+deferral:request	land expiry local	CC 4.3	A `deferral:request` states its own end.

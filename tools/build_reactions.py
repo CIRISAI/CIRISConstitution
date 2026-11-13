@@ -7,11 +7,12 @@ Reads formal/derivation/reaction_text.tsv and writes manifests/reactions.json, o
 relates two families and half its triggers are a clock, which is no transition, so it has a table of its own.
 
     cell     := clause *( "; " clause )
-    clause   := [ selector " " ] ( expiry | clock | land | react )
+    clause   := [ selector " " ] ( expiry | clock | land | while | react )
     selector := "[" LEAF *( "|" LEAF ) "]" | "@" SCOPE
     expiry   := "expiry " MODE [ " " MEMBER ] [ " eq " dur ] [ " default " dur ] [ " max " dur ] [ " from " origin ] [ " by " JUDGE ]
     clock    := "clock " NAME " = " dur [ " default " dur ] [ " max " dur ] " from " origin [ " by " JUDGE ]
     land     := "land " NAME ( " local" | " by " ROLE " as " famref ) [ " late " ( "closed" | "counts" ) ]
+    while    := "while " NAME ( " in_force" | " pending" )
     react    := "on " event *( "|" event ) [ " unless " event *( "|" event ) ] " -> " effect *( ", " effect )
     event    := STATE "(" famref [ "," ACTOR ] ")" | "close(" NAME ")" | "fold(" FOLDNAME ")"
     effect   := [ "should " | "may " ] ( "emit " famref " by " ROLE | "read " VERDICT [ " of " famref ] | "do " ACT | "open " POLICY_ROW )
@@ -30,6 +31,11 @@ row's own stated end. `by ROLE as FAMREF` names the seat that signs the outcome 
 `late closed` says an answer the concluder first holds after its close changes nothing, and `late counts` says
 it is still counted. A clause is written only where a sentence of the Parts states it. The clocks with no such
 clause are listed, and that list may only shrink.
+
+A `while` clause says what the opening row is while its window is open. NAME is a clock of the same family and
+leaves, or `expiry`. `in_force` says the row binds each node from that node's own first holding of it, before any
+landing (a halt pauses agents at receipt). `pending` says it binds nobody until the window lands or its fallback
+carries (a moderation proposal withholds nothing). A clause is written only where a sentence states it.
 
 Run: python3 tools/build_reactions.py            # build
      python3 tools/build_reactions.py --check    # the manifest is current
@@ -50,6 +56,7 @@ SIGNED_ORIGINS = ("asserted_at", "claimed_at", "effective_at", "cosigned_at", "d
 EMITTER_OPEN_MAX = 7   # clock- or fold-caused emits not signed by the origin door; the number only falls
 LANDING_OPEN_MAX = 4   # clocks whose concluder no clause states; the number only falls
 LATE = ("closed", "counts")
+WHILE = ("in_force", "pending")
 NAME = r"[A-Za-z_][A-Za-z_0-9]*"
 
 ACTORS = ("producer", "subject")   # whose act the event is, where the rule turns on it (CC 3.3.1 D1)
@@ -127,6 +134,11 @@ def parse_clause(raw, need):
             need["roles"].append(m.group(3)); need["families"].append(m.group(4))
             c["concluder"] = m.group(3); c["landing"] = m.group(4)
         if m.group(5): c["late"] = m.group(5)
+        return c
+    elif raw.startswith("while "):
+        m = re.fullmatch(r"while (" + NAME + r") ([a-z_]+)", raw)
+        if not m or m.group(2) not in WHILE: raise ReactionError(f"while {raw!r}")
+        c["kind"] = "while"; c["name"] = m.group(1); c["open"] = m.group(2)
         return c
     elif raw.startswith("on "):
         m = re.fullmatch(r"on (\S+)(?: unless (\S+))? -> (.+)", raw)
@@ -234,11 +246,16 @@ def build():
     if stray or twice:
         sys.exit("reactions: a landing names one clock or expiry of its own family and leaves, once: " + "; ".join(
             [f"no clock for {k}" for k in stray] + [f"two landings for {k}" for k in twice]))
+    whiles = [key(e) for e in entries if e["kind"] == "while"]
+    stray = sorted(show(k) for k in set(whiles) - set(windows)); twice = sorted(show(k) for k in set(whiles) if whiles.count(k) > 1)
+    if stray or twice:
+        sys.exit("reactions: a while clause names one clock or expiry of its own family and leaves, once: " + "; ".join(
+            [f"no clock for {k}" for k in stray] + [f"two while clauses for {k}" for k in twice]))
     unlanded = sorted(show(key(e)) for e in entries if e["kind"] == "clock" and key(e) not in lands)
     if len(unlanded) > LANDING_OPEN_MAX:
         sys.exit(f"reactions: {len(unlanded)} clocks have no landing clause, more than {LANDING_OPEN_MAX}: " + "; ".join(unlanded))
     land_by = lambda f: OrderedDict(sorted(Counter(f(e) for e in entries if e["kind"] == "land").items()))
-    kinds = {k: sum(1 for e in entries if e["kind"] == k) for k in ("expiry", "clock", "land", "react")}
+    kinds = {k: sum(1 for e in entries if e["kind"] == k) for k in ("expiry", "clock", "land", "while", "react")}
     emits = sum(1 for e in entries if e["kind"] == "react" for x in e["effects"] if x["effect"] == "emit")
     doc = OrderedDict([("_meta", OrderedDict([
         ("source", "formal/derivation/reaction_text.tsv"), ("cc_section", "4.5.13"),
@@ -250,6 +267,8 @@ def build():
                                  ("late", "`closed`: an answer the concluder first holds after its close changes nothing; `counts`: it is still counted; absent: no sentence states it"),
                                  ("by_concluder", land_by(lambda e: e["concluder"])), ("by_late", land_by(lambda e: e.get("late", "unstated"))),
                                  ("clocks_with_no_landing", unlanded)])),
+        ("while_open", OrderedDict([("rule", "a while entry says what the opening row is while its window is open: `in_force` binds each node from its own first holding, `pending` binds nobody until the window lands or its fallback carries; absent: no sentence states it"),
+                                    ("by_open", OrderedDict(sorted(Counter(e["open"] for e in entries if e["kind"] == "while").items())))])),
         ("one_emitter", OrderedDict([("rule", "a row a clock or a fold causes is emitted by the door the causing row first entered (CC 4.5.13)"),
                                      ("not_yet_by_origin_door", open_emit)]))])),
         ("reactions", entries)])
@@ -262,10 +281,12 @@ def self_test():
             "@community on sealed(self) -> emit key_grant:epoch by author",
             "on withdrawn(self)|recanted(self) -> do cease_replication, should do deregister_peer",
             "on close(sla) unless withdrawn(target,producer)|purged(target) -> read breached",
-            "land fuse local late closed", "[pending] land hold local", "land window by winner as ballot:moderator_acceptance late counts"]
+            "land fuse local late closed", "[pending] land hold local", "land window by winner as ballot:moderator_acceptance late counts",
+            "while fuse in_force", "[harm_report] while window pending"]
     bad = ["expiry sometimes", "clock x = 86400 from first_held", "clock x = a_secs", "on landed(self) -> read x", "on close(x) -> shout", "@galaxy expiry none",
            "on withdrawn(target,anyone) -> read x", "on close(sla,producer) -> read x",
-           "land fuse", "land fuse by holder", "land fuse local as hard_case:x", "land fuse local late sometimes", "land fuse late closed"]
+           "land fuse", "land fuse by holder", "land fuse local as hard_case:x", "land fuse local late sometimes", "land fuse late closed",
+           "while fuse", "while fuse sometimes", "while fuse in_force late closed"]
     for g in good: parse(g)
     n = 0
     for g in bad:

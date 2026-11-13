@@ -373,6 +373,7 @@ WORD_PLANTS = [   # (word, grammar, a cell whose text holds this, the misreading
     ("by receipt: from first holding", "reaction", "accord:invoke:constitutional:{halt_id}\texpiry none; clock fuse = charter.halt_fuse_secs from first_held by receipt", ("kx", "add(arrival(self)", "add(self.asserted_at")),
     ("by signed: the row's own end", "reaction", "[proposal] expiry required expires_at max membership_proposal_max_secs from asserted_at by signed", ("kx", "let O = self.asserted_at", "let O = arrival(self)")),
     ("by signed on a first-held clock reads no instant", "reaction", "accord:invoke:constitutional:{halt_id}\texpiry none; clock fuse = charter.halt_fuse_secs from first_held by receipt", ("text", "by receipt", "by signed")),
+    ("while NAME in_force: binds from each node's own first holding", "reaction", "while fuse in_force", ("kx", "'in_force'", "'pending'")),
     ("fold(NAME): the fold's verdict", "reaction", "on fold(founder_quorum_unreachable)", ("kx", "'founder_quorum_unreachable')), not(", "'founder_quorum_restored')), not(")),
 ]
 POLICY_PLANTS = [  # (word, row, the misreading)
@@ -380,6 +381,7 @@ POLICY_PLANTS = [  # (word, row, the misreading)
     ("voice key: each key a voice", "self_roster_add", ("size(CS)", "size(setof(CS, \\k: cell('person', k, k)))")),
     ("voices objection", "moderation_overturn", ("'objection:*'", "'ballot:*'")),
     ("voices ballot", "moderator_election", ("'ballot:*'", "'objection:*'")),
+    ("target_voice yes: the target's own yes is a voice", "community_invite", ("union(CS, single(self.target))", "CS")),
     ("voices scrubs", "moderator_recall", ("cosigners(self)", "setof(held, \\v: v.signer)")),
     ("target_silent yes", "self_roster_evict", ("ge(arrival(x), arrival(self))", "true")),
 ]
@@ -420,7 +422,8 @@ VOCAB = {
              r"\b(lower_only|raise_only|narrow_only|drop_only|fixed)\(", r"&(live|direct)\b", r"pick=(union|set|agree|once|tips)\b"],
     "guard": [r"\b(one|all|no|latest) ", r"@(admitted|withdrawn|recanted|superseded|landed)\[", r" at (asserted_at|receipt|its_asserted_at)\b",
               r"via=(none|delegates_to)", r"else (refuse|void|contested|exclude|withhold|advise)\b"],
-    "reaction": [r" by (signed|receipt|origin_door)\b", r"expiry (required|optional|forbidden|none)\b", r"-> (should |may )", r" late (closed|counts)\b"],
+    "reaction": [r" by (signed|receipt|origin_door)\b", r"expiry (required|optional|forbidden|none)\b", r"-> (should |may )", r" late (closed|counts)\b",
+                 r"while [A-Za-z_]+ (in_force|pending)\b"],
     "change": [r":(any|frozen|shrink|grow_signed|lower|no_weaker|as_attest)\b", r"reach=(own_prior|other_attester|below_seq|whole)",
                r"by=(same_attester|none|cosigned|cosigned_prior|committed_key|substrate)\b", r"/(by|under|about|ref|over):",
                r"\b(refuse|void|exclude)=[a-z_0-9]+"],
@@ -548,7 +551,7 @@ def run_policy():
         if c["column"] == "count_set" and T.count_set_kx(c["value"]):      # the seats the cell names, as an expression with a layer
             i = kx.analyse(kx.parse(T.count_set_kx(c["value"])), PRELUDE)
             sets.append({"row": c["row"], "value": c["value"], "layer": kx.layer_name(i), "flags": sorted(i.flags)})
-        elif c["column"] in ("voice", "voices", "target_silent") and c["row"] in counts and not counts[c["row"]]["disagree"]: pass   # in the row's count
+        elif c["column"] in ("voice", "voices", "target_silent", "target_voice") and c["row"] in counts and not counts[c["row"]]["disagree"]: pass   # in the row's count
         elif c["column"] != "counted_at": dropped.append(c)     # the count set is no seat, or whether the act changes its set: not translated
         if c["column"] == "counted_at":
             i = kx.analyse(kx.parse(T.counted_at_kx(c["value"])), PRELUDE)

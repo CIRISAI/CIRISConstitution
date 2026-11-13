@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "6b3b6c01d56058940c2d54d98dbbeac2931dd91c039227cad2566d5e45e176dc",
+  "policy_sha256": "a3197c38103f78ed2adfa47309b51c512f3095153e3e4727043f435dd52d1d8f",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -60,6 +60,9 @@
      "value": "no"
     },
     "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
      "value": "no"
     }
    },
@@ -130,6 +133,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "base",
@@ -198,6 +204,9 @@
      "value": "no"
     },
     "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
      "value": "no"
     }
    },
@@ -269,6 +278,10 @@
     "changes_set": {
      "value": "adds",
      "cc_ref": "CC 4.5.13"
+    },
+    "target_voice": {
+     "value": "yes",
+     "cc_ref": "CC 4.5.13"
     }
    },
    "cancel_over": "base",
@@ -326,6 +339,9 @@
     "changes_set": {
      "value": "removes",
      "cc_ref": "CC 3.3.4"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -387,6 +403,9 @@
     "changes_set": {
      "value": "adds",
      "cc_ref": "CC 3.3.6.3"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "others",
@@ -449,6 +468,9 @@
     "changes_set": {
      "value": "removes",
      "cc_ref": "CC 3.3.6.3"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "others",
@@ -508,6 +530,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -563,6 +588,9 @@
      "value": "no"
     },
     "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
      "value": "no"
     }
    },
@@ -625,6 +653,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -678,6 +709,9 @@
      "value": "no"
     },
     "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
      "value": "no"
     }
    },
@@ -737,6 +771,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -795,6 +832,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -852,6 +892,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "base",
@@ -906,6 +949,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -959,6 +1005,9 @@
      "value": "no"
     },
     "changes_set": {
+     "value": "no"
+    },
+    "target_voice": {
      "value": "no"
     }
    },
@@ -1016,6 +1065,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -1071,6 +1123,9 @@
     },
     "changes_set": {
      "value": "no"
+    },
+    "target_voice": {
+     "value": "no"
     }
    },
    "cancel_over": "—",
@@ -1115,6 +1170,7 @@
   "voices": "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)",
   "target_silent": "yes: the reverse path lands only if no row signed by the target was first held inside the window",
   "changes_set": "whether the act adds to or removes from the set it counts",
+  "target_voice": "yes: the target's own row naming the act is one of the voices counted, though the target is not in the count set",
   "unstated": "the text does not state the cell",
   "unstated_cells": [
    "default_content.counted_at",

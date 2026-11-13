@@ -1655,6 +1655,7 @@ In time:
 - clock `fuse` = `charter.halt_fuse_secs` (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
 - on close(fuse) unless admitted(accord:lifecycle:confirmed): read lapsed (CC 4.2.1, CC 4.2.1.3, CC 4.2.1.1)
 - landing of `fuse`: each node for itself, nothing signed; a late answer does not count (CC 4.2.1.1, CC 4.2.1.3)
+- while `fuse` is open: in force at each node from its own first holding (CC 4.2.1.1)
 
 Body: `accord_root`
 
@@ -2357,6 +2358,7 @@ Count: `none`
 
 In time:
 - expiry required `valid_until` (CC 4.3)
+- landing of `expiry`: each node for itself, nothing signed (CC 4.3)
 
 Body: `domain`
 
@@ -2580,6 +2582,7 @@ In time:
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
 - on fold(founder_quorum_restored): emit `hard_case:community_liveness_restored` by origin_door (CC 3.2)
 - landing of `W`: by holder as `group:roster`; a late answer does not count (CC 4.2.6)
+- while `W` is open: binds nobody until it lands (CC 4.2.6)
 
 **`hardware_custody:{platform}`** — Circumstances, thing
 
@@ -2633,6 +2636,7 @@ In time:
 - expiry optional `valid_until` (CC 3.3.6.2)
 - on close(expiry): read lapsed (CC 3.3.6.2)
 - landing of `window`: each node for itself, nothing signed (CC 3.3.6.3)
+- while `window` is open: binds nobody until it lands (CC 3.3.6.3)
 
 **`identity:occurrence_revocation`** — Identity, thing
 
@@ -2881,6 +2885,7 @@ In time:
 - [widening] expiry optional `valid_until` (CC 3.3.4)
 - [widening] on close(expiry): read lapsed (CC 3.3.4)
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
+- [proposal] while `expiry` is open: binds nobody until it lands (CC 3.1.3.2)
 
 Body: `group_kind`, `role`, `proposal_hash`, `expires_at`
 
@@ -2932,6 +2937,8 @@ In time:
 - clock `window` = `moderation_action.window_secs` (CC 4.5.13)
 - [harm_report] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
 - landing of `window`: each node for itself, nothing signed (CC 4.5.13)
+- while `window` is open: binds nobody until it lands (CC 4.5.13)
+- [harm_report] while `window` is open: binds nobody until it lands (CC 4.5.13)
 
 **`moderation_track_record:{community_key_id}`** — Confidence, account
 
@@ -3345,6 +3352,10 @@ In time:
 - [DsaArticle16] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
 - [OsaIllegalContent] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
 - [CommunityStandards] landing of `withhold`: each node for itself, nothing signed; a late answer counts (CC 4.5.3)
+- [Dmca512] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
+- [DsaArticle16] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
+- [OsaIllegalContent] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
+- [CommunityStandards] while `withhold` is open: in force at each node from its own first holding (CC 4.5.3)
 
 Body: `asserted_at`, `claim_text` (text only), `claimant_key_id` (text only), `content_holder_key_ids` (text only), `content_sha256` (text only), `counter_notice_channel` (text only), `evidence_refs`, `expires_at`, `good_faith_statement` (text only), `jurisdiction` (text only), `legal_basis` (text only), `perceptual_hash` (text only), `subject_kind` (text only)
 

@@ -554,14 +554,14 @@ def check_room(spec, inst, private):
         seated = P("J") in roster(S)
         want = int(n.split(", ")[1].split()[0]) < 2          # cancel: at least a third, never fewer than two
         if seated != want: return "%s: seated=%s" % (n, seated)
-    plain = run(spec, worlds, c7)
-    with mutated(windows={lw: lambda w: dict(w, target_votes=True)}):
-        base = run(spec, worlds, c7)
-        with mutated(windows={lw: lambda w: dict(w, at_close=w["at_close"][1:])}):
-            m = run(spec, worlds, c7, orders=False)
+    with mutated(windows={lw: lambda w: dict(w, target_votes=False)}):     # the policy row's target_voice cell read as no
+        plain = run(spec, worlds, c7)
+    base = run(spec, worlds, c7)
+    with mutated(windows={lw: lambda w: dict(w, at_close=w["at_close"][1:])}):
+        m = run(spec, worlds, c7, orders=False)
     res.append(result(inst, "community_invite reverse path: one member's proposal and the joiner's yes land at the close unless a third objects",
-                      "manifests/governance_policy.json community_invite note; CC 3.1.3.2 'the invitee's acceptance is the second voice'",
-                      verdict_of(base, param="target_votes (the joiner's own yes is a voice of the window's floor)"), base, "no cancel", m,
+                      "manifests/governance_policy.json community_invite target_voice cell; CC 3.1.3.2 'the invitee's acceptance is the second voice'",
+                      verdict_of(base), base, "no cancel", m,
                       "without the parameter: %s" % (plain["fails"][:1] or "holds")))
     # C8 tips wait on the kernel's own seats: two versions of one head, then a version naming both
     ax = RS.accept(spec, "ax", "X", ("g",))

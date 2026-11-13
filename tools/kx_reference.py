@@ -1008,6 +1008,8 @@ def re_ref(clauses, held, s, now, folds=None, family=None):
             ok = any(fam_match(x["fam"], c["landing"]) and s["id"] in x.get("names", ()) and ref_state(held, x) == "admitted"
                      and (x.get("signer") == s.get("signer") if c["concluder"] in ("self", "author") else ref_stands(held, x.get("signer"), c["concluder"], s.get("object"))) for x in held)
             out.append(("land", c["name"], ok, late))
+        elif c["kind"] == "while":
+            out.append(("while", c["name"], c["open"]))
         else:
             on = [event_ref(e, s, held, clocks, now, folds, family) for e in c["on"]]
             un = [event_ref(e, s, held, clocks, now, folds, family) for e in c.get("unless", [])]
@@ -1050,7 +1052,8 @@ def policy_ref(row, cells, held, s, policy):
         for x in cells["voices"].split("|"):
             if x == "scrubs": V |= set(s.get("cosig", ()))
             else: V |= {v["signer"] for v in held if fam_match(v["fam"], x + ":*") and s["id"] in v.get("names", ()) and ref_state(held, v) == "admitted"}
-        out.append(len(unit(V & cs)))
+        tv = {getf(s, ["target"])} - {None} if cells.get("target_voice") == "yes" else set()     # the target's own yes is a voice
+        out.append(len(unit(V & (cs | tv))))
     if cells.get("target_silent") == "yes":
         w = policy.get(row, 3); tk = getf(s, ["target"])
         out.append(not any(x.get("signer") == tk and tk is not None and s["t"] <= x["t"] < s["t"] + w for x in held))
@@ -1084,6 +1087,9 @@ def policy_sets(cells, rnd, n=12):
             if rnd.random() < .25:
                 later.append({"id": f"w{vid}", "fam": later[-1]["fam"], "verb": "withdraw", "signer": k, "attested": None, "object": "o1",
                               "asserted_at": 3, "val": {}, "ref": {}, "names": frozenset([vid])})
+        if cells.get("target_voice") == "yes" and kinds and rnd.random() < .7:      # the target votes, seated or not
+            later.append({"id": "tv", "fam": rnd.choice(kinds) + ":yes", "verb": "attest", "signer": s["val"]["target"], "attested": None,
+                          "object": "o1", "asserted_at": 2, "val": {}, "ref": {}, "names": frozenset(["self"])})
         if cells.get("target_silent") == "yes" and rnd.random() < .7:
             later.append({"id": "tz", "fam": "x:y", "verb": "attest", "signer": s["val"]["target"] if rnd.random() < .7 else rnd.choice(KEYS),
                           "attested": None, "object": "o1", "asserted_at": 2, "val": {}, "ref": {}, "names": frozenset()})

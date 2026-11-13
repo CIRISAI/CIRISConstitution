@@ -54,8 +54,9 @@ ADMIT = os.path.join(ROOT, "constitution", "protocol_admissibility.tsv")
 ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
 # Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.2.8, which no role token names.
 COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "named", "act", "founding")),
-                       ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no"))])
-COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no"}
+                       ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no")),
+                       ("target_voice", ("yes", "no"))])
+COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
 SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
 SET_EXCL = ("target", "proposer", "node")
 UNSTATED_MAX = 12   # cells the text leaves unstated; the number only falls
@@ -507,6 +508,7 @@ def build():
                             ("voices", "where the voices are found: scrubs (cosignatures of the one row), objection (objection:{state} rows), ballot (ballot rows)"),
                             ("target_silent", "yes: the reverse path lands only if no row signed by the target was first held inside the window"),
                             ("changes_set", "whether the act adds to or removes from the set it counts"),
+                            ("target_voice", "yes: the target's own row naming the act is one of the voices counted, though the target is not in the count set"),
                             ("unstated", "the text does not state the cell"), ("unstated_cells", unstated)])),
                         ("protocols", OrderedDict([
                             ("source", "constitution/consensus_protocols.tsv"),

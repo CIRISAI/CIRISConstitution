@@ -12,7 +12,7 @@ age_assurance:{level}:{band}:{version}	claim	sourced | runs
 age_self_declared:band:{band}:{version}	claim	sourced | runs
 agent_files:{kind}:{platform_or_target}	claim	sourced | runs
 approach:{goal_id}	content	sourced | runs
-archive_release:{basis}	door	cannot run | cannot run: held shut; no doors.tsv row
+archive_release:{basis}	door	sourced | runs
 attestation:agent_integrity	claim	sourced | runs
 attestation:hardware_rooted	claim	sourced | runs
 attestation:license_validity	claim	sourced | runs
@@ -35,12 +35,12 @@ capacity:{factor}	claim	sourced | runs
 capacity_assurance:reversible_excluded:{domain}:{version}	claim	sourced | runs
 capacity_assurance:reversible_pending:{domain}:{version}	claim	sourced | runs
 capacity_assurance:{level}:{domain}:{band}:{version}	claim	sourced | runs
-census:composite:{class}	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
+census:composite:{class}	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
 census:expected_active	claim	sourced | runs
-census:member:partial	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
-census:member:share	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
-census:partial:{class}	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
-census:share:{class}	door	cannot run | cannot run: the count is drawn from a group secret that is not a row: no named answer can read it; no doors.tsv row
+census:member:partial	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:member:share	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:partial:{class}	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
+census:share:{class}	door	no shape, stated | no shape: a field sum over secret shares: no window takes answers and no offer seats, so no shape runs
 cert_validity:{authority}	claim	sourced | runs
 chat:*	content	sourced | runs
 coherence_standing:{cohort}	claim	sourced | runs
@@ -62,7 +62,7 @@ consent:replication:{version}	consent binds=signer	sourced | runs
 consent:scope:{kind}	consent binds=signer	sourced | runs
 consent:state:{stance}	consent binds=signer	sourced | runs
 consent:stream:{kind}	consent binds=signer	sourced | runs
-consent:{kind}	none fits	cannot run | cannot run: the prefix row; its leaves are families of their own; nobody reads it
+consent:{kind}	none fits	no shape, stated | no shape: a prefix: its leaves are families of their own and nobody reads it
 content_class:{class}	claim	sourced | runs
 content_rating:{scheme}:{rating}	claim	sourced | runs
 corpus_health:n_eff_measurable	claim	sourced | runs
@@ -84,7 +84,7 @@ dma:csdma:*	claim	sourced | runs
 dma:dsdma:{domain}:*	claim	sourced | runs
 dma:idma:*	claim	sourced | runs
 dma:pdma:*	claim	sourced | runs
-duty:{kind}	consent binds=signer+holder	cannot run | cannot run: it moves no seat: an obligation on a referenced permission by that permission's attester; no world runs a term
+duty:{kind}	consent binds=signer+holder	no shape, stated | no shape: a term on an offer: an obligation on a referenced permission, which moves no seat
 encyclopedia:*	content	sourced | runs
 event:attendance	claim	sourced | runs
 event:lifecycle:{state}	content	sourced | runs
@@ -114,7 +114,7 @@ key:record	consent binds=signer	sourced | runs
 key:revocation	consent+door binds=signer	sourced | runs
 key_boundary:{scope}	claim	sourced | runs
 key_grant:{axis}	content	sourced | runs
-lawful_order:release	door	cannot run | cannot run: signer `steward` is a duty of the rulings with no doors.tsv row; held shut
+lawful_order:release	claim	sourced | runs
 ledger:checkpoint:{unit}:{version}	claim	sourced | runs
 ledger:head:{unit}:{version}	claim	sourced | runs
 ledger:promotion:{version}	claim	sourced | runs
@@ -160,8 +160,8 @@ retirement:{state}	consent+door binds=signer+holder	sourced | runs
 revocation:{entity_type}:{reason}	consent binds=signer	cannot run | cannot run: the signer cell is empty; for a licence the thing ended is a claim
 rollback_detected:{revision_field}	claim	sourced | runs
 seed_holder_voting_alignment:{cell}	claim	sourced | runs
-self:delegates_to	none fits	cannot run | cannot run: confers nothing and no rule reads it: a label, not a consent to anything
-self:delegates_to:agent_occurrence	none fits	cannot run | cannot run: confers nothing and no rule reads it: a label, not a consent to anything
+self:delegates_to	none fits	no shape, stated | no shape: a label: it confers nothing and no rule reads it
+self:delegates_to:agent_occurrence	none fits	no shape, stated | no shape: a label: it confers nothing and no rule reads it
 session:{kind}	claim	sourced | runs
 settlement:*	claim	sourced | runs
 slashing:{outcome}	door	sourced | runs
@@ -192,11 +192,13 @@ door accord_roster_change	72 worlds, 1 properties hold	holds
 door accord_roster_change	plant: its mutation (check_door.MUTATION)	caught
 door affiliation_member_action	12 worlds, 2 properties hold	holds
 door affiliation_member_action	plant: its mutation (check_door.MUTATION)	caught
-door community_invite+invitee	500 worlds, 3 properties hold	holds
-door community_invite+invitee	plant: its mutation (check_door.MUTATION)	caught
-door community_remove[majority]	72 worlds, 2 properties hold	holds
+door archive_release	4 worlds, 2 properties hold	holds
+door archive_release	plant: its mutation (check_door.MUTATION)	caught
+door community_invite	600 worlds, 4 properties hold	holds
+door community_invite	plant: its mutation (check_door.MUTATION)	caught
+door community_remove[majority]	72 worlds, 4 properties hold	holds
 door community_remove[majority]	plant: its mutation (check_door.MUTATION)	caught
-door cosigned_act	72 worlds, 1 properties hold	holds
+door cosigned_act	72 worlds, 3 properties hold	holds
 door cosigned_act	plant: its mutation (check_door.MUTATION)	caught
 door custodian_replace	12 worlds, 2 properties hold	holds
 door custodian_replace	plant: its mutation (check_door.MUTATION)	caught
@@ -228,7 +230,7 @@ door self_roster_evict	600 worlds, 3 properties hold	holds
 door self_roster_evict	plant: its mutation (check_door.MUTATION)	caught
 door takedown_withhold	577 worlds, 2 properties hold	holds
 door takedown_withhold	plant: its mutation (check_door.MUTATION)	caught
-door wa_adjudication	72 worlds, 2 properties hold	holds
+door wa_adjudication	72 worlds, 4 properties hold	holds
 door wa_adjudication	plant: its mutation (check_door.MUTATION)	caught
 claim.py	plant: mutation claim: an untrusted source moves nothing (everyone)	caught
 claim.py	plant: mutation claim: only the source retracts (any_signer)	caught
@@ -256,8 +258,8 @@ mechanism claim	keeps the characteristic property of door	no
 mechanism consent	keeps the characteristic property of door	no
 mechanism content	keeps the characteristic property of door	no
 mechanism door	keeps the characteristic property of door	yes
-removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 24, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 154, e.g. accord:*)
-removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 154, e.g. accord:*) ; door kept (loses 24, e.g. accord:invoke:constitutional:{halt_id})
-removal	order door > consent > content > claim	surviving consent,door | door kept (loses 24, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 20, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
-counts	families per shape	claim 110, consent 16, consent+door 7, content 24, door 24, none fits 3
-counts	status	cannot run 13, sourced 171
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 155, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 155, e.g. accord:*) ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id})
+removal	order door > consent > content > claim	surviving consent,door | door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 20, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
+counts	families per shape	claim 111, consent 16, consent+door 7, content 24, door 23, none fits 3
+counts	status	cannot run 2, no shape, stated 9, sourced 173

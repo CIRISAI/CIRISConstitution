@@ -18,7 +18,8 @@ directory's own kernel modules.
                 only the source retracts, a source seat read, one source saying two things says nothing, every order
        content  claim.py: the audience reads it and no one outside, only the author retracts or supersedes, every order
      status: sourced (every parameter has a source) | guessed (one at least is `guessed`) | cannot run (no world
-     can be built: the reason is the family's misfit)
+     can be built: the reason is the family's misfit, a thing the text leaves unstated) | no shape, stated (a
+     `class` parameter, with a source that is not guessed, says what the family is and why no shape runs)
   2  mutations of claim.py, each to be caught; plants: three made-up families that fit no shape, each to be
      reported as not fitting
   3  the four shapes removed in order, each kept only if, given the removals already made, a family whose every
@@ -139,6 +140,7 @@ def table_checks(rows):
 
 
 def status(r):
+    if "class" in r["P"] and dict(r["srcs"]).get("class", "guessed") != "guessed": return "no shape, stated"
     if r["shape"] == "none fits": return "cannot run"
     if r["P"].get("door") == "none" or r["P"].get("conferrer") == "unstated" or r["P"].get("signer") == "unstated" \
             or r["P"].get("role") == "a term on an offer":
@@ -479,6 +481,7 @@ def rest_job(_):
     for r in rows:
         st = status(r)
         if st == "cannot run": res[r["family"]] = (st, "cannot run: " + r["misfit"], 0); continue
+        if st == "no shape, stated": res[r["family"]] = (st, "no shape: " + r["P"]["class"], 0); continue
         bad, n = [], 0
         try:
             for s in r["shape"].split("+"):
@@ -502,14 +505,14 @@ def main():
     got, problems = [], []
     tb = table_checks(rows)
     for b in tb: got.append(("table", b, "defect")); problems.append("table: " + b)
-    used = sorted({d for r in rows if status(r) != "cannot run" for d in r["P"].get("door", "none").split("|") if "door" in r["P"] and d != "none"})
+    used = sorted({d for r in rows if status(r) not in ("cannot run", "no shape, stated") for d in r["P"].get("door", "none").split("|") if "door" in r["P"] and d != "none"})
     half = len(used) // 2
     with multiprocessing.Pool(PROCS, maxtasksperchild=1) as mp:
         jobs = [mp.apply_async(rest_job, (None,)), mp.apply_async(door_job, (used,))]
         rest, doors = jobs[0].get(), jobs[1].get()
     for r in rows:
         st, verdict, n = rest["families"][r["family"]]
-        if st != "cannot run" and "door" in r["P"]:
+        if st not in ("cannot run", "no shape, stated") and "door" in r["P"]:
             ds = [doors[d] for d in r["P"]["door"].split("|")]
             n += sum(d["worlds"] for d in ds)
             notes = []

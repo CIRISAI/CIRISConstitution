@@ -59,6 +59,8 @@ def card(fam, fm, tr, rx):
             elif e["kind"] == "land":
                 body = f"landing of `{e['name']}`: " + ("each node for itself, nothing signed" if e["concluder"] == "local" else f"by {e['concluder']} as `{e['landing']}`")
                 body += {"closed": "; a late answer does not count", "counts": "; a late answer counts"}.get(e.get("late"), "")
+            elif e["kind"] == "while":
+                body = f"while `{e['name']}` is open: " + {"in_force": "in force at each node from its own first holding", "pending": "binds nobody until it lands"}[e["open"]]
             else:
                 ev = lambda xs: " or ".join(f"{x['event']}({x['of']}" + (f", by the {x['by']}" if x.get('by') else "") + ")" for x in xs)
                 eff = ", ".join((f"emit `{x['family']}` by {x['by']}" if x["effect"] == "emit" else f"read {x['verdict']}" if x["effect"] == "read" else f"do {x.get('act')}" if x["effect"] == "do" else f"open {x['policy']}") for x in e["effects"])
