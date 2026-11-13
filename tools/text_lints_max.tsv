@@ -2,12 +2,12 @@
 # A count above its maximum refuses the check; each number only falls. The worklists are formal/derivation/text_lints/<lint>.tsv.
 lint	max	note
 counts	1	a number the prose states against the table or tool that states it, and a constant restated with another value
-citations	5	a citation of no section, of a heading with no body, a link whose anchor or Part differs from the number it shows, an empty anchor, a below or above the wrong way
-citations_no_anchor	116	a [CC x.y] link into a Part with no #x.y anchor
+citations	0	a citation of no section, of a heading with no body, a link whose anchor or Part differs from the number it shows, an empty anchor, a below or above the wrong way
+citations_no_anchor	106	a [CC x.y] link into a Part with no #x.y anchor
 terms	19	a name from the closed list of terms used outside the sense the text has settled
 force	3	an RFC 2119 keyword in an informative paragraph or example, a lower-case requirement in a normative paragraph, a restatement whose keyword differs from its home's
-length	68	prose sentences over 40 words in Parts 2 to 8
-length:p2	19	the same, Part 2
+length	67	prose sentences over 40 words in Parts 2 to 8
+length:p2	18	the same, Part 2
 length:p3	0	the same, Part 3
 length:p4	0	the same, Part 4
 length:p5	36	the same, Part 5

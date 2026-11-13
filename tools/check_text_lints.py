@@ -180,7 +180,11 @@ def section_index(parts):
         for k, (i, d, n, _) in enumerate(heads):
             if not n:
                 continue
-            end = heads[k + 1][0] if k + 1 < len(heads) else len(lines)
+            end = len(lines)
+            for j in range(k + 1, len(heads)):                 # an unnumbered sub-heading is part of the body
+                if heads[j][2]:
+                    end = heads[j][0]
+                    break
             body = any(l.strip() and l.strip() != "---" for l in lines[i + 1:end])
             idx[n] = (part, i, body)
     return idx
@@ -212,7 +216,7 @@ def lint_citations(parts):
                 n = shown.group(1)
                 if f and f in P.FILE_PART and n in idx and idx[n][0] != P.FILE_PART[f]:
                     hits.append((part, sec, i + 1, short(l), f"[CC {n}] links into {f}; CC {n} is in {P.PARTS[idx[n][0]]}"))
-                elif anchor is None and (f in P.FILE_PART or not f):
+                elif anchor is None and (f in P.FILE_PART or not f) and "." in n:   # a whole Part has no anchor
                     hits.append((part, sec, i + 1, short(l), f"no anchor: [CC {n}] links to {f or 'this Part'} with no #{n}"))
                 elif anchor is not None and re.fullmatch(r"\d+(?:\.\d+)*", anchor) and anchor != n:
                     hits.append((part, sec, i + 1, short(l), f"[CC {n}] links to #{anchor}"))
@@ -366,7 +370,7 @@ def lint_length(parts):
     for part, sec, line, s, _ in sentences_of(parts, which=[p for p in parts if p != "p1"]):
         t = P.plain(s)
         for k in keep:
-            t = t.replace(k, "")
+            t = t.replace(k, "").replace(P.plain(k), "")
         n = len(t.split())
         if n > MAX_WORDS:
             hits.append((part, sec, line, short(s), f"{n} words"))
@@ -393,7 +397,7 @@ def lint_history(parts):
             continue
         t = P.plain(re.sub(r"`[^`]*`", "", s))
         for k in keep:
-            t = t.replace(k, "")
+            t = t.replace(k, "").replace(P.plain(k), "")
         for name, pat in HISTORY:
             mm = re.search(pat, t, 0 if name == "product or repository" else re.I)
             if mm:

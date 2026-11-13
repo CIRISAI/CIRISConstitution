@@ -108,7 +108,7 @@ into it from the count across signers is the intended movement.
 | a cell orders rows of different signers by a digest or a key id | 0 |
 | a cell orders one signer's own rows by a signed instant | 102 |
 | a cell orders one signer's own rows by a digest | 94 |
-| a cell compares the signed instants of two rows | 13 |
+| a cell compares the signed instants of two rows | 10 |
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
 | a fold a reaction calls and no cell defines | 9 |

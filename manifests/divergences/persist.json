@@ -3949,6 +3949,27 @@
    "quote": "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
   },
   {
+   "id": "persist/membership:{stage}/roster event signers",
+   "status": "stated",
+   "reason": "the store compares a signed instant with an arrival clock; the kernel reads the head the event names and each node's own acknowledged head, and has no instant to compare",
+   "cc_ref": "CC 3.3.4",
+   "quote": "A widening or removal names the roster head it extends, and its signers are counted over the members at that head."
+  },
+  {
+   "id": "persist/membership:{stage}/invitation expiry",
+   "status": "stated",
+   "reason": "the door runs the window with the widening as its landing; what the store compares is two rows' signed instants, which the kernel does not read",
+   "cc_ref": "CC 3.1.3.2",
+   "quote": "P's `expires_at` is P's own stated end, and a late acceptance is closed."
+  },
+  {
+   "id": "persist/observation:access_assumption/cited grant",
+   "status": "stated",
+   "reason": "the text reads the grant in the row's causal past; a check at the row's signed instant would read a clock the kernel does not",
+   "cc_ref": "CC 3.1.9.4",
+   "quote": "live in the row's causal past"
+  },
+  {
    "id": "persist/moderation:{allegation_type}/replication.audience",
    "status": "stated",
    "reason": "the subject is served the row's existence and some fields and not others; the model's audience is of a whole row",

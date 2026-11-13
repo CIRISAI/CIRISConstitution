@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "12bf0c626a3dd3b86635c564e20c1fc96d263893bd8e5356f7cf0475a4dd2cab",
+  "policy_sha256": "daeb17529e9e958b79a7967059c17825b1a1efb8b47e1095bdb2d569d1dd573b",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -326,7 +326,7 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "signed",
+     "value": "named",
      "cc_ref": "CC 3.1.3"
     },
     "voices": {
@@ -641,7 +641,7 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "signed",
+     "value": "named",
      "cc_ref": "CC 3.1.3"
     },
     "voices": {
@@ -937,7 +937,7 @@
      "value": "unstated"
     },
     "counted_at": {
-     "value": "signed",
+     "value": "named",
      "cc_ref": "CC 3.1.3"
     },
     "voices": {

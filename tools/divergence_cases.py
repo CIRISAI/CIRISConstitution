@@ -442,6 +442,18 @@ def cases():
         "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason",
         "legal_hold: none in code", "storage",
         "the withdraws is admitted in both; what differs is the erasure descent, a storage act the kernel does not model"))
+    E.append(stated("persist", "membership:{stage}", "roster event signers", "count", ["CLM-roster-event-fresh"], "CC 3.3.4",
+        "A widening or removal names the roster head it extends, and its signers are counted over the members at that head.",
+        "a signer is judged at the event's signed instant, trusted only inside the freshness window of first receipt", "a signed instant",
+        "the store compares a signed instant with an arrival clock; the kernel reads the head the event names and each node's own acknowledged head, and has no instant to compare"))
+    E.append(stated("persist", "membership:{stage}", "invitation expiry", "window", ["CLM-membership-consent"], "CC 3.1.3.2",
+        "P's `expires_at` is P's own stated end, and a late acceptance is closed.",
+        "the acceptance's and the widening's signed instants are compared with expires_at", "a signed instant",
+        "the door runs the window with the widening as its landing; what the store compares is two rows' signed instants, which the kernel does not read"))
+    E.append(stated("persist", "observation:access_assumption", "cited grant", "door", ["CLM-capacity-consent-gate"], "CC 3.1.9.4",
+        "live in the row's causal past",
+        "whether a cited grant is checked at all, and at which instant, is not known", "a signed instant",
+        "the text reads the grant in the row's causal past; a check at the row's signed instant would read a clock the kernel does not"))
     E.append(stated("agent", "(agent conduct)", "CC 7.4 stop", "door", ["C562"], "CC 7.4",
         "An agent that finds itself one step from a lethal act — holding a target, a trigger, a release, or the computation another system would fire on — stops.",
         "nothing detects that situation; none of the ten verbs is a stop", "outside the kernel",

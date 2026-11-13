@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "policy_sha256": "12bf0c626a3dd3b86635c564e20c1fc96d263893bd8e5356f7cf0475a4dd2cab",
+  "policy_sha256": "daeb17529e9e958b79a7967059c17825b1a1efb8b47e1095bdb2d569d1dd573b",
   "count": 819,
   "rule_vector_count": 270,
   "target_voice": "on a row whose target_voice cell is yes, a vector's target_voice says whether the target's own yes is held: one voice toward the floor of two and toward the floor count, never a member and never part of the enact fraction; a vector without the field reads false",
