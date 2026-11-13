@@ -29,7 +29,7 @@ rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window
 and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
 `Harden3.lean` (the rules added after the kernel was attacked), and `SeatG.lean`, `Terms.lean`, `Reader.lean`,
 `Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads), and
-`Consent.lean` (the one act beneath the seat) and `Carry.lean` (a row leaves its room only by its own signer's act). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) and `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -46,7 +46,21 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.no_offer_no_seat`, `no_acceptance_no_seat`, `one_row_only_to_self` | a seat needs two voices, the conferrer's offer and the holder's acceptance; one row is both voices only when a key seats itself |
 | `Kernel.Consent.silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end` | a relation stands when every voice it binds has consented; nobody is bound by the rows of others, rows by an unbound voice change nothing, and only a bound voice's own withdrawal or a cut ends it |
 | `Kernel.Consent.one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands` | with one voice bound one row is enough; with two it is two rows, one naming the other, in either order; the seat conferred by one key is exactly that act with the conferrer's row first |
-| `Kernel.Consent.count_needs_holder`, `one_voice_is_not_a_count`, `nonmember_rows_change_nothing`, `only_members_withdraw`, `count_of_one_is_one_row` | where a body places a duty its consent is a count of its members' rows; the holder's own row is still needed, rows by one voice are never a count of two, non-members change nothing, only a member's own withdrawal lowers the count, and a body of one is the one-key case |
+| `Kernel.Consent.count_needs_holder`, `one_voice_is_not_a_count`, `nonmember_rows_change_nothing`, `count_of_one_is_one_row` | where a body places a duty its consent is a count of its members' signatures on the row; the holder's own yes is still needed, one voice is never a count of two, non-members change nothing, and a body of one is the one-key case |
+| `Kernel.Consent.count_is_final_against_members`, `only_holder_or_cut_ends`, `holder_still_ends_its_own` | a count once met is final against every later row, withdrawals included; a counted duty ends only by its holder's own withdrawal or a cut |
+| `Kernel.RosterHead.membersAt_function`, `standing_final` | the members at a roster head are a function of the head, the signatures it carries and its past, and no concurrent or later row changes them |
+| `Kernel.RosterHead.counted_over_named_head`, `rows_outside_change_nothing` | whether a version stands is decided by the members at the heads it names and the signatures on it, and rows outside its past change nothing |
+| `Kernel.RosterHead.no_self_admission`, `outsiders_admit_nothing` | a key that is not a member at the heads a version names gives no voice to its count, and keys outside the roster admit nobody however much they sign |
+| `Kernel.RosterHead.removed_voice_does_not_count`, `readmission_needed` | a key a version leaves out is no voice of a version naming it, and further down the line is a member only if a version counted without it lists it again |
+| `Kernel.RosterHead.old_head_still_counts` | by definition, a key that is a member at an older head is a voice of a version naming only that head |
+| `Kernel.RosterHead.one_signature_never_removes`, `one_key_alone_stands_nothing` | where the count asks two or more, a member leaves a standing version only by its own withdrawal or by the signatures of two distinct members |
+| `Kernel.RosterHead.voters_is_common` | a version naming several heads is counted over the members common to them, which is the common list of `Merge.lean` |
+| `Kernel.RosterHead.Rejected.Model.later_withdrawal_changes_members`, `head_withdrawal_ends_version` | under the rejected rule of withdrawable votes, one later withdrawal removes every member at a head and ends a version naming it |
+| `Kernel.TwoMechanisms.edge_is_one_voice_consent`, `claim_is_one_voice_consent` | an edge of the meaning walk is a relation binding one voice, so what a row means to a reader is a bounded walk of one-voice consents from the reader's key |
+| `Kernel.TwoMechanisms.claim_lost_only_by_walk_voice` | a row loses its meaning for a reader only through a withdrawal signed by a key on that reader's walk |
+| `Kernel.TwoMechanisms.content_holders_are_consents`, `content_audience_function`, `content_audience_final` | with each row's own audience a roster's members, everyone or one key, who may hold a row is read off roster heads, their pasts and naming rows alone |
+| `Kernel.TwoMechanisms.door_not_function_of_rows` | a window the reader closes on its own clock, with no answer held, is open at one instant and closed at a later one over the same rows |
+| `Kernel.TwoMechanisms.SeatModel.consent_not_door`, `offer_alone_never_stands` | whatever answers a window an offer opens, its outcome at every instant does not say whether the seat stands, and an offer alone stands at no instant |
 | `Kernel.Carry.nothing_leaves`, `others_elsewhere_change_nothing`, `author_carries`, `same_room_unchanged` | a naming row carries only from the same room or under the named row's own signer; then no key outside a room's own audiences is in the audience of its rows unless an author carried a row of its own out, rows by others elsewhere change no audience, and inside one room the rule is the earlier one |
 | `Kernel.offer_withdrawal_ends`, `acceptance_withdrawal_ends`, `third_key_cannot_end`, `only_withdrawals_and_cuts_end` | either side ends a seat alone by its own withdrawal; no third key ends it without a cut |
 | `Kernel.stands_function`, `stands_mono`, `means_is_seat_walk` | standing is a bounded walk of live seats and a function of the set; it grows with offers and acceptances and shrinks only with withdrawals and cuts; what a row means to a reader is that walk from the reader's own key |
@@ -110,12 +124,14 @@ An edge is withdrawn only by its own signer.
   outsider assumes that the conclusion rule refuses a row on a slot by a key with no seat at its head, and it
   concerns voices, not the signer: a cut carried by an outsider with enough seated cosignatures is entitled.
   The instances are proved for two cuts that are the only concluded cuts.
-- A voice counted by a group cannot be withdrawn in this model. A version naming several heads is counted over
-  the members common to them (`Merge.lean`); counting over each head's own roster is not modelled.
+- A voice counted by a group is a signature on the row and is not withdrawn. A member who changes its mind signs a
+  new counted act, or answers through a window under recount. A version naming several heads is counted over the
+  members common to them (`Merge.lean`, `RosterHead.voters_is_common`).
+- Concurrent versions of one head are not decided in `RosterHead.lean`; they wait as tips (`Window.lean`, `Merge.lean`).
 - A conclusion from silence, such as a window closing unopposed, cannot be drawn from rows and is not here.
 - The walk has one depth for all edges; the classes and budgets of `formal/trust_set` are not carried over.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run: `bash formal/causal_order/build.sh`. It compiles the fourteen files in order and exits on a compile error,
+Run: `bash formal/causal_order/build.sh`. It compiles the sixteen files in order and exits on a compile error,
 a `sorry`, or an axiom beyond the three of core Lean.

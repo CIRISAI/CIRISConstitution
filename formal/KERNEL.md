@@ -146,9 +146,15 @@ and not a second object, and it stands the same whichever of the two signed firs
 of others, any bound voice ends it alone, and no third key ends it without a cut. **proved**
 (`Consent.lean`): `silent_voice_not_bound`, `unbound_rows_change_nothing`, `only_bound_voices_end`,
 `one_voice_one_row`, `two_voices_two_rows`, `seat_is_two_consents`, `holder_first_stands`. Where a body places the duty,
-the body is one party and its consent is a count of its members' rows: `count_needs_holder`,
-`one_voice_is_not_a_count`, `only_members_withdraw`, `count_of_one_is_one_row`. The count is over the members
-given; that they are the members at the head the row names is the roster's part and is not in this file.
+the body is one party and its consent is a count of its members' signatures on the row. **proved**:
+`count_needs_holder`, `one_voice_is_not_a_count`, `count_of_one_is_one_row`. A signature is part of the row, so
+a count once met is final: no member's later row lowers it, and only the holder's own withdrawal or a cut ends
+the duty. **proved**: `count_is_final_against_members`, `only_holder_or_cut_ends`, `holder_still_ends_its_own`.
+A member who changes its mind signs a new counted act, or answers through a window under recount. The members
+are those at the head the row names. **proved** (`RosterHead.lean`): `membersAt_function`,
+`counted_over_named_head`, `no_self_admission`. The rule that a member may withdraw a counted
+voice is rejected, since it lets one signature unseat a member. The file keeps it under `Rejected`, with its
+counter-model.
 
 Who may place a duty is one parameter with three values: the object's own key, a key holding a seat that may
 confer, or a group whose count is met. A key
@@ -265,7 +271,10 @@ The four are labels over two mechanisms. Removing the shapes in order, three ord
 consent and the door. Content is carried by consent, since its audience is the holders of a roster and its
 life is the **state** answer. A claim is carried by consent, since what it means to a reader is the reader's
 own one-voice consent, walked from the reader's key. Nothing else reads now, so the door stays. Nothing else
-makes an offer stand, so consent stays. This is measured on one property of each shape and is not proved.
+makes an offer stand, so consent stays. **proved** (`TwoMechanisms.lean`): a claim is the reader's one-voice consents walked, in full; content's
+audience is read off roster heads and naming rows, for the three audiences of section 7. That the door reads
+now, and that consent is no window's outcome, are proved on stated models. The sorting of the families into
+shapes is **measured**.
 
 | | Families |
 |---|---|
@@ -308,6 +317,13 @@ tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over ev
 versions an adversary below the count can cause, in three settings under two counting protocols, the roster is
 a function of the set, no removed key is listed, and a removal naming an old head gains nothing. Four further
 protocols were run once at the same bound and are not in the check.
+
+**proved** (`RosterHead.lean`): the members at a head are a function of the head, its signatures and its past
+(`membersAt_function`, `standing_final`). A removal is a later counted version and changes the members there,
+not at the old head. A member's own leaving binds the same way, by causal past. Where the count asks two or
+more, one key's rows remove nobody: a member leaves only by its own withdrawal or by the signatures of two
+distinct members (`one_signature_never_removes`). A removed key counts again only after a version lists it
+again (`readmission_needed`). Two concurrent versions of one head are not decided there; they wait as tips.
 
 An adversary holding the count of an old head signs a valid version alone. A witnessed lineage answers that
 (CC 3.2 T6), and it is each reader's own trust that decides whose witnesses count.
