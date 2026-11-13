@@ -312,6 +312,7 @@ jobs:
           python3 -I ../causal_kernel/check_rosters.py
           python3 -I ../causal_kernel/check_door.py
           python3 -I ../causal_kernel/check_time.py
+          python3 -I ../causal_kernel/check_shapes.py
           python3 -B ../../tools/kx_check.py --check
           python3 -I ../roster_fork/fork_check.py --check
           python3 -I ../transport_tiers/frame_ab.py --check

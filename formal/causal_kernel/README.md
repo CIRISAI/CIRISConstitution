@@ -111,6 +111,12 @@ cannot tell apart and that a reading sends to different results. Six readings ar
 as written and have a replacement. Two are not covered and are recorded with their witnesses: a cosignature
 attached against the node's clock at first receipt, and a session held by the earliest claimed instant.
 
+**A shape for every family** (`check_shapes.py`, `claim.py`, `shapes_expected.tsv`, and the table
+`formal/derivation/family_shapes.tsv`). Each of the 184 families is run as an instance of its shape, with every
+parameter traced to a table cell or a quoted sentence and each quote checked against the section it cites.
+`claim.py` states a claim and content over the kernel's layers. The check also removes the shapes in three
+orders and records which survive. Three made-up families that fit no shape must be reported as not fitting.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -123,4 +129,4 @@ attached against the node's clock at first receipt, and a session held by the ea
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
 `python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
-`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` and `python3 -I formal/causal_kernel/check_time.py`
+`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` and `python3 -I formal/causal_kernel/check_shapes.py`

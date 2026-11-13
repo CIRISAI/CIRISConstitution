@@ -214,6 +214,31 @@ person's own devices (CC 3.1.3.1). This is the one ranking by a signed instant t
 both claimants are one person's keys, so it is one voice ordering its own rows, and a back-dated claim gains at
 most one lease against that person's other devices.
 
+## 5a. Two mechanisms, four shapes
+
+Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
+consent given by a count, and an acknowledgement is a claim. **measured**
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 184 families, 110 are
+claims, 24 content, 24 doors, 17 consents and 6 both a consent and a door. Three fit none.
+
+The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
+consent and the door. Content is carried by consent, since its audience is the holders of a roster and its
+life is the **state** answer. A claim is carried by consent, since what it means to a reader is the reader's
+own one-voice consent, walked from the reader's key. Nothing else reads now, so the door stays. Nothing else
+makes an offer stand, so consent stays. This is measured on one property of each shape and is not proved.
+
+| | Families |
+|---|---|
+| every parameter traced to a table cell or a quoted sentence | 147 |
+| a guessed parameter | 20 |
+| cannot run | 17 |
+
+The guesses are nineteen content families whose audience cell is empty, and key revocation, where the text
+does not say who may revoke another's key. Each family that cannot run lacks one thing, named in the table:
+eight are doors with no row in `doors.tsv`, five are census families whose count is drawn from a group secret
+that is not a row, and four are labels or prefixes that confer nothing. A family is counted as traced when its
+own parameters are; most door rows still rest on parameters the tables do not state (section 5). **open**.
+
 ## 6. Conflict between concurrent rows
 
 1. **Different kinds on one target** are decided by a fixed order on kinds. **proved**: `wins_unique`.
