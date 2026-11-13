@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "b3a2b59062bbb8b085f7722c46b6c2e88ec8f1d33184c082625fd64f9e8c6089",
+  "policy_sha256": "e41b1099de6ba3d180ad2e174b6105e8bee4588d2d85d6f8603b6a57c66e84ff",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -974,6 +974,117 @@
    ],
    "status": "normative",
    "note": "a strict majority of the standing accord roster cosign one row: the resumption after a halt and every other accord threshold but the fire"
+  },
+  {
+   "family": "poll",
+   "cc_ref": "4.5.13 6.1.9",
+   "kind": "tally",
+   "standing_set": "the roster the poll's opening row names",
+   "base": "standing",
+   "enact": null,
+   "cancel": null,
+   "floor": "more than 1/2 of those who voted, at least 2 voices",
+   "enact_rule": {
+    "kind": "none"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "voted_majority",
+    "count": 2
+   },
+   "counted": {
+    "count_set": {
+     "value": "member",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.5.13"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 4.5.13"
+    },
+    "voices": {
+     "value": "ballot",
+     "cc_ref": "CC 6.1.9"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "tallied",
+   "window_secs": 0,
+   "window_class": "none",
+   "irreversible": false,
+   "reverse_path": true,
+   "corridor": "community",
+   "model": [
+    "4.5.13"
+   ],
+   "status": "default",
+   "note": "a poll states its own rule in the row that opens it; where it states none, a strict majority of those who voted, never fewer than two voices, one ballot a person; the poll's own close ends it, so the row carries no window"
+  },
+  {
+   "family": "wa_adjudication",
+   "cc_ref": "4.3 3.1.9.4",
+   "kind": "cosigned",
+   "standing_set": "the designated body's full seated roster, counted as its declared protocol states",
+   "base": "standing",
+   "enact": "protocol",
+   "cancel": null,
+   "floor": null,
+   "enact_rule": {
+    "kind": "protocol"
+   },
+   "cancel_rule": {
+    "kind": "none"
+   },
+   "floor_rule": {
+    "kind": "none"
+   },
+   "counted": {
+    "count_set": {
+     "value": "wa",
+     "cc_ref": "CC 4.3"
+    },
+    "voice": {
+     "value": "person",
+     "cc_ref": "CC 4.3"
+    },
+    "counted_at": {
+     "value": "named",
+     "cc_ref": "CC 4.3"
+    },
+    "voices": {
+     "value": "scrubs",
+     "cc_ref": "CC 4.3"
+    },
+    "target_silent": {
+     "value": "no"
+    },
+    "changes_set": {
+     "value": "no"
+    }
+   },
+   "cancel_over": "—",
+   "at_window": "cancelled",
+   "window_secs": 259200,
+   "window_class": "standing_72h",
+   "irreversible": false,
+   "reverse_path": false,
+   "corridor": "cosign",
+   "model": [
+    "4.3"
+   ],
+   "status": "normative",
+   "note": "a finding of the designated Wise Authority body is one row cosigned under the body's own declared protocol, as any cosigned act of a group; the denominator is the full seated roster, never the live subset"
   }
  ],
  "base_law": {

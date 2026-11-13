@@ -677,6 +677,21 @@ COUNTED_AT = {"named": "past(self)", "signed": "sel(held, \\x: le(x.asserted_at,
               "founding": "past(the(named(self, 'founding')))"}
 
 
+COUNT_SET_LESS = {"target": "single(self.target)", "proposer": "single(self.signer)"}
+COUNT_SET_SEATS = ("member", "self", "holder", "operator", "wa", "moderate", "review", "founder", "custodian", "owner", "steward")
+
+
+def count_set_kx(value):
+    """Who a policy row counts, by its count_set cell (formal/derivation/policy_text.tsv): the keys seated in each role
+    the cell names, over the roster the row extends, less the party the cell leaves out. None where the cell names a
+    set no seat gives: `protocol` (the group's declared kind), a role that is no seat token, or `-node`."""
+    m = re.fullmatch(r"([a-z_:]+(?:\+[a-z_:]+)*)(?:-([a-z]+))?", value)
+    if not m or any(r not in COUNT_SET_SEATS for r in m.group(1).split("+")) or (m.group(2) and m.group(2) not in COUNT_SET_LESS): return None
+    sets = [f"holders_in(past(self), {q(r)}, self.object)" for r in m.group(1).split("+")]
+    s = sets[0] if len(sets) == 1 else f"union({', '.join(sets)})"
+    return f"diff({s}, {COUNT_SET_LESS[m.group(2)]})" if m.group(2) else s
+
+
 def counted_at_kx(value):
     """The set a policy row counts over, by its counted_at cell (formal/derivation/policy_text.tsv)."""
     return f"size(holders_in({COUNTED_AT[value]}, 'member', self.object))"

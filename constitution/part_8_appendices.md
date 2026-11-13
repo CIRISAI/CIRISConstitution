@@ -2355,6 +2355,9 @@ In time:
 
 Count: `none`
 
+In time:
+- expiry required `valid_until` (CC 4.3)
+
 Body: `domain`
 
 **`deferral:response:{outcome}`** — Rules, thing
@@ -3205,6 +3208,7 @@ Change:
 
 In time:
 - [decided] clock `objection` = `default_standing.window_secs` (CC 7.5.5)
+- [decided] landing of `objection`: by author as `retirement:{state}` (CC 7.5.5)
 
 Body: `decided_by` (text only), `kind`, `preserve_until` (text only), `reason`, `retirement_id` (text only)
 

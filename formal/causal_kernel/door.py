@@ -74,9 +74,10 @@ def land_text(e):
                                               " late " + e["late"] if e.get("late") else "", ", ".join(e["cc_ref"]))
 
 
-def stated(spec, door, reader):
+def stated(spec, door, reader, author=None):
     """The concluder, the landing row and the late answer of a door, from the manifest where it states them.
-    `reader`: the seat that stands for the node reading its own close, where the manifest says `local`."""
+    `reader`: the seat that stands for the node reading its own close, where the manifest says `local`.
+    `author`: the seat of the opening row's signer, where the manifest says `author` and that signer concludes."""
     e = land_entry(*LANDS[door])
     if e is None:
         return dict(spec, concluder=reader if spec.get("concluder") is None else spec["concluder"])
@@ -86,6 +87,7 @@ def stated(spec, door, reader):
         spec["concluder"] = reader; spec["landing_row"] = "none: each node reads its own close (run as the key in '%s')" % reader
     else:
         spec["concluder"] = SEAT.get(e["concluder"], e["concluder"]); spec["landing_row"] = e["landing"]
+        if e["concluder"] == "author" and author: spec["concluder"] = author
     if e.get("late"): spec["late"] = e["late"]
     return spec
 
@@ -279,6 +281,7 @@ def rule(r, P, past):
     if not spec.get("door"): return WN.rule(r, P, past)
     c = spec["concluder"]
     if "concluder_holder" in MUT and c == "target": c = spec["counted"]       # MUTATION: the halt landed by a holder
+    if "concluder_target" in MUT and p.get("target"): c = "target"            # MUTATION: the target closes its own window
     if c == "target":
         if r["signer"] != p.get("target"): return False
     elif c == "winner":
@@ -451,10 +454,14 @@ def door_specs():
         unstated=["concluder: the holding device (custody:ack signer), per node", "answers: reconsideration reversed; members' lift"]), "takedown_withhold", "target")
     D["retirement_objection"] = stated(dict(policy="retirement:{state}[decided]", kind="clock", opener="decider", counted="decider", extra=(),
         target_votes=True, opener_says=None, kinds=("withdrawn", "object"),
-        clauses=(("once", "withdrawn", ("abs", 1), "all", "cancelled"), ("close", "object", ("abs", 1), "target", "held")),
-        silent=None, default="proceed", secs=259200, concluder="target", late="counts", outcomes=("cancelled", "held", "proceed", "open"),
-        cells={"clock": "objection dur default_standing.window_secs from first_held by receipt"},
-        unstated=["the agent's objection row is not named in the text", "concluder: the agent (it signs the ladder)"]), "retirement_objection", "target")
+        clauses=(("once", "withdrawn", ("abs", 1), "all", "cancelled"), ("close", "object", ("abs", 1), "target", "objected")),
+        silent=None, default="proceed", secs=259200, concluder="target", late="counts", outcomes=("cancelled", "objected", "proceed", "open"),
+        cells={"clock": "objection dur default_standing.window_secs from first_held by receipt",
+               "objection": "the agent signs its own; a `decided` row that does not name one its signer held concludes nothing (CC 7.5.5): the recount"},
+        unstated=["the family of the agent's objection row is not named in the text",
+                  "an objection first held after the close: no sentence says whether it counts; run as counted",
+                  "the decider is run as the signer of the opening `decided` row (the cell's `author`); the register has the agent key sign that row and name the decider in `decided_by`",
+                  "concluder: the agent (it signs the ladder)"]), "retirement_objection", "target", author="decider")
     D["decay_stage"] = stated(dict(policy="consent:decay:{stage}", kind="clock", opener="subject", counted="subject", extra=(), target_votes=False,
         opener_says=None, kinds=(), clauses=(), silent=None, default="due", secs=30 * 86400, concluder="author", late="counts",
         outcomes=("due", "open"), cells={"clock": "anonymise / complete, from admitted revocation"},
@@ -465,6 +472,50 @@ def door_specs():
         cells={"expiry": "expires_at, max membership_proposal_max_secs, from asserted_at by signed (CC 3.1.3.2 (3))"},
         unstated=["late=closed: an acceptance not in the landing's past by its close does not admit",
                   "the window's length: the proposal's own expires_at - asserted_at (both the proposer's)"]), "invitation", "member")
+    # ---- a poll (CC 4.5.13): the rule its opening row states, or the default of the policy row `poll` ---------------
+    f = POLICY["poll"]
+    own = "the window's length: the poll's own close, stated by its opening row; run at 86 400 s"
+    for name, rule, over, cell, extra in (
+            ("poll", at_least_rule(f["floor_rule"], MIN_COUNT.get(f["corridor"], 2)), "voted",
+             "floor_rule voted_majority 2: more than half of those who voted, at least two voices (the poll states no rule)", []),
+            ("poll[stated]", ("strict", 2, 3, 2), "all", "the rule the poll's opening row states (CC 4.5.13)",
+             ["the poll's own rule: run here as more than two thirds of the roster, floor two"])):
+        if "stated_ignored" in MUT:                                  # MUTATION: the opening row's own rule is not read
+            rule, over = at_least_rule(f["floor_rule"], 2), "voted"
+        D[name] = dict(policy="poll", kind="tally", opener="member", counted="member", extra=(), target_votes=False, opener_says=None,
+            kinds=("for", "against"), clauses=(("close", "for", rule, over, "carried"),), silent=None, default="not_carried", secs=86400,
+            concluder="member", late="counts", outcomes=("carried", "not_carried", "open"),
+            landing_row="ballot:tally:{poll_id} (the tally member's row; CC 3.1.3)",
+            cells={"count": cell, "counted": "counted.count_set member, voice person, counted_at named", "default": "at_window tallied",
+                   "window": "window_secs 0: the poll's own close"},
+            unstated=extra + [own, "who opens: no family is named for the row that opens a poll; a member's open row stands for it",
+                              "concluder: the period's tally member signs the result; run as a member, since a tally member is drawn from a group secret that is not a row",
+                              "a ballot after the closing period: a secret poll counts only its closing period (CC 6.1.9); the door recounts a concurrent ballot"])
+    # ---- a Wise Authority adjudication (CC 4.3): one row cosigned under the body's own declared protocol ------------
+    f = POLICY["wa_adjudication"]
+    D["wa_adjudication"] = hold_close(dict(policy="wa_adjudication", kind="cosigned", opener="wa", counted="wa", extra=(), target_votes=False,
+        opener_says="assent", kinds=("assent",),
+        clauses=(("once", "assent", ("strict", 1, 2, 1), "voted" if "live_subset" in MUT else "all", "landed"),),   # MUTATION: the live subset
+        silent=None, default="cancelled", secs=f["window_secs"], concluder="wa", late="counts", outcomes=("landed", "cancelled", "open"),
+        cells={"enact": "protocol (the body's declared rule)", "counted": "counted.count_set wa, voice person, counted_at named: the full seated roster the finding names",
+               "window": "window_secs %d (hold)" % f["window_secs"], "default": "at_window cancelled"},
+        unstated=["the protocol: read here as strict_majority; the body's charter states its own",
+                  "concluder at the close: a node's own drop (cosign:{state} hold is local)"]))
+    # ---- a deferral (CC 4.3): the request states its own end; no default answers it; at the end it goes up ----------
+    D["deferral"] = dict(policy="deferral:request", kind="extra", opener="deferring", counted="resolve_deferral", extra=(), target_votes=False,
+        opener_says=None, kinds=("approved", "rejected"),
+        clauses=(("once", "approved", ("abs", 1), "all", "approved"), ("once", "rejected", ("abs", 1), "all", "rejected")),
+        silent=None, default="rejected" if "default_answers" in MUT else "escalated",                              # MUTATION: silence answers
+        secs=7 * 86400, concluder="deferring", late="counts", outcomes=("approved", "rejected", "escalated", "open"),
+        landing_row="none: each node reads the request's own end; going up is an effect and no row",
+        cells={"expiry": "expiry required valid_until (the request's own end)",
+               "close": "CC 4.3: with no answer held at the end the request goes up to whoever conferred the seat; the agent stays deferred",
+               "answers": "deferral:response:{outcome}, approved | rejected, by the seat the request is addressed to"},
+        unstated=["the window's length: the request's own stated end; run at 604 800 s",
+                  "concluder: each node reads the request's own end; run as the deferring party's node",
+                  "an answer of the seat first held after the end: no sentence says whether it still answers; run as counted",
+                  "the conferrer's own answer once the request has gone up: the same door one seat up; not run",
+                  "going up at the end is a sentence of CC 4.3 and no clause of the reactions table"])
     return D
 
 

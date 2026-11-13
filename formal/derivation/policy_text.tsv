@@ -61,3 +61,11 @@ cosigned_act	counted_at	signed	CC 3.1.3	the signer is an active member at the ev
 accord_majority	count_set	holder	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
 accord_majority	voice	person	CC 4.2.3	Each holder is a person.
 accord_majority	voices	scrubs	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
+poll	count_set	member	CC 4.5.13	Those who vote are members of the roster the opening row names
+poll	voice	person	CC 4.5.13	one ballot counts for each person
+poll	counted_at	named	CC 4.5.13	Those who vote are members of the roster the opening row names
+poll	voices	ballot	CC 6.1.9	For such a poll a member's community cell carries a one-hot over the poll's options plus *none*.
+wa_adjudication	count_set	wa	CC 4.3	The count is over the full seated roster the finding names, one voice a person.
+wa_adjudication	voice	person	CC 4.3	The count is over the full seated roster the finding names, one voice a person.
+wa_adjudication	counted_at	named	CC 4.3	The count is over the full seated roster the finding names, one voice a person.
+wa_adjudication	voices	scrubs	CC 4.3	A finding of the designated body is one row cosigned under that body's declared protocol

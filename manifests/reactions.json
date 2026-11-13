@@ -4,11 +4,11 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 113,
+  "entries": 115,
   "kinds": {
-   "expiry": 20,
+   "expiry": 21,
    "clock": 19,
-   "land": 16,
+   "land": 17,
    "react": 58
   },
   "emits": 25,
@@ -21,7 +21,7 @@
    "rule": "a land entry names who concludes a clock or an expiry of its family: a seat and the row it signs, or `local` where each node reads the close on its own clock and nothing is signed",
    "late": "`closed`: an answer the concluder first holds after its close changes nothing; `counts`: it is still counted; absent: no sentence states it",
    "by_concluder": {
-    "author": 2,
+    "author": 3,
     "holder": 1,
     "identity:substrate_persist": 1,
     "local": 10,
@@ -31,13 +31,12 @@
    "by_late": {
     "closed": 4,
     "counts": 5,
-    "unstated": 7
+    "unstated": 8
    },
    "clocks_with_no_landing": [
     "cosign:{state} [pending] age",
     "group:roster cover",
-    "membership:{stage} W",
-    "retirement:{state} [decided] objection"
+    "membership:{stage} W"
    ]
   },
   "one_emitter": {
@@ -2203,6 +2202,28 @@
    "late": "closed",
    "cc_ref": [
     "CC 3.1.3.2"
+   ]
+  },
+  {
+   "family": "retirement:{state}",
+   "leaves": [
+    "decided"
+   ],
+   "kind": "land",
+   "name": "objection",
+   "concluder": "author",
+   "landing": "retirement:{state}",
+   "cc_ref": [
+    "CC 7.5.5"
+   ]
+  },
+  {
+   "family": "deferral:request",
+   "kind": "expiry",
+   "mode": "required",
+   "member": "valid_until",
+   "cc_ref": [
+    "CC 4.3"
    ]
   }
  ]

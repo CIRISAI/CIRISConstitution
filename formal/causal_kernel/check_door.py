@@ -53,7 +53,7 @@ def _limit():
 def cast(name):
     s = D.DOORS[name]
     counted = s["counted"]
-    keys = {"producer": ("P",), "decider": ("DC",), "subject": ("S",), "pair": ("op", "wa")}.get(counted, tuple("m%d" % i for i in range(1, NK + 1)))
+    keys = {"producer": ("P",), "decider": ("DC",), "subject": ("S",), "pair": ("op", "wa"), "resolve_deferral": ("WA",)}.get(counted, tuple("m%d" % i for i in range(1, NK + 1)))
     target = {"self_roster_evict": "m2", "accord_halt@node": "N", "accord_halt@holder": "N", "accord_halt@node+late_closed": "N", "invitation": "J",
               "takedown_withhold": "H", "retirement_objection": "A", "deletion_sla": "P", "community_remove[unanimous]": "m3",
               "community_remove[majority]": "m3", "community_remove[quorum]": "m3", "moderator_recall": None,
@@ -70,7 +70,7 @@ def setup(name, n=None):
     rows = [ST.offer("g", keys[0], keys, s["counted"], "@", "self", cosigners=keys[1:])]
     seat_of = {}
     for i, sc in enumerate(scopes):
-        k = {"moderate": "MOD", "review": "REV", "takedown": "TK", "substrate": "SUB", "author": "AU", "subject": "S", "decider": "DC"}.get(sc, sc.upper())
+        k = {"moderate": "MOD", "review": "REV", "takedown": "TK", "substrate": "SUB", "author": "AU", "subject": "S", "decider": "DC", "deferring": "AG"}.get(sc, sc.upper())
         if k in keys: seat_of[sc] = k; continue
         rows.append(ST.offer("s%d" % i, keys[0], k, sc, "g", "self", (rows[-1]["id"],), cosigners=(k,)))
         seat_of[sc] = k
@@ -91,8 +91,8 @@ def worlds(name):
     answerers = [k for k in keys if s["kind"] != "ranked" or True]
     answerers += [seat_of[x] for x in s["extra"]]
     if s.get("target_votes") and target: answerers.append(target)
-    answerers = list(dict.fromkeys(a for a in answerers if a != op or s["kind"] == "ranked" or name == "moderation_action"))
-    if s["kind"] == "ranked": answerers.append(keys[0])                 # one person with a second ballot
+    answerers = list(dict.fromkeys(a for a in answerers if a != op or s["kind"] in ("ranked", "tally") or name == "moderation_action"))
+    if s["kind"] in ("ranked", "tally"): answerers.append(keys[0])      # one person with a second ballot
     kinds = BALLOTS if s["kind"] == "ranked" else s["kinds"]
     opts = [None] + [(k, pos) for k in kinds for pos in ("named", "conc")]
     if name == "moderation_action" and NK == 4:          # four members: the split vote only (the moderator silent, every answer named)
@@ -107,6 +107,7 @@ def worlds(name):
     else:
         pool = keys if s["concluder"] == s["counted"] else (seat_of[s["concluder"]],)
         concl = list(dict.fromkeys([op if op in pool else pool[0], [k for k in pool if k != op][-1] if len(pool) > 1 else pool[0]]))
+        if name == "retirement_objection": concl.append(target)          # the agent tries to close its own window
     says = [o for o in s["outcomes"] if o != "open"]
     notes = [None, "named", "conc"] if s.get("silent") else [None]
     out = []
@@ -194,12 +195,34 @@ def ref(w):
         if not el: return "open"
         got = RC.winner([(a, k) for a, k, _ in w["ans"]], ["m1", "m2", "m3"])
         return ("winner:" + got) if got else "open"
+    if name.startswith("poll"):
+        if not el: return "open"
+        yes, voted = poll_count(w)
+        if name == "poll": return "carried" if 2 * yes > voted and yes >= 2 else "not_carried"      # CC 4.5.13: of those who voted, two voices
+        return "carried" if 3 * yes > 2 * n and yes >= 2 else "not_carried"                          # the rule this instance's opening row states
+    if name == "wa_adjudication":
+        y = (tally(w, "assent") | {w["op"]}) & set(keys)
+        if 2 * len(y) > n: return "landed"                                                            # over the full seated roster
+        return "cancelled" if el else "open"
+    if name == "deferral":
+        said = {k for _, k, _ in w["ans"]}
+        if len(said) == 1: return next(iter(said))                                                    # the seat's one answer
+        return ("escalated" if el else "open") if not said else None
     if name == "moderation_action":
         if tally(w, "answered", {"MOD"}): return "answered"
         if not el: return "open"
         act, keep = tally(w, "act") & set(keys), tally(w, "keep") & set(keys)
         return "fallback" if 2 * len(act) > len(act | keep) and len(act) >= 2 else "lapsed"   # CC 4.5.13: of those who voted, two voices
     return None
+
+
+def poll_count(w):
+    """(ballots for, ballots counted): one ballot a person, and a person whose ballots disagree has none (CC 4.5.13)."""
+    keys, _, _ = cast(w["door"])
+    by = {}
+    for a, k, _ in w["ans"]: by.setdefault(a, set()).add(k)
+    one = [next(iter(v)) for a, v in by.items() if len(v) == 1 and a in keys]
+    return one.count("for"), len(one)
 
 
 def props(name):
@@ -288,7 +311,34 @@ def props(name):
         P.append(("only the holding device lands its own destruction", "CC 4.5.3 (custody:ack)", lambda w, o: None if o != "destroy" else L(w)[0] == "H"))
         P.append(("a reversal or a lift is not overridden", "CC 4.5.3", lambda w, o: None if not (tally(w, "reversed", {"REV"}) or 2 * len(tally(w, "lift", set(keys))) > n and len(tally(w, "lift", set(keys))) >= 2) else o != "destroy"))
     if name == "retirement_objection":
-        P.append(("the agent's objection holds the ladder", "CC 7.5.5", lambda w, o: None if not tally(w, "object", {"A"}) or tally(w, "withdrawn") else o != "proceed"))
+        P.append(("a decided row that does not name the agent's objection concludes nothing", "CC 7.5.5",
+                  lambda w, o: None if not tally(w, "object", {"A"}) or tally(w, "withdrawn") else o != "proceed"))
+        P.append(("a decided row naming the objection closes the window", "CC 7.5.5",
+                  lambda w, o: None if not tally(w, "object", {"A"}, ("named",)) or tally(w, "withdrawn") or L(w) != ("DC", "objected", True) else o == "objected"))
+        P.append(("only the decider closes the window; the agent signs its objection and no landing", "CC 7.5.5",
+                  lambda w, o: None if o in ("open", "none", "contested") else L(w)[0] == "DC"))
+    if name.startswith("poll"):
+        if name == "poll":
+            P.append(("a poll that states no rule carries only on a strict majority of those who voted, floor two voices", "CC 4.5.13; the row's floor cell",
+                      lambda w, o: None if o != "carried" else (lambda y, v: 2 * y > v and y >= 2)(*poll_count(w))))
+        else:
+            P.append(("a poll that states its own rule is counted by it (here more than two thirds of the roster)", "CC 4.5.13",
+                      lambda w, o: None if o != "carried" else 3 * poll_count(w)[0] > 2 * n))
+        P.append(("one ballot counts for each person, and one voice never carries a poll", "CC 4.5.13",
+                  lambda w, o: None if o != "carried" else poll_count(w)[0] >= 2))
+        P.append(("a poll nobody votes in carries nothing", "CC 4.5.13", lambda w, o: None if w["ans"] else o != "carried"))
+    if name == "wa_adjudication":
+        P.append(("a finding lands only on the body's count over the full seated roster, never the live subset", "CC 4.3; CC 3.1.9.4",
+                  lambda w, o: None if o != "landed" else 2 * len((tally(w, "assent") | {w["op"]}) & set(keys)) > n))
+        P.append(("the body's count lands the finding", "CC 4.3",
+                  lambda w, o: None if 2 * len((tally(w, "assent", None, ("named",)) | {w["op"]}) & set(keys)) <= n or L(w)[1] != "landed" else o == "landed"))
+    if name == "deferral":
+        P.append(("silence never resolves a deferral: no default answers it", "CC 4.3",
+                  lambda w, o: None if w["ans"] else o not in ("approved", "rejected")))
+        P.append(("the request goes up only at its own end", "CC 4.3", lambda w, o: None if L(w)[2] else o != "escalated"))
+        P.append(("an answer of the seat is not overridden by the end", "CC 4.3", lambda w, o: None if not w["ans"] else o != "escalated"))
+        P.append(("the seat's answer, named by the landing, resolves the deferral", "CC 4.3",
+                  lambda w, o: None if {k for _, k, p in w["ans"]} != {"approved"} or not tally(w, "approved", None, ("named",)) or L(w)[1] != "approved" else o == "approved"))
     if name == "decay_stage":
         P.append(("a stage landing before its window concludes nothing", "CC 4.4.3.5.1", lambda w, o: None if L(w)[2] else o != "due"))
     if name == "invitation":
@@ -335,9 +385,15 @@ MUTATION = {
     "retirement_objection": ("void", "the landing voids concurrent answers"),
     "decay_stage": ("zero_window", "the window has no length"),
     "invitation": ("late_counts", "an acceptance after the close still admits"),
+    "poll": ("one_voice", "every threshold read as one voice"),
+    "poll[stated]": ("stated_ignored", "the opening row's own rule is not read: the default counts"),
+    "wa_adjudication": ("live_subset", "the count is over those who answered, not the full seated roster"),
+    "deferral": ("default_answers", "silence at the request's end answers it"),
 }
+# a second deliberate break for a door whose text states two things
+MUTATION2 = {"retirement_objection": ("concluder_target", "the agent closes its own objection window")}
 DOOR_NAMES = list(MUTATION)
-THREE_ONLY = {"moderator_election", "takedown_withhold"}   # the largest world sets run at three keys only
+THREE_ONLY = {"moderator_election", "takedown_withhold", "poll[stated]"}   # the largest world sets run at three keys only
 
 
 def set_mut(m):
@@ -601,7 +657,7 @@ def doors_text():
     cols = ["door", "source", "kind", "opener", "answerers", "answer_kinds", "window_secs", "clauses (when value rule over -> outcome)",
             "default_at_close", "late_answer", "target_silent", "concluder", "landing_row", "table_read_by", "cells_used", "not_stated_in_tables"]
     # the landing row of a door whose clock has a `land` entry is that entry's (door.stated); these are the doors with none
-    landing = {"retirement_objection": "retirement:frozen (exists; no cell names it)", "custodian_replace": "the cosigned row itself",
+    landing = {"wa_adjudication": "the cosigned finding itself", "custodian_replace": "the cosigned row itself",
                "affiliation_member_action": "the cosigned row itself", "accord_majority": "the cosigned row itself", "cosigned_act": "the cosigned row itself",
                "community_remove[unanimous]": "the cosigned removal itself", "community_remove[majority]": "the cosigned removal itself",
                "community_remove[quorum]": "the cosigned removal itself", "moderator_recall": "the cosigned recall itself"}
@@ -658,6 +714,7 @@ def main():
     with multiprocessing.Pool(PROCS, initializer=_limit) as mp:
         jobs = [(d, m, nk) for m in (None, "mut") for nk in (3, 4) for d in DOOR_NAMES if nk == 3 or d not in THREE_ONLY]
         res = mp.map(door_job, [(d, MUTATION[d][0] if m else None, nk) for d, m, nk in jobs], chunksize=1)
+        res2 = mp.map(door_job, [(d, MUTATION2[d][0], 3) for d in MUTATION2], chunksize=1)
         ordr = mp.map(order_job, [(d, None, 7) for d in DOOR_NAMES] + [(PLANT_DOOR, "by_arrival", 7) for PLANT_DOOR in ("self_roster_evict", "moderation_action")], chunksize=1)
     say("1. per door (worlds generated; every property checked on each; recount against the independent reference)")
     def merge(rs):
@@ -687,6 +744,12 @@ def main():
         say("      plant: mutation %-18s (%s): %s" % (MUTATION[d][0], MUTATION[d][1], "caught" if caught else "NOT CAUGHT"))
         got.append((d, "plant: mutation " + MUTATION[d][0], "caught" if caught else "not caught"))
         if not caught: uncaught.append(d)
+        if d in MUTATION2:
+            m2 = merge(r for r in res2 if r["door"] == d)[d]
+            caught = sum(m2["fails"].values()) + m2["recount"][1]
+            say("      plant: mutation %-18s (%s): %s" % (MUTATION2[d][0], MUTATION2[d][1], "caught" if caught else "NOT CAUGHT"))
+            got.append((d, "plant: mutation " + MUTATION2[d][0], "caught" if caught else "not caught"))
+            if not caught: uncaught.append(d)
     say("   order-freeness (at most 12 worlds a door; every arrival order up to 7 rows, 1500 sampled above):")
     order_bad = []
     for o in ordr:

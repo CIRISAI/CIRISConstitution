@@ -14,7 +14,7 @@ REFUSE_ON_NON_DOOR_CLAUSE	41	refuse on a guard clause or a change whose computed
 INSTANT_AT_DECISION	11	a fold counts a set @decision or @count: the set its own outcome changes
 UNTYPED_MEMBERS	0	a member a cell reads has no row in formal/derivation/kx_field_types.tsv
 UNTRANSLATED_CELLS	0	a cell that does not parse or does not translate
-READS_DROPPED	136	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
+READS_DROPPED	126	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
 CARRIED_WORD_COLLISIONS	0	two words of one closed class that the translation reads alike, neither declared dropped
 LABEL_WORDS_NOT_EVALUATED	53	a fold cell states by=, result= or feeds=: carried to the manifest, not evaluated
 UNCAUGHT_MUTANTS_GUARD	20	seeded one-operator mutants of guard translations that no generated row set tells apart

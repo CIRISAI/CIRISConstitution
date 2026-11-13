@@ -82,8 +82,8 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 | guards | 43 | 14 |
 | folds | 162 | 28 |
 | changes | 31 | 31 |
-| reactions | 38 | 50 |
-| policy text cells | 0 | 49 |
+| reactions | 61 | 50 |
+| policy text cells | 16 | 39 |
 
 Every translation agrees with a reference reading on generated row sets, and the policy rows agree with the
 policy table's own vectors. Four of the five grammars had a parser and no evaluator, so for those the reference
@@ -105,7 +105,7 @@ The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`):
 | a fold a reaction calls and no cell defines | 11 |
 | a refusal on a clause that reads another row | 41 |
 | a count over the set its own outcome changes | 11 |
-| a cell with a dropped word | 136 |
+| a cell with a dropped word | 126 |
 
 One voice may order its own rows. The fold default (CC 3.5.1) evaluates each signer's chain on its own: between
 two acts of one kind by one signer on one named row, the later signed instant wins and the lower row id breaks
@@ -188,7 +188,7 @@ checked for none of the 147. The copy rule is a row of that table.
 the close. A window names its opener and the acknowledgement by which the concluding party first held it. Where the
 outcome binds others, the concluder signs it as a landing row naming that acknowledgement and its own head.
 Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 19
-clock entries have this shape, 16 of them counted from receipt. The other 20 are a row stating its own end,
+clock entries have this shape, 16 of them counted from receipt. The other 21 are a row stating its own end,
 read from the row alone against now.
 
 A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with the
@@ -204,7 +204,7 @@ for the two rejected rules `ruleI_concluder_decides`, `ruleII_never_final`. What
 window's length is the concluder's own word.
 
 **The door's parameters.** One door runs every policy row and every clock that takes answers. **run**
-(`formal/causal_kernel/door.py`, `check_door.py`, `doors.tsv`): all sixteen policy rows and ten clocks run on
+(`formal/causal_kernel/door.py`, `check_door.py`, `doors.tsv`): all eighteen policy rows, ten clocks and a deferral's own end run on
 the window's own receipt, landing and recount, as instances at rooms of three and four keys. Each gives one
 answer in every arrival order, the recount agrees with the policy table's own vectors and with the ranked
 count, and every deliberate break is caught. The policy table states the count, the floor and the length. The door needs five more things. The reactions
@@ -218,12 +218,15 @@ table now states the first two as a `land` clause on each window, each cell quot
 | the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands |
 | the threshold as the room's declared protocol | a removal is cosigned under the room's own protocol |
 
-**measured**: twelve of the thirteen answerable windows state their concluder, and the invitation's expiry
-does. An agent's objection at retirement states none, since no sentence says who closes it. Where the text has
+**measured**: all thirteen answerable windows state their concluder, and the invitation's expiry does. The
+decider closes an agent's objection window at retirement by the `decided` row, which names the objection
+(CC 7.5.5). **run**: a `decided` row that leaves out an objection the agent made concludes nothing, and the
+agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
 a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.3). A late answer is closed for
 the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. The last
-three parameters are still in no cell. `doors.tsv` lists 57 things the tables do not state, down from 73.
+three parameters are still in no cell. `doors.tsv` lists 73 things the tables do not state, 15 of them on the four
+doors of the poll, the adjudication and the deferral.
 
 Six of the nineteen clocks are not doors: two freshness checks, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
@@ -243,7 +246,7 @@ most one lease against that person's other devices.
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
 (`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 184 families, 110 are
-claims, 24 content, 24 doors, 17 consents and 6 both a consent and a door. Three fit none.
+claims, 24 content, 24 doors, 16 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
 consent and the door. Content is carried by consent, since its audience is the holders of a roster and its
@@ -253,14 +256,17 @@ makes an offer stand, so consent stays. This is measured on one property of each
 
 | | Families |
 |---|---|
-| every parameter traced to a table cell or a quoted sentence | 166 |
-| a guessed parameter | 1 |
-| cannot run | 17 |
+| every parameter traced to a table cell or a quoted sentence | 171 |
+| a guessed parameter | 0 |
+| cannot run | 13 |
 
-The guess is key revocation, where the text does not say who may revoke another's key. Nineteen content
+No parameter is guessed. Key revocation states its three revokers (CC 2.4.1.1): the key's own revocation and
+the roster's count are **run**, and the owner's revocation of a key it owns is **open**, since no seat ends
+another key's seat here. Nineteen content
 families take their audience from the default placement, the scope each row carries, and state none of their own. Each family that cannot run lacks one thing, named in the table:
-eight are doors with no row in `doors.tsv`, five are census families whose count is drawn from a group secret
-that is not a row, and four are labels or prefixes that confer nothing. A family is counted as traced when its
+two are doors with no row in `doors.tsv`, two are consents with no stated conferrer or signer, five are census
+families whose count is drawn from a group secret that is not a row, and four are labels or prefixes that
+confer nothing. A family is counted as traced when its
 own parameters are; most door rows still rest on parameters the tables do not state (section 5). **open**.
 
 ## 6. Conflict between concurrent rows

@@ -418,13 +418,16 @@ def run_policy():
                         d = bgp.decide(f, base, a, o, el)[0]; t = run(T.fill_call(call, base, a, o, el))
                         ga += d == t; gd += d != t
     pt = tsv(os.path.join(ROOT, "formal", "derivation", "policy_text.tsv"))
-    counted, dropped = [], []
+    counted, dropped, sets = [], [], []
     for c in pt:
-        if c["column"] != "counted_at": dropped.append(c)       # who is counted and how: not yet translated
+        if c["column"] == "count_set" and T.count_set_kx(c["value"]):      # the seats the cell names, as an expression with a layer
+            i = kx.analyse(kx.parse(T.count_set_kx(c["value"])), PRELUDE)
+            sets.append({"row": c["row"], "value": c["value"], "layer": kx.layer_name(i), "flags": sorted(i.flags)})
+        elif c["column"] != "counted_at": dropped.append(c)     # how a voice is counted and found: not yet translated
         if c["column"] == "counted_at":
             i = kx.analyse(kx.parse(T.counted_at_kx(c["value"])), PRELUDE)
             counted.append({"row": c["row"], "value": c["value"], "layer": kx.layer_name(i), "flags": sorted(i.flags)})
-    return {"vectors": (va, vd), "rule_vectors": (ra, rd), "grid": (ga, gd), "rows_called": sorted(calls), "examples": ex[:6], "counted_at": counted, "dropped": dropped}
+    return {"vectors": (va, vd), "rule_vectors": (ra, rd), "grid": (ga, gd), "rows_called": sorted(calls), "examples": ex[:6], "counted_at": counted, "count_set": sets, "dropped": dropped}
 
 
 # ------------------------------------------------------------------ the counts that may only fall
@@ -531,6 +534,9 @@ def main():
     for w, n in sorted(words.items(), key=lambda x: (-x[1], x[0])): print(f"            {n:3d}  {w}")
     pd = Counter(c["column"] for c in policy["dropped"])
     print("            policy cells not translated: " + ", ".join(f"{k} {v}" for k, v in sorted(pd.items())))
+    bad_sets = [c for c in policy["count_set"] if c["flags"]]
+    print(f"            policy count_set cells written as the seats they name: {len(policy['count_set'])}, {len(bad_sets)} with a flag (an expression with a layer; no agreement run)")
+    if bad_sets: refusals.append("a count_set cell reads an instant or a rank: " + "; ".join(f"{c['row']} {c['flags']}" for c in bad_sets)[:300])
     # plants for the split: one fold ordering two signers' rows by asserted_at, one ordering one signer's own
     fg = TOOLS["fold_grammar"]; dparts = fg.parse(fg.DEFAULT)[0]["parts"]
     for text, want in (("key=attested_key_id; pick=max(asserted_at)", False), ("key=attesting_key_id; pick=max(asserted_at)", True)):

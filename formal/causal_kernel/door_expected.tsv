@@ -95,13 +95,36 @@ harm_report	plant: mutation void	caught
 takedown_withhold	a reversal or a lift is not overridden	holds
 takedown_withhold	only the holding device lands its own destruction	holds
 takedown_withhold	plant: mutation concluder_holder	caught
-retirement_objection	the agent's objection holds the ladder	holds
+retirement_objection	a decided row naming the objection closes the window	holds
+retirement_objection	a decided row that does not name the agent's objection concludes nothing	holds
+retirement_objection	only the decider closes the window; the agent signs its objection and no landing	holds
 retirement_objection	plant: mutation void	caught
+retirement_objection	plant: mutation concluder_target	caught
 decay_stage	a stage landing before its window concludes nothing	holds
 decay_stage	plant: mutation zero_window	caught
 invitation	an acceptance held inside the window admits	holds
 invitation	an acceptance not held by the close does not admit (the proposal's own end)	holds
 invitation	plant: mutation late_counts	caught
+poll	recount agrees with the reference	holds
+poll	a poll nobody votes in carries nothing	holds
+poll	a poll that states no rule carries only on a strict majority of those who voted, floor two voices	holds
+poll	one ballot counts for each person, and one voice never carries a poll	holds
+poll	plant: mutation one_voice	caught
+poll[stated]	recount agrees with the reference	holds
+poll[stated]	a poll nobody votes in carries nothing	holds
+poll[stated]	a poll that states its own rule is counted by it (here more than two thirds of the roster)	holds
+poll[stated]	one ballot counts for each person, and one voice never carries a poll	holds
+poll[stated]	plant: mutation stated_ignored	caught
+wa_adjudication	recount agrees with the reference	holds
+wa_adjudication	a finding lands only on the body's count over the full seated roster, never the live subset	holds
+wa_adjudication	the body's count lands the finding	holds
+wa_adjudication	plant: mutation live_subset	caught
+deferral	recount agrees with the reference	holds
+deferral	an answer of the seat is not overridden by the end	holds
+deferral	silence never resolves a deferral: no default answers it	holds
+deferral	the request goes up only at its own end	holds
+deferral	the seat's answer, named by the landing, resolves the deferral	holds
+deferral	plant: mutation default_answers	caught
 default_content	one answer in every arrival order	same
 default_standing	one answer in every arrival order	same
 community_invite	one answer in every arrival order	same
@@ -130,6 +153,10 @@ takedown_withhold	one answer in every arrival order	same
 retirement_objection	one answer in every arrival order	same
 decay_stage	one answer in every arrival order	same
 invitation	one answer in every arrival order	same
+poll	one answer in every arrival order	same
+poll[stated]	one answer in every arrival order	same
+wa_adjudication	one answer in every arrival order	same
+deferral	one answer in every arrival order	same
 self_roster_evict	plant: by_arrival order	caught
 moderation_action	plant: by_arrival order	caught
 accord_halt@holder	halt case: a coerced holder h2 lands 'lapsed' at once, stating a full fuse on its own clock (no confirm)	lapsed
@@ -170,8 +197,9 @@ deletion_sla	concluder, landing row and late answer read from reactions.json	sub
 accord_roster_change	concluder, landing row and late answer read from reactions.json	holder; group:roster; late closed
 harm_report	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
 takedown_withhold	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late counts
+retirement_objection	concluder, landing row and late answer read from reactions.json	decider; retirement:{state}; late not stated
 decay_stage	concluder, landing row and late answer read from reactions.json	author; consent:decay:patterns_anonymized; late not stated
 invitation	concluder, landing row and late answer read from reactions.json	member; membership:widening; late closed
-doors.tsv	parameters no table states	57
+doors.tsv	parameters no table states	73
 accord_halt@node+late_closed	plant: the fuse's land entry rewritten to a holder	caught
 doors.tsv	written from the doors as run	current

@@ -69,7 +69,7 @@ cosign:{state}	read by a rule	1	2	fold guard clock react land	reference	B063	1	m
 credits:{domain}:{language}:{subject}	nothing shown	0	0	-	-	B007	2	-
 custody:{kind}	read by a rule	2	3	guard expiry react	-	B064	1	group:roster.change retirement:{state}.change
 cw_class:{class}	nothing shown	0	0	-	-	B011	2	-
-deferral:request	nothing shown	0	0	-	-	B065	1	-
+deferral:request	acts of its own	0	0	expiry	-	B065	1	-
 deferral:response:{outcome}	read by a rule	1	0	fold	reference	B066	1	identity_amendment.guard
 delivery:{class}	nothing shown	0	0	-	-	B012	2	-
 delivery_receipt:{stream_id}	acts of its own	0	0	guard	transparency_log:inclusion	B067	1	-
@@ -155,7 +155,7 @@ ratchet:flag:out_of_distribution_voting	acts of its own	0	0	fold	-	B004	5	-
 reconsideration:{grounds}	nothing shown	0	0	-	reference	B114	1	-
 regime:{artifact}:{version}	nothing shown	0	0	-	-	B016	2	-
 rendezvous:route	acts of its own	0	0	guard expiry react	-	B115	1	-
-retirement:{state}	read by a rule	1	1	count change guard clock	custody:{kind} reference	B116	1	key_grant:{axis}.guard
+retirement:{state}	read by a rule	1	1	count change guard clock land	custody:{kind} reference	B116	1	key_grant:{axis}.guard
 revocation:{entity_type}:{reason}	read by a rule	1	0	fold change	bond_posted:{currency}	B117	1	bond_posted:{currency}.reaction
 rollback_detected:{revision_field}	nothing shown	0	0	-	-	B118	1	-
 seed_holder_voting_alignment:{cell}	read by a rule	1	0	-	-	B016	2	slashing:{outcome}.guard

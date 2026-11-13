@@ -100,10 +100,10 @@ guessed, since the text states only how a voice's keys are seated.
 **One door, every policy row and clock** (`door.py`, `check_door.py`, `doors.tsv`, `door_expected.tsv`). The
 door is the window of `window.py` with its parameters named: who opens, who answers, the answer kinds, the
 length, the clauses read at once or at the close, whether a late answer counts, the target's silence and who
-concludes. All sixteen policy rows are built from their own cells, and ten more instances cover the clocks.
-`doors.tsv` holds one row for each instance, with a column for what the tables do not state. Ten instances
+concludes. All eighteen policy rows are built from their own cells, and further instances cover ten clocks and a deferral's own end.
+`doors.tsv` holds one row for each instance, with a column for what the tables do not state. Eleven instances
 read who concludes, with which row and whether a late answer counts from the `land` entries of
-`manifests/reactions.json`. The check records 176 verdicts and exits on any difference, any break that is not caught and any difference between
+`manifests/reactions.json`. The check records 204 verdicts and exits on any difference, any break that is not caught and any difference between
 arrival orders. Rooms are of three and four keys. Nothing here is proved in Lean.
 
 **Two notions of time** (`check_time.py`, `time_expected.tsv`). A row's own stated end, and a window with a

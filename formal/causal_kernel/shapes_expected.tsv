@@ -23,7 +23,7 @@ audit_chain:hash_continuity	claim	sourced | runs
 autonomy:{aspect}	claim	sourced | runs
 ballot:moderator	door	sourced | runs
 ballot:moderator_acceptance	consent+door binds=body+holder	sourced | runs
-ballot:tally:{poll_id}	door	cannot run | cannot run: a poll has no policy row and no doors.tsv row
+ballot:tally:{poll_id}	door	sourced | runs
 benchmark:he300:{category}:{version}	claim	sourced | runs
 beneficence:{aspect}	claim	sourced | runs
 blog:*	content	sourced | runs
@@ -70,8 +70,8 @@ cosign:{state}	door	sourced | runs
 credits:{domain}:{language}:{subject}	claim	sourced | runs
 custody:{kind}	claim	sourced | runs
 cw_class:{class}	claim	sourced | runs
-deferral:request	door	cannot run | cannot run: no window, no default, no doors.tsv row
-deferral:response:{outcome}	door	cannot run | cannot run: no window, no default, no doors.tsv row
+deferral:request	door	sourced | runs
+deferral:response:{outcome}	door	sourced | runs
 delivery:{class}	claim	sourced | runs
 delivery_receipt:{stream_id}	claim	sourced | runs
 detection:correlated_action:{axis}	claim	sourced | runs
@@ -111,7 +111,7 @@ integrity:{aspect}	claim	sourced | runs
 judge_model:verdict:{model_id}	claim	sourced | runs
 justice:{aspect}	claim	sourced | runs
 key:record	consent binds=signer	sourced | runs
-key:revocation	consent binds=signer	guessed | runs
+key:revocation	consent+door binds=signer	sourced | runs
 key_boundary:{scope}	claim	sourced | runs
 key_grant:{axis}	content	sourced | runs
 lawful_order:release	door	cannot run | cannot run: signer `steward` is a duty of the rulings with no doors.tsv row; held shut
@@ -180,7 +180,7 @@ trust:{job}:{version}	consent binds=signer|signer+holder|body+holder	sourced | r
 truth_grounding:{subject}	claim	sourced | runs
 video:*	content	sourced | runs
 vote:{contribution_id}	claim	sourced | runs
-wa_adjudication:{state}	door	cannot run | cannot run: no policy row for the WA quorum and no doors.tsv row
+wa_adjudication:{state}	door	sourced | runs
 watchlist:{id}	claim	sourced | runs
 weighted_aggregate:{contribution_id}	claim	sourced | runs
 witness_diversity:{contribution_id}	claim	sourced | runs
@@ -202,6 +202,8 @@ door custodian_replace	12 worlds, 2 properties hold	holds
 door custodian_replace	plant: its mutation (check_door.MUTATION)	caught
 door decay_stage	2 worlds, 1 properties hold	holds
 door decay_stage	plant: its mutation (check_door.MUTATION)	caught
+door deferral	30 worlds, 4 properties hold	holds
+door deferral	plant: its mutation (check_door.MUTATION)	caught
 door deletion_sla	12 worlds, 1 properties hold	holds
 door deletion_sla	plant: its mutation (check_door.MUTATION)	caught
 door harm_report	216 worlds, 1 properties hold	holds
@@ -214,7 +216,11 @@ door moderation_overturn	324 worlds, 2 properties hold	holds
 door moderation_overturn	plant: its mutation (check_door.MUTATION)	caught
 door moderator_election	577 worlds, 2 properties hold	holds
 door moderator_election	plant: its mutation (check_door.MUTATION)	caught
-door retirement_objection	60 worlds, 1 properties hold	holds
+door poll	556 worlds, 3 properties hold	holds
+door poll	plant: its mutation (check_door.MUTATION)	caught
+door poll[stated]	556 worlds, 1 properties hold	holds
+door poll[stated]	plant: its mutation (check_door.MUTATION)	caught
+door retirement_objection	60 worlds, 3 properties hold	holds
 door retirement_objection	plant: its mutation (check_door.MUTATION)	caught
 door self_roster_add	200 worlds, 2 properties hold	holds
 door self_roster_add	plant: its mutation (check_door.MUTATION)	caught
@@ -222,6 +228,8 @@ door self_roster_evict	600 worlds, 3 properties hold	holds
 door self_roster_evict	plant: its mutation (check_door.MUTATION)	caught
 door takedown_withhold	577 worlds, 2 properties hold	holds
 door takedown_withhold	plant: its mutation (check_door.MUTATION)	caught
+door wa_adjudication	72 worlds, 2 properties hold	holds
+door wa_adjudication	plant: its mutation (check_door.MUTATION)	caught
 claim.py	plant: mutation claim: an untrusted source moves nothing (everyone)	caught
 claim.py	plant: mutation claim: only the source retracts (any_signer)	caught
 claim.py	plant: mutation claim: polarity refused (no_polarity)	caught
@@ -248,8 +256,8 @@ mechanism claim	keeps the characteristic property of door	no
 mechanism consent	keeps the characteristic property of door	no
 mechanism content	keeps the characteristic property of door	no
 mechanism door	keeps the characteristic property of door	yes
-removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 153, e.g. accord:*)
-removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 153, e.g. accord:*) ; door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id})
-removal	order door > consent > content > claim	surviving consent,door | door kept (loses 19, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 19, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
-counts	families per shape	claim 110, consent 17, consent+door 6, content 24, door 24, none fits 3
-counts	status	cannot run 17, guessed 1, sourced 166
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 24, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 154, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 154, e.g. accord:*) ; door kept (loses 24, e.g. accord:invoke:constitutional:{halt_id})
+removal	order door > consent > content > claim	surviving consent,door | door kept (loses 24, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 20, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
+counts	families per shape	claim 110, consent 16, consent+door 7, content 24, door 24, none fits 3
+counts	status	cannot run 13, sourced 171
