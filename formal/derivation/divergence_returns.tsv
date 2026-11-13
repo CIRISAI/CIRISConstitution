@@ -1,0 +1,17 @@
+# Returns on the divergence manifest (manifests/divergences.json): an implementer that runs an entry's case and is sure
+# the kernel's verdict is wrong says so here, one row per return. Read by tools/build_divergences.py; held by
+# tools/check_divergences.py.
+# id            the entry's id, as the manifest gives it
+# implementer   who returns it (persist | edge | agent | server | client | verify | tooling)
+# date          YYYY-MM-DD
+# disputes      case | expect_kernel | sentence
+# counter_rows  the implementer's counter-case as a JSON list of rows in the manifest's row form, or empty
+# counter_ask   a JSON ask for the counter-case, or empty for the entry's own ask
+# their_verdict the verdict the implementer holds the case (or the counter-case) must give
+# reason        one line
+# outcome       open | ours stands | theirs stands
+# changed       for theirs stands: the section whose sentence changed (CC n.n) or the model file that changed
+# An open return makes the entry `disputed` and needs a row of formal/derivation/text_conflicts.tsv whose carrier names
+# this repository and whose witness is the entry id. Theirs stands needs `changed`, and the entry's expect_kernel then
+# equals their_verdict.
+id	implementer	date	disputes	counter_rows	counter_ask	their_verdict	reason	outcome	changed

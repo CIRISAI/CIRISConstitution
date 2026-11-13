@@ -100,6 +100,8 @@ jobs:
         run: python3 tools/check_compliance_wire_forms.py
       - name: The screen standard agrees with the view, the choice item, the transitions and the kernel it is built on (CSD/5; CC 4.5.13)
         run: python3 tools/check_ui_primitives.py
+      - name: Every place shipped behaviour differs from the text is a test expectation the kernel computes
+        run: python3 tools/build_divergences.py --check && python3 tools/check_divergences.py
       - name: The screen standard's closure over the typed tables does not fall
         run: python3 tools/ui_closure.py --check
       - name: Nothing a node concludes can run on without end — no cycle of caused rows, a bounded chain, every wait with a deadline

@@ -548,3 +548,15 @@ that the ending row has not seen from counting.
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | Two TLA+ models still state a moderator seated with no count and a founder's protocol in a community; their changes are written and not yet run. Three attack scenarios still seat a moderator by one signer of a member-scoped founding row. One of several duty holders still confers alone a scope that is not one of the four duties | model | `formal/mesh_life`, `formal/membership`, `formal/causal_kernel/attacks.py`, `formal/causal_kernel/seat.py` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
+| What each implementer's shipped behaviour does that the text does not: 65 cases the kernel runs, each a test to edit, 13 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
+
+**The divergence list is a list of tests.** **run** (`tools/check_divergences.py`): each difference between shipped
+behaviour and the text is a case of rows and one named answer, run under the text's cell and under the shipped
+cell. The two verdicts differ for each of 65, and the kernel's verdict is the same in every arrival order. The
+verdict under the text's cell is what an implementer's test asserts after the change. Thirteen cannot be run,
+each with its reason, and that count may only fall: six are matters of the wire, and the others are storage, a
+census secret that is not a row, an audience narrower than a row, a stalled roster and an agent's own
+recognition. Fifteen are a claim's wording and no behaviour. An implementer that holds a verdict wrong returns
+the entry with its own case (`formal/derivation/divergence_returns.tsv`). It is then disputed, with a conflict
+recorded against this repository, until the text or the model is corrected or the entry stands. An empty list
+is what agreement means.

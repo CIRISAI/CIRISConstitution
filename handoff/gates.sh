@@ -34,6 +34,8 @@ run python3 -I tools/mesh_story.py --check
 run python3 -I tools/check_fold_order.py
 run python3 tools/check_transition_roles.py
 run python3 tools/check_signer_gate.py
+run python3 tools/build_divergences.py --check
+run python3 tools/check_divergences.py
 run python3 formal/takedown/takedown_model.py --check
 run python3 formal/deletion/deletion_model.py --check
 run python3 formal/owner_binding/owner_binding_model.py --check
