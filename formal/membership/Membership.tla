@@ -49,9 +49,14 @@ EXTENDS Naturals, FiniteSets
 
 CONSTANTS Keys, Listed, Founders, Protocol, M, Roles, Offered, Window, HoldWindow, MaxGen,
           MaxProposals, MaxChanges, Coercible,
-          Binding, RemovalRule, FounderBasis, FoundingRule, HoldExpiry, UnanimousRemoval
+          Binding, RemovalRule, FounderBasis, FoundingRule, HoldExpiry, UnanimousRemoval, GroupKind
 
 ASSUME Protocol \in {"founder_only", "unanimous", "majority", "quorum"}
+(* GroupKind: "family" or "community". founder_only is one of a family's kinds (CC 3.2: "founder_only only on a
+   publication's subscriber list or a room's own listing ... or on an affiliation under the countersign rule"); a
+   community has members and duty holders and no founder tier (CC 4.5.4), so it never runs founder_only. *)
+ASSUME GroupKind \in {"family", "community"}
+ASSUME Protocol = "founder_only" => GroupKind = "family"
 ASSUME Founders \subseteq Listed /\ Listed \subseteq Keys /\ Coercible \subseteq Keys
 ASSUME Offered \in Roles
 ASSUME Binding \in {"spent", "literal", "none"} /\ RemovalRule \in {"protocol", "unilateral"}
@@ -101,7 +106,10 @@ CanSignAsMember(s) == s \in active \/ (FounderBasis = "record" /\ formed /\ s \i
 ProtocolMet(kind, k, signers, rosterAt) ==
   LET counted == signers \cap rosterAt
       voters  == IF kind = "remove" THEN rosterAt \ {k} ELSE rosterAt
-  IN CASE Protocol = "founder_only" -> signers \cap FoundersAt(rosterAt) # {}
+      \* CC 4.5.13: in a community one voice never decides who is in a room, whatever the size
+      floor   == GroupKind = "community" /\ Cardinality(rosterAt) >= 2 => Cardinality(counted) >= 2
+  IN floor /\
+     CASE Protocol = "founder_only" -> signers \cap FoundersAt(rosterAt) # {}
        [] Protocol = "unanimous"    -> /\ voters # {} /\ voters \subseteq signers
                                        /\ (kind = "remove" /\ UnanimousRemoval = "others_majority"
                                            => Cardinality(voters) * 2 > Cardinality(rosterAt))

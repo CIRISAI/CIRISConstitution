@@ -11,17 +11,16 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 96,
+  "total": 86,
   "by_status": {
    "runnable": 65,
    "stated": 16,
-   "wording-only": 15
+   "wording-only": 5
   },
   "by_implementer": {
    "agent": 1,
    "edge": 1,
-   "persist": 78,
-   "server": 2,
+   "persist": 70,
    "tooling": 14
   },
   "by_kind": {
@@ -35,11 +34,11 @@
    "signer": 31,
    "subject": 1,
    "window": 3,
-   "wording-only": 15
+   "wording-only": 5
   },
   "order_dependent_shipped": 1,
-  "conflict_rows_with_implementer_carrier": 68,
-  "conflict_rows_mapped": 68,
+  "conflict_rows_with_implementer_carrier": 66,
+  "conflict_rows_mapped": 66,
   "source_1_cells_with_disagree_cite": 0,
   "source_1_conflict_rows_naming_model_families": 34,
   "source_1_rows_whose_entries_name_another_family": [],
@@ -5572,7 +5571,7 @@
     "source": "constitution/claims.tsv CLM-capacity-consent-gate (check_capacity_consent_admission)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "f26cb31e5394ef96378e2dba01ce99f5e63a26de27b2accc52e196c0e4f7af17",
+    "file_sha256": "3f023699189c7fdff96af720292910814a57afdc5868287825c971ed28fcccb1",
     "file_rows": [
      "CLM-capacity-consent-gate"
     ],
@@ -6081,7 +6080,7 @@
     "source": "constitution/claims.tsv CLM-consent-community-trust; impl:CIRISPersist fold_community_trust",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "d6985a39025fe0e6b025156ec6047cf643e12be7a829e2a694bc25dd3dbe6119",
+    "file_sha256": "bd0f97a004f0b470ef33c5713be6ea8a56659ae6daf8a2233e2c9cac3481ae06",
     "file_rows": [
      "CLM-consent-community-trust",
      "CLM-consent-community-trust-owner-authored"
@@ -6182,7 +6181,7 @@
     "source": "constitution/claims.tsv CLM-merge; impl:CIRISPersist check_partner_record_revision",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "43c687b9a7426d8b712c0fb51d0d87efc3cc12bee40d2ca1543dd5d013532187",
+    "file_sha256": "8a33f4871e3c3e838720064ab938957b115a4242cf549532253c971cb0745b46",
     "file_rows": [
      "CLM-merge"
     ],
@@ -6268,7 +6267,7 @@
     "source": "constitution/claims.tsv CLM-merge",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "43c687b9a7426d8b712c0fb51d0d87efc3cc12bee40d2ca1543dd5d013532187",
+    "file_sha256": "8a33f4871e3c3e838720064ab938957b115a4242cf549532253c971cb0745b46",
     "file_rows": [
      "CLM-merge"
     ],
@@ -6352,7 +6351,7 @@
     "source": "constitution/claims.tsv CLM-quarantine-marker-not-command; impl:CIRISPersist fold_quarantine",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "2a571f74c88a754d42f60fa872210b765b37bec8f4732735936ad8f93a026bf0",
+    "file_sha256": "3c98fb7709f1e15e67d393c353ccb37d6e8ec06c478f81d2409db6dbb48fd682",
     "file_rows": [
      "CLM-quarantine-marker-not-command",
      "CLM-quarantine-serve-consult"
@@ -6431,7 +6430,7 @@
     "source": "constitution/claims.tsv CLM-moderator-election (staged:CIRISPersist#1195)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "e64429e45232e75d3dd36c1cc9cb431a6ea458a1f1fae325eae9faf9bf98fbb7",
+    "file_sha256": "a9da65b90d2951a445ff078524baf9b64c4bfdbf4038f968200ac26c6a29b1fa",
     "file_rows": [
      "CLM-moderator-election"
     ],
@@ -6517,7 +6516,7 @@
     "source": "constitution/claims.tsv CLM-nsproc-aggregation-policy (staged:CIRISPersist#803)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "c4d9246d2fd675664f735d61b79403de2fffdd717a9e351bfe886e0a098c2d39",
+    "file_sha256": "65cbf50367c9a1689b2d62c9b1864b86d1ff1c78c786634dda5fcb8f7fdcd92d",
     "file_rows": [
      "CLM-nsproc-aggregation-policy"
     ],
@@ -7534,266 +7533,6 @@
     "census_cell": "CC 3.3.10.1: the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
    },
    "reason": "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart"
-  },
-  {
-   "id": "persist/(community)/CLM-founder-duty-survives-protocol-change",
-   "implementer": "persist",
-   "family": "(community)",
-   "where": "CLM-founder-duty-survives-protocol-change",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C567",
-    "CLM-founder-duty-survives-protocol-change"
-   ],
-   "claims": [
-    "CLM-founder-duty-survives-protocol-change"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.4",
-    "quote": "A community has members and duty holders, and no other tier."
-   },
-   "shipped": {
-    "value": "states a founder's or a steward's power",
-    "source": "constitution/claims.tsv CLM-founder-duty-survives-protocol-change",
-    "census_cell": null
-   },
-   "reason": "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model"
-  },
-  {
-   "id": "persist/(community)/CLM-last-founder-may-leave",
-   "implementer": "persist",
-   "family": "(community)",
-   "where": "CLM-last-founder-may-leave",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C567",
-    "CLM-last-founder-may-leave"
-   ],
-   "claims": [
-    "CLM-last-founder-may-leave"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.4",
-    "quote": "A community has members and duty holders, and no other tier."
-   },
-   "shipped": {
-    "value": "states a founder's or a steward's power",
-    "source": "constitution/claims.tsv CLM-last-founder-may-leave",
-    "census_cell": null
-   },
-   "reason": "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model"
-  },
-  {
-   "id": "server/(community)/CLM-members-lift-moderator-act",
-   "implementer": "server",
-   "family": "(community)",
-   "where": "CLM-members-lift-moderator-act",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C567",
-    "CLM-members-lift-moderator-act"
-   ],
-   "claims": [
-    "CLM-members-lift-moderator-act"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.4",
-    "quote": "A community has members and duty holders, and no other tier."
-   },
-   "shipped": {
-    "value": "states a founder's or a steward's power",
-    "source": "constitution/claims.tsv CLM-members-lift-moderator-act",
-    "census_cell": null
-   },
-   "reason": "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model"
-  },
-  {
-   "id": "persist/(community)/CLM-moderation-fallback-window",
-   "implementer": "persist",
-   "family": "(community)",
-   "where": "CLM-moderation-fallback-window",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C567",
-    "CLM-moderation-fallback-window"
-   ],
-   "claims": [
-    "CLM-moderation-fallback-window"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.4",
-    "quote": "A community has members and duty holders, and no other tier."
-   },
-   "shipped": {
-    "value": "states a founder's or a steward's power",
-    "source": "constitution/claims.tsv CLM-moderation-fallback-window",
-    "census_cell": null
-   },
-   "reason": "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model"
-  },
-  {
-   "id": "server/(community)/CLM-public-community",
-   "implementer": "server",
-   "family": "(community)",
-   "where": "CLM-public-community",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C567",
-    "CLM-public-community"
-   ],
-   "claims": [
-    "CLM-public-community"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.4",
-    "quote": "A community has members and duty holders, and no other tier."
-   },
-   "shipped": {
-    "value": "states a founder's or a steward's power",
-    "source": "constitution/claims.tsv CLM-public-community",
-    "census_cell": null
-   },
-   "reason": "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model"
-  },
-  {
-   "id": "persist/(community)/CLM-takedown-chat-binding",
-   "implementer": "persist",
-   "family": "(community)",
-   "where": "CLM-takedown-chat-binding",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C567",
-    "CLM-takedown-chat-binding"
-   ],
-   "claims": [
-    "CLM-takedown-chat-binding"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.4",
-    "quote": "A community has members and duty holders, and no other tier."
-   },
-   "shipped": {
-    "value": "states a founder's or a steward's power",
-    "source": "constitution/claims.tsv CLM-takedown-chat-binding",
-    "census_cell": null
-   },
-   "reason": "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model"
-  },
-  {
-   "id": "persist/self:delegates_to/CLM-delegation-attenuation",
-   "implementer": "persist",
-   "family": "self:delegates_to",
-   "where": "CLM-delegation-attenuation",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C099",
-    "CLM-delegation-attenuation"
-   ],
-   "claims": [
-    "CLM-delegation-attenuation"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.5",
-    "quote": "**Deputization + attenuation (normative).**"
-   },
-   "shipped": {
-    "value": "homed at CC 4.4.3.4.3",
-    "source": "constitution/claims.tsv CLM-delegation-attenuation",
-    "census_cell": null
-   },
-   "reason": "the claim's anchor section moves; no behaviour differs"
-  },
-  {
-   "id": "persist/self:delegates_to/CLM-delegation-cascade",
-   "implementer": "persist",
-   "family": "self:delegates_to",
-   "where": "CLM-delegation-cascade",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C099",
-    "CLM-delegation-cascade"
-   ],
-   "claims": [
-    "CLM-delegation-cascade"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.5",
-    "quote": "**Deputization + attenuation (normative).**"
-   },
-   "shipped": {
-    "value": "homed at CC 4.4.3.4.3",
-    "source": "constitution/claims.tsv CLM-delegation-cascade",
-    "census_cell": null
-   },
-   "reason": "the claim's anchor section moves; no behaviour differs"
-  },
-  {
-   "id": "persist/self:delegates_to/CLM-sub-delegation-requirement",
-   "implementer": "persist",
-   "family": "self:delegates_to",
-   "where": "CLM-sub-delegation-requirement",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C099",
-    "CLM-sub-delegation-requirement"
-   ],
-   "claims": [
-    "CLM-sub-delegation-requirement"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.5",
-    "quote": "**Deputization + attenuation (normative).**"
-   },
-   "shipped": {
-    "value": "homed at CC 4.4.3.4.3",
-    "source": "constitution/claims.tsv CLM-sub-delegation-requirement",
-    "census_cell": null
-   },
-   "reason": "the claim's anchor section moves; no behaviour differs"
-  },
-  {
-   "id": "persist/self:delegates_to/CLM-delegation-determinism",
-   "implementer": "persist",
-   "family": "self:delegates_to",
-   "where": "CLM-delegation-determinism",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C099",
-    "CLM-delegation-determinism"
-   ],
-   "claims": [
-    "CLM-delegation-determinism"
-   ],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.5",
-    "quote": "**Deputization + attenuation (normative).**"
-   },
-   "shipped": {
-    "value": "homed at CC 4.4.3.4.3",
-    "source": "constitution/claims.tsv CLM-delegation-determinism",
-    "census_cell": null
-   },
-   "reason": "the claim's anchor section moves; no behaviour differs"
   },
   {
    "id": "tooling/(bibliography)/CC 8.6.1 entry",

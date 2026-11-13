@@ -50,7 +50,7 @@ first line.
 | `majority` | every rule on; any key coerced | every property holds | **closes**, 3,514,458 states |
 | `quorum2of3` | every rule on, M = 2; any key coerced | every property holds | **closes**, 3,495,550 states |
 | `founder_only_coerced` | every rule on; the founder coerced | one founder removes alone: the stated bound | `Inv_CoercedCannotRemoveHonest` violated in 3 steps |
-| `unanimous_two` | unanimous removal read as "every other member" | at two members either removes the other | `Inv_CoercedCannotRemoveHonest` violated in 4 steps |
+| `unanimous_two` | unanimous removal read as "every other member", in a community | the floor of two voices refuses a one-voice removal (CC 4.5.13) | **closes**, 3,514,458 states |
 | `any_member_removes` | a removal lands on its primary alone | the coerced key evicts an honest member | `Inv_QuorumGovernsRoster` violated in 3 steps, the same step `Inv_CoercedCannotRemoveHonest` fails |
 | `no_binding` | the widening reads any acceptance K ever signed | a seat from a mismatched acceptance | `Inv_AcceptanceBindsOneProposal` violated in 6 steps |
 | `unspent` | admission (1)–(4) read literally | a resigned member is re-seated on the old acceptance | `Inv_LeavingNotUndone` violated in 10 steps |

@@ -497,16 +497,6 @@ def cases():
             "or a delegate under its declared serialization discipline",
             "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart",
             census=(f, "reserved_rule")))
-    for c in ["CLM-founder-duty-survives-protocol-change", "CLM-last-founder-may-leave", "CLM-members-lift-moderator-act",
-              "CLM-moderation-fallback-window", "CLM-public-community", "CLM-takedown-chat-binding"]:
-        E.append(wording("claims", "(community)", c, ["C567", c], "CC 4.5.4",
-            "A community has members and duty holders, and no other tier.", "states a founder's or a steward's power",
-            "the claim is reworded when its implementer's evidence follows; the duty-holder law is run by the seat model",
-            shipped_source="constitution/claims.tsv " + c))
-    for c in ["CLM-delegation-attenuation", "CLM-delegation-cascade", "CLM-sub-delegation-requirement", "CLM-delegation-determinism"]:
-        E.append(wording("claims", "self:delegates_to", c, ["C099", c], "CC 4.5.5",
-            "**Deputization + attenuation (normative).**", "homed at CC 4.4.3.4.3",
-            "the claim's anchor section moves; no behaviour differs", shipped_source="constitution/claims.tsv " + c))
     E.append(wording("tooling", "(bibliography)", "CC 8.6.1 entry", ["C233"], "CC 1.7",
         "The classical impossibility (Pagnia and Gärtner, 1999)", "CC 8.6.1 has no Pagnia/Gärtner entry",
         "a citation, checked by tools/check_links.py; no row", shipped_source="tools/check_links.py"))

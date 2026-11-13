@@ -547,7 +547,6 @@ that the ending row has not seen from counting.
 | 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
-| Two TLA+ models are brought under the community law in writing and not yet run: a locked room is read-only, the members' recall and the election seat or lift a duty holder, and a community never runs a founder's protocol | model | `formal/mesh_life`, `formal/membership` |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
 | What each implementer's shipped behaviour does that the text does not: 65 cases the kernel runs, each a test to edit, 13 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
 

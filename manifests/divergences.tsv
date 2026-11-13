@@ -84,15 +84,5 @@ persist/(occurrence revocation, cosign:signature)/attestation_id form	persist	do
 persist/ledger:head:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:head:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
 persist/ledger:checkpoint:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:checkpoint:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
 persist/ledger:promotion:{version}/reserved_rule	persist	wording-only	wording-only	ledger:promotion:{version}	reserved_rule	CC 3.1.3	-	-	C363
-persist/(community)/CLM-founder-duty-survives-protocol-change	persist	wording-only	wording-only	(community)	CLM-founder-duty-survives-protocol-change	CC 4.5.4	-	-	C567 CLM-founder-duty-survives-protocol-change
-persist/(community)/CLM-last-founder-may-leave	persist	wording-only	wording-only	(community)	CLM-last-founder-may-leave	CC 4.5.4	-	-	C567 CLM-last-founder-may-leave
-server/(community)/CLM-members-lift-moderator-act	server	wording-only	wording-only	(community)	CLM-members-lift-moderator-act	CC 4.5.4	-	-	C567 CLM-members-lift-moderator-act
-persist/(community)/CLM-moderation-fallback-window	persist	wording-only	wording-only	(community)	CLM-moderation-fallback-window	CC 4.5.4	-	-	C567 CLM-moderation-fallback-window
-server/(community)/CLM-public-community	server	wording-only	wording-only	(community)	CLM-public-community	CC 4.5.4	-	-	C567 CLM-public-community
-persist/(community)/CLM-takedown-chat-binding	persist	wording-only	wording-only	(community)	CLM-takedown-chat-binding	CC 4.5.4	-	-	C567 CLM-takedown-chat-binding
-persist/self:delegates_to/CLM-delegation-attenuation	persist	wording-only	wording-only	self:delegates_to	CLM-delegation-attenuation	CC 4.5.5	-	-	C099 CLM-delegation-attenuation
-persist/self:delegates_to/CLM-delegation-cascade	persist	wording-only	wording-only	self:delegates_to	CLM-delegation-cascade	CC 4.5.5	-	-	C099 CLM-delegation-cascade
-persist/self:delegates_to/CLM-sub-delegation-requirement	persist	wording-only	wording-only	self:delegates_to	CLM-sub-delegation-requirement	CC 4.5.5	-	-	C099 CLM-sub-delegation-requirement
-persist/self:delegates_to/CLM-delegation-determinism	persist	wording-only	wording-only	self:delegates_to	CLM-delegation-determinism	CC 4.5.5	-	-	C099 CLM-delegation-determinism
 tooling/(bibliography)/CC 8.6.1 entry	tooling	wording-only	wording-only	(bibliography)	CC 8.6.1 entry	CC 1.7	-	-	C233
 tooling/retirement:{state}/count grammar stage key	tooling	wording-only	wording-only	retirement:{state}	count grammar stage key	CC 3.1.5	-	-	C518 C519
