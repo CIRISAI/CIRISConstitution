@@ -80,6 +80,23 @@ The verdicts on the binding are symbolic: a fact has a set of parties able to ma
 convinced when nobody else but the person could have. Nothing here is proved in Lean. The check prints ten
 limits and marks each as run or as stated from outside the model.
 
+**One roster, five instances** (`roster.py`, `check_rosters.py`, `roster_expected.tsv`). A person's keys, a
+voice's room keys, a room, the accord and an infrastructure community run on one mechanism: a lineage of counted
+versions, each naming the head it extends. The instances differ by parameters read from the policy table and the
+text. The check runs 77 properties that each instance's own model or text claims, over every arrival order up to
+a cap of 400, each with a deliberate break that must be caught. Nothing here is proved in Lean. The plain
+mechanism was wrong in four places, and a stated parameter restores each:
+
+- One signature removed a member under a one-voice protocol. The floor of two voices now sits under every protocol.
+- An invitation by one member never seated anyone. The joiner's own yes now counts toward the window's floor.
+- A member who left was seated again on its old acceptance. An acceptance is spent once its key has left. The
+  text says a key is not seated twice; "once it has left" is this model's reading.
+- An agent's self roster ran the person's lone path. That path is for a person's roster only.
+
+Two limits. The accord's rule that a removed holder no longer fires needs a latch at the node's receipt, which
+reads arrival order and is not a function of the rows. The parameters for removing a key from a voice are
+guessed, since the text states only how a voice's keys are seated.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -91,4 +108,5 @@ limits and marks each as run or as stated from outside the model.
 
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
-`python3 -I formal/causal_kernel/check_attacks.py` and `python3 -I formal/causal_kernel/check_roomkey.py`
+`python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
+`python3 -I formal/causal_kernel/check_rosters.py`

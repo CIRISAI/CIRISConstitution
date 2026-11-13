@@ -101,18 +101,23 @@ def landing(id, signer, p, rec, says, at, names=()):
 def table_outcome(spec, p, answers, inside, base, elapsed):
     """The outcome the table gives. answers: rows answering p; inside: rows read for the target's silence;
     base(name) -> the keys counted; elapsed: whether the concluder's two instants span the window."""
-    said = K.group([a for a in answers if a["signer"] in base("all") | base("moderate")], "signer", "one", "says")
+    tv = {p["target"]} if spec.get("target_votes") else set()   # the joiner's own yes is a voice of the floor (CC 3.1.3.2)
+    said = K.group([a for a in answers if a["signer"] in base("all") | base("moderate") | tv], "signer", "one", "says")
     if spec["opener_says"]: said.setdefault(p["signer"], spec["opener_says"])       # a voice that says two things says nothing
-    def count_met(value, how, over):
+    def count_met(value, how, over, floor=False):
         keys = base(over)
-        yes = K.group([{"k": s} for s, v in said.items() if v == value and s in keys], None, "count", "k")
+        yes = K.group([{"k": s} for s, v in said.items() if v == value and (s in keys or (floor and s in tv and value == "approve"))], None, "count", "k")
+        if isinstance(how, tuple):               # a threshold read off the policy table
+            kind, num, den, least = how          # ("atleast", n, d, min): >= max(min, ceil(n*N/d)); ("more", n, d, 0): > n/d
+            if kind == "atleast": return yes >= max(least, -(-num * len(keys) // den))
+            return yes * den > num * len(keys)
         return yes >= 1 if how == "one" else 2 * yes > len(keys)
     for value, how, over, out in spec["at_once"]:
         if count_met(value, how, over): return out
     if not elapsed: return "open"
     if spec["silent"] and K.sel(inside, signer=p["target"]): return spec["silent"]
     for value, how, over, out in spec["at_close"]:
-        if count_met(value, how, over): return out
+        if count_met(value, how, over, floor=True): return out
     return spec["default"]
 
 
@@ -183,7 +188,7 @@ def outcome(S, pid, how, by_arrival=False, checkpoint=False):
         conc = [r for r in S.Cs if (pos[r["id"]] > pos[L["id"]] and L["id"] not in S.anc[r["id"]]) if by_arrival] if by_arrival else \
                [r for r in S.Cs if S.concurrent(r["id"], L["id"])]
         conc = [r for r in conc if not late(r)]
-        ans = [r for r in K.sel(conc, kind="answer", of=pid) if r["signer"] in base("all") | base("moderate")]
+        ans = [r for r in K.sel(conc, kind="answer", of=pid) if r["signer"] in base("all") | base("moderate") | ({p["target"]} if spec.get("target_votes") else set())]
         tgt = K.sel(conc, signer=p["target"]) if spec["silent"] else []
         if how == "contest":
             said.append({"v": "contested" if ans or tgt else L["says"]})
