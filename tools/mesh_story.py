@@ -114,6 +114,8 @@ def more(s):
         if oid not in s.objects: s.new(oid, family, atoms={"stage": stage} if stage else None)
         return s.step(who, roles, oid, verb, note)
     # 8. what a device's edge says of itself is the edge's to say
+    one("own:edge-bob", "ownership:{relation}:{target_kind}:{version}", "erin", [], "A stranger tries to bind Bob's device as its owner: no standing, refused", verb="authorize")
+    one("own:edge-bob", "ownership:{relation}:{target_kind}:{version}", "bob", ["owner"], "Bob binds his device as its owner, the device's own key signing too: the binding confers the duty to report", verb="authorize")
     one("link:bob", "transport:{kind}", "bob", ["self", "registered"], "Bob tries to sign a transport report for his own device: refused, the report is the edge's own")
     one("link:bob", "transport:{kind}", "edge:bob", ["infra:attest"], "The edge on Bob's device reports its own link, under the duty its owner conferred")
     one("deliver:bob", "delivery:{class}", "edge:bob", ["infra:attest"], "The edge reports what it delivered")
