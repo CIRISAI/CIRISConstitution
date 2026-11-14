@@ -1,7 +1,7 @@
 #!/bin/bash
 # The gate a commit passes: every regenerator, then every check, under one fail flag.
 # A step fails when it exits non-zero or prints FAIL; its last lines are shown. Prints fail=N last
-# and exits N. It regenerates the generated outputs in place (ietf/ is restored after its build).
+# and exits N. It regenerates the generated outputs in place and checks that the committed ietf/ draft is current.
 # Scratch files go to $GATES_TMP (default /tmp/cc-gates); check_claims.out keeps the claims report.
 #   bash tools/gates.sh
 cd "$(git rev-parse --show-toplevel)"
@@ -17,8 +17,7 @@ run python3 tools/topology_to_cfg.py --all
 run python3 tools/build_promise_status.py
 run python3 build_pdf.py --write-toc-volumes
 run python3 tools/build_family_model.py
-run python3 tools/build_ietf_draft.py
-git checkout -- ietf/
+run python3 tools/build_ietf_draft.py --check
 run python3 tools/check_claims.py
 cp "$S/gate.out" "$S/check_claims.out"
 run python3 tools/check_links.py
