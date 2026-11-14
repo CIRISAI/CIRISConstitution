@@ -29,7 +29,7 @@ rank), `Seat.lean` (standing as one shape, and the cut), `Window.lean` (a window
 and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.lean`, `Harden2.lean`,
 `Harden3.lean` (the rules added after the kernel was attacked), and `SeatG.lean`, `Terms.lean`, `Reader.lean`,
 `Merge.lean` (the refined seat, the cut's terms, a reader's own line and a version naming several heads), and
-`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart), `KeyEnd.lean` (a key's own end, read from its records and now) and `Duty.lean` (the duty seat of a community). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
+`Consent.lean` (the one act beneath the seat), `Carry.lean` (a row leaves its room only by its own signer's act), `RosterHead.lean` (the members at the head a counted row names) `TwoMechanisms.lean` (claim and content carried by consent; the door and consent apart), `KeyEnd.lean` (a key's own end, read from its records and now), `Duty.lean` (the duty seat of a community) and `Settled.lean` (which answers no later row changes, and what makes a count one of them). Core Lean 4.14, no Mathlib, no `sorry`, no axioms beyond core.
 
 | Theorem | What it says |
 |---|---|
@@ -101,6 +101,28 @@ and the roster's tips), `Recount.lean` (the window's rule as taken) and `Harden.
 | `Kernel.Merge.merge_on_void_tip_void`, `merge_counts` | a merge naming a tip that does not count for the reader is void, and one whose tips all count counts |
 | `Kernel.rosterOf_function`, `merge_one_tip`, `fork_shares_signer` | with several tips the roster is the members common to them; a version naming every tip makes one tip; two versions of one head each counted by a strict majority share a signer |
 | `Causal.wins_unique`, `higher_kind_decides`, `same_kind_both_or_neither` | concurrent rows on one target that differ in kind are decided by a fixed order on kinds; rows of one kind are still both or neither |
+| `Kernel.Settled.kept_ext`, `concl_ext`, `grows_extends` | a later set holds every row held now and changes no row's past; under any such set, of any size, a kept row stays kept and, for a rule that reads no concurrent row, its conclusion is unchanged |
+| `Kernel.Settled.Rows.count_not_monotone` | under the cut, an act that counts where a grant and the act are held no longer counts once a concurrent cut on its slot is also held; it is concluded in both, so its conclusion is final and its counting is not |
+| `Kernel.Settled.counts_final_of_disarmed` | a concluded act counts in every later set when every cut that could void it there is disarmed against it |
+| `Kernel.Settled.settled_mono`, `settled_final` | an act every voice that may cut it has acknowledged stays so in every later set; if those voices are fixed by the act and an acknowledgement disarms its signer's cuts against the act, the act counts in every later set |
+| `Kernel.Settled.unsettled_defeated`, `final_iff_settled` | one row by a voice that may cut and has not acknowledged defeats the act; where each such voice can sign that row, an act counts in every later set exactly when every voice that may cut it has acknowledged it |
+| `Kernel.Settled.body_settled_disarms`, `body_unsettled_majority_free`, `half_disarms_majority`, `count_disarmed` | where a body cuts by a strict majority and an acknowledging member's voice is not counted against what it acknowledged, acknowledgements by half the members disarm every cut, and with fewer than half the rest are a strict majority; for a count of `t` of `n`, it takes `n - t + 1` |
+| `Kernel.Settled.Rows.fork_voids_acknowledged`, `overrule_voids_acknowledged` | under the cut as stated, a voice that acknowledged an act still voids it by a cut that leaves its acknowledgement unnamed, or by a deciding row that names it; neither does once an acknowledgement disarms its signer |
+| `Kernel.Settled.Rows.later_seat_defeats_acknowledged`, `seat_at_head_restores` | a voice seated at a later head voids an act every voice at the act's head acknowledged; read at the act's own head, the right to cut leaves it counting in every later set |
+| `Kernel.Settled.three_ways_final` | a row is kept for good, its conclusion is final, and whether it counts is final exactly when every voice that may cut it has acknowledged it; otherwise it is provisional |
+| `Kernel.Settled.blocking_set_blocks_all_cuts`, `ack_blocking_quorum`, `five_three` | acknowledgements that meet every coalition able to cut an act leave no cut; for a count of q of n members that takes exactly n − q + 1, so three of five where three cut |
+| `Kernel.Settled.ack_cut_three_cases`, `ack_blocks_cut`, `cut_with_ack_is_ancestor` | an acknowledgement is clean when no cut of the act by the same key is in its own past; then a cut by that key either has the act in its past or is concurrent with the acknowledgement, and the fork rule leaves the key no counted voice |
+| `Kernel.Settled.ack_finality_future_stable`, `ack_counts_future_stable` | with the voices and the count read at the head the act names and a forked signature not counted against it, clean acknowledgements by n − q + 1 members make the act count in every later set |
+| `Kernel.Settled.effect_row_settled` | a row whose own past holds those acknowledgements is, wherever it is kept, proof that no cut voids the act in that set or any later one |
+| `Kernel.Settled.Rows2.fork_recount_falls`, `acknowledged_fork_fails`, `unclean_ack_does_not_block`, `fork_stands_on_row_count` | a reader without a key's concurrent acknowledgement sees that key's cut met until the acknowledgement arrives; with three clean acknowledgements of five a forked cut signed by every other voice fails; an acknowledgement signed after the key's own cut blocks nothing; and read from the cut row's signatures alone, as a count is today, the fork still cuts |
+| `Kernel.Settled.closed_iff_no_witness_pair`, `full_view_closed`, `pruned_view_closed`, `pruned_view_answers` | a view is closed under adding rows when its next value is a function of its value, exactly when no two states with one view part after one step; rows with answers are closed, and so is a view that keeps an unblocked act's rows and only the fact for a blocked one |
+| `Kernel.Settled.Rows2.unsettled_drop_has_witness_pair`, `count_view_not_closed` | "the act counts" with the rows dropped is not closed: two unsettled histories with that answer part when the same cut arrives |
+| `Kernel.Settled.concl_ext_local`, `derived_ext_local`, `kept_sub` | under any later set a conclusion changes only where a newly kept row is in concurrent conflict with the row or an ancestor, so a node recomputes only what the new rows touch |
+| `Kernel.Settled.checkpoint_resume`, `checkpoint_conclusions` | every held set is a checkpoint row's past and the rest, and the conclusions folded over that past alone are those over every later set |
+| `Kernel.Settled.countsAt_local`, `later_head_changes_nothing`, `carried_to_head` | whether an act counts at a head reads only the rows naming that head; rows naming a later head change what the act carries to that head and never whether it counted at its own |
+| `Kernel.Settled.Rows.later_seat_is_forward`, `fork_has_no_say`, `overrule_is_no_vote` | read by head, a voice seated later moderates forward, a voice that acknowledged and forked has no say, and a deciding row with the act in its past is no vote against it; the timeless readings of the same rows are the three theorems above |
+| `Kernel.Settled.ack_never_yes`, `say_settled_final`, `countsAt_final`, `say_unblocked_can_cut`, `sole_cutter_fork_stands` | within one head a voice that has acknowledged never says cut again; acknowledgements by n − t + 1 members at the head leave no cut count met there in any later set, and members that have not acknowledged meet it when they are t |
+| `Kernel.Settled.symmetric_say_forced`, `say4_symmetric`, `sayC_not_symmetric`, `say4_closed`, `say3_not_closed`, `say4_absorbing`, `sayA_not_safe` | a reading that treats a voice's two opposite rows alike gives a voice that said both no say; that say is closed only with "said both" kept apart from "said nothing"; once a voice has acknowledged it never says cut, which fails where any cut vote counts and holds, asymmetrically, where an acknowledgement binds |
 | `Causal.counts_function`, `only_removals_stop_counting` | a row of a removed signer counts when it lies in the past of the removal; that is a function of the offered set, and only a removal of its signer can stop a row counting |
 | `Causal.sign_after_removal_never_counts`, `Removal.acknowledged_counts`, `Removal.honest_but_unnamed` | a row first held after the removal is kept never counts; a row the removal's past had named counts, and one it had not named does not |
 
@@ -144,8 +166,25 @@ An edge is withdrawn only by its own signer.
 - Concurrent versions of one head are not decided in `RosterHead.lean`; they wait as tips (`Window.lean`, `Merge.lean`).
 - A conclusion from silence, such as a window closing unopposed, cannot be drawn from rows and is not here.
 - The walk has one depth for all edges; the classes and budgets of `formal/trust_set` are not carried over.
+- Whether an act counts is final only under two rules the cut does not state: the voices that may cut an act are
+  those with standing at the head the act names, and a voice's acknowledgement disarms its own cuts against what it
+  acknowledges (`Settled.lean`). Without the first a later seat defeats an acknowledged act
+  (`later_seat_defeats_acknowledged`); without the second the acknowledging voice does (`fork_voids_acknowledged`,
+  `overrule_voids_acknowledged`). That every such voice can sign a cut is assumed in `final_iff_settled`, not proved.
+- `Settled.lean` Part 12 reads only cuts naming the head an act is judged at. A cut naming an older head is void for a
+  reader that acknowledged the newer head (`Reader.line_voids_old_fork`); for any other reader it is the fork on a
+  past head of KERNEL.md 8a. Its say rule reads a voice's rows at a head whatever their order; where a voice's cut
+  is in the past of its own later acknowledgement at the same head, the text's count once met keeps the cut, and
+  only Part 9's clean acknowledgement reads it so.
+- Finality by acknowledgement in `Settled.lean` Part 9 rests on two rules the text does not state: the voices and
+  count of a cut are those at the head the act names, and a signature on a cut is not counted against an act its
+  signer cleanly acknowledged in a concurrent row. It is final against cuts only; a key revoked back to a bound,
+  an end read against now, and a reader's own trust are outside it. The pruned view keeps every row of an act not
+  yet blocked; the least set of rows that suffices is not found.
+- `Settled.lean` reads the cut over a conclusion rule that reads no concurrent row. Where the conclusion itself reads
+  concurrent rows, it is not final, and neither is anything built on it.
 - The rule tables are not read. `formal/derivation/order/` holds the measure of the tables against this form:
   seventeen cases run through the guard cells in every arrival order, and each family's verdict.
 
-Run: `bash formal/causal_order/build.sh`. It compiles the eighteen files in order and exits on a compile error,
+Run: `bash formal/causal_order/build.sh`. It compiles the nineteen files in order and exits on a compile error,
 a `sorry`, or an axiom beyond the three of core Lean.

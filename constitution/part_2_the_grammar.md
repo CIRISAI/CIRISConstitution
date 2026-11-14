@@ -1,6 +1,6 @@
 # Part 2 — The Grammar
 
-**Decimal range** `2.x` · **55 sections** · **page budget 17pp** · [← master index](../README.md)
+**Decimal range** `2.x` · **56 sections** · **page budget 17pp** · [← master index](../README.md)
 
 > The minimal-and-adequate wire grammar: the envelope, the five primitives, conformance, and canonicalization.
 
@@ -383,7 +383,7 @@ An affiliation withdraws no statement about itself, whatever the statement. Its 
 
 A key renews by signing a further record that `supersedes` its own earlier record. Renewals that do not name each other all count, and the key lives to the greatest end they state. A renewal MAY be signed after the end of the record it supersedes, and it then revives the key at every node that holds it. A rotation is a record of another key that names the old key's record. It carries the old key's signature, made at an instant inside that record. A rotation hands on what the old key may hand on, and never extends the old key. Two rotations of one key, neither naming the other, hand on nothing until a rotation names both ([CC 2.7.7](#2.7.7)). An owner settles such a pair for a key it owns by revoking one. A key with no owner stays contested.
 
-A row lapses when its signer's key has ended and no row that has not lapsed names it, directly or through other rows ([CC 2.7.5](#2.7.5)). A revocation never lapses. A lapsed row MUST NOT count in any tally, score, walk of trust or other reading. Its own verdict is unchanged: a row signed while its key was live stays what it was. A row that has not lapsed counts as before, whatever its key's end. A node MAY stop serving a lapsed row and MAY drop it. A node MUST NOT stop serving or drop a row that has not lapsed. It MUST NOT keep a digest by which to refuse a dropped row again. A row whose signed instant no held record of its key covers is retryable, as a row signed by a key not yet held is.
+A row lapses when its signer's key has ended and no row that has not lapsed names it, directly or through other rows ([CC 2.7.5](#2.7.5)). A revocation never lapses. A lapsed row MUST NOT count in any tally, score, walk of trust or other reading. Its own verdict is unchanged: a row signed while its key was live stays what it was. A row that has not lapsed counts as before, whatever its key's end. A node MAY stop serving a lapsed row and MAY drop it. A node MUST NOT stop serving or drop, for its key's end, a row that has not lapsed; [CC 2.7.10](#2.7.10) states when it MAY drop a row's bytes. It MUST NOT keep a digest by which to refuse a dropped row again. A row whose signed instant no held record of its key covers is retryable, as a row signed by a key not yet held is.
 
 A signer's instants are its own word. Whoever holds an ended key's private half can revive it with a further record, and no reader can tell when that record was signed. Only a key's own revocation makes its end final ([CC 2.7.9](#2.7.9)). A key made for one task MAY revoke itself at its end; that revocation is never withdrawn and is kept. An implementation SHOULD state the greatest end the bound allows. A key made for one task SHOULD state an end that fits that task.
 
@@ -1097,7 +1097,9 @@ One voice may order its own rows. Between two acts of one kind by one signer on 
 
 Admission stops, and ends at one kept set, in every arrival order. A row waits for what it names. It is never refused for what another row says: a check that reads another row concludes nothing, is not counted, is contested, or is kept and not served ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2), the refusals; [CC 4.5.13](part_4_composition_governance.md#4.5.13), the state processor).
 
-Only the first two layers are final. A derived answer can be changed by a later row. After a counting cut on a slot, only a key that may cut that slot changes it. A key whose standing has ended can still change what a reader with no acknowledgement of its own concludes ([CC 2.7.9](#2.7.9)).
+Every answer about a row is of one of three kinds. **Final by form**: whether the row is kept, its conclusion for a rule that reads no concurrent row, and a row that names a blocking set of receipts. **Final by acknowledgement**: whether an act counts at the head it names, once n − t + 1 of the n members there have given receipts, where t can cut it ([CC 2.7.5](#2.7.5)). **Provisional**: the rest, including whether an act is still in force at a later head ([CC 2.7.7](#2.7.7)). This is finality of authorisation against cuts: a key revoked back to a bound, a row's own end and a reader's own trust are outside it, and it promises nothing about execution.
+
+After a counting cut on a slot, only a key that may cut that slot changes it. A key whose standing has ended can still change what a reader with no acknowledgement of its own concludes ([CC 2.7.9](#2.7.9)).
 
 ### 2.7.4 `kernel-operators` — Operators
 
@@ -1119,7 +1121,7 @@ A reduce that meets a tie between two different rows concludes nothing for that 
 
 ### 2.7.5 `kernel-answers` — Named answers
 
-Eight answers, each a composition of the operators. Each role, window, policy and constant they read is data.
+Nine answers, each a composition of the operators. Each role, window, policy and constant they read is data.
 
 | Answer | Question | Layer |
 |---|---|---|
@@ -1128,9 +1130,10 @@ Eight answers, each a composition of the operators. Each role, window, policy an
 | **tally** | is this count met, over the head it names | derived |
 | **may** | may this key do this act on this target, and if not, which row is missing and who could sign it | derived |
 | **audience** | who is this row for | derived, since a row naming it may come later |
-| **missing** | which rows that this conclusion depends on are not held | kept |
+| **missing** | which rows that this conclusion depends on are not held, and which receipts an act lacks to be settled | kept |
 | **owed** | what this node must emit or do | derived |
 | **window** | has this window closed, and with what outcome | derived; the one answer that reads `now` |
+| **settled** | does this act count at its head in every later set | concluded for a row that names its receipts; final by acknowledgement once they are held; derived until then |
 
 **stands.** One act underlies it: a voice consents to what binds it. A relation stands when every voice it binds has a concluded consent, one consent names the other, none is withdrawn by its own signer, and no cut removes it. A permission gives something of the signer's own and binds nobody else, so one row carries it. A duty binds the one who places it and the one who carries it, so it takes two consents ([CC 3.1.3.2](part_3_the_namespace.md#3.1.3.2), [CC 4.5.4](part_4_composition_governance.md#4.5.4)).
 
@@ -1146,9 +1149,11 @@ A duty seat over a community is one seat with four scopes: `moderate`, `review`,
 
 **missing, and what is copied.** A row moves to a peer because that peer must conclude something and lacks it. What is sent is what lies among the ancestors of that conclusion, within the row's audience. A row whose audience is everyone may be served to anyone, and a stranger is routed nothing outside that. A node holds a row only when it is in the row's audience. Being in an audience permits serving a row and does not cause a send; a peer's own request for it is a cause. A row carries its audience to the rows it names when it is concluded, sits in the same room, and its signer is already in the named row's audience. A row leaves its room only by its own signer's act ([CC 5.2](part_5_transport_substrate.md#5.2)).
 
+**settled, and receipts.** A **receipt** of an act is a row by a voice at the head the act names, with the act in its past and no cut of the act by that key in its own past. An act is **settled** once receipts are held from n − t + 1 of the n members at its head, where t can cut it ([CC 2.7.7](#2.7.7) rule 6). **missing** names the voices whose receipts it lacks; a node MAY ask them under the copy rule above, and nobody owes one. An effect that cannot be undone, such as a key wrap or release, a disclosure, an external actuation or a deletion, names a blocking set of receipts of the act it rests on and waits for them. A section that requires such an effect without them says so ([CC 4.5.3](part_4_composition_governance.md#4.5.3)).
+
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at the close. Where the outcome binds others, the concluder signs it as a landing row naming the acknowledgement by which it first held the opener, and its own head. Where it binds only the reader, each node reads the close on its own clock and signs nothing ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the clock of a window).
 
-A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with a landing is **recounted**: it is counted with the landing's past, and the landing stands only if the table still gives the outcome it stated. A landing that does not stand says nothing against one that does. A landing with a strict majority behind it is final where no key has answered both ways.
+A landing that states an outcome its own past does not give concludes nothing. An answer concurrent with a landing is **recounted**: it is counted with the landing's past, and the landing stands only if the table still gives the outcome it stated. A landing that does not stand says nothing against one that does. A landing with a strict majority behind it is final where no key of that majority answers both ways, in two rows neither of which names the other; such a key has no say there ([CC 2.7.7](#2.7.7) rule 6).
 
 One door runs every policy row and every clock that takes answers, and the policy table states its count, floor and length ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). The door reads five more things, each stated in the text. They are who concludes and with which row, and whether a late answer counts. They are also whether the opening act is in force while its window is open, whether the joiner's own yes is a voice of the floor, and the threshold the room's founding row declares.
 
@@ -1162,13 +1167,16 @@ The four are labels over two mechanisms, consent and the door. Content is carrie
 
 ### 2.7.7 `kernel-conflict` — Conflict between concurrent rows
 
-Concurrent rows on one target are settled by five rules, and by no ranking of their signers.
+Concurrent rows on one target are settled by six rules, and by no ranking of their signers.
 
 1. **Different kinds on one target** are decided by a fixed order on kinds ([CC 3.5.1](part_3_the_namespace.md#3.5.1)).
 2. **The same kind on one slot**: both count or neither does. No rule that cannot tell two rows apart can pick one.
 3. **A row that names both** may decide between them.
-4. **The cut.** A cut is a row on a slot by whoever may conclude it. Once it counts, rows on that slot concurrent with it do not count, rows in its past stand, and rows that name it are judged at the head they name ([CC 2.4.1.1](#2.4.1.1)).
+4. **The cut.** A cut is a row on a slot by whoever may conclude it. Once it counts, rows on that slot concurrent with it do not count from the head the cut names, rows in its past stand, and rows that name it are judged at the head they name ([CC 2.4.1.1](#2.4.1.1)).
 5. **Equal standing.** Two cuts by keys of equal standing that undo each other stay contested. A voice that the other cannot remove settles them.
+6. **One say.** On one slot at one head, a voice that has acknowledged an act and voted to cut it, in two rows neither of which names the other, has no say there. It stays among the members the count is over.
+
+**Answers by head.** Whether an act counts is read at the head it names, and whether it is still in force at a later head. A cut by a voice seated at a later head acts forward from the head it names and never changes what counted earlier; takedown, moderation and the halt act forward too.
 
 A row of a removed key counts when the removal has it among its ancestors: something the removal can see had already named it ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). Among several duty holders, one holder's own conferral concludes only while it is the one duty holder ([CC 4.5.4](part_4_composition_governance.md#4.5.4)).
 
@@ -1180,7 +1188,7 @@ A group's roster is a lineage. Each version names the heads it extends and is co
 
 Two versions of one head wait as tips. The roster is then the members common to all tips, until a version naming the tips makes one head again. The members at a head are a function of the head, its signatures and its past. A removal is a later counted version and changes the members there, not at the old head. A member's own leaving binds the same way, by causal past ([CC 3.3.4](part_3_the_namespace.md#3.3.4)).
 
-Where the count asks two or more, one key's rows remove nobody, and a removed key counts again only after a version lists it again ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the floor of two voices). A reader that has acknowledged a head holds a line from below that head void, however many rows it has. That line is the reader's own and ranks nothing for anyone else ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). Keys that met the count of an old head can sign a valid version alone; a witnessed lineage answers that ([CC 3.2](part_3_the_namespace.md#3.2) T6).
+Where the count asks two or more, one key's rows remove nobody, and a removed key counts again only after a version lists it again ([CC 4.5.13](part_4_composition_governance.md#4.5.13), the floor of two voices). A reader that has acknowledged a head holds void every counted act that names an older head and is not in that head's past, however many rows it has. Its signer acts again, forward, at the newer head ([CC 3.3.4](part_3_the_namespace.md#3.3.4)). That voiding is the reader's own and binds nobody else. Anything that binds others rests on receipts, a row that names a blocking set ([CC 2.7.5](#2.7.5)), never on one reader's own closure. Keys that met the count of an old head can sign a valid version alone; a witnessed lineage answers that ([CC 3.2](part_3_the_namespace.md#3.2) T6).
 
 A person's keys, a voice's room keys, a room, the accord and an infrastructure community are this one roster, with parameters read from the policy table and the text. A public room's roster is public, so an audience is the members of a roster, everyone, or one named key ([CC 3.2](part_3_the_namespace.md#3.2)). It is read by asking a member's node, and every other roster is never enumerable outside its cohort.
 
@@ -1190,7 +1198,7 @@ A person's keys, a voice's room keys, a room, the accord and an infrastructure c
 
 ### 2.7.9 `kernel-limits` — What the kernel does not give
 
-- **No finality across readers.** Two nodes with the same rows conclude the same, and a settled slot can be reopened by a key with standing on it. Finality is each reader's, from what it has itself acknowledged.
+- **No finality without the rows that show it.** Two nodes with the same rows conclude the same, and what is final by form or by receipts is final for every reader that holds them. A reader's own acknowledged head closes older heads for that reader only. Any other slot can be reopened by a key with standing on it.
 - **No conclusion from silence without a clock.** A window closing unopposed, and the lapse of an unconfirmed halt, are read on the node's own clock. Nodes may differ while a window is open.
 - **No decision that is not a function of rows.** Link and load decisions, retries, rendering and the prose rules given to a model stay outside the kernel.
 - **No invariant of the form "at least one".** Two honest keys acting concurrently can leave none. For a community the way back is the lock and the members' count ([CC 4.5.4](part_4_composition_governance.md#4.5.4)).
@@ -1212,8 +1220,34 @@ The kernel does not settle these:
 - a roster version that names several heads on the wire;
 - how a second consent travels, and from when a delegation without one stops seating;
 - the reach of a cosignature attached against a node's clock, unless it states its own end;
-- a meaning for a clock that times a window from a signed instant and judges it at receipt. The freshness window `W` and `CLOCK_SKEW_VIOLATION` ([CC 2.6.7](#2.6.7)), the bound on a key that has lost standing ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)) and the attach window ([CC 3.2](part_3_the_namespace.md#3.2) T4a) read one. So do a response bounded by `W` ([CC 4.3](part_4_composition_governance.md#4.3)) and an objection counted within `W` ([CC 4.5.13](part_4_composition_governance.md#4.5.13)). The kernel gives each no meaning beyond one node's own reading;
-- `revoked_after`, which reads a revoked key's rows by their signed instants ([CC 2.4.1.1](#2.4.1.1), [CC 5.3.2.3](part_5_transport_substrate.md#5.3.2.3)). The kernel gives that reading no meaning beyond one node's own;
+- a meaning for a clock that times a window from a signed instant and judges it at receipt. The freshness window `W` and `CLOCK_SKEW_VIOLATION` ([CC 2.6.7](#2.6.7)), the bound on a key that has lost standing ([CC 3.3.6.3](part_3_the_namespace.md#3.3.6.3)) and the attach window ([CC 3.2](part_3_the_namespace.md#3.2) T4a) read one. So do a response bounded by `W` ([CC 4.3](part_4_composition_governance.md#4.3)), an objection counted within `W` ([CC 4.5.13](part_4_composition_governance.md#4.5.13)) and the instant of a reserved family's row ([CC 3.4.7](part_3_the_namespace.md#3.4.7)). The kernel gives each no meaning beyond one node's own reading;
+- `revoked_after`, which reads a revoked key's rows by their signed instants ([CC 2.4.1.1](#2.4.1.1), [CC 3.2](part_3_the_namespace.md#3.2) T6 to T8, [CC 5.3.2.3](part_5_transport_substrate.md#5.3.2.3)). The kernel gives that reading no meaning beyond one node's own;
+- a seat, a licence or an owner read at a row's signed `asserted_at` where the row names no head ([CC 3.1.5](part_3_the_namespace.md#3.1.5), [CC 3.3.1](part_3_the_namespace.md#3.3.1), [CC 3.4.7](part_3_the_namespace.md#3.4.7), [CC 4.3](part_4_composition_governance.md#4.3)). The kernel gives that reading no meaning beyond one node's own;
 - the standing verdict of a trust root, which [CC 3.2](part_3_the_namespace.md#3.2) T6 to T8 index by a signed `effective_at`. The kernel gives it no meaning beyond one node's own reading;
 - a meaning for a rule cell that keeps a word the operators do not carry, or calls a fold no cell defines;
-- what a family confers where no sentence states it.
+- what a family confers where no sentence states it;
+- the smallest set of rows a node must keep ([CC 2.7.10](#2.7.10));
+- whether a withdrawn receipt still blocks a cut. It is treated as blocking, and that is not established.
+
+### 2.7.10 `kernel-checkpoint` — Checkpoint and purge
+
+A node MAY keep its folded state and fold only the rows it has not yet folded. It MAY sign a **checkpoint**: a row under its own key that names the held rows no held row names, and carries the digest of its folded state. It MAY then drop the bytes of rows beneath a checkpoint, as this section allows. None of this is a duty: a node that keeps every row conforms.
+
+A checkpoint binds nobody and is served to nobody unless its signer chooses. It is not an acknowledgement of the heads beneath it, and signing one changes no answer.
+
+**What a checkpoint keeps.** For every row whose bytes it drops, a node keeps the row's digest, the digests it names, the fields a rule reads, and its conclusion. Where an act's count at its own head is final, the node keeps that answer. That is so for a settled act, kept with its receipts' digests, and, for this node only, for an act at a head older than one it has acknowledged ([CC 2.7.8](#2.7.8)). Any other act is kept whole, with its receipts and every cut of it. Whether an act is still in force at a later head is read again. A row that arrives naming a dropped row waits or concludes as it would if the bytes were held.
+
+Nothing that reads `now` is frozen. A node keeps the instant it first held each row that opened a window ([CC 2.7.1](#2.7.1)), and reads again at each `now` every window, row's own end, key's end and `revoked_after` ([CC 2.4.1.1](#2.4.1.1)).
+
+**What a purge never drops.** A purge never drops bytes another section keeps:
+
+- the accountability record ([CC 2.4.1.1](#2.4.1.1));
+- identity, consent and config records ([CC 6.1.5.2](part_6_the_coherence_mathematics.md#6.1.5.2) B1);
+- records under a `legal_hold` or a class's retention floor ([CC 4.4.3.2.8](part_4_composition_governance.md#4.4.3.2.8));
+- bytes counted toward an item's target or reported `here`, until `none` is acknowledged ([CC 6.1.5.1](part_6_the_coherence_mathematics.md#6.1.5.1), [CC 3.1.3.3](part_3_the_namespace.md#3.1.3.3));
+- a retirement record under an accepted preserve request ([CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5));
+- a tombstone ([CC 4.5.3](part_4_composition_governance.md#4.5.3)).
+
+A deletion duty outranks a kept copy ([CC 4.5.3](part_4_composition_governance.md#4.5.3), [CC 3.3.1](part_3_the_namespace.md#3.3.1)). Only a `legal_hold` or an `erasure_exempt` class suspends consent-driven descent ([CC 4.4.3.5.4](part_4_composition_governance.md#4.4.3.5.4)). After a purge a node still serves its audience what it owes. A node holding bytes in custody for others drops only those whose custody has ended.
+
+**Scope.** This section concerns a node's own storage and answers. A new reader taking a group's past on a member's vouch performs a different act ([CC 3.3.4](part_3_the_namespace.md#3.3.4)).

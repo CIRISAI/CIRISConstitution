@@ -771,7 +771,7 @@ p2	1117	2.7.4	kernel	admission_order	none		is	states		a reduce over a tie betwee
 p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing whose own past does not give the outcome it states concludes nothing	
 p2	1150	2.7.5	kernel	policy_row	none		is	states		an answer concurrent with a landing is recounted with the landing's past; the landing stands only if the table still gives its stated outcome	
 p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing that does not stand says nothing against a landing that does	
-p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing with a strict majority behind it is final where no key has answered both ways	
+p2	1150	2.7.5	kernel	policy_row	none		is	states		a landing with a strict majority behind it is final where no key of that majority answers both ways in two rows neither naming the other	
 p2	1154	2.7.5	kernel	expiry	none		is	states		the kernel has two notions of time: a row's own stated end read against now, and a window with a landing	
 p2	1160	2.7.6	kernel	consent_fold	none		is	states		the four family shapes are labels over two mechanisms, consent and the door	
 p2	1160	2.7.6	kernel	consent_fold	none		is	states		content is carried by consent: its audience is read off roster heads and naming rows, its life is the state answer	
@@ -783,6 +783,23 @@ p2	1174	2.7.7	kernel	cosign	none		is	states		a cosignature is a voice only for a
 p2	1174	2.7.7	kernel	standing	none		is	states		an offer conferred by a count is ended by its holder or by a count, never by its proposer alone	
 p2	1174	2.7.7	kernel	roster_fold	none		is	states		a counted row counts only if every counted row it is built on counts	
 p2	1186	2.7.8	kernel	key_plane	none		is	states		each write and each mint names the head of the membership rows the writer held, so the writer's key state is a fold over its own rows	
+p2	1100	2.7.3	kernel	admission_order	none		is	states		every answer about a row is final by form, final by acknowledgement, or provisional	
+p2	1100	2.7.3	kernel	admission_order	none		is	states		finality is of authorisation against cuts; a key revoked back to a bound, a row's own end and a reader's own trust are outside it, and it promises nothing about execution	
+p2	1152	2.7.5	kernel	cosign	none		is	states		a receipt of an act is a row by a voice at the act's head with the act in its past and no cut of the act by that key in its own past	
+p2	1152	2.7.5	kernel	admission_order	none		is	states		an act is settled once receipts from n - t + 1 of the n members at its head are held, where t can cut it	
+p2	1152	2.7.5	kernel	audience	none		MAY	states		missing names the voices whose receipts an act lacks; a node may ask them under the copy rule, and nobody owes one	
+p2	1152	2.7.5	kernel	erasure	none		is	states		an effect that cannot be undone names a blocking set of receipts of the act it rests on and waits for them; a section requiring one without them says so	
+p2	1177	2.7.7	kernel	admission_order	none		is	states		on one slot at one head a voice that acknowledged an act and voted to cut it, in two rows neither naming the other, has no say there and stays in the count	
+p2	1179	2.7.7	kernel	roster_fold	none		is	states		whether an act counts is read at the head it names; whether it is still in force is read at a later head	
+p2	1179	2.7.7	kernel	standing	none		is	states		a cut by a voice seated at a later head acts forward from its head and never changes what counted earlier; takedown, moderation and the halt act forward	
+p2	1191	2.7.8	kernel	roster_fold	none		is	states		a reader that acknowledged a head holds void every counted act naming an older head and not in that head's past; its signer acts again forward	
+p2	1191	2.7.8	kernel	roster_fold	none		is	states		a reader's own closure binds nobody else; anything binding others rests on receipts	
+p2	1234	2.7.10	kernel	admission_order	none		MAY	states		a node may keep its folded state and fold only the rows it has not yet folded; a node that keeps every row conforms	
+p2	1234	2.7.10	kernel	erasure	none		MAY	states		a node may drop the bytes of rows beneath its own checkpoint only as CC 2.7.10 allows	
+p2	1236	2.7.10	kernel	roster_fold	none		is	states		a checkpoint is not an acknowledgement of the heads beneath it; signing one changes no answer	
+p2	1238	2.7.10	kernel	erasure	none		is	states		a dropped row keeps its digest, the digests it names, the fields a rule reads and its conclusion; a row naming it waits or concludes as if the bytes were held	
+p2	1240	2.7.10	kernel	expiry	none		is	states		nothing that reads now is frozen by a checkpoint; a node keeps the instant it first held each window opener and reads it again at each now	
+p2	1251	2.7.10	kernel	erasure	none		is	states		a deletion duty outranks a kept copy; only a legal_hold or an erasure_exempt class suspends consent-driven descent	
 p3	11	3.1	stewardship	other:family-registration	none	*	is	states	3.1.1	Each dimension family is registered once, under one owning component that commits to it.	
 p3	11	3.1	stewardship	amendment	none	*	is	states		The generated registry manifest is the count of record for families; a count restated in prose is never read as authoritative.	
 p3	11	3.1	stewardship	other:family-registration	none	*	is	states	3.1.10	Owning components commit to their families in their own mission statements; CIRISBench is catalogued without one.	
@@ -4313,7 +4330,7 @@ p2	1152	2.7.5	kernel	halt	none		is	states		the door reads whether the opening ac
 p2	1136	2.7.5	kernel	withdraw	none		is	states		any bound voice ends a relation alone, and no third key ends it without a cut	
 p2	1075	2.7.1	kernel	admission_order	none		is	states		the rows input is the signed rows the node holds or has been offered, each with the instant this node first held it	
 p2	1144	2.7.5	kernel	admission_order	none		is	states		the door, the control a person is offered and the gate on serving a row are one answer; a refusal names the missing row	
-p2	1164	2.7.7	kernel	supersede	none		is	states		concurrent rows on one target are settled by five rules and by no ranking of their signers	
+p2	1164	2.7.7	kernel	supersede	none		is	states		concurrent rows on one target are settled by six rules and by no ranking of their signers	
 p2	1136	2.7.5	kernel	roster_fold	none		is	states		nobody is bound by the rows of others	
 p2	1182	2.7.8	kernel	roster_fold	none		is	states		where the count asks two or more, one key's rows remove nobody	
 p2	1142	2.7.5	kernel	standing	none		is	states		the founding record seats the duty holders who sign it, and they are equals	

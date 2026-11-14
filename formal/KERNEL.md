@@ -52,9 +52,46 @@ the content is in these: the door stops and ends at one set in every order, and 
 **run**: 6,606 sets of up to six rows in 2,182,671 arrival orders, one answer each. That is the bound the
 continuous build runs; `--bound 5` is a shorter run of the same check.
 
-Only the first two layers are final. A derived answer can be changed by a later row. **run**: after a counting
-cut on a slot, no key changed that slot but one that may cut it. A key whose standing has ended can still
-change what a reader with no acknowledgement of its own concludes (8a).
+Every answer about a row is of one of three kinds.
+
+- **Final by form**: whether the row is kept, its conclusion for a rule that reads no concurrent row, and a row
+  that names a blocking set of receipts. **proved**: `Settled.kept_ext`, `concl_ext`, `effect_row_settled`.
+- **Final by acknowledgement**: whether an act counts at the head it names, once n − t + 1 of the n members there
+  have given receipts, where t can cut it. A receipt is a row by a voice at that head with the act in its past and
+  no cut of the act by that key in its own past. **proved**: `ack_blocking_quorum` (the threshold is exact, both
+  ways), `say_settled_final`, `countsAt_final`, `ack_finality_future_stable`.
+- **Provisional**: everything else, including whether an act is still in force at a later head. **proved**:
+  `Rows.count_not_monotone`; a voice seated later acts forward (`Rows.later_seat_is_forward`).
+
+Whether an act counts is read at the head it names and reads only rows naming that head (`countsAt_local`,
+`later_head_changes_nothing`). Finality by acknowledgement rests on one rule of section 6 (rule 6, one say).
+
+This is finality of authorisation against cuts. A key revoked back to a bound, a row's own end and a reader's
+own trust are outside it, and it says nothing about execution. **open**: whether a withdrawn receipt still
+blocks (it is treated as blocking).
+
+**run**: after a counting cut on a slot, no key changed that slot but one that may cut it. A key whose standing
+has ended can still change what a reader with no acknowledgement of its own concludes (8a).
+
+## 3a. Checkpoint and purge
+
+A node may keep its folded state and fold only new rows, sign a checkpoint (a row under its own key naming the
+rows it holds that no held row names, with the digest of its folded state), and drop bytes beneath it (CC 2.7.10).
+The checkpoint is not an acknowledgement and no answer reads it. Conclusions folded over its past are those of
+every later set, and a conclusion changes only where a later row conflicts concurrently with its row or an
+ancestor (**proved**: `checkpoint_conclusions`, `checkpoint_resume`, `concl_ext_local`).
+
+A dropped row keeps its digest, the digests it names, the fields a rule reads and its conclusion. Where an act's
+count at its head is final, by receipts or for this node by its own acknowledged head, that answer is kept and its
+receipts and same-head cuts are dropped; any other act keeps them whole (**proved**: sufficient,
+`pruned_view_closed`, `pruned_view_answers`; the bare answer is not enough, `count_view_not_closed`). Whether an
+act is still in force at a later head, every window, own end, key end and `revoked_after` are read again.
+A purge never drops what CC 2.7.10 lists, and a deletion duty outranks a kept copy.
+
+**run** (`formal/causal_kernel/check_purge.py`): nine histories, every extension of each to four late rows,
+purged once and again part way, at each `now`: 200 replays under each reading of the reader's line, every answer
+equal to keeping everything, no duty breached; eight plants caught. **open**: the least set that suffices, many
+acts purged at once, stubs as the store, and own end, key end and `revoked_after` over stubs.
 
 ## 4. Operators
 
@@ -76,7 +113,7 @@ The first six are in `formal/kernel_lib`. **run**: six models rewritten with the
 originals on 415,804 comparisons, and the closure agrees with a hand-written definition on 15,864.
 
 **One language.** `tools/kx.py` is one expression language over these operators, and `tools/kx_prelude.kx`
-writes each of the eight named answers once in it. `tools/kx_translate.py` translates the cells of the five
+writes eight of the nine named answers once in it. **open**: `settled`. `tools/kx_translate.py` translates the cells of the five
 authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on the repository's own text):
 
 | Grammar | Translated in full | Translated with a word dropped |
@@ -131,7 +168,7 @@ as a pick is counted across signers. **measured**.
 
 ## 5. Named answers
 
-Eight. Each is a composition of the operators, and each role, window, policy and constant is data.
+Nine. Each is a composition of the operators, and each role, window, policy and constant is data.
 
 | Answer | Question | Layer |
 |---|---|---|
@@ -140,7 +177,8 @@ Eight. Each is a composition of the operators, and each role, window, policy and
 | **tally** | is this count met, over the head it names | derived |
 | **may** | may this key do this act on this target; if not, which row is missing and who could sign it | derived |
 | **audience** | who is this row for | derived: a row's audience includes that of every row naming it, and such a row may come later |
-| **missing** | which rows does this conclusion depend on that are not held | kept |
+| **missing** | which rows does this conclusion depend on that are not held, and which receipts an act lacks to be settled | kept |
+| **settled** | does this act count at its head in every later set | concluded for a row that names its receipts; final by acknowledgement once they are held; derived until then |
 | **owed** | what must this node now emit or do | derived |
 | **window** | has this window closed, and with what outcome | derived; the one answer that reads now |
 
@@ -235,7 +273,8 @@ not evict alone holds against an owner who signs anything inside the window; an 
 looks lost. A landing that voids concurrent
 answers breaks seven, a thief evicting alone among them. An answer that contests any landing breaks two.
 **proved**: `Recount.dishonest_never_stands`, `stands_is_table_over_all_not_late`, and `quorum_closed_final` (a
-landing with a strict majority behind it is final where no key has answered both ways), and
+landing with a strict majority behind it is final where no key of that majority answers both ways; under rule 6
+of section 6 such a key has no say there), and
 for the two rejected rules `ruleI_concluder_decides`, `ruleII_never_final`. What recount costs: a lone landing is never final against a key that can still sign, and the
 window's length is the concluder's own word.
 
@@ -330,11 +369,21 @@ own parameters are; most door rows still rest on parameters the tables do not st
    **proved**: `holder_both_or_neither`.
 3. **A row that names both may decide.** **proved**: `Slot.descendant_decides`.
 4. **The cut.** A row on a slot by whoever may conclude it. Once it counts, rows on that slot concurrent with
-   it do not count; rows in its past stand; rows that name it are judged at the head they name. A removal is a
-   cut on a key and a deciding row is a cut on a contest. **run**: 4,898 sets in 440,291 orders.
+   it do not count from the head the cut names; rows in its past stand; rows that name it are judged at the head
+   they name. A removal is a cut on a key and a deciding row is a cut on a contest. **run**: 4,898 sets in
+   440,291 orders. A cut by a voice seated at a later head acts forward and never changes what counted at an
+   earlier head; takedown, moderation and the halt act forward too (**proved**: `later_head_changes_nothing`,
+   `Rows.later_seat_is_forward`).
 5. **Equal standing.** Two cuts by keys of equal standing that undo each other stay contested. What settles it
    is a voice the other cannot remove. **run**. So no slot that matters may be held on one signature: that is a
    requirement on the tables, and nothing yet checks them for it. **open**.
+6. **One say.** On one slot at one head, a voice that has acknowledged an act and voted to cut it, in two rows
+   neither of which names the other, has no say there; it stays among the members counted. **proved**: forced by
+   symmetry (`symmetric_say_forced`; CC 3.1.3.2's rule for replies is an instance) and by closure (`say3_not_closed`,
+   `say4_closed`, `say4_absorbing`); a sole cutter that forks has no say (`sole_cutter_fork_stands`); members
+   without receipts still cut when there are t of them (`say_unblocked_can_cut`). The two rival readings fail:
+   `sayA_not_safe`, `sayC_not_symmetric`. **run** (`check_purge.py`, plant `no_say`): with it off, 60 answers
+   differ after a purge.
 
 A row of a removed key counts when the removal has it among its ancestors: something the removal can see had
 already named it. **proved**: `only_removals_stop_counting`, `sign_after_removal_never_counts`.
@@ -349,6 +398,12 @@ tips makes one head again. **run** (`formal/roster_fork/fork_check.py`): over ev
 versions an adversary below the count can cause, in three settings under two counting protocols, the roster is
 a function of the set, no removed key is listed, and a removal naming an old head gains nothing. Four further
 protocols were run once at the same bound and are not in the check.
+
+A reader that has acknowledged a head holds void every counted act that names an older head and is not in that
+head's past; its signer acts again, forward, at the newer head. This binds nobody else, and anything that binds
+others rests on receipts. **proved** (`Reader.lean`): `line_voids_old_fork`, `old_fork_void_for_ever`. **run**
+(`check_purge.py`): under this reading a checkpointing node keeps 12 rows whole and 36 as stubs over nine
+histories; under the narrower reading (roster versions only) 16 and 32; plant `narrow_eval` differs on 20 answers.
 
 **proved** (`RosterHead.lean`): the members at a head are a function of the head, its signatures and its past
 (`membersAt_function`, `standing_final`). A removal is a later counted version and changes the members there,
@@ -459,8 +514,11 @@ What a private room does not give, each marked as the check marks it:
 
 ## 8. What the kernel does not give
 
-- **No finality across readers.** Two nodes with the same rows conclude the same. A settled slot can be
-  reopened by a key with standing on it. Finality is each reader's, from what it has itself acknowledged.
+- **No finality without the rows that show it.** Two nodes with the same rows conclude the same, and what is
+  final by form or by receipts is final for every reader that holds them. A reader's own acknowledged head
+  closes older heads for that reader only. Any other slot can be reopened by a key with standing on it.
+- **No least set of rows.** The smallest set a node must keep is not established, and a withdrawn receipt is
+  treated as still blocking without proof.
 - **No conclusion from silence without a clock.** A window closing unopposed, and the lapse of an unconfirmed
   halt, are read on the node's own clock. Nodes may differ while a window is open.
 - **No decision that is not a function of rows.** Link and load decisions, retries, rendering and the prose
@@ -504,7 +562,7 @@ anyone else.
 that named only older heads. It is not part of the kernel. Under it a seated key and a removed key, signing two
 rows, out-run the honest line and list the removed key again; and applied to a window, a majority voids a
 present moderator's answer. Both are run as the reason (`checkpoint.py`, off unless asked for). Nothing is
-ordered except by what rows name.
+ordered except by what rows name. The node's checkpoint of section 3a is not this: it is the node's own storage row, not an acknowledgement, and it ranks nothing.
 
 What that leaves, each **run** with its witness:
 
@@ -549,6 +607,9 @@ that the ending row has not seen from counting.
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
 | What each implementer's shipped behaviour does that the text does not: 61 cases the kernel runs, each a test to edit, 14 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
+| Each section that requires an effect that cannot be undone without receipts says so (CC 4.5.3 needs one clause) | text | Part 4 |
+| `settled` written in `tools/kx_prelude.kx` | table data | `tools/kx_prelude.kx` |
+| Whether a checkpoint is a registered family or a local row never served | wire | agreed with the store |
 
 **The divergence list is a list of tests.** **run** (`tools/check_divergences.py`): each difference between shipped
 behaviour and the text is a case of rows and one named answer, run under the text's cell and under the shipped

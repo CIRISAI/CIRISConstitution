@@ -1,6 +1,6 @@
 {
   "_note": "The dual-ID codebook of the CIRIS Constitution (CC): decimal_id <-> key <-> semantic_id, one to one, and legacy references -> decimal_id. Maintained data: a section added to constitution/toc.tsv is added here under the key cc:<decimal>, and tools/check_claims.py fails when the two disagree.",
-  "n_concepts": 430,
+  "n_concepts": 431,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -430,6 +430,7 @@
     "2.7.7": "cc:2.7.7",
     "2.7.8": "cc:2.7.8",
     "2.7.9": "cc:2.7.9",
+    "2.7.10": "cc:2.7.10",
     "2.6.1.8": "cc:2.6.1.8",
     "8.10": "cc:8.10"
   },
@@ -862,6 +863,7 @@
     "cc:2.7.7": "2.7.7",
     "cc:2.7.8": "2.7.8",
     "cc:2.7.9": "2.7.9",
+    "cc:2.7.10": "2.7.10",
     "cc:2.6.1.8": "2.6.1.8",
     "cc:8.10": "8.10"
   },
@@ -1294,6 +1296,7 @@
     "kernel-conflict": "cc:2.7.7",
     "kernel-roster": "cc:2.7.8",
     "kernel-limits": "cc:2.7.9",
+    "kernel-checkpoint": "cc:2.7.10",
     "signed-object-cose": "cc:2.6.1.8",
     "family-cards": "cc:8.10"
   },
@@ -1726,6 +1729,7 @@
     "cc:2.7.7": "kernel-conflict",
     "cc:2.7.8": "kernel-roster",
     "cc:2.7.9": "kernel-limits",
+    "cc:2.7.10": "kernel-checkpoint",
     "cc:2.6.1.8": "signed-object-cose",
     "cc:8.10": "family-cards"
   },

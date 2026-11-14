@@ -131,6 +131,19 @@ in time", the class condition read from the record and from an owner-binding, te
 order of up to seven rows, and the store's steady state from stated rates. Nothing here is measured. Whoever
 holds an ended key's private half can revive it, and that is recorded as conceded.
 
+**Checkpoint and purge** (`purge.py`, `check_purge.py`, `purge_expected.tsv`). Answers are indexed by head: whether an
+act counts at the head it names, and whether it is still in force at a later head. A node signs a checkpoint under
+its own key and keeps each row whole or as a stub: the digest, the digests it names, the fields a rule reads and its
+conclusion. Where an act's count at its own head is final (settled by receipts, or, for this node only, at a head
+older than one it has acknowledged) the stub keeps that answer and its receipts and same-head cuts are dropped;
+every other act keeps them whole. A window opener keeps the instant the node first held it, and a row under a duty
+of CC 2.7.10's list keeps its bytes. Over nine histories, every extension of each history's pool is offered to the
+purged store, and again after a second purge part way through, at each `now`: 200 replays under each reading of the
+reader's line, and every answer equals the answer with nothing purged. The broad reading (the rule) keeps 12 rows
+whole and 36 as stubs; the narrow reading keeps 16 whole and 32 as stubs. Eight plants are caught, among them the
+one-say rule switched off. The check also records that `checkpoint.py` voids, for a reader, a counted act on an
+older head that is not a roster version. This is a run over a model the authors wrote, at a bound of four late rows.
+
 **What it shows that the proof does not.**
 
 - Only the conclusion layer is final. A slot, a count and a roster are functions of the rows, and a later row by
@@ -143,4 +156,4 @@ holds an ended key's private half can revive it, and that is recorded as concede
 Run: `python3 -I formal/causal_kernel/check.py` (add `--bound 5` for a short run),
 `python3 -I formal/causal_kernel/check_cut.py`, `python3 -I formal/causal_kernel/check_lock.py`,
 `python3 -I formal/causal_kernel/check_attacks.py`, `python3 -I formal/causal_kernel/check_roomkey.py` and
-`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` `python3 -I formal/causal_kernel/check_shapes.py` and `python3 -I formal/causal_kernel/check_key_end.py`
+`python3 -I formal/causal_kernel/check_rosters.py`, `python3 -I formal/causal_kernel/check_door.py` , `python3 -I formal/causal_kernel/check_time.py` `python3 -I formal/causal_kernel/check_shapes.py` `python3 -I formal/causal_kernel/check_key_end.py` and `python3 -I formal/causal_kernel/check_purge.py`

@@ -15,7 +15,7 @@ group:roster	bound=drop_only(members)	CC 3.3.4	A `family` Contribution that supe
 group:roster	bound=drop_only(members)	CC 3.3.4	rides the widening plane of [CC 3.1.3.2](#3.1.3.2), never a supersede
 group:roster	bound=narrow_only(consensus_protocol),fixed(admission_quorum_basis)	CC 3.2	A `supersedes` that would weaken `consensus_protocol` or change `admission_quorum_basis` away from `founders`
 group:roster	pick=chain(prev_head_digest)	CC 4.4.3.4.4	// one held version per group id: a new version waits until the head its signed
-membership:{stage}	@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once	CC 3.1.3.2	A decline is terminal for its proposal. Two opposite replies by the same K to the same proposal are contested, and neither counts while they differ. Asking again is a
+membership:{stage}	@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once	CC 3.1.3.2	A decline is terminal for its proposal. Two opposite replies by the same K to the same proposal are contested, and neither counts while they differ ([CC 2.7.7](part_2_the_grammar.md#2.7.7) rule 6). Asking again is a
 membership:{stage}	@stage=resignation: cut=forward; feeds=group:roster	CC 3.1.3.2	Leaving is the member's own `membership:resignation`, which reaches forward only.
 consent:state:{stance}	pick=rank(revoked>granted)	CC 3.3.1	`revoked` overrides prior `granted`
 consent:state:{stance}	@stance=revoked: cut=boundary(asserted_at)	CC 3.3.1	`consent:state:*` rows on one subject use the same boundary fold, the latest admitted revocation's `asserted_at` putting every earlier grant out; and a decay protocol that

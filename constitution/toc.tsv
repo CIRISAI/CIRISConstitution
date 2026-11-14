@@ -103,6 +103,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 2.7.7	kernel-conflict	Conflict between concurrent rows	—	0.00050	444	0.3	II	ceg	wire
 2.7.8	kernel-roster	The roster is the one ledger	—	0.00050	444	0.3	II	ceg	wire
 2.7.9	kernel-limits	What the kernel does not give	—	0.00050	444	0.3	II	ceg	wire
+2.7.10	kernel-checkpoint	Checkpoint and purge	—	0.00050	444	0.3	II	ceg	wire
 3.1	namespace	The dimension namespace	§5	0.01687	5	2.02	III	ceg	dictionary
 3.1.1	registry	CIRISRegistry — identity / build / license / partner	§5.9	0.00765	22	0.92	III	ceg	dictionary
 3.1.2	attestation	CIRISVerify — attestation ladder, provenance, transparency	§5.2	0.00428	53	0.51	III	ceg	dictionary
