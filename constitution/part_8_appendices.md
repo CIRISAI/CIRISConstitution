@@ -251,7 +251,6 @@ These are settled. Each row names the gap, its terminal status, and the section 
 - A family that states no placement of its own takes the default of [CC 5.2](part_5_transport_substrate.md#5.2), and the text does not confirm, family by family, that none of them needs another.
 - The acts a screen offers do not include receiving a row, and some ways back the text states have no act a screen can offer.
 - Some states the text gives a lifecycle are checked by no executable model, among them a relay's opt-out, a frozen trust root, a moderator's recovery and candidacy windows, and a licence's suspension.
-- The text does not name the family of a moderation action raised in the room, so no family carries its 48-hour window.
 - Some rules the text states have no form in the rule tables, among them the reversal or lift that spares a takedown's withheld bytes, a stalled roster's recovery widening, a self-declared lower age band, and an occurrence's build check.
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
@@ -1634,7 +1633,7 @@ The build writes this section from the family model, the transitions table and t
 
 **Standing (normative).** Where a card states a value, the card is this document's statement of that value. A description of the family in [Part 3](part_3_the_namespace.md) gives the family's purpose and reasons, and a card and a description never differ on a value: the build takes each value from words quoted from the text and fails when those words change.
 
-A family with no card states none of these beyond the default row. Cards: 117 of 184 families.
+A family with no card states none of these beyond the default row. Cards: 118 of 184 families.
 
 **`accord:*`** — Rules, thing
 
@@ -2330,6 +2329,21 @@ Count: `none`
 In time:
 - on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
 
+**`content_class:{class}`** — Identity, thing
+
+| Transition | Who signs | Policy | Widens | Confirm | Way back |
+|---|---|---|---|---|---|
+| attest | registered | mirror `moderation_action` | true (by_scope) | true (if_widens) | withdraw |
+| withdraw | author, subject | selfAct | false | false | attest |
+
+Count: `leaf=reported => moderation_action@subject_group` (CC 4.5.13)
+
+In time:
+- [reported] clock `window` = `moderation_action.window_secs` (CC 4.5.13)
+- [reported] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
+- [reported] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
+- [reported] while `window` is open: binds nobody until it lands (CC 4.5.13)
+
 **`cosign:{state}`** — Process, thing
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
@@ -2946,19 +2960,10 @@ Body: `description` (text only)
 | withdraw | author | selfAct | false | false | attest |
 | recant | author | selfAct | false | false | attest |
 
-Count: `moderation_action@subject_group` (CC 4.5.13)
+Count: `none`
 
 Fold:
 - `over=present@named/person` (CC 4.5.13)
-
-In time:
-- [harm_report] clock `window` = `moderation_fallback_window_secs` (CC 4.5.13)
-- [harm_report] on close(window) unless fold(keep_decided): read withdrawn (CC 4.5.13)
-- clock `window` = `moderation_action.window_secs` (CC 4.5.13)
-- [harm_report] landing of `window`: each node for itself, nothing signed (CC 4.5.13)
-- landing of `window`: each node for itself, nothing signed (CC 4.5.13)
-- while `window` is open: binds nobody until it lands (CC 4.5.13)
-- [harm_report] while `window` is open: binds nobody until it lands (CC 4.5.13)
 
 **`moderation_track_record:{community_key_id}`** — Confidence, account
 

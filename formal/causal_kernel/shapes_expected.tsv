@@ -63,7 +63,7 @@ consent:scope:{kind}	consent binds=signer	sourced | runs
 consent:state:{stance}	consent binds=signer	sourced | runs
 consent:stream:{kind}	consent binds=signer	sourced | runs
 consent:{kind}	none fits	no shape, stated | no shape: a prefix: its leaves are families of their own and nobody reads it
-content_class:{class}	claim	sourced | runs
+content_class:{class}	door	sourced | runs
 content_rating:{scheme}:{rating}	claim	sourced | runs
 corpus_health:n_eff_measurable	claim	sourced | runs
 cosign:{state}	door	sourced | runs
@@ -258,8 +258,8 @@ mechanism claim	keeps the characteristic property of door	no
 mechanism consent	keeps the characteristic property of door	no
 mechanism content	keeps the characteristic property of door	no
 mechanism door	keeps the characteristic property of door	yes
-removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 155, e.g. accord:*)
-removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 155, e.g. accord:*) ; door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id})
-removal	order door > consent > content > claim	surviving consent,door | door kept (loses 25, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 20, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
-counts	families per shape	claim 111, consent 16, consent+door 7, content 24, door 23, none fits 3
+removal	order content > claim > door > consent	surviving consent,door | content removed ; claim removed ; door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 154, e.g. accord:*)
+removal	order claim > content > consent > door	surviving consent,door | claim removed ; content removed ; consent kept (loses 154, e.g. accord:*) ; door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id})
+removal	order door > consent > content > claim	surviving consent,door | door kept (loses 26, e.g. accord:invoke:constitutional:{halt_id}) ; consent kept (loses 20, e.g. ballot:moderator_acceptance) ; content removed ; claim removed
+counts	families per shape	claim 110, consent 16, consent+door 7, content 24, door 24, none fits 3
 counts	status	cannot run 2, no shape, stated 9, sourced 173

@@ -333,16 +333,6 @@ def cases():
                        R("v", "reversal", "A", ("n",))],
               "ask": {"answer": "owed"},
               "note": "stays: no fold or reaction word reads a row that names this one with a stated outcome, so the close cannot skip a reversed or lifted notice (a named limit in CC 8.3.4)"})
-    E.append({"implementer": "tooling", "family": "moderation:{allegation_type}", "where": "reaction on close(window)", "kind": "window",
-              "sources": ["C391"], "cc_ref": "CC 4.5.13",
-              "quote": "A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room.",
-              "text_value": "no window", "shipped_value": "[harm_report] on close(window) unless fold(keep_decided): read withdrawn",
-              "shipped_source": "manifests/reactions.json moderation:{allegation_type} [harm_report] (CC 8.10 card; formal/derivation/reaction_text.tsv)", "census": None,
-              "text_param": {"family": "moderation:{allegation_type}", "owed": "report_window", "window_secs": None},
-              "shipped_param": {"family": "moderation:{allegation_type}", "owed": "report_window", "window_secs": 172800},
-              "rows": [fam("m", "A", "moderation:{allegation_type}", (), seen_at=0)],
-              "ask": {"answer": "owed", "now": 172801},
-              "note": "stays: the text names no family for a moderation action raised in the room, so the window has no row to move to (a question for the owner, and a named limit in CC 8.3.4)"})
     # ---- folds ------------------------------------------------------------------------------------------------------
     def fold_entry(impl, f, srcs, cc, q, name, tmode, smode, sw, rows, ask, where="fold", census=None, src=None):
         return {"implementer": impl, "family": f, "where": where, "kind": "fold", "sources": srcs, "cc_ref": cc, "quote": q,

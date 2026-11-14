@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "d395ce92c7a7fdd816b6ae95aa4652f22ec5feaeb1cbb088cc93134b565f73a3",
+  "registry_sha256": "f9213fa9f9145b7e84685fa6095ee87dbe0cc7d2fdb4b3cf394356933ee95880",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -252,12 +252,12 @@
     "gap": 0
    },
    "confers": {
-    "cc-table": 161,
+    "cc-table": 160,
     "code-v61": 0,
     "generic": 0,
     "prose": 0,
     "mixed": 0,
-    "gap": 23
+    "gap": 24
    },
    "binds_segment": {
     "cc-table": 155,
@@ -571,8 +571,8 @@
   },
   "conferral": {
    "confers": {
-    "default": 135,
-    "gap": 23,
+    "default": 134,
+    "gap": 24,
     "shape": 21,
     "stated": 5
    },
@@ -586,8 +586,8 @@
     "stated": 3
    },
    "read_by": {
-    "cells": 101,
-    "default": 83
+    "cells": 102,
+    "default": 82
    },
    "read_by_default": {
     "every_family": [
@@ -25619,11 +25619,55 @@
    "read_by": {
     "value": [
      "state",
-     "stands"
+     "stands",
+     "tally",
+     "window"
     ],
     "source": "cc-table",
-    "rule": "default",
+    "rule": "cells",
     "by": [
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
+      "answers": [
+       "window"
+      ]
+     },
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
+      "answers": [
+       "window"
+      ]
+     },
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
+      "answers": [
+       "window"
+      ]
+     },
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
+      "answers": [
+       "window"
+      ]
+     },
+     {
+      "grammar": "reaction",
+      "cell": "formal/derivation/reaction_text.tsv#content_class:{class} (CC 4.5.13)",
+      "answers": [
+       "window"
+      ]
+     },
+     {
+      "grammar": "count",
+      "cell": "formal/derivation/count_text.tsv#content_class:{class}",
+      "answers": [
+       "tally"
+      ]
+     },
      {
       "grammar": "fold",
       "cell": "tools/fold_grammar.py DEFAULT",
@@ -25635,10 +25679,10 @@
     ]
    },
    "confers": {
-    "value": "nothing",
-    "source": "cc-table",
-    "cc_ref": "CC 3.4.5.1",
-    "rule": "default"
+    "value": null,
+    "source": "gap",
+    "from": "formal/derivation/family_shapes.tsv",
+    "note": "a door family, and no sentence says what its rows confer"
    },
    "binds_segment": {
     "value": {
@@ -25656,9 +25700,15 @@
     "note": "no fold is typed for the family; it reads by the default"
    },
    "count": {
-    "value": "none",
-    "source": "generic",
-    "note": "the cosign cell reads none: one signature carries the row"
+    "value": "leaf=reported => moderation_action@subject_group",
+    "arms": [
+     {
+      "when": "leaf=reported",
+      "doors": "moderation_action@subject_group",
+      "cc_ref": "CC 4.5.13"
+     }
+    ],
+    "source": "cc-table"
    },
    "blind": {
     "value": [
@@ -49257,9 +49307,7 @@
    "read_by": {
     "value": [
      "state",
-     "stands",
-     "tally",
-     "window"
+     "stands"
     ],
     "source": "cc-table",
     "rule": "cells",
@@ -49270,48 +49318,6 @@
       "answers": [
        "state",
        "stands"
-      ]
-     },
-     {
-      "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#moderation:{allegation_type} (CC 4.5.13)",
-      "answers": [
-       "window"
-      ]
-     },
-     {
-      "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#moderation:{allegation_type} (CC 4.5.13)",
-      "answers": [
-       "window"
-      ]
-     },
-     {
-      "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#moderation:{allegation_type} (CC 4.5.13)",
-      "answers": [
-       "window"
-      ]
-     },
-     {
-      "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#moderation:{allegation_type} (CC 4.5.13)",
-      "answers": [
-       "window"
-      ]
-     },
-     {
-      "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#moderation:{allegation_type} (CC 4.5.13)",
-      "answers": [
-       "window"
-      ]
-     },
-     {
-      "grammar": "count",
-      "cell": "formal/derivation/count_text.tsv#moderation:{allegation_type}",
-      "answers": [
-       "tally"
       ]
      }
     ]
@@ -49344,15 +49350,9 @@
     "source": "cc-table"
    },
    "count": {
-    "value": "moderation_action@subject_group",
-    "arms": [
-     {
-      "when": "*",
-      "doors": "moderation_action@subject_group",
-      "cc_ref": "CC 4.5.13"
-     }
-    ],
-    "source": "cc-table"
+    "value": "none",
+    "source": "generic",
+    "note": "the cosign cell reads none: one signature carries the row"
    },
    "blind": {
     "value": [],

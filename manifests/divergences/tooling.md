@@ -6,12 +6,11 @@ How to consume: each entry is one test: build `case`, ask `ask`, assert `expect_
 
 To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.
 
-5 entries: 4 runnable, 0 disputed, 1 stated, 0 wording only.
+4 entries: 3 runnable, 0 disputed, 1 stated, 0 wording only.
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
 | tooling/identity:occurrence/transition attest guard | identity:occurrence | transition attest guard | CC 3.3.6: It counts at a node only where that row is Rooted there and its manifest hash equals `build_manifest_hash`, and otherwise concludes nothing. | pv:provenance:build_manifest:{target} by B; oc:identity:occurrence by K names pv \| ask state oc | concludes nothing |
 | tooling/takedown_notice:{basis}/reaction on close(withhold) | takedown_notice:{basis} | reaction on close(withhold) | CC 4.5.3: **Inside the window** the bytes are still held: serving resumes, the hard-delete sweep skips them | n:takedown_notice:{basis} by A; l:landing by A names n; v:reversal by A names n \| ask owed | nothing |
-| tooling/moderation:{allegation_type}/reaction on close(window) | moderation:{allegation_type} | reaction on close(window) | CC 4.5.13: A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room. | m:moderation:{allegation_type} by A \| ask owed | nothing |
 | tooling/age_assurance:{level}:{band}:{version}/fold | age_assurance:{level}:{band}:{version} | fold | CC 3.4.11: A subject's declaration of a lower band lowers the reading and never raises it | aw:age_assurance:{level}:{band}:{version} by W; as:age_self_declared:band:{band}:{version} by S \| ask fold | minor |
 | tooling/membership:{stage}/guard[leaf=widening on a stalled roster] | membership:{stage} | guard[leaf=widening on a stalled roster] | CC 3.2: So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat. | (stated) a stalled roster (T7) is no answer of the kernel model and no condition of the guard grammar; its condition reads a count of active founders over a margin (a named limit in CC 8.3.4) | - |

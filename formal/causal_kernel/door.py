@@ -62,8 +62,8 @@ SEAT = {"identity:substrate_persist": "substrate"}      # a role token of the ma
 LANDS = {
     "accord_halt": ("accord:invoke:constitutional:{halt_id}", None, "fuse"),
     "self_roster_add": ("identity:occurrence", None, "window"),
-    "moderation_action": ("moderation:{allegation_type}", None, "window"),
-    "harm_report": ("moderation:{allegation_type}", "harm_report", "window"),
+    "moderation_action": ("content_class:{class}", "reported", "window"),
+    "harm_report": ("content_class:{class}", "reported", "window"),
     "moderator_election": ("ballot:moderator", None, "window"),
     "deletion_sla": ("consent:deletion_sla:{days}", None, "sla"),
     "accord_roster_change": ("group:roster", None, "W"),
@@ -535,11 +535,11 @@ def door_specs():
         cells={"clock": "W admission_freshness_window_secs max accord_roster_window_max_secs, from first_held by receipt",
                "close": "lapsed unless fold policy_met", "count": "CC 4.2.6: yes against the standing roster"},
         unstated=["concluder: a holder", "W is also the proposal's own window_until (cells.tsv:171)"]), "accord_roster_change", "holder")
-    D["harm_report"] = stated(dict(policy="moderation:{allegation_type}[harm_report]", kind="clock", opener="member", counted="member", extra=("moderate",),
+    D["harm_report"] = stated(dict(policy="content_class:{class}[reported]", kind="clock", opener="member", counted="member", extra=("moderate",),
         target_votes=False, opener_says=None, kinds=("keep",),
         clauses=(("once", "keep", ("abs", 1), "extra", "kept"), ("close", "keep", ("strict", 1, 2, 2), "voted", "kept")),
         silent=None, default="removed", secs=172800, concluder="member", late="counts", outcomes=("kept", "removed", "open"),
-        cells={"clock": "window moderation_fallback_window_secs from first_held by receipt", "close": "withdrawn(target) unless fold keep_decided"},
+        cells={"clock": "window moderation_action.window_secs from first_held by receipt", "close": "withdrawn(target) unless fold keep_decided"},
         unstated=["keep_decided: a moderator's keep at once, or a strict majority of those who voted, floor two (CC 4.5.13 text)"]), "harm_report", "member")
     D["takedown_withhold"] = stated(dict(policy="takedown_notice:{basis}", kind="clock", opener="takedown", counted="member", extra=("review",),
         target_votes=False, opener_says=None, kinds=("reversed", "lift"),

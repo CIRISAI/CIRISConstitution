@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "7cb47758533cceeac4ae545ab11f063b16a30c7ead131f88103923ee1b863835",
+  "source_sha256": "41b818bb2eea4f910d35a84faed32ab7cb1bdf3caed5858070d657720ed79f15",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -7307,10 +7307,25 @@
      },
      "policy": {
       "value": {
-       "policy": "selfAct",
-       "rows": []
+       "policy": "mirror",
+       "rows": [
+        "moderation_action"
+       ]
       },
-      "source": "derived"
+      "source": "cc-table",
+      "cc_ref": [
+       "CC 4.5.13"
+      ],
+      "count": "leaf=reported => moderation_action@subject_group",
+      "cases": [
+       {
+        "when": "leaf=reported",
+        "policy": "mirror",
+        "rows": [
+         "moderation_action"
+        ]
+       }
+      ]
      },
      "widens": {
       "value": true,
@@ -7362,7 +7377,7 @@
      "undo": {
       "value": true,
       "via": "attest",
-      "policy": "selfAct",
+      "policy": "mirror",
       "source": "derived"
      },
      "confirm": {
@@ -14883,11 +14898,7 @@
         "moderation_action"
        ]
       },
-      "source": "cc-table",
-      "cc_ref": [
-       "CC 4.5.13"
-      ],
-      "count": "moderation_action@subject_group"
+      "source": "code-v61"
      },
      "widens": {
       "value": true,

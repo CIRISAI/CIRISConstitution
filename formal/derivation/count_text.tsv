@@ -19,7 +19,7 @@ ballot:moderator	*	moderator_election@subject_group	CC 4.5.13	There is **one bal
 ballot:moderator_acceptance	*	moderator_election@subject_group!result	CC 4.5.13	the winner's acceptance row binds the ballot set it was seated on
 retirement:{state}	leaf=custodian_minted	custodian_replace	CC 7.5.5	That act is the governance table's `custodian_replace` row
 retirement:{state}	*	none	CC 7.5.5	one cosigned `retirement:custodian_minted:v1` row
-moderation:{allegation_type}	*	moderation_action@subject_group	CC 4.5.13	On their absence, the community vote carries.
+content_class:{class}	leaf=reported	moderation_action@subject_group	CC 4.5.13	On their absence, the community vote carries.
 objection:{state}	*	none	CC 3.1.9.2	a signed, roster-pinned vote on a pending act
 cosign:{state}	*	none	CC 3.1.3	**Neither row is the event.**
 lineage_witness:{stage}	*	none	CC 3.4.10	Its cosignature is the `ciris.lineage_head_cosign.v1` object

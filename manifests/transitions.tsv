@@ -157,8 +157,8 @@ consent:stream:{kind}	supersede	admitted	superseded	author	selfAct	true	supersed
 consent:{kind}	attest	none	admitted	owner,self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 consent:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 consent:{kind}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-content_class:{class}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
-content_class:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
+content_class:{class}	attest	none	admitted	registered	mirror	true	withdraw	selfAct	true	derived	cc-table	derived
+content_class:{class}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	mirror	false	code-v61	code-v61	derived
 content_rating:{scheme}:{rating}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 content_rating:{scheme}:{rating}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 content_rating:{scheme}:{rating}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
@@ -317,7 +317,7 @@ model_3d:*	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	de
 model_3d:*	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 model_3d:*	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 model_3d:*	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-moderation:{allegation_type}	attest	none	admitted	moderate	mirror	true	withdraw	selfAct	true	derived	cc-table	derived
+moderation:{allegation_type}	attest	none	admitted	moderate	mirror	true	withdraw	selfAct	true	derived	code-v61	derived
 moderation:{allegation_type}	withdraw	admitted	withdrawn	author	selfAct	false	attest	mirror	false	code-v61	code-v61	derived
 moderation:{allegation_type}	recant	admitted	recanted	author	selfAct	false	attest	mirror	false	cc-table	cc-table	derived
 moderation_track_record:{community_key_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived

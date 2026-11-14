@@ -11,9 +11,9 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 78,
+  "total": 77,
   "by_status": {
-   "runnable": 61,
+   "runnable": 60,
    "stated": 14,
    "wording-only": 3
   },
@@ -21,7 +21,7 @@
    "agent": 1,
    "edge": 1,
    "persist": 71,
-   "tooling": 5
+   "tooling": 4
   },
   "by_kind": {
    "audience": 4,
@@ -33,12 +33,12 @@
    "lifecycle": 9,
    "signer": 29,
    "subject": 1,
-   "window": 3,
+   "window": 2,
    "wording-only": 3
   },
   "order_dependent_shipped": 1,
-  "conflict_rows_with_implementer_carrier": 56,
-  "conflict_rows_mapped": 56,
+  "conflict_rows_with_implementer_carrier": 55,
+  "conflict_rows_mapped": 55,
   "source_1_cells_with_disagree_cite": 0,
   "source_1_conflict_rows_naming_model_families": 33,
   "source_1_rows_whose_entries_name_another_family": [],
@@ -5574,70 +5574,6 @@
    },
    "order_dependent_shipped": false,
    "note": "stays: no fold or reaction word reads a row that names this one with a stated outcome, so the close cannot skip a reversed or lifted notice (a named limit in CC 8.3.4)"
-  },
-  {
-   "id": "tooling/moderation:{allegation_type}/reaction on close(window)",
-   "implementer": "tooling",
-   "family": "moderation:{allegation_type}",
-   "where": "reaction on close(window)",
-   "kind": "window",
-   "status": "runnable",
-   "sources": [
-    "C391"
-   ],
-   "claims": [],
-   "text": {
-    "value": "no window",
-    "cc_ref": "CC 4.5.13",
-    "quote": "A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room.",
-    "param": {
-     "family": "moderation:{allegation_type}",
-     "owed": "report_window",
-     "window_secs": null
-    }
-   },
-   "shipped": {
-    "value": "[harm_report] on close(window) unless fold(keep_decided): read withdrawn",
-    "source": "manifests/reactions.json moderation:{allegation_type} [harm_report] (CC 8.10 card; formal/derivation/reaction_text.tsv)",
-    "census_cell": null,
-    "file": "manifests/reactions.json",
-    "file_sha256": "db07023154ee2d6c5ae2cd54a280efcea1b2399bca98c5408760ce1894d21c4a",
-    "param": {
-     "family": "moderation:{allegation_type}",
-     "owed": "report_window",
-     "window_secs": 172800
-    }
-   },
-   "case": {
-    "rows": [
-     {
-      "id": "m",
-      "kind": "fam",
-      "signer": "A",
-      "names": [],
-      "family": "moderation:{allegation_type}",
-      "seen_at": 0
-     }
-    ],
-    "ask": {
-     "answer": "owed",
-     "now": 172801
-    }
-   },
-   "expect_shipped": "read withdrawn m",
-   "expect_kernel": "nothing",
-   "orders": {
-    "run": 1,
-    "of": 1,
-    "kernel": [
-     "nothing"
-    ],
-    "shipped_judged_on_arrival": [
-     "read withdrawn m"
-    ]
-   },
-   "order_dependent_shipped": false,
-   "note": "stays: the text names no family for a moderation action raised in the room, so the window has no row to move to (a question for the owner, and a named limit in CC 8.3.4)"
   },
   {
    "id": "persist/consent:community_trust/fold",

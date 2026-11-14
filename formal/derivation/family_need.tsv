@@ -62,7 +62,7 @@ consent:scope:{kind}	nothing shown	0	0	-	reference	B058	1	-
 consent:state:{stance}	read by a rule	4	1	fold change expiry react	reference	B059	1	capacity:relay_delivery.guard consent:decay:{stage}.reaction consent:deletion_sla:{days}.reaction observation:access_assumption.guard
 consent:stream:{kind}	acts of its own	0	0	expiry	reference	B060	1	-
 consent:{kind}	acts of its own	0	0	react	reference	B061	1	-
-content_class:{class}	read by a site only	0	3	-	-	B062	1	-
+content_class:{class}	read by a site only	0	3	count clock react land while	-	B062	1	-
 content_rating:{scheme}:{rating}	nothing shown	0	0	-	-	B003	5	-
 corpus_health:n_eff_measurable	nothing shown	0	0	-	-	B010	2	-
 cosign:{state}	read by a site only	0	2	fold guard clock react land	reference	B063	1	-
@@ -125,7 +125,7 @@ membership:{stage}	read by a rule	3	1	fold count guard change expiry react land 
 mesh_config:{key}	acts of its own	0	0	fold expiry	-	B096	1	-
 method:{approach_id}:{substrate_rung}	nothing shown	0	0	-	-	B003	5	-
 model_3d:*	nothing shown	0	0	-	-	B002	10	-
-moderation:{allegation_type}	read by a rule	1	0	fold count clock react land while	-	B097	1	slashing:{outcome}.guard
+moderation:{allegation_type}	read by a rule	1	0	fold	-	B097	1	slashing:{outcome}.guard
 moderation_track_record:{community_key_id}	acts of its own	0	0	fold	-	B098	1	-
 multilateral_participation:{forum}:{kind}	nothing shown	0	0	-	-	B003	5	-
 need:{domain}:{kind}	nothing shown	0	0	-	-	B099	1	-

@@ -4,12 +4,12 @@
   "cc_section": "4.5.13",
   "reading": "an entry is an expiry rule, a named clock, a landing or a reaction of one family; `emit` produces a row that enters by the door, every other effect is a verdict a node recomputes from the rows it holds and the instant",
   "durations": "a duration is a name: a row of constitution/constants.tsv, POLICY_ROW.window_secs of the governance policy table, or HOLDER.member of a signed record",
-  "entries": 126,
+  "entries": 123,
   "kinds": {
    "expiry": 22,
-   "clock": 18,
-   "land": 18,
-   "while": 10,
+   "clock": 17,
+   "land": 17,
+   "while": 9,
    "react": 58
   },
   "emits": 25,
@@ -25,14 +25,14 @@
     "author": 3,
     "holder": 1,
     "identity:substrate_persist": 1,
-    "local": 11,
+    "local": 10,
     "member": 1,
     "winner": 1
    },
    "by_late": {
     "closed": 4,
     "counts": 5,
-    "unstated": 9
+    "unstated": 8
    },
    "clocks_with_no_landing": [
     "cosign:{state} [pending] age",
@@ -43,7 +43,7 @@
    "rule": "a while entry says what the opening row is while its window is open: `in_force` binds each node from its own first holding, `pending` binds nobody until the window lands or its fallback carries; absent: no sentence states it",
    "by_open": {
     "in_force": 5,
-    "pending": 5
+    "pending": 4
    }
   },
   "one_emitter": {
@@ -881,13 +881,13 @@
    ]
   },
   {
-   "family": "moderation:{allegation_type}",
+   "family": "content_class:{class}",
    "leaves": [
-    "harm_report"
+    "reported"
    ],
    "kind": "clock",
    "name": "window",
-   "dur": "moderation_fallback_window_secs",
+   "dur": "moderation_action.window_secs",
    "from": "first_held",
    "by": "receipt",
    "cc_ref": [
@@ -895,9 +895,9 @@
    ]
   },
   {
-   "family": "moderation:{allegation_type}",
+   "family": "content_class:{class}",
    "leaves": [
-    "harm_report"
+    "reported"
    ],
    "kind": "react",
    "on": [
@@ -1494,17 +1494,6 @@
    ]
   },
   {
-   "family": "moderation:{allegation_type}",
-   "kind": "clock",
-   "name": "window",
-   "dur": "moderation_action.window_secs",
-   "from": "first_held",
-   "by": "receipt",
-   "cc_ref": [
-    "CC 4.5.13"
-   ]
-  },
-  {
    "family": "ballot:moderator",
    "kind": "clock",
    "name": "window",
@@ -2053,19 +2042,10 @@
    ]
   },
   {
-   "family": "moderation:{allegation_type}",
+   "family": "content_class:{class}",
    "leaves": [
-    "harm_report"
+    "reported"
    ],
-   "kind": "land",
-   "name": "window",
-   "concluder": "local",
-   "cc_ref": [
-    "CC 4.5.13"
-   ]
-  },
-  {
-   "family": "moderation:{allegation_type}",
    "kind": "land",
    "name": "window",
    "concluder": "local",
@@ -2252,18 +2232,9 @@
    ]
   },
   {
-   "family": "moderation:{allegation_type}",
-   "kind": "while",
-   "name": "window",
-   "open": "pending",
-   "cc_ref": [
-    "CC 4.5.13"
-   ]
-  },
-  {
-   "family": "moderation:{allegation_type}",
+   "family": "content_class:{class}",
    "leaves": [
-    "harm_report"
+    "reported"
    ],
    "kind": "while",
    "name": "window",

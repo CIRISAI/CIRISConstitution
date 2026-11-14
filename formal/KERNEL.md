@@ -296,7 +296,7 @@ cell that quotes its sentence:
 | the joiner's own yes as a voice of the floor | without it an invitation by one member of two never lands: the policy row's `target_voice` cell |
 | the threshold as the room's declared protocol | a removal is cosigned under the protocol the room's founding row declares, read from that row |
 
-**measured**: all thirteen answerable windows state their concluder, and the invitation's expiry does. The
+**measured**: all twelve answerable windows state their concluder, and the invitation's expiry does. The
 decider closes an agent's objection window at retirement by the `decided` row, which names the objection
 (CC 7.5.5). **run**: a `decided` row that leaves out an objection the agent made concludes nothing, and the
 agent's own landing closes nothing. Where the text has
@@ -311,7 +311,7 @@ cosigned act and an adjudication read their count from the protocol the group's 
 Parameters the text states and no rule table has a column for are rows of `formal/derivation/door_text.tsv`,
 each with its quote. `doors.tsv` lists 16 things the tables do not state, and three stated and not run. CC 8.3.4 names both classes as limits.
 
-Five of the eighteen clocks are not doors: one freshness check, two of the node's own storage and liveness, and
+Five of the seventeen clocks are not doors: one freshness check, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
 
 **Two notions of time.** A row's own stated end, read from the row against now, and a window with a landing.
@@ -335,8 +335,8 @@ most one lease against that person's other devices.
 
 Every row family is one of four shapes: a **consent**, a **door**, a **claim** or **content**. A roster is a
 consent given by a count, and an acknowledgement is a claim. **measured**
-(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 184 families, 111 are
-claims, 24 content, 23 doors, 16 consents and 7 both a consent and a door. Three fit none.
+(`formal/derivation/family_shapes.tsv`, `formal/causal_kernel/check_shapes.py`): of the 184 families, 110 are
+claims, 24 content, 24 doors, 16 consents and 7 both a consent and a door. Three fit none.
 
 The four are labels over two mechanisms. Removing the shapes in order, three orders leave the same two:
 consent and the door. Content is carried by consent, since its audience is the holders of a roster and its
@@ -606,14 +606,14 @@ that the ending row has not seen from counting.
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
-| What each implementer's shipped behaviour does that the text does not: 61 cases the kernel runs, each a test to edit, 14 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
+| What each implementer's shipped behaviour does that the text does not: 60 cases the kernel runs, each a test to edit, 14 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
 | Each section that requires an effect that cannot be undone without receipts says so (CC 4.5.3 needs one clause) | text | Part 4 |
 | `settled` written in `tools/kx_prelude.kx` | table data | `tools/kx_prelude.kx` |
 | Whether a checkpoint is a registered family or a local row never served | wire | agreed with the store |
 
 **The divergence list is a list of tests.** **run** (`tools/check_divergences.py`): each difference between shipped
 behaviour and the text is a case of rows and one named answer, run under the text's cell and under the shipped
-cell. The two verdicts differ for each of 61, and the kernel's verdict is the same in every arrival order. The
+cell. The two verdicts differ for each of 60, and the kernel's verdict is the same in every arrival order. The
 verdict under the text's cell is what an implementer's test asserts after the change. Fourteen cannot be run,
 each with its reason, and that count may only fall: five are matters of the wire, three compare a signed instant the
 kernel does not read, and the others are storage, an audience narrower than a
