@@ -1,6 +1,6 @@
 {
-  "_note": "Deterministic dual-ID codebook for the CIRIS Constitution (CC). Both maps are 1:1. decimal_id and semantic_id are deterministic functions of the unified corpus (graph_unified.json unified_pagerank conscious-mesh weights + the fixed Part map); same corpus => byte-identical codebook. title->id is NOT codebook-free: it depends on the measured importance distribution, by design.",
-  "n_concepts": 428,
+  "_note": "The dual-ID codebook of the CIRIS Constitution (CC): decimal_id <-> key <-> semantic_id, one to one, and legacy references -> decimal_id. Maintained data: a section added to constitution/toc.tsv is added here under the key cc:<decimal>, and tools/check_claims.py fails when the two disagree.",
+  "n_concepts": 430,
   "decimal_to_key": {
     "2.6": "0",
     "2.6.9": "0.1",
@@ -429,7 +429,9 @@
     "2.7.6": "cc:2.7.6",
     "2.7.7": "cc:2.7.7",
     "2.7.8": "cc:2.7.8",
-    "2.7.9": "cc:2.7.9"
+    "2.7.9": "cc:2.7.9",
+    "2.6.1.8": "cc:2.6.1.8",
+    "8.10": "cc:8.10"
   },
   "key_to_decimal": {
     "0": "2.6",
@@ -859,7 +861,9 @@
     "cc:2.7.6": "2.7.6",
     "cc:2.7.7": "2.7.7",
     "cc:2.7.8": "2.7.8",
-    "cc:2.7.9": "2.7.9"
+    "cc:2.7.9": "2.7.9",
+    "cc:2.6.1.8": "2.6.1.8",
+    "cc:8.10": "8.10"
   },
   "semantic_to_key": {
     "foreword": "0",
@@ -998,12 +1002,12 @@
     "external": "16.4",
     "update": "17",
     "interoperability": "18",
-    "edge": "18.0",
+    "edge": "18.2",
     "credentials": "18.1",
     "evidence_refs": "18.1.1",
     "emit": "18.1.2",
     "profile": "18.1.3",
-    "registry-tracked": "18.2",
+    "registry-tracked": "18.0",
     "canonicalization-boundary": "19.0",
     "witness-wholenesswitness": "19.1",
     "trust": "19.2",
@@ -1289,7 +1293,9 @@
     "kernel-shapes": "cc:2.7.6",
     "kernel-conflict": "cc:2.7.7",
     "kernel-roster": "cc:2.7.8",
-    "kernel-limits": "cc:2.7.9"
+    "kernel-limits": "cc:2.7.9",
+    "signed-object-cose": "cc:2.6.1.8",
+    "family-cards": "cc:8.10"
   },
   "key_to_semantic": {
     "0": "foreword",
@@ -1429,12 +1435,12 @@
     "16.4": "external",
     "17": "update",
     "18": "interoperability",
-    "18.0": "edge",
+    "18.0": "registry-tracked",
     "18.1": "credentials",
     "18.1.1": "evidence_refs",
     "18.1.2": "emit",
     "18.1.3": "profile",
-    "18.2": "registry-tracked",
+    "18.2": "edge",
     "19": "substrate",
     "19.0": "canonicalization-boundary",
     "19.1": "witness-wholenesswitness",
@@ -1719,7 +1725,9 @@
     "cc:2.7.6": "kernel-shapes",
     "cc:2.7.7": "kernel-conflict",
     "cc:2.7.8": "kernel-roster",
-    "cc:2.7.9": "kernel-limits"
+    "cc:2.7.9": "kernel-limits",
+    "cc:2.6.1.8": "signed-object-cose",
+    "cc:8.10": "family-cards"
   },
   "legacy_to_decimal": {
     "§0": "2.6",
@@ -2123,6 +2131,8 @@
     "CC 8.8.9": "8.8.9",
     "CC 8.8.10": "8.8.10",
     "CC 8.9": "8.9",
-    "CC 3.4.14": "3.4.14"
+    "CC 3.4.14": "3.4.14",
+    "CC 2.6.1.8": "2.6.1.8",
+    "CC 8.10": "8.10"
   }
 }

@@ -1,6 +1,6 @@
 # Stewardship
 
-Stewarded by **Eric Moore**, founder.
+Stewarded by **Eric Moore**.
 
 This constitution carries no ratification date and no expiry. It is perpetually incomplete — it
 simply *is*: a living document, never finished and never lapsed.

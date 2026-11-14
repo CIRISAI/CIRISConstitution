@@ -10,8 +10,8 @@ Sources, read mechanically:
      disagree (counted), or a standing text_conflicts row naming the family (each must be covered by an entry);
   2. every text_conflicts row with still_there = yes whose carrier is an implementer (the store, the transport, the
      agent, the server, the client, verify, the claims register, or a tool or a text-side table of this repository);
-  3. handoff/implementers/*.tsv when present (seven_rankings_shipped.tsv: shipped claims that rank; models_vs_text.tsv
-     is about this repository's own models and is counted, not entered);
+  3. formal/derivation/seven_rankings_shipped.tsv (shipped claims that rank) and formal/derivation/models_vs_text.tsv
+     (this repository's own models against the text: counted, not entered);
   4. every claim those rows name, resolved against constitution/claims.tsv and attached to its entry.
 The cases themselves are tools/divergence_cases.py. Every runnable case is run by tools/divergence_oracle.py over
 formal/causal_kernel: once with the text's parameter, once with the shipped one, by the set and in every arrival order
@@ -42,7 +42,8 @@ CONFLICTS = P("formal", "derivation", "text_conflicts.tsv")
 CENSUS = P("formal", "derivation", "census_v61.tsv")
 CLAIMS = P("constitution", "claims.tsv")
 MODEL = P("manifests", "family_model.json")
-HANDOFF = P("handoff", "implementers")
+SEVEN = P("formal", "derivation", "seven_rankings_shipped.tsv")
+MODELS_VS_TEXT = P("formal", "derivation", "models_vs_text.tsv")
 RETURNS = P("formal", "derivation", "divergence_returns.tsv")
 RETURN_COLS = ["id", "implementer", "date", "disputes", "counter_rows", "counter_ask", "their_verdict", "reason", "outcome", "changed"]
 DISPUTES = ("case", "expect_kernel", "sentence")
@@ -289,8 +290,8 @@ def build():
         for s in r["sources"]: fams_of.setdefault(s, set()).add(r["family"])
     # a conflict row naming model families whose entries name none of them (an entry on a family the row does not name)
     off_family = sorted(c for c, fs in named.items() if c in fams_of and not (set(fs) & fams_of[c]))
-    seven = tsv(os.path.join(HANDOFF, "seven_rankings_shipped.tsv")) if os.path.isdir(HANDOFF) else []
-    models = tsv(os.path.join(HANDOFF, "models_vs_text.tsv")) if os.path.isdir(HANDOFF) else []
+    seven = tsv(SEVEN)
+    models = tsv(MODELS_VS_TEXT)
     counts = lambda key: {k: sum(1 for r in out if r[key] == k) for k in sorted({r[key] for r in out})}
     meta = {
         "contract": CONTRACT,

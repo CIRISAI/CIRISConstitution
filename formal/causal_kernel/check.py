@@ -601,7 +601,7 @@ def main():
                      "matches_reasoned", "needed", "adversary", "adversary_gain"])
         for t in table:
             wr.writerow([t[c] for c in cols])
-    with open(os.path.join(os.environ.get("HANDOFF_TMP", "/tmp"), "results.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(os.environ.get("GATES_TMP", "/tmp"), "results.json"), "w", encoding="utf-8") as f:
         json.dump(res, f, indent=1, default=sorted)
     say("RESULT: %s" % ("ok" if ok else "FAILED"))
     return 0 if ok else 1

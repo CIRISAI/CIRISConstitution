@@ -2,7 +2,7 @@
 ; tools/build_cc_signed_object.py from
 ; constitution/signed_object.tsv; do not edit. RFC 8610 CDDL, JSON
 ; profile (Appendix E).
-; Typed from CIRISPersist 7894b39c src/federation/envelope.rs.
+; Typed from CIRISPersist f74d1b2a src/federation/envelope.rs.
 ; The signing input is JCS(attestation-row.attestation_envelope), RFC
 ; 8785, and nothing else.
 
@@ -43,7 +43,7 @@ envelope = {
   asserted_at: rfc3339-ms,  ; REQUIRED; default stamped at the mint
   ? expires_at: rfc3339-ms,  ; OPTIONAL; default absent (no expiry)
   dimension: tstr,  ; REQUIRED on every row type
-  ; REQUIRED on supersedes, withdraws, recants
+  ; REQUIRED on supersedes, withdraws, recants, otherwise OPTIONAL
   ? references_attestation_id: uuid,
   ; REQUIRED on consent:state:granted and on delegates_to; array
   ; kind: set
@@ -80,7 +80,8 @@ envelope = {
   ; OPTIONAL (some families require it); default absent; array kind:
   ; sequence
   ? evidence_refs: [* tstr],
-  ? valid_until: rfc3339-ms,  ; OPTIONAL; default absent
+  ; REQUIRED on session:*, otherwise OPTIONAL; default absent
+  ? valid_until: rfc3339-ms,
   ; OPTIONAL; default direct
   ? epistemic_mode: "direct" / "crypto" / "hearsay" / "derivative"
     / "appeal",

@@ -5,11 +5,11 @@ tell the two apart, the named answer to ask, and the parameter each side gives t
 tools/build_divergences.py, which runs every case through tools/divergence_oracle.py (the kernel) and writes
 manifests/divergences.json. A case is data: rows in the kernel's row form.
 
-Each entry names its sources (text_conflicts rows, claims, handoff rows). `shipped.census` names the vendored census
-cell (formal/derivation/census_v61.tsv: prefix and column) whose words the shipped value is; the build reads that cell
-and the check holds that the words recorded here still stand in it, so a re-vendored census that has moved makes the
-entry stale and it is re-read or dropped. `status` is `runnable` unless the entry says `stated` (with `reason` and a
-`gap` group) or `wording-only`.
+Each entry names its sources (text_conflicts rows, claims, rows of formal/derivation/seven_rankings_shipped.tsv).
+`shipped.census` names the vendored census cell (formal/derivation/census_v61.tsv: prefix and column) whose words
+the shipped value is; the build reads that cell and the check holds that the words recorded here still stand in it,
+so a re-vendored census that has moved makes the entry stale and it is re-read or dropped.
+`status` is `runnable` unless the entry says `stated` (with `reason` and a `gap` group) or `wording-only`.
 """
 import os
 import sys

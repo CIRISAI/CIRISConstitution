@@ -81,22 +81,22 @@ authoring grammars and the policy table. **measured** (`tools/kx_check.py`, on t
 
 | Grammar | Translated in full | Translated with a word dropped |
 |---|---|---|
-| guards | 56 | 2 |
+| guards | 57 | 2 |
 | folds | 185 | 6 |
 | changes | 45 | 17 |
-| reactions | 93 | 30 |
-| policy text cells | 47 | 8 |
+| reactions | 93 | 29 |
+| policy text cells | 48 | 8 |
 
 Every translation agrees with a reference reading on generated row sets in every arrival order. The policy
 rows agree with the policy table's own vectors, and each row's count of persons and voices agrees with a
 reference reading. Four of the five grammars had a parser and no evaluator, so for those the reference
 reading is this work's own and agreement shows the translation matches that reading, not the text. A cell that
 uses a word the translation does not carry is not counted as translated. The dropped words are listed as
-data, and each word given a meaning has a misreading the check must catch. **measured**: 48 cells keep a
+data, and each word given a meaning has a misreading the check must catch. **measured**: 47 cells keep a
 dropped word, each listed with the sentence it needs. A count is over the members at the head its row names:
 no fold cell reads `@decision`, `@count` or `@prior`, and each reads `@named` (**proved**:
-`counted_over_named_head`). A reaction calls a fold by the state its test names. Of eleven folds the reactions
-call, two are defined. **open**: nine.
+`counted_over_named_head`). A reaction calls a fold by the state its test names. Of ten folds the reactions
+call, two are defined. **open**: eight.
 
 The check holds these counts, and each may only fall (`tools/kx_maxima.tsv`). For an order it holds the total
 and the count across signers. The count of one signer's own rows is shown and not held, since a cell moving
@@ -111,10 +111,10 @@ into it from the count across signers is the intended movement.
 | a cell compares the signed instants of two rows | 10 |
 | a cell reads arrival outside a clock | 1 |
 | floating point in a cell | 9 |
-| a fold a reaction calls and no cell defines | 9 |
+| a fold a reaction calls and no cell defines | 8 |
 | a refusal on a clause that reads another row | 0 |
 | a count over the set its own outcome changes | 0 |
-| a cell with a dropped word | 48 |
+| a cell with a dropped word | 47 |
 
 One voice may order its own rows. The fold default (CC 3.5.1) evaluates each signer's chain on its own: between
 two acts of one kind by one signer on one named row, the later signed instant wins and the lower row id breaks
@@ -184,13 +184,13 @@ delegate only with the delegate's own signature (CC 4.4.3.4.3), and a custodian 
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
 seating are not settled. **measured** (`manifests/family_model.json`, `formal/derivation/confers_text.tsv`): what a family confers is
-stated for 161 of 184 families. 134 claim and content families take one default, that a claim seats no one
-(CC 3.4.5.1). Twenty consents take their seat from `family_shapes.tsv`, and five families have a sentence of
-their own. **open**: 23 families confer nothing that a sentence states: 19 doors, three consents the shape
+stated for 161 of 184 families. 135 claim and content families take one default, that a claim seats no one
+(CC 3.4.5.1). Twenty-one consents take their seat from `family_shapes.tsv`, and five families have a sentence of
+their own. **open**: 23 families confer nothing that a sentence states: 20 doors, two consents the shape
 table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 155
 families; 29 have a segment that names another row and no word yet says so. Which answers read a family's
 rows is filled for all 184 from the expression language: every family is read by **state** and **stands**
-through the default fold, a default checked for none of the 83 that take it, and 41 are also read by another
+through the default fold, a default checked for none of the 83 that take it, and 42 are also read by another
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
 
 **may.** The door, the control a person is offered and the gate on serving a row are one answer
@@ -221,8 +221,8 @@ checked for none of the 147. The copy rule is a row of that table.
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
 the close. A window names its opener and the acknowledgement by which the concluding party first held it. Where the
 outcome binds others, the concluder signs it as a landing row naming that acknowledgement and its own head.
-Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 19
-clock entries have this shape, 16 of them counted from receipt. The other 21 are a row stating its own end,
+Where it binds only the reader, each node reads it on its own clock and signs nothing. **measured**: 18
+clock entries have this shape, 15 of them counted from receipt. The other 22 are a row stating its own end,
 read from the row alone against now. `by receipt` on a clock is the concluder's own first holding of the opener.
 **measured**: five clocks time a window from a signed instant and judge it at receipt, which is neither notion
 of time, so those five stay without a meaning. **open**.
@@ -365,7 +365,7 @@ able to name several; the store's shape is an optional list of further heads bes
 
 **One mechanism, five instances.** A person's keys, a voice's room keys, a room, the accord and an
 infrastructure community are this one roster with parameters read from the policy table and the text. **run**
-(`formal/causal_kernel/check_rosters.py`): 77 properties that each instance's own model or text claims, six
+(`formal/causal_kernel/check_rosters.py`): 90 properties that each instance's own model or text claims, six
 of a key's revocation, one of a member's leaving and six of a community's duty seats, in every arrival order
 to a cap, each with a deliberate break that is caught. Every seat the duty holders place over a room follows
 their count, whatever its scope; only membership is the roster's own seat. A version does not count a key whose own leaving is in its past, whatever head it
@@ -469,7 +469,7 @@ What a private room does not give, each marked as the check marks it:
 ## 8a. Attacked
 
 `formal/causal_kernel/check_attacks.py` runs thirty-four attacks, thirty-three of them drawn from the published
-failures of comparable systems, as 126 scenarios in 116,943 arrival orders: every order of a scenario of up to
+failures of comparable systems, as 126 scenarios in 116,211 arrival orders: every order of a scenario of up to
 seven rows, and a fixed sample of a thousand above that. **run**: thirteen gain the attacker nothing, none gains
 what this page does not concede, fifteen are the limits below, and six cannot be expressed without a second
 implementation, a byte form, a storage model or a request protocol. The class each attack must fall in was
@@ -539,24 +539,24 @@ that the ending row has not seen from counting.
 
 | Item | Kind | Where |
 |---|---|---|
-| Which rows seat which key in which role: what 19 doors and 4 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
+| Which rows seat which key in which role: what 20 doors and 3 other families confer, 29 name segments that point at another row, the 23 roles as one walk | table data | `manifests/family_model.json` |
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
-| 27 things `doors.tsv` lists as stated by no table, and three stated and not run; the policy table's own decision function admits on one of one in a room of one, which no vector reaches | table data | `formal/causal_kernel/doors.tsv`, `tools/build_governance_policy.py` |
-| 48 cells with a word the expression language does not carry, and nine folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
+| 27 things `doors.tsv` lists as stated by no table, and three stated and not run | table data | `formal/causal_kernel/doors.tsv` |
+| 47 cells with a word the expression language does not carry, and eight folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
-| What each implementer's shipped behaviour does that the text does not: 65 cases the kernel runs, each a test to edit, 13 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
+| What each implementer's shipped behaviour does that the text does not: 65 cases the kernel runs, each a test to edit, 16 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
 
 **The divergence list is a list of tests.** **run** (`tools/check_divergences.py`): each difference between shipped
 behaviour and the text is a case of rows and one named answer, run under the text's cell and under the shipped
 cell. The two verdicts differ for each of 65, and the kernel's verdict is the same in every arrival order. The
-verdict under the text's cell is what an implementer's test asserts after the change. Thirteen cannot be run,
-each with its reason, and that count may only fall: six are matters of the wire, and the others are storage, a
-census secret that is not a row, an audience narrower than a row, a stalled roster and an agent's own
-recognition. Fifteen are a claim's wording and no behaviour. An implementer that holds a verdict wrong returns
+verdict under the text's cell is what an implementer's test asserts after the change. Sixteen cannot be run,
+each with its reason, and that count may only fall: six are matters of the wire, three compare a signed instant the
+kernel does not read, and the others are storage, a census secret that is not a row, an audience narrower than a
+row, a stalled roster, a value no build ships, a clock and an agent's own recognition. Five differ in wording only and in no behaviour. An implementer that holds a verdict wrong returns
 the entry with its own case (`formal/derivation/divergence_returns.tsv`). It is then disputed, with a conflict
 recorded against this repository, until the text or the model is corrected or the entry stands. An empty list
 is what agreement means.

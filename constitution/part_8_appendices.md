@@ -155,7 +155,7 @@ A `not-translated` verdict is not a failure — it is a precise statement about 
 
 ## 8.3 `concerns` — Concerns + acknowledged gaps
 
-This section records the known gaps, covering cryptography, distributed systems, standards architecture, adversarial red-team, and application development. It records what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap. How strongly to read any evidence row backing a claim in this register is graded at [CC 8.6.1](#8.6.1).
+This section records the known gaps, covering cryptography, distributed systems, standards architecture, adversarial red-team, and application development. It records what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap. How strongly to read any evidence row backing a claim in this register is graded at [CC 8.6.1](#8.6.1). The places where a shipped implementation differs from this text are published with this text as data, each as a case of rows and the verdict the implementer's test asserts under this text.
 
 ### 8.3.1 `acknowledged` — Acknowledged risks (named as bets)
 
@@ -1598,7 +1598,7 @@ jobs:
 
 ## 8.9 `stubs` — Open stub registry
 
-Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 0.** Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart. An *open stub* is a piece the text references and does not define, counted here. A *staged row* is a defined rule whose evidence a named ticket carries, counted in the register. An *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)). A door the text names and declares undefined by design is none of the three and is not a stub. The path out of stewardship of [CC 1.13.2](part_1_foundation.md#1.13.2), an act of the HUMANITY_ACCORD under the first-contact discipline when it comes, is recorded here as named and undefined, and counts in no column.
+Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 5**, the five tracked boundary profiles of [CC 8.4.3](#8.4.3), each committed there as a disposition whose detailed profile is written as it lands. Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart. An *open stub* is a piece the text references and does not define, counted here. A *staged row* is a defined rule whose evidence a named ticket carries, counted in the register. An *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)). A door the text names and declares undefined by design is none of the three and is not a stub. The path out of stewardship of [CC 1.13.2](part_1_foundation.md#1.13.2), an act of the HUMANITY_ACCORD under the first-contact discipline when it comes, is recorded here as named and undefined, and counts in no column.
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.5](#8.8.5)–[CC 8.8.10](#8.8.10).

@@ -205,7 +205,7 @@ def run_base(say):
                        ("causal_kernel/check_cut.py", ["formal/causal_kernel/check_cut.py"]),
                        ("kernel_lib/kernel_lib_check.py --check", ["formal/kernel_lib/kernel_lib_check.py", "--check"])):
         t = time.time()
-        p = subprocess.run([sys.executable, "-I"] + cmd, cwd=ROOT, capture_output=True, text=True, env=dict(os.environ, HANDOFF_TMP=os.environ.get("HANDOFF_TMP", "/tmp")))
+        p = subprocess.run([sys.executable, "-I"] + cmd, cwd=ROOT, capture_output=True, text=True, env=dict(os.environ, GATES_TMP=os.environ.get("GATES_TMP", "/tmp")))
         tail = [l for l in p.stdout.strip().splitlines() if l.strip()][-1] if p.stdout.strip() else ""
         say("   %-42s exit %d in %.0fs  %s" % (label, p.returncode, time.time() - t, tail[:70]))
         ok &= p.returncode == 0

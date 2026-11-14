@@ -53,9 +53,9 @@ pointing elsewhere is a row of its own, so the table counts repeats.
 The cut-candidates table gives `file`, `line_start`, `line_end`, `kind` (`rationale`,
 `restated_block`, `informative`, `example`, `duplicate_table`, `history`), `bytes` and a note.
 
-Headline numbers: 4,248 statements (Part 3 1,525, Part 4 956, Part 5 640, Part 2 601, Part 6 226,
-Part 1 153, Part 7 147); by scope family 1,864, kernel 1,246, mechanism 727, foundation 211,
-stewardship 200; by role states 3,277, restates 823, applies 83, exception 65. 206 cut-candidate
+Headline numbers: 4,330 statements (Part 3 1,520, Part 4 955, Part 2 678, Part 5 644, Part 6 226,
+Part 1 154, Part 7 153); by scope family 1,858, kernel 1,327, mechanism 727, foundation 217,
+stewardship 201; by role states 3,335, restates 686, applies 244, exception 65. 206 cut-candidate
 blocks, about 260 KB.
 
 Caveats: twelve readers each took one line range, so a rule stated in two ranges may carry two
@@ -98,7 +98,7 @@ sentences that had sat inside table cells (whom a targeted row may name, what a 
 do, the oversight-mode shift, cosignatures beside the row) are short titled paragraphs under the
 tables, and the rules they belong to cite them there.
 
-A section with no sentence over forty words is registered as it stands, without a rewrite: `handoff/register.py` proposes, for each inventory statement of the section, the sentence or table cell closest to its gist, and every proposal scoring under 0.6 is read by hand before the rows are appended. 174 sections were registered this way; three were held back because the inventory places a statement in them that their text does not carry (CC 2.6.5, 4.5.9.4, 4.5.12.6).
+A section with no sentence over forty words is registered as it stands, without a rewrite: a scoring pass proposes, for each inventory statement of the section, the sentence or table cell closest to its gist, and every proposal scoring under 0.6 is read by hand before the rows are appended. 174 sections were registered this way; three were held back because the inventory places a statement in them that their text does not carry (CC 2.6.5, 4.5.9.4, 4.5.12.6).
 
 ## Compliance wire forms
 
@@ -137,6 +137,11 @@ who is protected, who decides or what is promised; `still_there` says whether a 
 wording in the Parts when the table was made; `carrier` names the model, manifest or check
 that could hold the settled rule and `witness` what would be added to it; `resolution` is filled when a row is settled, and says whether the settlement was derived from the text or ruled. Both are review
 artefacts, one reader's classification, and inputs to decisions, not findings of fact.
+
+Two further tables feed the divergence manifest (`tools/build_divergences.py`).
+`seven_rankings_shipped.tsv` lists shipped claims and checks that rank rows, each with what the
+text asks instead; the divergence cases cite its items. `models_vs_text.tsv` sets each rule a
+model of this repository asserts beside the text it models; it is counted, not entered.
 
 ## Cells sourced from the text
 

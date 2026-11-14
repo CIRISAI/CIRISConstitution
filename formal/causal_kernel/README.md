@@ -85,7 +85,7 @@ limits and marks each as run or as stated from outside the model.
 **One roster, five instances** (`roster.py`, `check_rosters.py`, `roster_expected.tsv`). A person's keys, a
 voice's room keys, a room, the accord and an infrastructure community run on one mechanism: a lineage of counted
 versions, each naming the head it extends. The instances differ by parameters read from the policy table and the
-text. The check runs 77 properties that each instance's own model or text claims, over every arrival order up to
+text. The check runs 90 properties that each instance's own model or text claims, over every arrival order up to
 a cap of 400, each with a deliberate break that must be caught. Nothing here is proved in Lean. The plain
 mechanism was wrong in four places, and a stated parameter restores each:
 

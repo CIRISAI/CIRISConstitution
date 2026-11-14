@@ -250,7 +250,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.8	identity-set-2	`identity_type` as a set — single-key role cohabitation	§11.9	0.00118	189	0.14	IV	ceg	constitution
 4.5.8.1	cohabitation	Cohabitation discipline for constitutional + substrate roles	§11.9.3	0.00101	217	0.12	IV	ceg	constitution
 4.5.8.2	amendment-what	The role set is the representation	§11.9.1	0.00092	254	0.11	IV	ceg	constitution
-4.5.8.3	settled	Settled in CIRISAgent, carried as-is	§11.9.2	0.00092	255	0.11	IV	ceg	constitution
+4.5.8.3	settled	The agent-side stance	§11.9.2	0.00092	255	0.11	IV	ceg	constitution
 4.5.8.4	documents-what-6	What this documents	§11.9.4	0.00092	256	0.11	IV	ceg	constitution
 4.5.9	registry-geographic	Geographic-community privacy invariant	§11.8	0.00111	201	0.13	IV	ceg	constitution
 4.5.9.1	location-joining	Joining is opt-in — substrate does NOT solicit location	§11.8.3	0.00194	122	0.23	IV	ceg	constitution
@@ -392,7 +392,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 8.6.4	namespace-sibling	Sibling MISSIONs (the namespace stewards)	§16.3	0.00092	268	0.11	APP	ceg	register
 8.7	enacting-ethics	Introduction: Enacting Ethics through Narrative	Accord 3.introduction-enacting-ethics-through-nar	0.00092	338	0.11	APP	accord	charter
 8.7.1	case-study	Case Study 1: MCAS and the High Cost of Ignoring WBD	Accord 3.case-study-1-mcas-and-the-high-cost-of-i	0.00092	330	0.11	APP	accord	charter
-8.7.2	case-study-case	Case Study 2: The Automated Triage System—Balancing Risks and Benefits	Accord 3.case-study-2-the-automated-triage-system	0.00092	331	0.11	APP	accord	charter
+8.7.2	case-study-case	Case Study 2: The Triage Intake System—The Conflict Flagged, the Allocation Deferred	Accord 3.case-study-2-the-automated-triage-system	0.00092	331	0.11	APP	accord	charter
 8.7.3	case-study-case-2	Case Study 3: The Biased Recruitment Algorithm—Detecting Hidden Bias	Accord 3.case-study-3-the-biased-recruitment-algo	0.00092	332	0.11	APP	accord	charter
 8.7.4	case-study-case-3	Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap	Accord 3.case-study-4-post-incident-analysis-urba	0.00092	333	0.11	APP	accord	charter
 8.7.5	case-study-case-4	Case Study 5: Novel Security Scenario—Handling Heuristic Brittleness	Accord 3.case-study-5-novel-security-scenario-han	0.00092	334	0.11	APP	accord	charter

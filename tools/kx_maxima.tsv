@@ -11,17 +11,17 @@ ORDER_UNDECIDED	0	an order whose grouping the check cannot read (each is also co
 CROSS_SIGNER_INSTANT	10	a cell compares the signed instants of two different rows (at asserted_at, boundary(asserted_at), @signed, counted_at=signed)
 ARRIVAL_OUTSIDE_WINDOW	1	a cell reads when this node first held a row, outside a clock or an expiry (order=…min(admission_order))
 FLOATING_POINT	9	mean, median, rate or / in a cell: read here as integers (floor of the mean, lower median, table weight, floor division)
-UNRESOLVED_FOLDS	9	a reaction names fold(NAME) and no cell defines that fold
+UNRESOLVED_FOLDS	8	a reaction names fold(NAME) and no cell defines that fold
 REFUSE_ON_NON_DOOR_CLAUSE	0	refuse on a guard clause, a clause inside a group or a change whose computed layer is not the door (it reads another row)
 FINAL_WORD_ON_DERIVED_CLAUSE	0	void on a guard clause or a change whose computed layer is derived: a final word on what a later row can change
 INSTANT_AT_DECISION	0	a fold counts a set @decision or @count: the set its own outcome changes
 UNTYPED_MEMBERS	0	a member a cell reads has no row in formal/derivation/kx_field_types.tsv
 UNTRANSLATED_CELLS	0	a cell that does not parse or does not translate
-READS_DROPPED	48	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
+READS_DROPPED	47	a cell uses a word this translation does not carry (DROPPED in tools/kx_translate.py), or a policy_text cell not yet translated: not counted as translated
 CARRIED_WORD_COLLISIONS	0	two words of one closed class that the translation reads alike, neither declared dropped
 LABEL_WORDS_NOT_EVALUATED	53	a fold cell states by=, result= or feeds=: carried to the manifest, not evaluated
 UNCAUGHT_MUTANTS_GUARD	19	seeded one-operator mutants of guard translations that no generated row set tells apart
-UNCAUGHT_MUTANTS_FOLD	131	the same, folds
+UNCAUGHT_MUTANTS_FOLD	129	the same, folds
 UNCAUGHT_MUTANTS_CHANGE	30	the same, changes
 UNCAUGHT_MUTANTS_REACTION	17	the same, reactions
 UNCAUGHT_MUTANTS_POLICY	0	the same, the counts of the policy rows (count set, voice, voices, target silent)

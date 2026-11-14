@@ -452,7 +452,7 @@ def main():
         say("   %s: %d steps" % (label, c.pop("steps")))
         for k in sorted(c):
             say("      %-78s %d" % (k, c[k]))
-    with open(os.path.join(os.environ.get("HANDOFF_TMP", "/tmp"), "results_cut.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(os.environ.get("GATES_TMP", "/tmp"), "results_cut.json"), "w", encoding="utf-8") as f:
         json.dump(res, f, indent=1, default=sorted)
     say("RESULT: %s" % ("ok" if ok else "FAILED"))
     return 0 if ok else 1
