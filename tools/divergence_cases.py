@@ -242,7 +242,7 @@ def cases():
     E.append(lifecycle_entry("persist", "ownership:{relation}:{target_kind}:{version}", ["C346"], "CC 3.2",
         "A rule-2 or rule-4 `withdraws` against a live owner-binding concludes nothing unless it carries a `wa_adjudication_ref`.",
         [["ref"]], [["ref"]], "withdraw: when(verb=withdraw,has=wa_adjudication_ref) ... else refuse",
-        [fam("ob", "O", "ownership:{relation}:{target_kind}:{version}", (), subject="N"), wd("x", "O", "ob")], "x",
+        [fam("ob", "O", "ownership:{relation}:{target_kind}:{version}", (), subject="N"), wd("x", "N", "ob")], "x",
         census=None, extra_shipped={"refuse": ["withdraw_without_ref"]}, kind="door", where="transition withdraw guard",
         shipped_source="manifests/transitions.json ownership:{relation}:{target_kind}:{version} withdraw guard (text_conflicts C346 side_b)"))
     # ---- cosign / count: a group's act takes the group's count ----------------------------------------------------
@@ -268,8 +268,8 @@ def cases():
         if cen is None:
             e["shipped_source"] = "manifests/transitions.json transport:canonical_rebind supersede (text_conflicts C471 side_b)"
         E.append(e)
-    # an occurrence evicting another: the self-roster door, not one occurrence's act (C412): the store and the build
-    for impl, srcs in [("persist", ["C412"]), ("tooling", ["C412"])]:
+    # an occurrence evicting another: the self-roster door, not one occurrence's act (C412)
+    for impl, srcs in [("persist", ["C412"])]:
         E.append({"implementer": impl, "family": "identity:occurrence", "where": "transition withdraw policy", "kind": "count",
                   "sources": srcs, "cc_ref": "CC 3.3.6",
                   "quote": "No single occurrence evicts at once with no window: that unilateral configuration is one a thief wins in two steps.",
@@ -309,6 +309,8 @@ def cases():
          fam("oc", "K", "identity:occurrence", ("pv",), provenance="pv", build_manifest_hash="h2")], "oc",
         census=None, kind="door", where="transition attest guard"))
     E[-1]["shipped_source"] = "manifests/transitions.json identity:occurrence attest guard (formal/derivation/guard_text.tsv has no row)"
+    E[-1]["note"] = ("stays: the guard row is written and held back, since its void clause needs a reason token the text states and "
+                     "none is stated, and a clause with none may not be added (a named limit in CC 8.3.4)")
     E.append(signer_entry("persist", "capacity:{factor}", ["CLM-capacity-consent-gate"], "CC 3.4.5",
         "a `capacity:*` row MUST name that grant in `evidence_refs[]`",
         [["grant_named"]], [["subject_grant_held"]], "admission reads the subject's grants; the scoring row names none",
@@ -317,10 +319,6 @@ def cases():
         census=None, kind="door", where="consent gate"))
     E[-1]["text_param"]["refuse"] = ["names_no_grant"]
     E[-1]["shipped_source"] = "constitution/claims.tsv CLM-capacity-consent-gate (check_capacity_consent_admission)"
-    e = dict(E[[i for i, x in enumerate(E) if "C346" in x["sources"]][0]])
-    e.update(implementer="tooling", sources=["C346"], census=None,
-             shipped_source="manifests/transitions.json ownership withdraw guard, from formal/derivation/guard_text.tsv")
-    E.append(e)
     # ---- the emitter of a reaction (tooling) ----------------------------------------------------------------------
     # ---- owed: what a window's close does -------------------------------------------------------------------------
     E.append({"implementer": "tooling", "family": "takedown_notice:{basis}", "where": "reaction on close(withhold)", "kind": "window",
@@ -333,7 +331,8 @@ def cases():
               "shipped_param": {"family": "takedown_notice:{basis}", "owed": "withhold_close"},
               "rows": [fam("n", "A", "takedown_notice:{basis}", ()), R("l", "landing", "A", ("n",), says="withhold"),
                        R("v", "reversal", "A", ("n",))],
-              "ask": {"answer": "owed"}})
+              "ask": {"answer": "owed"},
+              "note": "stays: no fold or reaction word reads a row that names this one with a stated outcome, so the close cannot skip a reversed or lifted notice (a named limit in CC 8.3.4)"})
     E.append({"implementer": "tooling", "family": "moderation:{allegation_type}", "where": "reaction on close(window)", "kind": "window",
               "sources": ["C391"], "cc_ref": "CC 4.5.13",
               "quote": "A **report filed privately with the duty holder** (a named moderator) opens no window and is not shown to the room.",
@@ -342,7 +341,8 @@ def cases():
               "text_param": {"family": "moderation:{allegation_type}", "owed": "report_window", "window_secs": None},
               "shipped_param": {"family": "moderation:{allegation_type}", "owed": "report_window", "window_secs": 172800},
               "rows": [fam("m", "A", "moderation:{allegation_type}", (), seen_at=0)],
-              "ask": {"answer": "owed", "now": 172801}})
+              "ask": {"answer": "owed", "now": 172801},
+              "note": "stays: the text names no family for a moderation action raised in the room, so the window has no row to move to (a question for the owner, and a named limit in CC 8.3.4)"})
     # ---- folds ------------------------------------------------------------------------------------------------------
     def fold_entry(impl, f, srcs, cc, q, name, tmode, smode, sw, rows, ask, where="fold", census=None, src=None):
         return {"implementer": impl, "family": f, "where": where, "kind": "fold", "sources": srcs, "cc_ref": cc, "quote": q,
@@ -393,6 +393,7 @@ def cases():
         [fam("aw", "W", "age_assurance:{level}:{band}:{version}", (), leaf="witness", level="provider", band="adult", subject="S"),
          fam("as", "S", "age_self_declared:band:{band}:{version}", (), leaf="self", level="self", band="minor", subject="S")],
         {"subject": "S"}, src="formal/derivation/fold_text.tsv age fold (tools/fold_grammar.py has no picker)"))
+    E[-1]["note"] = "stays: the fold grammar has no picker for the lower of the witness band and a self-declared lower band (a named limit in CC 8.3.4)"
     E.append(fold_entry("persist", "ownership:{relation}:{target_kind}:{version}", ["C208"], "CC 3.4.7.3",
         "The steward set therefore has **at most one** member: the granter of the one live owner-binding.",
         "stewards_of", "binding_only", "binding_and_occurrence", "the steward fold admits on the identity_occurrence anchor",
@@ -423,9 +424,6 @@ def cases():
     E.append(stated("persist", "(targeted rows)", "refusal token", "door", ["C104"], "CC 2.1",
         "A targeted row naming a third party in `attested_key_id` is refused at admission", "no token in CC 3.1.3.2's list",
         "wire", "the case is a refusal by the row alone and the kernel gives it (refused); what differs is the token's name on the wire"))
-    E.append(stated("tooling", "(any)", "refusal token for a future asserted_at", "freshness", ["C119"], "CC 5.3.2.3",
-        "the existing `CLOCK_SKEW_VIOLATION` error class", "federation_malformed_row has no clock reason", "wire",
-        "the reason a store gives for a future-dated row is a token of the wire; the kernel reads no token"))
     E.append(stated("persist", "key:record", "scrub_key_id", "signer", ["C359"], "CC 3.1.3",
         "**Yes — self only, by possession**; every other row is admitted only once its signer's `key:record` is held (retryable otherwise)",
         "an anchor scrub may differ from the subject (KeyRecord in constitution/signed_object.tsv)", "wire",
@@ -458,7 +456,7 @@ def cases():
     E.append(stated("tooling", "membership:{stage}", "guard[leaf=widening on a stalled roster]", "door", ["C492"], "CC 3.2",
         "So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat.",
         "when(leaf=widening) (one trust:confers@landed[...] else refuse & type(signer,user) else refuse ...)", "no such answer",
-        "a stalled roster (T7) is no answer of the kernel model; its condition reads a count of active founders over a margin",
+        "a stalled roster (T7) is no answer of the kernel model and no condition of the guard grammar; its condition reads a count of active founders over a margin (a named limit in CC 8.3.4)",
         shipped_source="tools/guard_grammar.py; manifests/transitions.json membership:{stage} attest guard"))
     E.append(stated("persist", "consent:partnership_grant, consent:partnership_accept", "fold:ratified_pair", "fold",
         ["seven_rankings item 2"], "CC 2.3.2.4",
@@ -484,7 +482,4 @@ def cases():
             "or a delegate under its declared serialization discipline",
             "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart",
             census=(f, "reserved_rule")))
-    E.append(wording("tooling", "(bibliography)", "CC 8.6.1 entry", ["C233"], "CC 1.7",
-        "The classical impossibility (Pagnia and Gärtner, 1999)", "CC 8.6.1 has no Pagnia/Gärtner entry",
-        "a citation, checked by tools/check_links.py; no row", shipped_source="tools/check_links.py"))
     return E

@@ -41,7 +41,7 @@ Planes touch each other only through the spine, so every invariant mentions the 
 | `MeshLife_evidence.cfg` | evidence, with the goal chain | closes: 2,249,084 states, 4 min 37 s |
 | `MeshLife_event.cfg` | the event and the charter (the room an affiliation) | closes: 287,458 states, 36 s |
 | `MeshLife_ledger.cfg` | the ledger | closes: 529,246 states, 1 min 5 s |
-| `MeshLife_live.cfg` (one row, no symmetry) | halt, consent, contact; `Live_WindsDownToEnd` | holds: 15,428,353 states, 55 min 39 s on 16 workers (run here; CI runs the next row) |
+| `MeshLife_live.cfg` (one row, no symmetry) | halt, consent, contact; `Live_WindsDownToEnd` | holds: 11,778,817 states, 34 min 55 s on 12 workers (run here; CI runs the next row) |
 | `MeshLife_live_contact.cfg` (one row, no symmetry) | contact; `Live_WindsDownToEnd` | holds: 125,847 states, 23 s |
 | `MeshLife_lone_halt.cfg` | one holder may confirm a halt | fails `Inv_HaltIsMajority` |
 | `MeshLife_gone_with_device.cfg` | a person may be gone while a device of theirs is claimed | fails `Inv_DeviceHasOwner` |

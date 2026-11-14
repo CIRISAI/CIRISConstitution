@@ -251,6 +251,8 @@ These are settled. Each row names the gap, its terminal status, and the section 
 - A family that states no placement of its own takes the default of [CC 5.2](part_5_transport_substrate.md#5.2), and the text does not confirm, family by family, that none of them needs another.
 - The acts a screen offers do not include receiving a row, and some ways back the text states have no act a screen can offer.
 - Some states the text gives a lifecycle are checked by no executable model, among them a relay's opt-out, a frozen trust root, a moderator's recovery and candidacy windows, and a licence's suspension.
+- The text does not name the family of a moderation action raised in the room, so no family carries its 48-hour window.
+- Some rules the text states have no form in the rule tables, among them the reversal or lift that spares a takedown's withheld bytes, a stalled roster's recovery widening, a self-declared lower age band, and an occurrence's build check.
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
 
@@ -3019,7 +3021,7 @@ Body: `witness_relation`
 Count: `none`
 
 Guard:
-- withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void` (CC 3.4.5)
+- withdraw: `when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void & when(verb=withdraw,not has=wa_adjudication_ref) one ownership:{relation}:{target_kind}:{version}@named[id=ref:target,signer=signer] else void` (CC 3.4.5, CC 3.2)
 
 Fold:
 - `reads=own&live&signer:owner; key=attested_key_id; pick=union; test=count(owner)=1 ?steward_bound:steward_less; by=node` (CC 3.2)

@@ -52484,6 +52484,14 @@
       ]
      },
      {
+      "grammar": "guard",
+      "cell": "formal/derivation/guard_text.tsv#ownership:{relation}:{target_kind}:{version} (CC 3.2)",
+      "answers": [
+       "state",
+       "may"
+      ]
+     },
+     {
       "grammar": "fold",
       "cell": "formal/derivation/fold_text.tsv#ownership:{relation}:{target_kind}:{version} (CC 3.2)",
       "answers": [

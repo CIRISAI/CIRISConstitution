@@ -304,6 +304,7 @@ class Ref:
         if w["cond"] == "leaf": return self.self.get("leafname") in w["values"]
         if w["cond"] == "subkind": return getf(self.self, ["subkind"]) in w["values"]
         if w["cond"] == "has": return getf(self.self, [w["values"][0]]) is not None
+        if w["cond"] == "lacks": return getf(self.self, [w["values"][0]]) is None
         return self.atom(w["atom"], bind)
 
 
@@ -351,8 +352,8 @@ def guard_sets(family, clauses, seed, n=30, maxrows=5):
             for w in c["when"]:
                 if w["cond"] == "leaf": leaves.update(w["values"])
                 if w["cond"] == "verb": verbs.update(w["values"])
-                if w["cond"] in ("has", "subkind"): vals.add(w["values"][0])
-                if w["cond"] == "has": hasv.add(w["values"][0])
+                if w["cond"] in ("has", "lacks", "subkind"): vals.add(w["values"][0])
+                if w["cond"] in ("has", "lacks"): hasv.add(w["values"][0])
             if "group" in c: walkc(c["group"])
     walkc(clauses)
     for a in walk_atoms(clauses):

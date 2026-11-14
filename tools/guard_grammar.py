@@ -10,7 +10,7 @@ text. It is used by tools/build_transitions.py, which reads formal/derivation/gu
 
     guard   := "none" | clause *( " & " clause )
     clause  := [ "each(" KEYS ") " ] [ "when(" cond *( "," cond ) ") " ] ( atom | "(" guard ")" ) [ " else " outcome ]
-    cond    := "verb=" VERB | "leaf=" LEAF *( "|" LEAF ) | "subkind=" SUBKIND | "has=" MEMBER | atom
+    cond    := "verb=" VERB | "leaf=" LEAF *( "|" LEAF ) | "subkind=" SUBKIND | "has=" MEMBER | "not has=" MEMBER | atom
     atom    := rowatom | keyatom
     rowatom := QUANT " " FAMILYSET "@" STATE "[" join *( "," join ) "]" [ " as " NAME ] [ " at " INSTANT ] [ " " window ]
     join    := SLOT OP SLOT
@@ -163,6 +163,9 @@ def parse_cond(s, marks):
     m = re.fullmatch(r"(verb|leaf|subkind|has)=([a-z_0-9|]+)", s)
     if m:
         return {"cond": m.group(1), "values": m.group(2).split("|")}
+    m = re.fullmatch(r"not has=([a-z_0-9]+)", s)        # the judged row carries no such member
+    if m:
+        return {"cond": "lacks", "values": [m.group(1)]}
     return {"cond": "atom", "atom": parse_atom(s, marks)}
 
 
@@ -293,9 +296,11 @@ def self_test():
         "no census:share:{class}@admitted[object=object,val:return_token=val:return_token] else contested(x)",
         "each(subject) when(type(key,node)) not founder(key,object) else exclude(x)+k",
         "one consent:state:granted@admitted[signer=attested] else withhold",
+        "when(verb=withdraw,not has=x) one a:b@named[id=ref:target,signer=signer] else void(t)",
     ]
     bad = ["one x@held[id=id]", "some x@admitted[id=id]", "member(key) else refuse(a)(b)", "one x@admitted[id~id]", "each(subject one x@admitted[id=id]",
-           "one x@admitted[id=id] else advise(t)", "one x@admitted[id=id] else drop"]
+           "one x@admitted[id=id] else advise(t)", "one x@admitted[id=id] else drop",
+           "when(not verb=withdraw) one x@admitted[id=id]", "when(not has=a|b) one x@admitted[id=id]"]
     for g in good:
         parse(g)
     n = 0
@@ -308,6 +313,7 @@ def self_test():
     assert n == len(bad), f"{len(bad) - n} malformed guards parsed"
     assert marks.count("ref:*") == 1 and marks.count("refuse") == 1
     assert placement(parse("one x@admitted[object=object] else contested")[0]) and not placement(parse(good[9])[0])
+    assert parse(good[-1])[0][0]["when"][1] == {"cond": "lacks", "values": ["x"]}
     assert top_conds(parse("when(verb=withdraw,leaf=decided) no a@admitted[object=object] else refuse")[0], "verb") == ["withdraw"]
     assert family_ok("membership:acceptance", {"membership:{stage}"}) and not family_ok("membership", {"membership:{stage}"})
     print(f"guard grammar: {len(good)} forms parse, {len(bad)} malformed forms refused")

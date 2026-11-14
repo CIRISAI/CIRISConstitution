@@ -43,13 +43,11 @@ persist/ownership:{relation}:{target_kind}:{version}/cosign_rule[owner=organisat
 persist/licensure:{authority_id}/cosign_rule[authority=organisation]	persist	cosign	runnable	licensure:{authority_id}	cosign_rule[authority=organisation]	CC 2.4.1.2.1	concludes nothing	admitted	C432
 persist/accord:lifecycle:{kind}/cosign_rule	persist	cosign	runnable	accord:lifecycle:{kind}	cosign_rule	CC 4.2.1.3	concludes nothing	admitted	C457
 persist/identity:occurrence/transition withdraw policy	persist	count	runnable	identity:occurrence	transition withdraw policy	CC 3.3.6	stands	does not stand	C412
-tooling/identity:occurrence/transition withdraw policy	tooling	count	runnable	identity:occurrence	transition withdraw policy	CC 3.3.6	stands	does not stand	C412
 persist/census:share:{class}/replication.audience	persist	audience	runnable	census:share:{class}	replication.audience	CC 6.1.9	not served	served	C383
 persist/census:member:share/replication.audience	persist	audience	runnable	census:member:share	replication.audience	CC 3.1.3	not served	served	C465
 persist/identity:occurrence/replication.audience	persist	audience	runnable	identity:occurrence	replication.audience	CC 5.4.6	not served	served	C464
 tooling/identity:occurrence/transition attest guard	tooling	door	runnable	identity:occurrence	transition attest guard	CC 3.3.6	concludes nothing	admitted	C516
 persist/capacity:{factor}/consent gate	persist	door	runnable	capacity:{factor}	consent gate	CC 3.4.5	refused	concludes nothing	CLM-capacity-consent-gate
-tooling/ownership:{relation}:{target_kind}:{version}/transition withdraw guard	tooling	door	runnable	ownership:{relation}:{target_kind}:{version}	transition withdraw guard	CC 3.2	concludes nothing	refused	C346
 tooling/takedown_notice:{basis}/reaction on close(withhold)	tooling	window	runnable	takedown_notice:{basis}	reaction on close(withhold)	CC 4.5.3	nothing	destroy_bytes	C377
 tooling/moderation:{allegation_type}/reaction on close(window)	tooling	window	runnable	moderation:{allegation_type}	reaction on close(window)	CC 4.5.13	nothing	read withdrawn m	C391
 persist/consent:community_trust/fold	persist	fold	runnable	consent:community_trust	fold	CC 3.3.1	not captured	captured	CLM-consent-community-trust CLM-consent-community-trust-owner-authored seven_rankings item 1
@@ -64,7 +62,6 @@ persist/takedown_notice:{basis}/signer_rule[leaf=steward_purge]	persist	cosign	r
 persist/(default row)/subject_rule.in_audience	persist	subject	runnable	(default row)	subject_rule.in_audience	CC 2.1	concludes nothing	admitted	C331
 persist/moderation:{allegation_type}/body.subject_digest	persist	door	runnable	moderation:{allegation_type}	body.subject_digest	CC 2.6.1.7	admitted	refused	C439 C481
 persist/(targeted rows)/refusal token	persist	door	stated	(targeted rows)	refusal token	CC 2.1	-	-	C104
-tooling/(any)/refusal token for a future asserted_at	tooling	freshness	stated	(any)	refusal token for a future asserted_at	CC 5.3.2.3	-	-	C119
 persist/key:record/scrub_key_id	persist	signer	stated	key:record	scrub_key_id	CC 3.1.3	-	-	C359
 persist/(any, under legal_hold)/erasure_route	persist	lifecycle	stated	(any, under legal_hold)	erasure_route	CC 4.4.3.5.4	-	-	C453
 persist/membership:{stage}/roster event signers	persist	count	stated	membership:{stage}	roster event signers	CC 3.3.4	-	-	CLM-roster-event-fresh
@@ -81,4 +78,3 @@ persist/(occurrence revocation, cosign:signature)/attestation_id form	persist	do
 persist/ledger:head:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:head:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
 persist/ledger:checkpoint:{unit}:{version}/reserved_rule	persist	wording-only	wording-only	ledger:checkpoint:{unit}:{version}	reserved_rule	CC 3.1.3	-	-	C363
 persist/ledger:promotion:{version}/reserved_rule	persist	wording-only	wording-only	ledger:promotion:{version}	reserved_rule	CC 3.1.3	-	-	C363
-tooling/(bibliography)/CC 8.6.1 entry	tooling	wording-only	wording-only	(bibliography)	CC 8.6.1 entry	CC 1.7	-	-	C233

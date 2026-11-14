@@ -177,6 +177,7 @@ def t_clause(c):
             elif w["cond"] == "leaf": conds.append(f"member(self.leafname, {{{', '.join(q(x) for x in w['values'])}}})")
             elif w["cond"] == "subkind": conds.append(f"member(self.subkind, {{{', '.join(q(x) for x in w['values'])}}})")
             elif w["cond"] == "has": conds.append(f"has(self, {q(w['values'][0])})")
+            elif w["cond"] == "lacks": conds.append(f"not(has(self, {q(w['values'][0])}))")
             else: conds.append(t_atom(w["atom"]))
         body = f"first(and({', '.join(conds)}) -> {body}, else -> ok())"
     if c["each"]:

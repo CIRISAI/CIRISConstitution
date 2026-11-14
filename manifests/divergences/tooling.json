@@ -11,97 +11,10 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 6
+  "count": 4
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
-  {
-   "id": "tooling/identity:occurrence/transition withdraw policy",
-   "family": "identity:occurrence",
-   "where": "transition withdraw policy",
-   "kind": "count",
-   "case": {
-    "rows": [
-     {
-      "id": "g",
-      "kind": "offer",
-      "signer": "A",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "A",
-       "B"
-      ],
-      "scope": "member",
-      "obj": "g",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "A",
-        "member",
-        "g"
-       ],
-       [
-        "seat",
-        "B",
-        "member",
-        "g"
-       ]
-      ],
-      "cosigners": [
-       "B"
-      ]
-     },
-     {
-      "id": "u",
-      "kind": "unseat",
-      "signer": "A",
-      "names": [
-       "g"
-      ],
-      "family": "unseat",
-      "to": [
-       "B"
-      ],
-      "scope": "member",
-      "obj": "g",
-      "conf": "group",
-      "cuts": [
-       [
-        "seat",
-        "B",
-        "member",
-        "g"
-       ]
-      ],
-      "says": "out",
-      "head": [
-       "g"
-      ],
-      "policy": "occurrence_evict"
-     }
-    ],
-    "ask": {
-     "answer": "stands",
-     "key": "B",
-     "scope": "member",
-     "obj": "g"
-    }
-   },
-   "expect_kernel": "stands",
-   "expect_shipped": "does not stand",
-   "kernel_parameter": {
-    "family": "identity:occurrence",
-    "policy": {
-     "occurrence_evict": [
-      "strict",
-      1,
-      2
-     ]
-    }
-   }
-  },
   {
    "id": "tooling/identity:occurrence/transition attest guard",
    "family": "identity:occurrence",
@@ -142,48 +55,6 @@
     "gate": [
      [
       "provenance_matches"
-     ]
-    ]
-   }
-  },
-  {
-   "id": "tooling/ownership:{relation}:{target_kind}:{version}/transition withdraw guard",
-   "family": "ownership:{relation}:{target_kind}:{version}",
-   "where": "transition withdraw guard",
-   "kind": "door",
-   "case": {
-    "rows": [
-     {
-      "id": "ob",
-      "kind": "fam",
-      "signer": "O",
-      "names": [],
-      "family": "ownership:{relation}:{target_kind}:{version}",
-      "subject": "N"
-     },
-     {
-      "id": "x",
-      "kind": "withdraw",
-      "signer": "O",
-      "names": [
-       "ob"
-      ],
-      "family": "withdraws",
-      "target": "ob"
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "x"
-    }
-   },
-   "expect_kernel": "concludes nothing",
-   "expect_shipped": "refused",
-   "kernel_parameter": {
-    "family": "ownership:{relation}:{target_kind}:{version}",
-    "withdraws_by": [
-     [
-      "ref"
      ]
     ]
    }
@@ -309,25 +180,11 @@
  ],
  "not_runnable": [
   {
-   "id": "tooling/(any)/refusal token for a future asserted_at",
-   "status": "stated",
-   "reason": "the reason a store gives for a future-dated row is a token of the wire; the kernel reads no token",
-   "cc_ref": "CC 5.3.2.3",
-   "quote": "the existing `CLOCK_SKEW_VIOLATION` error class"
-  },
-  {
    "id": "tooling/membership:{stage}/guard[leaf=widening on a stalled roster]",
    "status": "stated",
-   "reason": "a stalled roster (T7) is no answer of the kernel model; its condition reads a count of active founders over a margin",
+   "reason": "a stalled roster (T7) is no answer of the kernel model and no condition of the guard grammar; its condition reads a count of active founders over a margin (a named limit in CC 8.3.4)",
    "cc_ref": "CC 3.2",
    "quote": "So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat."
-  },
-  {
-   "id": "tooling/(bibliography)/CC 8.6.1 entry",
-   "status": "wording-only",
-   "reason": "a citation, checked by tools/check_links.py; no row",
-   "cc_ref": "CC 1.7",
-   "quote": "The classical impossibility (Pagnia and Gärtner, 1999)"
   }
  ]
 }

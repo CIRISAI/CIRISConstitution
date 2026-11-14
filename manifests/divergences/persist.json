@@ -2695,7 +2695,7 @@
      {
       "id": "x",
       "kind": "withdraw",
-      "signer": "O",
+      "signer": "N",
       "names": [
        "ob"
       ],

@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "6a84e3b65d64ba2aca1f2e216d746536af57ca6102fa96b51d13859666c052ee",
+  "source_sha256": "830c548ae00f3a5d15e76247c2c3c07c6adca7514026bdabfad40768f74062eb",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -45,7 +45,7 @@
   },
   "guard": "a guard cell lists what must be held, live or signed for the row to be admitted, as clauses in the grammar of tools/guard_grammar.py, each with the sections that state it and whether it says the whole statement; a failed clause refuses the row only where it reads the row alone, and elsewhere the row is kept and the clause's word says how it is read (void, contested, exclude, withhold); an empty list with source generic is a transition for which no guard is typed, which is not a claim that the text states none",
   "guards": {
-   "statements": 59,
+   "statements": 60,
    "guarded_transitions": 28,
    "marks": {
     "refuse": 32,
@@ -16054,9 +16054,10 @@
      "guard": {
       "value": [
        {
-        "guard": "when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void",
+        "guard": "when(verb=withdraw,has=wa_adjudication_ref) one wa_adjudication:{state}@named[id=ref:wa_adjudication_ref] else void & when(verb=withdraw,not has=wa_adjudication_ref) one ownership:{relation}:{target_kind}:{version}@named[id=ref:target,signer=signer] else void",
         "cc_ref": [
-         "CC 3.4.5"
+         "CC 3.4.5",
+         "CC 3.2"
         ],
         "reach": "whole"
        }
