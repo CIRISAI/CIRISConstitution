@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "f2181cd557d7a4ba8b76334cfc0eb6ca19b6b609bc63061d59029440d10adbcb",
+  "policy_sha256": "9b68ee39a48f2067c026f050bd37152a9933d344943fdf6df81a629153a4192c",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -363,7 +363,7 @@
   },
   {
    "family": "self_roster_add",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "kind": "two_path",
    "standing_set": "the live roster keys of one fedID",
    "base": "standing",
@@ -387,26 +387,26 @@
    "counted": {
     "count_set": {
      "value": "self",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "voice": {
      "value": "key",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "counted_at": {
      "value": "named",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "voices": {
      "value": "objection",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "target_silent": {
      "value": "no"
     },
     "changes_set": {
      "value": "adds",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "target_voice": {
      "value": "no"
@@ -427,7 +427,7 @@
   },
   {
    "family": "self_roster_evict",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "kind": "two_path",
    "standing_set": "the live roster keys of one fedID",
    "base": "standing",
@@ -451,27 +451,27 @@
    "counted": {
     "count_set": {
      "value": "self",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "voice": {
      "value": "key",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "counted_at": {
      "value": "named",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "voices": {
      "value": "objection",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "target_silent": {
      "value": "yes",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "changes_set": {
      "value": "removes",
-     "cc_ref": "CC 3.3.6.3"
+     "cc_ref": "CC 3.3.6.4"
     },
     "target_voice": {
      "value": "no"
@@ -795,7 +795,7 @@
   },
   {
    "family": "affiliation_member_action",
-   "cc_ref": "4.4.3.2.8 4.5.13",
+   "cc_ref": "4.4.3.12 4.5.13",
    "kind": "cosigned",
    "standing_set": "the deciding seat + one key outside it (the designated official, or a review-holder of the overseeing body)",
    "base": "standing",
@@ -819,7 +819,7 @@
    "counted": {
     "count_set": {
      "value": "deciding+outside",
-     "cc_ref": "CC 4.4.3.2.8"
+     "cc_ref": "CC 4.4.3.12"
     },
     "voice": {
      "value": "unstated"
@@ -829,7 +829,7 @@
     },
     "voices": {
      "value": "scrubs",
-     "cc_ref": "CC 4.4.3.2.8"
+     "cc_ref": "CC 4.4.3.12"
     },
     "target_silent": {
      "value": "no"

@@ -386,7 +386,7 @@ NON_CATALOGUE_SECTIONS = {
     "2.1":         "envelope fields, not dimension families",
     "4.1.3":       "already-rejected wire additions — registering them would be wrong",
     "4.1.5":       "rejected proposals from the stress test",
-    "4.4.3.4.3":   "delegated_scope classes (infra:* / agency:*), not dimensions",
+    "4.4.3.19":   "delegated_scope classes (infra:* / agency:*), not dimensions",
     "8.3.4":       "closed-gaps appendix — restatements of families registered elsewhere",
 }
 

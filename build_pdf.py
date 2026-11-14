@@ -29,7 +29,7 @@ B.NUC.update({"é": r"\'e", "↑": r"$\uparrow$", "↓": r"$\downarrow$",
               "⌊": r"$\lfloor$", "⌋": r"$\rfloor$", "⌈": r"$\lceil$", "⌉": r"$\rceil$", "₀": r"\textsubscript{0}", "₂": r"\textsubscript{2}", "⅔": r"$2/3$",
               "⟨": r"$\langle$", "⟩": r"$\rangle$",
               "├": "+", "└": "+", "⟶": r"$\longrightarrow$",
-              # effective-count glyphs (Part VI 6.1.2.1.2)
+              # effective-count glyphs (Part VI 6.1.2.3)
               "λ": r"$\lambda$", "κ": r"$\kappa$", "ℝ": r"$\mathbb{R}$",
               "∉": r"$\notin$", "∅": r"$\emptyset$",
               "": r"$\bar{\rho}$"})   # placeholder for ρ̄ (ρ + combining macron); see prefilter()

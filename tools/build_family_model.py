@@ -55,7 +55,7 @@ COLUMNS = OrderedDict([
     ("replication", "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}"),
     ("projection", "{table, rebuild ∈ {byte_equal, none}}"),
     ("erasure_route", "dsar | purge | legal_hold | none"),
-    ("blind", "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
+    ("blind", "members minted as disclosures (CC 2.6.1.9): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member"),
     ("governance", "policy_row | none"),
     ("fold", "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)"),
     ("count", "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)"),
@@ -795,7 +795,7 @@ def main():
         print("signer_rule_text.tsv names families outside the model: " + ", ".join(sorted(signer_text))); return 1
     if cell_text:
         print("cell_text.tsv names families outside the model: " + ", ".join(sorted(cell_text))); return 1
-    # The body of a family from the signed-object table (CC 2.6.1.7): each member whose presence that table states for
+    # The body of a family from the signed-object table (CC 2.6.1.8): each member whose presence that table states for
     # a wire form of the family, with its type. A presence written in words that name no wire form is left to the
     # table and counted. A cell the census reads as prose is not replaced.
     all_fams = [r["family"] for r in rows]
@@ -834,7 +834,7 @@ def main():
     for r in rows:
         mem = body_members.get(r["family"])
         if mem and r["body"].get("source") == "gap":
-            r["body"] = {"value": OrderedDict([("members", mem)]), "source": "cc-table", "cc_ref": "CC 2.6.1.7",
+            r["body"] = {"value": OrderedDict([("members", mem)]), "source": "cc-table", "cc_ref": "CC 2.6.1.8",
                          "code": {"value": r["body"].get("value"), "source": "gap"},
                          "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries"}
     # The sentences that state a closed cell: the cell gains the sections that say it, its value untouched.

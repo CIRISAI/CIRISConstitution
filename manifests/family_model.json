@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "f9213fa9f9145b7e84685fa6095ee87dbe0cc7d2fdb4b3cf394356933ee95880",
+  "registry_sha256": "875d06b803aecbd94630df288c3faa75d37e368ca31061b8c7700cb279a7b773",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -23,7 +23,7 @@
    "replication": "{tier ∈ {local, cohort, federation}, audience ∈ {cohort, cohort_plus_subjects(full|existence_only), addressee, everyone}, non_recipient ∈ {drop, hold_sealed}, held ∈ {settle_on_key, refuse}}",
    "projection": "{table, rebuild ∈ {byte_equal, none}}",
    "erasure_route": "dsar | purge | legal_hold | none",
-   "blind": "members minted as disclosures (CC 2.6.1.8): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
+   "blind": "members minted as disclosures (CC 2.6.1.9): every free-text and other-authored member of a dsar|purge family, body.note always; [] for none|legal_hold; no fold, verdict or admission reads a listed member",
    "governance": "policy_row | none",
    "fold": "how the family's rows, read as a set, give a value: statements in the grammar of tools/fold_grammar.py, a part not stated taken from the default (formal/derivation/fold_text.tsv)",
    "count": "arms `selector => doors` joined by ` ; `, the first that holds deciding; a door is none | shut | POLICY_ROW[@source][!confers|!result] (formal/derivation/count_text.tsv)",
@@ -375,7 +375,7 @@
      "when": "requested",
      "statement": "the peer itself pulls for a subject or a dimension",
      "cc_ref": "CC 5.2",
-     "quote": "| requested | the peer itself pulls for a subject or a dimension ([CC 5.3.2.4.4](#5.3.2.4.4)); an automatic diff is not a request |"
+     "quote": "| requested | the peer itself pulls for a subject or a dimension ([CC 5.3.2.9](#5.3.2.9)); an automatic diff is not a request |"
     },
     {
      "when": "required",
@@ -448,7 +448,7 @@
      "fold": "bound=narrow_only(cohort_scope)",
      "cc_ref": [
       "CC 2.1",
-      "CC 2.6.1.7"
+      "CC 2.6.1.8"
      ]
     },
     {
@@ -490,13 +490,13 @@
     {
      "fold": "reads=own&live",
      "cc_ref": [
-      "CC 5.3.2.4.4"
+      "CC 5.3.2.9"
      ]
     },
     {
      "fold": "reads=own&live&signer:trusted; key=dimension,attested_key_id,attesting_key_id; by=reader",
      "cc_ref": [
-      "CC 4.4.3.8"
+      "CC 4.4.3.34"
      ]
     },
     {
@@ -508,7 +508,7 @@
     {
      "fold": "pick=min(affected_population_estimate); by=reader",
      "cc_ref": [
-      "CC 4.4.3.9",
+      "CC 4.4.3.35",
       "CC 4.4.1"
      ]
     },
@@ -600,7 +600,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#* (CC 2.6.1.7)",
+      "cell": "formal/derivation/fold_text.tsv#* (CC 2.6.1.8)",
       "answers": [
        "state"
       ]
@@ -649,14 +649,14 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#* (CC 5.3.2.4.4)",
+      "cell": "formal/derivation/fold_text.tsv#* (CC 5.3.2.9)",
       "answers": [
        "state"
       ]
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#* (CC 4.4.3.8)",
+      "cell": "formal/derivation/fold_text.tsv#* (CC 4.4.3.34)",
       "answers": [
        "state",
        "stands"
@@ -671,7 +671,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#* (CC 4.4.3.9)",
+      "cell": "formal/derivation/fold_text.tsv#* (CC 4.4.3.35)",
       "answers": [
        "state"
       ]
@@ -685,7 +685,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#* (CC 4.4.3.9)",
+      "cell": "formal/derivation/fold_text.tsv#* (CC 4.4.3.35)",
       "answers": [
        "state"
       ]
@@ -875,7 +875,7 @@
      "when": "The row is an owner's, a roster's or a consenting party's act, whose authority is the signer's standing when it signed.",
      "why": "The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.",
      "basis": "text",
-     "cc_ref": "CC 3.3.6.3",
+     "cc_ref": "CC 3.3.6.4",
      "quote": "so an evicted key can backdate an owner act into its old live window by at most W, and no further",
      "cells": 6
     },
@@ -921,7 +921,7 @@
      "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
      "why": "A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.",
      "basis": "text",
-     "cc_ref": "CC 2.6.1.7",
+     "cc_ref": "CC 2.6.1.8",
      "quote": "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold",
      "cells": 7
     },
@@ -1141,7 +1141,7 @@
      "when": "The row adds a device to a person's identity, proposes to remove one, or answers such a proposal.",
      "why": "One device able to evict the others at once is a prize a thief wins in two steps. The change waits a window, and the person's other devices decide whether it stands.",
      "basis": "text",
-     "cc_ref": "CC 3.3.6.3",
+     "cc_ref": "CC 3.3.6.4",
      "quote": "The policy is two rows of the governance table",
      "cells": 2
     },
@@ -1161,7 +1161,7 @@
      "when": "The row is a capacity score: one party's measurement of another.",
      "why": "A row held unsigned on its signer's own node must be the signer's statement about itself. A measurement is never its subject's own, so it cannot be such a row and is always written for the federation.",
      "basis": "text",
-     "cc_ref": "CC 5.3.2.4.1",
+     "cc_ref": "CC 5.3.2.5",
      "quote": "`witness_relation` MUST be `self` for any local-tier write",
      "cells": 3
     },
@@ -1289,7 +1289,7 @@
      "when": "The row reports that independent registry sources agree about a key.",
      "why": "A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.",
      "basis": "text",
-     "cc_ref": "CC 4.4.3.2.1",
+     "cc_ref": "CC 4.4.3.4",
      "quote": "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)",
      "cells": 1
     },
@@ -1347,7 +1347,7 @@
      "when": "The row is a consent state that carries the recipient field.",
      "why": "The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.",
      "basis": "text",
-     "cc_ref": "CC 2.6.1.7",
+     "cc_ref": "CC 2.6.1.8",
      "quote": "Also carried on consent:state rows.",
      "cells": 1
     },
@@ -1542,7 +1542,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -1975,7 +1975,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -2345,7 +2345,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -2778,7 +2778,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -3148,7 +3148,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -3514,7 +3514,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -3933,7 +3933,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -5471,7 +5471,7 @@
     "source": "code-v61",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.7",
+      "cc_ref": "CC 4.4.3.33",
       "reading": "agree"
      }
     ]
@@ -5691,7 +5691,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#agent_files:{kind}:{platform_or_target} (CC 4.4.3.7)",
+      "cell": "formal/derivation/fold_text.tsv#agent_files:{kind}:{platform_or_target} (CC 4.4.3.33)",
       "answers": [
        "state",
        "stands"
@@ -5721,7 +5721,7 @@
      {
       "fold": "reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader",
       "cc_ref": [
-       "CC 4.4.3.7"
+       "CC 4.4.3.33"
       ]
      }
     ],
@@ -6191,7 +6191,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -6654,7 +6654,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#attestation:agent_integrity (CC 4.4.3.6)",
+      "cell": "formal/derivation/fold_text.tsv#attestation:agent_integrity (CC 4.4.3.32)",
       "answers": [
        "state",
        "stands"
@@ -6662,7 +6662,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#attestation:agent_integrity (CC 4.4.3.6)",
+      "cell": "formal/derivation/fold_text.tsv#attestation:agent_integrity (CC 4.4.3.32)",
       "answers": [
        "state",
        "stands"
@@ -6689,7 +6689,7 @@
       "cc_ref": [
        "CC 3.1.7",
        "CC 4.1.3",
-       "CC 4.4.3.6"
+       "CC 4.4.3.32"
       ]
      }
     ],
@@ -7149,7 +7149,7 @@
     "source": "code-v61",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -7484,7 +7484,7 @@
    "placement": {
     "value": "commons",
     "source": "cc-table",
-    "cc_ref": "CC 4.4.3.2.1",
+    "cc_ref": "CC 4.4.3.4",
     "code": {
      "value": [
       "self_collective",
@@ -7496,7 +7496,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.2.1",
+      "cc_ref": "CC 4.4.3.4",
       "reading": "agree"
      }
     ]
@@ -8322,7 +8322,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -9301,7 +9301,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": null,
      "source": "gap"
@@ -10020,7 +10020,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -10028,7 +10028,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      },
      {
@@ -12066,7 +12066,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "feature_dim",
@@ -12101,7 +12101,7 @@
        "type": "number",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "sample_size",
@@ -12134,7 +12134,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -12600,7 +12600,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "epoch",
@@ -12642,7 +12642,7 @@
        "type": "number",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "sample_size",
@@ -12682,7 +12682,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -13094,7 +13094,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "feature_dim",
@@ -13129,7 +13129,7 @@
        "type": "number",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "sample_size",
@@ -13162,7 +13162,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -14757,7 +14757,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -14765,7 +14765,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      },
      {
@@ -14959,7 +14959,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#census:composite:{class} (CC 6.1.2.1.2)",
+      "cell": "formal/derivation/fold_text.tsv#census:composite:{class} (CC 6.1.2.3)",
       "answers": [
        "state"
       ]
@@ -14999,7 +14999,7 @@
      {
       "fold": "absent=refuse",
       "cc_ref": [
-       "CC 6.1.2.1.2"
+       "CC 6.1.2.3"
       ]
      }
     ],
@@ -15186,7 +15186,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -15194,7 +15194,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -15604,7 +15604,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -15612,7 +15612,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -15941,7 +15941,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -15949,7 +15949,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -16053,7 +16053,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "fills"
      }
     ]
@@ -16359,7 +16359,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -16367,7 +16367,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -16706,7 +16706,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -16714,7 +16714,7 @@
     "note": "the members the signed-object table states for this family's wire forms, and those the text states (each with its section and whether the name is in the CDDL), beyond those every row carries",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -16818,7 +16818,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "fills"
      },
      {
@@ -17243,7 +17243,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#cert_validity:{authority} (CC 4.4.3.11)",
+      "cell": "formal/derivation/fold_text.tsv#cert_validity:{authority} (CC 4.4.3.37)",
       "answers": [
        "state"
       ]
@@ -17267,7 +17267,7 @@
      {
       "fold": "reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader",
       "cc_ref": [
-       "CC 4.4.3.11"
+       "CC 4.4.3.37"
       ]
      }
     ],
@@ -18773,7 +18773,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -18875,11 +18875,11 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.1",
+      "cc_ref": "CC 4.4.3.4",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.8",
+      "cc_ref": "CC 4.4.3.12",
       "reading": "fills"
      }
     ]
@@ -21426,7 +21426,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.5.1",
+      "cc_ref": "CC 4.4.3.26",
       "reading": "agree"
      }
     ]
@@ -21477,7 +21477,7 @@
     "by": [
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.5.1)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.26)",
       "answers": [
        "state",
        "owed",
@@ -21486,7 +21486,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.5.1)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.26)",
       "answers": [
        "state",
        "owed",
@@ -21495,7 +21495,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.5.1)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.26)",
       "answers": [
        "state",
        "window"
@@ -21503,7 +21503,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.5.1)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:decay:{stage} (CC 4.4.3.26)",
       "answers": [
        "state",
        "window"
@@ -22246,7 +22246,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:deletion_sla:{days} (CC 4.4.3.5.2)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:deletion_sla:{days} (CC 4.4.3.27)",
       "answers": [
        "state",
        "owed",
@@ -22255,7 +22255,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:deletion_sla:{days} (CC 4.4.3.4.7)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:deletion_sla:{days} (CC 4.4.3.24)",
       "answers": [
        "state",
        "owed",
@@ -22422,7 +22422,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3.1",
+      "cc_ref": "CC 4.4.3.20",
       "reading": "agree"
      }
     ]
@@ -22466,7 +22466,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3.1",
+      "cc_ref": "CC 4.4.3.20",
       "reading": "fills"
      }
     ]
@@ -22483,61 +22483,61 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "attestation_type",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "attesting_key_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "bilateral_pair_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "dimension",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "stance",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "subject_key_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "subject_kind",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       }
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none on release-61",
      "source": "gap"
@@ -22589,7 +22589,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -22710,7 +22710,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:partnership_accept (CC 4.4.3.5.3)",
+      "cell": "formal/derivation/fold_text.tsv#consent:partnership_accept (CC 4.4.3.28)",
       "answers": [
        "state"
       ]
@@ -22731,7 +22731,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:partnership_accept (CC 4.4.3.5.3)",
+      "cell": "formal/derivation/fold_text.tsv#consent:partnership_accept (CC 4.4.3.28)",
       "answers": [
        "state"
       ]
@@ -22749,15 +22749,15 @@
     },
     "source": "cc-table",
     "cc_ref": [
-     "CC 4.4.3.4.3"
+     "CC 4.4.3.19"
     ],
     "rule": "shape",
     "from": "formal/derivation/family_shapes.tsv",
     "sources": {
      "scope": "cell:manifests/family_model.json#consent:partnership_accept.fold",
-     "conferrer": "quote:CC 4.4.3.4.3 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\"",
-     "consent": "quote:CC 4.4.3.4.3 \"the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
-     "ends": "quote:CC 4.4.3.4.3 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\""
+     "conferrer": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\"",
+     "consent": "quote:CC 4.4.3.19 \"the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
+     "ends": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\""
     },
     "cells_from": [
      "formal/derivation/confers_text.tsv",
@@ -22775,7 +22775,7 @@
      {
       "fold": "key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)",
       "cc_ref": [
-       "CC 4.4.3.5.3"
+       "CC 4.4.3.28"
       ]
      },
      {
@@ -22783,7 +22783,7 @@
       "cc_ref": [
        "CC 2.3.2.4",
        "CC 3.3.5",
-       "CC 4.4.3.5.3"
+       "CC 4.4.3.28"
       ]
      }
     ],
@@ -22901,7 +22901,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3.1",
+      "cc_ref": "CC 4.4.3.20",
       "reading": "agree"
      }
     ]
@@ -22945,7 +22945,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3.1",
+      "cc_ref": "CC 4.4.3.20",
       "reading": "fills"
      }
     ]
@@ -22962,61 +22962,61 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "attestation_type",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "attesting_key_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "bilateral_pair_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "dimension",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "stance",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "subject_key_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "subject_kind",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       }
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none on release-61",
      "source": "gap"
@@ -23072,7 +23072,7 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -23126,7 +23126,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -23199,7 +23199,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:partnership_grant (CC 4.4.3.5.3)",
+      "cell": "formal/derivation/fold_text.tsv#consent:partnership_grant (CC 4.4.3.28)",
       "answers": [
        "state"
       ]
@@ -23231,15 +23231,15 @@
     },
     "source": "cc-table",
     "cc_ref": [
-     "CC 4.4.3.4.3"
+     "CC 4.4.3.19"
     ],
     "rule": "shape",
     "from": "formal/derivation/family_shapes.tsv",
     "sources": {
      "scope": "cell:manifests/family_model.json#consent:partnership_grant.fold",
-     "conferrer": "quote:CC 4.4.3.4.3 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\"",
-     "consent": "quote:CC 4.4.3.4.3 \"the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
-     "ends": "quote:CC 4.4.3.4.3 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\""
+     "conferrer": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\"",
+     "consent": "quote:CC 4.4.3.19 \"the user emits `consent:partnership_grant` and the agent occurrence emits `consent:partnership_accept` under one `bilateral_pair_id`\"",
+     "ends": "quote:CC 4.4.3.19 \"Either half may be withdrawn by its signer's `withdraws`, because consent is revocability\""
     },
     "cells_from": [
      "formal/derivation/confers_text.tsv",
@@ -23257,7 +23257,7 @@
      {
       "fold": "key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)",
       "cc_ref": [
-       "CC 4.4.3.5.3"
+       "CC 4.4.3.28"
       ]
      },
      {
@@ -23799,7 +23799,7 @@
     "qualifier": "a subject of the target, or a chain rooted at one",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "agree"
      }
     ]
@@ -24333,11 +24333,11 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.5",
+      "cc_ref": "CC 4.4.3.25",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.5.5",
+      "cc_ref": "CC 4.4.3.30",
       "reading": "agree"
      }
     ]
@@ -24408,28 +24408,28 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.5.5)",
+      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.30)",
       "answers": [
        "state"
       ]
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.5.5)",
+      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.30)",
       "answers": [
        "state"
       ]
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.5)",
+      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.25)",
       "answers": [
        "state"
       ]
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.5.5)",
+      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.30)",
       "answers": [
        "state",
        "stands"
@@ -24437,14 +24437,14 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.5.5)",
+      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.30)",
       "answers": [
        "state"
       ]
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.5.5)",
+      "cell": "formal/derivation/fold_text.tsv#consent:state:{stance} (CC 4.4.3.30)",
       "answers": [
        "state"
       ]
@@ -24467,7 +24467,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#consent:state:{stance} (CC 4.4.3.5.5)",
+      "cell": "formal/derivation/reaction_text.tsv#consent:state:{stance} (CC 4.4.3.30)",
       "answers": [
        "state",
        "owed"
@@ -24527,43 +24527,43 @@
      {
       "fold": "@stance=revoked: cut=boundary(asserted_at),terminal",
       "cc_ref": [
-       "CC 4.4.3.5.5"
+       "CC 4.4.3.30"
       ]
      },
      {
       "fold": "@stance=revoked: cut=terminal",
       "cc_ref": [
-       "CC 4.4.3.5.5"
+       "CC 4.4.3.30"
       ]
      },
      {
       "fold": "pick=max(asserted_at); by=reader",
       "cc_ref": [
-       "CC 4.4.3.5"
+       "CC 4.4.3.25"
       ]
      },
      {
       "fold": "reads=own&signer:subject|proxy",
       "cc_ref": [
-       "CC 4.4.3.5.5"
+       "CC 4.4.3.30"
       ]
      },
      {
       "fold": "absent=unspecified",
       "cc_ref": [
-       "CC 4.4.3.5.5"
+       "CC 4.4.3.30"
       ]
      },
      {
       "fold": "pick=max(asserted_at)",
       "cc_ref": [
-       "CC 4.4.3.5.5"
+       "CC 4.4.3.30"
       ]
      },
      {
       "fold": "result=state(granted|revoked|expired|unspecified)",
       "cc_ref": [
-       "CC 4.4.3.5.5"
+       "CC 4.4.3.30"
       ]
      }
     ],
@@ -27168,11 +27168,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.2",
+      "cc_ref": "CC 2.6.1.3",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      },
      {
@@ -27244,7 +27244,7 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 5.3.2.5",
+      "cc_ref": "CC 5.3.2.11",
       "reading": "fills"
      }
     ]
@@ -27310,11 +27310,11 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.1",
+      "cc_ref": "CC 4.4.3.4",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.6",
+      "cc_ref": "CC 4.4.3.10",
       "reading": "fills"
      },
      {
@@ -27958,7 +27958,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -28282,7 +28282,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "agree"
      }
     ]
@@ -29006,7 +29006,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 5.3.3.6",
+      "cc_ref": "CC 5.3.3.11",
       "reading": "agree"
      }
     ]
@@ -29061,14 +29061,14 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 5.3.3.6"
+       "cc_ref": "CC 5.3.3.11"
       },
       {
        "member": "chunk_root",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 5.3.3.6"
+       "cc_ref": "CC 5.3.3.11"
       },
       {
        "member": "epoch",
@@ -29082,19 +29082,19 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 5.3.3.6"
+       "cc_ref": "CC 5.3.3.11"
       },
       {
        "member": "subscriber_key_id",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 5.3.3.6"
+       "cc_ref": "CC 5.3.3.11"
       }
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -29256,7 +29256,7 @@
     "by": [
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#delivery_receipt:{stream_id} (CC 5.3.3.6)",
+      "cell": "formal/derivation/guard_text.tsv#delivery_receipt:{stream_id} (CC 5.3.3.11)",
       "answers": [
        "state",
        "may"
@@ -31383,7 +31383,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -35784,7 +35784,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -37532,7 +37532,7 @@
     "s3": "signed instants .sssZ only (signed_instant_form_violation)",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.2.4.1",
+      "cc_ref": "CC 4.4.3.8",
       "reading": "agree"
      }
     ]
@@ -37585,11 +37585,11 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.2",
+      "cc_ref": "CC 4.4.3.5",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.6",
+      "cc_ref": "CC 4.4.3.10",
       "reading": "fills"
      }
     ]
@@ -37662,19 +37662,19 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.2.4",
+      "cc_ref": "CC 4.4.3.7",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.2.4.1",
+      "cc_ref": "CC 4.4.3.8",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.2.6",
+      "cc_ref": "CC 4.4.3.10",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.4",
+      "cc_ref": "CC 4.4.3.21",
       "reading": "agree"
      }
     ]
@@ -37775,7 +37775,7 @@
      },
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#group:roster (CC 4.4.3.4.4)",
+      "cell": "formal/derivation/guard_text.tsv#group:roster (CC 4.4.3.21)",
       "answers": [
        "state",
        "may"
@@ -37811,14 +37811,14 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 4.4.3.4.4)",
+      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 4.4.3.21)",
       "answers": [
        "state"
       ]
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 4.4.3.2.4.1)",
+      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 4.4.3.8)",
       "answers": [
        "state"
       ]
@@ -37849,7 +37849,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 4.4.3.2.4)",
+      "cell": "formal/derivation/fold_text.tsv#group:roster (CC 4.4.3.7)",
       "answers": [
        "state"
       ]
@@ -37871,7 +37871,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.2.8)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.12)",
       "answers": [
        "owed"
       ]
@@ -37885,14 +37885,14 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.4.2.1)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.18)",
       "answers": [
        "window"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.2.3)",
+      "cell": "formal/derivation/reaction_text.tsv#group:roster (CC 4.4.3.6)",
       "answers": [
        "owed"
       ]
@@ -37975,8 +37975,8 @@
      {
       "fold": "pick=chain(prev_head_digest)",
       "cc_ref": [
-       "CC 4.4.3.4.4",
-       "CC 4.4.3.2.4"
+       "CC 4.4.3.21",
+       "CC 4.4.3.7"
       ]
      },
      {
@@ -37988,19 +37988,19 @@
      {
       "fold": "order=min(key_id)",
       "cc_ref": [
-       "CC 4.4.3.2.4.1"
+       "CC 4.4.3.8"
       ]
      },
      {
       "fold": "feeds=replication.audience",
       "cc_ref": [
-       "CC 4.4.3.2.6"
+       "CC 4.4.3.10"
       ]
      },
      {
       "fold": "reads=head",
       "cc_ref": [
-       "CC 4.4.3.4.4"
+       "CC 4.4.3.21"
       ]
      },
      {
@@ -38030,7 +38030,7 @@
      {
       "fold": "reads=head; pick=chain(prev_head_digest)",
       "cc_ref": [
-       "CC 4.4.3.2.4.1"
+       "CC 4.4.3.8"
       ]
      },
      {
@@ -38053,11 +38053,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.2.4",
+      "cc_ref": "CC 4.4.3.7",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.2.4.1",
+      "cc_ref": "CC 4.4.3.8",
       "reading": "agree"
      }
     ]
@@ -38622,7 +38622,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -39282,7 +39282,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -39582,11 +39582,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3.1",
+      "cc_ref": "CC 4.4.3.20",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.6",
+      "cc_ref": "CC 4.4.3.23",
       "reading": "agree"
      }
     ]
@@ -39696,11 +39696,11 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.4.6",
+      "cc_ref": "CC 4.4.3.23",
       "reading": "fills"
      }
     ]
@@ -39755,11 +39755,11 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4",
+      "cc_ref": "CC 4.4.3.15",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.6",
+      "cc_ref": "CC 4.4.3.23",
       "reading": "agree"
      }
     ]
@@ -39818,7 +39818,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#identity:occurrence (CC 3.3.6.3)",
+      "cell": "formal/derivation/fold_text.tsv#identity:occurrence (CC 3.3.6.4)",
       "answers": [
        "state",
        "stands"
@@ -39850,7 +39850,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#identity:occurrence (CC 3.3.6.3)",
+      "cell": "formal/derivation/reaction_text.tsv#identity:occurrence (CC 3.3.6.4)",
       "answers": [
        "window"
       ]
@@ -39872,7 +39872,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#identity:occurrence (CC 3.3.6.3)",
+      "cell": "formal/derivation/reaction_text.tsv#identity:occurrence (CC 3.3.6.4)",
       "answers": [
        "window"
       ]
@@ -39896,13 +39896,13 @@
     },
     "source": "cc-table",
     "cc_ref": [
-     "CC 3.3.6.3"
+     "CC 3.3.6.4"
     ],
     "rule": "shape",
     "from": "formal/derivation/family_shapes.tsv",
     "sources": {
-     "roster": "quote:CC 3.3.6.3 \"This is the one roster where a floor of one voice is right, because every key is the same person's.\"",
-     "consent": "quote:CC 3.3.6.3 \"This is the one roster where a floor of one voice is right, because every key is the same person's.\"",
+     "roster": "quote:CC 3.3.6.4 \"This is the one roster where a floor of one voice is right, because every key is the same person's.\"",
+     "consent": "quote:CC 3.3.6.4 \"This is the one roster where a floor of one voice is right, because every key is the same person's.\"",
      "door": "cell:manifests/family_model.json#identity:occurrence.count"
     },
     "cells_from": [
@@ -39920,13 +39920,13 @@
      {
       "fold": "reads=own&at(now); key=identity_key_id; result=set; by=node",
       "cc_ref": [
-       "CC 4.4.3.4.6"
+       "CC 4.4.3.23"
       ]
      },
      {
       "fold": "over=live@named/key",
       "cc_ref": [
-       "CC 3.3.6.3"
+       "CC 3.3.6.4"
       ]
      }
     ],
@@ -39938,12 +39938,12 @@
      {
       "when": "identity=user",
       "doors": "self_roster_add@self",
-      "cc_ref": "CC 3.3.6.3"
+      "cc_ref": "CC 3.3.6.4"
      },
      {
       "when": "*",
       "doors": "none",
-      "cc_ref": "CC 3.3.6.3"
+      "cc_ref": "CC 3.3.6.4"
      }
     ],
     "source": "cc-table"
@@ -40273,13 +40273,13 @@
     },
     "source": "cc-table",
     "cc_ref": [
-     "CC 3.3.6.3"
+     "CC 3.3.6.4"
     ],
     "rule": "shape",
     "from": "formal/derivation/family_shapes.tsv",
     "sources": {
      "role": "cell:manifests/family_model.json#identity:occurrence_revocation.verbs",
-     "roster": "quote:CC 3.3.6.3 \"This is the one roster where a floor of one voice is right, because every key is the same person's.\"",
+     "roster": "quote:CC 3.3.6.4 \"This is the one roster where a floor of one voice is right, because every key is the same person's.\"",
      "door": "cell:manifests/family_model.json#identity:occurrence_revocation.count"
     },
     "cells_from": [
@@ -41177,7 +41177,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -43625,11 +43625,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.4.1.2.1",
+      "cc_ref": "CC 2.4.1.3",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -43678,7 +43678,7 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.1"
+       "cc_ref": "CC 4.4.3.16"
       },
       {
        "member": "axis",
@@ -43699,7 +43699,7 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.1"
+       "cc_ref": "CC 4.4.3.16"
       },
       {
        "member": "epoch",
@@ -43727,14 +43727,14 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.1"
+       "cc_ref": "CC 4.4.3.16"
       },
       {
        "member": "scope",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.1"
+       "cc_ref": "CC 4.4.3.16"
       },
       {
        "member": "stream_id",
@@ -43760,7 +43760,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -43811,7 +43811,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 2.4.1.2.1",
+      "cc_ref": "CC 2.4.1.3",
       "reading": "fills"
      },
      {
@@ -43827,19 +43827,19 @@
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.2",
+      "cc_ref": "CC 4.4.3.5",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.2.6",
+      "cc_ref": "CC 4.4.3.10",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      },
      {
-      "cc_ref": "CC 4.4.3.4.5",
+      "cc_ref": "CC 4.4.3.22",
       "reading": "fills"
      },
      {
@@ -43880,7 +43880,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.7",
+      "cc_ref": "CC 4.4.3.24",
       "reading": "fills"
      }
     ]
@@ -43907,7 +43907,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4",
+      "cc_ref": "CC 4.4.3.15",
       "reading": "agree"
      }
     ]
@@ -44022,21 +44022,21 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.2.1)",
+      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.4)",
       "answers": [
        "owed"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.2.5)",
+      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.9)",
       "answers": [
        "owed"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.4.1)",
+      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.16)",
       "answers": [
        "state",
        "owed"
@@ -44044,14 +44044,14 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.4.1)",
+      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.16)",
       "answers": [
        "owed"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.4.1)",
+      "cell": "formal/derivation/reaction_text.tsv#key_grant:{axis} (CC 4.4.3.16)",
       "answers": [
        "state",
        "owed"
@@ -44255,7 +44255,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -44937,7 +44937,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -45606,7 +45606,7 @@
     "qualifier": "(license: outside vocabulary)",
     "cites": [
      {
-      "cc_ref": "CC 2.4.1.2.1",
+      "cc_ref": "CC 2.4.1.3",
       "reading": "agree"
      },
      {
@@ -45618,11 +45618,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.2.8",
+      "cc_ref": "CC 4.4.3.12",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "agree"
      }
     ]
@@ -45676,7 +45676,7 @@
     "source": "code-v61",
     "cites": [
      {
-      "cc_ref": "CC 2.4.1.2.1",
+      "cc_ref": "CC 2.4.1.3",
       "reading": "fills"
      },
      {
@@ -45807,7 +45807,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 2.4.1.2.1",
+      "cc_ref": "CC 2.4.1.3",
       "reading": "agree"
      },
      {
@@ -45879,7 +45879,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#licensure:{authority_id} (CC 2.4.1.2.1)",
+      "cell": "formal/derivation/fold_text.tsv#licensure:{authority_id} (CC 2.4.1.3)",
       "answers": [
        "state",
        "stands"
@@ -45936,7 +45936,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#licensure:{authority_id} (CC 4.4.3.2.8)",
+      "cell": "formal/derivation/reaction_text.tsv#licensure:{authority_id} (CC 4.4.3.12)",
       "answers": [
        "state",
        "owed"
@@ -45956,7 +45956,7 @@
     },
     "source": "cc-table",
     "cc_ref": [
-     "CC 2.4.1.2.1"
+     "CC 2.4.1.3"
     ],
     "rule": "stated"
    },
@@ -45965,7 +45965,7 @@
      {
       "fold": "reads=own&signer:authority",
       "cc_ref": [
-       "CC 2.4.1.2.1"
+       "CC 2.4.1.3"
       ]
      },
      {
@@ -45983,7 +45983,7 @@
      {
       "fold": "reads=own&declared(licence_class); by=reader",
       "cc_ref": [
-       "CC 4.4.3.2.8"
+       "CC 4.4.3.12"
       ]
      },
      {
@@ -46731,7 +46731,7 @@
     "by": [
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#locality:decision:{scale} (CC 4.4.3.1.1)",
+      "cell": "formal/derivation/fold_text.tsv#locality:decision:{scale} (CC 4.4.3.2)",
       "answers": [
        "state"
       ]
@@ -46759,14 +46759,14 @@
      {
       "fold": "absent=refuse",
       "cc_ref": [
-       "CC 4.4.3.1.1"
+       "CC 4.4.3.2"
       ]
      }
     ],
     "source": "cc-table",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.1.1",
+      "cc_ref": "CC 4.4.3.2",
       "reading": "agree"
      }
     ]
@@ -47272,7 +47272,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -47284,11 +47284,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.2",
+      "cc_ref": "CC 2.6.1.3",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      },
      {
@@ -47405,7 +47405,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.2",
+      "cc_ref": "CC 4.4.3.17",
       "reading": "agree"
      }
     ]
@@ -47421,7 +47421,7 @@
     "closed": "none",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.2",
+      "cc_ref": "CC 4.4.3.17",
       "reading": "fills"
      }
     ]
@@ -47508,7 +47508,7 @@
      },
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.2.3)",
+      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.6)",
       "answers": [
        "state",
        "stands",
@@ -47517,7 +47517,7 @@
      },
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.2.3)",
+      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.6)",
       "answers": [
        "state",
        "stands",
@@ -47526,7 +47526,7 @@
      },
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.2.5)",
+      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.9)",
       "answers": [
        "state",
        "stands",
@@ -47535,7 +47535,7 @@
      },
      {
       "grammar": "guard",
-      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.4.2)",
+      "cell": "formal/derivation/guard_text.tsv#membership:{stage} (CC 4.4.3.17)",
       "answers": [
        "state",
        "stands",
@@ -47606,7 +47606,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#membership:{stage} (CC 4.4.3.2.4.1)",
+      "cell": "formal/derivation/fold_text.tsv#membership:{stage} (CC 4.4.3.8)",
       "answers": [
        "state",
        "stands"
@@ -47622,7 +47622,7 @@
      },
      {
       "grammar": "fold",
-      "cell": "formal/derivation/fold_text.tsv#membership:{stage} (CC 4.4.3.2.8)",
+      "cell": "formal/derivation/fold_text.tsv#membership:{stage} (CC 4.4.3.12)",
       "answers": [
        "state",
        "stands"
@@ -47637,7 +47637,7 @@
      },
      {
       "grammar": "change",
-      "cell": "formal/derivation/change_text.tsv#membership:{stage} (CC 4.4.3.2.8)",
+      "cell": "formal/derivation/change_text.tsv#membership:{stage} (CC 4.4.3.12)",
       "answers": [
        "state",
        "stands"
@@ -47653,14 +47653,14 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#membership:{stage} (CC 4.4.3.2.3)",
+      "cell": "formal/derivation/reaction_text.tsv#membership:{stage} (CC 4.4.3.6)",
       "answers": [
        "owed"
       ]
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#membership:{stage} (CC 4.4.3.4.2)",
+      "cell": "formal/derivation/reaction_text.tsv#membership:{stage} (CC 4.4.3.17)",
       "answers": [
        "state",
        "owed"
@@ -47766,8 +47766,8 @@
      {
       "fold": "feeds=group:roster",
       "cc_ref": [
-       "CC 4.4.3.2.4",
-       "CC 4.4.3.4.4"
+       "CC 4.4.3.7",
+       "CC 4.4.3.21"
       ]
      },
      {
@@ -47781,7 +47781,7 @@
       "fold": "@cohort_subkind=infrastructure: over=founders@named/person",
       "cc_ref": [
        "CC 3.2",
-       "CC 4.4.3.2.4.1"
+       "CC 4.4.3.8"
       ]
      },
      {
@@ -47800,7 +47800,7 @@
      {
       "fold": "@group_kind=affiliation: over=deciding_seats@named/person",
       "cc_ref": [
-       "CC 4.4.3.2.8"
+       "CC 4.4.3.12"
       ]
      },
      {
@@ -47838,7 +47838,7 @@
      {
       "when": "leaf=removal & group=affiliations & seats=one",
       "doors": "affiliation_member_action@subject_group",
-      "cc_ref": "CC 4.4.3.2.8"
+      "cc_ref": "CC 4.4.3.12"
      },
      {
       "when": "*",
@@ -48771,7 +48771,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -49063,7 +49063,7 @@
     "closed": "seat_role(moderate) x delegates_to(moderate)",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "agree"
      },
      {
@@ -51225,7 +51225,7 @@
        "type": "\"self\"",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 3.3.6.3"
+       "cc_ref": "CC 3.3.6.4"
       },
       {
        "member": "cohort_key_id",
@@ -51239,7 +51239,7 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 3.3.6.3"
+       "cc_ref": "CC 3.3.6.4"
       },
       {
        "member": "objects_to_attestation_id",
@@ -51251,7 +51251,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -51642,7 +51642,7 @@
        "type": "[* consent-basis]",
        "presence": "optional",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "evidence_refs",
@@ -51661,7 +51661,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -51673,7 +51673,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -52007,7 +52007,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -53638,7 +53638,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -53962,7 +53962,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -54649,7 +54649,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -55015,7 +55015,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -55392,7 +55392,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -56298,12 +56298,12 @@
      {
       "when": "group=affiliations & seats=one",
       "doors": "affiliation_member_action@subject_group",
-      "cc_ref": "CC 4.4.3.2.8"
+      "cc_ref": "CC 4.4.3.12"
      },
      {
       "when": "*",
       "doors": "none",
-      "cc_ref": "CC 4.4.3.2.8"
+      "cc_ref": "CC 4.4.3.12"
      }
     ],
     "source": "cc-table"
@@ -58423,7 +58423,7 @@
     "note": "filing: subject of the target | seat_role(review); ruling: seat_role(review) x delegates_to(review) x {}",
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "agree"
      },
      {
@@ -59542,7 +59542,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -61263,47 +61263,47 @@
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "delegation_purpose",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3"
+       "cc_ref": "CC 4.4.3.19"
       },
       {
        "member": "delegation_valid_from",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       },
       {
        "member": "delegation_valid_until",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3"
+       "cc_ref": "CC 4.4.3.19"
       },
       {
        "member": "scope",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 4.4.3.4.3"
+       "cc_ref": "CC 4.4.3.19"
       },
       {
        "member": "signed_at",
        "type": "unstated",
        "presence": "unstated",
        "in_cddl": false,
-       "cc_ref": "CC 4.4.3.4.3.1"
+       "cc_ref": "CC 4.4.3.20"
       }
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -61355,7 +61355,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -61409,7 +61409,7 @@
     },
     "cites": [
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "fills"
      }
     ]
@@ -61668,7 +61668,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -61680,11 +61680,11 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.2",
+      "cc_ref": "CC 2.6.1.3",
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -62749,12 +62749,12 @@
      {
       "when": "group=affiliations & seats=one",
       "doors": "affiliation_member_action@subject_group",
-      "cc_ref": "CC 4.4.3.2.8"
+      "cc_ref": "CC 4.4.3.12"
      },
      {
       "when": "*",
       "doors": "none",
-      "cc_ref": "CC 4.4.3.2.8"
+      "cc_ref": "CC 4.4.3.12"
      }
     ],
     "source": "cc-table"
@@ -63214,7 +63214,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 4.4.3.4.3",
+      "cc_ref": "CC 4.4.3.19",
       "reading": "agree"
      },
      {
@@ -63333,7 +63333,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -63524,7 +63524,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#takedown_notice:{basis} (CC 6.1.2.2)",
+      "cell": "formal/derivation/reaction_text.tsv#takedown_notice:{basis} (CC 6.1.2.4)",
       "answers": [
        "state",
        "owed"
@@ -63651,7 +63651,7 @@
      {
       "when": "group=affiliations & seats=one",
       "doors": "affiliation_member_action@subject_group",
-      "cc_ref": "CC 4.4.3.2.8"
+      "cc_ref": "CC 4.4.3.12"
      },
      {
       "when": "*",
@@ -66906,7 +66906,7 @@
        "type": "hex64 presence=optional leaf=trust:charter",
        "presence": "unstated",
        "in_cddl": true,
-       "cc_ref": "CC 2.6.1.7"
+       "cc_ref": "CC 2.6.1.8"
       },
       {
        "member": "recovery_commitments",
@@ -66918,7 +66918,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"
@@ -66930,7 +66930,7 @@
       "reading": "agree"
      },
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -67136,7 +67136,7 @@
      },
      {
       "grammar": "reaction",
-      "cell": "formal/derivation/reaction_text.tsv#trust:{job}:{version} (CC 4.4.3.2.8)",
+      "cell": "formal/derivation/reaction_text.tsv#trust:{job}:{version} (CC 4.4.3.12)",
       "answers": [
        "state",
        "owed"
@@ -67159,7 +67159,7 @@
     "cc_ref": [
      "CC 3.2",
      "CC 3.4.5",
-     "CC 4.4.3.4.3",
+     "CC 4.4.3.19",
      "CC 4.5.4"
     ],
     "rule": "shape",
@@ -67169,7 +67169,7 @@
      "scope": "cell:manifests/family_model.json#trust:{job}:{version}.signer_rule",
      "roster": "quote:CC 3.2 \"A witness is someone else's node, so the conferring roster MUST NOT list a key without a live `lineage_witness:acceptance:v1` from that node's owner\"",
      "conferrer": "quote:CC 4.5.4 \"A conferral carries the voices of a strict majority of the duty holders\"",
-     "consent": "quote:CC 4.4.3.4.3 \"seats its delegate only with the delegate's own consent\"",
+     "consent": "quote:CC 4.4.3.19 \"seats its delegate only with the delegate's own consent\"",
      "ends": "cell:manifests/family_model.json#trust:{job}:{version}.lifecycle"
     },
     "cells_from": [
@@ -67211,7 +67211,7 @@
     "source": "cc-table",
     "cites": [
      {
-      "cc_ref": "CC 2.6.1.7",
+      "cc_ref": "CC 2.6.1.8",
       "reading": "agree"
      }
     ]
@@ -67756,7 +67756,7 @@
      ]
     },
     "source": "cc-table",
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "code": {
      "value": "none (no family body; SchemaResolver no-op by default)",
      "source": "gap"

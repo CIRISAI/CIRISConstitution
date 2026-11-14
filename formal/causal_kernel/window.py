@@ -51,7 +51,7 @@ CK, CUT, K, R = ST.CK, ST.CUT, ST.K, ST.R
 
 # value said, threshold, over which base, outcome
 WINDOWS = {
-    # formal/self_roster, CC 3.3.6.3: a strict majority of the roster lands it at once (the proposer approves);
+    # formal/self_roster, CC 3.3.6.4: a strict majority of the roster lands it at once (the proposer approves);
     # a strict majority of the others refuses it; alone it lands at the close, and only if the target was silent
     "self_roster_evict": {"policy": "self_roster_evict", "counted": "self", "concluder": "self", "opener_says": "approve",
                           "at_once": (("approve", "strict", "all", "landed"), ("object", "strict", "others", "refused")),

@@ -20,6 +20,6 @@ platform signal is attested at the provider rung.
 
 **What it does not model.** Who may be a witness and how a platform signal is attested (CC 3.4.11,
 the reserved prefix); the capability envelope of each band (CC 3.4.13); guardianship; whether
-the roster's devices are one person's (CC 3.3.6.3), on which the roster rule rests.
+the roster's devices are one person's (CC 3.3.6.4), on which the roster rule rests.
 
 **Run.** `lean AgeBand.lean` (exit 0, no `sorry`).

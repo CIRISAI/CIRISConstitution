@@ -66,7 +66,7 @@ self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
 self roster (a person's keys)	Inv_ThiefCannotEvictHonest (owner present)	holds
 self roster (a person's keys)	Inv_ThiefNeverMajority: a thief's own key is not added against the owner's two keys	holds
 self roster (a person's keys)	Prop_LostRecoverable (two lost of three)	holds
-self roster (a person's keys)	WITNESS PAIR: a person's and an agent's self roster, same parameters; CC 3.3.6.3 'The door is a person's ... an agent's occurrence is single-signer, and neither runs these paths'	holds with persons_only (identity_type of the roster's root)
+self roster (a person's keys)	WITNESS PAIR: a person's and an agent's self roster, same parameters; CC 3.3.6.4 'The door is a person's ... an agent's occurrence is single-signer, and neither runs these paths'	holds with persons_only (identity_type of the roster's root)
 self roster (a person's keys)	a vote from an evicted key is void (removal by causal past)	holds
 self roster (a person's keys)	combined1_add: at one key the addition lands at once	holds
 self roster (a person's keys)	combined1_stolen: one key stolen loses the self	bound reproduced

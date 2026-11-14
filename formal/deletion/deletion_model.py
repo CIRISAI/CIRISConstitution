@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CC — the deletion deadline as a small executable model (CC 3.3.1 D1, CC 4.4.3.5.2, CC 2.4.1.1).
+CC — the deletion deadline as a small executable model (CC 3.3.1 D1, CC 4.4.3.27, CC 2.4.1.1).
 
 A producer holds a row T about a subject and has committed to delete within a window. The subject revokes or
 withdraws; the window starts at the instant this node first held that act. The node holds a set of rows about T,

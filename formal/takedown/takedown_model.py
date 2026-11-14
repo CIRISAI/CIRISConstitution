@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CC — takedown and erasure as a small executable model (CC 4.5.3, CC 4.5.13, CC 4.4.3.2.8).
+CC — takedown and erasure as a small executable model (CC 4.5.3, CC 4.5.13, CC 4.4.3.12).
 
 One blob at one node. The node holds a set of rows about the blob, each with the instant the node first held it.
 The blob's state is a fold over that set and the instant, never stored: served, withheld or destroyed.
@@ -9,7 +9,7 @@ Rows:  notice(basis)   a takedown notice on a basis; immediate bases destroy on 
                        and destroy at the close of their window
        reversal        an admitted reversal of a windowed notice (reconsideration upheld, counter-notice)
        lift            the members' lift of a moderator's act (CC 4.5.13)
-       hold            a legal hold on the blob (CC 4.4.3.2.8)
+       hold            a legal hold on the blob (CC 4.4.3.12)
        hold_lifted
 
 The bases, which are immediate and which windowed, and each window's name are read from manifests/reactions.json;

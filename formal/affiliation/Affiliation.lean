@@ -5,7 +5,7 @@
   and an affiliation never becomes a place where one voice rules its members.
 
   The split: an affiliation bundles two things the text can hold apart. The DATA REGIME (CC
-  4.4.3.2.8: classification, retention, legal hold, erasure policy, designated officials, …) attaches
+  4.4.3.12: classification, retention, legal hold, erasure policy, designated officials, …) attaches
   to the record and its subjects, at any size. The FLOORS (CC 4.5.13: no single vote admits, no
   single vote removes, a named moderator, removal on a harm report by more than one voice) bind
   power over MEMBERS, and the second voice can come from outside the deciding seat: the designated
@@ -30,7 +30,7 @@ structure Body where
   members : List Key
   official : Key
   overseers : List Key
-  dataLimbsDeclared : Bool     -- the 4.4.3.2.8 limbs resolve to a value (classification, retention, …)
+  dataLimbsDeclared : Bool     -- the 4.4.3.12 limbs resolve to a value (classification, retention, …)
   deriving Repr
 
 inductive ActKind | appoint | remove | quarantine | slash | takedown

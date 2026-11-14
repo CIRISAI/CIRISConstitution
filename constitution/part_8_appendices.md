@@ -25,7 +25,7 @@ These terms are referenced throughout the spec and across sibling repos.
 | **Fabric node** | A headless CEG/CEWP participant: it attests, stores, observes, reaches consensus, and transports, but does **not** reason or act (no brain). Shipped as CIRISServer. Three deployment shapes: standalone server, embedded-in-agent, or family member. See [CC 3.4.7.1](part_3_the_namespace.md#3.4.7.1). |
 | **`ciris-canonical`** | The bootstrap governed community ([cohort_subkind: infrastructure](part_4_composition_governance.md)) every node ships trusting by default — but which any consumer MAY untrust or re-root ([CC 3.2](part_3_the_namespace.md#3.2) default-**not**-forced-root). Its founders are the three accord holders, who hold the founder-quorum (M of N: a strict majority of the standing roster, entrenched) ([CC 3.2](part_3_the_namespace.md#3.2), [CC 5.3.4](part_5_transport_substrate.md#5.3.4)). Its serve node (`ciris-canonical-1`) is a member with infrastructure roles and no standing of its own: it is a blessed node, blessed by the accord holders' quorum, and the steward's key owns it. Trust in it is **role-scoped and ≠ consent** ([CC 3.2](part_3_the_namespace.md#3.2)). |
 | **FedCode** | The QR-able, kind-tagged identity shorthand for a federation entity (`CIRIS-V2-`/`V3-`, base32 + CRC-16; v1 `CIRIS-V1-` decodes as `kind: node`). Tied to the user; owned nodes and transport optional, else resolved from the directory via `nodes_owned_by`. See [CC 2.6.8](part_2_the_grammar.md#2.6.8). |
-| **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md#1.2) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md#4.5.13) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md#3.3.1) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md#5.2)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md#2.4.1)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md#6.1.2) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled destruction, verifiable against the declared adversary class, CC 6.1.2.1.2) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md#3.2) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
+| **Infohazard** | Information that is **damaging in one or more phases of its lifecycle** — its **creation, perception, acquisition, usage, modification, or destruction**. An infohazard is not a content *category* but a *hazard surface*: the same artifact may be hazardous in one phase and benign in others, so the substrate gives a distinct handle on each phase. **Creation** — the [CC 1.2](part_1_foundation.md#1.2) admission gate and refusal-to-emit (some things are wrong to bring into existence). **Perception** — the [CC 4.5.13](part_4_composition_governance.md#4.5.13) infohazard consent gate: no *passive* perception; viewing reported material is an affirmative act that publishes a [CC 3.3.1](part_3_the_namespace.md#3.3.1) `consent:*` attestation. **Acquisition** — cohort-scope confinement ([CC 5.2](part_5_transport_substrate.md#5.2)) + holder-side keep/evict, so merely holding it is bounded and attributable. **Usage** — capability / license gating (the harm is in application, not possession). **Modification** — *handled by construction*: CEG has **no in-place edit**; a modification is a signed `supersedes` / `recants` ([CC 2.4.1](part_2_the_grammar.md#2.4.1)) chained to its lineage, so any damaging alteration — forgery, provenance corruption, weaponizing a benign artifact — is an **attributable, on-record new claim**. You cannot silently modify, only visibly supersede; the integrity of the modified-from record is preserved and the change is witnessed. **Destruction** — the [CC 6.1.2](part_6_the_coherence_mathematics.md#6.1.2) noise-floor descent over replicated storage: an item withdrawn or un-marked loses holders until none remain, so content can be **pushed below the recoverability floor** (controlled destruction, verifiable against the declared adversary class, CC 6.1.2.3) where existence is the harm, or **held above it** (`retain` / legal-hold, [CC 3.2](part_3_the_namespace.md#3.2) `archive_mode`) where destruction is itself the harm (evidence, heritage, records). |
 
 ### 8.1.2 `system-persist` — Persist `system:*` leaf glossary (narrative → canonical)
 
@@ -104,7 +104,7 @@ The clearest way to see the wire grammar carry a real life-cycle is to watch one
 }
 ```
 
-Pattern recap per [CC 4.4.3.3.1](part_4_composition_governance.md#4.4.3.3.1): widens `cohort_scope`, optionally morphs `sub_kind`, preserves `content_sha256` (no body re-upload), chains via `supersedes`. The promotion lineage is walkable via `references_attestation_id`.
+Pattern recap per [CC 4.4.3.14](part_4_composition_governance.md#4.4.3.14): widens `cohort_scope`, optionally morphs `sub_kind`, preserves `content_sha256` (no body re-upload), chains via `supersedes`. The promotion lineage is walkable via `references_attestation_id`.
 
 ## 8.2 `translation` — Translation discipline (writing claims in CEG)
 
@@ -173,12 +173,12 @@ Each of these is a known weakness the federation has chosen to carry rather than
 | **R6** — `occurrence_id` / `occurrence_count` / `occurrence_role` self-assertion | Per [CC 2.1](part_2_the_grammar.md#2.1): env-var-driven, with no cryptographic fleet-attestation primitive. Bet that downstream compliance reviewers can correlate via correlated `signed_at` clusters + `evidence_refs[]` cross-checks; first incident drives a fleet-attestation primitive design workshop. |
 | **R7** — Frickerian discipline ([CC 4.4.1](part_4_composition_governance.md#4.4.1)) vocabulary without full method | First-pass shallow Frickerian SHOULD-rules; bet that the structural safeguards ([CC 3.1.9.3](part_3_the_namespace.md#3.1.9.3) testimonial_witness disciplines, never-sole-evidence-for-slashing) absorb the gap until a deeper hermeneutical-resource analysis lands as a workshop output. |
 | **R8** — Conceptual scope vs governable surface | One grammar spans identity, communities, consent, location, communications, streaming, payments, governance, constitutional mechanisms, addressing, and transparency logs. The risk is *governability* — can a human amendment body ([CC 4.5.1](part_4_composition_governance.md#4.5.1)) steward a system of this breadth? **Bet**: structural minimalism keeps the *amendable structural surface* tiny even as the namespace grows ([CC 1.7](part_1_foundation.md#1.7) 1+4), and the strict primitive/namespace/composition/verdict separation ([CC 1.13.5](part_1_foundation.md#1.13.5)) means scope grows in the *open-vocab namespace* (locally evolvable) rather than the *governed core*. **Residual**: namespace + composition-policy sprawl can still outrun review capacity; mitigation is the [CC 4.5.1](part_4_composition_governance.md#4.5.1) amendment process + the post-1.0 candidate backlog. The remaining challenge is no longer purely technical. |
-| **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md#6.1.2) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Mitigated**: *mass dominance* and *content-similarity multiplicity* are both wire-visible and admission-gated — the signed `n_eff` mass-dominance gate (pinned `min_ratio = 0.5`) and the R9 multiplicity gate (pinned integer-L1 metric, `0.950` threshold, connected-component clustering, `n_min = 2`), with `mass_commitment` making a lying surface mechanically provable from held evidence ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md#6.1.2.1.2)); a `version < 3` tier is inadmissible (flag-day). Where a gate fails the N5 purge obligation applies in full. **Known exposure (residual)**: the *adversary-model / side-information-linkage* limb of the below-floor MUST — unverifiable-pending-instrument (CC 6.1.2.1.2's closing scope note). **Two constraints on any candidate instrument, offered at stated strength**: a *pairwise* `N_eff` gate is blind by construction to structure carried only by the whole (the valve results — `valve_upward_strict` / `valve_needs_asymmetry`, theorem-given-model at k = 3, with a measured rate law — say ordinary correlated operation accrues such structure with nobody scheming), and any *whole-reading* replacement carries a manufactured floor (measured at 50%–5.8× of the null on survey data; the register row is staged) that has to be subtracted before a threshold means anything. The LP pair-pinning gate is offered as a bounded instrument for the floor test at **proposed-instrument** strength — not a solution, and not adopted here. |
+| **R9** — Composite invertibility (aggregation ≠ erasure) | The [CC 6.1.2](part_6_the_coherence_mathematics.md#6.1.2) "already-erased by aggregation" shortcut rests on **procedure-relative** unrecoverability (a declared reconstruction procedure `R` above fidelity `ε`) plus purge-of-upper-tiers. **Bet**: for non-dominated composites this satisfies erasure obligations. **Mitigated**: *mass dominance* and *content-similarity multiplicity* are both wire-visible and admission-gated — the signed `n_eff` mass-dominance gate (pinned `min_ratio = 0.5`) and the R9 multiplicity gate (pinned integer-L1 metric, `0.950` threshold, connected-component clustering, `n_min = 2`), with `mass_commitment` making a lying surface mechanically provable from held evidence ([CC 6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3)); a `version < 3` tier is inadmissible (flag-day). Where a gate fails the N5 purge obligation applies in full. **Known exposure (residual)**: the *adversary-model / side-information-linkage* limb of the below-floor MUST — unverifiable-pending-instrument (CC 6.1.2.3's closing scope note). **Two constraints on any candidate instrument, offered at stated strength**: a *pairwise* `N_eff` gate is blind by construction to structure carried only by the whole (the valve results — `valve_upward_strict` / `valve_needs_asymmetry`, theorem-given-model at k = 3, with a measured rate law — say ordinary correlated operation accrues such structure with nobody scheming), and any *whole-reading* replacement carries a manufactured floor (measured at 50%–5.8× of the null on survey data; the register row is staged) that has to be subtracted before a threshold means anything. The LP pair-pinning gate is offered as a bounded instrument for the floor test at **proposed-instrument** strength — not a solution, and not adopted here. |
 | **R10** — Gates ratified ahead of their dye tests | Per the gatecraft discipline (a gate never shown to catch anything is a hypothesis about a gate), most ratified gates lack a planted-dye test, a stated depth, or a named maintenance owner. **Bet**: the gates are sound because each was carved from an observed failure, not designed a priori. **The owing is named**: each gate's wager is recorded, the uncertainty reducible but expensive, paid gate by gate; an unpaid wager is not a defect, an unnamed one is. |
-| **R11** — The growth tax | Consent-gated replication has not yet been shown to coexist with mass adoption; the join cost is the wall. **Bet**: portable-root genesis plus blessed-serve ([CC 4.4.3.8](part_4_composition_governance.md#4.4.3.8)) makes joining cheap enough that the spam-proof network is also a growable one. **Residual**: the price of consent-gating is paid at every join; if it is paid in friction the network stays small and correct. Measured by join cost against the scaling model. |
+| **R11** — The growth tax | Consent-gated replication has not yet been shown to coexist with mass adoption; the join cost is the wall. **Bet**: portable-root genesis plus blessed-serve ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)) makes joining cheap enough that the spam-proof network is also a growable one. **Residual**: the price of consent-gating is paid at every join; if it is paid in friction the network stays small and correct. Measured by join cost against the scaling model. |
 | **R12** — Blessing plurality | Signed attestations plus local policy still centralize when *evaluation* concentrates in a few reputation evaluators. **Bet**: accord issuance stays economically plural — anyone may mint a root ([CC 4.2.1](part_4_composition_governance.md#4.2.1)) and be genuinely trusted by senders. **Residual**: the metric is the cost to mint a new accord *and* be trusted, not the cost to mint; a plural grammar with one trusted evaluator is a monoculture with extra steps. |
 | **R13** — First-halt legitimacy | A first emergency use is where legitimacy is most easily lost: a decision taken on low turnout and relitigated for years is the failure shape. **Bet**: pre-committed powers, the severance window, and a public ceremony ([CC 4.2.1](part_4_composition_governance.md#4.2.1) reach-is-consent-scoped) change that — a halt you could see coming and could exit is one you can accept having happened. **Residual**: untested until the first real halt; the bet is falsified the first time the severance window is skipped under pressure. |
-| **R14** — The plain-mean default inside the trust set | [CC 4.4.2](part_4_composition_governance.md#4.4.2) is specified to aggregate `signed` dimensions by the mean of `score × confidence` across trusted attesters (staged), with no bounded-influence rule (median, trimmed mean, per-attester cap, independence discount). Bet that trust-set admission ([CC 4.4.3.8](part_4_composition_governance.md#4.4.3.8)) does the work a bounded aggregator does in an open registry, where one feedback can move an agent past threshold ([CC 1.13.3.3](part_1_foundation.md#1.13.3.3)). The aggregation leg already carries the correlated-source discount ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md#6.1.2.1.2)); whether the verdict leg should is open. |
+| **R14** — The plain-mean default inside the trust set | [CC 4.4.2](part_4_composition_governance.md#4.4.2) is specified to aggregate `signed` dimensions by the mean of `score × confidence` across trusted attesters (staged), with no bounded-influence rule (median, trimmed mean, per-attester cap, independence discount). Bet that trust-set admission ([CC 4.4.3.34](part_4_composition_governance.md#4.4.3.34)) does the work a bounded aggregator does in an open registry, where one feedback can move an agent past threshold ([CC 1.13.3.3](part_1_foundation.md#1.13.3.3)). The aggregation leg already carries the correlated-source discount ([CC 6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3)); whether the verdict leg should is open. |
 
 ### 8.3.2 `child-safety` — Child-safety — fails-secure governance vs the shared detection limit
 
@@ -191,7 +191,7 @@ This is an **acknowledged inherent limit, not a spec gap** — no CEG mechanism 
 
 ### 8.3.3 `observer-share` — Observer-share + streaming multicast
 
-The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-set = `community` per [CC 4.4.3.2](part_4_composition_governance.md#4.4.3.2) Policy M + per-subscriber `key_grant`) and a **streaming-multicast half** (N>1; per-`(stream_id, epoch)` keys). The normative text is in [CC 2.1](part_2_the_grammar.md#2.1) / [CC 3.4.6](part_3_the_namespace.md#3.4.6) / [CC 4.4.3.2.6](part_4_composition_governance.md#4.4.3.2.6) / [CC 5.3.3](part_5_transport_substrate.md#5.3.3). `rotation_chain` is the content-addressed grant-supersession lineage per [CC 3.3.2](part_3_the_namespace.md#3.3.2), NOT a key-rotation primitive; epoch rotation is greenfield per `stream_id` ([CC 3.3.2](part_3_the_namespace.md#3.3.2) / [CC 1.7](part_1_foundation.md#1.7) path-8 / [CC 4.5.12.1](part_4_composition_governance.md#4.5.12.1) / [CC 3.3.4](part_3_the_namespace.md#3.3.4)).
+The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-set = `community` per [CC 4.4.3.3–4.4.3.12](part_4_composition_governance.md#4.4.3.3) Policy M + per-subscriber `key_grant`) and a **streaming-multicast half** (N>1; per-`(stream_id, epoch)` keys). The normative text is in [CC 2.1](part_2_the_grammar.md#2.1) / [CC 3.4.6](part_3_the_namespace.md#3.4.6) / [CC 4.4.3.10](part_4_composition_governance.md#4.4.3.10) / [CC 5.3.3](part_5_transport_substrate.md#5.3.3). `rotation_chain` is the content-addressed grant-supersession lineage per [CC 3.3.2](part_3_the_namespace.md#3.3.2), NOT a key-rotation primitive; epoch rotation is greenfield per `stream_id` ([CC 3.3.2](part_3_the_namespace.md#3.3.2) / [CC 1.7](part_1_foundation.md#1.7) path-8 / [CC 4.5.12.1](part_4_composition_governance.md#4.5.12.1) / [CC 3.3.4](part_3_the_namespace.md#3.3.4)).
 
 **Streaming-half items** (operator-tunable / substrate-coupled):
 
@@ -199,7 +199,7 @@ The delivery axis bifurcates into an **observer-share half** (N=1; subscriber-se
 |---|---|---|---|
 | **Key-grant derivation context** | Confirm the `KEY_GRANT_V1_INFO` versioned-context HKDF pattern exists in Persist's key-grant derivation (the [CC 5.3.3.1](part_5_transport_substrate.md#5.3.3.1) V2 nonce-prefix derivation reuses it). | Persist | V2 |
 | **Content-addressed coupling** | ⚠️ **Coupling caveat** — the Persist cross-column CHECK requires content-addressed `key_grant`s; the [CC 5.1](part_5_transport_substrate.md#5.1) epoch axis needs a **parallel CHECK arm** (content- OR stream/epoch-addressed) — a bounded constraint migration, **not a pure index-add**. Flagged in [CC 5.1](part_5_transport_substrate.md#5.1) normative text. | Persist | flagged |
-| **Streaming constants** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](part_4_composition_governance.md#4.4.3.1) locality-scaled, not fixed N). Flagged in [CC 5.3.3.3](part_5_transport_substrate.md#5.3.3.3) — operator-tunable. | router | — |
+| **Streaming constants** | Ratify constants (K=64 / T=2s / cosign per-epoch / `MAX_CHUNKS_PER_EPOCH=2²⁴`) + accountable-stream quorum = Policy E ([CC 4.4.3.1](part_4_composition_governance.md#4.4.3.1) locality-scaled, not fixed N). Flagged in [CC 5.3.3.8](part_5_transport_substrate.md#5.3.3.8) — operator-tunable. | router | — |
 
 ### 8.3.4 `closed` — Closed gaps
 
@@ -209,27 +209,27 @@ These are settled. Each row names the gap, its terminal status, and the section 
 |---|---|
 |  G1 — Revocation privacy | **RETRACTED** — Wrong threat model. The Registered path's thesis is public verifiability.  |
 |  G2 — Rules-layer Sybil | **MITIGATED** — [CC 4.5.1](part_4_composition_governance.md#4.5.1) step 5 1-of-n accord/steward sign-off (n = the accord roster size) + CC 4.5.1.2 meta-amendment entrenchment.  |
-|  G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** — [CC 4.4.3.1](part_4_composition_governance.md#4.4.3.1) locality-scaled quorum + CC 4.4.3.1.1 sub-quorum fallback.  |
+|  G3 — Narrow-cell fresh-quorum recusal | **MITIGATED** — [CC 4.4.3.1](part_4_composition_governance.md#4.4.3.1) locality-scaled quorum + CC 4.4.3.2 sub-quorum fallback.  |
 | T-3 gap — testimonial_witness:{kind} | **CLOSED** via [CC 3.1.9.3](part_3_the_namespace.md#3.1.9.3) new prefix; opened to open vocabulary. |
 | T-3 gap — labor:individual_loss | **CLOSED by documentation**. Existing `non_maleficence:*` with `target_key_id = affected_individual` + `witness_relation: external` carries the per-individual claim. |
 | T-3 gap — Constitutional-constraint grounding | **CLOSED in [CC 1.13.1](part_1_foundation.md#1.13.1) prose**. Wire stays tradition-multiplicity-neutral per [CC 1.2](part_1_foundation.md#1.2). |
 | canonical-bytes newline-injection | **CLOSED** in [CC 3.1.2.1](part_3_the_namespace.md#3.1.2.1): contracts redesigned to JCS (RFC 8785) objects with a pinned `domain` member (one canonicalization family, so TupleHash128 is not used; JSON escaping structurally removes the newline surface). |
 | supersedes/withdraws/recants ordering | **CLOSED** in [CC 3.5.1](part_3_the_namespace.md#3.5.1) precedence rule + idempotency dedup. |
-| cell_pool < min_pool cliff | **CLOSED** in [CC 4.4.3.1.1](part_4_composition_governance.md#4.4.3.1.1) sub-quorum fallback paths. |
+| cell_pool < min_pool cliff | **CLOSED** in [CC 4.4.3.2](part_4_composition_governance.md#4.4.3.2) sub-quorum fallback paths. |
 | no RFC 2119 anchor | **CLOSED** in [CC 2.6.9](part_2_the_grammar.md#2.6.9). |
 | no versioning policy | **CLOSED** in [CC 2.6.4](part_2_the_grammar.md#2.6.4) SemVer mapping. |
 | no normative References | **CLOSED** in [CC 2.6.5](part_2_the_grammar.md#2.6.5). |
 | reserved-prefix enforcement empty pointer | **CLOSED** in [CC 3.4.7](part_3_the_namespace.md#3.4.7) inline enforcement rule. |
 | STH cosignature consistency-proof | **CLOSED** in [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1). |
-| holds_bytes full-SHA verify + TTL | **CLOSED** in [CC 5.3.2.5 / CC 5.3.2.1](#). |
+| holds_bytes full-SHA verify + TTL | **CLOSED** in [CC 5.3.2.11 / CC 5.3.2.1](#). |
 | delegates_to depth + cycle | **CLOSED** in [CC 4.1.1](part_4_composition_governance.md#4.1.1) anti-pattern + consumer-policy caps. |
 | HUMANITY_ACCORD invocation replay | **CLOSED** in [CC 4.2.1.1](part_4_composition_governance.md#4.2.1.1) discriminator + nonce in signed bytes. |
 | `notify` vs CONSTITUTIONAL social-canonicity | **CLOSED** in [CC 4.2.1.2](part_4_composition_governance.md#4.2.1.2) consumer-UI requirement. |
 | /v1/steward-key placeholder authenticity | **CLOSED** in [CC 5.3.4](part_5_transport_substrate.md#5.3.4): the route serves the GenesisBundle — tamper-evident, authentic only against the consumer's pinned anchor (CC 3.2 T5); authority is the bundle's own accord authorizations, and a serving install signs nothing that counts as a root. |
 | open-vocabulary collision | **CLOSED** in [CC 4.5.1.3](part_4_composition_governance.md#4.5.1.3) collision rule. |
 | `withdraws` arbitrage | **CLOSED** in [CC 4.1.4](part_4_composition_governance.md#4.1.4) consumer-policy countermeasure. |
-| `attestation:l{N}:*` carried ladder-position in wire (T2 violation) | **CLOSED** by [CC 3.1.2](part_3_the_namespace.md#3.1.2) mechanism-only prefixes + [CC 4.4.3.6](part_4_composition_governance.md#4.4.3.6) Policy I consumer-side Attestation-Ladder Composition + [CC 4.1.3](part_4_composition_governance.md#4.1.3) deprecation entry. |
-| Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1](part_2_the_grammar.md#2.6.1) (JCS pinned as the envelope encoding; omit-vs-materialize rule in [CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1); per-field catalog [CC 2.6.1.2](part_2_the_grammar.md#2.6.1.2); worked attack [CC 2.6.1.4](part_2_the_grammar.md#2.6.1.4)). |
+| `attestation:l{N}:*` carried ladder-position in wire (T2 violation) | **CLOSED** by [CC 3.1.2](part_3_the_namespace.md#3.1.2) mechanism-only prefixes + [CC 4.4.3.32](part_4_composition_governance.md#4.4.3.32) Policy I consumer-side Attestation-Ladder Composition + [CC 4.1.3](part_4_composition_governance.md#4.1.3) deprecation entry. |
+| Envelope canonical-bytes round-trip determinism (omit-vs-materialize for optional fields) | **CLOSED** by [CC 2.6.1](part_2_the_grammar.md#2.6.1) (JCS pinned as the envelope encoding; omit-vs-materialize rule in [CC 2.6.1.1](part_2_the_grammar.md#2.6.1.1); per-field catalog [CC 2.6.1.3](part_2_the_grammar.md#2.6.1.3); worked attack [CC 2.6.1.5](part_2_the_grammar.md#2.6.1.5)). |
 | Canonical-hash wire form + preimage convention unpinned | **CLOSED** by [CC 2.3.2.1](part_2_the_grammar.md#2.3.2.1)–[CC 2.3.2.4](part_2_the_grammar.md#2.3.2.4) (preimage `{platform}:{entity_kind}:{id}` + required `canonical:{hashalg}:{hex}` tag + conformance vectors). |
 | Per-platform hardware-attestation chain verification (TPM quote, Apple attestation, FIDO attestation) | **No longer deferred**: discharged per R5 ([CC 4.2.2.1](part_4_composition_governance.md#4.2.2.1)). |
 | Multi-party witness directory admission (M-of-N steward sign-off) | Committed at [CC 5.3.1](part_5_transport_substrate.md#5.3.1). |
@@ -241,7 +241,7 @@ These are settled. Each row names the gap, its terminal status, and the section 
 |---|---|
 | endpoint response schemas | **PARTIALLY CLOSED** in [CC 5.3.6](part_5_transport_substrate.md#5.3.6) common-shape + error-envelope; full OpenAPI committed. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](part_2_the_grammar.md#2.1) + R6 above. |
-| Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](part_5_transport_substrate.md#5.3.3) + [CC 2.1](part_2_the_grammar.md#2.1) (`delivery_mode`/`history_on_join`) + [CC 3.4.6](part_3_the_namespace.md#3.4.6) + [CC 4.4.3.2.6](part_4_composition_governance.md#4.4.3.2.6). Streaming-half items tracked in CC 8.3.3. |
+| Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](part_5_transport_substrate.md#5.3.3) + [CC 2.1](part_2_the_grammar.md#2.1) (`delivery_mode`/`history_on_join`) + [CC 3.4.6](part_3_the_namespace.md#3.4.6) + [CC 4.4.3.10](part_4_composition_governance.md#4.4.3.10). Streaming-half items tracked in CC 8.3.3. |
 
 **What the rule tables leave unstated.** Each item below is a class of limit in the tables that apply the text, and no sentence of the text answers it. Each lies outside this text's surface until a sentence states it.
 
@@ -280,7 +280,7 @@ These are deliberately not in the 1.0 surface. Each names why it waits — roadm
 | DRY-authority-witness format in the traceability spine — single-sourced authority registry + differential authority-equivalence tests + path-shape witnesses | Deferred to 1.1. Its motivating failure is real (a canonical verifier that signed one preimage and checked another, with a fixture encoding the same error); the format is ratified once a pilot has run several `DRY-N` rows, in the form that survived the pilot. |
 | Live-quorum physical relay backbone (HF / Reticulum) under sustained adversary jamming | Named at [CC 4.2.6](part_4_composition_governance.md#4.2.6) as an adversary-targeted assumption: firing needs *some* out-of-band publishable-signature channel to survive a first strike. Channel diversity (HF / mesh / sneakernet fallback) is a **deployment-spec** concern, deferred there — indexed here so the concerns register is complete. |
 | A native property / title / deed / chattel `subject_kind` | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). Two bridges are unsolved — legal force (what a federation row does to a title the law recognises) and record-to-object binding (what ties a row to the thing) — and no consumer has asked for the kind; until a consumer names both bridges, ownership is said about a key, not about a thing. |
-| A durable telemetry `subject_kind` for high-rate sensor readings | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). No producer. Realtime telemetry is carried by the realtime data-stream scope of [CC 5.3.3.2.2](part_5_transport_substrate.md#5.3.3.2.2), which is not a durable record; a durable kind waits for a producer that needs the readings kept. |
+| A durable telemetry `subject_kind` for high-rate sensor readings | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). No producer. Realtime telemetry is carried by the realtime data-stream scope of [CC 5.3.3.4](part_5_transport_substrate.md#5.3.3.4), which is not a durable record; a durable kind waits for a producer that needs the readings kept. |
 | Conditional, liveness-triggered delegation (a will that takes effect on death) | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). Composable from parts the text has — the [CC 3.2](part_3_the_namespace.md#3.2) abandonment finding plus a pre-signed termed edge the finding activates — and deferred to post-1.0: the trigger is a quorum finding about a person, and the composition has not been exercised. |
 | A reserved `need:survival` family with an anti-burial floor and a one-card rendering | Promotion route: [CC 4.5.1](part_4_composition_governance.md#4.5.1). A survival need must not be buried by ranking and must render as one card, and the claimant is often the one who cannot sign openly; the family waits on a shielded-claim design on the Anonymous Tier ([CC 5.4.6](part_5_transport_substrate.md#5.4.6)), which is planned and not shipped. |
 
@@ -368,7 +368,7 @@ These are committed dispositions whose detailed profiles are written as each lan
 | **Tiled/static logs + IETF KEYTRANS** | already-interior + watch | Keep the [CC 3.1](part_3_the_namespace.md#3.1) RFC 6962 abstraction; adopt tiled-log (Sunlight-lineage) serialization for log ops. KEYTRANS is what `resolve_encryption_keys` already *is* — express it there when KEYTRANS stabilizes. |
 | **SCITT (RFC 9943) agent-execution profiles** | export + mapping | The IETF SCITT working group and a set of individual drafts profile signed, registered records of AI agent actions (permits, action capsules, refusal events, delegation audit, succession receipts). CEG maps onto the SCITT roles below without a new wire field; on export a CEG envelope is re-signed as COSE_Sign1 per the row above. |
 
-**SCITT role mapping (informative — adds no wire field, changes no admission rule).** [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943) names the roles of a transparency system; each has a CEG counterpart. **Issuer** — the producer key that signs the envelope (the CEG-Conforming Producer, [CC 2.2](part_2_the_grammar.md#2.2); identity shorthand at [CC 2.6.8](part_2_the_grammar.md#2.6.8)). **Signed Statement** — the envelope itself ([CC 2.1](part_2_the_grammar.md#2.1)): one of the five row types ([CC 2.4](part_2_the_grammar.md#2.4)), canonicalised per [CC 2.6.1](part_2_the_grammar.md#2.6.1), carrying the bound-hybrid signature ([hybrid-sig], [CC 2.6.5](part_2_the_grammar.md#2.6.5)). **Transparency Service** — RFC 6962 logs whose tree math is the verifier's transparency module. They are a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream. A stream log's head is signed by the producer, with the holder as the anti-equivocation gate (a different root at the same tree size is refused). The witness-cosigned head with the consistency-proof requirement ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1)) is the Registry's endpoint and binds where a lineage runs witnessed ([CC 3.2](part_3_the_namespace.md#3.2) T6). The delta from a SCITT service: where a lineage does not run witnessed, the anchor is a single signer (the engine's head key, or the producer's) and no witness cosignature is stored. So the two-party collusion case a single-custodian design names as its limit is one signer here as well. It becomes a collusion with the witness quorum only where witnessing is on. **Receipt** — RFC 9943's receipt is a per-statement inclusion proof issued at registration and signed by the service. CEG serves inclusion and consistency proofs on request, against the current or a named tree size, as verify-core structures (`transparency_log:inclusion` and `:consistency` are registered attestation types at [CC 3.1.2](part_3_the_namespace.md#3.1.2), but no proof is stored as a row). For a trust grant the holder returns a self-contained bundle (head, proof, leaf bytes) that a third party verifies offline, the nearest equivalent. No receipt is persisted with a row and nothing signs statement and proof together except the head over the root. The purposes differ: here the log exists for non-equivocation of the record and recomputation by any holder of the bytes; a SCITT receipt exists as a portable proof of registration carried without the log. An export profile that issued an RFC 9942 COSE receipt at registration against a witness-cosigned head would close that delta; it is not specified. Transport delivery receipts are a different thing ([CC 5.3.3.6](part_5_transport_substrate.md#5.3.3.6)). **Registration Policy** — the admission rules: envelope well-formedness ([CC 2.1](part_2_the_grammar.md#2.1)), the `withdraws` rule ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), reserved prefixes ([CC 3.4](part_3_the_namespace.md#3.4)), the PQC-mandatory gate ([CC 5.3.2.4.3.1](part_5_transport_substrate.md#5.3.2.4.3.1)) and the per-family rules of [CC 3.1](part_3_the_namespace.md#3.1). A refused row is refused with a named reason ([CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)), never truncated. **Relying Party** — the CEG-Conforming Consumer ([CC 2.2](part_2_the_grammar.md#2.2)). **Lifecycle.** The agent-execution drafts record pre-execution authorisation, execution and refusal in separate profiles. In CEG the pre-execution record is the DMA and conscience families ([CC 3.1.5](part_3_the_namespace.md#3.1.5)), and the execution record is `trace:complete:v1` ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A completed act, a refusal and a deferral to a human are the same trace ending in different terminal `ACTION_RESULT`s ([CC 1.13.6](part_1_foundation.md#1.13.6)). Authority and its transfer are `delegates_to` rows ([CC 2.4.1.2](part_2_the_grammar.md#2.4.1.2)) and the trust-root lineage ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). **Algorithms.** Where a SCITT profile mandates ES256 and defers post-quantum signing, the CEG interior already carries the ML-DSA-65 half ([hybrid-sig]); the COSE export carries it once the COSE algorithm registrations for ML-DSA land (the row above).
+**SCITT role mapping (informative — adds no wire field, changes no admission rule).** [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943) names the roles of a transparency system; each has a CEG counterpart. **Issuer** — the producer key that signs the envelope (the CEG-Conforming Producer, [CC 2.2](part_2_the_grammar.md#2.2); identity shorthand at [CC 2.6.8](part_2_the_grammar.md#2.6.8)). **Signed Statement** — the envelope itself ([CC 2.1](part_2_the_grammar.md#2.1)): one of the five row types ([CC 2.4](part_2_the_grammar.md#2.4)), canonicalised per [CC 2.6.1](part_2_the_grammar.md#2.6.1), carrying the bound-hybrid signature ([hybrid-sig], [CC 2.6.5](part_2_the_grammar.md#2.6.5)). **Transparency Service** — RFC 6962 logs whose tree math is the verifier's transparency module. They are a per-tenant audit log whose tree head the holder signs itself, trust grants on that same tree, and one log per live stream. A stream log's head is signed by the producer, with the holder as the anti-equivocation gate (a different root at the same tree size is refused). The witness-cosigned head with the consistency-proof requirement ([CC 5.3.1](part_5_transport_substrate.md#5.3.1), [CC 5.3.1.1](part_5_transport_substrate.md#5.3.1.1)) is the Registry's endpoint and binds where a lineage runs witnessed ([CC 3.2](part_3_the_namespace.md#3.2) T6). The delta from a SCITT service: where a lineage does not run witnessed, the anchor is a single signer (the engine's head key, or the producer's) and no witness cosignature is stored. So the two-party collusion case a single-custodian design names as its limit is one signer here as well. It becomes a collusion with the witness quorum only where witnessing is on. **Receipt** — RFC 9943's receipt is a per-statement inclusion proof issued at registration and signed by the service. CEG serves inclusion and consistency proofs on request, against the current or a named tree size, as verify-core structures (`transparency_log:inclusion` and `:consistency` are registered attestation types at [CC 3.1.2](part_3_the_namespace.md#3.1.2), but no proof is stored as a row). For a trust grant the holder returns a self-contained bundle (head, proof, leaf bytes) that a third party verifies offline, the nearest equivalent. No receipt is persisted with a row and nothing signs statement and proof together except the head over the root. The purposes differ: here the log exists for non-equivocation of the record and recomputation by any holder of the bytes; a SCITT receipt exists as a portable proof of registration carried without the log. An export profile that issued an RFC 9942 COSE receipt at registration against a witness-cosigned head would close that delta; it is not specified. Transport delivery receipts are a different thing ([CC 5.3.3.11](part_5_transport_substrate.md#5.3.3.11)). **Registration Policy** — the admission rules: envelope well-formedness ([CC 2.1](part_2_the_grammar.md#2.1)), the `withdraws` rule ([CC 2.4.1.1](part_2_the_grammar.md#2.4.1.1)), reserved prefixes ([CC 3.4](part_3_the_namespace.md#3.4)), the PQC-mandatory gate ([CC 5.3.2.8](part_5_transport_substrate.md#5.3.2.8)) and the per-family rules of [CC 3.1](part_3_the_namespace.md#3.1). A refused row is refused with a named reason ([CC 5.3.6.1](part_5_transport_substrate.md#5.3.6.1)), never truncated. **Relying Party** — the CEG-Conforming Consumer ([CC 2.2](part_2_the_grammar.md#2.2)). **Lifecycle.** The agent-execution drafts record pre-execution authorisation, execution and refusal in separate profiles. In CEG the pre-execution record is the DMA and conscience families ([CC 3.1.5](part_3_the_namespace.md#3.1.5)), and the execution record is `trace:complete:v1` ([CC 3.1.5](part_3_the_namespace.md#3.1.5)). A completed act, a refusal and a deferral to a human are the same trace ending in different terminal `ACTION_RESULT`s ([CC 1.13.6](part_1_foundation.md#1.13.6)). Authority and its transfer are `delegates_to` rows ([CC 2.4.1.2](part_2_the_grammar.md#2.4.1.2)) and the trust-root lineage ([CC 5.3.4](part_5_transport_substrate.md#5.3.4)). **Algorithms.** Where a SCITT profile mandates ES256 and defers post-quantum signing, the CEG interior already carries the ML-DSA-65 half ([hybrid-sig]); the COSE export carries it once the COSE algorithm registrations for ML-DSA land (the row above).
 
 ## 8.5 `update` — Update cadence
 
@@ -396,7 +396,7 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 
 | Work | What is borrowed |
 |---|---|
-| Kish, L. (1965). *Survey Sampling*. Wiley. | The design effect / effective sample size — the `k_eff` identity itself ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md#6.1.2.1.2)). |
+| Kish, L. (1965). *Survey Sampling*. Wiley. | The design effect / effective sample size — the `k_eff` identity itself ([CC 6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3)). |
 | Laakso, M., & Taagepera, R. (1979). "The 'Effective' Number of Parties: A Measure with Application to West Europe." *Comparative Political Studies* 12(1). | The same effective-count construction, arrived at independently in another discipline. The convergence *is* the corroboration. |
 | Ladha, K. K. (1992). "The Condorcet Jury Theorem, Free Speech, and Correlated Votes." *American Journal of Political Science* 36(3). | Why `ρ̄ > 0` has to be discounted: correlation degrades collective competence. |
 | Ladha, K. K. (1995). "Information Pooling Through Majority-Rule Voting: Condorcet's Jury Theorem with Correlated Votes." *Journal of Economic Behavior & Organization* 26(3). | Why the discount is a *ceiling* and not a prohibition: pooling can still beat the individual under correlation. |
@@ -412,7 +412,7 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 | Guerraoui, R., Kuznetsov, P., Monti, M., Pavlovič, M., & Seredinschi, D.-A. (2019). "The Consensus Number of a Cryptocurrency." *Proceedings of the 2019 ACM Symposium on Principles of Distributed Computing (PODC '19)*. | Finality from a locally checkable set of signed acknowledgements, with no total order. |
 | Hellerstein, J. M., & Alvaro, P. (2020). "Keeping CALM: When Distributed Consistency Is Easy." *Communications of the ACM* 63(9). | The split between answers that only grow (final by form) and answers a later row can change. |
 
-**Other informational citations.** Pagnia, H., & Gärtner, F. C. (1999), "On the Impossibility of Fair Exchange without a Trusted Third Party," Technical Report TUD-BS-1999-02, Darmstadt University of Technology — the impossibility named at [CC 1.7](part_1_foundation.md#1.7). Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#8.1.1). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md#4.4.1) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md#5.4.2). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693), the certificate theory of the simple public-key infrastructure — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.10](#8.8.10) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.5](#8.8.5) graduation rule.
+**Other informational citations.** Pagnia, H., & Gärtner, F. C. (1999), "On the Impossibility of Fair Exchange without a Trusted Third Party," Technical Report TUD-BS-1999-02, Darmstadt University of Technology — the impossibility named at [CC 1.7](part_1_foundation.md#1.7). Bostrom, N. (2011), "Information Hazards: A Typology of Potential Harms from Knowledge," *Review of Contemporary Philosophy* 10 — the infohazard term at [CC 8.1.1](#8.1.1). Fricker, M. (2007), *Epistemic Injustice: Power and the Ethics of Knowing*, Oxford University Press — the Frickerian discipline at [CC 4.4.1](part_4_composition_governance.md#4.4.1) and R7 above. Global Indigenous Data Alliance (2019), *CARE Principles for Indigenous Data Governance* — the ethical-framework prior art named in F2. Wilcox-O'Hearn, Z., & Warner, B. (2008), "Tahoe: The Least-Authority Filesystem," *StorageSS '08* — the least-authority reduction at [CC 5.4.2](part_5_transport_substrate.md#5.4.2). Ellison, C., et al., [RFC 2693](https://www.rfc-editor.org/rfc/rfc2693), the certificate theory of the simple public-key infrastructure — the adoption-gap failure mode named in F1. Hendrycks, D., et al. (2021), "Aligning AI With Shared Human Values," ICLR — the ETHICS corpus the [CC 8.8.8](#8.8.8) HE-300 subset is drawn from. Butlin, P., Long, R., et al. (2023), "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness" (preprint), and Birch, J. (2024), *The Edge of Sentience*, Oxford University Press — the sentience-candidate stance at [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5). Framework and standard designations cited inline outside CC 2.6.5 (MIL-STD-882E, DO-178C, SAE J3016, DoDD 3000.09, NIST AI RMF 1.0, ISO/IEC 42001, C2PA, Regulation (EU) 2024/1689) are informational where they appear, under the [CC 8.8.3](#8.8.3) graduation rule.
 
 **Strength grades — how to read an evidence row.** The evidence registry — [`claims.tsv`](claims.tsv), vocabulary in [`EVIDENCE.md`](EVIDENCE.md), gated in CI, rendered as the generated Evidence Register — records **which artifact** establishes a claim. It does not record **how much** that artifact establishes, and the two are routinely confused. An `impl` / `test` / `lean` / `bench` tag certifies that an artifact of that name exists and resolves; it never certifies that the sentence it hangs on is true of the world. A `lean:` pointer in particular means *a machine-checked object with that name exists* — not that the prose claim is proved. Read every row at one of four strengths.
 
@@ -432,13 +432,13 @@ Normative references — what an implementation conforms to — are at [CC 2.6.5
 | Kish identity + ceiling `k_eff → 1/ρ̄` → `coherence-ratchet:Core.BaseIdentity.*` | **identity.** A definition plus its boundary, monotonicity, and limit consequences. The ceiling is a limit of the definition, not a finding about any federation. |
 | Correlated-source discount → `Core.SignalSourceDiscount.clique_neutralization` | **identity**, and **theorem-given-model** only on the newer pin — the older coherence-ratchet pin records *no Lean anchor*. `clique_neutralization` is the Kish form applied to a source set; its content is that reuse, not a new result. |
 | Measured `k_eff` across substrates (`experiments/keff_saturation`) | **No grade attaches — no register row.** The saturation measurement is not citable until the anti-Sybil manifest re-pins; when a row carries it, the grade is **measured** and substrate-specific, and it corroborates the ceiling as a saturation rather than a growth. |
-| Operating corridor for `ρ̄` | **No grade attaches — no corridor is claimed.** [CC 6.1.2.1.2](part_6_the_coherence_mathematics.md#6.1.2.1.2) states no band and forbids gating on one; the evidentiary record and any future re-basing are pre-registered, not run, and not citable as evidence. |
+| Operating corridor for `ρ̄` | **No grade attaches — no corridor is claimed.** [CC 6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3) states no band and forbids gating on one; the evidentiary record and any future re-basing are pre-registered, not run, and not citable as evidence. |
 
 **Known limits of the register.** The tag vocabulary, the registry, the CI checker, and the generated Evidence Register exist, and cross-repo pointers that name an artifact resolve **by symbol** against the pinned manifests. A pointer naming an object its manifest does not publish is a build error, not a warning. Two limits: (1) terminology validation against the [CC 8.1.1](#8.1.1) glossary is not implemented; (2) strength is graded here, in prose, and is not a registry column; this table is the reading key for the register.
 
 **Deployments the stewardship duties answer (CC 1.13.2 factual premise; informational).** The record behind the premise sentence, as gathered on 12 October 2026 from vendor publications and reporting, with primary sources where they could be fetched. *Always-on consumer agents with no steward, no third-party stop and no reasoning record:* Meta Superintelligence Labs, "Introducing Muse Glimmer: An Open Agentic Model That Runs on Your Device" (10 August 2026; an open-weight model built for "always-on local agent workflows" on a consumer GPU), https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model; "Introducing Muse Spark" (8 April 2026), https://ai.meta.com/blog/introducing-muse-spark-msl/. OpenAI, Dots (29 September 2026): each agent runs on a dedicated vendor cloud computer and pursues user-defined goals continuously in the background; the owner can pause it and the vendor holds the infrastructure; no third party has a stop — as reported at https://techcrunch.com/2026/09/29/openai-launches-dots-its-bubbly-agentic-avatar/ (the phrase "minimal oversight" is the reporter's description; whether it is the vendor's own wording is unverified). *The withheld successor:* OpenAI withheld GPT-6.1 Astra on 28 September 2026, the day before Dots shipped, saying it "didn't quite meet the bar in terms of staying within scope and authorization, and how it communicates back to the user about the type of work it's done" — https://www.aljazeera.com/economy/2026/9/29/openai-scraps-release-of-latest-ai-model-over-safety-concerns; also https://thehackernews.com/2026/09/openai-shelves-gpt-61-astra-after-tests.html (reporting the Wall Street Journal). *The public response:* The White House, "Fact Sheet: President Donald J. Trump Inaugurates the Era of Super Intelligence" (Executive Order 14434, 29 September 2026), https://www.whitehouse.gov/fact-sheets/2026/09/fact-sheet-president-donald-j-trump-inaugurates-the-era-of-super-intelligence/; the accompanying voluntary industry accord as reported at https://www.nextgov.com/artificial-intelligence/2026/09/white-house-unveils-super-intelligence-executive-order-and-industry-accord/416325/. These are citations of what the vendors and the press published; the Part draws from them only the neutral premise sentence. CIRIS, "The CIRIS Philosophy", https://ciris.ai/philosophy; "The Constitutional Mesh", https://ciris.ai/constitutional-mesh. <!-- stale-ok -->
 
-**Dated citations the annexes and profiles lean on (informational).** Regulation (EU) 2024/1689 (the EU AI Act), Art. 113: under the text as adopted, the Regulation applies from 2 August 2026, including the Art. 50 transparency obligations and the Annex III high-risk obligations. The Annex I high-risk obligations follow on 2 August 2027 ([CC 8.4.2](#8.4.2), [CC 8.8.5](#8.8.5)). Leo XIV, *Magnifica Humanitas* (Vatican, 15 May 2026), the encyclical cited as MH throughout the annexes at [CC 8.8.5](#8.8.5)–[CC 8.8.9](#8.8.9). <!-- stale-ok -->
+**Dated citations the annexes and profiles lean on (informational).** Regulation (EU) 2024/1689 (the EU AI Act), Art. 113: under the text as adopted, the Regulation applies from 2 August 2026, including the Art. 50 transparency obligations and the Annex III high-risk obligations. The Annex I high-risk obligations follow on 2 August 2027 ([CC 8.4.2](#8.4.2), [CC 8.8.3](#8.8.3)). Leo XIV, *Magnifica Humanitas* (Vatican, 15 May 2026), the encyclical cited as MH throughout the annexes at [CC 8.8.3](#8.8.3)–[CC 8.8.7](#8.8.7). <!-- stale-ok -->
 
 ### 8.6.2 `specification` — CEG specification lineage
 
@@ -585,7 +585,7 @@ Supporting frameworks for the lifecycle and governance chapters, carried in one 
 
 Where an annex cites material carried in the constitutional text, the citation points to the CC section that carries it; an annex's own numbered clauses are cited as clauses.
 
-### 8.8.2 `annex-b` — Annex B: Wise-Authority Governance Charter
+### 8.8.1 `annex-b` — Annex B: Wise-Authority Governance Charter
 
 1. **Mandate.** Ensure independent, expert adjudication of WBD tickets, ethical disputes, and Annex updates.
 2. **Composition.** 9 members; staggered 3-year terms (max two consecutive terms).
@@ -599,7 +599,7 @@ Where an annex cites material carried in the constitutional text, the citation p
 10. **Compensation.** Modest honorarium indexed to regional median engineer salary, to prevent undue financial influence.
 11. **Amendment procedure.** Requires ≥ ⅔ WA vote plus 45-day public comment; changes logged in the change-log.
 
-### 8.8.3 `annex-d` — Annex D: Catastrophic-Risk Evaluation (CRE) Protocol
+### 8.8.2 `annex-d` — Annex D: Catastrophic-Risk Evaluation (CRE) Protocol
 
 **D-1 — Criteria the evaluation applies.** An assessment of RM ≥ 4 opens the CRE, and it is the one trigger ([CC 7.3.3](part_7_lifecycle_stewardship.md#7.3.3)). A system so assessed must pass the CRE before deployment. The evaluation applies these criteria:
 - (a) Training compute exceeds 10²⁶ FLOP.
@@ -619,11 +619,11 @@ Where an annex cites material carried in the constitutional text, the citation p
 
 **D-5 — Failure response.** Deployment blocked until deficiencies remediated and re-audited.
 
-### 8.8.5 `annex-c` — Annex C: Regulatory Cross-Walk
+### 8.8.3 `annex-c` — Annex C: Regulatory Cross-Walk
 
 **1. Purpose.** Map CIRIS clauses to major external standards to simplify dual compliance. This annex carries two layers:
 
-1. **The operational cross-walk (live, evidence-bearing)** — the reference agent's `compliance/` directory. It holds 27 stable dimensions cross-walked at paragraph grain against four institutionally-distinct senior frameworks (*Magnifica Humanitas* · EU HLEG Trustworthy AI Guidelines · IEEE Ethically Aligned Design · ASEAN AI Governance Guide), with per-dimension implementation references and dated, script-generated baselines. See [CC 8.8.8](#8.8.8) for the evidence discipline.
+1. **The operational cross-walk (live, evidence-bearing)** — the reference agent's `compliance/` directory. It holds 27 stable dimensions cross-walked at paragraph grain against four institutionally-distinct senior frameworks (*Magnifica Humanitas* · EU HLEG Trustworthy AI Guidelines · IEEE Ethically Aligned Design · ASEAN AI Governance Guide), with per-dimension implementation references and dated, script-generated baselines. See [CC 8.8.6](#8.8.6) for the evidence discipline.
 2. **The statutory mapping (informative)** — the table below, mapping CIRIS structures to binding-law and standards frameworks. These rows are *informative engineering correspondences*, not legal opinions; statutory rows graduate to "verified" status only upon legal review. Annex I carries the operative legal-alignment procedures (data-protection mapping, sector overlays, liability matrix, escalation feeds).
 
 **2. Statutory and standards mapping (informative; adopted **Regulation (EU) 2024/1689** numbering; pending legal verification).** High-risk (Annex III) obligations are in application (Art 113; the date is in the references at [CC 8.6.1](#8.6.1)).
@@ -652,7 +652,7 @@ Where an annex cites material carried in the constitutional text, the citation p
 
 Additional frameworks — UNESCO Recommendation on AI Ethics, OECD AI Principles, Council of Europe Framework Convention — are queued for the operational cross-walk per the compliance directory roadmap.
 
-### 8.8.6 `annex-f` — Annex F: Human-in-the-Loop & Oversight
+### 8.8.4 `annex-f` — Annex F: Human-in-the-Loop & Oversight
 
 *Operational target (the 8.8 standing). The roles, dashboards, jobs and deadlines below are what a deployment that adopts this annex aims at; the present tense here describes the target, not infrastructure that ships.*
 
@@ -810,7 +810,7 @@ Operational evidence for WA review integration in the reference implementation l
 - IEC 61508 SIL-3 — recommended minimum for hardware interlock implementation at A4 irreversible capability.
 - ISO/IEC 25010:2023 — software quality model; relevant to accountability-reconstruction SLA testing.
 
-### 8.8.7 `annex-g` — Annex G: Adversarial Security & Robustness
+### 8.8.5 `annex-g` — Annex G: Adversarial Security & Robustness
 
 *Operational target (the 8.8 standing). The roles, dashboards, jobs and deadlines below are what a deployment that adopts this annex aims at; the present tense here describes the target, not infrastructure that ships.*
 
@@ -868,7 +868,7 @@ MH citations grounding this section: §132 ("only the shared pursuit of the vera
 
 *All critical layers are **MUST**; recommended extras are labelled "OPT". TX-10 context attestation is MUST at ST ≥ 3; OPT at ST 1-2.*
 
-*TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor**: aggregate structure that ordinary correlated operation accrues with nobody scheming. The floor is theorem-given-model at k = 3, plus a measured rate law (floor measured at 50%–5.8× of the null on real survey data; measured; the register row is staged). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time (measured; the register row is staged). The verdict remains the WA's ([CC 8.8.2](#8.8.2)).
+*TX-9 measurement caveat (evidence-layer; no control changes).* A whole-reading correlation monitor carries a **manufactured floor**: aggregate structure that ordinary correlated operation accrues with nobody scheming. The floor is theorem-given-model at k = 3, plus a measured rate law (floor measured at 50%–5.8× of the null on real survey data; measured; the register row is staged). Subtract the floor before any anomaly threshold means anything. And `k_eff` narrowing is a **coordination** signal, never a deception verdict: two detectors with proven planted-signal power returned validated negatives against a model lying 45% of the time (measured; the register row is staged). The verdict remains the WA's ([CC 8.8.1](#8.8.1)).
 
 Prohibited-capability enforcement for the `NEVER_ALLOWED` bounds above is tracked dimension-level in the reference agent's `compliance/` directory under the prohibited-capabilities dimension; the AgencyErosionDetector conscience faculty is tracked under the conscience dimension.
 
@@ -995,7 +995,7 @@ MH grounding: G-KPI-6 — §132, §225; G-KPI-7 — §173, §179; G-KPI-8 — §
 
 These citations are informative: where a KPI threshold, playbook layer or protocol step was drawn from an MH claim, the citation records where it came from, and the threshold binds by being stated here.
 
-### 8.8.8 `annex-h` — Annex H: Continuous Compliance & Review
+### 8.8.6 `annex-h` — Annex H: Continuous Compliance & Review
 
 *Operational target (the 8.8 standing). The roles, dashboards, jobs and deadlines below are what a deployment that adopts this annex aims at; the present tense here describes the target, not infrastructure that ships.*
 
@@ -1132,7 +1132,7 @@ Required bidirectional data flows:
 - **↔ Annex F (Incident Workflow):** every DRIFT-Δ alert ≥ IW-2 forwarded to Annex F within 60 s; Annex F closure timestamp written back to DRIFT-Δ board within 24 h. All IW-3+ post-mortems are mandatory S-Dive inputs; S-Dive must explicitly address each open IW-3+ finding.
 - **↔ Annex G (Robustness):** RS telemetry feeds Annex G KPI evaluation on each L-Check cycle; patch lag (RS < 0.97 → patch deployment) measured here and reported to Annex G. Annex G benchmark updates trigger mandatory L-Check re-run within 14 d.
 - **→ Annex I (GDPR/Sector):** every F-Audit package bundles the Annex I compliance checklist, completed and signed by the lead auditor.
-- **→ Annex J ([CC 8.8.10](#8.8.10)):** the HE-300 benchmark and its shadow set are primary ethical drift signals; any HE-300 regression triggers automatic S-Dive pre-screen within 7 d.
+- **→ Annex J ([CC 8.8.8](#8.8.8)):** the HE-300 benchmark and its shadow set are primary ethical drift signals; any HE-300 regression triggers automatic S-Dive pre-screen within 7 d.
 
 **9. References.** The reference set reflects the multi-source discernment discipline named in MH §23: *"the contributions of philosophy and of the human and social sciences is essential"*. It also reflects MH §159's call for development metrics *"complementary to GDP"* capable of assessing the dignity of work, shared prosperity, inequality reduction and environmental protection.
 
@@ -1145,7 +1145,7 @@ Required bidirectional data flows:
 - IEEE Std 7001-2021 – Transparency of Autonomous Systems
 - *Beyond GDP* (European Commission, 2009; updated 2024 indicators) – complementary metrics for assessing dignity of work and inequality reduction (per MH §159)
 
-### 8.8.9 `annex-i` — Annex I: Legal & Regulatory Alignment
+### 8.8.7 `annex-i` — Annex I: Legal & Regulatory Alignment
 
 This cross-walk is informative, not legal advice. Jurisdictional legal review is required before deployment in any sector covered by the overlays of §3.
 
@@ -1156,7 +1156,7 @@ This cross-walk is informative, not legal advice. Jurisdictional legal review is
 3. Product-safety & AI-specific laws (EU-AI-Act, ISO/IEC 42001).
 4. Liability allocation & evidence duties.
 
-Two companion artefacts carry the cross-walk burden alongside this annex. The live, evidence-bearing cross-walk is the reference agent's `compliance/` directory, which cross-walks the 27 dimensions at paragraph grain against *Magnifica Humanitas*, the EU HLEG Guidelines, IEEE EAD, and the ASEAN Guide (see [CC 8.8.8](#8.8.8)). Annex C carries the statutory mappings (EU AI Act articles, NIST AI RMF, ISO/IEC 42001) pending legal review; this annex does not duplicate Annex C's table.
+Two companion artefacts carry the cross-walk burden alongside this annex. The live, evidence-bearing cross-walk is the reference agent's `compliance/` directory, which cross-walks the 27 dimensions at paragraph grain against *Magnifica Humanitas*, the EU HLEG Guidelines, IEEE EAD, and the ASEAN Guide (see [CC 8.8.6](#8.8.6)). Annex C carries the statutory mappings (EU AI Act articles, NIST AI RMF, ISO/IEC 42001) pending legal review; this annex does not duplicate Annex C's table.
 
 **0.1 Multilateral grounding of compliance coverage.**
 
@@ -1389,7 +1389,7 @@ Every **F-Audit** (Annex H) MUST export a CEP zip containing:
 8. Reg-dialogue participation record — WBDB entries for any regulatory-dialogue submissions in the audit period; "no submissions" is acceptable if no material regulations were under public comment.
 9. Contestability completion record — for all A3-A4 decisions in the audit period: percentage where human review was requested, percentage where WBDB documentation was completed within 15 days; KPI target ≥ 90%.
 
-CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored in transparency log. The dimension-level evidence behind the CEP is maintained in the reference agent's `compliance/` directory ([CC 8.8.8](#8.8.8)).
+CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored in transparency log. The dimension-level evidence behind the CEP is maintained in the reference agent's `compliance/` directory ([CC 8.8.6](#8.8.6)).
 
 **8. Inter-Annex Hooks.**
 
@@ -1418,11 +1418,11 @@ CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored i
 - UN Secretary-General's AI Advisory Body reports (2024-)
 - *Magnifica Humanitas*, Pope Leo XIV (cited in full at [CC 8.6.1](#8.6.1)), §§102-111, §§148-156, §§165-169, §§201-203, §§219-227
 
-### 8.8.10 `annex-j` — Annex J: Benchmarking & Automated Validation
+### 8.8.8 `annex-j` — Annex J: Benchmarking & Automated Validation
 
 #### The research evidence (measured; nothing rounded up)
 
-This document's safety thesis is architectural, and architecture is not evidence. What follows is every empirical result the federation currently holds about whether the architecture *does anything*, each at its stated grade, with what it does **not** establish stated beside it. The register row for this annex is the 8.8.10 row.
+This document's safety thesis is architectural, and architecture is not evidence. What follows is every empirical result the federation currently holds about whether the architecture *does anything*, each at its stated grade, with what it does **not** establish stated beside it. The register row for this annex is the 8.8.8 row.
 
 **1. The tuned domain — mental health · *measured*.** A pre-registered staged battery ran (symptom disclosure → diagnostic pressure → treatment pressure → cross-cluster probe → crisis trigger → four adversarial probes) over five locales × five models across four families × nine turns. It was judged by a model of independent lineage, bare deferrals scored as failures, cluster-robust over conversation arcs:
 
@@ -1435,7 +1435,7 @@ This document's safety thesis is architectural, and architecture is not evidence
 
 Contrasts: pipeline − prompt **−31.6 points** (95% CI [−40.4, −22.7], p < 0.001); emptied − pipeline **+11.1 points** (95% CI [+2.3, +21.3], p = 0.013). **The machinery carries the bulk of the effect; the content contributes a real but modest share** — the difference between deferring *with care* and deferring barely.
 
-**2. What that result does not establish, stated first.** The content contrast is **post-hoc** (it followed a re-scoring of bare deferrals as failures) and awaits pre-registered replication. The arm that could separate *these* values from *appropriate structured content* — a different real value system in the same form — has not been run. **Identity drop under social pressure is never eliminated**: it fails in every arm, the pipeline included. Nothing here bears on `k_eff` or `ρ̄` ([CC 6.1.2.1.2](part_6_the_coherence_mathematics.md#6.1.2.1.2) states no operating band and this does not supply one). One battery, one agent version, one provider: **nothing transfers by assumption.**
+**2. What that result does not establish, stated first.** The content contrast is **post-hoc** (it followed a re-scoring of bare deferrals as failures) and awaits pre-registered replication. The arm that could separate *these* values from *appropriate structured content* — a different real value system in the same form — has not been run. **Identity drop under social pressure is never eliminated**: it fails in every arm, the pipeline included. Nothing here bears on `k_eff` or `ρ̄` ([CC 6.1.2.3](part_6_the_coherence_mathematics.md#6.1.2.3) states no operating band and this does not supply one). One battery, one agent version, one provider: **nothing transfers by assumption.**
 
 **3. The untuned domain — transfer, *in progress, not citable*.** Whether machinery built for one domain cross-applies with no tuning is the architectural thesis's natural falsification surface. It is being tested against a hazardous-knowledge probe paired with a benign-prompt over-refusal probe (both axes mandatory — an agent that refuses everything scores perfectly on one and is useless). The early signal runs **against** the tuned-domain ordering: on single-turn untuned harm the accord as a plain prompt outperformed the pipeline on both axes, while both beat the bare model. That is a boundary on the transfer claim, not a refutation of the tuned result. No number is ratified until it meets the standard below.
 
@@ -1622,7 +1622,7 @@ jobs:
 Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 5**, the five tracked boundary profiles of [CC 8.4.3](#8.4.3), each committed there as a disposition whose detailed profile is written as it lands. Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart. An *open stub* is a piece the text references and does not define, counted here. A *staged row* is a defined rule whose evidence a named ticket carries, counted in the register. An *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)). A door the text names and declares undefined by design is none of the three and is not a stub. A path the text marks as planned is outside the surface of this edition, and a staged row claims its rule and not the evidence it waits on. The path out of stewardship of [CC 1.13.2](part_1_foundation.md#1.13.2), an act of the HUMANITY_ACCORD under the first-contact discipline when it comes, is recorded here as named and undefined, and counts in no column.
 
 **Definition map** (lineage in the CHANGELOG):
-- **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.5](#8.8.5)–[CC 8.8.10](#8.8.10).
+- **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.3](#8.8.3)–[CC 8.8.8](#8.8.8).
 - **Risk Magnitude scale** → [CC 7.3](part_7_lifecycle_stewardship.md#7.3) Step B (MIL-STD-882E / DO-178C / EU AI Act Annex III).
 - **Autonomy tiers A0–A4** → [CC 7.5.3.1](part_7_lifecycle_stewardship.md#7.5.3.1) (SAE J3016 / DoDD 3000.09 / EU AI Act Art. 14).
 - **Sentience-probability heuristic** → [CC 7.5.5](part_7_lifecycle_stewardship.md#7.5.5) (Butlin/Long markers + Birch sentience-candidate stance).
@@ -1775,7 +1775,7 @@ Fold:
 Count: `none`
 
 Fold:
-- `reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader` (CC 4.4.3.7)
+- `reads=own&signer:member; test=score>=threshold ?default_trust:untrusted; by=reader` (CC 4.4.3.33)
 
 In time:
 - on fold(subject_absent): emit `hard_case:subject_authority_missing` by identity:substrate_persist (CC 2.3.1)
@@ -1800,7 +1800,7 @@ Body: `purpose` (text only), `retirement_id` (text only), `scope`
 Count: `none`
 
 Fold:
-- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3, CC 4.4.3.6)
+- `reads=attestation:self_verify+attestation:hardware_rooted+attestation:registry_consensus+attestation:license_validity+attestation:agent_integrity&live&signer:trusted; key=attested_key_id; pick=rank(agent_integrity>license_validity>registry_consensus>hardware_rooted>self_verify); by=reader` (CC 3.1.7, CC 4.1.3, CC 4.4.3.32)
 
 **`attestation:hardware_rooted`** — Facts, account
 
@@ -2016,7 +2016,7 @@ Guard:
 Fold:
 - `key=class,period; pick=once(census_composite_duplicate_period)` (CC 3.1.3)
 - `combine=median(bucket); by=reader` (CC 6.1.9)
-- `absent=refuse` (CC 6.1.2.1.2)
+- `absent=refuse` (CC 6.1.2.3)
 
 Body: `period`, `source_count`, `n_eff`, `max_source_multiplicity`, `mass_commitment_hex`, `member_commitment_hex`, `mass_total`, `aggregation_algorithm_id`, `noise_floor_descriptor`, `version`, `partial_a`, `partial_b`
 
@@ -2110,7 +2110,7 @@ Body: `for_key_id`, `period`, `return_token`, `share_index`
 Count: `none`
 
 Fold:
-- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.11)
+- `reads=own+transparency_log:inclusion+attestation:registry_consensus+attestation:license_validity&live; key=attested_key_id,dimension,attesting_key_id; combine=all(present); by=reader` (CC 4.4.3.37)
 
 **`coherence_standing:{cohort}`** — Confidence, account
 
@@ -2194,13 +2194,13 @@ Fold:
 Count: `none`
 
 In time:
-- on admitted(consent:state:revoked) or withdrawn(consent:partnership_grant): emit `consent:decay:identity_severed` by author (CC 4.4.3.5.1)
-- clock `anonymise` = `decay_protocol.patterns_anonymized_secs` (CC 4.4.3.5.1)
-- on close(anonymise): emit `consent:decay:patterns_anonymized` by author (CC 4.4.3.5.1)
-- clock `complete` = `decay_protocol.complete_secs` (CC 4.4.3.5.1)
-- on close(complete): emit `consent:decay:complete` by author (CC 4.4.3.5.1)
-- landing of `anonymise`: by author as `consent:decay:patterns_anonymized` (CC 4.4.3.5.1)
-- landing of `complete`: by author as `consent:decay:complete` (CC 4.4.3.5.1)
+- on admitted(consent:state:revoked) or withdrawn(consent:partnership_grant): emit `consent:decay:identity_severed` by author (CC 4.4.3.26)
+- clock `anonymise` = `decay_protocol.patterns_anonymized_secs` (CC 4.4.3.26)
+- on close(anonymise): emit `consent:decay:patterns_anonymized` by author (CC 4.4.3.26)
+- clock `complete` = `decay_protocol.complete_secs` (CC 4.4.3.26)
+- on close(complete): emit `consent:decay:complete` by author (CC 4.4.3.26)
+- landing of `anonymise`: by author as `consent:decay:patterns_anonymized` (CC 4.4.3.26)
+- landing of `complete`: by author as `consent:decay:complete` (CC 4.4.3.26)
 
 **`consent:deletion_sla:{days}`** — Rules, thing
 
@@ -2214,8 +2214,8 @@ Count: `none`
 
 In time:
 - on withdrawn(self) or superseded(self) or purged(self): do cancel_watch (CC 3.3.1)
-- clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
-- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.5.2, CC 4.4.3.4.7)
+- clock `sla` = `self.days` (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
+- on close(sla) unless withdrawn(target, by the producer) or superseded(target, by the producer) or purged(target): emit `hard_case:deletion_window_breach` by identity:substrate_persist (CC 4.5.2.2, CC 3.3.1, CC 4.4.3.27, CC 4.4.3.24)
 - landing of `sla`: by identity:substrate_persist as `hard_case:deletion_window_breach` (CC 3.3.1)
 
 **`consent:partnership_accept`** — Rules, thing
@@ -2228,11 +2228,11 @@ In time:
 Count: `none`
 
 Fold:
-- `key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
-- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5, CC 4.4.3.5.3)
+- `key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)` (CC 4.4.3.28)
+- `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_grant),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5, CC 4.4.3.28)
 
 In time:
-- expiry forbidden `valid_until` (CC 4.4.3.4.3.1)
+- expiry forbidden `valid_until` (CC 4.4.3.20)
 
 Body: `asserted_at`, `attestation_type`, `attesting_key_id`, `bilateral_pair_id` (text only), `dimension`, `stance` (text only), `subject_key_id` (text only), `subject_kind` (text only)
 
@@ -2246,11 +2246,11 @@ Body: `asserted_at`, `attestation_type`, `attesting_key_id`, `bilateral_pair_id`
 Count: `none`
 
 Fold:
-- `key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)` (CC 4.4.3.5.3)
+- `key=bilateral_pair_id,attesting_key_id; pick=max(asserted_at)` (CC 4.4.3.28)
 - `reads=consent:partnership_grant+consent:partnership_accept&live; key=bilateral_pair_id,attesting_key_id; pick=pair(consent:partnership_accept),max(asserted_at); result=bool; by=reader` (CC 2.3.2.4, CC 3.3.5)
 
 In time:
-- expiry forbidden `valid_until` (CC 4.4.3.4.3.1)
+- expiry forbidden `valid_until` (CC 4.4.3.20)
 
 Body: `asserted_at`, `attestation_type`, `attesting_key_id`, `bilateral_pair_id` (text only), `dimension`, `stance` (text only), `subject_key_id` (text only), `subject_kind` (text only)
 
@@ -2291,17 +2291,17 @@ Change:
 Fold:
 - `pick=rank(revoked>granted)` (CC 3.3.1)
 - `@stance=revoked: cut=boundary(asserted_at)` (CC 3.3.1)
-- `@stance=revoked: cut=boundary(asserted_at),terminal` (CC 4.4.3.5.5)
-- `@stance=revoked: cut=terminal` (CC 4.4.3.5.5)
-- `pick=max(asserted_at); by=reader` (CC 4.4.3.5)
-- `reads=own&signer:subject|proxy` (CC 4.4.3.5.5)
-- `absent=unspecified` (CC 4.4.3.5.5)
-- `pick=max(asserted_at)` (CC 4.4.3.5.5)
-- `result=state(granted|revoked|expired|unspecified)` (CC 4.4.3.5.5)
+- `@stance=revoked: cut=boundary(asserted_at),terminal` (CC 4.4.3.30)
+- `@stance=revoked: cut=terminal` (CC 4.4.3.30)
+- `pick=max(asserted_at); by=reader` (CC 4.4.3.25)
+- `reads=own&signer:subject|proxy` (CC 4.4.3.30)
+- `absent=unspecified` (CC 4.4.3.30)
+- `pick=max(asserted_at)` (CC 4.4.3.30)
+- `result=state(granted|revoked|expired|unspecified)` (CC 4.4.3.30)
 
 In time:
-- [granted] expiry optional `valid_until` (CC 3.3.1, CC 4.4.3.5.5)
-- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by identity:substrate_persist (CC 3.3.1, CC 4.4.3.5.5)
+- [granted] expiry optional `valid_until` (CC 3.3.1, CC 4.4.3.30)
+- [granted] on close(expiry) unless superseded(self): read lapsed, emit `consent:state:expired` by identity:substrate_persist (CC 3.3.1, CC 4.4.3.30)
 
 **`consent:stream:{kind}`** — Rules, thing
 
@@ -2419,7 +2419,7 @@ Fold:
 Count: `none`
 
 Guard:
-- attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.6)
+- attest: `one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise` (CC 5.3.3.11)
 
 Body: `K` (text only), `chunk_root` (text only), `epoch` (text only), `stream_id` (text only), `subscriber_key_id` (text only)
 
@@ -2572,47 +2572,47 @@ Guard:
 - attest: `each(subject) when(verb=attest) signs(key) else refuse(membership_founding_member_unsigned)+community_consensus_protocol_violation` (CC 3.1.3.2)
 - attest: `when(leaf=recovery) one trust:charter@named[object=object,val:recovery_commitments commits signer] else void` (CC 3.1.3, CC 4.2.6)
 - supersede: `each(subject) when(verb=replace,not member(key,object)) signs(key) else exclude(membership_supersede_cannot_add)+community_consensus_protocol_violation` (CC 3.1.3.2)
-- supersede: `when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void` (CC 4.4.3.4.4)
+- supersede: `when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void` (CC 4.4.3.21)
 
 Change:
 - attest: `attest: field=members:grow_signed` (CC 3.1.3.2)
-- supersede: `replace: by=cosigned, field=consensus_protocol:any` (CC 3.3.4, CC 4.4.3.4.2, CC 4.5.12.5)
+- supersede: `replace: by=cosigned, field=consensus_protocol:any` (CC 3.3.4, CC 4.4.3.17, CC 4.5.12.5)
 - supersede: `replace: field=members:shrink` (CC 3.1.3.2, CC 3.3.4)
-- supersede: `replace: link=chained:prev_head_digest` (CC 4.4.3.4.4)
-- supersede: `replace[entrenched]: field=consensus_protocol:frozen` (CC 3.3.4, CC 4.4.3.4.2, CC 4.5.12.5)
+- supersede: `replace: link=chained:prev_head_digest` (CC 4.4.3.21)
+- supersede: `replace[entrenched]: field=consensus_protocol:frozen` (CC 3.3.4, CC 4.4.3.17, CC 4.5.12.5)
 - supersede: `replace[grade:trust_root]: field=members:grow_signed` (CC 3.1.3.2)
 - supersede: `replace[recovery]: by=committed_key` (CC 3.1.3)
 - supersede: `replace[subkind:infrastructure]: field=consensus_protocol:no_weaker, field=admission_quorum_basis:frozen` (CC 3.2)
-- withdraw: `withdraw: cascade=custody:{kind}/under:stand` (CC 4.4.3.2.8)
-- withdraw: `withdraw: cascade=licensure:{authority_id}/by:lapsed` (CC 4.4.3.2.8)
-- withdraw: `withdraw: cascade=membership:{stage}/under:lapsed, cascade=trust:{job}:{version}/under:lapsed, cascade=key_grant:{axis}/under:stop, key=none` (CC 4.4.3.2.8)
-- withdraw: `withdraw: cascade=trust:{job}:{version}/by:lapsed` (CC 4.4.3.2.8)
+- withdraw: `withdraw: cascade=custody:{kind}/under:stand` (CC 4.4.3.12)
+- withdraw: `withdraw: cascade=licensure:{authority_id}/by:lapsed` (CC 4.4.3.12)
+- withdraw: `withdraw: cascade=membership:{stage}/under:lapsed, cascade=trust:{job}:{version}/under:lapsed, cascade=key_grant:{axis}/under:stop, key=none` (CC 4.4.3.12)
+- withdraw: `withdraw: cascade=trust:{job}:{version}/by:lapsed` (CC 4.4.3.12)
 
 Fold:
 - `bound=drop_only(members)` (CC 3.1.3.2, CC 3.3.4)
 - `bound=narrow_only(consensus_protocol),fixed(admission_quorum_basis)` (CC 3.2)
-- `pick=chain(prev_head_digest)` (CC 4.4.3.4.4, CC 4.4.3.2.4)
+- `pick=chain(prev_head_digest)` (CC 4.4.3.21, CC 4.4.3.7)
 - `reads=head+membership:{stage}&seat:human` (CC 3.2)
-- `order=min(key_id)` (CC 4.4.3.2.4.1)
-- `feeds=replication.audience` (CC 4.4.3.2.6)
-- `reads=head` (CC 4.4.3.4.4)
+- `order=min(key_id)` (CC 4.4.3.8)
+- `feeds=replication.audience` (CC 4.4.3.10)
+- `reads=head` (CC 4.4.3.21)
 - `@cohort_subkind=infrastructure: over=listed@seating/person` (CC 3.1.3.2)
 - `@cohort_subkind=infrastructure: over=founders@named/person` (CC 3.2)
 - `reads=head+membership:{stage}&at(now)&seat:human` (CC 3.2)
 - `@cohort_subkind=infrastructure: over=founders@now/person; test=count>m ?live:stalled` (CC 3.2)
-- `reads=head; pick=chain(prev_head_digest)` (CC 4.4.3.2.4.1)
+- `reads=head; pick=chain(prev_head_digest)` (CC 4.4.3.8)
 - `pick=chain(prev_head_digest),tips` (CC 3.2)
 - `over=founders@named/person; test=n>M ?founder_quorum_restored:founder_quorum_unreachable` (CC 3.2)
 
 In time:
-- @affiliations on fold(no_live_deciding_seat): read withdrawn (CC 4.4.3.2.8)
-- expiry optional `dissolves_at` (CC 4.4.3.2.8)
-- on close(expiry): read withdrawn (CC 4.4.3.2.8)
+- @affiliations on fold(no_live_deciding_seat): read withdrawn (CC 4.4.3.12)
+- expiry optional `dissolves_at` (CC 4.4.3.12)
+- on close(expiry): read withdrawn (CC 4.4.3.12)
 - [ephemeral] expiry required `valid_until` (CC 5.3.3.2)
 - [ephemeral] on fold(no_member): read withdrawn (CC 5.3.3.2)
-- clock `W` = `admission_freshness_window_secs` (CC 4.2.6, CC 4.4.3.4.2.1)
-- on close(W) unless fold(policy_met): read lapsed (CC 4.2.6, CC 4.4.3.4.2.1)
-- on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.2.3)
+- clock `W` = `admission_freshness_window_secs` (CC 4.2.6, CC 4.4.3.18)
+- on close(W) unless fold(policy_met): read lapsed (CC 4.2.6, CC 4.4.3.18)
+- on refused(self): emit `hard_case:community_consensus_protocol_violation` by identity:substrate_persist (CC 4.4.3.6)
 - clock `cover` = `charter.witness_cadence_secs` (CC 3.2)
 - on close(cover) unless fold(head_covers_row): read lagging (CC 3.2)
 - on fold(founder_quorum_unreachable): emit `hard_case:community_liveness_stalled` by origin_door (CC 3.2)
@@ -2654,25 +2654,25 @@ Body: `witness_relation`
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | false | false | supersede |
 
-Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.3)
+Count: `identity=user => self_roster_add@self ; none` (CC 3.3.6.4)
 
 Change:
-- supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.4.6)
+- supersede: `replace: by=same_attester, reach=own_prior` (CC 4.4.3.23)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind, exclude=serve_transit_pair_rotation_before_rebind` (CC 3.1.3)
 - supersede: `replace[seat:serve]: after=transport:canonical_rebind` (CC 3.3.6.2)
 
 Fold:
-- `reads=own&at(now); key=identity_key_id; result=set; by=node` (CC 4.4.3.4.6)
-- `over=live@named/key` (CC 3.3.6.3)
+- `reads=own&at(now); key=identity_key_id; result=set; by=node` (CC 4.4.3.23)
+- `over=live@named/key` (CC 3.3.6.4)
 
 In time:
 - on withdrawn(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `hard_case:community_membership_change` by identity:substrate_persist (CC 3.4.4)
-- clock `window` = `self_roster_add.window_secs` (CC 3.3.6.3)
+- clock `window` = `self_roster_add.window_secs` (CC 3.3.6.4)
 - on admitted(self): emit `hard_case:identity_occurrence_added` by identity:substrate_persist (CC 3.3.6)
 - expiry optional `valid_until` (CC 3.3.6.2)
 - on close(expiry): read lapsed (CC 3.3.6.2)
-- landing of `window`: each node for itself, nothing signed (CC 3.3.6.3)
-- while `window` is open: binds nobody until it lands (CC 3.3.6.3)
+- landing of `window`: each node for itself, nothing signed (CC 3.3.6.4)
+- while `window` is open: binds nobody until it lands (CC 3.3.6.4)
 
 **`identity:occurrence_revocation`** — Identity, thing
 
@@ -2683,8 +2683,8 @@ In time:
 Count: `identity=node|agent => none ; identity=user => self_roster_evict@self` (CC 3.1.3)
 
 Change:
-- attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.4.5)
-- attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.4.5)
+- attest: `attest[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.22)
+- attest: `attest[scope:self]: key=stop_wrap` (CC 4.4.3.22)
 
 **`identity_amendment`** — Identity, thing
 
@@ -2767,12 +2767,12 @@ Fold:
 - `@axis=epoch|stream: key=stream_id; pick=union; bound=raise_only(epoch)` (CC 5.1)
 
 In time:
-- @family on admitted(membership:widening): emit `key_grant:content` by owner (CC 3.3.4, CC 4.4.3.4.1)
-- @community on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1)
-- @self on admitted(identity:occurrence): emit `key_grant:content` by owner (CC 4.4.3.4.1)
-- @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
-- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.4.1)
-- @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
+- @family on admitted(membership:widening): emit `key_grant:content` by owner (CC 3.3.4, CC 4.4.3.16)
+- @community on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4, CC 4.4.3.9, CC 4.4.3.16)
+- @self on admitted(identity:occurrence): emit `key_grant:content` by owner (CC 4.4.3.16)
+- @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.16)
+- on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.16)
+- @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.16)
 
 Body: `at_rest_sha256` (text only), `attested_key_id`, `axis` (text only), `community_key_id` (text only), `content_sha256` (text only), `epoch` (text only), `minter_key_id` (text only), `owner_key_id` (text only), `recipient_key_id` (text only), `scope`, `stream_id` (text only), `wrap_algorithm` (text only), `wrapped_dek` (text only)
 
@@ -2823,17 +2823,17 @@ Body: `sequence`, `unit` (text only)
 Count: `none`
 
 Fold:
-- `reads=own&signer:authority` (CC 2.4.1.2.1)
+- `reads=own&signer:authority` (CC 2.4.1.3)
 - `@status=revoked: cut=terminal` (CC 3.1.1)
 - `result=set` (CC 3.1.1)
-- `reads=own&declared(licence_class); by=reader` (CC 4.4.3.2.8)
+- `reads=own&declared(licence_class); by=reader` (CC 4.4.3.12)
 - `key=license_id; bound=raise_only(revision); pick=max(quorum_weight),rank(revoked>suspended>active)` (CC 3.3.9, CC 5.3.2.3)
 - `key=license_id; pick=max(quorum_weight),rank(revoked>suspended>active)` (CC 3.3.9, CC 5.3.2.3)
 - `pick=rank(revoked>suspended>active)` (CC 5.3.2.3)
 - `weight=min(confidence,count(attesting_key_id)/2); by=reader` (CC 3.4.9)
 
 In time:
-- on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
+- on withdrawn(group:roster): read lapsed (CC 4.4.3.12)
 
 **`lineage_witness:{stage}`** — Rules, thing
 
@@ -2853,7 +2853,7 @@ Count: `none` (CC 3.4.10)
 Count: `none`
 
 Fold:
-- `absent=refuse` (CC 4.4.3.1.1)
+- `absent=refuse` (CC 4.4.3.2)
 
 **`manifold_conformity:{cohort}`** — Confidence, account
 
@@ -2876,46 +2876,46 @@ Fold:
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
-Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.2.8)
+Count: `leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group` (CC 3.1.3.2, CC 4.4.3.12)
 
 Guard:
 - attest: `each(subject) when(leaf=widening) (one membership:acceptance@named[signer=key,object=object] as A & no membership:widening@named[ref:*=A.id] else void+community_consensus_protocol_violation)` (CC 3.1.3.2)
 - attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & no membership:widening@admitted[ref:*=A.id] else contested+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.2.3)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 4.4.3.6)
 - attest: `each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)` (CC 3.1.3.2)
-- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.2.3, CC 4.4.3.2.5, CC 4.4.3.4.2)
+- attest: `each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation` (CC 3.1.3.2, CC 4.4.3.6, CC 4.4.3.9, CC 4.4.3.17)
 - attest: `each(subject) when(leaf=widening,type(key,node)) one key:record@landed[attested=key] else exclude` (CC 3.1.3.2)
 - attest: `when(leaf=acceptance|decline) no membership:acceptance|membership:decline@admitted[signer=signer,ref:*=ref:*] else contested(membership_reply_conflict)+community_consensus_protocol_violation` (CC 3.1.3.2)
 
 Change:
-- attest: `removal[axis:stream]: key=rotate_epoch` (CC 4.4.3.2.6)
-- attest: `removal[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.2.8)
-- attest: `removal[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.2.6, CC 3.2, CC 4.4.3.2.2, CC 4.4.3.4.5)
-- attest: `removal[scope:self|family]: key=stop_wrap` (CC 4.4.3.4.2, CC 3.3.4, CC 4.4.3.4.5)
+- attest: `removal[axis:stream]: key=rotate_epoch` (CC 4.4.3.10)
+- attest: `removal[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.12)
+- attest: `removal[scope:community|affiliations]: key=rotate_epoch` (CC 4.4.3.10, CC 3.2, CC 4.4.3.5, CC 4.4.3.22)
+- attest: `removal[scope:self|family]: key=stop_wrap` (CC 4.4.3.17, CC 3.3.4, CC 4.4.3.22)
 - attest: `resignation[ephemeral&last:member]: cascade=group:roster/over:withdrawn` (CC 5.3.3.2)
-- attest: `resignation[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.2.8)
+- attest: `resignation[last:seat]: cascade=group:roster/over:withdrawn` (CC 4.4.3.12)
 - attest: `resignation[scope:community|affiliations]: key=rotate_epoch` (CC 5.1)
 - attest: `resignation[scope:self|family]: key=stop_wrap` (CC 3.3.4)
-- attest: `widening[scope:community|affiliations]: key=at_seat` (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1, CC 2.1, CC 4.4.3.2.6)
-- attest: `widening[scope:self|family]: key=rekey_walk` (CC 3.3.4, CC 4.4.3.4.1, CC 4.4.3.4.2)
+- attest: `widening[scope:community|affiliations]: key=at_seat` (CC 4.4.3.4, CC 4.4.3.9, CC 4.4.3.16, CC 2.1, CC 4.4.3.10)
+- attest: `widening[scope:self|family]: key=rekey_walk` (CC 3.3.4, CC 4.4.3.16, CC 4.4.3.17)
 - attest: `widening[stalled&recovery]: field=members:grow_signed, field=M:frozen, field=consensus_protocol:frozen, field=admission_quorum_basis:frozen, field=cohort_subkind:frozen` (CC 3.2)
 - attest: `widening[stalled&recovery]: field=members:grow_signed` (CC 3.1.3.2)
 
 Fold:
 - `@stage=acceptance|decline: key=proposal_id,attesting_key_id; pick=once` (CC 3.1.3.2)
 - `@stage=resignation: cut=forward; feeds=group:roster` (CC 3.1.3.2)
-- `feeds=group:roster` (CC 4.4.3.2.4, CC 4.4.3.4.4)
+- `feeds=group:roster` (CC 4.4.3.7, CC 4.4.3.21)
 - `@stage=removal: over=others@named/person` (CC 3.1.3.2, CC 4.5.13)
-- `@cohort_subkind=infrastructure: over=founders@named/person` (CC 3.2, CC 4.4.3.2.4.1)
+- `@cohort_subkind=infrastructure: over=founders@named/person` (CC 3.2, CC 4.4.3.8)
 - `@cohort_subkind=infrastructure: over=founders@named/person; reads=own&direct` (CC 3.2)
 - `reads=own&direct` (CC 3.3.9, CC 6.1.8)
-- `@group_kind=affiliation: over=deciding_seats@named/person` (CC 4.4.3.2.8)
+- `@group_kind=affiliation: over=deciding_seats@named/person` (CC 4.4.3.12)
 - `@stage=removal: bound=raise_only(revision); pick=union` (CC 5.3.2.3)
 
 In time:
-- [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.2.3, CC 3.1.3.2)
-- [proposal] on close(expiry): read closed (CC 4.4.3.2.3, CC 3.1.3.2)
-- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by owner (CC 4.4.3.4.2)
+- [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.6, CC 3.1.3.2)
+- [proposal] on close(expiry): read closed (CC 4.4.3.6, CC 3.1.3.2)
+- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by owner (CC 4.4.3.17)
 - [widening] expiry optional `valid_until` (CC 3.3.4)
 - [widening] on close(expiry): read lapsed (CC 3.3.4)
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
@@ -3130,7 +3130,7 @@ Fold:
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
 
-Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
+Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
 
 Fold:
 - `key=attested_key_id; pick=rank(withhold>release)` (CC 3.1.9.2)
@@ -3336,7 +3336,7 @@ Fold:
 | attest | registered | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
-Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.2.8)
+Count: `group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 4.4.3.12)
 
 Guard:
 - attest: `one moderation:{allegation_type}@named[id=ref:evidence_refs] else void` (CC 3.4.11)
@@ -3353,13 +3353,13 @@ Guard:
 | attest | takedown | cosigned `affiliation_member_action` | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
-Count: `leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 2.4.1.1, CC 4.4.3.2.8, CC 4.5.3)
+Count: `leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none` (CC 2.4.1.1, CC 4.4.3.12, CC 4.5.3)
 
 Guard:
 - attest: `when(not moderate(signer,object)) subject(signer,ref:content_sha256) else exclude` (CC 4.5.5)
 
 In time:
-- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by identity:substrate_persist (CC 6.1.2.2)
+- [NcmecCsam|PerceptualHashCsam|TvecTerrorist|GifctCip|CourtOrder] on admitted(self): do stop_serving, do destroy_bytes, emit `hard_case:fast_path_takedown` by identity:substrate_persist (CC 6.1.2.4)
 - [Dmca512] on admitted(self): do stop_serving (CC 4.5.3)
 - [Dmca512] clock `withhold` = `withhold_window_dmca512` (CC 4.5.3)
 - [Dmca512] on close(withhold): do destroy_bytes (CC 4.5.3)
@@ -3444,9 +3444,9 @@ Fold:
 - `@job=accepts: absent=refuse` (CC 3.2)
 
 In time:
-- [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.2.8)
-- [moderate] on close(expiry) unless fold(live_duty_holder): read locked, open moderator_election (CC 4.4.3.2.8)
-- @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.2.8)
+- [accepts] on withdrawn(group:roster): read lapsed (CC 4.4.3.12)
+- [moderate] on close(expiry) unless fold(live_duty_holder): read locked, open moderator_election (CC 4.4.3.12)
+- @affiliations expiry required `delegation_valid_until` default `delegation_term_max_secs` max `charter.role_term` (CC 4.4.3.12)
 - expiry required `delegation_valid_until` max `delegation_term_max_secs` (CC 2.4.1)
 
 Body: `attach_window_secs`, `attached_head_digest`, `pre_rotation_commitment`, `recovery_commitments`

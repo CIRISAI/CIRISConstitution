@@ -303,8 +303,8 @@ def check_keys(spec, inst):
         plain = run(spec, P2, pw, orders=False)
         with mutated(params={"persons_only"}):
             b = run(spec, P2, pw)
-        res.append(result(inst, "WITNESS PAIR: a person's and an agent's self roster, same parameters; CC 3.3.6.3 'The door is a person's ... an agent's occurrence is single-signer, and neither runs these paths'",
-                          "CC 3.3.6.3 l.1996", verdict_of(b, param="persons_only (identity_type of the roster's root)"), b,
+        res.append(result(inst, "WITNESS PAIR: a person's and an agent's self roster, same parameters; CC 3.3.6.4 'The door is a person's ... an agent's occurrence is single-signer, and neither runs these paths'",
+                          "CC 3.3.6.4 l.1996", verdict_of(b, param="persons_only (identity_type of the roster's root)"), b,
                           "plant: the parameter off (the plain mechanism)", plain))
 
     # S7 a vote from an evicted key is void; removal reaches by causal past, in every arrival order

@@ -11,11 +11,11 @@
          serving and no replication; it moves exactly the agent's act gate (CC 3.2 T8 (v),
          4.2.1.1);
      X2  the authority of a roster key ends with its eviction: an owner act by an evicted key
-         is refused, an owner act by any live roster key is admitted (CC 3.3.6.3);
+         is refused, an owner act by any live roster key is admitted (CC 3.3.6.4);
      X3  a node replicates a peer's content only under that peer's replication consent, and a
          revocation is a boundary: nothing replicated after it (CC 3.3.7, 3.3.1);
      X4  a local-tier row never leaves its node; a row reaches another node only at the
-         federation tier, which requires the hybrid signature (CC 5.3.2.4, 2.6.1.7);
+         federation tier, which requires the hybrid signature (CC 5.3.2.4, 2.6.1.8);
      X5  leaving the root is one act; it ends the reach of every later halt and keeps every
          record, while a halt latched before the cut keeps its reach until it lapses or is
          resumed (CC 4.2.1: exit is prospective, never retroactive; guarantees Inv_ExitOneStep).

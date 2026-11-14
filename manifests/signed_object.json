@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "cc_section": "2.6.1.7",
+    "cc_section": "2.6.1.8",
     "source": "constitution/signed_object.tsv",
-    "source_sha256": "3b0957965aad0ee9e36f5e77f8bd7e5826843b45991382116639563e62cef2d4",
+    "source_sha256": "e2aa0d55d09f10b0bf44e6e2949af6998eb74557ed56d7df2caafc9df63bc3e5",
     "typed_from": {
       "repo": "CIRISPersist",
       "commit": "f74d1b2a",
@@ -71,7 +71,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.6.1.7",
+        "cc_ref": "2.6.1.8",
         "impl": "src/federation/envelope.rs#RowMirror",
         "note": "The signed twin of the seven typed columns beside the row. The member set is closed (an eighth member is refused); a row with no mirror is refused envelope_member_missing, a mirror that disagrees with a column is refused typed_diverges_from_envelope."
       },
@@ -83,7 +83,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.6.1.7",
+        "cc_ref": "2.6.1.8",
         "impl": "src/federation/envelope.rs#RowMirror",
         "note": "The row's identity, minted by the stamper before the bytes exist (a UUID; this edition pins no version); the composers' references_attestation_id points at it."
       },
@@ -131,9 +131,9 @@
         "array_kind": "set",
         "presence": "REQUIRED (may be empty)",
         "default": "[]",
-        "cc_ref": "2.3 2.3.2.1 2.6.1.1.1",
+        "cc_ref": "2.3 2.3.2.1 2.6.1.2",
         "impl": "src/federation/envelope.rs#RowMirror",
-        "note": "Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (2.6.1.1.1): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted."
+        "note": "Always present in the mirror, an empty array when there is no subject; the column beside the row is absent when empty. An element is a key_id verbatim or the tagged canonical:{alg}:{hex} form; uppercase and whitespace are refused at emit. A set (2.6.1.2): sorted and unique, an unsorted or duplicated set refused federation_set_semantics_unsorted."
       },
       {
         "member": "row.cohort_scope",
@@ -215,7 +215,7 @@
         "array_kind": "set",
         "presence": "REQUIRED on consent:state:granted and on delegates_to",
         "default": "-",
-        "cc_ref": "2.1 3.3.1 4.4.3.4.3",
+        "cc_ref": "2.1 3.3.1 4.4.3.19",
         "impl": "src/federation/envelope.rs#ScopeSet",
         "note": "The form an emitter writes is the array: an emitter writes [\"retain\"], and a bare token is admitted as the one-element array it denotes; admission normalises nothing in the signed bytes."
       },
@@ -323,7 +323,7 @@
         "array_kind": "-",
         "presence": "REQUIRED on a widening supersedes, absent otherwise",
         "default": "absent",
-        "cc_ref": "4.4.3.3.1 2.6.7",
+        "cc_ref": "4.4.3.14 2.6.7",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
         "note": "When the widening itself was placed; asserted_at on a widening is the claim's own instant carried verbatim."
       },
@@ -443,7 +443,7 @@
         "array_kind": "sequence",
         "presence": "OPTIONAL (some families require it)",
         "default": "absent",
-        "cc_ref": "2.1 2.6.1.1.1 2.6.1.3",
+        "cc_ref": "2.1 2.6.1.2 2.6.1.4",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "Producer-asserted order, preserved. Above the 1 MiB cap the payload moves to the blob plane and is named here by content hash."
       },
@@ -467,7 +467,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "direct",
-        "cc_ref": "2.1 2.5 2.6.1.2",
+        "cc_ref": "2.1 2.5 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "Interpretation-time default; an explicit default value is signed as written (2.6.1.1)."
       },
@@ -479,7 +479,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "external",
-        "cc_ref": "2.1 2.6.1.2",
+        "cc_ref": "2.1 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": ""
       },
@@ -491,9 +491,9 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "absent (per-cell default)",
-        "cc_ref": "2.1 2.6.1.2",
+        "cc_ref": "2.1 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 2.6.1.1.1)."
+        "note": "CC 2.1 writes the default as null, which means absent; an explicit JSON null on any optional member is refused federation_malformed_row / envelope_member_null (CC 2.6.1.2)."
       },
       {
         "member": "occurrence_id",
@@ -503,7 +503,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "absent (read as occurrence-0)",
-        "cc_ref": "2.1 2.6.1.2",
+        "cc_ref": "2.1 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "Self-asserted (CC 8.3.1)."
       },
@@ -515,7 +515,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "absent (read as 1)",
-        "cc_ref": "2.1 2.6.1.2",
+        "cc_ref": "2.1 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "At least 1."
       },
@@ -527,7 +527,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "absent (read as primary)",
-        "cc_ref": "2.1 2.6.1.2",
+        "cc_ref": "2.1 2.6.1.3",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": ""
       },
@@ -551,7 +551,7 @@
         "array_kind": "-",
         "presence": "REQUIRED iff cohort_scope is community or affiliations",
         "default": "-",
-        "cc_ref": "2.1 2.3.3 4.4.3.2.8",
+        "cc_ref": "2.1 2.3.3 4.4.3.12",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "The community whose roster gates visibility; refused when missing at those scopes."
       },
@@ -673,7 +673,7 @@
         "default": "-",
         "cc_ref": "2.1 3.2",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "A set, sorted by each element's JCS string (the 2.6.1.1.1 default made explicit)."
+        "note": "A set, sorted by each element's JCS string (the 2.6.1.2 default made explicit)."
       },
       {
         "member": "history_on_join",
@@ -683,7 +683,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "from_join",
-        "cc_ref": "2.1 4.4.3.4.1 5.1",
+        "cc_ref": "2.1 4.4.3.16 5.1",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": ""
       },
@@ -707,9 +707,9 @@
         "array_kind": "set",
         "presence": "OPTIONAL on supersedes; a widening lists cohort_scope",
         "default": "absent",
-        "cc_ref": "2.4.1 4.4.3.3.1",
+        "cc_ref": "2.4.1 4.4.3.14",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
-        "note": "Member names that differ from the prior. Array kind not declared in 2.4.1, so the 2.6.1.1.1 default (set, sorted) applies."
+        "note": "Member names that differ from the prior. Array kind not declared in 2.4.1, so the 2.6.1.2 default (set, sorted) applies."
       },
       {
         "member": "recantation_reason",
@@ -767,7 +767,7 @@
         "array_kind": "-",
         "presence": "REQUIRED on a termed delegates_to (CC 2.4.1), otherwise OPTIONAL",
         "default": "absent (open-ended)",
-        "cc_ref": "2.4.1 4.4.3.2.8",
+        "cc_ref": "2.4.1 4.4.3.12",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "At most 365 days after delegation_valid_from; refused delegation_term_required."
       },
@@ -779,7 +779,7 @@
         "array_kind": "set",
         "presence": "OPTIONAL on a delegates_to bearing trust:accepts:v1",
         "default": "absent (every class the authority's charter declares)",
-        "cc_ref": "4.4.3.8",
+        "cc_ref": "4.4.3.34",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "The licence classes the reader trusts this authority for; present non-empty; [] refused trust_accepts_classes_malformed."
       },
@@ -791,7 +791,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL on a delegates_to bearing trust:accepts:v1",
         "default": "absent (0)",
-        "cc_ref": "4.4.3.8 4.1.1",
+        "cc_ref": "4.4.3.34 4.1.1",
         "impl": "src/federation/envelope.rs#EnvelopeCore (extra)",
         "note": "Further hops honoured past this authority, 0..5; out of range refused trust_accepts_depth_out_of_range."
       },
@@ -1091,7 +1091,7 @@
         "array_kind": "-",
         "presence": "REQUIRED on census:composite:{class}:v1, ballot:tally:{poll_id}:v1",
         "default": "absent",
-        "cc_ref": "6.1.2.1.2 6.1.9",
+        "cc_ref": "6.1.2.3 6.1.9",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
         "note": "The effective source count; equals source_count by construction for one-hot returns; aggregation_meta_dominated below half of source_count."
       },
@@ -1127,7 +1127,7 @@
         "array_kind": "-",
         "presence": "REQUIRED on census:partial:{class}:v1, census:member:partial:v1, census:composite:{class}:v1, ballot:tally:{poll_id}:v1, census:expected_active:v1",
         "default": "absent",
-        "cc_ref": "6.1.2.1.1 6.1.9",
+        "cc_ref": "6.1.2.2 6.1.9",
         "impl": "src/federation/envelope.rs#EnvelopeCore",
         "note": "Merkle root over the accepted tokens; a contributor checks its token's path against it; both partials of a period must carry the same root."
       },
@@ -1247,7 +1247,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.6.1.7",
+        "cc_ref": "2.6.1.8",
         "impl": "src/federation/admission.rs#check_row_column_binding",
         "note": "Equals row.attestation_id or the row is refused."
       },
@@ -1355,7 +1355,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.1 2.6.1 2.6.1.3",
+        "cc_ref": "2.1 2.6.1 2.6.1.4",
         "impl": "src/verify/canonical.rs#JcsCanonicalizer",
         "note": "The signed object itself, stored and relayed as received (2.6.1.1). The signing input is JCS(attestation_envelope) and nothing else."
       },
@@ -1367,7 +1367,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.6.1.3 2.6.3",
+        "cc_ref": "2.6.1.4 2.6.3",
         "impl": "src/federation/tier_ingest.rs#verify_row_hybrid_signature",
         "note": "Lowercase hex SHA-256 of JCS(attestation_envelope); recomputed at federation-tier ingest and refused on mismatch."
       },
@@ -1393,7 +1393,7 @@
         "default": "-",
         "cc_ref": "-",
         "impl": "src/federation/types.rs#compute_persist_row_hash",
-        "note": "Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 2.6.1.3). Not a conformance target."
+        "note": "Store-computed over the row's own serialisation (not JCS), excluding itself; informational on the wire, never re-verified on read (CC 2.6.1.4). Not a conformance target."
       },
       {
         "member": "withdraws_admission_rule",
@@ -1439,7 +1439,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.6.5 2.6.1.1.1 5.3.2.4.3.1",
+        "cc_ref": "2.6.5 2.6.1.2 5.3.2.8",
         "impl": "src/federation/tier_ingest.rs#verify_envelope_hybrid_signature",
         "note": "Ed25519 (RFC 8032) over JCS(attestation_envelope); RFC 4648 section 4 standard alphabet, padded."
       },
@@ -1451,7 +1451,7 @@
         "array_kind": "-",
         "presence": "REQUIRED at the federation tier",
         "default": "-",
-        "cc_ref": "2.6.5 5.3.2.4.3.1 6.1.3",
+        "cc_ref": "2.6.5 5.3.2.8 6.1.3",
         "impl": "src/federation/tier_ingest.rs#verify_envelope_hybrid_signature",
         "note": "ML-DSA-65 (FIPS 204) over JCS(attestation_envelope) followed by the raw 64 Ed25519 signature bytes (the bound-payload form); verified under the strict hybrid policy, never classical-only."
       },
@@ -1487,7 +1487,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "-",
-        "cc_ref": "5.3.2.4.3.1",
+        "cc_ref": "5.3.2.8",
         "impl": "src/federation/attestation_emit.rs#assemble",
         "note": "When the ML-DSA-65 half was attached. Outside the bytes."
       },
@@ -1561,7 +1561,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "3.2 5.3.2.4.3.1",
+        "cc_ref": "3.2 5.3.2.8",
         "impl": "src/federation/types.rs#KeyRecord",
         "note": "Raw 32-byte key."
       },
@@ -1573,7 +1573,7 @@
         "array_kind": "-",
         "presence": "REQUIRED for algorithm hybrid",
         "default": "-",
-        "cc_ref": "5.3.2.4.3.1",
+        "cc_ref": "5.3.2.8",
         "impl": "src/federation/types.rs#KeyRecord",
         "note": "Raw 1952-byte key; the substrate takes writes only at algorithm hybrid."
       },
@@ -1585,7 +1585,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "5.3.2.4.3.1",
+        "cc_ref": "5.3.2.8",
         "impl": "src/federation/types.rs#KeyRecord",
         "note": "hybrid on every admitted record."
       },
@@ -1657,7 +1657,7 @@
         "array_kind": "-",
         "presence": "REQUIRED",
         "default": "-",
-        "cc_ref": "2.6.1.3",
+        "cc_ref": "2.6.1.4",
         "impl": "src/federation/types.rs#KeyRecord",
         "note": "Lowercase hex SHA-256 of JCS(registration_envelope)."
       },
@@ -1717,7 +1717,7 @@
         "array_kind": "-",
         "presence": "OPTIONAL",
         "default": "-",
-        "cc_ref": "5.3.2.4.3.1",
+        "cc_ref": "5.3.2.8",
         "impl": "src/federation/types.rs#KeyRecord",
         "note": ""
       },

@@ -38,7 +38,7 @@ For every atom the entry promises: its plane, the state-table predicate, the CC 
 model that constrains it, or "no model". Across the catalogue every promised atom has a plane model
 behind it (`generated/SUMMARY.json` carries the count). The report also records the bounds the entry sits on: a root with no witness
 directory is witnessed-mode-off, which `TrustRootVerdict` does not cover (residual E); a person with
-one initial key meets the one-key bound and with two the two-key stalemate of CC 3.3.6.3.
+one initial key meets the one-key bound and with two the two-key stalemate of CC 3.3.6.4.
 
 A generated configuration proves what its plane model proves, under the entry's constants. It does
 not prove the planes compose: that is the spine.
@@ -52,9 +52,9 @@ guard). It checks only what no plane sees alone:
 | | Cross-plane invariant | CC |
 |---|---|---|
 | X1 | a constitutional halt is not a trust leg: the latch moves no standing, stops no serving and no replication, and moves exactly the agent's act gate; a latched node can still serve and replicate (`ENABLED`) | 3.2 T8 (v), 4.2.1.1 |
-| X2 | the authority of a roster key ends with its eviction; any live roster key acts as the self | 3.3.6.3 |
+| X2 | the authority of a roster key ends with its eviction; any live roster key acts as the self | 3.3.6.4 |
 | X3 | replication of a peer's content needs that peer's consent; a revocation is a boundary | 3.3.7, 3.3.1 |
-| X4 | a local-tier row never leaves its node; a served row is a signed federation-tier row | 5.3.2.4, 2.6.1.7 |
+| X4 | a local-tier row never leaves its node; a served row is a signed federation-tier row | 5.3.2.7, 2.6.1.8 |
 | X5 | leaving the root is one act: the subscription falls and the latch lifts together, the record stands | 4.2.1 |
 
 `CewpNode.cfg` (three roster keys, one peer, two rows) **closes at 483,840 distinct states** (the reach pin `bound` of CC 4.2.1 added the difference).

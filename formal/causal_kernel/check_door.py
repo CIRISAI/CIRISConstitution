@@ -138,7 +138,7 @@ TEXT_OPEN = {"accord_halt": ("in_force", "CC 4.2.1.1: it fires on receipt"), "mo
              "harm_report": ("pending", "CC 4.5.13: each node reads the removal from the closed window"),
              "takedown_withhold": ("in_force", "CC 4.5.3: every holder withholds from its own receipt"),
              "invitation": ("pending", "CC 3.1.3.2: the widening is the only door that adds anyone"),
-             "self_roster_add": ("pending", "CC 3.3.6.3: an addition is a proposal"),
+             "self_roster_add": ("pending", "CC 3.3.6.4: an addition is a proposal"),
              "accord_roster_change": ("pending", "CC 4.2.6: until W has closed the named holder remains")}
 
 
@@ -283,13 +283,13 @@ def props(name):
             P.append(("an irreversible change never lands before its window", "two_path Irreversible",
                       lambda w, o: None if o != "landed" else L(w)[2]))
         if name == "self_roster_evict":
-            P.append(("a thief (one key of three) does not evict alone", "window_adversary; CC 3.3.6.3",
+            P.append(("a thief (one key of three) does not evict alone", "window_adversary; CC 3.3.6.4",
                       lambda w, o: None if not (tally(w, "object") >= set(keys) - {w["op"]} or w["note"] or tally(w, "object", {w["target"]}) or tally(w, "approve", {w["target"]}))
                   or 2 * len(tally(w, "approve") | {w["op"]}) > n else o != "landed"))
             P.append(("a lost device (signs nothing) cannot veto", "window_adversary",
                       lambda w, o: None if w["ans"] or w["note"] or not L(w)[2] or L(w)[1] != "landed" else o == "landed"))
         if name == "self_roster_add":
-            P.append(("a strict majority of the others objecting is not overridden by a lone landing", "CC 3.3.6.3 cancel",
+            P.append(("a strict majority of the others objecting is not overridden by a lone landing", "CC 3.3.6.4 cancel",
                       lambda w, o: None if len(tally(w, "object", {"m2", "m3"})) < 2 else o != "landed"))
     if s.get("declared"):
         fl = 2 if name.startswith("community_remove") else 1
@@ -340,8 +340,8 @@ def props(name):
                   "AccordHaltFuse; wave1 windows finding",
                   lambda w, o: None if o != "lapsed" else L(w)[0] == w["target"]))
     if name in ("custodian_replace", "affiliation_member_action"):
-        P.append(("one side alone never acts", "CC 7.5.5 / 4.4.3.2.8", lambda w, o: None if o != "landed" else (tally(w, "assent") | {w["op"]}) >= set(keys)))
-        P.append(("both signing acts", "CC 7.5.5 / 4.4.3.2.8",
+        P.append(("one side alone never acts", "CC 7.5.5 / 4.4.3.12", lambda w, o: None if o != "landed" else (tally(w, "assent") | {w["op"]}) >= set(keys)))
+        P.append(("both signing acts", "CC 7.5.5 / 4.4.3.12",
                   lambda w, o: None if not (tally(w, "assent", None, ("named",)) | {w["op"]}) >= set(keys) or L(w)[1] != "landed" else o == "landed"))
     if name == "moderator_election":
         P.append(("the winner is the instant-runoff winner over one ballot per person (R1, R8, Election.winner)", "ranked_choice; moderator_election",
@@ -395,7 +395,7 @@ def props(name):
         P.append(("the seat's answer, named by the landing, resolves the deferral", "CC 4.3",
                   lambda w, o: None if {k for _, k, p in w["ans"]} != {"approved"} or not tally(w, "approved", None, ("named",)) or L(w)[1] != "approved" else o == "approved"))
     if name == "decay_stage":
-        P.append(("a stage landing before its window concludes nothing", "CC 4.4.3.5.1", lambda w, o: None if L(w)[2] else o != "due"))
+        P.append(("a stage landing before its window concludes nothing", "CC 4.4.3.26", lambda w, o: None if L(w)[2] else o != "due"))
     if name == "invitation":
         P.append(("an acceptance not held by the close does not admit (the proposal's own end)", "CC 3.1.3.2 (3)",
                   lambda w, o: None if o != "admitted" else not L(w)[2]))

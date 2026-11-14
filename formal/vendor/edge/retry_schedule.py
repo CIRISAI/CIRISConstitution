@@ -469,7 +469,7 @@ def section_d():
                 u = Upgrade(n, T_m * 60, p, scenario="1200", seed=sd, horizon=24 * 3600, degree=None).run()
                 held.append(sum(1 for x in u.nodes if x.holds) / n)
                 non = [x for x in u.nodes if not x.holds]
-                # CC 4.4.3.2.3: one record per refused row id, a re-ask emits none. Persist emits none today.
+                # CC 4.4.3.6: one record per refused row id, a re-ask emits none. Persist emits none today.
                 records.append(sum(1 for x in u.nodes if x.refusals > 0))
                 raw.append(sum(x.refusals for x in u.nodes))
                 if non:

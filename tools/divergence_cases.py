@@ -256,7 +256,7 @@ def cases():
         ("persist", "ownership:{relation}:{target_kind}:{version}", ["C371"], "CC 3.2",
          "It is cosigned under that affiliation's protocol", "none",
          ("ownership:{relation}:{target_kind}:{version}", COSIGN[0]), "cosign_rule[owner=organisation]"),
-        ("persist", "licensure:{authority_id}", ["C432"], "CC 2.4.1.2.1",
+        ("persist", "licensure:{authority_id}", ["C432"], "CC 2.4.1.3",
          "A `licensure:{community_key_id}` row is a **cosigned row** ([CC 2.4](#2.4)) whose protocol source is the authority named in the dimension.",
          "none", ("licensure:{authority_id}", COSIGN[0]), "cosign_rule[authority=organisation]"),
         ("persist", "accord:lifecycle:{kind}", ["C457"], "CC 4.2.1.3",
@@ -371,7 +371,7 @@ def cases():
         [fam("acc1", "X", "ballot:moderator_acceptance", (), leaf="acceptance", ballots=["b1", "b2"], seats="X"),
          fam("acc2", "Y", "ballot:moderator_acceptance", (), leaf="acceptance", ballots=["b1", "b3"], seats="Y")],
         {}, src="constitution/claims.tsv CLM-moderator-election (staged:CIRISPersist#1195)"))
-    E.append(fold_entry("persist", "*reader:enumerated", ["seven_rankings item 7", "CLM-nsproc-aggregation-policy"], "CC 4.4.3.8",
+    E.append(fold_entry("persist", "*reader:enumerated", ["seven_rankings item 7", "CLM-nsproc-aggregation-policy"], "CC 4.4.3.34",
         "The reader aggregates per (`dimension`, `attested_key_id`) tuple, over trusted attesters, by the polarity defaults of [CC 4.4.2](#4.4.2).",
         "enumerated", "reader_trust", "most_recent", "most-recent by an authorized attester",
         [R("ca", "claim", "A", (), subject="S", dim="d", value="x", at=2), R("cb", "claim", "B", (), subject="S", dim="d", value="y", at=1),
@@ -405,7 +405,7 @@ def cases():
     e["note"] = ("the text says refused; the check reads the roster at the row's head, another row, so the kernel concludes "
                  "nothing rather than refusing (KERNEL.md section 3)")
     E.append(e)
-    e = signer_entry("persist", "moderation:{allegation_type}", ["C439", "C481"], "CC 2.6.1.7", "OPTIONAL on moderation:*",
+    e = signer_entry("persist", "moderation:{allegation_type}", ["C439", "C481"], "CC 2.6.1.8", "OPTIONAL on moderation:*",
         [["any"]], [["any"]], "moderation subject digest required", [fam("m", "A", "moderation:{allegation_type}", ())], "m",
         census=("moderation:{allegation_type}", "7_body"), kind="door", where="body.subject_digest")
     e["shipped_param"]["refuse"] = ["missing_subject_digest"]
@@ -418,8 +418,8 @@ def cases():
         "**Yes — self only, by possession**; every other row is admitted only once its signer's `key:record` is held (retryable otherwise)",
         "an anchor scrub may differ from the subject (KeyRecord in constitution/signed_object.tsv)", "wire",
         "which field carries an anchor's signature is the signed object's byte form; the kernel's row has one signer and cosigners"))
-    E.append(stated("persist", "(any, under legal_hold)", "erasure_route", "lifecycle", ["C453"], "CC 4.4.3.5.4",
-        "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason",
+    E.append(stated("persist", "(any, under legal_hold)", "erasure_route", "lifecycle", ["C453"], "CC 4.4.3.29",
+        "or under a `legal_hold` ([CC 4.4.3.12](#4.4.3.12)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason",
         "legal_hold: none in code", "storage",
         "the withdraws is admitted in both; what differs is the erasure descent, a storage act the kernel does not model"))
     E.append(stated("agent", "(agent conduct)", "CC 7.4 stop", "door", ["C562"], "CC 7.4",
@@ -446,7 +446,7 @@ def cases():
         "time", "judging at a signed instant bounded by W is neither of the kernel's two notions of time (a row's own end, "
         "a window with a landing); KERNEL.md 5 leaves such clocks without a meaning", census=("licensure:{authority_id}", "8_freshness")))
     for impl in ("persist", "edge"):
-        E.append(stated(impl, "transparency_log:cosigned:{tree_size}", "guard[accountable stream]", "door", ["C433"], "CC 5.3.3.6",
+        E.append(stated(impl, "transparency_log:cosigned:{tree_size}", "guard[accountable stream]", "door", ["C433"], "CC 5.3.3.11",
             'For accountable streams, "published" means **witness-cosigned**', "no signed member says a stream is accountable",
             "wire", "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
             shipped_source="CC 8.10 card guard (text_conflicts C433)"))
@@ -490,7 +490,7 @@ def cases():
         shipped_source="constitution/claims.tsv CLM-cosigned-rows (impl check_cosigned_withdraws, verify_roster_cosignatures)"))
     # ---- authority over the act's causal past, not at its signed instant ---------------------------------------------
     for f, scope, srcs, cc, q, where in [
-        ("licensure:{authority_id}", "license", ["CLM-licence-judged-at-issuance"], "CC 2.4.1.2.1",
+        ("licensure:{authority_id}", "license", ["CLM-licence-judged-at-issuance"], "CC 2.4.1.3",
          "It is judged over the issuance's own causal past under the cosigned-row rule, never at receipt",
          "authority at issuance"),
         ("self:delegates_to", "moderate", ["CLM-licence-judged-at-issuance"], "CC 4.5.5",
@@ -524,12 +524,12 @@ def cases():
          [fam("e1", "A", "self:delegates_to", (), delegate="B"), fam("e2", "B", "self:delegates_to", ("e1",), delegate="A")],
          "e2", None, "the cycle-closing delegates_to refused at admission (check_delegation_cycle_admission)",
          "constitution/claims.tsv CLM-self-edge-not-cycle (impl check_delegation_cycle_admission; the summary before 6e90792: still refused)"),
-        ("licensure:{authority_id}", ["CLM-issuance-scope"], "CC 4.4.3.4.3",
+        ("licensure:{authority_id}", ["CLM-issuance-scope"], "CC 4.4.3.19",
          "**concludes nothing**, and is not merely unweighted", [["seat:license@root"]],
          [SEAT.offer("rt", "Rt", "Rt", "root", "@", "self"), fam("i", "D", "licensure:{authority_id}", ("rt",), root="Rt")],
          "i", None, "an issuance whose delegator lacks the authority refused at admission (check_licensure_delegator_is_authority)",
          "constitution/claims.tsv CLM-issuance-scope (impl check_licensure_delegator_is_authority)"),
-        ("key_grant:{axis}", ["CLM-issuance-scope"], "CC 4.4.3.4.3",
+        ("key_grant:{axis}", ["CLM-issuance-scope"], "CC 4.4.3.19",
          "**concludes nothing**, and is not merely unweighted", [["owner_of_subject"], ["seat:grant@subject"]],
          [fam("i", "D", "key_grant:{axis}", (), subject="S")],
          "i", None, "a grant whose delegator lacks the authority refused at admission (admit_replicated_key_grant)",

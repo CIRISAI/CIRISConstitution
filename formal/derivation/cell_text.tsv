@@ -20,7 +20,7 @@ provenance:build_manifest:{target}	placement	commons	CC 3.1.2.1	Its `cohort_scop
 testimonial_witness:{kind}	placement	self_collective	CC 3.1.9.3	the four load-bearing wire-level disciplines (`witness_relation: self`, `cohort_scope: self`, never aggregated, never sole evidence for `slashing:*`)
 need:{domain}:{kind}	placement	commons	CC 3.1.9.3	Federation-scope open-call surface
 watchlist:{id}	placement	targeted_room	CC 3.1.9.4	**Per-group, NEVER global**
-attestation:registry_consensus	placement	commons	CC 4.4.3.2.1	are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)
+attestation:registry_consensus	placement	commons	CC 4.4.3.4	are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)
 lineage_witness:{stage}	cosign_rule	none	CC 3.4.10	Its cosignature is the `ciris.lineage_head_cosign.v1` object
 ballot:moderator	placement	targeted_room	CC 3.1.3	Wire `ballot:moderator:v1`. Community scope.
 ballot:moderator_acceptance	placement	targeted_room	CC 3.1.3	Wire `ballot:moderator_acceptance:v1`. Community scope.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CC — who holds which content key, as a small executable model (CC 4.4.3.4.1, CC 4.4.3.4.5, CC 4.4.3.2.1).
+CC — who holds which content key, as a small executable model (CC 4.4.3.16, CC 4.4.3.22, CC 4.4.3.4).
 
 One group and one writer in it (the minter of its own keys). Members b and c come and go; b has a second device
 that may be added and revoked. The writer seals each write under a key and wraps that key to devices. Two tiers:
@@ -113,7 +113,7 @@ def explore(tab, scope, tier, full_history=False):
         elif kind == "device_add":
             live.add(who)
             mine = [k for k, v in holders.items() if DEVICES["b"][0] in v]
-            grant(who, list(holders) if tier == "per-write" else mine)   # CC 4.4.3.4.1: every key the member's other devices hold
+            grant(who, list(holders) if tier == "per-write" else mine)   # CC 4.4.3.16: every key the member's other devices hold
         elif kind == "device_revoke":
             live.discard(who); revoked.add(who)
             if eff("revocation") == "rotate_epoch":

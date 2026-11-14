@@ -24,7 +24,7 @@ p2	377	392	informative	1562	eight reasoning axes are not wire fields; three cell
 p2	396	407	informative	2800	foreword: what CEG is, readerships, substrate layering; no rule beyond pointers
 p2	409	413	rationale	1200	why the omit-vs-materialize rule exists; the hazard
 p2	419	436	example	1500	scores_minimal vector copied verbatim plus explicit-default walkthrough
-p2	463	506	duplicate_table	6500	per-field catalog; every cell restates 2.1 or the 2.6.1.7 signed-object table
+p2	463	506	duplicate_table	6500	per-field catalog; every cell restates 2.1 or the 2.6.1.8 signed-object table
 p2	536	544	example	1100	worked attack; the one MUST at 544 restates 2.6.1.1
 p2	546	556	restated_block	900	verification flow pseudocode; restates JCS, hybrid verify, relay preservation
 p2	558	566	restated_block	800	scope pointer; what the rule does not do
@@ -35,7 +35,7 @@ p2	876	878	rationale	1200	why FedCode exists; cross-impl determinism framing
 p2	912	912	rationale	700	birthday-bound arithmetic inside the key_id paragraph (the MUSTs around it stay)
 p3	11	13	rationale	1300	Part 3 intro: shared-vocabulary rationale; its two rules survive at 3.1.7
 p3	34	39	duplicate_table	1650	Six accord catalogue rows pointing to 3.4.1; keep only for registry generation
-p3	48	52	informative	700	Attestation ladder rows L1-L5 are mechanism names; composition lives at 4.4.3.6
+p3	48	52	informative	700	Attestation ladder rows L1-L5 are mechanism names; composition lives at 4.4.3.32
 p3	79	79	rationale	300	Provenance intro sentence
 p3	126	128	rationale	600	Agent text manifest motivation; the rules follow at 139-143
 p3	211	213	rationale	1200	Session: the problem it solves; N-to-M fan-out rationale
@@ -103,7 +103,7 @@ p3	1885	1885	rationale	2075	four reasons why no read rule exists; one rule sente
 p3	1895	1895	rationale	1421	per-family reasons the verify families are not consent-gated; one exception row
 p3	1897	1897	rationale	447	emitter-standing model rejected; principle only
 p3	1909	1909	informative	286	plane carriage is an implementation gap
-p3	1953	1959	rationale	2164	fabric-node discipline; restates 4.4.3.2.4.1 founder quorum and 3.4.8 non-adjudication
+p3	1953	1959	rationale	2164	fabric-node discipline; restates 4.4.3.8 founder quorum and 3.4.8 non-adjudication
 p3	2002	2002	rationale	505	why infrastructure is the right enforcer
 p3	2006	2006	informative	903	multi-tenant hosting deferred; one MUST NOT survives
 p3	2014	2014	example	961	LensCore-fold worked example; restates 3.4.5 self-emission rule
@@ -136,7 +136,7 @@ p4	555	595	example	2700	Geographic-community admission worked example (Alice)
 p4	646	652	example	1400	Composition with consent and self-collectives; two of three bullets restate rules
 p4	718	735	example	2600	Affiliation instantiation table, committee vs IGO, plus the regulated-middle note
 p4	737	737	rationale	1300	Why affiliations are still 1+4; recap of which existing machinery each limb rides
-p4	763	767	restated_block	900	Policy L intro restates the cascade rule stated in 4.4.3.4.1
+p4	763	767	restated_block	900	Policy L intro restates the cascade rule stated in 4.4.3.16
 p4	846	846	rationale	700	why absolute-M; weighted: alternative
 p4	913	913	example	900	worked login flow; restates 856-870
 p4	1000	1000	example	700	Acme Household DEK wrapping example
@@ -149,11 +149,11 @@ p4	1187	1189	rationale	900	ladder-vs-mechanism framing
 p4	1201	1215	example	500	reference ladder_verdict implementation
 p4	1219	1219	rationale	700	why mechanism-only matters
 p4	1253	1256	restated_block	300	1+4 preserved note
-p4	1342	1345	restated_block	2400	declared-asymmetry register table; cells restate 8.8.2, 1.9, 4.3, 4.2.6, 4.2.1 and 1.13.2
+p4	1342	1345	restated_block	2400	declared-asymmetry register table; cells restate 8.8.1, 1.9, 4.3, 4.2.6, 4.2.1 and 1.13.2
 p4	1347	1347	rationale	1000	why listed items are defaults not privileges; names nothing new
 p4	1349	1349	rationale	1100	two kinds of entry; justification stated once; repeats 1340 and 1345
 p4	1425	1441	informative	3800	vertical compliance table marked informational; its rule cells restate 2.4.1.1, 4.5.3, 3.4.14
-p4	1443	1455	restated_block	1200	documents-what-3 list; pointers to 4.5.2.1, 4.4.3.5.x
+p4	1443	1455	restated_block	1200	documents-what-3 list; pointers to 4.5.2.1, 4.4.3.25–4.4.3.31
 p4	1555	1557	restated_block	1100	coup property and 1+4 preserved; restates 4.5.3 line 1481 and 4.2.1
 p4	1613	1624	restated_block	1200	documents-what-6 list; restates 4.5.8.1 and 3.4.7.1; encoding sentence is the one rule
 p4	1655	1659	restated_block	600	what the wire promises; restates 4.5.9.1 and 4.5.9.2
@@ -161,7 +161,7 @@ p4	1661	1674	restated_block	1300	documents-what-5 list; pointers only except H3-
 p4	1676	1699	informative	2000	hash-database landscape, operator default path, future coalition slot
 p4	1701	1706	restated_block	850	documents-what-2; the feed-registration MUST is the one rule
 p4	1708	1712	example	850	bootstrap-content pattern and multi-source list
-p4	1748	1760	restated_block	1000	documents-what-4 list; restates 5.2, 4.2.3, 4.4.3.4.5
+p4	1748	1760	restated_block	1000	documents-what-4 list; restates 5.2, 4.2.3, 4.4.3.22
 p4	1766	1766	restated_block	1300	general pattern restates 4.2.6 and the mechanism below
 p4	1775	1775	rationale	900	first half: fallback-not-check and why 48 h; second half (two acts) is rules
 p4	1787	1793	duplicate_table	1100	outcome ladder restates 1781-1785
@@ -173,13 +173,13 @@ p5	75	100	restated_block	1466	Enforcement pseudo-code restates lines 63, 102, 10
 p5	110	110	rationale	430	Locality dividend: cost argument, no rule
 p5	217	217	rationale	379	Rationale for the subject-revocation promotion rule
 p5	223	225	restated_block	1790	Consent tail and overdue emission restate lines 215 and 219 from the two gates
-p5	248	248	restated_block	643	5.3.2.4.1 restates 5.3.2.2 eligibility and carve-out; only witness_relation=self is new
-p5	284	290	informative	1222	Holistic cost model, marked informative; promotion-cost sentence restates 5.3.2.4.2
-p5	350	361	restated_block	1494	Composition map: worked compositions; rules it carries live at 4.4.3.2.x, 3.1.3.2, 5.3.3.4
+p5	248	248	restated_block	643	5.3.2.5 restates 5.3.2.2 eligibility and carve-out; only witness_relation=self is new
+p5	284	290	informative	1222	Holistic cost model, marked informative; promotion-cost sentence restates 5.3.2.6
+p5	350	361	restated_block	1494	Composition map: worked compositions; rules it carries live at 4.4.3.3–4.4.3.12, 3.1.3.2, 5.3.3.9
 p5	371	375	rationale	1291	Realtime profile rationale and breadth confirmation; PQC sentence restates 5.1
 p5	395	395	informative	770	MDC-primacy design intent, marked informative
-p5	478	483	duplicate_table	1443	Edge-decision table restates 5.3.3.2 profiles, 5.3.3.4 fan-out and E1 stated in full below it
-p5	541	543	restated_block	510	Scope pointer restates 2.4, 5.3.3.3 and 5.3.3.5 E2
+p5	478	483	duplicate_table	1443	Edge-decision table restates 5.3.3.2 profiles, 5.3.3.9 fan-out and E1 stated in full below it
+p5	541	543	restated_block	510	Scope pointer restates 2.4, 5.3.3.8 and 5.3.3.10 E2
 p5	556	572	example	800	Illustrative JSON of the trust-root bundle response; fields restated in prose at 574-578
 p5	615	625	example	250	Illustrative JSON of the error envelope; fields are named in the MUST at 613
 p5	709	723	example	900	Three record_id conformance vectors; normative but published with the release (725)
@@ -193,7 +193,7 @@ p6	9	11	informative	1400	substrate overview; restates 6.1.5 and 5.3.3.2
 p6	43	45	rationale	1100	memory pyramid storage-cost discussion around the two operators
 p6	192	194	informative	540	reliability figure and no-wire-change note
 p6	290	292	restated_block	780	fail-secure summary of N1 to N8, RB-1, WW-2
-p6	318	318	restated_block	1250	what anyone holding the rows can check; restates 6.1.9 and 6.1.2.1.1
+p6	318	318	restated_block	1250	what anyone holding the rows can check; restates 6.1.9 and 6.1.2.2
 p7	1	9	informative	850	part header and arc overview
 p7	11	17	informative	650	introduction to 7.1 and the three-sphere list repeated by 7.1.1-7.1.3
 p7	70	72	informative	450	conclusion of 7.1

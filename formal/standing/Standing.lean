@@ -49,7 +49,7 @@ inductive Statement | peer | dutyRecord | authorityAct
   deriving DecidableEq, Repr
 
 /-- whose standing applies: a person has consent over what is said about them; an affiliation
-    (a business, a court, a professional body) has duties and no such consent (CC 4.4.3.2.8) -/
+    (a business, a court, a professional body) has duties and no such consent (CC 4.4.3.12) -/
 inductive SubjectKind | person | affiliation
   deriving DecidableEq, Repr
 

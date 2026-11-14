@@ -23,7 +23,7 @@ rows of CC 3.1.3.2 are actions:
 A held change lands when the protocol is met. Otherwise it expires after its hold window, which is
 the window the group sets on its own signed record, never under the standing class (CC 3.3.4). Protocols are `founder_only` (any active
 founder), `unanimous`, `majority` (more than half the roster, the target counted) and `quorum:M/N`
-(M absolute, CC 4.4.3.4.2.1). An adversary holds one key from the start and signs anything that key
+(M absolute, CC 4.4.3.18). An adversary holds one key from the start and signs anything that key
 may sign. Honest keys sign a removal only of that key, so any removal of an honest member is the
 adversary's alone. Time is per object: each proposal and each held change carries its own age, and
 one tick ages all of them together. There is no clock variable.
@@ -147,7 +147,7 @@ ticks keep coming and a due object expires. No signer is ever required to act.
 
 - `weighted:{rubric}` and `custom:` protocols, and protocol amendment or entrenchment (CC 3.3.4).
 - The `infrastructure` subkind: admission over the founder subset, node seats with no acceptance, and
-  the T7 recovery widening (CC 3.2). The geographic `location_proof` gate (CC 4.4.3.2.3).
+  the T7 recovery widening (CC 3.2). The geographic `location_proof` gate (CC 4.4.3.6).
 - `admission: open` on a `public` community, where the standing proposal resolves its subject at
   acceptance (CC 3.2).
 - Role changes for an active member, promotion to founder, and supersedes that change metadata or

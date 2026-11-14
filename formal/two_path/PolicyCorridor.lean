@@ -75,7 +75,7 @@ theorem ruled_in_corridor_at_7 : inCorridor ruled 7 86400 = true := by decide
 
 /-- the self roster: strict majority both ways at N = 3, and a floor of one key — the one roster
     where one voice on the reverse path is right, because every key is the same person's; it is
-    therefore outside the community corridor by the floor clause and inside its own (3.3.6.3) -/
+    therefore outside the community corridor by the floor clause and inside its own (3.3.6.4) -/
 def selfRoster : Policy := ⟨1, 2, 1, 2, 1, 3, 86400, false, by decide, by decide, by decide⟩
 theorem self_roster_floor_is_one : floorVotes selfRoster 3 = 1 := rfl
 theorem self_roster_outside_community_corridor : inCorridor selfRoster 3 86400 = false := by decide

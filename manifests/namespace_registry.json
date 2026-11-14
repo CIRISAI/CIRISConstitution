@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "4ab18d92f7b9793daaa67376a374a5dec92526daa06e224c28d180a30449b519",
+    "registry_sha256": "7a1bd198d592befe880d6a76afbb3a1da3399beab6a843022baaa390fb8351b1",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "5ba8182891b4942963a4a55b7a41c44e8ed1f5fe7d4daa0e197a4f45c7c6582d"
+    "source_sha256": "66f7209466bc9cc9d59026bb8cf9e9c6fcd7f2e5f2aae5b2d79f8da304712982"
   },
   "families": [
     {
@@ -1728,7 +1728,7 @@
     },
     {
       "cc_section": "3.1.5",
-      "description": "Catalogue row (CC 3.1.7 R1); subject side of a bilateral grant, CC 3.3.1 / CC 4.4.3.5.3.",
+      "description": "Catalogue row (CC 3.1.7 R1); subject side of a bilateral grant, CC 3.3.1 / CC 4.4.3.28.",
       "owning_component": "accord-agent",
       "owning_repo": "CIRISAgent",
       "polarity": "positive-only",
@@ -2895,7 +2895,7 @@
     },
     {
       "cc_section": "3.1.3",
-      "description": "The carrier of a framed occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed outside the two-path roster door (CC 3.3.6.3)",
+      "description": "The carrier of a framed occurrence revocation (registered under CC 3.1.7 R2(a), on the planes-as-rows pattern of key:record / key:revocation): a framed SignedIdentityOccurrenceRevocation signed outside the two-path roster door (CC 3.3.6.4)",
       "owning_component": "persist",
       "owning_repo": "CIRISPersist",
       "polarity": "-1 only",
@@ -3255,7 +3255,7 @@
     },
     {
       "cc_section": "3.1.1",
-      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.2.1).",
+      "description": "License status for a key under a named authority (authority_id is the licence's provenance \u2014 CC 2.4.1.3).",
       "owning_component": "registry",
       "owning_repo": "CIRISRegistry",
       "polarity": "signed",

@@ -66,21 +66,21 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 2.4.1	structure	The four structural composers	§3.2	0.00618	30	0.74	II	ceg	wire
 2.4.1.1	withdraws	Who may take a row back	§3.2.3	0.00756	23	0.91	II	ceg	wire
 2.4.1.2	delegates_to	Authority-source claims via `delegates_to`	§3.2.1	0.00402	59	0.48	II	ceg	wire
-2.4.1.2.1	authority-triad	Licensure, grant, delegation — three concepts, three wire discriminators (normative)	(spine-reconciled)	0.00050	438	0.35	II	ceg	wire
-2.4.1.3	recants	The `recants` distinction matters	§3.2.2	0.00172	143	0.21	II	ceg	wire
+2.4.1.3	authority-triad	Licensure, grant, delegation — three concepts, three wire discriminators (normative)	(spine-reconciled)	0.00050	438	0.35	II	ceg	wire
+2.4.1.4	recants	The `recants` distinction matters	§3.2.2	0.00172	143	0.21	II	ceg	wire
 2.4.2	scores	The workhorse: `scores`	§3.1	0.00092	277	0.11	II	ceg	wire
 2.5	reasoning	The reasoning grammar — the eight axes	§2	0.00382	65	0.46	II	ceg	wire
 2.6	foreword	Canonical form and the signed object	§0	0.00134	173	0.16	II	ceg	wire
 2.6.1	envelope-canonicalization	Envelope canonicalization — JCS + the omit-vs-materialize rule	§0.9	0.00796	21	0.95	II	ceg	wire
 2.6.1.1	round-trip	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	§0.9.2	0.00284	87	0.34	II	ceg	wire
-2.6.1.1.1	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	§0.9.2.1	0.00176	136	0.21	II	ceg	wire
-2.6.1.2	per-field	Per-field encoding table (informational)	§0.9.3	0.00124	182	0.15	II	ceg	wire
-2.6.1.3	canonical	Canonical encoding format (normative)	§0.9.1	0.00110	202	0.13	II	ceg	wire
-2.6.1.4	worked	Worked attack the rule closes	§0.9.5	0.00102	216	0.12	II	ceg	wire
-2.6.1.5	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg	wire
-2.6.1.6	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	II	ceg	wire
-2.6.1.7	signed-object	The signed object — member set, placement and types (normative)	(spine-reconciled)	0.00050	444	0.4	II	ceg	wire
-2.6.1.8	signed-object-cose	The signed object of the v62 edition: CBOR and COSE (planned)	—	0.00050	444	0.3	II	ceg	wire
+2.6.1.2	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	§0.9.2.1	0.00176	136	0.21	II	ceg	wire
+2.6.1.3	per-field	Per-field encoding table (informational)	§0.9.3	0.00124	182	0.15	II	ceg	wire
+2.6.1.4	canonical	Canonical encoding format (normative)	§0.9.1	0.00110	202	0.13	II	ceg	wire
+2.6.1.5	worked	Worked attack the rule closes	§0.9.5	0.00102	216	0.12	II	ceg	wire
+2.6.1.6	verification	Verification flow (informational)	§0.9.4	0.00092	235	0.11	II	ceg	wire
+2.6.1.7	section	Scope of the canonicalization rule	§0.9.6	0.00092	236	0.11	II	ceg	wire
+2.6.1.8	signed-object	The signed object — member set, placement and types (normative)	(spine-reconciled)	0.00050	444	0.4	II	ceg	wire
+2.6.1.9	signed-object-cose	The signed object of the v62 edition: CBOR and COSE (planned)	—	0.00050	444	0.3	II	ceg	wire
 2.6.2	canonicalization	Date-time canonicalization	§0.5	0.00530	39	0.64	II	ceg	wire
 2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	§0.6	0.00443	51	0.53	II	ceg	wire
 2.6.4	policy-versioning	Versioning policy	§0.3	0.00214	111	0.26	II	ceg	wire
@@ -147,8 +147,8 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 3.3.6	identity	`identity_occurrence` subject_kind	§5.6.8.8	0.00467	45	0.56	III	ceg	dictionary
 3.3.6.1	encryption_pubkeys	the recipient content-encryption KEM binding	§5.6.8.8.2	0.00303	81	0.36	III	ceg	dictionary
 3.3.6.2	transport-authenticated	`transport_destination` — the authenticated identity↔address binding	§5.6.8.8.1	0.00268	93	0.32	III	ceg	dictionary
-3.3.6.2.1	rns	RNS destination-hash algorithm (pinned)	§5.6.8.8.1.1	0.00321	79	0.39	III	ceg	dictionary
-3.3.6.3	self-roster	The key roster of a self: one fedID, its keys, who may act and how the roster changes (normative)	(spine-reconciled)	0.00050	445	0.5	III	ceg	dictionary
+3.3.6.3	rns	RNS destination-hash algorithm (pinned)	§5.6.8.8.1.1	0.00321	79	0.39	III	ceg	dictionary
+3.3.6.4	self-roster	The key roster of a self: one fedID, its keys, who may act and how the roster changes (normative)	(spine-reconciled)	0.00050	445	0.5	III	ceg	dictionary
 3.3.7	consent-directed	`consent:replication` — directed federation-peer replication consent	§5.6.8.15	0.00274	90	0.33	III	ceg	dictionary
 3.3.8	namespace-event	Event-lifecycle dimension families	§5.6.8.5	0.00168	145	0.2	III	ceg	dictionary
 3.3.9	partner	Operational-data subject_kinds — `organization` / `org_membership` / `partner_record`	§5.6.8.13	0.00153	159	0.18	III	ceg	dictionary
@@ -196,43 +196,43 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.4.2	aggregation	Aggregation semantics — opinionated defaults	§8.2	0.00201	119	0.24	IV	ceg	policies
 4.4.3	reference	Reference policies	§8.1	0.00188	127	0.23	IV	ceg	policies
 4.4.3.1	quorum	Policy E — Locality-scaled quorum	§8.1.5	0.00602	31	0.72	IV	ceg	policies
-4.4.3.1.1	sub-quorum	Sub-quorum fallback	§8.1.5.1	0.00397	61	0.48	IV	ceg	policies
-4.4.3.2	community-policy	Policy M — Community membership composition	§8.1.13	0.00543	36	0.65	IV	ceg	policies
-4.4.3.2.1	community-three	The three crypto tiers + the Community DEK cascade (normative)	§8.1.13.3	0.00376	68	0.45	IV	ceg	policies
-4.4.3.2.2	community-forward	Forward secrecy on community member removal	§8.1.13.4	0.00173	142	0.21	IV	ceg	policies
-4.4.3.2.3	community-admission	Community admission per `consensus_protocol` + `cohort_subkind`	§8.1.13.2	0.00151	160	0.18	IV	ceg	policies
-4.4.3.2.4	community-membership	Community membership resolution	§8.1.13.1	0.00146	163	0.18	IV	ceg	policies
-4.4.3.2.4.1	deterministic	Deterministic resolution + member→address resolution (NORMATIVE)	§8.1.13.1.1	0.00262	95	0.31	IV	ceg	policies
-4.4.3.2.5	admission-geographic	Geographic-community admission flow (worked example)	§8.1.13.5	0.00121	184	0.15	IV	ceg	policies
-4.4.3.2.6	delivery-extension	Delivery extension — `delivery_mode` × Policy M	§8.1.13.7	0.00103	212	0.12	IV	ceg	policies
-4.4.3.2.7	composition-8-1-13-6	Composition with consent + self-collectives	§8.1.13.6	0.00092	298	0.11	IV	ceg	policies
-4.4.3.3	policy	Policy H — Tiered-Scope Composition	§8.1.8	0.00456	47	0.55	IV	ceg	policies
-4.4.3.3.1	supersedes	Promotion via `supersedes` (worked pattern)	§8.1.8.1	0.00376	69	0.45	IV	ceg	policies
-4.4.3.4	family-policy	Policy L — Self/family membership composition	§8.1.12	0.00450	49	0.54	IV	ceg	policies
-4.4.3.4.1	cascade	Key-grant cascade (the at-rest encryption flow)	§8.1.12.4	0.00401	60	0.48	IV	ceg	policies
-4.4.3.4.2	admission-membership	Membership-change admission per consensus_protocol	§8.1.12.3	0.00220	107	0.26	IV	ceg	policies
-4.4.3.4.2.1	quorum-absolute	`quorum:M/N` is absolute-M (normative)	§8.1.12.3.1	0.00109	204	0.13	IV	ceg	policies
-4.4.3.4.3	cohort	The "Self at login" — app + agent co-self + partnered delegation (normative composition)	§8.1.12.7	0.00218	108	0.26	IV	ceg	policies
-4.4.3.4.3.1	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg	policies
-4.4.3.4.4	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg	policies
-4.4.3.4.5	forward-secrecy	Forward secrecy on member removal	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
-4.4.3.4.6	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg	policies
-4.4.3.4.7	composition-subject	Composition with subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg	policies
-4.4.3.5	policy-cem	Policy K — Consent composition	§8.1.11	0.00445	50	0.53	IV	ceg	policies
-4.4.3.5.1	composition-decay	Decay-protocol stage composition (the CIRISAgent ANONYMOUS stream)	§8.1.11.5	0.00239	102	0.29	IV	ceg	policies
-4.4.3.5.2	deletion-sla	Deletion-SLA watcher (substrate emission)	§8.1.11.3	0.00224	106	0.27	IV	ceg	policies
-4.4.3.5.3	composition-bilateral	Bilateral pair composition (PARTNERED ceremony)	§8.1.11.4	0.00178	133	0.21	IV	ceg	policies
-4.4.3.5.4	multi-subject	Multi-subject revocation (any-subject-binding)	§8.1.11.2	0.00140	167	0.17	IV	ceg	policies
-4.4.3.5.5	consent-effective	Effective consent resolution (read path)	§8.1.11.1	0.00132	176	0.16	IV	ceg	policies
-4.4.3.5.6	policy-what	What Policy K composes	§8.1.11.6	0.00092	295	0.11	IV	ceg	policies
-4.4.3.6	policy-attestation	Policy I — Attestation-Ladder Composition	§8.1.9	0.00345	73	0.41	IV	ceg	policies
-4.4.3.7	contributions-policy	Policy F — `agent_files` trust composition	§8.1.6	0.00250	99	0.3	IV	ceg	policies
-4.4.3.8	policy-direct	Policy A — direct trust	§8.1.1	0.00201	118	0.24	IV	ceg	policies
-4.4.3.9	policy-lexical	Policy D — Lexical-vulnerability-priority	§8.1.4	0.00174	138	0.21	IV	ceg	policies
-4.4.3.10	policy-trusted	Policy J — Trusted-Publisher composition	§8.1.10	0.00116	193	0.14	IV	ceg	policies
-4.4.3.11	policy-trust	Policy G — Trust-Fresh / Lighthouse	§8.1.7	0.00095	228	0.11	IV	ceg	policies
-4.4.3.12	policy-one	Policy B — one-hop transitive	§8.1.2	0.00092	299	0.11	IV	ceg	policies
-4.4.3.13	policy-weighted	Policy C — weighted graph	§8.1.3	0.00092	300	0.11	IV	ceg	policies
+4.4.3.2	sub-quorum	Sub-quorum fallback	§8.1.5.1	0.00397	61	0.48	IV	ceg	policies
+4.4.3.3	community-policy	Policy M — Community membership composition	§8.1.13	0.00543	36	0.65	IV	ceg	policies
+4.4.3.4	community-three	The three crypto tiers + the Community DEK cascade (normative)	§8.1.13.3	0.00376	68	0.45	IV	ceg	policies
+4.4.3.5	community-forward	Forward secrecy on community member removal	§8.1.13.4	0.00173	142	0.21	IV	ceg	policies
+4.4.3.6	community-admission	Community admission per `consensus_protocol` + `cohort_subkind`	§8.1.13.2	0.00151	160	0.18	IV	ceg	policies
+4.4.3.7	community-membership	Community membership resolution	§8.1.13.1	0.00146	163	0.18	IV	ceg	policies
+4.4.3.8	deterministic	Deterministic resolution + member→address resolution (NORMATIVE)	§8.1.13.1.1	0.00262	95	0.31	IV	ceg	policies
+4.4.3.9	admission-geographic	Geographic-community admission flow (worked example)	§8.1.13.5	0.00121	184	0.15	IV	ceg	policies
+4.4.3.10	delivery-extension	Delivery extension — `delivery_mode` × Policy M	§8.1.13.7	0.00103	212	0.12	IV	ceg	policies
+4.4.3.11	composition-8-1-13-6	Composition with consent + self-collectives	§8.1.13.6	0.00092	298	0.11	IV	ceg	policies
+4.4.3.13	policy	Policy H — Tiered-Scope Composition	§8.1.8	0.00456	47	0.55	IV	ceg	policies
+4.4.3.14	supersedes	Promotion via `supersedes` (worked pattern)	§8.1.8.1	0.00376	69	0.45	IV	ceg	policies
+4.4.3.15	family-policy	Policy L — Self/family membership composition	§8.1.12	0.00450	49	0.54	IV	ceg	policies
+4.4.3.16	cascade	Key-grant cascade (the at-rest encryption flow)	§8.1.12.4	0.00401	60	0.48	IV	ceg	policies
+4.4.3.17	admission-membership	Membership-change admission per consensus_protocol	§8.1.12.3	0.00220	107	0.26	IV	ceg	policies
+4.4.3.18	quorum-absolute	`quorum:M/N` is absolute-M (normative)	§8.1.12.3.1	0.00109	204	0.13	IV	ceg	policies
+4.4.3.19	cohort	The "Self at login" — app + agent co-self + partnered delegation (normative composition)	§8.1.12.7	0.00218	108	0.26	IV	ceg	policies
+4.4.3.20	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	§8.1.12.7.1	0.00192	124	0.23	IV	ceg	policies
+4.4.3.21	family-membership	Family membership resolution	§8.1.12.2	0.00216	110	0.26	IV	ceg	policies
+4.4.3.22	forward-secrecy	Forward secrecy on member removal	§8.1.12.5	0.00165	149	0.2	IV	ceg	policies
+4.4.3.23	self-collective	Self-collective resolution	§8.1.12.1	0.00092	296	0.11	IV	ceg	policies
+4.4.3.24	composition-subject	Composition with subject_key_ids[]	§8.1.12.6	0.00092	297	0.11	IV	ceg	policies
+4.4.3.25	policy-cem	Policy K — Consent composition	§8.1.11	0.00445	50	0.53	IV	ceg	policies
+4.4.3.26	composition-decay	Decay-protocol stage composition (the CIRISAgent ANONYMOUS stream)	§8.1.11.5	0.00239	102	0.29	IV	ceg	policies
+4.4.3.27	deletion-sla	Deletion-SLA watcher (substrate emission)	§8.1.11.3	0.00224	106	0.27	IV	ceg	policies
+4.4.3.28	composition-bilateral	Bilateral pair composition (PARTNERED ceremony)	§8.1.11.4	0.00178	133	0.21	IV	ceg	policies
+4.4.3.29	multi-subject	Multi-subject revocation (any-subject-binding)	§8.1.11.2	0.00140	167	0.17	IV	ceg	policies
+4.4.3.30	consent-effective	Effective consent resolution (read path)	§8.1.11.1	0.00132	176	0.16	IV	ceg	policies
+4.4.3.31	policy-what	What Policy K composes	§8.1.11.6	0.00092	295	0.11	IV	ceg	policies
+4.4.3.32	policy-attestation	Policy I — Attestation-Ladder Composition	§8.1.9	0.00345	73	0.41	IV	ceg	policies
+4.4.3.33	contributions-policy	Policy F — `agent_files` trust composition	§8.1.6	0.00250	99	0.3	IV	ceg	policies
+4.4.3.34	policy-direct	Policy A — direct trust	§8.1.1	0.00201	118	0.24	IV	ceg	policies
+4.4.3.35	policy-lexical	Policy D — Lexical-vulnerability-priority	§8.1.4	0.00174	138	0.21	IV	ceg	policies
+4.4.3.36	policy-trusted	Policy J — Trusted-Publisher composition	§8.1.10	0.00116	193	0.14	IV	ceg	policies
+4.4.3.37	policy-trust	Policy G — Trust-Fresh / Lighthouse	§8.1.7	0.00095	228	0.11	IV	ceg	policies
+4.4.3.38	policy-one	Policy B — one-hop transitive	§8.1.2	0.00092	299	0.11	IV	ceg	policies
+4.4.3.39	policy-weighted	Policy C — weighted graph	§8.1.3	0.00092	300	0.11	IV	ceg	policies
 4.4.4	sovereign-registered	Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)	§8.4	0.00167	146	0.2	IV	ceg	policies
 4.5	discipline	Governance discipline	§11	0.00174	140	0.21	IV	ceg	constitution
 4.5.1	amendment	Amendment process — federation Contribution, WA quorum, strict majority	§11.2	0.00711	27	0.85	IV	ceg	constitution
@@ -244,7 +244,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.2.2	compliance-vertical	Vertical compliance mapping (informational)	§11.6.1	0.00092	247	0.11	IV	ceg	constitution
 4.5.2.3	documents-what-3	What this governance layer documents	§11.6.3	0.00092	248	0.11	IV	ceg	constitution
 4.5.3	takedown	Fast-path takedown coordination	§11.4	0.00459	46	0.55	IV	ceg	constitution
-4.5.4	registry-named	Named-moderator existence invariant + the election in merit order	§11.11	0.00348	72	0.42	IV	ceg	constitution
+4.5.4	registry-named	Named-moderator existence invariant + the election	§11.11	0.00348	72	0.42	IV	ceg	constitution
 4.5.5	takedown-moderation	Moderation as a delegable duty — `moderate` / `takedown` / `review`	§11.10	0.00216	109	0.26	IV	ceg	constitution
 4.5.6	admission-operational	Operational-language gate at admission	§11.1	0.00164	151	0.2	IV	ceg	constitution
 4.5.7	registry-watchlist	Watchlist auto-detection — opt-in, per-group, separation-of-powers	§11.12	0.00119	185	0.14	IV	ceg	constitution
@@ -267,7 +267,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.5.12	family-self-2	Self/family membership governance	§11.7	0.00094	230	0.11	IV	ceg	constitution
 4.5.12.1	forward	Forward secrecy on member departure	§11.7.1	0.00423	55	0.51	IV	ceg	constitution
 4.5.12.2	envelope-multi	Multi-family membership — envelope `family_id`	§11.7.2	0.00127	178	0.15	IV	ceg	constitution
-4.5.12.3	admission-self	Self-occurrence admission — single-vouch	§11.7.4	0.00097	222	0.12	IV	ceg	constitution
+4.5.12.3	admission-self	Self-occurrence admission — the self-roster door	§11.7.4	0.00097	222	0.12	IV	ceg	constitution
 4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in CC 3.4.4	§11.7.3	0.00092	249	0.11	IV	ceg	constitution
 4.5.12.5	family-admission	Family admission — consensus_protocol (normative)	§11.7.5	0.00092	250	0.11	IV	ceg	constitution
 4.5.12.6	documents-what-4	What this documents	§11.7.6	0.00092	251	0.11	IV	ceg	constitution
@@ -281,28 +281,28 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 5.3.2.2	consent-revocations	Consent revocations are NOT local-tier-eligible	§10.1.3	0.00318	80	0.38	V	ceg	threats wire
 5.3.2.3	merge	Cross-region merge intents — CEG-declared per subject_kind (normative)	§10.1.6	0.00194	123	0.23	V	ceg	threats wire
 5.3.2.4	attestation-tier	The attestation tier model — local-tier write, query, promotion (normative)	§10.1.5	0.00115	194	0.14	V	ceg	threats wire
-5.3.2.4.1	authority-local	Local-tier eligibility — the discriminator is *whose act the row is*, not subject-set emptiness	§10.1.5.2	0.00154	158	0.18	V	ceg	threats wire
-5.3.2.4.2	local	Promotion — `local → federation` (the deferred-signature moment)	§10.1.5.3	0.00125	180	0.15	V	ceg	threats wire
-5.3.2.4.3	two	The two tiers	§10.1.5.1	0.00125	181	0.15	V	ceg	threats wire
-5.3.2.4.3.1	admission-pqc	The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)	§10.1.5.1.1	0.00127	179	0.15	V	ceg	threats wire
-5.3.2.4.4	persist-query	Query — open-prefix dimensions, bounded operators (normative)	§10.1.5.4	0.00092	239	0.11	V	ceg	threats wire
-5.3.2.4.5	holistic	For holistic analysis + modeling (informative)	§10.1.5.5	0.00092	240	0.11	V	ceg	threats wire
-5.3.2.5	full-sha	Full-SHA verification before consumption (normative)	§10.1.1	0.00095	224	0.11	V	ceg	threats wire
-5.3.2.6	render-tier	The render tier is receiver policy, computed from verified, sniffed bytes (normative)	(spine-reconciled)	0.00050	439	0.35	V	ceg	threats wire
+5.3.2.5	authority-local	Local-tier eligibility — the discriminator is *whose act the row is*, not subject-set emptiness	§10.1.5.2	0.00154	158	0.18	V	ceg	threats wire
+5.3.2.6	local	Promotion — `local → federation` (the deferred-signature moment)	§10.1.5.3	0.00125	180	0.15	V	ceg	threats wire
+5.3.2.7	two	The two tiers	§10.1.5.1	0.00125	181	0.15	V	ceg	threats wire
+5.3.2.8	admission-pqc	The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)	§10.1.5.1.1	0.00127	179	0.15	V	ceg	threats wire
+5.3.2.9	persist-query	Query — open-prefix dimensions, bounded operators (normative)	§10.1.5.4	0.00092	239	0.11	V	ceg	threats wire
+5.3.2.10	holistic	For holistic analysis + modeling (informative)	§10.1.5.5	0.00092	240	0.11	V	ceg	threats wire
+5.3.2.11	full-sha	Full-SHA verification before consumption (normative)	§10.1.1	0.00095	224	0.11	V	ceg	threats wire
+5.3.2.12	render-tier	The render tier is receiver policy, computed from verified, sniffed bytes (normative)	(spine-reconciled)	0.00050	439	0.35	V	ceg	threats wire
 5.3.3	transport-streaming	Streaming transport, per-stream logs & delivery receipts	§10.5	0.00379	67	0.45	V	ceg	threats wire
 5.3.3.1	stream	Chunk seal + STREAM nonce (normative)	§10.5.2	0.00419	56	0.5	V	ceg	threats wire
 5.3.3.2	composition	Realtime group communication — composition	§10.5.8	0.00381	66	0.46	V	ceg	threats wire
-5.3.3.2.1	namespace-realtime	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	§10.5.8.2	0.00190	125	0.23	V	ceg	threats wire
-5.3.3.2.2	realtime	Realtime non-A/V data streams (normative scope boundary)	§10.5.8.1	0.00132	175	0.16	V	ceg	threats wire
-5.3.3.2.3	registry-wire	`SealedAvChunk` wire layout (normative)	§10.5.8.3	0.00114	195	0.14	V	ceg	threats wire
-5.3.3.2.4	chunklayer	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	§10.5.8.4	0.00113	197	0.14	V	ceg	threats wire
-5.3.3.2.5	stream-double	Double-seal + deterministic nonce derivation (normative)	§10.5.8.5	0.00092	243	0.11	V	ceg	threats wire
-5.3.3.3	per-stream	Per-stream log + stream-root (normative)	§10.5.1	0.00301	82	0.36	V	ceg	threats wire
-5.3.3.4	liveness	Liveness invariant — entitled vs reachable (normative)	§10.5.6	0.00295	84	0.35	V	ceg	threats wire
-5.3.3.5	transport-edge	Transport — Edge layer (normative)	§10.5.5	0.00242	101	0.29	V	ceg	threats wire
-5.3.3.6	delivery	Delivery receipts (normative)	§10.5.4	0.00227	105	0.27	V	ceg	threats wire
-5.3.3.7	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg	threats wire
-5.3.3.8	documents-what	What the streaming surface documents	§10.5.7	0.00092	242	0.11	V	ceg	threats wire
+5.3.3.3	namespace-realtime	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	§10.5.8.2	0.00190	125	0.23	V	ceg	threats wire
+5.3.3.4	realtime	Realtime non-A/V data streams (normative scope boundary)	§10.5.8.1	0.00132	175	0.16	V	ceg	threats wire
+5.3.3.5	registry-wire	`SealedAvChunk` wire layout (normative)	§10.5.8.3	0.00114	195	0.14	V	ceg	threats wire
+5.3.3.6	chunklayer	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	§10.5.8.4	0.00113	197	0.14	V	ceg	threats wire
+5.3.3.7	stream-double	Double-seal + deterministic nonce derivation (normative)	§10.5.8.5	0.00092	243	0.11	V	ceg	threats wire
+5.3.3.8	per-stream	Per-stream log + stream-root (normative)	§10.5.1	0.00301	82	0.36	V	ceg	threats wire
+5.3.3.9	liveness	Liveness invariant — entitled vs reachable (normative)	§10.5.6	0.00295	84	0.35	V	ceg	threats wire
+5.3.3.10	transport-edge	Transport — Edge layer (normative)	§10.5.5	0.00242	101	0.29	V	ceg	threats wire
+5.3.3.11	delivery	Delivery receipts (normative)	§10.5.4	0.00227	105	0.27	V	ceg	threats wire
+5.3.3.12	normative	Framing (normative)	§10.5.0	0.00092	241	0.11	V	ceg	threats wire
+5.3.3.13	documents-what	What the streaming surface documents	§10.5.7	0.00092	242	0.11	V	ceg	threats wire
 5.3.4	multi-steward	Trust-root discovery — the GenesisBundle + accord holders	§10.2	0.00264	94	0.32	V	ceg	threats wire
 5.3.5	registry-other	Other Registry endpoints	§10.4	0.00107	207	0.13	V	ceg	threats wire
 5.3.6	common	Common response shape	§10.0	0.00095	223	0.11	V	ceg	threats wire
@@ -311,10 +311,10 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 6.1.1	witness-wholenesswitness	The wholeness witness — divergence detection	§19.1	0.00249	100	0.3	VI	ceg	maths
 6.1.2	noise	The noise floor — retirement and the retained floor (normative)	§19.7	0.00200	120	0.24	VI	ceg	maths
 6.1.2.1	aggregationmetav1	`AggregationMetaV1` — the aggregation-tier wire contract (normative)	§19.7.1	0.00101	218	0.12	VI	ceg	maths
-6.1.2.1.1	member_commitment	`member_commitment` (descent integrity)	§19.7.1.1	0.00143	164	0.17	VI	ceg	maths
-6.1.2.1.2	dominance-gate	`n_eff`, the dominance gate, and the R9 multiplicity gate (normative)	§19.7.1.2	0.00050	431	0.1	VI	ceg	maths
-6.1.2.2	descent	Descent rule (normative)	§19.7.2	0.00092	275	0.11	VI	ceg	maths
-6.1.2.3	ejectionverdict	`EjectionVerdict` — the tier-aware retirement surface (normative)	§19.7.3	0.00092	276	0.11	VI	ceg	maths
+6.1.2.2	member_commitment	`member_commitment` (descent integrity)	§19.7.1.1	0.00143	164	0.17	VI	ceg	maths
+6.1.2.3	dominance-gate	`n_eff`, the dominance gate, and the R9 multiplicity gate (normative)	§19.7.1.2	0.00050	431	0.1	VI	ceg	maths
+6.1.2.4	descent	Descent rule (normative)	§19.7.2	0.00092	275	0.11	VI	ceg	maths
+6.1.2.5	ejectionverdict	`EjectionVerdict` — the tier-aware retirement surface (normative)	§19.7.3	0.00092	276	0.11	VI	ceg	maths
 6.1.3	canonicalization-boundary	Canonicalization boundary + the 1+4 line (normative)	§19.0	0.00176	135	0.21	VI	ceg	maths
 6.1.4	conformance-freeze	Conformance — the freeze gate	§19.6	0.00164	150	0.2	VI	ceg	maths
 6.1.5	storage	Durable storage: per-item replication and swarm rarity	§19.3	0.00149	161	0.18	VI	ceg	maths
@@ -409,7 +409,7 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 4.2.1.3	lifecycle	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	(spine-reconciled)	0.00050	406	0.1	IV	accord	constitution
 4.2.1.4	operational-relief	Operational self-report vs. relief — the node detects, the root relieves (normative)	(spine-reconciled)	0.00050	435	0.3	IV	ceg	constitution
 4.2.6	live-quorum	Live-quorum operation & recovery under decimation (normative)	(spine-reconciled)	0.00050	407	0.1	IV	accord	constitution
-4.4.3.2.8	affiliations	The institutional cohort (necessity, not interest) (normative)	(spine-reconciled)	0.00050	408	0.1	IV	ceg	policies
+4.4.3.12	affiliations	The institutional cohort (necessity, not interest) (normative)	(spine-reconciled)	0.00050	408	0.1	IV	ceg	policies
 4.5.13	reverse-quorum	Reverse-quorum governance — presence is authority, absence forfeits it	(spine-reconciled)	0.00050	409	0.1	IV	ceg	constitution
 5.4	scope-privacy-wire	Scope-Native Privacy wire profile	(spine-reconciled)	0.00050	410	0.1	V	ceg	threats wire
 5.4.1	record-id	Deterministic `record_id` (CBOR profile, normative)	(spine-reconciled)	0.00050	411	0.1	V	ceg	threats wire
@@ -420,13 +420,13 @@ decimal_id	semantic_id	title	legacy_ref	p_i	import_rank	pages	part	origin	volume
 5.4.6	announce-suppress	Announce suppression for group-scoped destinations (normative)	(spine-reconciled)	0.00050	416	0.1	V	ceg	threats wire
 7.5.3.1	autonomy-tiers	Operational autonomy tiers (A0–A4)	(spine-reconciled)	0.00050	417	0.1	VII	accord	charter
 8.8	annexes	Annexes (supporting frameworks)	(spine-reconciled)	0.00050	418	0.1	APP	accord	register
-8.8.2	annex-b	Annex B: Wise-Authority Governance Charter	Accord Annex B	0.00050	420	0.1	APP	accord	register
-8.8.3	annex-d	Annex D: Catastrophic-Risk Evaluation (CRE) Protocol	Accord Annex D	0.00050	421	0.1	APP	accord	register
-8.8.5	annex-c	Annex C: Regulatory Cross-Walk	Accord Annex C	0.00050	423	0.1	APP	accord	register
-8.8.6	annex-f	Annex F: Human-in-the-Loop & Oversight	Accord Annex F	0.00050	424	0.1	APP	accord	register
-8.8.7	annex-g	Annex G: Adversarial Security & Robustness	Accord Annex G	0.00050	425	0.1	APP	accord	register
-8.8.8	annex-h	Annex H: Continuous Compliance & Review	Accord Annex H	0.00050	426	0.1	APP	accord	register
-8.8.9	annex-i	Annex I: Legal & Regulatory Alignment	Accord Annex I	0.00050	427	0.1	APP	accord	register
-8.8.10	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register
+8.8.1	annex-b	Annex B: Wise-Authority Governance Charter	Accord Annex B	0.00050	420	0.1	APP	accord	register
+8.8.2	annex-d	Annex D: Catastrophic-Risk Evaluation (CRE) Protocol	Accord Annex D	0.00050	421	0.1	APP	accord	register
+8.8.3	annex-c	Annex C: Regulatory Cross-Walk	Accord Annex C	0.00050	423	0.1	APP	accord	register
+8.8.4	annex-f	Annex F: Human-in-the-Loop & Oversight	Accord Annex F	0.00050	424	0.1	APP	accord	register
+8.8.5	annex-g	Annex G: Adversarial Security & Robustness	Accord Annex G	0.00050	425	0.1	APP	accord	register
+8.8.6	annex-h	Annex H: Continuous Compliance & Review	Accord Annex H	0.00050	426	0.1	APP	accord	register
+8.8.7	annex-i	Annex I: Legal & Regulatory Alignment	Accord Annex I	0.00050	427	0.1	APP	accord	register
+8.8.8	annex-j	Annex J: Benchmarking & Automated Validation	Accord Annex J	0.00050	428	0.1	APP	accord	register
 8.9	stubs	Open stub registry	(spine-reconciled)	0.00050	429	0.1	APP	ceg	register
 8.10	family-cards	The family cards (generated from the data)	(spine-reconciled)	0.00050	430	20.0	APP	ceg	dictionary

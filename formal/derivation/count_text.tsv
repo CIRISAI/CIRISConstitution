@@ -6,13 +6,13 @@
 family	selector	doors	cc_ref	quote
 membership:{stage}	leaf=proposal|acceptance|decline	none	CC 3.1.3.2	The first three are single-signer (below)
 membership:{stage}	leaf=resignation	none	CC 3.1.3.2	a resignation is signed by the leaving member
-membership:{stage}	leaf=removal & group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.2.8	is admitted only when countersigned by a key outside the deciding seat
+membership:{stage}	leaf=removal & group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	is admitted only when countersigned by a key outside the deciding seat
 membership:{stage}	*	cosigned_act@subject_group	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
 accord:invoke:constitutional:{halt_id}	*	accord_halt@accord	CC 4.2.1.1	One holder can stop every agent instantly and silently
 accord:lifecycle:{kind}	leaf=confirmed	accord_halt@accord	CC 4.2.1.1	unless a strict majority of the standing roster confirms it
 accord:lifecycle:{kind}	leaf=active	accord_majority@accord	CC 4.2.1.3	It is a cosigned row by a strict majority of the standing roster
-identity:occurrence	identity=user	self_roster_add@self	CC 3.3.6.3	The door is a person's: it governs the roster of a user fedID.
-identity:occurrence	*	none	CC 3.3.6.3	an agent's occurrence is single-signer, and neither runs these paths
+identity:occurrence	identity=user	self_roster_add@self	CC 3.3.6.4	The door is a person's: it governs the roster of a user fedID.
+identity:occurrence	*	none	CC 3.3.6.4	an agent's occurrence is single-signer, and neither runs these paths
 identity:occurrence_revocation	identity=node|agent	none	CC 3.1.3	for an occurrence of a `node` or `agent` identity, which is single-signer in any case
 identity:occurrence_revocation	identity=user	self_roster_evict@self	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
 ballot:moderator	*	moderator_election@subject_group	CC 4.5.13	There is **one ballot per person** however many keys they hold
@@ -24,10 +24,10 @@ objection:{state}	*	none	CC 3.1.9.2	a signed, roster-pinned vote on a pending ac
 cosign:{state}	*	none	CC 3.1.3	**Neither row is the event.**
 lineage_witness:{stage}	*	none	CC 3.4.10	Its cosignature is the `ciris.lineage_head_cosign.v1` object
 takedown_notice:{basis}	leaf=steward_purge	cosigned_act@trust_root	CC 2.4.1.1	authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`
-takedown_notice:{basis}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.2.8	Where the body has one deciding seat, an act against a member
+takedown_notice:{basis}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	Where the body has one deciding seat, an act against a member
 takedown_notice:{basis}	*	none	CC 4.5.3	A duty-holder's notice is admitted by the [CC 4.5.5](#4.5.5) enforced-admission rule and reaches the bytes plane only.
 transport:canonical_rebind	*	accord_majority@accord	CC 3.1.3	authored by an accord holder and cosigned in `additional_scrubs[]`, admitted at the accord charter's threshold
-quarantine:{state}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.2.8	Where the body has one deciding seat, an act against a member
-quarantine:{state}	*	none	CC 4.4.3.2.8	A body of two or more deciding seats decides under its own protocol as a community does
-slashing:{outcome}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.2.8	Where the body has one deciding seat, an act against a member
-slashing:{outcome}	*	none	CC 4.4.3.2.8	A body of two or more deciding seats decides under its own protocol as a community does
+quarantine:{state}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	Where the body has one deciding seat, an act against a member
+quarantine:{state}	*	none	CC 4.4.3.12	A body of two or more deciding seats decides under its own protocol as a community does
+slashing:{outcome}	group=affiliations & seats=one	affiliation_member_action@subject_group	CC 4.4.3.12	Where the body has one deciding seat, an act against a member
+slashing:{outcome}	*	none	CC 4.4.3.12	A body of two or more deciding seats decides under its own protocol as a community does

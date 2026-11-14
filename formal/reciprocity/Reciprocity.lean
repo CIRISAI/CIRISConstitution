@@ -729,7 +729,7 @@ def fixedBy : Coord → List String
   | .process       => ["the two paths, windows and ceremonies: self_roster, membership, retirement, accord_halt"]
   | .model         => ["the state table and the plane models (STATE_TABLE.tsv, the eleven directories)",
                         "coherence is not justice: J = F by definition (coherence-ratchet) — P8"]
-  | .structure     => ["the 1+4 grammar and the closed row-type slot (CC 2.4); the signed object (2.6.1.7)"]
+  | .structure     => ["the 1+4 grammar and the closed row-type slot (CC 2.4); the signed object (2.6.1.8)"]
   | .manner        => ["the wire form: JCS, CDDL, vectors (2.6.1); the plain rules and digests for each reader"]
   | .record        => ["R6 the record binds the rule-maker too; physics keeps it, meaning is added (§12)",
                         "RECORD-1's own finding: the Record axis is one-way, zero reversals"]

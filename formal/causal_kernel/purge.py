@@ -50,12 +50,12 @@ import itertools
 DUTIES = {
     "accountability": "CC 2.4.1.1: revocation, key revocation, moderation, track record, slashing and hard_case rows are never purgeable",
     "pinned": "CC 6.1.5.2 B1: identity, consent and config records are always pinned",
-    "hold": "CC 4.4.3.2.8: a legal_hold pins the records it names, over retention and consent-driven descent",
-    "floor": "CC 4.4.3.2.8: an affiliation class's retention floor pins its records above the noise floor",
+    "hold": "CC 4.4.3.12: a legal_hold pins the records it names, over retention and consent-driven descent",
+    "floor": "CC 4.4.3.12: an affiliation class's retention floor pins its records above the noise floor",
     "owed": "CC 6.1.5.1, CC 3.1.3.3: a holder counted toward an item's target, or reporting here, holds its bytes",
     "preserve": "CC 7.5.5: a retirement record under an accepted preserve request",
 }
-DELETION = "CC 4.5.3, CC 3.3.1, CC 4.4.3.5.2, CC 6.1.5 N5: a takedown, a withdrawal or a revoked consent ends the bytes"
+DELETION = "CC 4.5.3, CC 3.3.1, CC 4.4.3.27, CC 6.1.5 N5: a takedown, a withdrawal or a revoked consent ends the bytes"
 HEADER = ("id", "names", "kind", "signer", "head", "of", "members", "q", "length", "receipt", "duty", "delete")
 COUNTED = ("act", "cut", "seat")
 

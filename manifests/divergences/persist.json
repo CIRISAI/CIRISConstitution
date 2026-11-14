@@ -4947,8 +4947,8 @@
    "id": "persist/(any, under legal_hold)/erasure_route",
    "status": "stated",
    "reason": "the withdraws is admitted in both; what differs is the erasure descent, a storage act the kernel does not model",
-   "cc_ref": "CC 4.4.3.5.4",
-   "quote": "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
+   "cc_ref": "CC 4.4.3.29",
+   "quote": "or under a `legal_hold` ([CC 4.4.3.12](#4.4.3.12)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
   },
   {
    "id": "persist/moderation:{allegation_type}/replication.audience",
@@ -4975,7 +4975,7 @@
    "id": "persist/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
    "status": "stated",
    "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
-   "cc_ref": "CC 5.3.3.6",
+   "cc_ref": "CC 5.3.3.11",
    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
   },
   {

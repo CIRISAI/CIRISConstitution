@@ -1,7 +1,7 @@
 # `formal/deletion` — the deletion deadline a producer owes a subject
 
 **The point.** A producer that commits to `consent:deletion_sla:{days}` owes the subject a deletion within that
-window once the subject revokes or withdraws (CC 3.3.1 D1, CC 4.4.3.5.2). The rule turns on whose act a row is:
+window once the subject revokes or withdraws (CC 3.3.1 D1, CC 4.4.3.27). The rule turns on whose act a row is:
 the subject's act starts the window, only the producer's act ends the duty, and an attestation of deletion is
 evidence and never the deletion. A reading of the text found the breach sentence and the typed rule disagreeing
 on exactly that point (conflict C525 of `formal/derivation/text_conflicts.tsv`).

@@ -133,9 +133,9 @@ def gen(entry_path):
               f"  Mode = \"combined\"\n  Window = 2\n  StolenAuth = TRUE\n  MaxStolen = {ms}\n  MaxLost = {ml}\n  OwnerPresent = TRUE\n"
               "INVARIANTS TypeOK Inv_ThiefCannotEvictHonest Inv_ThiefNeverMajority Inv_SelfSurvives\nPROPERTIES Prop_LostRecoverable\n")
         if len(initial) == 1:
-            notes.append(f"person {p['id']}: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design")
+            notes.append(f"person {p['id']}: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design")
         if len(initial) == 2:
-            notes.append(f"person {p['id']}: two keys — a theft is the stated two-key stalemate (CC 3.3.6.3)")
+            notes.append(f"person {p['id']}: two keys — a theft is the stated two-key stalemate (CC 3.3.6.4)")
     # ---- nodes: RootReach ----
     if nodes:
         ns = [ident(n) for n in nodes]

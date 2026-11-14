@@ -4,9 +4,9 @@
   "Who I trust" is one of the reader's options: it adds licensors, licensors of licensors, or a
   class of licensor (medical, legal, financial), and removes them — the shipped root included.
 
-  CC 4.4.3.8: the pinned trust set is a graph and its roots are pluggable; a reader trusts an
+  CC 4.4.3.34: the pinned trust set is a graph and its roots are pluggable; a reader trusts an
   authority by hanging an acceptance edge off its own base, "added and removed freely"; the
-  shipped root is the default entry, never the root. CC 2.4.1.2.1: a licence is a leaf — holding
+  shipped root is the default entry, never the root. CC 2.4.1.3: a licence is a leaf — holding
   one never confers issuing one, and never confers trust. CC 4.1.1: a walk is capped at five hops.
 
   The model: a finite world of authorities, acceptance edges (each the signed row of the key it
@@ -35,7 +35,7 @@ structure Accepts where
   depth : Nat
   deriving DecidableEq, Repr
 
-/-- a licence: authority `auth` licensed `holder` in class `cls` (CC 2.4.1.2.1) -/
+/-- a licence: authority `auth` licensed `holder` in class `cls` (CC 2.4.1.3) -/
 structure Licence where
   auth : Key
   holder : Key
@@ -46,7 +46,7 @@ structure Licence where
     rows), every charter's declared classes, every licence -/
 structure World where
   edges : List Accepts
-  charter : Key → List Class      -- the classes an authority's charter declares (CC 2.4.1.2.1)
+  charter : Key → List Class      -- the classes an authority's charter declares (CC 2.4.1.3)
   licences : List Licence
 
 def reader : Key := 0
@@ -187,7 +187,7 @@ theorem empty_set_honours_nothing (w : World) (hno : ∀ e ∈ w.edges, e.src �
 
   The walk reads acceptance edges only. Licences are not edges: adding any licence to the world,
   or removing every one, changes no reach. Holding a licence from A makes nobody a licensor the
-  reader trusts (CC 2.4.1.2.1: a licence is a leaf; I4 of `formal/authority_tree`). -/
+  reader trusts (CC 2.4.1.3: a licence is a leaf; I4 of `formal/authority_tree`). -/
 
 theorem licences_move_no_reach (w : World) (ls : List Licence) (k : Key) (c : Class) (n : Nat) (a : Key) :
     reaches { w with licences := ls } k c n a = reaches w k c n a :=

@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "41b818bb2eea4f910d35a84faed32ab7cb1bdf3caed5858070d657720ed79f15",
+  "source_sha256": "3bc63897b6c0880f942f032d381a726e652d6a75781d4b225757dfa260194e91",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -86,7 +86,7 @@
   "count": "a policy cell with `count` is derived from the family model's count cell: `cases` lists the arms that turn on something a stage does not key (the kind of identity, of group, the number of seats), each with its policy and rows",
   "stages": "a roles cell with `stages` gives each stage's or leaf's signers and `value` is their union; a policy cell with `stages` gives the policy of the stages that differ from `value`; a view that knows its stage is served from the stage",
   "undo": "an undo cell says whether this table offers a way back for the row the transition signs, the verb of that way back (`via`) and the policy it runs under (`policy`): selfAct is the signer alone, any other policy takes the others it names; false with source derived is a family whose lifecycle closes retraction, false with source gap is a family whose retraction this table does not list; source cc-table is a way back the text states (cc_ref) for a family whose verbs list none, `stated` marking that its `via` is the structural verb of CC 2.4.1.1 and not a transition of this table",
-  "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.3.1). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
+  "widens_when": "one rule reads every widens and confirm cell: the boolean never under-states, and `when` narrows it. widens.when is always, by_scope (a row signed at self scope does not widen, a row at any wider scope does) or by_scope_change (a replacing row widens when its scope is wider than the row it replaces, CC 4.4.3.14). confirm.when is always (the row widens at every scope, or this table offers no way back) or if_widens (a way back is offered, and the item is confirmed only when widens.when holds for the row as signed). A way back means this table offers a withdraw or recant of the row; a copy a peer took is not recalled",
   "confirm": "a confirm cell is true when the transition widens or has no way back: the item is confirmed before it is signed; false is one step",
   "conditions": "a roles cell with `conditions` carries the signer rule's conditions; not_subject closes the transition to a signer who is the row's subject",
   "families": 184,
@@ -537,7 +537,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -721,7 +721,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -856,7 +856,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -1028,7 +1028,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -1160,7 +1160,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -1332,7 +1332,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -1996,7 +1996,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -2605,7 +2605,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -2906,7 +2906,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -3127,7 +3127,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -3663,7 +3663,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -3798,7 +3798,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -3948,7 +3948,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -4088,7 +4088,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -4221,7 +4221,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -4540,7 +4540,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -4898,7 +4898,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -5159,7 +5159,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -5558,7 +5558,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -6271,7 +6271,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -6453,7 +6453,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -6771,7 +6771,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -6968,7 +6968,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -7100,7 +7100,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -7267,7 +7267,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -7503,7 +7503,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -8279,7 +8279,7 @@
        {
         "guard": "one transparency_log:inclusion@admitted[val:root_hash=val:chunk_root] else advise",
         "cc_ref": [
-         "CC 5.3.3.6"
+         "CC 5.3.3.11"
         ],
         "reach": "whole"
        }
@@ -9041,7 +9041,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -9689,7 +9689,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -9861,7 +9861,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -10083,7 +10083,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -10215,7 +10215,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -10355,7 +10355,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -10577,7 +10577,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -10709,7 +10709,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -10970,7 +10970,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -11142,7 +11142,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -11314,7 +11314,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -11454,25 +11454,25 @@
        {
         "item": "withdraw: cascade=membership:{stage}/under:lapsed, cascade=trust:{job}:{version}/under:lapsed, cascade=key_grant:{axis}/under:stop, key=none",
         "cc_ref": [
-         "CC 4.4.3.2.8"
+         "CC 4.4.3.12"
         ]
        },
        {
         "item": "withdraw: cascade=licensure:{authority_id}/by:lapsed",
         "cc_ref": [
-         "CC 4.4.3.2.8"
+         "CC 4.4.3.12"
         ]
        },
        {
         "item": "withdraw: cascade=trust:{job}:{version}/by:lapsed",
         "cc_ref": [
-         "CC 4.4.3.2.8"
+         "CC 4.4.3.12"
         ]
        },
        {
         "item": "withdraw: cascade=custody:{kind}/under:stand",
         "cc_ref": [
-         "CC 4.4.3.2.8"
+         "CC 4.4.3.12"
         ]
        }
       ],
@@ -11522,7 +11522,7 @@
        {
         "guard": "when(verb=replace) one group:roster@named[object=object,id=ref:prev_head_digest] else void",
         "cc_ref": [
-         "CC 4.4.3.4.4"
+         "CC 4.4.3.21"
         ],
         "reach": "whole"
        }
@@ -11553,7 +11553,7 @@
        {
         "item": "replace: link=chained:prev_head_digest",
         "cc_ref": [
-         "CC 4.4.3.4.4"
+         "CC 4.4.3.21"
         ]
        },
        {
@@ -11566,7 +11566,7 @@
         "item": "replace[entrenched]: field=consensus_protocol:frozen",
         "cc_ref": [
          "CC 3.3.4",
-         "CC 4.4.3.4.2",
+         "CC 4.4.3.17",
          "CC 4.5.12.5"
         ]
        },
@@ -11574,7 +11574,7 @@
         "item": "replace: by=cosigned, field=consensus_protocol:any",
         "cc_ref": [
          "CC 3.3.4",
-         "CC 4.4.3.4.2",
+         "CC 4.4.3.17",
          "CC 4.5.12.5"
         ]
        }
@@ -11780,7 +11780,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -11915,7 +11915,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -12051,7 +12051,7 @@
       },
       "source": "cc-table",
       "cc_ref": [
-       "CC 3.3.6.3"
+       "CC 3.3.6.4"
       ],
       "count": "identity=user => self_roster_add@self ; none",
       "cases": [
@@ -12182,7 +12182,7 @@
        {
         "item": "replace: by=same_attester, reach=own_prior",
         "cc_ref": [
-         "CC 4.4.3.4.6"
+         "CC 4.4.3.23"
         ]
        }
       ],
@@ -12226,7 +12226,7 @@
        "rows": []
       },
       "source": "derived",
-      "cc_ref": "CC 3.3.6.3",
+      "cc_ref": "CC 3.3.6.4",
       "stages": {
        "user_self": {
         "policy": "two_path",
@@ -12259,13 +12259,13 @@
        {
         "item": "attest[scope:self]: key=stop_wrap",
         "cc_ref": [
-         "CC 4.4.3.4.5"
+         "CC 4.4.3.22"
         ]
        },
        {
         "item": "attest[scope:community|affiliations]: key=rotate_epoch",
         "cc_ref": [
-         "CC 4.4.3.4.5"
+         "CC 4.4.3.22"
         ]
        }
       ],
@@ -12569,7 +12569,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -13492,7 +13492,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -13585,7 +13585,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -13678,7 +13678,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -13809,7 +13809,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -14163,7 +14163,7 @@
       "source": "cc-table",
       "cc_ref": [
        "CC 3.1.3.2",
-       "CC 4.4.3.2.8"
+       "CC 4.4.3.12"
       ],
       "count": "leaf=proposal|acceptance|decline => none ; leaf=resignation => none ; leaf=removal & group=affiliations & seats=one => affiliation_member_action@subject_group ; cosigned_act@subject_group",
       "stages": {
@@ -14216,9 +14216,9 @@
         "guard": "each(subject) when(leaf=widening,not member(key,object)) one membership:acceptance@admitted[signer=key,object=object,val:role=val:role] as A else exclude(membership_acceptance_mismatch)+community_consensus_protocol_violation",
         "cc_ref": [
          "CC 3.1.3.2",
-         "CC 4.4.3.2.3",
-         "CC 4.4.3.2.5",
-         "CC 4.4.3.4.2"
+         "CC 4.4.3.6",
+         "CC 4.4.3.9",
+         "CC 4.4.3.17"
         ],
         "reach": "whole"
        },
@@ -14239,7 +14239,7 @@
        {
         "guard": "each(subject) when(leaf=widening,not member(key,object)) (one membership:acceptance@admitted[signer=key,object=object] as A & one membership:proposal@admitted[id=A.ref:*,val:expires_at>=A.val:asserted_at,val:expires_at>=val:asserted_at] as P else exclude(membership_proposal_expired)+community_consensus_protocol_violation & no membership:decline@admitted[signer=key,ref:*=P.id] else exclude(membership_declined)+community_consensus_protocol_violation)",
         "cc_ref": [
-         "CC 4.4.3.2.3"
+         "CC 4.4.3.6"
         ],
         "reach": "whole"
        },
@@ -14284,13 +14284,13 @@
        {
         "item": "removal[last:seat]: cascade=group:roster/over:withdrawn",
         "cc_ref": [
-         "CC 4.4.3.2.8"
+         "CC 4.4.3.12"
         ]
        },
        {
         "item": "resignation[last:seat]: cascade=group:roster/over:withdrawn",
         "cc_ref": [
-         "CC 4.4.3.2.8"
+         "CC 4.4.3.12"
         ]
        },
        {
@@ -14303,35 +14303,35 @@
         "item": "widening[scope:self|family]: key=rekey_walk",
         "cc_ref": [
          "CC 3.3.4",
-         "CC 4.4.3.4.1",
-         "CC 4.4.3.4.2"
+         "CC 4.4.3.16",
+         "CC 4.4.3.17"
         ]
        },
        {
         "item": "removal[scope:self|family]: key=stop_wrap",
         "cc_ref": [
-         "CC 4.4.3.4.2",
+         "CC 4.4.3.17",
          "CC 3.3.4",
-         "CC 4.4.3.4.5"
+         "CC 4.4.3.22"
         ]
        },
        {
         "item": "widening[scope:community|affiliations]: key=at_seat",
         "cc_ref": [
-         "CC 4.4.3.2.1",
-         "CC 4.4.3.2.5",
-         "CC 4.4.3.4.1",
+         "CC 4.4.3.4",
+         "CC 4.4.3.9",
+         "CC 4.4.3.16",
          "CC 2.1",
-         "CC 4.4.3.2.6"
+         "CC 4.4.3.10"
         ]
        },
        {
         "item": "removal[scope:community|affiliations]: key=rotate_epoch",
         "cc_ref": [
-         "CC 4.4.3.2.6",
+         "CC 4.4.3.10",
          "CC 3.2",
-         "CC 4.4.3.2.2",
-         "CC 4.4.3.4.5"
+         "CC 4.4.3.5",
+         "CC 4.4.3.22"
         ]
        },
        {
@@ -14343,7 +14343,7 @@
        {
         "item": "removal[axis:stream]: key=rotate_epoch",
         "cc_ref": [
-         "CC 4.4.3.2.6"
+         "CC 4.4.3.10"
         ]
        },
        {
@@ -14546,7 +14546,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -14678,7 +14678,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -14850,7 +14850,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -15243,7 +15243,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -15415,7 +15415,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -15587,7 +15587,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -15812,7 +15812,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -16002,7 +16002,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -16101,7 +16101,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -16275,7 +16275,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -16407,7 +16407,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -16684,7 +16684,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -16905,7 +16905,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -17219,7 +17219,7 @@
       },
       "source": "cc-table",
       "cc_ref": [
-       "CC 4.4.3.2.8"
+       "CC 4.4.3.12"
       ],
       "count": "group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
       "cases": [
@@ -17319,7 +17319,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -18285,7 +18285,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -18386,7 +18386,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -18773,7 +18773,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -19005,7 +19005,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -19154,7 +19154,7 @@
       },
       "source": "cc-table",
       "cc_ref": [
-       "CC 4.4.3.2.8"
+       "CC 4.4.3.12"
       ],
       "count": "group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
       "cases": [
@@ -19386,7 +19386,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -19434,7 +19434,7 @@
       "source": "cc-table",
       "cc_ref": [
        "CC 2.4.1.1",
-       "CC 4.4.3.2.8",
+       "CC 4.4.3.12",
        "CC 4.5.3"
       ],
       "count": "leaf=steward_purge => cosigned_act@trust_root ; group=affiliations & seats=one => affiliation_member_action@subject_group ; none",
@@ -20242,7 +20242,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -20374,7 +20374,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -20472,7 +20472,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -20830,7 +20830,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -21091,7 +21091,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -21223,7 +21223,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,
@@ -21316,7 +21316,7 @@
       "value": true,
       "when": "by_scope_change",
       "source": "derived",
-      "cc_ref": "CC 4.4.3.3.1"
+      "cc_ref": "CC 4.4.3.14"
      },
      "undo": {
       "value": true,

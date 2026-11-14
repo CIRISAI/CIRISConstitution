@@ -67,7 +67,7 @@ class World:
         if p == 'unanimous':
             others = b & ~drop
             return (s & others) == others and 2 * bin(s & others).count('1') > nb
-        if p.startswith('quorum'): return k >= int(p[6:])        # absolute M (CC 4.4.3.4.2.1)
+        if p.startswith('quorum'): return k >= int(p[6:])        # absolute M (CC 4.4.3.18)
         if p == 'founder_only': return (s & self.founders) != 0
         raise ValueError(p)
 

@@ -1,8 +1,8 @@
 # `formal/key_plane` — who holds which content key
 
 **The point.** Content at rest is sealed under a key, and the key is wrapped to the devices allowed to read it
-(CC 4.4.3.4.1). What a membership change does to keys differs by tier: `self` and `family` seal every write under
-a fresh key, `community` and `affiliations` seal under the writer's epoch key (CC 4.4.3.4.5, CC 4.4.3.2.1). The
+(CC 4.4.3.16). What a membership change does to keys differs by tier: `self` and `family` seal every write under
+a fresh key, `community` and `affiliations` seal under the writer's epoch key (CC 4.4.3.22, CC 4.4.3.4). The
 readings found twenty-three conflicts among these rules. This model runs the rules as the typed data carries
 them and checks what a member who joins, leaves or loses a device can and cannot read.
 
@@ -34,13 +34,13 @@ All ten hold at both tiers. Changing any one word of the table breaks the proper
 
 **What it found.** On its first runs K8 and K9 failed at the epoch tier. A revoked device of a member who stayed kept the epoch key until the next rotation (conflict C558). A newcomer was wrapped at the writer's next write, so in a room where nobody wrote again they never read what the epoch already held; a three-node run of an implementation showed it (C559). The steward ruled on 2026-11-12: a revocation rotates the epoch as a removal does, and a member is wrapped when the writer's roster gains them, the writer rotating then if a rotation is due. The change column carries both, and the model holds them.
 
-**When a rotation is due.** The first build of the seat door treated any removal as making a rotation due, so a writer that had sealed nothing would mint and wrap a key at the next seat for nobody's benefit: in a room of fifty, fifty such mints after one removal. A rotation is due only when a device no longer entitled holds the writer's current key (CC 4.4.3.4.1). In the model that is read from who holds what, not remembered as a flag: a member removed and seated again before any write leaves nothing due. K10 holds it, and the reading in which every departure makes a rotation due fails K10.
+**When a rotation is due.** The first build of the seat door treated any removal as making a rotation due, so a writer that had sealed nothing would mint and wrap a key at the next seat for nobody's benefit: in a room of fifty, fifty such mints after one removal. A rotation is due only when a device no longer entitled holds the writer's current key (CC 4.4.3.16). In the model that is read from who holds what, not remembered as a flag: a member removed and seated again before any write leaves nothing due. K10 holds it, and the reading in which every departure makes a rotation due fails K10.
 
-**A proposal, checked before the text moves.** Files at `self` and `family` take a fresh key for every write today, so one write signs a grant for each recipient device and a newcomer is caught up by a walk over every earlier key. The proposal is one group key for an epoch, as `community` has: an admission is wrapped at the seat together with one history key that opens every earlier epoch, and a removal, a resignation or a device revocation rotates. The model runs it as a third table and it holds every property, with K5 (a newcomer holds the key of every earlier write) in place of K4 (a newcomer holds no earlier epoch). Leaving out the rotation on revocation fails K8, leaving out the rotation on removal fails K2, and leaving out the history key fails K5. It is not the rule: CC 4.4.3.4.1 still gives a key for each write at those scopes.
+**A proposal, checked before the text moves.** Files at `self` and `family` take a fresh key for every write today, so one write signs a grant for each recipient device and a newcomer is caught up by a walk over every earlier key. The proposal is one group key for an epoch, as `community` has: an admission is wrapped at the seat together with one history key that opens every earlier epoch, and a removal, a resignation or a device revocation rotates. The model runs it as a third table and it holds every property, with K5 (a newcomer holds the key of every earlier write) in place of K4 (a newcomer holds no earlier epoch). Leaving out the rotation on revocation fails K8, leaving out the rotation on removal fails K2, and leaving out the history key fails K5. It is not the rule: CC 4.4.3.16 still gives a key for each write at those scopes.
 
 **What it does not model.** The instant a writer learns of a removal: a write made before the writer holds the
 removal row is under the old key, which is the exposure window of CC 5.1. Streams and their kept epochs
-(CC 5.1, CC 5.3.3.2.5), where a late joiner and a change of `history_on_join` mid-stream are open. Who may sign a
+(CC 5.1, CC 5.3.3.7), where a late joiner and a change of `history_on_join` mid-stream are open. Who may sign a
 grant (the signer gate, `tools/check_signer_gate.py`). Whether a holder of a key is served the bytes.
 
 **To explore, with the wire work of the next edition.** A rotation today is one signed row for each recipient

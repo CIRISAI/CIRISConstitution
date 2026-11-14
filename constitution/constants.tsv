@@ -27,7 +27,7 @@ moderator_eligibility_track_record_min	none; a track record orders the ballot an
 first_cosignature_prior	signed field empty; descent anchored at the lineage's genesis head from the bundle	5.3.1	formal/trust_root/TrustRootVerdict.tla	C207
 custody_claims_per_key	at most 1 live owner-binding per key; steward set at most 2 anchors (one occurrence, one custody)	3.2	formal/guarantees	C210
 replication_target_cap	effective target = min(owner's target, audience size); a larger target is read down, never refused	6.1.5.3		C214
-envelope_cap_bytes	1,048,576 bytes of JCS image; exactly the cap admits, one byte more is refused ENVELOPE_TOO_LARGE	2.6.1.3	manifests/signed_object.json, manifests/signed_object_vectors.json, tools/build_cc_signed_object.py	C223
+envelope_cap_bytes	1,048,576 bytes of JCS image; exactly the cap admits, one byte more is refused ENVELOPE_TOO_LARGE	2.6.1.4	manifests/signed_object.json, manifests/signed_object_vectors.json, tools/build_cc_signed_object.py	C223
 trust_walk_hop_cap	5 hops, consumer default, for every policy; an entry's `trust_depth` is 0..5, absent reads 0	4.1.1	formal/trust_set/TrustSet.lean, formal/authority_tree	C267
 witness_quorum_absent	0 (witnessed mode off); when set, ⌊|witnesses|/2⌋ + 1 and at least 2	constitution/signed_object.tsv	tools/build_cc_signed_object.py, manifests/signed_object.json, manifests/signed_object.cddl	C279
 membership_proposal_max_secs	at most 30 days after the proposal's `asserted_at`	2.1	manifests/reactions.json	
@@ -40,7 +40,7 @@ withhold_window_osa	14 days, counted on each holder from the instant it executes
 withhold_window_community_standards	30 days, counted on each holder from the instant it executes the tombstone	4.5.3		
 accord_heartbeat_max_secs	at most 90 days between refreshes of the heartbeat's `valid_until`	3.4.1	manifests/reactions.json	
 accord_roster_window_max_secs	604,800 s (7 d): the most an accord roster change's `window_until` reaches, under a declared severe-degradation state	4.2.6	manifests/reactions.json	
-consent_temporary_ttl_secs	14 days from `asserted_at` for a temporary grant that states no `valid_until`	4.4.3.5.6	manifests/reactions.json	
+consent_temporary_ttl_secs	14 days from `asserted_at` for a temporary grant that states no `valid_until`	4.4.3.31	manifests/reactions.json	
 epoch_key_retention_secs	30 days: the rotate-forward window after which holders delete past-epoch keys (the default mode)	3.2	manifests/reactions.json	
 key_record_max_secs	31,536,000 s (365 × 86,400): `valid_until − asserted_at` of a `node` or `agent` key record never exceeds it	2.4.1.1	manifests/reactions.json	
 key_record_end_required_from	the release instant of the edition that carries the own-end paragraph of CC 2.4.1.1, set at that release; a `node` or `agent` key record whose `asserted_at` is earlier and states no end stays endless	2.4.1.1		
@@ -50,7 +50,7 @@ accord_drill_liveness_bands	0–90 days green, 90–180 yellow, 180+ or never re
 halt_fuse_secs	86,400 s (24 hours) where the charter states none: a halt signed by one holder lapses this long after each node received it unless a strict majority of the standing roster confirms it	4.2.1.1	tools/topology_to_cfg.py	
 moderator_election_window_secs	24 h on the node's own clock from when it first held the lock, before an election's acceptance is counted	4.5.13		
 federation_promotion_window_secs	24 hours by default, operator-tunable: a revocation from a subject in the set MUST promote to federation tier within it	5.3.2.2		
-sth_cadence_chunks, sth_cadence_secs	K = 64 chunks or T = 2 s, whichever comes first; default pins, operator-tunable	5.3.3.3		
-av_binding_max_bytes	8,192 bytes for the whole chunk-key binding encoding; trailing bytes are refused	5.3.3.2.3		
-av_binding_parts_max, av_binding_parts_in_flight	at most 64 parts per binding on the A/V link; at most four reassembling in flight per link	5.3.3.2.3		
-multiplicity_n_min	2 by default, substrate-side and pinned per corpus kind; never producer-settable	6.1.2.1.2		
+sth_cadence_chunks, sth_cadence_secs	K = 64 chunks or T = 2 s, whichever comes first; default pins, operator-tunable	5.3.3.8		
+av_binding_max_bytes	8,192 bytes for the whole chunk-key binding encoding; trailing bytes are refused	5.3.3.5		
+av_binding_parts_max, av_binding_parts_in_flight	at most 64 parts per binding on the A/V link; at most four reassembling in flight per link	5.3.3.5		
+multiplicity_n_min	2 by default, substrate-side and pinned per corpus kind; never producer-settable	6.1.2.3		

@@ -20,7 +20,7 @@
    "id": "edge/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
    "status": "stated",
    "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
-   "cc_ref": "CC 5.3.3.6",
+   "cc_ref": "CC 5.3.3.11",
    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
   }
  ]

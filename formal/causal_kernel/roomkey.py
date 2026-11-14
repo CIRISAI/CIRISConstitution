@@ -7,7 +7,7 @@ The rule run here
                 public. A room goes private -> public and never back. A self room and a family are seated by identity
                 keys whatever they say: the rule is for communities.
     voice       what the roster of a private room seats. A voice is a small counted roster of ROOM KEYS, one for each
-                device of its holder, each made for this room only (the self roster of CC 3.3.6.3, in the room). Every
+                device of its holder, each made for this room only (the self roster of CC 3.3.6.4, in the room). Every
                 row of the room (speech, reply, vote, admission, removal, window, acknowledgement, a duty holder's
                 verdict) is signed under a room key. A room row carries the voice as `signer`, the room key that made
                 the signature as `dev`, and the head of the voice's roster it relies on as `vhead`. The kernel reads

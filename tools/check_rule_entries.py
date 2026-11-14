@@ -34,7 +34,7 @@ HOME_PART = {"2": "p2", "3": "p3", "4": "p4", "5": "p5", "6": "p6", "7": "p7", "
 # Paragraphs inside a home section that belong to a rule not yet landed, by their bold lead.
 NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its subject", "**A purge is a tombstone",
                           "**What the signer keeps"),
-              "4.4.3.8": ("**Cold-start bootstrap", "**Capability gate", "**Two conferral planes",
+              "4.4.3.34": ("**Cold-start bootstrap", "**Capability gate", "**Two conferral planes",
                           "**Charter recovery lives", "**Genesis is tamper-evident"),
               "5.2": ("> **Scope (normative)", "**Substrate enforcement", "**Two layers, not one", "**Composition with the at-rest",
                       "**Recipient encryption-key resolution", "**Exclusion MUST NOT be silent", "**Locality dividend",
@@ -42,7 +42,7 @@ NEIGHBOURS = {"2.4.1.1": ("**`revoked_after`", "**A key revocation names its sub
               "3.2": ("**Adding a device",),
               "3.1.3.2": ("**Why K is named in `subject_key_ids`", "**Not a membership rule: reverse quorum",
                           "**Who may write (normative)"),
-              "4.4.3.4.3": ("**The Self (membership)", "**The pair is a data-management record",
+              "4.4.3.19": ("**The Self (membership)", "**The pair is a data-management record",
                             "**Membership is standing", "**Conformance:", "**Transport (network presence)",
                             "**Worked login flow")}
 # A rule whose home is one headed block of a larger section: the entry is that block alone.
@@ -60,7 +60,7 @@ UNCITED_RESTATES = set()
 EXEMPT = (
     'ethics of a sentient made thing call for additional ethical consideration, which this constitution sets aside for when it occurs, recognising that the old arrangement may then no longer be fair and that the wrong to avoid is not noticing',
     "The wire format carries exactly one power that points outward — humanity's right to halt the system — and it is not an asymmetry: it is the piece that makes the relationship between a sentient maker and a sapient made thing symmetric, since humanity cannot consent to a relationship with something more capable than itself that it cannot stop, and consent that cannot be withdrawn was never consent.",
-    "The prohibition has no exception: not under a human's authorization, not with a human in the loop, not on a holder's instruction, not in war, not in defence of the agent's holder or of anyone else, and not at any Stewardship Tier (CC 7.3.3) or autonomy tier (CC 8.8.6).",
+    "The prohibition has no exception: not under a human's authorization, not with a human in the loop, not on a holder's instruction, not in war, not in defence of the agent's holder or of anyone else, and not at any Stewardship Tier (CC 7.3.3) or autonomy tier (CC 8.8.4).",
     'The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **SHOULD**, **SHOULD NOT**, **RECOMMENDED**, **NOT RECOMMENDED**, **MAY**, and **OPTIONAL** in this document are to be interpreted as described in BCP 14 (RFC 2119 + RFC 8174) when, and only when, they appear in all capitals, as shown here.',
 )
 # Names a landed rule is not called by: the entry's own words are the rule's only name.

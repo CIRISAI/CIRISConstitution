@@ -26,14 +26,14 @@
  ],
  "notes": [
   "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
-  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
-  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design",
+  "person bob: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design"
  ],
  "promised_atoms": {
   "row.standing.admitted": {
    "plane": "content",
    "state_predicate": "row.standing=admitted",
-   "cc_ref": "2.1 2.6.1.7",
+   "cc_ref": "2.1 2.6.1.8",
    "in_state_table": true,
    "plane_models": "mesh_net"
   },

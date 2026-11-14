@@ -10,4 +10,4 @@ To return an entry whose verdict you hold wrong, add a row to `formal/derivation
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
-| edge/transparency_log:cosigned:{tree_size}/guard[accountable stream] | transparency_log:cosigned:{tree_size} | guard[accountable stream] | CC 5.3.3.6: For accountable streams, "published" means **witness-cosigned** | (stated) the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it | - |
+| edge/transparency_log:cosigned:{tree_size}/guard[accountable stream] | transparency_log:cosigned:{tree_size} | guard[accountable stream] | CC 5.3.3.11: For accountable streams, "published" means **witness-cosigned** | (stated) the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it | - |

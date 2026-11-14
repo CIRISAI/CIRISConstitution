@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "cc_section": "2.6.1.7",
+  "cc_section": "2.6.1.8",
   "generated_by": "scratchpad make_vectors.py (not committed) over tools/build_cc_signed_object.py jcs()",
   "jcs": "pure-Python RFC 8785 (tools/build_cc_signed_object.py) cross-checked byte-for-byte against the reference ciris_verify wheel 10.3.0 FFI (ciris-verify-core jcs.rs)",
   "signatures": "produced and verified by ciris-crypto (CIRISVerify 3c16f9c6, ml-dsa 0.1.1, ed25519-dalek) through HybridSigner/HybridVerifier; every vector also failed verification after a one-byte tamper",
@@ -372,7 +372,7 @@
   {
    "name": "cap_plus_one",
    "kind": "recipe",
-   "note": "JCS image 1 MiB + 1 byte: refused ENVELOPE_TOO_LARGE at every write path (CC 2.6.1.3)",
+   "note": "JCS image 1 MiB + 1 byte: refused ENVELOPE_TOO_LARGE at every write path (CC 2.6.1.4)",
    "envelope_template": {
     "row": {
      "attestation_id": "668797c2-3186-5d65-0f1c-98d2b172988d",

@@ -23,7 +23,7 @@ tools/text_lints_max.tsv. The check exits 1 when a count rises above its maximum
 a count below its maximum is reported so the maximum can be lowered. Every lint has a deliberate break
 (a planted sentence) run every time, which must raise its count.
 
-Read only prose: tables, fenced blocks, headings and the generated sections (CC 2.6.1.7, CC 8.10) are
+Read only prose: tables, fenced blocks, headings and the generated sections (CC 2.6.1.8, CC 8.10) are
 skipped, except where a lint says otherwise. A line ending in `<!-- stale-ok -->` is not read by the
 history lint (the same exemption tools/check_stale_refs.py gives).
 

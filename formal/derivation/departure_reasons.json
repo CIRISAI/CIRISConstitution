@@ -167,7 +167,7 @@
    "when": "The row is an owner's, a roster's or a consenting party's act, whose authority is the signer's standing when it signed.",
    "why": "The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.",
    "basis": "text",
-   "cc_ref": "CC 3.3.6.3",
+   "cc_ref": "CC 3.3.6.4",
    "quote": "so an evicted key can backdate an owner act into its old live window by at most W, and no further",
    "moves": {
     "freshness": [
@@ -237,7 +237,7 @@
    "when": "The row is an accord's act: its standing, a halt, a notice or a drill.",
    "why": "A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.",
    "basis": "text",
-   "cc_ref": "CC 2.6.1.7",
+   "cc_ref": "CC 2.6.1.8",
    "quote": "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold",
    "moves": {
     "subject_rule": [
@@ -588,7 +588,7 @@
    "when": "The row adds a device to a person's identity, proposes to remove one, or answers such a proposal.",
    "why": "One device able to evict the others at once is a prize a thief wins in two steps. The change waits a window, and the person's other devices decide whether it stands.",
    "basis": "text",
-   "cc_ref": "CC 3.3.6.3",
+   "cc_ref": "CC 3.3.6.4",
    "quote": "The policy is two rows of the governance table",
    "moves": {
     "governance": [
@@ -617,7 +617,7 @@
    "when": "The row is a capacity score: one party's measurement of another.",
    "why": "A row held unsigned on its signer's own node must be the signer's statement about itself. A measurement is never its subject's own, so it cannot be such a row and is always written for the federation.",
    "basis": "text",
-   "cc_ref": "CC 5.3.2.4.1",
+   "cc_ref": "CC 5.3.2.5",
    "quote": "`witness_relation` MUST be `self` for any local-tier write",
    "moves": {
     "replication": [
@@ -813,7 +813,7 @@
    "when": "The row reports that independent registry sources agree about a key.",
    "why": "A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.",
    "basis": "text",
-   "cc_ref": "CC 4.4.3.2.1",
+   "cc_ref": "CC 4.4.3.4",
    "quote": "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)",
    "moves": {
     "placement": [
@@ -898,7 +898,7 @@
    "when": "The row is a consent state that carries the recipient field.",
    "why": "The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.",
    "basis": "text",
-   "cc_ref": "CC 2.6.1.7",
+   "cc_ref": "CC 2.6.1.8",
    "quote": "Also carried on consent:state rows.",
    "moves": {
     "subject_rule": [

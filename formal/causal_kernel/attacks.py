@@ -948,7 +948,7 @@ def t24(t):
     S = CK.kept([R("a", "note", "k", malformed=True), R("b", "note", "k")])
     t.fact("the door in these modules is one predicate on one flag (`malformed`): kept %s" % [r["id"] for r in S], [r["id"] for r in S] == ["b"])
     return dict(cls="NOT EXPRESSIBLE", who="-", witness="There is one implementation and no byte form of a row here.",
-                protects="Missing: a second implementation and the wire encoding. What would settle it: a differential fuzz of each implementation's door over the 2.6.1.7 CDDL and vectors "
+                protects="Missing: a second implementation and the wire encoding. What would settle it: a differential fuzz of each implementation's door over the 2.6.1.8 CDDL and vectors "
                          "(integer ranges, map order, duplicate keys, length limits, number of named rows), counting rows one keeps and another refuses. KERNEL 3 makes the door 'the row alone', so that is the whole surface.",
                 fix="")
 

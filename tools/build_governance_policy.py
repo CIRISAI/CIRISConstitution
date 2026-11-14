@@ -55,7 +55,7 @@ TEXT = os.path.join(ROOT, "formal", "derivation", "policy_text.tsv")
 PROTO = os.path.join(ROOT, "constitution", "consensus_protocols.tsv")
 ADMIT = os.path.join(ROOT, "constitution", "protocol_admissibility.tsv")
 ROLES = json.load(open(os.path.join(ROOT, "manifests", "transitions.json")))["_meta"]["role_tokens"]
-# Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.2.8, which no role token names.
+# Who a door counts, typed. `deciding` and `outside` are the two seats of CC 4.4.3.12, which no role token names.
 COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("counted_at", ("signed", "named", "act", "founding")),
                        ("voices", ("scrubs", "objection", "ballot")), ("target_silent", ("yes", "no")), ("changes_set", ("adds", "removes", "no")),
                        ("target_voice", ("yes", "no"))])

@@ -16,9 +16,9 @@ PARTS = {"p1": "part_1_foundation.md", "p2": "part_2_the_grammar.md", "p3": "par
          "p6": "part_6_the_coherence_mathematics.md", "p7": "part_7_lifecycle_stewardship.md",
          "p8": "part_8_appendices.md"}
 FILE_PART = {v: k for k, v in PARTS.items()}
-# Sections whose body a tool writes from a table: CC 2.6.1.7 (build_cc_signed_object.py) and the
+# Sections whose body a tool writes from a table: CC 2.6.1.8 (build_cc_signed_object.py) and the
 # family cards of CC 8.10 (family_card.py). Their sentences are the table's, not the prose's.
-GENERATED = ("2.6.1.7", "8.10")
+GENERATED = ("2.6.1.8", "8.10")
 HEAD = re.compile(r"^(#{1,6}) (.*)$")
 DEC = re.compile(r"^(\d+(?:\.\d+)*) ")
 # A citation: "CC 4.5.13" in the words, or a link whose anchor is a decimal section.

@@ -4248,7 +4248,7 @@
     "source": "manifests/transitions.json ownership:{relation}:{target_kind}:{version} withdraw guard (text_conflicts C346 side_b)",
     "census_cell": null,
     "file": "manifests/transitions.json",
-    "file_sha256": "383277ac0af39c4393de5d0ea75cb8ddc344ca2e18e872ad1ecba28f4351d1d7",
+    "file_sha256": "83df39ac7d9bdf8d5aa3f5d79d5d58789fbdacb3bbac770104a23a06b103f116",
     "param": {
      "family": "ownership:{relation}:{target_kind}:{version}",
      "withdraws_by": [
@@ -4667,7 +4667,7 @@
       "count:protocol@group"
      ]
     ],
-    "cc_ref": "CC 2.4.1.2.1",
+    "cc_ref": "CC 2.4.1.3",
     "quote": "A `licensure:{community_key_id}` row is a **cosigned row** ([CC 2.4](#2.4)) whose protocol source is the authority named in the dimension.",
     "param": {
      "family": "licensure:{authority_id}",
@@ -5350,7 +5350,7 @@
     "source": "manifests/transitions.json identity:occurrence attest guard (formal/derivation/guard_text.tsv has no row)",
     "census_cell": null,
     "file": "manifests/transitions.json",
-    "file_sha256": "ba2b99933534d2dfda00ffcd9210fff5110ed91e597222e874c55073bba568fc",
+    "file_sha256": "3ba54c61d2688d0418b205385b6c1a4b9e84d192db3e42f1364477fb820a4fa7",
     "param": {
      "family": "identity:occurrence",
      "gate": [
@@ -5521,7 +5521,7 @@
     "source": "manifests/reactions.json takedown_notice:{basis} (formal/derivation/reaction_text.tsv)",
     "census_cell": null,
     "file": "manifests/reactions.json",
-    "file_sha256": "cbbdece8e4d3bccfb3d727d876529acefb62243fdafb9b455161fcf8c8e5ae20",
+    "file_sha256": "3bbb0579f8759ada264533ca1e469442e72d608248c1f6d79f9710e28da7d57f",
     "param": {
      "family": "takedown_notice:{basis}",
      "owed": "withhold_close"
@@ -6029,7 +6029,7 @@
    ],
    "text": {
     "value": "reader_trust",
-    "cc_ref": "CC 4.4.3.8",
+    "cc_ref": "CC 4.4.3.34",
     "quote": "The reader aggregates per (`dimension`, `attested_key_id`) tuple, over trusted attesters, by the polarity defaults of [CC 4.4.2](#4.4.2).",
     "param": {
      "family": "*reader:enumerated",
@@ -6546,7 +6546,7 @@
       "any"
      ]
     ],
-    "cc_ref": "CC 2.6.1.7",
+    "cc_ref": "CC 2.6.1.8",
     "quote": "OPTIONAL on moderation:*",
     "param": {
      "family": "moderation:{allegation_type}",
@@ -6663,8 +6663,8 @@
    "claims": [],
    "text": {
     "value": null,
-    "cc_ref": "CC 4.4.3.5.4",
-    "quote": "or under a `legal_hold` ([CC 4.4.3.2.8](#4.4.3.2.8)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
+    "cc_ref": "CC 4.4.3.29",
+    "quote": "or under a `legal_hold` ([CC 4.4.3.12](#4.4.3.12)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
    },
    "shipped": {
     "value": "legal_hold: none in code",
@@ -6807,7 +6807,7 @@
    "claims": [],
    "text": {
     "value": null,
-    "cc_ref": "CC 5.3.3.6",
+    "cc_ref": "CC 5.3.3.11",
     "quote": "For accountable streams, \"published\" means **witness-cosigned**"
    },
    "shipped": {
@@ -6831,7 +6831,7 @@
    "claims": [],
    "text": {
     "value": null,
-    "cc_ref": "CC 5.3.3.6",
+    "cc_ref": "CC 5.3.3.11",
     "quote": "For accountable streams, \"published\" means **witness-cosigned**"
    },
    "shipped": {
@@ -7459,7 +7459,7 @@
       "seat:license@authority"
      ]
     ],
-    "cc_ref": "CC 2.4.1.2.1",
+    "cc_ref": "CC 2.4.1.3",
     "quote": "It is judged over the issuance's own causal past under the cosigned-row rule, never at receipt",
     "param": {
      "family": "licensure:{authority_id}",
@@ -7475,7 +7475,7 @@
     "source": "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "6cc81fdb1b3266498a6c8cb102530d5d60ea0730c3ccd01a05936cef3dd755b7",
+    "file_sha256": "64e22a1dbadf152370846c7366e4015afae3dcec822134a7e36b0122dcc97ba1",
     "file_rows": [
      "CLM-licence-judged-at-issuance"
     ],
@@ -7603,7 +7603,7 @@
     "source": "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "6cc81fdb1b3266498a6c8cb102530d5d60ea0730c3ccd01a05936cef3dd755b7",
+    "file_sha256": "64e22a1dbadf152370846c7366e4015afae3dcec822134a7e36b0122dcc97ba1",
     "file_rows": [
      "CLM-licence-judged-at-issuance"
     ],
@@ -7938,7 +7938,7 @@
       "seat:license@root"
      ]
     ],
-    "cc_ref": "CC 4.4.3.4.3",
+    "cc_ref": "CC 4.4.3.19",
     "quote": "**concludes nothing**, and is not merely unweighted",
     "param": {
      "family": "licensure:{authority_id}",
@@ -7954,7 +7954,7 @@
     "source": "constitution/claims.tsv CLM-issuance-scope (impl check_licensure_delegator_is_authority)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "977d9b9083d22e5f78f098fddea51e605120cad538e82b543969bd68d251d7dd",
+    "file_sha256": "24b6d88fa0863ed6572d4175f2eb93dde2516891388cf52ea6fb445f10ae059f",
     "file_rows": [
      "CLM-issuance-scope"
     ],
@@ -8045,7 +8045,7 @@
       "seat:grant@subject"
      ]
     ],
-    "cc_ref": "CC 4.4.3.4.3",
+    "cc_ref": "CC 4.4.3.19",
     "quote": "**concludes nothing**, and is not merely unweighted",
     "param": {
      "family": "key_grant:{axis}",
@@ -8064,7 +8064,7 @@
     "source": "constitution/claims.tsv CLM-issuance-scope (impl admit_replicated_key_grant)",
     "census_cell": null,
     "file": "constitution/claims.tsv",
-    "file_sha256": "977d9b9083d22e5f78f098fddea51e605120cad538e82b543969bd68d251d7dd",
+    "file_sha256": "24b6d88fa0863ed6572d4175f2eb93dde2516891388cf52ea6fb445f10ae059f",
     "file_rows": [
      "CLM-issuance-scope"
     ],

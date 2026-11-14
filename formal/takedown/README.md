@@ -2,7 +2,7 @@
 
 **The point.** CC 4.5.3 gives nine bases for removing content: five destroy on receipt, four withhold for a
 window and destroy at its close. CC 4.5.13 lets the members lift a moderator's act, CC 4.5.5 lets a reversal be
-admitted, and CC 4.4.3.2.8 lets a court freeze a record. Five readings of the text found twenty-two conflicts
+admitted, and CC 4.4.3.12 lets a court freeze a record. Five readings of the text found twenty-two conflicts
 among those rules. This model states them once, as a fold over the rows a node holds, and checks them together.
 
 **The model.** `takedown_model.py`. One blob, one node. The node holds rows about the blob, each with the instant

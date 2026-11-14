@@ -123,7 +123,7 @@ SPECS = {}          # obj -> Spec: the rule is one function; a row finds its par
 def instances(protocol="majority", private=False):
     """The five instances, from the table's own rows. `protocol` is a community's declared consensus_protocol."""
     S = {}
-    # 1. a person's keys: self_roster_add / self_roster_evict (CC 3.3.6.3)
+    # 1. a person's keys: self_roster_add / self_roster_evict (CC 3.3.6.4)
     a = register("R:self_add", count_kind(TABLE["self_roster_add"]["enact_rule"]))
     e = register("R:self_evict", count_kind(TABLE["self_roster_evict"]["enact_rule"]))
     S["self"] = Spec("self", "S", "self", a, e, floor=MIN_COUNT["self"], unit="key",
@@ -251,7 +251,7 @@ def rule(r, P, past):
     spec = SPECS.get(r.get("obj"))
     by = {q["id"]: q for q in P}
     if r["kind"] == "open" and spec is not None and "persons_only" in PARAMS:
-        g = by.get(r["obj"])                                           # CC 3.3.6.3: "The door is a person's"
+        g = by.get(r["obj"])                                           # CC 3.3.6.4: "The door is a person's"
         if g is not None and g.get("identity_type", "user") != "user": return False
     if r.get("via"):                                                   # the effect of a lone landing
         L, p = by.get(r["via"]), by.get(r.get("of"))

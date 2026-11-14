@@ -18,7 +18,7 @@ sites, `formal/derivation`), or **open**.
 | own key | the key the node signs under |
 
 There is no trust set among the inputs. Who a node trusts is a fold over the rows its own key signed
-(CC 4.4.3.8). **proved**: `Causal.two_readers`, `no_own_edge_no_reach`.
+(CC 4.4.3.34). **proved**: `Causal.two_readers`, `no_own_edge_no_reach`.
 
 Config is not an input. A value that binds others is a row signed by whoever decided it. A value that binds
 only the node is a row under the node's own key. **measured**: 174 decision sites on the kernel's side read
@@ -217,7 +217,7 @@ withdrawn by a strict majority of the others, never on fewer than two voices whe
 seat. `member`, an accord holder and a key of a self roster are one counted seat over three objects. `serve` is
 two seats required together, which is a question for **may**.
 The text states the second consent wherever it places a duty: a delegation that carries a scope seats its
-delegate only with the delegate's own signature (CC 4.4.3.4.3), and a custodian holds custody only with its own
+delegate only with the delegate's own signature (CC 4.4.3.19), and a custodian holds custody only with its own
 (CC 7.5.5). Those two sentences cover the fourteen rows that stated a conferral and no acceptance. Three places
 need none and say why: a node in an infrastructure community, a key of a person's own roster, and a device
 under its owner. **open**: how the second signature travels and from when a delegation without it stops
@@ -301,7 +301,7 @@ decider closes an agent's objection window at retirement by the `decided` row, w
 (CC 7.5.5). **run**: a `decided` row that leaves out an objection the agent made concludes nothing, and the
 agent's own landing closes nothing. Where the text has
 each node read the close on its own clock, the cell says `local` and nothing is signed: the moderation window,
-a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.3). A late answer is closed for
+a harm report, a person's own roster and the halt's fuse (CC 4.5.13, CC 3.3.6.4). A late answer is closed for
 the fuse, an invitation and the accord's roster change, and counts for an election and a takedown. Seven doors state whether the opening row is in force while its window is open: the halt and a takedown's
 withhold are, from each node's own receipt; a moderation action, a harm report, an invitation, a device's
 addition and the accord's roster change are not. **run**: the **state** answer gives each while no landing

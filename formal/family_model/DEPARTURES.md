@@ -109,7 +109,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** The act stays good after its signer leaves, and a key that has lost standing cannot sign an act back into the time when it held it: past the freshness window such a row is refused.
 
-**Text.** CC 3.3.6.3: "so an evicted key can backdate an owner act into its old live window by at most W, and no further"
+**Text.** CC 3.3.6.4: "so an evicted key can backdate an owner act into its old live window by at most W, and no further"
 
 | column | families |
 |---|---|
@@ -169,7 +169,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A halt or a roster act counts only toward the accord it names. A row that names no accord, or one the reader does not hold, is refused when the rows are read.
 
-**Text.** CC 2.6.1.7: "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold"
+**Text.** CC 2.6.1.8: "Which accord an accord:* row belongs to; a foreign row carrying junk fails closed at the fold"
 
 | column | families |
 |---|---|
@@ -454,7 +454,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** One device able to evict the others at once is a prize a thief wins in two steps. The change waits a window, and the person's other devices decide whether it stands.
 
-**Text.** CC 3.3.6.3: "The policy is two rows of the governance table"
+**Text.** CC 3.3.6.4: "The policy is two rows of the governance table"
 
 | column | families |
 |---|---|
@@ -478,7 +478,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A row held unsigned on its signer's own node must be the signer's statement about itself. A measurement is never its subject's own, so it cannot be such a row and is always written for the federation.
 
-**Text.** CC 5.3.2.4.1: "`witness_relation` MUST be `self` for any local-tier write"
+**Text.** CC 5.3.2.5: "`witness_relation` MUST be `self` for any local-tier write"
 
 | column | families |
 |---|---|
@@ -637,7 +637,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** A reader anywhere must be able to check a key against it before trusting the key, so the row is signed at federation scope in plain text.
 
-**Text.** CC 4.4.3.2.1: "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)"
+**Text.** CC 4.4.3.4: "are therefore `cohort_scope: federation` (Commons/plaintext, world-readable)"
 
 | column | families |
 |---|---|
@@ -715,7 +715,7 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 
 **Why.** The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.
 
-**Text.** CC 2.6.1.7: "Also carried on consent:state rows."
+**Text.** CC 2.6.1.8: "Also carried on consent:state rows."
 
 | column | families |
 |---|---|

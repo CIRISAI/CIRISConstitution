@@ -96,7 +96,7 @@ Signatures are hybrid throughout: Ed25519 (mandatory) + ML-DSA-65 (`signature_pq
 
 **Retired (v1.0.2).** `GoalDeclaration` and `GoalRetirement` are no longer wire kinds. CC 3.1.9.7: the declarer's signed `scores` row on `goal:{scale}` **is** the Goal, carrying its fields and its `MetaGoalAlignment` (the M-1 invariant is an admission gate on the family); amendment is the declarer's `supersedes`, retirement `withdraws`, "this goal was never mine" `recants`; the row replicates as any row through `ContributionSubmit`, so no separate transport message exists. A decoder that meets either discriminator MUST reject it as an unknown kind.
 
-**Retired (v1.0.3).** `FountainHoldingClaim` is no longer a wire kind. Holding on the chunk plane is a sealed-chunk custody fact ([CC 5.3.3.2.4], [CC 6.1.5.1]) carried as rows and acknowledgements, not a fire-and-forget claim; no production host installs the runtime that constructed the kind and no shipped build emits it. A decoder that meets the discriminator MUST reject it as an unknown kind; a receiver that previously folded it drops it by name.
+**Retired (v1.0.3).** `FountainHoldingClaim` is no longer a wire kind. Holding on the chunk plane is a sealed-chunk custody fact ([CC 5.3.3.6], [CC 6.1.5.1]) carried as rows and acknowledgements, not a fire-and-forget claim; no production host installs the runtime that constructed the kind and no shipped build emits it. A decoder that meets the discriminator MUST reject it as an unknown kind; a receiver that previously folded it drops it by name.
 
 ### 2.7 Consent / trust-graph retraction
 

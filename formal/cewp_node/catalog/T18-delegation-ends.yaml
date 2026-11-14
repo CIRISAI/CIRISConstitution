@@ -1,4 +1,4 @@
-# T18 — delegation ends (CC 4.4.3.2.8, 4.4.3.4.3, 3.3.2, 3.4.13; catalogue v2):
+# T18 — delegation ends (CC 4.4.3.12, 4.4.3.19, 3.3.2, 3.4.13; catalogue v2):
 # a child is seated with no guardian bond (guardian.bond = none), a key grant
 # is held per recipient, the bond is made (refused: no route, as T4), and a
 # delegation chain is withdrawn and a term expires — no durable scoped
