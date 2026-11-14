@@ -62,7 +62,7 @@ COUNTED = OrderedDict([("count_set", None), ("voice", ("person", "key")), ("coun
 COUNTED_DEFAULT = {"target_silent": "no", "changes_set": "no", "target_voice": "no"}
 SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
 SET_EXCL = ("target", "proposer", "node")
-UNSTATED_MAX = 12   # cells the text leaves unstated; the number only falls
+UNSTATED_MAX = 8   # cells the text leaves unstated; the number only falls
 
 BASE_LAW = OrderedDict([("kind", "standing_then_expected_active"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),

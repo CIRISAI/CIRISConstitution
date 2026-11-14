@@ -63,11 +63,11 @@ community:listing	replication	listing_public	{"audience": "everyone", "held": "s
 config:{scope}	lifecycle	renewal_replaces	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "renewal must supersede"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 consent:community_trust	subject_rule	own_record	"attested = the node; an owner binding in force"
 consent:community_trust	freshness	standing_at_signing	{"W": 259200, "judged_at": "signed_instant_with_W"}
-consent:replication:{version}	subject_rule	open	{"for_key_id": ["recipient (the node granted for; s2 adds a relay arm)", "subjects: the peers"]}
+consent:replication:{version}	subject_rule	replication_grant_names_peer	{"for_key_id": ["recipient (the node granted for; s2 adds a relay arm)", "subjects: the peers"]}
 consent:replication:{version}	freshness	standing_at_signing	{"W": "W on the owner's standing (check_roster_act_fresh / outside_past_freshness_window)", "judged_at": "signed_instant_with_W"}
-consent:replication:{version}	replication	open	{"audience": "cohort_plus_subjects(full) refers-to only", "held": "settle_on_key", "non_recipient": null, "tier": ["local", "federation"]}
+consent:replication:{version}	replication	replication_grant_public	{"audience": "cohort_plus_subjects(full) refers-to only", "held": "settle_on_key", "non_recipient": null, "tier": ["local", "federation"]}
 consent:replication:{version}	projection	derived_no_rebuild	{"rebuild": "none", "table": "consent_peer_set"}
-consent:state:{stance}	subject_rule	open	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
+consent:state:{stance}	subject_rule	consent_addressed	{"for_key_id": ["recipient (the node)", "scope tokens parsed"]}
 consent:state:{stance}	freshness	standing_at_signing	{"W": "W on the owner's standing", "judged_at": "signed_instant_with_W"}
 content_class:{class}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "withdrawal clears only its emitter's flag (read)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 cosign:{state}	placement	unbuilt	["targeted_family", "targeted_room"]
@@ -139,7 +139,7 @@ key_grant:{axis}	placement	key_wrap	"the content's scope (attested = recipient, 
 key_grant:{axis}	subject_rule	key_wrap	{"for_key_id": "none", "kind": ["attested = recipient occurrence (AV-84 exception)", "cardinality 0"]}
 key_grant:{axis}	freshness	standing_at_signing	{"W": "W: past W the sealer must also stand at receipt (asserted_at_stale)", "judged_at": "signed_instant_with_W"}
 key_grant:{axis}	lifecycle	shared_stays_shared	{"expires": "expires_at honoured", "retraction_class": "none", "rotation_on_removal": "yes", "supersedes": "same_attester", "withdraws_by": "{}"}
-key_grant:{axis}	replication	open	{"audience": "addressee", "held": "refuse", "non_recipient": null, "tier": "federation"}
+key_grant:{axis}	replication	wrap_reaches_recipient	{"audience": "addressee", "held": "refuse", "non_recipient": null, "tier": "federation"}
 key_grant:{axis}	projection	derived_no_rebuild	{"rebuild": "none", "table": "federation_key_grant_pending"}
 lawful_order:release	placement	unbuilt	"none (held shut: never stored)"
 lawful_order:release	subject_rule	unbuilt	"none (held shut)"
@@ -169,7 +169,7 @@ objection:{state}	cosign_rule	quorum	"reverse quorum (1-of-N protect, m-of-n und
 objection:{state}	governance	own_devices_policy	"policy_row: self_roster_add, self_roster_evict (governance_policy.rs:407)"
 observation:access_assumption	subject_rule	observation_names_observed	"CC cardinality >= 1, never the attester; not enforced"
 observation:reachability	subject_rule	observation_names_observed	"CC cardinality 0; not enforced"
-ownership:{relation}:{target_kind}:{version}	placement	open	"affiliation named must admit the owner"
+ownership:{relation}:{target_kind}:{version}	placement	binding_cosigned_by_affiliation	"affiliation named must admit the owner"
 ownership:{relation}:{target_kind}:{version}	subject_rule	own_record; minor_not_announced	"attested = the node; a minor's binding never announced at federation"
 ownership:{relation}:{target_kind}:{version}	freshness	standing_at_signing	{"W": "W on incumbents (check_roster_act_fresh)", "judged_at": "signed_instant_with_W"}
 preserve_request	placement	unbuilt	"none (held shut: never stored)"
@@ -185,7 +185,7 @@ preserve_response	replication	unbuilt	"none (held shut)"
 preserve_response	projection	unbuilt	"none (never stored)"
 preserve_response	erasure_route	unbuilt	"none (never stored)"
 provenance:build_manifest:{target}	placement	build_manifest_public	"commons"
-quarantine:{state}	lifecycle	open	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "released supersedes withheld (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
+quarantine:{state}	lifecycle	withhold_outranks_release	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "released supersedes withheld (fold)"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
 rendezvous:route	placement	rendezvous_public	"commons"
 retirement:{state}	placement	unbuilt	"none (held shut: never stored)"
 retirement:{state}	subject_rule	unbuilt	"none (held shut)"
@@ -205,10 +205,10 @@ takedown_notice:{basis}	cosign_rule	quorum	"legal bases: none; steward_purge: GA
 takedown_notice:{basis}	lifecycle	adverse	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": "no", "supersedes": "same_attester", "withdraws_by": "{attester}"}
 testimonial_witness:{kind}	placement	testimony_private	"self_collective"
 trace:{form}:{version}	subject_rule	own_record	{"kind": "cardinality >= 1, subject_key_ids contains the attester", "must_be_registered": "attested yes"}
-trace:{form}:{version}	projection	open	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
+trace:{form}:{version}	projection	trace_store_columns	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
 trace:{form}:{version}	erasure_route	open	["dsar (trace corpus hard delete)", "purge"]
 transport:canonical_rebind	cosign_rule	quorum	"holder quorum (CC 5.3.4)"
-trust:{job}:{version}	subject_rule	open	"delegation term required, no cycle, node agency scopes infra-only"
+trust:{job}:{version}	subject_rule	trust_edge_is_a_delegation	"delegation term required, no cycle, node agency scopes infra-only"
 trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_charter_witness_quorum)"
 trust:{job}:{version}	freshness	standing_at_signing	{"W": "attach freshness window W (check_attach_freshness, CC 2.6.7); charter/cycle read received_at", "judged_at": "signed_instant_with_W"}
 wa_adjudication:{state}	cosign_rule	quorum	"WA quorum re-derived (no vocabulary value; CC moderator_quorum? no)"

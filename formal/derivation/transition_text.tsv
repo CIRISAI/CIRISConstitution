@@ -1,7 +1,7 @@
 # Transition cells the Constitution text states where the family model gives the generator nothing to derive them from.
 # Applied by tools/build_transitions.py: the cell takes this value with source cc-table and the reference as cc_ref.
 # A cell the census closes (source code-v61) is never overridden; a row here for one is refused.
-# cell: roles (role tokens, comma separated; empty closes the stage to everyone) | policy (kind, or kind:policy_row) | widens (true | false) | undo (false, or via:policy with via withdraw, recant, or attest for a withdrawal said again).
+# cell: roles (role tokens, comma separated; empty closes the stage to everyone) | policy (kind, or kind:policy_row) | widens (true | false | by_scope, where the signer's scope decides) | undo (false, or via:policy with via withdraw, recant, or attest for a withdrawal said again).
 # stage: empty for the whole transition; a stage name where the text gives the stage its own answer (roles and policy only).
 # A policy row with a stage leaves the transition's own policy as it is and adds the stage's beside it.
 # undo: the way back the text states for a row whose family lists no withdraw; it fills only a gap cell, and its quote must stand in the section it cites.
@@ -24,11 +24,21 @@ key:revocation	attest	roles		self	CC 2.4.1.1
 identity:occurrence_revocation	attest	roles	node_or_agent	owner,self	CC 2.4.1.1	The key revokes itself. Its owner revokes it under the owner-binding
 identity:occurrence_revocation	attest	roles	user_self	member	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
 identity:occurrence_revocation	attest	policy	user_self	two_path:self_roster_evict	CC 3.3.6.3	The policy is two rows of the governance table
+archive_release:{basis}	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+community:listing	attest	roles		moderate	CC 3.1.1	signed by a current `moderate`-holder of the community it names
+lawful_order:release	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
+membership:{stage}	attest	roles	proposal	member	CC 3.1.3.2	a proposal is an inviter's
+membership:{stage}	attest	roles	acceptance	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
+membership:{stage}	attest	roles	decline	self	CC 3.1.3.2	an acceptance or decline is the invitee's only
+membership:{stage}	attest	roles	widening	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	attest	roles	removal	member	CC 3.1.3.2	a widening or removal is cosigned under the group's `consensus_protocol`
+membership:{stage}	attest	roles	resignation	self	CC 3.1.3.2	a resignation is signed by the leaving member
 preserve_request	attest	widens		true	CC 3.1.5
 preserve_request	withdraw	policy		selfAct	CC 2.4.1.1
 preserve_request	withdraw	roles		author	CC 2.4.1.1
 preserve_response	attest	widens		true	CC 3.1.5
 retirement:{state}	attest	policy	custodian_replace	cosigned:custodian_replace	CC 7.5.5
+retirement:{state}	attest	widens		by_scope	CC 3.4.5.1	Scope is per-row; a family is not scope-pinned.
 retirement:{state}	withdraw	roles		author	CC 7.5.5
 retirement:{state}	withdraw	policy		selfAct	CC 7.5.5
 accord:invoke:constitutional:{halt_id}	attest	undo		false	CC 4.2.1.3	`accord:lifecycle:active` is the **only** sanctioned resumption after a `constitutional` halt

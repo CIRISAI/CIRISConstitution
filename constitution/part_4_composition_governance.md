@@ -2179,10 +2179,10 @@ Where the duty-holder acts for an organisation, the organisation is on the bond 
 
 | Row | Who is counted | Enact | Cancel | Floor | Window | At the window |
 |---|---|---|---|---|---|---|
-| `default_content` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled |
-| `default_standing` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
-| `default_irreversible` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
-| `community_invite` | `member`, one voice a person, instant not stated | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
+| `default_content` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 86 400 s | cancelled |
+| `default_standing` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
+| `default_irreversible` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 604 800 s | cancelled |
+| `community_invite` | `member`, one voice a person, the set the proposal names | 2/3 | 1/3 | 1/3 | 259 200 s | cancelled |
 | `community_remove` | `member`, one voice a person, the set the proposal names | protocol | — | — | 259 200 s | cancelled |
 | `self_roster_add` | `self`, one voice a key, the set the proposal names | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |
 | `self_roster_evict` | `self`, one voice a key, the set the proposal names, the target silent | 1/2 | more than 1/2 of the others (strict majority) | 1/N | 86 400 s | stay_open |

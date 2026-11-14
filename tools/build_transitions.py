@@ -271,9 +271,11 @@ def apply_text(fam, t, cells):
         elif stages != [""]:
             raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} {cell} takes no stage")
         elif cell == "widens":
-            if rows[0][1] not in ("true", "false"):
-                raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} widens is true or false")
-            new["value"] = rows[0][1] == "true"
+            if rows[0][1] not in ("true", "false", "by_scope"):
+                raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} widens is true, false or by_scope")
+            new["value"] = rows[0][1] != "false"
+            if rows[0][1] == "by_scope":   # the family is not scope-pinned: a row at self scope does not widen, a wider one does
+                new["when"] = "by_scope"
         else:
             raise SystemExit(f"transition_text.tsv: {fam} {t['verb']} names the unknown cell {cell}")
         t[cell] = new

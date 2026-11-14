@@ -42,13 +42,7 @@ FM = json.loads((ROOT / "manifests" / "family_model.json").read_text())
 # removal of its line here; the check fails on a gap that is not listed and on a line that has closed.
 PINNED = {
     ("duty:{kind}", "attest", "roles"):
-        "is a duty the permission-giver's alone to state, or any registered key's?",
-    ("retirement:{state}", "attest", "widens"):
-        "at what scope does an agent's retirement row travel?",
-    ("archive_release:{basis}", "attest", "widens"):
-        "at what scope does the row that opens a seal travel?",
-    ("lawful_order:release", "attest", "widens"):
-        "at what scope does the steward's record of an order to release travel?",
+        "CC 2.7.5 places a duty by the object's own key; which role token names the signer of the permission a duty attaches to?",
 }
 
 

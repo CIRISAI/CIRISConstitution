@@ -157,6 +157,8 @@ A `not-translated` verdict is not a failure — it is a precise statement about 
 
 This section records the known gaps, covering cryptography, distributed systems, standards architecture, adversarial red-team, and application development. It records what is closed and how, what is bet and on what, where the federation is a first adopter with no precedent to lean on, what is deferred, and where two concepts deliberately overlap. How strongly to read any evidence row backing a claim in this register is graded at [CC 8.6.1](#8.6.1). The places where a shipped implementation differs from this text are published with this text as data, each as a case of rows and the verdict the implementer's test asserts under this text.
 
+An item here that is not marked closed lies outside the surface this text specifies: the text states it as a limit and does not claim it as met. The kernel's own limits, what it does not give and what it does not settle, are stated at [CC 2.7.9](part_2_the_grammar.md#2.7.9) and belong to this ledger.
+
 ### 8.3.1 `acknowledged` — Acknowledged risks (named as bets)
 
 Each of these is a known weakness the federation has chosen to carry rather than over-engineer around. The "what's bet" column states the wager and the fallback if it loses.
@@ -240,6 +242,15 @@ These are settled. Each row names the gap, its terminal status, and the section 
 | endpoint response schemas | **PARTIALLY CLOSED** in [CC 5.3.6](part_5_transport_substrate.md#5.3.6) common-shape + error-envelope; full OpenAPI committed. |
 | occurrence_id self-assertion | **ACKNOWLEDGED** in [CC 2.1](part_2_the_grammar.md#2.1) + R6 above. |
 | Delivery axis (observer-share + streaming multicast, third envelope axis) | **CLOSED-OBSERVER-SHARE / STAGED-STREAMING** by [CC 5.3.3](part_5_transport_substrate.md#5.3.3) + [CC 2.1](part_2_the_grammar.md#2.1) (`delivery_mode`/`history_on_join`) + [CC 3.4.6](part_3_the_namespace.md#3.4.6) + [CC 4.4.3.2.6](part_4_composition_governance.md#4.4.3.2.6). Streaming-half items tracked in CC 8.3.3. |
+
+**What the rule tables leave unstated.** Each item below is a class of limit in the tables that apply the text, and no sentence of the text answers it. Each lies outside this text's surface until a sentence states it.
+
+- Some parameters a window reads are stated by no sentence, among them which row opens a poll, whether a recalled moderator counts in the recall's base, and whether an answer first held after the close counts.
+- Two readings the text states are exercised by no run: an election winner who declines passing the seat to the next, and a deferral answered by the conferrer one seat up.
+- For some families the text does not say which segment of the family's name names the key a row binds.
+- A family that states no placement of its own takes the default of [CC 5.2](part_5_transport_substrate.md#5.2), and the text does not confirm, family by family, that none of them needs another.
+- The acts a screen offers do not include receiving a row, and some ways back the text states have no act a screen can offer.
+- Some states the text gives a lifecycle are checked by no executable model, among them a relay's opt-out, a frozen trust root, a moderator's recovery and candidacy windows, and a licence's suspension.
 
 ### 8.3.5 `first-adopter` — First-adopter exposures (no prior validation; explicit bets)
 
@@ -1598,7 +1609,7 @@ jobs:
 
 ## 8.9 `stubs` — Open stub registry
 
-Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 5**, the five tracked boundary profiles of [CC 8.4.3](#8.4.3), each committed there as a disposition whose detailed profile is written as it lands. Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart. An *open stub* is a piece the text references and does not define, counted here. A *staged row* is a defined rule whose evidence a named ticket carries, counted in the register. An *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)). A door the text names and declares undefined by design is none of the three and is not a stub. The path out of stewardship of [CC 1.13.2](part_1_foundation.md#1.13.2), an act of the HUMANITY_ACCORD under the first-contact discipline when it comes, is recorded here as named and undefined, and counts in no column.
+Every piece of the constitution that is *referenced but not yet defined*, in one place, with a count, so the gaps are explicit. **Open stubs: 5**, the five tracked boundary profiles of [CC 8.4.3](#8.4.3), each committed there as a disposition whose detailed profile is written as it lands. Every annex the text references is carried in full, and the three definitional frameworks are defined in Part VII against adopted international standards. Three states are kept apart. An *open stub* is a piece the text references and does not define, counted here. A *staged row* is a defined rule whose evidence a named ticket carries, counted in the register. An *acknowledged residual* is a limit the text names and no row carries, kept in the concerns ledger ([CC 8.3](#8.3)). A door the text names and declares undefined by design is none of the three and is not a stub. A path the text marks as planned is outside the surface of this edition, and a staged row claims its rule and not the evidence it waits on. The path out of stewardship of [CC 1.13.2](part_1_foundation.md#1.13.2), an act of the HUMANITY_ACCORD under the first-contact discipline when it comes, is recorded here as named and undefined, and counts in no column.
 
 **Definition map** (lineage in the CHANGELOG):
 - **Annexes C, F, G, H, I, J** carried in full → [CC 8.8.5](#8.8.5)–[CC 8.8.10](#8.8.10).
@@ -1763,7 +1774,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | wa | selfAct | false | true (always) | none |
+| attest | wa | selfAct | true (by_scope) | true (always) | none |
 
 Count: `none`
 
@@ -2121,7 +2132,7 @@ Change:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | founder, moderate | selfAct | true (always) | true (always) | withdraw |
+| attest | moderate | selfAct | true (always) | true (always) | withdraw |
 | withdraw | author, subject | selfAct | false | false | attest |
 | supersede | author | selfAct | false | false | supersede |
 
@@ -2744,7 +2755,7 @@ Body: `at_rest_sha256` (text only), `attested_key_id`, `axis` (text only), `comm
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | steward | selfAct | false | true (always) | none |
+| attest | steward | selfAct | true (by_scope) | true (always) | none |
 
 Count: `none`
 
@@ -2836,7 +2847,7 @@ Fold:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | founder, member, self (proposal: founder, member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
+| attest | member, self (proposal: member; acceptance: self; decline: self; widening: member; removal: member; resignation: self) | cosigned `cosigned_act` | true (always) | true (always) | withdraw |
 | withdraw | member | cosigned | false | false | attest |
 | supersede | member | cosigned | false | false | supersede |
 
@@ -3207,7 +3218,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | custodian, operator, self, wa (until_retired: self; after_retired: custodian; custodian_replace: operator, wa) | selfAct | false | false | withdraw |
+| attest | custodian, operator, self, wa (until_retired: self; after_retired: custodian; custodian_replace: operator, wa) | selfAct | true (by_scope) | true (if_widens) | withdraw |
 | withdraw | author | selfAct | false | false | attest |
 
 Count: `leaf=custodian_minted => custodian_replace ; none` (CC 7.5.5)

@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "daeb17529e9e958b79a7967059c17825b1a1efb8b47e1095bdb2d569d1dd573b",
+  "policy_sha256": "4250768760850b81b7241130c4bf1324f4f1753667050cb9a6be01bcd19451d8",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -50,7 +50,8 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "unstated"
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
     },
     "voices": {
      "value": "objection",
@@ -122,7 +123,8 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "unstated"
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
     },
     "voices": {
      "value": "objection",
@@ -194,7 +196,8 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "unstated"
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
     },
     "voices": {
      "value": "objection",
@@ -266,7 +269,8 @@
      "cc_ref": "CC 4.5.13"
     },
     "counted_at": {
-     "value": "unstated"
+     "value": "named",
+     "cc_ref": "CC 2.7.4"
     },
     "voices": {
      "value": "objection",
@@ -1173,10 +1177,6 @@
   "target_voice": "yes: the target's own row naming the act is one of the voices counted, though the target is not in the count set",
   "unstated": "the text does not state the cell",
   "unstated_cells": [
-   "default_content.counted_at",
-   "default_standing.counted_at",
-   "default_irreversible.counted_at",
-   "community_invite.counted_at",
    "moderation_action.voices",
    "accord_halt.counted_at",
    "custodian_replace.voice",

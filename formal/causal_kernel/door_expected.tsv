@@ -259,8 +259,8 @@ harm_report	while its window is open, read from reactions.json	pending
 takedown_withhold	while its window is open, read from reactions.json	in_force
 invitation	while its window is open, read from reactions.json	pending
 accord_halt@node+late_closed	plant: the fuse's while entry rewritten to pending	caught
-door_text.tsv	quotes standing in their sections	16 of 16
+door_text.tsv	quotes standing in their sections	21 of 21
 door_text.tsv	plant: a changed quote	caught
-doors.tsv	parameters no table states	27
+doors.tsv	parameters no table states	16
 accord_halt@node+late_closed	plant: the fuse's land entry rewritten to a holder	caught
 doors.tsv	written from the doors as run	current

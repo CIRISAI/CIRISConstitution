@@ -26,7 +26,7 @@ approach:{goal_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct
 approach:{goal_id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 approach:{goal_id}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 approach:{goal_id}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-archive_release:{basis}	attest	none	admitted	wa	selfAct	false	none		true	derived	derived	gap
+archive_release:{basis}	attest	none	admitted	wa	selfAct	true	none		true	derived	derived	cc-table
 attestation:agent_integrity	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 attestation:agent_integrity	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 attestation:hardware_rooted	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
@@ -114,7 +114,7 @@ collection:{kind}	supersede	admitted	superseded	author	selfAct	true	supersede	se
 commitment_fulfillment:{prior_contribution_id}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 commitment_fulfillment:{prior_contribution_id}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 commitment_fulfillment:{prior_contribution_id}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-community:listing	attest	none	admitted	founder,moderate	selfAct	true	withdraw	selfAct	true	derived	derived	derived
+community:listing	attest	none	admitted	moderate	selfAct	true	withdraw	selfAct	true	cc-table	derived	derived
 community:listing	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 community:listing	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 config:{scope}	attest	none	admitted	owner,self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
@@ -288,7 +288,7 @@ key:revocation	supersede	admitted	superseded	author	selfAct	false	supersede	self
 key_boundary:{scope}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 key_boundary:{scope}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 key_grant:{axis}	attest	none	admitted	member,owner	selfAct	true	none		true	derived	derived	derived
-lawful_order:release	attest	none	admitted	steward	selfAct	false	none		true	derived	derived	gap
+lawful_order:release	attest	none	admitted	steward	selfAct	true	none		true	derived	derived	cc-table
 ledger:checkpoint:{unit}:{version}	attest	none	admitted	self	selfAct	true	none		true	derived	derived	derived
 ledger:checkpoint:{unit}:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 ledger:head:{unit}:{version}	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
@@ -304,7 +304,7 @@ locality:decision:{scale}	attest	none	admitted	registered	selfAct	true	withdraw	
 manifold_conformity:{cohort}	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 manifold_conformity:{cohort}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 manifold_conformity:{cohort}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
-membership:{stage}	attest	none	admitted	founder,member,self	cosigned	true	withdraw	cosigned	true	derived	cc-table	derived
+membership:{stage}	attest	none	admitted	member,self	cosigned	true	withdraw	cosigned	true	cc-table	cc-table	derived
 membership:{stage}	withdraw	admitted	withdrawn	member	cosigned	false	attest	cosigned	false	code-v61	code-v61	derived
 membership:{stage}	supersede	admitted	superseded	member	cosigned	false	supersede	cosigned	false	code-v61	code-v61	derived
 mesh_config:{key}	attest	none	admitted	steward	selfAct	true	withdraw	selfAct	true	derived	derived	derived
@@ -396,7 +396,7 @@ regime:{artifact}:{version}	attest	none	admitted	registered	selfAct	true	withdra
 regime:{artifact}:{version}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
 rendezvous:route	attest	none	admitted	self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 rendezvous:route	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
-retirement:{state}	attest	none	admitted	custodian,operator,self,wa	selfAct	false	withdraw	selfAct	false	derived	cc-table	gap
+retirement:{state}	attest	none	admitted	custodian,operator,self,wa	selfAct	true	withdraw	selfAct	true	derived	cc-table	cc-table
 retirement:{state}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 revocation:{entity_type}:{reason}	attest	none	admitted	registered,self	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 revocation:{entity_type}:{reason}	withdraw	admitted	withdrawn	author	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived

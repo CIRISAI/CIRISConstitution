@@ -10,7 +10,7 @@ property	break	verdict
 6	waiting_as_done	caught
 6	waiting_as_refused	caught
 6	waiting_unnamed	caught
-#	story steps	100
+#	story steps	102
 #	grid views	46000
 #	generated worlds	720
 #	breaches	0

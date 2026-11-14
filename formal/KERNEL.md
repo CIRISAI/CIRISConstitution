@@ -188,7 +188,7 @@ stated for 161 of 184 families. 135 claim and content families take one default,
 (CC 3.4.5.1). Twenty-one consents take their seat from `family_shapes.tsv`, and five families have a sentence of
 their own. **open**: 23 families confer nothing that a sentence states: 20 doors, two consents the shape
 table cannot run, and the consent prefix. Which segment of a family's name binds a key is filled for 155
-families; 29 have a segment that names another row and no word yet says so. Which answers read a family's
+families; 29 have a segment that names another row and no word yet says so, a limit CC 8.3.4 names. Which answers read a family's
 rows is filled for all 184 from the expression language: every family is read by **state** and **stands**
 through the default fold, a default checked for none of the 83 that take it, and 42 are also read by another
 answer. A row that must equal its own recomputation is stated for three families (CC 6.1.9) and for no other.
@@ -200,7 +200,7 @@ admits, and confirms exactly what widens at the scope signed or has no way back.
 did not send as sent, and it draws a row that waits as waiting, with what it waits on. Six properties hold over
 the mesh story, every family's states and 720 generated worlds, and eleven deliberate breaks are caught.
 **open**: "receive" is not yet a verb of the table, and 25 ways back that the text states have no transition to
-draw them.
+draw them. CC 8.3.4 names both as limits.
 
 **missing and copying.** A row moves to a peer because that peer must conclude something and lacks it. What
 to send is what lies among the ancestors of what the peer must conclude, within the row's audience. This is
@@ -216,7 +216,7 @@ that names a row of another room waits until that row's signer carries it. What 
 who said it or of who is in the room, which is section 7b. **measured** (`formal/derivation/placement_text.tsv`): no placement cell
 is empty. Of 184 families, 147 take the one default, the scope each row carries with the audience CC 5.2 gives
 it, and 21 are placed by a sentence of their own. **open**: the default is stated once for all families and is
-checked for none of the 147. The copy rule is a row of that table.
+checked for none of the 147. CC 8.3.4 names this as a limit. The copy rule is a row of that table.
 
 **window.** A row opens a clock. An answering row closes it, or time does, and the table states the outcome at
 the close. A window names its opener and the acknowledgement by which the concluding party first held it. Where the
@@ -270,7 +270,7 @@ stands, and a cell read the other way is caught at every door. The invitation co
 policy row's `target_voice` cell, and a room of one admits nobody on its founder's proposal alone. A removal, a
 cosigned act and an adjudication read their count from the protocol the group's founding row declares.
 Parameters the text states and no rule table has a column for are rows of `formal/derivation/door_text.tsv`,
-each with its quote. `doors.tsv` lists 27 things the tables do not state, and three stated and not run.
+each with its quote. `doors.tsv` lists 16 things the tables do not state, and three stated and not run. CC 8.3.4 names both classes as limits.
 
 Five of the eighteen clocks are not doors: one freshness check, two of the node's own storage and liveness, and
 two duty deadlines that take no answers.
@@ -543,7 +543,7 @@ that the ending row has not seen from counting.
 | A roster version naming several heads: an optional list beside the head it names now | wire | agreed with the store |
 | One acknowledgement of a head covering everything beneath it, in place of one for each row | wire | agreed with the store |
 | The default audience checked family by family for the 147 that take it; the transport reading placement and the copy rule as the `missing` answer | table data, with transport | `manifests/family_model.json` |
-| 27 things `doors.tsv` lists as stated by no table, and three stated and not run | table data | `formal/causal_kernel/doors.tsv` |
+| 16 things `doors.tsv` lists as stated by no table, and three stated and not run | table data | `formal/causal_kernel/doors.tsv` |
 | 47 cells with a word the expression language does not carry, and eight folds a reaction calls that no cell defines, each listed with the sentence it needs | table data | `tools/kx_maxima.tsv` |
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |

@@ -175,6 +175,8 @@ def more(s):
     one("vote:carol", "ballot:moderator", "carol", ["author"], "Carol withdraws her ballot: her own act, counted as withdrawn", verb="withdraw")
     one("seat:moderator", "ballot:moderator_acceptance", "dave", ["member"], "Dave tries to accept the seat: refused, the count did not yield him")
     one("seat:moderator", "ballot:moderator_acceptance", "frank", ["member", "winner"], "Frank, whom the count yields, accepts and binds the ballots he was seated on")
+    one("listing:1", "community:listing", "dave", ["member"], "Dave tries to list the room: refused, a listing is signed by a holder of the room's moderate duty")
+    one("listing:1", "community:listing", "frank", ["member", "moderate"], "Frank, who holds the moderate duty, lists the room")
     # 14. a row that needs more than one signature
     one("act:1", "cosign:{state}", "erin", [], "A stranger tries to open a cosigned act in the room: refused", stage="pending")
     one("act:1", "cosign:{state}", "bob", ["member"], "Bob opens a cosigned act: his pending row, served to the room's active members", stage="pending")

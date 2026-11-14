@@ -659,20 +659,114 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | placement | `deferral:request` |
 
+## The store tables the family with columns no row carries
+
+**When.** The store keeps the family's rows in tables of its own, with working state and columns it adds on receipt that no signed row carries.
+
+**Why.** The extra columns are storage and no authority over the rows. No answer reads them and they confer nothing, so a node that holds the rows alone concludes the same.
+
+**Basis.** A fact of the store; no rule turns on it.
+
+| column | families |
+|---|---|
+| projection | `trace:{form}:{version}` |
+
+## A binding that names an affiliation stands only with the affiliation's consent
+
+**When.** An owner-binding names an organisation's affiliation as the body its agent acts for.
+
+**Why.** The affiliation answers alongside the steward, so the binding binds it and is cosigned under the affiliation's protocol. The cell records that cosignature as a condition on where the row sits.
+
+**Text.** CC 3.2: "It is cosigned under that affiliation's protocol"
+
+| column | families |
+|---|---|
+| placement | `ownership:{relation}:{target_kind}:{version}` |
+
+## A consent row names the node it is for
+
+**When.** The row is a consent state that carries the recipient field.
+
+**Why.** The recipient field names the addressed recipient. Such a row is held by its author's node and that key's node and by no other.
+
+**Text.** CC 2.6.1.7: "Also carried on consent:state rows."
+
+| column | families |
+|---|---|
+| subject_rule | `consent:state:{stance}` |
+
+## A replication grant names its peer as its subject
+
+**When.** The row is a node's standing grant to replicate a class of its own rows to a named peer.
+
+**Why.** The grant is the granting node's own consent, and the peer it names is its subject. The text gives the grant no recipient field.
+
+**Text.** CC 3.3.7: "the recipient peer is named in `subject_key_ids[] = [P]`"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the build. The pinned build also reads a recipient field naming the node the grant is for. That reading is the build's and no rule of the text.
+
+| column | families |
+|---|---|
+| subject_rule | `consent:replication:{version}` |
+
+## A replication grant is a public record at federation scope
+
+**When.** The row is a node's standing grant to replicate a class of its own rows to a named peer.
+
+**Why.** The grant authorises flow across nodes, so it is never local-tier and is placed at federation scope. A grant that an unannounced node signs or is named in is held by the two nodes alone.
+
+**Text.** CC 3.3.7: "It carries `cohort_scope: federation` (the grant itself is a public governance record)."
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the build. The pinned build admits a self-scoped grant at the local tier and sends every grant only to the parties it names.
+
+| column | families |
+|---|---|
+| replication | `consent:replication:{version}` |
+
+## A key wrap reaches its one recipient by naming it
+
+**When.** The row carries a content key wrapped for one device.
+
+**Why.** A wrap goes to the device it names by the audience rule every row follows. A wrap whose key is not yet held waits for it, as every row waits for what it names.
+
+**Text.** CC 3.3.2: "the row is placed at the content's scope and reaches the recipient's node because the row *refers to* it"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the build. The pinned build sends a wrap at the federation tier alone and refuses one whose key it does not yet hold. The text gives neither.
+
+| column | families |
+|---|---|
+| replication | `key_grant:{axis}` |
+
+## A withhold outranks a release whatever their instants
+
+**When.** Two quarantine markers name one subject, one withholding and one releasing.
+
+**Why.** Markers are ordered by kind and never by instant. The withhold holds until a release names the withhold it lifts, and between one holder's own markers the default order applies.
+
+**Text.** CC 3.1.9.2: "a withhold outranks a release whatever their instants"
+
+| column | families |
+|---|---|
+| lifecycle | `quarantine:{state}` |
+
+## A trust edge is a delegation
+
+**When.** The row is a trust-root conferral, acceptance or charter edge.
+
+**Why.** The edge rides a delegation row, so the rules on every delegation bind it: a stated term and no cycle. An acceptance edge confers nothing on the root and is outside the cycle check.
+
+**Text.** CC 3.1.1: "carried as `dimension` values on `delegates_to` rows"
+
+| column | families |
+|---|---|
+| subject_rule | `trust:{job}:{version}` |
+
 ## Open
 
 Cells that leave the default with no reason yet, each with the question that would give it one.
 
 | family | column | question |
 |---|---|---|
-| `trace:{form}:{version}` | projection | The trace tables hold the originator's envelope before scrubbing and columns added on receipt, which no row carries. Which words say what a node keeps of a trace beyond its row? |
-| `ownership:{relation}:{target_kind}:{version}` | placement | The cell says an affiliation named on a binding must admit the owner. The text says such a binding is cosigned under the affiliation's protocol. Is that one rule, and is it a rule of placement or of cosigning? |
-| `consent:state:{stance}` | subject_rule | The text says a consent row also carries the recipient field, and that a row with a recipient is held by two nodes and no other. Is a consent row addressed in that sense, or does it only name the node it is for? |
-| `consent:replication:{version}` | subject_rule | The text names the peer as the row's subject and gives the grant no recipient field. What does the recipient on a replication grant name? |
-| `consent:replication:{version}` | replication | The pinned build admits a self-scoped grant at the local tier and sends a grant to the parties it names and no further. The text calls the grant a public record at federation scope and bars it from the local tier, and a public grant that names an unannounced node would list that node. Which holds? |
-| `key_grant:{axis}` | replication | The text sends a wrap to its recipient by the common audience rule. Which words bar it from the local tier, and why is a wrap whose key is not yet held refused when other rows wait? |
-| `quarantine:{state}` | lifecycle | The text gives one rule: at the same instant a withholding beats a release. Does the read apply that tie rule, and is a later release replacing a withholding the default order or a rule of this family? |
-| `trust:{job}:{version}` | subject_rule | The term and the cycle check are rules on every delegation, and the text takes an acceptance edge out of the cycle check. Which part of the cell is the trust family's own rule about the party a row names? |
 | `duty:{kind}` | placement | No words found say a duty may sit no wider than the permission it attaches to. Does the text state that bound? |
 | `trace:{form}:{version}` | erasure_route | The pinned build deletes an agent's traces on the host's request with no check of its own, and with the key included it deletes rows other parties signed about that key. The text gives erasure no node-local basis and puts the accountability record beyond anyone's purge. Which request removes a trace, and what may the deletion reach? |
 
