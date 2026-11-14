@@ -38,7 +38,7 @@ moderation_action	voice	person	CC 4.5.13	A vote counts once per person, whatever
 moderation_action	counted_at	named	CC 4.5.13	The members are those of the roster the proposal names
 moderation_overturn	count_set	member	CC 4.5.13	Members object by signing `objection:raised` rows that name the act.
 moderation_overturn	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.
-moderation_overturn	counted_at	act	CC 4.5.13	Only a member seated before that instant counts
+moderation_overturn	counted_at	act	CC 4.5.13	Only a member seated at the head the act names counts
 moderation_overturn	voices	objection	CC 4.5.13	Members object by signing `objection:raised` rows that name the act.
 moderator_recall	count_set	member	CC 4.5.13	A recall is one row cosigned by more than two thirds of the standing roster
 moderator_recall	voice	person	CC 4.5.13	A vote counts once per person, whatever the number of their devices.

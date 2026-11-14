@@ -17,4 +17,3 @@ p3	3.2	1265	So a stalled roster admits **exactly one row kind without that count
 p3	3.2	1267	The conferral is `trust:confers:v1` under a co-scrub reaching that family's `consensus_protocol`, the same act that seated the original founders.	founder
 p3	3.2	1319	A mechanized model of this machine, checked for (i)–(viii) over bounded founder sets and instant orderings, is the standing-verdict model, pinned by the register as `CLM-standing-verdict`.	founder
 p3	3.3.4	1572	An active member (under `founder_only`, an active founder) emits a `membership:proposal` to the joiner's key.	founder
-p4	4.5.13	2276	The standing is the roles the held rows give them: author, subject, member, moderator, founder, steward, holder, witness.	founder

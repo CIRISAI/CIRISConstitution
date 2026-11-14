@@ -350,7 +350,7 @@ group:roster	fold	agree	CC 3.2	Founder *f* counts at instant *t* iff all four of
 group:roster	fold	agree	CC 3.2	It is **live** while its active founder set holds at least **M + 1** signers and **stalled** when it holds M or fewer.
 group:roster	fold	agree	CC 4.4.3.2.4	// one held version per group id: a new version waits until the head its signed
 group:roster	fold	agree	CC 4.4.3.2.4.1	A new version waits until the head its signed `prev_head_digest` names is held
-group:roster	freshness	agree	CC 4.4.3.2.4.1	the resolving Consumer's own clock; membership is evaluated as of `now`
+group:roster	freshness	agree	CC 4.4.3.2.4.1	the resolving Consumer's own clock, which reads only a row's own stated end
 group:roster	lifecycle	fills	CC 3.1.3	withdrawn only by a cosigned `withdraws`
 group:roster	lifecycle	fills	CC 3.2	A fresh epoch DEK follows a removal, and history is never re-encrypted
 group:roster	lifecycle	fills	CC 4.2.3	A seat is added or vacated only by roster change on the public record under the standing-majority rule.

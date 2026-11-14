@@ -764,7 +764,7 @@ def check_infra(spec, inst):
     sub = [r for r in S.Cs if r["id"] == "v1" or r["id"] in S.anc["v1"]]
     witnessed = ST.Seats(CK.State(sub, {r["id"]: True for r in sub})).holders("member", "I")
     b = {"worlds": 1, "orders": len(RS.linear_extensions(rows, CAP)), "fails": [], "order_differs": []}
-    res.append(result(inst, "T6: a witnessed lineage refuses the rival head that is not witnessed", src,
+    res.append(result(inst, "T6: a witnessed lineage holds void the rival head that is not witnessed", src,
                       "holds with witnessed (a reader's parameter: which tip its witnesses named)", b, "tips wait (an ordinary room)",
                       {"fails": [("rival", "tips wait: %s; witnessed v1: %s" % (sorted(tips), sorted(witnessed)))] if tips != witnessed else []}))
     return res

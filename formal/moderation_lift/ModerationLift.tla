@@ -24,7 +24,7 @@ VARIABLES roster,      \* who is in the room now
           item,        \* "visible" | "withheld" | "gated"
           actor,       \* the moderator whose act is in force, or None
           basis,       \* "ordinary" | "immediate" | "private"   (of the act in force)
-          atAct,       \* the roster as it stood at the instant of the act
+          atAct,       \* the roster at the head the act names
           objections,  \* members who signed objection:raised naming the act
           open,        \* the window is open
           lifted,      \* moderators whose act on this item was lifted

@@ -208,7 +208,7 @@ def cases():
         [], [["attester"]], "withdraws_by: {attester}",
         [fam("v", "A", "revocation:{entity_type}:{reason}", (), subject="S"), wd("x", "A", "v")], "v"))
     E.append(lifecycle_entry("persist", "objection:{state}", ["C476"], "CC 4.5.13",
-        "The act is lifted when a strict majority of the roster as it stood at the instant of the act has objected within the 48-hour window.",
+        "The act is lifted when a strict majority of the roster at the head the act names has objected within the 48-hour window.",
         [["attester"]], [["attester"], ["subject"]], "withdraws_by: {attester, subject}",
         [fam("ob", "M", "objection:{state}", (), subject="X"), wd("x", "X", "ob")], "ob"))
     E.append(lifecycle_entry("persist", "trace:{form}:{version}", ["C228"], "CC 3.1.5",
@@ -248,7 +248,7 @@ def cases():
     # ---- cosign / count: a group's act takes the group's count ----------------------------------------------------
     for impl, f, srcs, cc, q, sw, cen, where in [
         ("persist", "goal:{scale}", ["C469", "C508"], "CC 3.1.9.7",
-         "A member votes for the Goal by cosigning it, and the row is admitted only when its full scrub set meets the group's protocol at `asserted_at`.",
+         "A member votes for the Goal by cosigning it, and the row is admitted only when its full scrub set meets the group's protocol over the members at the head the row names",
          "none", ("goal:{scale}", COSIGN[0]), "cosign_rule"),
         ("persist", "mesh_config:{key}", ["C509"], "CC 4.2.1",
          "**Durable** settings are earned by **quorum, never by having been exercised**.", "none",

@@ -1,7 +1,7 @@
 # `formal/moderation_lift` — the members' check on a moderator's act
 
 **The rule (CC 4.5.13).** One moderator's signature takes effect at once, and the members may
-lift it: a strict majority of the roster as it stood at the instant of the act, objecting
+lift it: a strict majority of the roster at the head the act names, objecting
 inside the 48-hour window, with a floor of two voices. A lifted item returns consent-gated and
 never to plain view. An act on an immediate-removal basis and a ruling on a privately filed
 report are not objectable. The moderator whose act was lifted does not take it again on the
