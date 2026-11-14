@@ -190,7 +190,7 @@ def more(s):
     one("witness:answer", "lineage_witness:{stage}", "alice", ["founder"], "Alice tries to accept for the node: refused, the answer is the owner's and never a founder's", stage="acceptance")
     one("witness:answer", "lineage_witness:{stage}", "carol", ["owner"], "Carol, the node's owner, accepts", stage="acceptance")
     # 16. a key is revoked by itself
-    one("revoke:dave", "key:revocation", "frank", ["moderate", "member"], "Frank tries to revoke Dave's key: refused, the key is not his")
+    one("revoke:dave", "key:revocation", "frank", ["moderate", "member"], "Frank tries to revoke Dave's key: refused, the key is not his", stage="self")
     one("revoke:dave", "key:revocation", "dave", ["self"], "Dave retires an old key under that key's own signature: recognised because the revoker is the key")
     # 17. an agent is retired, and its record handed over
     one("retire:decided", "retirement:{state}", "bob", ["steward"], "Bob tries to sign the agent's retirement row: refused, up to retired the row is the agent's own", stage="until_retired")
@@ -213,6 +213,10 @@ def more(s):
     one("unbind:1", "identity:occurrence_revocation", "bob", ["self", "owner"], "Bob tries to carry alone a framed revocation of his old phone: refused, a person's occurrence is revoked by a strict majority of the person's own roster", stage="user_self")
     one("unbind:1", "identity:occurrence_revocation", "bob", ["member"], "Bob's own roster carries the revocation of his old phone: a strict majority of his live keys", stage="user_self")
     one("unbind:2", "identity:occurrence_revocation", "bob", ["owner"], "Bob revokes the occurrence of his node: its owner", stage="node_or_agent")
+    # 20. the accord holders re-bind a seated serve node's transport destination
+    one("rebind:1", "transport:canonical_rebind", "bob", ["owner", "registered"], "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act")
+    one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold")
+    one("rebind:1", "transport:canonical_rebind", "alice", ["holder"], "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's", verb="supersede")
 
 def check(s):
     errs = []

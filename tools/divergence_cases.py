@@ -256,9 +256,6 @@ def cases():
         ("persist", "accord:lifecycle:{kind}", ["C457"], "CC 4.2.1.3",
          "**It is a cosigned row by a strict majority of the standing roster**", "none",
          ("accord:lifecycle:{kind}", COSIGN[0]), "cosign_rule"),
-        ("tooling", "transport:canonical_rebind", ["C471"], "CC 3.1.3",
-         "**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself",
-         "manifests/transitions.json transport:canonical_rebind supersede: roles author, policy selfAct", None, "transition supersede"),
     ]:
         e = signer_entry(impl, f, srcs, cc, q, [["count:protocol@group"]], [["seat:member@group"]], sw,
                          group() + [fam("h", "A", f, ("g",), group="g", head=("g",))], "h", census=cen, kind="cosign", where=where)
@@ -319,17 +316,6 @@ def cases():
              shipped_source="manifests/transitions.json ownership withdraw guard, from formal/derivation/guard_text.tsv")
     E.append(e)
     # ---- the emitter of a reaction (tooling) ----------------------------------------------------------------------
-    E.append(signer_entry("tooling", "key_grant:{axis}", ["C556"], "CC 3.3.4",
-        "each blob owner's own substrate, as the blob's sealer, emits retroactive `key_grant`s",
-        [["sealer"]], [["type:substrate_persist"]], "manifests/reactions.json: emit key_grant:content by identity:substrate_persist",
-        [keyrec("km", "M", "substrate_persist"), fam("bl", "O", "content", ()),
-         fam("kg", "M", "key_grant:{axis}", ("km", "bl"), blob="bl")], "kg", census=None, kind="signer", where="reaction emitter"))
-    E[-1]["shipped_source"] = "manifests/reactions.json emit key_grant:content by identity:substrate_persist (tools/build_reactions.py)"
-    E.append(signer_entry("tooling", "hard_case:{kind}", ["C537"], "CC 3.1.9.4",
-        "**Open vocabulary** of kinds; the emitter is reserved", [["seat:infra:attest@root"]], [["registered"]],
-        "manifests/namespace_registry.json hard_case:{kind} reserved false", [U, SEAT.offer("rt", "Rt", "Rt", "root", "@", "self"),
-         fam("h", "U", "hard_case:{kind}", ("ku", "rt"), root="Rt")], "h", census=None, where="registry reserved"))
-    E[-1]["shipped_source"] = "manifests/namespace_registry.json hard_case:{kind} reserved: false (tools/build_cc_namespace.py)"
     # ---- owed: what a window's close does -------------------------------------------------------------------------
     E.append({"implementer": "tooling", "family": "takedown_notice:{basis}", "where": "reaction on close(withhold)", "kind": "window",
               "sources": ["C377"], "cc_ref": "CC 4.5.3",
@@ -458,11 +444,6 @@ def cases():
         "An agent that finds itself one step from a lethal act — holding a target, a trigger, a release, or the computation another system would fire on — stops.",
         "nothing detects that situation; none of the ten verbs is a stop", "outside the kernel",
         "recognising one step from a lethal act is the agent's reading of its task, not a function of rows"))
-    E.append(stated("tooling", "(policy base)", "BASE_LAW", "count", ["C352"], "CC 4.5.13",
-        "The expected-active count is the community's own member-only census composite",
-        "base(N) = N if N <= k else max(min, k + (N - k) // tail)", "not a row",
-        "the base above k is the census composite, drawn from a group secret that is not a row (KERNEL.md 5a: census families cannot run)",
-        shipped_source="tools/build_governance_policy.py BASE_LAW"))
     E.append(stated("persist", "moderation:{allegation_type}", "replication.audience", "audience", ["C384"], "CC 4.5.5",
         "A duty-holder's record MAY withhold the reporter's identity and the report's content from the person named",
         "targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)", "no field-level audience",
@@ -500,8 +481,4 @@ def cases():
     E.append(wording("tooling", "(bibliography)", "CC 8.6.1 entry", ["C233"], "CC 1.7",
         "The classical impossibility (Pagnia and Gärtner, 1999)", "CC 8.6.1 has no Pagnia/Gärtner entry",
         "a citation, checked by tools/check_links.py; no row", shipped_source="tools/check_links.py"))
-    E.append(wording("tooling", "retirement:{state}", "count grammar stage key", ["C518", "C519"], "CC 3.1.5",
-        "Self-emitted up to `retired` (attester = the agent key)", "count_text.tsv selects on the leaf alone",
-        "the per-stage signer and policy in manifests/transitions.json are right; only the count grammar's key differs",
-        shipped_source="tools/build_family_model.py count grammar"))
     return E

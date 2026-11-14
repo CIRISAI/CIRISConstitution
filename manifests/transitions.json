@@ -1,7 +1,7 @@
 {
  "_meta": {
   "source": "manifests/family_model.json",
-  "source_sha256": "f4ba805870a12ace42211bd131df0de35625e70103211e35e7a0d2cfbabae5ef",
+  "source_sha256": "0fdd35a1b1242ff8c187192a76c4cc0f76d939b3143fa1afb7249db2ee862a26",
   "cc_section": "4.5.13",
   "model": "formal/event_lifecycle",
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
@@ -13086,15 +13086,46 @@
       "source": "cc-table",
       "cc_ref": "CC 2.4.1.1",
       "value": [
+       "member",
+       "owner",
        "self"
-      ]
+      ],
+      "stages": {
+       "self": [
+        "self"
+       ],
+       "owner": [
+        "owner"
+       ],
+       "self_roster": [
+        "member"
+       ],
+       "room_roster": [
+        "member"
+       ]
+      }
      },
      "policy": {
       "value": {
        "policy": "selfAct",
        "rows": []
       },
-      "source": "derived"
+      "source": "derived",
+      "cc_ref": "CC 2.4.1.1",
+      "stages": {
+       "self_roster": {
+        "policy": "two_path",
+        "rows": [
+         "self_roster_evict"
+        ]
+       },
+       "room_roster": {
+        "policy": "cosigned",
+        "rows": [
+         "community_remove"
+        ]
+       }
+      }
      },
      "widens": {
       "value": true,
@@ -20179,17 +20210,21 @@
      "from": "admitted",
      "to": "superseded",
      "roles": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
       "value": [
-       "author"
-      ],
-      "source": "derived"
+       "holder"
+      ]
      },
      "policy": {
+      "source": "cc-table",
+      "cc_ref": "CC 3.1.3",
       "value": {
-       "policy": "selfAct",
-       "rows": []
-      },
-      "source": "derived"
+       "policy": "cosigned",
+       "rows": [
+        "accord_majority"
+       ]
+      }
      },
      "widens": {
       "value": true,
@@ -20200,7 +20235,7 @@
      "undo": {
       "value": true,
       "via": "supersede",
-      "policy": "selfAct",
+      "policy": "cosigned",
       "source": "derived"
      },
      "confirm": {

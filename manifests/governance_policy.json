@@ -2,7 +2,7 @@
  "_meta": {
   "source": "constitution/governance_policy.tsv",
   "cc_section": "4.5.13",
-  "policy_sha256": "4250768760850b81b7241130c4bf1324f4f1753667050cb9a6be01bcd19451d8",
+  "policy_sha256": "f2181cd557d7a4ba8b76334cfc0eb6ca19b6b609bc63061d59029440d10adbcb",
   "corridor": "formal/two_path/PolicyCorridor.lean",
   "machine": "formal/two_path/TwoPath.tla; one generated instance per two-path row in formal/two_path/generated/"
  },
@@ -1147,12 +1147,13 @@
   }
  ],
  "base_law": {
-  "kind": "standing_then_expected_active",
+  "kind": "standing_then_census",
   "k": 12,
   "tail": 30,
   "min": 3,
   "status": "provisional: k and the tail are a stand-in for the measured participation law",
-  "rule": "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N"
+  "rule": "base(N) = N if N <= k, else the census:expected_active count of the community (CC 4.5.13, CC 6.1.9), falling at most a tenth per period and never below min; rows with base=standing use N",
+  "stand_in": "max(min, k + (N - k) // tail): the vectors' value for the census count above k, a test stand-in and not the law"
  },
  "min_count": {
   "community": 2,

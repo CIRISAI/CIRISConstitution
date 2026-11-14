@@ -20,7 +20,12 @@ cosign:{state}	attest	widens		true	CC 3.1.3
 cosign:{state}	withdraw	policy		selfAct	CC 3.1.3
 cosign:{state}	withdraw	roles	pending	author	CC 3.1.3
 cosign:{state}	withdraw	roles	signature		CC 3.1.3
-key:revocation	attest	roles		self	CC 2.4.1.1
+key:revocation	attest	roles	self	self	CC 2.4.1.1	The key revokes itself.
+key:revocation	attest	roles	owner	owner	CC 2.4.1.1	Its owner revokes it under the owner-binding
+key:revocation	attest	roles	self_roster	member	CC 2.4.1.1	the eviction door of a self roster
+key:revocation	attest	roles	room_roster	member	CC 2.4.1.1	for a room key the room's removal
+key:revocation	attest	policy	self_roster	two_path:self_roster_evict	CC 2.4.1.1	the eviction door of a self roster
+key:revocation	attest	policy	room_roster	cosigned:community_remove	CC 2.4.1.1	for a room key the room's removal
 identity:occurrence_revocation	attest	roles	node_or_agent	owner,self	CC 2.4.1.1	The key revokes itself. Its owner revokes it under the owner-binding
 identity:occurrence_revocation	attest	roles	user_self	member	CC 3.1.3	for an occurrence of a user self only when cosigned by a **strict majority of the self's current live roster**
 identity:occurrence_revocation	attest	policy	user_self	two_path:self_roster_evict	CC 3.3.6.3	The policy is two rows of the governance table
@@ -67,4 +72,6 @@ seed_holder_voting_alignment:{cell}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the
 self:delegates_to	authorize	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 self:delegates_to:agent_occurrence	authorize	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none
 transport:canonical_rebind	attest	undo		withdraw:cosigned	CC 2.4.1.1	a quorum's act is undone only by a quorum
+transport:canonical_rebind	supersede	roles		holder	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
+transport:canonical_rebind	supersede	policy		cosigned:accord_majority	CC 3.1.3	**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself
 weighted_aggregate:{contribution_id}	attest	undo		withdraw:selfAct	CC 2.4.1.1	the key that signed `T` (`T.attesting_key_id`) | none

@@ -548,15 +548,15 @@ that the ending row has not seen from counting.
 | Constants out of config | table data | `constitution/constants.tsv` |
 | How a second consent travels, and from when a delegation without one stops seating | wire | the implementers |
 | The signer gate written over the library | code | `tools/check_signer_gate.py` |
-| What each implementer's shipped behaviour does that the text does not: 65 cases the kernel runs, each a test to edit, 16 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
+| What each implementer's shipped behaviour does that the text does not: 62 cases the kernel runs, each a test to edit, 15 it cannot express, and the returns implementers send back | test expectations | `manifests/divergences.json`, `manifests/divergences/` |
 
 **The divergence list is a list of tests.** **run** (`tools/check_divergences.py`): each difference between shipped
 behaviour and the text is a case of rows and one named answer, run under the text's cell and under the shipped
-cell. The two verdicts differ for each of 65, and the kernel's verdict is the same in every arrival order. The
-verdict under the text's cell is what an implementer's test asserts after the change. Sixteen cannot be run,
+cell. The two verdicts differ for each of 62, and the kernel's verdict is the same in every arrival order. The
+verdict under the text's cell is what an implementer's test asserts after the change. Fifteen cannot be run,
 each with its reason, and that count may only fall: six are matters of the wire, three compare a signed instant the
-kernel does not read, and the others are storage, a census secret that is not a row, an audience narrower than a
-row, a stalled roster, a value no build ships, a clock and an agent's own recognition. Five differ in wording only and in no behaviour. An implementer that holds a verdict wrong returns
+kernel does not read, and the others are storage, an audience narrower than a
+row, a stalled roster, a value no build ships, a clock and an agent's own recognition. Four differ in wording only and in no behaviour. An implementer that holds a verdict wrong returns
 the entry with its own case (`formal/derivation/divergence_returns.tsv`). It is then disputed, with a conflict
 recorded against this repository, until the text or the model is corrected or the entry stands. An empty list
 is what agreement means.

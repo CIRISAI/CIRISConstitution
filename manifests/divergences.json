@@ -11,36 +11,36 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 86,
+  "total": 81,
   "by_status": {
-   "runnable": 65,
-   "stated": 16,
-   "wording-only": 5
+   "runnable": 62,
+   "stated": 15,
+   "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
    "edge": 1,
    "persist": 70,
-   "tooling": 14
+   "tooling": 9
   },
   "by_kind": {
    "audience": 4,
-   "cosign": 7,
-   "count": 4,
+   "cosign": 6,
+   "count": 3,
    "door": 12,
    "fold": 9,
    "freshness": 2,
    "lifecycle": 8,
-   "signer": 31,
+   "signer": 29,
    "subject": 1,
    "window": 3,
-   "wording-only": 5
+   "wording-only": 4
   },
   "order_dependent_shipped": 1,
-  "conflict_rows_with_implementer_carrier": 66,
-  "conflict_rows_mapped": 66,
+  "conflict_rows_with_implementer_carrier": 60,
+  "conflict_rows_mapped": 60,
   "source_1_cells_with_disagree_cite": 0,
-  "source_1_conflict_rows_naming_model_families": 34,
+  "source_1_conflict_rows_naming_model_families": 33,
   "source_1_rows_whose_entries_name_another_family": [],
   "source_3_rows_read": {
    "seven_rankings_shipped.tsv": 22,
@@ -4770,124 +4770,6 @@
    "order_dependent_shipped": false
   },
   {
-   "id": "tooling/transport:canonical_rebind/transition supersede",
-   "implementer": "tooling",
-   "family": "transport:canonical_rebind",
-   "where": "transition supersede",
-   "kind": "cosign",
-   "status": "runnable",
-   "sources": [
-    "C471"
-   ],
-   "claims": [],
-   "text": {
-    "value": [
-     [
-      "count:protocol@group"
-     ]
-    ],
-    "cc_ref": "CC 3.1.3",
-    "quote": "**Yes — the accord holders, cosigned at the charter's M**; never a single holder, never the node itself",
-    "param": {
-     "family": "transport:canonical_rebind",
-     "gate": [
-      [
-       "count:protocol@group"
-      ]
-     ]
-    }
-   },
-   "shipped": {
-    "value": "manifests/transitions.json transport:canonical_rebind supersede: roles author, policy selfAct",
-    "source": "manifests/transitions.json transport:canonical_rebind supersede (text_conflicts C471 side_b)",
-    "census_cell": null,
-    "file": "manifests/transitions.json",
-    "file_sha256": "dd4c44691fff19d0b8b185f691038081b0f79e0d0f0592983de32d5aba999adf",
-    "param": {
-     "family": "transport:canonical_rebind",
-     "gate": [
-      [
-       "seat:member@group"
-      ]
-     ]
-    }
-   },
-   "case": {
-    "rows": [
-     {
-      "id": "g",
-      "kind": "offer",
-      "signer": "A",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "A",
-       "B",
-       "C"
-      ],
-      "scope": "member",
-      "obj": "g",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "A",
-        "member",
-        "g"
-       ],
-       [
-        "seat",
-        "B",
-        "member",
-        "g"
-       ],
-       [
-        "seat",
-        "C",
-        "member",
-        "g"
-       ]
-      ],
-      "cosigners": [
-       "B",
-       "C"
-      ],
-      "protocol": "strict"
-     },
-     {
-      "id": "h",
-      "kind": "fam",
-      "signer": "A",
-      "names": [
-       "g"
-      ],
-      "family": "transport:canonical_rebind",
-      "group": "g",
-      "head": [
-       "g"
-      ]
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "h"
-    }
-   },
-   "expect_shipped": "admitted",
-   "expect_kernel": "concludes nothing",
-   "orders": {
-    "run": 2,
-    "of": 2,
-    "kernel": [
-     "concludes nothing"
-    ],
-    "shipped_judged_on_arrival": [
-     "admitted"
-    ]
-   },
-   "order_dependent_shipped": false
-  },
-  {
    "id": "persist/identity:occurrence/transition withdraw policy",
    "implementer": "persist",
    "family": "identity:occurrence",
@@ -5707,202 +5589,6 @@
     ],
     "shipped_judged_on_arrival": [
      "refused"
-    ]
-   },
-   "order_dependent_shipped": false
-  },
-  {
-   "id": "tooling/key_grant:{axis}/reaction emitter",
-   "implementer": "tooling",
-   "family": "key_grant:{axis}",
-   "where": "reaction emitter",
-   "kind": "signer",
-   "status": "runnable",
-   "sources": [
-    "C556"
-   ],
-   "claims": [],
-   "text": {
-    "value": [
-     [
-      "sealer"
-     ]
-    ],
-    "cc_ref": "CC 3.3.4",
-    "quote": "each blob owner's own substrate, as the blob's sealer, emits retroactive `key_grant`s",
-    "param": {
-     "family": "key_grant:{axis}",
-     "gate": [
-      [
-       "sealer"
-      ]
-     ]
-    }
-   },
-   "shipped": {
-    "value": "manifests/reactions.json: emit key_grant:content by identity:substrate_persist",
-    "source": "manifests/reactions.json emit key_grant:content by identity:substrate_persist (tools/build_reactions.py)",
-    "census_cell": null,
-    "file": "manifests/reactions.json",
-    "file_sha256": "6c4f2eb3d5bbf51ab9cf80001f7c6aaff558672ece003b3347b381a5adca3ae3",
-    "param": {
-     "family": "key_grant:{axis}",
-     "gate": [
-      [
-       "type:substrate_persist"
-      ]
-     ]
-    }
-   },
-   "case": {
-    "rows": [
-     {
-      "id": "km",
-      "kind": "keyrec",
-      "signer": "M",
-      "names": [],
-      "family": "key:record",
-      "identity_type": "substrate_persist"
-     },
-     {
-      "id": "bl",
-      "kind": "fam",
-      "signer": "O",
-      "names": [],
-      "family": "content"
-     },
-     {
-      "id": "kg",
-      "kind": "fam",
-      "signer": "M",
-      "names": [
-       "km",
-       "bl"
-      ],
-      "family": "key_grant:{axis}",
-      "blob": "bl"
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "kg"
-    }
-   },
-   "expect_shipped": "admitted",
-   "expect_kernel": "concludes nothing",
-   "orders": {
-    "run": 6,
-    "of": 6,
-    "kernel": [
-     "concludes nothing"
-    ],
-    "shipped_judged_on_arrival": [
-     "admitted"
-    ]
-   },
-   "order_dependent_shipped": false
-  },
-  {
-   "id": "tooling/hard_case:{kind}/registry reserved",
-   "implementer": "tooling",
-   "family": "hard_case:{kind}",
-   "where": "registry reserved",
-   "kind": "signer",
-   "status": "runnable",
-   "sources": [
-    "C537"
-   ],
-   "claims": [],
-   "text": {
-    "value": [
-     [
-      "seat:infra:attest@root"
-     ]
-    ],
-    "cc_ref": "CC 3.1.9.4",
-    "quote": "**Open vocabulary** of kinds; the emitter is reserved",
-    "param": {
-     "family": "hard_case:{kind}",
-     "gate": [
-      [
-       "seat:infra:attest@root"
-      ]
-     ]
-    }
-   },
-   "shipped": {
-    "value": "manifests/namespace_registry.json hard_case:{kind} reserved false",
-    "source": "manifests/namespace_registry.json hard_case:{kind} reserved: false (tools/build_cc_namespace.py)",
-    "census_cell": null,
-    "file": "manifests/namespace_registry.json",
-    "file_sha256": "5029adcc1f6303b39d04d57dab3ef3461b612e02dbb076fd42b671a1d3a587d7",
-    "param": {
-     "family": "hard_case:{kind}",
-     "gate": [
-      [
-       "registered"
-      ]
-     ]
-    }
-   },
-   "case": {
-    "rows": [
-     {
-      "id": "ku",
-      "kind": "keyrec",
-      "signer": "U",
-      "names": [],
-      "family": "key:record",
-      "identity_type": "user"
-     },
-     {
-      "id": "rt",
-      "kind": "offer",
-      "signer": "Rt",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "Rt"
-      ],
-      "scope": "root",
-      "obj": "rt",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "Rt",
-        "root",
-        "rt"
-       ]
-      ]
-     },
-     {
-      "id": "h",
-      "kind": "fam",
-      "signer": "U",
-      "names": [
-       "ku",
-       "rt"
-      ],
-      "family": "hard_case:{kind}",
-      "root": "Rt"
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "h"
-    }
-   },
-   "expect_shipped": "admitted",
-   "expect_kernel": "concludes nothing",
-   "orders": {
-    "run": 6,
-    "of": 6,
-    "kernel": [
-     "concludes nothing"
-    ],
-    "shipped_judged_on_arrival": [
-     "admitted"
     ]
    },
    "order_dependent_shipped": false
@@ -7274,30 +6960,6 @@
    "gap": "outside the kernel"
   },
   {
-   "id": "tooling/(policy base)/BASE_LAW",
-   "implementer": "tooling",
-   "family": "(policy base)",
-   "where": "BASE_LAW",
-   "kind": "count",
-   "status": "stated",
-   "sources": [
-    "C352"
-   ],
-   "claims": [],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 4.5.13",
-    "quote": "The expected-active count is the community's own member-only census composite"
-   },
-   "shipped": {
-    "value": "base(N) = N if N <= k else max(min, k + (N - k) // tail)",
-    "source": "tools/build_governance_policy.py BASE_LAW",
-    "census_cell": null
-   },
-   "reason": "the base above k is the census composite, drawn from a group secret that is not a row (KERNEL.md 5a: census families cannot run)",
-   "gap": "not a row"
-  },
-  {
    "id": "persist/moderation:{allegation_type}/replication.audience",
    "implementer": "persist",
    "family": "moderation:{allegation_type}",
@@ -7556,30 +7218,6 @@
     "census_cell": null
    },
    "reason": "a citation, checked by tools/check_links.py; no row"
-  },
-  {
-   "id": "tooling/retirement:{state}/count grammar stage key",
-   "implementer": "tooling",
-   "family": "retirement:{state}",
-   "where": "count grammar stage key",
-   "kind": "wording-only",
-   "status": "wording-only",
-   "sources": [
-    "C518",
-    "C519"
-   ],
-   "claims": [],
-   "text": {
-    "value": null,
-    "cc_ref": "CC 3.1.5",
-    "quote": "Self-emitted up to `retired` (attester = the agent key)"
-   },
-   "shipped": {
-    "value": "count_text.tsv selects on the leaf alone",
-    "source": "tools/build_family_model.py count grammar",
-    "census_cell": null
-   },
-   "reason": "the per-stage signer and policy in manifests/transitions.json are right; only the count grammar's key differs"
   }
  ]
 }

@@ -1,10 +1,10 @@
 {
  "_meta": {
   "rule": "queue(view, standing) = transitions of the view's family whose from = view.state and whose roles meet standing; one item per transition; the door admits by the same predicate",
-  "transitions_sha256": "c6aedaa323cb9bcc35b43aaf02860d2e63e8bd5676ae736b5160cf212848c415",
-  "policy_sha256": "4250768760850b81b7241130c4bf1324f4f1753667050cb9a6be01bcd19451d8",
-  "steps": 102,
-  "rows": 72,
+  "transitions_sha256": "9c8f070af3ce8606987f40504ed9b55f33e1bd54a5263cede77f62cf16867f74",
+  "policy_sha256": "f2181cd557d7a4ba8b76334cfc0eb6ca19b6b609bc63061d59029440d10adbcb",
+  "steps": 105,
+  "rows": 74,
   "errors": []
  },
  "steps": [
@@ -2230,7 +2230,9 @@
     "family": "key:revocation",
     "state_before": null,
     "state_after": "none",
-    "atoms": {}
+    "atoms": {
+     "stage": "self"
+    }
    },
    "queue": [],
    "chosen": null,
@@ -2250,6 +2252,7 @@
     "state_before": "none",
     "state_after": "admitted",
     "atoms": {
+     "stage": "self",
      "last_attest_by": "dave"
     }
    },
@@ -2723,6 +2726,85 @@
     "verb": "attest",
     "signer": "bob",
     "object": "unbind:2"
+   }
+  },
+  {
+   "n": 103,
+   "note": "Bob tries to re-bind his serve node's transport destination: refused, a re-bind is the accord holders' act",
+   "actor": "bob",
+   "standing": [
+    "owner",
+    "registered"
+   ],
+   "view": {
+    "object": "rebind:1",
+    "family": "transport:canonical_rebind",
+    "state_before": null,
+    "state_after": "none",
+    "atoms": {}
+   },
+   "queue": [],
+   "chosen": null,
+   "refused": true,
+   "row": null
+  },
+  {
+   "n": 104,
+   "note": "The accord holders re-bind the serve node's transport destination, cosigned at the charter's threshold",
+   "actor": "alice",
+   "standing": [
+    "holder"
+   ],
+   "view": {
+    "object": "rebind:1",
+    "family": "transport:canonical_rebind",
+    "state_before": "none",
+    "state_after": "admitted",
+    "atoms": {
+     "last_attest_by": "alice"
+    }
+   },
+   "queue": [
+    "attest"
+   ],
+   "chosen": "attest",
+   "refused": false,
+   "row": {
+    "id": "row73",
+    "family": "transport:canonical_rebind",
+    "verb": "attest",
+    "signer": "alice",
+    "object": "rebind:1"
+   }
+  },
+  {
+   "n": 105,
+   "note": "A later re-bind by the holders supersedes the first: again their cosigned act, never one holder's",
+   "actor": "alice",
+   "standing": [
+    "holder"
+   ],
+   "view": {
+    "object": "rebind:1",
+    "family": "transport:canonical_rebind",
+    "state_before": "admitted",
+    "state_after": "superseded",
+    "atoms": {
+     "last_attest_by": "alice",
+     "last_supersede_by": "alice"
+    }
+   },
+   "queue": [
+    "supersede"
+   ],
+   "chosen": "supersede",
+   "refused": false,
+   "row": {
+    "id": "row74",
+    "family": "transport:canonical_rebind",
+    "verb": "supersede",
+    "signer": "alice",
+    "object": "rebind:1"
    }
   }
  ]

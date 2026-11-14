@@ -295,7 +295,7 @@
       }
     },
     "private_use_prefix": "x_private:",
-    "registry_sha256": "e1c82f0a0177782d1280de7cada3cf5235c86e3c8d09d71fbbc44c54404d6ad7",
+    "registry_sha256": "4ab18d92f7b9793daaa67376a374a5dec92526daa06e224c28d180a30449b519",
     "row_types": {
       "carriers": [],
       "cc_ref": "CC 2.4",
@@ -310,7 +310,7 @@
       ]
     },
     "source": "constitution/part_3_the_namespace.md",
-    "source_sha256": "b22a698cc5125da6d6ed3c77dceb65f92b7c47495fde6536d8e65062f2a5e4b1"
+    "source_sha256": "bf5e3ac38f7c6d2f157c16a88269b8e7a9fa31ec8d2a095ea752f3a41fb8109b"
   },
   "families": [
     {
@@ -2772,7 +2772,11 @@
       "owning_repo": "CIRISNodeCore",
       "polarity": "positive-only",
       "prefix": "hard_case:{kind}",
-      "reserved": false,
+      "reserved": true,
+      "reserved_rule": {
+        "cc_ref": "CC 3.4.4",
+        "rule": "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error"
+      },
       "segments": [
         {
           "class": "literal",

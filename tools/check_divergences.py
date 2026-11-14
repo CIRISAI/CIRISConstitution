@@ -39,7 +39,7 @@ import build_divergences as B     # noqa: E402
 from build_family_model import section_span  # noqa: E402
 sys.dont_write_bytecode = _dwb
 
-MAX_STATED = 16     # shrink-only: an entry leaves `stated` when the kernel model can run it (13, plus three new differences on a signed instant)
+MAX_STATED = 15     # shrink-only: an entry leaves `stated` when the kernel model can run it
 
 
 def coverage(doc, standing):

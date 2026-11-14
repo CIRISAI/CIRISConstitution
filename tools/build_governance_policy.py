@@ -64,9 +64,12 @@ SET_ROLES = set(ROLES) | {"deciding", "outside", "joiner"}
 SET_EXCL = ("target", "proposer", "node")
 UNSTATED_MAX = 8   # cells the text leaves unstated; the number only falls
 
-BASE_LAW = OrderedDict([("kind", "standing_then_expected_active"), ("k", 12), ("tail", 30), ("min", 3),
+BASE_LAW = OrderedDict([("kind", "standing_then_census"), ("k", 12), ("tail", 30), ("min", 3),
                         ("status", "provisional: k and the tail are a stand-in for the measured participation law"),
-                        ("rule", "base(N) = N if N <= k else max(min, k + (N - k) // tail); rows with base=standing use N")])
+                        ("rule", "base(N) = N if N <= k, else the census:expected_active count of the community (CC 4.5.13, CC 6.1.9), "
+                                 "falling at most a tenth per period and never below min; rows with base=standing use N"),
+                        ("stand_in", "max(min, k + (N - k) // tail): the vectors' value for the census count above k, "
+                                     "a test stand-in and not the law")])
 WINDOW_CLASSES = OrderedDict([("content_24h", 86400), ("standing_72h", 259200), ("irreversible_7d", 604800),
                               ("ruled_24h", 86400), ("ruled_48h", 172800), ("fuse_24h", 86400), ("none", 0)])
 

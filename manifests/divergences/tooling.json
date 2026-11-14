@@ -11,87 +11,10 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 9
+  "count": 6
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
-  {
-   "id": "tooling/transport:canonical_rebind/transition supersede",
-   "family": "transport:canonical_rebind",
-   "where": "transition supersede",
-   "kind": "cosign",
-   "case": {
-    "rows": [
-     {
-      "id": "g",
-      "kind": "offer",
-      "signer": "A",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "A",
-       "B",
-       "C"
-      ],
-      "scope": "member",
-      "obj": "g",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "A",
-        "member",
-        "g"
-       ],
-       [
-        "seat",
-        "B",
-        "member",
-        "g"
-       ],
-       [
-        "seat",
-        "C",
-        "member",
-        "g"
-       ]
-      ],
-      "cosigners": [
-       "B",
-       "C"
-      ],
-      "protocol": "strict"
-     },
-     {
-      "id": "h",
-      "kind": "fam",
-      "signer": "A",
-      "names": [
-       "g"
-      ],
-      "family": "transport:canonical_rebind",
-      "group": "g",
-      "head": [
-       "g"
-      ]
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "h"
-    }
-   },
-   "expect_kernel": "concludes nothing",
-   "expect_shipped": "admitted",
-   "kernel_parameter": {
-    "family": "transport:canonical_rebind",
-    "gate": [
-     [
-      "count:protocol@group"
-     ]
-    ]
-   }
-  },
   {
    "id": "tooling/identity:occurrence/transition withdraw policy",
    "family": "identity:occurrence",
@@ -266,120 +189,6 @@
    }
   },
   {
-   "id": "tooling/key_grant:{axis}/reaction emitter",
-   "family": "key_grant:{axis}",
-   "where": "reaction emitter",
-   "kind": "signer",
-   "case": {
-    "rows": [
-     {
-      "id": "km",
-      "kind": "keyrec",
-      "signer": "M",
-      "names": [],
-      "family": "key:record",
-      "identity_type": "substrate_persist"
-     },
-     {
-      "id": "bl",
-      "kind": "fam",
-      "signer": "O",
-      "names": [],
-      "family": "content"
-     },
-     {
-      "id": "kg",
-      "kind": "fam",
-      "signer": "M",
-      "names": [
-       "km",
-       "bl"
-      ],
-      "family": "key_grant:{axis}",
-      "blob": "bl"
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "kg"
-    }
-   },
-   "expect_kernel": "concludes nothing",
-   "expect_shipped": "admitted",
-   "kernel_parameter": {
-    "family": "key_grant:{axis}",
-    "gate": [
-     [
-      "sealer"
-     ]
-    ]
-   }
-  },
-  {
-   "id": "tooling/hard_case:{kind}/registry reserved",
-   "family": "hard_case:{kind}",
-   "where": "registry reserved",
-   "kind": "signer",
-   "case": {
-    "rows": [
-     {
-      "id": "ku",
-      "kind": "keyrec",
-      "signer": "U",
-      "names": [],
-      "family": "key:record",
-      "identity_type": "user"
-     },
-     {
-      "id": "rt",
-      "kind": "offer",
-      "signer": "Rt",
-      "names": [],
-      "family": "offer",
-      "to": [
-       "Rt"
-      ],
-      "scope": "root",
-      "obj": "rt",
-      "conf": "self",
-      "on": [
-       [
-        "seat",
-        "Rt",
-        "root",
-        "rt"
-       ]
-      ]
-     },
-     {
-      "id": "h",
-      "kind": "fam",
-      "signer": "U",
-      "names": [
-       "ku",
-       "rt"
-      ],
-      "family": "hard_case:{kind}",
-      "root": "Rt"
-     }
-    ],
-    "ask": {
-     "answer": "state",
-     "target": "h"
-    }
-   },
-   "expect_kernel": "concludes nothing",
-   "expect_shipped": "admitted",
-   "kernel_parameter": {
-    "family": "hard_case:{kind}",
-    "gate": [
-     [
-      "seat:infra:attest@root"
-     ]
-    ]
-   }
-  },
-  {
    "id": "tooling/takedown_notice:{basis}/reaction on close(withhold)",
    "family": "takedown_notice:{basis}",
    "where": "reaction on close(withhold)",
@@ -507,13 +316,6 @@
    "quote": "the existing `CLOCK_SKEW_VIOLATION` error class"
   },
   {
-   "id": "tooling/(policy base)/BASE_LAW",
-   "status": "stated",
-   "reason": "the base above k is the census composite, drawn from a group secret that is not a row (KERNEL.md 5a: census families cannot run)",
-   "cc_ref": "CC 4.5.13",
-   "quote": "The expected-active count is the community's own member-only census composite"
-  },
-  {
    "id": "tooling/membership:{stage}/guard[leaf=widening on a stalled roster]",
    "status": "stated",
    "reason": "a stalled roster (T7) is no answer of the kernel model; its condition reads a count of active founders over a margin",
@@ -526,13 +328,6 @@
    "reason": "a citation, checked by tools/check_links.py; no row",
    "cc_ref": "CC 1.7",
    "quote": "The classical impossibility (Pagnia and Gärtner, 1999)"
-  },
-  {
-   "id": "tooling/retirement:{state}/count grammar stage key",
-   "status": "wording-only",
-   "reason": "the per-stage signer and policy in manifests/transitions.json are right; only the count grammar's key differs",
-   "cc_ref": "CC 3.1.5",
-   "quote": "Self-emitted up to `retired` (attester = the agent key)"
   }
  ]
 }

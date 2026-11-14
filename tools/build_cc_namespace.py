@@ -263,6 +263,9 @@ def _reserved_rules():
         # ledger is owner-serialized content, not a substrate self-report — the table cell says so.
         (lambda p, c: p.startswith("ledger:"),
          "the ledger's single owner (the steward-bound identity of its ledger_id triple); a delegation confers no write on a ledger", "CC 3.3.10.1"),
+        # CC 3.4.2 / 3.4.4: the hard-case kinds are open and the emitter is reserved to the substrate.
+        (lambda p, c: p.startswith("hard_case:"),
+         "substrate-emitted (identity_type substrate_persist); the kinds are open, the emitter is reserved; a non-substrate emission is a category error", "CC 3.4.4"),
         # component-scoped: persist / edge dimensions are substrate-self-reports.
         (lambda p, c: c in ("persist", "transport-delivery"),
          "substrate-self-report", "CC 3.4.3"),

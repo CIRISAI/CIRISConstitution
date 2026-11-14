@@ -255,7 +255,7 @@
     {
      "effect": "emit",
      "family": "key_grant:content",
-     "by": "identity:substrate_persist",
+     "by": "owner",
      "force": "must"
     }
    ],
@@ -467,7 +467,7 @@
     {
      "effect": "emit",
      "family": "key_grant:content",
-     "by": "identity:substrate_persist",
+     "by": "owner",
      "force": "must"
     }
    ],
@@ -1192,7 +1192,7 @@
     {
      "effect": "emit",
      "family": "key_grant:content",
-     "by": "identity:substrate_persist",
+     "by": "owner",
      "force": "must"
     }
    ],

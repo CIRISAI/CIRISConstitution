@@ -2710,7 +2710,7 @@ In time:
 
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
-| attest | self | selfAct | true (always) | true (always) | none |
+| attest | member, owner, self (self: self; owner: owner; self_roster: member; room_roster: member) | selfAct | true (always) | true (always) | none |
 | supersede | author | selfAct | false | false | supersede |
 
 Count: `none`
@@ -2742,9 +2742,9 @@ Fold:
 - `@axis=epoch|stream: key=stream_id; pick=union; bound=raise_only(epoch)` (CC 5.1)
 
 In time:
-- @family on admitted(membership:widening): emit `key_grant:content` by identity:substrate_persist (CC 3.3.4, CC 4.4.3.4.1)
+- @family on admitted(membership:widening): emit `key_grant:content` by owner (CC 3.3.4, CC 4.4.3.4.1)
 - @community on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.2.1, CC 4.4.3.2.5, CC 4.4.3.4.1)
-- @self on admitted(identity:occurrence): emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.1)
+- @self on admitted(identity:occurrence): emit `key_grant:content` by owner (CC 4.4.3.4.1)
 - @affiliations on sealed(self): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
 - on fold(no_wrap_target): emit `hard_case:recipient_excluded` by identity:substrate_persist (CC 4.4.3.4.1)
 - @community on admitted(membership:{stage}): emit `key_grant:epoch` by author (CC 4.4.3.4.1)
@@ -2890,7 +2890,7 @@ Fold:
 In time:
 - [proposal] expiry required `expires_at` max `membership_proposal_max_secs` (CC 4.4.3.2.3, CC 3.1.3.2)
 - [proposal] on close(expiry): read closed (CC 4.4.3.2.3, CC 3.1.3.2)
-- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by identity:substrate_persist (CC 4.4.3.4.2)
+- @family on admitted(self): emit `hard_case:family_membership_change` by identity:substrate_persist, emit `key_grant:content` by owner (CC 4.4.3.4.2)
 - [widening] expiry optional `valid_until` (CC 3.3.4)
 - [widening] on close(expiry): read lapsed (CC 3.3.4)
 - [proposal] landing of `expiry`: by member as `membership:widening`; a late answer does not count (CC 3.1.3.2)
@@ -3385,7 +3385,7 @@ Fold:
 | Transition | Who signs | Policy | Widens | Confirm | Way back |
 |---|---|---|---|---|---|
 | attest | holder | cosigned `accord_majority` | true (by_scope) | true (if_widens) | withdraw |
-| supersede | author | selfAct | true (by_scope_change) | true (if_widens) | supersede |
+| supersede | holder | cosigned `accord_majority` | true (by_scope_change) | true (if_widens) | supersede |
 
 Count: `accord_majority@accord` (CC 3.1.3)
 

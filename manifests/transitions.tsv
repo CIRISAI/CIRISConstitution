@@ -283,7 +283,7 @@ justice:{aspect}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest
 justice:{aspect}	recant	admitted	recanted	author	selfAct	false	attest	selfAct	false	cc-table	cc-table	derived
 key:record	attest	none	admitted	self	selfAct	true	none		true	derived	derived	derived
 key:record	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
-key:revocation	attest	none	admitted	self	selfAct	true	none		true	cc-table	derived	derived
+key:revocation	attest	none	admitted	member,owner,self	selfAct	true	none		true	cc-table	derived	derived
 key:revocation	supersede	admitted	superseded	author	selfAct	false	supersede	selfAct	false	derived	derived	derived
 key_boundary:{scope}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 key_boundary:{scope}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
@@ -432,7 +432,7 @@ transparency_log:cosigned:{tree_size}	attest	none	admitted	attest	selfAct	true	n
 transparency_log:inclusion	attest	none	admitted	registered	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 transparency_log:inclusion	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 transport:canonical_rebind	attest	none	admitted	holder	cosigned	true	withdraw	cosigned	true	derived	cc-table	derived
-transport:canonical_rebind	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
+transport:canonical_rebind	supersede	admitted	superseded	holder	cosigned	true	supersede	cosigned	true	cc-table	cc-table	derived
 transport:{kind}	attest	none	admitted	infra:attest	selfAct	true	withdraw	selfAct	true	derived	derived	derived
 transport:{kind}	withdraw	admitted	withdrawn	author,subject	selfAct	false	attest	selfAct	false	code-v61	code-v61	derived
 transport:{kind}	supersede	admitted	superseded	author	selfAct	true	supersede	selfAct	true	derived	derived	derived
