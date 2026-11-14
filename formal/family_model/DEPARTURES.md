@@ -322,6 +322,18 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 |---|---|
 | placement | `custody:{kind}` |
 
+## A duty sits no wider than the permission it attaches to
+
+**When.** The row is an obligation attached to a permission.
+
+**Why.** A duty names the permission it attaches to, so a duty placed wider would tell readers outside the permission's audience that the permission exists. The signer does not choose a wider scope.
+
+**Text.** CC 3.1.1: "A duty MUST NOT be placed wider than the permission it attaches to"
+
+| column | families |
+|---|---|
+| placement | `duty:{kind}` |
+
 ## Only the device that holds the content reports holding it
 
 **When.** The row reports custody of one piece of content.
@@ -519,6 +531,20 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 | column | families |
 |---|---|
 | erasure_route | `detection:correlated_action:{axis}`, `detection:distributive:access:{resource_type}`, `detection:hash_chain_integrity`, `detection:intra_agent_consistency`, `detection:{detector}` |
+
+## A trace is erased by its own signer
+
+**When.** The row is an agent's own reasoning trace.
+
+**Why.** A trace explains the act it is anchored to. Only its signer, or the custodian after retirement, erases it; the owner's node may stop holding the bytes, which is no erasure, and a deletion never reaches a row another party signed.
+
+**Text.** CC 3.1.5: "An agent's trace is erased only by its signer's `withdraws`"
+
+**Build.** The text states this and the pinned build does not enforce it; the cell records the build. The pinned build hard-deletes an agent's traces on the host's request with no check, and with the key included it deletes rows other parties signed about that key.
+
+| column | families |
+|---|---|
+| erasure_route | `trace:{form}:{version}` |
 
 ## A claim to an outside name carries that name in its family
 
@@ -760,13 +786,4 @@ Unless a reason below applies, a family's rows are placed by their signer at any
 | column | families |
 |---|---|
 | subject_rule | `trust:{job}:{version}` |
-
-## Open
-
-Cells that leave the default with no reason yet, each with the question that would give it one.
-
-| family | column | question |
-|---|---|---|
-| `duty:{kind}` | placement | No words found say a duty may sit no wider than the permission it attaches to. Does the text state that bound? |
-| `trace:{form}:{version}` | erasure_route | The pinned build deletes an agent's traces on the host's request with no check of its own, and with the key included it deletes rows other parties signed about that key. The text gives erasure no node-local basis and puts the accountability record beyond anyone's purge. Which request removes a trace, and what may the deletion reach? |
 

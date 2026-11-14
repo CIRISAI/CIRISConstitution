@@ -211,6 +211,12 @@ def cases():
         "The act is lifted when a strict majority of the roster as it stood at the instant of the act has objected within the 48-hour window.",
         [["attester"]], [["attester"], ["subject"]], "withdraws_by: {attester, subject}",
         [fam("ob", "M", "objection:{state}", (), subject="X"), wd("x", "X", "ob")], "ob"))
+    E.append(lifecycle_entry("persist", "trace:{form}:{version}", ["C228"], "CC 3.1.5",
+        "An agent's trace is erased only by its signer's `withdraws`",
+        [["attester"]], [["attester"], ["subject"], ["owner_of_subject"]],
+        "withdraws_by: {attester, subject} (+ producer's owner",
+        [SEAT.offer("ob", "Ag", "O", "owner", "Ag", "self", cosigners=("O",)),
+         fam("tr", "Ag", "trace:{form}:{version}", (), subject="Ag"), wd("x", "O", "tr", ("ob",), subject="Ag")], "tr"))
     E.append(signer_entry("persist", "trust:{job}:{version}", ["C499"], "CC 3.2",
         "The acceptance edge is a person's row: any live key of the person's roster signs it as that person",
         [["seat:member@person"]], [["self"]], "accepts: self (node -> root)",

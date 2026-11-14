@@ -3,7 +3,7 @@
   "cc_section": "3.1 (the family model manifest, CIRISConstitution#189)",
   "version": "0-draft",
   "taxonomy_version": "11+1 v1",
-  "registry_sha256": "7a34a78d7cbc537129c7e7d800302ae5c01bde6afaa744d18ddd1e23bd8372b1",
+  "registry_sha256": "f9fb68fbf633fe14b6fe0e9e730d2b5eb9061664e67b2f47557c897610f1e661",
   "census": "CIRISPersist release-61.0.0 ea6ab724, #1130 comment 6563875341",
   "columns": {
    "kind": "Priorities | Rules | Manner | Identity | Confidence | Facts | Circumstances | Process | Model | Structure | Premises",
@@ -1036,6 +1036,16 @@
      "cells": 1
     },
     {
+     "id": "duty_scope",
+     "title": "A duty sits no wider than the permission it attaches to",
+     "when": "The row is an obligation attached to a permission.",
+     "why": "A duty names the permission it attaches to, so a duty placed wider would tell readers outside the permission's audience that the permission exists. The signer does not choose a wider scope.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.1",
+     "quote": "A duty MUST NOT be placed wider than the permission it attaches to",
+     "cells": 1
+    },
+    {
      "id": "custody_own_report",
      "title": "Only the device that holds the content reports holding it",
      "when": "The row reports custody of one piece of content.",
@@ -1194,6 +1204,16 @@
      "cc_ref": "CC 4.5.3",
      "quote": "the request is executed by the row's **producer** under rule 1, the data controller withdrawing its own row",
      "cells": 5
+    },
+    {
+     "id": "trace_signer_erases",
+     "title": "A trace is erased by its own signer",
+     "when": "The row is an agent's own reasoning trace.",
+     "why": "A trace explains the act it is anchored to. Only its signer, or the custodian after retirement, erases it; the owner's node may stop holding the bytes, which is no erasure, and a deletion never reaches a row another party signed.",
+     "basis": "text",
+     "cc_ref": "CC 3.1.5",
+     "quote": "An agent's trace is erased only by its signer's `withdraws`",
+     "cells": 1
     },
     {
      "id": "outside_name",
@@ -1382,18 +1402,7 @@
      "cells": 1
     }
    ],
-   "open": [
-    {
-     "family": "duty:{kind}",
-     "column": "placement",
-     "question": "No words found say a duty may sit no wider than the permission it attaches to. Does the text state that bound?"
-    },
-    {
-     "family": "trace:{form}:{version}",
-     "column": "erasure_route",
-     "question": "The pinned build deletes an agent's traces on the host's request with no check of its own, and with the key included it deletes rows other parties signed about that key. The text gives erasure no node-local basis and puts the accountability record beyond anyone's purge. Which request removes a trace, and what may the deletion reach?"
-    }
-   ],
+   "open": [],
    "reading": "every departing cell names in because the reasons that move it, or open; a departure with no reason fails the build, and so does a reason whose cell sits on the default"
   },
   "reading": "every cell carries its source: cc-table (the CC classification), code-v61 (what persist's door enforces for this family), generic (the generic door's value, not the family's), prose (bespoke code outside the closed vocabulary), mixed (a compound cell whose parts differ; see parts), gap (nothing enforces; a value after the tag is the de-facto or target value). A signer rule the text gives where the code enforces none, or holds the family shut, is cc-table, with the census reading kept beside it as code; where the text gives one signer per stage the value is keyed by stage (per_stage). Census-only readings ride beside the CC columns as verbs_code, maintains_record_code, reference_code and reserved. A ruled version replaces every generic, prose, mixed and gap cell with a closed value and refuses what remains."
@@ -33215,7 +33224,9 @@
     "placement"
    ],
    "because": {
-    "placement": "open"
+    "placement": [
+     "duty_scope"
+    ]
    }
   },
   {
@@ -64736,7 +64747,9 @@
     "projection": [
      "trace_store_columns"
     ],
-    "erasure_route": "open"
+    "erasure_route": [
+     "trace_signer_erases"
+    ]
    }
   },
   {

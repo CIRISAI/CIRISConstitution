@@ -354,7 +354,8 @@ A node MUST admit a `withdraws` against a target row `T` when one line of this t
 - a `licensure:*` or `revocation:*` row, where the licensee's path is `reconsideration:{grounds}`;
 - a duty-holder's record on the accountability trail: a `moderation:*` report or action, a `hard_case:*`, a `slashing:*` verdict, a `quarantine:*` marker ([CC 4.5.5](part_4_composition_governance.md#4.5.5));
 - an act of a body under a declared legal-weight class, such as a conviction or a licence ([CC 2.4.1.2.1](#2.4.1.2.1), [CC 4.4.3.2.8](part_4_composition_governance.md#4.4.3.2.8));
-- a `takedown_notice:*`, where the path is the counter-notice its basis names ([CC 3.3.2](part_3_the_namespace.md#3.3.2)).
+- a `takedown_notice:*`, where the path is the counter-notice its basis names ([CC 3.3.2](part_3_the_namespace.md#3.3.2));
+- an agent's own `trace:*`, where the path of a person named in it is withdrawing consent ([CC 3.1.5](part_3_the_namespace.md#3.1.5)).
 
 An affiliation withdraws no statement about itself, whatever the statement. Its path is reconsideration and the reader's composition. A named party contests a kept row by `reconsideration:{grounds}`, and it holds standing there ([CC 4.5.5](part_4_composition_governance.md#4.5.5)). The consent and scoring context of this list is [CC 3.4.5](part_3_the_namespace.md#3.4.5).
 

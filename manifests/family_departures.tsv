@@ -99,7 +99,7 @@ detection:{detector}	lifecycle	adverse	{"expires": "expires_at honoured", "retra
 detection:{detector}	projection	typed_view	{"rebuild": "byte_equal", "table": "detection_events"}
 detection:{detector}	erasure_route	signer_erases_adverse	["dsar (producer withdraws + tombstone)", "purge"]
 device:label	placement	device_name	"self_collective"
-duty:{kind}	placement	open	"never wider than the referenced permission's projection"
+duty:{kind}	placement	duty_scope	"never wider than the referenced permission's projection"
 evidence:{suite}:{kind}:{cell}:{prefix}	placement	evidence_public	"commons"
 expertise:{domain}:{language}	projection	typed_view	{"rebuild": "byte_equal", "table": "expertise_ledger"}
 goal:{scale}	lifecycle	read_note	{"expires": "expires_at honoured", "retraction_class": "peer", "rotation_on_removal": ["no", "amendment = declarer's supersedes with whole body"], "supersedes": "same_attester", "withdraws_by": "{attester, subject}"}
@@ -206,7 +206,7 @@ takedown_notice:{basis}	lifecycle	adverse	{"expires": "expires_at honoured", "re
 testimonial_witness:{kind}	placement	testimony_private	"self_collective"
 trace:{form}:{version}	subject_rule	own_record	{"kind": "cardinality >= 1, subject_key_ids contains the attester", "must_be_registered": "attested yes"}
 trace:{form}:{version}	projection	trace_store_columns	{"rebuild": "none", "table": "trace_events + trace_llm_calls"}
-trace:{form}:{version}	erasure_route	open	["dsar (trace corpus hard delete)", "purge"]
+trace:{form}:{version}	erasure_route	trace_signer_erases	["dsar (trace corpus hard delete)", "purge"]
 transport:canonical_rebind	cosign_rule	quorum	"holder quorum (CC 5.3.4)"
 trust:{job}:{version}	subject_rule	trust_edge_is_a_delegation	"delegation term required, no cycle, node agency scopes infra-only"
 trust:{job}:{version}	cosign_rule	quorum	"family charter witness quorum (check_charter_witness_quorum)"

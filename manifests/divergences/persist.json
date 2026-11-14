@@ -11,7 +11,7 @@
    "fold": "the value the fold gives",
    "owed": "the effects owed, or nothing"
   },
-  "count": 56
+  "count": 57
  },
  "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
  "vectors": [
@@ -2301,6 +2301,74 @@
    "expect_shipped": "withdrawn",
    "kernel_parameter": {
     "family": "objection:{state}",
+    "withdraws_by": [
+     [
+      "attester"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "persist/trace:{form}:{version}/lifecycle.withdraws_by",
+   "family": "trace:{form}:{version}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "case": {
+    "rows": [
+     {
+      "id": "ob",
+      "kind": "offer",
+      "signer": "Ag",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "O"
+      ],
+      "scope": "owner",
+      "obj": "Ag",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "O",
+        "owner",
+        "Ag"
+       ]
+      ],
+      "cosigners": [
+       "O"
+      ]
+     },
+     {
+      "id": "tr",
+      "kind": "fam",
+      "signer": "Ag",
+      "names": [],
+      "family": "trace:{form}:{version}",
+      "subject": "Ag"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "O",
+      "names": [
+       "ob",
+       "tr"
+      ],
+      "family": "withdraws",
+      "target": "tr",
+      "subject": "Ag"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "tr"
+    }
+   },
+   "expect_kernel": "admitted",
+   "expect_shipped": "withdrawn",
+   "kernel_parameter": {
+    "family": "trace:{form}:{version}",
     "withdraws_by": [
      [
       "attester"

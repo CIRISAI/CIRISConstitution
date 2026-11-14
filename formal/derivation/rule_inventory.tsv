@@ -378,6 +378,7 @@ p2	291	2.4.1.1	family	withdraw	lifecycle	licensure,revocation	MUST_NOT	exception
 p2	291	2.4.1.1	family	withdraw	lifecycle	moderation,hard_case,slashing	MUST_NOT	exception	4.5.5	a subject MUST NOT withdraw a duty-holder's accountability-trail record about itself: a moderation report or action, a hard_case, a slashing verdict	
 p2	291	2.4.1.1	family	withdraw	lifecycle	licensure	MUST_NOT	exception	2.4.1.2.1,4.4.3.2.8	a subject MUST NOT withdraw an act of a body under a declared legal-weight class about itself, such as a conviction or a licence	
 p2	291	2.4.1.1	family	withdraw	lifecycle	takedown_notice	MUST_NOT	exception	3.3.2	a subject MUST NOT withdraw a takedown_notice about itself; the contest path is the counter-notice its basis names	
+p2	358	2.4.1.1	family	withdraw	lifecycle	trace	MUST_NOT	exception	3.1.5	a named party MUST NOT withdraw an agent's own trace:* about itself; a person named in it withdraws consent instead	
 p2	291	2.4.1.1	family	withdraw	lifecycle	*	MUST_NOT	exception		an affiliation never withdraws a statement about itself, whatever the statement; its path is reconsideration and the reader's composition	
 p2	291	2.4.1.1	kernel	withdraw	lifecycle	*	is	states		between peers the person named retracts peer speech about themself under rule 2; the withdraws is a signed act the audience sees and the speaker stays attributed	
 p2	291	2.4.1.1	kernel	moderation	none	*	is	restates	4.5.5	the subject's contest path against an adverse record is reconsideration:{grounds}, on which the subject holds standing	
@@ -794,6 +795,7 @@ p3	22	3.1.1	family	row_shape	body	duty	is	states	4.5.1.1	duty kind is open vocab
 p3	22	3.1.1	family	other:composition	projection	duty,commitment_fulfillment	is	states	3.1.9.2	A duty's discharge is evidenced by commitment_fulfillment rows, never by a second family.	table
 p3	22	3.1.1	family	moderation	projection	duty,hard_case	is	states	3.1.9.4	A duty breach routes to hard_case:duty_unmet for adjudication, never to automatic slashing.	table
 p3	22	3.1.1	family	row_shape	none	duty	is	states		duty rides scores; no new structural primitive.	table
+p3	22	3.1.1	family	placement	placement	duty	MUST_NOT	states		A duty MUST NOT be placed wider than the permission it attaches to, since a wider duty would tell readers outside the permission's audience that the permission exists	table
 p3	23	3.1.1	family	row_shape	body	partner_role	is	states	3.1.7	partner_role role values are the six listed, lowercase per R3.	table
 p3	23	3.1.1	mechanism	wire	none	partner_role	is	restates	3.1.7	Dimension vocabulary is lowercase (R3).	table
 p3	24	3.1.1	family	row_shape	body	revocation	is	states		revocation entity_type is agent, partner or license.	table
@@ -2057,6 +2059,10 @@ p3	1887	3.4.5	family	consent_fold	none	capacity,consent	MUST_NOT	states		A servi
 p3	1889	3.4.5	kernel	trace	none	scores,capacity	MUST_NOT	states	4.5.1.1	A consumer MUST NOT feed an automated loop selecting a party's next action any scores row about that party, any aggregate or verdict over such rows, or their thresholds	
 p3	1889	3.4.5	kernel	trace	none	scores	is	states		The composition-context rule is uniform: it names no identity_type and binds an operator's tuning pipeline exactly as an agent's context assembly	
 p3	1891	3.4.5	kernel	trace	none	trace	MUST	states	3.1.5	A consumer MUST tag every context item with (dimension, subject_key_ids) provenance and MUST show over trace:complete:v1 that no item violates the composition-context rule; an absent tag is non-conformance	
+p3	448	3.1.5	family	erasure	erasure_route	trace	is	states	2.4.1.1,7.5.5	An agent's trace is erased only by its signer's withdraws under rule 1, or after retirement by the custodian its retired row names	
+p3	448	3.1.5	family	erasure	erasure_route	trace	MAY	states		The agent's owner MAY stop their own node holding a trace's bytes; that is no erasure and reaches no copy another party holds under a consent grant	
+p3	448	3.1.5	family	erasure	erasure_route	trace	is	restates	2.4.1.1,5.2	A deletion of a trace never reaches a row another party signed	
+p3	448	3.1.5	family	erasure	erasure_route	trace,consent	is	restates	3.3.1,4.4.3.5.2	A person whose data is in a trace keeps their own route: withdrawing consent starts the deletion clock	
 p3	1891	3.4.5	kernel	trace	none	capacity	MUST	states		A value derived from a self-subject capacity:* row inherits the composition-context constraint; the trace audit MUST verify label propagation through derivation	
 p3	1891	3.4.5	kernel	conformance	none	capacity	MUST_NOT	states	5.3.2.4.4	A deployment MUST NOT claim composition-context conformance on the basis of a caller-versus-subject comparison at the read surface; no read rule redacts capacity:* from a party the scope gate admits	
 p3	1893	3.4.5	kernel	audience	replication	capacity	MAY	states		A deployment MAY redact a composed output locally but MUST NOT call it a boundary unless input closure, no predicate on a redacted field, marginal-pinning and verifiability hold	
@@ -2905,7 +2911,7 @@ p4	1347	4.5.1	stewardship	amendment	none		is	states	4.2.3,4.5.1.2,3.4.1,4.2.1,4.
 p4	1347	4.5.1	stewardship	halt	none		is	states	4.2.5,1.13.2	The halt is not a privilege as to the operator who granted and can ungrant it; as to the agent it is carried on the register as the condition of symmetry	
 p4	1349	4.5.1	stewardship	amendment	none		is	states		A declared privilege is carried only when all four cells hold; one with a missing cell is a defect carried as such until repaired or ratified	
 p4	1349	4.5.1	stewardship	amendment	none		is	states	4.2,4.5.1.2	Entrenched structure is listed for visibility, already entrenched, bounded by the first-contact act; the steward may move the scale gate before it	
-p4	1351	4.5.1	stewardship	amendment	none		SHOULD	states	4.5.1.2	If the register grows past a handful or a bound passes unmet, surviving privileges are re-read as permanent structure needing entrenched ratification	
+p4	1351	4.5.1	stewardship	amendment	none		SHOULD	states	4.5.1.2	If the register grows past seven entries, counted from its table, or a bound passes unmet, surviving privileges are re-read as permanent structure needing entrenched ratification	
 p4	1351	4.5.1	stewardship	amendment	none		MUST	states		A revision condition MUST name its mechanical evaluator: the check that fails when it trips and where it runs	
 p4	1355	4.5.1.1	kernel	licensure	evidence	detection,hard_case,testimonial_witness	MUST	states		Every axis value under an open-vocabulary prefix MUST carry an operational definition from its calibration package, or a documented convention where none exists	
 p4	1357	4.5.1.1	family	licensure	evidence	detection	is	states		For RATCHET detectors the operational definition lives in the calibration package pinned via evidence_refs: procedure, threshold, floor, evidence shape, polarity	

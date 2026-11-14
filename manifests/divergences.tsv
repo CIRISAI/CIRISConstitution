@@ -31,6 +31,7 @@ persist/watchlist:{id}/lifecycle.withdraws_by	persist	lifecycle	runnable	watchli
 persist/quarantine:{state}/lifecycle.withdraws_by	persist	lifecycle	runnable	quarantine:{state}	lifecycle.withdraws_by	CC 3.1.9.2	admitted	withdrawn	C370
 persist/revocation:{entity_type}:{reason}/lifecycle.withdraws_by	persist	lifecycle	runnable	revocation:{entity_type}:{reason}	lifecycle.withdraws_by	CC 3.1.1	admitted	withdrawn	C551
 persist/objection:{state}/lifecycle.withdraws_by	persist	lifecycle	runnable	objection:{state}	lifecycle.withdraws_by	CC 4.5.13	admitted	withdrawn	C476
+persist/trace:{form}:{version}/lifecycle.withdraws_by	persist	lifecycle	runnable	trace:{form}:{version}	lifecycle.withdraws_by	CC 3.1.5	admitted	withdrawn	C228
 persist/trust:{job}:{version}/signer_rule[leaf=accepts]	persist	signer	runnable	trust:{job}:{version}	signer_rule[leaf=accepts]	CC 3.2	admitted	concludes nothing	C499
 persist/trust:{job}:{version}/lifecycle.withdraws_by[leaf=charter]	persist	lifecycle	runnable	trust:{job}:{version}	lifecycle.withdraws_by[leaf=charter]	CC 2.4	admitted	withdrawn	C507
 persist/(default row)/lifecycle.withdraws_by[subject=affiliation]	persist	lifecycle	runnable	(default row)	lifecycle.withdraws_by[subject=affiliation]	CC 2.4.1.1	admitted	withdrawn	C552

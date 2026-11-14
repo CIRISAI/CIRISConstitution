@@ -21,7 +21,8 @@ prose cannot disagree. README.md's figures are held the same way:
   the edition of "This tree"            VERSION
   divergence entries, by status and by implementer   manifests/divergences.json
 
-and formal/derivation/README.md's headline numbers against formal/derivation/rule_inventory.tsv
+and CC 4.5.1's register of declared privileges against the bound its revision condition states (the
+condition's mechanical evaluator), and formal/derivation/README.md's headline numbers against formal/derivation/rule_inventory.tsv
 (statements by Part, scope and role) and rule_cut_candidates.tsv (blocks).
 
 Every run also alters the first figure of each sentence matched and requires the comparison to
@@ -178,6 +179,28 @@ def main():
     else:
         missed += 1
         errs.append("formal/derivation/README.md: the deliberate break of the headline numbers was not reported")
+
+    # CC 4.5.1's revision condition: the register of declared privileges holds no more entries than the bound
+    # its sentence states, counted from the register table (the condition's mechanical evaluator)
+    p4 = open(os.path.join(ROOT, "constitution/part_4_composition_governance.md"), encoding="utf-8").read()
+    bound_pat = r"if the register grows past (\w+) entries, counted from the register table of this section"
+
+    def register_bound(text):
+        b = re.search(bound_pat, text)
+        t = re.search(r"\n\| Declared privilege \|[^\n]*\n\|[-| ]+\|\n((?:\|[^\n]*\n)*)", text)
+        if not b or not t:
+            return ["constitution/part_4_composition_governance.md: no register bound sentence or no register table (CC 4.5.1)"]
+        n, bound = len(t.group(1).strip("\n").split("\n")), num(b.group(1))
+        return [] if isinstance(bound, int) and n <= bound else \
+            [f"constitution/part_4_composition_governance.md: the CC 4.5.1 register holds {n} entries, past its bound {b.group(1)}"]
+
+    errs += register_bound(p4)
+    bm = re.search(r"\n\| Declared privilege \|[^\n]*\n\|[-| ]+\|\n((?:\|[^\n]*\n)*)", p4)
+    if bm and register_bound(p4[:bm.end()] + bm.group(1) * 8 + p4[bm.end():]):   # the deliberate break: a register grown past the bound
+        caught += 1
+    else:
+        missed += 1
+        errs.append("constitution/part_4_composition_governance.md: the deliberate break of the register bound was not reported")
 
     # the A11 list of variables without an invariant names exactly those variables
     adq = open(os.path.join(ROOT, "formal/ADEQUACY.md"), encoding="utf-8").read()

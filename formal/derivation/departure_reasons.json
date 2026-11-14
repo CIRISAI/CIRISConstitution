@@ -423,6 +423,20 @@
    }
   },
   {
+   "id": "duty_scope",
+   "title": "A duty sits no wider than the permission it attaches to",
+   "when": "The row is an obligation attached to a permission.",
+   "why": "A duty names the permission it attaches to, so a duty placed wider would tell readers outside the permission's audience that the permission exists. The signer does not choose a wider scope.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.1",
+   "quote": "A duty MUST NOT be placed wider than the permission it attaches to",
+   "moves": {
+    "placement": [
+     "duty:{kind}"
+    ]
+   }
+  },
+  {
    "id": "custody_own_report",
    "title": "Only the device that holds the content reports holding it",
    "when": "The row reports custody of one piece of content.",
@@ -672,6 +686,23 @@
      "detection:hash_chain_integrity",
      "detection:intra_agent_consistency",
      "detection:{detector}"
+    ]
+   }
+  },
+  {
+   "id": "trace_signer_erases",
+   "title": "A trace is erased by its own signer",
+   "when": "The row is an agent's own reasoning trace.",
+   "why": "A trace explains the act it is anchored to. Only its signer, or the custodian after retirement, erases it; the owner's node may stop holding the bytes, which is no erasure, and a deletion never reaches a row another party signed.",
+   "basis": "text",
+   "cc_ref": "CC 3.1.5",
+   "quote": "An agent's trace is erased only by its signer's `withdraws`",
+   "enforced": false,
+   "cell": "build",
+   "build_note": "The pinned build hard-deletes an agent's traces on the host's request with no check, and with the key included it deletes rows other parties signed about that key.",
+   "moves": {
+    "erasure_route": [
+     "trace:{form}:{version}"
     ]
    }
   },
@@ -955,16 +986,5 @@
    }
   }
  ],
- "open": [
-  {
-   "family": "duty:{kind}",
-   "column": "placement",
-   "question": "No words found say a duty may sit no wider than the permission it attaches to. Does the text state that bound?"
-  },
-  {
-   "family": "trace:{form}:{version}",
-   "column": "erasure_route",
-   "question": "The pinned build deletes an agent's traces on the host's request with no check of its own, and with the key included it deletes rows other parties signed about that key. The text gives erasure no node-local basis and puts the accountability record beyond anyone's purge. Which request removes a trace, and what may the deletion reach?"
-  }
- ]
+ "open": []
 }

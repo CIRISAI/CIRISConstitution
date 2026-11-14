@@ -11,16 +11,16 @@
    "owed": "the effects owed, or nothing"
   },
   "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
-  "total": 81,
+  "total": 82,
   "by_status": {
-   "runnable": 62,
+   "runnable": 63,
    "stated": 15,
    "wording-only": 4
   },
   "by_implementer": {
    "agent": 1,
    "edge": 1,
-   "persist": 70,
+   "persist": 71,
    "tooling": 9
   },
   "by_kind": {
@@ -30,7 +30,7 @@
    "door": 12,
    "fold": 9,
    "freshness": 2,
-   "lifecycle": 8,
+   "lifecycle": 9,
    "signer": 29,
    "subject": 1,
    "window": 3,
@@ -3620,6 +3620,119 @@
    "orders": {
     "run": 2,
     "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/trace:{form}:{version}/lifecycle.withdraws_by",
+   "implementer": "persist",
+   "family": "trace:{form}:{version}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C228"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 3.1.5",
+    "quote": "An agent's trace is erased only by its signer's `withdraws`",
+    "param": {
+     "family": "trace:{form}:{version}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject} (+ producer's owner",
+    "source": "formal/derivation/census_v61.tsv trace:{form}:{version} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary) | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "trace:{form}:{version}",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ],
+      [
+       "owner_of_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ob",
+      "kind": "offer",
+      "signer": "Ag",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "O"
+      ],
+      "scope": "owner",
+      "obj": "Ag",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "O",
+        "owner",
+        "Ag"
+       ]
+      ],
+      "cosigners": [
+       "O"
+      ]
+     },
+     {
+      "id": "tr",
+      "kind": "fam",
+      "signer": "Ag",
+      "names": [],
+      "family": "trace:{form}:{version}",
+      "subject": "Ag"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "O",
+      "names": [
+       "ob",
+       "tr"
+      ],
+      "family": "withdraws",
+      "target": "tr",
+      "subject": "Ag"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "tr"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
     "kernel": [
      "admitted"
     ],

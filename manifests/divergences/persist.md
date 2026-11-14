@@ -6,7 +6,7 @@ How to consume: each entry is one test: build `case`, ask `ask`, assert `expect_
 
 To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.
 
-70 entries: 56 runnable, 0 disputed, 11 stated, 3 wording only.
+71 entries: 57 runnable, 0 disputed, 11 stated, 3 wording only.
 
 | id | family | where | the sentence | the case | assert |
 |---|---|---|---|---|---|
@@ -41,6 +41,7 @@ To return an entry whose verdict you hold wrong, add a row to `formal/derivation
 | persist/quarantine:{state}/lifecycle.withdraws_by | quarantine:{state} | lifecycle.withdraws_by | CC 3.1.9.2: Subject-scoped quarantine marker: **slash-duty-holder-only** emitter. | q:quarantine:{state} by A; x:withdraw by S names q \| ask state q | admitted |
 | persist/revocation:{entity_type}:{reason}/lifecycle.withdraws_by | revocation:{entity_type}:{reason} | lifecycle.withdraws_by | CC 3.1.1: Entity revocation (`agent` / `partner` / `license`). Immediate, non-rollbackable. | v:revocation:{entity_type}:{reason} by A; x:withdraw by A names v \| ask state v | admitted |
 | persist/objection:{state}/lifecycle.withdraws_by | objection:{state} | lifecycle.withdraws_by | CC 4.5.13: The act is lifted when a strict majority of the roster as it stood at the instant of the act has objected within the 48-hour window. | ob:objection:{state} by M; x:withdraw by X names ob \| ask state ob | admitted |
+| persist/trace:{form}:{version}/lifecycle.withdraws_by | trace:{form}:{version} | lifecycle.withdraws_by | CC 3.1.5: An agent's trace is erased only by its signer's `withdraws` | ob:offer by Ag; tr:trace:{form}:{version} by Ag; x:withdraw by O names ob,tr \| ask state tr | admitted |
 | persist/trust:{job}:{version}/signer_rule[leaf=accepts] | trust:{job}:{version} | signer_rule[leaf=accepts] | CC 3.2: The acceptance edge is a person's row: any live key of the person's roster signs it as that person | p:offer by D1; ac:trust:{job}:{version} by D2 names p \| ask state ac | admitted |
 | persist/trust:{job}:{version}/lifecycle.withdraws_by[leaf=charter] | trust:{job}:{version} | lifecycle.withdraws_by[leaf=charter] | CC 2.4: so no single signer and no subject can retire a community, un-name a charter or retract a roster event | g:offer by A; ch:trust:{job}:{version} by A names g; x:withdraw by A names ch \| ask state ch | admitted |
 | persist/(default row)/lifecycle.withdraws_by[subject=affiliation] | (default row) | lifecycle.withdraws_by[subject=affiliation] | CC 2.4.1.1: An affiliation withdraws no statement about itself, whatever the statement. | st:(default row) by A; x:withdraw by Aff names st \| ask state st | admitted |
