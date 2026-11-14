@@ -1,0 +1,30 @@
+kind	name	verdict
+history broad	reviewer: grant, act, concurrent revocation	66 replays, 0 differ, 0 breaches, 1 whole, 2 stub
+history broad	blocked act, and one not yet blocked	66 replays, 0 differ, 0 breaches, 3 whole, 5 stub
+history broad	forked acknowledger	6 replays, 0 differ, 0 breaches, 0 whole, 4 stub
+history broad	cutter seated later acts forward	6 replays, 0 differ, 0 breaches, 0 whole, 4 stub
+history broad	legal hold, owed row, never-purge rows, deletion	6 replays, 0 differ, 0 breaches, 7 whole, 4 stub
+history broad	windows read now	18 replays, 0 differ, 0 breaches, 1 whole, 2 stub
+history broad	reader's acknowledged line	6 replays, 0 differ, 0 breaches, 0 whole, 3 stub
+history broad	late removal, no acknowledgement	6 replays, 0 differ, 0 breaches, 0 whole, 5 stub
+history broad	reader closes an older head	20 replays, 0 differ, 0 breaches, 0 whole, 7 stub
+total broad	9 histories	200 replays, 12 whole, 36 stub
+history narrow	reviewer: grant, act, concurrent revocation	66 replays, 0 differ, 0 breaches, 1 whole, 2 stub
+history narrow	blocked act, and one not yet blocked	66 replays, 0 differ, 0 breaches, 3 whole, 5 stub
+history narrow	forked acknowledger	6 replays, 0 differ, 0 breaches, 0 whole, 4 stub
+history narrow	cutter seated later acts forward	6 replays, 0 differ, 0 breaches, 0 whole, 4 stub
+history narrow	legal hold, owed row, never-purge rows, deletion	6 replays, 0 differ, 0 breaches, 7 whole, 4 stub
+history narrow	windows read now	18 replays, 0 differ, 0 breaches, 1 whole, 2 stub
+history narrow	reader's acknowledged line	6 replays, 0 differ, 0 breaches, 0 whole, 3 stub
+history narrow	late removal, no acknowledgement	6 replays, 0 differ, 0 breaches, 0 whole, 5 stub
+history narrow	reader closes an older head	20 replays, 0 differ, 0 breaches, 4 whole, 3 stub
+total narrow	9 histories	200 replays, 16 whole, 32 stub
+plant	drop_unsettled	caught, 8 differ, 0 breaches
+plant	freeze_now	caught, 17 differ, 0 breaches
+plant	ck_acks	caught, 5 differ, 0 breaches
+plant	drop_duty	caught, 0 differ, 7 breaches
+plant	keep_deleted	caught, 0 differ, 1 breaches
+plant	no_say	caught, 60 differ, 0 breaches
+plant	narrow_eval	caught, 20 differ, 0 breaches
+plant	freeze_carried	caught, 11 differ, 0 breaches
+reading	reader's line	a moderator seat's counted withdrawal on a head below the acknowledged one: void for the reader yes, for a reader with none no

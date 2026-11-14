@@ -20,7 +20,7 @@ are void. An owner device proposes only against what it lost or had stolen; a th
 anything. Adding a device runs under the same policy. `OwnerPresent` makes the owner use every
 device each tick; `FALSE` is the owner away for a whole window. Time is per proposal (no clock).
 
-**Sixteen configurations, one module.** Three devices unless stated; one theft or two losses. The one- and two-key runs state the bounds of CC 3.3.6.3, with `Inv_SelfSurvives` (the owner never holds no key) in the combined configurations; the stolen device ranges over every member, the genesis key included, so the genesis key's evictability is covered by the three- and four-key runs.
+**Sixteen configurations, one module.** Three devices unless stated; one theft or two losses. The one- and two-key runs state the bounds of CC 3.3.6.4, with `Inv_SelfSurvives` (the owner never holds no key) in the combined configurations; the stolen device ranges over every member, the genesis key included, so the genesis key's evictability is covered by the three- and four-key runs.
 
 | Config | Policy / adversary | Expectation | TLC verdict |
 |---|---|---|---|
@@ -37,7 +37,7 @@ device each tick; `FALSE` is the owner away for a whole window. Time is per prop
 | `combined1_add` | both paths; one key, the owner adds a device | at one key the add lands at once: the add-device approval | **closes**, 80 states |
 | `combined1_stolen` | both paths; one key, stolen | the self is lost; nothing on the wire recovers it | `Inv_SelfSurvives` violated: the one-key bound |
 | `combined2_lost` | both paths; two keys, one lost | the remaining key evicts the lost one over a window and adds | **closes**, 252 states |
-| `combined2_stolen` | both paths; two keys, one stolen | safety holds; one against one is a stalemate the thief can hold | `Prop_LostRecoverable` violated: the two-key bound, stated in CC 3.3.6.3 |
+| `combined2_stolen` | both paths; two keys, one stolen | safety holds; one against one is a stalemate the thief can hold | `Prop_LostRecoverable` violated: the two-key bound, stated in CC 3.3.6.4 |
 
 **What the runs forced into the rule, each found as a counterexample first.** (1) Without the
 silence condition, a thief's lone eviction landed on a present owner whose devices had not yet
@@ -55,7 +55,7 @@ stolen device eventually leaves and the owner holds two devices again), `TypeOK`
 
 **What it does not model.** Data at rest and DEK re-wrap; the add-device join
 itself (CIRISServer `formal/add_device`); a thief who steals after the owner has started acting;
-theft after the owner has started acting (the adversary moves first); the one- and two-key cases are configurations, with their bounds stated in CC 3.3.6.3.
+theft after the owner has started acting (the adversary moves first); the one- and two-key cases are configurations, with their bounds stated in CC 3.3.6.4.
 
 Run: `java -cp tla2tools.jar tlc2.TLC -workers auto -metadir /tmp/tlc -deadlock -config SelfRoster_<cfg>.cfg SelfRoster.tla` (TLA+ tools 1.7.4; the three-device runs finish in seconds, the four-device ones in minutes).
 

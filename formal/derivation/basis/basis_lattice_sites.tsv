@@ -1,0 +1,151 @@
+site_id	expression	fits	note
+A003	K5(K2,K1)	yes	halt live; exempt verbs are a rule
+A005	K5(K2)	yes	
+A006	K5(K2)	yes	
+A007	K5(K2)	yes	
+A011	K5(K1)	yes	refuse or propose by category rule
+A015	K1	partly	dead duplicate table
+A016	K5(K3)	partly	licence would be a standing; no code
+A020	K5(K3)	partly	roles come from a local certificate store
+A021	K5(K3)	partly	same
+A022	K5	yes	
+A023	K3	partly	role mapped by config, not by rows
+A024	K2	partly	agent graph, not signed rows; a read extends the term
+A033	K2	partly	site ignores withdrawal
+A037	K2	yes	
+A038	K2	yes	
+A040	K5(K3)	yes	
+A042	K5(K3)	partly	a boolean in context stands in for standing
+A046	K6	partly	the site takes the channel from model output and checks no audience
+A060	K5	partly	approval is not a row here
+A064	K5	partly	who signs; the write is an effect
+A066	K5(K3,K2)	yes	
+A075	-	no	prose rule on model speech
+A081	-	no	prose rule
+A082	K5(K3)	partly	prose with a code check on a flag
+A083	K5(K3)	partly	prose only
+A084	K5(K3)	partly	prose with a code check
+A085	-	no	prose rule
+A091	-	no	prose rule
+A092	-	no	prose rule
+A094	-	no	local attribute guard
+C003	K5(K2)	yes	
+C009	K5	yes	
+C010	K5(K3)	partly	hard-coded table
+C011	K5	yes	this site is the primitive's output shape
+C013	K5	partly	uses an earlier 404 in place of the answer
+C015	K5(K4)	partly	uses an earlier call
+C017	K5(K2)	yes	
+C022	K5(K3)	partly	agent admin role is not a signed row
+C023	K5(K1)	partly	budget headroom is not a row
+C026	K5(K2)	partly	duplicate check is a service call
+C027	-	no	software version of the node is not a row
+C039	K3	partly	inferred from own messages when absent
+C040	K3	partly	same
+C043	K3	yes	
+C057	K1	partly	compiled default before the read lands
+C059	K1	partly	compiled default
+C062	K1	yes	confirm flag per verb is a rule
+C064	K1	yes	same
+C065	K1	yes	same
+C069	K5(K2)	partly	site does not check pending
+C084	K6	partly	default on an absent answer
+C088	K6	partly	client's own filter
+C089	K6	partly	unknown token
+C092	-	no	meaning given to a failed probe
+C101	K5 & K6	partly	the sheet states both answers and reads neither
+C115	K4	yes	
+C121	K1	yes	
+C122	K1	yes	validity of a threshold rule
+C123	K5(K1)	yes	
+C127	K1	yes	
+E004	K6(K1)	partly	what is owed fits; offered first is scheduling
+E012	K6(K3)	yes	
+E042	K6	yes	
+E059	K5(K1)	yes	
+E066	K6	yes	relay of the answer
+E069	K6	partly	the cursor is the caller's claim
+E075	K6	partly	packing under a byte budget is transport
+E088	K7	partly	re-fetch after release; the trigger is a cache
+E094	-	no	a latch on what the peer said it holds; not a row
+E116	K3	partly	own node's owner fits; which legs run is scheduling
+E140	K6	yes	
+E149	K4	partly	a sum of bytes per scope; tally with weight = size is a stretch
+E165	K6	yes	
+E207	K4(K6)	partly	holder deficit fits; the tick and link state do not
+E271	-	no	path choice from link state
+E273	-	no	path choice from link state
+E277	K6	partly	roster kept in process memory, not read from rows
+E287	-	no	load admission
+E296	-	no	attribution from the link identity
+E302	K5	partly	admission fits; whether the key was solicited is process memory
+E311	K5(K1)	yes	size cap is a rule
+E325	-	no	link behaviour
+E328	K6	yes	
+E329	K6(K3)	yes	
+E340	K3	yes	rooted or advisory is the walk reaching an anchor or not
+E352	K7	partly	missing signer fits; the trigger is a caller claim
+E359	K6	partly	narrowing after a read error is fault handling
+E392	K7	partly	retry state is not a row
+E393	K2	yes	memo of live claims; a pure function needs no memo
+E409	K3	partly	first-held instant of a roster row is kernel input, read directly
+P004	K1	yes	family class is a registry read
+P007	K3	yes	inverse form: holders of role owner on the node; more than one is the ambiguous answer
+P008	K5(K4)	yes	rebinding verb requires a count that includes the node's own key
+P009	K5(K3)	yes	the cycle is found by the same walk that answers standing
+P010	K5(K1)	yes	term bound is a rule
+P012	K2	yes	rank among rivals in a slot
+P015	K2	yes	own de-admission row is live
+P019	K3	yes	anchor is the reader's trust set
+P020	K4	yes	
+P021	K4	yes	tally returns pending, met or expired
+P022	K3 & K3	yes	same question at two instants (signed, first held)
+P023	K3 & K3	yes	same; W is a rule read inside K3
+P025	K3 & K3	yes	same
+P028	K2	yes	takedown state and its next-change instant; the destruction of bytes is the effect
+P029	K2	partly	fits only if key material follows a row lifecycle; the site reads a local key table on a sweep
+P036	K2	partly	a stored projection of live rows; this is closer to the kernel's input than to an answer
+P037	K2	partly	the decision is to write a computed answer back as a row; the kernel computes, the write is an effect
+P038	K3	yes	chain depth at first held
+P040	K5	yes	promotion is an act by the node's own key
+P041	K3	yes	the instant is a parameter of every primitive; no separate primitive for judged-at-receipt
+P042	K5(K2)	yes	refuse when the slot already has a live row
+P053	K6	yes	charter read gives everyone
+P058	K6(K3)	yes	
+P059	K2(K6)	partly	lapse of a parked row; parked rows are not yet held rows, so the kernel input must be widened to take them
+P060	K2(K6)	partly	same
+P069	K6	yes	audience resolved to devices
+P071	K6(K3)	yes	
+P073	K5(K1)	yes	retired family in the registry
+P074	K2	yes	
+P075	K5	partly	shape check on one row; it needs no held rows, so it is a registry schema matter more than a kernel answer
+S001	K6(K2)	yes	flag state, then who it is withheld from
+S004	K3	yes	pick is the first of the roster in fixed order
+S006	K3	yes	
+S010	K5(K2,K3)	partly	candidate choice by wall clock is outside
+S012	K3 & K1	partly	which rooms fits; the rewrite is a migration effect
+S015	K3	yes	owner no longer stands
+S017	K3	yes	
+S023	K2 & K2	yes	grant and policy both live
+S026	K4	partly	sub-quorum signatures held in memory, not as rows
+S036	K4(K3,K1)	yes	eligible set and required number
+S038	K1(K3)	yes	threshold rule read against roster size
+S041	K1	yes	
+S042	K1	partly	compiled fallback beside the rule
+S043	K4	partly	latch in process memory
+S044	K4	yes	
+S052	K2(K3)	yes	a clear counts only from a standing signer
+S053	K2	yes	
+S056	K4	yes	set form of the holder tally
+S059	K6(K3)	partly	driven by a caller claim
+S061	K2	partly	two live rivals in one slot; the write is an effect
+S062	-	no	a log write on every operation; nothing is decided
+S064	K7	partly	waits for missing rows; the grant write is an effect
+S065	-	no	retry of group commits
+S066	K7	partly	hand-placed release
+S068	K5(K4,K1)	yes	members plus live invites against the cap
+S069	K5(K3)	yes	
+S071	K5(K4)	yes	
+S074	K5(K3)	yes	
+S088	K1	yes	
+S090	K4	partly	as S026

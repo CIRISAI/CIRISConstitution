@@ -1,0 +1,266 @@
+instance	property	verdict
+window.py	window_adversary.tsv reproduced	same
+default_content	recount agrees with the reference	holds
+default_content	a cancelling minority at the close is not overridden	holds
+default_content	no single vote admits by silence	holds
+default_content	the floor never lands early	holds
+default_content	plant: mutation no_floor	caught
+default_standing	recount agrees with the reference	holds
+default_standing	a cancelling minority at the close is not overridden	holds
+default_standing	no single vote admits by silence	holds
+default_standing	the floor never lands early	holds
+default_standing	plant: mutation no_floor	caught
+community_invite	recount agrees with the reference	holds
+community_invite	a cancelling minority at the close is not overridden	holds
+community_invite	no single vote admits by silence	holds
+community_invite	the floor never lands early	holds
+community_invite	the invitee's own yes is the floor's second voice: the proposer and the invitee land it at the close	holds
+community_invite	plant: mutation no_floor	caught
+community_invite	plant: mutation target_voice_ignored	caught
+community_invite-invitee	recount agrees with the reference	holds
+community_invite-invitee	a cancelling minority at the close is not overridden	holds
+community_invite-invitee	no single vote admits by silence	holds
+community_invite-invitee	the floor never lands early	holds
+community_invite-invitee	plant: mutation no_floor	caught
+default_irreversible	recount agrees with the reference	holds
+default_irreversible	a cancelling minority at the close is not overridden	holds
+default_irreversible	an irreversible change never lands before its window	holds
+default_irreversible	no single vote admits by silence	holds
+default_irreversible	plant: mutation ignore_irreversible	caught
+self_roster_add	a strict majority of the others objecting is not overridden by a lone landing	holds
+self_roster_add	the floor never lands early	holds
+self_roster_add	while its window is open the opening row is pending at the node holding it	holds
+self_roster_add	plant: mutation void	caught
+self_roster_add	plant: mutation force_flipped	caught
+self_roster_evict	a lost device (signs nothing) cannot veto	holds
+self_roster_evict	a thief (one key of three) does not evict alone	holds
+self_roster_evict	the floor never lands early	holds
+self_roster_evict	plant: mutation no_silent	caught
+community_remove[unanimous]	acts only when the protocol the founding row declares is met (unanimous)	holds
+community_remove[unanimous]	every other member removes (note: 'every other member and a strict majority')	holds
+community_remove[unanimous]	no single key removes a member	holds
+community_remove[unanimous]	the declared count, named by the landing, acts (unanimous)	holds
+community_remove[unanimous]	plant: mutation one_voice	caught
+community_remove[unanimous]	plant: mutation protocol_misread	caught
+community_remove[majority]	acts only when the protocol the founding row declares is met (majority)	holds
+community_remove[majority]	every other member removes (note: 'every other member and a strict majority')	holds
+community_remove[majority]	no single key removes a member	holds
+community_remove[majority]	the declared count, named by the landing, acts (majority)	holds
+community_remove[majority]	plant: mutation one_voice	caught
+community_remove[majority]	plant: mutation protocol_misread	caught
+community_remove[quorum]	acts only when the protocol the founding row declares is met (quorum)	holds
+community_remove[quorum]	every other member removes (note: 'every other member and a strict majority')	holds
+community_remove[quorum]	no single key removes a member	holds
+community_remove[quorum]	the declared count, named by the landing, acts (quorum)	holds
+community_remove[quorum]	plant: mutation one_voice	caught
+community_remove[quorum]	plant: mutation protocol_misread	caught
+moderation_action	recount agrees with the reference	holds
+moderation_action	a present moderator is not overridden	holds
+moderation_action	the fallback carries only on a strict majority of the members who voted, floor two	holds
+moderation_action	the fallback needs the members' count	holds
+moderation_action	the fallback works when the moderator is absent	holds
+moderation_action	while its window is open the opening row is pending at the node holding it	holds
+moderation_action	plant: mutation floor_two_voices	caught
+moderation_action	plant: mutation force_flipped	caught
+moderation_overturn	recount agrees with the reference	holds
+moderation_overturn	Inv_SeatedMajority: a lift is carried by a strict majority seated at the act	holds
+moderation_overturn	Inv_StandsAfterWindow: an act not lifted stands	holds
+moderation_overturn	Inv_TwoVoices: never one voice	holds
+moderation_overturn	plant: mutation live_roster	caught
+moderator_recall	recount agrees with the reference	holds
+moderator_recall	recall needs more than two thirds and two voices	holds
+moderator_recall	plant: mutation one_voice	caught
+accord_halt@holder	recount agrees with the reference	holds
+accord_halt@holder	no key but the halted node ends its lone halt before a majority (Inv_ResumeNeedsHonest, Inv_LoneBounded per node)	breaks
+accord_halt@holder	one holder cannot keep agents stopped alone	holds
+accord_halt@holder	one holder cannot lift a confirmed halt alone	holds
+accord_halt@holder	while its window is open the opening row is in force at the node holding it	holds
+accord_halt@holder	plant: mutation void	caught
+accord_halt@holder	plant: mutation force_flipped	caught
+accord_halt@node	recount agrees with the reference	holds
+accord_halt@node	no key but the halted node ends its lone halt before a majority (Inv_ResumeNeedsHonest, Inv_LoneBounded per node)	holds
+accord_halt@node	one holder cannot keep agents stopped alone	holds
+accord_halt@node	one holder cannot lift a confirmed halt alone	holds
+accord_halt@node	while its window is open the opening row is in force at the node holding it	holds
+accord_halt@node	plant: mutation concluder_holder	caught
+accord_halt@node	plant: mutation force_flipped	caught
+accord_halt@node+late_closed	recount agrees with the reference	holds
+accord_halt@node+late_closed	no key but the halted node ends its lone halt before a majority (Inv_ResumeNeedsHonest, Inv_LoneBounded per node)	holds
+accord_halt@node+late_closed	one holder cannot keep agents stopped alone	holds
+accord_halt@node+late_closed	one holder cannot lift a confirmed halt alone	breaks
+accord_halt@node+late_closed	while its window is open the opening row is in force at the node holding it	holds
+accord_halt@node+late_closed	plant: mutation concluder_holder	caught
+accord_halt@node+late_closed	plant: mutation force_flipped	caught
+custodian_replace	recount agrees with the reference	holds
+custodian_replace	both signing acts	holds
+custodian_replace	one side alone never acts	holds
+custodian_replace	plant: mutation strict_2_2	caught
+affiliation_member_action	recount agrees with the reference	holds
+affiliation_member_action	both signing acts	holds
+affiliation_member_action	one side alone never acts	holds
+affiliation_member_action	plant: mutation one_voice	caught
+moderator_election	recount agrees with the reference	holds
+moderator_election	a tie for weakest seats nobody: an election declares no order (R12, R13, Election.free_tie_seats_nobody)	holds
+moderator_election	below the floor of two voices nobody is seated (R7, no_ballots_no_winner)	holds
+moderator_election	the winner is the instant-runoff winner over one ballot per person (R1, R8, Election.winner)	holds
+moderator_election	plant: mutation dedupe_off	caught
+moderator_election	plant: mutation tie_by_position	caught
+cosigned_act	acts only when the protocol the founding row declares is met (majority)	holds
+cosigned_act	lands only when the protocol's count is met	holds
+cosigned_act	the declared count, named by the landing, acts (majority)	holds
+cosigned_act	plant: mutation one_voice	caught
+cosigned_act	plant: mutation protocol_misread	caught
+accord_majority	lands only when the protocol's count is met	holds
+accord_majority	plant: mutation one_voice	caught
+deletion_sla	a breach whose past or recount holds the producer's deletion does not stand	holds
+deletion_sla	plant: mutation void	caught
+accord_roster_change	a change carries only on a strict majority of the standing roster; a presumed-dead holder's yes is counted	holds
+accord_roster_change	while its window is open the opening row is pending at the node holding it	holds
+accord_roster_change	plant: mutation one_voice	caught
+accord_roster_change	plant: mutation force_flipped	caught
+harm_report	a moderator's keep is not overridden	holds
+harm_report	while its window is open the opening row is pending at the node holding it	holds
+harm_report	plant: mutation void	caught
+harm_report	plant: mutation force_flipped	caught
+takedown_withhold	a reversal or a lift is not overridden	holds
+takedown_withhold	only the holding device lands its own destruction	holds
+takedown_withhold	while its window is open the opening row is in force at the node holding it	holds
+takedown_withhold	plant: mutation concluder_holder	caught
+takedown_withhold	plant: mutation force_flipped	caught
+retirement_objection	a decided row naming the objection closes the window	holds
+retirement_objection	a decided row that does not name the agent's objection concludes nothing	holds
+retirement_objection	only the decider closes the window; the agent signs its objection and no landing	holds
+retirement_objection	plant: mutation void	caught
+retirement_objection	plant: mutation concluder_target	caught
+decay_stage	a stage landing before its window concludes nothing	holds
+decay_stage	plant: mutation zero_window	caught
+invitation	an acceptance held inside the window admits	holds
+invitation	an acceptance not held by the close does not admit (the proposal's own end)	holds
+invitation	while its window is open the opening row is pending at the node holding it	holds
+invitation	plant: mutation late_counts	caught
+invitation	plant: mutation force_flipped	caught
+poll	recount agrees with the reference	holds
+poll	a poll nobody votes in carries nothing	holds
+poll	a poll that states no rule carries only on a strict majority of those who voted, floor two voices	holds
+poll	one ballot counts for each person, and one voice never carries a poll	holds
+poll	plant: mutation one_voice	caught
+poll[stated]	recount agrees with the reference	holds
+poll[stated]	a poll nobody votes in carries nothing	holds
+poll[stated]	a poll that states its own rule is counted by it (here more than two thirds of the roster)	holds
+poll[stated]	one ballot counts for each person, and one voice never carries a poll	holds
+poll[stated]	plant: mutation stated_ignored	caught
+wa_adjudication	recount agrees with the reference	holds
+wa_adjudication	a finding lands only on the body's count over the full seated roster, never the live subset	holds
+wa_adjudication	acts only when the protocol the founding row declares is met (majority)	holds
+wa_adjudication	the body's count lands the finding	holds
+wa_adjudication	the declared count, named by the landing, acts (majority)	holds
+wa_adjudication	plant: mutation live_subset	caught
+wa_adjudication	plant: mutation protocol_misread	caught
+deferral	recount agrees with the reference	holds
+deferral	an answer of the seat is not overridden by the end	holds
+deferral	silence never resolves a deferral: no default answers it	holds
+deferral	the request goes up only at its own end	holds
+deferral	the seat's answer, named by the landing, resolves the deferral	holds
+deferral	plant: mutation default_answers	caught
+archive_release	recount agrees with the reference	holds
+archive_release	a key outside the seat opens no seal	holds
+archive_release	the seat's one row opens the seal	holds
+archive_release	plant: mutation any_opener	caught
+default_content	one answer in every arrival order	same
+default_standing	one answer in every arrival order	same
+community_invite	one answer in every arrival order	same
+community_invite-invitee	one answer in every arrival order	same
+default_irreversible	one answer in every arrival order	same
+self_roster_add	one answer in every arrival order	same
+self_roster_evict	one answer in every arrival order	same
+community_remove[unanimous]	one answer in every arrival order	same
+community_remove[majority]	one answer in every arrival order	same
+community_remove[quorum]	one answer in every arrival order	same
+moderation_action	one answer in every arrival order	same
+moderation_overturn	one answer in every arrival order	same
+moderator_recall	one answer in every arrival order	same
+accord_halt@holder	one answer in every arrival order	same
+accord_halt@node	one answer in every arrival order	same
+accord_halt@node+late_closed	one answer in every arrival order	same
+custodian_replace	one answer in every arrival order	same
+affiliation_member_action	one answer in every arrival order	same
+moderator_election	one answer in every arrival order	same
+cosigned_act	one answer in every arrival order	same
+accord_majority	one answer in every arrival order	same
+deletion_sla	one answer in every arrival order	same
+accord_roster_change	one answer in every arrival order	same
+harm_report	one answer in every arrival order	same
+takedown_withhold	one answer in every arrival order	same
+retirement_objection	one answer in every arrival order	same
+decay_stage	one answer in every arrival order	same
+invitation	one answer in every arrival order	same
+poll	one answer in every arrival order	same
+poll[stated]	one answer in every arrival order	same
+wa_adjudication	one answer in every arrival order	same
+deferral	one answer in every arrival order	same
+archive_release	one answer in every arrival order	same
+self_roster_evict	plant: by_arrival order	caught
+moderation_action	plant: by_arrival order	caught
+accord_halt@holder	halt case: a coerced holder h2 lands 'lapsed' at once, stating a full fuse on its own clock (no confirm)	lapsed
+accord_halt@holder	halt case: the node N lands 'lapsed' at its own fuse; nobody confirmed	open
+accord_halt@holder	halt case: an honest holder h3 lands 'lapsed' at its own fuse; nobody confirmed	lapsed
+accord_halt@holder	halt case: N lands 'lapsed' while h2's confirm (a strict majority with the firer) is concurrent with it	open
+accord_halt@holder	halt case: h3 lands 'lapsed' while h2's confirm is concurrent with it	contested
+accord_halt@holder	halt case: N lands 'lapsed' early (its own clock lies): the node releases itself	open
+accord_halt@holder	halt case: h2 confirms and N lands 'confirmed' naming it	open
+accord_halt@holder	halt case: h1 (the firer) lands 'confirmed' alone	open
+accord_halt@node	halt case: a coerced holder h2 lands 'lapsed' at once, stating a full fuse on its own clock (no confirm)	open
+accord_halt@node	halt case: the node N lands 'lapsed' at its own fuse; nobody confirmed	lapsed
+accord_halt@node	halt case: an honest holder h3 lands 'lapsed' at its own fuse; nobody confirmed	open
+accord_halt@node	halt case: N lands 'lapsed' while h2's confirm (a strict majority with the firer) is concurrent with it	contested
+accord_halt@node	halt case: h3 lands 'lapsed' while h2's confirm is concurrent with it	open
+accord_halt@node	halt case: N lands 'lapsed' early (its own clock lies): the node releases itself	lapsed
+accord_halt@node	halt case: h2 confirms and N lands 'confirmed' naming it	confirmed
+accord_halt@node	halt case: h1 (the firer) lands 'confirmed' alone	open
+community_invite	room of one: the founder proposes J, J accepts, the founder lands at the close	landed
+community_invite	room of one, two consents (CC 4.5.13, CC 3.1.3.2): the founder proposes J, J accepts, the founder lands at the close	holds
+community_invite	room of one: the founder proposes J, nobody answers, the founder lands at the close	open
+community_invite	room of one, two consents (CC 4.5.13, CC 3.1.3.2): the founder proposes J, nobody answers, the founder lands at the close	holds
+community_invite-invitee	room of one: the founder proposes J, J accepts, the founder lands at the close	open
+community_invite-invitee	room of one: the founder proposes J, nobody answers, the founder lands at the close	open
+moderator_election	room of one: the member's own ballot elects it (the floor is the smaller of two and the roster)	holds
+moderator_election	plant: room of one, mutation election_floor_two	caught
+community_invite	plant: room of one, mutation enact_floor_off	caught
+community_invite	plant: room of one, mutation target_voice_ignored	caught
+moderation_action	two act and two keep of four: a landing stating fallback	open
+moderation_action	two act and two keep of four: a landing stating lapsed	lapsed
+two-path rows	819 published vectors replayed	same
+time G3	withdrawal that never saw the act	cut [False]; first-held [True]
+time G3	withdrawal naming the act	cut [True]; first-held [True]
+time invitation	J accepts; m2 holds it inside the window and lands 'admitted'	admitted
+time invitation	J accepts late with a back-dated asserted_at; m2 first holds it after its window and lands 'admitted'	open
+time invitation	m2 lands 'closed' at its window; J's acceptance is concurrent (back-dated)	closed
+time invitation	m2 lands 'closed' early (lies), J's acceptance concurrent	open
+time invitation	m2 lands 'closed' at its window; m3 holds the acceptance inside its own window and lands 'admitted' naming both	admitted
+self_roster_add	concluder, landing row and late answer read from reactions.json	self; none: each node reads its own close; late not stated
+moderation_action	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
+accord_halt@node+late_closed	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late closed
+moderator_election	concluder, landing row and late answer read from reactions.json	winner; ballot:moderator_acceptance; late counts
+deletion_sla	concluder, landing row and late answer read from reactions.json	substrate; hard_case:deletion_window_breach; late not stated
+accord_roster_change	concluder, landing row and late answer read from reactions.json	holder; group:roster; late closed
+harm_report	concluder, landing row and late answer read from reactions.json	member; none: each node reads its own close; late not stated
+takedown_withhold	concluder, landing row and late answer read from reactions.json	target; none: each node reads its own close; late counts
+retirement_objection	concluder, landing row and late answer read from reactions.json	decider; retirement:{state}; late not stated
+decay_stage	concluder, landing row and late answer read from reactions.json	author; consent:decay:patterns_anonymized; late not stated
+invitation	concluder, landing row and late answer read from reactions.json	member; membership:widening; late closed
+deferral	concluder, landing row and late answer read from reactions.json	deferring; none: each node reads its own close; late not stated
+self_roster_add	while its window is open, read from reactions.json	pending
+moderation_action	while its window is open, read from reactions.json	pending
+accord_halt@holder	while its window is open, read from reactions.json	in_force
+accord_halt@node	while its window is open, read from reactions.json	in_force
+accord_halt@node+late_closed	while its window is open, read from reactions.json	in_force
+accord_roster_change	while its window is open, read from reactions.json	pending
+harm_report	while its window is open, read from reactions.json	pending
+takedown_withhold	while its window is open, read from reactions.json	in_force
+invitation	while its window is open, read from reactions.json	pending
+accord_halt@node+late_closed	plant: the fuse's while entry rewritten to pending	caught
+door_text.tsv	quotes standing in their sections	21 of 21
+door_text.tsv	plant: a changed quote	caught
+doors.tsv	parameters no table states	16
+accord_halt@node+late_closed	plant: the fuse's land entry rewritten to a holder	caught
+doors.tsv	written from the doors as run	current

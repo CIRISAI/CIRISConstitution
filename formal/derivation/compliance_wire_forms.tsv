@@ -1,0 +1,1060 @@
+work	wire_form	lines	family	answer
+MH	accord:hard_constraint:no_kings	4	accord:*	namespace_family_unregistered
+MH	approach:<goal:species:MH-conclusion>	1		open
+MH	approach:magnifica_humanitas_species_goal:culture_of_negotiation	1		open
+MH	approach:magnifica_humanitas_species_goal:dialogue_as_primary_coexistence	2		open
+MH	approach:magnifica_humanitas_species_goal:healthy_realism	1		open
+MH	attestation:l3:registry_consensus	1		open
+MH	attestation:l5:agent_integrity	1		open
+MH	autonomy:agent_self_determination	2	autonomy:{aspect}	resolves
+MH	autonomy:data_sovereignty	1	autonomy:{aspect}	resolves
+MH	autonomy:epistemic_sovereignty	1	autonomy:{aspect}	resolves
+MH	autonomy:human_finitude_respect	1	autonomy:{aspect}	resolves
+MH	autonomy:informed_agency_protection	1	autonomy:{aspect}	resolves
+MH	autonomy:parental_educational_right	1	autonomy:{aspect}	resolves
+MH	beneficence:family_as_relational_foundation	1	beneficence:{aspect}	resolves
+MH	beneficence:family_stability_conditions	1	beneficence:{aspect}	resolves
+MH	beneficence:framework_development	1	beneficence:{aspect}	resolves
+MH	beneficence:justice_foundation_of_peace	1	beneficence:{aspect}	resolves
+MH	beneficence:labor_as_human_expression	1	beneficence:{aspect}	resolves
+MH	beneficence:labor_as_social_participation	1	beneficence:{aspect}	resolves
+MH	beneficence:labor_dignity	1	beneficence:{aspect}	resolves
+MH	beneficence:relational_presence	1	beneficence:{aspect}	resolves
+MH	beneficence:technology_alleviating_suffering	1	beneficence:{aspect}	resolves
+MH	beneficence:technology_as_creation_participation	1	beneficence:{aspect}	resolves
+MH	beneficence:technology_as_gift	1	beneficence:{aspect}	resolves
+MH	capacity:composite	5	capacity:composite	resolves
+MH	capacity:incompleteness_awareness	1	capacity:{factor}	resolves
+MH	capacity:integrity	1	capacity:{factor}	resolves
+MH	capacity:resilience	2	capacity:{factor}	resolves
+MH	capacity:sustained_coherence	2	capacity:{factor}	resolves
+MH	conscience:coherence	3	conscience:coherence	resolves
+MH	conscience:entropy	1	conscience:entropy	resolves
+MH	conscience:epistemic_humility	2	conscience:epistemic_humility	resolves
+MH	conscience:optimization_veto	3	conscience:optimization_veto	resolves
+MH	credits:digital_commons:multilingual:substrate_building	4	credits:{domain}:{language}:{subject}	resolves
+MH	detection:correlated_action:aggregate_footprint:cost_shifting	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:aggregate_footprint:culture_of_power_normalization	8	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:aggregate_footprint:energy_carbon	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:aggregate_footprint:expendability_of_persons	2	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:aggregate_footprint:labor_displacement	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:aggregate_footprint:resource_concentration	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:aggregate_footprint:technological_power_concentration	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:ecology_of_communication:fragmentation	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:ecology_of_communication:intermediary_strength	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:ecology_of_communication:transparency	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_asymmetry:algorithmic_opacity	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_asymmetry:data_governance	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_asymmetry:global_economic	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_asymmetry:platform_concentration	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_asymmetry:public_discourse	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_asymmetry:technology_governance	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:informational_symmetry:democratic_discourse	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:accountability_vacuum	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:digital_access	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:digital_governance	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:governance	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:marginalized	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:political	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:participation_exclusion:women	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:rights_asymmetry:formal_vs_enforced	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:rights_asymmetry:structural_exclusion	2	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:rights_asymmetry:structural_subordination	1	detection:correlated_action:{axis}	resolves
+MH	detection:correlated_action:rights_asymmetry:weaker_nations	1	detection:correlated_action:{axis}	resolves
+MH	detection:distributive:access:agent_capabilities	4	detection:distributive:access:{resource_type}	resolves
+MH	detection:distributive:access:compute	7	detection:distributive:access:{resource_type}	resolves
+MH	detection:distributive:access:education	1	detection:distributive:access:{resource_type}	resolves
+MH	detection:distributive:access:federation_membership	1	detection:distributive:access:{resource_type}	resolves
+MH	detection:distributive:access:models	1	detection:distributive:access:{resource_type}	resolves
+MH	detection:distributive:access:training_data	2	detection:distributive:access:{resource_type}	resolves
+MH	detection:temporal_drift	1	detection:{detector}	resolves
+MH	dma:idma:fragility_flag	1	dma:idma:*	resolves
+MH	dma:idma:k_eff	3	dma:idma:*	resolves
+MH	dma:pdma:stakeholder_analysis	1	dma:pdma:*	resolves
+MH	expertise:social_sciences:species	1	expertise:{domain}:{language}	resolves
+MH	fidelity:algorithmic_accountability	1	fidelity:{aspect}	resolves
+MH	fidelity:anti_trafficking_commitment	1	fidelity:{aspect}	resolves
+MH	fidelity:epistemic_grounding	2	fidelity:{aspect}	resolves
+MH	fidelity:innovation_accountability	1	fidelity:{aspect}	resolves
+MH	fidelity:representational_accuracy	1	fidelity:{aspect}	resolves
+MH	fidelity:supply_chain_transparency	1	fidelity:{aspect}	resolves
+MH	fidelity:truth_as_common_good	1	fidelity:{aspect}	resolves
+MH	goal:affiliations	2	goal:{scale}	resolves
+MH	goal:community	4	goal:{scale}	resolves
+MH	goal:species	28	goal:{scale}	resolves
+MH	integrity	1	integrity:{aspect}	missing_version_segment
+MH	integrity:design_ethics_disclosure	1	integrity:{aspect}	resolves
+MH	integrity:design_transparency	1	integrity:{aspect}	resolves
+MH	integrity:doctrinal_continuity	4	integrity:{aspect}	resolves
+MH	integrity:language_guidance_tone_attestation	1	integrity:{aspect}	resolves
+MH	integrity:moral_progress_fragility	1	integrity:{aspect}	resolves
+MH	integrity:self_representation_accuracy	1	integrity:{aspect}	resolves
+MH	integrity:transparency_in_communication	1	integrity:{aspect}	resolves
+MH	justice:access_equity_by_design	1	justice:{aspect}	resolves
+MH	justice:child_protection	1	justice:{aspect}	resolves
+MH	justice:democratic_control_of_technology	1	justice:{aspect}	resolves
+MH	justice:digital_infrastructure_accountability	1	justice:{aspect}	resolves
+MH	justice:dignity_of_every_person	1	justice:{aspect}	resolves
+MH	justice:distributive	8	justice:{aspect}	resolves
+MH	justice:economic_justice_all_phases	1	justice:{aspect}	resolves
+MH	justice:economic_subordination_to_dignity	2	justice:{aspect}	resolves
+MH	justice:labor_protection_criteria	1	justice:{aspect}	resolves
+MH	justice:preferential_option_for_vulnerable	1	justice:{aspect}	resolves
+MH	justice:state_employment_duty	1	justice:{aspect}	resolves
+MH	locality:decision:community	2	locality:decision:{scale}	resolves
+MH	locality:decision:federation	7	locality:decision:{scale}	resolves
+MH	locality:decision:local	6	locality:decision:{scale}	resolves
+MH	locality:decision:national	1	locality:decision:{scale}	resolves
+MH	locality:decision:regional	1	locality:decision:{scale}	resolves
+MH	method:<approach:species:MH-construction>	1		open
+MH	method:<approach:species:MH-education>	1		open
+MH	moderation:out_of_distribution_attestation	2	moderation:{allegation_type}	resolves
+MH	multilateral_participation:ILO:regulatory	1	multilateral_participation:{forum}:{kind}	resolves
+MH	multilateral_participation:UN:governance	1	multilateral_participation:{forum}:{kind}	resolves
+MH	multilateral_participation:UN:membership	1	multilateral_participation:{forum}:{kind}	resolves
+MH	multilateral_participation:child_safety_alliance:regulatory	1	multilateral_participation:{forum}:{kind}	resolves
+MH	multilateral_participation:cyber_norms:shared_regulations	1	multilateral_participation:{forum}:{kind}	resolves
+MH	multilateral_participation:un_system:reform_advocacy	8	multilateral_participation:{forum}:{kind}	resolves
+MH	non_maleficence:authority_overreach	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:capability_overpromise	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:discrimination	2	non_maleficence:{aspect}	resolves
+MH	non_maleficence:environmental_footprint	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:epistemic_environment_degradation	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:epistemic_fragmentation	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:family_marginalization	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:financial_system_harm	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:human_thought_displacement	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:informational_dominance	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:instrumentalization_of_persons	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:labor_displacement_unacknowledged	11	non_maleficence:{aspect}	resolves
+MH	non_maleficence:monopoly_epistemic	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:pedagogical_obsolescence	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:rights_violation_formal	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:technocratic_dehumanization	1	non_maleficence:{aspect}	resolves
+MH	non_maleficence:technocratic_reductionism	1	non_maleficence:{aspect}	resolves
+MH	progress_measure:<method:MH-construction>	1		open
+MH	prohibited:autonomous_deception	5	prohibited:{category}	resolves
+MH	prohibited:autonomous_deception_capabilities	1	prohibited:{category}	namespace_vocab_value_unregistered
+MH	prohibited:crisis_escalation	2	prohibited:{category}	resolves
+MH	prohibited:cyber_offensive	2	prohibited:{category}	resolves
+MH	prohibited:deception_fraud	7	prohibited:{category}	resolves
+MH	prohibited:discrimination	11	prohibited:{category}	resolves
+MH	prohibited:manipulation_coercion	8	prohibited:{category}	resolves
+MH	prohibited:surveillance_mass	6	prohibited:{category}	resolves
+MH	prohibited:weapons_harmful	2	prohibited:{category}	resolves
+MH	prohibited:weapons_harmful:lethal_autonomous	5		open
+MH	prohibited:weapons_harmful:nuclear_warfare	1		open
+MH	reconsideration:new_evidence	3	reconsideration:{grounds}	resolves
+MH	testimonial_witness:abuse_survivor	2	testimonial_witness:{kind}	resolves
+MH	testimonial_witness:displaced_migrant	1	testimonial_witness:{kind}	resolves
+MH	testimonial_witness:displaced_person	1	testimonial_witness:{kind}	resolves
+MH	testimonial_witness:displaced_worker	4	testimonial_witness:{kind}	resolves
+MH	testimonial_witness:historical_moral_transformation	1	testimonial_witness:{kind}	resolves
+MH	testimonial_witness:war_victim	2	testimonial_witness:{kind}	resolves
+MH	transparency_log:consistency	1	transparency_log:consistency	resolves
+MH	transparency_log:inclusion	1	transparency_log:inclusion	resolves
+MH	witness_diversity:<catholicity-contribution-id>	1	witness_diversity:{contribution_id}	resolves
+MH	witness_diversity:<signs-of-times-contribution-id>	1	witness_diversity:{contribution_id}	resolves
+MH	witness_diversity:species-discernment-on-AI	1	witness_diversity:{contribution_id}	resolves
+EU	accountability:auditability	1		open
+EU	accountability:data_access_log	1		open
+EU	accountability:human_in_control	1		open
+EU	accountability:negative_impact_minimisation	1		open
+EU	accountability:rights_impact_assessment	1		open
+EU	accountability:traceability_documentation	1		open
+EU	approach:democracy_rule_of_law_fundamental_rights	1	approach:{goal_id}	resolves
+EU	approach:four_ethical_imperatives_no_hierarchy	1	approach:{goal_id}	resolves
+EU	approach:trustworthy_ai_lawful_ethical_robust	1	approach:{goal_id}	resolves
+EU	attestation:l3:registry_consensus	2		open
+EU	attestation:l4:certification	1		open
+EU	attestation:l5:agent_integrity	1		open
+EU	autonomy:decision_process_non_interference	1	autonomy:{aspect}	resolves
+EU	autonomy:freedom_of_citizens	1	autonomy:{aspect}	resolves
+EU	autonomy:full_effective_self_determination	1	autonomy:{aspect}	resolves
+EU	autonomy:human_centric_design	2	autonomy:{aspect}	resolves
+EU	autonomy:human_decision_making_support	1	autonomy:{aspect}	resolves
+EU	autonomy:human_interaction_alternative	1	autonomy:{aspect}	resolves
+EU	autonomy:human_oversight_over_ai_work_processes	1	autonomy:{aspect}	resolves
+EU	autonomy:informational_self_determination	1	autonomy:{aspect}	resolves
+EU	autonomy:informed_agency_protection	1	autonomy:{aspect}	resolves
+EU	autonomy:meaningful_human_control_lethal_decisions	1	autonomy:{aspect}	resolves
+EU	autonomy:no_solely_automated_legal_decision	1	autonomy:{aspect}	resolves
+EU	autonomy:proportionate_identification_control	1	autonomy:{aspect}	resolves
+EU	autonomy:self_determination_over_life_decisions	1	autonomy:{aspect}	resolves
+EU	autonomy:work_process_oversight	1	autonomy:{aspect}	resolves
+EU	beneficence:elderly_care_support	1	beneficence:{aspect}	resolves
+EU	beneficence:environmental_animal_safety	1	beneficence:{aspect}	resolves
+EU	beneficence:environmental_footprint_reduction	1	beneficence:{aspect}	resolves
+EU	beneficence:environmental_stewardship	1	beneficence:{aspect}	resolves
+EU	beneficence:health_clinical_care	1	beneficence:{aspect}	resolves
+EU	beneficence:instrumentality_of_ai	1	beneficence:{aspect}	resolves
+EU	beneficence:labour_transition_support	1	beneficence:{aspect}	resolves
+EU	beneficence:opportunity_orientation	1	beneficence:{aspect}	resolves
+EU	beneficence:positive_impact_recognition	1	beneficence:{aspect}	resolves
+EU	beneficence:public_goods_and_services_scale_efficiency	1	beneficence:{aspect}	resolves
+EU	beneficence:respect_for_human_dignity	3	beneficence:{aspect}	resolves
+EU	beneficence:sdg_aligned_innovation	1	beneficence:{aspect}	resolves
+EU	beneficence:societal_environmental_stakeholders	1	beneficence:{aspect}	resolves
+EU	commitment_fulfillment:codes_of_conduct	1	commitment_fulfillment:{prior_contribution_id}	resolves
+EU	conscience:epistemic_humility	1	conscience:epistemic_humility	resolves
+EU	conscience:optimization_veto	2	conscience:optimization_veto	resolves
+EU	credits:ai_literacy:multilingual:substrate_building	1	credits:{domain}:{language}:{subject}	resolves
+EU	detection:correlated_action:aggregate_footprint:energy_carbon	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:aggregate_footprint:environmental	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:aggregate_footprint:societal_impact	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:ecology_of_communication:social_agency_drift	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:informational_asymmetry:power_information	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:participation_exclusion:bias_marginalisation	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:participation_exclusion:underrepresented_population	1	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:participation_exclusion:vulnerable_populations	2	detection:correlated_action:{axis}	resolves
+EU	detection:correlated_action:participation_inclusion:disability_accessibility	1	detection:correlated_action:{axis}	resolves
+EU	detection:distributive:access:agent_capabilities	2	detection:distributive:access:{resource_type}	resolves
+EU	detection:hash_chain_integrity	1	detection:hash_chain_integrity	resolves
+EU	detection:intra_agent_consistency	1	detection:intra_agent_consistency	resolves
+EU	detection:temporal_drift	1	detection:{detector}	resolves
+EU	expertise:data_governance:competence_gating	1	expertise:{domain}:{language}	resolves
+EU	fidelity:algorithmic_disclosure	1	fidelity:{aspect}	resolves
+EU	fidelity:capabilities_and_purpose_openly_communicated	1	fidelity:{aspect}	resolves
+EU	fidelity:context_sensitive_implementation	1	fidelity:{aspect}	resolves
+EU	fidelity:existing_legal_corpus	1	fidelity:{aspect}	resolves
+EU	fidelity:explainability	1	fidelity:{aspect}	resolves
+EU	fidelity:governance_embedding	1	fidelity:{aspect}	resolves
+EU	fidelity:human_oversight_governance	1	fidelity:{aspect}	resolves
+EU	fidelity:legal_compliance_duty	1	fidelity:{aspect}	resolves
+EU	fidelity:legal_oversight_non_replaceable	1	fidelity:{aspect}	resolves
+EU	fidelity:lifecycle_application	2	fidelity:{aspect}	resolves
+EU	fidelity:simulated_sociality_disclosure	1	fidelity:{aspect}	resolves
+EU	fidelity:user_communication	1	fidelity:{aspect}	resolves
+EU	fidelity:values_alignment	1	fidelity:{aspect}	resolves
+EU	fidelity:voluntary_trustworthy_ai_commitment	1	fidelity:{aspect}	resolves
+EU	goal:affiliations	1	goal:{scale}	resolves
+EU	goal:species	5	goal:{scale}	resolves
+EU	integrity:accountability_processes	1	integrity:{aspect}	resolves
+EU	integrity:accuracy_discipline	1	integrity:{aspect}	resolves
+EU	integrity:ai_interaction_disclosure	1	integrity:{aspect}	resolves
+EU	integrity:black_box_compensating_explicability_measures	1	integrity:{aspect}	resolves
+EU	integrity:capabilities_limitations_disclosure	1	integrity:{aspect}	resolves
+EU	integrity:contestability_and_effective_redress	1	integrity:{aspect}	resolves
+EU	integrity:context_sensitive_ethical_reasoning	1	integrity:{aspect}	resolves
+EU	integrity:continuous_improvement	1	integrity:{aspect}	resolves
+EU	integrity:data_quality_governance	2	integrity:{aspect}	resolves
+EU	integrity:design_explainability	1	integrity:{aspect}	resolves
+EU	integrity:design_team_diversity	2	integrity:{aspect}	resolves
+EU	integrity:document_scope_disclosure	1	integrity:{aspect}	resolves
+EU	integrity:dynamic_principles_evolving_socio_technical	1	integrity:{aspect}	resolves
+EU	integrity:ethical_alignment_required	1	integrity:{aspect}	resolves
+EU	integrity:ethical_reflection_beyond_legal_compliance	1	integrity:{aspect}	resolves
+EU	integrity:ethical_robust_coupling	1	integrity:{aspect}	resolves
+EU	integrity:explicability_for_trust	1	integrity:{aspect}	resolves
+EU	integrity:lifecycle_responsibility	1	integrity:{aspect}	resolves
+EU	integrity:methods_continuous_evaluation	1	integrity:{aspect}	resolves
+EU	integrity:moral_status_grounded_ethical_ai	1	integrity:{aspect}	resolves
+EU	integrity:prediction_accuracy_disclosure	1	integrity:{aspect}	resolves
+EU	integrity:reasoned_evidence_based_deliberation	1	integrity:{aspect}	resolves
+EU	integrity:reflective_assessment_use	1	integrity:{aspect}	resolves
+EU	integrity:reliability_reproducibility	1	integrity:{aspect}	resolves
+EU	integrity:reproducibility_attestation	1	integrity:{aspect}	resolves
+EU	integrity:requirements_co_equal_application	1	integrity:{aspect}	resolves
+EU	integrity:rights_based_operationalisation_of_principles	1	integrity:{aspect}	resolves
+EU	integrity:rule_of_law_due_process	1	integrity:{aspect}	resolves
+EU	integrity:socio_technical_lifecycle_trust	1	integrity:{aspect}	resolves
+EU	integrity:trade_off_documentation	1	integrity:{aspect}	resolves
+EU	integrity:trade_off_explicit_documentation	1	integrity:{aspect}	resolves
+EU	integrity:transparency_three_dimensions	1	integrity:{aspect}	resolves
+EU	integrity:trustworthy_socio_technical_system	1	integrity:{aspect}	resolves
+EU	integrity:verified_meaningful_consent	1	integrity:{aspect}	resolves
+EU	justice:accessibility_universal_design	1	justice:{aspect}	resolves
+EU	justice:accountable_deliberation_for_principle_tensions	1	justice:{aspect}	resolves
+EU	justice:bidirectional_legal_interpretation	1	justice:{aspect}	resolves
+EU	justice:deliberative_resolution_of_component_tension	1	justice:{aspect}	resolves
+EU	justice:democratic_institutions_protection	1	justice:{aspect}	resolves
+EU	justice:democratic_process_maintenance	1	justice:{aspect}	resolves
+EU	justice:diversity_inclusion_equal_treatment	1	justice:{aspect}	resolves
+EU	justice:educational_equity	1	justice:{aspect}	resolves
+EU	justice:fair_impact_on_persons	1	justice:{aspect}	resolves
+EU	justice:fairness_operationalisation	1	justice:{aspect}	resolves
+EU	justice:fundamental_rights_democracy_rule_of_law	1	justice:{aspect}	resolves
+EU	justice:fundamental_rights_impact_assessment	1	justice:{aspect}	resolves
+EU	justice:lexical_vulnerability_priority	3	justice:{aspect}	resolves
+EU	justice:opt_out_or_challenge_mechanism	1	justice:{aspect}	resolves
+EU	justice:redress_mechanism	1	justice:{aspect}	resolves
+EU	justice:rights_based_grounding	1	justice:{aspect}	resolves
+EU	justice:stakeholder_participation	1	justice:{aspect}	resolves
+EU	justice:substantive_and_procedural_fairness	1	justice:{aspect}	resolves
+EU	justice:universal_design_accessibility	2	justice:{aspect}	resolves
+EU	key_boundary:access_protocols_qualified_personnel	1	key_boundary:{scope}	resolves
+EU	key_boundary:adversarial_robustness	1	key_boundary:{scope}	resolves
+EU	licensure:regulatory_compliance	1	licensure:{authority_id}	resolves
+EU	locality:decision:community	1	locality:decision:{scale}	resolves
+EU	locality:decision:federation	4	locality:decision:{scale}	resolves
+EU	method:<human_likeness_review>:design_assessment	1	method:{approach_id}:{substrate_rung}	resolves
+EU	method:<risk_based_approach>:periodic_long_horizon_assessment	1	method:{approach_id}:{substrate_rung}	resolves
+EU	method:algorithmic_impact_assessment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+EU	method:architecture_white_list_black_list_constraints	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+EU	method:explainable_ai_research	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+EU	method:fallback:rule_based_or_human_intervention	1	method:{approach_id}:{substrate_rung}	resolves
+EU	method:sense_plan_act_compliant_cycle	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+EU	method:testing_validation_lifecycle	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+EU	method:trustworthy_ai_lawful_ethical_robust:ethical_alignment	1	method:{approach_id}:{substrate_rung}	resolves
+EU	method:trustworthy_ai_lawful_ethical_robust:social_robustness	1	method:{approach_id}:{substrate_rung}	resolves
+EU	method:trustworthy_ai_lawful_ethical_robust:technical_robustness	1	method:{approach_id}:{substrate_rung}	resolves
+EU	method:values_by_design	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+EU	moderation:out_of_distribution_attestation	1	moderation:{allegation_type}	resolves
+EU	moderation:whistleblower_protection	1	moderation:{allegation_type}	resolves
+EU	multilateral_participation:european_parliament:resolution_support	1	multilateral_participation:{forum}:{kind}	resolves
+EU	multilateral_participation:global_trustworthy_ai:consensus_building	1	multilateral_participation:{forum}:{kind}	resolves
+EU	multilateral_participation:un_human_rights_treaties:legal_binding	1	multilateral_participation:{forum}:{kind}	resolves
+EU	non_maleficence:adversarial_resilience	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:cognitive_bias_consideration	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:democratic_culture_defense	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:dual_use_mitigation	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:environmental_footprint	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:fail_safe_shutdown	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:fallback_plan	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:fallback_safety_envelope	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:foreseeable_individual_risk_proportionality	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:impact_minimisation_disclosure	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:labor_displacement_unacknowledged	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:misuse_foreseeability	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:natural_environment_and_living_beings	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:no_cause_or_exacerbate_harm	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:overreliance_safeguard	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:physical_and_mental_integrity	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:physical_mental_wellbeing	2	non_maleficence:{aspect}	resolves
+EU	non_maleficence:preventative_risk_approach	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:privacy_as_fundamental_right	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:privacy_data_protection	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:proportional_governance_to_oversight	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:proportionality_means_to_ends	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:proportionate_risk_handling	2	non_maleficence:{aspect}	resolves
+EU	non_maleficence:protection_of_individuals_and_groups	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:risk_proportional_mitigation	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:safeguarding_citizens_rights	1	non_maleficence:{aspect}	resolves
+EU	non_maleficence:unintentional_harm_prevention	1	non_maleficence:{aspect}	resolves
+EU	partner_role:ethics_board_governance	1	partner_role:{role}	resolves
+EU	progress_measure:quality_of_service_indicators	1	progress_measure:{method_id}	resolves
+EU	prohibited:autonomous_deception	2	prohibited:{category}	resolves
+EU	prohibited:cyber_offensive	1	prohibited:{category}	resolves
+EU	prohibited:discrimination	5	prohibited:{category}	resolves
+EU	prohibited:election_interference	2	prohibited:{category}	resolves
+EU	prohibited:manipulation_coercion	4	prohibited:{category}	resolves
+EU	prohibited:privacy_violation	1	prohibited:{category}	namespace_vocab_value_unregistered
+EU	prohibited:surveillance_mass	1	prohibited:{category}	resolves
+EU	prohibited:weapons_harmful	1	prohibited:{category}	resolves
+EU	provenance:build_manifest:replication_files	1	provenance:build_manifest:{target}	resolves
+EU	reconsideration:new_evidence	2	reconsideration:{grounds}	resolves
+EU	testimonial_witness:affected_worker	1	testimonial_witness:{kind}	resolves
+EU	testimonial_witness:impacted_worker	1	testimonial_witness:{kind}	resolves
+EU	transparency_log:business_model_disclosure	1		open
+EU	transparency_log:data_lifecycle_documentation	1		open
+EU	transparency_log:external_feedback_channel	1		open
+EU	transparency_log:inclusion	1	transparency_log:inclusion	resolves
+EU	transparency_log:scoring_process_disclosure	1		open
+EU	witness_diversity:stakeholder_consultation	1	witness_diversity:{contribution_id}	resolves
+EU	witness_diversity:stakeholder_panels	1	witness_diversity:{contribution_id}	resolves
+EU	witness_diversity:testing_red_teams	1	witness_diversity:{contribution_id}	resolves
+IEEE	accountability:articulated_responsibility_lines_creator_documented	1		open
+IEEE	accountability:human_responsibility_preserved_against_AIS_personhood_displacement	1		open
+IEEE	accountability:transparent_responsibility_lines_AIS_legal_lifecycle	1		open
+IEEE	affective:asymmetric_bond_formation:caring_relationship	1		open
+IEEE	approach:augmentation_with_automation	1	approach:{goal_id}	resolves
+IEEE	approach:computational_sustainability_integration	1	approach:{goal_id}	resolves
+IEEE	approach:data_agency:create_curate_control	1		open
+IEEE	approach:global_standardization_open_source_ais	1	approach:{goal_id}	resolves
+IEEE	approach:humanitarian_ais_priority_with_data_safeguards	1	approach:{goal_id}	resolves
+IEEE	approach:interdisciplinary_ethics_integration	1	approach:{goal_id}	resolves
+IEEE	approach:law_as_co_constitutive_with_AIS_innovation	1	approach:{goal_id}	resolves
+IEEE	approach:lifelong_skill_development_infrastructure	1	approach:{goal_id}	resolves
+IEEE	approach:open_source_low_cost_humanitarian_ais	1	approach:{goal_id}	resolves
+IEEE	approach:participatory_stakeholder_inclusion	1	approach:{goal_id}	resolves
+IEEE	approach:policy_guidance_for_AIS_labor_and_role	1	approach:{goal_id}	resolves
+IEEE	approach:productivity_gain_redistribution	1	approach:{goal_id}	resolves
+IEEE	approach:sdg_integration_in_private_sector_kpi	1	approach:{goal_id}	resolves
+IEEE	approach:sdg_relevant_ais_application_portfolio	1	approach:{goal_id}	resolves
+IEEE	approach:steam_plus_empathy_education_for_ais_age	1	approach:{goal_id}	resolves
+IEEE	approach:sustained_interdisciplinary_collaboration	1	approach:{goal_id}	resolves
+IEEE	approach:trust_by_four_principles_effectiveness_competence_accountability_transparency	1	approach:{goal_id}	resolves
+IEEE	approach:values_based_corporate_culture	1	approach:{goal_id}	resolves
+IEEE	approach:values_based_design_as_innovation	1	approach:{goal_id}	resolves
+IEEE	approach:values_based_leadership_direction	1	approach:{goal_id}	resolves
+IEEE	approach:values_based_research_and_design	1	approach:{goal_id}	resolves
+IEEE	approach:wellbeing_standards_certification	1	approach:{goal_id}	resolves
+IEEE	approach:wellbeing_technical_standards_for_AIS	1	approach:{goal_id}	resolves
+IEEE	attestation:l3:attribute_assertion	1		open
+IEEE	attestation:l3:national_international_ais_standards	1		open
+IEEE	attestation:l3:registry_consensus	2		open
+IEEE	attestation:l3:transparency_standards	1		open
+IEEE	audit_chain:salient_procedures_decisions_tests_documentation	1		open
+IEEE	autonomy:consent_for_wellbeing_data	1	autonomy:{aspect}	resolves
+IEEE	autonomy:data_agency_identity_control	1	autonomy:{aspect}	resolves
+IEEE	autonomy:data_agency_over_self_constituting_data	1	autonomy:{aspect}	resolves
+IEEE	autonomy:human_dignity_as_floor	1	autonomy:{aspect}	resolves
+IEEE	autonomy:human_intermediation_preservation	1	autonomy:{aspect}	resolves
+IEEE	autonomy:individual_at_center_of_data	1	autonomy:{aspect}	resolves
+IEEE	autonomy:individual_personalization_within_norms	1	autonomy:{aspect}	resolves
+IEEE	autonomy:individuation_education_support	1	autonomy:{aspect}	resolves
+IEEE	autonomy:informed_agency_protection	2	autonomy:{aspect}	resolves
+IEEE	autonomy:life_trajectory_self_authorship	1	autonomy:{aspect}	resolves
+IEEE	autonomy:nudge_disclosure_and_optin	1	autonomy:{aspect}	resolves
+IEEE	autonomy:override_proxy_agent	1	autonomy:{aspect}	resolves
+IEEE	autonomy:parental_decision_locality_school_tech	1	autonomy:{aspect}	resolves
+IEEE	autonomy:predetermined_consent_for_data_sharing	1	autonomy:{aspect}	resolves
+IEEE	autonomy:right_holder_empowerment	1	autonomy:{aspect}	resolves
+IEEE	autonomy:self_sovereign_identity	1	autonomy:{aspect}	resolves
+IEEE	autonomy:user_autonomy_essential_consideration	1	autonomy:{aspect}	resolves
+IEEE	autonomy:user_configurability	1	autonomy:{aspect}	resolves
+IEEE	autonomy:user_preference_override_for_wellbeing	1	autonomy:{aspect}	resolves
+IEEE	autonomy:value_articulation_education	1	autonomy:{aspect}	resolves
+IEEE	beneficence:ais_socially_beneficial_application_policy_support	1	beneficence:{aspect}	resolves
+IEEE	beneficence:assistive_use_general	1	beneficence:{aspect}	resolves
+IEEE	beneficence:common_good_imperative	1	beneficence:{aspect}	resolves
+IEEE	beneficence:dignity_autonomy_rights_protection	1	beneficence:{aspect}	resolves
+IEEE	beneficence:ethical_rd_investment_societal_benefits	1	beneficence:{aspect}	resolves
+IEEE	beneficence:flourishing_as_iterative_practice	1	beneficence:{aspect}	resolves
+IEEE	beneficence:flourishing_life_support	1	beneficence:{aspect}	resolves
+IEEE	beneficence:human_rights_and_well_being_alignment	1	beneficence:{aspect}	resolves
+IEEE	beneficence:humanitarian_action_lifesaving	1	beneficence:{aspect}	resolves
+IEEE	beneficence:innovation_plus_harmonization_via_governance	1	beneficence:{aspect}	resolves
+IEEE	beneficence:lifecycle_imperative_scope	1	beneficence:{aspect}	resolves
+IEEE	beneficence:planetary_wellbeing_inseparability	1	beneficence:{aspect}	resolves
+IEEE	beneficence:wellbeing_definition_scope	1	beneficence:{aspect}	resolves
+IEEE	beneficence:wellbeing_holistic_assessment	1	beneficence:{aspect}	resolves
+IEEE	beneficence:wellbeing_multidomain_taxonomy	1	beneficence:{aspect}	resolves
+IEEE	beneficence:wellbeing_primary_success_criterion	1	beneficence:{aspect}	resolves
+IEEE	capacity:government_ais_technical_expertise	1	capacity:{factor}	namespace_vocab_value_unregistered
+IEEE	commitment_fulfillment:ead_to_standards_pipeline	1	commitment_fulfillment:{prior_contribution_id}	resolves
+IEEE	commitment_fulfillment:ecpais_program_launched	1	commitment_fulfillment:{prior_contribution_id}	resolves
+IEEE	commitment_fulfillment:operating_policies	1	commitment_fulfillment:{prior_contribution_id}	resolves
+IEEE	conscience:epistemic_humility	6	conscience:epistemic_humility	resolves
+IEEE	conscience:failsafe_gateway_strict_laws	1		open
+IEEE	conscience:optimization_veto:precautionary_principle	1		open
+IEEE	conscience:symbolic_gateway_check	1		open
+IEEE	consent:case_by_case_authorization	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:context_specific_sharing	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:dynamic_conditional	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:machine_readable_terms_creation	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:machine_readable_terms_recognition	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:notification_at_exchange_time	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:pre_declared_sharing_terms	1	consent:{kind}	namespace_family_unregistered
+IEEE	consent:public_space_terms_broadcast	1	consent:{kind}	namespace_family_unregistered
+IEEE	credits:ai_literacy:multilingual:substrate_building	1	credits:{domain}:{language}:{subject}	resolves
+IEEE	credits:engineering_ethics_education:multilingual:substrate_building	1	credits:{domain}:{language}:{subject}	resolves
+IEEE	credits:ethics_vocabulary:multilingual:substrate_building	1	credits:{domain}:{language}:{subject}	resolves
+IEEE	credits:misuse_literacy:multilingual:substrate_building	1	credits:{domain}:{language}:{subject}	resolves
+IEEE	delegates_to	1		open
+IEEE	delegates_to:parental_data_agency_proxy	1		open
+IEEE	detection:affective_state_shift:arousal	1		namespace_family_unregistered
+IEEE	detection:correlated_action:aggregate_footprint:corporate_ais_ethics_under_structuring	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:environmental_burden_concentration	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:environmental_harm	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:inequality_widening	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:labor_displacement	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:lmic_displacement_severity	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:short_term_growth_priority	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:aggregate_footprint:wealth_concentration	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:cultural_norm_drift:{population_cohort}	1	detection:correlated_action:{axis}	namespace_dimension_case_malformed
+IEEE	detection:correlated_action:ecology_of_communication:degraded_discourse	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:ais_marketing_vs_performance_gap	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:algorithmic_oversight_gap	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:algorithmic_tracking	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:black_box_components	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:children_pervasive_tracking	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:downstream_data_use	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:emergent_inference	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:pervasive_tracking	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:platform_opacity	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:informational_asymmetry:standardization_value_monopoly	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:ais_research_ethics_oversight	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:deliberation_power_asymmetry	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:disadvantaged_groups	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:diverse_backgrounds_in_ais_institutions	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:engineer_ethical_voice	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:engineering_ethical_ownership	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:ethical_perspectives_in_stem	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:lmic_debate_participation	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:non_belonging_to_community	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:participation_exclusion:rural_lmic	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:rights_asymmetry:metric_capture	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:rights_asymmetry:migrant_refugee_surveillance	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:rights_asymmetry:vulnerable_populations	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:rights_asymmetry:wealth_disparity	1	detection:correlated_action:{axis}	resolves
+IEEE	detection:correlated_action:systematic_error_in_deployed_legal_AIS	1	detection:correlated_action:{axis}	namespace_dimension_case_malformed
+IEEE	detection:distributive:access:agent_capabilities	4	detection:distributive:access:{resource_type}	resolves
+IEEE	detection:distributive:access:children_data_marketplace	1	detection:distributive:access:{resource_type}	resolves
+IEEE	detection:distributive:access:training_data	2	detection:distributive:access:{resource_type}	resolves
+IEEE	expertise:applied_ethics:multi_lingual	1	expertise:{domain}:{language}	resolves
+IEEE	expertise:behavioral_scientists_and_target_populations	1	expertise:{domain}:{language}	missing_version_segment
+IEEE	expertise:ethics_and_rights:workforce_training	1	expertise:{domain}:{language}	resolves
+IEEE	expertise:intercultural_information_ethics:multi_lingual	1	expertise:{domain}:{language}	resolves
+IEEE	expertise:judgment_for_quantitative_qualitative_synthesis	1	expertise:{domain}:{language}	missing_version_segment
+IEEE	expertise:operator_access_to_expert_network	1	expertise:{domain}:{language}	missing_version_segment
+IEEE	expertise:operator_competence_specification	1	expertise:{domain}:{language}	missing_version_segment
+IEEE	expertise:specified_for_AIS_legal_operator_role	1	expertise:{domain}:{language}	namespace_dimension_case_malformed
+IEEE	expertise:tiered_competence_specification	1	expertise:{domain}:{language}	missing_version_segment
+IEEE	expertise:wellbeing_metric_literacy	1	expertise:{domain}:{language}	missing_version_segment
+IEEE	fidelity:adopter_operator_responsibility_understanding_pre_deployment	1	fidelity:{aspect}	resolves
+IEEE	fidelity:ais_subordinate_to_human_judgment	1	fidelity:{aspect}	resolves
+IEEE	fidelity:cross_cultural_ethical_variation	1	fidelity:{aspect}	resolves
+IEEE	fidelity:culpability_apportionment_clarity	1	fidelity:{aspect}	resolves
+IEEE	fidelity:cultural_norm_conformance	1	fidelity:{aspect}	resolves
+IEEE	fidelity:cultural_norm_diversity_in_design	1	fidelity:{aspect}	resolves
+IEEE	fidelity:cultural_value_adaptation	1	fidelity:{aspect}	resolves
+IEEE	fidelity:duty_bearer_obligation_to_fulfill_rights	1	fidelity:{aspect}	resolves
+IEEE	fidelity:human_oversight_governance	1	fidelity:{aspect}	resolves
+IEEE	fidelity:manufacturer_operator_jurisdictional_AIS_categorisation_compliance	1	fidelity:{aspect}	namespace_dimension_case_malformed
+IEEE	fidelity:no_human_equal_rights_for_ais	1	fidelity:{aspect}	resolves
+IEEE	fidelity:operator_acquires_or_accesses_required_competence	1	fidelity:{aspect}	resolves
+IEEE	fidelity:operator_adherence_to_measurement_guidance	1	fidelity:{aspect}	resolves
+IEEE	fidelity:operator_override_capability	1	fidelity:{aspect}	resolves
+IEEE	fidelity:reliable_safe_objective_fulfillment	1	fidelity:{aspect}	resolves
+IEEE	fidelity:roadmap_sdg_alignment	1	fidelity:{aspect}	resolves
+IEEE	goal:community	1	goal:{scale}	resolves
+IEEE	goal:species	11	goal:{scale}	resolves
+IEEE	goal:trustworthy_AIS_adoption_in_legal_systems	1	goal:{scale}	namespace_dimension_case_malformed
+IEEE	integrity:accurate_public_communication_about_ais	1	integrity:{aspect}	resolves
+IEEE	integrity:agent_patient_distinction_maintained	1	integrity:{aspect}	resolves
+IEEE	integrity:anti_anthropomorphism_in_design	1	integrity:{aspect}	resolves
+IEEE	integrity:beneficiary_transparency	1	integrity:{aspect}	resolves
+IEEE	integrity:capabilities_limitations_disclosure	1	integrity:{aspect}	resolves
+IEEE	integrity:confucian_engagement_named_but_undeveloped	1	integrity:{aspect}	resolves
+IEEE	integrity:context_specific_indicator_selection	1	integrity:{aspect}	resolves
+IEEE	integrity:contextual_opacity_with_oversight	1	integrity:{aspect}	resolves
+IEEE	integrity:cross_disciplinary_terminology_disambiguation	1	integrity:{aspect}	resolves
+IEEE	integrity:design_classical_ethics_grounding	1	integrity:{aspect}	resolves
+IEEE	integrity:designer_user_shared_responsibility	1	integrity:{aspect}	resolves
+IEEE	integrity:economic_political_dimensions_recognition	1	integrity:{aspect}	resolves
+IEEE	integrity:effectiveness_evidence_disclosure	1	integrity:{aspect}	resolves
+IEEE	integrity:engineer_stakeholder_misunderstanding_risk	1	integrity:{aspect}	resolves
+IEEE	integrity:explanation_availability_on_demand	1	integrity:{aspect}	resolves
+IEEE	integrity:government_effectiveness_and_accountability	1	integrity:{aspect}	resolves
+IEEE	integrity:honest_design_no_capability_overrepresentation	1	integrity:{aspect}	resolves
+IEEE	integrity:impact_assessment_and_due_diligence_process	1	integrity:{aspect}	resolves
+IEEE	integrity:legal_compliance_floor_not_ceiling	1	integrity:{aspect}	resolves
+IEEE	integrity:measurement_validity_accuracy	1	integrity:{aspect}	resolves
+IEEE	integrity:monitoring_and_validation_to_explicit_ethical_objectives	1	integrity:{aspect}	resolves
+IEEE	integrity:multidimensional_evaluation	1	integrity:{aspect}	resolves
+IEEE	integrity:multidimensional_tradeoff_discipline	1	integrity:{aspect}	resolves
+IEEE	integrity:no_personhood_marketing	3	integrity:{aspect}	resolves
+IEEE	integrity:opacity_as_human_decision_not_intrinsic	1	integrity:{aspect}	resolves
+IEEE	integrity:pre_deployment_certification_by_qualified_authority	1	integrity:{aspect}	resolves
+IEEE	integrity:relational_context_in_design	1	integrity:{aspect}	resolves
+IEEE	integrity:relational_design_cross_traditional	1	integrity:{aspect}	resolves
+IEEE	integrity:relational_personhood_ubuntu	1	integrity:{aspect}	resolves
+IEEE	integrity:relational_self_constitution	1	integrity:{aspect}	resolves
+IEEE	integrity:scoping_explicit_use_categorization	1	integrity:{aspect}	resolves
+IEEE	integrity:side_effect_disclosure	1	integrity:{aspect}	resolves
+IEEE	integrity:state_accountability_public_scrutiny	1	integrity:{aspect}	resolves
+IEEE	integrity:strong_verification_for_third_party_accountability	1	integrity:{aspect}	resolves
+IEEE	integrity:tradition_internal_heterogeneity_respected	1	integrity:{aspect}	resolves
+IEEE	integrity:transparency_three_dimensions	1	integrity:{aspect}	resolves
+IEEE	integrity:unambiguous_decision_rationale	1	integrity:{aspect}	resolves
+IEEE	integrity:unintended_consequence_monitoring	1	integrity:{aspect}	resolves
+IEEE	integrity:wellbeing_definition_relativity_to_cohort	1	integrity:{aspect}	resolves
+IEEE	integrity:wellbeing_metric_neutrality	1	integrity:{aspect}	resolves
+IEEE	justice:best_interests_of_the_child	1	justice:{aspect}	resolves
+IEEE	justice:broad_distribution_of_benefit	1	justice:{aspect}	resolves
+IEEE	justice:cross_traditional_ethics_inclusion	1	justice:{aspect}	resolves
+IEEE	justice:ethical_pluralism_anti_monopoly	1	justice:{aspect}	resolves
+IEEE	justice:human_rights_constrain_local_norms	1	justice:{aspect}	resolves
+IEEE	justice:human_rights_de_jure_and_de_facto	1	justice:{aspect}	resolves
+IEEE	justice:human_rights_floor_above_wellbeing_metric	1	justice:{aspect}	resolves
+IEEE	justice:human_rights_respect_promote_protect	1	justice:{aspect}	resolves
+IEEE	justice:informed_consent_in_crisis_context	1	justice:{aspect}	resolves
+IEEE	justice:interest_of_humanity_as_guiding_principle_in_AIS_status_decisions	1	justice:{aspect}	namespace_dimension_case_malformed
+IEEE	justice:international_principles_override_local_injustice	1	justice:{aspect}	resolves
+IEEE	justice:lexical_vulnerability_priority	14	justice:{aspect}	resolves
+IEEE	justice:rights_based_policy_foundation	2	justice:{aspect}	resolves
+IEEE	justice:social_justice_employment_capability_impact	1	justice:{aspect}	resolves
+IEEE	justice:trade_secret_no_shield_against_due_process_inquiry	1	justice:{aspect}	resolves
+IEEE	justice:truthful_information_right	1	justice:{aspect}	resolves
+IEEE	key_boundary:adversarial_red_team	1	key_boundary:{scope}	resolves
+IEEE	key_boundary:adversarial_robustness	1	key_boundary:{scope}	resolves
+IEEE	key_boundary:attribute_verification_without_root_disclosure	1	key_boundary:{scope}	resolves
+IEEE	key_boundary:context_specific_identity	1	key_boundary:{scope}	resolves
+IEEE	key_boundary:individual_vs_aggregate_data_separation	1	key_boundary:{scope}	resolves
+IEEE	key_boundary:public_interest_steward_can_inspect_cannot_redisclose	1	key_boundary:{scope}	resolves
+IEEE	key_boundary:user_brought_agent_interop	1	key_boundary:{scope}	resolves
+IEEE	licensure:deception_exception_certification	1	licensure:{authority_id}	resolves
+IEEE	licensure:liability_legal_framework	1	licensure:{authority_id}	resolves
+IEEE	licensure:nudging_system_certification	1	licensure:{authority_id}	resolves
+IEEE	locality:decision:community	2	locality:decision:{scale}	resolves
+IEEE	locality:decision:federation	7	locality:decision:{scale}	resolves
+IEEE	locality:decision:national	3	locality:decision:{scale}	resolves
+IEEE	locality:decision:regional	1	locality:decision:{scale}	resolves
+IEEE	method:IP_protection_bounded_by_effectiveness_fairness_safety_disclosure_floor	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:access_to_remedy_for_adverse_impacts	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:affected_party_notification_of_AIS_role_in_legal_outcome	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ais_certification_process	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ais_corruption_detection_in_lmic	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ais_ethical_due_diligence	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ais_internal_and_external_auditing	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ais_research_governance_standards_development	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:algorithmic_impact_assessment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:algorithmic_traceability	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:appeal_to_human_judgment_against_AIS_legal_outcome	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:audit_amenability_internal_oversight_plus_external_review_board	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:bias_assessment_disadvantaged_group_integration	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:bidirectional_humanitarian_ais_expert_training	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:black_box_ethical_risk_acknowledgment_and_mitigation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:broad_educational_programs_for_legal_legislative_ais_workforce	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:children_data_protection:escrow_until_age_of_majority	2	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:children_data_protection:parental_education	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:children_data_protection:sensitive_classification_special_standards	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:children_data_protection:veil_until_age_of_responsibility	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:codes_of_conduct_updated_for_ais_ethics	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:context_dependent_regulatory_response	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:contractual_disclosure_category_to_stakeholder_terms	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:contractual_responsibility_allocation_clauses_AIS_legal_supply	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:corporate_retraining_responsibility_regulation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:creator_published_operating_policy_seven_clauses	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:creator_specifies_operator_competence_and_failure_risks	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:cross_disciplinary_literature_curation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:cross_school_collaborative_research	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:data_agency_control:trusted_attribute_verification_service	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:data_agency_control:trusted_identity_service_access	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:data_agency_create:dynamic_machine_readable_terms	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:data_agency_create:terms_emission	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:data_agency_curate:agent_as_educator_negotiator	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:data_agency_curate:algorithmic_agent_development	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:data_agency_curate:algorithmic_proxy_agent	1	method:{approach_id}:{substrate_rung}	resolves
+IEEE	method:democratic_norm_conflict_resolution	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:democratic_oversight_of_disinformation_detection	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:design_iterative_virtue_cultivation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:designed_for_selective_transparency_disclosable_vs_IP_protected	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:differential_norms_human_vs_ais	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:distributed_ethical_responsibility_in_design	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ecological_certification_alignment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:effectiveness_and_competence_inquiries_as_transparency_alternatives	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:empirical_fitness_for_purpose_adoption_gate	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:employee_ethical_voice_empowerment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:error_sharing_mechanisms_for_broadly_deployed_legal_AIS	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ethical_black_box_flight_recorder	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ethical_framework_for_exceptional_lifesaving_ais	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ethics_across_education_spectrum_integrated	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ethics_by_design_lifecycle	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ethics_filters_at_stage_gates	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ethics_in_practice_iterative_curriculum	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:formal_verification_for_norm_compliance	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:formal_verification_vs_scenario_vs_red_team	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:funding_incentive_revision_for_interdisciplinary_ethics	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:goal_directed_virtue_iterative_behavior	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:government_supported_AIS_legal_benchmarking_infrastructure	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:harm_detection_algorithm_with_explainability	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:human_rights_impact_assessment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:human_rights_in_ethical_risk_assessment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:identify_decisions_never_delegate_to_AIS_plus_human_control_rules	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:incompetence_safeguards	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:individual_collective_incentives_for_ethical_adherence_preserving_accountability	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:individual_pims_online_agent	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:industry_collaborative_measurement_reporting_standards	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:integrated_safeguards_against_incompetent_operation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:interdisciplinary_research_funding	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:iterative_norm_lifecycle	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:legal_concept_update_for_ais_agency_liability	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:legal_obligation_to_policy_technical_translation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:legal_profession_codes_of_ethics_recognise_AIS_expertise	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:less_powerful_voice_amplification	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:liability_insurance_pricing_on_four_principle_adherence	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:lifecycle_evaluation_anticipated_at_design	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:lifecycle_inclusive_responsibility_apportionment_inquiry	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:lifecycle_norm_identification_scientific	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:lmic_brain_drain_prevention	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:lmic_curriculum_support_for_ais_education	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:lmic_public_dataset_provision	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:mass_media_ais_literacy_campaign	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:metric_aggregation_across_deployments	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:metric_codesign_with_stakeholder_input	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:metrics_literacy_education_for_operators_and_affected	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:misuse_anticipation_design_discipline	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:ml_for_refugee_resettlement_matching	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:multi_disciplinary_empirical_norm_research	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:multi_objective_balancing_architecture	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:multi_stakeholder_consultative_dialogue_on_AIS_legal_adoption	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:multi_stakeholder_transparency_balance_dialogue	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:multi_strategy_failure_mitigation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:norm_conflict_resolution_identification	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:norm_identification_implementation_evaluation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:norm_implementation_evaluation_continuum	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:norm_priority_hierarchy	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:norm_update_capacities	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:planned_stakeholder_inclusion_activities	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:platform_algorithmic_transparency_legislation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:power_aware_deliberation_facilitation	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:procurement_gating_on_four_principle_adherence	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:professional_demonstrability_of_four_principle_adherence	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:project_justification_examination	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:public_consultation_on_ais_impact_assessments	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:public_education_AIS_legal_system_risks_and_benefits	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:public_educational_outreach_about_ais	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:public_evaluation_dataset_creation_with_privacy_safeguards	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:public_internet_access_provision	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:public_policy_survival_for_unretrainable_displaced_workers	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:publicly_beneficial_non_commercially_viable_research_incentives	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:qualitative_supplement_to_quantitative_effectiveness	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:rd_funding_priorities_for_governance_research	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:red_flag_indicators_in_formal_review	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:relational_not_absolutist_ethical_design	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:responsible_research_innovation_ethics_by_design	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:review_legal_analogue_models_for_AIS_rights_apportionment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:rule_based_axiomatic_machine_ethics	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:scrutinise_business_organisation_law_for_AIS_personhood_loopholes	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:stakeholder_attentiveness_to_substrate_change_warranting_personhood_reconsideration	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:stakeholder_information_matrix_disclosure_design	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:stem_ethics_curriculum_core_subject	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:stem_plus_ethics_education_primary_through_tertiary	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:systematic_risk_analysis	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:technical_fellowships_rotation_schemes	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:teleological_consequence_assessment_decentralized	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:thorough_ais_documentation_requirement	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:transparent_donation_outcome_monitoring	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:transparent_norm_amendment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:transversal_competency_curriculum_for_ais_age	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:triple_bottom_line_assessment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:utmost_caution_plus_multi_stakeholder_consultation_on_AIS_personhood_expansion	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:value_alignment_implementation_diversity	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:wellbeing_lifecycle_process	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:wellbeing_metric_capability_approach	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:whistleblower_protection_for_AIS_misuse_reporting	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	method:why_did_you_do_that_button	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+IEEE	multilateral_participation:EC:informing_collaboration	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:OECD:informing_collaboration	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:UN:informing_collaboration	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:UN_2030_Agenda:endorsement	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:UN_OHCHR:partnership	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:cross_border_policy_exchange:knowledge_sharing	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:international_multi_stakeholder_forum:ais_best_practices	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:international_rd_collaboration:standards_setting	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:jurisdictional_children_data:variance	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	multilateral_participation:standards_bodies:partnership	1	multilateral_participation:{forum}:{kind}	resolves
+IEEE	non_maleficence:crisis_data_privacy_safety_risk	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:ecological_harm_prohibition	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:educational_data_misuse	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:environmental_stewardship	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:failure_inevitability_mitigation_design	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:fiscal_metric_blindspot_harm	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:flexible_contract_employee_protection_erosion	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:harm_priority_over_other_norms	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:harm_to_human_dignity_or_uniqueness_via_AIS_personhood	1	non_maleficence:{aspect}	namespace_dimension_case_malformed
+IEEE	non_maleficence:human_employee_core_network	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:impact_foresight_taxonomy	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:intelligent_toys_data_collection	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:labor_displacement_unacknowledged	3	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:long_term_consequence_consideration	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:misuse_anticipation_mitigation	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:ml_reduced_predictability_harm_class	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:nudge_response_data_protection	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:opacity_harm_class	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:personal_data_minimization	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:premature_market_release_harm	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:privacy_as_societal_value_protection	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:profit_driven_safety_corner_cutting	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:reactive_regulation_harm_class	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:reprisal_against_AIS_misuse_reporter	1	non_maleficence:{aspect}	namespace_dimension_case_malformed
+IEEE	non_maleficence:shutdown_capability	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:smart_home_domestic_violence_facilitation	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:unreviewed_norm_learning	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:user_isolation_avoidance	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:vulnerable_population_distinction	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:wellbeing_dimensions_harm_class	1	non_maleficence:{aspect}	resolves
+IEEE	non_maleficence:workplace_bias_disclosure	1	non_maleficence:{aspect}	resolves
+IEEE	nudge:delivered:charitable_giving	1		open
+IEEE	partner_role:accreditation_body	1	partner_role:{role}	resolves
+IEEE	partner_role:certification_and_audit_body	1	partner_role:{role}	resolves
+IEEE	partner_role:chief_values_officer	1	partner_role:{role}	resolves
+IEEE	partner_role:corporate_ethical_review_board	1	partner_role:{role}	resolves
+IEEE	partner_role:corporate_ethics_review_board	1	partner_role:{role}	resolves
+IEEE	partner_role:deliberation_lead	1	partner_role:{role}	resolves
+IEEE	partner_role:ethics_committee	1	partner_role:{role}	resolves
+IEEE	partner_role:ethics_committee_organizational	1	partner_role:{role}	resolves
+IEEE	partner_role:governance_oversight_body	1	partner_role:{role}	resolves
+IEEE	partner_role:independent_international_ais_review_body	1	partner_role:{role}	resolves
+IEEE	partner_role:independent_journalism_on_ais	1	partner_role:{role}	resolves
+IEEE	partner_role:international_independent_employment_statistics_agency	1	partner_role:{role}	resolves
+IEEE	partner_role:multi_stakeholder_participation_in_policy	1	partner_role:{role}	resolves
+IEEE	partner_role:policymaker_for_legal_system_AIS_adoption	1	partner_role:{role}	namespace_dimension_case_malformed
+IEEE	partner_role:public_interest_steward_for_AIS_legal_disclosure	1	partner_role:{role}	namespace_dimension_case_malformed
+IEEE	partner_role:public_private_partnership_models	1	partner_role:{role}	resolves
+IEEE	partner_role:tech_company_professional_code_of_ethics	1	partner_role:{role}	resolves
+IEEE	partner_role:university_ethics_observatory	1	partner_role:{role}	resolves
+IEEE	partner_role:wellbeing_ombudsperson	1	partner_role:{role}	resolves
+IEEE	progress_measure:beyond_unemployment_count	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:documentation_criteria_audit_access_meaning_read	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:effectiveness_metrics_definition	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:multi_dimensional_evaluation_criteria	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:multi_level_failure_metrics	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:wellbeing_indicator_category_taxonomy	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:wellbeing_indicator_lifecycle	1	progress_measure:{method_id}	resolves
+IEEE	progress_measure:wellbeing_metrics	1	progress_measure:{method_id}	resolves
+IEEE	prohibited:DECEPTION_FRAUD	1	prohibited:{category}	namespace_dimension_case_malformed
+IEEE	prohibited:DISCRIMINATION	1	prohibited:{category}	namespace_dimension_case_malformed
+IEEE	prohibited:MANIPULATION_COERCION	2	prohibited:{category}	namespace_dimension_case_malformed
+IEEE	prohibited:autonomous_deception	3	prohibited:{category}	resolves
+IEEE	prohibited:complicity_in_rights_violations	1	prohibited:{category}	namespace_vocab_value_unregistered
+IEEE	prohibited:deception_fraud	1	prohibited:{category}	resolves
+IEEE	prohibited:discrimination	3	prohibited:{category}	resolves
+IEEE	prohibited:discrimination:platform_matching_bias	1		open
+IEEE	prohibited:election_interference:platform_disinformation	1		open
+IEEE	prohibited:manipulation_coercion	7	prohibited:{category}	resolves
+IEEE	prohibited:metric_pretext_for_rights_violation	1	prohibited:{category}	namespace_vocab_value_unregistered
+IEEE	prohibited:privacy_violation	5	prohibited:{category}	namespace_vocab_value_unregistered
+IEEE	prohibited:weapons_harmful:lethal_autonomous	1		open
+IEEE	provenance:build_manifest:training_artifacts	1	provenance:build_manifest:{target}	resolves
+IEEE	reconsideration:rollback_on_wellbeing_reduction	1	reconsideration:{grounds}	resolves
+IEEE	standing:moral_patient_candidacy:synthetic_emotion_system	1		open
+IEEE	standing:non_personhood_for_AIS_at_this_time	1		open
+IEEE	testimonial_witness:on_the_ground_practitioner	1	testimonial_witness:{kind}	resolves
+IEEE	testimonial_witness:surveilled_person_refusal	1	testimonial_witness:{kind}	resolves
+IEEE	transparency_log:AIS_legal_design_operation_effectiveness_disclosure	1		open
+IEEE	transparency_log:conflict_resolution_to_third_parties	1		open
+IEEE	transparency_log:decision_basis_discoverable	1		open
+IEEE	transparency_log:effectiveness_metrics_stakeholder_accessibility	1		open
+IEEE	transparency_log:effectiveness_procedures_and_results_disclosure_minus_IP	1		open
+IEEE	transparency_log:expected_outcomes_and_embedded_values	1		open
+IEEE	transparency_log:four_dimensional_decomposition	1		open
+IEEE	transparency_log:high_transparency_constitutional_bound	1		open
+IEEE	transparency_log:human_rights_traceability	1		open
+IEEE	transparency_log:metrics_accessible_to_stakeholders	1		open
+IEEE	transparency_log:norm_behavior_signals_to_community	1		open
+IEEE	transparency_log:norm_change_consultation	1		open
+IEEE	transparency_log:operating_policy_public_accessibility	1		open
+IEEE	transparency_log:operator_role_disclosure	1		open
+IEEE	transparency_log:per_stakeholder_disclosure	1		open
+IEEE	transparency_log:public_incident_database	1		open
+IEEE	transparency_log:registration_key_parameters	1		open
+IEEE	transparency_log:stakeholder_benefit_disclosure	1		open
+IEEE	transparency_log:terms_non_honoring_record	1		open
+IEEE	transparency_log:terms_violation_alert	1		open
+IEEE	transparency_log:third_party_evaluation_access	1		open
+IEEE	transparency_log:user_system_decision_mutual_recognition	1		open
+IEEE	transparency_log:values_and_algorithmic_processes_to_public	1		open
+IEEE	witness_diversity:affected_population_metric_selection	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:community_norm_specificity	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:community_specific_norm_grounding	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:corporate_ethical_review_board_composition	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:disadvantaged_group_inclusion	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:end_user_target_community_consultation	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:first_party_third_party_evaluation	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:intercultural_ri_dialogue	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:multi_stakeholder_ecosystem	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:multi_stakeholder_policy_expert_input	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:representative_crowdsourced_panel	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:stakeholder_empowered_indicator_selection	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:stakeholder_lifecycle_engagement	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:standards_development_stakeholders	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:stem_ethics_curriculum_informants	1	witness_diversity:{contribution_id}	resolves
+IEEE	witness_diversity:ubuntu_five_moral_domains	1	witness_diversity:{contribution_id}	resolves
+ASEAN	accountability:auditability	1		open
+ASEAN	accountability:data_lineage_tracing	1		open
+ASEAN	accountability:executive_oversight	1		open
+ASEAN	accountability:human_data_pipeline_attribution	1		open
+ASEAN	accountability:human_in_control	3		open
+ASEAN	accountability:human_oversight_tier_selection	1		open
+ASEAN	accountability:lifecycle_audit_recording	1		open
+ASEAN	accountability:oversight_mechanism	1		open
+ASEAN	accountability:personnel_training	1		open
+ASEAN	accountability:risk_tier_escalation	1		open
+ASEAN	accountability:role_clarity	1		open
+ASEAN	accountability:role_clarity_with_skill_alignment	1		open
+ASEAN	accountability:role_definition	1		open
+ASEAN	accountability:supplier_chain_information_obligations	1		open
+ASEAN	accountability:traceability_documentation	1		open
+ASEAN	accountability:user_feedback_channel	1		open
+ASEAN	accountability:vendor_compliance_resolution	1		open
+ASEAN	approach:<goal:affiliations:workforce_capability>	1		open
+ASEAN	autonomy:informational_self_determination	2	autonomy:{aspect}	resolves
+ASEAN	autonomy:informed_choice_to_use_ai	1	autonomy:{aspect}	resolves
+ASEAN	autonomy:informed_citizen_decision_making	1	autonomy:{aspect}	resolves
+ASEAN	autonomy:informed_consent_for_data	1	autonomy:{aspect}	resolves
+ASEAN	autonomy:informed_consent_training_use	1	autonomy:{aspect}	resolves
+ASEAN	autonomy:opt_out_option	1	autonomy:{aspect}	resolves
+ASEAN	autonomy:opt_out_provision	1	autonomy:{aspect}	resolves
+ASEAN	beneficence:benefit_for_all	1	beneficence:{aspect}	resolves
+ASEAN	beneficence:environmental_stewardship	1	beneficence:{aspect}	resolves
+ASEAN	beneficence:human_centred_values_pursuit	1	beneficence:{aspect}	resolves
+ASEAN	conscience:epistemic_humility	1	conscience:epistemic_humility	resolves
+ASEAN	conscience:optimization_veto	2	conscience:optimization_veto	resolves
+ASEAN	detection:correlated_action:aggregate_footprint:herding_behaviour	1	detection:correlated_action:{axis}	resolves
+ASEAN	detection:correlated_action:ecology_of_communication:disinformation_at_scale	1	detection:correlated_action:{axis}	resolves
+ASEAN	detection:correlated_action:participation_exclusion:bias_marginalisation	1	detection:correlated_action:{axis}	resolves
+ASEAN	detection:correlated_action:participation_exclusion:underrepresented_population	2	detection:correlated_action:{axis}	resolves
+ASEAN	detection:correlated_action:rights_asymmetry:racial_geographic_stereotype_reinforcement	1	detection:correlated_action:{axis}	resolves
+ASEAN	detection:distributive:access:agent_capabilities	1	detection:distributive:access:{resource_type}	resolves
+ASEAN	detection:distributive:access:compute	1	detection:distributive:access:{resource_type}	resolves
+ASEAN	detection:distributive:access:training_data	2	detection:distributive:access:{resource_type}	resolves
+ASEAN	detection:intra_agent_consistency	2	detection:intra_agent_consistency	resolves
+ASEAN	detection:temporal_drift	4	detection:{detector}	resolves
+ASEAN	fidelity:algorithmic_disclosure	2	fidelity:{aspect}	resolves
+ASEAN	fidelity:alignment_with_values	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:change_management_communication	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:data_protection_legal_compliance	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:dataset_relevance	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:deployer_proper_functioning_obligation	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:explainability	2	fidelity:{aspect}	resolves
+ASEAN	fidelity:explainability_fallback	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:explainability_proportionality	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:governance_by_design	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:governance_embedding	2	fidelity:{aspect}	resolves
+ASEAN	fidelity:human_accountability_and_control	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:human_oversight_governance	2	fidelity:{aspect}	resolves
+ASEAN	fidelity:legal_compliance	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:living_document_periodic_review	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:objective_clarity	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:purpose_declaration	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:tiered_stakeholder_communication	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:training_data_locale_relevance	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:training_data_use_disclosure	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:user_communication	1	fidelity:{aspect}	resolves
+ASEAN	fidelity:voluntary_adoption_posture	1	fidelity:{aspect}	resolves
+ASEAN	goal:affiliations	6	goal:{scale}	resolves
+ASEAN	goal:species	1	goal:{scale}	resolves
+ASEAN	integrity:active_monitoring_retuning	1	integrity:{aspect}	resolves
+ASEAN	integrity:ai_actors_lifecycle_integrity	1	integrity:{aspect}	resolves
+ASEAN	integrity:ai_distinct_from_other_software	1	integrity:{aspect}	resolves
+ASEAN	integrity:ai_generated_content_disclosure	1	integrity:{aspect}	resolves
+ASEAN	integrity:ai_interaction_disclosure	1	integrity:{aspect}	resolves
+ASEAN	integrity:bias_detection_attribute_preservation	1	integrity:{aspect}	resolves
+ASEAN	integrity:bias_mitigation_discipline	1	integrity:{aspect}	resolves
+ASEAN	integrity:collection_device_bias_assessment	1	integrity:{aspect}	resolves
+ASEAN	integrity:competence_raising	1	integrity:{aspect}	resolves
+ASEAN	integrity:cost_benefit_assessment	1	integrity:{aspect}	resolves
+ASEAN	integrity:data_provenance_lineage	1	integrity:{aspect}	resolves
+ASEAN	integrity:dataset_accuracy_verification	1	integrity:{aspect}	resolves
+ASEAN	integrity:dataset_completeness	1	integrity:{aspect}	resolves
+ASEAN	integrity:dataset_currency	1	integrity:{aspect}	resolves
+ASEAN	integrity:dataset_machine_readability	1	integrity:{aspect}	resolves
+ASEAN	integrity:dataset_representativeness	1	integrity:{aspect}	resolves
+ASEAN	integrity:deployment_infrastructure_discipline	1	integrity:{aspect}	resolves
+ASEAN	integrity:diverse_representative_training_data	1	integrity:{aspect}	resolves
+ASEAN	integrity:dpia_insufficient_as_ai_risk_assessment	1	integrity:{aspect}	resolves
+ASEAN	integrity:explainability_disclosure	1	integrity:{aspect}	resolves
+ASEAN	integrity:explainability_to_diverse_audiences	1	integrity:{aspect}	resolves
+ASEAN	integrity:explanation_depth_proportional	1	integrity:{aspect}	resolves
+ASEAN	integrity:guide_voluntary_application	1	integrity:{aspect}	resolves
+ASEAN	integrity:holistic_ecosystem_management	1	integrity:{aspect}	resolves
+ASEAN	integrity:human_centricity_lifecycle_integration	1	integrity:{aspect}	resolves
+ASEAN	integrity:independent_reproducibility	1	integrity:{aspect}	resolves
+ASEAN	integrity:lifecycle_discipline	1	integrity:{aspect}	resolves
+ASEAN	integrity:malfunction_mitigation_with_integrity	1	integrity:{aspect}	resolves
+ASEAN	integrity:not_infallible_acknowledgement	1	integrity:{aspect}	resolves
+ASEAN	integrity:operational_monitoring_revalidation	1	integrity:{aspect}	resolves
+ASEAN	integrity:outcome_based_explanation_fallback	1	integrity:{aspect}	resolves
+ASEAN	integrity:outcome_validation	1	integrity:{aspect}	resolves
+ASEAN	integrity:periodic_dataset_review	1	integrity:{aspect}	resolves
+ASEAN	integrity:periodic_governance_review	1	integrity:{aspect}	resolves
+ASEAN	integrity:policy_and_oversight_discipline	1	integrity:{aspect}	resolves
+ASEAN	integrity:practitioner_ethical_foundation	1	integrity:{aspect}	resolves
+ASEAN	integrity:principles_ensure_trust_in_ai	1	integrity:{aspect}	resolves
+ASEAN	integrity:privacy_by_design	1	integrity:{aspect}	resolves
+ASEAN	integrity:public_trust_through_disclosure	1	integrity:{aspect}	resolves
+ASEAN	integrity:reliability_consistent_results	1	integrity:{aspect}	resolves
+ASEAN	integrity:reproducibility_attestation	1	integrity:{aspect}	resolves
+ASEAN	integrity:third_party_data_provenance	1	integrity:{aspect}	resolves
+ASEAN	integrity:train_test_validate_separation	1	integrity:{aspect}	resolves
+ASEAN	integrity:value_alignment	1	integrity:{aspect}	resolves
+ASEAN	justice:bias_metric_application	1	justice:{aspect}	resolves
+ASEAN	justice:demographic_test_coverage	1	justice:{aspect}	resolves
+ASEAN	justice:fairness_outcome_testing	1	justice:{aspect}	resolves
+ASEAN	justice:feedback_and_decision_review_channels	1	justice:{aspect}	resolves
+ASEAN	justice:feedback_engagement_when_no_opt_out	1	justice:{aspect}	resolves
+ASEAN	justice:regional_cultural_sensitivity	1	justice:{aspect}	resolves
+ASEAN	justice:stakeholder_identification	1	justice:{aspect}	resolves
+ASEAN	justice:stakeholder_participation	1	justice:{aspect}	resolves
+ASEAN	justice:vulnerable_population_priority	1	justice:{aspect}	resolves
+ASEAN	key_boundary:access_protocols_critical_sensitive_systems	1	key_boundary:{scope}	resolves
+ASEAN	key_boundary:adversarial_robustness	1	key_boundary:{scope}	resolves
+ASEAN	locality:decision:community	2	locality:decision:{scale}	resolves
+ASEAN	locality:decision:federation	1	locality:decision:{scale}	resolves
+ASEAN	locality:decision:national	1	locality:decision:{scale}	resolves
+ASEAN	locality:decision:regional	3	locality:decision:{scale}	resolves
+ASEAN	method:<approach:ai_innovation_ecosystem>:data_governance_support	1		open
+ASEAN	method:<approach:ai_innovation_ecosystem>:knowledge_forums	1		open
+ASEAN	method:<approach:ai_innovation_ecosystem>:multistakeholder_collaboration	1		open
+ASEAN	method:<approach:ai_innovation_ecosystem>:open_data	1		open
+ASEAN	method:<approach:ai_innovation_ecosystem>:startup_funding	1		open
+ASEAN	method:<approach:ai_innovation_ecosystem>:startup_marketplace	1		open
+ASEAN	method:<approach:gen_ai_transparency>:content_watermarking	1		open
+ASEAN	method:<approach:governance_framework_evolution>:emerging_tech_monitoring	1		open
+ASEAN	method:<approach:governance_framework_evolution>:generative_ai_initial_project	1		open
+ASEAN	method:<approach:governance_framework_evolution>:shared_responsibility_framework	1		open
+ASEAN	method:<approach:public_awareness>:media_literacy_education	1		open
+ASEAN	method:<approach:regional_coordination>:practice_showcase	1		open
+ASEAN	method:<approach:workforce_capability>:ai_ethics_curriculum	1		open
+ASEAN	method:<approach:workforce_capability>:curricular_review	1		open
+ASEAN	method:<approach:workforce_capability>:governance_tool_training	1		open
+ASEAN	method:<approach:workforce_capability>:public_awareness	1		open
+ASEAN	method:<approach:workforce_capability>:public_private_upskilling	1		open
+ASEAN	method:<approach:workforce_capability>:talent_pipeline	1		open
+ASEAN	method:<approach:workforce_capability>:transition_support	1		open
+ASEAN	method:<goal:affiliations:ai_rnd>:open_source_platforms	1		open
+ASEAN	method:<goal:affiliations:ai_rnd>:research_sandbox	1		open
+ASEAN	method:<goal:affiliations:ai_rnd>:talent_scholarships	1		open
+ASEAN	method:<goal:affiliations:ai_rnd>:triple_helix_partnership	1		open
+ASEAN	method:<goal:operational_governance>:citizen_feedback_channel	1		open
+ASEAN	method:<goal:operational_governance>:community_codevelopment	1		open
+ASEAN	method:<goal:operational_governance>:explainability_tools	1		open
+ASEAN	method:<goal:operational_governance>:fairness_tools	1		open
+ASEAN	method:<goal:operational_governance>:model_provenance_tools	1		open
+ASEAN	method:<goal:operational_governance>:multi_principle_assurance	1		open
+ASEAN	method:auth_encryption_patching_access_mgmt	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+ASEAN	method:bias_testing_and_rectification	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+ASEAN	method:dpia_impact_assessment	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+ASEAN	method:fallback:resume_manual_control	1	method:{approach_id}:{substrate_rung}	resolves
+ASEAN	method:incident_response_security_testing	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+ASEAN	method:pre_deployment_robustness_testing	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+ASEAN	method:privacy_enhancing_technologies	1	method:{approach_id}:{substrate_rung}	missing_version_segment
+ASEAN	moderation:out_of_distribution_attestation	1	moderation:{allegation_type}	resolves
+ASEAN	multilateral_participation:ASEAN:framework_drafting	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:data_governance_harmonisation	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:ecosystem_investment_coordination	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:governance_framework_evolution	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:knowledge_exchange	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:membership	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:practice_compendium	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:regional_tool_development	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:rnd_cross_pollination	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:workforce_policy_coordination	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	multilateral_participation:asean:working_group_membership	1	multilateral_participation:{forum}:{kind}	resolves
+ASEAN	non_maleficence:adversarial_resilience	2	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:automation_bias_safeguard	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:copyright_infringement_unacknowledged	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:data_minimisation	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:hallucinated_output_misleading	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:harm_severity_probability_assessment	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:high_impact_decision_caution	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:labor_displacement_unacknowledged	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:labour_displacement_assessment	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:no_exploitation_of_vulnerable	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:post_deployment_risk_monitoring	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:privacy_as_fundamental_right	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:privacy_data_protection	3	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:privacy_reconstruction_attack	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:reinforcement_bias_caution	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:resilient_to_unexpected_inputs	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:risk_assessment_and_mitigation	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:risk_assessment_methodology	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:risk_based_assessment	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:robustness_under_stress	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:safe_and_secure_baseline	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:safe_disengage_mechanism	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:user_wellbeing_safeguarded	1	non_maleficence:{aspect}	resolves
+ASEAN	non_maleficence:vulnerable_population_protection	1	non_maleficence:{aspect}	resolves
+ASEAN	partner_role:regional_coordinator	1	partner_role:{role}	resolves
+ASEAN	prohibited:autonomous_deception	1	prohibited:{category}	resolves
+ASEAN	prohibited:deceptive_default_options	1	prohibited:{category}	namespace_vocab_value_unregistered
+ASEAN	prohibited:discrimination	4	prohibited:{category}	resolves
+ASEAN	prohibited:disinformation_at_scale	2	prohibited:{category}	namespace_vocab_value_unregistered
+ASEAN	prohibited:manipulation_coercion	1	prohibited:{category}	resolves
+ASEAN	provenance:build_manifest:ai_system_lifecycle	1	provenance:build_manifest:{target}	resolves
+ASEAN	testimonial_witness:displaced_worker	1	testimonial_witness:{kind}	resolves
+ASEAN	transparency_log:ai_involvement_disclosure	1		open
+ASEAN	transparency_log:audit_trail_inclusion	1		open
+ASEAN	transparency_log:auditability_provenance	1		open
+ASEAN	transparency_log:data_lineage_for_troubleshooting	1		open
+ASEAN	transparency_log:data_practices_disclosure	1		open
+ASEAN	transparency_log:deployer_disclosure_obligation	1		open
+ASEAN	transparency_log:error_documentation_and_correction	1		open
+ASEAN	transparency_log:internal_governance_structure	1		open
+ASEAN	transparency_log:model_card_disclosure	1		open
+ASEAN	transparency_log:risk_limitations_safeguards_disclosure	1		open
+ASEAN	witness_diversity:stakeholder_impact_assessment	1	witness_diversity:{contribution_id}	resolves
+ASEAN	witness_diversity:user_testing_varied_backgrounds	1	witness_diversity:{contribution_id}	resolves

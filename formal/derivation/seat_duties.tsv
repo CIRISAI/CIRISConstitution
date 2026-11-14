@@ -1,0 +1,26 @@
+# The duty each reserved family names, from the table of CC 3.4.7, as the role token of the family's entry transition.
+# Read by tools/check_signer_gate.py (property `seat`): the entry transition admits exactly this token, or the family is listed as staged.
+# The quote must stand verbatim in CC 3.4.7.
+family	token	cc_ref	quote
+system:*	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+audit_chain:hash_continuity	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+corpus_health:n_eff_measurable	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+federation_directory:replication_lag	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+identity_continuity:relational_anchor	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+delivery:{class}	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+key_boundary:{scope}	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+peer_reachability:{network}	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+transport:{kind}	infra:attest	CC 3.4.7	a node, about itself or about a grant it holds | `infra:attest`
+hard_case:{kind}	infra:attest	CC 3.4.7	the node that admitted or refused the row | `infra:attest`
+detection:correlated_action:{axis}	infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:distributive:access:{resource_type}	infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:hash_chain_integrity	infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:intra_agent_consistency	infra:detect	CC 3.4.7	a detector | `infra:detect`
+detection:{detector}	infra:detect	CC 3.4.7	a detector | `infra:detect`
+transparency_log:cosigned:{tree_size}	infra:attest_assurance	CC 3.4.7	a log witness | `infra:attest_assurance`
+age_assurance:{level}:{band}:{version}	assure:age	CC 3.4.7	an age assessor who is not the subject | `assure:age`
+capacity_assurance:reversible_excluded:{domain}:{version}	assure:capacity	CC 3.4.7	a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity`
+capacity_assurance:reversible_pending:{domain}:{version}	assure:capacity	CC 3.4.7	a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity`
+capacity_assurance:{level}:{domain}:{band}:{version}	assure:capacity	CC 3.4.7	a capacity assessor who is neither the subject nor the proposed steward | `assure:capacity`
+census:partial:{class}	serve	CC 3.4.7	a serve seat of the period | `infra:serve`
+census:composite:{class}	serve	CC 3.4.7	a serve seat of the period | `infra:serve`

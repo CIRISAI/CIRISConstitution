@@ -148,6 +148,18 @@ def load_prose():
 
 # --- manifests ---------------------------------------------------------------
 
+def _recut():
+    """old -> new section number from formal/derivation/section_map.tsv (a manifest pinned before the re-cut cites old numbers)."""
+    p = os.path.join(ROOT, "formal", "derivation", "section_map.tsv")
+    if not os.path.exists(p):
+        return {}
+    rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
+    return {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != r["new_number"]}
+
+
+RECUT = _recut()
+
+
 def load_manifests():
     """repo -> {backed: set(decimals), sym_backed/sym_all: {symbol -> set(decimals)},
                known_bad: [(dec, claim, symbols, status)], spec: MANIFESTS entry}."""
@@ -168,6 +180,7 @@ def load_manifests():
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
             if not dec or dec == "—":            # non-section row (e.g. h3ere StepPoint)
                 continue
+            dec = RECUT.get(dec, dec) if row.get("cc_numbering", "") != "recut" else dec
             is_backed = spec["backed"](r)
             if is_backed:
                 backed.add(dec)
@@ -289,11 +302,66 @@ def report_toc_drift(toc, prose, errors, warnings, notes):
     for dec, t, p in semid:
         errors.append(f"dual-ID drift at CC {dec}: toc.tsv semantic_id '{t}' != prose heading id '{p}'")
     for dec, t, p in title_hard:
-        warnings.append(f"title drift at CC {dec}: toc.tsv={t!r} | prose={p!r}")
+        errors.append(f"title drift at CC {dec}: toc.tsv={t!r} | prose={p!r} (the heading is the title)")
     if title_annot:
         notes.append(f"{len(title_annot)} section(s) where toc.tsv keeps a provenance annotation the "
                      f"prose heading dropped (title otherwise identical): {', '.join(title_annot)}")
     return len(semid), len(title_hard), len(title_annot)
+
+
+def codebook_drift(toc, cb):
+    """constitution/codebook.json against toc.tsv: every decimal of the toc and no other, each mapped
+    through one key to the toc's semantic id, the four maps inverse to each other, n_concepts the count."""
+    out = []
+    d2k, k2d, s2k, k2s = (cb.get(m, {}) for m in ("decimal_to_key", "key_to_decimal", "semantic_to_key", "key_to_semantic"))
+    for dec in sorted(set(toc) - set(d2k)):
+        out.append(f"CC {dec} is in toc.tsv and not in codebook.json")
+    for dec in sorted(set(d2k) - set(toc)):
+        out.append(f"CC {dec} is in codebook.json and not in toc.tsv")
+    for dec, key in d2k.items():
+        if dec not in toc:
+            continue
+        sid = (toc[dec].get("semantic_id") or "").strip()
+        if k2d.get(key) != dec:
+            out.append(f"codebook key {key!r}: decimal_to_key gives it to CC {dec}, key_to_decimal to {k2d.get(key)!r}")
+        if k2s.get(key) != sid:
+            out.append(f"CC {dec}: codebook semantic id {k2s.get(key)!r}, toc.tsv {sid!r}")
+        if s2k.get(sid) != key:
+            out.append(f"CC {dec}: codebook semantic_to_key[{sid!r}] is {s2k.get(sid)!r}, not {key!r}")
+    if len(k2d) != len(d2k) or len(s2k) != len(k2s) or len(s2k) != len(d2k):
+        out.append(f"codebook maps differ in size: decimal_to_key {len(d2k)}, key_to_decimal {len(k2d)}, "
+                   f"semantic_to_key {len(s2k)}, key_to_semantic {len(k2s)}")
+    if cb.get("n_concepts") != len(toc):
+        out.append(f"codebook n_concepts {cb.get('n_concepts')} != {len(toc)} toc.tsv rows")
+    return out
+
+
+def check_codebook(toc, prose, errors, notes):
+    """The codebook agrees with toc.tsv; and, run every time, five deliberate breaks of the toc and the
+    codebook (a title, a semantic id, a missing row, a swapped codebook semantic id, a dropped codebook
+    decimal) must each be caught."""
+    import copy
+    cb = json.load(open(os.path.join(DOC, "codebook.json"), encoding="utf-8"))
+    for x in codebook_drift(toc, cb):
+        errors.append("codebook drift: " + x)
+    dec = next(d for d in toc if d in prose)
+    caught = []
+    for what, mutate in (("title", lambda t: t[dec].__setitem__("title", "A title the heading does not have")),
+                         ("semantic id", lambda t: t[dec].__setitem__("semantic_id", "altered-id")),
+                         ("missing row", lambda t: t.pop(dec))):
+        t = copy.deepcopy(toc); mutate(t); e = []
+        report_toc_drift(t, prose, e, [], [])
+        caught.append((what, bool(e)))
+    for what, mutate in (("codebook semantic id", lambda c: c["key_to_semantic"].__setitem__(c["decimal_to_key"][dec], "altered-id")),
+                         ("codebook decimal", lambda c: c["decimal_to_key"].pop(dec))):
+        c = copy.deepcopy(cb); mutate(c)
+        caught.append((what, bool(codebook_drift(toc, c))))
+    missed = [w for w, ok in caught if not ok]
+    if missed:
+        errors.append(f"toc/codebook check: deliberate break(s) not caught: {', '.join(missed)}")
+    else:
+        notes.append(f"toc/codebook check: {len(caught)} deliberate breaks caught at CC {dec} "
+                     f"({', '.join(w for w, _ in caught)})")
 
 
 # --- main --------------------------------------------------------------------
@@ -318,7 +386,7 @@ NON_CATALOGUE_SECTIONS = {
     "2.1":         "envelope fields, not dimension families",
     "4.1.3":       "already-rejected wire additions — registering them would be wrong",
     "4.1.5":       "rejected proposals from the stress test",
-    "4.4.3.4.3":   "delegated_scope classes (infra:* / agency:*), not dimensions",
+    "4.4.3.19":   "delegated_scope classes (infra:* / agency:*), not dimensions",
     "8.3.4":       "closed-gaps appendix — restatements of families registered elsewhere",
 }
 
@@ -600,6 +668,7 @@ def main():
     prose = load_prose()
     decs = set(toc) | set(prose)
     n_semid, n_title, n_annot = report_toc_drift(toc, prose, errors, warnings, notes)
+    check_codebook(toc, prose, errors, notes)
 
     path = os.path.join(DOC, "claims.tsv")
     with open(path, encoding="utf-8") as f:

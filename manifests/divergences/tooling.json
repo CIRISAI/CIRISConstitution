@@ -1,0 +1,161 @@
+{
+ "_meta": {
+  "contract": "each entry is one test: build `case`, ask `ask`, assert `expect_kernel`",
+  "implementer": "tooling",
+  "source": "manifests/divergences.json",
+  "row_form": "every row has `id`, `kind`, `signer`, `names` (the ids it names) and `family`. Kinds:\n    keyrec     a key's own record (`identity_type`, and `node` for a component of a node); admitted by possession\n    offer, accept, withdraw, unseat, cosign\n               the seat rows of formal/causal_kernel/seat.py, with its fields (`to`, `scope`, `obj`, `conf`,\n               `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)\n    fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:\n               `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,\n               `build_manifest_hash`, `head`, `leaf`, `ref`, `delegate`, `proposal`, `expires_at` (a row's own stated\n               end), `at` (a signed instant, read only by a shipped fold or a shipped `_at` token; any row may carry\n               one, and a row without one is read as signed before every row that has one)\n    landing, reversal, claim, trust, receipt\n               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge, a key's\n               statement that it holds the rows it names, at its own instant `at`\nA `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.",
+  "verdicts": {
+   "state": "admitted | concludes nothing | withdrawn | recanted | refused | waits",
+   "stands": "stands | does not stand",
+   "audience": "served | not served",
+   "fold": "the value the fold gives",
+   "owed": "the effects owed, or nothing"
+  },
+  "count": 3
+ },
+ "returns": "To return an entry whose verdict you hold wrong, add a row to `formal/derivation/divergence_returns.tsv` with the entry's `id`, your implementer name, the date, what it `disputes` (case, expect_kernel or sentence), your counter-case as JSON rows in `counter_rows` with `counter_ask`, `their_verdict`, a one-line `reason` and `outcome` open. The entry then reads `disputed`, the kernel's verdict on your counter-case is recorded beside yours, and the text or the model is corrected or the entry stands.",
+ "vectors": [
+  {
+   "id": "tooling/identity:occurrence/transition attest guard",
+   "family": "identity:occurrence",
+   "where": "transition attest guard",
+   "kind": "door",
+   "case": {
+    "rows": [
+     {
+      "id": "pv",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "provenance:build_manifest:{target}",
+      "rooted": true,
+      "hash": "h1"
+     },
+     {
+      "id": "oc",
+      "kind": "fam",
+      "signer": "K",
+      "names": [
+       "pv"
+      ],
+      "family": "identity:occurrence",
+      "provenance": "pv",
+      "build_manifest_hash": "h2"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "oc"
+    }
+   },
+   "expect_kernel": "concludes nothing",
+   "expect_shipped": "admitted",
+   "kernel_parameter": {
+    "family": "identity:occurrence",
+    "gate": [
+     [
+      "provenance_matches"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "tooling/takedown_notice:{basis}/reaction on close(withhold)",
+   "family": "takedown_notice:{basis}",
+   "where": "reaction on close(withhold)",
+   "kind": "window",
+   "case": {
+    "rows": [
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "takedown_notice:{basis}"
+     },
+     {
+      "id": "l",
+      "kind": "landing",
+      "signer": "A",
+      "names": [
+       "n"
+      ],
+      "family": "landing",
+      "says": "withhold"
+     },
+     {
+      "id": "v",
+      "kind": "reversal",
+      "signer": "A",
+      "names": [
+       "n"
+      ],
+      "family": "reversal"
+     }
+    ],
+    "ask": {
+     "answer": "owed"
+    }
+   },
+   "expect_kernel": "nothing",
+   "expect_shipped": "destroy_bytes",
+   "kernel_parameter": {
+    "family": "takedown_notice:{basis}",
+    "owed": "withhold_close",
+    "unless": "notice_voided"
+   }
+  },
+  {
+   "id": "tooling/age_assurance:{level}:{band}:{version}/fold",
+   "family": "age_assurance:{level}:{band}:{version}",
+   "where": "fold",
+   "kind": "fold",
+   "case": {
+    "rows": [
+     {
+      "id": "aw",
+      "kind": "fam",
+      "signer": "W",
+      "names": [],
+      "family": "age_assurance:{level}:{band}:{version}",
+      "leaf": "witness",
+      "level": "provider",
+      "band": "adult",
+      "subject": "S"
+     },
+     {
+      "id": "as",
+      "kind": "fam",
+      "signer": "S",
+      "names": [],
+      "family": "age_self_declared:band:{band}:{version}",
+      "leaf": "self",
+      "level": "self",
+      "band": "minor",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "subject": "S",
+     "answer": "fold"
+    }
+   },
+   "expect_kernel": "minor",
+   "expect_shipped": "adult",
+   "kernel_parameter": {
+    "family": "age_assurance:{level}:{band}:{version}",
+    "fold": "age_band",
+    "mode": "witness_then_self_lowers"
+   }
+  }
+ ],
+ "not_runnable": [
+  {
+   "id": "tooling/membership:{stage}/guard[leaf=widening on a stalled roster]",
+   "status": "stated",
+   "reason": "a stalled roster (T7) is no answer of the kernel model and no condition of the guard grammar; its condition reads a count of active founders over a margin (a named limit in CC 8.3.4)",
+   "cc_ref": "CC 3.2",
+   "quote": "So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat."
+  }
+ ]
+}

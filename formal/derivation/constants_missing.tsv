@@ -1,0 +1,24 @@
+# Numbers with a unit the Parts state as a parameter and constitution/constants.tsv did not hold, found by
+# scanning prose sentences with a parameter cue (at most, default, window, cap, floor, within, MUST ...) and the
+# named parameters (*_secs, *_bytes, *_ms ...). status: added (a row of constants.tsv) or listed (why not added).
+# No parameter was found stated with two different values; the recorded parameter conflicts are all already rows.
+name_proposed	value	unit	home	sentence	status
+clock_skew_tolerance_secs	300	s	2.6.7	The maximum tolerated skew between attester clock and consumer clock for a freshness check is ±5 minutes by default.	added; restated with the same value in CC 3.1.3.1, 5.3.1, 5.3.2.3
+owner_abandonment_window_floor_secs	90	days	3.2	The window's floor is **90 days**.	added
+accord_drill_liveness_bands	0–90 / 90–180 / 180+	days	3.2	The accord drills are the liveness signal, banded like every other signal in the system: **0–90 days green · 90–180 yellow · 180+ or never red**.	added
+halt_fuse_secs	86400	s	4.2.1.1	`halt_fuse_secs` is a charter member whose **absence means 86400**, 24 hours, as a constant of this document	added; restated with the same value in CC 5.3.x (part 5 line 663) and as 'the 24-hour fuse' in CC 4.5.3
+moderator_election_window_secs	24	h	4.5.13	the node's own 24 h since it first held the lock have passed	added; CC 4.5.4 'a 24 h ranked-choice vote' agrees
+federation_promotion_window_secs	24	hours	5.3.2.2	MUST promote to federation-tier within **the window (24 hours by default, operator-tunable)**	added
+sth_cadence_chunks, sth_cadence_secs	64; 2	chunks; s	5.3.3.8	Default pins: **K=64, T=2s** (operator-tunable)	added; CC 1.13.3.1 restates T=2 s (Part 1, not edited)
+av_binding_max_bytes	8192	bytes	5.3.3.5	The whole encoding is at most 8192 bytes and trailing bytes are refused.	added
+av_binding_parts_max, av_binding_parts_in_flight	64; 4	parts	5.3.3.5	at most 64 parts ... (at most four in flight	added
+multiplicity_n_min	2	sources	6.1.2.3	**`n_min`** — substrate-side and corpus-kind-pinned (default `2`).	added
+tier2_reactivation_time_to_act_secs	30	minutes	4.2.1.3	A Tier-2 lone-signature reactivation within its 30-minute time-to-act therefore resumes an operator-tier pause only.	listed: 'its' time-to-act points at a definition this sentence does not give (the Tier-2 role of the Annex F tiers); the home is unsettled
+accord_widening_severance_window_secs	72	h	4.2.1	takes effect only after a published severance window (72 h baseline, the CC 4.2.6 cadence)	listed: names the CC 4.2.6 cadence, which is admission_freshness_window_secs (W = 259,200 s); the same value, not a new constant
+mesh_config_emergency_ttl_secs (restated)	72	h	4.2.1	Emergency relief is threshold-1 on the announce carrier, TTL ≤ 72 h, not renewable back-to-back by the same holder.	listed: agrees with mesh_config_emergency_ttl_secs (home 3.1.9.2); a restatement
+tvec_regulator_notice_secs	1	hour	4.5.3	national regulator notification within 1 hour	listed: an external regulation's deadline, not this document's parameter
+mls_watch_tick_ms	250	ms	5.3.3.5	at most one 250 ms watch tick	listed: stated as the bound of a residual exposure, not as a parameter a node is set to
+shaping budget table (rho, W, byte budget per class)	per class	s; B/s	5.4.3	| Budget class | ρ | W | Byte budget per link |	listed: already a table of the Part (CC 5.4.3); a constants row per cell would state each value twice until the Part cites the table
+pdma_log_publication_days	180	days	1.3	publishes (or exposes by API) redacted PDMA logs and WBD tickets within 180 days	listed: Part 1 (the owner's)
+collective_action_mitigation_days	30	days	7.3.4	mitigation strategies for the collective action within 30 days of initiation	listed: Part 7 stance text; a duty's deadline for people, not a node's constant
+annex process deadlines (CC 8.8.1, 8.8.2, 8.8.4 to 8.8.7)	21 d, 60 d, 24 months, 30 d, 7 d, 24 h, 72 h, 5 min, 60 s, 4 h, 14 d, 48 h, 15 d	various	8.8	e.g. 'reasoned judgment within 21 days'; 'External audit every 24 months'; 'Rollback ... must complete within 5 min'	listed: 27 deadlines of the annex profiles' human processes, each stated once; not a node's constant (formal/KERNEL.md section 1 concerns config a node reads)

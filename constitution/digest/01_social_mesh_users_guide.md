@@ -10,7 +10,7 @@ A social network and a personal store in one, with no company behind it. Your me
 
 ## Your key and your devices
 
-Your key is your signature; nothing happens in your name without it. Each device you own carries its own key under your identity, and together they form your roster (CC 3.3.6.3). You add a device by approving it from one you already have, with a short code your own device derives, never one the new device supplies (CC 3.2). A stolen device cannot evict the others, and lost devices are recoverable; with three or more keys a thief is outvoted, with two the network holds still until you act (CC 3.3.6.3, the self-roster model). *[works today]* You choose which devices announce. An announced device can be found by strangers; an unannounced one exists for you and the circles you are in, and nobody else can tell it is there (CC 5.4.6). *[works today]*
+Your key is your signature; nothing happens in your name without it. Each device you own carries its own key under your identity, and together they form your roster (CC 3.3.6.4). You add a device by approving it from one you already have, with a short code your own device derives, never one the new device supplies (CC 3.2). A stolen device cannot evict the others, and lost devices are recoverable; with three or more keys a thief is outvoted, with two the network holds still until you act (CC 3.3.6.4, the self-roster model). *[works today]* You choose which devices announce. An announced device can be found by strangers; an unannounced one exists for you and the circles you are in, and nobody else can tell it is there (CC 5.4.6). *[works today]*
 
 ## Finding people, and being found
 
@@ -18,7 +18,7 @@ You are reachable by your federation id only if you announced a device. Someone 
 
 ## Talking
 
-Two contacts share a room of two; every message is a signed row only the two of you can read, and taking the contact away leaves the room standing with nothing able to leave it (CC 4.4.3.2.1). *[works today]* A room with more people is a community, sealed to its members; the people in a public room, which anyone may found and anyone may join, read it in the clear (CC 3.1.3.2, 4.4.3.2.1). *[being built]* Live video and voice reach a room of thousands peer to peer: the members themselves form the tree that carries it, every hop sealed, and nobody in the middle can read it (CC 5.3.3, 6.1.6). *[works today in the substrate; the screens are being built]*
+Two contacts share a room of two; every message is a signed row only the two of you can read, and taking the contact away leaves the room standing with nothing able to leave it (CC 4.4.3.4). *[works today]* A room with more people is a community, sealed to its members; the people in a public room, which anyone may found and anyone may join, read it in the clear (CC 3.1.3.2, 4.4.3.4). *[being built]* Live video and voice reach a room of thousands peer to peer: the members themselves form the tree that carries it, every hop sealed, and nobody in the middle can read it (CC 5.3.3, 6.1.6). *[works today in the substrate; the screens are being built]*
 
 ## Rooms: founding, joining, leaving
 
@@ -30,7 +30,7 @@ A post is a row in a room. A reply is a row that names it; a reaction is a score
 
 ## Files and photos
 
-Your files live in a circle like everything else. A file's row says which of your devices hold its bytes, and a large file crosses between devices in pieces with a receipt for each (CC 3.1.3.3, 2.6.1.3). *[works today]* Nothing is stored on your device that you did not agree to, except what you wrote yourself; your device never holds a stranger's data for them (CC 5.2). *[works today]*
+Your files live in a circle like everything else. A file's row says which of your devices hold its bytes, and a large file crosses between devices in pieces with a receipt for each (CC 3.1.3.3, 2.6.1.4). *[works today]* Nothing is stored on your device that you did not agree to, except what you wrote yourself; your device never holds a stranger's data for them (CC 5.2). *[works today]*
 
 ## When something is wrong
 
@@ -38,7 +38,7 @@ You have two acts, and they are separate choices. **File a report privately** wi
 
 ## What is said about you
 
-Any row that names you is visible to you: that it exists, what kind it is, what follows from it, and who answers for it. If it is another person's opinion you may retract it. If it is a moderator's record, an authority's act such as a licence or a conviction, or something several people signed together, you contest it instead, by asking for reconsideration, and you can never make it disappear (CC 4.5.5, 2.4.1.1). A business never retracts a review of itself; it contests, and your reader discounts a flurry of reviews from one source (CC 4.4.3.2.8, 6.1.2). *[a rule, no code yet, with the model proved]*
+Any row that names you is visible to you: that it exists, what kind it is, what follows from it, and who answers for it. If it is another person's opinion you may retract it. If it is a moderator's record, an authority's act such as a licence or a conviction, or something several people signed together, you contest it instead, by asking for reconsideration, and you can never make it disappear (CC 4.5.5, 2.4.1.1). A business never retracts a review of itself; it contests, and your reader discounts a flurry of reviews from one source (CC 4.4.3.12, 6.1.2). *[a rule, no code yet, with the model proved]*
 
 ## Deciding together
 
@@ -46,7 +46,7 @@ Every decision a room makes takes one shape: enough yeses land it at once, enoug
 
 ## Businesses and the people who act for them
 
-A business, a school or a court is a room that acts as one voice. It licenses, it reviews, it hires; it never removes a member alone, and against a member it acts only with a signature from outside itself (CC 4.4.3.2.8). A licence it issues is honoured by your reader only where your own trust reaches it; a licence confers no trust by itself (CC 4.4.3.8). *[being built]*
+A business, a school or a court is a room that acts as one voice. It licenses, it reviews, it hires; it never removes a member alone, and against a member it acts only with a signature from outside itself (CC 4.4.3.12). A licence it issues is honoured by your reader only where your own trust reaches it; a licence confers no trust by itself (CC 4.4.3.34). *[being built]*
 
 ## Your agent
 

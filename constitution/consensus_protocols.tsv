@@ -1,0 +1,11 @@
+# The kinds of `consensus_protocol` a group record may declare, typed: who is counted and the rule the count must meet.
+# Built into manifests/governance_policy.json by tools/build_governance_policy.py; each quote must stand verbatim in the cited section.
+# rule: role_at:{role}:{n} | all | strict_majority | voices:{m} | weight:{rubric} | predicate:{id} | joiner. removal_rule adds all_and_majority.
+# `unstated` where the text gives no rule for a removal under the kind.
+kind	count_set	rule	removal_set	removal_rule	cc_ref	quote
+founder_only	founder	role_at:founder:1	unstated	unstated	CC 3.3.4	Founders are the sole admission authority
+unanimous	member	all	member-target	all_and_majority	CC 3.3.4	every member other than the target signs *and* those signers are a strict majority of the roster
+majority	member	strict_majority	member	strict_majority	CC 3.3.4	> 50% of the members at the roster head the row names must sign.
+quorum:{m}/{n}	member	voices:{m}	member	voices:{m}	CC 3.3.4	Any `m` members must sign, `m` an absolute count
+weighted:{rubric}	member	weight:{rubric}	member	weight:{rubric}	CC 3.3.4	The sum of the signing members' weights must reach a threshold.
+open:self_admit	joiner	joiner	unstated	unstated	CC 4.5.13	anyone signs their own admission

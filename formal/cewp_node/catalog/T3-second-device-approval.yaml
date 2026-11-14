@@ -25,7 +25,7 @@ topology:
   nodes:
     - {id: A1, dials: [C],     accepts: HA, announced: true}
     # A2 joins alice by approval, minting a ROSTER KEY of alice's fedID
-    # (`<fedID>-<fp>`, CC 3.3.6.3), and announces itself: persist v59's steward
+    # (`<fedID>-<fp>`, CC 3.3.6.4), and announces itself: persist v59's steward
     # gate resolves a roster key to the fedID (CIRISPersist#1099).
     - {id: A2, dials: [C, A1], accepts: HA, announced: true}
     - {id: B,  dials: [C, A1], accepts: HA, announced: true}
@@ -44,7 +44,7 @@ topology:
     - {rel: join_approve, person: alice, device: A2}
     - {rel: join_complete, person: alice, device: A2}
     # The joined device's first owner act: consent signed by its roster key as
-    # the fedID (CC 3.3.6.3, CIRISServer#793).
+    # the fedID (CC 3.3.6.4, CIRISServer#793).
     - {rel: peered, between: [A2, C]}
     - {rel: peered, between: [A1, A2]}
     - {rel: roster, person: alice, visible_from: [B], visible_from_complete: true}   # CSD-037: alice's devices list each other; bob lists the ANNOUNCED ones

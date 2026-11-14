@@ -1,4 +1,4 @@
-# T10 — a stolen device: the owner evicts it by the quorum path (CC 3.3.6.3;
+# T10 — a stolen device: the owner evicts it by the quorum path (CC 3.3.6.4;
 # catalogue v2, CC formal/roster). alice's genesis key is roster key one; two
 # devices join by approval (T3's flow), so her roster holds three keys and both
 # paths are open. A3 is stolen WITH its authentication (a staging: the key stays

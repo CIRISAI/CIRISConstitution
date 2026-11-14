@@ -33,8 +33,8 @@
  ],
  "notes": [
   "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
-  "person authority: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design",
-  "person practitioner: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+  "person authority: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design",
+  "person practitioner: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design"
  ],
  "promised_atoms": {
   "community.formed": {
@@ -54,14 +54,14 @@
   "authority.licensing": {
    "plane": "authority",
    "state_predicate": "licence.state=held under an affiliated authority",
-   "cc_ref": "2.4.1.2.1 4.4.3.2.8",
+   "cc_ref": "2.4.1.3 4.4.3.12",
    "in_state_table": true,
    "plane_models": "authority_tree"
   },
   "delegation.chain": {
    "plane": "authority",
    "state_predicate": "∃ chain: delegation.link=live, length ≥ 2",
-   "cc_ref": "4.4.3.4.3",
+   "cc_ref": "4.4.3.19",
    "in_state_table": true,
    "plane_models": "authority_tree"
   }

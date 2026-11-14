@@ -29,8 +29,8 @@
  ],
  "notes": [
   "root R: kind key (one holder key): no roster machine applies; standing is by the key alone",
-  "person guardian: two keys — a theft is the stated two-key stalemate (CC 3.3.6.3)",
-  "person child: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+  "person guardian: two keys — a theft is the stated two-key stalemate (CC 3.3.6.4)",
+  "person child: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design"
  ],
  "promised_atoms": {
   "household.formed": {
@@ -71,7 +71,7 @@
   "person.multi_device": {
    "plane": "self",
    "state_predicate": "self.roster_size∈{two,three_or_more}",
-   "cc_ref": "3.3.6.3",
+   "cc_ref": "3.3.6.4",
    "in_state_table": true,
    "plane_models": "self_roster"
   },

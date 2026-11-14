@@ -1,0 +1,17 @@
+property	break	verdict
+1	draw_all	caught
+2	drop_exits	caught
+3	confirm_exit	caught
+3	confirm_ignores_when	caught
+3	confirm_none	caught
+4	first_held	caught
+4	ignore_audience	caught
+5	not_sent_as_value	caught
+6	waiting_as_done	caught
+6	waiting_as_refused	caught
+6	waiting_unnamed	caught
+#	story steps	105
+#	grid views	46000
+#	generated worlds	720
+#	breaches	0
+#	ways back the text states that no transition of the table offers (not drawable)	25

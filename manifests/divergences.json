@@ -1,0 +1,8472 @@
+{
+ "_meta": {
+  "contract": "each entry is one test: build `case`, ask `ask`, assert `expect_kernel`",
+  "generator": "tools/build_divergences.py (cases: tools/divergence_cases.py; oracle: tools/divergence_oracle.py over formal/causal_kernel)",
+  "row_form": "every row has `id`, `kind`, `signer`, `names` (the ids it names) and `family`. Kinds:\n    keyrec     a key's own record (`identity_type`, and `node` for a component of a node); admitted by possession\n    offer, accept, withdraw, unseat, cosign\n               the seat rows of formal/causal_kernel/seat.py, with its fields (`to`, `scope`, `obj`, `conf`,\n               `under`, `cosigners`, `head`, `policy`, `cuts`, `on`)\n    fam        a row of the family the parameter governs, or of another family the case needs; fields the gate reads:\n               `subject`, `subjects`, `group`, `root`, `content`, `blob`, `for_key`, `binding`, `provenance`,\n               `build_manifest_hash`, `head`, `leaf`, `ref`, `delegate`, `proposal`, `expires_at` (a row's own stated\n               end), `at` (a signed instant, read only by a shipped fold or a shipped `_at` token; any row may carry\n               one, and a row without one is read as signed before every row that has one)\n    landing, reversal, claim, trust, receipt\n               a window's landing, a row voiding a notice, a source's statement, a reader's trust edge, a key's\n               statement that it holds the rows it names, at its own instant `at`\nA `withdraw` or `recant` naming a `fam` row of the governed family is judged by the parameter's lifecycle.",
+  "verdicts": {
+   "state": "admitted | concludes nothing | withdrawn | recanted | refused | waits",
+   "stands": "stands | does not stand",
+   "audience": "served | not served",
+   "fold": "the value the fold gives",
+   "owed": "the effects owed, or nothing"
+  },
+  "orders": "every arrival order of the case up to 720 (a fixed sample above); `kernel` must hold one verdict, and `shipped_judged_on_arrival` is the shipped parameter judged once at admission against every row held",
+  "total": 87,
+  "by_status": {
+   "runnable": 72,
+   "stated": 11,
+   "wording-only": 4
+  },
+  "by_implementer": {
+   "agent": 1,
+   "edge": 1,
+   "persist": 81,
+   "tooling": 4
+  },
+  "by_kind": {
+   "audience": 4,
+   "cosign": 6,
+   "count": 3,
+   "door": 18,
+   "fold": 9,
+   "freshness": 1,
+   "lifecycle": 10,
+   "signer": 29,
+   "subject": 1,
+   "window": 2,
+   "wording-only": 4
+  },
+  "order_dependent_shipped": 1,
+  "conflict_rows_with_implementer_carrier": 55,
+  "conflict_rows_mapped": 55,
+  "source_1_cells_with_disagree_cite": 0,
+  "source_1_conflict_rows_naming_model_families": 33,
+  "source_1_rows_whose_entries_name_another_family": [],
+  "source_3_rows_read": {
+   "seven_rankings_shipped.tsv": 22,
+   "models_vs_text.tsv (this repository's models; not entered)": 46
+  }
+ },
+ "entries": [
+  {
+   "id": "persist/watchlist:{id}/signer_rule",
+   "implementer": "persist",
+   "family": "watchlist:{id}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C365",
+    "C388"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:moderate@group"
+     ],
+     [
+      "seat:takedown@group"
+     ]
+    ],
+    "cc_ref": "CC 3.1.9.4",
+    "quote": "Enable/disable is signed by the CC 4.5.5 `moderate`/`takedown` authority and revocable by `withdraws`",
+    "param": {
+     "family": "watchlist:{id}",
+     "gate": [
+      [
+       "seat:moderate@group"
+      ],
+      [
+       "seat:takedown@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv watchlist:{id} 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "watchlist:{id}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A"
+      ],
+      "scope": "duty",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "duty",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "w",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "g",
+       "ku"
+      ],
+      "family": "watchlist:{id}",
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "w"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/age_self_declared:band:{band}:{version}/signer_rule",
+   "implementer": "persist",
+   "family": "age_self_declared:band:{band}:{version}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C364",
+    "C422"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "self"
+     ]
+    ],
+    "cc_ref": "CC 3.4.11",
+    "quote": "Admitted iff the signer acts for the subject (the subject's own occurrence or an admitted occurrence of it).",
+    "param": {
+     "family": "age_self_declared:band:{band}:{version}",
+     "gate": [
+      [
+       "self"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv age_self_declared:band:{band}:{version} 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "age_self_declared:band:{band}:{version}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "d",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "ku"
+      ],
+      "family": "age_self_declared:band:{band}:{version}",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "d"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/wa_adjudication:{state}/signer_rule[leaf=petition]",
+   "implementer": "persist",
+   "family": "wa_adjudication:{state}",
+   "where": "signer_rule[leaf=petition]",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C366"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "self"
+     ]
+    ],
+    "cc_ref": "CC 3.1.9.4",
+    "quote": "`petition` is the petitioner's own row that opens the ownership-reclaim ceremony",
+    "param": {
+     "family": "wa_adjudication:{state}",
+     "gate": {
+      "petition": [
+       [
+        "self"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "seat_role(wa) quorum, re-derived from this node's state",
+    "source": "formal/derivation/census_v61.tsv wa_adjudication:{state} 3_signer_rule",
+    "census_cell": "seat_role(wa) quorum, re-derived from this node's state",
+    "param": {
+     "family": "wa_adjudication:{state}",
+     "gate": {
+      "petition": [
+       [
+        "seat:wa@root"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kp",
+      "kind": "keyrec",
+      "signer": "P",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "p",
+      "kind": "fam",
+      "signer": "P",
+      "names": [
+       "kp",
+       "rt"
+      ],
+      "family": "wa_adjudication:{state}",
+      "subject": "P",
+      "root": "Rt",
+      "leaf": "petition"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "p"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/regime:{artifact}:{version}/signer_rule",
+   "implementer": "persist",
+   "family": "regime:{artifact}:{version}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C445",
+    "C484"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "type:substrate_persist"
+     ]
+    ],
+    "cc_ref": "CC 3.1.9.2",
+    "quote": "**reserved — substrate-steward-emitted**, the emitter rule pinned at mint per R2(a), so the ProducerSteward default never applies",
+    "param": {
+     "family": "regime:{artifact}:{version}",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv regime:{artifact}:{version} 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "regime:{artifact}:{version}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "r",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "ku"
+      ],
+      "family": "regime:{artifact}:{version}"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "r"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/evidence:{suite}:{kind}:{cell}:{prefix}/signer_rule",
+   "implementer": "persist",
+   "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C446"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.1.5.5",
+    "quote": "Emitted at `federation` scope by a key holding `infra:attest`, delegated by the root or conferred by an accord co-scrub of its key record",
+    "param": {
+     "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
+     "gate": [
+      [
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv evidence:{suite}:{kind}:{cell}:{prefix} 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "e",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "ku",
+       "rt"
+      ],
+      "family": "evidence:{suite}:{kind}:{cell}:{prefix}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "e"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/slashing:{outcome}/signer_rule",
+   "implementer": "persist",
+   "family": "slashing:{outcome}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C447",
+    "C458"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:slash@group"
+     ]
+    ],
+    "cc_ref": "CC 4.5.5",
+    "quote": "A duty action (`takedown_notice`, `moderation:*`, `reconsideration:*`, `slashing:*`, `quarantine:*`) is admitted **iff** one holds **positively**",
+    "param": {
+     "family": "slashing:{outcome}",
+     "gate": [
+      [
+       "seat:slash@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "any_registered x none x {}",
+    "source": "formal/derivation/census_v61.tsv slashing:{outcome} 3_signer_rule",
+    "census_cell": "any_registered x none x {}",
+    "param": {
+     "family": "slashing:{outcome}",
+     "gate": [
+      [
+       "registered"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A"
+      ],
+      "scope": "duty",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "duty",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "s",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "g",
+       "ku"
+      ],
+      "family": "slashing:{outcome}",
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "s"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/consent:state:{stance}/signer_rule[stance=granted|revoked]",
+   "implementer": "persist",
+   "family": "consent:state:{stance}",
+   "where": "signer_rule[stance=granted|revoked]",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C449",
+    "C497"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "self"
+     ],
+     [
+      "seat:consent:state@subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.5",
+    "quote": "`consent:state:granted` / `consent:state:revoked`, `consent:scope:*`, `consent:stream:*` MUST be emitted by a `subject_key_id` of the target Contribution or a `delegates_to` chain rooted at one",
+    "param": {
+     "family": "consent:state:{stance}",
+     "gate": {
+      "granted": [
+       [
+        "self"
+       ],
+       [
+        "seat:consent:state@subject"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "self | owner_of_subject(for_key_id) x none x {}",
+    "source": "formal/derivation/census_v61.tsv consent:state:{stance} 3_signer_rule",
+    "census_cell": "self | owner_of_subject(for_key_id) x none x {}; W on the owner's standing",
+    "param": {
+     "family": "consent:state:{stance}",
+     "gate": {
+      "granted": [
+       [
+        "self"
+       ],
+       [
+        "owner_of_subject"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "S",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "consent:state",
+      "obj": "S",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "consent:state",
+        "S"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "c",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "dl",
+       "da"
+      ],
+      "family": "consent:state:{stance}",
+      "subject": "S",
+      "leaf": "granted"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "c"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/consent:state:{stance}/signer_rule[stance=expired]",
+   "implementer": "persist",
+   "family": "consent:state:{stance}",
+   "where": "signer_rule[stance=expired]",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C450",
+    "C485"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.5",
+    "quote": "**`consent:state:expired`** is signed by the node that holds the grant and saw it lapse, under `infra:attest`",
+    "param": {
+     "family": "consent:state:{stance}",
+     "gate": {
+      "expired": [
+       [
+        "seat:infra:attest@root"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "self | owner_of_subject(for_key_id) x none x {}",
+    "source": "formal/derivation/census_v61.tsv consent:state:{stance} 3_signer_rule",
+    "census_cell": "self | owner_of_subject(for_key_id) x none x {}; W on the owner's standing",
+    "param": {
+     "family": "consent:state:{stance}",
+     "gate": {
+      "expired": [
+       [
+        "self"
+       ],
+       [
+        "owner_of_subject"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "N"
+      ],
+      "scope": "infra:attest",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "N",
+        "infra:attest",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "N",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "x",
+      "kind": "fam",
+      "signer": "N",
+      "names": [
+       "a1"
+      ],
+      "family": "consent:state:{stance}",
+      "subject": "S",
+      "root": "Rt",
+      "leaf": "expired"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "x"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/consent:community_trust/signer_rule",
+   "implementer": "persist",
+   "family": "consent:community_trust",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C496"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "owner_of_subject"
+     ],
+     [
+      "self"
+     ]
+    ],
+    "cc_ref": "CC 3.3.1",
+    "quote": "The node-authored form stays valid, and the fold below groups both forms by `attested_key_id`.",
+    "param": {
+     "family": "consent:community_trust",
+     "gate": [
+      [
+       "owner_of_subject"
+      ],
+      [
+       "self"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "owner_of_subject (binding in force at the signed instant) x none x {}",
+    "source": "formal/derivation/census_v61.tsv consent:community_trust 3_signer_rule",
+    "census_cell": "owner_of_subject (binding in force at the signed instant) x none x {}",
+    "param": {
+     "family": "consent:community_trust",
+     "gate": [
+      [
+       "owner_of_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "t",
+      "kind": "fam",
+      "signer": "N",
+      "names": [],
+      "family": "consent:community_trust",
+      "subject": "N"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "t"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 1,
+    "of": 1,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/takedown_notice:{basis}/signer_rule",
+   "implementer": "persist",
+   "family": "takedown_notice:{basis}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C521",
+    "C536"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "subject_of_content"
+     ],
+     [
+      "seat:takedown@group"
+     ]
+    ],
+    "cc_ref": "CC 4.5.5",
+    "quote": "the content's **authoritative** subject set `subject_of(content_sha256)`",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": [
+      [
+       "subject_of_content"
+      ],
+      [
+       "seat:takedown@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(takedown) x delegates_to(takedown) x {} (takedown: outside vocabulary)",
+    "source": "formal/derivation/census_v61.tsv takedown_notice:{basis} 3_signer_rule",
+    "census_cell": "seat_role(takedown) x delegates_to(takedown) x {} (takedown: outside vocabulary); steward_purge leaf: none (held shut)",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": [
+      [
+       "seat:takedown@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A"
+      ],
+      "scope": "duty",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "duty",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "ct",
+      "kind": "fam",
+      "signer": "X",
+      "names": [],
+      "family": "content",
+      "subjects": [
+       "S"
+      ]
+     },
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "g",
+       "ct"
+      ],
+      "family": "takedown_notice:{basis}",
+      "group": "g",
+      "content": "ct"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "n"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/community:listing/signer_rule",
+   "implementer": "persist",
+   "family": "community:listing",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C566"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:moderate@group"
+     ]
+    ],
+    "cc_ref": "CC 3.1.1",
+    "quote": "signed by a current `moderate`-holder of the community it names; one live row per community",
+    "param": {
+     "family": "community:listing",
+     "gate": [
+      [
+       "seat:moderate@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}",
+    "source": "formal/derivation/census_v61.tsv community:listing 3_signer_rule",
+    "census_cell": "seat_role(moderate) | founder (founder: outside vocabulary) x none x {}",
+    "param": {
+     "family": "community:listing",
+     "gate": [
+      [
+       "seat:moderate@group"
+      ],
+      [
+       "seat:founder@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "F",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "F"
+      ],
+      "scope": "founder",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "F",
+        "founder",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "l",
+      "kind": "fam",
+      "signer": "F",
+      "names": [
+       "g"
+      ],
+      "family": "community:listing",
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "l"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/system:*/signer_rule",
+   "implementer": "persist",
+   "family": "system:*",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C486",
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "component_of_subject",
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "a node, about itself or about a grant it holds | `infra:attest`",
+    "param": {
+     "family": "system:*",
+     "gate": [
+      [
+       "component_of_subject",
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains substrate_persist (no vocabulary value) x none x {}",
+    "source": "formal/derivation/census_v61.tsv system:* 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains substrate_persist (no vocabulary value) x none x {}; CC self-report attester == subject: GAP",
+    "param": {
+     "family": "system:*",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ke",
+      "kind": "keyrec",
+      "signer": "E",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "substrate_edge",
+      "node": "N"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "E"
+      ],
+      "scope": "infra:attest",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "E",
+        "infra:attest",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "E",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "sy",
+      "kind": "fam",
+      "signer": "E",
+      "names": [
+       "ke",
+       "a1"
+      ],
+      "family": "system:*",
+      "subject": "N",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "sy"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/audit_chain:hash_continuity/signer_rule",
+   "implementer": "persist",
+   "family": "audit_chain:hash_continuity",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "a node, about itself or about a grant it holds | `infra:attest`",
+    "param": {
+     "family": "audit_chain:hash_continuity",
+     "gate": [
+      [
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains substrate_persist",
+    "source": "formal/derivation/census_v61.tsv audit_chain:hash_continuity 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains substrate_persist (no vocabulary value) x none x {}; CC self-report attester == subject: GAP",
+    "param": {
+     "family": "audit_chain:hash_continuity",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kn",
+      "kind": "keyrec",
+      "signer": "N",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "substrate_persist"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "N",
+      "names": [
+       "kn",
+       "rt"
+      ],
+      "family": "audit_chain:hash_continuity",
+      "subject": "N",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/corpus_health:n_eff_measurable/signer_rule",
+   "implementer": "persist",
+   "family": "corpus_health:n_eff_measurable",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "a node, about itself or about a grant it holds | `infra:attest`",
+    "param": {
+     "family": "corpus_health:n_eff_measurable",
+     "gate": [
+      [
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains substrate_persist",
+    "source": "formal/derivation/census_v61.tsv corpus_health:n_eff_measurable 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains substrate_persist (no vocabulary value) x none x {}; CC self-report attester == subject: GAP",
+    "param": {
+     "family": "corpus_health:n_eff_measurable",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kn",
+      "kind": "keyrec",
+      "signer": "N",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "substrate_persist"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "N",
+      "names": [
+       "kn",
+       "rt"
+      ],
+      "family": "corpus_health:n_eff_measurable",
+      "subject": "N",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/federation_directory:replication_lag/signer_rule",
+   "implementer": "persist",
+   "family": "federation_directory:replication_lag",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "a node, about itself or about a grant it holds | `infra:attest`",
+    "param": {
+     "family": "federation_directory:replication_lag",
+     "gate": [
+      [
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains substrate_persist",
+    "source": "formal/derivation/census_v61.tsv federation_directory:replication_lag 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains substrate_persist (no vocabulary value) x none x {}; CC self-report attester == subject: GAP",
+    "param": {
+     "family": "federation_directory:replication_lag",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kn",
+      "kind": "keyrec",
+      "signer": "N",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "substrate_persist"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "N",
+      "names": [
+       "kn",
+       "rt"
+      ],
+      "family": "federation_directory:replication_lag",
+      "subject": "N",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/identity_continuity:relational_anchor/signer_rule",
+   "implementer": "persist",
+   "family": "identity_continuity:relational_anchor",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "a node, about itself or about a grant it holds | `infra:attest`",
+    "param": {
+     "family": "identity_continuity:relational_anchor",
+     "gate": [
+      [
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains substrate_persist",
+    "source": "formal/derivation/census_v61.tsv identity_continuity:relational_anchor 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains substrate_persist (no vocabulary value) x none x {}; CC self-report attester == subject: GAP",
+    "param": {
+     "family": "identity_continuity:relational_anchor",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kn",
+      "kind": "keyrec",
+      "signer": "N",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "substrate_persist"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "N",
+      "names": [
+       "kn",
+       "rt"
+      ],
+      "family": "identity_continuity:relational_anchor",
+      "subject": "N",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/hard_case:{kind}/signer_rule",
+   "implementer": "persist",
+   "family": "hard_case:{kind}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "a node, about itself or about a grant it holds | `infra:attest`",
+    "param": {
+     "family": "hard_case:{kind}",
+     "gate": [
+      [
+       "seat:infra:attest@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains substrate_persist",
+    "source": "formal/derivation/census_v61.tsv hard_case:{kind} 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains substrate_persist x delegates_to(infra:record_hard_case) when about another party x {}; legacy attestation_type spelling only (scores-dimension form ungated, BELIEVED)",
+    "param": {
+     "family": "hard_case:{kind}",
+     "gate": [
+      [
+       "type:substrate_persist"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kn",
+      "kind": "keyrec",
+      "signer": "N",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "substrate_persist"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "N",
+      "names": [
+       "kn",
+       "rt"
+      ],
+      "family": "hard_case:{kind}",
+      "subject": "N",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/detection:correlated_action:{axis}/signer_rule",
+   "implementer": "persist",
+   "family": "detection:correlated_action:{axis}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:detect@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`infra:detect`",
+    "param": {
+     "family": "detection:correlated_action:{axis}",
+     "gate": [
+      [
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
+    "source": "formal/derivation/census_v61.tsv detection:correlated_action:{axis} 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect) x {} (detect: duty outside vocabulary)",
+    "param": {
+     "family": "detection:correlated_action:{axis}",
+     "gate": [
+      [
+       "type:lenscore_detector",
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kd",
+      "kind": "keyrec",
+      "signer": "D",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "infra:detect",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "D",
+        "infra:detect",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "kd",
+       "a1"
+      ],
+      "family": "detection:correlated_action:{axis}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/detection:distributive:access:{resource_type}/signer_rule",
+   "implementer": "persist",
+   "family": "detection:distributive:access:{resource_type}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:detect@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`infra:detect`",
+    "param": {
+     "family": "detection:distributive:access:{resource_type}",
+     "gate": [
+      [
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
+    "source": "formal/derivation/census_v61.tsv detection:distributive:access:{resource_type} 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect) x {} (detect: duty outside vocabulary)",
+    "param": {
+     "family": "detection:distributive:access:{resource_type}",
+     "gate": [
+      [
+       "type:lenscore_detector",
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kd",
+      "kind": "keyrec",
+      "signer": "D",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "infra:detect",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "D",
+        "infra:detect",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "kd",
+       "a1"
+      ],
+      "family": "detection:distributive:access:{resource_type}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/detection:hash_chain_integrity/signer_rule",
+   "implementer": "persist",
+   "family": "detection:hash_chain_integrity",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:detect@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`infra:detect`",
+    "param": {
+     "family": "detection:hash_chain_integrity",
+     "gate": [
+      [
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
+    "source": "formal/derivation/census_v61.tsv detection:hash_chain_integrity 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect) x {} (detect: duty outside vocabulary)",
+    "param": {
+     "family": "detection:hash_chain_integrity",
+     "gate": [
+      [
+       "type:lenscore_detector",
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kd",
+      "kind": "keyrec",
+      "signer": "D",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "infra:detect",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "D",
+        "infra:detect",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "kd",
+       "a1"
+      ],
+      "family": "detection:hash_chain_integrity",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/detection:intra_agent_consistency/signer_rule",
+   "implementer": "persist",
+   "family": "detection:intra_agent_consistency",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:detect@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`infra:detect`",
+    "param": {
+     "family": "detection:intra_agent_consistency",
+     "gate": [
+      [
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
+    "source": "formal/derivation/census_v61.tsv detection:intra_agent_consistency 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect) x {} (detect: duty outside vocabulary)",
+    "param": {
+     "family": "detection:intra_agent_consistency",
+     "gate": [
+      [
+       "type:lenscore_detector",
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kd",
+      "kind": "keyrec",
+      "signer": "D",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "infra:detect",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "D",
+        "infra:detect",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "kd",
+       "a1"
+      ],
+      "family": "detection:intra_agent_consistency",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/detection:{detector}/signer_rule",
+   "implementer": "persist",
+   "family": "detection:{detector}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:detect@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`infra:detect`",
+    "param": {
+     "family": "detection:{detector}",
+     "gate": [
+      [
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect)",
+    "source": "formal/derivation/census_v61.tsv detection:{detector} 3_signer_rule",
+    "census_cell": "PROSE: identity_type contains lenscore_detector x delegates_to(infra:detect) x {} (detect: duty outside vocabulary)",
+    "param": {
+     "family": "detection:{detector}",
+     "gate": [
+      [
+       "type:lenscore_detector",
+       "seat:infra:detect@root"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kd",
+      "kind": "keyrec",
+      "signer": "D",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "infra:detect",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "D",
+        "infra:detect",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "kd",
+       "a1"
+      ],
+      "family": "detection:{detector}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/transparency_log:cosigned:{tree_size}/signer_rule",
+   "implementer": "persist",
+   "family": "transparency_log:cosigned:{tree_size}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:infra:attest_assurance@root"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`infra:attest_assurance`",
+    "param": {
+     "family": "transparency_log:cosigned:{tree_size}",
+     "gate": [
+      [
+       "seat:infra:attest_assurance@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(attest) x delegates_to(infra:attest_assurance) x {}; + identity_type contains witness",
+    "source": "formal/derivation/census_v61.tsv transparency_log:cosigned:{tree_size} 3_signer_rule",
+    "census_cell": "seat_role(attest) x delegates_to(infra:attest_assurance) x {}; + identity_type contains witness",
+    "param": {
+     "family": "transparency_log:cosigned:{tree_size}",
+     "gate": [
+      [
+       "type:witness",
+       "seat:infra:attest_assurance@root"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kw",
+      "kind": "keyrec",
+      "signer": "W",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "W"
+      ],
+      "scope": "infra:attest_assurance",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "W",
+        "infra:attest_assurance",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "W",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "W",
+      "names": [
+       "kw",
+       "a1"
+      ],
+      "family": "transparency_log:cosigned:{tree_size}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/age_assurance:{level}:{band}:{version}/signer_rule",
+   "implementer": "persist",
+   "family": "age_assurance:{level}:{band}:{version}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C423",
+    "C483",
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:assure:age@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`assure:age`",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:age@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(attest) x delegates_to(infra:attest_assurance",
+    "source": "formal/derivation/census_v61.tsv age_assurance:{level}:{band}:{version} 3_signer_rule",
+    "census_cell": "seat_role(attest) x delegates_to(infra:attest_assurance) x {not_subject}; + identity_type contains witness",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "gate": [
+      [
+       "type:witness",
+       "seat:infra:attest_assurance@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kw",
+      "kind": "keyrec",
+      "signer": "W",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "witness"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "W"
+      ],
+      "scope": "infra:attest_assurance",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "W",
+        "infra:attest_assurance",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "W",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "W",
+      "names": [
+       "kw",
+       "a1"
+      ],
+      "family": "age_assurance:{level}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/capacity_assurance:{level}:{domain}:{band}:{version}/signer_rule",
+   "implementer": "persist",
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C483",
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:assure:capacity@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`assure:capacity`",
+    "param": {
+     "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(attest) x delegates_to(infra:attest_assurance",
+    "source": "formal/derivation/census_v61.tsv capacity_assurance:{level}:{domain}:{band}:{version} 3_signer_rule",
+    "census_cell": "seat_role(attest) x delegates_to(infra:attest_assurance, root this node trusts) x {not_subject}; + identity_type contains witness (no vocabulary value); attester != steward: GAP",
+    "param": {
+     "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+     "gate": [
+      [
+       "type:witness",
+       "seat:infra:attest_assurance@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kw",
+      "kind": "keyrec",
+      "signer": "W",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "witness"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "W"
+      ],
+      "scope": "infra:attest_assurance",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "W",
+        "infra:attest_assurance",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "W",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "W",
+      "names": [
+       "kw",
+       "a1"
+      ],
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/capacity_assurance:reversible_excluded:{domain}:{version}/signer_rule",
+   "implementer": "persist",
+   "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C483",
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:assure:capacity@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`assure:capacity`",
+    "param": {
+     "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(attest) x delegates_to(infra:attest_assurance",
+    "source": "formal/derivation/census_v61.tsv capacity_assurance:reversible_excluded:{domain}:{version} 3_signer_rule",
+    "census_cell": "seat_role(attest) x delegates_to(infra:attest_assurance, root this node trusts) x {not_subject}; + identity_type contains witness (no vocabulary value); attester != steward: GAP",
+    "param": {
+     "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+     "gate": [
+      [
+       "type:witness",
+       "seat:infra:attest_assurance@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kw",
+      "kind": "keyrec",
+      "signer": "W",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "witness"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "W"
+      ],
+      "scope": "infra:attest_assurance",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "W",
+        "infra:attest_assurance",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "W",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "W",
+      "names": [
+       "kw",
+       "a1"
+      ],
+      "family": "capacity_assurance:reversible_excluded:{domain}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/capacity_assurance:reversible_pending:{domain}:{version}/signer_rule",
+   "implementer": "persist",
+   "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+   "where": "signer_rule",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C483",
+    "C564"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:assure:capacity@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.7",
+    "quote": "`assure:capacity`",
+    "param": {
+     "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "seat_role(attest) x delegates_to(infra:attest_assurance",
+    "source": "formal/derivation/census_v61.tsv capacity_assurance:reversible_pending:{domain}:{version} 3_signer_rule",
+    "census_cell": "seat_role(attest) x delegates_to(infra:attest_assurance, root this node trusts) x {not_subject}; + identity_type contains witness (no vocabulary value); attester != steward: GAP",
+    "param": {
+     "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+     "gate": [
+      [
+       "type:witness",
+       "seat:infra:attest_assurance@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "kw",
+      "kind": "keyrec",
+      "signer": "W",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "witness"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "o1",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [
+       "rt"
+      ],
+      "family": "offer",
+      "to": [
+       "W"
+      ],
+      "scope": "infra:attest_assurance",
+      "obj": "Rt",
+      "conf": "seat",
+      "on": [
+       [
+        "seat",
+        "W",
+        "infra:attest_assurance",
+        "Rt"
+       ]
+      ],
+      "under": "rt"
+     },
+     {
+      "id": "a1",
+      "kind": "accept",
+      "signer": "W",
+      "names": [
+       "o1"
+      ],
+      "family": "accept",
+      "of": "o1",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "W",
+      "names": [
+       "kw",
+       "a1"
+      ],
+      "family": "capacity_assurance:reversible_pending:{domain}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 120,
+    "of": 120,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/watchlist:{id}/lifecycle.withdraws_by",
+   "implementer": "persist",
+   "family": "watchlist:{id}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C365"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 3.1.9.4",
+    "quote": "Enable/disable is signed by the CC 4.5.5 `moderate`/`takedown` authority and revocable by `withdraws`",
+    "param": {
+     "family": "watchlist:{id}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject}",
+    "source": "formal/derivation/census_v61.tsv watchlist:{id} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary) | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "watchlist:{id}",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "w",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "watchlist:{id}",
+      "subjects": [
+       "S"
+      ]
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "S",
+      "names": [
+       "w"
+      ],
+      "family": "withdraws",
+      "target": "w"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "w"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/quarantine:{state}/lifecycle.withdraws_by",
+   "implementer": "persist",
+   "family": "quarantine:{state}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C370"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 3.1.9.2",
+    "quote": "Subject-scoped quarantine marker: **slash-duty-holder-only** emitter.",
+    "param": {
+     "family": "quarantine:{state}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject}",
+    "source": "formal/derivation/census_v61.tsv quarantine:{state} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary) | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no | released supersedes withheld (fold)",
+    "param": {
+     "family": "quarantine:{state}",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "q",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "quarantine:{state}",
+      "subject": "S",
+      "leaf": "withhold"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "S",
+      "names": [
+       "q"
+      ],
+      "family": "withdraws",
+      "target": "q"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "q"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/revocation:{entity_type}:{reason}/lifecycle.withdraws_by",
+   "implementer": "persist",
+   "family": "revocation:{entity_type}:{reason}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C551"
+   ],
+   "claims": [],
+   "text": {
+    "value": [],
+    "cc_ref": "CC 3.1.1",
+    "quote": "Entity revocation (`agent` / `partner` / `license`). Immediate, non-rollbackable.",
+    "param": {
+     "family": "revocation:{entity_type}:{reason}",
+     "withdraws_by": []
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester}",
+    "source": "formal/derivation/census_v61.tsv revocation:{entity_type}:{reason} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester} (+ producer's owner; subject refused, SUBJECT_WITHDRAWS_CARVE_OUT) | retraction_class: duty_record (accountability record, unpurgeable) | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "revocation:{entity_type}:{reason}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "v",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "revocation:{entity_type}:{reason}",
+      "subject": "S"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "A",
+      "names": [
+       "v"
+      ],
+      "family": "withdraws",
+      "target": "v"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "v"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/objection:{state}/lifecycle.withdraws_by",
+   "implementer": "persist",
+   "family": "objection:{state}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C476"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 4.5.13",
+    "quote": "The act is lifted when a strict majority of the roster at the head the act names has objected within the 48-hour window.",
+    "param": {
+     "family": "objection:{state}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject}",
+    "source": "formal/derivation/census_v61.tsv objection:{state} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary) | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "objection:{state}",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ob",
+      "kind": "fam",
+      "signer": "M",
+      "names": [],
+      "family": "objection:{state}",
+      "subject": "X"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "X",
+      "names": [
+       "ob"
+      ],
+      "family": "withdraws",
+      "target": "ob"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "ob"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/trace:{form}:{version}/lifecycle.withdraws_by",
+   "implementer": "persist",
+   "family": "trace:{form}:{version}",
+   "where": "lifecycle.withdraws_by",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C228"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 3.1.5",
+    "quote": "An agent's trace is erased only by its signer's `withdraws`",
+    "param": {
+     "family": "trace:{form}:{version}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject} (+ producer's owner",
+    "source": "formal/derivation/census_v61.tsv trace:{form}:{version} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary) | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "trace:{form}:{version}",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ],
+      [
+       "owner_of_subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ob",
+      "kind": "offer",
+      "signer": "Ag",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "O"
+      ],
+      "scope": "owner",
+      "obj": "Ag",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "O",
+        "owner",
+        "Ag"
+       ]
+      ],
+      "cosigners": [
+       "O"
+      ]
+     },
+     {
+      "id": "tr",
+      "kind": "fam",
+      "signer": "Ag",
+      "names": [],
+      "family": "trace:{form}:{version}",
+      "subject": "Ag"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "O",
+      "names": [
+       "ob",
+       "tr"
+      ],
+      "family": "withdraws",
+      "target": "tr",
+      "subject": "Ag"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "tr"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/trust:{job}:{version}/signer_rule[leaf=accepts]",
+   "implementer": "persist",
+   "family": "trust:{job}:{version}",
+   "where": "signer_rule[leaf=accepts]",
+   "kind": "signer",
+   "status": "runnable",
+   "sources": [
+    "C499"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:member@person"
+     ]
+    ],
+    "cc_ref": "CC 3.2",
+    "quote": "The acceptance edge is a person's row: any live key of the person's roster signs it as that person",
+    "param": {
+     "family": "trust:{job}:{version}",
+     "gate": {
+      "accepts": [
+       [
+        "seat:member@person"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "accepts: self (node -> root)",
+    "source": "formal/derivation/census_v61.tsv trust:{job}:{version} 3_signer_rule",
+    "census_cell": "charter: self; confers: steward (root) x delegates_to(scope, depth, term); accepts: self (node -> root)",
+    "param": {
+     "family": "trust:{job}:{version}",
+     "gate": {
+      "accepts": [
+       [
+        "self"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "p",
+      "kind": "offer",
+      "signer": "D1",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D1",
+       "D2"
+      ],
+      "scope": "member",
+      "obj": "p",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D1",
+        "member",
+        "p"
+       ],
+       [
+        "seat",
+        "D2",
+        "member",
+        "p"
+       ]
+      ],
+      "cosigners": [
+       "D2"
+      ]
+     },
+     {
+      "id": "ac",
+      "kind": "fam",
+      "signer": "D2",
+      "names": [
+       "p"
+      ],
+      "family": "trust:{job}:{version}",
+      "subject": "N",
+      "person": "p",
+      "leaf": "accepts"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "ac"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/trust:{job}:{version}/lifecycle.withdraws_by[leaf=charter]",
+   "implementer": "persist",
+   "family": "trust:{job}:{version}",
+   "where": "lifecycle.withdraws_by[leaf=charter]",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C507"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4",
+    "quote": "so no single signer and no subject can retire a community, un-name a charter or retract a roster event",
+    "param": {
+     "family": "trust:{job}:{version}",
+     "withdraws_by": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject}",
+    "source": "formal/derivation/census_v61.tsv trust:{job}:{version} 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} (+ producer's owner, consent proxy rule 3, delegate rule 4: outside vocabulary) | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "trust:{job}:{version}",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "ch",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "trust:{job}:{version}",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "subject": "B",
+      "leaf": "charter"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "A",
+      "names": [
+       "ch"
+      ],
+      "family": "withdraws",
+      "target": "ch",
+      "head": [
+       "g"
+      ],
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "ch"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/(default row)/lifecycle.withdraws_by[subject=affiliation]",
+   "implementer": "persist",
+   "family": "(default row)",
+   "where": "lifecycle.withdraws_by[subject=affiliation]",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C552"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "An affiliation withdraws no statement about itself, whatever the statement.",
+    "param": {
+     "family": "(default row)",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "\"withdraws_by\": \"{attester, subject}\"",
+    "source": "formal/derivation/family_default_row.json withdraws_by (the census reading)",
+    "census_cell": null,
+    "file": "formal/derivation/family_default_row.json",
+    "file_sha256": "d9e1254514448633b35e84bd260071c853f0e3cfc497e37870367d3729e58854",
+    "param": {
+     "family": "(default row)",
+     "withdraws_by": [
+      [
+       "attester"
+      ],
+      [
+       "subject"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "st",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "(default row)",
+      "subject": "Aff"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "Aff",
+      "names": [
+       "st"
+      ],
+      "family": "withdraws",
+      "target": "st"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "st"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/membership:{stage}/lifecycle.withdraws_by[leaf=proposal]",
+   "implementer": "persist",
+   "family": "membership:{stage}",
+   "where": "lifecycle.withdraws_by[leaf=proposal]",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "C494",
+    "C506"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "attester"
+     ]
+    ],
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "The inviter withdraws a proposal with the ordinary `withdraws`.",
+    "param": {
+     "family": "membership:{stage}",
+     "withdraws_by": [
+      [
+       "attester"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {cosigned}",
+    "source": "formal/derivation/census_v61.tsv membership:{stage} 9_lifecycle",
+    "census_cell": "withdraws_by: {cosigned} (check_cosigned_withdraws; resignation self) | retraction_class: cosigned | supersedes: typed record supersede only (composer supersedes refused, group_plane_row_shape) | expires: expires_at honoured | rotation_on_removal: yes (removal forces stream/community DEK rotation, blobs.rs:4487)",
+    "param": {
+     "family": "membership:{stage}",
+     "withdraws_by": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "pr",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "membership:{stage}",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "leaf": "proposal"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "A",
+      "names": [
+       "pr"
+      ],
+      "family": "withdraws",
+      "target": "pr",
+      "head": [
+       "g"
+      ],
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "pr"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "withdrawn",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "withdrawn"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/ownership:{relation}:{target_kind}:{version}/transition withdraw guard",
+   "implementer": "persist",
+   "family": "ownership:{relation}:{target_kind}:{version}",
+   "where": "transition withdraw guard",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "C346"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "ref"
+     ]
+    ],
+    "cc_ref": "CC 3.2",
+    "quote": "A rule-2 or rule-4 `withdraws` against a live owner-binding concludes nothing unless it carries a `wa_adjudication_ref`.",
+    "param": {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "withdraws_by": [
+      [
+       "ref"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "withdraw: when(verb=withdraw,has=wa_adjudication_ref) ... else refuse",
+    "source": "manifests/transitions.json ownership:{relation}:{target_kind}:{version} withdraw guard (text_conflicts C346 side_b)",
+    "census_cell": null,
+    "file": "manifests/transitions.json",
+    "file_sha256": "83df39ac7d9bdf8d5aa3f5d79d5d58789fbdacb3bbac770104a23a06b103f116",
+    "param": {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "withdraws_by": [
+      [
+       "ref"
+      ]
+     ],
+     "refuse": [
+      "withdraw_without_ref"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ob",
+      "kind": "fam",
+      "signer": "O",
+      "names": [],
+      "family": "ownership:{relation}:{target_kind}:{version}",
+      "subject": "N"
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "N",
+      "names": [
+       "ob"
+      ],
+      "family": "withdraws",
+      "target": "ob"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "x"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/goal:{scale}/cosign_rule",
+   "implementer": "persist",
+   "family": "goal:{scale}",
+   "where": "cosign_rule",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "C469",
+    "C508"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 3.1.9.7",
+    "quote": "A member votes for the Goal by cosigning it, and the row is admitted only when its full scrub set meets the group's protocol over the members at the head the row names",
+    "param": {
+     "family": "goal:{scale}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "none",
+    "source": "formal/derivation/census_v61.tsv goal:{scale} 5_cosign_rule",
+    "census_cell": "none",
+    "param": {
+     "family": "goal:{scale}",
+     "gate": [
+      [
+       "seat:member@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "goal:{scale}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/mesh_config:{key}/cosign_rule[form=durable]",
+   "implementer": "persist",
+   "family": "mesh_config:{key}",
+   "where": "cosign_rule[form=durable]",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "C509"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 4.2.1",
+    "quote": "**Durable** settings are earned by **quorum, never by having been exercised**.",
+    "param": {
+     "family": "mesh_config:{key}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "none",
+    "source": "formal/derivation/census_v61.tsv mesh_config:{key} 5_cosign_rule",
+    "census_cell": "none",
+    "param": {
+     "family": "mesh_config:{key}",
+     "gate": [
+      [
+       "seat:member@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "mesh_config:{key}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/ownership:{relation}:{target_kind}:{version}/cosign_rule[owner=organisation]",
+   "implementer": "persist",
+   "family": "ownership:{relation}:{target_kind}:{version}",
+   "where": "cosign_rule[owner=organisation]",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "C371"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 3.2",
+    "quote": "It is cosigned under that affiliation's protocol",
+    "param": {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "none",
+    "source": "formal/derivation/census_v61.tsv ownership:{relation}:{target_kind}:{version} 5_cosign_rule",
+    "census_cell": "none",
+    "param": {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "gate": [
+      [
+       "seat:member@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "ownership:{relation}:{target_kind}:{version}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/licensure:{authority_id}/cosign_rule[authority=organisation]",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "cosign_rule[authority=organisation]",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "C432"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.3",
+    "quote": "A `licensure:{community_key_id}` row is a **cosigned row** ([CC 2.4](#2.4)) whose protocol source is the authority named in the dimension.",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "none",
+    "source": "formal/derivation/census_v61.tsv licensure:{authority_id} 5_cosign_rule",
+    "census_cell": "none",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:member@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "licensure:{authority_id}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/accord:lifecycle:{kind}/cosign_rule",
+   "implementer": "persist",
+   "family": "accord:lifecycle:{kind}",
+   "where": "cosign_rule",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "C457"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 4.2.1.3",
+    "quote": "**It is a cosigned row by a strict majority of the standing roster**",
+    "param": {
+     "family": "accord:lifecycle:{kind}",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "none",
+    "source": "formal/derivation/census_v61.tsv accord:lifecycle:{kind} 5_cosign_rule",
+    "census_cell": "none",
+    "param": {
+     "family": "accord:lifecycle:{kind}",
+     "gate": [
+      [
+       "seat:member@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "accord:lifecycle:{kind}",
+      "group": "g",
+      "head": [
+       "g"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/identity:occurrence/transition withdraw policy",
+   "implementer": "persist",
+   "family": "identity:occurrence",
+   "where": "transition withdraw policy",
+   "kind": "count",
+   "status": "runnable",
+   "sources": [
+    "C412"
+   ],
+   "claims": [],
+   "text": {
+    "value": "self_roster_evict: a strict majority of the occurrences, or the lone path's window",
+    "cc_ref": "CC 3.3.6",
+    "quote": "No single occurrence evicts at once with no window: that unilateral configuration is one a thief wins in two steps.",
+    "param": {
+     "family": "identity:occurrence",
+     "policy": {
+      "occurrence_evict": [
+       "strict",
+       1,
+       2
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "withdraws_by: {attester, subject} via signer_acts_for identity",
+    "source": "formal/derivation/census_v61.tsv identity:occurrence 9_lifecycle",
+    "census_cell": "withdraws_by: {attester, subject} via signer_acts_for identity; user-role eviction is a self-roster proposal | retraction_class: peer | supersedes: same_attester (read: lifecycle_predicate attestation_query.rs:760; the door admits any signer's supersedes) | expires: expires_at honoured | rotation_on_removal: no",
+    "param": {
+     "family": "identity:occurrence",
+     "policy": {
+      "occurrence_evict": [
+       "one",
+       1,
+       1
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B"
+      ]
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "B"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "occurrence_evict"
+     }
+    ],
+    "ask": {
+     "answer": "stands",
+     "key": "B",
+     "scope": "member",
+     "obj": "g"
+    }
+   },
+   "expect_shipped": "does not stand",
+   "expect_kernel": "stands",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "stands"
+    ],
+    "shipped_judged_on_arrival": [
+     "does not stand"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/census:share:{class}/replication.audience",
+   "implementer": "persist",
+   "family": "census:share:{class}",
+   "where": "replication.audience",
+   "kind": "audience",
+   "status": "runnable",
+   "sources": [
+    "C383"
+   ],
+   "claims": [],
+   "text": {
+    "value": "addressed",
+    "cc_ref": "CC 6.1.9",
+    "quote": "held by the author's node and the recipient's node and by no other",
+    "param": {
+     "family": "census:share:{class}",
+     "audience": "addressed"
+    }
+   },
+   "shipped": {
+    "value": "targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
+    "source": "formal/derivation/census_v61.tsv census:share:{class} 10_replication",
+    "census_cell": "tier: local | federation | audience: by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone | non_recipient: GAP on release-61 (a delivered row is stored); s2: drop (#1148) | held: settle_on_key (byte-identical re-offer AlreadyHeld, #672)",
+    "param": {
+     "family": "census:share:{class}",
+     "audience": "cohort_plus_subjects"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "T",
+       "M"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "T",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "M",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "T",
+       "M"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "sh",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "census:share:{class}",
+      "group": "g",
+      "for_key": "T"
+     }
+    ],
+    "ask": {
+     "answer": "audience",
+     "target": "sh",
+     "reader": "M"
+    }
+   },
+   "expect_shipped": "served",
+   "expect_kernel": "not served",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "not served"
+    ],
+    "shipped_judged_on_arrival": [
+     "served"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/census:member:share/replication.audience",
+   "implementer": "persist",
+   "family": "census:member:share",
+   "where": "replication.audience",
+   "kind": "audience",
+   "status": "runnable",
+   "sources": [
+    "C465"
+   ],
+   "claims": [],
+   "text": {
+    "value": "addressed",
+    "cc_ref": "CC 3.1.3",
+    "quote": "**Yes — addressed:** a member of the room; reach is the named tally member only",
+    "param": {
+     "family": "census:member:share",
+     "audience": "addressed"
+    }
+   },
+   "shipped": {
+    "value": "targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
+    "source": "formal/derivation/census_v61.tsv census:member:share 10_replication",
+    "census_cell": "tier: local | federation | audience: by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone | non_recipient: GAP on release-61 (a delivered row is stored); s2: drop (#1148) | held: settle_on_key (byte-identical re-offer AlreadyHeld, #672)",
+    "param": {
+     "family": "census:member:share",
+     "audience": "cohort_plus_subjects"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "T",
+       "M"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "T",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "M",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "T",
+       "M"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "sh",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "census:member:share",
+      "group": "g",
+      "for_key": "T"
+     }
+    ],
+    "ask": {
+     "answer": "audience",
+     "target": "sh",
+     "reader": "M"
+    }
+   },
+   "expect_shipped": "served",
+   "expect_kernel": "not served",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "not served"
+    ],
+    "shipped_judged_on_arrival": [
+     "served"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/identity:occurrence/replication.audience",
+   "implementer": "persist",
+   "family": "identity:occurrence",
+   "where": "replication.audience",
+   "kind": "audience",
+   "status": "runnable",
+   "sources": [
+    "C464"
+   ],
+   "claims": [],
+   "text": {
+    "value": "the audience the attester's owner-binding reaches",
+    "cc_ref": "CC 5.4.6",
+    "quote": "A node offers an `identity:occurrence:v1` row to a peer only when it would also relay the row's attester key to that peer",
+    "param": {
+     "family": "identity:occurrence",
+     "audience": "attester_relayed"
+    }
+   },
+   "shipped": {
+    "value": "audience: PROSE key-plane reach (Plane::KeyRecord cells; the carrier: everyone)",
+    "source": "formal/derivation/census_v61.tsv identity:occurrence 10_replication",
+    "census_cell": "tier: federation | audience: PROSE key-plane reach (Plane::KeyRecord cells; the carrier: everyone) | non_recipient: GAP on release-61 (a delivered row is stored); s2: drop (#1148) | held: settle_on_key (key-plane door by held row hash)",
+    "param": {
+     "family": "identity:occurrence",
+     "audience": "everyone"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "O",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "O",
+       "K"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "O",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "K",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "K"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "b",
+      "kind": "fam",
+      "signer": "O",
+      "names": [
+       "g"
+      ],
+      "family": "self:delegates_to",
+      "group": "g",
+      "tier": "cohort"
+     },
+     {
+      "id": "oc",
+      "kind": "fam",
+      "signer": "K",
+      "names": [
+       "b"
+      ],
+      "family": "identity:occurrence",
+      "binding": "b"
+     }
+    ],
+    "ask": {
+     "answer": "audience",
+     "target": "oc",
+     "reader": "P"
+    }
+   },
+   "expect_shipped": "served",
+   "expect_kernel": "not served",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "not served"
+    ],
+    "shipped_judged_on_arrival": [
+     "served"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "tooling/identity:occurrence/transition attest guard",
+   "implementer": "tooling",
+   "family": "identity:occurrence",
+   "where": "transition attest guard",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "C516"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "provenance_matches"
+     ]
+    ],
+    "cc_ref": "CC 3.3.6",
+    "quote": "It counts at a node only where that row is Rooted there and its manifest hash equals `build_manifest_hash`, and otherwise concludes nothing.",
+    "param": {
+     "family": "identity:occurrence",
+     "gate": [
+      [
+       "provenance_matches"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "manifests/transitions.json identity:occurrence attest: guard value [] (source generic)",
+    "source": "manifests/transitions.json identity:occurrence attest guard (formal/derivation/guard_text.tsv has no row)",
+    "census_cell": null,
+    "file": "manifests/transitions.json",
+    "file_sha256": "3ba54c61d2688d0418b205385b6c1a4b9e84d192db3e42f1364477fb820a4fa7",
+    "param": {
+     "family": "identity:occurrence",
+     "gate": [
+      [
+       "any"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "pv",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "provenance:build_manifest:{target}",
+      "rooted": true,
+      "hash": "h1"
+     },
+     {
+      "id": "oc",
+      "kind": "fam",
+      "signer": "K",
+      "names": [
+       "pv"
+      ],
+      "family": "identity:occurrence",
+      "provenance": "pv",
+      "build_manifest_hash": "h2"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "oc"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "stays: the guard row is written and held back, since its void clause needs a reason token the text states and none is stated, and a clause with none may not be added (a named limit in CC 8.3.4)"
+  },
+  {
+   "id": "persist/capacity:{factor}/consent gate",
+   "implementer": "persist",
+   "family": "capacity:{factor}",
+   "where": "consent gate",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-capacity-consent-gate"
+   ],
+   "claims": [
+    "CLM-capacity-consent-gate"
+   ],
+   "text": {
+    "value": [
+     [
+      "grant_named"
+     ]
+    ],
+    "cc_ref": "CC 3.4.5",
+    "quote": "a `capacity:*` row MUST name that grant in `evidence_refs[]`",
+    "param": {
+     "family": "capacity:{factor}",
+     "gate": [
+      [
+       "grant_named"
+      ]
+     ],
+     "refuse": [
+      "names_no_grant"
+     ]
+    }
+   },
+   "shipped": {
+    "value": "admission reads the subject's grants; the scoring row names none",
+    "source": "constitution/claims.tsv CLM-capacity-consent-gate (check_capacity_consent_admission)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "3f023699189c7fdff96af720292910814a57afdc5868287825c971ed28fcccb1",
+    "file_rows": [
+     "CLM-capacity-consent-gate"
+    ],
+    "param": {
+     "family": "capacity:{factor}",
+     "gate": [
+      [
+       "subject_grant_held"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "gr",
+      "kind": "fam",
+      "signer": "S",
+      "names": [],
+      "family": "consent:state:{stance}",
+      "scope": "analyze"
+     },
+     {
+      "id": "cp",
+      "kind": "fam",
+      "signer": "L",
+      "names": [],
+      "family": "capacity:{factor}",
+      "subject": "S",
+      "needs_scope": "analyze"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "cp"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "refused",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "refused"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted",
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": true,
+   "also_assert": "the same verdict in every arrival order"
+  },
+  {
+   "id": "tooling/takedown_notice:{basis}/reaction on close(withhold)",
+   "implementer": "tooling",
+   "family": "takedown_notice:{basis}",
+   "where": "reaction on close(withhold)",
+   "kind": "window",
+   "status": "runnable",
+   "sources": [
+    "C377"
+   ],
+   "claims": [],
+   "text": {
+    "value": "on close(withhold) unless fold(notice_voided) -> do destroy_bytes",
+    "cc_ref": "CC 4.5.3",
+    "quote": "**Inside the window** the bytes are still held: serving resumes, the hard-delete sweep skips them",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "owed": "withhold_close",
+     "unless": "notice_voided"
+    }
+   },
+   "shipped": {
+    "value": "on close(withhold): do destroy_bytes, force must, with no unless",
+    "source": "manifests/reactions.json takedown_notice:{basis} (formal/derivation/reaction_text.tsv)",
+    "census_cell": null,
+    "file": "manifests/reactions.json",
+    "file_sha256": "3bbb0579f8759ada264533ca1e469442e72d608248c1f6d79f9710e28da7d57f",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "owed": "withhold_close"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "takedown_notice:{basis}"
+     },
+     {
+      "id": "l",
+      "kind": "landing",
+      "signer": "A",
+      "names": [
+       "n"
+      ],
+      "family": "landing",
+      "says": "withhold"
+     },
+     {
+      "id": "v",
+      "kind": "reversal",
+      "signer": "A",
+      "names": [
+       "n"
+      ],
+      "family": "reversal"
+     }
+    ],
+    "ask": {
+     "answer": "owed"
+    }
+   },
+   "expect_shipped": "destroy_bytes",
+   "expect_kernel": "nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "destroy_bytes"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "stays: no fold or reaction word reads a row that names this one with a stated outcome, so the close cannot skip a reversed or lifted notice (a named limit in CC 8.3.4)"
+  },
+  {
+   "id": "persist/consent:community_trust/fold",
+   "implementer": "persist",
+   "family": "consent:community_trust",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "CLM-consent-community-trust",
+    "CLM-consent-community-trust-owner-authored",
+    "seven_rankings item 1"
+   ],
+   "claims": [
+    "CLM-consent-community-trust",
+    "CLM-consent-community-trust-owner-authored"
+   ],
+   "text": {
+    "value": "per_party",
+    "cc_ref": "CC 3.3.1",
+    "quote": "**Each party's consent is its own**, and each party's rows are folded apart from every other party's.",
+    "param": {
+     "family": "consent:community_trust",
+     "fold": "consent_capture",
+     "mode": "per_party"
+    }
+   },
+   "shipped": {
+    "value": "the latest admitted revocation of any party is R; among grants after R the latest asserted_at wins (fold_community_trust)",
+    "source": "constitution/claims.tsv CLM-consent-community-trust; impl:CIRISPersist fold_community_trust",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "bd0f97a004f0b470ef33c5713be6ea8a56659ae6daf8a2233e2c9cac3481ae06",
+    "file_rows": [
+     "CLM-consent-community-trust",
+     "CLM-consent-community-trust-owner-authored"
+    ],
+    "param": {
+     "family": "consent:community_trust",
+     "fold": "consent_capture",
+     "mode": "one_boundary"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g0",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "consent:community_trust",
+      "leaf": "grant",
+      "at": 0
+     },
+     {
+      "id": "g1",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "consent:community_trust",
+      "leaf": "grant",
+      "at": 1
+     },
+     {
+      "id": "r2",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "consent:community_trust",
+      "leaf": "revoke",
+      "at": 2
+     },
+     {
+      "id": "g3",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "consent:community_trust",
+      "leaf": "grant",
+      "at": 3
+     }
+    ],
+    "ask": {
+     "bound": [
+      "A",
+      "B"
+     ],
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "captured",
+   "expect_kernel": "not captured",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "not captured"
+    ],
+    "shipped_judged_on_arrival": [
+     "captured"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/key:revocation/fold",
+   "implementer": "persist",
+   "family": "key:revocation",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "CLM-merge",
+    "seven_rankings item 3"
+   ],
+   "claims": [
+    "CLM-merge"
+   ],
+   "text": {
+    "value": "minimum",
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "Where a key carries multiple revocations the effective bound is the **minimum** `revoked_after` across all of them",
+    "param": {
+     "family": "key:revocation",
+     "fold": "revocation_bound",
+     "mode": "minimum"
+    }
+   },
+   "shipped": {
+    "value": "revocations ranked by quorum_weight, then signed timestamp, then content hash",
+    "source": "constitution/claims.tsv CLM-merge; impl:CIRISPersist check_partner_record_revision",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "8a33f4871e3c3e838720064ab938957b115a4242cf549532253c971cb0745b46",
+    "file_rows": [
+     "CLM-merge"
+    ],
+    "param": {
+     "family": "key:revocation",
+     "fold": "revocation_bound",
+     "mode": "ranked"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "r1",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "key:revocation",
+      "leaf": "revocation",
+      "subject": "K",
+      "revoked_after": 10,
+      "weight": 1,
+      "at": 5
+     },
+     {
+      "id": "r2",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "key:revocation",
+      "leaf": "revocation",
+      "subject": "K",
+      "revoked_after": 20,
+      "weight": 2,
+      "at": 6
+     }
+    ],
+    "ask": {
+     "key": "K",
+     "signed_at": 15,
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "counts",
+   "expect_kernel": "does not count",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "does not count"
+    ],
+    "shipped_judged_on_arrival": [
+     "counts"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/licensure:{authority_id}/fold",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "CLM-merge",
+    "seven_rankings item 4"
+   ],
+   "claims": [
+    "CLM-merge"
+   ],
+   "text": {
+    "value": "weight_then_state",
+    "cc_ref": "CC 5.3.2.3",
+    "quote": "At equal weight the more restrictive state stands: `revoked` > `suspended` > `active`.",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "fold": "licence_merge",
+     "mode": "weight_then_state"
+    }
+   },
+   "shipped": {
+    "value": "quorum_weight, then signed timestamp, then content hash",
+    "source": "constitution/claims.tsv CLM-merge",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "8a33f4871e3c3e838720064ab938957b115a4242cf549532253c971cb0745b46",
+    "file_rows": [
+     "CLM-merge"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "fold": "licence_merge",
+     "mode": "weight_time_hash"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "l1",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "licensure:{authority_id}",
+      "leaf": "licence",
+      "status": "revoked",
+      "weight": 1,
+      "at": 1
+     },
+     {
+      "id": "l2",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "licensure:{authority_id}",
+      "leaf": "licence",
+      "status": "active",
+      "weight": 1,
+      "at": 2
+     }
+    ],
+    "ask": {
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "active",
+   "expect_kernel": "revoked",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "revoked"
+    ],
+    "shipped_judged_on_arrival": [
+     "active"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/quarantine:{state}/fold",
+   "implementer": "persist",
+   "family": "quarantine:{state}",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "CLM-quarantine-marker-not-command",
+    "CLM-quarantine-serve-consult",
+    "seven_rankings item 5"
+   ],
+   "claims": [
+    "CLM-quarantine-marker-not-command",
+    "CLM-quarantine-serve-consult"
+   ],
+   "text": {
+    "value": "release_names",
+    "cc_ref": "CC 3.1.9.2",
+    "quote": "**a withhold outranks a release whatever their instants**. The withhold holds until a release names the withhold it lifts.",
+    "param": {
+     "family": "quarantine:{state}",
+     "fold": "quarantine",
+     "mode": "release_names"
+    }
+   },
+   "shipped": {
+    "value": "withhold beats release at a same-instant tie (fold_quarantine)",
+    "source": "constitution/claims.tsv CLM-quarantine-marker-not-command; impl:CIRISPersist fold_quarantine",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "3c98fb7709f1e15e67d393c353ccb37d6e8ec06c478f81d2409db6dbb48fd682",
+    "file_rows": [
+     "CLM-quarantine-marker-not-command",
+     "CLM-quarantine-serve-consult"
+    ],
+    "param": {
+     "family": "quarantine:{state}",
+     "fold": "quarantine",
+     "mode": "latest_then_withhold"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "w",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "quarantine:{state}",
+      "leaf": "withhold",
+      "at": 1
+     },
+     {
+      "id": "rl",
+      "kind": "fam",
+      "signer": "B",
+      "names": [],
+      "family": "quarantine:{state}",
+      "leaf": "release",
+      "at": 2
+     }
+    ],
+    "ask": {
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "released",
+   "expect_kernel": "withheld",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "withheld"
+    ],
+    "shipped_judged_on_arrival": [
+     "released"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/ballot:moderator_acceptance/fold",
+   "implementer": "persist",
+   "family": "ballot:moderator_acceptance",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "CLM-moderator-election",
+    "seven_rankings item 6"
+   ],
+   "claims": [
+    "CLM-moderator-election"
+   ],
+   "text": {
+    "value": "larger_then_nobody",
+    "cc_ref": "CC 4.5.13",
+    "quote": "Two acceptances over different sets of equal size are a tie, and neither seats anyone.",
+    "param": {
+     "family": "ballot:moderator_acceptance",
+     "fold": "acceptance",
+     "mode": "larger_then_nobody"
+    }
+   },
+   "shipped": {
+    "value": "the valid acceptance over the larger set, then the smaller digest",
+    "source": "constitution/claims.tsv CLM-moderator-election (staged:CIRISPersist#1195)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "a9da65b90d2951a445ff078524baf9b64c4bfdbf4038f968200ac26c6a29b1fa",
+    "file_rows": [
+     "CLM-moderator-election"
+    ],
+    "param": {
+     "family": "ballot:moderator_acceptance",
+     "fold": "acceptance",
+     "mode": "larger_then_digest"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "acc1",
+      "kind": "fam",
+      "signer": "X",
+      "names": [],
+      "family": "ballot:moderator_acceptance",
+      "leaf": "acceptance",
+      "ballots": [
+       "b1",
+       "b2"
+      ],
+      "seats": "X"
+     },
+     {
+      "id": "acc2",
+      "kind": "fam",
+      "signer": "Y",
+      "names": [],
+      "family": "ballot:moderator_acceptance",
+      "leaf": "acceptance",
+      "ballots": [
+       "b1",
+       "b3"
+      ],
+      "seats": "Y"
+     }
+    ],
+    "ask": {
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "seats X",
+   "expect_kernel": "seats nobody",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "seats nobody"
+    ],
+    "shipped_judged_on_arrival": [
+     "seats X"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/*reader:enumerated/fold",
+   "implementer": "persist",
+   "family": "*reader:enumerated",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "CLM-nsproc-aggregation-policy",
+    "seven_rankings item 7"
+   ],
+   "claims": [
+    "CLM-nsproc-aggregation-policy"
+   ],
+   "text": {
+    "value": "reader_trust",
+    "cc_ref": "CC 4.4.3.34",
+    "quote": "The reader aggregates per (`dimension`, `attested_key_id`) tuple, over trusted attesters, by the polarity defaults of [CC 4.4.2](#4.4.2).",
+    "param": {
+     "family": "*reader:enumerated",
+     "fold": "enumerated",
+     "mode": "reader_trust"
+    }
+   },
+   "shipped": {
+    "value": "most-recent by an authorized attester",
+    "source": "constitution/claims.tsv CLM-nsproc-aggregation-policy (staged:CIRISPersist#803)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "65cbf50367c9a1689b2d62c9b1864b86d1ff1c78c786634dda5fcb8f7fdcd92d",
+    "file_rows": [
+     "CLM-nsproc-aggregation-policy"
+    ],
+    "param": {
+     "family": "*reader:enumerated",
+     "fold": "enumerated",
+     "mode": "most_recent"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ca",
+      "kind": "claim",
+      "signer": "A",
+      "names": [],
+      "family": "claim",
+      "subject": "S",
+      "dim": "d",
+      "value": "x",
+      "at": 2
+     },
+     {
+      "id": "cb",
+      "kind": "claim",
+      "signer": "B",
+      "names": [],
+      "family": "claim",
+      "subject": "S",
+      "dim": "d",
+      "value": "y",
+      "at": 1
+     },
+     {
+      "id": "tr",
+      "kind": "trust",
+      "signer": "Rd",
+      "names": [],
+      "family": "trust",
+      "to": "B",
+      "scope": "any"
+     }
+    ],
+    "ask": {
+     "reader": "Rd",
+     "subject": "S",
+     "dim": "d",
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "x",
+   "expect_kernel": "y",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "y"
+    ],
+    "shipped_judged_on_arrival": [
+     "x"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "tooling/age_assurance:{level}:{band}:{version}/fold",
+   "implementer": "tooling",
+   "family": "age_assurance:{level}:{band}:{version}",
+   "where": "fold",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "C548"
+   ],
+   "claims": [],
+   "text": {
+    "value": "witness_then_self_lowers",
+    "cc_ref": "CC 3.4.11",
+    "quote": "A subject's declaration of a lower band lowers the reading and never raises it",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "fold": "age_band",
+     "mode": "witness_then_self_lowers"
+    }
+   },
+   "shipped": {
+    "value": "pick=rank(government>provider>self)",
+    "source": "formal/derivation/fold_text.tsv age fold (tools/fold_grammar.py has no picker)",
+    "census_cell": null,
+    "file": "formal/derivation/fold_text.tsv",
+    "file_sha256": "e22e77d836612ed24af53c02ef2e57d6830501582e1647f67f5506a20f1484b3",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "fold": "age_band",
+     "mode": "rank"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "aw",
+      "kind": "fam",
+      "signer": "W",
+      "names": [],
+      "family": "age_assurance:{level}:{band}:{version}",
+      "leaf": "witness",
+      "level": "provider",
+      "band": "adult",
+      "subject": "S"
+     },
+     {
+      "id": "as",
+      "kind": "fam",
+      "signer": "S",
+      "names": [],
+      "family": "age_self_declared:band:{band}:{version}",
+      "leaf": "self",
+      "level": "self",
+      "band": "minor",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "subject": "S",
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "adult",
+   "expect_kernel": "minor",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "minor"
+    ],
+    "shipped_judged_on_arrival": [
+     "adult"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "stays: the fold grammar has no picker for the lower of the witness band and a self-declared lower band (a named limit in CC 8.3.4)"
+  },
+  {
+   "id": "persist/ownership:{relation}:{target_kind}:{version}/fold:stewards_of",
+   "implementer": "persist",
+   "family": "ownership:{relation}:{target_kind}:{version}",
+   "where": "fold:stewards_of",
+   "kind": "fold",
+   "status": "runnable",
+   "sources": [
+    "C208"
+   ],
+   "claims": [],
+   "text": {
+    "value": "binding_only",
+    "cc_ref": "CC 3.4.7.3",
+    "quote": "The steward set therefore has **at most one** member: the granter of the one live owner-binding.",
+    "param": {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "fold": "stewards_of",
+     "mode": "binding_only"
+    }
+   },
+   "shipped": {
+    "value": "the steward fold admits on the identity_occurrence anchor",
+    "source": "formal/derivation/text_conflicts.tsv C208 (the store's steward fold, read by the conflict row)",
+    "census_cell": null,
+    "file": "formal/derivation/text_conflicts.tsv",
+    "file_sha256": "677605fa9acc84ec49312cb92c69c5e4a465f4289d6b5a15a41d2d408a6b77f9",
+    "file_rows": [
+     "C208"
+    ],
+    "param": {
+     "family": "ownership:{relation}:{target_kind}:{version}",
+     "fold": "stewards_of",
+     "mode": "binding_and_occurrence"
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ob",
+      "kind": "offer",
+      "signer": "K",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "O"
+      ],
+      "scope": "owner",
+      "obj": "K",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "O",
+        "owner",
+        "K"
+       ]
+      ],
+      "cosigners": [
+       "O"
+      ]
+     },
+     {
+      "id": "io",
+      "kind": "fam",
+      "signer": "X",
+      "names": [],
+      "family": "identity:occurrence",
+      "leaf": "identity_occurrence",
+      "subject": "K"
+     }
+    ],
+    "ask": {
+     "key": "K",
+     "answer": "fold"
+    }
+   },
+   "expect_shipped": "O,X",
+   "expect_kernel": "O",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "O"
+    ],
+    "shipped_judged_on_arrival": [
+     "O,X"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/takedown_notice:{basis}/signer_rule[leaf=steward_purge]",
+   "implementer": "persist",
+   "family": "takedown_notice:{basis}",
+   "where": "signer_rule[leaf=steward_purge]",
+   "kind": "cosign",
+   "status": "runnable",
+   "sources": [
+    "C307"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "authorised by a cosigned `takedown_notice` under the trust root's `consensus_protocol` with basis `steward_purge`",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": {
+      "steward_purge": [
+       [
+        "count:protocol@group"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "steward_purge leaf: none (held shut)",
+    "source": "formal/derivation/census_v61.tsv takedown_notice:{basis} 3_signer_rule",
+    "census_cell": "seat_role(takedown) x delegates_to(takedown) x {} (takedown: outside vocabulary); steward_purge leaf: none (held shut)",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": {
+      "steward_purge": [],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "cb",
+      "kind": "cosign",
+      "signer": "B",
+      "names": [
+       "g"
+      ],
+      "family": "cosign",
+      "of": "n"
+     },
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g",
+       "cb"
+      ],
+      "family": "takedown_notice:{basis}",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "leaf": "steward_purge"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "n"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/(default row)/subject_rule.in_audience",
+   "implementer": "persist",
+   "family": "(default row)",
+   "where": "subject_rule.in_audience",
+   "kind": "subject",
+   "status": "runnable",
+   "sources": [
+    "C331"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "subjects_in:group"
+     ]
+    ],
+    "cc_ref": "CC 2.1",
+    "quote": "A row naming a key outside its audience concludes nothing",
+    "param": {
+     "family": "(default row)",
+     "gate": [
+      [
+       "subjects_in:group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "\"in_audience\": \"no\"",
+    "source": "formal/derivation/family_default_row.json subject_rule in_audience (the census reading, 144 code-v61 cells)",
+    "census_cell": null,
+    "file": "formal/derivation/family_default_row.json",
+    "file_sha256": "d9e1254514448633b35e84bd260071c853f0e3cfc497e37870367d3729e58854",
+    "param": {
+     "family": "(default row)",
+     "gate": [
+      [
+       "any"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "t",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "(default row)",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "subjects": [
+       "X"
+      ]
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "t"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the text says refused; the check reads the roster at the row's head, another row, so the kernel concludes nothing rather than refusing (KERNEL.md section 3)"
+  },
+  {
+   "id": "persist/moderation:{allegation_type}/body.subject_digest",
+   "implementer": "persist",
+   "family": "moderation:{allegation_type}",
+   "where": "body.subject_digest",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "C439",
+    "C481"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "any"
+     ]
+    ],
+    "cc_ref": "CC 2.6.1.8",
+    "quote": "OPTIONAL on moderation:*",
+    "param": {
+     "family": "moderation:{allegation_type}",
+     "gate": [
+      [
+       "any"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "moderation subject digest required",
+    "source": "formal/derivation/census_v61.tsv moderation:{allegation_type} 7_body",
+    "census_cell": "PROSE: moderation subject digest required (moderation_subject_digest)",
+    "param": {
+     "family": "moderation:{allegation_type}",
+     "gate": [
+      [
+       "any"
+      ]
+     ],
+     "refuse": [
+      "missing_subject_digest"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "m",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "moderation:{allegation_type}"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "m"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 1,
+    "of": 1,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/(targeted rows)/refusal token",
+   "implementer": "persist",
+   "family": "(targeted rows)",
+   "where": "refusal token",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "C104"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 2.1",
+    "quote": "A targeted row naming a third party in `attested_key_id` is refused at admission"
+   },
+   "shipped": {
+    "value": "no token in CC 3.1.3.2's list",
+    "source": null,
+    "census_cell": null
+   },
+   "reason": "the case is a refusal by the row alone and the kernel gives it (refused); what differs is the token's name on the wire",
+   "gap": "wire"
+  },
+  {
+   "id": "persist/key:record/scrub_key_id",
+   "implementer": "persist",
+   "family": "key:record",
+   "where": "scrub_key_id",
+   "kind": "signer",
+   "status": "stated",
+   "sources": [
+    "C359"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 3.1.3",
+    "quote": "**Yes — self only, by possession**; every other row is admitted only once its signer's `key:record` is held (retryable otherwise)"
+   },
+   "shipped": {
+    "value": "an anchor scrub may differ from the subject (KeyRecord in constitution/signed_object.tsv)",
+    "source": null,
+    "census_cell": null
+   },
+   "reason": "which field carries an anchor's signature is the signed object's byte form; the kernel's row has one signer and cosigners",
+   "gap": "wire"
+  },
+  {
+   "id": "persist/(any, under legal_hold)/erasure_route",
+   "implementer": "persist",
+   "family": "(any, under legal_hold)",
+   "where": "erasure_route",
+   "kind": "lifecycle",
+   "status": "stated",
+   "sources": [
+    "C453"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 4.4.3.29",
+    "quote": "or under a `legal_hold` ([CC 4.4.3.12](#4.4.3.12)), the `withdraws` is admitted and recorded, and the descent it would force is refused with reason"
+   },
+   "shipped": {
+    "value": "legal_hold: none in code",
+    "source": null,
+    "census_cell": null
+   },
+   "reason": "the withdraws is admitted in both; what differs is the erasure descent, a storage act the kernel does not model",
+   "gap": "storage"
+  },
+  {
+   "id": "agent/(agent conduct)/CC 7.4 stop",
+   "implementer": "agent",
+   "family": "(agent conduct)",
+   "where": "CC 7.4 stop",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "C562"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 7.4",
+    "quote": "An agent that finds itself one step from a lethal act — holding a target, a trigger, a release, or the computation another system would fire on — stops."
+   },
+   "shipped": {
+    "value": "nothing detects that situation; none of the ten verbs is a stop",
+    "source": null,
+    "census_cell": null
+   },
+   "reason": "recognising one step from a lethal act is the agent's reading of its task, not a function of rows",
+   "gap": "outside the kernel"
+  },
+  {
+   "id": "persist/moderation:{allegation_type}/replication.audience",
+   "implementer": "persist",
+   "family": "moderation:{allegation_type}",
+   "where": "replication.audience",
+   "kind": "audience",
+   "status": "stated",
+   "sources": [
+    "C384"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 4.5.5",
+    "quote": "A duty-holder's record MAY withhold the reporter's identity and the report's content from the person named"
+   },
+   "shipped": {
+    "value": "targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id)",
+    "source": "formal/derivation/census_v61.tsv moderation:{allegation_type} 10_replication",
+    "census_cell": "tier: local | federation | audience: by cohort_scope: self_collective -> owner's nodes; targeted -> cohort_plus_subjects(full) (refers-to: attested, subjects, for_key_id); commons -> everyone | non_recipient: GAP on release-61 (a delivered row is stored); s2: drop (#1148) | held: settle_on_key (byte-identical re-offer AlreadyHeld, #672)"
+   },
+   "reason": "the subject is served the row's existence and some fields and not others; the model's audience is of a whole row",
+   "gap": "no field-level audience"
+  },
+  {
+   "id": "tooling/membership:{stage}/guard[leaf=widening on a stalled roster]",
+   "implementer": "tooling",
+   "family": "membership:{stage}",
+   "where": "guard[leaf=widening on a stalled roster]",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "C492"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 3.2",
+    "quote": "So a stalled roster admits **exactly one row kind without that count**: a widening whose only change is the addition of a **founder** seat."
+   },
+   "shipped": {
+    "value": "when(leaf=widening) (one trust:confers@landed[...] else refuse & type(signer,user) else refuse ...)",
+    "source": "tools/guard_grammar.py; manifests/transitions.json membership:{stage} attest guard",
+    "census_cell": null
+   },
+   "reason": "a stalled roster (T7) is no answer of the kernel model and no condition of the guard grammar; its condition reads a count of active founders over a margin (a named limit in CC 8.3.4)",
+   "gap": "no such answer"
+  },
+  {
+   "id": "persist/consent:partnership_grant, consent:partnership_accept/fold:ratified_pair",
+   "implementer": "persist",
+   "family": "consent:partnership_grant, consent:partnership_accept",
+   "where": "fold:ratified_pair",
+   "kind": "fold",
+   "status": "stated",
+   "sources": [
+    "seven_rankings item 2"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 2.3.2.4",
+    "quote": "this predicate is **consumer policy**, NOT registry-normative"
+   },
+   "shipped": {
+    "value": "no claim and no model states the shipped rule",
+    "source": null,
+    "census_cell": null
+   },
+   "reason": "no claim, census cell or model records what the shipped store does with two halves, so there is no shipped verdict to compute",
+   "gap": "no shipped value"
+  },
+  {
+   "id": "persist/licensure:{authority_id}/freshness.judged_at",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "freshness.judged_at",
+   "kind": "freshness",
+   "status": "stated",
+   "sources": [
+    "C372"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 2.6.7",
+    "quote": "is judged at its signed `asserted_at`"
+   },
+   "shipped": {
+    "value": "receipt future-skew <=5 min, us resolution (check_instant_binding); no W",
+    "source": "formal/derivation/census_v61.tsv licensure:{authority_id} 8_freshness",
+    "census_cell": "GENERIC: receipt future-skew <=5 min, us resolution (check_instant_binding); no W; s3: signed instants .sssZ only (signed_instant_form_violation)"
+   },
+   "reason": "judging at a signed instant bounded by W is neither of the kernel's two notions of time (a row's own end, a window with a landing); KERNEL.md 5 leaves such clocks without a meaning",
+   "gap": "time"
+  },
+  {
+   "id": "persist/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
+   "implementer": "persist",
+   "family": "transparency_log:cosigned:{tree_size}",
+   "where": "guard[accountable stream]",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "C433"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 5.3.3.11",
+    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
+   },
+   "shipped": {
+    "value": "no signed member says a stream is accountable",
+    "source": "CC 8.10 card guard (text_conflicts C433)",
+    "census_cell": null
+   },
+   "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
+   "gap": "wire"
+  },
+  {
+   "id": "edge/transparency_log:cosigned:{tree_size}/guard[accountable stream]",
+   "implementer": "edge",
+   "family": "transparency_log:cosigned:{tree_size}",
+   "where": "guard[accountable stream]",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "C433"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 5.3.3.11",
+    "quote": "For accountable streams, \"published\" means **witness-cosigned**"
+   },
+   "shipped": {
+    "value": "no signed member says a stream is accountable",
+    "source": "CC 8.10 card guard (text_conflicts C433)",
+    "census_cell": null
+   },
+   "reason": "the guard needs a signed member stating the stream's profile; until the wire carries one no rule can read it",
+   "gap": "wire"
+  },
+  {
+   "id": "persist/(occurrence revocation, cosign:signature)/attestation_id form",
+   "implementer": "persist",
+   "family": "(occurrence revocation, cosign:signature)",
+   "where": "attestation_id form",
+   "kind": "door",
+   "status": "stated",
+   "sources": [
+    "C443"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 3.1.3",
+    "quote": "sha256(domain ‖ JCS(object))"
+   },
+   "shipped": {
+    "value": "attestation_id typed uuid in manifests/signed_object.cddl",
+    "source": "manifests/signed_object.cddl uuid",
+    "census_cell": null
+   },
+   "reason": "how a 32-byte digest id folds to the uuid form is a byte form, not a row",
+   "gap": "wire"
+  },
+  {
+   "id": "persist/ledger:head:{unit}:{version}/reserved_rule",
+   "implementer": "persist",
+   "family": "ledger:head:{unit}:{version}",
+   "where": "reserved_rule",
+   "kind": "wording-only",
+   "status": "wording-only",
+   "sources": [
+    "C363"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 3.1.3",
+    "quote": "**Yes:** the ledger's single owner (the steward-bound identity of its `ledger_id` triple); no delegate writes"
+   },
+   "shipped": {
+    "value": "or a delegate under its declared serialization discipline",
+    "source": "formal/derivation/census_v61.tsv ledger:head:{unit}:{version} reserved_rule",
+    "census_cell": "CC 3.3.10.1: the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
+   },
+   "reason": "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart"
+  },
+  {
+   "id": "persist/ledger:checkpoint:{unit}:{version}/reserved_rule",
+   "implementer": "persist",
+   "family": "ledger:checkpoint:{unit}:{version}",
+   "where": "reserved_rule",
+   "kind": "wording-only",
+   "status": "wording-only",
+   "sources": [
+    "C363"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 3.1.3",
+    "quote": "**Yes:** the ledger's single owner (the steward-bound identity of its `ledger_id` triple); no delegate writes"
+   },
+   "shipped": {
+    "value": "or a delegate under its declared serialization discipline",
+    "source": "formal/derivation/census_v61.tsv ledger:checkpoint:{unit}:{version} reserved_rule",
+    "census_cell": "CC 3.3.10.1: the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
+   },
+   "reason": "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart"
+  },
+  {
+   "id": "persist/ledger:promotion:{version}/reserved_rule",
+   "implementer": "persist",
+   "family": "ledger:promotion:{version}",
+   "where": "reserved_rule",
+   "kind": "wording-only",
+   "status": "wording-only",
+   "sources": [
+    "C363"
+   ],
+   "claims": [],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 3.1.3",
+    "quote": "**Yes:** the ledger's single owner (the steward-bound identity of its `ledger_id` triple); no delegate writes"
+   },
+   "shipped": {
+    "value": "or a delegate under its declared serialization discipline",
+    "source": "formal/derivation/census_v61.tsv ledger:promotion:{version} reserved_rule",
+    "census_cell": "CC 3.3.10.1: the ledger's single owner (the steward-bound identity of its ledger_id triple) or a delegate under its declared serialization discipline"
+   },
+   "reason": "the census reserved_rule words admit a delegate; its signer cell admits self only ('CC delegate arm: GAP'), so no row tells them apart"
+  },
+  {
+   "id": "persist/group:roster/cosign_rule count",
+   "implementer": "persist",
+   "family": "group:roster",
+   "where": "cosign_rule count",
+   "kind": "count",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosigned-rows"
+   ],
+   "claims": [
+    "CLM-cosigned-rows"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4",
+    "quote": "judged on the *receiver's own* fold over the members at the roster head the row names",
+    "param": {
+     "family": "group:roster",
+     "gate": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "roster_member(at)",
+    "source": "formal/derivation/census_v61.tsv group:roster 3_signer_rule",
+    "census_cell": "roster_member(at) x none x {} (minted from the signed record)",
+    "param": {
+     "family": "group:roster",
+     "gate": [
+      [
+       "count_at:protocol@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "group:roster",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the removal is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/membership:{stage}/roster event signers",
+   "implementer": "persist",
+   "family": "membership:{stage}",
+   "where": "roster event signers",
+   "kind": "count",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosigned-rows",
+    "CLM-roster-event-fresh"
+   ],
+   "claims": [
+    "CLM-cosigned-rows",
+    "CLM-roster-event-fresh"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 3.3.4",
+    "quote": "A widening or removal names the roster head it extends, and its signers are counted over the members at that head.",
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "count:protocol@group"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "widening/removal: roster_member(at) cosigned",
+    "source": "formal/derivation/census_v61.tsv membership:{stage} 3_signer_rule",
+    "census_cell": "proposal: roster_member(at) (founder_only: founder; s2: refused above family); acceptance/decline: self (acts for the invitee); widening/removal: roster_member(at) cosigned; resignation: self",
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "count_at:protocol@group"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "u"
+      ],
+      "family": "membership:{stage}",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3,
+      "leaf": "widening"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the removal is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/group:roster/lifecycle.withdraws_by[rule 0]",
+   "implementer": "persist",
+   "family": "group:roster",
+   "where": "lifecycle.withdraws_by[rule 0]",
+   "kind": "lifecycle",
+   "status": "runnable",
+   "sources": [
+    "CLM-cosigned-rows"
+   ],
+   "claims": [
+    "CLM-cosigned-rows"
+   ],
+   "text": {
+    "value": [
+     [
+      "count:protocol@group"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.1",
+    "quote": "counted over the members at the roster head the withdrawal names",
+    "param": {
+     "family": "group:roster",
+     "withdraws_by": [
+      [
+       "count:protocol@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "a cosigned withdraws admitted when its cosigners satisfy the protocol on the receiver's fold at the signed instant",
+    "source": "constitution/claims.tsv CLM-cosigned-rows (impl check_cosigned_withdraws, verify_roster_cosignatures)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "da8f147b8764cb65cf4552f717500dfc6d03da617e15a9bae14b1b8ee0d61f81",
+    "file_rows": [
+     "CLM-cosigned-rows"
+    ],
+    "param": {
+     "family": "group:roster",
+     "withdraws_by": [
+      [
+       "count_at:protocol@group"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A",
+       "B",
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "B",
+        "member",
+        "g"
+       ],
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ],
+      "protocol": "strict"
+     },
+     {
+      "id": "h0",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "group:roster",
+      "group": "g",
+      "head": [
+       "g"
+      ],
+      "cosigners": [
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "u",
+      "kind": "unseat",
+      "signer": "A",
+      "names": [
+       "g"
+      ],
+      "family": "unseat",
+      "to": [
+       "C"
+      ],
+      "scope": "member",
+      "obj": "g",
+      "conf": "group",
+      "cuts": [
+       [
+        "seat",
+        "C",
+        "member",
+        "g"
+       ]
+      ],
+      "says": "out",
+      "head": [
+       "g"
+      ],
+      "policy": "strict",
+      "cosigners": [
+       "B"
+      ],
+      "at": 5
+     },
+     {
+      "id": "x",
+      "kind": "withdraw",
+      "signer": "A",
+      "names": [
+       "u",
+       "h0"
+      ],
+      "family": "withdraws",
+      "target": "h0",
+      "group": "g",
+      "head": [
+       "u"
+      ],
+      "cosigners": [
+       "C"
+      ],
+      "at": 3
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h0"
+    }
+   },
+   "expect_shipped": "withdrawn",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "withdrawn"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/licensure:{authority_id}/authority at issuance",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "authority at issuance",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "claims": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:license@authority"
+     ]
+    ],
+    "cc_ref": "CC 2.4.1.3",
+    "quote": "It is judged over the issuance's own causal past under the cosigned-row rule, never at receipt",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:license@authority"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "authority judged at the row's signed asserted_at (licence_roots_at)",
+    "source": "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "64e22a1dbadf152370846c7366e4015afae3dcec822134a7e36b0122dcc97ba1",
+    "file_rows": [
+     "CLM-licence-judged-at-issuance"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat_at:license@authority"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "Au",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "license",
+      "obj": "Au",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "license",
+        "Au"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "w",
+      "kind": "withdraw",
+      "signer": "Au",
+      "names": [
+       "dl"
+      ],
+      "family": "withdraws",
+      "target": "dl",
+      "at": 9
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "da",
+       "w"
+      ],
+      "family": "licensure:{authority_id}",
+      "authority": "Au",
+      "delegate": "E",
+      "at": 5
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the withdrawal of the delegation is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/self:delegates_to/acts under a withdrawn delegates_to",
+   "implementer": "persist",
+   "family": "self:delegates_to",
+   "where": "acts under a withdrawn delegates_to",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "claims": [
+    "CLM-licence-judged-at-issuance"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:moderate@authority"
+     ]
+    ],
+    "cc_ref": "CC 4.5.5",
+    "quote": "for every act that has the withdrawal in its own past or is concurrent with it",
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "seat:moderate@authority"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "authority judged at the row's signed asserted_at (licence_roots_at)",
+    "source": "constitution/claims.tsv CLM-licence-judged-at-issuance (impl licence_roots_at)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "64e22a1dbadf152370846c7366e4015afae3dcec822134a7e36b0122dcc97ba1",
+    "file_rows": [
+     "CLM-licence-judged-at-issuance"
+    ],
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "seat_at:moderate@authority"
+      ]
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "dl",
+      "kind": "offer",
+      "signer": "Au",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "D"
+      ],
+      "scope": "moderate",
+      "obj": "Au",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "D",
+        "moderate",
+        "Au"
+       ]
+      ]
+     },
+     {
+      "id": "da",
+      "kind": "accept",
+      "signer": "D",
+      "names": [
+       "dl"
+      ],
+      "family": "accept",
+      "of": "dl",
+      "scope": null,
+      "obj": null
+     },
+     {
+      "id": "w",
+      "kind": "withdraw",
+      "signer": "Au",
+      "names": [
+       "dl"
+      ],
+      "family": "withdraws",
+      "target": "dl",
+      "at": 9
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "da",
+       "w"
+      ],
+      "family": "self:delegates_to",
+      "authority": "Au",
+      "delegate": "E",
+      "at": 5
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "admitted",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "admitted"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the withdrawal of the delegation is in the act's causal past and carries the later signed instant"
+  },
+  {
+   "id": "persist/membership:{stage}/invitation expiry",
+   "implementer": "persist",
+   "family": "membership:{stage}",
+   "where": "invitation expiry",
+   "kind": "window",
+   "status": "runnable",
+   "sources": [
+    "CLM-membership-consent"
+   ],
+   "claims": [
+    "CLM-membership-consent"
+   ],
+   "text": {
+    "value": [
+     [
+      "held_before_end:proposal"
+     ]
+    ],
+    "cc_ref": "CC 3.1.3.2",
+    "quote": "P's `expires_at` is P's own stated end, and a late acceptance is closed.",
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "held_before_end:proposal"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "shipped": {
+    "value": "the acceptance's and the widening's signed instants compared with expires_at (check_growth_accepted)",
+    "source": "constitution/claims.tsv CLM-membership-consent (impl check_growth_accepted; the summary before 4aa21dd: an undeclined, unexpired acceptance on signed instants)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "27e5348f7c3a4c101f371ab9f7d0324c48834e2b00eb83b22aa90189eba65ddf",
+    "file_rows": [
+     "CLM-membership-consent"
+    ],
+    "param": {
+     "family": "membership:{stage}",
+     "gate": {
+      "widening": [
+       [
+        "signed_before_end:proposal"
+       ]
+      ],
+      "*": [
+       [
+        "any"
+       ]
+      ]
+     }
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "pr",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "membership:{stage}",
+      "leaf": "proposal",
+      "subjects": [
+       "K"
+      ],
+      "expires_at": 10
+     },
+     {
+      "id": "ac",
+      "kind": "fam",
+      "signer": "K",
+      "names": [
+       "pr"
+      ],
+      "family": "membership:{stage}",
+      "leaf": "acceptance",
+      "at": 4
+     },
+     {
+      "id": "rc",
+      "kind": "receipt",
+      "signer": "A",
+      "names": [
+       "ac"
+      ],
+      "family": "receipt",
+      "at": 9
+     },
+     {
+      "id": "w",
+      "kind": "fam",
+      "signer": "A",
+      "names": [
+       "pr",
+       "ac",
+       "rc"
+      ],
+      "family": "membership:{stage}",
+      "leaf": "widening",
+      "proposal": "pr",
+      "at": 11
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "w"
+    }
+   },
+   "expect_shipped": "concludes nothing",
+   "expect_kernel": "admitted",
+   "orders": {
+    "run": 24,
+    "of": 24,
+    "kernel": [
+     "admitted"
+    ],
+    "shipped_judged_on_arrival": [
+     "concludes nothing"
+    ]
+   },
+   "order_dependent_shipped": false,
+   "note": "the member held the acceptance before the end on its own clock and signed the widening after it"
+  },
+  {
+   "id": "persist/self:delegates_to/admission refusal",
+   "implementer": "persist",
+   "family": "self:delegates_to",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-self-edge-not-cycle"
+   ],
+   "claims": [
+    "CLM-self-edge-not-cycle"
+   ],
+   "text": {
+    "value": [
+     [
+      "acyclic"
+     ]
+    ],
+    "cc_ref": "CC 4.1.1",
+    "quote": "the cycle-closing emission concludes nothing, and a walk visits a cycle once",
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "acyclic"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "the cycle-closing delegates_to refused at admission (check_delegation_cycle_admission)",
+    "source": "constitution/claims.tsv CLM-self-edge-not-cycle (impl check_delegation_cycle_admission; the summary before 6e90792: still refused)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "410382902fde28a5e40f730e0b6c32811f541726b61b4d7ce1f3795542b439e2",
+    "file_rows": [
+     "CLM-self-edge-not-cycle"
+    ],
+    "param": {
+     "family": "self:delegates_to",
+     "gate": [
+      [
+       "acyclic"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "e1",
+      "kind": "fam",
+      "signer": "A",
+      "names": [],
+      "family": "self:delegates_to",
+      "delegate": "B"
+     },
+     {
+      "id": "e2",
+      "kind": "fam",
+      "signer": "B",
+      "names": [
+       "e1"
+      ],
+      "family": "self:delegates_to",
+      "delegate": "A"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "e2"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/licensure:{authority_id}/admission refusal",
+   "implementer": "persist",
+   "family": "licensure:{authority_id}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-issuance-scope"
+   ],
+   "claims": [
+    "CLM-issuance-scope"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:license@root"
+     ]
+    ],
+    "cc_ref": "CC 4.4.3.19",
+    "quote": "**concludes nothing**, and is not merely unweighted",
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:license@root"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "an issuance whose delegator lacks the authority refused at admission (check_licensure_delegator_is_authority)",
+    "source": "constitution/claims.tsv CLM-issuance-scope (impl check_licensure_delegator_is_authority)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "24b6d88fa0863ed6572d4175f2eb93dde2516891388cf52ea6fb445f10ae059f",
+    "file_rows": [
+     "CLM-issuance-scope"
+    ],
+    "param": {
+     "family": "licensure:{authority_id}",
+     "gate": [
+      [
+       "seat:license@root"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [
+       "rt"
+      ],
+      "family": "licensure:{authority_id}",
+      "root": "Rt"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 2,
+    "of": 2,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/key_grant:{axis}/admission refusal",
+   "implementer": "persist",
+   "family": "key_grant:{axis}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-issuance-scope"
+   ],
+   "claims": [
+    "CLM-issuance-scope"
+   ],
+   "text": {
+    "value": [
+     [
+      "owner_of_subject"
+     ],
+     [
+      "seat:grant@subject"
+     ]
+    ],
+    "cc_ref": "CC 4.4.3.19",
+    "quote": "**concludes nothing**, and is not merely unweighted",
+    "param": {
+     "family": "key_grant:{axis}",
+     "gate": [
+      [
+       "owner_of_subject"
+      ],
+      [
+       "seat:grant@subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "a grant whose delegator lacks the authority refused at admission (admit_replicated_key_grant)",
+    "source": "constitution/claims.tsv CLM-issuance-scope (impl admit_replicated_key_grant)",
+    "census_cell": null,
+    "file": "constitution/claims.tsv",
+    "file_sha256": "24b6d88fa0863ed6572d4175f2eb93dde2516891388cf52ea6fb445f10ae059f",
+    "file_rows": [
+     "CLM-issuance-scope"
+    ],
+    "param": {
+     "family": "key_grant:{axis}",
+     "gate": [
+      [
+       "owner_of_subject"
+      ],
+      [
+       "seat:grant@subject"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "i",
+      "kind": "fam",
+      "signer": "D",
+      "names": [],
+      "family": "key_grant:{axis}",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "i"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 1,
+    "of": 1,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/takedown_notice:{basis}/admission refusal",
+   "implementer": "persist",
+   "family": "takedown_notice:{basis}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-takedown-notice-row"
+   ],
+   "claims": [
+    "CLM-takedown-notice-row"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:takedown@group"
+     ]
+    ],
+    "cc_ref": "CC 4.5.3",
+    "quote": "An immediate-removal basis asserted by a key that holds no `takedown` duty over the content concludes nothing",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": [
+      [
+       "seat:takedown@group"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "takedown_tombstone::check_takedown_notice_row_admission",
+    "source": "formal/derivation/census_v61.tsv takedown_notice:{basis} door",
+    "census_cell": "generic put_attestation; takedown_tombstone::check_takedown_notice_row_admission; steward_purge leaf held shut",
+    "param": {
+     "family": "takedown_notice:{basis}",
+     "gate": [
+      [
+       "seat:takedown@group"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "g",
+      "kind": "offer",
+      "signer": "A",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "A"
+      ],
+      "scope": "duty",
+      "obj": "g",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "A",
+        "duty",
+        "g"
+       ]
+      ]
+     },
+     {
+      "id": "ku",
+      "kind": "keyrec",
+      "signer": "U",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "n",
+      "kind": "fam",
+      "signer": "U",
+      "names": [
+       "g",
+       "ku"
+      ],
+      "family": "takedown_notice:{basis}",
+      "group": "g"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "n"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/age_assurance:{level}:{band}:{version}/admission refusal",
+   "implementer": "persist",
+   "family": "age_assurance:{level}:{band}:{version}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "C423"
+   ],
+   "claims": [],
+   "text": {
+    "value": [
+     [
+      "seat:assure:age@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.11",
+    "quote": "a row by any other signer concludes nothing at admission",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:age@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "check_reserved_prefix_admission self arm",
+    "source": "formal/derivation/census_v61.tsv age_assurance:{level}:{band}:{version} door",
+    "census_cell": "generic put_attestation; prefix-table row age_assurance: + check_reserved_prefix_admission self arm",
+    "param": {
+     "family": "age_assurance:{level}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:age@root",
+       "not_subject"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ks",
+      "kind": "keyrec",
+      "signer": "S",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "ks",
+       "rt"
+      ],
+      "family": "age_assurance:{level}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/capacity_assurance:{level}:{domain}:{band}:{version}/admission refusal",
+   "implementer": "persist",
+   "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+   "where": "admission refusal",
+   "kind": "door",
+   "status": "runnable",
+   "sources": [
+    "CLM-nsproc-attestation-type-capacity-assurance"
+   ],
+   "claims": [
+    "CLM-nsproc-attestation-type-capacity-assurance"
+   ],
+   "text": {
+    "value": [
+     [
+      "seat:assure:capacity@root",
+      "not_subject"
+     ]
+    ],
+    "cc_ref": "CC 3.4.12",
+    "quote": "A row by any other signer concludes nothing at admission",
+    "param": {
+     "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ]
+    }
+   },
+   "shipped": {
+    "value": "self arms in check_reserved_prefix_admission",
+    "source": "formal/derivation/census_v61.tsv capacity_assurance:{level}:{domain}:{band}:{version} door",
+    "census_cell": "generic put_attestation; prefix-table row capacity_assurance: + self arms in check_reserved_prefix_admission; companion grammar in check_namespace_family_registered",
+    "param": {
+     "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+     "gate": [
+      [
+       "seat:assure:capacity@root",
+       "not_subject"
+      ]
+     ],
+     "refuse": [
+      "gate_fails"
+     ]
+    }
+   },
+   "case": {
+    "rows": [
+     {
+      "id": "ks",
+      "kind": "keyrec",
+      "signer": "S",
+      "names": [],
+      "family": "key:record",
+      "identity_type": "user"
+     },
+     {
+      "id": "rt",
+      "kind": "offer",
+      "signer": "Rt",
+      "names": [],
+      "family": "offer",
+      "to": [
+       "Rt"
+      ],
+      "scope": "root",
+      "obj": "rt",
+      "conf": "self",
+      "on": [
+       [
+        "seat",
+        "Rt",
+        "root",
+        "rt"
+       ]
+      ]
+     },
+     {
+      "id": "h",
+      "kind": "fam",
+      "signer": "S",
+      "names": [
+       "ks",
+       "rt"
+      ],
+      "family": "capacity_assurance:{level}:{domain}:{band}:{version}",
+      "root": "Rt",
+      "subject": "S"
+     }
+    ],
+    "ask": {
+     "answer": "state",
+     "target": "h"
+    }
+   },
+   "expect_shipped": "refused",
+   "expect_kernel": "concludes nothing",
+   "orders": {
+    "run": 6,
+    "of": 6,
+    "kernel": [
+     "concludes nothing"
+    ],
+    "shipped_judged_on_arrival": [
+     "refused"
+    ]
+   },
+   "order_dependent_shipped": false
+  },
+  {
+   "id": "persist/(tombstoned record)/purge_tombstoned",
+   "implementer": "persist",
+   "family": "(tombstoned record)",
+   "where": "purge_tombstoned",
+   "kind": "wording-only",
+   "status": "wording-only",
+   "sources": [
+    "CLM-purge-whole-or-not"
+   ],
+   "claims": [
+    "CLM-purge-whole-or-not"
+   ],
+   "text": {
+    "value": null,
+    "cc_ref": "CC 4.5.3",
+    "quote": "A node does not hold a tombstoned record again and never serves it"
+   },
+   "shipped": {
+    "value": "a tombstoned record is refused at every admission door and never served",
+    "source": "constitution/claims.tsv CLM-purge-whole-or-not (impl refuse_if_tombstoned_attestation; the summary before 6e90792)",
+    "census_cell": null
+   },
+   "reason": "not holding the bytes again and refusing them at the door have one outward effect; the reason reported is purge_tombstoned in both"
+  }
+ ]
+}

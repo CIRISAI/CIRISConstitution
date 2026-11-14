@@ -10,7 +10,7 @@
                       its chance (secrets destroyed, a hard delete, a key destroyed).
 
    Thresholds are fractions of the STANDING set N (m-of-n, scalable), with Cancel ≤ Enact:
-   e.g. enact at 2/3, cancel at 1/3, window by sensitivity. The self roster (CC 3.3.6.3) is the
+   e.g. enact at 2/3, cancel at 1/3, window by sensitivity. The self roster (CC 3.3.6.4) is the
    instance Enact = strict majority, Cancel = strict majority of the others, Window = W_self,
    reversible; the constitutional halt's confirmation (4.2.1.1) is the mirror image — a floor-of-
    one FIRE that lapses unless a majority confirms within the fuse — and is modelled in

@@ -1,6 +1,6 @@
-; CC 2.6.1.8 — the signed object of the v62 edition (a release candidate of 1.0): CBOR and COSE,
+; CC 2.6.1.9 — the signed object of the v62 edition (a release candidate of 1.0): CBOR and COSE,
 ; aligned with SCITT (RFC 9943). PLANNED, hand-written; RFC 8610 CDDL over CBOR with CBOR
-; Deterministic Encoding (draft-ietf-cbor-cde, updating RFC 8949). The JSON/JCS object of 2.6.1.7
+; Deterministic Encoding (draft-ietf-cbor-cde, updating RFC 8949). The JSON/JCS object of 2.6.1.8
 ; stays the signed object of every earlier candidate and verifies as itself for ever.
 
 ; A signed statement is one COSE_Sign1 (RFC 9052 §4.2), as RFC 9943 §6 requires: ONE signer.
@@ -36,10 +36,10 @@ cwt-claims = {
   -70003: uint,                    ; edition: 2 for this object
 }
 
-; The envelope: the 2.6.1.7 member set less what the header now carries (type, family, author key),
+; The envelope: the 2.6.1.8 member set less what the header now carries (type, family, author key),
 ; every text and byte member bounded, no free text: `context` becomes a bounded `note` in the body.
 attestation-envelope = {
-  * tstr => any,                   ; typed members as 2.6.1.7 names them, absent never null
+  * tstr => any,                   ; typed members as 2.6.1.8 names them, absent never null
   ? "asserted_at": ms-time, ? "valid_from": ms-time, ? "valid_until": ms-time,
   ? "expires_at": ms-time,
   ? "reason": uint,                ; a code from a closed registry, 0 = unspecified
@@ -48,7 +48,7 @@ attestation-envelope = {
   ? "body": { ? "note": tstr .size (0..2048), * tstr => any },
 }
 
-; Erasability (CC 2.6.1.1, 2.6.1.8): the selective disclosure of draft-ietf-spice-sd-cwt, exactly; the
+; Erasability (CC 2.6.1.1, 2.6.1.9): the selective disclosure of draft-ietf-spice-sd-cwt, exactly; the
 ; member name "_sd" and the header label -70005 are CIRIS-scoped until the draft's labels are assigned.
 ; A blinded member is absent from the payload; its disclosure is [salt, name, value], its digest is
 ; SHA-256 over the disclosure's deterministic encoding. A family whose erasure_route is dsar or purge

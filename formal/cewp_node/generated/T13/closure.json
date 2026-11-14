@@ -26,7 +26,7 @@
  ],
  "notes": [
   "root HA: witnessed mode off; trust_root model not applicable until extended (residual E)",
-  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.3): Inv_SelfSurvives fails in both generated configurations by design"
+  "person alice: one initial key — a theft or a loss of it is the stated one-key bound (CC 3.3.6.4): Inv_SelfSurvives fails in both generated configurations by design"
  ],
  "promised_atoms": {
   "root.head.stale": {

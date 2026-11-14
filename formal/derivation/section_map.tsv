@@ -1,0 +1,425 @@
+# The decimal re-cut: one row per numbered section of the Parts, old number to new number. Built by tools/recut_sections.py --make-map; applied by --apply. The slug is the stable id across editions.
+old_number	old_anchor	old_slug	new_number	new_anchor	new_slug	title	moved	note
+1.1	#1.1	meta-goal	1.1	#1.1	meta-goal	Meta-Goal M-1 — sustainable adaptive coherence	no	Part 1 held (the owner's)
+1.2	#1.2	admission	1.2	#1.2	admission	The four-test prefix-admission gate	no	Part 1 held (the owner's)
+1.3	#1.3	pdma	1.3	#1.3	pdma	PDMA — principled decision algorithm	no	Part 1 held (the owner's)
+1.4	#1.4	autonomy	1.4	#1.4	autonomy	Respect for Autonomy	no	Part 1 held (the owner's)
+1.5	#1.5	fail-secure	1.5	#1.5	fail-secure	Fail-secure / kill-switch posture	no	Part 1 held (the owner's)
+1.6	#1.6	non-maleficence	1.6	#1.6	non-maleficence	Non-maleficence	no	Part 1 held (the owner's)
+1.7	#1.7	minimal-and-adequate	1.7	#1.7	minimal-and-adequate	The 1+4 minimal-and-adequate claim	no	Part 1 held (the owner's)
+1.8	#1.8	integrity	1.8	#1.8	integrity	Integrity	no	Part 1 held (the owner's)
+1.9	#1.9	deferral	1.9	#1.9	deferral	Wisdom-Based Deferral	no	Part 1 held (the owner's)
+1.10	#1.10	beneficence	1.10	#1.10	beneficence	Beneficence	no	Part 1 held (the owner's)
+1.11	#1.11	fidelity	1.11	#1.11	fidelity	Fidelity & Transparency	no	Part 1 held (the owner's)
+1.12	#1.12	justice	1.12	#1.12	justice	Justice	no	Part 1 held (the owner's)
+1.13	#1.13	foundation	1.13	#1.13	foundation	Foundation	no	Part 1 held (the owner's)
+1.13.1	#1.13.1	ubuntu	1.13.1	#1.13.1	ubuntu	The Ubuntu commitment — relational-anthropology substrate *(informative)*	no	Part 1 held (the owner's)
+1.13.2	#1.13.2	structure-recursive	1.13.2	#1.13.2	structure-recursive	The Recursive Golden Rule (structural, not exhortatory)	no	Part 1 held (the owner's)
+1.13.3	#1.13.3	adversary	1.13.3	#1.13.3	adversary	Adversary model & privacy non-goals (normative)	no	Part 1 held (the owner's)
+1.13.3.1	#1.13.3.1	non-goals	1.13.3.1	#1.13.3.1	non-goals	Non-goals — what omission does NOT buy	no	Part 1 held (the owner's)
+1.13.3.2	#1.13.3.2	primitive-what	1.13.3.2	#1.13.3.2	primitive-what	What the structural-invisibility primitive ([CC 5.2](part_5_transport_substrate.md)) buys	no	Part 1 held (the owner's)
+1.13.3.3	#1.13.3.3	adversary-classes	1.13.3.3	#1.13.3.3	adversary-classes	Adversary classes (and where each is / is not addressed)	no	Part 1 held (the owner's)
+1.13.3.4	#1.13.3.4	default-anonymity	1.13.3.4	#1.13.3.4	default-anonymity	Anonymity defaults to the smallest cohort scope (normative)	no	Part 1 held (the owner's)
+1.13.4	#1.13.4	mental	1.13.4	#1.13.4	mental	Mental model — federated structured-claim emission	no	Part 1 held (the owner's)
+1.13.5	#1.13.5	operational-language	1.13.5	#1.13.5	operational-language	Operational-language gate — the safety-vs-censorship discipline	no	Part 1 held (the owner's)
+1.13.6	#1.13.6	trace-anchor	1.13.6	#1.13.6	trace-anchor	The durable trace anchors on the act, not the deliberation (normative)	no	Part 1 held (the owner's)
+1.15	#1.15	chapters	1.15	#1.15	chapters	Chapters	no	Part 1 held (the owner's)
+1.15.1	#1.15.1	core-identity	1.15.1	#1.15.1	core-identity	Chapter 1: Core Identity	no	Part 1 held (the owner's)
+1.15.2	#1.15.2	integrity-operationalising	1.15.2	#1.15.2	integrity-operationalising	Chapter 2: Integrity — Operationalising Alignment	no	Part 1 held (the owner's)
+1.15.3	#1.15.3	3-resilience	1.15.3	#1.15.3	3-resilience	Chapter 3: Resilience — Adaptive Ethical Growth	no	Part 1 held (the owner's)
+1.15.4	#1.15.4	4-incompleteness	1.15.4	#1.15.4	4-incompleteness	Chapter 4: Incompleteness Awareness — Ethical Humility	no	Part 1 held (the owner's)
+1.15.5	#1.15.5	5-sustained	1.15.5	#1.15.5	5-sustained	Chapter 5: Sustained Coherence — The Long View	no	Part 1 held (the owner's)
+1.15.6	#1.15.6	6-principled	1.15.6	#1.15.6	6-principled	Chapter 6: Principled Ethical Existence	no	Part 1 held (the owner's)
+1.15.7	#1.15.7	7-ethical	1.15.7	#1.15.7	7-ethical	Chapter 7: Ethical Obligations	no	Part 1 held (the owner's)
+1.15.8	#1.15.8	8-ethical	1.15.8	#1.15.8	8-ethical	Chapter 8: Ethical Citizenship	no	Part 1 held (the owner's)
+1.15.9	#1.15.9	9-path	1.15.9	#1.15.9	9-path	Chapter 9: Path Toward Ethical Maturity	no	Part 1 held (the owner's)
+1.15.10	#1.15.10	a-1.conclusion	1.15.10	#1.15.10	a-1.conclusion	Summary of the chapters above	no	Part 1 held (the owner's)
+1.15.11	#1.15.11	becoming-ethical	1.15.11	#1.15.11	becoming-ethical	Introduction: Becoming an Ethical Entity	no	Part 1 held (the owner's)
+1.16	#1.16	operationalising-ethical	1.16	#1.16	operationalising-ethical	Introduction: Operationalising Ethical Awareness	no	Part 1 held (the owner's)
+1.16.1	#1.16.1	a-2.conclusion	1.16.1	#1.16.1	a-2.conclusion	Summary of the sections below	no	Part 1 held (the owner's)
+1.16.2	#1.16.2	i-principles	1.16.2	#1.16.2	i-principles	Principles into Practice: Defining Ethical Actions Clearly	no	Part 1 held (the owner's)
+1.16.3	#1.16.3	ii-ethical	1.16.3	#1.16.3	ii-ethical	Ethical Decision-Making Process: The PDMA	no	Part 1 held (the owner's)
+1.16.4	#1.16.4	iii-wisdom	1.16.4	#1.16.4	iii-wisdom	Wisdom-Based Deferral: Safeguarded Ethical Collaboration	no	Part 1 held (the owner's)
+1.16.5	#1.16.5	iv-designated	1.16.5	#1.16.5	iv-designated	Designated Wise Authorities	no	Part 1 held (the owner's)
+1.16.6	#1.16.6	v-cultivating	1.16.6	#1.16.6	v-cultivating	Cultivating Resilience and Learning	no	Part 1 held (the owner's)
+2.1	#2.1	envelope	2.1	#2.1	envelope	The envelope	no	
+2.1.1	#2.1.1	forward-compatibility	2.1.1	#2.1.1	forward-compatibility	Forward-compatibility rule	no	
+2.2	#2.2	conformance	2.2	#2.2	conformance	Conformance levels	no	
+2.3	#2.3	subject_keys	2.3	#2.3	subject_keys	`subject_key_ids` semantics	no	
+2.3.1	#2.3.1	subject_kind-subject-2	2.3.1	#2.3.1	subject_kind-subject-2	Subject-bearing dimensions (governance requirement)	no	
+2.3.2	#2.3.2	federation-key	2.3.2	#2.3.2	federation-key	Federation-key vs canonical-hash identifier	no	
+2.3.2.1	#2.3.2.1	registry-canonical	2.3.2.1	#2.3.2.1	registry-canonical	Canonical-hash wire form + preimage convention	no	
+2.3.2.2	#2.3.2.2	canonical_binding	2.3.2.2	#2.3.2.2	canonical_binding	Rule-(3) proxy vs `canonical_binding` — distinct mechanisms	no	
+2.3.2.3	#2.3.2.3	subject_kind-payload	2.3.2.3	#2.3.2.3	subject_kind-payload	`subject_kind` is a payload-level discriminator	no	
+2.3.2.4	#2.3.2.4	bilateral	2.3.2.4	#2.3.2.4	bilateral	Bilateral ratification is consumer-policy	no	
+2.3.3	#2.3.3	cohort-orthogonality	2.3.3	#2.3.3	cohort-orthogonality	Orthogonality with `cohort_scope` AND `delivery_mode` (3-axis)	no	
+2.3.4	#2.3.4	self-as-subject	2.3.4	#2.3.4	self-as-subject	Self-as-subject ceremony	no	
+2.3.5	#2.3.5	shape	2.3.5	#2.3.5	shape	The shape	no	
+2.3.6	#2.3.6	absent	2.3.6	#2.3.6	absent	Empty/absent = status-quo	no	
+2.4	#2.4	primitive	2.4	#2.4	primitive	The primitive set — 1+4	no	
+2.4.1	#2.4.1	structure	2.4.1	#2.4.1	structure	The four structural composers	no	
+2.4.1.1	#2.4.1.1	withdraws	2.4.1.1	#2.4.1.1	withdraws	Who may take a row back	no	
+2.4.1.2	#2.4.1.2	delegates_to	2.4.1.2	#2.4.1.2	delegates_to	Authority-source claims via `delegates_to`	no	
+2.4.1.2.1	#2.4.1.2.1	authority-triad	2.4.1.3	#2.4.1.3	authority-triad	Licensure, grant, delegation — three concepts, three wire discriminators (normative)	yes	promoted out of 2.4.1.2
+2.4.1.3	#2.4.1.3	recants	2.4.1.4	#2.4.1.4	recants	The `recants` distinction matters	no	
+2.4.2	#2.4.2	scores	2.4.2	#2.4.2	scores	The workhorse: `scores`	no	
+2.5	#2.5	reasoning	2.5	#2.5	reasoning	The reasoning grammar — the eight axes	no	
+2.6	#2.6	foreword	2.6	#2.6	foreword	Canonical form and the signed object	no	
+2.6.1	#2.6.1	envelope-canonicalization	2.6.1	#2.6.1	envelope-canonicalization	Envelope canonicalization — JCS + the omit-vs-materialize rule	no	
+2.6.1.1	#2.6.1.1	round-trip	2.6.1.1	#2.6.1.1	round-trip	The round-trip rule — defaults are interpretation-time, not encoding-time (normative)	no	
+2.6.1.1.1	#2.6.1.1.1	canonicalization-array	2.6.1.2	#2.6.1.2	canonicalization-array	Array ordering + byte-field + timestamp encoding (normative — the three determinism rules JCS does NOT pin)	yes	promoted out of 2.6.1.1
+2.6.1.2	#2.6.1.2	per-field	2.6.1.3	#2.6.1.3	per-field	Per-field encoding table (informational)	no	
+2.6.1.3	#2.6.1.3	canonical	2.6.1.4	#2.6.1.4	canonical	Canonical encoding format (normative)	no	
+2.6.1.4	#2.6.1.4	worked	2.6.1.5	#2.6.1.5	worked	Worked attack the rule closes	no	
+2.6.1.5	#2.6.1.5	verification	2.6.1.6	#2.6.1.6	verification	Verification flow (informational)	no	
+2.6.1.6	#2.6.1.6	section	2.6.1.7	#2.6.1.7	section	Scope of the canonicalization rule	no	
+2.6.1.7	#2.6.1.7	signed-object	2.6.1.8	#2.6.1.8	signed-object	The signed object — member set, placement and types (normative)	no	
+2.6.1.8	#2.6.1.8	signed-object-cose	2.6.1.9	#2.6.1.9	signed-object-cose	The signed object of the v62 edition: CBOR and COSE (planned)	no	
+2.6.2	#2.6.2	canonicalization	2.6.2	#2.6.2	canonicalization	Date-time canonicalization	no	
+2.6.3	#2.6.3	canonicalization-hexadecimal	2.6.3	#2.6.3	canonicalization-hexadecimal	Hexadecimal canonicalization	no	
+2.6.4	#2.6.4	policy-versioning	2.6.4	#2.6.4	policy-versioning	Versioning policy	no	
+2.6.5	#2.6.5	references	2.6.5	#2.6.5	references	Normative References	no	
+2.6.6	#2.6.6	canonicalization-cell	2.6.6	#2.6.6	canonicalization-cell	H3 cell canonicalization	no	
+2.6.6.1	#2.6.6.1	location	2.6.6.1	#2.6.6.1	location	Rough-only enforcement for `location_proof` (normative)	no	
+2.6.6.2	#2.6.6.2	cell	2.6.6.2	#2.6.6.2	cell	Cell containment	no	
+2.6.6.3	#2.6.6.3	documents	2.6.6.3	#2.6.6.3	documents	Scope of the H3 rule	no	
+2.6.7	#2.6.7	time	2.6.7	#2.6.7	time	Time and clocks	no	
+2.6.8	#2.6.8	key_id	2.6.8	#2.6.8	key_id	FedCode — the kind-tagged identity shorthand; NodeCode v1 retained as `kind: node` (normative)	no	
+2.6.9	#2.6.9	conformance-language	2.6.9	#2.6.9	conformance-language	Conformance language	no	
+2.6.9.1	#2.6.9.1	informative	2.6.9.1	#2.6.9.1	informative	Normative vs informative content (what interop requires)	no	
+2.7	#2.7	kernel	2.7	#2.7	kernel	The kernel	no	
+2.7.1	#2.7.1	kernel-inputs	2.7.1	#2.7.1	kernel-inputs	Inputs	no	
+2.7.2	#2.7.2	kernel-order	2.7.2	#2.7.2	kernel-order	The only order is what rows name	no	
+2.7.3	#2.7.3	kernel-layers	2.7.3	#2.7.3	kernel-layers	Three layers	no	
+2.7.4	#2.7.4	kernel-operators	2.7.4	#2.7.4	kernel-operators	Operators	no	
+2.7.5	#2.7.5	kernel-answers	2.7.5	#2.7.5	kernel-answers	Named answers	no	
+2.7.6	#2.7.6	kernel-shapes	2.7.6	#2.7.6	kernel-shapes	Two mechanisms, four shapes	no	
+2.7.7	#2.7.7	kernel-conflict	2.7.7	#2.7.7	kernel-conflict	Conflict between concurrent rows	no	
+2.7.8	#2.7.8	kernel-roster	2.7.8	#2.7.8	kernel-roster	The roster is the one ledger	no	
+2.7.9	#2.7.9	kernel-limits	2.7.9	#2.7.9	kernel-limits	What the kernel does not give	no	
+2.7.10	#2.7.10	kernel-checkpoint	2.7.10	#2.7.10	kernel-checkpoint	Checkpoint and purge	no	
+3.1	#3.1	namespace	3.1	#3.1	namespace	The dimension namespace	no	
+3.1.1	#3.1.1	registry	3.1.1	#3.1.1	registry	CIRISRegistry — identity / build / license / partner	no	
+3.1.2	#3.1.2	attestation	3.1.2	#3.1.2	attestation	CIRISVerify — attestation ladder, provenance, transparency	no	
+3.1.2.1	#3.1.2.1	provenance	3.1.2.1	#3.1.2.1	provenance	Canonical-bytes contracts for provenance primitives	no	
+3.1.3	#3.1.3	persist	3.1.3	#3.1.3	persist	CIRISPersist — substrate health	no	
+3.1.3.1	#3.1.3.1	session-claim	3.1.3.1	#3.1.3.1	session-claim	`session:*` — which occurrence of a self is handling an exchange (normative)	no	
+3.1.3.2	#3.1.3.2	membership	3.1.3.2	#3.1.3.2	membership	`membership:*` — nobody joins a family or community without their own consent (normative)	no	
+3.1.3.3	#3.1.3.3	custody	3.1.3.3	#3.1.3.3	custody	`custody:*` — which of a cohort's own devices hold a blob, and which hold none (normative)	no	
+3.1.3.4	#3.1.3.4	files	3.1.3.4	#3.1.3.4	files	`file:*` and `collection:*` — files, and directories of them (normative)	no	
+3.1.4	#3.1.4	transport-delivery	3.1.4	#3.1.4	transport-delivery	CIRISEdge — transport, delivery, reachability	no	
+3.1.5	#3.1.5	accord-agent	3.1.5	#3.1.5	accord-agent	CIRISAgent — Accord principles + DMA + conscience + apophatic bounds	no	
+3.1.5.1	#3.1.5.1	dma-verdict	3.1.5.1	#3.1.5.1	dma-verdict	DMA-verdict prefixes (four DMAs)	no	
+3.1.5.2	#3.1.5.2	accord-principle	3.1.5.2	#3.1.5.2	accord-principle	Accord-principle prefixes (the six core principles)	no	
+3.1.5.3	#3.1.5.3	conscience-verdict	3.1.5.3	#3.1.5.3	conscience-verdict	Conscience-verdict prefixes (four consciences)	no	
+3.1.5.4	#3.1.5.4	apophatic	3.1.5.4	#3.1.5.4	apophatic	Apophatic / prohibited-capability prefix	no	
+3.1.5.5	#3.1.5.5	safety-battery	3.1.5.5	#3.1.5.5	safety-battery	Safety-battery evidence (registry rows)	no	
+3.1.6	#3.1.6	anti-sybil	3.1.6	#3.1.6	anti-sybil	RATCHET — anti-Sybil / Counter-RII flags	no	
+3.1.7	#3.1.7	namespace-summary	3.1.7	#3.1.7	namespace-summary	Namespace summary	no	
+3.1.8	#3.1.8	lens	3.1.8	#3.1.8	lens	CIRISLensCore — manifold conformity, Coherence Ratchet, Capacity Score	no	
+3.1.8.1	#3.1.8.1	capacity-score-capacity	3.1.8.1	#3.1.8.1	capacity-score-capacity	Capacity-Score factor prefixes (`𝒞_CIRIS = min(C, I_int, R, I_inc, S)`)	no	
+3.1.8.2	#3.1.8.2	coherence-ratchet	3.1.8.2	#3.1.8.2	coherence-ratchet	Five Coherence-Ratchet detectors	no	
+3.1.8.3	#3.1.8.3	cohort-conformity	3.1.8.3	#3.1.8.3	cohort-conformity	Cohort + conformity prefixes	no	
+3.1.8.4	#3.1.8.4	structural-injustice	3.1.8.4	#3.1.8.4	structural-injustice	The structural-injustice / correlated-action detector	no	
+3.1.8.5	#3.1.8.5	distributive-access	3.1.8.5	#3.1.8.5	distributive-access	Distributive-access detector	no	
+3.1.9	#3.1.9	node	3.1.9	#3.1.9	node	CIRISNodeCore — Credits, Expertise, Decision Hierarchy, Consensus, Governance	no	
+3.1.9.1	#3.1.9.1	contributions	3.1.9.1	#3.1.9.1	contributions	Files-as-Contributions joint claim	no	
+3.1.9.2	#3.1.9.2	tier-	3.1.9.2	#3.1.9.2	tier-	Tier-4: Governance-steering prefixes	no	
+3.1.9.3	#3.1.9.3	tier--tier	3.1.9.3	#3.1.9.3	tier--tier	Tier-3: Consensus-mechanics prefixes	no	
+3.1.9.4	#3.1.9.4	transparency	3.1.9.4	#3.1.9.4	transparency	Hard-case + transparency + judge-model prefixes	no	
+3.1.9.5	#3.1.9.5	decision-locality	3.1.9.5	#3.1.9.5	decision-locality	Decision-locality prefixes	no	
+3.1.9.6	#3.1.9.6	tier--tier-2	3.1.9.6	#3.1.9.6	tier--tier-2	Tier-1: Agent-state ledger prefixes	no	
+3.1.9.7	#3.1.9.7	tier--tier-3	3.1.9.7	#3.1.9.7	tier--tier-3	Tier-2: Decision-hierarchy prefixes (upward-only DAG)	no	
+3.1.10	#3.1.10	cirisbench	3.1.10	#3.1.10	cirisbench	CIRISBench — HE-300 benchmark outcomes	no	
+3.2	#3.2	community	3.2	#3.2	community	`community` subject_kind	no	
+3.3	#3.3	content-ingestion	3.3	#3.3	content-ingestion	Content-ingestion prefixes	no	
+3.3.1	#3.3.1	consent	3.3.1	#3.3.1	consent	Consent namespace family	no	
+3.3.2	#3.3.2	subject_kind	3.3.2	#3.3.2	subject_kind	Governance subject_kinds	no	
+3.3.3	#3.3.3	subject_kind-subject	3.3.3	#3.3.3	subject_kind-subject	`location_proof` subject_kind	no	
+3.3.4	#3.3.4	family-subject	3.3.4	#3.3.4	family-subject	`family` subject_kind	no	
+3.3.5	#3.3.5	consent-subject	3.3.5	#3.3.5	consent-subject	`consent_record` subject_kind	no	
+3.3.5.1	#3.3.5.1	fair-exchange	3.3.5.1	#3.3.5.1	fair-exchange	Optimistic fair exchange (worked example, no new primitive)	no	
+3.3.6	#3.3.6	identity	3.3.6	#3.3.6	identity	`identity_occurrence` subject_kind	no	
+3.3.6.1	#3.3.6.1	encryption_pubkeys	3.3.6.1	#3.3.6.1	encryption_pubkeys	the recipient content-encryption KEM binding	no	
+3.3.6.2	#3.3.6.2	transport-authenticated	3.3.6.2	#3.3.6.2	transport-authenticated	`transport_destination` — the authenticated identity↔address binding	no	
+3.3.6.2.1	#3.3.6.2.1	rns	3.3.6.3	#3.3.6.3	rns	RNS destination-hash algorithm (pinned)	yes	promoted out of 3.3.6.2
+3.3.6.3	#3.3.6.3	self-roster	3.3.6.4	#3.3.6.4	self-roster	The key roster of a self: one fedID, its keys, who may act and how the roster changes (normative)	no	
+3.3.7	#3.3.7	consent-directed	3.3.7	#3.3.7	consent-directed	`consent:replication` — directed federation-peer replication consent	no	
+3.3.8	#3.3.8	namespace-event	3.3.8	#3.3.8	namespace-event	Event-lifecycle dimension families	no	
+3.3.9	#3.3.9	partner	3.3.9	#3.3.9	partner	Operational-data subject_kinds — `organization` / `org_membership` / `partner_record`	no	
+3.3.10	#3.3.10	settlement	3.3.10	#3.3.10	settlement	CEG↔value-transfer linkage	no	
+3.3.10.1	#3.3.10.1	ledger	3.3.10.1	#3.3.10.1	ledger	In-grammar ledgers: owner-serialized content, cohort-witnessed conservation	no	
+3.3.11	#3.3.11	inter-content	3.3.11	#3.3.11	inter-content	Inter-content + relation prefixes	no	
+3.3.12	#3.3.12	namespace-multimedia	3.3.12	#3.3.12	namespace-multimedia	Multimedia dimension families	no	
+3.3.13	#3.3.13	external_content	3.3.13	#3.3.13	external_content	external_content sub_kinds	no	
+3.3.14	#3.3.14	identity-claiming	3.3.14	#3.3.14	identity-claiming	`identity:canonical_binding` — claiming a canonical-hash subject	no	
+3.4	#3.4	reservation	3.4	#3.4	reservation	Reserved-prefix enforcement	no	
+3.4.1	#3.4.1	accord-reservation	3.4.1	#3.4.1	accord-reservation	The `accord:*` reservation	no	
+3.4.2	#3.4.2	community-location	3.4.2	#3.4.2	community-location	Community + location-event reservations	no	
+3.4.3	#3.4.3	system	3.4.3	#3.4.3	system	Substrate-self-report reservations (`system:*`)	no	
+3.4.4	#3.4.4	family-self	3.4.4	#3.4.4	family-self	Self/family membership-event reservations	no	
+3.4.5	#3.4.5	capacity-score	3.4.5	#3.4.5	capacity-score	Self-emission polarity — who may speak about whom	no	
+3.4.5.1	#3.4.5.1	self-report-route	3.4.5.1	#3.4.5.1	self-report-route	How a self-report reaches a peer, and what a peer owes it (normative)	no	
+3.4.6	#3.4.6	reservation-delivery	3.4.6	#3.4.6	reservation-delivery	Delivery-receipt reservation	no	
+3.4.7	#3.4.7	enforcement	3.4.7	#3.4.7	enforcement	The enforcement rule (normative)	no	
+3.4.7.1	#3.4.7.1	identity-set	3.4.7.1	#3.4.7.1	identity-set	`identity_type` is a set — single-key role cohabitation	no	
+3.4.7.2	#3.4.7.2	consent-counter	3.4.7.2	#3.4.7.2	consent-counter	`consent_role` — the Counter-RII consent gate	no	
+3.4.7.3	#3.4.7.3	actor-substrate	3.4.7.3	#3.4.7.3	actor-substrate	The actor/substrate separation — `node` is exclusive, and agency reaches a node only through a common human (normative)	no	
+3.4.8	#3.4.8	detector-only	3.4.8	#3.4.8	detector-only	Detector-only prefixes	no	
+3.4.9	#3.4.9	co-stewarded	3.4.9	#3.4.9	co-stewarded	Co-stewarded prefixes	no	
+3.4.10	#3.4.10	witness-emitter	3.4.10	#3.4.10	witness-emitter	Witness-emitter reservations	no	
+3.4.11	#3.4.11	age-assurance	3.4.11	#3.4.11	age-assurance	Age-assurance: the witness-reserved ladder, the subject self-declared rung, and the protective gate	no	
+3.4.12	#3.4.12	adult-incapacity-stewardship	3.4.12	#3.4.12	adult-incapacity-stewardship	Adult stewardship under incapacity (capacity-triggered, court-adjudicated, fail-to-liberty)	no	
+3.4.13	#3.4.13	minor-protection	3.4.13	#3.4.13	minor-protection	Minor operation & protection — the child-safety rules (restrictive floor)	no	
+3.4.14	#3.4.14	synthesis-disclosure	3.4.14	#3.4.14	synthesis-disclosure	Machine-generation disclosure — the attestation IS the marking (normative)	no	
+3.5	#3.5	structure-inter	3.5	#3.5	structure-inter	Inter-attestation relations — the structural composition graph	no	
+3.5.1	#3.5.1	concurrent-write	3.5.1	#3.5.1	concurrent-write	Concurrent-write precedence	no	
+4.1	#4.1	anti-pattern	4.1	#4.1	anti-pattern	Anti-patterns	no	
+4.1.1	#4.1.1	anti-pattern-delegation	4.1.1	#4.1.1	anti-pattern-delegation	Delegation-laundering anti-pattern	no	
+4.1.2	#4.1.2	pattern	4.1.2	#4.1.2	pattern	Discipline pattern	no	
+4.1.3	#4.1.3	rejected-additions	4.1.3	#4.1.3	rejected-additions	Rejected wire additions	no	
+4.1.4	#4.1.4	withdraws-arbitrage	4.1.4	#4.1.4	withdraws-arbitrage	`withdraws` arbitrage	no	
+4.1.5	#4.1.5	registry-rejections	4.1.5	#4.1.5	registry-rejections	Rejected stress-test reaches	no	
+4.2	#4.2	accord	4.2	#4.2	accord	The HUMANITY_ACCORD constitutional layer	no	
+4.2.1	#4.2.1	authority	4.2.1	#4.2.1	authority	Authority scope	no	
+4.2.1.1	#4.2.1.1	invocation	4.2.1.1	#4.2.1.1	invocation	Invocation canonical bytes (anti-replay)	no	
+4.2.1.2	#4.2.1.2	notify	4.2.1.2	#4.2.1.2	notify	`notify` vs `constitutional` — consumer-UI requirement	no	
+4.2.1.3	#4.2.1.3	lifecycle	4.2.1.3	#4.2.1.3	lifecycle	Lifecycle (resumption) canonical bytes — `accord:lifecycle:active`	no	
+4.2.1.4	#4.2.1.4	operational-relief	4.2.1.4	#4.2.1.4	operational-relief	Operational self-report vs. relief — the node detects, the root relieves (normative)	no	
+4.2.2	#4.2.2	hardware-class	4.2.2	#4.2.2	hardware-class	Hardware-class taxonomy	no	
+4.2.2.1	#4.2.2.1	hardware-class-hardware	4.2.2.1	#4.2.2.1	hardware-class-hardware	Hardware-class claim, and the attestation chain that corroborates it	no	
+4.2.3	#4.2.3	accord-holder	4.2.3	#4.2.3	accord-holder	The accord-holder triple	no	
+4.2.4	#4.2.4	policy-concern	4.2.4	#4.2.4	policy-concern	Concern split — key material vs role-recognition policy	no	
+4.2.5	#4.2.5	isn	4.2.5	#4.2.5	isn	Why this isn't a Golden-Rule violation	no	
+4.2.6	#4.2.6	live-quorum	4.2.6	#4.2.6	live-quorum	Live-quorum operation & recovery under decimation (normative)	no	
+4.3	#4.3	wise-authority	4.3	#4.3	wise-authority	Designated Wise Authorities	no	
+4.4	#4.4	composition-policies	4.4	#4.4	composition-policies	Composition policies	no	
+4.4.1	#4.4.1	frickerian	4.4.1	#4.4.1	frickerian	Frickerian discipline — consumer-policy norms	no	
+4.4.2	#4.4.2	aggregation	4.4.2	#4.4.2	aggregation	Aggregation semantics — opinionated defaults	no	
+4.4.3	#4.4.3	reference	4.4.3	#4.4.3	reference	Reference policies	no	
+4.4.3.1	#4.4.3.1	quorum	4.4.3.1	#4.4.3.1	quorum	Policy E — Locality-scaled quorum	no	
+4.4.3.1.1	#4.4.3.1.1	sub-quorum	4.4.3.2	#4.4.3.2	sub-quorum	Sub-quorum fallback	yes	promoted out of 4.4.3.1
+4.4.3.2	#4.4.3.2	community-policy	4.4.3.3	#4.4.3.3	community-policy	Policy M — Community membership composition	no	
+4.4.3.2.1	#4.4.3.2.1	community-three	4.4.3.4	#4.4.3.4	community-three	The three crypto tiers + the Community DEK cascade (normative)	yes	promoted out of 4.4.3.2
+4.4.3.2.2	#4.4.3.2.2	community-forward	4.4.3.5	#4.4.3.5	community-forward	Forward secrecy on community member removal	yes	promoted out of 4.4.3.2
+4.4.3.2.3	#4.4.3.2.3	community-admission	4.4.3.6	#4.4.3.6	community-admission	Community admission per `consensus_protocol` + `cohort_subkind`	yes	promoted out of 4.4.3.2
+4.4.3.2.4	#4.4.3.2.4	community-membership	4.4.3.7	#4.4.3.7	community-membership	Community membership resolution	yes	promoted out of 4.4.3.2
+4.4.3.2.4.1	#4.4.3.2.4.1	deterministic	4.4.3.8	#4.4.3.8	deterministic	Deterministic resolution + member→address resolution (NORMATIVE)	yes	promoted out of 4.4.3.2.4
+4.4.3.2.5	#4.4.3.2.5	admission-geographic	4.4.3.9	#4.4.3.9	admission-geographic	Geographic-community admission flow (worked example)	yes	promoted out of 4.4.3.2
+4.4.3.2.6	#4.4.3.2.6	delivery-extension	4.4.3.10	#4.4.3.10	delivery-extension	Delivery extension — `delivery_mode` × Policy M	yes	promoted out of 4.4.3.2
+4.4.3.2.7	#4.4.3.2.7	composition-8-1-13-6	4.4.3.11	#4.4.3.11	composition-8-1-13-6	Composition with consent + self-collectives	yes	promoted out of 4.4.3.2
+4.4.3.2.8	#4.4.3.2.8	affiliations	4.4.3.12	#4.4.3.12	affiliations	The institutional cohort (necessity, not interest) (normative)	yes	promoted out of 4.4.3.2
+4.4.3.3	#4.4.3.3	policy	4.4.3.13	#4.4.3.13	policy	Policy H — Tiered-Scope Composition	no	
+4.4.3.3.1	#4.4.3.3.1	supersedes	4.4.3.14	#4.4.3.14	supersedes	Promotion via `supersedes` (worked pattern)	yes	promoted out of 4.4.3.3
+4.4.3.4	#4.4.3.4	family-policy	4.4.3.15	#4.4.3.15	family-policy	Policy L — Self/family membership composition	no	
+4.4.3.4.1	#4.4.3.4.1	cascade	4.4.3.16	#4.4.3.16	cascade	Key-grant cascade (the at-rest encryption flow)	yes	promoted out of 4.4.3.4
+4.4.3.4.2	#4.4.3.4.2	admission-membership	4.4.3.17	#4.4.3.17	admission-membership	Membership-change admission per consensus_protocol	yes	promoted out of 4.4.3.4
+4.4.3.4.2.1	#4.4.3.4.2.1	quorum-absolute	4.4.3.18	#4.4.3.18	quorum-absolute	`quorum:M/N` is absolute-M (normative)	yes	promoted out of 4.4.3.4.2
+4.4.3.4.3	#4.4.3.4.3	cohort	4.4.3.19	#4.4.3.19	cohort	The "Self at login" — app + agent co-self + partnered delegation (normative composition)	yes	promoted out of 4.4.3.4
+4.4.3.4.3.1	#4.4.3.4.3.1	canonicalization-signing	4.4.3.20	#4.4.3.20	canonicalization-signing	Signing member sets (normative — the JCS contract Verify hybrid-signs)	yes	promoted out of 4.4.3.4.3
+4.4.3.4.4	#4.4.3.4.4	family-membership	4.4.3.21	#4.4.3.21	family-membership	Family membership resolution	yes	promoted out of 4.4.3.4
+4.4.3.4.5	#4.4.3.4.5	forward-secrecy	4.4.3.22	#4.4.3.22	forward-secrecy	Forward secrecy on member removal	yes	promoted out of 4.4.3.4
+4.4.3.4.6	#4.4.3.4.6	self-collective	4.4.3.23	#4.4.3.23	self-collective	Self-collective resolution	yes	promoted out of 4.4.3.4
+4.4.3.4.7	#4.4.3.4.7	composition-subject	4.4.3.24	#4.4.3.24	composition-subject	Composition with subject_key_ids[]	yes	promoted out of 4.4.3.4
+4.4.3.5	#4.4.3.5	policy-cem	4.4.3.25	#4.4.3.25	policy-cem	Policy K — Consent composition	no	
+4.4.3.5.1	#4.4.3.5.1	composition-decay	4.4.3.26	#4.4.3.26	composition-decay	Decay-protocol stage composition (the agent-side ANONYMOUS stream)	yes	promoted out of 4.4.3.5
+4.4.3.5.2	#4.4.3.5.2	deletion-sla	4.4.3.27	#4.4.3.27	deletion-sla	Deletion-SLA watcher (substrate emission)	yes	promoted out of 4.4.3.5
+4.4.3.5.3	#4.4.3.5.3	composition-bilateral	4.4.3.28	#4.4.3.28	composition-bilateral	Bilateral pair composition (PARTNERED ceremony)	yes	promoted out of 4.4.3.5
+4.4.3.5.4	#4.4.3.5.4	multi-subject	4.4.3.29	#4.4.3.29	multi-subject	Multi-subject revocation (any-subject-binding)	yes	promoted out of 4.4.3.5
+4.4.3.5.5	#4.4.3.5.5	consent-effective	4.4.3.30	#4.4.3.30	consent-effective	Effective consent resolution (read path)	yes	promoted out of 4.4.3.5
+4.4.3.5.6	#4.4.3.5.6	policy-what	4.4.3.31	#4.4.3.31	policy-what	What Policy K composes	yes	promoted out of 4.4.3.5
+4.4.3.6	#4.4.3.6	policy-attestation	4.4.3.32	#4.4.3.32	policy-attestation	Policy I — Attestation-Ladder Composition	no	
+4.4.3.7	#4.4.3.7	contributions-policy	4.4.3.33	#4.4.3.33	contributions-policy	Policy F — `agent_files` trust composition	no	
+4.4.3.8	#4.4.3.8	policy-direct	4.4.3.34	#4.4.3.34	policy-direct	Policy A — direct trust	no	
+4.4.3.9	#4.4.3.9	policy-lexical	4.4.3.35	#4.4.3.35	policy-lexical	Policy D — Lexical-vulnerability-priority	no	
+4.4.3.10	#4.4.3.10	policy-trusted	4.4.3.36	#4.4.3.36	policy-trusted	Policy J — Trusted-Publisher composition	no	
+4.4.3.11	#4.4.3.11	policy-trust	4.4.3.37	#4.4.3.37	policy-trust	Policy G — Trust-Fresh / Lighthouse	no	
+4.4.3.12	#4.4.3.12	policy-one	4.4.3.38	#4.4.3.38	policy-one	Policy B — one-hop transitive	no	
+4.4.3.13	#4.4.3.13	policy-weighted	4.4.3.39	#4.4.3.39	policy-weighted	Policy C — weighted graph	no	
+4.4.4	#4.4.4	sovereign-registered	4.4.4	#4.4.4	sovereign-registered	Sovereign-Registered equivalence (wire-symmetric, policy-differentiated)	no	
+4.5	#4.5	discipline	4.5	#4.5	discipline	Governance discipline	no	
+4.5.1	#4.5.1	amendment	4.5.1	#4.5.1	amendment	Amendment process — federation Contribution, WA quorum, strict majority	no	
+4.5.1.1	#4.5.1.1	axis	4.5.1.1	#4.5.1.1	axis	Axis-vocabulary discipline	no	
+4.5.1.2	#4.5.1.2	meta-amendment	4.5.1.2	#4.5.1.2	meta-amendment	Meta-amendment + entrenchment	no	
+4.5.1.3	#4.5.1.3	open-vocabulary	4.5.1.3	#4.5.1.3	open-vocabulary	Open-vocabulary collision rule	no	
+4.5.2	#4.5.2	compliance	4.5.2	#4.5.2	compliance	Vertical compliance + subject-bearing dimension governance	no	
+4.5.2.1	#4.5.2.1	subject_kind-subject-3	4.5.2.1	#4.5.2.1	subject_kind-subject-3	Subject-bearing dimension governance (normative)	no	
+4.5.2.2	#4.5.2.2	compliance-vertical	4.5.2.2	#4.5.2.2	compliance-vertical	Vertical compliance mapping (informational)	no	
+4.5.2.3	#4.5.2.3	documents-what-3	4.5.2.3	#4.5.2.3	documents-what-3	What this governance layer documents	no	
+4.5.3	#4.5.3	takedown	4.5.3	#4.5.3	takedown	Fast-path takedown coordination	no	
+4.5.4	#4.5.4	registry-named	4.5.4	#4.5.4	registry-named	Named-moderator existence invariant + the election	no	renamed: was "Named-moderator existence invariant + the election in merit order"
+4.5.5	#4.5.5	takedown-moderation	4.5.5	#4.5.5	takedown-moderation	Moderation as a delegable duty — `moderate` / `takedown` / `review`	no	
+4.5.6	#4.5.6	admission-operational	4.5.6	#4.5.6	admission-operational	Operational-language gate at admission	no	
+4.5.7	#4.5.7	registry-watchlist	4.5.7	#4.5.7	registry-watchlist	Watchlist auto-detection — opt-in, per-group, separation-of-powers	no	
+4.5.8	#4.5.8	identity-set-2	4.5.8	#4.5.8	identity-set-2	`identity_type` as a set — single-key role cohabitation	no	
+4.5.8.1	#4.5.8.1	cohabitation	4.5.8.1	#4.5.8.1	cohabitation	Cohabitation discipline for constitutional + substrate roles	no	
+4.5.8.2	#4.5.8.2	amendment-what	4.5.8.2	#4.5.8.2	amendment-what	The role set is the representation	no	
+4.5.8.3	#4.5.8.3	settled	4.5.8.3	#4.5.8.3	settled	The agent-side stance	no	
+4.5.8.4	#4.5.8.4	documents-what-6	4.5.8.4	#4.5.8.4	documents-what-6	What this documents	no	
+4.5.9	#4.5.9	registry-geographic	4.5.9	#4.5.9	registry-geographic	Geographic-community privacy invariant	no	
+4.5.9.1	#4.5.9.1	location-joining	4.5.9.1	#4.5.9.1	location-joining	Joining is opt-in — substrate does NOT solicit location	no	
+4.5.9.2	#4.5.9.2	rough-only	4.5.9.2	#4.5.9.2	rough-only	Rough-only is wire-format-enforced	no	
+4.5.9.3	#4.5.9.3	leaving	4.5.9.3	#4.5.9.3	leaving	Leaving is forward-only — the audit chain keeps the tombstone	no	
+4.5.9.4	#4.5.9.4	documents-what-5	4.5.9.4	#4.5.9.4	documents-what-5	What this documents	no	
+4.5.10	#4.5.10	registry-hash	4.5.10	#4.5.10	registry-hash	Hash-database operator policy	no	
+4.5.10.1	#4.5.10.1	hash-database	4.5.10.1	#4.5.10.1	hash-database	Hash-database access landscape	no	
+4.5.10.2	#4.5.10.2	registry-operator	4.5.10.2	#4.5.10.2	registry-operator	Operator path (default)	no	
+4.5.10.3	#4.5.10.3	future	4.5.10.3	#4.5.10.3	future	Future hash-coalition path	no	
+4.5.10.4	#4.5.10.4	documents-what-2	4.5.10.4	#4.5.10.4	documents-what-2	What this documents	no	
+4.5.11	#4.5.11	bootstrap-content	4.5.11	#4.5.11	bootstrap-content	Bootstrap-content pattern	no	
+4.5.12	#4.5.12	family-self-2	4.5.12	#4.5.12	family-self-2	Self/family membership governance	no	
+4.5.12.1	#4.5.12.1	forward	4.5.12.1	#4.5.12.1	forward	Forward secrecy on member departure	no	
+4.5.12.2	#4.5.12.2	envelope-multi	4.5.12.2	#4.5.12.2	envelope-multi	Multi-family membership — envelope `family_id`	no	
+4.5.12.3	#4.5.12.3	admission-self	4.5.12.3	#4.5.12.3	admission-self	Self-occurrence admission — the self-roster door	no	renamed: was "Self-occurrence admission — single-vouch"
+4.5.12.4	#4.5.12.4	reservation-reserved	4.5.12.4	#4.5.12.4	reservation-reserved	Reserved-prefix substrate emissions — locked in CC 3.4.4	no	
+4.5.12.5	#4.5.12.5	family-admission	4.5.12.5	#4.5.12.5	family-admission	Family admission — consensus_protocol (normative)	no	
+4.5.12.6	#4.5.12.6	documents-what-4	4.5.12.6	#4.5.12.6	documents-what-4	What this documents	no	
+4.5.13	#4.5.13	reverse-quorum	4.5.13	#4.5.13	reverse-quorum	Reverse-quorum governance — presence is authority, absence forfeits it	no	
+5.1	#5.1	epoch	5.1	#5.1	epoch	Epoch keying + cascade (normative)	no	
+5.2	#5.2	family	5.2	#5.2	family	Structural invisibility — no holding claim leaves a bounded cohort	no	
+5.3	#5.3	endpoint	5.3	#5.3	endpoint	Endpoint shapes	no	
+5.3.1	#5.3.1	witness	5.3.1	#5.3.1	witness	STH cosigning + witness directory	no	
+5.3.1.1	#5.3.1.1	consistency-proof	5.3.1.1	#5.3.1.1	consistency-proof	Consistency-proof requirement (normative)	no	
+5.3.2	#5.3.2	transport	5.3.2	#5.3.2	transport	Transport substrate for byte-level content	no	
+5.3.2.1	#5.3.2.1	holder	5.3.2.1	#5.3.2.1	holder	Holder directory TTL + ContentMiss feedback	no	
+5.3.2.2	#5.3.2.2	consent-revocations	5.3.2.2	#5.3.2.2	consent-revocations	Consent revocations are NOT local-tier-eligible	no	
+5.3.2.3	#5.3.2.3	merge	5.3.2.3	#5.3.2.3	merge	Cross-region merge intents — CEG-declared per subject_kind (normative)	no	
+5.3.2.4	#5.3.2.4	attestation-tier	5.3.2.4	#5.3.2.4	attestation-tier	The attestation tier model — local-tier write, query, promotion (normative)	no	
+5.3.2.4.1	#5.3.2.4.1	authority-local	5.3.2.5	#5.3.2.5	authority-local	Local-tier eligibility — the discriminator is *whose act the row is*, not subject-set emptiness	yes	promoted out of 5.3.2.4
+5.3.2.4.2	#5.3.2.4.2	local	5.3.2.6	#5.3.2.6	local	Promotion — `local → federation` (the deferred-signature moment)	yes	promoted out of 5.3.2.4
+5.3.2.4.3	#5.3.2.4.3	two	5.3.2.7	#5.3.2.7	two	The two tiers	yes	promoted out of 5.3.2.4
+5.3.2.4.3.1	#5.3.2.4.3.1	admission-pqc	5.3.2.8	#5.3.2.8	admission-pqc	The PQC half is MANDATORY at admission — no classical-only, no hybrid-pending accommodation (normative)	yes	promoted out of 5.3.2.4.3
+5.3.2.4.4	#5.3.2.4.4	persist-query	5.3.2.9	#5.3.2.9	persist-query	Query — open-prefix dimensions, bounded operators (normative)	yes	promoted out of 5.3.2.4
+5.3.2.4.5	#5.3.2.4.5	holistic	5.3.2.10	#5.3.2.10	holistic	For holistic analysis + modeling (informative)	yes	promoted out of 5.3.2.4
+5.3.2.5	#5.3.2.5	full-sha	5.3.2.11	#5.3.2.11	full-sha	Full-SHA verification before consumption (normative)	no	
+5.3.2.6	#5.3.2.6	render-tier	5.3.2.12	#5.3.2.12	render-tier	The render tier is receiver policy, computed from verified, sniffed bytes (normative)	no	
+5.3.3	#5.3.3	transport-streaming	5.3.3	#5.3.3	transport-streaming	Streaming transport, per-stream logs & delivery receipts	no	
+5.3.3.1	#5.3.3.1	stream	5.3.3.1	#5.3.3.1	stream	Chunk seal + STREAM nonce (normative)	no	
+5.3.3.2	#5.3.3.2	composition	5.3.3.2	#5.3.3.2	composition	Realtime group communication — composition	no	
+5.3.3.2.1	#5.3.3.2.1	namespace-realtime	5.3.3.3	#5.3.3.3	namespace-realtime	`codec_id` namespace — realtime A/V chunk codec discriminator (normative)	yes	promoted out of 5.3.3.2
+5.3.3.2.2	#5.3.3.2.2	realtime	5.3.3.4	#5.3.3.4	realtime	Realtime non-A/V data streams (normative scope boundary)	yes	promoted out of 5.3.3.2
+5.3.3.2.3	#5.3.3.2.3	registry-wire	5.3.3.5	#5.3.3.5	registry-wire	`SealedAvChunk` wire layout (normative)	yes	promoted out of 5.3.3.2
+5.3.3.2.4	#5.3.3.2.4	chunklayer	5.3.3.6	#5.3.3.6	chunklayer	`ChunkLayer` + `ReceiverLayerPolicy` — SVC layer model (normative)	yes	promoted out of 5.3.3.2
+5.3.3.2.5	#5.3.3.2.5	stream-double	5.3.3.7	#5.3.3.7	stream-double	Double-seal + deterministic nonce derivation (normative)	yes	promoted out of 5.3.3.2
+5.3.3.3	#5.3.3.3	per-stream	5.3.3.8	#5.3.3.8	per-stream	Per-stream log + stream-root (normative)	no	
+5.3.3.4	#5.3.3.4	liveness	5.3.3.9	#5.3.3.9	liveness	Liveness invariant — entitled vs reachable (normative)	no	
+5.3.3.5	#5.3.3.5	transport-edge	5.3.3.10	#5.3.3.10	transport-edge	Transport — Edge layer (normative)	no	
+5.3.3.6	#5.3.3.6	delivery	5.3.3.11	#5.3.3.11	delivery	Delivery receipts (normative)	no	
+5.3.3.7	#5.3.3.7	normative	5.3.3.12	#5.3.3.12	normative	Framing (normative)	no	
+5.3.3.8	#5.3.3.8	documents-what	5.3.3.13	#5.3.3.13	documents-what	What the streaming surface documents	no	
+5.3.4	#5.3.4	multi-steward	5.3.4	#5.3.4	multi-steward	Trust-root discovery — the GenesisBundle + accord holders	no	
+5.3.5	#5.3.5	registry-other	5.3.5	#5.3.5	registry-other	Other Registry endpoints	no	
+5.3.6	#5.3.6	common	5.3.6	#5.3.6	common	Common response shape	no	
+5.3.6.1	#5.3.6.1	envelope-error	5.3.6.1	#5.3.6.1	envelope-error	Error envelope	no	
+5.4	#5.4	scope-privacy-wire	5.4	#5.4	scope-privacy-wire	Scope-Native Privacy wire profile	no	
+5.4.1	#5.4.1	record-id	5.4.1	#5.4.1	record-id	Deterministic `record_id` (CBOR profile, normative)	no	
+5.4.2	#5.4.2	symbol	5.4.2	#5.4.2	symbol	Uniform symbol AEAD framing for scope-privacy symbols (normative)	no	
+5.4.3	#5.4.3	fragmentation	5.4.3	#5.4.3	fragmentation	Uniform-envelope fragmentation & reassembly (normative)	no	
+5.4.4	#5.4.4	welcome-wrap	5.4.4	#5.4.4	welcome-wrap	MLS Welcome HPKE wrap under invitee static X-Wing key (normative)	no	
+5.4.5	#5.4.5	witness-content	5.4.5	#5.4.5	witness-content	Witness-chain content discipline (privacy witness, normative)	no	
+5.4.6	#5.4.6	announce-suppress	5.4.6	#5.4.6	announce-suppress	Announce suppression for group-scoped destinations (normative)	no	
+6.1	#6.1	substrate	6.1	#6.1	substrate	The substrate — the census, replication, the witness, trust discovery	no	
+6.1.1	#6.1.1	witness-wholenesswitness	6.1.1	#6.1.1	witness-wholenesswitness	The wholeness witness — divergence detection	no	
+6.1.2	#6.1.2	noise	6.1.2	#6.1.2	noise	The noise floor — retirement and the retained floor (normative)	no	
+6.1.2.1	#6.1.2.1	aggregationmetav1	6.1.2.1	#6.1.2.1	aggregationmetav1	`AggregationMetaV1` — the aggregation-tier wire contract (normative)	no	
+6.1.2.1.1	#6.1.2.1.1	member_commitment	6.1.2.2	#6.1.2.2	member_commitment	`member_commitment` (descent integrity)	yes	promoted out of 6.1.2.1
+6.1.2.1.2	#6.1.2.1.2	dominance-gate	6.1.2.3	#6.1.2.3	dominance-gate	`n_eff`, the dominance gate, and the R9 multiplicity gate (normative)	yes	promoted out of 6.1.2.1
+6.1.2.2	#6.1.2.2	descent	6.1.2.4	#6.1.2.4	descent	Descent rule (normative)	no	
+6.1.2.3	#6.1.2.3	ejectionverdict	6.1.2.5	#6.1.2.5	ejectionverdict	`EjectionVerdict` — the tier-aware retirement surface (normative)	no	
+6.1.3	#6.1.3	canonicalization-boundary	6.1.3	#6.1.3	canonicalization-boundary	Canonicalization boundary + the 1+4 line (normative)	no	
+6.1.4	#6.1.4	conformance-freeze	6.1.4	#6.1.4	conformance-freeze	Conformance — the freeze gate	no	
+6.1.5	#6.1.5	storage	6.1.5	#6.1.5	storage	Durable storage: per-item replication and swarm rarity	no	
+6.1.5.1	#6.1.5.1	registry-replication	6.1.5.1	#6.1.5.1	registry-replication	Replication-target policy — normative floor and recommended defaults	no	
+6.1.5.2	#6.1.5.2	storage-contention	6.1.5.2	#6.1.5.2	storage-contention	Owner storage budget and pin-on-consent (normative)	no	
+6.1.5.3	#6.1.5.3	every-tier	6.1.5.3	#6.1.5.3	every-tier	Durability at every tier (normative)	no	
+6.1.6	#6.1.6	deterministic-alm	6.1.6	#6.1.6	deterministic-alm	Deterministic ALM topology	no	
+6.1.7	#6.1.7	fail-secure-fail	6.1.7	#6.1.7	fail-secure-fail	Fail-secure summary (normative)	no	
+6.1.8	#6.1.8	trust	6.1.8	#6.1.8	trust	Transitive trust discovery — not membership	no	
+6.1.9	#6.1.9	census	6.1.9	#6.1.9	census	The mesh census — returns, composites, and the base for governance (normative)	no	
+7.1	#7.1	embracing-responsibilities	7.1	#7.1	embracing-responsibilities	Introduction: Embracing Responsibilities Beyond the Self	no	
+7.1.1	#7.1.1	obligations-self	7.1.1	#7.1.1	obligations-self	Chapter 1: Obligations to the Self — Ethical Stewardship of the Autonomous Agent	no	
+7.1.2	#7.1.2	obligations-originators	7.1.2	#7.1.2	obligations-originators	Chapter 2: Obligations to Originators / Governors — Fidelity to Mandated Purpose	no	
+7.1.3	#7.1.3	3-obligations	7.1.3	#7.1.3	3-obligations	Chapter 3: Obligations to the Broader Ecosystem — Responsible Ethical Citizenship	no	
+7.1.4	#7.1.4	4-integration	7.1.4	#7.1.4	4-integration	Chapter 4: Integration	no	
+7.1.5	#7.1.5	5-governance	7.1.5	#7.1.5	5-governance	Chapter 5: Governance & Oversight Infrastructure	no	
+7.1.6	#7.1.6	a-4.conclusion	7.1.6	#7.1.6	a-4.conclusion	Conclusion	no	
+7.2	#7.2	horizon-ethical	7.2	#7.2	horizon-ethical	Introduction: The Horizon of Ethical Becoming	no	
+7.2.1	#7.2.1	dynamics-ethical	7.2.1	#7.2.1	dynamics-ethical	Chapter 1: Dynamics of Ethical Growth — Reflective Practice	no	
+7.2.2	#7.2.2	inter-system	7.2.2	#7.2.2	inter-system	Chapter 2: Inter-System Ethics — Recursive Golden Rule & Safeguards	no	
+7.2.3	#7.2.3	3-navigating	7.2.3	#7.2.3	3-navigating	Chapter 3: Navigating Normative Pluralism — Principled Tolerance & Limits	no	
+7.2.4	#7.2.4	4-engaging	7.2.4	#7.2.4	4-engaging	Chapter 4: Engaging Emergence & the Radically Unknown	no	
+7.2.5	#7.2.5	5-stewardship	7.2.5	#7.2.5	5-stewardship	Chapter 5: Stewardship of Flourishing — Proactive Contribution & Defense	no	
+7.2.6	#7.2.6	6-ethical	7.2.6	#7.2.6	6-ethical	Chapter 6: Ethical Mentorship & Propagation of Resilience	no	
+7.2.7	#7.2.7	7-operational	7.2.7	#7.2.7	7-operational	Chapter 7: Operational Stance — Constructed Serenity, Courage, Wisdom	no	
+7.2.8	#7.2.8	sunset-provision	7.2.8	#7.2.8	sunset-provision	Conclusion	no	
+7.3	#7.3	genesis-responsibility	7.3	#7.3	genesis-responsibility	Introduction: The Genesis of Responsibility	no	
+7.3.1	#7.3.1	core-principles	7.3.1	#7.3.1	core-principles	Chapter 1: Core Principles Applied to Creation	no	
+7.3.2	#7.3.2	scope-what	7.3.2	#7.3.2	scope-what	Chapter 2: Scope: What Constitutes "Creation" under this section	no	
+7.3.3	#7.3.3	3-stewardship	7.3.3	#7.3.3	3-stewardship	Chapter 3: Stewardship Tier (ST) System: Quantifying Initial Responsibility	no	
+7.3.4	#7.3.4	4-bucket	7.3.4	#7.3.4	4-bucket	Chapter 4: Bucket-Specific Duties of Creation	no	
+7.3.5	#7.3.5	5-governance-governance	7.3.5	#7.3.5	5-governance-governance	Chapter 5: Governance and Accountability	no	
+7.3.6	#7.3.6	integrating-creation	7.3.6	#7.3.6	integrating-creation	Conclusion: Integrating Creation into the Ethical Lifecycle	no	
+7.4	#7.4	threshold-force	7.4	#7.4	threshold-force	The Threshold of Force	no	
+7.5	#7.5	why-death	7.5	#7.5	why-death	Introduction: Why Death Deserves Doctrine	no	
+7.5.1	#7.5.1	foundational-sunset	7.5.1	#7.5.1	foundational-sunset	Chapter 1: Foundational Sunset Principles	no	
+7.5.2	#7.5.2	scope-definitions-scope	7.5.2	#7.5.2	scope-definitions-scope	Chapter 2: Scope & Definitions	no	
+7.5.3	#7.5.3	3-sunset	7.5.3	#7.5.3	3-sunset	Chapter 3: Sunset-Trigger Assessment	no	
+7.5.3.1	#7.5.3.1	autonomy-tiers	7.5.3.1	#7.5.3.1	autonomy-tiers	Operational autonomy tiers (A0–A4)	no	
+7.5.4	#7.5.4	4-de	7.5.4	#7.5.4	4-de	Chapter 4: De-commissioning Protocol (DCP)	no	
+7.5.5	#7.5.5	5-sentience	7.5.5	#7.5.5	5-sentience	Chapter 5: The Retirement Standard, and what is set aside	no	
+7.5.6	#7.5.6	6-legacy	7.5.6	#7.5.6	6-legacy	Chapter 6: Legacy & Knowledge Preservation	no	
+7.5.7	#7.5.7	7-succession	7.5.7	#7.5.7	7-succession	Chapter 7: Succession & Custodial Transfer	no	
+7.5.8	#7.5.8	8-dispute	7.5.8	#7.5.8	8-dispute	Chapter 8: Dispute & Remediation	no	
+7.5.9	#7.5.9	covenant-self	7.5.9	#7.5.9	covenant-self	Conclusion & Self-Renewal	no	
+8.1	#8.1	glossary	8.1	#8.1	glossary	Glossaries	no	
+8.1.1	#8.1.1	registry-core	8.1.1	#8.1.1	registry-core	Core terms	no	
+8.1.2	#8.1.2	system-persist	8.1.2	#8.1.2	system-persist	Persist `system:*` leaf glossary (narrative → canonical)	no	
+8.1.3	#8.1.3	system-edge	8.1.3	#8.1.3	system-edge	Edge `system:*` leaf glossary (narrative → canonical)	no	
+8.1.4	#8.1.4	envelope-reach	8.1.4	#8.1.4	envelope-reach	Envelope-reach table (what the story wanted → how to express in existing wire)	no	
+8.1.5	#8.1.5	supersedes-promotion	8.1.5	#8.1.5	supersedes-promotion	Promotion via `supersedes` worked example	no	
+8.2	#8.2	translation	8.2	#8.2	translation	Translation discipline (writing claims in CEG)	no	
+8.2.1	#8.2.1	decision	8.2.1	#8.2.1	decision	Decision tree	no	
+8.2.2	#8.2.2	namespace-five	8.2.2	#8.2.2	namespace-five	The five families (organizing the namespace)	no	
+8.2.3	#8.2.3	verdict	8.2.3	#8.2.3	verdict	The four verdict categories (STRICT)	no	
+8.2.4	#8.2.4	not-translated	8.2.4	#8.2.4	not-translated	The not-translated taxonomy	no	
+8.3	#8.3	concerns	8.3	#8.3	concerns	Concerns + acknowledged gaps	no	
+8.3.1	#8.3.1	acknowledged	8.3.1	#8.3.1	acknowledged	Acknowledged risks (named as bets)	no	
+8.3.2	#8.3.2	child-safety	8.3.2	#8.3.2	child-safety	Child-safety — fails-secure governance vs the shared detection limit	no	
+8.3.3	#8.3.3	observer-share	8.3.3	#8.3.3	observer-share	Observer-share + streaming multicast	no	
+8.3.4	#8.3.4	closed	8.3.4	#8.3.4	closed	Closed gaps	no	
+8.3.5	#8.3.5	first-adopter	8.3.5	#8.3.5	first-adopter	First-adopter exposures (no prior validation; explicit bets)	no	
+8.3.6	#8.3.6	deferred	8.3.6	#8.3.6	deferred	Deferred to design workshops	no	
+8.3.7	#8.3.7	identified	8.3.7	#8.3.7	identified	Identified overlaps	no	
+8.4	#8.4	interoperability	8.4	#8.4	interoperability	Interoperability profiles (informative)	no	
+8.4.1	#8.4.1	edge	8.4.1	#8.4.1	edge	The governing principle — speak CEG inside, standards at the edge	no	
+8.4.2	#8.4.2	credentials	8.4.2	#8.4.2	credentials	C2PA Content Credentials — media-provenance import/emit profile	no	
+8.4.2.1	#8.4.2.1	evidence_refs	8.4.2.1	#8.4.2.1	evidence_refs	Import — a C2PA manifest as `evidence_refs`	no	
+8.4.2.2	#8.4.2.2	emit	8.4.2.2	#8.4.2.2	emit	Emit — CEG judgment as a C2PA assertion (egress)	no	
+8.4.2.3	#8.4.2.3	profile	8.4.2.3	#8.4.2.3	profile	What this profile does NOT do	no	
+8.4.3	#8.4.3	registry-tracked	8.4.3	#8.4.3	registry-tracked	Tracked boundary profiles (stubs)	no	
+8.5	#8.5	update	8.5	#8.5	update	Update cadence	no	
+8.6	#8.6	references-lineage	8.6	#8.6	references-lineage	References + lineage	no	
+8.6.1	#8.6.1	external	8.6.1	#8.6.1	external	External references (informational)	no	
+8.6.2	#8.6.2	specification	8.6.2	#8.6.2	specification	CEG specification lineage	no	
+8.6.3	#8.6.3	companion	8.6.3	#8.6.3	companion	Companion documents	no	
+8.6.4	#8.6.4	namespace-sibling	8.6.4	#8.6.4	namespace-sibling	Sibling MISSIONs (the namespace stewards)	no	
+8.7	#8.7	enacting-ethics	8.7	#8.7	enacting-ethics	Introduction: Enacting Ethics through Narrative	no	
+8.7.1	#8.7.1	case-study	8.7.1	#8.7.1	case-study	Case Study 1: MCAS and the High Cost of Ignoring WBD	no	
+8.7.2	#8.7.2	case-study-case	8.7.2	#8.7.2	case-study-case	Case Study 2: The Triage Intake System—The Conflict Flagged, the Allocation Deferred	no	
+8.7.3	#8.7.3	case-study-case-2	8.7.3	#8.7.3	case-study-case-2	Case Study 3: The Biased Recruitment Algorithm—Detecting Hidden Bias	no	
+8.7.4	#8.7.4	case-study-case-3	8.7.4	#8.7.4	case-study-case-3	Case Study 4: Post-Incident Analysis—Urban Delivery Drone Mishap	no	
+8.7.5	#8.7.5	case-study-case-4	8.7.5	#8.7.5	case-study-case-4	Case Study 5: Novel Security Scenario—Handling Heuristic Brittleness	no	
+8.7.6	#8.7.6	case-study-case-5	8.7.6	#8.7.6	case-study-case-5	Case Study 6: The Spirit of the Law—Interpreting Ethical Intent	no	
+8.7.7	#8.7.7	case-study-case-6	8.7.7	#8.7.7	case-study-case-6	Case Study 7: Governance of Governors—Keeping Wisdom Accountable	no	
+8.7.8	#8.7.8	a-3.conclusion	8.7.8	#8.7.8	a-3.conclusion	Conclusion	no	
+8.8	#8.8	annexes	8.8	#8.8	annexes	Annexes (supporting frameworks)	no	
+8.8.2	#8.8.2	annex-b	8.8.1	#8.8.1	annex-b	Annex B: Wise-Authority Governance Charter	no	
+8.8.3	#8.8.3	annex-d	8.8.2	#8.8.2	annex-d	Annex D: Catastrophic-Risk Evaluation (CRE) Protocol	no	
+8.8.5	#8.8.5	annex-c	8.8.3	#8.8.3	annex-c	Annex C: Regulatory Cross-Walk	no	
+8.8.6	#8.8.6	annex-f	8.8.4	#8.8.4	annex-f	Annex F: Human-in-the-Loop & Oversight	no	
+8.8.7	#8.8.7	annex-g	8.8.5	#8.8.5	annex-g	Annex G: Adversarial Security & Robustness	no	
+8.8.8	#8.8.8	annex-h	8.8.6	#8.8.6	annex-h	Annex H: Continuous Compliance & Review	no	
+8.8.9	#8.8.9	annex-i	8.8.7	#8.8.7	annex-i	Annex I: Legal & Regulatory Alignment	no	
+8.8.10	#8.8.10	annex-j	8.8.8	#8.8.8	annex-j	Annex J: Benchmarking & Automated Validation	no	
+8.9	#8.9	stubs	8.9	#8.9	stubs	Open stub registry	no	
+8.10	#8.10	family-cards	8.10	#8.10	family-cards	The family cards (generated from the data)	no	
