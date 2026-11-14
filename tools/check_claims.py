@@ -148,6 +148,18 @@ def load_prose():
 
 # --- manifests ---------------------------------------------------------------
 
+def _recut():
+    """old -> new section number from formal/derivation/section_map.tsv (a manifest pinned before the re-cut cites old numbers)."""
+    p = os.path.join(ROOT, "formal", "derivation", "section_map.tsv")
+    if not os.path.exists(p):
+        return {}
+    rows = csv.DictReader((l for l in open(p, encoding="utf-8") if not l.startswith("#")), delimiter="\t")
+    return {r["old_number"]: r["new_number"] for r in rows if r["old_number"] != r["new_number"]}
+
+
+RECUT = _recut()
+
+
 def load_manifests():
     """repo -> {backed: set(decimals), sym_backed/sym_all: {symbol -> set(decimals)},
                known_bad: [(dec, claim, symbols, status)], spec: MANIFESTS entry}."""
@@ -168,6 +180,7 @@ def load_manifests():
             dec = (r.get("decimal_id") or r.get("cc_decimal_id") or "").strip()
             if not dec or dec == "—":            # non-section row (e.g. h3ere StepPoint)
                 continue
+            dec = RECUT.get(dec, dec) if row.get("cc_numbering", "") != "recut" else dec
             is_backed = spec["backed"](r)
             if is_backed:
                 backed.add(dec)
